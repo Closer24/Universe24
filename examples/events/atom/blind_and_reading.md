@@ -71,7 +71,7 @@ enter; the seed 34).
 
 The hydrogen worlds at the electron's read 3 (2026-10-20, the owner's order through the builder, the
 atom's own line; the builder's clone 985c818 with his patch the reference, his numbers beside by
-name): the universe hydrogen_read3.json, hydrogen.json with one number changed, the electron reading
+name): the universe hydrogen_read3.json (deleted 2026-10-24, the read weight one for every reader by the owner's word, the file then equal to hydrogen.json; the worlds hydrogen_1s and hydrogen_line point to hydrogen.json and are owed a re-lay under the read 1), hydrogen.json with one number changed, the electron reading
 the holder of the sign at the weight 3 (the proton keeps 1); the cube of 11 open on its three axes
 at T = 36,000,000, the proton at [5, 5, 5] as the one-Node pixel record (4,242 and -4,242) and the
 electron declared at [6, 5, 5]; 400 intervals. The well the engine's start writes under the proton

@@ -13,7 +13,7 @@ from event_universe.world_files import load_world
 from tests.laws import PACKET, ROOT, TOOL, load_file, slit_world
 
 STANDING = load_file("standing_lay", ROOT / "tools" / "standing_lay.py")  # the standing lay's tool
-UNIVERSE = ROOT / "examples" / "events" / "atom" / "hydrogen_read3.json"  # the hydrogen worlds' integers
+UNIVERSE = ROOT / "examples" / "events" / "atom" / "hydrogen.json"  # the hydrogen worlds' integers
 CUBE, WINDOW, WINDOWS = 5, 4, 3
 HUNDREDTH = 100  # the walk's bound: the booked inflow per window below one count's hundredth
 INTERVALS = 4  # the plain path on the node detector test's chain, the packet crossing the region

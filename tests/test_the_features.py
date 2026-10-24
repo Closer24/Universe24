@@ -142,7 +142,12 @@ HELD = {"sources": ["form"], "level_weight": 5, "write_weight": 3}
 HOLLOW = {"name": "hollow", "pair": [1, 1], "reads": {"hollow": 1}, "held": HELD}  # reading itself at 1
 CORE = {"name": "core", "pair": [3, 4], "reads": {}}
 CORE["held"] = {**HELD, "level_weight": 7, "write_weight": -1}
-STUFF = {"name": "stuff", "pair": [4000, 6000], "reads": {"hollow": 2}, "dimension": 1}
+STUFF = {
+    "name": "stuff",
+    "pair": [4000, 6000],
+    "reads": {"hollow": 1},
+    "dimension": 1,
+}  # the read weight one for every reader (2026-10-24; 2 until then)
 OTHER = {"name": "other", "pair": [4000, 6000], "reads": {"core": 1}, "dimension": 1}
 SIGN = {
     "name": "sign",
@@ -158,8 +163,10 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
     integers, families = universe_of(universe(HOLLOW, CORE, STUFF, OTHER))
     hollow, core, stuff, other = range(4)
     reads = [[(r.family, r.weight) for r in f.reads] for f in families]
-    assert reads == [[(0, 1)], [], [(0, 2)], [(1, 1)]] and readers_of(families, hollow) == [stuff]
-    assert readers_of(families, core) == [other] and weight_of(hollow, families[stuff]) == 2
+    assert reads == [[(0, 1)], [], [(0, 1)], [(1, 1)]] and readers_of(families, hollow) == [stuff]
+    assert (
+        readers_of(families, core) == [other] and weight_of(hollow, families[stuff]) == 1
+    )  # the read weight one for every reader (the owner's word of 2026-10-24; STUFF read hollow at 2 until then, the former rule kept by name)
     draw, wrap, action = np.random.default_rng(7), Wrap(True, True, True), integers["quantum_action"]
     writes = {i: held_write_of(families, i, action) for i in (hollow, core)}
     walls = [writes[i].walls if f.held else () for i, f in enumerate(families)]
@@ -169,9 +176,11 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         state.lines = [records.Record(*pair, 0 * SHAPE[0]) for pair in levels]
     levels = [states[i].lines[0].now for i in (hollow, core)]
     read = {i: node.read(i, families, states, 1, wrap, GAMMA, 1) for i in range(4)}
-    assert np.array_equal(read[stuff][0], 2 * levels[0]) and np.array_equal(read[other][0], levels[1])
+    assert np.array_equal(read[stuff][0], levels[0]) and np.array_equal(
+        read[other][0], levels[1]
+    )  # each read at the one weight (2026-10-24; stuff read hollow at 2 until then)
     assert np.array_equal(read[hollow][0], levels[0]) and read[core] == (0, (1,) * 6)
-    by_law = coefficients(4000, 6000, GAMMA, *paces.node_paces(GAMMA, 2 * levels[0]))[0]
+    by_law = coefficients(4000, 6000, GAMMA, *paces.node_paces(GAMMA, levels[0]))[0]
     rule = node.rule_of(families[stuff], GAMMA, *read[stuff])
     assert all(np.array_equal(a, b) for a, b in zip(rule[0], by_law, strict=True))
     forms, rulers = {}, {}
@@ -180,7 +189,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         _lines, (first, second) = flux.step_family(i, families, states, own, wrap, GAMMA)
         forms[i, 0] = records.form(first, second)  # the bookings per record, (family, record)
         rulers[i, 0] = node.rulers(i, families, states, 1, wrap, GAMMA)
-    for held, reader, weights in ((hollow, stuff, 3 * 2), (core, other, -1 * 1)):
+    for held, reader, weights in ((hollow, stuff, 3 * 1), (core, other, -1 * 1)):
         numerators, walls, _weight = records.write_sources(
             held, families, forms, {}, writes[held], rulers, GAMMA
         )
@@ -209,7 +218,7 @@ def test_every_family_reads_the_holders_its_declaration_names_and_the_write_carr
         ((HOLLOW, missing), r"families\[1\] \('stuff'\) lacks the key 'reads'"),
         ((unweighted, STUFF), r"\('hollow'\).held lacks the key 'write_weight'"),
         ((HOLLOW, {**STUFF, "reads": {"hollow": 0}}), r"reads\['hollow'\] is 0"),
-        ((HOLLOW, {**STUFF, "reads": {"hollow": 2, "stuff": 1}}), "no held row of that name"),
+        ((HOLLOW, {**STUFF, "reads": {"hollow": 1, "stuff": 1}}), "no held row of that name"),
         (({**SIGN, "reads": {"sign": 1}},), "never reads its own level"),
         ((SIGN, {**STUFF, "reads": {"sign": 1}}), "no plane"),
     ):
@@ -366,8 +375,15 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
     assert (
         derived.amplitude_bound(families, GAMMA, 64, 63) == 173_613 < under_the_hill
     )  # as read under the Links' stress (2026-10-23); the hand's formula gives under_the_rooms 122,763 (146,117 before), the room's re-derivation under the doubled wall open
-    two = universe_of(universe(well, deep, {**line, "reads": {"well": 1, "deep": 2}}))[1]
-    assert rooms.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 2) * 7  # the two rows read, summed
+    two = universe_of(universe(well, deep, {**line, "reads": {"well": 1, "deep": 1}}))[1]
+    assert (
+        rooms.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 1) * 7
+    )  # the two rows read, summed, each at the one read weight (2026-10-24; "deep": 2 and (1 + 2) until then)
+    refused(
+        "the read weight is one for every reader",
+        universe_of,
+        universe(well, deep, {**line, "reads": {"well": 1, "deep": 2}}),
+    )
 
 
 def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():

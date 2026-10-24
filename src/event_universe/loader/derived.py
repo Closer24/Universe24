@@ -267,8 +267,8 @@ def shared_clock(families: tuple[FamilyRule, ...]) -> None:
 
 
 def weight_of(held: int, reader: FamilyRule) -> int:
-    """The weight with which a family reads a held family, and so sources it, the one weight of the pair (ALGEBRA.md #the-primitives, a family's write: whoever reads with w sources with w), 0 where it does not read it."""
-    return sum(read.weight for read in reader.reads if read.family == held)
+    """The weight with which a family reads a held family, and so sources it: one for every reader (the owner's word of 2026-10-24, 'like nature', the read's universality beside the write's; ALGEBRA.md, The constants), 0 where it does not read it; the declared weights (ALGEBRA.md #the-primitives, a family's write: whoever reads with w sources with w, the former rule) kept by name, the loader admitting the weight 1 alone (`loader/keys.reads_of`)."""
+    return 1 if any(read.family == held for read in reader.reads) else 0
 
 
 def readers_of(families: tuple[FamilyRule, ...], held: int) -> list[int]:

@@ -87,5 +87,11 @@ def reads_of(value: object, label: str) -> tuple[tuple[str, int], ...]:
         at = f"{label}[{name!r}]"
         if integer(weight, at, -MAX_WORK_INT) == 0:
             raise ValueError(f"{at} is 0: a holder read at the weight 0 is no read, leave it out")
+        if int(weight) != 1:
+            raise ValueError(
+                f"{at} is {weight}: the read weight is one for every reader (the owner's word of 2026-10-24, "
+                "'like nature', nature's one alpha; ALGEBRA.md, The constants, the read's universality beside the "
+                "write's; the declared read weights of 2026-10-2x the former rule, kept by name)"
+            )
         found.append((name, int(weight)))
     return tuple(found)

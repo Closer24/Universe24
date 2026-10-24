@@ -157,7 +157,7 @@ def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # ty
             {
                 "name": "electron",
                 "pair": [53_567_757, DEN],
-                "reads": {"gravity": 1, "charge": 3},
+                "reads": {"gravity": 1, "charge": 1},
                 "dimension": 2,
             },
             {
