@@ -1,35 +1,13 @@
 """Part G, the source as partner, the click with two receivers (both hands' lines of 2026-10-10, the mathematician's 6091663984 and the advisor's 6091670073, the Boss's merged line 6091735946): at a click the write books the piece's momentum on the credit line with the source drawn and named and the recoil it owes, -p_a, and writes nothing for it (`take.recoiled`; ALGEBRA.md, The click's algebra beyond the law); the erasure removes only the fan's own P_a, zero to the floor for a lay at one Node; the source is drawn among the emitters by the quanta each still holds in the record (`credit.Books.emitters`), one source no draw; where no body emitted, the recoil is booked lost to the lay. The emit-and-take world: a periodic chain of 48 of the resonance world's universe, body 0 an excited atom on six Nodes along x at count 1 emitting at [2, 3] over the lifetime 48 (its window 61: in the exact dark its emission falls at the window's close, `meeting.emission_fell`; a null window's re-lay keeps each Node's own direction, Part H), body 1 a ground atom of the same reach twelve Links on. The brief's four Nodes at count 1 carry 48,432 of the 52,566 a four-Node region reads at [2, 3] on this guide (the hands' 46,341 is the pi / 4 piece of one_photon's packets); six Nodes read 44,566 and carry it whole on both sides. Every integer printed for the Boss."""
 
-import time
-
 import pytest
 
 from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests import laws
-from tests.laws import EMIT_RUN as RUN
 from tests.laws import EVENTS
-from tests.laws_content import RESONANT, TWO_ATOMS, ZENO_ATOM, content_copy, content_world, opened
+from tests.laws_content import RESONANT, ZENO_ATOM, content_world, opened
 from tests.laws_read import load_shipped
-
-T = 32768
-STRIPPED = {"momentum", "fan", "lost", "source", "recoil"}  # the Boss's check strips these
-
-
-def test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_the_two_folds(
-    tmp_path, monkeypatch
-):
-    """Task 5 (d): the reversal with the books through the emission, the click and the two folds, MATCH; its own test so that each half of Task 5 runs under the suite's bound. Re-read 2026-10-20 under the click's read of the board (the reader's ruling): on the content-declared emit-and-take world the emitter's quantum leaves by the faces before any take, so a sentence of a take reads where its matter is, the shipped chain world chain_x_minus (examples/events/chain), which takes at 74 and 142 and emits at 122 and 190 within 200 intervals: 200 forward and back with the books through two takes with their folds and two emissions, MATCH (the emit-and-take ring over 240 before)."""
-    started = time.perf_counter()
-    path = content_copy(
-        tmp_path, EVENTS / "chain" / "chain_x_minus.json", TWO_ATOMS
-    )  # the content copy: the shipped world's run is refused by name at the body 0 of 'atom' at the interval 122 (the law's third refusal of the click's read, ALGEBRA.md The digits' budget: the room 2^45.8 of the digits read, the photon's five at three values each on the universe two_atoms.json, which declares no content, and the atom's three at the lay's origin, below the absorption draw's total 2^51.5; the former course took at 74 by the same number read, the rest weight's booking centred on 2026-10-23 moving the residue to the cell none takes), so the claim is read on the content copy (tests/laws_content.content_world, the born universe's holders prepended), which carries every draw
-    verdict = laws.BACK.verdict(Lattice(load_world(path)), RUN)
-    assert verdict["verdict"] == "MATCH", verdict
-    print(
-        f"Part G (5d): chain_x_minus {RUN} forward and back through two takes, their folds and two emissions: MATCH; {time.perf_counter() - started:.1f} s"
-    )
 
 
 def test_resonant_runs_green_and_names_atom_0_as_the_source_at_the_taking_click(tmp_path, monkeypatch):

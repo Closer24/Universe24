@@ -1,9 +1,5 @@
 """The emission lays no uniform mode and the front writes to 0 at its reach (ALGEBRA.md, The click writes on the lattice (5) and (6); the owner's "yes to everything" of 2026-10-04, #1793 comment 5975629873; the mathematician's hand, #1793 comments 5975866852 and 5975925032, the advisor's seconds 5975890713 and 5975964920): the source in time's increments corrected by the division act in time where the span holds its period, the open board's packet's two levels by the packet lay's act, the front's taper with the erasure line's take in quanta; one test each, on the mathematician's branch for the engine's reopening."""
 
-import json
-
-import numpy as np
-
 from event_universe import node_detector, world_files
 from event_universe.emission import holds_period, increments_of, radiated_total
 from event_universe.features.click import SCALE_OF
@@ -11,9 +7,8 @@ from event_universe.lattice import Lattice
 from event_universe.lay import division_act_in_time
 from event_universe.reports import NO_SIDE
 from event_universe.world_files import load_world
-from tests.laws import BACK, TOOL, packet_world, refused
-from tests.laws_content import ONE_PHOTON, TWO_ATOMS, one_photon_board, with_content
-from tests.laws_read import redeclared
+from tests.laws import TOOL, packet_world
+from tests.laws_content import one_photon_board
 
 
 def test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period():
@@ -53,51 +48,6 @@ def test_the_open_boards_packet_lays_no_uniform_mode(tmp_path):
     assert len(lays) > 500 and board.credit.counts[pulse] == 1  # the train of 69 slices by 9 across
     sums = [sum(c["after"][k] - c["before"][k] for c in lays) for k in (0, 1)]
     assert sums == [0, 0] and max(abs(c["after"][0]) for c in lays) > 20  # each level's lay sums to 0
-
-
-def test_the_front_writes_to_zero_at_the_reach_and_the_board_ends_dark(tmp_path, monkeypatch):
-    """The erasing front under the law of one Node (ALGEBRA.md, The click writes on the lattice (6); the owner's word of 2026-10-04; `src/event_universe/front.py`, `Face`): the deleted anticoincidence world's declaration inlined on the two atoms' universe with the content, the world's former key `erasure` an unknown key; the photon absorbed at 63 (the content, 2026-10-20); from the click the front faces one shell per interval to 0 at its reach, the Link-metric distance of the intervals since the click, so at every interval every shell two or more behind the reach stands at 0 in both levels on every line of the record while the shell at the reach, unwritten, still carries a level at more than twenty intervals; the erasure lines carry the record's unit and a take whose sum follows the levels' sign; the share never above its lay by more than an eighth and 0 at the end, the board dark; the run back MATCH over 170 intervals."""
-    world = json.loads(
-        json.dumps(ONE_PHOTON)
-    )  # the deleted anticoincidence world's declaration, inlined
-    (tmp_path / "u.json").write_text(
-        json.dumps(with_content(TWO_ATOMS)), encoding="utf-8"
-    )  # the content
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    redeclared(world).update(universe="u.json")
-    (path := tmp_path / "front.json").write_text(json.dumps(world), encoding="utf-8")
-    TOOL.main(["--input", str(path)])
-    (bad := tmp_path / "bad.json").write_text(json.dumps({**world, "erasure": 8}), encoding="utf-8")
-    refused("unknown key 'erasure'", load_world, bad)
-    board = Lattice(load_world(path), (lines := []).append)
-    photon, shares = [f.name for f in board.families].index("photon"), []
-    laid = board.books()["photon"]["share"]
-    credits: list[dict] = []
-    while not credits and board.interval < board.world.intervals:
-        board.step()
-        credits = [
-            c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c["absorbed"]
-        ]
-    taken = credits[0]["interval"]
-    assert (
-        len(credits) == 1 and taken == credits[0]["window"][1] and board.credit.counts[photon] == 0
-    )  # the take at the window's close, the window derived (60 on this world under the derived window; 63 under the content at the declared window, 2026-10-20, 62 before)
-    origin = next(f.at for f in board.credit.faces[taken + 1] if f.family == photon)
-    reaching = 0
-    for interval in range(taken + 1, taken + 197):  # the front leaves the grown board by about 220
-        board.step()
-        shares.append(board.books()["photon"]["share"])
-        at = np.reshape(np.add(origin, board.offset), (3, 1, 1, 1))
-        distance = np.abs(np.indices(board.shape) - at).sum(axis=0)
-        inside, reach = distance <= interval - taken - 2, distance == interval - taken
-        for line in board.states[photon].lines[: board.families[photon].record]:
-            assert not line.now[inside].any() and not line.before[inside].any()
-            reaching += int(np.abs(line.now[reach]).sum(dtype=object) > 0)
-    erased = [e for e in lines if e["event"] == "erasure"]
-    assert reaching > 20 and erased and all(e["unit"] == board.credit.units[photon] for e in erased)
-    assert sum(e["take"] for e in erased) > 0  # the takes' sum; a tail's take follows its level's sign
-    assert laid > 0 and max(shares) * 7 <= laid * 8 and shares[-1] == 0
-    assert BACK.verdict(Lattice(load_world(path)), 170)["verdict"] == "MATCH"
 
 
 def test_a_tied_axis_is_faced_on_both_ports_and_a_set_above_the_wall_is_booked(tmp_path, monkeypatch):

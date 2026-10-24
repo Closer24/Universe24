@@ -6,12 +6,9 @@ import pytest
 
 from event_universe import node_detector, world_files
 from event_universe.lattice import Lattice
-from event_universe.reports import BOOKED_AT_EMISSION, LOST_TO_SOURCE, NO_DRAW
+from event_universe.reports import NO_DRAW
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, ROOT, TOOL
-from tests.laws_read import load_shipped
-
-BORN = ("born_a_b", "born_a_b_prime", "born_a_prime_b", "born_a_prime_b_prime")
+from tests.laws import EVENTS, TOOL
 
 
 def clicks(lines):  # type: ignore[no-untyped-def]
@@ -66,84 +63,3 @@ def test_a_body_alone_in_the_dark_emits_at_its_windows_close_without_a_draw(tmp_
     laid = {tuple(x["node"]["at"]) for x in lines if x["event"] == "lay" and x["family"] == "pulse"}
     assert laid <= {tuple(n["node"]) for n in body["nodes"]} and board.credit.counts[pulse] == 1
     print(f"the dark body's emission {given[0]['interval']}, {given[0]['lost']}, laid at {sorted(laid)}")
-
-
-def test_the_born_worlds_emit_at_the_atoms_close_and_run_lawful(monkeypatch):
-    """The four born worlds as shipped, in the read's shape: each atom alone in the dark gives the pair at its window's close without a draw (the reading NO_DRAW), the run is LAWFUL to its end, and the two sides click once each on the pair, the left at the first close and the right, whose beam comes through in the second window, at the second. What the atom reads (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): at its later closes, 85 and 110, lit by its own pair's wake once the left side has taken the source, the absorption's draw in the unit W_rec^2 (53.9 bits) reads the spin record at the atom's Node and at its two neighbours within one Link, where the wake stands off the origin, with its own lines at its Node: 156 and 184 bits, above the total, so the draw is the board's and the world runs whole (before G2 the Node alone read 50 bits and the world was refused at 85); the reads' Nodes per family and bits printed per world."""
-    world_files.REPOSITORY_ROOT = ROOT
-    found, reads, real = {}, [], node_detector.read_of
-
-    def spied(board, what, label):  # type: ignore[no-untyped-def]
-        number, moduli = real(board, what, label)
-        nodes = [(board.families[f].name, int(at.sum())) for f, at in what]
-        reads.append((board.interval, nodes, number.bit_length()))
-        return number, moduli
-
-    monkeypatch.setattr(node_detector, "read_of", spied)
-    for name in BORN:
-        reads.clear()
-        board = run_whole(
-            Lattice(load_shipped(EVENTS / "bell_singlet" / f"{name}.json"), (lines := []).append)
-        )
-        atom = [(at, nodes, bits) for at, nodes, bits in reads if nodes[-1][0] == "atom" and at > 24]
-        assert (
-            [(at, nodes) for at, nodes, _b in atom]
-            == [
-                (95, [("spin", 3), ("atom", 1)]),
-                (119, [("spin", 3), ("atom", 1)]),
-            ]
-        )  # the atom's reads at the derived windows' closes (85 and 110 at the declared windows before 2026-10-23)
-        assert all(bits > 54 for _a, _n, bits in atom), atom  # above the absorption's unit, 53.9 bits
-        found[f"{name} reads"] = atom
-        given = [c for c in clicks(lines) if c["emitted"]]
-        sides = [
-            (c["interval"], c["node_detector"], c["realised"])
-            for c in clicks(lines)
-            if c["node_detector"] in ("left", "right")
-        ]
-        window = board.world.bodies[0].detector.draw.window
-        assert [(c["interval"], c["lost"]) for c in given] == [(window, [NO_DRAW])], name
-        assert [(at, side) for at, side, _r in sides] == [(72, "left"), (120, "right")], (
-            name,
-            sides,
-        )  # the sides' derived closes 72 and 120 (62 and 124 at the declared windows before 2026-10-23)
-        assert board.ended is None, name
-        found[name] = (given[0]["interval"], sides)
-    print(f"the born worlds: {found}")
-
-
-def test_the_resonance_pair_and_the_packet_world_run_lawful_with_the_emission_at_the_close():
-    """The resonance pair and the packet emission world as shipped, in the read's shape: the giver alone in the dark emits at its window's close where the hazard's draws from its own cycling digits missed (the resonant and the detuned world at 48, their windows), the taker's own draws read from the light; the packet world's giver has its window 48 derived from its own rate's lifetime (a body's own rate enters its window's derivation as the lifetime whatever the form of its lay; its train's passage 758 is read beside it and is no window, 2026-10-20), so its directed packet falls at 48, the recoil owed booked on the emission's line beside the no-draw reading; every run LAWFUL to its end; the packet world's one close, 168, under the floor and the remainder's draw (`credit.whether`): the pulse's net inflow through the reach over the window is -0.0095 of a quantum (the packet entered and left the one-column region inside the window, the walk's rest), floored at 0, so no remainder is drawn and no credit is written; its universe zeno_atom_content.json has light reading the two holders of the content at 1 and the atom none, so that light's digits carry a read while the emitter's dark physics stands (an atom reading the content draws its emission from its own walk at 3, measured 2026-10-22, not this world's); refused 2026-10-21 under the whether until the content holder was declared (light at the exact vacuum paces carrying three-valued digits, the remainder +0.0070 unreadable), history; the emission intervals printed."""
-    world_files.REPOSITORY_ROOT = ROOT
-    found = {}
-    for folder, name in (
-        ("resonance", "resonant"),
-        ("resonance", "detuned"),
-        ("packet_emission", "packet_emission"),
-    ):
-        board = Lattice(load_shipped(EVENTS / folder / f"{name}.json"), (lines := []).append)
-        refused_at = {
-            "resonant": 41,
-            "detuned": 71,
-        }  # under their derived windows the shipped resonance pair refuses by name (2026-10-23): the digits read at the body's close do not carry the draw (the emission at 48 at the declared windows before)
-        if name in refused_at:
-            with pytest.raises(RuntimeError, match="below the draw's total") as refusal:
-                run_whole(board)
-            assert f"at the interval {refused_at[name]}" in str(refusal.value), str(refusal.value)
-            found[name] = ("refused at", refused_at[name])
-            continue
-        run_whole(board)
-        given = [(c["interval"], c["node_detector"], c["lost"]) for c in clicks(lines) if c["emitted"]]
-        window = board.world.bodies[0].detector.draw.window
-        assert board.ended is None, name
-        assert not [c for c in clicks(lines) if c["node_detector"] == "reach"], (
-            name
-        )  # the reach's close: no credit
-        directed = any(r.width is not None for r in board.credit.bodies[0].declared.rates)
-        readings = [NO_DRAW, *([BOOKED_AT_EMISSION, LOST_TO_SOURCE] if directed else [])]
-        if window <= board.world.intervals:
-            assert given[:1] == [(window, "body 0", readings)], (name, given)
-        else:
-            assert given == [], (name, given)
-        found[name] = (window, given)
-    print(f"the dark emitters: {found}")

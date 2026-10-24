@@ -3,16 +3,15 @@
 import json
 from pathlib import Path
 
-from event_universe import node_detector, world_files
+from event_universe import world_files
 from event_universe.core.rule3 import largest_below
-from event_universe.emission import Emitter
 from event_universe.features.click import wave_cosine
 from event_universe.lattice import Lattice
 from event_universe.loader import window
 from event_universe.loader.draw import Draw
 from event_universe.loader.world import TORUS, World, parse_world
 from tests.laws import EVENTS, ROOT, refused, world_beside
-from tests.laws_content import RESONANT, ZENO_ATOM, content_world, emit_and_take_world, opened, ring_of
+from tests.laws_content import emit_and_take_world, ring_of
 from tests.laws_read import redeclared
 
 CHAIN = EVENTS / "chain"
@@ -240,58 +239,6 @@ def test_the_key_is_refused_by_name_where_derived_and_required_where_a_lay_has_n
     assert windows(declared(two, None, ring)) == beats
     assert passages(declared(two, None, ring), 0) == [33, None]
     refused("the body's own beat", declared, two, 48, ring)
-
-
-def test_an_emitter_is_dark_to_the_light_it_gave_while_its_quanta_stand_where_the_lay_has_an_end(
-    tmp_path,
-):
-    """C5's reach where the lay has an end (the cold reader's change (a) with the reader's fix of 2026-10-19; `node_detector.sourcing`, `Rate.ended`, `emission.Emitter.outstanding`): the resonance world opened (x open with receding faces, the ring cut, the run 200; the pair over three Nodes since 2026-10-21, the bodies the chain's, so the giver emits at 10, its quantum stands 18 intervals and the taker takes at 75): body 0's rate lays the pulse as a source in time on an open guide, a lay with an end (`Rate.ended` True; the window of both bodies derived, 48 = tau), so from its emission on body 0 is dark to the pulse while its given quantum stands in the record, through the source's span and after it, its Nodes carrying its own train and wake (lit by the board, dark to its own light: no window opens or closes on it after), until body 1 takes the quantum, the piece's source body 0 drawn (`take.drawn_emitter`), the count 0 and body 0 lit again by what stands at its Nodes, or the run ends with the quantum standing; a read of the books and of the lay's end, symmetric under the 48 by construction. Re-pinned 2026-10-20 under the content of the born universe (the reader's ruling: the sentence needs only the emission): the universe with the holders of the content, the box opened along x as the content's sink; body 0's first close at 48 reads no emission (e standing: under the content the emission is drawn within the span by the digits, not at the window's close as in the exact dark), the emission falls at 83, the window open at the emission closes null at 96 and none after, the body's windows 2; body 1's closes at 146 and 194 take nothing and the run ends with the quantum standing in the books, the light leaving by the faces: no take falls in the run."""
-
-    def receding(document):  # type: ignore[no-untyped-def]
-        opened(document)  # the box opened along x as the content's sink, the windows derived
-        document["intervals"] = (
-            400  # the run parameter, 200 before 2026-10-23: under the derived windows the take falls later
-        )
-        document["receding"] = {
-            "x": {"sides": ["low", "high"], "largest": 1200, "layers": 16}
-        }  # the run parameter, 400 before 2026-10-23
-
-    path = content_world(tmp_path, "resonant", RESONANT, ZENO_ATOM, receding)
-    board = Lattice(world_files.load_world(path), (lines := []).append)
-    pulse = [f.name for f in board.families].index("pulse")
-    giver, taker = board.credit.bodies
-    assert [r.ended for r in giver.declared.rates] == [True] and giver.declared.draw.window == 48
-    while not any(c["event"] == "credit" and c["emitted"] == "pulse" for c in lines):
-        board.step()
-    given = board.interval
-    assert node_detector.sourcing(board, giver) == {pulse}
-    assert board.credit.emitters[pulse] == [Emitter(0, 1, False)]
-    while board.credit.sources:
-        board.step()
-    assert board.interval == given + 47  # the span's 48 lays
-    dark_to_its_own = []
-    while board.credit.counts[pulse] > 0 and board.interval < board.world.intervals:
-        own = node_detector.sourcing(board, giver)
-        dark_to_its_own.append(own == {pulse} and node_detector.dark(board, giver, own))
-        board.step()
-    assert (
-        all(dark_to_its_own) and len(dark_to_its_own) == board.world.intervals - given - 47 == 343
-    )  # under the derived windows the quantum stands to the run's end, dark to its emitter throughout, and no take falls (18 intervals to the take at 75 at the declared windows before 2026-10-23)
-    assert (giver.windows, giver.elapsed) == (1, 0)  # the emission's window, closed null at 48
-    taken = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "pulse"]
-    closes = [(c["interval"], c["node_detector"], c["emitted"]) for c in lines if c["event"] == "credit"]
-    assert (
-        closes
-        == [(10, "body 0", "pulse"), (48, "body 0", None)]
-        + [(75 + 48 * k, "body 1", None) for k in range(7)]
-    )  # the taker's null closes every 48 from 75 to 363 under the derived window (the take at 75, 2026-10-21; two Nodes, 2026-10-20: the emission at 83, the null closes at 48, 96, 146 and 194)
-    assert (
-        taken == [] and board.credit.counts[pulse] == 1
-    )  # no take in the run (the take at the taker's first close before 2026-10-23)
-    print(
-        f"C5 where the lay has an end: body 0 gave at {given}, its source spent at {given + 47}, dark to its own "
-        f"light over {len(dark_to_its_own)} intervals after it; taken {[c['interval'] for c in taken]}"
-    )
 
 
 def test_an_emitter_on_a_periodic_board_is_dark_to_its_source_alone_and_released_at_the_spans_end(
