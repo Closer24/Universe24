@@ -1,11 +1,9 @@
-"""The charge per quantum of the sign holder's readers (ALGEBRA.md, The constants: the charge is the Wronskian per quantum and the sign's reader is Pythagorean, the owner's words of 2026-10-24): each reader's Wronskian enters the holder's one write times 3 T den over its own count unit W_c sin omega_0 = 3 T den sin omega_0 (`derived.count_wall`), one over the sine, so that every quantum of every family writes T / 2 per count (`charge_factors`: the readers' units brought to one wall by their least common multiple as the tension lines' dens are, the factors and the multiple reduced once by their common divisor, a massless reader's factor the multiple itself); a reader whose sine is irrational is refused by name (`pythagorean_readers`), as the conversion refuses it from every exact list (ALGEBRA.md 180); the former behaviour of 236e74ed0 (the count unit rounded once, the lcm of units sharing no structure) kept by name as its defect."""
+"""The sign's reader is Pythagorean (ALGEBRA.md, The constants, the owner's word of 2026-10-24): a reader of the holder of the sign whose sine is irrational is refused by name (`pythagorean_readers`). The charge factors that stood here the same morning (`charge_factors`, each reader's Wronskian times 3 T den over its own count unit, the units brought to one wall) left with the law's sentence The charge written is the Wronskian over T div 2 for every reader: the write reads no family's sine and no count unit, one wall 2 E_s T Gamma (`derived.held_write_of`); kept by name as the defect, the electron's factor 1,822 times the proton's on the one universe file."""
 
 from __future__ import annotations
 
-from math import gcd
-
-from event_universe.core.rule3 import division_forward, largest_below
-from event_universe.loader.derived import FamilyRule, count_wall, readers_of
+from event_universe.core.rule3 import largest_below
+from event_universe.loader.derived import FamilyRule, readers_of
 
 
 def pythagorean_readers(families: tuple[FamilyRule, ...], index: int) -> None:
@@ -25,32 +23,3 @@ def pythagorean_readers(families: tuple[FamilyRule, ...], index: int) -> None:
                 "exact list (ALGEBRA.md, The conversion, 180; The constants, the owner's word of 2026-10-24; "
                 "the rounded count unit and the lcm of 236e74ed0 the former behaviour, kept by name as its defect)"
             )
-
-
-def charge_factors(
-    families: tuple[FamilyRule, ...], index: int, action: int
-) -> tuple[dict[int, int], int]:
-    """The sign holder's readers' charge factors and the walls' charge multiple (ALGEBRA.md, The constants, 2026-10-24): per reader with a gap 3 T den over its count unit, the units brought to their least common multiple by the division act on the greatest common divisor, the factors and the multiple reduced once by their common divisor; a massless reader's factor the multiple itself; the readers Pythagorean first (`pythagorean_readers`), so that every unit is 3 T times an integer sine and the multiple stays within the den."""
-    pythagorean_readers(families, index)
-    sources = readers_of(families, index)
-    units = {
-        other: count_wall(families[other], action)
-        for other in sources
-        if abs(families[other].pair[0]) != families[other].pair[1]
-    }
-    charge = 1
-    for unit_of_one in units.values():
-        charge = int(division_forward(charge * unit_of_one, gcd(charge, unit_of_one), 0)[0])
-    factors = {
-        other: 3 * action * families[other].pair[1] * int(division_forward(charge, units[other], 0)[0])
-        if other in units
-        else charge
-        for other in sources
-    }
-    common = charge
-    for factor in factors.values():
-        common = gcd(common, factor)
-    charge = int(division_forward(charge, common, 0)[0])
-    return {
-        other: int(division_forward(factor, common, 0)[0]) for other, factor in factors.items()
-    }, charge
