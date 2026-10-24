@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from fractions import Fraction
 
 import numpy as np
@@ -11,12 +10,16 @@ from event_universe import flux, node, plane, records
 from event_universe.core.ports import LINK_UNIT, PORT_SIDES, Wrap
 from event_universe.core.rule3 import rule_integers
 from event_universe.loader.derived import held_write_of
-from event_universe.loader.universe import universe_of
-from tests.laws_universe import CUBE, GAMMA, UNIVERSE
+from event_universe.loader.universe import SIGN, universe_of
+from tests.laws_universe import CUBE, GAMMA, SMALL
 
-INTEGERS, FAMILIES = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
+INTEGERS, FAMILIES = universe_of(SMALL)  # the tests' small universe, den 1,021 with its two points
 NAMES = [family.name for family in FAMILIES]
-CHARGE, ELECTRON = NAMES.index("charge"), NAMES.index("electron")
+CHARGE = NAMES.index(SIGN)
+ELECTRON = min(
+    (i for i, f in enumerate(FAMILIES) if f.plane),
+    key=lambda i: FAMILIES[i].pair[1] ** 2 - FAMILIES[i].pair[0] ** 2,
+)  # the least leg, the lighter point
 PAIR, UNIT, T = FAMILIES[ELECTRON].pair, LINK_UNIT, INTEGERS["quantum_action"]
 SHAPE, TORUS = (CUBE,) * 3, Wrap(True, True, True)
 
@@ -53,16 +56,14 @@ def test_the_wronskian_is_conserved_on_the_bare_torus_under_the_folded_link_turn
         for _ in range(2)
     ]
     started, floor = int(records.wronskian(lines, True).sum()), 0
-    for _ in range(
-        60
-    ):  # 200 at den 53,567,765: the enlarged den's 70-bit integers step slower (2026-10-24)
+    for _ in range(200):
         states[ELECTRON].lines = lines
         floor += int((np.abs(lines[0].now) + np.abs(lines[1].now)).sum())
         lines = flux.step_family(ELECTRON, FAMILIES, states, rule, TORUS, GAMMA, pairs=pairs)[0]
     drift = int(records.wronskian(lines, True).sum()) - started
     assert started != 0 and abs(drift) <= floor, (drift, floor)
     print(
-        f"the torus of {CUBE}^3: W {started}, the drift over 60 intervals {drift} within the floor {floor}"
+        f"the torus of {CUBE}^3: W {started}, the drift over 200 intervals {drift} within the floor {floor}"
     )
     reads, self_coefficient, wall, _mass = rule
     even = [np.asarray(p, dtype=object).reshape(-1) for p in pairs[0]]
@@ -78,9 +79,7 @@ def test_the_wronskian_is_conserved_on_the_bare_torus_under_the_folded_link_turn
         return sum(a[0] * b[1] - a[1] * b[0] for a, b in zip(now, before, strict=True))
 
     first = wronskian(z, z_before)
-    for _ in range(
-        60
-    ):  # 200 at den 53,567,765: the rationals' walls grow with the enlarged den (2026-10-24)
+    for _ in range(200):
         following = []
         for i in range(CUBE**3):
             re = self_coefficient * z[i][0] - wall * z_before[i][0]

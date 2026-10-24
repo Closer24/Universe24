@@ -121,7 +121,8 @@ const format = v => v === null || v === undefined || Number.isNaN(v) ? 'none' : 
 const intervals = LINES.map(l => l.interval);
 const rows = LINES.map(l => l.rows[ROW]);
 const families = Object.keys(rows[0].writes);
-const colour = name => name === 'light' || name === 'photon' ? token('--light') : name === 'dust' ? token('--matter') : TONES[(families.indexOf(name) + 2) % TONES.length];
+const SEED = HEAD.seed || 'light';  // the seed row's name from the header (the massless point; 'light' the former files' row)
+const colour = name => name === SEED || name === 'light' || name === 'photon' ? token('--light') : name === 'dust' ? token('--matter') : TONES[(families.indexOf(name) + 2) % TONES.length];
 function era(i) {  // the family whose write is largest at the interval sources the era
   const writes = rows[i].writes; let best = null;
   for (const name of families) if (best === null || writes[name] > writes[best]) best = name;

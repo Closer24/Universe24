@@ -13,8 +13,6 @@ from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
 
 PLANE = 2  # the lines of a plane, re and im: the one shape with a Wronskian and a turn (charged matter)
-REAL_LINE, PLANE_LINE = "real", "plane"
-KINDS = (REAL_LINE, PLANE_LINE)  # the kinds of a record's lines, the shape by name (the two hands)
 FOLD_REACH = 2  # a folded arrival's part within twice the level: |X^c re_j - X^s im_j| <= X (|re_j| + |im_j|) at the fold's tangent at most 1 (the guard at load, plane.fold_guard; the sign's pair, whose magnitude is X to the rounding, read at its own extreme, `turned_room`), the integer total per part and no modulus
 
 
