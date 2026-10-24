@@ -14,6 +14,7 @@ import event_universe.readings as readings
 import event_universe.records as records
 from event_universe import (
     credit,
+    emission,
     meeting,
     meeting_board,
     node,
@@ -31,7 +32,7 @@ from event_universe.features import phase, read, volume
 from event_universe.features.start import Sourced
 from event_universe.features.start.rests import held_rests
 from event_universe.frames import frames_of
-from event_universe.loader.derived import held_write_of, readers_of, turns
+from event_universe.loader.derived import charged, held_write_of, readers_of, turns
 from event_universe.loader.keys import Node
 from event_universe.loader.world import World
 from event_universe.reports import book
@@ -64,9 +65,22 @@ class Lattice:
         self.swaps: list[tuple[int, int, int]] = []
         self.writes = {i: held_write_of(self.families, i, world.quantum_action) for i in self.held}
         self.states = [
-            records.empty_state(family, self.shape, self.walls(i), self.kind, self.half_wall(i))
+            records.empty_state(
+                family,
+                self.shape,
+                self.walls(i),
+                self.kind,
+                self.half_wall(i),
+                registry.start_records(self.families, i),
+            )
             for i, family in enumerate(self.families)
         ]
+        self.row_walls: dict[
+            int, list[Any]
+        ] = {}  # per charged family the walls of one row of the sign at the start's paces, the walls its rows are born with (`start`, `born_point`)
+        self.born_at: dict[
+            int, list[int]
+        ] = {}  # per interval the points whose records were born at its close (`born_point`), undone by the step back and born again by the replay
         self.origins = [self.half_wall(index) for index in range(len(self.families))]
         self.amplitude = node.seed_phases(self, world)
         if world.seed is not None:
@@ -152,6 +166,24 @@ class Lattice:
             )  # the wall each write divides at
             self.states[index].write_remainders = records.write_origins(divided, self.shape, object)
             self.fixed_walls[index] = born
+        for index in self.order:  # the walls of one row of the sign for a record of a charged family at the start's paces (the same numbers every row of the family had at the start to 2026-10-24: every record's read of the start's content alike), kept for the rows born later (`born_point`)
+            if charged(self.families, index):
+                sign = next(
+                    r.family for r in self.families[index].reads if self.families[r.family].wronskian
+                )
+                virtual = {(index, 0): node.rulers(index, self.families, self.states, 1, gamma, 0)}
+                at_start = records.walls_at(
+                    sign, self.families, self.writes[sign], virtual, gamma, [[], [(index, 0)]]
+                )
+                self.row_walls[index] = [records.exact(w) for w in at_start[self.families[sign].width :]]
+
+    def born_point(self, index: int) -> None:
+        """A point's records and rows of the sign born at its first lay by the count (`emission.born_point`, 2026-10-24)."""
+        emission.born_point(self, index)
+
+    def unborn_point(self, index: int) -> None:
+        """The inverse of `born_point` for the step back (`emission.unborn_point`)."""
+        emission.unborn_point(self, index)
 
     def lines_of(self, index: int, record: int) -> list[records.Record]:
         """The lines of one record of a family of quanta as they stand (`bookings.record_lines`)."""
@@ -233,6 +265,10 @@ class Lattice:
             self.tick += 1
             meeting_board.closed(self, kept_state)
         else:
+            for index in self.born_at.get(
+                self.interval, []
+            ):  # the points born at this close, born again before the lays are re-applied
+                self.born_point(index)
             meeting_back.logged(self, 1)
         self.passes, self.heading = self.passes + (self.heading < 0), 1
         for observer in self.observers:
@@ -317,6 +353,10 @@ class Lattice:
     def step_inverse(self) -> None:
         """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): first the acts' lays of the interval undone from the books' log where the world's draw runs back (`meeting_back.logged`; where the books hold no log, a world with no record of several parts at declared sides, the host tool crosses them from the lines), then the write's rulers read from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every line standing at the previous interval's start again, the sign holder's phase lines back by the potentials read there (`phased` at -1, features/phase); the lay is not taken back; the observers called with the interval, the direction -1 and the pass; refused by name first on a world (every board's interval unobservable) (`motion_back`)."""
         meeting_back.logged(self, -1)
+        for index in reversed(
+            self.born_at.get(self.interval, [])
+        ):  # the points born at this interval's close: gone before the step back, as the step ran without them
+            self.unborn_point(index)
         forms, turns, stresses, senses = Bookings(), Bookings(), Stresses(), Stresses()
         rulers, ended = self.rulers(-1), [s.lines for s in self.states]
         kept_state = swap.kept(self)

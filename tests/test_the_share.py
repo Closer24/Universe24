@@ -149,6 +149,9 @@ def test_under_the_rotation_the_share_reads_the_level_pair_as_the_step_reads_it(
             names.index(SIGN),
         )
         half = np.full(board.shape, board.half_wall(electron), dtype=object)
+        board.born_point(
+            electron
+        )  # the point's records stand before its levels are written by hand (2026-10-24)
         for line in range(2):
             now, before = draw.integers(-6000, 6000, (2, *board.shape)).astype(object)
             board.states[electron].lines[line] = records.Record(now, before, half)
