@@ -215,16 +215,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "largest_below",
     ): "D",  # the integer sine of a sign reader's pair, the search on the share reading, once (the sign's reader is Pythagorean, 2026-10-24)
     (
-        "loader/charge.py",
-        "charge_factors",
-        "division_forward",
-    ): "D",  # the readers' count units to one wall and the factors reduced, exact, no remainder (The constants, 2026-10-24)
-    (
-        "loader/charge.py",
-        "charge_factors",
-        "gcd",
-    ): "D",  # Euclid's remainders on the count units and the factors, once each
-    (
         "loader/rooms.py",
         "held_room",
         "largest_below",

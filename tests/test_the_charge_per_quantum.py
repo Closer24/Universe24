@@ -1,11 +1,10 @@
-"""The charge is the Wronskian per quantum (ALGEBRA.md, The constants, the owner's word of 2026-10-24, nature's charge universality, "nature is the main thing"; the old "one ratio per holder, E_h T num / (Gamma den)" of 2026-10-23 kept by name): the holder of the sign carries one alpha = E_h T / Gamma with any pairs under it (`loader/derived.alpha_of`), and each reader's Wronskian enters the holder's one write times 3 T den over its own count unit W_c sin omega_0 (`loader/derived.held_write_of`, the charge factors, the readers' units brought to one wall as the tension lines' dens are; `records.write_sources` on the time line, `bookings.booked_sources` at the start), so that every quantum of every family writes the same charge, T / 2 per count, the proton's and the electron's alike at any masses. Measured here on a small torus with a proton and an electron of different pairs both reading the sign holder, each one quantum laid at the quarter turn (the law's one-Node lay of a plane quantum, now (A, 0), before (0, sense A)): the write per quantum of the two is equal within the lay's rounding of A, exact in the identity factor x count unit; and the one world's universe at nature's den (the proton off the top at (4,859,756, 53,346,867), the electron at (53,567,757, 29,276), Gamma 1,000 kept) loads, which the sentence of 2026-10-23 refused by name."""
+"""The charge written is the Wronskian over T div 2 for every reader (ALGEBRA.md, The constants, the law's sentence of 2026-10-24 on the owner's word of that morning, the charge universal like nature; the former clause of the same day, each reader's Wronskian times 3 T den over its own count unit, kept by name as the defect: the electron's factor 1,822 times the proton's on the one universe file, one born electron written as 1,822 proton charges, the sign holder's row running away; the old "one ratio per holder, E_h T num / (Gamma den)" of 2026-10-23 kept by name too): the holder of the sign carries one alpha = E_h T / Gamma with any pairs under it (`loader/derived.alpha_of`), and each reader's Wronskian enters the holder's one write at the factor 1 over the one wall 2 E_s T Gamma (`loader/derived.held_write_of`, `loader/charge.charge_factors`), so that a quantum of every plane family, W = T div 2 at the birth's quarter-turn lay, writes the same charge; the register's scale and the lay's amplitude bound stay the loader's tool, a holder of the sign changing no neutral body's register."""
 
 from __future__ import annotations
 
 from dataclasses import replace
 
-import numpy as np
-
+from event_universe.features.click import amplitude
 from event_universe.loader.derived import amplitude_bound, count_wall, held_write_of
 from event_universe.loader.universe import universe_of
 
@@ -26,7 +25,7 @@ def universe(proton: list[int], electron: list[int], gamma: int = GAMMA) -> dict
 
 
 def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # type: ignore[no-untyped-def]
-    """The universe of $S/arrange/nature_den/universe_nature.json (2026-10-24): the pairs on the circle of den 53,567,765 = 5 x 17 x 73 x 89 x 97 with Gamma 1,000, the proton at (4,859,756, 53,346,867) off the top and the electron at (53,567,757, 29,276), both moving planes reading one holder: refused by name under the sentence of 2026-10-23, loaded under the charge's universality with alpha (36, 1)."""
+    """The universe of $S/arrange/nature_den/universe_nature.json (2026-10-24): the pairs on the circle of den 53,567,765 = 5 x 17 x 73 x 89 x 97 with Gamma 1,000, the proton at (4,859,756, 53,346,867) off the top and the electron at (53,567,757, 29,276), both moving planes reading one holder: refused by name under the sentence of 2026-10-23, loaded under the charge's universality with alpha (36, 1), the write of a born quantum of either family 36 x 17,956 over 72,000 levels per interval."""
     document = {
         "integers": {"node_clock": GAMMA, "quantum_action": T, "width": 92, "link_unit": 16},
         "families": [
@@ -43,15 +42,13 @@ def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # ty
     assert (sign.write_weight, sign.write_wall) == (36, 1)
     write = held_write_of(families, families.index(sign), T)
     proton, electron = (families.index(f) for f in families if f.name in ("proton", "electron"))
-    assert write.factors[proton] * count_wall(families[proton], T) == write.factors[
-        electron
-    ] * count_wall(families[electron], T)
+    assert write.factors[proton] == write.factors[electron] == 1  # the charge the Wronskian itself
+    assert write.walls[0] == 2 * T * sign.write_wall  # the one wall 2 E_s T Gamma, no count unit in it
+    born = amplitude(1, T, (DEN, DEN), 1) ** 2  # the birth's quarter-turn lay, W = A^2 for either child
+    assert T // 2 - born < 2 * amplitude(1, T, (DEN, DEN), 1)  # the largest square at or below T div 2
     assert (
-        np.gcd.reduce(
-            [write.factors[proton], write.factors[electron], write.walls[0] // (2 * T * sign.write_wall)]
-        )
-        == 1
-    )  # the factors reduced once by their common divisor
+        count_wall(families[proton], T) > 1800 * count_wall(families[electron], T)
+    )  # the count units differ 1,822 times, and none of it enters the write (the former factor kept by name)
 
 
 def test_the_register_reads_the_content_rooms_and_a_sign_holder_at_w_0_changes_no_neutral_body():
