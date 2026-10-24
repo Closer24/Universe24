@@ -1,4 +1,4 @@
-"""The board stepped in slabs by several processes with one-Link halos (the owner's word of 2026-10-24, everything local and fast, the Node steps simply with Rule3 and the click produces everything; the architect's design, rank 9 and section 7: every act of the interval reads the Node and its six Links at the interval's start, so a slab of layers along one axis with its two neighbouring layers as halos steps its own Nodes by the same Rule3 to the same integers): the board is cut along its longest axis into as many slabs as the axis has layers and the machine has cores, the fewer of the two (`slabs_of`; the count is the machine's and the board's, no file's and no law's number, and every count gives the same integers, the gate), one process forked per slab (`Slabs`, `served`), each holding a lattice over its layers and the two halo layers (`tile_of`, the state taken from the one board at the fork); every interval the parent sends each process its two halo layers as the board holds them at the interval's start, the process writes them onto its lattice (`imposed`, `rebuilt`), steps it with every act (`Lattice.step`) and sends back every array of its own layers (`arrays_of`, `layers_of`), its output lines moved to the board's frame with the key of their place in the board's order (`in_the_boards_frame`), the Nodes the fifth act turned among its own layers (`Lattice.turned`) or its refusal by name; the parent writes the returned layers onto the one board, so the board's state is the single process's bit for bit and every reading over it (tools/eras.py, the eras and the nodes lines) is the same reading, gives the output lines in the board's order (`in_the_boards_order`: the close walks the Nodes in x-major order within each of its three writes, the holes' lays, the children's lays, then the credit and birth lines, so the lines sort by their write and their Node) and logs the lays in the books as the lay act does, so the run back from the board is the single process's. The acts of the interval and what each writes beyond its Node: none writes beyond it; Rule3's step and the held write land at the Node, the hole and the born children's lays at the meeting Node (`meeting_board.closed`, `lay.laid` at the Node's own mask), the swap's exchange and complement of every line, write remainder and phase line at the turned Node (`swap.swapped`, `swap.swapped_phases`: a Link's phase pair is held at the Node of its +a Port and the far end reads it through the halo), so what crosses a slab's face is read alone, through the halo at the interval's start, and no write is routed back. A refusal in a slab is tried on the board: the halo layers' own step reads the slab's wrap in place of the true neighbour, so a slab may refuse by the amplitude bound or a reading where the board does not; the parent then steps the board itself from the same start, the board's refusal or the interval's integers are the verdict, and every slab is re-imposed whole at the next interval. When a point's records and sign rows are born at the point's first lay and nothing is allocated before (the lean board), the exchange carries the board's record set with the halos: each slab reports the points born in its own layers this interval, the parent keeps their union in the board's birth order and sends it with the halo layers, a slab lacking a record births it at the vacuum before imposing the halo's arrays (the neighbour's lay crossing the face is the record's birth on this side, at the same interval), and a record that a halo layer's own step born and the board did not is struck, so both sides hold one record set and the arrays travel keyed by the record and its line and not by their position."""
+"""The board stepped in slabs by several processes with one-Link halos (the owner's word of 2026-10-24, everything local and fast, the Node steps simply with Rule3 and the click produces everything; the architect's design, rank 9 and section 7: every act of the interval reads the Node and its six Links at the interval's start, so a slab of layers along one axis with its two neighbouring layers as halos steps its own Nodes by the same Rule3 to the same integers): the board is cut along its longest axis into as many slabs as the axis has layers and the machine has cores, the fewer of the two (`slabs_of`; the count is the machine's and the board's, no file's and no law's number, and every count gives the same integers, the gate), one process forked per slab (`Slabs`, `served`), each holding a lattice over its layers and the two halo layers (`tile_of`, the state taken from the one board at the fork); every interval the parent sends each process its two halo layers as the board holds them at the interval's start, the process writes them onto its lattice (`imposed`, `rebuilt`), steps it with every act (`Lattice.step`) and sends back every array of its own layers (`arrays_of`, `layers_of`), its output lines moved to the board's frame with the key of their place in the board's order (`in_the_boards_frame`), the Nodes the fifth act turned among its own layers (`Lattice.turned`) or its refusal by name; the parent writes the returned layers onto the one board, so the board's state is the single process's bit for bit and every reading over it (tools/eras.py, the eras and the nodes lines) is the same reading, gives the output lines in the board's order (`in_the_boards_order`: the close walks the Nodes in x-major order within each of its three writes, the holes' lays, the children's lays, then the credit and birth lines, so the lines sort by their write and their Node) and logs the lays in the books as the lay act does, so the run back from the board is the single process's. The acts of the interval and what each writes beyond its Node: none writes beyond it; Rule3's step and the held write land at the Node, the hole and the born children's lays at the meeting Node (`meeting_board.closed`, `lay.laid` at the Node's own mask), the swap's exchange and complement of every line, write remainder and phase line at the turned Node (`swap.swapped`, `swap.swapped_phases`: a Link's phase pair is held at the Node of its +a Port and the far end reads it through the halo), so what crosses a slab's face is read alone, through the halo at the interval's start, and no write is routed back. A refusal in a slab is tried on the board: the halo layers' own step reads the slab's wrap in place of the true neighbour, so a slab may refuse by the amplitude bound or a reading where the board does not; the parent then steps the board itself from the same start, the board's refusal or the interval's integers are the verdict, and every slab is re-imposed whole at the next interval. A point's records and sign rows are born at the point's first lay and nothing is allocated before (the lean board, `emission.born_point`), so the exchange carries the births with the halos: the parent reads the births of the close from the slabs' lay lines at their own Nodes (a point first laid there is born on the board, `Lattice.born_point`, its records at the vacuum until the slab's layers arrive), sends every slab the record set the board then holds, and each slab conforms before its arrays travel (`conformed`: a point it lacks born at the vacuum, the neighbour's lay crossing the face being the point's birth on this side at the same interval; a point its halo layers' own step born and the board did not struck, `Lattice.unborn_point`), the sign holder's rows standing in the families' order whatever the births' order (`registry.rows_of`), so the arrays' shapes and positions agree across every face."""
 
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ import numpy as np
 from event_universe import credit, records
 from event_universe.core.rule3 import division_forward
 from event_universe.lattice import Lattice
+from event_universe.loader.derived import charged
 from event_universe.reports import AT, CREDIT, LAY, LAY_KEYS, NODES, READINGS, REPORT_KEYS
 
 if TYPE_CHECKING:
@@ -23,8 +24,8 @@ if TYPE_CHECKING:
 Line = dict[str, object]
 Keyed = tuple[tuple[int, int], Line]  # a line with its place in the board's order: the write, the Node
 Answer = tuple[
-    bool, Any, Any, Any
-]  # a slab's answer for an interval: True with its layers, its lines and its turned count, or False with its refusal's kind and words
+    bool, Any, Any
+]  # a slab's first answer for an interval: True with its lines and its turned count, or False with its refusal's kind and words; its own layers' arrays follow once the births are agreed
 
 
 def axis_of(shape: Node) -> int:
@@ -102,17 +103,37 @@ def tile_layers(slab: range, extent: int) -> list[int]:
     return [wrapped(slab.start - 1, extent), *slab, wrapped(slab.stop, extent)]
 
 
+def born_points(board: Lattice) -> list[int]:
+    """The points born on a lattice, the charged families whose records stand (`emission.born_point`): the record set, a reading."""
+    return [i for i in board.order if charged(board.families, i) and board.states[i].lines]
+
+
+def conformed(board: Lattice, born: list[int]) -> None:
+    """A lattice's record set made the one given: every point of `born` it lacks is born at the vacuum (`Lattice.born_point`: the neighbour's lay crossing the face is the point's birth on this side, at the same interval), every point it holds beyond `born` is struck (`Lattice.unborn_point`: a halo layer's own step births where the board does not); the sign holder's rows stand in the families' order whatever the births' order (`registry.rows_of`), so the arrays' positions agree on both sides."""
+    standing = set(born_points(board))
+    for index in sorted(set(born) - standing):
+        board.born_point(index)
+    for index in sorted(standing - set(born)):
+        board.unborn_point(index)
+
+
+def walls_over(walls: list[Any], where: tuple[Any, ...], shape: Node) -> list[Any]:
+    """Some layers of a list of walls fixed per Node (a wall alike at every Node stands as its number)."""
+    return [np.asarray(wall)[where] if np.shape(wall) == shape else wall for wall in walls]
+
+
 def tile_of(board: Lattice, axis: int, slab: range) -> Lattice:
-    """A slab's lattice: the board's world over the slab's layers and its two halos, every array over the Nodes and the fixed walls taken from the board's layers, the board's clocks, its origins and its amplitude; its own books (the counts and the births' book are readings, no act's input)."""
+    """A slab's lattice: the board's world over the slab's layers and its two halos, its record set the board's (`conformed`), every array over the Nodes, the fixed walls and the rows' walls taken from the board's layers, the board's clocks, its origins and its amplitude; its own books (the counts and the births' book are readings, no act's input)."""
     extent, shape = board.shape[axis], list(board.shape)
     shape[axis] = len(slab) + 2
     tile = Lattice(replace(board.world, shape=(shape[0], shape[1], shape[2])))
     layers = tile_layers(slab, extent)
-    rebuilt(tile, layers_of(arrays_of(board), axis, layers))
     where = selection(axis, layers)
+    tile.row_walls = {i: walls_over(walls, where, board.shape) for i, walls in board.row_walls.items()}
+    conformed(tile, born_points(board))
+    rebuilt(tile, layers_of(arrays_of(board), axis, layers))
     tile.fixed_walls = {
-        index: [np.asarray(wall)[where] if np.shape(wall) == board.shape else wall for wall in walls]
-        for index, walls in board.fixed_walls.items()
+        i: walls_over(walls, where, board.shape) for i, walls in board.fixed_walls.items()
     }
     tile.origins, tile.laid, tile.amplitude = list(board.origins), dict(board.laid), board.amplitude
     tile.interval, tile.tick, tile.passes, tile.heading = (
@@ -161,29 +182,34 @@ def in_the_boards_frame(
 
 def in_the_boards_order(answers: list[Answer]) -> list[Line]:
     """The slabs' output lines of one interval in the board's order, by their keys (the close's write, then the Node's x-major index; within a Node the slab's own order stands)."""
-    keyed: list[Keyed] = [pair for answer in answers for pair in answer[2]]
+    keyed: list[Keyed] = [pair for answer in answers for pair in answer[1]]
     return [line for _key, line in sorted(keyed, key=lambda pair: pair[0])]
 
 
 def served(board: Lattice, axis: int, slab: range, pipe: Connection) -> None:
-    """One slab's process: its lattice made from the board at the fork, then per interval the layers the parent names imposed with the board's clocks, the lattice stepped with every act, and the answer sent, its own layers' arrays with its lines in the board's frame and its count of turned Nodes, or its refusal by name; None ends it."""
+    """One slab's process: its lattice made from the board at the fork, then per interval the board's record set conformed to (`conformed`) and the layers the parent names imposed with the board's clocks, the lattice stepped with every act, the first answer sent (its lines in the board's frame and its count of turned Nodes, or its refusal by name), then the record set the board holds after the interval's births received, conformed to, and its own layers' arrays sent (none where the parent asks none, the interval tried on the board); None ends it."""
     tile, lines, shape = tile_of(board, axis, slab), list[Line](), board.shape
     tile.output = lines.append
     seed = board.families[board.world.seed].name if board.world.seed is not None else None
     own = list(range(1, len(slab) + 1))
     while (message := pipe.recv()) is not None:
-        layers, pieces, interval, tick = message
+        layers, pieces, interval, tick, born = message
+        conformed(tile, born)
         rebuilt(tile, imposed(arrays_of(tile), axis, layers, pieces))
         tile.interval, tile.tick = interval, tick
         lines.clear()
         try:
             tile.step()
         except (ValueError, RuntimeError) as refusal:
-            pipe.send((False, type(refusal).__name__, str(refusal), None))
+            pipe.send((False, type(refusal).__name__, str(refusal)))
             continue
         moved = [in_the_boards_frame(line, axis, slab, shape, tile.shape, seed) for line in lines]
         turned = int(np.asarray(tile.turned)[selection(axis, own)].sum())
-        pipe.send((True, layers_of(arrays_of(tile), axis, own), [m for m in moved if m], turned))
+        pipe.send((True, [m for m in moved if m], turned))
+        agreed = pipe.recv()  # the board's record set after the interval's births, or None
+        if agreed is not None:
+            conformed(tile, agreed)
+            pipe.send(layers_of(arrays_of(tile), axis, own))
 
 
 class Slabs:
@@ -215,30 +241,41 @@ class Slabs:
         return len(self.slabs)
 
     def advanced(self) -> None:
-        """One interval of the board through the slabs: the halo layers (or every layer after a refusal tried) sent to every slab, the answers gathered, the slabs' layers written onto the board, the board's clocks advanced as `Lattice.step` advances them, the swaps' count logged, the lines given in the board's order and the lays logged in the books, the seed's count read, the observers called; a refusal in any slab tried on the board itself; the one slab stepped by the board itself."""
+        """One interval of the board through the slabs: the halo layers (or every layer after a refusal tried) sent to every slab with the board's record set, the first answers gathered, the board's clocks advanced as `Lattice.step` advances them, the close's births read from the lay lines and born on the board (`Lattice.born_point`), the record set sent back and the slabs' layers, conformed to it, written onto the board, the swaps' count logged, the lines given in the board's order and the lays logged in the books, the seed's count read, the observers called; a refusal in any slab tried on the board itself; the one slab stepped by the board itself."""
         board, extent = self.board, self.board.shape[self.axis]
         if not self.pipes:
             board.step()
             return
-        arrays = arrays_of(board)
+        arrays, born = arrays_of(board), born_points(board)
         for slab, pipe in zip(self.slabs, self.pipes, strict=True):
             layers = tile_layers(slab, extent)
             kept = list(range(len(layers))) if self.whole else [0, len(layers) - 1]
             pieces = layers_of(arrays, self.axis, [layers[k] for k in kept])
-            pipe.send((kept, pieces, board.interval, board.tick))
+            pipe.send((kept, pieces, board.interval, board.tick, born))
         answers: list[Answer] = [pipe.recv() for pipe in self.pipes]
         self.whole = any(not answer[0] for answer in answers)
         if self.whole:
+            for pipe, answer in zip(self.pipes, answers, strict=True):
+                if answer[0]:
+                    pipe.send(None)  # no arrays wanted: the interval is tried on the board
             board.step()
             return
-        for slab, answer in zip(self.slabs, answers, strict=True):
-            arrays = imposed(arrays, self.axis, list(slab), answer[1])
-        rebuilt(board, arrays)
         board.interval, board.tick = board.interval + 1, board.tick + 1
-        turned = sum(int(answer[3]) for answer in answers)
+        lines, names = in_the_boards_order(answers), [family.name for family in board.families]
+        for line in lines:  # the births of the close: a point first laid at a slab's own Node is born on the board, its records at the vacuum until the slab's layers arrive
+            if line[REPORT_KEYS[0]] == LAY:
+                board.born_point(names.index(str(line[REPORT_KEYS[3]])))
+        agreed = born_points(board)
+        for pipe in self.pipes:
+            pipe.send(agreed)
+        arrays = arrays_of(board)
+        for slab, pipe in zip(self.slabs, self.pipes, strict=True):
+            arrays = imposed(arrays, self.axis, list(slab), pipe.recv())
+        rebuilt(board, arrays)
+        turned = sum(int(answer[2]) for answer in answers)
         if turned:
             board.swaps.append((board.interval, 1, turned))
-        for line in in_the_boards_order(answers):
+        for line in lines:
             if board.output is not None:
                 board.output(line)
             if line[REPORT_KEYS[0]] == LAY:
