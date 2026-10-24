@@ -257,6 +257,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "settled_free",
         "division_forward",
     ): "D",  # the carried torus's iteration, remainder discarded
+    (
+        "features/start/rests.py",
+        "damped",
+        "division_forward",
+    ): "D",  # the damped pass's mean, carry dropped at the stop
     # features/write
     (
         "features/write/__init__.py",
