@@ -18,6 +18,9 @@ def test_the_phase_act_reaches_one_link(tmp_path: Path, monkeypatch: pytest.Monk
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = bare_torus(tmp_path, CUBE)
     boards = [Lattice(load_world(path)), Lattice(load_world(path))]
+    for board in boards:  # every point standing, its rows of the sign born (2026-10-24, the point rows born at the first birth)
+        for index in range(len(board.families)):
+            board.born_point(index)
     charge = [family.name for family in boards[0].families].index(SIGN)
     gamma = boards[0].world.node_clock
     free = boards[1].states[charge].lines[0]

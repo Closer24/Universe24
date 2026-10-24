@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass, field
+from itertools import cycle
 from typing import Any
 
 import numpy as np
@@ -203,7 +204,10 @@ def write_sources(
             found.append(total)
             scales.append(scale)
     found = [family.write * numerator for numerator in found]  # the row's write weight k_w
-    walls = [wall * scale for wall, scale in zip(write.walls, scales, strict=True)]  # one per line
+    walls = [  # one per line: the row's walls (`write.walls`, the loader's one row) over every live row of the holder
+        wall * scale
+        for wall, scale in zip(cycle(write.walls[: families[held].width]), scales, strict=False)
+    ]
     if (
         fixed is not None
     ):  # the wall fixed per Node: the ratio of the walls inside the numerator, rounded once, in Python's integers (the fixed wall E_s T Gamma^power p_0^(3 - power) passes 63 bits at the shipped level weights, 7 x 10^21 at E_s 10^6 and T 2^15, so the one product is exact beyond the width as the write factor's numerator is, `exact`)
@@ -307,17 +311,11 @@ def empty_record(shape: tuple[int, int, int], kind: type, origin: Any = 0) -> Re
     return Record(zeros(shape, kind), zeros(shape, kind), full(shape, origin, kind))
 
 
-def phase_lines(
-    family: FamilyRule, shape: tuple[int, int, int], kind: type, gamma: int, width: int
-) -> list[list[Record]]:
-    """The phase lines of a holder of the sign under the rotation at the start (features/phase, `seed`; the two hands' item (i); the centred count, the owner's decision of 2026-10-23): per row of the sign beyond the free row, for each axis the cosine line and the sine line of the Node's +a Link at the angle 0, (X, X cos theta rounded, D div 2) and (0, -(X div 2 Gamma), D div 2) at every Node, X the amplitude the width derives at the line's unit 2 Gamma (`phase.amplitude`, `phase.unit`), the Link's phase at the fixed half angle theta_0 / 2; after them the three count lines at 0, each axis's Link's count K_ij as the step reads it (`NodeState`, the cache of the two ends' difference node.phased carries the pair to); and last the Node's phase row Phi, a Rule3 record born at rest (0, 0, 0), whose write per interval is the clocked potential (node.phased); the free row's list empty (read by no record); empty for every other family. `node.seed_phases` then carries every pair to the count the laid state stands at."""
-    if not family.rotation:
-        return []
-    cosine, sine = phase.seed(phase.amplitude(phase.unit(gamma), width), phase.unit(gamma))
-    return [
-        []
-        if row == 0
-        else [
+def phase_row(shape: tuple[int, int, int], kind: type, gamma: int, amplitude: int) -> list[Record]:
+    """One row's phase lines at the seed (features/phase, `seed`): per axis the cosine and the sine line of the Link's pair at the amplitude, then the three count lines at 0 and the Node's phase row Phi at 0, every line born as the orbit's seed; the lines a row born during the run takes (`Lattice.born`, 2026-10-24) as every row took them at the start."""
+    cosine, sine = phase.seed(amplitude, phase.unit(gamma))
+    return (
+        [
             Record(full(shape, c, kind), full(shape, b, kind), full(shape, r, kind))
             for _axis in range(AXES)
             for c, b, r in (cosine, sine)
@@ -327,8 +325,22 @@ def phase_lines(
             for _axis in range(AXES)
         ]
         + [Record(full(shape, 0, kind), full(shape, 0, kind), full(shape, 0, kind))]
-        for row in range(family.records)
-    ]
+    )
+
+
+def phase_lines(
+    family: FamilyRule, shape: tuple[int, int, int], kind: type, gamma: int, width: int, rows: int
+) -> list[list[Record]]:
+    """The phase lines of a holder of the sign under the rotation at the start (features/phase, `seed`; the two hands' item (i); the centred count, the owner's decision of 2026-10-23): per row of the sign beyond the free row, for each axis the cosine line and the sine line of the Node's +a Link at the angle 0, (X, X cos theta rounded, D div 2) and (0, -(X div 2 Gamma), D div 2) at every Node, X the amplitude the width derives at the line's unit 2 Gamma (`phase.amplitude`, `phase.unit`), the Link's phase at the fixed half angle theta_0 / 2; after them the three count lines at 0, each axis's Link's count K_ij as the step reads it (`NodeState`, the cache of the two ends' difference node.phased carries the pair to); and last the Node's phase row Phi, a Rule3 record born at rest (0, 0, 0), whose write per interval is the clocked potential (node.phased); the free row's list empty (read by no record); empty for every other family. `node.seed_phases` then carries every pair to the count the laid state stands at."""
+    if not family.rotation:
+        return []
+    amplitude = phase.amplitude(phase.unit(gamma), width)
+    return [[] if row == 0 else phase_row(shape, kind, gamma, amplitude) for row in range(rows)]
+
+
+def born_lines(family: FamilyRule, shape: tuple[int, int, int], kind: type, origin: Any) -> list[Record]:
+    """The lines of one record of a family at the state of a Node with no level, the parts times the width lines, every one born at the half wall `origin` as every line of the engine is: the lines a record born during the run takes (`Lattice.born`, 2026-10-24)."""
+    return [empty_record(shape, kind, origin) for _ in range(family.parts * family.width)]
 
 
 def complement(remainder: Any, wall: Any) -> Any:
@@ -347,11 +359,11 @@ def empty_state(
     walls: Sequence[int],
     kind: type,
     origin: Any = 0,
+    records: int | None = None,
 ) -> NodeState:
     """A family's NodeState before its start, the state of a Node with no level: its lines at 0, as many as the loader derives for it (`FamilyRule.lines`), the three tension lines of a row under the stress's trace born at the half of the wall 3 w they step by (flux.step_traceless, the one rounding half up there too), and where it is held one write remainder per line at the origin (`walls` the write's wall per line, `write_origins`)."""
-    lines = [
-        empty_record(shape, kind, origin) for _ in range(family.lines)
-    ]  # every line born at the half wall
+    count = family.lines if records is None else records * family.parts * family.width
+    lines = [empty_record(shape, kind, origin) for _ in range(count)]  # every line born at the half wall
     if family.axes and not family.wronskian:  # the tension lines step at the wall 3 w: born at its half
         lines[1 : 1 + AXES] = [empty_record(shape, kind, AXES * origin) for _ in range(AXES)]
-    return NodeState(lines, write_origins(walls, shape, kind) if family.held else [])
+    return NodeState(lines, write_origins(walls[: len(lines)], shape, kind) if family.held else [])

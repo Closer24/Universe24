@@ -93,7 +93,9 @@ def quanta_line(board: Lattice, index: int) -> dict[str, Any]:
     """One family of quanta's readings this interval: its largest level (against the amplitude bound), its quanta over the board (the engine's own `Lattice.quanta`, None over a board holding a frozen Node) and, where a seed Node stands, its share within one Link of the seed over its share on the board, its rulers at the far Node (the clock and the three axis paces of its read, the page's h_a = p_0 / p_a) and its Links' factors (q_+ + q_-) / (2 Gamma) per axis at the seed Node and the far Node (the tension's reach into the write's paces, the second smoke's finding); where the read refuses by name (a Link's tension beyond Gamma after this interval's write, features/read.link_tensions), the reading carries the refusal's words under `refused_reading` and the next step refuses the run by name, so that the log is complete at the refusal."""
     lines = board.record(index)
     found: dict[str, Any] = {
-        "largest": max(int(np.abs(np.asarray(line.now, dtype=object)).max()) for line in lines)
+        "largest": max(
+            (int(np.abs(np.asarray(line.now, dtype=object)).max()) for line in lines), default=0
+        )  # 0 for a point whose records are not born (2026-10-24)
     }
     try:
         quanta, frozen = board.quanta(index)

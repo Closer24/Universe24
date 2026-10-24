@@ -7,7 +7,7 @@ import json
 
 import numpy as np
 
-from event_universe import conversion, credit, records, seed, world_files
+from event_universe import conversion, credit, records, registry, seed, world_files
 from event_universe.act import born_items, born_table, click
 from event_universe.emission import laid_by_count
 from event_universe.features.click import amplitude
@@ -83,7 +83,7 @@ def test_a_list_of_four_children_lays_four_records_through_the_same_path(tmp_pat
     width = board.families[charge].width
     rows = [
         int(np.abs(np.asarray(board.states[charge].lines[r * width].now, dtype=object)).max())
-        for r in range(board.families[charge].records)
+        for r in range(registry.records_of(board.families[charge], board.states[charge].lines))
     ]
     assert rows[0] == 0 and sum(1 for row in rows[1:] if row) == len(items)  # the four reader rows
 
@@ -124,7 +124,7 @@ def test_the_uniform_cube_births_the_list_one_record_per_child_each_at_its_sense
     width = board.families[charge].width
     rows = [
         int(np.abs(np.asarray(board.states[charge].lines[r * width].now, dtype=object)).max())
-        for r in range(board.families[charge].records)
+        for r in range(registry.records_of(board.families[charge], board.states[charge].lines))
     ]
     assert rows[0] == 0 and sum(1 for row in rows[1:] if row) == len(children)
 

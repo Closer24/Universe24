@@ -34,10 +34,11 @@ def rows_of(families: Families, states: Sequence[Any]) -> list[Row]:
 
 
 def row_of(families: Families, states: Sequence[Any], index: int, record: int) -> int | None:
-    """A record's own row of the holder of the sign, its position among the rows (`rows_of`); None for a record that reads no holder of the sign."""
+    """A record's own row of the holder of the sign, its position among the rows (`rows_of`); None for a record that reads no holder of the sign, and None for a record not standing (a record's read before its birth, the start's walls for the rows born later, `Lattice.start`)."""
     if not charged(families, index):
         return None
-    return rows_of(families, states).index((index, record))
+    rows = rows_of(families, states)
+    return rows.index((index, record)) if (index, record) in rows else None
 
 
 def sourcing(families: Families, states: Sequence[Any], held: int) -> list[list[Row]]:
@@ -52,3 +53,11 @@ def sourcing(families: Families, states: Sequence[Any], held: int) -> list[list[
             ]
         ]
     return [[row] if row[0] in readers else [] for row in rows_of(families, states)]
+
+
+def start_records(families: Families, index: int) -> int | None:
+    """The records a family's state is built with (2026-10-24, the point rows born at the first birth): none for a charged family, whose records and rows of the sign are born at the first lay of the point (`emission.born_point`; to that day the loader's count stood from the start, every record empty, and the step paid for every one, 0.42 s against 0.008 s per interval before any birth at the PeV den); the free row alone for a holder of the sign; the loader's count, None, for every other family."""
+    family = families[index]
+    if charged(families, index):
+        return 0
+    return 1 if family.held and family.wronskian else None
