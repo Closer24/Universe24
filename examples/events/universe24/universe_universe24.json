@@ -19,14 +19,6 @@
    ]
   },
   {
-   "name": "matter",
-   "pair": [
-    32140659,
-    53567765
-   ],
-   "dimension": 1
-  },
-  {
    "name": "light",
    "pair": [
     53567765,

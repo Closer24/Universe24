@@ -95,4 +95,6 @@ def test_the_nodes_line_is_the_reading_node_by_node(
     assert found["length"] == [round(float((x / gamma) ** (1 / 4)), 6) if x > 0 else 0 for x in now]
     assert found["direction"] == [-1 if i in turned else 1 for i in range(nodes)]
     assert all(type(q) is int for name in found["quanta"] for q in found["quanta"][name])
-    assert found["quanta"]["matter"] == [int(q) for q in board.quanta(2)[0].reshape(-1)]
+    assert found["quanta"]["light"] == [
+        int(q) for q in board.quanta(2)[0].reshape(-1)
+    ]  # the third row, light since matter left (2026-10-24)

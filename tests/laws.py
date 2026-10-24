@@ -172,15 +172,16 @@ def packet(board: Lattice, axis: int, wave: tuple[int, int], size: int, at: int)
     inside = (x >= at) & (x < at + size)  # a raised-cosine window: a locally plane wave
     envelope = 600 * inside * np.sin(np.pi * (x - at + 1) / (size + 1)) ** 2
     phase = k * x
+    laid = lambda values: np.rint(values).astype(np.int64).astype(board.kind)  # noqa: E731  # integers in the board's kind (Python's integers, not floats, in an object array: the width derived, 2026-10-24)
     lines = [
         Record(
-            np.rint(envelope * np.cos(phase)).astype(board.kind),
-            np.rint(envelope * np.cos(phase + omega)).astype(board.kind),
+            laid(envelope * np.cos(phase)),
+            laid(envelope * np.cos(phase + omega)),
             board.states[index].lines[0].remainder,
         ),
         Record(
-            np.rint(envelope * np.sin(phase)).astype(board.kind),
-            np.rint(envelope * np.sin(phase + omega)).astype(board.kind),
+            laid(envelope * np.sin(phase)),
+            laid(envelope * np.sin(phase + omega)),
             board.states[index].lines[1].remainder,
         ),
     ]

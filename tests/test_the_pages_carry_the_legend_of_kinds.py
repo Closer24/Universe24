@@ -66,7 +66,7 @@ def logs() -> tuple[list[dict], list[dict], list[dict]]:
 
 
 def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothing_new_after_bang_1():
-    """(1) The record's legend: 8 bangs, 8 tops, 0 black holes, 0 turns at the floor, 1,000 Node turns, 125 proton pairs at 29 at 125 Nodes, 0 electron and 0 matter pairs with the cause, 0 conversions, 125 clicks counted whole, 375 lays, the proton standing 3 per Node at 2,400, light 0 from 29, bound bodies not readable; (2) the ledger: 8 rows, 125 proton pairs in the first, 0 births in every row after, the finding sentence."""
+    """(1) The record's legend: 8 bangs, 8 tops, 0 black holes, 0 turns at the floor, 1,000 Node turns, 125 proton pairs at 29 at 125 Nodes, 0 electron pairs with the cause (matter's row gone 2026-10-24), 0 conversions, 125 clicks counted whole, 375 lays, the proton standing 3 per Node at 2,400, light 0 from 29, bound bodies not readable; (2) the ledger: 8 rows, 125 proton pairs in the first, 0 births in every row after, the finding sentence."""
     eras, nodes, clicks = logs()
     floor = ERAS_PAGE.least_of(nodes, eras[0]["node_clock"])["floor"]
     legend = CAPTIONS.legend_of(eras, nodes, clicks, floor)
@@ -79,13 +79,11 @@ def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothi
         "black holes": 0,
         "turns at the floor (the crunch)": 0,
         "Node turns (the swap at the top)": 1000,
-        "matter pairs born": 0,
         "proton pairs born": 125,
         "electron pairs born": 0,
         "conversions": 0,
         "clicks": 125,
         "lays (the records laid)": 375,
-        "standing matter": 0,
         "standing light (the seed family: light left)": 0,
         "standing proton": 375,
         "standing electron": 0,
@@ -126,7 +124,7 @@ def test_the_legend_counts_every_kind_from_the_record_and_the_ledger_shows_nothi
         (3, 612, 913, 763, 1422000),
     ]
     assert len(cycles) == 8 and cycles[-1]["open"] and cycles[-1]["to"] == 2400
-    assert cycles[0]["births"] == {"matter": 0, "proton": 125, "electron": 0}
+    assert cycles[0]["births"] == {"proton": 125, "electron": 0}  # matter's row left the file 2026-10-24
     assert all(sum(c["births"].values()) == 0 for c in cycles[1:])
     assert all(c["light"] == 0 and c["horizon"] == 0 and c["turns"] == 125 for c in cycles)
     assert [c["standing"]["proton"] for c in cycles[:2]] == [
@@ -176,11 +174,11 @@ def test_both_pages_carry_the_legend_and_the_ledger_as_rows():
             "1",
             "303",
             "153 at the volume 1,422,000",
-            "0 matter pairs; 125 proton pairs; 0 electron pairs",
+            "125 proton pairs; 0 electron pairs",
         ]
         assert (
             cycles[8][2] == "2,400 (the log's last interval)"
-            and cycles[8][4] == "0 matter pairs; 0 proton pairs; 0 electron pairs"
+            and cycles[8][4] == "0 proton pairs; 0 electron pairs"
         )
         assert parsed.finding == ledger["finding"]
         assert "to the interval 2,400 of 2,400 declared" in html
