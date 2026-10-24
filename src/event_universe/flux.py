@@ -309,7 +309,7 @@ def pairs_of(
         *(() if factors is None else tuple(factors)),
     )
     if (kept := read_again(key, taken)) is not None:
-        return cast("tuple[tuple[Any, ...], tuple[Any, ...]] | None", kept[0])
+        return cast(Pairs | None, kept[0])
     angles = node.turning(index, families, states, direction, record)
     flux = odd_links(index, families, states, direction, wrap)  # the fold, a folded plane's
     sign = (  # the sign's Link levels n_ij, the two ends weighed as the holder declares (`link_read`)
