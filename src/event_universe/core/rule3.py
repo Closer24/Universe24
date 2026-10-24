@@ -122,7 +122,7 @@ def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:
 
 
 def partial_rooms(
-    reaches: Reads, self_coefficient: Any, wall: Any, mass: Any, links: Any, arrivals: Any
+    self_coefficient: Any, wall: Any, mass: Any, links: Any, arrivals: Any
 ) -> tuple[Any, ...]:
     """The rooms of the flux line's five partial sums at a level A, each the factor of A (ENGINE.md, The amplitude bound): the free term 3 w, the mass D, the Node's own terms |2 w - D| + w, the Links' sum `links` (2 SUM_j |R_ij| on a plain line, a Node at +A among six neighbours at -A; more on a turned or folded plane, whose Links reach further), and the whole total `arrivals` + w + |S| with the remainder, w - 1 more than A times it, `arrivals` the six arrivals' reads (SUM_j |R_ij| on a plain line; under the pair's two parts on a turned or folded plane, the loader's `bound_under_rooms`)."""
     return (

@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe import registry
 from event_universe.core import paces
-from event_universe.core.ports import AXES, PORTS, Wrap, arrival
+from event_universe.core.ports import AXES, PORTS, arrival
 from event_universe.core.rule3 import Rule, division_back, division_forward, rule_integers
 from event_universe.features import phase, volume
 from event_universe.features.held_write import held_write
@@ -27,12 +27,10 @@ from event_universe.features.read import (
 from event_universe.loader.derived import FamilyRule, turns, weight_of
 from event_universe.plane import (
     Angles,
-    fold_guard,
     frame_signs,
     link_guard,
     link_levels,
     link_wall,
-    odd_links,
 )
 from event_universe.records import Families, Record, Rulers, States, level_at, phase_lines, row_levels
 
@@ -96,7 +94,6 @@ def read(
     families: Families,
     states: States,
     direction: int,
-    wrap: Wrap,
     gamma: int,
     unit: int,
     record: int = 0,
@@ -109,7 +106,7 @@ def read(
         key, taken = read_key(read, index, families, states, direction, gamma, record)
         if (kept := read_again(key, taken)) is None:
             content, axes = read_lines(index, families, states, direction, gamma, record)
-            factors = link_factors(gamma, unit, link_tensions(axes, wrap, gamma))
+            factors = link_factors(gamma, unit, link_tensions(axes, gamma))
             READS[key] = (taken, (content, list(factors)))
         else:
             content, factors = kept[0], tuple(kept[1])
@@ -117,13 +114,7 @@ def read(
 
 
 def rulers(
-    index: int,
-    families: Families,
-    states: States,
-    direction: int,
-    wrap: Wrap,
-    gamma: int,
-    record: int = 0,
+    index: int, families: Families, states: States, direction: int, gamma: int, record: int = 0
 ) -> Rulers:
     """The paces a record's read gives it at every Node for the write's factor (ALGEBRA.md, The write per proper volume and per proper interval; The paces compose): the clock p_0 from its content and its pace along each axis, p_a = p_i (q_(+a) + q_(-a)) / (2 Gamma), the Node's pace p_i = p_0^2 / Gamma times the mean of its two a-Links' factors from their tensions, one reading per axis through its two Ports (`features/read`, `axis_paces`), the ruler h_a = p_0 / p_a; Gamma on the clock and on every axis where the family reads nothing (every factor 1 at the vacuum's paces); read at the level the step in `direction` starts from, the same numbers read back."""
     if not any(not families[r.family].rotation for r in families[index].reads):
@@ -133,7 +124,7 @@ def rulers(
         return kept[0], tuple(kept[1])
     content, axes = read_lines(index, families, states, direction, gamma, record)
     clock, pace = paces.node_paces(gamma, content)
-    found = clock, axis_paces(gamma, pace, link_tensions(axes, wrap, gamma))
+    found = clock, axis_paces(gamma, pace, link_tensions(axes, gamma))
     READS[key] = (taken, (found[0], list(found[1])))
     return found
 
@@ -142,11 +133,11 @@ def rulers_of(
     board: Lattice, sources: Iterable[tuple[int, int]], direction: int
 ) -> dict[tuple[int, int], Rulers]:
     """Every record of quanta's paces at the interval's start in `direction`, keyed by its sourcing (the family's index and the record), and beside them every held row's own paces keyed (held, row), the wall of a row that reads the content (`records.wall_rulers`; ALGEBRA.md, The one Node, the clause of 2026-10-23): a held row's index is no quanta family's, so the keys never meet."""
-    families, states, wrap, gamma = board.families, board.states, board.wrap, board.world.node_clock
-    found = {s: rulers(s[0], families, states, direction, wrap, gamma, s[1]) for s in sources}
+    families, states, gamma = board.families, board.states, board.world.node_clock
+    found = {s: rulers(s[0], families, states, direction, gamma, s[1]) for s in sources}
     for index in board.held:
         for row in range(registry.records_of(families[index], states[index].lines)):
-            found[(index, row)] = rulers(index, families, states, direction, wrap, gamma, row)
+            found[(index, row)] = rulers(index, families, states, direction, gamma, row)
     return found
 
 
@@ -187,7 +178,7 @@ PHI = (
 
 
 def clocked_potentials(
-    index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
+    index: int, families: Families, states: States, direction: int, gamma: int
 ) -> dict[int, Any]:
     """The clocked potential of every row of the sign beyond the free row at every Node, c = rounded(L p_0 / Gamma) (`paces.turn_factor`, kind D; ALGEBRA.md, The turn per proper interval): L the holder's time level summed over every row but the row's own reader's (`row_levels`, at the weight the reader reads with, `weight_of`; No record reads its own write of the sign) and p_0 the reader's clock at that Node (`rulers`), both at the level `direction` names, 1 the level now and -1 the level before, the Node's own levels and nothing of the board; the write of the Node's phase row (`phased`)."""
     family, state = families[index], states[index]
@@ -205,20 +196,20 @@ def clocked_potentials(
         potential = weight_of(index, families[reader_index]) * row_levels(
             family, state.lines, 0, direction, row
         )
-        clock = rulers(reader_index, families, states, direction, wrap, gamma, reader_record)[0]
+        clock = rulers(reader_index, families, states, direction, gamma, reader_record)[0]
         found[row] = np.asarray(paces.turn_factor(potential, clock, gamma), dtype=object)
     return found
 
 
 def phase_counts(
-    index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
+    index: int, families: Families, states: States, direction: int, gamma: int
 ) -> dict[int, list[Any]]:
     """The count every Link of the holder's rows stands at in the state the Node holds (ALGEBRA.md, The turn per proper interval, the centred count): per row, the Node's K = 2 (Phi_now - Phi_before) - c, c the row's clocked potential at the level `direction` names (`clocked_potentials`), which is Phi_next - Phi_before of the Rule3 triple whose write is c, twice the trapezoid sum of the clocked potential to the triple's centre (at the end of an interval, c at the level before, the write the act just took: K(m + 1); at a turned Node after the swap at the top the same reading gives -K(m + 1); after the inverse of the act, c at the level now: K(m)); per axis the Link's count K_i - s K_(i + a), the two ends' difference read in one frame (`frame_signs`: s = +1 where the two ends' phase rows carry one remainder at the wall 2 and -1 where one end is time-reversed by the swap and the other not, the neighbour's K negated into the Node's frame), 0 beyond a face (`arrival`), the pair at -K the conjugate of the pair at +K (features/phase `signed_read`). In the frame every record was born in the swap exchanges a plane's two levels like every plain line's (conj(conj z) = z, -(-K) = K), so the pair the two ends read is one and the same whichever end turned, and the inverse of a split top is exact at the unturned neighbours (M25; the former reading of a mixed Link, -K_i - K_j, carried the pair by about 2 |K| acts at the fire and the inverse read it where the forward step read K_i - K_j)."""
     found: dict[int, list[Any]] = {}
-    for row, c in clocked_potentials(index, families, states, direction, wrap, gamma).items():
+    for row, c in clocked_potentials(index, families, states, direction, gamma).items():
         phi = states[index].phases[row][PHI]
         k = 2 * (np.asarray(phi.now, dtype=object) - np.asarray(phi.before, dtype=object)) - c
-        signs = frame_signs(phi.remainder, wrap)
+        signs = frame_signs(phi.remainder)
         counts = []
         for axis in range(AXES):
             counts.append(k - signs[2 * axis] * arrival(k, axis, 1))
@@ -283,39 +274,32 @@ def phase_rows(index: int, states: States, potentials: dict[int, Any], direction
 
 
 def phased(
-    index: int, families: Families, states: States, direction: int, wrap: Wrap, gamma: int
+    index: int, families: Families, states: States, direction: int, gamma: int
 ) -> list[list[Record]]:
     """The phase act of one interval on a holder of the sign under the rotation (features/phase; the mathematician's item (g) and the two hands' item (i); ALGEBRA.md, The sign holder rotates the two-part record, The turn per proper interval; the centred count, the owner's decision of 2026-10-23, the phase hand's derivation M23): for every row of the sign beyond the free row the Node carries its phase row Phi, a Rule3 record whose write per interval is the row's clocked potential c = rounded(L p_0 / Gamma) at the level now, the interval's start in either direction (`clocked_potentials`, `phase_rows`: Phi_next = 2 Phi_now - Phi_before + c), and the Link's count is the two ends' difference of the Node's K = Phi_next - Phi_before = 2 (Phi_now - Phi_before) + c, twice the trapezoid sum of the clocked potential to the triple's centre, K_ij = K_i - K_(i + a) (`phase_counts`; the former reading, to 2026-10-23, the left sum N_ij moved by c_i - c_j per interval, read at the step's start), by which each axis's Link's cosine and sine lines take the acts that carry the pair along the one orbit from the seed to the size of the count reached (`phase_carried`; the pair at X e^(i |K| theta_0 / 2), read with the count's sign, the pair at -K the conjugate of the pair at +K, so that the cube's 48 map the remainders as they map the levels and the Node's time reversal, the swap at the top, is the pair's conjugate exactly, swap.py); forward, and at `direction` -1 the row stepped back and the pairs carried back to K(m), bit for bit, once every line stands at the interval's start again (`Lattice.step_inverse`); one Link's reach, the two ends; no count line of its own, the row's three count lines the cache of the Link's count the planes read (plane.phase_links). Returns the rows' phase lines after the act, the state's phase rows stepped."""
-    potentials = clocked_potentials(index, families, states, 1, wrap, gamma)
+    potentials = clocked_potentials(index, families, states, 1, gamma)
     phase_rows(index, states, potentials, direction)
-    counts = phase_counts(index, families, states, direction, wrap, gamma)
+    counts = phase_counts(index, families, states, direction, gamma)
     return phase_carried(index, states, counts, gamma)
 
 
-def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> None:
+def guarded(index: int, families: Families, states: States, gamma: int, unit: int) -> None:
     """The guard once at load (ALGEBRA.md #the-paces, The guard): every record's read of the initial state checked as squares, the content below the Link's zero (the lower side, a frozen clock refused by name) and p^2 (den + num) <= 2 den Gamma^2 at every Node on the clock, on the Node's pace and on each Link's pace p_i^2 Q_ij / G^2, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's Links alike (`plane.link_guard`): each Link's two ends' sum n_ij of the sign's odd lines within 4 Gamma, a tangent half-angle at most 1, the guard on n the fold's Link keeps (`plane.sign_pairs`); the time level is guarded by nothing, the phase line's circle wrapping (features/phase); one holder of the sign under the rotation per turned family (`sign_holder`)."""
     for record in range(registry.records_of(families[index], states[index].lines)):
         if families[index].reads:
-            content, factors = read(index, families, states, 1, wrap, gamma, unit, record)
+            content, factors = read(index, families, states, 1, gamma, unit, record)
             paces_guard(families[index].pair, gamma, unit, content, factors, families[index].name)
-        links = odd_links(index, families, states, 1, wrap)
-        if links is not None:  # a folded record's fold at every Link within the tangent 1
-            fold_guard(families[index].pair, gamma, links, families[index].name)
         angles = turning(index, families, states, 1, record)
         if angles is not None:  # a turned record's Links at both ends, read as the holder declares
             ends = families[sign_holder(index, families)].link_read
-            for a, link in zip((0, 0, 1, 1, 2, 2), link_levels(angles[1], wrap, ends), strict=True):
+            for a, link in zip((0, 0, 1, 1, 2, 2), link_levels(angles[1], ends), strict=True):
                 link_guard(link, link_wall(gamma), families[index].name, a)
 
 
-def least_pace(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> int:
+def least_pace(index: int, families: Families, states: States, gamma: int, unit: int) -> int:
     """The least Node pace p_i = p_0^2 / Gamma of a family's records over the lattice as it is, 0 at a frozen Node, a lattice diagnostic for the report and no act of the law (the Links' factors beside it are read by no report)."""
     return min(
-        int(
-            np.min(
-                paces.link_pace_of(gamma, read(index, families, states, 1, wrap, gamma, unit, record)[0])
-            )
-        )
+        int(np.min(paces.link_pace_of(gamma, read(index, families, states, 1, gamma, unit, record)[0])))
         for record in range(registry.records_of(families[index], states[index].lines))
     )
 
@@ -363,15 +347,15 @@ def seed_phases(board: Lattice, world: World) -> int:
             phase.seeded(states[index], phase.unit(gamma), phase.amplitude(phase.unit(gamma), bits))
     for index, family in enumerate(families):
         if family.rotation and any(turns(families, i) for i in range(len(families))):
-            counts = phase_counts(index, families, states, -1, board.wrap, gamma)
+            counts = phase_counts(index, families, states, -1, gamma)
             states[index].phases = phase_carried(index, states, counts, gamma)
     return phase.amplitude(phase.unit(gamma), bits)
 
 
 def phase_act(
-    held: Sequence[int], families: Families, states: States, direction: int, wrap: Wrap, gamma: int
+    held: Sequence[int], families: Families, states: States, direction: int, gamma: int
 ) -> None:
     """The phase act of one interval on every held holder of the sign under the rotation (`phased`), by the potentials at the interval's start: forward at `direction` 1 before the lines' step, back at -1 after them."""
     for index in held:
         if families[index].rotation:
-            states[index].phases = phased(index, families, states, direction, wrap, gamma)
+            states[index].phases = phased(index, families, states, direction, gamma)

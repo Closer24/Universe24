@@ -44,7 +44,7 @@ def analyse(name):
     w = n.copy()
     w[24:] = 0
     W = w.sum()
-    tens = link_tensions(axes, board.wrap)
+    tens = link_tensions(axes)
     Q = [np.asarray(q, dtype=float) for q in link_factors(GAMMA, G, tens)]
     T = [np.asarray(t, dtype=float) for t in tens]
     p0, pi = paces.node_paces(GAMMA, content.astype(int))

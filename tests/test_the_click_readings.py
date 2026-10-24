@@ -70,7 +70,7 @@ def test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start(tmp_pa
         [light, 0],
     )
     num = board.families[light].pair[0]
-    terms = readings.momentum_of(num, [start], board.wrap, board.mask((at,)))  # the start's currents
+    terms = readings.momentum_of(num, [start], board.mask((at,)))  # the start's currents
     frame = [
         point_of(
             int(arrival(start.now, a, -1)[at]),

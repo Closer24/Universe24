@@ -60,7 +60,7 @@ def even_box_refused(shape: Node, families: tuple[FamilyRule, ...]) -> None:
             )
 
 
-def parse_world(document: object, files: Mapping[str, object], digest: str) -> World:
+def parse_world(document: object, files: Mapping[str, object]) -> World:
     """The world from its document, the files it names (the universe, read by the host) and its digest; every defect refused by name; the board the torus (the owner's words of 2026-10-23 and 2026-10-24: the default a torus, then the torus the one board, the keys `boundary`, `face_depth`, `faces` and `receding` refused as unknown); a document naming neither `bodies` nor `node_detectors` declares nothing (the owner's word of 2026-10-24, the fold: a world of the universe, the board's shape and the run's length alone), its seed the universe's one massless family of quanta laid by the engine at one quantum on every Node and its reader the board itself (`loader/seed.seed_of`); a document naming them empty declares an empty board and runs as before (the former requirement of the two keys kept by name)."""
     world = keyed(document, "the world", WORLD_KEYS, WORLD_REQUIRED)
     integers, families = universe_of(document_at(files, world["universe"], "universe"))

@@ -36,7 +36,7 @@ def test_a_node_whose_output_would_fall_below_the_floor_turns_as_at_the_top(
     )
     board.states[held].lines[0] = records.Record(now, before, time.remainder)
     triple = (floor + 3, floor + 1, floor - 1)  # X0, X1 and the output X2 the free step gives, 2 X1 - X0
-    assert not swap.at_top(*triple).any() and swap.at_floor(*triple, floor).all()
+    assert not swap.at_top(*triple).any() and swap.at_floor(triple[0], triple[2], floor).all()
     assert (
         board.families[held].pair[0] == board.families[held].pair[1]
     )  # the volume holder massless (2026-10-24)

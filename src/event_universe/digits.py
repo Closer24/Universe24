@@ -68,9 +68,7 @@ def digits_of(board: Lattice, index: int, at: Frame) -> Iterator[tuple[int, int,
         content, factors = board.read(index, 1, record)
         rule = ruled(board, index, record, content, factors)
         families, states, amplitude = board.families, board.states, board.amplitude
-        pairs = flux.pairs_of(
-            index, families, states, 1, board.wrap, gamma, content, factors, record, amplitude
-        )
+        pairs = flux.pairs_of(index, families, states, 1, gamma, content, factors, record, amplitude)
         lattice = lattice_of(rule, at, pairs)
         for line in board.lines_of(index, record):
             kept = picked(line.remainder, at)

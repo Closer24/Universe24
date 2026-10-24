@@ -12,7 +12,7 @@ from event_universe import seed, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.circle import vector_of
 from event_universe.loader.universe import MASSLESS, SIGN, VOLUME
-from event_universe.world_files import input_digest, load_world
+from event_universe.world_files import load_world
 from tests.laws_universe import CUBE, GAMMA, UNIVERSE, WORLD, flat, small_universe
 
 
@@ -20,14 +20,18 @@ def test_the_fold_accepts_the_bare_world_and_refuses_a_former_key() -> None:
     """(1) The one world's file is the universe, the shape and the run's length alone and parses with no mode file, its seed the massless point on one real line (the row named by what it is, the page's caption light), the rows the volume holder, the sign holder, the massless point and the 26 points of the file's den (the PeV tier since 2026-10-24, 26 at the top tier too), every point a row of two lines named by its vector; the former keys `bodies` and `interval` of the world and `families` of the universe refused by name."""
     world = json.loads(WORLD.read_text(encoding="utf-8"))
     universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    files = {world["universe"]: universe}
+    files = {
+        world["universe"]: json.loads(
+            '{"integers": {"den": 1166991900949580266237, "node_clock": 1000, "quantum_action": 36000}}'
+        )
+    }  # the shipped world's keys with the top tier's den: the fold accepts the bare world at every den, and the loader's circle test alone factors the PeV den (2026-10-24)
     from event_universe.loader.world import parse_world
 
     assert (
         set(world) == {"universe", "shape", "intervals"} and not WORLD.with_suffix(".mode.json").exists()
     )
     assert set(universe) == {"integers"}  # no family row (2026-10-24)
-    parsed = parse_world(world, files, input_digest(world))  # (1) the bare world, accepted
+    parsed = parse_world(world, files)  # (1) the bare world, accepted
     names = [family.name for family in parsed.families]
     assert names[:3] == [VOLUME, SIGN, MASSLESS] and names[parsed.seed] == MASSLESS
     assert len(names) == 3 + 3**3 - 1 and all(vector_of(name) is not None for name in names[3:])
@@ -36,14 +40,14 @@ def test_the_fold_accepts_the_bare_world_and_refuses_a_former_key() -> None:
     )  # two lines for a gap, per record
     emptied = {**world, "bodies": []}  # the declared bodies, a key refused since 2026-10-24
     with pytest.raises(ValueError, match="unknown key 'bodies'"):
-        parse_world(emptied, files, input_digest(emptied))
+        parse_world(emptied, files)
     former = copy.deepcopy(world)
     former["interval"] = "unobservable"
     with pytest.raises(ValueError, match="unknown key 'interval'"):
-        parse_world(former, files, input_digest(former))
+        parse_world(former, files)
     declared = {**universe, "families": [{"name": "light", "pair": [2, 2], "dimension": 1}]}
     with pytest.raises(ValueError, match="holds the key 'families', a declaration no file carries"):
-        parse_world(world, {**files, world["universe"]: declared}, input_digest(world))
+        parse_world(world, {**files, world["universe"]: declared})
 
 
 def bare_board(

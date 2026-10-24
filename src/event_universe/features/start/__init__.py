@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.ports import Wrap, arrival
+from event_universe.core.ports import arrival
 from event_universe.core.rule3 import Reads, coefficients, division_forward
 
 Pair = tuple[int, int]
@@ -43,7 +43,7 @@ def division(numerator: Any, wall: Any, value: Any) -> np.ndarray:
     return np.asarray(division_forward(numerator * value, wall, 0)[0])
 
 
-def arrivals(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
+def arrivals(a: np.ndarray) -> tuple[np.ndarray, ...]:
     """The six arrivals as Rule3 reads them, the two of each axis summed: the wrap on a periodic axis, 0 beyond a face, the Node itself on a folded axis (core/ports.py)."""
     return tuple(arrival(a, axis, 1) + arrival(a, axis, -1) for axis in range(3))
 
@@ -73,18 +73,12 @@ def unit_from_bound(largest_level: int, pair: Pair, width: int, gamma: int) -> i
 
 
 def unit_of(
-    counts: np.ndarray,
-    pair: Pair,
-    divisor: int,
-    width: int,
-    gamma: int,
-    wrap: Wrap | None = None,
-    free: bool = False,
+    counts: np.ndarray, pair: Pair, divisor: int, width: int, gamma: int, free: bool = False
 ) -> int:
     """The fine unit of a row's rest: under the tent where the tent leaves a unit (`tent_of`, the way of every shipped world), else, on a board open on every axis of more than one Node (no wrap and no fold there, `wrap` the board's), under the source's own bound (`source_bound`, the room the tent over-bounds by 2 (L + 1), which held the Node clock of the atom's world at a fiftieth of its reach), and on a board periodic on every axis of more than one Node whose uniform mode is free (`free`, the world's the volume form (ALGEBRA.md, The board's interval is no observable) or the level form's uniform line), under twice the source's bound: the zero-mean rest of a compact source stands within 3 G(0) of the source over the wall on either side of its mean, the torus's Green's function the open board's less its mean; a periodic axis with an open or a closed one folds the images of the source onto it and the rest is a slab's, a chain's or the gap's uniform mode, above the bound by 3 to 19 times on the tubes the mathematician solved, so the tent stays there; refused by name where every bound leaves none."""
     unit = unit_from_bound(tent_of(counts, divisor), pair, width, gamma)
     long = [axis for axis in range(len(counts.shape)) if counts.shape[axis] > 1]
-    free_board = free and wrap is not None and len(long) == 3
+    free_board = free and len(long) == 3  # the torus wraps every axis
     if not unit and free_board:
         unit = unit_from_bound(2 * source_bound(counts, divisor), pair, width, gamma)
     if unit < 1:
@@ -96,12 +90,12 @@ def unit_of(
 
 
 def settled(
-    fine: np.ndarray, reads: Reads, divisor: Any, source: Any, wrap: Wrap, iterations: int
+    fine: np.ndarray, reads: Reads, divisor: Any, source: Any, iterations: int
 ) -> tuple[np.ndarray, int]:
     """The line at fixed paces, b <- (SUM over the three axes of read x the two arrivals + source) div divisor, iterated by the division act to its fixed point, the first state the act returns unchanged (the line's residual then in [0, divisor) at every Node, the state below the line by up to the bound `bound_of` in the lowest mode, which `refined` takes off); where the act cycles (the floors of a line at the massless pair can swing between two states), the cycle's elementwise highest state is a floor of the line, from which the act, monotone in the levels, only rises to a fixed point, so the iteration goes on from it; refused by name where it cycles again."""
 
     def act(state: np.ndarray) -> np.ndarray:
-        summed = sum(read * arrived for read, arrived in zip(reads, arrivals(state, wrap), strict=True))
+        summed = sum(read * arrived for read, arrived in zip(reads, arrivals(state), strict=True))
         return np.asarray(division_forward(summed, divisor, source)[0])
 
     seen: set[int] = set()
@@ -147,13 +141,13 @@ def recentred(levels: np.ndarray) -> np.ndarray:
 
 
 def settled_free(
-    fine: np.ndarray, reads: Reads, divisor: Any, source: Any, wrap: Wrap, iterations: int
+    fine: np.ndarray, reads: Reads, divisor: Any, source: Any, iterations: int
 ) -> tuple[np.ndarray, int]:
     """The line at fixed paces on a board with no sink, the uniform mode free (ALGEBRA.md, The closed lattice has no rest; the carried uniform mode): the same act as `settled`'s, b <- (SUM over the three axes of read x the two arrivals + source) div divisor, re-centred after every act (`recentred`: the floors drift the levels by a uniform shift the Laplacian reads nothing of, so the act returns no state unchanged and a repeat of the quotient is no fixed point), the line's residual read exactly before each act and its largest size over the Nodes the stop's own reading: the exact iteration contracts every wrapped mode by at most (2 + cos(2 pi / n)) / 3 per act, n the longest extent, and the floors hold the residual at a size they set, so the least size seen falls and then stands; the state of the least size is kept and returned once the least has stood for n^2 acts (above six e-folds of the slowest wrapped mode, 3 n^2 / (2 pi^2) acts each), a deterministic stop, the least sizes a falling sequence of whole numbers; the levels then within the miss `bound_of` names of the line in fine units, refined after (`refined`)."""
     patience, least, kept, stood = max(fine.shape) ** 2, None, fine, 0
     while True:
         iterations += 1
-        summed = sum(read * arrived for read, arrived in zip(reads, arrivals(fine, wrap), strict=True))
+        summed = sum(read * arrived for read, arrived in zip(reads, arrivals(fine), strict=True))
         size = int(np.abs(summed + source - divisor * fine).max())
         if least is None or size < least:
             least, kept, stood = size, fine, 0
@@ -164,7 +158,7 @@ def settled_free(
         fine = recentred(np.asarray(division_forward(summed, divisor, source)[0]))
 
 
-def bound_of(fine: np.ndarray, wrap: Wrap, reads: Reads, divisor: Any, free: bool = False) -> int:
+def bound_of(fine: np.ndarray, reads: Reads, divisor: Any, free: bool = False) -> int:
     """The floored iteration's largest miss in fine units, K, a bound of the line's inverse on the unit source (the advisor's finding: the first state the act returns unchanged lies below the line by up to one fine unit over 1 - rho, rho the row's Jacobi factor on the board's lowest mode, (num / den) cos(pi / (n + 1)) on an open n-cube): along the longest open or closed axis of n Nodes, (6 div 2) ((n + 2) div 2)^2 + 1, the six reads over the axis's two Ports times the half-extent squared, plus one (`PORTS`, `SIDES`; no three of the axes in it), at or above the top 3 (n + 1)^2 / 4 of the parabola 3 x (n + 1 - x), the inverse of 6 b - S_6(b) = 6 along the axis, 2 b_x - b_(x-1) - b_(x+1) = 6, which the massless line at the vacuum's paces returns at or above the unit source at every Node (at every pace the six reads sum to at most the divisor, 6 num p_i^2 <= 6 (den - num) p_0^2 + 6 num p_i^2, so the inverse's row sums are at most that line's, and a face or an inner face read as 0 only lowers them); where every axis of more than one Node wraps, the pair's gap alone is the sink, W div (W - 6 R) + 1 at the Node where it is largest (den over den - num at the vacuum); the smaller where both hold; where neither holds and an inner face is the sink (`Wrap.beyond`), the longest axis's parabola, the face a wall somewhere along it; refused by name where no face at all bounds it (a massless row on a board wrapping on every axis needs a sink, which `rest` refuses before, or its uniform mode is free on Rule3's own line at k = 0: `free`, the re-centred iteration's miss, 6 times the zero-mean Green's function's absolute row sum on the torus under the floors of either sign bounded by one, the row sum under n^2 / 2 for the longest extent n, so 3 n^2 + 1)."""
     if free:
         longest = int(max(fine.shape))
@@ -186,7 +180,6 @@ def refined(
     reads: Reads,
     divisor: Any,
     source: Any,
-    wrap: Wrap,
     largest: int,
     unit: int,
     iterations: int,
@@ -199,15 +192,14 @@ def refined(
     six = 2 * sum(int(np.asarray(read).max()) for read in reads)  # 6 R at the largest pace
     while True:
         total = (
-            sum(read * arrived for read, arrived in zip(reads, arrivals(fine, wrap), strict=True))
-            + source
+            sum(read * arrived for read, arrived in zip(reads, arrivals(fine), strict=True)) + source
         )  # the numerator
         residual = np.asarray(total, dtype=object) - np.asarray(divisor, dtype=object) * fine
         residual = residual.astype(fine.dtype)  # within the divisor, the fine levels' kind
         if not residual.any():  # the stop is the line itself: nothing to refine, no bound needed
             return fine, iterations, found
         if not bound:
-            bound = miss = bound_of(fine, wrap, reads, divisor, free)
+            bound = miss = bound_of(fine, reads, divisor, free)
             if (
                 2 * bound <= unit
             ):  # the miss within half a level: the levels within one level of the line
@@ -224,7 +216,7 @@ def refined(
         )  # the least at 2 K or above
         start = np.zeros_like(fine) if seed is None else division(scale, seed[1], seed[0])
         settle = settled_free if free else settled
-        delta, iterations = settle(start, reads, divisor, scale * residual, wrap, iterations)
+        delta, iterations = settle(start, reads, divisor, scale * residual, iterations)
         fine = fine + division(1, scale, delta + int(division(1, 2, scale)))
         found, seed = found or (delta, scale), None  # the later rounds correct another residual
         if scale >= 2 * bound:
@@ -278,7 +270,6 @@ def scaled_source(source: np.ndarray, clock: Any, pace: Any, gamma: int, interva
 def rest(
     counts: np.ndarray,
     pair: Pair,
-    wrap: Wrap,
     divisor: int,
     width: int,
     wall: int,
@@ -296,7 +287,7 @@ def rest(
             f"the start's divisor, the row's level weight or its write's wall, is from 1, got {divisor}"
         )
     double_root = num == den and bool(counts.any())  # the double root with no sink: the free mode
-    unit = unit_of(counts, pair, divisor, width, gamma, wrap, double_root)
+    unit = unit_of(counts, pair, divisor, width, gamma, double_root)
     largest = min(width, MAX_WORK_INT)
     source = division(3 * den * unit, divisor, counts) * gamma * gamma
     half = int(division(1, 2, unit))
@@ -320,9 +311,9 @@ def rest(
         if double_root:  # the zero-mean part alone, the torus's own static line
             scaled = without_uniform(scaled, reads[0])
         settle = settled_free if double_root else settled
-        fine, iterations = settle(fine, reads, line_wall, scaled, wrap, iterations)
+        fine, iterations = settle(fine, reads, line_wall, scaled, iterations)
         fine, iterations, correction = refined(
-            fine, reads, line_wall, scaled, wrap, largest, unit, iterations, correction, double_root
+            fine, reads, line_wall, scaled, largest, unit, iterations, correction, double_root
         )
         if double_root:  # the gauge of the free uniform mode: the rest's floor at 0, the vacuum's rest
             fine = fine - int(fine.min())

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, NamedTuple
+from typing import Any
 
 AXES = 3  # the lattice's three axes
 SIDES = 2  # the two Ports of one axis, +a and -a
@@ -11,14 +11,6 @@ PORT_SIDES = tuple((axis, side) for axis in range(AXES) for side in (1, -1))  # 
 LINK_UNIT = (
     SIDES ** (SIDES + SIDES)
 )  # the Link unit G = 2^4 = 16, the engine's own (the owner's word of 2026-10-24, only the universe's constants: the universe file's key `link_unit`, declared 16 in every file to that day, refused by name since, loader/universe.GONE_INTEGERS): the unit in which each Link's factor is one integer, Q_ij = (G^2 (Gamma - t_a)^2 + Gamma^2 div 2) div Gamma^2 (core/rule3.link_factor; ALGEBRA.md, The engine's derivation ledger, row 1: the tension resolved to Gamma / (2 G^2) by the one rounding), a power of two as the loader required of the key; every integer of Rule3 carries G^2, w = 6 den Gamma^2 G^2, and no reading of the run carries it but the clicks' remainder integer 3 den Gamma^2 G^2 (the scan of 2026-10-24: the eras and nodes logs equal at G 8, 16 and 32), so the record stands at 16 bit for bit
-
-
-class Wrap(NamedTuple):
-    """The board's face rule, the torus: every axis wraps (ALGEBRA.md, The board is a torus; the open and closed faces and the inner faces of the record worlds left 2026-10-24), the three flags kept as the readings' word for the ring on each axis."""
-
-    x: bool
-    y: bool
-    z: bool
 
 
 def shifted(a: Any, axis: int, sigma: int) -> Any:

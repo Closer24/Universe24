@@ -87,7 +87,7 @@ def born_list(board: Lattice, item: Item, whole: list[Node]) -> list[Item]:
     shares, frozen = board.share_of(item.family, 1, board.mask(nodes[:1]))
     if bool(frozen[at]):
         return []  # a frozen Node births nothing: its share is not read there
-    share = int(shares[at])  # the standing light's energy
+    share = int(shares[at])  # the standing massless record's energy
     standing = max(
         int(division_forward(share, board.credit.units[item.family], 0)[0]), 1
     )  # the whole quanta standing there

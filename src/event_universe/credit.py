@@ -29,10 +29,7 @@ class Books:
     def of(cls, board: Lattice) -> Books:
         """The books at the start: every family of quanta's unit of one quantum from its own rotation (`record_unit`, held through the run; the click's plan, C1) and its count its laid share in that unit (`counted`, the books' origin read as a count; a record with no count at the origin named among `empty`, its unit set at its first lay), the emitters' book holding the file's lay for every family laid with a count, `Emitter(None, count, False)` (Part H, the hands' SHOULD: a laid light beside an emitter is drawn between the body and the lay by their counts, `take.drawn_emitter`; the lay drawn is the file's, no receiver, the lay with the recoil lost to the lay), every other book empty."""
         units = {index: record_unit(board, index) for index in board.order}
-        counts = {
-            i: counted(board, i, *share.count_read(board, i, board.laid[i], units[i]))
-            for i in board.order
-        }
+        counts = {i: counted(*share.count_read(board, i, board.laid[i], units[i])) for i in board.order}
         books = cls(counts, units)
         books.births = {  # the births' book: the records laid at the start, born at the interval 0
             index: (0, support_of(board, index)) for index in board.order if counts[index] > 0
@@ -50,7 +47,7 @@ def born(board: Lattice, index: int, was: int) -> None:
         )  # the whole lay's Nodes, a section too
 
 
-def counted(board: Lattice, index: int, total: int | None, unit: int) -> int:
+def counted(total: int | None, unit: int) -> int:
     """A share in the current's units as whole quanta of the record's own unit, (total + W_rec div 2) div W_rec by the division act (`share.quanta_of`; `record_unit`, C1), 0 where it is not read: the reading of the record's count."""
     return 0 if total is None else int(share.quanta_of(np.array([total], dtype=object), unit, object)[0])
 
@@ -60,7 +57,7 @@ def count_of(board: Lattice, index: int) -> int | None:
     total, unit = share.count_read(board, index, board.total_share(index)[0], board.credit.units[index])
     if total is None:
         return None
-    return counted(board, index, total, unit)
+    return counted(total, unit)
 
 
 def record_unit(board: Lattice, index: int) -> int:
