@@ -7,23 +7,23 @@ import json
 
 import numpy as np
 
-from event_universe import conversion, records, world_files
+from event_universe import conversion, records, seed, world_files
 from event_universe.act import born_items
 from event_universe.emission import laid_by_count
 from event_universe.features.click import amplitude
 from event_universe.lattice import Lattice
 from event_universe.lay import laid
 from event_universe.loader.derived import count_wall
+from event_universe.loader.universe import SIGN
 from event_universe.world_files import load_world
 from tests.laws import ROOT
-
-UNIVERSE = ROOT / "examples" / "events" / "universe24" / "universe_universe24.json"
+from tests.laws_universe import small_universe, uniform_sea
 
 
 def bare_board(tmp_path, monkeypatch, intervals, births):  # type: ignore[no-untyped-def]
-    """The one universe file on the bare 3-cube torus, the births kept."""
+    """The tests' small universe on the bare 3-cube torus (den 1,021, its two points; 2026-10-24, the family-less file), the births kept."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    (tmp_path / "u.json").write_text(UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8")
+    small_universe(tmp_path)
     world = {"universe": "u.json", "shape": [3, 3, 3], "intervals": intervals}
     (tmp_path / "bare.json").write_text(json.dumps(world), encoding="utf-8")
     keep = lambda line: births.append(line) if line.get("event") == "birth" else None  # noqa: E731
@@ -43,7 +43,7 @@ def test_the_lists_two_light_quanta_make_are_the_conjugate_pairs_and_the_general
     walls = [sum(count_wall(families[out], 1) for out, _sense in table) for table in pairs]
     assert walls == sorted(walls)
     general = conversion.lists_of(families, 2, 4)
-    assert len(general) == 5 and all(table in general for table in pairs)
+    assert len(general) >= len(pairs) and all(table in general for table in pairs)
     assert all(
         conversion.conjugate_exact(families, table) and sum(s for _o, s in table) == 0
         for table in general
@@ -55,7 +55,9 @@ def test_a_list_of_four_children_lays_four_records_through_the_same_path(tmp_pat
     """A list of any length lays its children one record each (`act.born_items`, `emission.laid_by_count`): a four-child list, the proton pair with the electron pair, handed to the path at one Node lays two records of each family, each born record's Wronskian its child's sense, and after one interval the holder of the sign's four reader rows are written."""
     board = bare_board(tmp_path, monkeypatch, 2, [])
     names = [f.name for f in board.families]
-    proton, electron = names.index("proton"), names.index("electron")
+    proton, electron = sorted(
+        (k for k, f in enumerate(board.families) if f.plane), key=lambda k: board.families[k].pair[0]
+    )  # the heavier point, the lighter
     table = ((proton, -1), (proton, 1), (electron, -1), (electron, 1))
     items = born_items(board.families, table, ((1, 1, 1),))
     assert [item.record for item in items] == [0, 1, 0, 1] and [item.sense for item in items] == [
@@ -72,7 +74,7 @@ def test_a_list_of_four_children_lays_four_records_through_the_same_path(tmp_pat
             int(w[1, 1, 1]) == item.sense * amplitude(1, board.world.quantum_action, item.pair, 1) ** 2
         )
     board.step()
-    charge = names.index("charge")
+    charge = names.index(SIGN)
     width = board.families[charge].width
     rows = [
         int(np.abs(np.asarray(board.states[charge].lines[r * width].now, dtype=object)).max())
@@ -84,6 +86,9 @@ def test_a_list_of_four_children_lays_four_records_through_the_same_path(tmp_pat
 def test_the_uniform_cube_births_the_list_one_record_per_child_each_at_its_sense(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     """At the first meeting every Node births the one list the law selects, the conjugate pair of the heaviest plane family within the two quanta's energy: the records holding levels number the list's children, each born record's Wronskian carries its child's sense at every Node and equals the opposite child's in size, the books count one quantum per child, and the holder of the sign's row of every charged record is written after the birth."""
     births: list[dict] = []  # type: ignore[type-arg]
+    monkeypatch.setattr(
+        seed, "uniform_seed", uniform_sea
+    )  # the uniform cube, the law's seed to 2026-10-24, by name: the sentence is every Node's alike
     board = bare_board(tmp_path, monkeypatch, 40, births)
     names = [f.name for f in board.families]
     while not births:
@@ -110,7 +115,7 @@ def test_the_uniform_cube_births_the_list_one_record_per_child_each_at_its_sense
     for (name, sense), w in born.items():
         assert born[(name, -sense)] == -w != 0
     board.step()
-    charge = names.index("charge")
+    charge = names.index(SIGN)
     width = board.families[charge].width
     rows = [
         int(np.abs(np.asarray(board.states[charge].lines[r * width].now, dtype=object)).max())

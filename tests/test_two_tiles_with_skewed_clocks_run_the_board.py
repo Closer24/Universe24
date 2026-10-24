@@ -159,9 +159,11 @@ def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_through_the_birth
         born and born[0]["interval"] <= BIRTH
     )  # the hole seed's first birth by the draw at the hole's side (2026-10-24; every Node alike at 24 under the uniform sea to that day)
     assert all(
-        vector_of(line["children"][0]) is not None for line in born
+        vector_of(c) is not None for line in born for c in line["children"]
     )  # the points the fit picks, named by their vectors
-    assert all(line["children"][0] == line["children"][1] and line["senses"] == [-1, 1] for line in born)
+    assert all(
+        sum(line["senses"]) == 0 for line in born
+    )  # one record per child, the senses summing to 0 (2026-10-24)
     assert skew == 1 and board.interval == tiles[0].interval == tiles[1].interval == INTERVALS
 
 

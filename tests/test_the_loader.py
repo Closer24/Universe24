@@ -119,13 +119,12 @@ def test_the_rows_are_derived_from_den_and_the_one_file_loads():
         False,
     )
     assert sign.held and sign.wronskian and sign.rotation and sign.pair == (6000, 6000)
-    assert (sign.width, sign.records) == (
-        4,
-        1 + 6,
-    )  # the time line and three odd lines per row, a row per plane and the free row
+    assert (
+        (sign.width, sign.records) == (4, 1 + 2 * 6)
+    )  # the time line and three odd lines per row, two rows per plane (the list's two children, 2026-10-24) and the free row
     assert volume.held and not volume.wronskian and not volume.rotation and volume.pair == (6000, 6000)
     for plane in families[3:]:
-        assert plane.plane and plane.lines == 2 and not plane.held and plane.pair[1] == 6000
+        assert plane.plane and plane.width == 2 and plane.records == 2 and not plane.held and plane.pair[1] == 6000  # two lines per record, two records (the list's children, 2026-10-24)
         assert sorted(read.family for read in plane.reads) == [0, 1]  # the volume and the sign
         assert circle.vector_of(plane.name) is not None
     assert [read.family for read in massless.reads] == [0] and sign.reads == ()

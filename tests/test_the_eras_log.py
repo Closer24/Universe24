@@ -30,7 +30,7 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
     assert (header["node_clock"], header["quantum_action"], header["intervals"]) == (GAMMA, 36000, 8)
     assert (
         header["width"] == load_world(world).width.bit_length() and "unobservable" not in header
-    )  # the derived width (2026-10-24), no flag
+    )  # the derived width (139 on 2026-10-24 with one record per charged family, 141 with four, the lists' children; 92 declared before), no flag
     assert (
         header["den"] == 1021
         and header["primes"] == [[1021, 1]]

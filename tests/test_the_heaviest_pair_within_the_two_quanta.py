@@ -1,4 +1,4 @@
-"""Matter's birth from light, the heaviest pair within the two quanta's own energy (ALGEBRA.md, Matter's birth from light; act.born_table, act.born_pair, meeting_board.child_of): the chooser on the one universe file, exact in the integers, over every point of den's circle since the file carries no row (2026-10-24; the fit vacuous at two whole quanta, so the two quanta at the top birth the point nearest the top, the builder's finding of #2187; the selection sentence the builder's sense runs decide): W_c = 3 den T, each point's walls 2 x 3 T s, the heaviest whose walls fit."""
+"""Matter's birth from light, the heaviest pair within the two quanta's own energy (ALGEBRA.md, Matter's birth from light; act.born_table, act.born_list, meeting_board.child_of): the chooser on the one universe file, exact in the integers, over every point of den's circle since the file carries no row (2026-10-24; the fit vacuous at two whole quanta, so the two quanta at the top birth the point nearest the top, the builder's finding of #2187; the selection sentence the builder's sense runs decide): W_c = 3 den T, each point's walls 2 x 3 T s, the heaviest whose walls fit."""
 
 import json
 

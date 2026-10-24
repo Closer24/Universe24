@@ -32,8 +32,8 @@ def test_the_fold_accepts_the_bare_world_and_refuses_a_former_key() -> None:
     assert names[:3] == [VOLUME, SIGN, MASSLESS] and names[parsed.seed] == MASSLESS
     assert len(names) == 3 + 3**3 - 1 and all(vector_of(name) is not None for name in names[3:])
     assert all(
-        family.plane and family.lines == 2 for family in parsed.families[3:]
-    )  # two lines for a gap
+        family.plane and family.width == 2 for family in parsed.families[3:]
+    )  # two lines for a gap, per record
     emptied = {**world, "bodies": []}  # the declared bodies, a key refused since 2026-10-24
     with pytest.raises(ValueError, match="unknown key 'bodies'"):
         parse_world(emptied, files, input_digest(emptied))
@@ -78,9 +78,11 @@ def test_the_bare_torus_is_seeded_with_the_hole_bangs_and_births_the_pairs(
         births = [line for line in lines if line.get("event") == "birth"]
     assert births and births[0]["interval"] < 60
     for birth in births:
-        child = birth["children"][0]
-        assert vector_of(child) is not None and board.families[names.index(child)].plane
-        assert birth["children"] == [child] * 2 and birth["senses"] == [-1, 1]
+        for child in birth["children"]:
+            assert vector_of(child) is not None and board.families[names.index(child)].plane
+        assert (
+            len(birth["children"]) == len(birth["senses"]) >= 2 and sum(birth["senses"]) == 0
+        )  # one record per child, the senses summing to 0 (2026-10-24)
     credits = [line for line in lines if line.get("event") == "credit"]
     assert credits and all(
         c["absorbed"] == MASSLESS and vector_of(c["realised"]) is not None for c in credits

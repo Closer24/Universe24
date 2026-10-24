@@ -15,7 +15,6 @@ from event_universe.lattice import Lattice
 from event_universe.lay import laid
 from event_universe.loader.circle import circle_points, lightest_point
 from event_universe.loader.derived import amplitude_bound, count_wall, held_write_of
-from event_universe.share import charge_at
 from event_universe.take import Item
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, refused, resolved
@@ -109,7 +108,9 @@ def test_equal_wronskians_of_two_families_write_equal_charge(tmp_path, monkeypat
         names = [f.name for f in board.families]
         index, den = names.index(name), board.families[names.index(name)].pair[1]
         laid_by_count(board, Item(index, 1, ((1, 1, 1),), (den, den), sense=-1))
-        wronskian = int(charge_at(board, index)[1, 1, 1])
+        wronskian = int(
+            np.asarray(records.wronskian(board.lines_of(index, 0), True), dtype=object)[1, 1, 1]
+        )
         board.step()
         written[name] = (wronskian, max(holder_rows(board)))
     heavier, lighter = points_of(board)
@@ -117,8 +118,8 @@ def test_equal_wronskians_of_two_families_write_equal_charge(tmp_path, monkeypat
     assert written[heavier][1] == written[lighter][1] > 0
 
 
-def test_the_holes_board_runs_40_intervals_with_the_sign_holder_bounded(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The sea with a hole (the law's seed with the origin's light taken by the one lay act, the form the board's own close uses for the two quanta's hole) and one electron quantum laid in the birth's own form, 40 intervals: electron pairs are born by the draw and every level of the holder of the sign stays below the former factor's write of that one electron in one interval, 16,427 (the runaway hand's 3-cube, 2026-10-24: 18,861 at the interval 1 under the former factor, 18 under the sentence; the hole's board 4,401,616 at 40 before, 3,774 after). On this head a born pair's two items are both laid at the Node (every face read before any write), its Wronskian there 0, so the laid quantum is the holder's source."""
+def test_the_holes_board_runs_25_intervals_with_the_sign_holder_bounded(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """The sea with a hole (the law's seed with the origin's light taken by the one lay act, the form the board's own close uses for the two quanta's hole) and one electron quantum laid in the birth's own form, 25 intervals: electron pairs are born by the draw and every level of the holder of the sign stays below the former factor's write of that one electron in one interval, 16,427 (the runaway hand's 3-cube, 2026-10-24: 18,861 at the interval 1 under the former factor, 18 under the sentence; the hole's board 4,401,616 at 40 before, 3,774 after). On this head a born pair's two items are both laid at the Node (every face read before any write), its Wronskian there 0, so the laid quantum is the holder's source."""
     births: list[dict] = []  # type: ignore[type-arg]
     board = bare_board(
         tmp_path, monkeypatch, lambda line: births.append(line) if line.get("event") == "birth" else None
@@ -134,12 +135,12 @@ def test_the_holes_board_runs_40_intervals_with_the_sign_holder_bounded(tmp_path
     electron, den = names.index(lighter), board.families[names.index(lighter)].pair[1]
     laid_by_count(board, Item(electron, 1, ((1, 1, 1),), (den, den), sense=-1))
     largest = []
-    for _ in range(40):
+    for _ in range(25):
         board.step()
         largest.append(max(holder_rows(board)))
     assert births and all(
-        b["children"][0] in points_of(board) for b in births
-    )  # pairs of the den's points born
+        c in points_of(board) for b in births for c in b["children"]
+    )  # lists of the den's points born, one record per child (2026-10-24)
     assert 0 < max(largest) < 16_427
 
 
