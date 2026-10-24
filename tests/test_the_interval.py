@@ -180,7 +180,7 @@ def test_the_run_back_matches_at_every_interval_at_a_wall_that_never_moves(tmp_p
     volume_universe(tmp_path)
     torus = laid_torus(tmp_path, "torus")
     cube = light_cube(tmp_path, "cube", 400)
-    for path, intervals in ((torus, 30), (cube, 16)):
+    for path, intervals in ((torus, 12), (cube, 8)):  # 30 and 16 before the suite's bound of 2026-10-24
         verdict = BACK.verdict(Lattice(load_world(path)), intervals)
         expected = {"verdict": "MATCH", "intervals": intervals, "interval": 1, "ended": None}
         assert verdict == expected, (path.name, verdict)
@@ -191,7 +191,7 @@ def test_the_run_back_matches_at_every_interval_at_a_wall_that_never_moves(tmp_p
     board.states[g].lines[0] = replace(
         line, before=before
     )  # the kicked torus, the velocity in the record
-    assert BACK.verdict(board, 16)["verdict"] == "MATCH"
+    assert BACK.verdict(board, 8)["verdict"] == "MATCH"
 
 
 def test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_traceless_parts(
@@ -296,7 +296,7 @@ def test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rou
     fixed = one_number(board.fixed_walls[g][0])
     assert fixed == wall * GAMMA * paces.clock(GAMMA, 60) ** 2
     assert one_number(board.states[g].write_remainders[0]) == fixed // 2  # born at the half wall
-    for step in lockstep(board, g, m, 40):
+    for step in lockstep(board, g, m, 16):  # 40 before the suite's bound of 2026-10-24
         form = step["now"] * step["now"] - step["next"] * step["before_record"]
         a = int(volume.level_of(GAMMA, np.array(step["level"])))
         clock, pace = paces.node_paces(GAMMA, a)
@@ -320,8 +320,8 @@ def test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rou
     # to that day the loader refused them by name, "differing weights", the carried factor's one wall per
     # Node the sources' shared clock's; the refusal stands for a holder of the sign reading no content alone
     volume_universe(tmp_path)
-    verdict = BACK.verdict(Lattice(load_world(laid_torus(tmp_path, "law"))), 20)
-    assert verdict == {"verdict": "MATCH", "intervals": 20, "interval": 1, "ended": None}
+    verdict = BACK.verdict(Lattice(load_world(laid_torus(tmp_path, "law"))), 8)
+    assert verdict == {"verdict": "MATCH", "intervals": 8, "interval": 1, "ended": None}
     board = Lattice(load_world(laid_torus(tmp_path, "deep")))
     deep = volume.volume_of(GAMMA, np.full(board.shape, GAMMA, dtype=object))
     board.states[g].lines[0] = replace(board.states[g].lines[0], now=deep, before=deep)

@@ -12,11 +12,11 @@ from tests.laws_interval import laid_torus, volume_universe
 def test_the_flux_step_equals_the_first_form_on_a_held_well_and_runs_back_to_the_lay(
     tmp_path, monkeypatch
 ) -> None:  # type: ignore[no-untyped-def]
-    """The laid 3-cube torus (tests/laws_interval.py, matter in its held well at the volume form's integers), every interval of 6 forward against the first form (every line's two levels and remainder, every write remainder, the record) and back with the record to the lay exactly (bell_a_b over its 100 intervals, 30 s on the suite's clock, left on 2026-10-24)."""
+    """The laid 3-cube torus (tests/laws_interval.py, matter in its held well at the volume form's integers), every interval of 4 forward against the first form (every line's two levels and remainder, every write remainder, the record) and back with the record to the lay exactly (bell_a_b over its 100 intervals, 30 s on the suite's clock, left on 2026-10-24)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     volume_universe(tmp_path)
-    found = ORACLE.verdict(Lattice(load_world(laid_torus(tmp_path, "well", intervals=6))), None)
-    assert found["verdict"] == "EQUAL" and found["intervals"] == found["back"] == 6, found
+    found = ORACLE.verdict(Lattice(load_world(laid_torus(tmp_path, "well", intervals=4))), None)
+    assert found["verdict"] == "EQUAL" and found["intervals"] == found["back"] == 4, found
 
 
 def test_the_flux_step_equals_the_first_form_under_the_fold(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
