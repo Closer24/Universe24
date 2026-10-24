@@ -280,6 +280,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("loader/faces.py", "connected", "%"): "D",  # a walked coordinate's wrap, named
     ("loader/derived.py", "FamilyRule.width", "//"): "D",  # exact, a row's lines, named
     ("loader/derived.py", "FamilyRule.planes", "//"): "D",  # exact, a part's planes, named
+    (
+        "loader/derived.py",
+        "pythagorean_readers",
+        "largest_below",
+    ): "D",  # the integer sine of a sign reader's pair, the search on the share reading, once (the sign's reader is Pythagorean, 2026-10-24)
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     (

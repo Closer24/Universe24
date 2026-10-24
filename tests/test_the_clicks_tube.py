@@ -3,7 +3,7 @@
 import json
 
 from event_universe.lattice import Lattice
-from tests.laws import EVENTS
+from tests.laws import EVENTS, refused
 from tests.laws_read import load_shipped
 
 FOLDER = EVENTS / "clicks"
@@ -22,8 +22,14 @@ SHELL_NODES = 218  # the Chebyshev shell r = 3 about the body's declared Node (6
 REGION = 3209  # the write's region, the laid part's whole support
 LINES = 0  # the run's output lines: none, no click fell inside the 256 intervals (the blind's 0.62 by the probe's stream missed, the book half the probe's and then dying; the reader's estimate of 05:01 about 0.2)
 
+IRRATIONAL = "a reader of the sign writes its charge per quantum by its count unit"  # the refusal of 2026-10-24 (tests/test_the_sign_reader_with_an_irrational_sine.py)
+
 
 def test_the_declaration_is_the_frames_and_nothing_of_the_mechanism():
+    refused(
+        IRRATIONAL, load_shipped, WORLD
+    )  # the world refused at load since 2026-10-24 (the sign reader with an irrational sine, the owner's word); the former assertions below stand as the record of the law to 2026-10-23, kept by name
+    return
     world = load_shipped(WORLD)
     mode = json.loads(WORLD.with_suffix(".mode.json").read_text(encoding="utf-8"))
     instrument = mode["bodies"][1]["instrument"]
@@ -45,6 +51,10 @@ def test_the_declaration_is_the_frames_and_nothing_of_the_mechanism():
 
 
 def test_the_bound_body_books_its_own_light_and_the_run_drew_no_click():
+    refused(
+        IRRATIONAL, load_shipped, WORLD
+    )  # the world refused at load since 2026-10-24 (the sign reader with an irrational sine, the owner's word); the former assertions below stand as the record of the law to 2026-10-23, kept by name
+    return
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_shipped(WORLD), lines.append)
     (books,) = [b for b in board.credit.bodies if board.families[b.index].name == "electron"]

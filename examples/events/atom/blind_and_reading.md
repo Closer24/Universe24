@@ -618,3 +618,7 @@ The shells' worlds atom_shells and atom_shells_symmetric deleted 2026-10-20 at t
 body in the exact vacuum, its digits one bit per line per interval against its draws' totals of 54
 bits, its draws before the ninth the generator's; the law's line standing (the exclusion from the
 family's sign on the singlet, ALGEBRA.md, What a body reads).
+
+## Refused at load since 2026-10-24 (the owner's word)
+
+The seven worlds of this folder stand as files and as the records of the law as it stood to 2026-10-23. Since 2026-10-24 the sign's reader is Pythagorean (ALGEBRA.md, The constants: a reader of the sign writes its charge per quantum by its count unit, exact for a Pythagorean pair alone; a reader with an irrational sine is refused, as the conversion refuses it from every exact list), and the electron [4000, 6000] has an irrational sine (20,000,000 is no square), so every world here is refused at load by name; the owner's word: no re-lay of the experiment worlds, every effort on Universe24. The former runs' numbers above, their pages and their logs stand as the record; tests/test_the_sign_reader_with_an_irrational_sine.py asserts the refusal on each world by name.

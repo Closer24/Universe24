@@ -33,7 +33,11 @@ CHAIN, QUANTA = (
     6,
 )  # the shortest chain (x open) holding the body apart from the end node_detectors; the
 # smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
-CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
+CHARGED = {
+    "name": "charged",
+    "pair": [3600, 6000],
+    "dimension": 2,
+}  # a Pythagorean plane under the sign (2026-10-24: the sign's reader is Pythagorean; matter's [4000, 6000] until then)
 # the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
 TOP = [0, 6000]
 CHARGED["reads"] = {"gravity": 1, "binding": 1, "charge": 1}  # every holder, the sign's among them
@@ -238,7 +242,10 @@ def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fracti
 # world edited beside tmp_path, the emit-and-take world and the fold's floor
 TURNING_FILE = EVENTS / "turning.json"
 TURNING_INTEGERS, TURNING = universe_of(json.loads(TURNING_FILE.read_text(encoding="utf-8")))
-TURNING_T, TURNING_PAIR = TURNING_INTEGERS["quantum_action"], (4000, 6000)
+TURNING_T, TURNING_PAIR = (
+    TURNING_INTEGERS["quantum_action"],
+    (3600, 6000),
+)  # the tests' charged plane, Pythagorean since 2026-10-24 ((4000, 6000) until then, refused under the sign)
 CHARGE = [family.name for family in TURNING].index("charge")
 RULE_WALL = coefficients(*TURNING[CHARGE].pair, 6000, 6000, 6000, None, 16)[2]  # w = 6 den Gamma^2 G^2
 SINE = 4472  # isqrt(6000^2 - 4000^2): the matter pair's sin omega_0 times den
@@ -250,7 +257,12 @@ GRAVITY = {
     "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60},
 }
 COULOMB_UNIVERSE = {
-    "integers": {"node_clock": 6000, "quantum_action": 36000, "width": 63, "link_unit": 16},
+    "integers": {
+        "node_clock": 6000,
+        "quantum_action": 36000,
+        "width": 64,  # 63 until 2026-10-24: the sign holder's levels under the universal charge pass the content bound of 63 bits by 5 percent on this chain
+        "link_unit": 16,
+    },
     "families": [
         {
             "name": "charge",

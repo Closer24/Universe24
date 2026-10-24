@@ -65,6 +65,9 @@ def write_rooms(
     sources = readers_of(families, index)
     time = sum(
         abs(weight_of(index, families[other]))
+        * (
+            write.factors[other] if family.wronskian else 1
+        )  # the sign holder's charge factor on its time line (The constants, 2026-10-24)
         * booking_room(families, other, family.wronskian)
         * source_room(families, other, gamma, True, hill)
         for other in sources

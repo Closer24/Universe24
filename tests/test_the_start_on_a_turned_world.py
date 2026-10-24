@@ -9,6 +9,7 @@ import pytest
 from event_universe import bookings, lattice, node, records, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
+from tests.laws import refused
 
 ATOM = Path(world_files.REPOSITORY_ROOT) / "examples" / "events" / "atom"
 ROUNDING = 2  # Rule3's rounding on the held write, the lay a standing state within 2 units (ALGEBRA.md)
@@ -27,12 +28,19 @@ def time_lines(board: Lattice) -> list[tuple[str, int, np.ndarray]]:
     return found
 
 
+IRRATIONAL = "a reader of the sign writes its charge per quantum by its count unit"  # the refusal of 2026-10-24 (tests/test_the_sign_reader_with_an_irrational_sine.py)
+
+
 @pytest.mark.parametrize(
     ("name", "lay", "after"),
     [("hydrogen_1s", 3659, 3658), ("hydrogen_line", 3092, 3092)],
 )
 def test_the_first_write_returns_the_rest_on_the_turned_hydrogen_worlds(monkeypatch, name, lay, after):  # type: ignore[no-untyped-def]
     """The electron's Wronskian the start books in its last fixed-point iteration equals the Wronskian the first `Lattice.step` books at every Node bit for bit (the two hooks on `booked_of`, the start's and the step's), so the first write returns the rest: every held row's time line after the first interval within Rule3's rounding of the lay's level at every Node of the board, the electron's own row at the centre pinned at the lay and after the first interval (hydrogen_1s 3659 and 3658; hydrogen_line 3092 and 3092; the shipped booking's 3254 and 4043, 2825 and 3355), and the phase lines after the start stand at the seed angle 0, the state a run starts from, bit for bit."""
+    refused(
+        IRRATIONAL, load_world, ATOM / f"{name}.json"
+    )  # the world refused at load since 2026-10-24 (the sign reader with an irrational sine, the owner's word); the former assertions below stand as the record of the law to 2026-10-23, kept by name
+    return
     booked: dict[str, list[np.ndarray]] = {"start": [], "step": []}
     original = bookings.booked_of
 

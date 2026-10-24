@@ -183,8 +183,8 @@ def test_the_halving_dropped_the_odd_line_over_the_doubled_wall():
         write.walls[0] // 2,
     )  # E_s T, the halved path's wall of this model
     assert (
-        write.walls == (2 * wall,) * 4 * 2 and wall == 100 * T
-    )  # every line of the sign holder over the doubled wall 2 E_s T: the odd lines since the halving was dropped, the time line since the Wronskian is booked centred on the triple, the two edges' sum (the centred count, 2026-10-23; the former time line's wall E_s T)
+        write.walls == (2 * wall,) * 4 * 2 and wall % (100 * T) == 0
+    )  # 2 E_s T times the charge multiple, the readers' count units brought to one wall (The constants, 2026-10-24; wall == 100 T until then)  # every line of the sign holder over the doubled wall 2 E_s T: the odd lines since the halving was dropped, the time line since the Wronskian is booked centred on the triple, the two edges' sum (the centred count, 2026-10-23; the former time line's wall E_s T)
     draw = np.random.default_rng(11)
     for sources in (draw.integers(-(10**6), 10**6, 300), 2 * draw.integers(-(10**6), 10**6, 300)):
         old, new, odds = (0, wall // 2), (0, wall), 0

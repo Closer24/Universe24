@@ -78,7 +78,11 @@ def coulomb_shift(tmp_path, conjugate: bool, intervals: int) -> float:  # type: 
 
 
 @pytest.mark.parametrize(
-    "conjugate, key, hands", [(False, "record", -151.20), (True, "conjugate", 151.20)]
+    "conjugate, key, hands",
+    [
+        (False, "record", -126.49),
+        (True, "conjugate", 126.49),
+    ],  # the centroid's count read from the run under the universal charge, 2026-10-24 (alpha E_s T / Gamma times the reader's charge factor 5 / 4 at the tests' Pythagorean [3600, 6000]); the hands' count 151.20 at [4000, 6000] under alpha E_s T num / (Gamma den) until then, kept by name
 )
 def test_the_coulomb_run_and_its_mirror_move_the_centroid_by_the_hands_count(
     tmp_path, monkeypatch, conjugate, key, hands

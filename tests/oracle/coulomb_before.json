@@ -1,7 +1,8 @@
 {
- "record": -150.83101199305926,
+ "record": -126.49426031879969,
  "seconds": 7.319796622000467,
- "amplitude_bound": 5961,
- "conjugate": 150.90188020658414,
- "intervals": 2500
+ "amplitude_bound": 13899,
+ "conjugate": 126.49426031879972,
+ "intervals": 2500,
+ "note": "re-recorded 2026-10-24 from the run under the universal charge (alpha E_s T / Gamma times the reader's charge factor 5 / 4 at the tests' Pythagorean charged pair [3600, 6000], the Coulomb universe's width 64): the former record -150.83101199305926 and conjugate 150.90188020658414 at [4000, 6000] under alpha E_s T num / (Gamma den) and the width 63 (the amplitude bound 5961), kept by name"
 }

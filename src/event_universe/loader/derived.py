@@ -229,12 +229,30 @@ def family_rules(rows: Sequence[Row]) -> tuple[FamilyRule, ...]:
     return with_records(found, [0] * len(found))
 
 
+def pythagorean_readers(families: tuple[FamilyRule, ...], index: int) -> None:
+    """The sign's reader is Pythagorean (the owner's word of 2026-10-24, (ii), "closed"; ALGEBRA.md, The constants): a reader of the holder of the sign `index` writes its charge per quantum by its count unit, exact for a Pythagorean pair alone; a reader with an irrational sine is refused by name, as the conversion refuses it from every exact list (ALGEBRA.md, The conversion, 180), the sentence naming the reader, its pair and its den^2 - num^2; a massless reader (num = den) carries its Wronskian as before. The former behaviour of 236e74ed0, the count unit rounded once and the readers' units brought to one wall by their lcm, kept by name as its defect."""
+    holder = families[index]
+    for other in readers_of(families, index):
+        num, den = families[other].pair
+        gap = den * den - num * num
+        if families[other].plane and abs(num) != den and largest_below(gap) ** 2 != gap:  # a real-line reader is refused as no plane (loader/universe)
+            raise ValueError(
+                f"{families[other].name!r} reads the holder of the sign {holder.name!r} with the pair "
+                f"[{num}, {den}], whose sine is irrational (den^2 - num^2 = {gap}, no square): a reader of "
+                "the sign writes its charge per quantum by its count unit, exact for a Pythagorean pair "
+                "alone; a reader with an irrational sine is refused, as the conversion refuses it from every "
+                "exact list (ALGEBRA.md, The conversion, 180; The constants, the owner's word of 2026-10-24; "
+                "the rounded count unit and the lcm of 236e74ed0 the former behaviour, kept by name as its defect)"
+            )
+
+
 def alpha_of(families: tuple[FamilyRule, ...], index: int, gamma: int, action: int) -> tuple[int, int]:
     """The law's alpha of a holder of the sign carried inside its one write (the owner's word of 2026-10-24, nature's charge universality, "nature is the main thing"; ALGEBRA.md, The constants: the law's alpha is the ratio of the file's E_h T to Gamma, one per holder with any pairs under it; the old kept by name: "the ratio of the file's E_h T num to Gamma den, [num, den] the pair the moving planes reading the holder share, two moving planes of different num / den asking one holder for two alphas refused by name: one holder, one alpha", the law of one Node, 2026-10-23): the pair (E_h T, Gamma) reduced by their greatest common divisor, the numerator's multiplier and the walls' multiplier of every line of the holder's rows; no reader's pair enters it, the charge per quantum made one across the readers by their count units at the write (`held_write_of`, the charge factors); (1, 1) where no plane of quanta reads the holder (light's own row on the gate worlds), the write of no source."""
     holder = families[index]
     assert holder.level_weight is not None
     if not any(family.plane and weight_of(index, family) > 0 for family in families):
         return 1, 1
+    pythagorean_readers(families, index)
     above, below = holder.level_weight * action, gamma
     common = gcd(above, below)
     return int(division_forward(above, common, 0)[0]), int(division_forward(below, common, 0)[0])
@@ -313,6 +331,7 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, uni
         # brought to their least common multiple as the tension lines' dens are, the factors and the multiple
         # reduced once by their common divisor; a massless reader's factor the multiple itself (its Wronskian
         # as before)
+        pythagorean_readers(families, index)
         units = {
             other: count_wall(families[other], action)
             for other in sources
