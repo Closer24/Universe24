@@ -175,5 +175,10 @@ def test_a_born_child_carries_the_two_light_quantas_energy_and_the_charge_t_div_
     )
     born_here(board, (0, 0, 1), ((lightest, -1), (lightest, 1)))
     quanta, unit = int(board.quanta(lightest)[0][0, 0, 1]), board.credit.units[lightest]
-    assert quanta == (12 * den * size * size + unit // 2) // unit > 1800 * read[den][0]  # E over m c^2
+    legs = sorted(
+        sine for _vector, _num, sine in lift_points(den)
+    )  # the lifts' legs s from the loader, the least first: the units 3 T s stand in the legs' ratio
+    assert (
+        quanta == (12 * den * size * size + unit // 2) // unit > (legs[-1] // legs[0]) * read[den][0]
+    )  # E over m c^2: the heaviest lift's leg over the least, the two children's units' ratio (1838.68 at the top tier), times the heaviest child's quanta
     assert abs(quanta * unit - read[den][0] * read[den][1]) <= read[den][1]  # one energy, two units

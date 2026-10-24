@@ -105,7 +105,7 @@ __OPEN__
   document.getElementById('lvl-scale').textContent = '+-' + maxAbs;
   const cVac = S.content[0][0][0];
   document.getElementById('vac').textContent = cVac;
-  document.getElementById('well-scale').textContent = cVac + ' … ' + cMax;
+  document.getElementById('well-scale').textContent = cVac + ' ... ' + cMax;
   const cvL = document.getElementById('board-level'), cvW = document.getElementById('board-well');
   const bars = document.getElementById('bars');
   const centreLevel = rows.map((r, t) => { const xi = Math.min(X - 1, Math.max(0, Math.round(r.cx))); const yi = Math.min(YZ - 1, Math.max(0, Math.round(r.cy))); return S.now[t][xi][yi]; });

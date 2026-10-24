@@ -42,7 +42,7 @@ def body_records(board: Lattice) -> list[tuple[int, int]]:
 
 def bodies_closing(
     board: Lattice,
-    light: np.ndarray,
+    shares: np.ndarray,
     frozen: np.ndarray,
     born: set[Node],
     refusals: list[tuple[Node, str, int, int]],
@@ -68,7 +68,7 @@ def bodies_closing(
             at = (int(where[0]), int(where[1]), int(where[2]))
             if at in born:
                 continue
-            whole, rest = division_forward(int(light[at]), unit_k, 0)
+            whole, rest = division_forward(int(shares[at]), unit_k, 0)
             met = whole >= 1
             if not met and rest > 0:
                 label = f"the body {[k, r]} at {list(at)}'s read of itself and its Links at the interval {board.interval}"
