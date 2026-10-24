@@ -33,11 +33,9 @@ GAMMA_S = 1 / math.sqrt(1 - BETA2)
 YC = (SHAPE[1] - 1) // 2
 Y = np.indices(SHAPE)[1]
 
-IRRATIONAL = "a reader of the sign writes its charge per quantum by its count unit"  # the refusal of 2026-10-24 (tests/test_the_sign_reader_with_an_irrational_sine.py)
-
 
 def board_of(tmp_path: Path) -> Lattice:
-    """hydrogen.json's integers (hydrogen_read3.json's until 2026-10-24, the read 3 struck and the file, then equal to hydrogen.json, deleted) and its charge holder (no `form`) with the electron alone, on a board periodic in x and z and open in y, the electron laid by a mode file as the plane wave A g(y) e^(i k x), g a Gaussian of sigma 3 about the centre, 0 on the face layers, its before level the same wave turned by the band's omega(k), the clockwise record (W > 0) moving toward +x at v."""
+    """hydrogen.json's integers (hydrogen_read3.json's, the record worlds' universe at the read 3, kept as a file since 2026-10-24) and its charge holder (no `form`) with the electron alone, on a board periodic in x and z and open in y, the electron laid by a mode file as the plane wave A g(y) e^(i k x), g a Gaussian of sigma 3 about the centre, 0 on the face layers, its before level the same wave turned by the band's omega(k), the clockwise record (W > 0) moving toward +x at v."""
     universe = {
         "integers": {"node_clock": GAMMA, "quantum_action": T, "width": 63, "link_unit": 16},
         "families": [

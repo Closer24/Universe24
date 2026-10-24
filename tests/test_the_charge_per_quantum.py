@@ -1,4 +1,4 @@
-"""The charge is the Wronskian per quantum (ALGEBRA.md, The constants, the owner's word of 2026-10-24, nature's charge universality, "nature is the main thing"; the old "one ratio per holder, E_h T num / (Gamma den)" of 2026-10-23 kept by name): the holder of the sign carries one alpha = E_h T / Gamma with any pairs under it (`loader/derived.alpha_of`), and each reader's Wronskian enters the holder's one write times 3 T over its own count unit W_c sin omega_0 (`loader/derived.held_write_of`, the charge factors, the readers' units brought to one wall as the tension lines' dens are; `records.write_sources` on the time line, `bookings.booked_sources` at the start), so that every quantum of every family writes the same charge, T / 2 per count, the proton's and the electron's alike at any masses. Measured here on a small torus with a proton and an electron of different pairs both reading the sign holder, each one quantum laid at the quarter turn (the law's one-Node lay of a plane quantum, now (A, 0), before (0, sense A)): the write per quantum of the two is equal within the lay's rounding of A, exact in the identity factor x count unit; and the one world's universe at nature's den (the proton off the top at (4,859,756, 53,346,867), the electron at (53,567,757, 29,276), Gamma 1,000 kept) loads, which the sentence of 2026-10-23 refused by name."""
+"""The charge is the Wronskian per quantum (ALGEBRA.md, The constants, the owner's word of 2026-10-24, nature's charge universality, "nature is the main thing"; the old "one ratio per holder, E_h T num / (Gamma den)" of 2026-10-23 kept by name): the holder of the sign carries one alpha = E_h T / Gamma with any pairs under it (`loader/derived.alpha_of`), and each reader's Wronskian enters the holder's one write times 3 T den over its own count unit W_c sin omega_0 (`loader/derived.held_write_of`, the charge factors, the readers' units brought to one wall as the tension lines' dens are; `records.write_sources` on the time line, `bookings.booked_sources` at the start), so that every quantum of every family writes the same charge, T / 2 per count, the proton's and the electron's alike at any masses. Measured here on a small torus with a proton and an electron of different pairs both reading the sign holder, each one quantum laid at the quarter turn (the law's one-Node lay of a plane quantum, now (A, 0), before (0, sense A)): the write per quantum of the two is equal within the lay's rounding of A, exact in the identity factor x count unit; and the one world's universe at nature's den (the proton off the top at (4,859,756, 53,346,867), the electron at (53,567,757, 29,276), Gamma 1,000 kept) loads, which the sentence of 2026-10-23 refused by name."""
 
 from __future__ import annotations
 
@@ -176,7 +176,12 @@ def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # ty
     assert write.factors[proton] * count_wall(families[proton], T) == write.factors[
         electron
     ] * count_wall(families[electron], T)
-    assert np.gcd(write.factors[proton], write.factors[electron]) >= 1
+    assert (
+        np.gcd.reduce(
+            [write.factors[proton], write.factors[electron], write.walls[0] // (2 * T * sign.write_wall)]
+        )
+        == 1
+    )  # the factors reduced once by their common divisor
 
 
 def test_the_register_reads_the_content_rooms_and_a_sign_holder_at_w_0_changes_no_neutral_body():

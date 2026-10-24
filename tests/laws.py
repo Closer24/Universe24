@@ -248,7 +248,7 @@ TURNING_T, TURNING_PAIR = (
 )  # the tests' charged plane, Pythagorean since 2026-10-24 ((4000, 6000) until then, refused under the sign)
 CHARGE = [family.name for family in TURNING].index("charge")
 RULE_WALL = coefficients(*TURNING[CHARGE].pair, 6000, 6000, 6000, None, 16)[2]  # w = 6 den Gamma^2 G^2
-SINE = 4472  # isqrt(6000^2 - 4000^2): the matter pair's sin omega_0 times den
+SINE = 4800  # isqrt(6000^2 - 3600^2): the charged pair's sin omega_0 times den (4472 for [4000, 6000] to 2026-10-24)
 COULOMB_CHAIN, COULOMB_AT, EMIT_RUN = 400, 280, 200
 GRAVITY = {
     "name": "gravity",
@@ -272,7 +272,7 @@ COULOMB_UNIVERSE = {
         },
         {"name": "charged", "pair": list(TURNING_PAIR), "reads": {"charge": 1}, "dimension": 2},
     ],
-}  # the energy line: E_h T num = 100 x 36,000 x 4,000 = k_w Gamma den = 400 x 6,000 x 6,000
+}
 
 
 def sign_world(tmp_path, name, shape, boundary, intervals, centre, profile):  # type: ignore[no-untyped-def]
@@ -302,7 +302,7 @@ def imaged(a: np.ndarray, axes: tuple[int, ...], signs: tuple[int, ...]) -> np.n
 def coulomb_world(
     tmp_path, shape=(COULOMB_CHAIN, 1, 1), boundary=None, intervals=3000, centre=(COULOMB_AT, 0, 0)
 ):  # type: ignore[no-untyped-def]
-    """The Coulomb world: the sign holder alone with a plane record [4000, 6000] reading it (no holder of the content: the vacuum's paces, as the hands' chain), the body a one-quantum profile at the centre (the count-1 gate), the chain x open, y and z periodic of size 1 (the hands' chain of 400)."""
+    """The Coulomb world: the sign holder alone with a plane record [3600, 6000] reading it (Pythagorean since 2026-10-24; [4000, 6000] to then) (no holder of the content: the vacuum's paces, as the hands' chain), the body a one-quantum profile at the centre (the count-1 gate), the chain x open, y and z periodic of size 1 (the hands' chain of 400)."""
     (tmp_path / "u.json").write_text(json.dumps(COULOMB_UNIVERSE), encoding="utf-8")
     profile = np.zeros(shape, dtype=np.int64)
     profile[centre] = 1

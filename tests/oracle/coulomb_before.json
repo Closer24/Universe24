@@ -4,5 +4,5 @@
  "amplitude_bound": 13899,
  "conjugate": 126.49426031879972,
  "intervals": 2500,
- "note": "re-recorded 2026-10-24 from the run under the universal charge (alpha E_s T / Gamma times the reader's charge factor 5 / 4 at the tests' Pythagorean charged pair [3600, 6000], the Coulomb universe's width 64): the former record -150.83101199305926 and conjugate 150.90188020658414 at [4000, 6000] under alpha E_s T num / (Gamma den) and the width 63 (the amplitude bound 5961), kept by name"
+ "note": "re-recorded 2026-10-24 from the corrected lay (tests/laws.py SINE 4800 = isqrt(6000^2 - 3600^2), the charged pair [3600, 6000] laid as one quantum of its own pair; the lay to then had SINE 4472, the sine of [4000, 6000], so it was no quantum of the pair and its before level the old rest rotation, and gave the same centroid to the digit) under the universal charge (alpha E_s T / Gamma times the reader's charge factor 5 / 4, the Coulomb universe's width 64): the former record -150.83101199305926 and conjugate 150.90188020658414 at [4000, 6000] under alpha E_s T num / (Gamma den) and the width 63 (the amplitude bound 5961), kept by name"
 }

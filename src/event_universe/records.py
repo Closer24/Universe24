@@ -139,8 +139,11 @@ def scaled_sum(
         scaled, scale = rulers_write_factor(
             value, wall_rulers(held, families, rulers, row, source), gamma, intervals, True, parts
         )
-        total = total + weight * scaled
-        terms.append((weight * scaled, families[source[0]].exponent(intervals)))
+        term = (
+            weight * exact(scaled)
+        )  # Python's integers before the sum: two carried terms of object arrays summed through an int64 scalar passed 2^63 at the chain's interval 208 (2026-10-24)
+        total = total + term
+        terms.append((term, families[source[0]].exponent(intervals)))
     return total, scale, terms
 
 
