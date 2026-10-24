@@ -141,7 +141,9 @@ def test_the_holes_board_runs_25_intervals_with_the_sign_holder_bounded(tmp_path
     assert births and all(
         c in points_of(board) for b in births for c in b["children"]
     )  # lists of the den's points born, one record per child (2026-10-24)
-    assert 0 < max(largest) < 16_427
+    assert (
+        0 < max(largest) < board.world.amplitude_bound
+    )  # bounded by the engine's own derived bound and no course number (the former factor's 16,427 struck 2026-10-24)
 
 
 def test_the_lightest_point_of_the_circle_is_the_electrons_pair():

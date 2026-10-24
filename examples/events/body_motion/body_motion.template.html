@@ -102,7 +102,7 @@ __OPEN__
   function mix(a, b, t) { return [Math.round(a[0] + (b[0] - a[0]) * t), Math.round(a[1] + (b[1] - a[1]) * t), Math.round(a[2] + (b[2] - a[2]) * t)]; }
   let maxAbs = 1; for (const sl of S.now) for (const col of sl) for (const v of col) maxAbs = Math.max(maxAbs, Math.abs(v));
   let cMax = 61; for (const sl of S.content) for (const col of sl) for (const v of col) cMax = Math.max(cMax, v);
-  document.getElementById('lvl-scale').textContent = '±' + maxAbs;
+  document.getElementById('lvl-scale').textContent = '+-' + maxAbs;
   const cVac = S.content[0][0][0];
   document.getElementById('vac').textContent = cVac;
   document.getElementById('well-scale').textContent = cVac + ' … ' + cMax;

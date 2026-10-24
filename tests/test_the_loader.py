@@ -195,13 +195,13 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
 
 
 def test_a_file_integer_of_310_bits_loads_and_a_big_dens_turned_room_is_exact():
-    """The den enlarged as content (2026-10-24, the builder's two findings): a file's integer is bounded by 2^512 and not the host's 63 bits (`keys.FILE_INTEGER`; a den of 70 bits at the top tier), and plane.turned_room's arrivals at that den are exact in Python's integers, the room beyond 2^63, read against the pairs by hand."""
+    """The den enlarged as content (2026-10-24, the builder's two findings): a file's integer is bounded by no number of the tool's, Python's integers (the bound 2^512 gone 2026-10-24), and not the host's 63 bits (`keys.FILE_INTEGER`; a den of 70 bits at the top tier), and plane.turned_room's arrivals at that den are exact in Python's integers, the room beyond 2^63, read against the pairs by hand."""
     from event_universe.core.ports import LINK_UNIT
     from event_universe.plane import link_wall, sign_pairs, turned_room
 
     big = 2**310 - 1
-    assert keys.integer(big, "n", 1) == big
-    refused("integer from 1 through", keys.integer, 2**513, "n", 1)
+    assert keys.integer(big, "n", 1) == big and keys.integer(2**513, "n", 1) == 2**513
+    refused("integer from 1 through 3", keys.integer, 4, "n", 1, 3)
     pair, gamma, square = (1_166_991_729_163_826_857_995, TOP), 1000, LINK_UNIT * LINK_UNIT
     by_hand = max(
         abs(int(even[0])) + abs(int(odd[0]))
