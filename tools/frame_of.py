@@ -321,7 +321,9 @@ def standing_region(
     content, factors = board.read(index, 1, record)
     lines = board.lines_of(index, record)
     plane = lines[part * family.width : (part + 1) * family.width]  # the laid part's lines alone
-    shares = share.family_share(family, plane, board.wrap, gamma, content, factors, board.unit)
+    shares = share.family_share(  # the lay's own support: the plain Node term, 0 at a Node whose levels are 0, and not the frame's share, which stands at the Nodes beside the lay too (ALGEBRA.md, The booking is the frame's)
+        family, plane, board.wrap, gamma, content, factors, board.unit, None, list(plane)
+    )
     shape, periodic = board.shape, board.world.periodic
     region = np.asarray(shares, dtype=object) > 0
     for line in plane:

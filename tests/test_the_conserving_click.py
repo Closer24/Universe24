@@ -28,10 +28,10 @@ RESONANCE, LIFETIME, REGION, FIRST = (
 )  # the declaration, the whole support with its one joining Node, and the world's own click (5 under the centred count and the lay regenerated to it, 2026-10-23; 8 to that day under the left-sum count: the click's interval is the draw's, from the state's digits)
 WALL = 482990683139  # the electron's quantum W_c sin omega_0 at T = 36,000,000 and [4000, 6000]
 PIECE, FAN, RECOIL = (
-    5940256,
+    6005285,
     7156328,
-    5935911,
-)  # the body's P_z after 5935911 under the centred count and the lay regenerated to it (5947440 to 2026-10-23); the taker world's click at 9: the piece's p_z, the photon's P_z, the body's P_z after at the k of the record's own covariant Link angles, the piece to the integers' roundings (5497698, 0.9255, at the amplitudes' k of 2026-10-21 on this lay; 4945189, 2600676, 4571327 at the click at 27 on the packet's return, the first lay with the top at z = 1 to 2026-10-22 03:39; 11055256, 8012902, 10192931 at the click at 18 on 2026-10-21, the coupling 51; the packet laid one Node nearer the body on 2026-10-22, 03:39, for the test's bound (the Boss's word of that hour; the nearer lay a declaration of the experimenter by the reader's ruling))
+    5993849,
+)  # the piece 6005285 and the body's P_z after 5993849 under the frame's booking, 2026-10-23 (the passage's share at the body's Nodes in the frame's form, ALGEBRA.md, The booking is the frame's; 5940256 and 5935911 under the plain share, the same day, the centred count and the lay regenerated to it; 5947440 before that); the taker world's click at 9: the piece's p_z, the photon's P_z, the body's P_z after at the k of the record's own covariant Link angles, the piece to the integers' roundings (5497698, 0.9255, at the amplitudes' k of 2026-10-21 on this lay; 4945189, 2600676, 4571327 at the click at 27 on the packet's return, the first lay with the top at z = 1 to 2026-10-22 03:39; 11055256, 8012902, 10192931 at the click at 18 on 2026-10-21, the coupling 51; the packet laid one Node nearer the body on 2026-10-22, 03:39, for the test's bound (the Boss's word of that hour; the nearer lay a declaration of the experimenter by the reader's ruling))
 T = 36000000  # the clock's unit of both worlds, the energies' scale
 GIVER_BEFORE = (
     (1, 0),
@@ -56,11 +56,11 @@ TAKER_BEFORE = (
 )  # the taker at 8 under the centred count and the lay regenerated to it, 2026-10-23 (((1, 1), 17999924, (0, 0, 0), 693173072000, 195675174000) to that day; (26 on the first lay at z = 1, to 2026-10-22 03:39; 17 to 2026-10-21)
 TAKER_AFTER = (
     (1, 0),
-    17990086,
+    17989217,
     (0, 0, RECOIL),
-    814141670000,
+    814136046000,
     195573372000,
-)  # the taker at 9 (17986213 and 790168088000 at the amplitudes' k; 27 on the first lay; 18 to 2026-10-21)
+)  # the taker at 9 (17990086 and 814141670000 under the plain share and the hole to 0 to 2026-10-23, the photon's hole at the frame's level moving the content's write and so the electron's weighted share by 7 parts in 10^6, the frame's share at the readers' Nodes moving the piece's rounding by one unit of the Wronskian, ALGEBRA.md, The booking is the frame's; 17986213 and 790168088000 at the amplitudes' k; 27 on the first lay; 18 to 2026-10-21)
 
 
 def test_a_bound_record_declared_through_the_mode_file_clicks_on_the_instrument_bodys_path():
@@ -303,23 +303,23 @@ def test_the_recoil_is_written_as_the_entered_parts_phase_on_a_bound_record():
     after = fan_momentum(board, electron)
     assert (
         after == (0, 0, RECOIL) and abs(RECOIL - PIECE) * 1000 < 2 * PIECE
-    )  # the piece to the integers' roundings, 0.12 percent (0.9255 at the amplitudes' k)
+    )  # the piece to the integers' roundings, 0.19 percent under the frame's booking (0.12 under the plain share; 0.9255 at the amplitudes' k)
     assert (books.part, books.counts) == (1, [0, 1]) and board.credit.counts[photon] == 0
     assert board.credit.deficits == {photon: 1} and len(board.credit.fronts) == 1
     assert (
         (charge, wronskian_of(board, electron))
         == (
             18011012,
-            17990086,
+            17989217,
         )
-    )  # under the centred count and the regenerated lay, 2026-10-23 ((17999924, 17985966) to that day; 17986213 after at the amplitudes' k; (17982014, 17990792) at 26 and 27 on the first lay; (17992808, 18010122) at 18, 2026-10-21
+    )  # under the frame's booking, 2026-10-23 (17990086 after under the plain share the same day; under the centred count and the regenerated lay, 2026-10-23 ((17999924, 17985966) to that day; 17986213 after at the amplitudes' k; (17982014, 17990792) at 26 and 27 on the first lay; (17992808, 18010122) at 18, 2026-10-21
     assert (
         (share, board.total_share(electron)[0])
         == (
             705092768000,
-            814141670000,
+            814136046000,
         )
-    )  # under the centred count and the regenerated lay, 2026-10-23 ((693173072000, 790248268000) to that day; 790168088000 at the amplitudes' k; (708152334000, 880331622000) at 26 and 27 on the first lay; (762383080000, 978929402000) at 18
+    )  # under the frame's booking and the hole at the frame's level, 2026-10-23 (814141670000 after under the plain share and the hole to 0 the same day; under the centred count and the regenerated lay, 2026-10-23 ((693173072000, 790248268000) to that day; 790168088000 at the amplitudes' k; (708152334000, 880331622000) at 26 and 27 on the first lay; (762383080000, 978929402000) at 18
 
 
 def wronskian_of(board: Lattice, index: int) -> int:
@@ -393,9 +393,9 @@ def test_the_conservation_table_closes_in_the_count_and_names_its_remainders():
         (round(TAKER_BEFORE[1] / half, 2), TAKER_AFTER[1])
         == (
             1.0,
-            half - 9914,
+            half - 10783,
         )
-    )  # one quantum (half - 13787 at the amplitudes' k; half - 9208 at 27 on the first lay at z = 1, half + 10122 at the click at 18 of 2026-10-21; the lay at z = 2 of 2026-10-22, the click at 9)
+    )  # one quantum (half - 9914 under the plain share to 2026-10-23;half - 13787 at the amplitudes' k; half - 9208 at 27 on the first lay at z = 1, half + 10122 at the click at 18 of 2026-10-21; the lay at z = 2 of 2026-10-22, the click at 9)
     assert (
         round(GIVER_AFTER[3] / GIVER_BEFORE[3] - 1, 2) == 0.06
     )  # the lay's energy in the well, read (0.07 to 2026-10-23 under the left-sum count's lay)

@@ -8,6 +8,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.ports import Wrap, arrival
+from event_universe.core.rule3 import division_forward
 
 Vector = tuple[Any, Any, Any]
 PRODUCTS = 2  # the current's two products, now_i before_j and before_i now_j
@@ -33,6 +34,11 @@ class Neighbours:
 def current(weight: int, here: Levels, there: Levels) -> Any:
     """The current into the Node here from the Node there through their Link, weight (now_i before_j - before_i now_j), positive inward (ALGEBRA.md #the-booking)."""
     return weight * (here.now * there.before - here.before * there.now)
+
+
+def level_term(weight: int, here: Levels, there: Levels) -> Any:
+    """The Link's level-times-difference term at the pair (now, before), h_ij = weight (before_i - before_j)(now_i + now_j) div 2 by the division act (ALGEBRA.md, The booking is the frame's, 2026-10-23): the Node's plain share term less its frame's term is the sum of this over the Node's six Links, so the plain current F_ij less the step's change of h_ij, from the pair the step started from to the pair it wrote, is the frame's current J_ij, which a uniform shift of a massless level leaves bit for bit (the shift c moves F_ij by weight c (v_i - v_j) and h_ij by exactly weight c (before_i - before_j), the numerator's move being even); 0 where the two ends hold the same two levels."""
+    return division_forward(weight * (here.before - there.before) * (here.now + there.now), 2, 0)[0]
 
 
 def momentum_terms(now: Any, before: Any, axis: int, wrap: Wrap, weight: int = 1) -> Any:

@@ -23,11 +23,11 @@ def frozen(gamma: int, content: Any) -> Any:
     return paces.link_pace_of(gamma, content) == 0
 
 
-def over_pace(numerator: Any, gamma: int, content: Any, unit: int) -> np.ndarray:
-    """A Node term over the Node's pace squared and the Link unit squared, numerator div (2 p_i^2 G^2) by Rule3's division act, the weight 1 / p_i^2 of the conserved form (`paces.link_pace_of`): at a frozen Node the wall is 0 and the division has no value, so the act divides there by the wall 1 and every reader reports the Node as frozen, not read (`frozen`), never the number."""
+def over_pace(numerator: Any, gamma: int, content: Any, unit: int, halves: int = 1) -> np.ndarray:
+    """A Node term over the Node's pace squared and the Link unit squared, numerator div (2 p_i^2 G^2) by Rule3's division act, the weight 1 / p_i^2 of the conserved form (`paces.link_pace_of`), the wall `halves` times that for a numerator carried doubled (the frame's term of `share`, 2): at a frozen Node the wall is 0 and the division has no value, so the act divides there by the wall 1 and every reader reports the Node as frozen, not read (`frozen`), never the number."""
     pace = paces.link_pace_of(gamma, content)
     squares = pace * pace
-    wall = 2 * squares * unit * unit + (squares == 0)
+    wall = halves * 2 * squares * unit * unit + (squares == 0)
     return np.asarray(division_forward(numerator, wall, 0)[0])
 
 
@@ -45,6 +45,11 @@ def share(
     """One level pair's weighted share at every Node in the current's units: the conserved form's term at the Node, w (now^2 + before^2) - S now before less now x SUM over the six Ports of R_ij x the neighbour's before by the read act, over 2 p_i^2 G^2 by the division act (`over_pace`); Rule3's integers at the paces of the read (the Node's content and its Links' factors, None no tension), exact at any size in Python's integers, computed at the Nodes `nodes` names (a mask; None: every Node where the pair holds a level, the term being 0 at a Node whose two levels are 0 whatever its neighbours hold) and 0 at every other Node. Under the rotation the share reads the level pair as the step reads it (ALGEBRA.md, The share's change is the currents; the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker; two hands): `as_read`, the line as the step reads it (the sign's phase stands on the Links, features/phase), stands in the Node term's cross product S now x before and in the Link term's six arrivals alike, the squares now^2 and before^2 as they stand: the plain form's term less now x S x (u - before) at the Node, the arrivals read from u, exact in the integers, the form of the pair so read the flat form the step conserves; None, the plain read, the level before itself, bit for bit where no family reads the sign (the plain read of a pair under the sign is no conserved form)."""
     num, den = pair
     at = (record.now != 0) | (record.before != 0) if nodes is None else nodes
+    if (
+        nodes is None and as_read is None
+    ):  # the frame's term stands at a Node at 0 beside a Node that is not
+        beside = ports(np.asarray(at, dtype=np.int64), wrap)
+        at = at | np.logical_or.reduce([np.asarray(value) != 0 for value in beside])
     read = record if as_read is None else as_read
     now, before = record.now[at].astype(object), record.before[at].astype(object)
     clock, pace = paces.node_paces(gamma, paces.at_nodes(content, at))
@@ -54,8 +59,19 @@ def share(
     link = sum(read * arrival for read, arrival in zip(reads, arrived, strict=True))  # the Links' sum
     turn = self_coefficient * (read.before[at].astype(object) - before)  # the cross product's turn
     found = form_term(self_coefficient, wall, now, before) - now * (link + turn)
+    halves = 1
+    if (
+        as_read is None
+    ):  # the frame's term: the Links' products shared half and half between a Link's two ends
+        arrived_now = tuple(value[at].astype(object) for value in ports(record.now, wrap))
+        present = tuple(value[at] for value in ports(np.ones(record.now.shape, dtype=object), wrap))
+        shared = sum(  # a Link to a Node beyond the board gives its whole term to its one Node on it
+            read * (before - b_j) * (now + n_j) * on
+            for read, b_j, n_j, on in zip(reads, arrived, arrived_now, present, strict=True)
+        )
+        found, halves = found + found - shared, 2
     everywhere = np.zeros(record.now.shape, dtype=object)
-    everywhere[at] = over_pace(found, gamma, paces.at_nodes(content, at), unit)
+    everywhere[at] = over_pace(found, gamma, paces.at_nodes(content, at), unit, halves)
     return everywhere
 
 
@@ -84,6 +100,21 @@ def quanta_of(share_now: Any, wall: int, kind: type) -> np.ndarray:
     origin = division_forward(wall, 2, 0)[0]
     quanta, _remainder = division_forward(np.asarray(share_now) + origin, wall, 0)
     return np.asarray(quanta, dtype=kind)
+
+
+def plain_quanta(board: Lattice, index: int) -> tuple[np.ndarray, np.ndarray]:
+    """A family's lay in quanta at every Node by the plain term, the lay's own support (ALGEBRA.md, The booking is the frame's, the last clause): the plain form's term at the Node, 0 where the record's two levels are 0 whatever its neighbours hold, the Links' terms at the lay's Nodes alone (`share` with the lines as their own read, `as_read`), in quanta over the record's unit (`quanta_of`) with the mask of its frozen Nodes; what a body's declared Nodes read as its standing (`Lattice.body_nodes`) and the start's count gate reads against the declared count (`lists.gate_count`), the frame's share standing at the Nodes beside the lay too and belonging to the Links, not to a declared Node (tools/frame_of.py reads the standing region the same way)."""
+    family, gamma = board.families[index], board.world.node_clock
+    found: Any = 0
+    cold = np.zeros(board.shape, dtype=bool)
+    for record in quanta_records(board.families, index):
+        content, factors = board.read(index, 1, record)
+        lines = board.lines_of(index, record)
+        found = found + family_share(
+            family, lines, board.wrap, gamma, content, factors, board.unit, None, lines
+        )
+        cold |= np.broadcast_to(frozen(gamma, content), board.shape)
+    return quanta_of(found, board.credit.units[index], board.kind), cold
 
 
 def half_action(action: int) -> int:
