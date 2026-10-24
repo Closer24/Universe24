@@ -1,14 +1,14 @@
-"""The board's own hole is the Node's own level before, twice: the quantum is the drift, the write stops it (ALGEBRA.md, The board reads itself, the dated sentence of 2026-10-24 on the Boss's ruling over the bound-click hand's measurement; `meeting_board.stopped_at`): the seed's record at a meeting Node keeps the level it had before the interval's drift and drifts no more, the write reading nothing but the Node's own two levels, so that the Node's own quanta pay, nothing is made at the Links, and a hole on the uniform sea is the seed's own origin; on the tests' small universe (den 1,021) and the bare torus under the engine's own hole seed."""
+"""The hole is the write that takes what the birth books and nothing else (ALGEBRA.md, The board reads itself, the hole's clause of 2026-10-24 on the builder's derivation, #2187; `meeting_board.take_of`, `refused_by`): at a born Node the seed record's before is kept and its now moved toward it, one level at a time, until the frame's seven shares, by the share's own form on the state the write acts on, have fallen by the children's walls summed; the last level's excess named on the birth line; the close refused by name where the full stop would take less than the walls, and, the Boss's default of the same day, where a child's lay would be refused, nothing born and nothing taken either way, the light standing; every face read before any write; the books the board's charge by construction; on the tests' small universe (den 1,021)."""
 
 from __future__ import annotations
 
 import numpy as np
 
-from event_universe import meeting_board, records, seed, world_files
+from event_universe import credit, digits, meeting_board, share, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
-from tests.laws_universe import bare_torus, uniform_sea
+from tests.laws_universe import bare_torus
 
 
 def hole_seed(tmp_path, monkeypatch, cube, intervals, lines):  # type: ignore[no-untyped-def]
@@ -18,9 +18,8 @@ def hole_seed(tmp_path, monkeypatch, cube, intervals, lines):  # type: ignore[no
 
 
 def light_of(board):  # type: ignore[no-untyped-def]
-    """The seed family's share summed over the board, and its share per Node, in the current's units."""
-    found = np.asarray(board.share_of(board.world.seed)[0], dtype=object)
-    return int(found.sum()), found
+    """The seed family's share summed over the board, in the current's units."""
+    return int(np.asarray(board.share_of(board.world.seed)[0], dtype=object).sum())
 
 
 def watched(monkeypatch):  # type: ignore[no-untyped-def]
@@ -28,80 +27,122 @@ def watched(monkeypatch):  # type: ignore[no-untyped-def]
     real, kept = meeting_board.closed, {}
 
     def spy(board, begun):  # type: ignore[no-untyped-def]
-        before = light_of(board)[0]
+        before = light_of(board)
         real(board, begun)
-        kept[board.interval] = (before, light_of(board)[0])
+        kept[board.interval] = (before, light_of(board))
 
     monkeypatch.setattr(meeting_board, "closed", spy)
     return kept
 
 
-def births_at(lines, interval):  # type: ignore[no-untyped-def]
-    return [
-        tuple(row["nodes"][0])
-        for row in lines
-        if row.get("event") == "birth" and row["interval"] == interval
-    ]
+def events(lines, kind, interval):  # type: ignore[no-untyped-def]
+    return [row for row in lines if row.get("event") == kind and row["interval"] == interval]
 
 
-def test_the_holed_nodes_own_quanta_pay_and_nothing_is_made_at_the_links_on_the_3_cube(
-    tmp_path, monkeypatch
-):  # type: ignore[no-untyped-def]
-    """Conservation at the click and no cascade on the 3-cube (ALGEBRA.md, The board reads itself, the dated sentence of 2026-10-24: the Node's own quanta paying, the owner's point that the entanglement of clicks is the conservation of energy at a click): at every close the light's summed share after the hole's write is at most its share before (nothing made at the Links), at a close with a birth it falls (the pair paid by the light; the fall's size is the course's and not the law's: the close reads the interval's start and the hole is written on the state the step left, so a Node read at three whole quanta may have moved most of them to its Links by the write), and every hole stands at a Node the close read a whole quantum at (no cascade: a Node is holed by its own meeting alone, an orbit of the cube's 48 meeting together where its Nodes read one number); the light's summed share above zero at every interval and several births over the run (the former write to (0, 0) made 7.68 quanta at the first close, holed 1, 7, 18 and 20 Nodes at the closes 2 to 5 and spent the sea to exactly zero; the frame's mean of the level before, measured between, took 2.09 at the first close and made light between adjacent holes on the 5-cube)."""
+def apart(nodes, shape):  # type: ignore[no-untyped-def]
+    """Whether no two of the Nodes are one Link apart on the torus."""
+    frames = [digits.frame_of(tuple(at), shape, (True, True, True))[1:] for at in nodes]
+    return all(
+        tuple(b) not in frame for a, frame in zip(nodes, frames, strict=True) for b in nodes if b != a
+    )
+
+
+def test_the_hole_takes_what_the_birth_books_and_makes_nothing_on_the_3_cube(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """The hole's clause on the 3-cube over 40 intervals: at every close the light's summed share after the writes is at most the share before (nothing made), and where the born Nodes stand apart the fall equals the births' taken summed, each the children's walls plus an excess at or above 0 and below the last level's step; a refused close with no birth leaves the light standing; the light above zero at every interval and several births; the course's own numbers (18 births, 72 refusals) are the course's and not asserted."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = hole_seed(tmp_path, monkeypatch, 3, 40, lines)
-    kept, born, met = watched(monkeypatch), {}, {}
-    real = meeting_board.meetings
-    monkeypatch.setattr(
-        meeting_board, "meetings", lambda b, i, s, f: met.setdefault(b.interval, real(b, i, s, f))
-    )
+    kept = watched(monkeypatch)
     for _ in range(40):
         board.step()
-        born[board.interval] = births_at(lines, board.interval)
-        assert light_of(board)[0] > 0
-        assert all(any(at == a for a, _w, _r in met[board.interval]) for at in born[board.interval])
+        assert light_of(board) > 0
     for interval, (before, after) in kept.items():
-        assert after <= before and (
-            after < before or not born[interval]
-        )  # paid by the light, nothing made
-    assert sum(len(found) for found in born.values()) > 3
+        births, refused = events(lines, "birth", interval), events(lines, "refused", interval)
+        assert after <= before
+        assert all(0 <= row["excess"] < row["step"] and row["walls"] > 0 for row in births)
+        assert all(row["taken"] == row["walls"] + row["excess"] for row in births)
+        if births and apart([row["nodes"][0] for row in births], board.shape):
+            assert before - after == sum(row["taken"] for row in births)
+        if refused and not births:
+            assert after == before and all(
+                row["amount"] < row["bound"] for row in refused if row["cause"] == "stop"
+            )
+    assert sum(len(events(lines, "birth", t)) for t in kept) > 3
 
 
-def test_the_5_cube_keeps_its_light_above_zero_under_the_holes(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The 5-cube under the same hole for 20 intervals: the light's summed share above zero at every interval where the former write spent it to exactly zero by the end of 8, births at several closes and no close holing every Node; the write makes no light at any close, where the frame's mean of the level before made 10 to 172 quanta per close at the closes 5 to 10 between adjacent holes each written to its own frame (the 60-interval runs, 131 births against 405, named in ALGEBRA.md's dated sentence)."""
+def test_the_5_cube_keeps_its_light_above_zero_and_makes_nothing_under_the_takes(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """The 5-cube under the exact take for 20 intervals: the light's summed share above zero at every interval, at most the share before after every close's writes, births at several closes and no close holing every Node."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = hole_seed(tmp_path, monkeypatch, 5, 20, lines)
-    nodes = int(np.prod(board.shape))
+    kept, nodes = watched(monkeypatch), int(np.prod(board.shape))
     for _ in range(20):
         board.step()
-        assert light_of(board)[0] > 0
-        assert len(births_at(lines, board.interval)) < nodes
+        assert light_of(board) > 0
+        assert len(events(lines, "birth", board.interval)) < nodes
+    assert all(after <= before for before, after in kept.values())
     assert len({row["interval"] for row in lines if row.get("event") == "birth"}) > 3
 
 
-def test_a_hole_on_the_uniform_sea_is_the_seeds_own_origin(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The seed is untouched and the hole is its form (ALGEBRA.md, The uniform seed is a lay; The board reads itself, the dated sentence): the seed lays (v, 0) at every Node but the origin, (0, 0), and `stopped_at` on the seed's own state at the origin returns (0, 0), the seed's hole; on the uniform sea by name (every Node at the drift, no hole) stepped three intervals, the sea drifts by v at every Node and `stopped_at` at any Node returns the Node's level before twice, so a hole written there is the seed's kink exactly: the Node at the level it had before this interval's drift, the drift stopped, one quantum absent (the six Ports' mean of both levels, the first form measured, returns the Node's own levels on a uniform frame and so writes nothing there, kept by name)."""
-    board = hole_seed(tmp_path, monkeypatch, 3, 4, [])
-    light = board.world.seed
-    first = records.record_slice(board.families[light], 0).start
-    line, drift = board.states[light].lines[first], seed.drift_of(board.world.quantum_action)
-    assert (int(line.now[seed.ORIGIN]), int(line.before[seed.ORIGIN])) == (0, 0)
-    assert (int(line.now[1, 2, 0]), int(line.before[1, 2, 0])) == (drift, 0)
-    assert meeting_board.stopped_at(board, light, first, seed.ORIGIN) == (0, 0)
-    monkeypatch.setattr(seed, "uniform_seed", uniform_sea)
-    sea = hole_seed(tmp_path, monkeypatch, 3, 4, [])
-    for _ in range(3):
-        sea.step()
-    line, at = sea.states[light].lines[first], (1, 2, 0)
-    level = int(line.before[at])
-    assert int(line.now[at]) - level == drift
-    assert meeting_board.stopped_at(sea, light, first, at) == (level, level)
+def test_a_full_stop_that_cannot_pay_refuses_by_name_and_the_light_stands(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """The refusal by name (the hole's clause): on the 3-cube at den 1,021 a close whose full stop would take less than the children's walls is logged refused with the cause "stop" and its two numbers, the take below the walls, nothing is born at that close and the light's summed share stands through its writes."""
+    lines: list[dict] = []  # type: ignore[type-arg]
+    board = hole_seed(tmp_path, monkeypatch, 3, 12, lines)
+    kept = watched(monkeypatch)
+    for _ in range(12):
+        board.step()
+    stops = [row for row in lines if row.get("event") == "refused" and row["cause"] == "stop"]
+    assert stops and all(row["amount"] < row["bound"] for row in stops)
+    for row in stops:
+        assert not events(lines, "birth", row["interval"])
+        assert kept[row["interval"]][0] == kept[row["interval"]][1]
+
+
+def test_every_take_is_read_before_any_hole_is_written(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """Every face before any write (the hole's clause): within every close of the 3-cube every read of the frame's shares precedes the first hole written, so the takes of a close are read on the one state the write acts on and the order of the Nodes enters no number."""
+    board, order = hole_seed(tmp_path, monkeypatch, 3, 16, []), []
+    real_read, real_laid = meeting_board.taken_at, meeting_board.laid
+    monkeypatch.setattr(
+        meeting_board,
+        "taken_at",
+        lambda *a: (order.append((board.interval, "read")), real_read(*a))[1],
+    )
+    monkeypatch.setattr(
+        meeting_board, "laid", lambda *a: (order.append((board.interval, "write")), real_laid(*a))[1]
+    )
+    for _ in range(16):
+        board.step()
+    for interval in {t for t, _kind in order}:
+        kinds = [kind for t, kind in order if t == interval]
+        assert "write" not in kinds or kinds.index("write") > max(
+            i for i, k in enumerate(kinds) if k == "read"
+        )
+    assert any(kind == "write" for _t, kind in order)
+
+
+def test_nothing_is_booked_without_its_lay_and_the_first_births_charge_is_the_books(
+    tmp_path, monkeypatch
+):  # type: ignore[no-untyped-def]
+    """The Boss's default of 2026-10-24: a close whose children's lay would be refused births nothing and takes nothing, so no quantum is booked without its lay: on the 3-cube over 40 intervals every charged family's deficit stays 0 and its books count the children its birth lines name, the refusals of the cause "lay" name a share above the unit, and at a family's first birth the charge read from the board (`credit.count_of`, over T div 2) equals the books. Measured and named, not asserted: a lay onto a Node where the family's earlier wave stands below one unit superposes with it and the Wronskian's cross terms move the charge off the count (the eight corners at the close 16: the charge 24 against the books' 20), the architect's open sentence (FURTHER_RESEARCH.md)."""
+    lines: list[dict] = []  # type: ignore[type-arg]
+    board = hole_seed(tmp_path, monkeypatch, 3, 40, lines)
+    charged, first = [k for k in board.order if share.charged(board.families[k])], {}
+    for _ in range(40):
+        board.step()
+        for k in charged:
+            name, births = board.families[k].name, [row for row in lines if row.get("event") == "birth"]
+            laid = sum(row["children"].count(name) for row in births)
+            assert board.credit.deficits.get(k, 0) == 0 and board.credit.counts[k] == laid, (
+                board.interval
+            )
+            if laid and k not in first:
+                first[k] = credit.count_of(board, k) == laid
+    lays = [row for row in lines if row.get("event") == "refused" and row["cause"] == "lay"]
+    assert first and all(first.values()) and lays and all(row["amount"] > row["bound"] for row in lays)
 
 
 def test_the_first_draw_by_the_digits_falls_at_a_share_between_one_and_two_quanta_and_writes_its_credit(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The Born side (ALGEBRA.md, The board reads itself: where one whole quantum stands with a share above it, the second quantum is the click's whether, drawn by the Node's read of itself and its Links): on the 3-cube the first meeting met by the draw stands at one whole quantum with a remainder above zero and below the unit, the draw's weights are that remainder against the unit less it, and the close writes the credit line and the birth line at that Node (the former write to (0, 0) left every meeting at two whole quanta or more, no draw on either seed)."""
+    """The Born side (ALGEBRA.md, The board reads itself): on the 3-cube the first meeting met by the draw and not refused stands at one whole quantum with a remainder above zero and below the unit, the draw's weights are that remainder against the unit less it, and the close writes the credit line and the birth line at that Node."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = hole_seed(tmp_path, monkeypatch, 3, 40, lines)
     unit, meetings, draws = board.credit.units[board.world.seed], {}, []
@@ -118,27 +159,30 @@ def test_the_first_draw_by_the_digits_falls_at_a_share_between_one_and_two_quant
         lambda b, i, s, f: meetings.setdefault(b.interval, real_meetings(b, i, s, f)),
     )
     monkeypatch.setattr(meeting_board, "drawn_from", drawn)
-    while not any(port == 0 for _i, _l, _w, port in draws) and board.interval < 40:
+    credited = []
+    while not credited and board.interval < 40:
         board.step()
-    interval, label, weights, port = next(draw for draw in draws if draw[3] == 0)
-    at = next(at for at, whole, rest in meetings[interval] if str(list(at)) in label)
-    whole, rest = next((whole, rest) for a, whole, rest in meetings[interval] if a == at)
+        for interval, label, weights, port in draws:
+            if port == 0 and interval == board.interval:
+                at = next(a for a, _w, _r in meetings[interval] if str(list(a)) in label)
+                place = int(np.ravel_multi_index(at, board.shape))
+                if any(row["node_detector"] == place for row in events(lines, "credit", interval)):
+                    credited.append((interval, at, weights))
+    interval, at, weights = credited[0]
+    whole, rest = next((w, r) for a, w, r in meetings[interval] if a == at)
     assert whole == 1 and 0 < rest < unit and weights == [rest, unit - rest]
-    place = int(np.ravel_multi_index(at, board.shape))
-    credits = [row for row in lines if row.get("event") == "credit" and row["interval"] == interval]
-    assert any(row["node_detector"] == place and row["count"] == 1 for row in credits)
-    assert at in births_at(lines, interval)
+    assert any(list(at) in row["nodes"] for row in events(lines, "birth", interval))
 
 
 def test_the_run_back_is_exact_through_the_closes_that_hole(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The hole's write is a lay logged in the books and undone by the run back as every lay is (ALGEBRA.md, The lay's inverse): eight intervals of the 3-cube hole seed forward through several closes that hole and birth, then eight back, every family's lines and write remainders equal bit for bit at every interval and the interval back at 0."""
+    """The hole's write is a lay logged in the books and undone by the run back as every lay is (ALGEBRA.md, The lay's inverse): eight intervals of the 3-cube hole seed forward through its first close and back, every state the forward run's bit for bit."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = hole_seed(tmp_path, monkeypatch, 3, 12, lines)
     states = [board_state(board)]
     for _ in range(8):
         board.step()
         states.append(board_state(board))
-    assert sum(1 for row in lines if row.get("event") == "birth") >= 2
+    assert any(row.get("event") == "birth" for row in lines)
     back = 0
     for k in range(8):
         board.step_inverse()

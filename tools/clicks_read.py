@@ -1281,6 +1281,39 @@ def births_table(lines: Lines, eras: list[Line] | None = None) -> dict[str, Any]
     return {"rows": rows, "cycles": summaries, "total": total, "note": note}
 
 
+def conservation_table(lines: Lines) -> dict[str, Any]:
+    """The conservation line of the board's own closes (ALGEBRA.md, The board reads itself, the hole's clause of 2026-10-24): per close the taken (the frame's seven shares' fall), the booked (the children's walls summed) and the excess (the take's remainder below the last level's step) summed over the births of that interval, as the birth lines carry them (`reports.TAKE_KEYS`), the refusals of the close by cause (the lines `refused`: "stop", the full stop below the walls; "lay", a child's share above its unit), and the same over the run; the keys named where a log carries none."""
+    births = [line for line in lines.births if all(key in line for key in ("taken", "walls", "excess"))]
+    refused = [line for line in lines.others if line.get("event") == "refused"]
+    if not births and not refused:
+        return {"closes": [], "run": lacking("taken", "walls", "excess")}
+    closes = []
+    for interval in sorted({int(line["interval"]) for line in births + refused}):
+        born = [line for line in births if int(line["interval"]) == interval]
+        causes = [str(line.get("cause")) for line in refused if int(line["interval"]) == interval]
+        closes.append(
+            {
+                "interval": interval,
+                "births": len(born),
+                "taken": sum(int(line["taken"]) for line in born),
+                "booked": sum(int(line["walls"]) for line in born),
+                "excess": sum(int(line["excess"]) for line in born),
+                "refused": {cause: causes.count(cause) for cause in sorted(set(causes))},
+            }
+        )
+    run = {
+        "births": sum(close["births"] for close in closes),
+        "taken": sum(close["taken"] for close in closes),
+        "booked": sum(close["booked"] for close in closes),
+        "excess": sum(close["excess"] for close in closes),
+        "refused": {
+            cause: sum(1 for line in refused if line.get("cause") == cause)
+            for cause in sorted({str(line.get("cause")) for line in refused})
+        },
+    }
+    return {"closes": closes, "run": run}
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=(__doc__ or "").splitlines()[0])
     parser.add_argument("log", type=Path, help="the clicks log, <world>.clicks.jsonl")
@@ -1347,6 +1380,7 @@ def main(argv: list[str] | None = None) -> None:
         "dilation_vs_clock": dilation_vs_clock(lines, nodes, shape) if nodes else NO_NODES,
         "spacing_vs_length": spacing_vs_length(lines, nodes, shape, light, eras) if nodes else NO_NODES,
         "births": births_table(lines, eras),
+        "conservation": conservation_table(lines),
     }
     text = json.dumps(tables, indent=1)
     if args.out is not None:

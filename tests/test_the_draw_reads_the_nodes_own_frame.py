@@ -94,4 +94,6 @@ def test_a_seed_rolled_one_link_gives_the_rolled_board_bit_for_bit(
         )
         for lines, shift in ((origin_lines, 1), (rolled_lines, 0))
     ]
-    assert births[0] == births[1] and births[0] and 0 in drawn  # a whether drawn by the digits and met
+    assert (
+        births[0] == births[1] and drawn
+    )  # the whethers drawn by the digits alike, the births alike (a met whether may be refused by the take)

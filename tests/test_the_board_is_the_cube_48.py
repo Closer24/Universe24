@@ -214,7 +214,9 @@ def test_a_seed_invariant_under_the_48_runs_invariant_under_the_48(
             if line.get("event") == "birth" and line["interval"] == board.interval
         ]
         assert broken == [], (board.interval, len(broken), births)
-    assert any(line.get("event") == "birth" for line in lines)
+    assert any(
+        line.get("event") in ("birth", "refused") for line in lines
+    )  # a close reached: born, or refused by the take
 
 
 @pytest.mark.parametrize(
@@ -241,4 +243,6 @@ def test_a_seed_transformed_before_the_run_gives_the_transformed_run(tmp_path, m
         ]
         equal = same(carried(board, m), plain(other))
         assert equal, (board.interval, births)
-    assert any(line.get("event") == "birth" for line in lines)
+    assert any(
+        line.get("event") in ("birth", "refused") for line in lines
+    )  # a close reached: born, or refused by the take
