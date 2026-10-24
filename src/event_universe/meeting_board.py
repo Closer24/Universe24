@@ -1,4 +1,4 @@
-"""The board reads itself (ALGEBRA.md, The board reads itself, the owner's word of 2026-10-24, the fold; beside Matter's birth from light, whose clause "a birth at every Node by the rule alone with no draw" this module enters): on a world that declares nothing (`World.seed`, `loader/seed.seed_of`) the torus is the law's own region, every Node of it, the way the open faces' layer is the board's own region `face` (loader/world.layer_of), and no NodeDetector object stands per Node: at the end of every interval, after the readers' acts, the board reads its seed family's share at every Node once (`Lattice.share_of`, one vectorised reading of the record, the count the record's share) and, Node by Node in the lattice's x-major order, where two whole quanta stand, the floor of the share over the record's unit W_rec at or above 2, the gapless meeting is there and the pair is born: the two quanta taken from the record at that Node by the law's one write (`act.written`: the hole where the record is local and whole there, the books alone where it is a beam, the undepleted beam, the deficit printed) and the lightest conjugate pair within the threshold laid at that Node at the senses -1 and 1 (`conversion.birth_of`, the threshold of `act.born_pair`, the two quanta's two walls carrying the pair's two walls), one meeting per Node per interval, the Node's one write; where one whole quantum stands with a share above it, the second quantum is the click's whether, the remainder below one quantum drawn against the unit by the Node's read of itself and its Links (the owner's word of 2026-10-24, 04:2x UTC, everything local: `digits.read_of` over every family of quanta at the Node and its six neighbours, one Link, as a body detector reads at its Nodes and within one Link, Rule3's kept remainders as the digits of one number, `features/click.drawn_from`, one read per Node that draws), and where that read finds every digit at the lay's origin the Node does not draw, the floor alone (the exact dark's precedent, `digits.at_origin`); a Node whose clock is frozen is not read and births nothing, every other Node read as itself; the count the board pays with is the books' count of the seed family, the lay's count less the quanta taken (ALGEBRA.md, The count on the board: the board's reading of the share walks with the paces, the walk, and the books' count is the count the law conserves), so that a world seeded with N quanta of light births at most N div 2 pairs, the record's count at 0 beginning its erasing front from the drawn Nodes as every spent record's does (`front.started`); where the count pays for fewer meetings than Nodes carry them the law is silent on which, every Node alike, and the engine writes the first in the file's x-major index order, a convention of the file's coordinates and no sentence of the law; each birth writes the click's line (`reports.credit`, the reader the Node's x-major index, an integer, since the board names no detector and the Node is the write's place) and the birth line beside it (`reports.birth_line`); every lay logged in the books at its interval for the run back as every act's lay is."""
+"""The board reads itself (ALGEBRA.md, The board reads itself, the owner's word of 2026-10-24, the fold; beside Matter's birth from light, whose clause "a birth at every Node by the rule alone with no draw" this module enters): on a world that declares nothing (`World.seed`, `loader/seed.seed_of`) the torus is the law's own region, every Node of it, the way the open faces' layer is the board's own region `face` (loader/world.layer_of), and no NodeDetector object stands per Node: at the end of every interval, after the readers' acts, the board reads its seed family's share at every Node once (`Lattice.share_of`, one vectorised reading of the record, the count the record's share) and, Node by Node in the lattice's x-major order, where two whole quanta stand, the floor of the share over the record's unit W_rec at or above 2, the gapless meeting is there and the pair is born: the two quanta taken from the record at that Node by the hole there, every line of the seed's record at the Node to the state of a Node with no level through the one lay act (`lay.laid`, logged for the run back; the owner's word of 2026-10-24, 04:2x UTC, everything local: the new clause beside the undepleted beam's, ALGEBRA.md, The board reads itself, the old kept by name), the Node's own quanta paying, and the lightest conjugate pair within the threshold laid at that Node at the senses -1 and 1 (`conversion.birth_of`, the threshold of `act.born_pair`, the two quanta's two walls carrying the pair's two walls), one meeting per Node per interval, the Node's one write; where one whole quantum stands with a share above it, the second quantum is the click's whether, the remainder below one quantum drawn against the unit by the Node's read of itself and its Links (the owner's word of 2026-10-24, 04:2x UTC, everything local: `digits.read_of` over every family of quanta at the Node and its six neighbours, one Link, as a body detector reads at its Nodes and within one Link, Rule3's kept remainders as the digits of one number, `features/click.drawn_from`, one read per Node that draws), and where that read finds every digit at the lay's origin the Node does not draw, the floor alone (the exact dark's precedent, `digits.at_origin`); a Node whose clock is frozen is not read and births nothing, every other Node read as itself; no count summed over the board caps or orders the births (the former cap, the books' count of the seed family read as the share summed over the lattice, was the one non-local act of the folded world, found by the architect's tile test of 2026-10-24, two slabs with skewed clocks equal to the bit before the meeting and apart at it; removed the same day): every Node with two whole quanta births, its own hole paying, the meetings read once before any write so that no Node's hole enters another's reading, and the family's count in the books is afterwards a reading of the board, the share summed (`credit.count_of`), never an act's input; each birth writes the click's line (`reports.credit`, the reader the Node's x-major index, an integer, since the board names no detector and the Node is the write's place) and the birth line beside it (`reports.birth_line`); every lay logged in the books at its interval for the run back as every act's lay is."""
 
 from __future__ import annotations
 
@@ -7,12 +7,13 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from event_universe import conversion
+from event_universe import conversion, credit, records
 from event_universe.act import Alternative, click
 from event_universe.core.rule3 import division_forward
 from event_universe.digits import at_origin, read_of
 from event_universe.features.click import drawn_from
 from event_universe.features.front import ball
+from event_universe.lay import laid
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
 from event_universe.reports import birth_line
@@ -58,13 +59,9 @@ def closed(board: Lattice) -> None:
     if table is None:
         return
     shares, frozen = board.share_of(index)
-    unit, left = (
-        books.units[index],
-        books.counts[index],
-    )  # the books' count: the lay's less the quanta taken
+    unit, family = books.units[index], board.families[index]
+    span = records.record_slice(family, 0)
     for at, whole, rest in meetings(board, index, shares, frozen):
-        if left < 2:
-            break
         meet = whole >= 2
         if not meet and rest > 0:  # one whole quantum and a share above it: the second is the whether
             label = (
@@ -77,12 +74,16 @@ def closed(board: Lattice) -> None:
                 meet = drawn_from(number, [rest, unit - rest], label, moduli)[0] == 0
         if not meet:
             continue
-        items = [Item(index, None, None, -1, (at,)), Item(index, None, None, -1, (at,))]
+        here = board.mask((at,))  # the hole: the seed's record at this Node to 0, the two quanta paying
+        for number in range(span.start, span.stop):
+            line = board.states[index].lines[number]
+            change = (np.where(here, -line.now, 0), np.where(here, -line.before, 0))
+            laid(board, index, number, change, None, None, here)
+        items = []
         for out, sense in table:
             den = board.families[out].pair[1]
             items.append(Item(out, None, None, 1, (at,), (den, den), sense=sense))
         click(board, None, [Alternative(1, partial(list, items))])
-        left -= 2
         if board.output is not None:
             names = [board.families[out].name for out, _sense in table]
             seed = board.families[index].name
@@ -99,7 +100,7 @@ def closed(board: Lattice) -> None:
                     names[0],
                     None,
                     1,
-                    left,
+                    None,
                     None,
                     seed,
                     names[0],
@@ -108,3 +109,8 @@ def closed(board: Lattice) -> None:
             board.output(
                 birth_line(board.interval, seed, names, [sense for _out, sense in table], (at,))
             )
+    counted = credit.count_of(
+        board, index
+    )  # the family's count a reading of the board, never an act's input
+    if counted is not None:
+        books.counts[index] = counted
