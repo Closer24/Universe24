@@ -62,7 +62,7 @@ def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first
             [("electron", -1), ("electron", 1)],
             [("proton", -1), ("proton", 1)],
         ]
-    )  # the lightest first: the electron's gap 29,276^2 before the proton's (the declared seed's 3,600 T then 6,000 T)
+    )  # the lister's order, the lightest first: the electron's gap 29,276^2 before the proton's; the one born the heaviest within the two quanta's energy (act.born_table, 2026-10-24)
     assert (
         conversion.birth_of(families, names.index("matter")) == []
     )  # a family with a gap births nothing: its own list is the conversion's

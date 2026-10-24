@@ -280,7 +280,7 @@ def test_two_instruments_clicks_counted_by_stage_on_the_small_world(
 def test_the_bare_torus_is_seeded_with_light_bangs_and_births_the_pairs_at_the_first_meeting(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """(11) The folded sentences on the small bare torus, the 3-cube with the one world's universe at nature's den and nothing declared (ALGEBRA.md, The uniform seed is a lay; The board reads itself; 2026-10-24): the seed is light at one quantum on every Node, the level now the drift 189 (189^2 <= 36,000 < 190^2) and the level before 0, 27 quanta on the board and 27 in the books; the bang from the seed, X rising from Gamma at every Node alike while no birth has parted them; the first meeting, where the light's share reads two whole quanta at a Node, births the electron pair there at the senses -1 and 1 with the click's line naming the Node's x-major index, the books' count capping the births at 27 div 2 = 13 in the lattice's order, the light's count 1 after them and the electron's 26."""
+    """(11) The folded sentences on the small bare torus, the 3-cube with the one world's universe at nature's den and nothing declared (ALGEBRA.md, The uniform seed is a lay; The board reads itself; 2026-10-24): the seed is light at one quantum on every Node, the level now the drift 189 (189^2 <= 36,000 < 190^2) and the level before 0, 27 quanta on the board and 27 in the books; the bang from the seed, X rising from Gamma at every Node alike while no birth has parted them; the first meeting, where the light's share reads two whole quanta at a Node, births the proton pair there at the senses -1 and 1 (the heaviest pair within the two quanta's own energy, the law's sentence of 2026-10-24: two whole quanta of light at the top's unit W_c carry at least 2 W_c, the proton pair's walls 1.99175 W_c; the former clause, the lightest within the top's threshold, birthed the electron pair here, 2026-10-23 to 2026-10-24) with the click's line naming the Node's x-major index, the books' count capping the births at 27 div 2 = 13 in the lattice's order, the light's count 1 after them and the proton's 26."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     (tmp_path / "u.json").write_text(UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8")
     bare = {"universe": "u.json", "shape": [CUBE] * 3, "intervals": 60}
@@ -303,10 +303,8 @@ def test_the_bare_torus_is_seeded_with_light_bangs_and_births_the_pairs_at_the_f
     assert births and len(set(alike)) == 1 and alike[0] > GAMMA  # the bang, uniform to the birth
     first = births[0]["interval"]
     assert len(births) == CUBE**3 // 2 and all(b["interval"] == first for b in births)
-    assert all(b["children"] == ["electron"] * 2 and b["senses"] == [-1, 1] for b in births)
+    assert all(b["children"] == ["proton"] * 2 and b["senses"] == [-1, 1] for b in births)
     credits = [line for line in lines if line.get("event") == "credit"]
     assert [c["node_detector"] for c in credits] == list(range(CUBE**3 // 2))  # the Nodes by index
-    assert all(c["absorbed"] == "light" and c["realised"] == "electron" for c in credits)
-    assert (
-        board.credit.counts[light] == 1 and board.credit.counts[names.index("electron")] == CUBE**3 - 1
-    )
+    assert all(c["absorbed"] == "light" and c["realised"] == "proton" for c in credits)
+    assert board.credit.counts[light] == 1 and board.credit.counts[names.index("proton")] == CUBE**3 - 1
