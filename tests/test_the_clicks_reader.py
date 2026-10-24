@@ -26,7 +26,7 @@ def test_the_committed_records_credits_give_the_counts_floor_and_the_torus_wide_
     born = sorted(tuple(node) for birth in lines.births for node in birth["nodes"])
     assert sorted(tuple(b["position"]["where"]) for b in bodies) == born
     gr = reader.gr_table(lines)
-    assert gr["dilation"] == {"rows": [], "note": lacking("identity", "proper")}
+    assert gr["dilation"] == {"rows": [], "note": lacking("proper")}
     assert (
         gr["tracks"] == {"rows": [], "note": lacking("identity")} and gr["light_spacing"]["rows"] == []
     )
@@ -34,7 +34,7 @@ def test_the_committed_records_credits_give_the_counts_floor_and_the_torus_wide_
 
 
 def test_a_log_with_the_eight_keys_gives_velocity_verdict_dilation_and_product_by_hand(tmp_path):
-    """Two bodies over two closes on the 5-cube: A free from [0, 0, 0] to [2, 0, 0] in 4 intervals and 3 of its own, B bound at [1, 1, 1] with the beat 4; the dilation 3 / 4 against 4 / 4; the where's spread 2 and the momentum's 4 along x, their product 8."""
+    """Two bodies over two closes on the 5-cube: A free from [0, 0, 0] to [2, 0, 0] in 4 intervals (its two credits two Nodes' clocks, no own interval), B bound at [1, 1, 1] with the beat 4 and its Node's clock 3 whole intervals over the 4: the dilation 3 / 4; the where's spread 2 and the momentum's 4 along x, their product 8."""
 
     def credit(interval, body, support, identity, momentum, proper):  # type: ignore[no-untyped-def]
         line = {"event": "credit", "label": "NODEDETECTOR", "interval": interval, "family": "light"}
@@ -50,23 +50,34 @@ def test_a_log_with_the_eight_keys_gives_velocity_verdict_dilation_and_product_b
     rows = [credit(10, "body 0", [0, 0, 0], [3, 0], [2, 0, 0], 8)]
     rows.append(credit(10, "body 1", [1, 1, 1], [3, 1], [-2, 0, 0], 10))
     rows.append(credit(14, "body 0", [2, 0, 0], [3, 0], [2, 0, 0], 11))
-    rows.append(credit(14, "body 1", [1, 1, 1], [3, 1], [-2, 0, 0], 14))
+    rows.append(credit(14, "body 1", [1, 1, 1], [3, 1], [-2, 0, 0], 13))
     (tmp_path / "eight.clicks.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows), "utf-8")
     lines = reader.read_log(tmp_path / "eight.clicks.jsonl")
     shape = reader.shape_of(lines, (5, 5, 5))
     a, b = reader.bodies_table(lines, shape)
     assert (a["identity"], a["velocity"]["links"], a["velocity"]["intervals"]) == ([3, 0], [2, 0, 0], 4)
-    assert (a["velocity"]["per_interval"], a["velocity"]["proper_intervals"]) == ([0.5, 0.0, 0.0], 3)
-    assert a["velocity"]["per_proper_interval"] == [2 / 3, 0.0, 0.0]
+    assert (a["velocity"]["per_interval"], a["velocity"]["per_proper_interval"]) == (
+        [0.5, 0.0, 0.0],
+        reader.TWO_CLOCKS,
+    )
     assert a["bound_or_free"]["verdict"] == "free, v = [0.5, 0.0, 0.0] Links per interval"
     mass = a["mass"]
-    assert (mass["mass"], mass["point"], mass["kind"], mass["sense"]) == (0.8, [3, 5], 2, -1)
+    assert (mass["mass"], mass["point"], mass["kind"], mass["sense"], mass["beat"]) == (
+        0.8,
+        [3, 5],
+        2,
+        -1,
+        4,
+    )
     assert (a["energy"]["quanta"], a["energy"]["rest"]) == (1, 0.8)
     bound = b["bound_or_free"]
     assert (bound["verdict"], bound["beats"], bound["beat"]) == ("bound at [1, 1, 1]", [4], [4, 4])
     dilation = reader.gr_table(lines, shape)["dilation"]["rows"]
-    read = [(r["identity"], r["proper_intervals"], r["intervals"], r["ratio"]) for r in dilation]
-    assert read == [([3, 0], 3, 4, 0.75), ([3, 1], 4, 4, 1.0)]
+    read = [
+        (r["where"], r["identities"], r["proper_intervals"], r["intervals"], r["ratio"])
+        for r in dilation
+    ]
+    assert read == [([1, 1, 1], [(3, 1), (3, 1)], 3, 4, 0.75)]
     first, second = reader.uncertainty_table(lines, shape)
     assert (first["window"], first["where_spread"]) == ([10, 10], [2, 2, 2])
     assert (first["momentum_spread"], first["product"], first["violations"]) == (

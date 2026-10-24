@@ -47,7 +47,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "125 credits in one window, the count's floor 1, the where 5 Links on every axis, the momentum and the clock unreadable with their keys named",
     ),
     "tests/test_the_clicks_reader.py::test_a_log_with_the_eight_keys_gives_velocity_verdict_dilation_and_product_by_hand": (
-        42,
+        53,
         "the same reader on a log with the eight keys: the velocity in Links per board and per proper interval, the bound and the free verdicts, "
         "the dilation ratio and the Delta x Delta p product, each number computed by hand",
     ),

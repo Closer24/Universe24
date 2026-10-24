@@ -17,6 +17,8 @@ Shape = tuple[int, int, int]
 Identity = tuple[int, int] | str
 AXES = (0, 1, 2)
 ONE_WINDOW = "one window: nothing to compare"
+TWO_CLOCKS = "the two credits' proper are two Nodes' clocks: no one taker's own interval"
+NO_ONE_BODY = "a record credited at several Nodes in one close: the credited record and no one body"
 
 
 class Lines(NamedTuple):
@@ -140,24 +142,53 @@ def leg_below(square: int) -> int:
     return low
 
 
-def sine_of(point: Any) -> float:
-    """sin omega of a point's reduced pair [num, den], cos omega = num / den: the leg over den, the leg the largest integer whose square is at most den^2 - num^2 (exact at a Pythagorean point): the mass T sin omega in T's unit."""
-    num, den = int(point[0]), int(point[1])
+def pair_of(point: Any) -> tuple[int, int] | None:
+    """A point's reduced pair [num, den] as two integers; None where the key holds none, or a list of pairs (the record's lines reading different points at the credited Node)."""
+    if point is None or len(point) != 2 or not all(isinstance(v, int) for v in point):
+        return None
+    return (int(point[0]), int(point[1]))
+
+
+def sine_of(pair: tuple[int, int]) -> float:
+    """sin omega of a point's reduced pair (num, den), cos omega = num / den: the leg over den, the leg the largest integer whose square is at most den^2 - num^2 (exact at a Pythagorean point): T sin omega in T's unit, the mass of a point at rest and the frequency of a massless record."""
+    num, den = pair
     return leg_below(den * den - num * num) / den
 
 
+def action_of(credit: Line) -> int | None:
+    """T from the click's own keys where no --action is given: the `beat` is 3 T sin omega of the `point`, so T = beat x den div (3 x leg), exact where den divides 3 T leg; None where the point or the beat is lacking or the point has no leg (a massless record at its rest)."""
+    pair, beat = pair_of(credit.get("point")), credit.get("beat")
+    if pair is None or beat is None or abs(pair[0]) > pair[1]:
+        return None
+    leg = leg_below(pair[1] * pair[1] - pair[0] * pair[0])
+    return int(beat) * pair[1] // (3 * leg) if leg else None
+
+
 def mass_of(credit: Line, birth: Line | None = None) -> dict[str, Any]:
-    """The mass: `point`, the reduced pair the click read, as T sin omega in T's unit, with the `kind` (1, 2 or 3) and the `sense` (-1, 0, 1); the family's label (`realised`, `emitted` or the birth's `children`) names the family and no number."""
+    """The mass: `point`, the reduced pair the click read from the three levels, as T sin omega in T's unit (a point at rest; for the credited massless record the quantum's frequency), with the `beat` (3 T sin omega, the click's own unit), the `kind` (1 or 2, the record's width) and the `sense` (-1, 0, 1, the Wronskian's sign); the family's label (`realised`, `emitted` or the birth's `children`) names the family and no number; the birth's `points` and `records` are the children's."""
     point = credit.get("point")
+    pair = pair_of(point)
     children = (birth or {}).get("children") or []
     label = credit.get("realised") or credit.get("emitted") or (children[0] if children else None)
     found: dict[str, Any] = {"label": label if label is not None else lacking("realised", "emitted")}
-    found["point"] = [int(point[0]), int(point[1])] if point is not None else lacking("point")
-    found["mass"] = sine_of(point) if point is not None else lacking("point")
-    found["kind"] = credit["kind"] if credit.get("kind") is not None else lacking("kind")
-    found["sense"] = credit["sense"] if credit.get("sense") is not None else lacking("sense")
+    if pair is None:
+        found["point"] = (
+            lacking("point") if point is None else f"the lines read different points: {point}"
+        )
+        found["mass"] = found["point"]
+    elif abs(pair[0]) > pair[1]:
+        found["point"] = list(pair)
+        found["mass"] = f"the point {list(pair)} lies outside the circle: no rotation"
+    else:
+        found["point"] = list(pair)
+        found["mass"] = sine_of(pair)
+    for key in ("beat", "kind", "sense"):
+        found[key] = credit[key] if credit.get(key) is not None else lacking(key)
     if birth is not None and birth.get("senses") is not None:
         found["senses_born"] = birth["senses"]
+    if birth is not None and birth.get("points") is not None:
+        found["children_points"] = birth["points"]
+        found["children_records"] = birth.get("records")
     return found
 
 
@@ -215,6 +246,8 @@ def velocity_of(first: Line, last: Line, shape: Shape | None) -> dict[str, Any] 
     proper = (first.get("proper"), last.get("proper"))
     if proper[0] is None or proper[1] is None:
         found["per_proper_interval"] = lacking("proper")
+    elif a != b:
+        found["per_proper_interval"] = TWO_CLOCKS
     elif proper[1] == proper[0]:
         found["per_proper_interval"] = "no proper interval elapsed between the two closes"
     else:
@@ -233,16 +266,17 @@ def momentum_of(credit: Line) -> dict[str, Any]:
 
 
 def energy_of(credit: Line, point: Any = None, action: int | None = None) -> dict[str, Any]:
-    """The energy: `count` whole quanta; at rest the count times T sin omega of the point, in T's unit; with the momentum the band's form, cos omega(k) = cos omega_0 - (1 / 3) SUM_a (1 - cos k_a) with sin k_a = p_a / T, which needs T (`--action`)."""
+    """The energy: `count` whole quanta; at rest the count times T sin omega of the point, in T's unit; with the momentum the band's form, cos omega(k) = cos omega_0 - (1 / 3) SUM_a (1 - cos k_a) with sin k_a = p_a / T, T given (`--action`) or read from the beat and the point (`action_of`)."""
     count = credit.get("count")
-    point = credit.get("point") if point is None else point
+    pair = pair_of(credit.get("point") if point is None else point)
     found: dict[str, Any] = {"quanta": count if count is not None else lacking("count")}
-    if count is None or point is None:
+    if count is None or pair is None or abs(pair[0]) > pair[1]:
         found["rest"] = lacking("count") if count is None else lacking("point")
         found["with_momentum"] = found["rest"]
         return found
-    found["rest"] = count * sine_of(point)
+    found["rest"] = count * sine_of(pair)
     momentum = credit.get("momentum")
+    action = action_of(credit) if action is None else action
     if momentum is None:
         found["with_momentum"] = lacking("momentum")
     elif action is None:
@@ -251,10 +285,11 @@ def energy_of(credit: Line, point: Any = None, action: int | None = None) -> dic
         found["with_momentum"] = "a momentum above T: no band reading"
     else:
         legs = [leg_below(action * action - int(p) * int(p)) for p in momentum]  # T cos k_a per axis
-        num, den = int(point[0]), int(point[1])
+        num, den = pair
         scale = 3 * den * action  # cos omega(k) = (3 num T - den SUM_a (T - T cos k_a)) / (3 den T)
         cosine = 3 * num * action - den * sum(action - leg for leg in legs)
         found["with_momentum"] = count * leg_below(scale * scale - cosine * cosine) / scale
+        found["action"] = action
     return found
 
 
@@ -284,6 +319,10 @@ def bound_or_free(track: list[Line], shape: Shape | None, births: list[Line]) ->
     found: dict[str, Any] = {"beats": beats, "beat": [c.get("beat") for c in track]}
     if isinstance(wheres[0], tuple) and all(w == wheres[0] for w in wheres):
         found.update(verdict=f"bound at {list(wheres[0])}", support=list(wheres[0]))
+        return found
+    if len(set(closes)) < len(closes):
+        found.update(verdict=NO_ONE_BODY, support=None, closes=sorted(set(closes)))
+        found["distinct_wheres"] = len({w for w in wheres if isinstance(w, tuple)})
         return found
     velocity = velocity_of(track[0], track[-1], shape)
     moving = f", v = {json.dumps(velocity['per_interval'])} Links per interval" if velocity else ""
@@ -321,8 +360,11 @@ def bodies_table(
     rows: list[dict[str, Any]] = []
     for key, track in tracks_of(lines).items():
         last = track[-1]
+        closes = [int(c["window"][1]) for c in track]
         velocity: Any = velocity_of(track[0], last, shape) if len(track) > 1 else None
-        if velocity is None:
+        if len(set(closes)) < len(closes):
+            velocity = NO_ONE_BODY
+        elif velocity is None:
             velocity = "unreadable: one credit" if len(track) < 2 else lacking("support")
         rows.append(
             {
@@ -355,7 +397,51 @@ def bodies_table(
                 else {},
             }
         )
+    rows.extend(born_bodies(lines))
     partners(rows)
+    return rows
+
+
+def born_bodies(lines: Lines) -> list[dict[str, Any]]:
+    """One row per child record of the birth lines that carry `records` and `points` (the click's view of the birth): its identity by the family's name and the record's index, its mass from its point, its sense, its position the birth's Node and close; no credit of its own, so velocity, momentum and bound or free are unreadable by name."""
+    rows: list[dict[str, Any]] = []
+    for birth in lines.births:
+        records_, points = birth.get("records"), birth.get("points")
+        if records_ is None or points is None:
+            continue
+        children, senses = birth.get("children") or [], birth.get("senses") or []
+        for k, (record, point) in enumerate(zip(records_, points, strict=True)):
+            pair = pair_of(point)
+            mass: Any = (
+                sine_of(pair) if pair is not None and abs(pair[0]) <= pair[1] else lacking("point")
+            )
+            where = birth["nodes"][0] if birth.get("nodes") else None
+            rows.append(
+                {
+                    "identity": {"family": children[k] if k < len(children) else None, "record": record},
+                    "credits": 0,
+                    "mass": {
+                        "label": children[k] if k < len(children) else lacking("children"),
+                        "point": list(pair) if pair else lacking("point"),
+                        "mass": mass,
+                        "sense": senses[k] if k < len(senses) else lacking("senses"),
+                    },
+                    "position": {
+                        "where": where if where is not None else lacking("nodes"),
+                        "when": birth.get("interval"),
+                        "born": True,
+                    },
+                    "velocity": "unreadable: born once, no credit of its own",
+                    "momentum": lacking("momentum"),
+                    "energy": {"quanta": 1, "rest": mass},
+                    "bound_or_free": {
+                        "verdict": "unreadable: born once, no credit of its own",
+                        "support": None,
+                        "beats": [],
+                    },
+                    "counts": {},
+                }
+            )
     return rows
 
 
@@ -442,16 +528,23 @@ def gr_table(lines: Lines, shape: Shape | None = None, light: str = "light") -> 
     tracks = tracks_of(lines)
     clock_written = any(c.get("proper") not in (None, 0) for c in lines.credits)
     found: dict[str, Any] = {}
+    at_where: dict[Node, list[Line]] = defaultdict(list)
+    for credit in lines.credits:
+        where = where_of(credit, shape, lines.births)
+        if isinstance(where, tuple) and credit.get("window"):
+            at_where[where].append(credit)
     dilation: list[dict[str, Any]] = []
-    for key, track in tracks.items():
-        for a, b in zip(track, track[1:], strict=False):
+    for where, credits in sorted(at_where.items()):  # `proper` is the credited Node's own clock
+        ordered = sorted(credits, key=lambda c: int(c["window"][1]))
+        for a, b in zip(ordered, ordered[1:], strict=False):
             intervals = int(b["window"][1]) - int(a["window"][1])
             if a.get("proper") is None or b.get("proper") is None or not clock_written or not intervals:
                 continue
             elapsed = int(b["proper"]) - int(a["proper"])
             dilation.append(
                 {
-                    "identity": json.loads(key),
+                    "where": list(where),
+                    "identities": [identity_of(a), identity_of(b)],
                     "closes": [a["window"][1], b["window"][1]],
                     "proper": [a["proper"], b["proper"]],
                     "proper_intervals": elapsed,
@@ -459,8 +552,10 @@ def gr_table(lines: Lines, shape: Shape | None = None, light: str = "light") -> 
                     "ratio": elapsed / intervals,
                 }
             )
-    keys = [k for k, absent in (("identity", not tracks), ("proper", not clock_written)) if absent]
-    note = lacking(*keys) if keys else ("" if dilation else "one credit per identity: no two closes")
+    if not clock_written:
+        note = lacking("proper")
+    else:
+        note = "" if dilation else "one credit per where: no two closes of one Node's clock"
     found["dilation"] = {"rows": dilation, "note": note}
     closes = [int(c["window"][1]) for c in lines.credits if c.get("window")]
     per_where: dict[Node, list[int]] = defaultdict(list)
@@ -495,6 +590,9 @@ def gr_table(lines: Lines, shape: Shape | None = None, light: str = "light") -> 
         wheres = [where_of(c, shape, lines.births) for c in track]
         velocity = velocity_of(track[0], track[-1], shape) if len(track) > 1 else None
         if velocity is None or shape is None or not all(isinstance(w, tuple) for w in wheres):
+            continue
+        if len({int(c["window"][1]) for c in track}) < len(track):
+            straight.append({"identity": json.loads(key), "credits": len(track), "note": NO_ONE_BODY})
             continue
         start, began = wheres[0], int(track[0]["window"][1])
         deviations = []
