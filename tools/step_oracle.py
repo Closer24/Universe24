@@ -18,7 +18,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import board_readings, flux, node, swap
+from event_universe import board_readings, flux, node, registry, swap
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, arrival
 from event_universe.core.rule3 import Rule
@@ -127,7 +127,7 @@ def oracle_step_records(
     gamma, unit = board.world.node_clock, board.unit
     lines: list[Record] = []
     bookings: list[Booking] = []
-    for record in range(families[index].records):
+    for record in range(registry.records_of(families[index], states[index].lines)):
         content, factors = node.read(index, families, states, direction, gamma, unit, record)
         rule = node.rule_of(families[index], gamma, content, factors, unit)
         pairs = flux.pairs_of(

@@ -7,7 +7,7 @@ from dataclasses import replace
 
 import numpy as np
 
-from event_universe import records, world_files
+from event_universe import records, registry, world_files
 from event_universe.core.ports import LINK_UNIT
 from event_universe.emission import laid_by_count
 from event_universe.features.click import amplitude
@@ -94,7 +94,10 @@ def points_of(board: Lattice) -> list[str]:
 def holder_rows(board: Lattice) -> list[int]:
     """The largest level of each row of the holder of the sign's time line (the free row 0, then one per charged family)."""
     charge = [f.name for f in board.families].index(SIGN_ROW)
-    width, rows = board.families[charge].width, board.families[charge].records
+    width, rows = (
+        board.families[charge].width,
+        registry.records_of(board.families[charge], board.states[charge].lines),
+    )
     lines = board.states[charge].lines
     return [int(np.abs(np.asarray(lines[row * width].now, dtype=object)).max()) for row in range(rows)]
 

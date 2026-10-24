@@ -14,7 +14,7 @@ from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
 from event_universe.features import volume
 from event_universe.frames import frames_of
-from event_universe.loader.derived import weight_of
+from event_universe.loader.derived import readers_of, weight_of
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -127,6 +127,11 @@ def eras(
         terms.append(weighed)
         exponents.append(other.exponent(family.power))
         writes.append((other.name, int(family.write * weighed.sum())))
+    for reader in readers_of(
+        board.families, index
+    ):  # a reader with no record standing writes 0 (2026-10-24)
+        if board.families[reader].name not in dict(writes):
+            writes.append((board.families[reader].name, 0))
     product, others = paces.exponent_products(exponents)
     sums = [int(term.sum()) for term in terms]
     potential = sum(s * o for s, o in zip(sums, others, strict=True))  # P x SUM_f S_f / n_f

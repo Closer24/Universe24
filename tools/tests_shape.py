@@ -41,6 +41,11 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_point_rows_are_born_at_the_first_birth.py::test_the_lean_board_equals_the_board_with_every_point_standing_through_the_births": (
+        70,
+        "the point rows born at the first birth (2026-10-24, the field view (c)): the lean board against its twin with every point standing from the start, "
+        "equal bit for bit on every shared label and every output line over 24 intervals of the hole seed through its births, the step back through the first birth",
+    ),
     "tests/test_the_clicks_reader.py::test_the_committed_records_credits_give_the_counts_floor_and_the_torus_wide_where_and_name_the_lacking_keys": (
         26,
         "the reader of the clicks log alone on the committed record (2026-10-24, the owner's word that every measurement goes to the clicks): "

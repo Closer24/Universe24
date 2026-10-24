@@ -9,7 +9,7 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import records, seed, world_files
+from event_universe import records, registry, seed, world_files
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import wall_of
 from event_universe.lattice import Lattice
@@ -98,10 +98,13 @@ def carried(board: Lattice, m: Matrix) -> list[Any]:
             for k, line in enumerate(state.lines):
                 lines[k] = tuple(moved(v) for v in (line.now, line.before, line.remainder))
         else:  # a holder: per row the time line, then the axis lines in triples
-            per_row = len(state.lines) // max(family.records, 1)
+            rows, per_row = (
+                registry.records_of(family, state.lines),
+                family.width,
+            )  # the live rows (the point rows born at the first birth, 2026-10-24)
             wall = wall_of(family.pair[1], board.world.node_clock, board.unit)
             divided = records.divided_walls(family, board.fixed_walls[index], board.world.node_clock)
-            for row in range(max(family.records, 1)):
+            for row in range(rows):
                 base = row * per_row
                 lines[base] = tuple(moved(v) for v in records_of(state.lines[base]))
                 writes[base] = moved(state.write_remainders[base])
