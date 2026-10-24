@@ -6,10 +6,10 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import digits, node, plane, share, world_files
+from event_universe import digits, node, plane, registry, share, world_files
 from event_universe.features import read
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import amplitude_bound, quanta_records, turns
+from event_universe.loader.derived import amplitude_bound, turns
 from event_universe.loader.universe import MASSLESS
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
@@ -95,8 +95,9 @@ def test_the_nodes_line_is_the_reading_node_by_node(
         ]
     gamma, nodes = board.world.node_clock, len(now)
     found = ERAS.node_lines(board, before, [1] * nodes)
-    # no Node turns under the massless volume holder (2026-10-24)
-    assert found["X"] == now and found["turned"] == turned == []
+    assert (
+        found["X"] == now and found["turned"] == turned == []
+    )  # no Node turns under the massless holder
     assert found["length"] == [round(float((x / gamma) ** (1 / 4)), 6) if x > 0 else 0 for x in now]
     assert found["direction"] == [-1 if i in turned else 1 for i in range(nodes)]
     assert all(type(q) is int for name in found["quanta"] for q in found["quanta"][name])
@@ -126,7 +127,9 @@ def test_the_rule_and_the_pairs_of_the_digits_read_are_made_once_per_close(
     calls, rule_of = list[int](), node.rule_of
     monkeypatch.setattr(node, "rule_of", lambda *a, **k: (calls.append(1), rule_of(*a, **k))[1])
     assert [read_digits(frame) for frame in frames] == cold
-    assert len(calls) == sum(len(quanta_records(board.families, i)) for i in board.order)
+    assert len(calls) == sum(
+        len(registry.quanta_records(board.families, board.states, i)) for i in board.order
+    )
 
 
 def test_the_turned_room_is_computed_once_per_pair_at_load(

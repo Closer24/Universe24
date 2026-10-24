@@ -128,7 +128,7 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
         rulers[i, 0] = node.rulers(i, families, states, 1, wrap, GAMMA)
     for held in (hollow, core):
         numerators, walls, _weight = records.write_sources(
-            held, families, forms, {}, writes[held], rulers, GAMMA
+            held, families, forms, {}, writes[held], rulers, GAMMA, [list(forms)]
         )
         power = families[held].power  # one power on every booking: the form's own clock
         assert (

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import node, records, shear
+from event_universe import node, records, registry, shear
 from event_universe.core.rule3 import wall_of
 from event_universe.features import volume
 from event_universe.loader.derived import turns
@@ -60,7 +60,7 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
             int, records.Record
         ] = {}  # per tension line the row's own time line at the interval's start, the wall of the shear's momentum
         if shear.carried(family):
-            for record in range(family.records):
+            for record in range(registry.records_of(family, lines)):
                 first = records.record_slice(family, record).start
                 for number in shear.shear_lines(family):
                     if first < number <= first + family.width - 1:

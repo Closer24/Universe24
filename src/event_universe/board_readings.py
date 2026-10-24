@@ -8,12 +8,13 @@ import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
+from event_universe import registry
 from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
 from event_universe.features import volume
 from event_universe.frames import frames_of
-from event_universe.loader.derived import row_sources, weight_of
+from event_universe.loader.derived import weight_of
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -52,7 +53,7 @@ def stresses(board: Lattice) -> Stresses:
             board.wrap,
             frames_of(s[0], board.families, board.states, board.wrap, s[1]),
         )
-        for s in sources_of(board.families, board.order)
+        for s in sources_of(board.families, board.states, board.order)
     }
 
 
@@ -60,7 +61,7 @@ def sense_currents(board: Lattice) -> Stresses:
     """Every turned record's sign current on each axis at every Node, the Node's two a-Links' Wronskian currents summed unhalved, J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its lines as they stand at the interval's start (`readings.sense_current_of`): the source the odd lines of the record's own row take in their one write under the rotation at the doubled wall 2 E_s T (`loader.derived.held_write_of`; the two hands' lines of 2026-10-09); where the record's holder of the sign declares the Lorentz form, the record's step's own flux through each of the Node's three +a Links instead (`sense_fluxes`, covector.link_fluxes), read after the interval's phase act with the Link pairs the step reads."""
     return {
         s: sense_fluxes(board, s, board.lines_of(*s), 1)
-        for s in sources_of(board.families, board.order)
+        for s in sources_of(board.families, board.states, board.order)
         if s[0] in board.turning
     }
 
@@ -120,7 +121,7 @@ def eras(
     terms: list[Any] = []
     exponents: list[int] = []
     writes: list[tuple[str, int]] = []
-    for source in row_sources(board.families, index, 0):
+    for source in registry.sourcing(board.families, board.states, index)[0]:
         other = board.families[source[0]]
         scaled = records.rulers_write_factor(forms.get(source, 0), rulers[source], gamma, family.power)
         weighed = weight_of(index, other) * np.asarray(scaled, dtype=object) + np.zeros(

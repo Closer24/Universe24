@@ -131,15 +131,6 @@ def charged(families: tuple[FamilyRule, ...], index: int) -> bool:
     )
 
 
-def row_of(families: tuple[FamilyRule, ...], index: int, record: int) -> int | None:
-    """The row of every holder of the sign that the record `record` of the family `index` owns, the one its Wronskian is written into and the one its read leaves out: the row 0 is owned by no record (the free row, the laid light's), and the charged families' records take the rows after it in the file's order; None where the family reads no holder of the sign."""
-    if not charged(families, index):
-        return None
-    return (
-        1 + sum(families[other].records for other in range(index) if charged(families, other)) + record
-    )
-
-
 def children_of(families: tuple[FamilyRule, ...], index: int) -> int:
     """The records a charged family needs for its births: the largest count of its children in any list a meeting selects (`conversion.birth_of` over every gapless parent, the exact lists; 2 at every list of the one universe, (k, -1), (k, 1)), 0 where no list births it (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24: N records of the write step, one per child of the list, each at its own sense; the owner's word, several can be born). Nothing here counts two: the list's own length."""
     from event_universe.conversion import (
@@ -176,23 +167,6 @@ def with_records(families: tuple[FamilyRule, ...], laid: Sequence[int]) -> tuple
         else:
             found.append(family)
     return tuple(found)
-
-
-def quanta_records(families: tuple[FamilyRule, ...], index: int) -> range:
-    """The records of quanta of a family, each read, stepped and booked at its own paces: every record of a family that reads a holder of the sign (each its own lines and its own row of the sign), the one record of every other family of quanta, a holder of the sign's one record, light, among them (its rows are rows of the sign and no records of light)."""
-    return range(1 if families[index].wronskian else families[index].records)
-
-
-def row_sources(families: tuple[FamilyRule, ...], held: int, row: int) -> list[tuple[int, int]]:
-    """The records that source one row of a held family, (reader, record) pairs (ALGEBRA.md #the-primitives, the held write's reciprocity; No record reads its own write of the sign): every record of every reader for a holder of the content, whose one row is the sum of its readers' forms; for a holder of the sign the one record that owns the row, and none for the row 0, which no record writes."""
-    sources = [
-        (reader, record)
-        for reader in readers_of(families, held)
-        for record in quanta_records(families, reader)
-    ]
-    if not families[held].wronskian:
-        return sources
-    return [(reader, record) for reader, record in sources if row_of(families, reader, record) == row]
 
 
 @dataclass(frozen=True)
