@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Sequence
 from dataclasses import replace
 from typing import Any
 
@@ -12,7 +12,7 @@ from event_universe import node, records
 from event_universe.core.ports import Wrap
 from event_universe.features.start import Sourced
 from event_universe.flux import step_records as stepped_records
-from event_universe.loader.derived import quanta_records, row_sources, weight_of
+from event_universe.loader.derived import held_write_of, quanta_records, row_sources, weight_of
 
 Bookings = dict[records.Sourcing, Any]  # per record of quanta its form or its Wronskian
 Row = tuple[int, int]  # a held family's index and one row of it, the rows the start rests
@@ -61,12 +61,12 @@ def booked_sources(
     holders: Sequence[Row],
     walls: dict[Row, int],
     packets: dict[Row, records.Record],
+    action: int,
     levels: Sequence[np.ndarray],
     wrap: Wrap,
     gamma: int,
     unit: int,
     amplitude: int,
-    factors: Mapping[int, Mapping[int, int]] | None = None,
 ) -> tuple[list[Sourced], list[Sourced]]:
     """The sources of the start at the held rows' levels given, as the held write's write books them (ALGEBRA.md #what-a-body-is, the four lines (a) and (c); the engine's start and the generator call this one act, `Lattice.start` and tools/pixel_mode.py; for every held holder of the sign under the rotation (`Row.rotation`, the declared act `rotation` and no form's name; `node.phase_act`, the one act `Lattice.step` takes before the lines' step) the booking is taken after the first interval's phase act at these levels, the Links' pairs the first step reads, and the phase lines are turned back to the angle 0 after it, bit for bit, so that the first write returns the rest on every turned world and, under the Lorentz form, the lattice Lorenz constraint stands from the first interval (covector.py); the booking before 2026-10-21 took the trial step at the seed angle 0 on every turned holder but the one declaring the Lorentz form, so that the first interval's turn moved the rows by the two Wronskians' difference, the hydrogen 11-cube's centre 3029 at the lay and 3596 after the first interval, ALGEBRA.md, (g) The field at rest, the start of a world, the dated clause of 2026-10-21; the numbers in CHANGELOG.md): the levels laid into the time lines of `rows`, each a held family and one row of it (the holders of the content then every row of the holders of the sign, each added to the row's laid record `packets`, read once before the loop and never from the pass before, with its vacuum content, both levels alike), every record of quanta stepped once at the paces its read gives it there (`flux.step_records`, every sign row but the record's own, the phase lines after the first interval's act with `amplitude` their X, features/phase) and its form D = now^2 - next x before and its Wronskian read from the step's booking (`records.form`, `records.wronskian`), each row's source the sum over the records that source it (`row_sources`: every reader's records for a holder of the content, the one record that owns the row for a holder of the sign, none for its free row) of their bookings at the weight they read it with (the held write's reciprocity, `weight_of`), the form for a row sourced by the form and the Wronskian for the holder of the sign, over the write's wall E_s T (`walls`), with its pair, its rest, its reads of the content holders by position and the proper-interval power of its booking (`FamilyRule.power`, the rest scaled as the write scales its source); the holders' sources then the sign rows'."""
     for (index, row), level in zip(rows, levels, strict=True):
@@ -91,11 +91,16 @@ def booked_sources(
         node.phase_act(phased, families, states, -1, wrap, gamma)
     found: list[Sourced] = []
     content = [held for held, _row in holders]
+    factors = {  # the sign holders' charge factors, the Wronskian per quantum (The constants, 2026-10-24; loader/charge.py)
+        index: held_write_of(families, index, action, unit).factors
+        for index, family in enumerate(families)
+        if family.held and family.wronskian
+    }
     for index, row in rows:
         family, source = families[index], np.zeros_like(states[index].lines[0].now)
         bookings = turns if family.wronskian else forms
         for reader, record in row_sources(families, index, row):
-            factor = factors[index].get(reader, 1) if factors and index in factors else 1
+            factor = factors[index].get(reader, 1) if index in factors else 1
             source = source + weight_of(index, families[reader]) * factor * bookings[(reader, record)]
         reads = tuple((content.index(r.family), r.weight) for r in family.reads if r.family in content)
         found.append(

@@ -229,29 +229,16 @@ def family_rules(rows: Sequence[Row]) -> tuple[FamilyRule, ...]:
     return with_records(found, [0] * len(found))
 
 
-def pythagorean_readers(families: tuple[FamilyRule, ...], index: int) -> None:
-    """The sign's reader is Pythagorean (the owner's word of 2026-10-24, (ii), "closed"; ALGEBRA.md, The constants): a reader of the holder of the sign `index` writes its charge per quantum by its count unit, exact for a Pythagorean pair alone; a reader with an irrational sine is refused by name, as the conversion refuses it from every exact list (ALGEBRA.md, The conversion, 180), the sentence naming the reader, its pair and its den^2 - num^2; a massless reader (num = den) carries its Wronskian as before. The former behaviour of 236e74ed0, the count unit rounded once and the readers' units brought to one wall by their lcm, kept by name as its defect."""
-    holder = families[index]
-    for other in readers_of(families, index):
-        num, den = families[other].pair
-        gap = den * den - num * num
-        if families[other].plane and abs(num) != den and largest_below(gap) ** 2 != gap:  # a real-line reader is refused as no plane (loader/universe)
-            raise ValueError(
-                f"{families[other].name!r} reads the holder of the sign {holder.name!r} with the pair "
-                f"[{num}, {den}], whose sine is irrational (den^2 - num^2 = {gap}, no square): a reader of "
-                "the sign writes its charge per quantum by its count unit, exact for a Pythagorean pair "
-                "alone; a reader with an irrational sine is refused, as the conversion refuses it from every "
-                "exact list (ALGEBRA.md, The conversion, 180; The constants, the owner's word of 2026-10-24; "
-                "the rounded count unit and the lcm of 236e74ed0 the former behaviour, kept by name as its defect)"
-            )
-
-
 def alpha_of(families: tuple[FamilyRule, ...], index: int, gamma: int, action: int) -> tuple[int, int]:
     """The law's alpha of a holder of the sign carried inside its one write (the owner's word of 2026-10-24, nature's charge universality, "nature is the main thing"; ALGEBRA.md, The constants: the law's alpha is the ratio of the file's E_h T to Gamma, one per holder with any pairs under it; the old kept by name: "the ratio of the file's E_h T num to Gamma den, [num, den] the pair the moving planes reading the holder share, two moving planes of different num / den asking one holder for two alphas refused by name: one holder, one alpha", the law of one Node, 2026-10-23): the pair (E_h T, Gamma) reduced by their greatest common divisor, the numerator's multiplier and the walls' multiplier of every line of the holder's rows; no reader's pair enters it, the charge per quantum made one across the readers by their count units at the write (`held_write_of`, the charge factors); (1, 1) where no plane of quanta reads the holder (light's own row on the gate worlds), the write of no source."""
     holder = families[index]
     assert holder.level_weight is not None
     if not any(family.plane and weight_of(index, family) > 0 for family in families):
         return 1, 1
+    from event_universe.loader.charge import (
+        pythagorean_readers,  # charge reads this module: imported here
+    )
+
     pythagorean_readers(families, index)
     above, below = holder.level_weight * action, gamma
     common = gcd(above, below)
@@ -320,39 +307,18 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, uni
         row[1 + AXES :] = [SIDES * family.level_weight * measure] * AXES
     if family.rotation:  # the sign's odd lines: the two Links' currents summed unhalved over 2 E_s T
         row[1:] = [SIDES * family.level_weight * measure] * AXES
-    charge, units = (
-        1,
-        {},
-    )  # the sign holder's charge multiple: the readers' count units brought to one wall
-    if family.wronskian:
-        # the charge is the Wronskian per quantum (ALGEBRA.md, The constants, 2026-10-24): each reader's
-        # Wronskian times 3 T den over its own count unit W_c sin omega_0 = 3 T den sin omega_0 (`count_wall`),
-        # one over the sine, so that every quantum of every family writes T / 2 per count; the readers' units
-        # brought to their least common multiple as the tension lines' dens are, the factors and the multiple
-        # reduced once by their common divisor; a massless reader's factor the multiple itself (its Wronskian
-        # as before)
-        pythagorean_readers(families, index)
-        units = {
-            other: count_wall(families[other], action)
-            for other in sources
-            if abs(families[other].pair[0]) != families[other].pair[1]
-        }
-        for unit_of_one in units.values():
-            charge = int(division_forward(charge * unit_of_one, gcd(charge, unit_of_one), 0)[0])
-        units = {
-            other: 3
-            * action
-            * families[other].pair[1]
-            * int(division_forward(charge, units[other], 0)[0])
-            if other in units
-            else charge
-            for other in sources
-        }
-        common = charge
-        for factor in units.values():
-            common = gcd(common, factor)
-        charge = int(division_forward(charge, common, 0)[0])
-        units = {other: int(division_forward(factor, common, 0)[0]) for other, factor in units.items()}
+    charge: int = 1
+    units: dict[
+        int, int
+    ] = {}  # the sign holder's charge multiple: the readers' count units brought to one wall
+    if (
+        family.wronskian
+    ):  # the charge factors and the charge multiple (loader/charge.py; The constants, 2026-10-24)
+        from event_universe.loader.charge import (
+            charge_factors,  # charge reads this module: imported here
+        )
+
+        units, charge = charge_factors(families, index, action)
     row = [
         wall * family.write_wall * charge for wall in row
     ]  # the sign holder's Gamma (alpha inside the write) and its charge multiple
@@ -415,28 +381,9 @@ def bound_under_rooms(
 
             write = held_write_of(families, index, action, unit)
             rooms = write_rooms(families, index, write, gamma, hill, unit)
-            # the register's scale and the lay's amplitude bound are the loader's tool and no line of the law, and a
-            # record laid at W = 0 writes nothing, so a holder of the sign's write room never lowers the bound for
-            # the others: it is gated apart, refused by name where it does not fit the width (the Boss's word,
-            # 2026-10-24; the former rule, the min over every family's rooms, the sign holder's among them, kept by
-            # name, 2026-10-23)
-            own = largest
-            for wall, room in zip(write.walls, rooms, strict=True):
-                if wall > largest:
-                    own = 0
-                elif room:
-                    fits = int(division_forward(largest - wall, room, 0)[0])
-                    own = min(own, largest_below(fits))
-            if family.wronskian:
-                if own < 1:
-                    raise ValueError(
-                        f"the holder of the sign {family.name!r} at the Node clock Gamma = {gamma} and T = {action}: "
-                        f"its one write's room, the walls {list(write.walls)[:2]} and the numerators' rooms "
-                        f"{[int(room) for room in rooms][:2]} per level, leaves no level inside the width of "
-                        f"{width} bits (ALGEBRA.md #the-bound; the room gated apart from the register's bound)"
-                    )
-            else:
-                found = min(found, own)
+            from event_universe.loader.rooms import held_room  # rooms reads this module: imported here
+
+            found = held_room(family, write, rooms, found, largest, gamma, action, width)
         if found < 1:
             raise ValueError(
                 f"the pair [{num}, {den}] at the Node clock Gamma = {gamma} and T = {action}: the totals of "

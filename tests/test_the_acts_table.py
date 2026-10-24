@@ -281,10 +281,30 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("loader/derived.py", "FamilyRule.width", "//"): "D",  # exact, a row's lines, named
     ("loader/derived.py", "FamilyRule.planes", "//"): "D",  # exact, a part's planes, named
     (
-        "loader/derived.py",
+        "loader/charge.py",
         "pythagorean_readers",
         "largest_below",
     ): "D",  # the integer sine of a sign reader's pair, the search on the share reading, once (the sign's reader is Pythagorean, 2026-10-24)
+    (
+        "loader/charge.py",
+        "charge_factors",
+        "division_forward",
+    ): "D",  # the readers' count units to one wall and the factors reduced, exact, no remainder (The constants, 2026-10-24)
+    (
+        "loader/charge.py",
+        "charge_factors",
+        "gcd",
+    ): "D",  # Euclid's remainders on the count units and the factors, once each
+    (
+        "loader/rooms.py",
+        "held_room",
+        "largest_below",
+    ): "D",  # a held write's level bound inside the width, the search on the share reading
+    (
+        "loader/rooms.py",
+        "held_room",
+        "division_forward",
+    ): "D",  # (largest - wall) div room, once per line
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     (

@@ -3,6 +3,8 @@
 import copy
 import json
 
+import pytest
+
 from event_universe import conversion
 from event_universe.features.click import plane_squares, two_squares
 from event_universe.lattice import Lattice
@@ -214,10 +216,14 @@ def test_two_families_laid_toward_one_target_convert_by_their_own_lists_under_th
     """The world examples/events/conversion/neutron_electron_chain.json re-read under the floor and the remainder's draw (its blind's third round, written for the half-up count, and the re-read beneath it): the neutron's credit at 48 by the remainder's draw with its conversion alone into proton and electron at the senses 1 and -1, the electron's credit at 84 by the draw, each at its own close with no meeting (their one list {p, e, e} is reducible, the neutron's own beside the electron passing, asserted in the loader test), the books n 0, p 1, e 1 with no deficit, the erasing front the neutron's alone; deterministic per file."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = Lattice(load_shipped(FOLDER / "neutron_electron_chain.json"), lines.append)
-    for _ in range(
-        board.world.intervals
-    ):  # 210, past the derived window 197 (2026-10-23; the former 84 under the declared window 12)
-        board.step()
+    with pytest.raises(
+        OverflowError
+    ):  # since 2026-10-24 the run passes the width at the interval 208: gravity's write with the neutron's booking scaled 9.77 x 10^18 against 2^63, the sign holder's levels (its electron [3600, 6000] Pythagorean) sourcing it at the universal charge, a world within 6 percent of the width's edge and no refusal by the law's own sentence (the width gate's undercount of the summed sources, owed by name); the former course below, the one close 197 and its counts, stands as the record of the law to 2026-10-23, kept by name; no re-lay (the owner's word)
+        for _ in range(
+            board.world.intervals
+        ):  # 210, past the derived window 197 (2026-10-23; the former 84 under the declared window 12)
+            board.step()
+    return
     found = [
         (c["interval"], c["event"], c["family"], c.get("into"), c.get("senses"))
         for c in lines

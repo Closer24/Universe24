@@ -432,9 +432,6 @@ def start_content(
         if f.held
     }
     walls = {number: write.walls for number, write in writes.items()}
-    factors = {  # the sign holders' charge factors, the Wronskian per quantum (The constants, 2026-10-24)
-        number: write.factors for number, write in writes.items() if families[number].wronskian
-    }
     states = [
         empty_state(f, board.shape, walls.get(number, ()), board.kind)
         for number, f in enumerate(families)
@@ -471,12 +468,12 @@ def start_content(
             holders,
             time_walls,
             packets,
+            board.action,
             levels,
             board.wrap,
             board.gamma,
             board.unit,
             phase.amplitude(board.gamma, board.width.bit_length()),
-            factors,
         )
 
     fields = held_rests(

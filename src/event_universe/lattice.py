@@ -156,13 +156,10 @@ class Lattice:
         line_of = {row: int(records.record_slice(self.families[row[0]], row[1]).start) for row in rows}
         walls = {row: self.walls(row[0])[0] for row in rows}
         packets = {row: self.states[row[0]].lines[line_of[row]] for row in rows}
-        reads = (self.families, self.states, rows, holders, walls, packets)
-        factors = {  # the sign holders' charge factors, the Wronskian per quantum (The constants, 2026-10-24)
-            row[0]: self.writes[row[0]].factors for row in rows if self.families[row[0]].wronskian
-        }
+        reads = (self.families, self.states, rows, holders, walls, packets, world.quantum_action)
 
         def booked(levels: Sequence[np.ndarray]) -> tuple[list[Sourced], list[Sourced]]:
-            return booked_sources(*reads, levels, self.wrap, gamma, self.unit, self.amplitude, factors)
+            return booked_sources(*reads, levels, self.wrap, gamma, self.unit, self.amplitude)
 
         seed = [records.zeros(self.shape, self.kind) for _ in rows]
         try:
