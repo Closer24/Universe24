@@ -9,8 +9,8 @@
   {
    "name": "gravity",
    "pair": [
-    999,
-    1000
+    53529741,
+    53567765
    ],
    "reads": {
     "gravity": 1
@@ -27,8 +27,8 @@
   {
    "name": "charge",
    "pair": [
-    1000,
-    1000
+    53567765,
+    53567765
    ],
    "reads": {},
    "held": {
@@ -41,8 +41,8 @@
   {
    "name": "matter",
    "pair": [
-    600,
-    1000
+    32140659,
+    53567765
    ],
    "reads": {
     "gravity": 1
@@ -52,8 +52,8 @@
   {
    "name": "light",
    "pair": [
-    1000,
-    1000
+    53567765,
+    53567765
    ],
    "reads": {
     "gravity": 1
@@ -63,8 +63,8 @@
   {
    "name": "proton",
    "pair": [
-    0,
-    1000
+    4859756,
+    53567765
    ],
    "reads": {
     "gravity": 1,
@@ -75,28 +75,14 @@
   {
    "name": "electron",
    "pair": [
-    800,
-    1000
+    53567757,
+    53567765
    ],
    "reads": {
     "gravity": 1,
     "charge": 3
    },
    "dimension": 2
-  },
-  {
-   "name": "absorber",
-   "pair": [
-    666,
-    1000
-   ],
-   "reads": {
-    "gravity": 1
-   },
-   "dimension": [
-    2,
-    2
-   ]
   }
  ]
 }
