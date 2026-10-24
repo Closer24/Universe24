@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, NamedTuple
@@ -124,10 +123,27 @@ def identity_of(credit: Line) -> Identity | None:
     return taker if isinstance(taker, str) and taker.startswith("body") else None
 
 
+def leg_below(square: int) -> int:
+    """The largest integer x with x * x <= square, by a bisection on comparisons of integers alone (the law's one search, core/rule3.largest_below, written here so that the reader imports nothing of the engine): the leg of a Pythagorean point exactly, no root."""
+    if square < 0:
+        raise ValueError(f"no integer has a square at most {square}: the search is refused")
+    high = 1
+    while high * high <= square:
+        high = high + high
+    low = 0
+    while high - low > 1:
+        middle = (low + high) // 2
+        if middle * middle <= square:
+            low = middle
+        else:
+            high = middle
+    return low
+
+
 def sine_of(point: Any) -> float:
-    """sin omega of a point's reduced pair [num, den], cos omega = num / den: the mass T sin omega in T's unit."""
+    """sin omega of a point's reduced pair [num, den], cos omega = num / den: the leg over den, the leg the largest integer whose square is at most den^2 - num^2 (exact at a Pythagorean point): the mass T sin omega in T's unit."""
     num, den = int(point[0]), int(point[1])
-    return math.sqrt(den * den - num * num) / den
+    return leg_below(den * den - num * num) / den
 
 
 def mass_of(credit: Line, birth: Line | None = None) -> dict[str, Any]:
@@ -231,10 +247,14 @@ def energy_of(credit: Line, point: Any = None, action: int | None = None) -> dic
         found["with_momentum"] = lacking("momentum")
     elif action is None:
         found["with_momentum"] = "the band's form needs T: pass --action"
+    elif any(abs(int(p)) > action for p in momentum):
+        found["with_momentum"] = "a momentum above T: no band reading"
     else:
-        cosines = [math.sqrt(max(0.0, 1 - (p / action) ** 2)) for p in momentum]
-        cosine = int(point[0]) / int(point[1]) - sum(1 - c for c in cosines) / 3
-        found["with_momentum"] = count * math.sqrt(max(0.0, 1 - cosine * cosine))
+        legs = [leg_below(action * action - int(p) * int(p)) for p in momentum]  # T cos k_a per axis
+        num, den = int(point[0]), int(point[1])
+        scale = 3 * den * action  # cos omega(k) = (3 num T - den SUM_a (T - T cos k_a)) / (3 den T)
+        cosine = 3 * num * action - den * sum(action - leg for leg in legs)
+        found["with_momentum"] = count * leg_below(scale * scale - cosine * cosine) / scale
     return found
 
 
@@ -266,9 +286,8 @@ def bound_or_free(track: list[Line], shape: Shape | None, births: list[Line]) ->
         found.update(verdict=f"bound at {list(wheres[0])}", support=list(wheres[0]))
         return found
     velocity = velocity_of(track[0], track[-1], shape)
-    speed = math.sqrt(sum(v * v for v in velocity["per_interval"])) if velocity else None
-    verdict = "free" + (f", |v| = {speed:.4f} Links per interval" if speed is not None else "")
-    found.update(verdict=verdict, support=None)
+    moving = f", v = {json.dumps(velocity['per_interval'])} Links per interval" if velocity else ""
+    found.update(verdict="free" + moving, support=None)
     found["wheres"] = [list(w) if isinstance(w, tuple) else w for w in wheres]
     return found
 
@@ -386,9 +405,9 @@ def uncertainty_table(lines: Lines, shape: Shape | None = None) -> list[dict[str
             "energy_time": {
                 "quanta": min(counts),
                 "intervals": length,
-                "rotation_resolved": 2 * math.pi / length,
-                "product_in_T": 2 * math.pi,
-                "floor_in_T": 0.5,
+                "rotation_resolved": f"2 pi / {length}",
+                "product": "2 pi T",
+                "floor": "T / 2",
             }
             if counts
             else lacking("count"),
@@ -524,10 +543,16 @@ def main(argv: list[str] | None = None) -> None:
         help="T, the quantum's action, for the band's form of the energy",
     )
     parser.add_argument("--out", type=Path, default=None, help="write the tables as JSON here")
+    parser.add_argument(
+        "--light",
+        default=None,
+        help="the massless family's name for the GR table's spacing; the first credit's family otherwise",
+    )
     args = parser.parse_args(argv)
     lines = read_log(args.log)
     declared = (args.shape[0], args.shape[1], args.shape[2]) if args.shape else None
     shape = shape_of(lines, declared)
+    light = args.light or (str(lines.credits[0].get("family")) if lines.credits else "light")
     tables = {
         "log": str(args.log),
         "lines": {
@@ -539,7 +564,7 @@ def main(argv: list[str] | None = None) -> None:
         "shape": list(shape) if shape else lacking("shape"),
         "bodies": bodies_table(lines, shape, args.action),
         "uncertainty": uncertainty_table(lines, shape),
-        "gr": gr_table(lines, shape),
+        "gr": gr_table(lines, shape, light),
     }
     text = json.dumps(tables, indent=1)
     if args.out is not None:

@@ -58,7 +58,7 @@ def test_a_log_with_the_eight_keys_gives_velocity_verdict_dilation_and_product_b
     assert (a["identity"], a["velocity"]["links"], a["velocity"]["intervals"]) == ([3, 0], [2, 0, 0], 4)
     assert (a["velocity"]["per_interval"], a["velocity"]["proper_intervals"]) == ([0.5, 0.0, 0.0], 3)
     assert a["velocity"]["per_proper_interval"] == [2 / 3, 0.0, 0.0]
-    assert a["bound_or_free"]["verdict"].startswith("free, |v| = 0.5")
+    assert a["bound_or_free"]["verdict"] == "free, v = [0.5, 0.0, 0.0] Links per interval"
     mass = a["mass"]
     assert (mass["mass"], mass["point"], mass["kind"], mass["sense"]) == (0.8, [3, 5], 2, -1)
     assert (a["energy"]["quanta"], a["energy"]["rest"]) == (1, 0.8)
