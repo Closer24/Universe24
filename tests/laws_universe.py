@@ -122,5 +122,13 @@ def small_world(
     return path
 
 
+def bare_torus(folder: Path, cube: int = CUBE, intervals: int = 60) -> Path:
+    """The folded world's three keys on a bare torus of `cube` Nodes a side with the one universe file copied beside it (the folded loader, 2026-10-24: nothing declared, the light seeded on every Node); `world_files.REPOSITORY_ROOT` is `folder`."""
+    (folder / "u.json").write_text(UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8")
+    world = {"universe": "u.json", "shape": [cube] * 3, "intervals": intervals}
+    (path := folder / "bare.json").write_text(json.dumps(world), encoding="utf-8")
+    return path
+
+
 def flat(array: Any) -> list[int]:
     return [int(x) for x in np.asarray(array, dtype=object).reshape(-1)]

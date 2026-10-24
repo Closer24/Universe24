@@ -36,8 +36,6 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
     shares = [int(share.share((1, 1), r, RING, 5, 1)[HERE]) for r in (record, after)]
     plain = [int(share.share((1, 1), r, RING, 5, 1, as_read=r)[HERE]) for r in (record, after)]
     currents = sum(int(f[HERE]) for f in readings.currents_of(1, [record], RING))
-    level_terms = sum(int(g[HERE]) for g in readings.gauge_terms(1, [record], [after], RING))
-    framed = currents - level_terms  # the frame's current J: the plain less the level terms' change
     nxt, carried = int(after.now[HERE]), int(after.remainder[HERE])
 
     def unfloored(
@@ -57,11 +55,12 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
 
     residual = unfloored(record)[0] % 1 - unfloored(after)[0] % 1
     assert (nxt, carried, shares, plain, currents) == (-2, 12, [13, 12], [54, 26], -27)
-    assert (level_terms, framed, residual) == (-27, 0, Fraction(-1, 3))
+    assert residual == Fraction(
+        -1, 3
+    )  # the level terms' clause left with readings.gauge_terms, 2026-10-24
     assert (
         sum(int(f[HERE]) for f in readings.currents_of(1, [after], RING)) != currents
     )  # not the pair left
-    assert shares[1] - shares[0] == framed + Fraction(-(nxt + 3) * carried, weight) + residual
     plain_residual = unfloored(record)[1] % 1 - unfloored(after)[1] % 1
     assert plain[1] - plain[0] == currents + Fraction(-(nxt + 3) * carried, weight) + plain_residual
     record, rule = records.Record(ones, zero, zero), law(2, 3, GAMMA, GAMMA, GAMMA)

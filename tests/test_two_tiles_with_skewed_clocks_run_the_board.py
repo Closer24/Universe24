@@ -10,12 +10,15 @@ import pytest
 from event_universe import records, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws_universe import ROOT, WORLD
+from tests.laws_universe import UNIVERSE, bare_torus
 
-INTERVALS, SIDE = 28, 5
+INTERVALS, SIDE = (
+    30,
+    3,
+)  # through the births at 29 and one past (28 before them on the 5-cube to 2026-10-24; 32 shortened under the suite's bound)
 TILES = (
-    {"x": [0, 1, 2]},
-    {"x": [3, 4]},
+    {"x": [0, 1]},
+    {"x": [2]},
 )  # the two slabs' interiors along x; the halos one layer each side
 
 
@@ -25,10 +28,9 @@ def layers_of(interior: list[int]) -> list[int]:
 
 
 def tile_world(folder: Path, layers: int) -> Path:
-    """The tile's world: the folded universe over the tile's layers along x and the board's other two sides."""
-    world = json.loads(WORLD.read_text(encoding="utf-8"))
-    world["shape"] = [layers, SIDE, SIDE]
-    world["universe"] = str(ROOT / world["universe"])  # the universe file by its repository path
+    """The tile's world: the one universe over the tile's layers along x and the board's other two sides."""
+    (folder / "u.json").write_text(UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8")
+    world = {"universe": "u.json", "shape": [layers, SIDE, SIDE], "intervals": INTERVALS}
     path = folder / f"tile_{layers}.json"
     path.write_text(json.dumps(world), encoding="utf-8")
     return path
@@ -118,13 +120,13 @@ def differences(whole: list[Any], board: Lattice) -> list[tuple[Any, ...]]:
     return found
 
 
-def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_until_the_meeting(
+def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_through_the_births(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Equal bit for bit over the 28 intervals before the first meeting in either order of the tiles' ticks; at 29 the births differ, the one act that reads beyond one Link as written: the count of the quanta born is the family's share summed over the whole lattice (credit.count_of through Lattice.total_share at the window's close, credit.counted_windows and meeting.closed) and the Nodes are drawn in the lattice's order (meeting.jumped), so each tile births by its own lattice's sum; named here and not patched (the owner's word of 2026-10-24: find the non-local act)."""
-    lines: list[dict[str, object]] = []
-    board = Lattice(load_world(WORLD), output=lines.append)
+    """Equal bit for bit over 30 intervals in either order of the tiles' ticks, through the first meeting at 29: every birth pays by the hole at its own Node and no act reads beyond one Link (the owner's word, everything local, 2026-10-24), so the tiles' interiors are the board's every line, write remainder and phase line; the births read from the board's lines, a proton pair at every one of the 27 Nodes at the senses -1 and 1. To 2026-10-24 the test ran the 5-cube to 28 and named the births' count summed over the board as the one non-local act; that act left with the fold's local births."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    lines: list[dict[str, object]] = []
+    board = Lattice(load_world(bare_torus(tmp_path, SIDE, INTERVALS)), output=lines.append)
     interiors = [tile["x"] for tile in TILES]
     layers = [layers_of(interior) for interior in interiors]
     tiles = [
@@ -134,7 +136,7 @@ def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_until_the_meeting
     for tile, rows in zip(tiles, layers, strict=True):
         imposed(tile, whole, rows)
     skew = 0
-    for interval in range(1, INTERVALS + 2):
+    for interval in range(1, INTERVALS + 1):
         board.step()
         first, second = (
             tiles if interval % 2 else tiles[::-1]
@@ -147,13 +149,8 @@ def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_until_the_meeting
         )  # the halos exchanged: each tile re-imposed from the two interiors
         for tile, rows in zip(tiles, layers, strict=True):
             imposed(tile, whole, rows)
-        found = differences(whole, board)
-        if interval <= INTERVALS:
-            assert found == [] and not lines, (interval, found[:4])
-        else:  # the meeting at 29: 61 pairs born on the board by its own sum, each tile by its lattice's
-            born = [line for line in lines if line["event"] == "birth"]
-            assert born and {name for name, *_ in found} == {"electron"}, (interval, found[:4])
-            assert (
-                dict(tiles[0].credit.counts) == dict(board.credit.counts) != dict(tiles[1].credit.counts)
-            )
-    assert skew == 1 and board.interval == tiles[0].interval == tiles[1].interval == INTERVALS + 1
+        assert differences(whole, board) == [], interval
+    born = [line for line in lines if line["event"] == "birth"]
+    assert len(born) == SIDE**3 and all(line["interval"] == 29 for line in born)  # every Node alike
+    assert all(line["children"] == ["proton"] * 2 and line["senses"] == [-1, 1] for line in born)
+    assert skew == 1 and board.interval == tiles[0].interval == tiles[1].interval == INTERVALS

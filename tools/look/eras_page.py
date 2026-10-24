@@ -15,7 +15,13 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from captions import captions_of  # noqa: E402  (the look's own module, beside this tool)
+from captions import (  # noqa: E402  (the look's own module, beside this tool)
+    captions_of,
+    ledger_of,
+    legend_html,
+    legend_of,
+    parse_log,
+)
 
 PAGE = Path(__file__).with_name("page.py")
 TOKENS = re.search(r":root \{.*?\n\}\n", PAGE.read_text(encoding="utf-8"), re.S)
@@ -77,6 +83,7 @@ td.num { font-family: var(--font-mono); }
 <div class="page">
   <section class="panel wide" id="notes-box" hidden><h2 id="notes-heading">Notes</h2><div class="prose" id="notes-prose"></div></section>
   <section class="panel wide" id="captions-box" hidden><h2>The events, in the viewer's words (every caption read from the logs; the interval first)</h2><div class="prose scroll" id="captions-list"></div></section>
+{{LEGEND}}
   <section class="panel wide">
     <div class="picker"><label>the estimator's span <input type="number" id="span-input" min="2" step="1"></label><span class="words">intervals: d(1 / v) / dt = n_eff / (2 Gamma), q_board = n_eff / 2 - 1, q_p = q_board - 1, the second difference over short spans failing on the integers' staircase</span></div>
     <div class="graph" id="course"></div>
@@ -317,8 +324,9 @@ def page(
     clicks: list[dict[str, Any]] | None = None,
     least: dict[str, Any] | None = None,
     captions: list[dict[str, Any]] | None = None,
+    legend: str = "",
 ) -> str:
-    """The page's HTML from the log's lines (the header first), the blind and the notes, the estimator's span, the look page's link (empty where none stands) and, where the run kept one, the clicks log's lines (tools/eras.py --clicks), drawn as one panel: the quanta at the detector's Nodes, the clicks' magnitude and the fifth act's fires."""
+    """The page's HTML from the log's lines (the header first), the blind and the notes, the estimator's span, the look page's link (empty where none stands) and, where the run kept one, the clicks log's lines (tools/eras.py --clicks), drawn as one panel: the quanta at the detector's Nodes, the clicks' magnitude and the fifth act's fires; `legend` the legend of kinds and the per-bang ledger as captions.legend_html renders them (empty where none)."""
     if not log or not isinstance(log[0], dict) or "held" not in log[0] or not log[0]["held"]:
         raise ValueError(
             "the log's first line is tools/eras.py's header naming the held rows of the content"
@@ -338,12 +346,13 @@ def page(
         .replace("{{LEAST}}", embed(least))
         .replace("{{CAPTIONS}}", embed(captions or []))
         .replace("{{LOOK}}", look)
+        .replace("{{LEGEND}}", legend)
     )
 
 
 def read_log(path: Path) -> list[dict[str, Any]]:
-    """The log's lines, one JSON object per line, the header first."""
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    """The log's lines, one JSON object per line, the header first; a last line cut mid-write (a log read while its run goes on) left out."""
+    return parse_log(path.read_text(encoding="utf-8"))
 
 
 def least_of(nodes: list[dict[str, Any]], gamma: int) -> dict[str, Any]:
@@ -395,7 +404,9 @@ def main(argv: list[str] | None = None) -> None:
     clicks = read_log(args.clicks) if args.clicks else None
     least = least_of(read_log(args.nodes), int(log[0]["node_clock"])) if args.nodes else None
     nodes = read_log(args.nodes) if args.nodes else []
-    captions = captions_of(log, nodes, clicks or [], None, least["floor"] if least else None)
+    floor = least["floor"] if least else None
+    captions = captions_of(log, nodes, clicks or [], None, floor)
+    legend = legend_html(legend_of(log, nodes, clicks or [], floor), ledger_of(log, nodes, clicks or []))
     blind = json.loads(args.blind.read_text(encoding="utf-8")) if args.blind else None
     notes = args.notes.read_text(encoding="utf-8") if args.notes else None
     stem = args.log.name.removesuffix(".eras.jsonl")
@@ -408,7 +419,7 @@ def main(argv: list[str] | None = None) -> None:
         else ""
     )
     target.write_text(
-        page(log, blind, notes, args.span, look, clicks, least, captions), encoding="utf-8"
+        page(log, blind, notes, args.span, look, clicks, least, captions, legend), encoding="utf-8"
     )
     print(
         json.dumps(

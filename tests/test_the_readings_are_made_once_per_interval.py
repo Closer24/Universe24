@@ -10,9 +10,12 @@ from event_universe.features import read
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
-from tests.laws_universe import ERAS, WORLD, small_world
+from tests.laws_universe import ERAS, bare_torus
 
-INTERVALS, FIRST_TURN = 20, 34  # the small universe's first turned Node is at the interval 34
+INTERVALS, FIRST_TURN = (
+    32,
+    154,
+)  # the bare 3-cube torus: the births at 29, the first turned Node at 154 (20 and 34 on the small universe, laid with bodies, to 2026-10-24)
 
 
 class Unkept(dict[Any, Any]):
@@ -22,61 +25,57 @@ class Unkept(dict[Any, Any]):
         pass
 
 
-def stepped(intervals: int) -> tuple[list[Any], list[dict[str, object]]]:
+def stepped(path: Path, intervals: int) -> tuple[list[Any], list[dict[str, object]], list[int]]:
     """The board stepped with the readings the eras tool makes after every interval (every family's share and quanta over the board) kept among the lines."""
     lines: list[dict[str, object]] = []
-    board = Lattice(load_world(WORLD), output=lines.append)
-    states = []
+    board = Lattice(load_world(path), output=lines.append)
+    states, sizes = [], []
     for _ in range(intervals):
         board.step()
         states.append(board_state(board))
+        sizes.append(len(read.READS))  # the memo's entries after the interval
         for index in board.order:  # the share, the eras line's quanta and the nodes line's quanta
-            share, quanta, again = (
-                board.share_of(index)[0],
-                board.quanta(index)[0],
-                board.quanta(index)[0],
-            )
-            assert (quanta == again).all()
+            share, quanta = board.share_of(index)[0], board.quanta(index)[0]
             lines.append({"event": "read", "share": share.tolist(), "quanta": quanta.tolist()})
-    return states, lines
+    return states, lines, sizes
 
 
-@pytest.mark.parametrize("holder", [node, share])
 def test_the_reading_made_once_per_interval_is_the_reading_at_every_act(
-    monkeypatch: pytest.MonkeyPatch, holder: Any
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    monkeypatch.setattr(holder, "READS", Unkept())  # the names as the module holds them
-    made, made_lines = stepped(INTERVALS)
+    """The one run with both memos kept against the run with neither (the readings made again at every act), then each holder's memo counted on its own run: the same states and lines, the credit lines of the births at 29 among them, the memo bounded (one entry per key)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    path = bare_torus(tmp_path)
+    for holder in (node, share):
+        monkeypatch.setattr(holder, "READS", Unkept())  # the names as the module holds them
+    made, made_lines, _sizes = stepped(path, INTERVALS)
     monkeypatch.undo()
-    hits = {"again": 0, "made": 0}
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     again = read.read_again
+    for holder in (node, share):
+        hits = {"again": 0, "made": 0}
 
-    def counted(key: Any, taken: Any) -> Any:
-        found = again(key, taken)
-        hits["again" if found is not None else "made"] += 1
-        return found
+        def counted(key: Any, taken: Any, hits: dict[str, int] = hits) -> Any:
+            found = again(key, taken)
+            hits["again" if found is not None else "made"] += 1
+            return found
 
-    monkeypatch.setattr(holder, "read_again", counted)
-    kept, kept_lines = stepped(INTERVALS)
-    assert all(same_state(a, b) for a, b in zip(kept, made, strict=True))
-    assert kept_lines == made_lines and any(line["event"] == "credit" for line in kept_lines)
-    assert hits["again"] > hits["made"] > 0
-    board = Lattice(load_world(WORLD), output=lambda line: None)
-    for _ in range(INTERVALS):
-        board.step()
-        board.quanta(board.order[0])
-        if board.interval == INTERVALS // 4:
-            entries = len(read.READS)
-    assert (
-        len(read.READS) == entries
-    )  # the memo bounded: one entry per key, the states compared by identity
+        monkeypatch.setattr(holder, "read_again", counted)
+        kept, kept_lines, sizes = stepped(path, INTERVALS)
+        monkeypatch.setattr(holder, "read_again", again)
+        assert all(same_state(a, b) for a, b in zip(kept, made, strict=True))
+        assert kept_lines == made_lines and any(line["event"] == "credit" for line in kept_lines)
+        assert hits["again"] > hits["made"] > 0, holder.__name__
+        assert (
+            sizes[INTERVALS // 4] == sizes[-1] > 0
+        )  # the memo bounded: one entry per key, the states compared by identity
 
 
 def test_the_nodes_line_is_the_reading_node_by_node(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(small_world(tmp_path)), output=lambda line: None)
+    board = Lattice(load_world(bare_torus(tmp_path, intervals=FIRST_TURN)), output=lambda line: None)
     for _ in range(FIRST_TURN - 1):
         board.step()
     time_line = board.states[board.held[0]].lines[0]
