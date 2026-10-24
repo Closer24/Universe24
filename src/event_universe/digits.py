@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any, cast
 import numpy as np
 
 from event_universe import flux, node
+from event_universe.core.ports import AXES
 from event_universe.core.rule3 import Rule, division_forward, wall_of
 from event_universe.features.click import read_number
 from event_universe.features.read import READS, read_again
@@ -24,8 +25,7 @@ Frame = Sequence[
 Reads = Sequence[
     tuple[int, Frame]
 ]  # what a reader reads: each family at the Nodes of its frame, in the frame's order
-VACUUM_VALUES = 3  # the exact vacuum paces' count of values per digit, w div F at F = w div 3 (ALGEBRA.md, The click's read of the board: the massless point's digit at p_0 = p_i = Gamma with no tension is three-valued, R = w / 3; the clause of 2026-10-24, a digit lattice at or above w div 3, three values or fewer, is the exact vacuum paces' and the read is refused there), the law's own count and no number of the engine
-VACUUM_VALUES = 3  # the exact vacuum paces' count of values per digit, w div F at F = w div 3 (ALGEBRA.md, The click's read of the board: the massless point's digit at p_0 = p_i = Gamma with no tension is three-valued, R = w / 3; the clause of 2026-10-24, a digit lattice at or above w div 3, three values or fewer, is the exact vacuum paces' and the read is refused there), the law's own count and no number of the engine
+VACUUM_VALUES = AXES  # the exact vacuum paces' count of values per digit, the axes' count (ALGEBRA.md, The click's read of the board: at the vacuum paces the six Ports' reaches and the mass sum to SIDES w, the massless point's mass 0, so each reach is w div AXES, the digit lattice F = gcd(w, 0, w div AXES) = w div AXES and the digit has AXES values, three; the clause of 2026-10-24, a digit lattice at or above w div 3, three values or fewer, is the exact vacuum paces' and the read is refused there), the law's own count from the Ports' names and no number of the engine
 
 
 def frame_of(at: Node, shape: tuple[int, int, int], periodic: Sequence[bool]) -> list[Node]:
