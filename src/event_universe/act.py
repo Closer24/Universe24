@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import cache
 from typing import TYPE_CHECKING
 
 from event_universe import conversion, credit, front
@@ -71,10 +72,8 @@ def born_table(
 ) -> conversion.Table | None:
     """The list the meeting of two quanta of a gapless family births at one Node under the law's sentence of 2026-10-24 (ALGEBRA.md, Matter's birth from light: the heaviest list whose summed walls fit within the two meeting quanta's own energy as read from the Node's own levels; the pair's two walls to the owner's word of that day, several can be born, N children one record each): among `conversion.birth_of`'s exact lists, the lightest first, the heaviest whose children's walls summed, SUM over the children of count_wall(child) (`loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over` (the fraction the caller reads at the Node, `meeting_board.child_of`, `born_list`), the comparison cross-multiplied, exact in the integers with no division and no rounding; None where no list fits, nothing then born; two distinct lists at one heaviest sum refused by name (The conversion's rule, several exact lists)."""
     fitting = [
-        (sum(count_wall(families[out], action) for out, _sense in table), table)
-        for table in conversion.birth_of(families, parent)
+        (walls, table) for walls, table in list_walls(families, parent, action) if walls * over <= energy
     ]
-    fitting = [(walls, table) for walls, table in fitting if walls * over <= energy]
     if not fitting:
         return None
     heaviest = max(walls for walls, _table in fitting)
@@ -87,6 +86,17 @@ def born_table(
             "share among them (The conversion, several exact lists refused by name; Matter's birth from light)"
         )
     return tables[0]
+
+
+@cache
+def list_walls(
+    families: tuple[FamilyRule, ...], parent: int, action: int
+) -> tuple[tuple[int, conversion.Table], ...]:
+    """Every exact list two quanta of the gapless family `parent` make (`conversion.birth_of`) with the sum of its children's walls at the quantum action, SUM over the children of count_wall(child) (`loader/derived.count_wall`), lightest first: a function of the families and the action alone, made once per universe (`cache`; the board's close asks it at every meeting Node)."""
+    return tuple(
+        (sum(count_wall(families[out], action) for out, _sense in table), table)
+        for table in conversion.birth_of(families, parent)
+    )
 
 
 def born_list(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...]]]) -> list[Item]:

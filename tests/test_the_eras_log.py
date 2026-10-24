@@ -3,10 +3,9 @@
 import json
 
 from event_universe import world_files
+from event_universe.world_files import load_world
 from tests.laws import ROOT, load_file, refused
 from tests.laws_universe import GAMMA, UNIVERSE
-
-WIDTH = 139  # the one universe file's width, derived (2026-10-24; 92 declared to that day)
 
 ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
 ERAS_PAGE = load_file("eras_page_tool", ROOT / "tools" / "look" / "eras_page.py")
@@ -30,7 +29,9 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
         header["held"] == ["gravity"] and "keys" not in header
     )  # the held rows by name, no former key reported (2026-10-23)
     assert (header["node_clock"], header["quantum_action"], header["intervals"]) == (GAMMA, 36000, 8)
-    assert header["width"] == WIDTH and "unobservable" not in header  # every board's, no flag
+    assert (
+        header["width"] == load_world(world).width.bit_length() and "unobservable" not in header
+    )  # the derived width (139 on 2026-10-24 with one record per charged family, 141 with four, the lists' children; 92 declared before), no flag
     assert len(lines) == 8 and [line["interval"] for line in lines] == list(range(1, 9))
     assert last == lines[-1] and last["interval"] == 8 and "unreturning" not in last
     for line in lines:
