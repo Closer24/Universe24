@@ -5,10 +5,13 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core import ports
 
 Node = tuple[int, int, int]
 AXES = ("x", "y", "z")
+FILE_INTEGER = (
+    ports.SIDES ** (ports.SIDES ** (ports.AXES * ports.AXES))
+)  # the bound of a file's integer, 2^512 (2026-10-24, the den enlarged as content: nature's den of 70 bits at the top tier and 154 at the PeV tier passed the host's 63-bit bound, which refused them; the work path's own int64 check stands where it is, loader/world.kind_of); a bound of the file's reading and no number of the law
 
 
 def keyed(
@@ -26,8 +29,8 @@ def keyed(
     return value
 
 
-def integer(value: object, label: str, least: int, most: int = MAX_WORK_INT) -> int:
-    """An integer of the files within [least, most], refused by name otherwise."""
+def integer(value: object, label: str, least: int, most: int = FILE_INTEGER) -> int:
+    """An integer of the files within [least, most], refused by name otherwise (the file's bound `FILE_INTEGER`, 2^512, where the caller names none; the host's 63 bits to 2026-10-24)."""
     if type(value) is not int or not least <= value <= most:
         raise ValueError(f"{label} must be an integer from {least} through {most}, got {value!r}")
     return value

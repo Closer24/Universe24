@@ -8,11 +8,13 @@ from dataclasses import dataclass
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
+from event_universe.core.ports import LINK_UNIT
 from event_universe.core.rule3 import division_forward
 from event_universe.loader import derived
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.interval import volume_rows
 from event_universe.loader.keys import Node, document_at, integer, keyed
+from event_universe.loader.rooms import width_of
 from event_universe.loader.seed import seed_of
 from event_universe.loader.universe import universe_of
 
@@ -27,7 +29,7 @@ TORUS = (
 
 @dataclass(frozen=True)
 class World:
-    """The world as loaded: the lattice's shape, the torus (`periodic`, every axis wrapping; the open and closed faces, the inner faces and the receding faces of the record worlds left 2026-10-24), the intervals, Gamma, T, the largest integer of the file's width, the kind of the run's arrays chosen by the width (`kind_of`), the amplitude bound A derived, the families, the bodies (each a NodeDetector at a Node), the node_detectors, the receding faces, the NodeDetectors' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write) and the seed family of a world that declares nothing (`loader/seed.seed_of`)."""
+    """The world as loaded: the lattice's shape, the torus (`periodic`, every axis wrapping; the open and closed faces, the inner faces and the receding faces of the record worlds left 2026-10-24), the intervals, Gamma, T, the largest integer of the derived width (`loader/rooms.width_of`; the file's width to 2026-10-24), the kind of the run's arrays chosen by the width (`kind_of`), the Link unit G, the engine's (`core/ports.LINK_UNIT`; the file's `link_unit` to 2026-10-24), the amplitude bound A derived, the families, the bodies (each a NodeDetector at a Node), the node_detectors, the receding faces, the NodeDetectors' draw (`draw`, `loader/draw.py`, None where the world declares none: no draw and no write) and the seed family of a world that declares nothing (`loader/seed.seed_of`)."""
 
     shape: Node
     periodic: tuple[bool, bool, bool]
@@ -43,7 +45,7 @@ class World:
 
 
 def kind_of(width: int) -> type:
-    """The kind of the run's arrays from the declared width, the one place the engine's integers are chosen (the owner, "choose 64 or 128 bits outside the engine, at the start"): the host's 64-bit integers where the width is at or under the host's signed bits, Python's integers (arrays of objects, exact at any width and slow) above it; the amplitude bound A is derived at the declared width either way (ENGINE.md, the loader)."""
+    """The kind of the run's arrays from the derived width (`loader/rooms.width_of`; the declared width to 2026-10-24, the owner's word then, "choose 64 or 128 bits outside the engine, at the start"), the one place the engine's integers are chosen: the host's 64-bit integers where the width is at or under the host's signed bits, Python's integers (arrays of objects, exact at any width and slow) above it; the amplitude bound A is derived at the width either way (ENGINE.md, the loader)."""
     return np.int64 if width <= MAX_WORK_INT.bit_length() else object
 
 
@@ -69,8 +71,8 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
     shape = (extents[0], extents[1], extents[2])
     even_box_refused(shape, families)
     gamma, action = integers["node_clock"], integers["quantum_action"]
-    width = integers["width"]
-    bound = derived.amplitude_bound(families, gamma, action, width, integers["link_unit"])
+    width = width_of(families, gamma, action, LINK_UNIT)  # derived, 2026-10-24; G the engine's
+    bound = derived.amplitude_bound(families, gamma, action, width, LINK_UNIT)
     families = volume_rows(families, gamma)  # the held rows sourced by the tensions carry their volume
     intervals = integer(world["intervals"], "intervals", 0)
     families = derived.with_records(families, [0] * len(families))  # no declared record, 2026-10-24
@@ -82,7 +84,7 @@ def parse_world(document: object, files: Mapping[str, object], digest: str) -> W
         gamma,
         action,
         derived.largest_of(width),
-        integers["link_unit"],
+        LINK_UNIT,
         kind_of(width),
         bound,
         families,

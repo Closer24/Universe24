@@ -12,12 +12,13 @@ from event_universe.emission import laid_by_count
 from event_universe.features.click import amplitude
 from event_universe.lattice import Lattice
 from event_universe.lay import laid
+from event_universe.loader.circle import lightest_point
 from event_universe.loader.derived import amplitude_bound, count_wall, held_write_of
 from event_universe.loader.universe import universe_of
 from event_universe.share import charge_at
 from event_universe.take import Item
 from event_universe.world_files import load_world
-from tests.laws import ROOT
+from tests.laws import EVENTS, ROOT, refused
 
 GAMMA, T = 1000, 36_000
 DEN = 53_567_765
@@ -26,7 +27,7 @@ SIGN = {"name": "charge", "pair": [GAMMA, GAMMA]}  # the holder of the sign, the
 
 def universe(proton: list[int], electron: list[int], gamma: int = GAMMA) -> dict:  # type: ignore[type-arg]
     return {
-        "integers": {"node_clock": gamma, "quantum_action": T, "width": 92, "link_unit": 16},
+        "integers": {"node_clock": gamma, "quantum_action": T},
         "families": [
             {**SIGN, "pair": [gamma, gamma]},
             {"name": "proton", "pair": proton, "dimension": 2},
@@ -38,7 +39,7 @@ def universe(proton: list[int], electron: list[int], gamma: int = GAMMA) -> dict
 def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # type: ignore[no-untyped-def]
     """The universe of $S/arrange/nature_den/universe_nature.json (2026-10-24): the pairs on the circle of den 53,567,765 = 5 x 17 x 73 x 89 x 97 with Gamma 1,000, the proton at (4,859,756, 53,346,867) off the top and the electron at (53,567,757, 29,276), both moving planes reading one holder: refused by name under the sentence of 2026-10-23, loaded under the charge's universality with alpha (36, 1), the write of a born quantum of either family 36 x 17,956 over 72,000 levels per interval."""
     document = {
-        "integers": {"node_clock": GAMMA, "quantum_action": T, "width": 92, "link_unit": 16},
+        "integers": {"node_clock": GAMMA, "quantum_action": T},
         "families": [
             {"name": "gravity", "pair": [53_529_741, DEN]},
             {"name": "charge", "pair": [DEN, DEN]},
@@ -60,6 +61,24 @@ def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # ty
     assert (
         count_wall(families[proton], T) > 1800 * count_wall(families[electron], T)
     )  # the count units differ 1,822 times, and none of it enters the write (the former factor kept by name)
+
+
+def test_the_lightest_point_of_the_circle_is_the_electrons_pair():
+    """The extremal sentence (the owner's word of 2026-10-24, 09:1x UTC: the charged plane family at rest is the lightest point of the circle; ALGEBRA.md, The lightest point is the electron, The lightest point is derived): s_min(den) is the least leg among the Pythagorean points of den's circle, enumerated whole from den's primes, m_e / T = s_min / den; at den 53,567,765 the point (53,567,757, 29,276), the one universe's electron to 2026-10-24, and at the enlarged den 1,166,991,900,949,580,266,237 = 13,586,597 x 132,260,701 x 649,421 the file's electron row, s 633,202,287,062,780,012; at den 1,000 (960, 280), at 5 (4, 3), at 65 (63, 16), at 25 (24, 7); a den no prime 1 mod 4 divides has no point and is refused by name."""
+    num, s = lightest_point(DEN)
+    assert (num, s) == (53_567_757, 29_276) and num * num + s * s == DEN * DEN
+    rows = json.loads((EVENTS / "universe24" / "universe_universe24.json").read_text(encoding="utf-8"))
+    den = rows["families"][0]["pair"][
+        1
+    ]  # the one universe's den, enlarged as content 2026-10-24 (the three primes 1 mod 4)
+    assert [f["pair"] for f in rows["families"] if f["name"] == "electron"] == [
+        [*lightest_point(den)][:1] + [den]
+    ]
+    assert (
+        den == 13_586_597 * 132_260_701 * 649_421 and lightest_point(den)[1] == 633_202_287_062_780_012
+    )
+    assert [lightest_point(d) for d in (1000, 5, 65, 25)] == [(960, 280), (4, 3), (63, 16), (24, 7)]
+    refused("no prime 1 mod 4 divides it", lightest_point, 9)
 
 
 def test_the_register_reads_the_content_rooms_and_a_sign_holder_at_w_0_changes_no_neutral_body():
