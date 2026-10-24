@@ -177,12 +177,6 @@ def read(pair: Pair) -> tuple[Any, Any]:
     return cosine[0], sine[0]
 
 
-def orbit_moves(standing: Any, count: Any, direction: int = 1) -> tuple[Any, Any]:
-    """The Link's count after an act and the acts that carry its pair there along the one orbit from the seed (`iterate`; 2026-10-21): the count standing at N (the signed sum of the levels the acts added, the Link's angle in the unit theta_0, one integer per Link), the interval's level n, the count reached N + n forward (`direction` 1) and N - n back (-1); the pair stands at the count's size |N| on the forward orbit from the seed and is carried by |N'| - |N| acts, forward where the size grows and by the inverse act where it shrinks, the two acts each other's inverse on every state (ALGEBRA.md #the-direction), so that the back-step's acts undo the forward's act for act and a count below 0 stands at the pair of its size, read conjugated (`signed_read`): the pair at -n the conjugate of the pair at +n, so that the cube's 48 map the remainders as they map the levels; the inverse act exact as before. Returns (the count reached, the acts, signed)."""
-    reached = standing + direction * count
-    return reached, np.abs(reached) - np.abs(standing)
-
-
 def signed_read(pair: Pair, count: Any) -> tuple[Any, Any]:
     """The hop's two integers at a signed count (`read`): (c, s) at a count at or above 0 and (c, -s) below it, the pair at -n the conjugate of the pair at +n, so that the cube's 48 map the remainders as they map the levels (2026-10-21; `orbit_moves`); at the count 0 the sine line stands at 0 and the sign is nothing."""
     cosine, sine = read(pair)

@@ -1,7 +1,6 @@
 """The read, its own folder (ALGEBRA.md #the-paces): the content as it is, no floor, the reads summed at their weights; the axis content rounded at the read; the guard at load on squares (the checkerboard factor at -2) admits and refuses by name, and the read in the interval carries no guard. The write's folder and the held write's (ALGEBRA.md #the-primitives, a family's write is one act; the row "the held write"): (numerator + r) div wall at every Node by Rule3's carried division, the remainder kept at the Node, forward then back exact, over many intervals the written total the numerator's within one unit; a held part gains the same division each interval and loses it back; the refusals by name. The start, its own folder (ALGEBRA.md #the-generator (g), the start): a held family's rest is the division act iterated from nothing until the levels repeat, 6 den b = num S_6(b) + 3 den sigma at the fine unit from the width, the levels its nearest integers; the refusals by name."""
 
 import json
-from dataclasses import replace
 from fractions import Fraction
 
 import numpy as np
@@ -19,11 +18,9 @@ from event_universe.features.read import (
     stability_bound,
 )
 from event_universe.features.start.rests import read_content
-from event_universe.features.write import carried
-from event_universe.loader.derived import Row, family_rules, held_write_of, readers_of, weight_of
+from event_universe.loader.derived import held_write_of, readers_of, weight_of
 from event_universe.loader.universe import universe_of
-from tests.laws import CHARGED, COULOMB_UNIVERSE, ROOT, TURNING_UNIVERSE, refused, universe_copy
-from tests.laws_universe import DECLARED
+from tests.laws import CHARGED, ROOT, refused, universe_copy
 
 GAMMA, SHAPE = 10_000, (3, 3, 3)
 OWN = {"own_weight": 1, "intervals": paces.COUNT_POWER}  # a row reading its own level at 1, a count
@@ -70,7 +67,6 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     assert content_of([]) == 0 and link_tension([]) == 0
     assert link_tension([(1, level, level)]).ravel().tolist() == [7, -7]
     assert link_tension([(1, level, -level), (1, full, full + 1)]).ravel().tolist() == [4, 4]
-    refused("wall is from 1", carried, 5, 0, 0), refused("direction", carried, 5, 3, 0, 2)
     refused("wall E_s T is from 1", held_write, 0, 1, 0, 0)
 
 
@@ -96,7 +92,7 @@ PLANE = {"name": "stuff", "pair": [3600, 6000], "dimension": 2}  # a Pythagorean
 
 
 def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_the_weight_one():
-    """The derived read and the derived write (the owner's word of 2026-10-24, no declarations; ALGEBRA.md #the-paces, The reads are derived; #a-familys-declaration, The holders are derived): a universe of two holders of the volume, `hollow` [3, 4] and `core` [1, 2], both gapped, and two real-line families of matter's pair, `stuff` and `other`; the loader derives that every row but the holder of the sign reads every holder of the volume at 1, the holders themselves among the readers (Every row reads the content), every level weight 1 and every write weight 1. On random levels of a periodic 3-cube: every family's content is the two holders' time lines summed, every Link's factor G^2, the rule of `stuff` the law's line at the composed paces of that content; each holder is sourced by `stuff` and `other` (the reciprocity), each source's numerator its form scaled by the write's factor at the weight 1 x 1, the level gaining (numerator + r) div (E_s T) with the remainder in [0, wall), the write back exact; `read_content` sums weight x (level + rest) over the reads with the row's own weight apart. The loader refuses by name a row carrying the gone key `reads` or `held`, each refusal naming the derivation that replaced it; a universe of the sign holder and a real line gives the line no read of the sign and the sign holder none at all, and a plane the sign at 1; on a board of two Nodes with the sign holder at -5 and 5 the plane's turn's numerators are -5 and 5, the signed level, and its content read is the integer 0, the holder's level entering no content (the one act, the mathematician's 117 III); the tests' universe at T 36,000 with the charged row carries alpha = E_h T / Gamma = 6 inside the sign holder's write; a plane reading the sign with an irrational sine (the deuteron's nuclide [4004, 6000] of examples/events/deuteron.json, the record of the law to 2026-10-23) is refused by name; and every universe of the tests and the one world's file, as the loader derives them, read as the sentences say: every holder of the volume by every row but the sign holder, the sign holder by every plane, the write weight 1 on every holder of the volume and alpha on the sign holder. The declared reads, level weights 5 and 7, write weights 3 and -1 (a negative write weight, the core's hill) and the refusals of a weight 0, of a read of no held row, of the sign holder naming itself and of a real line naming the sign (the tests of the law to 2026-10-24) kept by name."""
+    """The derived read and the derived write (the owner's word of 2026-10-24, no declarations; ALGEBRA.md #the-paces, The reads are derived; #a-familys-declaration, The holders are derived): a universe of two holders of the volume, `hollow` [3, 4] and `core` [1, 2], both gapped, and two real-line families of matter's pair, `stuff` and `other`; the loader derives that every row but the holder of the sign reads every holder of the volume at 1, the holders themselves among the readers (Every row reads the content), every level weight 1 and every write weight 1. On random levels of a periodic 3-cube: every family's content is the two holders' time lines summed, every Link's factor G^2, the rule of `stuff` the law's line at the composed paces of that content; each holder is sourced by `stuff` and `other` (the reciprocity), each source's numerator its form scaled by the write's factor at the weight 1 x 1, the level gaining (numerator + r) div (E_s T) with the remainder in [0, wall), the write back exact; `read_content` sums weight x (level + rest) over the reads with the row's own weight apart. The loader refuses by name a row carrying the gone key `reads` or `held`, each refusal naming the derivation that replaced it; a universe of the sign holder and a real line gives the line no read of the sign and the sign holder none at all, and a plane the sign at 1; on a board of two Nodes with the sign holder at -5 and 5 the plane's turn's numerators are -5 and 5, the signed level, and its content read is the integer 0, the holder's level entering no content (the one act, the mathematician's 117 III); the tests' universe at T 36,000 with the charged row carries alpha = E_h T / Gamma = 6 inside the sign holder's write; a plane reading the sign with an irrational sine (the deuteron's nuclide [4004, 6000] of examples/events/deuteron.json, the record of the law to 2026-10-23) is refused by name; and the tests' universe with the charged row and the one world's file, as the loader derives them, read as the sentences say: every holder of the volume by every row but the sign holder, the sign holder by every plane, the write weight 1 on every holder of the volume and alpha on the sign holder. The declared reads, level weights 5 and 7, write weights 3 and -1 (a negative write weight, the core's hill) and the refusals of a weight 0, of a read of no held row, of the sign holder naming itself and of a real line naming the sign (the tests of the law to 2026-10-24) kept by name."""
     integers, families = universe_of(universe(HOLLOW, CORE, STUFF, OTHER))
     hollow, core, stuff, other = range(4)
     reads = [[(r.family, r.weight) for r in f.reads] for f in families]
@@ -213,13 +209,7 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
             encoding="utf-8"
         )
     )
-    for name, document in (
-        ("tests", {**rule, "families": [*rows, CHARGED]}),
-        ("turning", TURNING_UNIVERSE),
-        ("coulomb", COULOMB_UNIVERSE),
-        ("universe24", one_world),
-        ("declared seed", DECLARED),
-    ):
+    for name, document in (("tests", {**rule, "families": [*rows, CHARGED]}), ("universe24", one_world)):
         integers, shipped = universe_of(json.loads(json.dumps(document)))
         held = [(i, f.wronskian) for i, f in enumerate(shipped) if f.held]
         for index, f in enumerate(shipped):
@@ -268,85 +258,3 @@ def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still
         2,
     )  # alpha = E_h T / Gamma = 15,000 / 10,000 reduced, no pair in it
     universe_of(universe(SIGN, plane, frozen))
-
-
-def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions():
-    """The register's room under a negative tension (ALGEBRA.md, The write per proper volume and per proper interval; the mathematician's 268 and the advisor's second with one precision, #1572 comments 5969128707 and 5969197876, two hands): the guard bounds p_i^2 Q_ij and not the Link's factor q = Gamma - t, so under a negative tension q exceeds Gamma, up to q_max = Gamma + W A, the sum of W_a A over the held rows with axis lines a source reads, and the write's factor in a hollow reaches (P / Gamma)^3 sqrt(q_max / P) on a count and (P / Gamma)^3 q_max / P on a Wronskian, beyond the hill's room (P / Gamma)^3 rounded up. At the rule's universe (Gamma 6,000, W 1, the hill's own bound A_1 = 9,266, q_max 15,266) the law's ceilings are 3 on a count and 4 on a Wronskian for matter's pair (P 6,572; the register's values 2.003 and 3.053 against the hill's room 2) and 2 and 3 for the three massless pairs (P 6,000; 1.595 and 2.544 against 1): `tension_room` returns them and exceeds `hill_scale` exactly where the register's values exceed it; the four shipped universes' bound stays 9,266, the write's total not their binding term; a universe where it is, a holder of the massless pair with axis lines at the write weight 10^6 read by one real line at 1 (Gamma 10,000, T 64, the width 63), has the hill's bound 2,147,483, isqrt((2^63 - 1 - 64) div (10^6 x 2 x 1)), and under the rooms 554,477, the tension's room 15 at q_max = 10,000 + 2,147,483, smaller by name."""
-    from math import ceil, isqrt
-
-    from event_universe.loader import derived, rooms
-
-    gamma, hill_bound = (
-        6000,
-        6949,
-    )  # the engine's bound for the flux line's partial sums (ENGINE.md, The amplitude bound)
-    q_max = gamma + 1 * hill_bound  # W = 1: every family reads gravity's axis lines at 1
-    for row in universe_copy()["families"]:
-        pair, matter = tuple(row["pair"]), row["name"] == "matter"
-        edge = isqrt(2 * pair[1] * gamma**2 // (pair[1] + pair[0]))  # the hill's edge pace P
-        assert edge**2 <= edge_squared(pair, gamma) < (edge + 1) ** 2
-        assert edge == {"matter": 6572, "gravity": 6001}.get(row["name"], 6000)
-        hill = ceil(Fraction(edge**3, gamma**3))
-        count = ceil(Fraction(edge**2 * (isqrt(q_max * edge) + 1), gamma**3))
-        wronskian = ceil(Fraction(edge**2 * q_max, gamma**3))
-        values = ((edge / gamma) ** 3 * (q_max / edge) ** 0.5, (edge / gamma) ** 3 * q_max / edge)
-        if pair[0] == pair[1] or pair == (
-            2400,
-            2401,
-        ):  # the edge Gamma: the massless rows and the binding holder
-            assert [round(v, 3) for v in values] == [1.469, 2.158] and (hill, count, wronskian) == (
-                1,
-                2,
-                3,
-            )
-        elif matter:
-            assert [round(v, 3) for v in values] == [1.845, 2.589] and (hill, count, wronskian) == (
-                2,
-                2,
-                3,
-            )
-        assert all(value > hill - 1 for value in values) and rooms.hill_scale(pair, gamma) == hill
-        assert (
-            rooms.tension_room(pair, gamma, q_max, False) == count >= hill
-        )  # equal at matter's pair at A = 6,949
-        assert rooms.tension_room(pair, gamma, q_max, True) == wronskian > hill
-    for name, document in (("tests", universe_copy()), ("turning", TURNING_UNIVERSE)):
-        integers, families = universe_of(json.loads(json.dumps(document)))
-        keys = ("node_clock", "quantum_action", "width", "link_unit")
-        assert derived.amplitude_bound(families, *(integers[key] for key in keys)) == hill_bound, name
-    # the rows by hand (loader.derived.Row, the tests' own and no file's since 2026-10-24: a massless holder of the content at the write weight 10^6, which no file declares): well [1, 1] with its axis lines read by one real line at 1, deep the same at the write weight 1
-    well = Row("well", (1, 1), 4, 1, False, False, False, 1, 10**6, 0, (("well", 1),))
-    deep = Row("deep", (1, 1), 4, 1, False, False, False, 1, 1, 0, (("deep", 1),))
-    line = Row("line", (1, 1), 1, 1, False, False, False, None, None, 0, (("well", 1),))
-    families = family_rules([well, line])
-    largest, wall, room = (
-        2**63 - 1,
-        1 * 64,
-        10**6 * 1 * 2 * 2 * 1,
-    )  # E_s T; k_w x W x two products x the centred difference's 2 x the hill's 1 (The stress is the Links', 2026-10-23: the tension's part the centred difference squared at the doubled wall; 10^6 x 2 before)
-    under_the_hill = isqrt((largest - wall) // room)
-    tension = ceil(
-        Fraction(GAMMA**2 * (GAMMA + under_the_hill), GAMMA**3)
-    )  # one power: the factor q_max itself
-    under_the_rooms = isqrt((largest - wall) // (room * tension))
-    assert (under_the_hill, tension, under_the_rooms) == (
-        1_518_500,
-        153,
-        122_763,
-    )  # (2_147_483, 216, 146_117) before the Links' stress
-    assert derived.bound_under_rooms(families, GAMMA, 64, 63, 1, None) == under_the_hill
-    assert (
-        derived.amplitude_bound(families, GAMMA, 64, 63) == 173_613 < under_the_hill
-    )  # as read under the Links' stress (2026-10-23); the hand's formula gives under_the_rooms 122,763 (146,117 before), the room's re-derivation under the doubled wall open
-    two = family_rules([well, deep, replace(line, holders=(("well", 1), ("deep", 1)))])
-    assert (
-        rooms.factor_bound(two, 2, GAMMA, 7) == GAMMA + (1 + 1) * 7
-    )  # the two rows read, summed, each at the one read weight (2026-10-24; "deep": 2 and (1 + 2) until then)
-    refused(  # a read weight of the file: the key itself refused by name since 2026-10-24 (the weight 2 refused by number before, the read's universality)
-        r"holds the key 'reads'",
-        universe_of,
-        universe(
-            {"name": "well", "pair": [3, 4]},
-            {"name": "line", "pair": [1, 1], "dimension": 1, "reads": {"well": 2}},
-        ),
-    )

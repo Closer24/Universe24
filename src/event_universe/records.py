@@ -12,7 +12,6 @@ from event_universe.core import paces
 from event_universe.core.ports import AXES, SIDES
 from event_universe.core.rule3 import division_forward
 from event_universe.features import currents, phase, volume
-from event_universe.features.write import carried
 from event_universe.loader.derived import FamilyRule, HeldWrite, row_sources, weight_of
 
 Rulers = tuple[Any, tuple[Any, Any, Any]]  # a read's paces at every Node: the clock p_0, each axis's p_a
@@ -95,7 +94,7 @@ def wronskian(lines: Sequence[Record], plane: bool) -> Any:
 
 def well(booking: Any, action: int) -> np.ndarray:
     """A reading, the well of one interval (ALGEBRA.md #the-primitives, the rows "the held write" and "the source"; row (u), a body's well is gravity's source as a number): a booking of the record at every Node (its form D_i, or its Wronskian W_i) in quanta, booking div T by the division act, no remainder kept; the run writes the booking itself through the one wall of the held line."""
-    return np.asarray(carried(booking, action, 0)[0])
+    return np.asarray(division_forward(booking, action, 0)[0])
 
 
 def rulers_write_factor(

@@ -1,4 +1,4 @@
-"""The shipped worlds in the read's shape for the law's tests (the click's read of the board, 2026-10-20; beside tests/laws.py, whose size the tests' shape caps): a shipped document with no engine start file and no generator constants (`redeclared`), a builder's world file rewritten so with its mode file's digest moved (`redeclared_file`), and a shipped world parsed in that shape without a copy, the mode file beside it standing by the digest of the file as shipped (`load_shipped`)."""
+"""The one world's file in the read's shape for the law's tests: a document with no engine start file and no generator constants (`redeclared`) and a shipped world parsed in that shape without a copy (`load_shipped`)."""
 
 from __future__ import annotations
 
@@ -18,17 +18,6 @@ def redeclared(world):  # type: ignore[no-untyped-def]
             for key in ("seed", "multiplier", "increment"):
                 block.pop(key, None)
     return world
-
-
-def redeclared_file(path):  # type: ignore[no-untyped-def]
-    """A world file a builder wrote, rewritten in the read's shape (`redeclared`) with its mode file's digest moved to the rewritten document where a mode file stands beside it; the path."""
-    world = redeclared(json.loads(path.read_text(encoding="utf-8")))
-    path.write_text(json.dumps(world), encoding="utf-8")
-    if (mode := path.with_suffix(".mode.json")).exists():
-        found = json.loads(mode.read_text(encoding="utf-8"))
-        found["world_digest"] = input_digest(world)
-        mode.write_text(json.dumps(found), encoding="utf-8")
-    return path
 
 
 def load_shipped(path):  # type: ignore[no-untyped-def]

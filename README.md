@@ -58,7 +58,6 @@ The tests of the law's course, each with its folder, its page and the test or th
 - **The resonance**: [examples/events/resonance/](examples/events/resonance/), `resonance.html` and `detuned.html`; tests/test_the_draw.py, tests/test_the_read_of_the_board.py, tests/test_part_g_recoil.py and tests/test_the_derived_window.py (the ring's bodies reading for their own beat).
 - **The clicks of one law**: [examples/events/clicks/](examples/events/clicks/), `clicks_chain.html`, `clicks_box.html` and `clicks_tube.html`, every kind of click in one world; tests/test_the_clicks_world.py, tests/test_the_clicks_box.py and tests/test_the_clicks_tube.py.
 - **The conserving click**: [examples/events/conserve/](examples/events/conserve/), the worlds of the one law's pieces; tests/test_the_conserving_click.py.
-- **The conversion**: [examples/events/conversion/](examples/events/conversion/), the neutron chains and cubes with their blind; tests/test_the_conversion.py.
 - **The chain**: [examples/events/chain/](examples/events/chain/), the blinds written before any run and asserted by tests/test_the_chain_world.py.
 - **The pixel's worlds**: [examples/events/pixel/](examples/events/pixel/), its README.
 - **The Zeno worlds**: [examples/events/zeno/](examples/events/zeno/); tests/test_the_phase_passes.py and tests/test_pixel_mode.py.
