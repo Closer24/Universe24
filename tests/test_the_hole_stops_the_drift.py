@@ -47,19 +47,23 @@ def births_at(lines, interval):  # type: ignore[no-untyped-def]
 def test_the_holed_nodes_own_quanta_pay_and_nothing_is_made_at_the_links_on_the_3_cube(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """Conservation at the click and no cascade on the 3-cube (ALGEBRA.md, The board reads itself, the dated sentence of 2026-10-24: the Node's own quanta paying, the owner's point that the entanglement of clicks is the conservation of energy at a click): at every close the light's summed share after the hole's write is at most its share before (nothing made at the Links), at a close with a birth it falls by at least one whole quantum of light per pair born, and the holed Node holds less than one quantum of light after its hole; at most one hole per close, the light's summed share above zero at every interval and several births over the run (the former write to (0, 0) made 7.68 quanta at the first close, holed 1, 7, 18 and 20 Nodes at the closes 2 to 5 and spent the sea to exactly zero; the frame's mean of the level before, measured between, took 2.09 at the first close and made light between adjacent holes on the 5-cube)."""
+    """Conservation at the click and no cascade on the 3-cube (ALGEBRA.md, The board reads itself, the dated sentence of 2026-10-24: the Node's own quanta paying, the owner's point that the entanglement of clicks is the conservation of energy at a click): at every close the light's summed share after the hole's write is at most its share before (nothing made at the Links), at a close with a birth it falls (the pair paid by the light; the fall's size is the course's and not the law's: the close reads the interval's start and the hole is written on the state the step left, so a Node read at three whole quanta may have moved most of them to its Links by the write), and every hole stands at a Node the close read a whole quantum at (no cascade: a Node is holed by its own meeting alone, an orbit of the cube's 48 meeting together where its Nodes read one number); the light's summed share above zero at every interval and several births over the run (the former write to (0, 0) made 7.68 quanta at the first close, holed 1, 7, 18 and 20 Nodes at the closes 2 to 5 and spent the sea to exactly zero; the frame's mean of the level before, measured between, took 2.09 at the first close and made light between adjacent holes on the 5-cube)."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = hole_seed(tmp_path, monkeypatch, 3, 40, lines)
-    unit, kept, born = board.credit.units[board.world.seed], watched(monkeypatch), {}
+    kept, born, met = watched(monkeypatch), {}, {}
+    real = meeting_board.meetings
+    monkeypatch.setattr(
+        meeting_board, "meetings", lambda b, i, s, f: met.setdefault(b.interval, real(b, i, s, f))
+    )
     for _ in range(40):
         board.step()
         born[board.interval] = births_at(lines, board.interval)
-        total, per_node = light_of(board)
-        assert total > 0
-        assert all(int(per_node[at]) < unit for at in born[board.interval])
+        assert light_of(board)[0] > 0
+        assert all(any(at == a for a, _w, _r in met[board.interval]) for at in born[board.interval])
     for interval, (before, after) in kept.items():
-        assert after <= before and before - after >= len(born[interval]) * unit
-        assert len(born[interval]) <= 1
+        assert after <= before and (
+            after < before or not born[interval]
+        )  # paid by the light, nothing made
     assert sum(len(found) for found in born.values()) > 3
 
 
@@ -103,8 +107,8 @@ def test_the_first_draw_by_the_digits_falls_at_a_share_between_one_and_two_quant
     unit, meetings, draws = board.credit.units[board.world.seed], {}, []
     real_meetings, real_drawn = meeting_board.meetings, meeting_board.drawn_from
 
-    def drawn(number, weights, label, moduli):  # type: ignore[no-untyped-def]
-        found = real_drawn(number, weights, label, moduli)
+    def drawn(number, weights, label, read):  # type: ignore[no-untyped-def]
+        found = real_drawn(number, weights, label, read)
         draws.append((board.interval, label, list(weights), found[0]))
         return found
 

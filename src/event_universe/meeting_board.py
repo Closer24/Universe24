@@ -70,8 +70,10 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
                 region = frame_of(at, board.shape, board.world.periodic)  # the Node, then its six Ports
                 reads = [(family, region) for family in board.order]
                 if not at_origin(board, reads):
-                    number, moduli = read_of(board, reads, label)
-                    meet = drawn_from(number, [rest, unit - rest], label, moduli)[0] == 0
+                    number = read_of(board, reads, label)  # one Link and one number (2026-10-24)
+                    meet = (
+                        drawn_from(number, [rest, unit - rest], label, True)[0] == 0
+                    )  # the number divided by the unit once: the remainder the whether, the quotient the close's later draws' (kept for the pick where main's selector asks none)
             if meet:
                 born.append((at, table))
     finally:
