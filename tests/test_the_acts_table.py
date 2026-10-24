@@ -121,12 +121,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the lay's quotient before the search
     ("features/click/__init__.py", "amplitude", "largest_below"): "S",  # the amplitude by the search
-    (
-        "features/click/__init__.py",
-        "two_squares",
-        "largest_below",
-    ): "S",  # a plane's (re, im) by the search
-    ("features/click/__init__.py", "plane_squares", "division_forward"): "D",  # the planes' target, once
+    # ("features/click/__init__.py", "two_squares", "largest_below"): "S" and ("plane_squares", "division_forward"): "D", the conversion's plane split: struck 2026-10-24, no record of several planes since the family-less file
     # features/held_write
     ("features/held_write/__init__.py", "held_write", "act"): "R",  # the held write's remainder returned
     # features/phase

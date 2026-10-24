@@ -68,9 +68,7 @@ def stepped(board: Lattice, index: int, direction: int, begun: list[list[records
     started = [replace(s, lines=lines) for s, lines in zip(board.states, begun, strict=True)]
     lines = list(board.states[index].lines)
     for record in range(family.records):
-        content, factors = node.read(
-            index, board.families, started, direction, board.wrap, gamma, unit, record
-        )
+        content, factors = node.read(index, board.families, started, direction, gamma, unit, record)
         rule = node.rule_of(family, gamma, content, factors, unit)
         first = records.record_slice(family, record).start
         time_begun, time_now = begun[index][first], lines[first]
@@ -80,7 +78,7 @@ def stepped(board: Lattice, index: int, direction: int, begun: list[list[records
             else (time_begun.now, time_begun.before, time_now.before)
         )
         lines[first + 1 : first + 1 + AXES] = flux.step_momentum(
-            lines[first + 1 : first + 1 + AXES], rule, board.wrap, direction, volumes
+            lines[first + 1 : first + 1 + AXES], rule, direction, volumes
         )
     board.states[index].lines = lines
 

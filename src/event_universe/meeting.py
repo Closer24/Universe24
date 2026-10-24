@@ -15,5 +15,5 @@ def stepped(board: Lattice, index: int, direction: int) -> tuple[list[Record], l
     """Every record of a family stepped by Rule3 in flux form in `direction` with the rule of its own read (`flux.step_records`)."""
     gamma, unit = board.world.node_clock, board.unit
     return flux.step_records(
-        index, board.families, board.states, board.wrap, gamma, unit, direction, board.amplitude
+        index, board.families, board.states, gamma, unit, direction, board.amplitude
     )

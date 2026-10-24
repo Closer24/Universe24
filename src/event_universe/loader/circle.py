@@ -7,7 +7,15 @@ from math import gcd
 
 from event_universe.core.rule3 import division_forward, largest_below
 
-GAUSSIAN_UNITS = 4  # the four units of the Gaussian integers, 1, i, -1 and -i (i^4 = 1): a prime 1 modulo 4 is a sum of two squares (Fermat) and splits in Z[i] into a Gaussian prime and its conjugate, a prime 3 modulo 4 stays prime there, so the circle's angles come from the primes 1 modulo 4 alone; the modulus of the two-squares theorem and no number of the lattice
+UNITS = (
+    (1, 0),
+    (0, 1),
+    (-1, 0),
+    (0, -1),
+)  # the units of the Gaussian integers, 1, i, -1 and -i, the powers of i (i^4 = 1)
+GAUSSIAN_UNITS = len(
+    UNITS
+)  # the two-squares theorem's modulus, the units' count: a prime 1 modulo it is a sum of two squares (Fermat) and splits in Z[i] into a Gaussian prime and its conjugate, a prime 3 modulo it stays prime there, so the circle's angles come from the primes 1 modulo 4 alone; the mathematics' own number and none of the lattice's
 
 
 @cache

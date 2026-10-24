@@ -24,7 +24,7 @@ def test_the_phase_act_reaches_one_link(tmp_path: Path, monkeypatch: pytest.Monk
     level = np.asarray(free.now, dtype=object).copy()
     level[AT] += KICK
     boards[1].states[charge].lines[0] = records.Record(level, level.copy(), free.remainder)
-    plain, kicked = (node.phased(charge, b.families, b.states, 1, b.wrap, gamma) for b in boards)
+    plain, kicked = (node.phased(charge, b.families, b.states, 1, gamma) for b in boards)
     touched = 0
     for row, (lines, others) in enumerate(zip(plain, kicked, strict=True)):
         for number, (a, c) in enumerate(zip(lines, others, strict=True)):

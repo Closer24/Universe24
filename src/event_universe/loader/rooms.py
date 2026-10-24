@@ -62,7 +62,6 @@ def write_rooms(
     write: HeldWrite,
     gamma: int,
     hill: int | None,
-    unit: int,
 ) -> list[int]:
     """The room of a held family's one write per part at the amplitude A, the numerator's size over A^2 at the largest level, each part's times the size of the row's write weight: for the time part SUM over the sourcing families of w x the room of the booking the row takes, the form or the Wronskian (`booking_room`), times the write's factor's room at the source's hill's edge (`source_room`: the hill's, `hill_scale`, 1 in a hollow under tensions at or above 0, where `hill` is None, and the larger of it and the tension's room at the hill's own bound `hill`, `tension_room`, where it is given; the Wronskian's room on a count too where the row declares the form's own clock, one proper-interval power); for each axis part SUM over the sources of w x factor x lines x 2 x 2 |num| for a tension line (the tension's part per line of the source's record, the centred difference squared, the difference of two levels within the bound squared, |num| on it; The stress is the Links', 2026-10-23) and w x factor x lines x 2 x 2 for an odd line (the sign's current across the axis's two Ports, two products each: the room of the two Links' currents, within which their mean, the source, stays), and w x factor x lines x 2 x 2 x |num| for a shear line (one product of the Node's two axis differences, each the difference of two levels within the bound, |num| on it)."""
     family = families[index]

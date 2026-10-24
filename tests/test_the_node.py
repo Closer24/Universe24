@@ -4,14 +4,14 @@ import numpy as np
 
 from event_universe import flux, node, readings, records, share
 from event_universe.core import paces
-from event_universe.core.ports import LINK_UNIT, Wrap
+from event_universe.core.ports import LINK_UNIT
 from event_universe.core.rule3 import coefficients, mass, rule3
 from event_universe.loader.derived import HeldWrite, family_rules, held_write_of
 from event_universe.loader.universe import SIGN, VOLUME, universe_of
 from tests.laws import real_rows
 from tests.laws_universe import SMALL
 
-WRAP, HERE, KEYS = Wrap(True, True, True), (1, 1, 1), ("now", "before", "remainder")
+HERE, KEYS = (1, 1, 1), ("now", "before", "remainder")
 ROWS = ("held", (4, 4), 4, 7), ("gapped", (3, 4), 1, 7), ("quanta", (5, 7), 1, None)
 BOX = (slice(1, -1),) * 3  # the inner Nodes of an array padded by one Node on every side
 HELD, GAPPED, QUANTA = family_rules(real_rows(*ROWS))
@@ -37,7 +37,7 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
     for _ in range(20):
         levels = records.Record(*draw.integers(-900, 900, (2, *shape)), draw.integers(0, 50, shape))
         content = int(draw.integers(-40, 40))
-        after = flux.step_line(levels, node.rule_of(QUANTA, 100, content), WRAP)
+        after = flux.step_line(levels, node.rule_of(QUANTA, 100, content))
         clock, pace = paces.node_paces(100, content)
         reads, self_coefficient, wall = coefficients(5, 7, 100, clock, pace)
         arrived, here = by_hand(levels.now, HERE), tuple(int(getattr(levels, k)[HERE]) for k in KEYS)
@@ -55,7 +55,7 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
             for r, n, b in zip(reads, arrived_now, arrived_before, strict=True)
         )
         share_here = (2 * plain - links) // (4 * pace**2)  # the plain term over 2 p^2 to 2026-10-23
-        read = share.family_share(QUANTA, (after,), WRAP, 100, content)
+        read = share.family_share(QUANTA, (after,), 100, content)
         quanta_here = int(share.quanta_of(read, wall_c, np.int64)[HERE])
         assert int(read[HERE]) == share_here and quanta_here == (share_here + wall_c // 2) // wall_c
         form = here[0] ** 2 - int(after.now[HERE]) * here[1]
@@ -72,17 +72,14 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
         (50, 3600, 3600, 3600), {1: 3, 2: 2}
     )  # the tension lines' doubled wall (The stress is the Links', 2026-10-23; 1800 before)
     rng, (reads, _s, w) = np.random.default_rng(3), coefficients(2, 3, 1000, 1000, 1000)
-    gap, chain = np.zeros((1, 1, 1), dtype=np.int64), Wrap(False, True, True)
+    gap = np.zeros((1, 1, 1), dtype=np.int64)
     half = [rng.integers(-1000, 1000, (20, 1, 1)) for _ in range(3)]
     a, b = (np.concatenate([h, gap, -h[::-1]]) for h in half[:2])
     r = np.concatenate([half[2] % w, gap, records.complement(half[2] % w, w)[::-1]])
     for _ in range(200):  # the mirrored odd line steps mirrored to the bit with complement remainders
         b, a, r = (
             a,
-            *(
-                np.asarray(x)
-                for x in rule3(flux.link_fluxes(a, reads, chain), mass(2, 3, 1000), w, a, b, r)
-            ),
+            *(np.asarray(x) for x in rule3(flux.link_fluxes(a, reads), mass(2, 3, 1000), w, a, b, r)),
         )
         assert np.array_equal(a, -a[::-1]) and (r[:20] == records.complement(r, w)[::-1][:20]).all()
     assert all((w - 1 - u) // w == -(u // w) for u in range(-40, 40) for w in range(1, 9))
@@ -103,7 +100,7 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         draw.integers(-3000, 3000, shape).astype(object),
         zero,
     )
-    record = flux.step_line(start, node.rule_of(matter, GAMMA, 0, None, UNIT), WRAP)
+    record = flux.step_line(start, node.rule_of(matter, GAMMA, 0, None, UNIT))
     nxt, remainder, now, before = record.now, record.remainder, start.now, start.before
 
     def through(a: int, b: int) -> np.ndarray:
@@ -118,18 +115,18 @@ def test_the_tension_is_rule3s_own_conservation_of_the_current():
         assert np.array_equal(
             left, right - remainder * difference(now, a) + now * difference(remainder, a)
         )
-    stresses = readings.stresses_of(matter.pair[0], [record], WRAP)
+    stresses = readings.stresses_of(matter.pair[0], [record])
     by_hand = [matter.pair[0] * (np.roll(nxt, -1, a) - np.roll(nxt, 1, a)) ** 2 for a in range(3)]
     assert all(np.array_equal(t, h) for t, h in zip(stresses, by_hand, strict=True))
     four = np.array([2, 0, -2, 0]).reshape(
         4, 1, 1
     )  # the law's pattern: 0, 16, 0, 16 per Node, 16 per Link
-    part = readings.stresses_of(1, [records.Record(four, four, 0 * four)], WRAP)[0]
+    part = readings.stresses_of(1, [records.Record(four, four, 0 * four)])[0]
     assert np.array_equal(part.reshape(-1), [0, 16, 0, 16]) and (part + np.roll(part, -1, 0) == 16).all()
     wave = np.take(np.array([2000, 1000, -1000, -2000, -1000, 1000]), np.indices(shape)[0])
-    tension = readings.stresses_of(1, [records.Record(wave, wave, 0 * wave)], WRAP)
+    tension = readings.stresses_of(1, [records.Record(wave, wave, 0 * wave)])
     assert int(tension[0].sum()) == 2 * (3 * 2000 * 2000 // 4) * wave.size
     assert set(np.unique(tension[0]).tolist()) == {0, 9_000_000} and not tension[1].any()
     assert not tension[2].any()
     flat = [records.Record(0 * wave + 7, 0 * wave + 7, 0 * wave)]
-    assert not any(t.any() for t in readings.stresses_of(1, flat, WRAP))
+    assert not any(t.any() for t in readings.stresses_of(1, flat))

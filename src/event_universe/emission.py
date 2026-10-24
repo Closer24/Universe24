@@ -7,11 +7,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe.core.rule3 import division_forward
-from event_universe.features.click import (
-    amplitude,
-    plane_squares,
-    squared,
-)
+from event_universe.features.click import amplitude
 from event_universe.lay import laid
 from event_universe.loader.derived import FamilyRule
 from event_universe.records import record_slice
@@ -39,10 +35,9 @@ def laid_by_count(board: Lattice, item: Item) -> None:
     size = amplitude(item.delta, board.world.quantum_action, item.pair, lines * parts)
     if family.plane:  # the loader admits a plane given by the count with the table's sense alone
         assert item.sense != 0
-        squares = [(size, 0)] * lines  # one plane: the rounding is exact where the total is a square
-        if lines > 1:  # several planes: the part's total in exact squares, the Wronskian whole
-            total = squared(item.delta, board.world.quantum_action, item.pair, parts)
-            squares = plane_squares(total, lines) or squares
+        squares = (
+            [(size, 0)] * lines
+        )  # one plane per record since the family-less file: the rounding is exact where the total is a square
         pairs = [pair for re, im in squares for pair in ((re, -item.sense * im), (im, item.sense * re))]
     else:
         pairs = [(size, int(division_forward(size * num, den, 0)[0]))] * lines

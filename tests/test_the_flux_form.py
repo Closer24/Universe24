@@ -9,7 +9,7 @@ import pytest
 
 from event_universe import flux, node, records, seed, world_files
 from event_universe.core import paces
-from event_universe.core.ports import LINK_UNIT, Wrap
+from event_universe.core.ports import LINK_UNIT
 from event_universe.lattice import Lattice
 from event_universe.loader.universe import MASSLESS, universe_of
 from event_universe.readings import ports
@@ -49,12 +49,7 @@ def test_the_rate_weighted_linear_sum_of_light_is_constant_at_a_fixed_content() 
     """The light family on a 3-cube torus of random levels within 10^6 at the content 0 on two layers and 600 on the third, laid by hand and never stepped: the rule `node.rule_of` at that content, 100 intervals of the engine's own `flux.step_line`, L'' = SUM weight_i [w (now - before) + r] the same whole number after every interval, weight_i = scale div p_i^2 with scale the least common multiple of the two distinct p_i^2, while L moves by exactly the pairing term SUM over the Links of (R_ij - R_ji)(a_j - a_i), the step's own Links' sum."""
     integers, families = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
     light = next(family for family in families if family.name == MASSLESS)
-    gamma, unit, wrap, shape = (
-        integers["node_clock"],
-        LINK_UNIT,
-        Wrap(True, True, True),
-        (CUBE,) * 3,
-    )
+    gamma, unit, shape = integers["node_clock"], LINK_UNIT, (CUBE,) * 3
     content = np.zeros(shape, dtype=object)
     content[CUBE - 1] = 600
     rule = node.rule_of(light, gamma, content, None, unit)
@@ -75,10 +70,10 @@ def test_the_rate_weighted_linear_sum_of_light_is_constant_at_a_fixed_content() 
         a = np.asarray(line.now, dtype=object)
         pairing = sum(
             int((read * (np.asarray(m, dtype=object) - a)).sum())
-            for read, m in zip(reads, ports(a, wrap), strict=True)
+            for read, m in zip(reads, ports(a), strict=True)
         )
         before = linear_sum(wall, line)
-        line = flux.step_line(line, rule, wrap)
+        line = flux.step_line(line, rule)
         assert (
             linear_sum(wall, line) - before == pairing
         )  # L moves by the pairing term alone, the mass 0

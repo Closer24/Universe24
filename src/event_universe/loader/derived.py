@@ -13,7 +13,6 @@ from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
 
 PLANE = 2  # the lines of a plane, re and im: the one shape with a Wronskian and a turn (charged matter)
-FOLD_REACH = 2  # a folded arrival's part within twice the level: |X^c re_j - X^s im_j| <= X (|re_j| + |im_j|) at the fold's tangent at most 1 (the guard at load, plane.fold_guard; the sign's pair, whose magnitude is X to the rounding, read at its own extreme, `turned_room`), the integer total per part and no modulus
 
 
 @dataclass(frozen=True)
@@ -117,11 +116,6 @@ def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
     """Whether a family's record is turned: a plane that reads a holder declaring the rotation (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record); a one-part family reads no holder of the sign and is untouched, as is a plane in a universe whose holders act on the pace."""
     family = families[index]
     return family.plane and any(families[read.family].rotation for read in family.reads)
-
-
-def folds(families: tuple[FamilyRule, ...], index: int) -> bool:
-    """Whether a family's record is folded: a plane that reads a holder carrying the flux's odd lines, each Link's read then a pair (X^c, X^s) in the Link unit (ALGEBRA.md, The clock family on the Ports; plane.py); a record of real lines, light among them, reads the odd lines into no pace and is untouched."""
-    return families[index].plane and any(families[r.family].flux for r in families[index].reads)
 
 
 def charged(families: tuple[FamilyRule, ...], index: int) -> bool:
@@ -265,7 +259,7 @@ def count_wall(family: FamilyRule, action: int) -> int:
     return sine_den(num, den, 3 * action)
 
 
-def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, unit: int = 1) -> HeldWrite:
+def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
     """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for the sign's odd line; the odd lines of either holder at twice their measure's wall, the two Links' currents summed unhalved over the doubled wall (the two hands' lines of 2026-10-09, the mathematician's (L2) and the advisor's (c)): the sign holder's time line at 2 E_s T as well, the Wronskian centred on the triple, W(now, before) + W(next, now) summed unhalved (bookings.booked_of; the owner's decision of 2026-10-23, the centred count), and its three odd lines at 2 E_s T, the Node's two a-Links' Wronskian currents summed (`readings.sense_current_of`, unhalved), and a flux holder's three odd lines at 2 E_s W_c, the count's flux through the axis's two Links summed unhalved over twice the count's wall (the joint line, the T of their "2 E_s T W_c" read as W_c's own: the flux F is in the share's units, one quantum W_c, as the form D over E_s T is one quantum T, so that a rigidly moving source's static solution is V = U v, ALGEBRA.md, The clock family on the Ports), the same factor per source as the tensions'; and a holder's three shear lines, where it declares the shear, at the same doubled wall 2 E_s W_c, the Node's product of its two axis differences D_a D_b being the two ends' halves of the Link's off-diagonal booking -num G_ab (ALGEBRA.md, The tension: G_ab(i) the stress booking on the b-Link, -2 b^2 sin k_a sin k_b on a plane record, met in the mean by -(D_a D_b) / 2 at each end as G_aa is met by h_a at each end exactly), the same factor per source as the tensions'. Under the Lorentz form (`Row.lorentz`, the key `form`: `lorentz`) the sign holder's odd line a is sourced by the +a Link's own flux of the record's step in the Link unit, Phi_a(i) = Im(conj(z_i) (X^c + i X^s) z_(i+a)) with (X^c, X^s) the Link's pair the step reads, X = 2 num_s Q_ij (`covector.link_fluxes`), over the wall 2 den_s G^2 E_s T, `unit` the run's Link unit G and den_s the source's den (the multiple of the sources' den where they differ, each source's factor the multiple over its own den, as the tensions'), so that the odd level over the time level is Phi / (2 den_s G^2 W) = (num_s / den_s) (g / W) = v / c^2 at light's c^2 = 1 / 3, the pairing at the holder's own light speed under which the massless line propagates the lattice Lorenz constraint exactly (covector.py; the pairing at c_s of ALGEBRA.md, The odd line's source is the sign's own current, is this times den_s / num_s, 1 - 2 x 10^-28 in nature)."""
     family = families[index]
     assert family.level_weight is not None
@@ -321,16 +315,12 @@ def bound_under_rooms(
             reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, None, unit)
             plain = sum(abs(read) for read in reads)  # the six plain reaches, R_ij = p_i^2 X_ij
             arrivals = plain  # the six arrivals' reads, under the pair's two parts where the plane turns or folds
-            if folds(families, index):  # the six arrivals each under a pair's two parts, within 2 X
-                arrivals *= FOLD_REACH
-            elif turns(families, index):  # the sign's pair with the phase: the pair's extreme, X 2^(1/2)
+            if turns(families, index):  # the sign's pair with the phase: the pair's extreme, X 2^(1/2)
                 from event_universe.plane import turned_room  # plane reads this module: imported here
 
                 arrivals = PORTS * pace * pace * turned_room(family.pair, gamma, unit)
             own = mass(num, den, clock, unit)  # the flux line's five partial sums (rule3.partial_rooms)
-            *partials, total = partial_rooms(
-                reads, self_coefficient, wall, own, arrivals + plain, arrivals
-            )
+            *partials, total = partial_rooms(self_coefficient, wall, own, arrivals + plain, arrivals)
             for room, head in (*((room, largest) for room in partials), (total, largest - wall)):
                 if room:
                     found = min(found, int(division_forward(head, room, 0)[0]))
@@ -340,8 +330,8 @@ def bound_under_rooms(
         if family.held:
             from event_universe.loader.rooms import write_rooms  # rooms reads this module: imported here
 
-            write = held_write_of(families, index, action, unit)
-            rooms = write_rooms(families, index, write, gamma, hill, unit)
+            write = held_write_of(families, index, action)
+            rooms = write_rooms(families, index, write, gamma, hill)
             from event_universe.loader.rooms import held_room  # rooms reads this module: imported here
 
             found = held_room(family, write, rooms, found, largest, gamma, action, width)

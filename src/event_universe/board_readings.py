@@ -50,8 +50,7 @@ def stresses(board: Lattice) -> Stresses:
         s: readings.axis_sources_of(
             board.families[s[0]].pair[0],
             board.lines_of(*s),
-            board.wrap,
-            frames_of(s[0], board.families, board.states, board.wrap, s[1]),
+            frames_of(s[0], board.families, board.states, s[1]),
         )
         for s in sources_of(board.families, board.states, board.order)
     }
@@ -60,19 +59,17 @@ def stresses(board: Lattice) -> Stresses:
 def sense_currents(board: Lattice) -> Stresses:
     """Every turned record's sign current on each axis at every Node, the Node's two a-Links' Wronskian currents summed unhalved, J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its lines as they stand at the interval's start (`readings.sense_current_of`): the source the odd lines of the record's own row take in their one write under the rotation at the doubled wall 2 E_s T (`loader.derived.held_write_of`; the two hands' lines of 2026-10-09); where the record's holder of the sign declares the Lorentz form, the record's step's own flux through each of the Node's three +a Links instead (`sense_fluxes`, covector.link_fluxes), read after the interval's phase act with the Link pairs the step reads."""
     return {
-        s: sense_fluxes(board, s, board.lines_of(*s), 1)
+        s: sense_fluxes(board, s, board.lines_of(*s))
         for s in sources_of(board.families, board.states, board.order)
         if s[0] in board.turning
     }
 
 
-def sense_fluxes(
-    board: Lattice, source: records.Sourcing, lines: list[records.Record], direction: int
-) -> Any:
+def sense_fluxes(board: Lattice, source: records.Sourcing, lines: list[records.Record]) -> Any:
     """One turned record's source of its own row's odd lines at the interval's start in `direction`: the plain sign current (`readings.sense_current_of`) where its holder books each line its own, and under the holder's Lorentz form the flux of its step through each +a Link in the Link unit (covector.link_fluxes), from the Link pairs its step reads (`flux.pairs_of` at its own read, `read`, the same integers the step takes, divided by the pace squared they carry) and the levels the step starts from, the same numbers forward and back."""
     index, record = source
-    frames = frames_of(index, board.families, board.states, board.wrap, record)
-    return readings.sense_current_of(lines, board.wrap, frames)
+    frames = frames_of(index, board.families, board.states, record)
+    return readings.sense_current_of(lines, frames)
 
 
 def uniform_mode(board: Lattice, index: int) -> UniformMode:

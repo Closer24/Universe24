@@ -8,18 +8,18 @@ from typing import Any, cast
 import numpy as np
 
 from event_universe import node, records, registry
-from event_universe.core.ports import AXES, Wrap
+from event_universe.core.ports import AXES
 from event_universe.core.rule3 import Rule, division_forward, rule3
 from event_universe.frames import frames_of
 from event_universe.loader.derived import PLANE
-from event_universe.plane import link_levels, link_pairs, odd_links, phase_links
+from event_universe.plane import link_levels, link_pairs, phase_links
 from event_universe.readings import at, slices
 from event_universe.records import Booking, Record, record_slice
 
 Pairs = tuple[tuple[Any, ...], tuple[Any, ...]]  # a turned plane's reads per Port, (R^c_ij, R^s_ij)
 
 
-def link_fluxes(level: np.ndarray, reaches: tuple[Any, ...], wrap: Wrap) -> np.ndarray:
+def link_fluxes(level: np.ndarray, reaches: tuple[Any, ...]) -> np.ndarray:
     """SUM over the Node's six Links of R_ij (m_ij - a_i) at every Node, gathered Link by Link: per axis every interior Link once, the near end reading the far level through its +a Port and the far end the near level through its -a Port, the Link's one difference with each end's own reach (two values where the paces differ, the pairing); on a periodic axis the Link from the last layer to the first; on an open axis the two wall Links to the fill; on an axis of extent one the Node is its own neighbour through both Ports and the Link's flux is 0; a Node beyond the board reads the fill and is read as the fill (`seen`)."""
     kind = np.result_type(
         level, *(np.asarray(reach) for reach in reaches)
@@ -41,7 +41,6 @@ def turned_link_fluxes(
     levels: tuple[np.ndarray, np.ndarray],
     reaches: tuple[Any, ...],
     pairs: Pairs,
-    wrap: Wrap,
     frames: tuple[Any, ...] | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
     """The complex flux line's Link sum on a turned or folded plane, z = re + i im, SUM over the six Links of [(R^c_ij + i R^s_ij) z_j - R_ij z_now] at every Node, its two real parts (ALGEBRA.md #the-line, The flux form on a turned or folded Link; `plane.link_pairs`, the pair (R^c, R^s) = p_i^2 (X^c, X^s) per Port, the plain reach R_ij = p_i^2 X_ij): the record sent on a turned Link is the neighbour's pair and the Port reads it turned by the Link's pair, R_ij m_ij the pair product, the far end reading the conjugate pair at its own pace (X^s_ji = -X^s_ij exactly, `plane.sign_pairs`, `plane.fold_pairs`); beyond a face and at a Node beyond the board the pair sent is (0, 0); on an axis of extent one the Node's own pair through both Ports, whose odd parts cancel (the two Ports carry the odd level with opposite signs, `plane.link_levels`), the self-Link's term 2 (R^c - R) z. Gathered Link by Link as `link_fluxes` gathers a plain line's. `frames`, per Port the sign the Node reads its neighbour's plane with (plane.frame_signs): -1 across a Link whose two ends stand in different frames (one end time-reversed by the swap at the top, the other not), where the neighbour's value is read conjugated, im_j -> -im_j, so that the Link reads its two ends in one frame (ALGEBRA.md, The swap at the top, the frame clause); None every Port at +1."""
@@ -71,16 +70,16 @@ def turned_link_fluxes(
     return flux_re, flux_im
 
 
-def gathered_line(record: Record, rule: Rule, wrap: Wrap, direction: int) -> tuple[np.ndarray, Any, Any]:
+def gathered_line(record: Record, rule: Rule, direction: int) -> tuple[np.ndarray, Any, Any]:
     """The Links' sum of one plain line, SUM over the six Links of R_ij (m_ij - a_now) at every Node, gathered Link by Link (`link_fluxes`) from the level the step starts from, with the faces the click act presents (`face_differences`); returned with that level and the other level, (now, before) forward and (before, now) backward."""
     level, other = (record.now, record.before) if direction == 1 else (record.before, record.now)
-    flux = link_fluxes(level, rule.reaches, wrap)
+    flux = link_fluxes(level, rule.reaches)
     return flux, level, other
 
 
-def step_line(record: Record, rule: Rule, wrap: Wrap, direction: int = 1) -> Record:
+def step_line(record: Record, rule: Rule, direction: int = 1) -> Record:
     """Rule3 on one plain line in the law's flux form (ALGEBRA.md #the-line, #the-direction): the Links' sum gathered (`gathered_line`), the division Rule3's (`core/rule3.rule3`); forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r)."""
-    flux, level, other = gathered_line(record, rule, wrap, direction)
+    flux, level, other = gathered_line(record, rule, direction)
     found, remainder = rule3(flux, rule.mass, rule.wall, level, other, record.remainder, direction)
     if direction == 1:
         return Record(np.asarray(found), record.now, np.asarray(remainder))
@@ -88,15 +87,11 @@ def step_line(record: Record, rule: Rule, wrap: Wrap, direction: int = 1) -> Rec
 
 
 def step_momentum(
-    own: Sequence[Record],
-    rule: Rule,
-    wrap: Wrap,
-    direction: int,
-    volumes: tuple[Any, Any, Any],
+    own: Sequence[Record], rule: Rule, direction: int, volumes: tuple[Any, Any, Any]
 ) -> list[Record]:
     """The three tension lines of a held row of the content stepped as the shear's momentum at the volume's wall (ALGEBRA.md, The shear's momentum is carried at the volume's wall, a hypothesis under its own name, 2026-10-23; the symmetry hand's derivation read cold by the reader): Rule3's line on the traceless part of the line's own three Link terms with its wall 3 w split across the interval, the wall of the pair the act enters 3 w (X_now + X_ahead) on the level stepped to and on the remainder's range, the wall the velocity carried in was born under, 3 w (X_now + X_behind), on that velocity, and the one volume of the start, 2 X_now, on the Links' term and the mass, `volumes` the Node's own time line (X_behind, X_now, X_ahead) in `direction` (forward X_before, X_now, X_next after the time line's step and write; backward X_next, X_now, X_before after the time line's inverse), so that the shear's momentum (X / Gamma) T_a' in the board's interval is what the Links' traceless terms move and the shear's velocity falls as the volume grows, nature's -3 H sigma in proper time with the weight the volume's exponent d + 1 in the board's interval and no number typed; with the half wall's move (3 w (X_ahead - X_behind)) / 2 in the numerator, so that the rest's remainder at half the wall born under stands at half the wall entered (the law's birth at the half wall carried across the wall's change: the momentum less half the wall is what the flux moves, the floor a rounding to the nearest, no bias as the wall grows), one carried division per line (`core/rule3.division_forward`, the remainder Python's integer in [0, 3 w (X_now + X_ahead))), a bijection at every Node-interval whether the volume grows or shrinks (the incoming remainder's range is the incoming level's coefficient), the inverse the same function at -1 with every remainder complemented at its own wall, the wall it was born under (the forward act on the swapped pair; `records.complement`, the mirror of The cube's symmetry), and the law's own `step_traceless` bit for bit where the time line stands (X_behind = X_now = X_ahead), the remainder 2 X times the law's."""
     behind, now, ahead = (np.asarray(volume, dtype=object) for volume in volumes)
-    gathered = [gathered_line(line, rule, wrap, direction) for line in own]
+    gathered = [gathered_line(line, rule, direction) for line in own]
     total: Any = sum(np.asarray(flux, dtype=object) for flux, _level, _other in gathered)
     wall3, mass3 = AXES * rule.wall, AXES * rule.mass
     entered, born = (
@@ -130,21 +125,16 @@ def step_momentum(
 
 
 def gathered_plane(
-    rule: Rule,
-    wrap: Wrap,
-    now: tuple[Any, Any],
-    pairs: Pairs,
-    frames: tuple[Any, ...] | None = None,
+    rule: Rule, now: tuple[Any, Any], pairs: Pairs, frames: tuple[Any, ...] | None = None
 ) -> list[np.ndarray]:
     """The Links' sum of a turned or folded plane's one complex line, SUM over the six Links of [(R^c_ij + i R^s_ij) z_j - R_ij z_now], its two real parts gathered Link by Link (`turned_link_fluxes`, `frames` the sign each Port reads its neighbour's im part with, the two ends read in one frame), with the faces the click act presents on each part's own arrivals (`face_differences`: a re arrival's difference enters the re part by R^c and the im part by R^s, an im arrival's the re part by -R^s and the im part by R^c, the im arrival's difference read with the Port's frame sign)."""
-    return list(turned_link_fluxes(now, rule.reaches, pairs, wrap, frames))
+    return list(turned_link_fluxes(now, rule.reaches, pairs, frames))
 
 
 def step_plane(
     re: Record,
     im: Record,
     rule: Rule,
-    wrap: Wrap,
     direction: int,
     pairs: Pairs | None,
     frames: tuple[Any, ...] | None = None,
@@ -153,10 +143,10 @@ def step_plane(
     now = (re.now, im.now) if direction == 1 else (re.before, im.before)
     other = (re.before, im.before) if direction == 1 else (re.now, im.now)
     if pairs is None:
-        found = [step_line(record, rule, wrap, direction) for record in (re, im)]
+        found = [step_line(record, rule, direction) for record in (re, im)]
     else:
         remainders = (re.remainder, im.remainder)
-        fluxes = gathered_plane(rule, wrap, now, pairs, frames)
+        fluxes = gathered_plane(rule, now, pairs, frames)
         stepped = [
             rule3(fluxes[part], rule.mass, rule.wall, now[part], other[part], remainder, direction)
             for part, remainder in enumerate(remainders)
@@ -180,8 +170,6 @@ def step_family(
     families: records.Families,
     states: records.States,
     rule: Rule,
-    wrap: Wrap,
-    gamma: int,
     direction: int = 1,
     record: int = 0,
     pairs: Pairs | None = None,
@@ -196,7 +184,7 @@ def step_family(
             family.axes and not family.wronskian
         )  # a holder of the content's tension lines: the shear's momentum
         found = [
-            step_line(line, rule, wrap, direction)
+            step_line(line, rule, direction)
             if not (traced and 1 <= number - span.start <= AXES)
             else line
             for number, line in enumerate(own, span.start)
@@ -210,7 +198,7 @@ def step_family(
     second: list[Record] = []
     for start in range(0, len(own), PLANE):  # plane by plane, each its two lines, re and im
         pair = own[start], own[start + 1]
-        found, (begun, left) = step_plane(*pair, rule, wrap, direction, pairs, frames)
+        found, (begun, left) = step_plane(*pair, rule, direction, pairs, frames)
         lines, first, second = lines + found, first + begun, second + left
     return lines, (first, second)
 
@@ -220,7 +208,6 @@ def pairs_of(
     families: records.Families,
     states: records.States,
     direction: int,
-    wrap: Wrap,
     gamma: int,
     content: Any,
     factors: node.Factors,
@@ -250,11 +237,10 @@ def pairs_of(
     if (kept := read_again(key, taken)) is not None:
         return cast(Pairs | None, kept[0])
     angles = node.turning(index, families, states, direction, record)
-    flux = odd_links(index, families, states, direction, wrap)  # the fold, a folded plane's
     sign = (  # the sign's Link levels n_ij, the two ends weighed as the holder declares (`link_read`)
         None
         if angles is None
-        else link_levels(angles[1], wrap, families[node.sign_holder(index, families)].link_read)
+        else link_levels(angles[1], families[node.sign_holder(index, families)].link_read)
     )
     phases = None
     if angles is not None:  # the record's row's phase pairs, the Link's hop through each Port
@@ -265,8 +251,8 @@ def pairs_of(
                 f"{families[index].name!r} reads the sign's phase lines and the step was given no amplitude X "
                 "for the fold: the caller passes features/phase.amplitude of the width"
             )
-        phases = phase_links(states[node.sign_holder(index, families)].phases[row], wrap)
-    found = link_pairs(families[index].pair, gamma, content, factors, flux, sign, phases, amplitude)
+        phases = phase_links(states[node.sign_holder(index, families)].phases[row])
+    found = link_pairs(families[index].pair, gamma, content, factors, sign, phases, amplitude)
     READS[key] = (taken, (found, []))
     return found
 
@@ -275,7 +261,6 @@ def step_records(
     index: int,
     families: records.Families,
     states: records.States,
-    wrap: Wrap,
     gamma: int,
     unit: int,
     direction: int = 1,
@@ -285,14 +270,10 @@ def step_records(
     lines: list[Record] = []
     bookings: list[Booking] = []
     for record in range(registry.records_of(families[index], states[index].lines)):
-        content, factors = node.read(index, families, states, direction, wrap, gamma, unit, record)
+        content, factors = node.read(index, families, states, direction, gamma, unit, record)
         rule = node.rule_of(families[index], gamma, content, factors, unit)
-        pairs = pairs_of(
-            index, families, states, direction, wrap, gamma, content, factors, record, amplitude
-        )
-        frames = frames_of(index, families, states, wrap, record)
-        found, booking = step_family(
-            index, families, states, rule, wrap, gamma, direction, record, pairs, frames
-        )
+        pairs = pairs_of(index, families, states, direction, gamma, content, factors, record, amplitude)
+        frames = frames_of(index, families, states, record)
+        found, booking = step_family(index, families, states, rule, direction, record, pairs, frames)
         lines, bookings = lines + found, bookings + [booking]
     return lines, bookings

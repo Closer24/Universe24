@@ -6,14 +6,14 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe import flux, node, readings, records
-from event_universe.core.ports import LINK_UNIT, PORT_SIDES, Wrap
+from event_universe.core.ports import LINK_UNIT, PORT_SIDES
 from event_universe.loader.universe import MASSLESS, universe_of
 from tests.laws_universe import CUBE, SMALL
 
 INTEGERS, FAMILIES = universe_of(SMALL)
 LIGHT = [family.name for family in FAMILIES].index(MASSLESS)
 GAMMA, UNIT = INTEGERS["node_clock"], LINK_UNIT
-SHAPE, TORUS = (CUBE,) * 3, Wrap(True, True, True)
+SHAPE = (CUBE,) * 3
 INTERVALS, AMPLITUDE = 50, 5000
 
 
@@ -43,7 +43,7 @@ def test_the_momentum_is_conserved_exactly_in_the_mirror_and_to_the_floor_on_the
         )
 
     kept = [mirror(now, before, axis) for axis in range(3)]
-    first = readings.momentum_of(num, [line], TORUS)
+    first = readings.momentum_of(num, [line])
     assert [Fraction(p) for p in first] == kept
     last, steps = first, []
     for _ in range(INTERVALS):
@@ -64,8 +64,8 @@ def test_the_momentum_is_conserved_exactly_in_the_mirror_and_to_the_floor_on_the
         assert [
             mirror(now, before, axis) for axis in range(3)
         ] == kept  # the theorem: exact at uniform paces
-        line = flux.step_line(line, rule, TORUS)
-        found = readings.momentum_of(num, [line], TORUS)
+        line = flux.step_line(line, rule)
+        found = readings.momentum_of(num, [line])
         steps.append(max(abs(found[axis] - last[axis]) for axis in range(3)))
         assert all(abs(found[axis] - last[axis]) < bounds[axis] for axis in range(3))
         last = found
@@ -81,5 +81,5 @@ def test_the_momentum_is_conserved_exactly_in_the_mirror_and_to_the_floor_on_the
         np.rint(AMPLITUDE * np.cos(k * x + omega)).astype(object),
         np.zeros(SHAPE, dtype=object),
     )
-    along = readings.momentum_of(num, [wave], TORUS)
+    along = readings.momentum_of(num, [wave])
     assert along[0] > 0 and along[1:] == (0, 0)

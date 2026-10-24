@@ -9,7 +9,6 @@ import numpy as np
 
 from event_universe import registry
 from event_universe.core import paces
-from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward, form_term
 from event_universe.features.read import READS, read_again
 from event_universe.loader.derived import FamilyRule
@@ -36,7 +35,6 @@ def over_pace(numerator: Any, gamma: int, content: Any, unit: int, halves: int =
 def share(
     pair: tuple[int, int],
     record: Record,
-    wrap: Wrap,
     gamma: int,
     content: Any = 0,
     factors: tuple[Any, ...] | None = None,
@@ -50,14 +48,14 @@ def share(
     if (
         nodes is None and as_read is None
     ):  # the frame's term stands at a Node at 0 beside a Node that is not
-        beside = ports(np.asarray(at, dtype=np.int64), wrap)
+        beside = ports(np.asarray(at, dtype=np.int64))
         at = at | np.logical_or.reduce([np.asarray(value) != 0 for value in beside])
     read = record if as_read is None else as_read
     now, before = record.now[at].astype(object), record.before[at].astype(object)
     clock, pace = paces.node_paces(gamma, paces.at_nodes(content, at))
     links = None if factors is None else tuple(paces.at_nodes(factor, at) for factor in factors)
     reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, links, unit)
-    arrived = tuple(value[at].astype(object) for value in ports(read.before, wrap))
+    arrived = tuple(value[at].astype(object) for value in ports(read.before))
     link = sum(read * arrival for read, arrival in zip(reads, arrived, strict=True))  # the Links' sum
     turn = self_coefficient * (read.before[at].astype(object) - before)  # the cross product's turn
     found = form_term(self_coefficient, wall, now, before) - now * (link + turn)
@@ -65,8 +63,8 @@ def share(
     if (
         as_read is None
     ):  # the frame's term: the Links' products shared half and half between a Link's two ends
-        arrived_now = tuple(value[at].astype(object) for value in ports(record.now, wrap))
-        present = tuple(value[at] for value in ports(np.ones(record.now.shape, dtype=object), wrap))
+        arrived_now = tuple(value[at].astype(object) for value in ports(record.now))
+        present = tuple(value[at] for value in ports(np.ones(record.now.shape, dtype=object)))
         shared = sum(  # a Link to a Node beyond the board gives its whole term to its one Node on it
             read * (before - b_j) * (now + n_j) * on
             for read, b_j, n_j, on in zip(reads, arrived, arrived_now, present, strict=True)
@@ -80,7 +78,6 @@ def share(
 def family_share(
     family: FamilyRule,
     records: Iterable[Record],
-    wrap: Wrap,
     gamma: int,
     content: Any = 0,
     factors: tuple[Any, ...] | None = None,
@@ -93,7 +90,7 @@ def family_share(
     lines = list(records)
     reads = [None] * len(lines) if as_read is None else list(as_read)
     for record, read in zip(lines, reads, strict=True):
-        total = total + share(family.pair, record, wrap, gamma, content, factors, unit, nodes, read)
+        total = total + share(family.pair, record, gamma, content, factors, unit, nodes, read)
     return np.asarray(total)
 
 
@@ -116,7 +113,7 @@ def board_share(
     for record in registry.quanta_records(board.families, board.states, index):
         content, factors = board.read(index, direction, record)
         lines = board.lines_of(index, record)
-        found = found + family_share(family, lines, board.wrap, gamma, content, factors, board.unit, at)
+        found = found + family_share(family, lines, gamma, content, factors, board.unit, at)
         cold |= np.broadcast_to(frozen(gamma, content), board.shape)
     if at is None:
         READS[key] = (taken, (np.asarray(found), [cold]))

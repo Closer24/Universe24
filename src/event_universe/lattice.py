@@ -26,7 +26,6 @@ from event_universe import (
 from event_universe.board_readings import Stresses
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
 from event_universe.core import paces
-from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import division_forward, wall_of
 from event_universe.features import phase, read, volume
 from event_universe.features.start import Sourced
@@ -56,7 +55,6 @@ class Lattice:
         self.output: Output | None = None
         self.observers = list[Observer]()
         self.shape = world.shape
-        self.wrap = Wrap(*world.periodic)
         self.families = volume.at_start(world.families)
         self.kind, self.unit = world.kind, world.link_unit
         self.order = [index for index, family in enumerate(self.families) if family.quanta]
@@ -64,9 +62,7 @@ class Lattice:
         self.turning = [index for index in self.order if turns(self.families, index)]
         self.fixed_walls, self.write_walls = dict[int, list[Any]](), dict[int, list[Any]]()
         self.swaps: list[tuple[int, int, int]] = []
-        self.writes = {
-            i: held_write_of(self.families, i, world.quantum_action, world.link_unit) for i in self.held
-        }
+        self.writes = {i: held_write_of(self.families, i, world.quantum_action) for i in self.held}
         self.states = [
             records.empty_state(family, self.shape, self.walls(i), self.kind, self.half_wall(i))
             for i, family in enumerate(self.families)
@@ -79,7 +75,7 @@ class Lattice:
         self.output = output
         self.densities: dict[tuple[int, str], tuple[int | None, int | None]] = {}  # the last readings
         for index in self.order:
-            node.guarded(index, self.families, self.states, self.world.node_clock, self.wrap, self.unit)
+            node.guarded(index, self.families, self.states, self.world.node_clock, self.unit)
         self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
         self.credit = credit.Books.of(self)
         self.proper_count = records.zeros(
@@ -118,14 +114,14 @@ class Lattice:
         line_of = {row: int(records.record_slice(self.families[row[0]], row[1]).start) for row in rows}
         walls = {row: self.walls(row[0])[0] for row in rows}
         packets = {row: self.states[row[0]].lines[line_of[row]] for row in rows}
-        reads = (self.families, self.states, rows, holders, walls, packets, world.quantum_action)
+        reads = (self.families, self.states, rows, holders, walls, packets)
 
         def booked(levels: Sequence[np.ndarray]) -> tuple[list[Sourced], list[Sourced]]:
-            return booked_sources(*reads, levels, self.wrap, gamma, self.unit, self.amplitude)
+            return booked_sources(*reads, levels, gamma, self.unit, self.amplitude)
 
         seed = [records.zeros(self.shape, self.kind) for _ in rows]
         try:
-            fields = held_rests(booked, seed, self.wrap, world.width, gamma, self.unit)
+            fields = held_rests(booked, seed, world.width, gamma, self.unit)
         except ValueError as refusal:
             raise ValueError(f"the start of the held families: {refusal}") from refusal
         for row, found in zip(rows, fields, strict=True):
@@ -161,7 +157,7 @@ class Lattice:
     def read(self, index: int, direction: int = 1, record: int = 0) -> tuple[Any, node.Factors]:
         """A record's read at the interval's start in `direction`: the content and its six Links' factors (`node.read`, every sign row but the record's own)."""
         gamma, unit = self.world.node_clock, self.unit
-        return node.read(index, self.families, self.states, direction, self.wrap, gamma, unit, record)
+        return node.read(index, self.families, self.states, direction, gamma, unit, record)
 
     def rulers(self, direction: int) -> Rulers:
         """Every record of quanta's paces at the interval's start in `direction`, the clock and the three axes' paces of its read at every Node (`node.rulers`), the write's factor's rulers for the bookings it sources (ALGEBRA.md, The write per proper volume and per proper interval); read from the held rows' levels the step in `direction` starts from, the same numbers forward and back."""
@@ -189,7 +185,7 @@ class Lattice:
             (total, cold), laid = self.total_share(index), self.laid[index]
             quanta, deficit = self.count(index), books.deficits.get(index, 0)
             drift = None if total is None or laid is None else total - laid
-            pace = node.least_pace(index, self.families, self.states, gamma, self.wrap, self.unit)
+            pace = node.least_pace(index, self.families, self.states, gamma, self.unit)
             found[family.name] = book(total, quanta, books.counts[index], deficit, drift, pace, cold)
         return found
 
@@ -208,7 +204,7 @@ class Lattice:
         """One interval forward, each act one loop over the families or the node_detectors (ALGEBRA.md #the-interval), every act one Link's reach so that the whole interval's dependency radius is one Link (#the-paces, The Link's two ends, the local test): the receding faces grown where the front reaches them (`growth.grow`; at the largest size the run ends, named in `ended`, and no act is taken); the sign holder's phase act, each Link's pair iterated by the potential's difference across it read at the start (`phased`, features/phase), first, so that every reading of a turned record takes the Link pairs the step reads (2026-10-21; the act moves the phase lines alone and no level a plain reading takes, every plain record's readings bit for bit); then the bookings' read of every record of quanta (node_detector.weighed_currents) and from it the currents, with the turned records' sign currents and the tensions' parts, read from every record at the pair the step starts from (a turned record's currents the flux line's own with those pairs, read once per interval: board_readings.currents takes a turned family's from the bookings' read), and every family of quanta's paces, the write's rulers, from the held rows' levels at the start (`rulers`), the lines of the start kept for the parts' report; the turned records' sign currents under the Lorentz form the fluxes with the pairs the step reads (board_readings.sense_currents); the read and Rule3 on every line, the form D and the Wronskian W read about the step from its booking; the node_detectors' reports with the faces the step presented as `face` lines; the one write per held line from the bookings of the start; then the NodeDetectors' acts from outside the Node (`credit.counted_windows` with `meeting.closed` at the window's close, `meeting.jumped`, `emission.sourced`, `front.advanced_fronts`); last the observers, with the interval, the direction +1 and the pass. With `acts` False the step at the Nodes alone, the run forward of the meeting that runs back (`meeting_back.run_forward`): no report, no booking and no act of the NodeDetectors, the faces presented from the books' log as ever and the acts' lays of the interval re-applied from the books' log (`meeting_back.logged`), so that the board returns bit for bit the one the run forward had left; no output line. The densities' reading (`board_readings.densities_read`, the one report that reads the state) is taken after the held writes and the fifth act, the state at the interval's end, so that no reading reads an output the floor's turn discards (ALGEBRA.md, The floor, 2026-10-23)."""
         self.interval, forms, turns = self.interval + 1, Bookings(), Bookings()
         kept_state = swap.kept(self)
-        node.phase_act(self.held, self.families, self.states, 1, self.wrap, self.world.node_clock)
+        node.phase_act(self.held, self.families, self.states, 1, self.world.node_clock)
         rulers, begun = self.rulers(1), [s.lines for s in self.states]
         if (
             self.world.seed is not None
@@ -309,13 +305,10 @@ class Lattice:
         for record in registry.quanta_records(self.families, self.states, index):
             own = record_lines(self.families, index, record, lines)
             stresses[(index, record)] = readings.axis_sources_of(
-                family.pair[0],
-                own,
-                self.wrap,
-                frames_of(index, self.families, self.states, self.wrap, record),
+                family.pair[0], own, frames_of(index, self.families, self.states, record)
             )
             if index in self.turning:
-                senses[(index, record)] = board_readings.sense_fluxes(self, (index, record), own, -1)
+                senses[(index, record)] = board_readings.sense_fluxes(self, (index, record), own)
         books[index] = lines
 
     def step_inverse(self) -> None:
@@ -343,7 +336,7 @@ class Lattice:
             self.states[index].lines = lines
         shear.inverted(self, ended)
         swap.inverted(self, kept_state)
-        node.phase_act(self.held, self.families, self.states, -1, self.wrap, self.world.node_clock)
+        node.phase_act(self.held, self.families, self.states, -1, self.world.node_clock)
         self.interval -= 1
         self.passes, self.heading = self.passes + (self.heading > 0), -1
         for observer in self.observers:

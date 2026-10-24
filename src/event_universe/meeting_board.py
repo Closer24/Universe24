@@ -181,7 +181,7 @@ def readings_at(
     )
     num, gamma = family.pair[0], board.world.node_clock
     terms = momentum_of(
-        num, starts, board.wrap, board.mask((where,))
+        num, starts, board.mask((where,))
     )  # the Node's two Link currents along each axis at the interval's start, the direction
     frame = [
         agreed(
