@@ -15,7 +15,7 @@ from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
 from tests.laws_universe import ERAS, GAMMA, bare_torus
 
-# the bare 3-cube torus of the tests' small universe: the births by the draw from the hole seed's first intervals, and no turned Node ever under the massless volume holder (2026-10-24, the owner's closure: one bang, the expansion for ever; the first turned Node at 205 to 328 under the gapped holder's cycle, kept by name), the Nodes' line read over TURN_BOUND intervals
+# the bare 3-cube torus of the tests' small universe: the births by the draw from the hole seed's first intervals, and the first turned Nodes within the first intervals under the volume holder gapped by the clock's one level (the weak tops of the rounding beside the hole; the uniform board's top at 157 on this cube)
 INTERVALS, TURN_BOUND = 32, 20
 
 
@@ -95,9 +95,7 @@ def test_the_nodes_line_is_the_reading_node_by_node(
         ]
     gamma, nodes = board.world.node_clock, len(now)
     found = ERAS.node_lines(board, before, [1] * nodes)
-    assert (
-        found["X"] == now and found["turned"] == turned == []
-    )  # no Node turns under the massless holder
+    assert found["X"] == now and found["turned"] == turned != []  # the Nodes turned, read the same
     assert found["length"] == [round(float((x / gamma) ** (1 / 4)), 6) if x > 0 else 0 for x in now]
     assert found["direction"] == [-1 if i in turned else 1 for i in range(nodes)]
     assert all(type(q) is int for name in found["quanta"] for q in found["quanta"][name])

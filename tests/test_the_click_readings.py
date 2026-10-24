@@ -12,14 +12,18 @@ from event_universe.core import paces
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import arrival
 from event_universe.lattice import Lattice
+from event_universe.loader import universe
 from event_universe.reports import BORN_KEYS, MOMENTUM, PROPER, READINGS, WINDOWS, point_of
 from event_universe.world_files import load_world
 from tests.laws_universe import small_universe, uniform_sea
 
 
 def bare_board(tmp_path, monkeypatch, lines):  # type: ignore[no-untyped-def]
-    """The tests' small universe on the bare 3-cube torus (den 1,021, its two points; the family-less file of 2026-10-24), every output line kept; the law's seed the sea with a hole at the origin, the uniform sea laid by name where a test asks (tests.laws_universe.uniform_sea)."""
+    """The tests' small universe on the bare 3-cube torus (den 1,021, its two points; the family-less file of 2026-10-24), every output line kept; the volume holder massless by name, the closure of 2026-10-24 the view's numbers were read on (the law's holder gapped by the clock's one level, loader/universe.volume_pair); the law's seed the sea with a hole at the origin, the uniform sea laid by name where a test asks (tests.laws_universe.uniform_sea)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        universe, "volume_pair", lambda den, gamma: (den, den)
+    )  # the massless holder, by name
     small_universe(tmp_path)
     world = {"universe": "u.json", "shape": [3, 3, 3], "intervals": 40}
     (tmp_path / "bare.json").write_text(json.dumps(world), encoding="utf-8")
