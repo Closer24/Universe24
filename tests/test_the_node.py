@@ -6,7 +6,7 @@ import numpy as np
 
 from event_universe import flux, node, readings, records, share
 from event_universe.core import paces
-from event_universe.core.ports import Wrap
+from event_universe.core.ports import LINK_UNIT, Wrap
 from event_universe.core.rule3 import coefficients, link_factor, mass, rule3
 from event_universe.features.start import rest
 from event_universe.loader.derived import HeldWrite, count_wall, family_rules, held_write_of
@@ -20,7 +20,7 @@ HELD, GAPPED, QUANTA = family_rules(real_rows(*ROWS))
 WRITE = held_write_of((HELD, GAPPED, QUANTA), 0, 64)  # the massless row's one write per part at T = 64
 UNIVERSE_ROWS = universe_copy()["families"]
 INTEGERS, FAMILIES = universe_of(universe_copy())  # the tests' universe
-UNIT = INTEGERS["link_unit"]  # the Link's unit G of the tests' universe
+UNIT = LINK_UNIT  # the Link's unit G, the engine's (2026-10-24; the tests' universe's key to that day)
 NAMES = [family.name for family in FAMILIES]
 MATTER, GRAVITY, CHARGE = (NAMES.index(name) for name in ("matter", "gravity", "charge"))
 GAMMA, T = INTEGERS["node_clock"], INTEGERS["quantum_action"]

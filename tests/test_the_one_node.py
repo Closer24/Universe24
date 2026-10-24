@@ -151,7 +151,7 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
     with pytest.raises(ValueError, match="unknown key"):
         universe.universe_of(
             {
-                "integers": {"node_clock": 6000, "quantum_action": 32768, "link_unit": 16},
+                "integers": {"node_clock": 6000, "quantum_action": 32768},
                 "families": [{"name": "g", "pair": [5999, 6000], "act": "pace"}],
             }
         )
@@ -262,7 +262,7 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
     from event_universe.loader.keys import keyed
 
     family = {"name": "g", "pair": [5999, 6000]}  # a holder of the volume, derived from its pair
-    integers = {"node_clock": 6000, "quantum_action": 32768, "link_unit": 16}
+    integers = {"node_clock": 6000, "quantum_action": 32768}
     with pytest.raises(ValueError, match=f"unknown key '{key}'"):
         if place == "world":
             world = {"shape": [3, 1, 1], "intervals": 1, "universe": "u.json", key: 1}

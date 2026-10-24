@@ -17,7 +17,7 @@ UNIVERSE = ROOT / "examples" / "events" / "universe24" / "universe_universe24.js
 def test_a_sign_reader_with_an_irrational_sine_is_refused_by_name_and_a_pythagorean_one_admitted():
     sign = {"name": "charge", "pair": [1000, 1000]}  # the holder of the sign, the held massless row
     universe = {
-        "integers": {"node_clock": 1000, "quantum_action": 36_000, "link_unit": 16},
+        "integers": {"node_clock": 1000, "quantum_action": 36_000},
         "families": [
             sign,
             {"name": "proton", "pair": [0, 1000], "dimension": 2},

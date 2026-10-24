@@ -47,9 +47,15 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
             lambda: universe.shape_of({"dimension": [1, 2, 3]}, "r"),
         ),
         (
-            "link_unit must be a power of two",
+            "the key 'link_unit', an integer of the engine and not of the universe",
             lambda: universe.universe_of(
-                {**document, "integers": {**document["integers"], "link_unit": 3}}
+                {**document, "integers": {**document["integers"], "link_unit": 16}}
+            ),
+        ),
+        (
+            "the key 'width', an integer of the engine and not of the universe",
+            lambda: universe.universe_of(
+                {**document, "integers": {**document["integers"], "width": 92}}
             ),
         ),
         ("families must be a list", lambda: universe.universe_of({**document, "families": {}})),

@@ -79,7 +79,7 @@ def test_the_tension_lines_write_at_the_doubled_wall_and_a_wrapped_world_runs_ba
 ) -> None:
     """The loader: gravity's three tension lines at 2 E_s W_c = 2 x level_weight x 3 den T x the row's write wall, twice the former, the shear lines' wall where the shear is declared; a 5-cube torus of the three-clump universe (no holder of the sign) with the matter record structured by hand stepped 6 intervals and run back 6, the snapshot bit for bit through the fifth act's fires at the void's pinned rest."""
     document = {  # the three-clump universe, examples/events/m20/universe_m19_lay3_g1000.json in the derived form (2026-10-24): gravity, dust and matter, no holder of the sign, so the reading's test is independent of the charge, and the fifth act refuses a holder under the rotation at a top by name; light the seed family, laid at one quantum on every Node
-        "integers": {"node_clock": 1000, "quantum_action": 36000, "link_unit": 16},
+        "integers": {"node_clock": 1000, "quantum_action": 36000},
         "families": [
             {"name": "gravity", "pair": [999, 1000]},
             {"name": "dust", "pair": [0, 1000], "dimension": 1},

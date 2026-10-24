@@ -1,8 +1,7 @@
 {
  "integers": {
   "node_clock": 1000,
-  "quantum_action": 36000,
-  "link_unit": 16
+  "quantum_action": 36000
  },
  "families": [
   {

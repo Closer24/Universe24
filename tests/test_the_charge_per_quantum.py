@@ -16,7 +16,7 @@ SIGN = {"name": "charge", "pair": [GAMMA, GAMMA]}  # the holder of the sign, the
 
 def universe(proton: list[int], electron: list[int], gamma: int = GAMMA) -> dict:  # type: ignore[type-arg]
     return {
-        "integers": {"node_clock": gamma, "quantum_action": T, "link_unit": 16},
+        "integers": {"node_clock": gamma, "quantum_action": T},
         "families": [
             {**SIGN, "pair": [gamma, gamma]},
             {"name": "proton", "pair": proton, "dimension": 2},
@@ -28,7 +28,7 @@ def universe(proton: list[int], electron: list[int], gamma: int = GAMMA) -> dict
 def test_the_one_world_at_natures_den_loads_with_the_proton_off_the_top():  # type: ignore[no-untyped-def]
     """The universe of $S/arrange/nature_den/universe_nature.json (2026-10-24): the pairs on the circle of den 53,567,765 = 5 x 17 x 73 x 89 x 97 with Gamma 1,000, the proton at (4,859,756, 53,346,867) off the top and the electron at (53,567,757, 29,276), both moving planes reading one holder: refused by name under the sentence of 2026-10-23, loaded under the charge's universality with alpha (36, 1)."""
     document = {
-        "integers": {"node_clock": GAMMA, "quantum_action": T, "link_unit": 16},
+        "integers": {"node_clock": GAMMA, "quantum_action": T},
         "families": [
             {"name": "gravity", "pair": [53_529_741, DEN]},
             {"name": "charge", "pair": [DEN, DEN]},

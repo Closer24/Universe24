@@ -141,7 +141,6 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
     rows["integers"]["quantum_action"] = (
         36_000  # T at which the law's alpha E_h T num / (Gamma den) is 4
     )
-    rows["integers"]["link_unit"] = 1
     (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
     world = dict(shape=[48, 1, 1], intervals=40)
     paths = {"turn": tmp_path / "turn_ring.json"}

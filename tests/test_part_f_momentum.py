@@ -13,9 +13,9 @@ from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 
-GAMMA, T, UNIT, CHAIN = 6000, 32768, 16, 24
+GAMMA, T, CHAIN = 6000, 32768, 24
 LIGHT = {"name": "light", "pair": [GAMMA, GAMMA], "dimension": 1}
-INTEGERS = {"node_clock": GAMMA, "quantum_action": T, "link_unit": UNIT}
+INTEGERS = {"node_clock": GAMMA, "quantum_action": T}
 
 
 def chain_world(tmp_path, families, chain=CHAIN):  # type: ignore[no-untyped-def]

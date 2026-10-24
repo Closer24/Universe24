@@ -32,7 +32,7 @@ RESONANCES = (810, 868)  # the two instruments' resonance pairs over Gamma, thei
 BEFORE_TOP, AFTER_TOP = 2, 2
 # the declared seed's universe (examples/events/universe24/universe_universe24.json to 2026-10-23, kept by name on the fold of 2026-10-24: the one world's file is nature's den since, and the small structured board's tests read this seed)
 DECLARED: dict[str, Any] = {
-    "integers": {"node_clock": GAMMA, "quantum_action": 36000, "link_unit": 16},
+    "integers": {"node_clock": GAMMA, "quantum_action": 36000},
     "families": [
         {"name": "gravity", "pair": [999, GAMMA]},
         {"name": "charge", "pair": [GAMMA, GAMMA]},

@@ -75,8 +75,8 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
 
 
 def universe(*rows: dict, **integers: int) -> dict:  # type: ignore[type-arg]
-    """A universe file of the rows given at Gamma 10,000, T 64 and the Link unit 1, but for `integers` (the width derived, 2026-10-24)."""
-    integers = {"node_clock": GAMMA, "quantum_action": 64, "link_unit": 1, **integers}
+    """A universe file of the rows given at Gamma 10,000 and T 64, but for `integers` (the width derived and the Link unit the engine's, 2026-10-24)."""
+    integers = {"node_clock": GAMMA, "quantum_action": 64, **integers}
     return {"integers": integers, "families": [dict(row) for row in rows]}
 
 
