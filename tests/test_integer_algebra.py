@@ -65,6 +65,11 @@ PHYSICAL_MODULES += (
     "frames.py",
 )  # the swap at the top, the fifth act; the frames of a turned record's read the step shares
 PHYSICAL_MODULES += (
+    "seed.py",
+    "meeting_board.py",
+    "loader/seed.py",
+)  # the fold: the uniform seed, the board's own read
+PHYSICAL_MODULES += (
     "frame_run.py",
 )  # the frame's run of a bound body's full beat at its first close (2026-10-22)
 

@@ -9,17 +9,16 @@ import pytest
 from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import input_digest, load_world
-from tests.laws import ROOT, board_state, same_state
-from tests.laws_universe import CLUMP, CUBE, GAMMA, GAP, NOW, flat
+from tests.laws import board_state, same_state
+from tests.laws_universe import CLUMP, CUBE, GAMMA, GAP, NOW, declared_universe, flat
 
-MATTER = ROOT / "examples" / "events" / "universe24" / "universe_universe24.json"
 ABSORBER = [2, 2, 2]
 MATTER_COUNT = 429  # the gate's count of the clump's share at [600, 1000] on the 3-cube at T 36,000
 END = 70
 
 
 def birth_board(folder: Path) -> Path:
-    universe = json.loads(MATTER.read_text(encoding="utf-8"))
+    universe = declared_universe()  # the declared seed's universe of 2026-10-23, kept by name
     universe["families"][0]["pair"] = [GAP, GAMMA]
     if not any(family["name"] == "absorber" for family in universe["families"]):
         universe["families"].append(

@@ -9,10 +9,10 @@ from event_universe.loader import window
 from event_universe.loader.draw import body_draw_of, draw_of
 from event_universe.loader.world import World, parse_world
 from tests.laws import EVENTS, refused
-from tests.laws_read import load_shipped, redeclared
+from tests.laws_read import redeclared
+from tests.laws_universe import small_world
 
 CLICKS, BELL = EVENTS / "clicks" / "clicks_chain.json", EVENTS / "bell" / "bell_a_b.json"
-UNIVERSE = EVENTS / "universe24" / "universe24.json"
 
 
 def parsed(path: Path, edit=None) -> World:  # type: ignore[no-untyped-def]
@@ -28,7 +28,7 @@ def parsed(path: Path, edit=None) -> World:  # type: ignore[no-untyped-def]
     return parse_world(document, files, digest)
 
 
-def test_a_declared_window_is_refused_by_name_on_a_body_and_on_the_world():
+def test_a_declared_window_is_refused_by_name_on_a_body_and_on_the_world(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     """(1) The key `window` refused by name with the rule that derives it: on a body's node_detector (the body's own beat or the lays' passage) and on the world's draw (the region's passage), at the parse of the key and at the parse of the shipped worlds given the key again."""
     assert body_draw_of({"window": 12}, "b").window == draw_of({"window": 12}, "draw", True).window == 12
     assert draw_of({}, "draw", True).window is None and body_draw_of({}, "b").window is None
@@ -41,20 +41,26 @@ def test_a_declared_window_is_refused_by_name_on_a_body_and_on_the_world():
 
     assert "W = 32" in str(refused("declares the window 12", parsed, CLICKS, body))
     assert "W = 149" in str(refused("declares the window 12", parsed, CLICKS, world))
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    small = small_world(
+        tmp_path, detector=False, absorber=True
+    )  # the declared seed's instrument, body 2
     assert "own beat" in str(
         refused(
             "declares the window 12",
             parsed,
-            UNIVERSE,
-            lambda d: d["bodies"][4]["node_detector"].update(window=12),
+            small,
+            lambda d: d["bodies"][2]["node_detector"].update(window=12),
         )
     )
 
 
-def test_the_body_window_is_its_own_beat_where_the_drive_has_no_end():
-    """(2) Universe24's instrument body at the resonance [902, 1000] in the standing uniform light of a board periodic on three axes, no passage end: its window the beat's period, 15 intervals, `period_of` (the first count n with sin(n Omega) back at or above 0 after a negative turn, 2 pi / Omega = 14.08); the clicks world's absorber at [5414, 6000] has the same beat, 15, and its drive, a laid packet with an end, gives the passage rule's 32."""
+def test_the_body_window_is_its_own_beat_where_the_drive_has_no_end(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """(2) The declared seed's instrument body (the one world's to 2026-10-23; the folded file declares none) at the resonance [902, 1000] in the standing uniform light of a board periodic on three axes, no passage end: its window the beat's period, 15 intervals, `period_of` (the first count n with sin(n Omega) back at or above 0 after a negative turn, 2 pi / Omega = 14.08); the clicks world's absorber at [5414, 6000] has the same beat, 15, and its drive, a laid packet with an end, gives the passage rule's 32."""
     assert window.period_of((902, 1000)) == window.period_of((5414, 6000)) == 15
-    universe = parsed(UNIVERSE)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    universe = parsed(small_world(tmp_path, detector=False, absorber=True))
+    monkeypatch.undo()  # the shipped clicks world below is read at the repository's root
     instrument = next(b for b in universe.bodies if b.detector is not None)
     assert universe.draw is None and instrument.detector.draw.window == 15
     assert instrument.detector.transitions[0].resonance == (902, 1000)
@@ -95,19 +101,16 @@ def test_the_two_rules_meet_on_one_body():
     assert ringed.bodies[0].detector.draw.window == 15
 
 
-def test_a_small_world_with_the_instrument_body_clicks_at_the_derived_cadence(tmp_path):
-    """(5) Universe24 cut to 30 intervals: the first instrument's (body 4, at [902, 1000]) windows close at 15 and 30, the derived cadence, and every credit line of the body falls at a close with the window [close - 14, close]; the former file's cadence of 12 closed at 12 and 24."""
-    document = json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    document["intervals"] = 30
-    (world := tmp_path / "universe24.json").write_text(json.dumps(document), encoding="utf-8")
-    mode = json.loads(UNIVERSE.with_suffix(".mode.json").read_text(encoding="utf-8"))
-    mode["world_digest"] = world_files.input_digest(document)
-    world.with_suffix(".mode.json").write_text(json.dumps(mode), encoding="utf-8")
+def test_a_small_world_with_the_instrument_body_clicks_at_the_derived_cadence(tmp_path, monkeypatch):
+    """(5) The declared seed's small world with its instrument (body 2, at [902, 1000]; the one world's file of 2026-10-23 declared it as body 4, the fold of 2026-10-24 declares no body) over 30 intervals: the instrument's windows close at 15 and 30, the derived cadence, and every credit line of the body falls at a close with the window [close - 14, close]; the former file's cadence of 12 closed at 12 and 24."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     lines: list[dict] = []  # type: ignore[type-arg]
-    board = Lattice(load_shipped(world), lines.append)
+    board = Lattice(
+        world_files.load_world(small_world(tmp_path, detector=False, absorber=True)), lines.append
+    )
     for _ in range(30):
         board.step()
-    credits = [c for c in lines if c.get("event") == "credit" and c.get("node_detector") == "body 4"]
+    credits = [c for c in lines if c.get("event") == "credit" and c.get("node_detector") == "body 2"]
     assert credits and all(
         c["interval"] % 15 == 0 and c["window"] == [c["interval"] - 14, c["interval"]] for c in credits
     )

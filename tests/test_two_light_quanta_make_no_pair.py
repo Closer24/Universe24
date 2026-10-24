@@ -11,13 +11,12 @@ from tests.laws import ROOT
 FOLDER = ROOT / "examples" / "events" / "universe24"
 UNIVERSES = (
     "universe_universe24.json",
-)  # the one world's universe: gravity, the sign holder, matter [600, 1000], light, the proton and electron planes, the absorber
+)  # the one world's universe at nature's den (2026-10-24): gravity, the sign holder, matter, light, the proton and electron planes
 LISTS_AS_WRITTEN = {  # every shipped universe with a list, its lists by name (the parent: the records out and their senses)
     "nucleons_box.json": {"neutron": [("proton", 1), ("electron", -1)]},
     "nucleons_light.json": {"neutron": [("proton", 1), ("electron", -1)]},
     "nucleons_pythagorean.json": {"neutron": [("proton", 1), ("electron", -1)]},
-    "universe_universe24.json": {"proton": [("matter", 0), ("electron", 1)]},
-}
+}  # the one world's universe at nature's den has no list (the proton off the top makes no exact list; the declared seed's of 2026-10-23 had the proton's, matter 0 and electron 1)
 
 
 def families_of(path: Path):  # type: ignore[no-untyped-def]
@@ -57,10 +56,13 @@ def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first
     families, names = families_of(FOLDER / "universe_universe24.json")
     light = names.index("light")
     born = [[(names[k], sense) for k, sense in table] for table in conversion.birth_of(families, light)]
-    assert born == [
-        [("electron", -1), ("electron", 1)],
-        [("proton", -1), ("proton", 1)],
-    ]  # the lightest first: 3,600 T then 6,000 T
+    assert (
+        born
+        == [
+            [("electron", -1), ("electron", 1)],
+            [("proton", -1), ("proton", 1)],
+        ]
+    )  # the lightest first: the electron's gap 29,276^2 before the proton's (the declared seed's 3,600 T then 6,000 T)
     assert (
         conversion.birth_of(families, names.index("matter")) == []
     )  # a family with a gap births nothing: its own list is the conversion's
