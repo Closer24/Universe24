@@ -218,6 +218,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "point_of",
         "gcd",
     ): "D",  # Euclid's remainders on the pair's two integers, once
+    (
+        "meeting_board.py",
+        "readings_at",
+        "division_forward",
+    ): "D",  # the click's view: the piece's p_a = P_a x W_rec div (num x W) and the proper time count div Gamma, exact (2026-10-24)
     # board_readings.py
     ("board_readings.py", "uniform_mode", "division_forward"): "D",  # the uniform level read, once
     ("lay.py", "shares_of", "division_forward"): "D",  # the shares' floors, once each

@@ -83,6 +83,12 @@ class Lattice:
             node.guarded(index, self.families, self.states, self.world.node_clock, self.wrap, self.unit)
         self.laid = {index: self.total_share(index)[0] for index in self.order}  # the books' origin
         self.credit = credit.Books.of(self)
+        self.proper_count = records.zeros(
+            self.shape, object
+        )  # the law's time count at every Node, SUM over the intervals of the Node's composed clock p_0 at the interval's start, in the unit Gamma one vacuum interval (ALGEBRA.md, The paces compose; The clock near matter): a reading kept beside the states and no act, read by the click's view as `proper` (meeting_board.readings_at)
+        self.closes = np.zeros(
+            self.shape, dtype=np.int64
+        )  # the count of every Node's own closes, the board's own clicks there, read by the click's view as `windows`
 
     def half_wall(self, index: int) -> int:
         """The half wall of the rule a family's lines step by, w div 2 with w = 6 den Gamma^2 G^2 (`wall_of`), the remainder every line is born with: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word; the mathematician's hand with the advisor's hand, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root)."""
@@ -205,6 +211,12 @@ class Lattice:
         node.phase_act(self.held, self.families, self.states, 1, self.wrap, self.world.node_clock)
         stresses = board_readings.stresses(self)
         rulers, begun = self.rulers(1), [s.lines for s in self.states]
+        if (
+            self.world.seed is not None
+        ):  # the time count: the clock the seed's record reads at the interval's start, summed (every family of quanta reads the same content, so the same clock)
+            self.proper_count = self.proper_count + np.asarray(
+                rulers[(self.world.seed, 0)][0], dtype=object
+            )
         stresses, senses = board_readings.stresses(self), board_readings.sense_currents(self)
         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
         for index, (lines, bookings) in found.items():

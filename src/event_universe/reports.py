@@ -65,10 +65,14 @@ ORDER, SCALE, BOARD_COUNT = (
     "scale",
     "board_count",
 )  # the credit line's three words of a record of several parts' click (the owner's word of 2026-10-20, the click writes at the birth): the side's order among the sides' draws, 1 the first to N the last, and the record's scale after the side's write, the norm's square of every coefficient written (`meeting_back.realised`); on no line of a record of one part
-CREDIT_KEYS = (
-    "window",
+PROPER, WINDOWS = (
     "proper",
     "windows",
+)  # the taker's own clock at the close in whole intervals and its count of its own closes: constants 0 on the board's own click to 2026-10-24, readings since (the click's view, meeting_board.readings_at; ALGEBRA.md, The paces compose, The clock near matter)
+CREDIT_KEYS = (
+    "window",
+    PROPER,
+    WINDOWS,
     "before",
     "realised",
     "kept",
@@ -229,7 +233,7 @@ READINGS = (
     "support",
     "beat",
     "identity",
-)  # the click's view, the six readings on the credit line (2026-10-24, the owner's frame: the Nodes are the event space, the clicks are what is seen from the hidden layer, all measurements go to the clicks; the builder's six, accepted as readings and no act): the point the credited record's cosine at the credited Node read from its three levels around the step, the kind the rank of the lines credited, the sense the Wronskian's sign there, the support the shell Node the credit left through, the beat the quantum's rotation W_c sin omega at the point read, the identity the record's family and index
+)  # the click's view, the six new readings on the credit line (2026-10-24, the owner's frame: the Nodes are the event space, the clicks are what is seen from the hidden layer, all measurements go to the clicks; the builder's six, accepted as readings and no act): the point the credited record's cosine at the credited Node read from its three levels around the step, the kind the rank of the lines credited, the sense the Wronskian's sign there, the support the shell Node the credit left through, the beat the quantum's rotation W_c sin omega at the point read, the identity the record's family and index; with them the credit line's former keys read and no longer constants on the board's own click: MOMENTUM (the piece's p_a, with FAN the record's P_a over the board and RECOIL -p, Part F and G) and PROPER (the taker's own clock at the close in whole intervals, with WINDOWS its count of its own closes), eight readings beyond the labels (meeting_board.readings_at)
 
 
 def point_of(before: int, now: int, after: int) -> tuple[int, int] | None:
