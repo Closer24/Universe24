@@ -99,10 +99,10 @@ def test_a_full_stop_that_cannot_pay_refuses_by_name_and_the_light_stands(tmp_pa
 def test_every_take_is_read_before_any_hole_is_written(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     """Every face before any write (the hole's clause): within every close of the 3-cube every read of the frame's shares precedes the first hole written, so the takes of a close are read on the one state the write acts on and the order of the Nodes enters no number."""
     board, order = hole_seed(tmp_path, monkeypatch, 3, 16, []), []
-    real_read, real_laid = meeting_board.frame_shares, meeting_board.laid
+    real_read, real_laid = meeting_board.taken_at, meeting_board.laid
     monkeypatch.setattr(
         meeting_board,
-        "frame_shares",
+        "taken_at",
         lambda *a: (order.append((board.interval, "read")), real_read(*a))[1],
     )
     monkeypatch.setattr(
