@@ -83,27 +83,27 @@ def test_the_two_ports_of_one_detector_read_at_one_close_with_equal_shares(tmp_p
     assert after and whole[(0,)] != whole[(1,)]  # the lines after the close carry the write
 
 
-def test_the_axis_is_the_planes_setting_and_the_basis_the_real_lines(tmp_path, monkeypatch):
-    """The settings' law (`loader/draw.settings_of_the_law`, `loader/world.node_detectors_of`): a side of a record of planes declares `axis` and a side of a record of real lines declares `basis`, each refused by name on the other kind, the two together refused, a setting with no `pattern` refused, one pattern over laid records of both kinds refused, and a setting on a body's node_detector refused; the spin world loads with its axis, and the same world with `basis` in the axis's place (its mode file re-addressed to it) is refused by name."""
+def test_the_one_setting_key_is_read_by_the_kind_of_the_record_it_reads(tmp_path, monkeypatch):
+    """The settings' law (`loader/draw.settings_of_the_law`, `loader/world.node_detectors_of`; the owner's word of 2026-10-23, nature is one, not several options): a side declares its setting under the one key `basis`, read as the half-angle pair (c, s) where the record it reads is a plane's and as the coefficients (p, q) where it is real lines', the kind the laid record's and no key's (`NodeDetectorRow.plane`, `.axis` the half-angle pair then); the former second key `axis` refused by name with the sentence naming `basis`, a setting with no `pattern` refused, one pattern over laid records of both kinds refused, a `turn` on a record of real lines refused, and a setting on a body's node_detector refused; the spin world loads with its half-angle pair, and the same world with `axis` in the key's place (its mode file re-addressed to it) is refused by name."""
     path = spin_world(tmp_path, monkeypatch, {"left": ((1, 0), IDENTITY)})
     world = json.loads(path.read_text(encoding="utf-8"))
     universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     families = universe_of(universe)[1]
     spin, pair = ([f.name for f in families].index(n) for n in ("spin", "light_pair"))
     row, shape = world["node_detectors"][0], tuple(world["shape"])
-    assert load_world(path).node_detectors[0].axis == (1, 0)
-    refused("both `axis` and `basis`", node_detectors_of, [{**row, "basis": [1, 0]}], shape, 0, (), ())
+    loaded = load_world(path).node_detectors[0]
+    assert (loaded.basis, loaded.axis, loaded.plane) == ((1, 0), (1, 0), True)
+    axis = {**{k: v for k, v in row.items() if k != "basis"}, "axis": [1, 0]}
+    found = refused("holds the key 'axis'", node_detectors_of, [axis], shape, 0, (), ())
+    assert "one key, `basis`" in str(found) and "write the pair under `basis`" in str(found)
     refused(
         "none is declared",
         node_detectors_of,
-        [{k: v for k, v in row.items() if k != "axis"}],
+        [{k: v for k, v in row.items() if k != "basis"}],
         shape,
         0,
         (),
         (),
-    )
-    refused(
-        "not on a body", node_detectors_of, [{"name": "d", "block": 0, "axis": [1, 0]}], shape, 1, (), ()
     )
     refused(
         "not on a body",
@@ -123,38 +123,25 @@ def test_the_axis_is_the_planes_setting_and_the_basis_the_real_lines(tmp_path, m
         (),
         (),
     )
-    pattern = ((1, 0), (0, 1))
+    sides = node_detectors_of([row], shape, 0, (), ())  # the setting's kind unread at the parse
+    assert (sides[0].basis, sides[0].axis, sides[0].plane) == ((1, 0), (), False)
+    refused("records of planes and of real lines", settings_of_the_law, sides, [spin, pair], families)
+    turned = node_detectors_of([{**row, "turn": 1}], shape, 0, (), ())
     refused(
-        "declares `basis` for a record of planes",
-        settings_of_the_law,
-        [("left", (), (1, 0), pattern)],
-        [spin],
-        families,
+        "declares the turn 1 on a record of real lines", settings_of_the_law, turned, [pair], families
     )
-    refused(
-        "declares `axis` for a record of real lines",
-        settings_of_the_law,
-        [("left", (1, 0), (), pattern)],
-        [pair],
-        families,
-    )
-    refused(
-        "records of planes and of real lines",
-        settings_of_the_law,
-        [("left", (1, 0), (), pattern)],
-        [spin, pair],
-        families,
-    )
-    settings_of_the_law([("left", (1, 0), (), pattern)], [spin], families)  # the axis on planes stands
-    settings_of_the_law(
-        [("left", (), (1, 0), pattern)], [pair], families
-    )  # the basis on real lines stands
-    world["node_detectors"][0] = {**{k: v for k, v in row.items() if k != "axis"}, "basis": [1, 0]}
+    (planes,) = settings_of_the_law(sides, [spin], families)  # the half-angle pair on planes
+    assert (planes.basis, planes.axis, planes.plane) == ((1, 0), (1, 0), True)
+    (lines,) = settings_of_the_law(sides, [pair], families)  # the coefficients on real lines
+    assert (lines.basis, lines.axis, lines.plane) == ((1, 0), (), False)
+    (azimuth,) = settings_of_the_law(turned, [spin], families)  # the turn on a plane side stands
+    assert (azimuth.turn, azimuth.plane) == (1, True)
+    world["node_detectors"][0] = axis
     (wrong := tmp_path / "wrong.json").write_text(json.dumps(world) + "\n", encoding="utf-8")
     mode = json.loads((tmp_path / "spin.mode.json").read_text(encoding="utf-8"))
     mode["world_digest"] = input_digest(world)
     (tmp_path / "wrong.mode.json").write_text(json.dumps(mode) + "\n", encoding="utf-8")
-    refused("declares `basis` for a record of planes", load_world, wrong)
+    refused("holds the key 'axis'", load_world, wrong)
 
 
 def test_a_full_part_refuses_the_second_quantum_by_its_declared_capacity(tmp_path, monkeypatch):

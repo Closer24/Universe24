@@ -1,4 +1,4 @@
-"""The singlet's four worlds under the family's sign (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19, and The click is the meeting; tests/test_the_spin.py, the singlet's test built as files, and tests/test_the_exchange_sign.py, the singlet under the sign) from the design file beside this script: four chain worlds, one per pair of settings, the two-plane family's parts laid alike as two packets from the centre toward the two ends, half a quantum each, two beams to the two declared regions at the chain's ends, each region's `axis` the side's setting (c, s) and both regions' `pattern` the plain identity, the family's sign under exchange declared `antisymmetric` in the universe file (the crossed pattern [[0, 1], [-1, 0]] on one side the declaration of 3.0.0 the sign supersedes, its numbers identical by the determinant's identity at two parts); their mode files by the packet lay (tools/pixel_mode.py, with --modes); and the blind expectation file, derived from the settings in exact fractions before any run and never touched after, by the reader's own algebra on equal parts in the sign's form (tools/spin_gate.py, `at_equal_parts` with the family's sign read from the universe file, the ports by the loader's `ports_of` on the axis and the pattern): E(a, b) = -cos(theta_a - theta_b), -119 / 169, 119 / 169, -120 / 169, -120 / 169, S = -478 / 169 with the CHSH signs, the marginal 1 / 2, and the three local credits as the fence, every one with |S| at most 2. Every number is the design's and stands in the files, none in this script or the engine.
+"""The singlet's four worlds under the family's sign (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19, and The click is the meeting; tests/test_the_spin.py, the singlet's test built as files, and tests/test_the_exchange_sign.py, the singlet under the sign) from the design file beside this script: four chain worlds, one per pair of settings, the two-plane family's parts laid alike as two packets from the centre toward the two ends, half a quantum each, two beams to the two declared regions at the chain's ends, each region's `basis` the side's setting (c, s), the half-angle pair under the one setting key (the key `axis` of 2026-10-19 refused by name since 2026-10-23), and both regions' `pattern` the plain identity, the family's sign under exchange declared `antisymmetric` in the universe file (the crossed pattern [[0, 1], [-1, 0]] on one side the declaration of 3.0.0 the sign supersedes, its numbers identical by the determinant's identity at two parts); their mode files by the packet lay (tools/pixel_mode.py, with --modes); and the blind expectation file, derived from the settings in exact fractions before any run and never touched after, by the reader's own algebra on equal parts in the sign's form (tools/spin_gate.py, `at_equal_parts` with the family's sign read from the universe file, the ports by the loader's `ports_of` on the axis and the pattern): E(a, b) = -cos(theta_a - theta_b), -119 / 169, 119 / 169, -120 / 169, -120 / 169, S = -478 / 169 with the CHSH signs, the marginal 1 / 2, and the three local credits as the fence, every one with |S| at most 2. Every number is the design's and stands in the files, none in this script or the engine.
 
 Run with PYTHONPATH set to the checkout's src:
 
@@ -52,13 +52,13 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         {
             "name": design["sides"]["a"],
             "positions": [[x, 0, 0] for x in range(depth)],
-            "axis": [int(v) for v in design["settings"][a]],
+            "basis": [int(v) for v in design["settings"][a]],
             "pattern": design["patterns"]["a"],
         },
         {
             "name": design["sides"]["b"],
             "positions": [[x, 0, 0] for x in range(length - depth, length)],
-            "axis": [int(v) for v in design["settings"][b]],
+            "basis": [int(v) for v in design["settings"][b]],
             "pattern": design["patterns"]["b"],
         },
     ]
@@ -77,7 +77,7 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
 
 
 def ports(design: dict[str, Any], settings: tuple[str, ...]) -> list[dict[str, tuple[int, ...]]]:
-    """The sides' ports for one combination of settings, each side's from its axis and its pattern (the loader's one arithmetic for an axis and a basis)."""
+    """The sides' ports for one combination of settings, each side's from its setting, the half-angle pair under the one key `basis`, and its pattern (the loader's one arithmetic for a pair and for real lines)."""
     return [
         bell_gate.ports_of(
             tuple(int(v) for v in design["settings"][setting]),
@@ -159,7 +159,7 @@ def expectation(design: dict[str, Any]) -> dict[str, object]:
         "window": [int(v) for v in design["window"]],
         "sides": design["sides"],
         "settings": design["settings"],
-        "settings_declared_as": "axis",
+        "settings_declared_as": "basis",
         "patterns": design["patterns"],
         "exchange": design["exchange"],
         "superseded_pattern": design["superseded_pattern"],

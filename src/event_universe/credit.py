@@ -124,7 +124,7 @@ class Books:
             (r.name, ports_of(r.axis or r.basis, r.pattern, r.turn))
             for r in board.world.node_detectors
             if r.pattern
-        ]  # a side's setting its `axis` for planes or its `basis` for real lines
+        ]  # a side's one setting, `basis`: the half-angle pair where the laid record is a plane's
         patterns = {r.name: r.pattern for r in board.world.node_detectors if r.pattern}
         bodies = books_of(board)
         emitters: dict[int, list[Emitter]] = {}

@@ -20,7 +20,7 @@ pair is laid as one event at the centre, two packets of the spin family at k = p
 ends at the amplitude 64 (the generator's lay 54, half a quantum each, the two together one quantum
 of the record, the count 1), the parts laid alike. One beam to each side, each to a declared region
 of four Nodes at the chain's end backed by a receding face, the regions `left` and `right`, each
-declaring its setting as its `axis`, the half-angle pair (c, s), and each the plain identity pattern
+declaring its setting as its `basis`, the half-angle pair (c, s), and each the plain identity pattern
 [[1, 0], [0, 1]]: the antisymmetric pair is the family's declaration and no detector's. The four
 worlds are the four pairs of settings a = (1, 0), a' = (1, 1) on the left and b = (12, 5),
 b' = (5, 12) on the right; 40 intervals, one window, the draw's seed 24.

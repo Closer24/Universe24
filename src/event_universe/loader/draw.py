@@ -1,17 +1,20 @@
-"""The draw's declaration (ALGEBRA.md, The NodeDetector is one declaration kind for every world; #the-click-is-the-meeting, the pair's form and the GHZ gate; The click's read of the board): on the world the `draw`, the window in intervals after which the NodeDetectors over regions draw and write their click derived at the end of the load from the regions' passages and declared by no key (`Draw`, `draw_of`, `loader/window.drawn`; the owner's decision of 2026-10-23; the draw itself the click's read of the board, `digits.read_of`, so no seed and no generator: `seed`, `multiplier` and `increment` are unknown keys, refused by name as every unknown key is), and the run back's reach (`reach`, `cone` or `board`; ALGEBRA.md, The meeting's reading, the run back's reach; the owner's words of 2026-10-19 and 2026-10-20): there is one meeting, the click that writes at the record's birth, the sides reading in the order of their closes (`meeting_back`, `lists.readings`), so the key `meeting` is refused by name (2026-10-20); a body with a probe among its transitions (a transition of a part into itself) declares its `node_detector` with no key (`windowless_of`, a `Draw` with no window), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate), and no body's `node_detector` admits the meeting, the world's draw's word; and on a node_detector's region its setting `basis` (p, q), the coefficients of its credit, and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the sides' draws in the run (`meeting_back.coefficients_of`); every defect refused by name and no default written."""
+"""The draw's declaration (ALGEBRA.md, The NodeDetector is one declaration kind for every world; #the-click-is-the-meeting, the pair's form and the GHZ gate; The click's read of the board): on the world the `draw`, the window in intervals after which the NodeDetectors over regions draw and write their click derived at the end of the load from the regions' passages and declared by no key (`Draw`, `draw_of`, `loader/window.drawn`; the owner's decision of 2026-10-23; the draw itself the click's read of the board, `digits.read_of`, so no seed and no generator: `seed`, `multiplier` and `increment` are unknown keys, refused by name as every unknown key is), and the run back's reach (`reach`, `cone` or `board`; ALGEBRA.md, The meeting's reading, the run back's reach; the owner's words of 2026-10-19 and 2026-10-20): there is one meeting, the click that writes at the record's birth, the sides reading in the order of their closes (`meeting_back`, `lists.readings`), so the key `meeting` is refused by name (2026-10-20); a body with a probe among its transitions (a transition of a part into itself) declares its `node_detector` with no key (`windowless_of`, a `Draw` with no window), its window bounded by the probe's lays at its Node (ALGEBRA.md, The pulsed gate), and no body's `node_detector` admits the meeting, the world's draw's word; and on a node_detector's region its one setting `basis` (p, q), the coefficients of its credit (the half-angle pair (c, s) where the record read is a plane's, the kind derived at the end of the load, `settings_of_the_law`; the second key `axis` refused by name since 2026-10-23), and its parts' `pattern`, one integer pair [alpha_k, beta_k] per part of the record it reads, the + port reading the part k as e_k(+) = alpha_k p + beta_k q and the - port as e_k(-) = alpha_k (-q) + beta_k p (the pair's pattern [[1, 0], [0, 1]], the ports (p, q) and (-q, p); `ports_of`, the two ports exactly orthogonal with equal norms, refused by name otherwise), read by the reader (`tools/bell_gate.py`) and by the sides' draws in the run (`meeting_back.coefficients_of`); every defect refused by name and no default written."""
 
 from __future__ import annotations
 
 import itertools
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import gcd
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.keys import integer, keyed
+
+if TYPE_CHECKING:
+    from event_universe.loader.world import NodeDetectorRow
 
 Gauss = tuple[
     int, int
@@ -21,7 +24,7 @@ Ports = tuple[
     tuple[Gauss, ...], tuple[Gauss, ...]
 ]  # a side's two ports, + then -, one coefficient per part
 UNITS: tuple[Gauss, ...] = ((1, 0), (0, 1), (-1, 0), (0, -1))  # i^turn, the azimuth in quarter turns
-TURN = "turn"  # a plane side's key beside `axis`: the azimuth in quarter turns, 0 to 3
+TURN = "turn"  # a plane side's key beside its `basis`: the azimuth in quarter turns, 0 to 3
 WINDOW = "window"  # the former key: admitted at the parse to be refused by name at the end of the load with the derived number
 DRAW_KEYS = (
     WINDOW,
@@ -150,53 +153,46 @@ def patterns_of_the_law(
             )
 
 
-def setting_of(row: Mapping[str, object], label: str) -> tuple[tuple[int, ...], tuple[int, ...], int]:
-    """A node_detector's setting from its row, (basis, axis), each () where the key is absent: `basis`, the setting's coefficients (p, q) for a record of real-line parts, or `axis`, the half-angle pair (c, s) of the detector's axis for a record of planes (the spin branch, 2026-10-19), one of the two; refused by name where both stand, and where a region declares a setting with no `pattern` to read it with (a setting is read by the pattern alone; a body's node_detector refuses a setting by its own line). With `turn`, the azimuth in quarter turns 0 to 3 on a plane side beside its `axis` (the two-term plane GHZ, 2026-10-20), refused by name beside `basis` or without `axis`, and outside 0 to 3 (`integer`); 0 where the key is absent."""
+def setting_of(row: Mapping[str, object], label: str) -> tuple[tuple[int, ...], int]:
+    """A node_detector's setting from its row, (basis, turn): `basis`, the side's one setting, the pair (p, q), the setting's coefficients at the full angle for a record of real-line parts and the half-angle pair (c, s) of the detector's axis for a record of planes (the spin branch, 2026-10-19), the kind read from the laid record at the end of the load (`settings_of_the_law`) and declared by no second key (the key `axis` refused by name in `loader/world.node_detectors_of`, 2026-10-23), () where the key is absent; refused by name where a region declares a setting with no `pattern` to read it with (a setting is read by the pattern alone; a body's node_detector refuses a setting by its own line). With `turn`, the azimuth in quarter turns 0 to 3 of a plane side (the two-term plane GHZ, 2026-10-20), refused by name without a setting and outside 0 to 3 (`integer`), and on a record of real lines at the end of the load (`settings_of_the_law`); 0 where the key is absent."""
     basis = basis_of(row["basis"], f"{label}.basis") if "basis" in row else ()
-    axis = basis_of(row["axis"], f"{label}.axis") if "axis" in row else ()
-    if axis and basis:
-        raise ValueError(
-            f"{label} declares both `axis` and `basis`: a side's setting is one of the two, `basis` the setting's "
-            "coefficients (p, q) for a record of real-line parts and `axis` the half-angle pair (c, s) for planes"
-        )
-    if (axis or basis) and "pattern" not in row and "block" not in row:
+    if basis and "pattern" not in row and "block" not in row:
         raise ValueError(
             f"{label} declares a setting and no `pattern` to read it with: a setting is read by the pattern alone"
         )
     turn = integer(row[TURN], f"{label}.{TURN}", 0, 3) if TURN in row else 0
-    if TURN in row and not axis:
+    if TURN in row and not basis:
         raise ValueError(
-            f"{label}.{TURN} is declared without `axis`: the quarter turn is a plane side's azimuth, declared "
-            "beside its `axis` (a real-line side's `basis` carries none)"
+            f"{label}.{TURN} is declared without `basis`: the quarter turn is a plane side's azimuth, declared "
+            "beside its setting"
         )
-    return basis, axis, turn
+    return basis, turn
 
 
 def settings_of_the_law(
-    sides: list[tuple[str, tuple[int, ...], tuple[int, ...], Pattern]],
-    laid: list[int],
-    families: tuple[FamilyRule, ...],
-) -> None:
-    """A side's setting is `basis` for a record of real-line parts, the setting's coefficients (p, q) at the full angle (the pair's and the GHZ's polarizations), and `axis` for a record of plane parts, the half-angle pair (c, s) of the detector's axis, the spinor read of a two-plane record (the spin branch, 2026-10-19; ALGEBRA.md, Spin, closed for the paper as a route: the half angle is the detector's declared basis and no property of the record under the 48): per side with a pattern, the laid families of as many parts as the pattern name the kind; refused by name where the side declares the other kind or where the laid records are of both kinds. The two ports' arithmetic is one (`ports_of`): e_k(+) = alpha_k c + beta_k s, e_k(-) = beta_k c - alpha_k s."""
-    for name, axis, basis, pattern in sides:
-        if not pattern:
+    rows: Sequence[NodeDetectorRow], laid: list[int], families: tuple[FamilyRule, ...]
+) -> tuple[NodeDetectorRow, ...]:
+    """A side's one setting read by the kind of the record it reads (the owner's word of 2026-10-23, nature is one, not several options; the two keys `basis` and `axis` of 2026-10-19 one key since): the `basis` of a side reading a record of real-line parts is the setting's coefficients (p, q) at the full angle (the pair's and the GHZ's polarizations), and the `basis` of a side reading a record of plane parts is the half-angle pair (c, s) of the detector's axis, the spinor read of a two-plane record (the spin branch, 2026-10-19; ALGEBRA.md, Spin, closed for the paper as a route: the half angle is the detector's declared basis and no property of the record under the 48): per side with a pattern, the laid families of as many parts as the pattern name the kind, and the row returns with `plane` set where they are planes (`NodeDetectorRow.axis`, the half-angle pair, its `basis` then); refused by name where the laid records of that many parts are of both kinds, and where a side reading real lines declares a `turn`, the quarter turn being a plane side's azimuth. The two ports' arithmetic is one (`ports_of`): e_k(+) = alpha_k c + beta_k s, e_k(-) = beta_k c - alpha_k s."""
+    found = []
+    for row in rows:
+        if not row.pattern:
+            found.append(row)
             continue
-        planes = {families[index].plane for index in laid if families[index].parts == len(pattern)}
+        planes = {families[i].plane for i in laid if families[i].parts == len(row.pattern)}
         if len(planes) == 2:
             raise ValueError(
-                f"node_detector {name!r} reads records of planes and of real lines with one pattern: a side's "
-                "setting is one kind's, `axis` for planes and `basis` for real lines"
+                f"node_detector {row.name!r} reads records of planes and of real lines with one pattern: a side's "
+                "setting is one kind's, the half-angle pair (c, s) for planes and the coefficients (p, q) for real "
+                "lines, and the kind is the laid record's"
             )
-        if planes == {True} and basis:
+        plane = planes == {True}
+        if row.turn and not plane:
             raise ValueError(
-                f"node_detector {name!r} declares `basis` for a record of planes, whose sides declare `axis`, the "
-                "half-angle pair (c, s) of the detector's axis"
+                f"node_detector {row.name!r} declares the turn {row.turn} on a record of real lines: the quarter "
+                "turn is a plane side's azimuth, u = i^turn on the second component of its half-angle setting"
             )
-        if planes == {False} and axis:
-            raise ValueError(
-                f"node_detector {name!r} declares `axis` for a record of real lines, whose sides declare `basis`, "
-                "the setting's coefficients (p, q)"
-            )
+        found.append(replace(row, plane=plane))
+    return tuple(found)
 
 
 def reduced_write(written: Sequence[Gauss], coefficients: Sequence[Gauss]) -> list[Gauss]:

@@ -75,13 +75,13 @@ def world(design: dict[str, Any], a: str, b: str) -> dict[str, object]:
         {
             "name": design["sides"]["a"],
             "positions": [[x, 0, 0] for x in range(depth)],
-            "axis": [int(v) for v in design["settings"][a]],
+            "basis": [int(v) for v in design["settings"][a]],
             "pattern": design["patterns"]["a"],
         },
         {
             "name": design["sides"]["b"],
             "positions": [[x, 0, 0] for x in range(length - depth, length)],
-            "axis": [int(v) for v in design["settings"][b]],
+            "basis": [int(v) for v in design["settings"][b]],
             "pattern": design["patterns"]["b"],
         },
     ]

@@ -57,7 +57,7 @@ def spin_world(
         {
             "name": name,
             "positions": [[x, 0, 0] for x in ends[name]],
-            "axis": list(axis),
+            "basis": list(axis),
             "pattern": pattern,
         }
         for name, (axis, pattern) in sides.items()
