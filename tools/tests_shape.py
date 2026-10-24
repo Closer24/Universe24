@@ -52,6 +52,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the velocity in Links per board and per proper interval, the bound and the free verdicts, p in T's unit, the rest point from the four pairs "
         "(1 for the massless record, None at a one-Node lay), the dilation ratio and the Delta x Delta p product in Links x T against the floor T / 2, each number computed by hand",
     ),
+    "tests/test_the_loader.py::test_dens_circle_is_read_from_its_integers_alone": (
+        18,
+        "the one test that factors the PeV den (2026-10-24, the Boss's rule that one test alone pays the factoring, 23 s cold): the shipped file's rows, "
+        "the least leg and the proton's point, their legs and the massless wall over the proton's, moved here from the rows test and the heaviest pair's test",
+    ),
     "tests/test_the_click_readings.py::test_the_point_is_the_reduced_pair_of_the_cosine_read_from_three_levels": (
         7,
         "the click's view (2026-10-24, the owner's frame, the builder's six readings): the point the reduced pair of the cosine read from three levels",

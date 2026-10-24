@@ -114,6 +114,33 @@ def test_dens_circle_is_read_from_its_integers_alone():
             30_036_532_038_439_967_297: 1,
         }
     )  # Brent's cycle (2026-10-24): the same factors as Floyd's split found on SMALL, the top tier and the PeV den
+    one = json.loads(
+        ONE_UNIVERSE.read_text(encoding="utf-8")
+    )  # the one test that factors the shipped den (2026-10-24): its rows and its own numbers here
+    assert set(one) == {"integers"} and set(one["integers"]) == {"den", "node_clock", "quantum_action"}
+    assert (
+        one["integers"]["den"] == PEV
+    )  # the PeV tier since 2026-10-24, the den chosen after the clicks
+    shipped, planes = universe.universe_of(one)
+    assert len(planes) == 3 + 3**3 - 1 and planes[0].pair == (PEV, PEV) and shipped["den"] == PEV
+    least = min((f for f in planes if f.plane), key=lambda f: f.pair[1] ** 2 - f.pair[0] ** 2)
+    assert (least.name, least.pair) == (
+        "point 0 0 2",
+        (21_397_363_965_165_989_150_474_488_818_982_086_595_722_885_795, PEV),
+    )  # the electron, the least leg, the heaviest prime's lift at this den (point 0 2 0 at the top tier)
+    proton = next(f for f in planes if f.name == "point 2 0 0")
+    assert proton.pair == (
+        21_397_363_965_161_185_649_061_722_838_116_504_985_189_627_435,
+        PEV,
+    )  # the proton, the lightest prime's lift, s_p / s_e = 1836.15265582 (point 0 0 2 at the top tier)
+    legs = [circle.largest_below(PEV * PEV - f.pair[0] ** 2) for f in (proton, least)]  # s_p and s_e
+    assert legs == [
+        14_337_524_090_452_503_379_101_009_450_350_924_059_372,
+        7_808_459_740_549_578_735_922_594_780_248_829_328,
+    ]
+    assert (
+        1_492_403 * legs[0] <= PEV < 1_492_404 * legs[0]
+    )  # den over the proton's leg, the massless point's wall over the proton's
 
 
 def test_the_rows_are_derived_from_den_and_the_one_file_loads():
@@ -148,22 +175,6 @@ def test_the_rows_are_derived_from_den_and_the_one_file_loads():
         2048,
         375,
     )  # alpha = T / Gamma reduced by 16, inside the write
-    one = json.loads(ONE_UNIVERSE.read_text(encoding="utf-8"))
-    assert set(one) == {"integers"} and set(one["integers"]) == {"den", "node_clock", "quantum_action"}
-    assert (
-        one["integers"]["den"] == PEV
-    )  # the PeV tier since 2026-10-24, the den chosen after the clicks
-    shipped, planes = universe.universe_of(one)
-    assert len(planes) == 3 + 3**3 - 1 and planes[0].pair == (PEV, PEV) and shipped["den"] == PEV
-    least = min((f for f in planes if f.plane), key=lambda f: f.pair[1] ** 2 - f.pair[0] ** 2)
-    assert (least.name, least.pair) == (
-        "point 0 0 2",
-        (21_397_363_965_165_989_150_474_488_818_982_086_595_722_885_795, PEV),
-    )  # the electron, the least leg, the heaviest prime's lift at this den (point 0 2 0 at the top tier)
-    assert next(f for f in planes if f.name == "point 2 0 0").pair == (
-        21_397_363_965_161_185_649_061_722_838_116_504_985_189_627_435,
-        PEV,
-    )  # the proton, the lightest prime's lift, s_p / s_e = 1836.15265582 (point 0 0 2 at the top tier)
 
 
 def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(

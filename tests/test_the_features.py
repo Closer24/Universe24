@@ -19,7 +19,7 @@ from event_universe.features.read import (
 from event_universe.features.start.rests import read_content
 from event_universe.loader.derived import held_write_of, readers_of, weight_of
 from event_universe.loader.universe import universe_of
-from tests.laws import ROOT, refused, resolved, universe_copy
+from tests.laws import refused, resolved, universe_copy
 
 GAMMA, SHAPE = 10_000, (3, 3, 3)
 OWN = {"own_weight": 1, "intervals": paces.COUNT_POWER}  # a row reading its own level at 1, a count
@@ -188,12 +188,10 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
         {"name": "charge", "pair": [6000, 6000]},
         {"name": "nuclide", "pair": [4004, 6000], "dimension": [2, 2]},
     )  # the deuteron's 'nuclide' [4004, 6000] reads the charge with an irrational sine, refused at load since 2026-10-24 (the owner's word; examples/events/deuteron.json the record of the law to 2026-10-23)
-    one_world = json.loads(
-        (ROOT / "examples" / "events" / "universe24" / "universe_universe24.json").read_text(
-            encoding="utf-8"
-        )
-    )
-    for name, document in (("tests", rule), ("universe24", one_world)):
+    top_tier = json.loads(
+        '{"integers": {"den": 1166991900949580266237, "node_clock": 1000, "quantum_action": 36000}}'
+    )  # the top tier's den as a literal, the PeV den factored by the loader's circle test alone (2026-10-24)
+    for name, document in (("tests", rule), ("top tier", top_tier)):
         integers, shipped = universe_of(json.loads(json.dumps(document)))
         held = [(i, f.wronskian) for i, f in enumerate(shipped) if f.held]
         for index, f in enumerate(shipped):
