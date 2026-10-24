@@ -202,17 +202,7 @@ class Lattice:
 
     def rulers(self, direction: int) -> Rulers:
         """Every record of quanta's paces at the interval's start in `direction`, the clock and the three axes' paces of its read at every Node (`node.rulers`), the write's factor's rulers for the bookings it sources (ALGEBRA.md, The write per proper volume and per proper interval); read from the held rows' levels the step in `direction` starts from, the same numbers forward and back."""
-        gamma = self.world.node_clock
-        found = {
-            s: node.rulers(s[0], self.families, self.states, direction, self.wrap, gamma, s[1])
-            for s in sources_of(self.families, self.order)
-        }
-        for index in self.held:  # the held rows' own paces, keyed (held, row): the wall of a row that reads the content (records.wall_rulers)
-            for row in range(self.families[index].records):
-                found[(index, row)] = node.rulers(
-                    index, self.families, self.states, direction, self.wrap, gamma, row
-                )
-        return found
+        return node.rulers_of(self, sources_of(self.families, self.order), direction)
 
     def share_of(self, index: int, direction: int = 1, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
         """A family of quanta's share at every Node in the current's units, a reading of the energy, rest and kinetic, in the free rotation's unit (no count: a plane record's count is its charge, `credit.count_of`, the ruling of 2026-10-22) from each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records (share.family_share; ALGEBRA.md #the-count-is-the-records-share), a turned record's from its plain levels too (under the temporal gauge the time Link carries no phase, plane.step_plane), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""

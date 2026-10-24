@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from dataclasses import replace
 from typing import TYPE_CHECKING, Any
 
@@ -102,6 +102,18 @@ def rulers(
     content, axes = read_lines(index, families, states, direction, gamma, record)
     clock, pace = paces.node_paces(gamma, content)
     return clock, axis_paces(gamma, pace, link_tensions(axes, wrap, gamma))
+
+
+def rulers_of(
+    board: Lattice, sources: Iterable[tuple[int, int]], direction: int
+) -> dict[tuple[int, int], Rulers]:
+    """Every record of quanta's paces at the interval's start in `direction`, keyed by its sourcing (the family's index and the record), and beside them every held row's own paces keyed (held, row), the wall of a row that reads the content (`records.wall_rulers`; ALGEBRA.md, The one Node, the clause of 2026-10-23): a held row's index is no quanta family's, so the keys never meet."""
+    families, states, wrap, gamma = board.families, board.states, board.wrap, board.world.node_clock
+    found = {s: rulers(s[0], families, states, direction, wrap, gamma, s[1]) for s in sources}
+    for index in board.held:
+        for row in range(families[index].records):
+            found[(index, row)] = rulers(index, families, states, direction, wrap, gamma, row)
+    return found
 
 
 def turning(

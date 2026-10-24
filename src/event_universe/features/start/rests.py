@@ -8,8 +8,8 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import wall_of
-from event_universe.features.start import FieldAtRest, SignReads, Sourced, rest, returned
+from event_universe.core.rule3 import division_forward, wall_of
+from event_universe.features.start import FieldAtRest, SignReads, Sourced, StateKey, rest, returned
 
 Booked = Callable[[Sequence[np.ndarray]], tuple[list[Sourced], list[Sourced]]]
 
@@ -40,7 +40,7 @@ def settled_rows(
     """Every holder of the content at its rest under its sources, each reading the holders its declaration names at their weights, its own level among them where it names itself (`read_content`; ALGEBRA.md #the-paces): the rows' rests taken in turn, each at the others' levels as last found with their rests (`rest`), until every row's levels repeat the state the pass began from, or the rows together repeat an earlier state one unit off at most, a rounding tie, a return further off refused by name as a cycle (`returned`, the one rule), the remainder of each at the half wall of the rule the row steps by, w = 6 den Gamma^2 G^2; each pass seeds every row's rest with its rest of the pass before (`seeds` those of an earlier call, none in the first), the fixed point the same and reached from nearer; the engine's start and the generator share it; each row's source scaled by the proper-interval power of its booking (the sixth element of `Sourced`: the count's two, the form's own clock's one, the Wronskian's one; ALGEBRA.md, The write per proper volume and per proper interval, The form's own clock); `free` the world's the volume form (ALGEBRA.md, The board's interval is no observable) or the level form's uniform line, the rest of a massless row on a board with no sink its zero-mean part (`rest`)."""
     levels = [np.zeros_like(row[0]) for row in rows]
     fields: list[FieldAtRest] = list(seeds)
-    seen: dict[bytes, int] = {}
+    seen: dict[StateKey, int] = {}
     rests = [own_rest for _counts, _pair, _divisor, own_rest, _reads, _power in rows]
     while True:
         began, fields, before = list(levels), [], fields
@@ -82,7 +82,8 @@ def held_rests(
 ) -> list[FieldAtRest]:
     """Every held row at its rest under the sources the laid records write at those rests, the engine's start (ALGEBRA.md #the-generator (g), the start; #what-a-body-is, (a) the body stands where the sources return themselves and (c) the well, D_i div T each interval, is the record's quanta as the fields' source): the lay and the rest iterated to the fixed point. `booked` books every held row's source at the held rows' levels it is given, the holders of the content first and then the holders of the sign, each the booking the held write's write takes at those paces (the form of every laid record for a row of the content and its Wronskian for the holder of the sign, scaled per proper volume and per proper interval at the sourcing family's paces, over the write's wall E_s T); the holders of the content rest together under it (`settled_rows`), then each holder of the sign at the rest of its line under the content it reads, its reads naming the content holders by their position with their weights, the rests among the levels and none of its own level (`read_content`), its Wronskian source carrying one proper-interval power where a count carries two and a count under the form's own clock one (each row's power the sixth element of its source); the levels found are booked again until they repeat the state they were booked at, the fixed point, or an earlier state two units off at most at every Node, a rounding tie of the composed map, one unit per division act, the rest's and the booking's (`returned`, the one rule), a return further off refused by name as a cycle; `seed` the levels the first booking reads, nothing (0 at every Node) in the engine, never the result; `free` the world's the volume form (ALGEBRA.md, The board's interval is no observable) or the level form's uniform line, every massless row's rest on a board with no sink its zero-mean part, the holders' and the signs' alike (`rest`); the fields in the holders' order and then the signs'."""
     levels, fields = list(seed), list[FieldAtRest]()
-    seen: dict[bytes, int] = {}
+    seen: dict[StateKey, int] = {}
+    carries: list[np.ndarray] | None = None  # the damped passes' carried remainders, None while undamped
     while True:
         holders, signs = booked(levels)
         before, fields = (
@@ -111,8 +112,32 @@ def held_rests(
             )
         found = [field.levels for field in fields]
         name = f"the lay and the rest of {len(holders)} holders and {len(signs)} signs"
-        if returned(
-            found, levels, seen, name, 2
-        ):  # two division acts composed: the rest's and the booking's
-            return fields
+        try:
+            if returned(
+                found, levels, seen, name, 2
+            ):  # two division acts composed: the rest's and the booking's
+                return fields
+        except (
+            ValueError
+        ):  # the undamped passes cycle: the passes damped from here, the fixed point the same
+            if carries is not None:
+                raise
+            carries, seen = [np.zeros_like(level) for level in levels], {}
+        if carries is not None:
+            found, carries = damped(levels, found, carries)
         levels = found
+
+
+def damped(
+    before: Sequence[np.ndarray], after: Sequence[np.ndarray], carries: Sequence[np.ndarray]
+) -> tuple[list[np.ndarray], list[np.ndarray]]:
+    """The start's passes are the loader's tool, damped to the fixed point the law names (the derivation hand's reading of 2026-10-24, the iteration a tool and no act of the law: no sentence names its passes, so the next pass's levels may be the integer mean of a pass's input and its output, b <- (b + F(b) + carry) div 2 by Rule3's division act with the remainder carried, the same map and the same fixed point, since at the fixed point b = F(b) and the mean is b; applied where the undamped passes cycle, so every world whose undamped passes settle is bit for bit as before, and the refusal by name on a cycle under the damped passes is the tool's honest word as the undamped one was)."""
+    levels, kept = [], []
+    for a, b, carry in zip(before, after, carries, strict=True):
+        total = np.asarray(a, dtype=object) + np.asarray(b, dtype=object)
+        mean, remainder = division_forward(
+            total, 2, np.asarray(carry, dtype=object)
+        )  # Rule3's division act at the wall 2, the carried remainder in and out
+        levels.append(np.asarray(mean, dtype=a.dtype))
+        kept.append(np.asarray(remainder, dtype=a.dtype))
+    return levels, kept
