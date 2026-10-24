@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import weakref
 from functools import cache
 from typing import Any
 
@@ -96,6 +97,76 @@ def iterate(pair: Pair, count: Any, gamma: Any, direction: int = 1) -> Pair:
         cosine = chosen(forward, act(cosine, gamma, 1), chosen(backward, act(cosine, gamma, -1), cosine))
         sine = chosen(forward, act(sine, gamma, 1), chosen(backward, act(sine, gamma, -1), sine))
     return cosine, sine
+
+
+SPACING = (
+    1 << (MAX_WORK_INT.bit_length() >> 3)
+)  # the orbit's checkpoints, one pair kept every so many acts along the orbit from the seed: 2^7 = 128 at the hardware's 63 bits, a size of the table and no number of the law
+
+
+class Orbit:
+    """The one orbit of the phase pair from its seed at one amplitude and one Gamma (node.phase_carried: every Link's pair stands at the orbit's count |K|, the acts from the seed one by one, forward and inverse exact; the acts compose in sequence and in no closed form, every act rounding at its wall, so the pair at a count is reached by that many acts and no fewer): the pair at every SPACING-th count kept (`checkpoints`) with the farthest pair reached (`reached`, `pair`), so that the pair at any count is the checkpoint at or below it carried by fewer than SPACING acts (`pairs_at`), the same integers as the acts one by one from the seed, and the acts of an interval over the board number the farthest count's advance and not the Links' sum (the architect's round of 2026-10-24)."""
+
+    def __init__(self, gamma: int, amplitude: int) -> None:
+        self.gamma, self.reached, self.pair = gamma, 0, seed(amplitude, gamma)
+        self.checkpoints: dict[int, Pair] = {0: self.pair}
+
+    def carried_to(self, count: int) -> None:
+        """The orbit carried forward act by act to `count` where it stands short of it, the checkpoints laid on the way."""
+        while self.reached < count:
+            self.pair = (act(self.pair[0], self.gamma, 1), act(self.pair[1], self.gamma, 1))
+            self.reached += 1
+            if division_forward(self.reached, SPACING, 0)[1] == 0:
+                self.checkpoints[self.reached] = self.pair
+
+    def pairs_at(self, counts: Any, standing: Any, pair: Pair, kind: Any) -> Pair:
+        """The pairs at the counts `counts` (an array of sizes |K'| over the Links, every one at or above 0) in the arrays' `kind`, from the pairs `pair` standing at the sizes `standing`: each Link carried from its own pair by |K'| - |K| acts (forward where the size grows, the inverse act where it shrinks) where that is the shorter way, and from the checkpoint at or below |K'| by the rest otherwise, both the orbit's own integers; the Links together in one iteration of as many rounds as the longest way, fewer than SPACING (`iterate`, each Link its own count)."""
+        sizes = np.asarray(counts, dtype=object)
+        flat = [int(x) for x in sizes.reshape(-1).tolist()]
+        self.carried_to(max(flat, default=0))
+        places = [division_forward(m, SPACING, 0) for m in flat]
+        bases = [self.checkpoints[int(q) * SPACING] for q, _rest in places]
+        rest = np.array([r for _q, r in places], dtype=object).reshape(sizes.shape)
+        moved = sizes - np.asarray(standing, dtype=object)
+        own = np.abs(moved) < rest  # the shorter way from the pair standing
+
+        def line_at(line: int) -> Line:
+            now, before, remainder = (
+                np.where(
+                    own,
+                    np.asarray(pair[line][part], dtype=object),
+                    np.array([base[line][part] for base in bases], dtype=object).reshape(sizes.shape),
+                )
+                for part in range(3)
+            )
+            return now, before, remainder
+
+        def in_kind(line: Line) -> Line:
+            now, before, remainder = (np.asarray(a, dtype=kind) for a in line)
+            return now, before, remainder
+
+        cosine, sine = iterate((line_at(0), line_at(1)), np.where(own, moved, rest), self.gamma)
+        return in_kind(cosine), in_kind(sine)
+
+
+ORBITS: dict[
+    tuple[int, int], Orbit
+] = {}  # the orbits by (Gamma, amplitude), cleared at a run's start (resonance.clear_memo)
+SEEDED: dict[
+    int, tuple[Any, Orbit]
+] = {}  # per seeded NodeState (by id, with a weak reference that tells a reused id apart) the orbit its Links' pairs stand on (node.seed_phases)
+
+
+def seeded(state: Any, gamma: int, amplitude: int) -> None:
+    """A holder's NodeState seeded at the angle 0 registered with the orbit its pairs stand on, the orbit made once per (Gamma, amplitude)."""
+    orbit = ORBITS.setdefault((gamma, amplitude), Orbit(gamma, amplitude))
+    SEEDED[id(state)] = (weakref.ref(state), orbit)
+
+
+def orbit_of(state: Any) -> Orbit | None:
+    """The orbit a NodeState's pairs stand on, None where the state was not seeded by the lattice (a state built by hand; its pairs then carried act by act)."""
+    kept = SEEDED.get(id(state))
+    return kept[1] if kept is not None and kept[0]() is state else None
 
 
 def read(pair: Pair) -> tuple[Any, Any]:
