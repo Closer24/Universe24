@@ -22,7 +22,7 @@ TWO_CLOCKS = "the two credits' proper are two Nodes' clocks: no one taker's own 
 NO_ONE_BODY = "a record credited at several Nodes in one close: the credited record and no one body"
 NO_WAVE = "no running wave along the axis: the pair lies outside the circle"
 ONE_NODE_LAY = "a one-Node lay: SUM_a cos k_a = 0, nothing beside the Node to read; a body is counted from its many clicks"
-VACUUM_PACES = "exact: the Node's clock at the board's interval, the vacuum's paces"
+VACUUM_PACES = "exact where the Node's pace equals the board's: the Node's clock at the board's interval, the vacuum's paces; the rest's value stands as read either way"
 FLOOR = "T / 2 in Links x T: the where's spread in Links times the momentum's spread in T's unit"
 HALF = Fraction(1, 2)  # the law's floor of Delta x Delta p in Links x T
 
@@ -296,7 +296,8 @@ def rest_of(credit: Line) -> dict[str, Any] | str:
     else:
         found["paces"] = (
             f"approximate: the Node's clock {proper} against the board's interval {window[1]}, "
-            "the paces change the reaches near matter, the paces' correction lacking"
+            "the paces change the reaches near matter, the paces' correction lacking; "
+            "the rest's value stands as read either way"
         )
     return found
 

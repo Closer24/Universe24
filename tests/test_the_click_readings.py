@@ -44,7 +44,7 @@ def test_the_point_is_the_reduced_pair_of_the_cosine_read_from_three_levels() ->
 
 
 def test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The uniform sea by name, two intervals stepped and a third with its start kept, before any birth: the point at a Node is the pair the massless line reads from its level before and now at the start and the level the step left, the beat its integer sine times 3 T, the kind the line's rank, the sense 0 for a real line, the support the Node, the identity the seed's record; the momentum per axis the Link current's sign with the pair point_of reads along the axis from the Node's level now and its two neighbours' at the start, [0, 1, 1] on every axis of the uniform sea (no current, the double root); the proper the floor of the clock summed over the intervals (summed here apart from the engine), the windows the Node's closes (none)."""
+    """The uniform sea by name, two intervals stepped and a third with its start kept, before any birth: the point at a Node is the pair the massless line reads from its level before and now at the start and the level the step left, the beat its integer sine times 3 T, the kind the line's rank, the sense 0 for a real line, the support the Node, the identity the seed's record; the momentum per axis the Link current's sign at the start with the pair point_of reads along the axis from the Node's level now and its two neighbours' at the start, [0, 1, 1] on every axis of the uniform sea (no current, the double root); the proper the floor of the clock summed over the intervals (summed here apart from the engine), the windows the Node's closes (none)."""
     monkeypatch.setattr(seed, "uniform_seed", uniform_sea)
     board = bare_board(tmp_path, monkeypatch, [])
     light, at = board.world.seed, (1, 2, 0)
@@ -69,8 +69,8 @@ def test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start(tmp_pa
         list(at),
         [light, 0],
     )
-    lines, num = board.lines_of(light, 0), board.families[light].pair[0]
-    terms = readings.momentum_of(num, lines, board.wrap, board.mask((at,)))  # the step's currents
+    num = board.families[light].pair[0]
+    terms = readings.momentum_of(num, [start], board.wrap, board.mask((at,)))  # the start's currents
     frame = [
         point_of(
             int(arrival(start.now, a, -1)[at]),
@@ -156,7 +156,7 @@ def test_the_hole_seeds_credits_read_their_own_clocks_and_differ_where_the_volum
 def test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_and_a_second_credit_reads_no_point(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The frame's running cosine along each axis with the Link current's sign, the blind of 2026-10-24 measured: the travelling plane wave of the massless record at k = 2 pi / 3 along x on the 3-cube reads [1, -1, 2] on x (cos k_x = -1/2, p_x = T sin k_x = 0.866 T toward +x, the lay's direction) and [0, 1, 1] on y and z (no current, the double root) on every credit of its step, its point [1, 2]; on the hole seed's first three closes the hole's own credit reads [0, 5, 6] on every axis (its inflow symmetric, its spatial cosine its temporal point), its six neighbours [-1, 1, 2] at the coordinate 1 and [1, 1, 2] at the coordinate 2 on the axis to the hole (cos k = 1/2, the sign toward the hole on both sides, opposite across it) and [0, 25, 26] on the two cross axes (their neighbours there the edge Nodes at one level); a Node's second credit reads no point, no beat and no momentum (its level now 0 at the start from the hole's last close), its windows 2, and every first credit a pair."""
+    """The frame's running cosine along each axis with the Link current's sign, both at the interval's start (the blind of 2026-10-24 measured, the Boss's ruling on the sign): the travelling plane wave of the massless record at k = 2 pi / 3 along x on the 3-cube reads [1, -1, 2] on x (cos k_x = -1/2, p_x = T sin k_x = 0.866 T toward +x, the lay's own current) and [0, 1, 1] on y and z (no current, the double root) on every credit of its step, its point [1, 2]; on the hole seed's first four closes the hole's own credit reads [0, 5, 6] on every axis (its inflow symmetric, its spatial cosine its temporal point), its six neighbours [0, 1, 2] on the axis to the hole (cos k = 1/2; the sign 0, nothing flowing at the start, the inflow the step's) and [0, 25, 26] on the two cross axes (their neighbours there the edge Nodes at one level), the twelve edge Nodes [0, 714, 713] on the axis between two corners (outside the circle) and [0, 1, 2] on the other two, the eight corners [0, 1, 2] on every axis; a Node's second credit reads no point, no beat and no momentum (its level now 0 at the start from the hole's last close), its windows 2, and every first credit a pair."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = bare_board(tmp_path, monkeypatch, lines)
     light = board.world.seed
@@ -181,20 +181,23 @@ def test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_a
     assert all(line["point"] == [1, 2] for line in credits)  # omega = pi / 3 = k at the lay's dispersion
     lines.clear()
     board = bare_board(tmp_path, monkeypatch, lines)  # the hole seed afresh
-    while len({line["interval"] for line in lines if line.get("event") == "credit"}) < 3:
+    while len({line["interval"] for line in lines if line.get("event") == "credit"}) < 4:
         board.step()
     credits = [line for line in lines if line.get("event") == "credit"]
-    closes = sorted({line["interval"] for line in credits})[:3]
+    closes = sorted({line["interval"] for line in credits})[:4]
     (first,) = [line for line in credits if line["interval"] == closes[0]]
     assert first["support"] == [0, 0, 0] and first["point"] == [5, 6]
     assert first[MOMENTUM] == [[0, 5, 6]] * 3  # the symmetric inflow: no current, the point's cosine
-    sides = [line for line in credits if line["interval"] == closes[1] and line[WINDOWS] == 1]
-    assert len(sides) == 6
-    for line in sides:
-        (axis,) = [a for a in range(3) if line["support"][a]]  # the one coordinate off the hole
-        toward = -1 if line["support"][axis] == 1 else 1  # toward the hole, through the wrap from 2
-        assert line[MOMENTUM][axis] == [toward, 1, 2]
-        assert all(line[MOMENTUM][other] == [0, 25, 26] for other in range(3) if other != axis)
+    shells = {
+        close: [line for line in credits if line["interval"] == close and line[WINDOWS] == 1]
+        for close in closes[1:]
+    }
+    assert [len(shells[close]) for close in closes[1:]] == [6, 12, 8]  # the neighbours, edges, corners
+    for close, across in zip(closes[1:], ([0, 25, 26], [0, 714, 713], None), strict=True):
+        for line in shells[close]:
+            off = [a for a in range(3) if line["support"][a]]  # the coordinates off the hole
+            assert all(line[MOMENTUM][a] == [0, 1, 2] for a in off)  # toward a zeroed Node: cos k 1/2
+            assert all(line[MOMENTUM][a] == across for a in range(3) if a not in off)
     for line in credits:
         if line["interval"] in closes:
             again = line[WINDOWS] > 1

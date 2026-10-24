@@ -69,9 +69,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the click's view on the sea with a hole: every credit's proper the floor of its Node's clock summed to its interval, its windows the Node's closes, two propers differing where the clocks differ",
     ),
     "tests/test_the_click_readings.py::test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_and_a_second_credit_reads_no_point": (
-        46,
-        "the click's view, the momentum as the frame's running cosine with the Link current's sign (2026-10-24, the Boss's blind measured): the plane wave at k = 2 pi / 3 reads [1, -1, 2] on x, "
-        "the hole's [0, 5, 6], its neighbours' [sign toward the hole, 1, 2] on the axis to it and [0, 25, 26] across; a second credit's point, beat and momentum None, its windows 2",
+        49,
+        "the click's view, the momentum as the frame's running cosine with the Link current's sign at the interval's start (2026-10-24, the blind measured, the Boss's ruling): the plane wave at k = 2 pi / 3 reads [1, -1, 2] on x, "
+        "the hole's [0, 5, 6], its neighbours' [0, 1, 2] toward it and [0, 25, 26] across, the edges' and the corners' at the closes 4 and 5; a second credit's point, beat and momentum None, its windows 2",
     ),
     "tests/test_the_click_readings.py::clock_of": (
         7,
