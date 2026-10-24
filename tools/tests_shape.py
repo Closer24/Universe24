@@ -178,12 +178,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         4,
         "the documents' gates: every derived number of the table the output of its script under tools/derivations/",
     ),
-    "tests/test_the_bound_body.py::test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte": (
-        25,
-        "the count gate on the smallest shipped world of every builder whose load is seconds (the Boss's 5971346856, item 2, "
-        "after #1788's lay defect in the committed worlds that the test without a board did not catch): one lattice per "
-        "folder, no interval, the long-loading folders the runner's gate by name",
-    ),
     "tests/test_pixel_mode.py::test_a_packets_mode_count_is_the_books_count_read_once_over_the_board": (
         16,
         "the generator's count as the books read it (mode-count, the mathematician's finding of 2026-10-03): the share "

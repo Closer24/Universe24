@@ -101,7 +101,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
 
     # the row 40 engine clause (the credit books the conserved form's own current through the front Ports) is deleted at the landing (2026-10-23): its breaker world, a wrapped chain of 8 with two regions and a draw and no lay, is one the loader refuses under the derived window (no lay with an end passes a declared region), and without a draw the regions book nothing; the claim stands in the clicks table and in tests/test_the_node_detector.py's booking of the front's current
     def the_loader_refuses_a_familys_third_key_by_name():
-        """Row 76, "(i) a family is a band of the rule, and its row holds only its two keys; (ii) there are three exact massive rotations"; the breaker: the loader on the tests' universe, a family's row with a key beyond its own refused by name, its own keys admitted ((ii) the row above's, kind (a)); here every row of the tests' universe with a key beyond the loader's five refused by name, the refusal naming the row and the keys it may hold, a row without its pair refused by name, and every shipped universe file admitted with its families."""
+        """Row 76, "(i) a family is a band of the rule, and its row holds only its two keys; (ii) there are three exact massive rotations"; the breaker: the loader on the tests' universe, a family's row with a key beyond its own refused by name, its own keys admitted ((ii) the row above's, kind (a)); here every row of the tests' universe with a key beyond the loader's five refused by name, the refusal naming the row and the keys it may hold, a row without its pair refused by name, and the one universe file admitted with its families."""
         document = json.loads(UNIVERSE.read_text(encoding="utf-8"))
         rows = document["families"]
         for k, row in enumerate(rows):
@@ -113,16 +113,14 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             )  # the loader names its own keys, `exchange` among them
         bare = {k: v for k, v in rows[0].items() if k != "pair"}
         refused("lacks the key 'pair'", universe_of, {**document, "families": [bare, *rows[1:]]})
-        shipped = {}
-        for path in sorted(EVENTS.rglob("*.json")):
-            if not path.name.endswith(".mode.json"):
-                document = json.loads(path.read_text(encoding="utf-8"))
-                if isinstance(document, dict) and set(document) == {"integers", "families"}:
-                    shipped[path.relative_to(EVENTS).as_posix()] = len(universe_of(document)[1])
-        assert len(shipped) >= 10 and all(shipped.values())
+        one = (
+            EVENTS / "universe24" / "universe_universe24.json"
+        )  # the one universe file; every other shipped universe left this row on 2026-10-24 (every world but Universe24 cancelled, the owner's word)
+        families = universe_of(json.loads(one.read_text(encoding="utf-8")))[1]
+        assert len(families) == 7 and all(family.name for family in families)
         return (
             f"{len(rows)} rows of the tests' universe each refused by name with a key beyond its own, a row without its "
-            f"pair refused by name; {len(shipped)} shipped universe files admitted, their families {shipped}"
+            f"pair refused by name; the one universe file admitted with its {len(families)} families"
         )
 
     def two_records_laid_equal_are_identical_and_one_apart_diverge_at_one_link_per_interval():

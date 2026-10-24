@@ -57,6 +57,9 @@ PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py")
 PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py")
 PHYSICAL_MODULES += ("loader/instrument.py",)  # the bound record declared an instrument body
 PHYSICAL_MODULES += (
+    "loader/charge.py",
+)  # the sign's readers Pythagorean and their charge factors (2026-10-24)
+PHYSICAL_MODULES += (
     "shear.py",
     "walls.py",
 )  # the tension lines stepped as the shear's momentum at the volume's wall

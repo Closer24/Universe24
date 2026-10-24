@@ -6,7 +6,7 @@ from collections import Counter
 import numpy as np
 import pytest
 
-from event_universe import digits, node, node_detector, world_files
+from event_universe import digits, flux, node, node_detector, world_files
 from event_universe.core import paces
 from event_universe.core.rule3 import rule_integers, wall_of
 from event_universe.features.click import bias_bound, drawn_from, read_number
@@ -17,6 +17,7 @@ from event_universe.meeting_back import first_difference, snapshot
 from event_universe.world_files import load_world
 from tests.laws import EVENTS, ROOT, family, world_beside
 from tests.laws_read import load_shipped
+from tests.laws_universe import CUBE, atom_world
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G
 LIGHT, ATOM = wall_of(6000, GAMMA, UNIT), wall_of(1299, GAMMA, UNIT)  # the walls w = 6 den Gamma^2 G^2
@@ -186,34 +187,42 @@ def test_the_digits_lattice_at_the_exact_vacuum_is_three_valued():
     )
 
 
-def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(monkeypatch):
-    """The digits' lattice of a turned plane (`digits.lattice_of` with the pairs the step reads, `flux.pairs_of`; the reader's ruling of 2026-10-21 on issue #2169, finding 2): on the shipped hydrogen_1s the electron reads its holder's phase pairs at the exact vacuum paces (its content 0, T = p_0^2 = Gamma^2 = 36,000,000), so F = gcd(w, D_i, R_ij, R^c_ij, R^s_ij) is T at the 33 Nodes about the centre over four intervals but at two Node-intervals 2 T (every pair part even there; four digits of 264, the record's two lines at 33 Nodes; one Node-interval and two digits before 2026-10-21, when the pair at -n was defined as the conjugate of the pair at +n and the pairs read through a -a Port moved by one Link unit at some angles), and every kept remainder lies on w div 2 + F Z and off the plain lattice w div 2 + (w div 9) Z after the first step (the builder's finding on 400 intervals: 36,000,000 the gcd of r - w div 2 over 26,466 remainders, 66 on the plain lattice, frame 0's origins); the plain reaches alone read w div 9, nine values, kept by name."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", ROOT)
-    board = Lattice(load_shipped(EVENTS / "atom" / "hydrogen_1s.json"))
+def test_a_turned_records_digits_lie_on_the_lattice_of_the_links_pairs(tmp_path, monkeypatch):
+    """The digits' lattice of a turned plane (`digits.lattice_of` with the pairs the step reads, `flux.pairs_of`; the reader's ruling of 2026-10-21 on issue #2169, finding 2; ALGEBRA.md, The click's read of the board: every line is born at w div 2, so a digit lies on w div 2 + F Z, F = gcd(w, D_i, R_ij, R^c_ij, R^s_ij) from Rule3's integers and the Link pairs at the Node), posed on the small torus with the universe file (tests/laws_universe.atom_world, the electron's plane reading the sign holder and gravity): after the first interval every digit of the electron's two lines at every Node lies on w div 2 + F Z with F the lattice of the pairs its step read, and off the plain lattice w div 2 + (w div 9) Z; the digits that moved, the Nodes the fifth act fired at and the digits off the lattice are printed. The former board, the shipped hydrogen_1s about its centre (the electron at the exact vacuum paces, F = T = 36,000,000 at 33 Nodes, 264 digits on w div 2 + T Z over four intervals, 8 of 16 digits at F = 8 T off by T at the interval 4 under the centred count, 2026-10-23), left with the atom folder on 2026-10-24, every world but Universe24 cancelled."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    board = Lattice(load_world(atom_world(tmp_path)))
+    board.output = lambda line: None
     electron, gamma = family(board, "electron"), board.world.node_clock
-    quantum, half = board.world.quantum_action, board.half_wall(electron)
-    assert quantum == gamma * gamma and electron in board.turning  # T = p_0^2 at the vacuum paces
-    at = ((np.indices(board.shape) - board.shape[0] // 2) ** 2).sum(axis=0) <= 4  # r^2 <= 4: 33 Nodes
-    found: Counter[int] = Counter()
-    for _ in range(
-        2
-    ):  # 4 before the suite's bound of 2026-10-24 (the 16 digits at 8 T fell at the interval 4)
-        board.step()
-        read = list(digits.digits_of(board, electron, at))
-        assert all((r - half) % quantum == 0 for r, f, _w, _p in read)  # on w div 2 + T Z, every one
-        off = [(r - half) % f for r, f, _w, _p in read if (r - half) % f]
-        assert (
-            off == []
-        )  # every digit on its own lattice w div 2 + F Z over the two intervals (at the interval 4, 8 of 16 digits read at F = 8 T stood off it by T under the centred count, 2026-10-23)
-        assert all((r - half) % (2 * half // 9) for r, _f, _w, _p in read)  # off w div 2 + (w div 9) Z
-        assert {w for _r, _f, w, _p in read} == {2 * half}
-        found.update(f for _r, f, _w, _p in read)
-    print(f"the digits' F over the two intervals {found}")
-    assert (
-        found == Counter({quantum: 2 * 2 * 33})
-    )  # every digit at F = T over the two intervals (the 2 T and 8 T digits fell at the intervals 3 and 4 under the centred count, 2026-10-23)
-    rule = node.rule_of(board.families[electron], gamma, *board.read(electron, 1, 0), board.unit)
-    assert digits.lattice_of(rule, at) == [2 * half // 9] * 33  # the plain reaches alone: nine values
+    half, at = board.half_wall(electron), np.ones(board.shape, dtype=bool)
+    assert electron in board.turning
+    content, factors = board.read(electron, 1, 0)
+    rule = node.rule_of(board.families[electron], gamma, content, factors, board.unit)
+    pairs = flux.pairs_of(
+        electron,
+        board.families,
+        board.states,
+        1,
+        board.wrap,
+        gamma,
+        content,
+        factors,
+        0,
+        board.amplitude,
+    )
+    lattice = digits.lattice_of(rule, at, pairs)  # F at every Node from the pairs the first step reads
+    assert len(set(lattice)) == 1 and lattice[0] % (2 * half // 9) and lattice[0] < 2 * half
+    board.step()
+    read = list(digits.digits_of(board, electron, at))
+    assert {w for _r, _f, w, _p in read} == {2 * half} and len(read) == 2 * CUBE**3
+    moved = [(r - half, lattice[place]) for r, _f, _w, (_record, place) in read if r != half]
+    off = [(d, f) for d, f in moved if d % f]
+    fired = [n for interval, direction, n in board.swaps if interval == 1 and direction == 1]
+    print(
+        f"the electron's digits after the first interval: F {lattice[0]}, {len(moved)} of {len(read)} moved, "
+        f"{len(off)} off w div 2 + F Z {off[:4]}; the fifth act fired at {fired} Nodes"
+    )
+    assert all(d % (2 * half // 9) for d, _f in moved)  # off the plain lattice w div 2 + (w div 9) Z
+    assert off == [], (len(off), len(moved), off[:6])  # every digit on w div 2 + F Z
 
 
 def test_the_read_refuses_by_name_the_untouched_region_and_the_exact_vacuum(tmp_path, monkeypatch):
