@@ -127,7 +127,6 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
             table = drawn_among(tables, left) if meet else None
             if table is not None:
                 born.append((at, table))
-        bodies = bodies_closing(board, shares, frozen, {at for at, _table in born}, refusals)
     finally:
         for state, (lines, phases) in zip(board.states, stepped, strict=True):
             state.lines, state.phases = lines, phases  # the write on the state the step left
@@ -139,6 +138,13 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
             refusals.append((at, *refusal))
             continue
         takes.append((at, table, found))
+    for state, lines, phases in zip(board.states, begun[0], begun[2], strict=True):
+        state.lines, state.phases = lines, phases  # the bodies' read on the interval's start
+    try:  # the births after the lay's refusals pre-empt the bodies' closings, a refused birth none
+        bodies = bodies_closing(board, shares, frozen, {at for at, _t, _f in takes}, refusals)
+    finally:
+        for state, (lines, phases) in zip(board.states, stepped, strict=True):
+            state.lines, state.phases = lines, phases
     clicks: list[
         tuple[int, int, Node, Take]
     ] = []  # the bound bodies' clicks: the light taken by the records' units, one take per Node
@@ -199,8 +205,17 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
         board.output is not None
     ):  # the close's lines after its lays, Node by Node in the x-major order (the slabs runner's order of the board's lines, 2026-10-24): a refused Node its one line, a born Node its credit and its birth
         closes: dict[Node, list[dict[str, object]]] = {}
-        for at, cause, amount, bound in refusals:
-            closes[at] = [refused_line(board.interval, family.name, at, cause, amount, bound)]
+        for (
+            at,
+            cause,
+            amount,
+            bound,
+        ) in (
+            refusals
+        ):  # every refusal its line: a Node's refused birth and its body's refused read or take both
+            closes.setdefault(at, []).append(
+                refused_line(board.interval, family.name, at, cause, amount, bound)
+            )
         for at, table, found in takes:
             names = [board.families[out].name for out, _sense in table]
             seed = board.families[index].name

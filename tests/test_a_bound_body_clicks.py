@@ -1,4 +1,4 @@
-"""The bound body's click as the Node's act (ALGEBRA.md, The board reads itself, the bound body's clause on the owner's sentence of 2026-10-24, 16:45 UTC: a record standing at a Node at a whole quantum of its own unit through one period of its beat is a bound body; its window one period; at the close the Node reads the light at it and its six Ports, the floor of the share over the record's unit, the remainder the whether divided by the unit once, the hole the board's own, the credit the record's; `meeting_board.bodies_closing`, `period_of`): the lone born pair on the 3-cube at den 1,021 (one birth, the selector then given no list), its two records standing at the birth Node, each clicking at the same close with its own identity, the light at the Node and its six Ports taken by the record's unit through the exact take, the quantum into the record by the click act, the credit line's eight keys the record's; and the same run bit for bit by three slabs through the first clicks."""
+"""The bound body's click as the Node's act (ALGEBRA.md, The board reads itself, the bound body's clause on the owner's sentence of 2026-10-24, 16:45 UTC: a record standing at a Node at a whole quantum of its own unit through one period of its beat is a bound body; its window one period; at the close the Node reads the light at it and its six Ports, the floor of the share over the record's unit, the remainder the whether divided by the unit once, the hole the board's own, the credit the record's; `meeting_board.bodies_closing`, `period_of`): the lone born pair on the 3-cube at den 1,021 (one birth, the selector then given no list), its two records standing at the birth Node, each clicking at the same close with its own identity, the light at the Node and its six Ports taken by the record's unit through the exact take, the quantum into the record by the click act, the credit line's eight keys the record's; and the same run bit for bit by three slabs through the first clicks. The bodies click again and again since the born gate reads the births after the lay's refusals (2026-10-24, 21:5x UTC): on the 3-cube the origin's two records click at 16, 18, 22, 26, 35, 44 and 52 in 60, the beats read there 5, 2, 2, 2, 9, 8 and 8 (the spreading wave's crossings, then the pair's rotation), each click no sooner than the period read after the previous; the former gate, a Node whose meeting passed counted as the birth's before the refusals, pre-empted every closing on the pumped board."""
 
 from __future__ import annotations
 
@@ -34,6 +34,15 @@ def test_the_lone_pairs_two_records_click_at_their_node_with_their_identities(
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     lines: list[dict[str, Any]] = []
     lone_pair(monkeypatch)
+    beats: dict[tuple[tuple[int, int], int], np.ndarray] = {}
+    real_beats = bound_body.beats_of
+
+    def read(b: Lattice, key: tuple[int, int]) -> np.ndarray:
+        found = real_beats(b, key)
+        beats[(key, b.interval)] = found.copy()  # the period read at every Node at this close
+        return found
+
+    monkeypatch.setattr(bound_body, "beats_of", read)
     board = Lattice(load_world(bare_torus(tmp_path, 3, INTERVALS)), output=lines.append)
     seed, light = board.world.seed, {}
     real = meeting_board.closed
@@ -74,12 +83,20 @@ def test_the_lone_pairs_two_records_click_at_their_node_with_their_identities(
     clicks = sum(1 for row in bodies if row["identity"][0] == family)
     assert board.credit.counts[family] == laid + clicks and board.credit.deficits.get(family) == -clicks
     gamma = SMALL["integers"]["node_clock"]
+    by_body: dict[tuple[tuple[int, int], tuple[int, int, int]], list[int]] = {}
+    for row in bodies:
+        by_body.setdefault((tuple(row["identity"]), tuple(row["support"])), []).append(row["interval"])
+    assert any(
+        len(found) >= 2 for found in by_body.values()
+    )  # the bodies click again and again: the window one period, re-opened at every closing (2026-10-24, 21:5x UTC)
     assert (
         gamma
         and all(
-            int(board.beats[tuple(row["identity"])][tuple(row["support"])]) in (8, 9) for row in at_first
+            later - earlier >= int(beats[(key, later)][at]) > 0
+            for (key, at), found in by_body.items()
+            for earlier, later in zip(found, found[1:], strict=False)
         )
-    )  # the beat's period read at the Node from the record's own line, the count between two upward zero crossings
+    )  # a record's click at a Node comes no sooner than the period read there from its own line after its previous click
     assert all(
         k != seed for k, _ in bound_body.body_records(board)
     )  # the massless pair never turns: no body
