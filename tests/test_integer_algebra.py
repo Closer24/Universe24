@@ -48,7 +48,7 @@ PHYSICAL_MODULES += (
 PHYSICAL_MODULES += ("core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
 PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys"))
 PHYSICAL_MODULES += ("loader/derived.py", "loader/universe.py")
-PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py")
+PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py", "registry.py")
 PHYSICAL_MODULES += (
     "loader/charge.py",
     "loader/circle.py",

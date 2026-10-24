@@ -97,6 +97,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
     ("digits.py", "read_of", "gcd"): "D",  # the bases less one, the plain sum's modulus, once
     (
+        "registry.py",
+        "records_of",
+        "division_forward",
+    ): "D",  # the records a family's lines hold, a count over a count
+    (
         "digits.py",
         "frame_of",
         "division_forward",

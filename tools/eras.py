@@ -32,7 +32,7 @@ def kept_lines(board: Lattice) -> dict[records.Sourcing, list[records.Record]]:
         source: [
             records.Record(r.now.copy(), r.before.copy(), r.remainder) for r in board.lines_of(*source)
         ]
-        for source in sources_of(board.families, board.order)
+        for source in sources_of(board.families, board.states, board.order)
     }
 
 

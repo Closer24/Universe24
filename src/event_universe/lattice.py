@@ -17,6 +17,7 @@ from event_universe import (
     meeting,
     meeting_board,
     node,
+    registry,
     seed,
     share,
     shear,
@@ -31,7 +32,7 @@ from event_universe.features import phase, read, volume
 from event_universe.features.start import Sourced
 from event_universe.features.start.rests import held_rests
 from event_universe.frames import frames_of
-from event_universe.loader.derived import held_write_of, quanta_records, readers_of, turns
+from event_universe.loader.derived import held_write_of, readers_of, turns
 from event_universe.loader.keys import Node
 from event_universe.loader.world import World
 from event_universe.reports import book
@@ -110,7 +111,7 @@ class Lattice:
             (i, row)
             for i in self.held
             if self.families[i].wronskian and sourced(self, i)
-            for row in range(self.families[i].records)
+            for row in range(registry.records_of(self.families[i], self.states[i].lines))
         ]
         rows, gamma, world = holders + signs, self.world.node_clock, self.world
 
@@ -144,7 +145,8 @@ class Lattice:
         self.families = world.families
         rulers = self.rulers(1) if self.held else {}
         for index in self.held:
-            born = records.walls_at(index, self.families, self.writes[index], rulers, gamma)
+            sourcing = registry.sourcing(self.families, self.states, index)
+            born = records.walls_at(index, self.families, self.writes[index], rulers, gamma, sourcing)
             born = [records.exact(wall) for wall in born]
             divided = records.divided_walls(
                 self.families[index], born, gamma
@@ -163,7 +165,7 @@ class Lattice:
 
     def rulers(self, direction: int) -> Rulers:
         """Every record of quanta's paces at the interval's start in `direction`, the clock and the three axes' paces of its read at every Node (`node.rulers`), the write's factor's rulers for the bookings it sources (ALGEBRA.md, The write per proper volume and per proper interval); read from the held rows' levels the step in `direction` starts from, the same numbers forward and back."""
-        return node.rulers_of(self, sources_of(self.families, self.order), direction)
+        return node.rulers_of(self, sources_of(self.families, self.states, self.order), direction)
 
     def share_of(self, index: int, direction: int = 1, at: Any = None) -> tuple[np.ndarray, np.ndarray]:
         """A family of quanta's share at every Node in the current's units, a reading of the energy, rest and kinetic, in the free rotation's unit (no count: a plane record's count is its charge, `credit.count_of`, the ruling of 2026-10-22) from each of its records' lines at the paces of that record's read at the level a step in `direction` starts from, summed over the records, the share over the whole board read once per interval on the same records and given again to the readers (features/read READS; the architect's second round of 2026-10-24) (share.family_share; ALGEBRA.md #the-count-is-the-records-share), a turned record's from its plain levels too (under the temporal gauge the time Link carries no phase, plane.step_plane), computed at the Nodes the mask `at` names (None: where a level stands) and 0 elsewhere, with the mask of its frozen Nodes, every Link pace 0 under any record's read, where the share is not read (`share.frozen`)."""
@@ -254,8 +256,19 @@ class Lattice:
         line, gamma = state.lines[0] if begun is None else begun[index][0], self.world.node_clock
         motion = (line.now, line.before) if family.motion_volume else None
         write, fixed = self.writes[index], self.fixed_walls.get(index)
+        sourcing = registry.sourcing(self.families, self.states, index)
         numerators, walls, _terms = records.write_sources(
-            index, self.families, bookings, axes, write, rulers, gamma, motion, direction, fixed
+            index,
+            self.families,
+            bookings,
+            axes,
+            write,
+            rulers,
+            gamma,
+            sourcing,
+            motion,
+            direction,
+            fixed,
         )
         self.write_walls[index] = walls
         state.lines, state.write_remainders = shear.written(
@@ -293,7 +306,7 @@ class Lattice:
         booked = booked_of(self.families, index, bookings)
         for held, gained in zip((forms, turns), booked, strict=True):
             held.update(gained)
-        for record in quanta_records(self.families, index):
+        for record in registry.quanta_records(self.families, self.states, index):
             own = record_lines(self.families, index, record, lines)
             stresses[(index, record)] = readings.axis_sources_of(
                 family.pair[0],

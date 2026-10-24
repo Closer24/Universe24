@@ -7,11 +7,12 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
+from event_universe import registry
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward, form_term
 from event_universe.features.read import READS, read_again
-from event_universe.loader.derived import FamilyRule, quanta_records
+from event_universe.loader.derived import FamilyRule
 from event_universe.readings import ports
 from event_universe.records import Record, wronskian
 
@@ -112,7 +113,7 @@ def board_share(
         return kept[0], kept[1][0]
     found: Any = 0
     cold = np.zeros(board.shape, dtype=bool)
-    for record in quanta_records(board.families, index):
+    for record in registry.quanta_records(board.families, board.states, index):
         content, factors = board.read(index, direction, record)
         lines = board.lines_of(index, record)
         found = found + family_share(family, lines, board.wrap, gamma, content, factors, board.unit, at)
@@ -138,7 +139,7 @@ def charge_of(board: Lattice, index: int) -> int:
     """A plane family's charge over the board, SUM over its records of |SUM over the Nodes of W_i| (`records.wronskian` per record; every record one quantum of its own sense, ALGEBRA.md, No record reads its own write of the sign; the born pair's two records of opposite sense each counted, the clause of 2026-10-24 under Matter's birth from light, where the family's one total read the pair as 0): its count of quanta in the unit T / 2 (`half_action`), the one number the count on the board reads for a plane record, free or standing in a well (the ruling of 2026-10-22; measured on the standing electron of examples/events/conserve: constant to four digits over 17 intervals while the share in the free unit beat 1.43 to 1.87)."""
     return sum(
         abs(int(np.asarray(wronskian(board.lines_of(index, record), True), dtype=object).sum()))
-        for record in quanta_records(board.families, index)
+        for record in registry.quanta_records(board.families, board.states, index)
     )
 
 

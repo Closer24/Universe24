@@ -8,11 +8,12 @@ from typing import Any
 
 import numpy as np
 
+from event_universe import registry
 from event_universe.core import paces
 from event_universe.core.ports import AXES, SIDES
 from event_universe.core.rule3 import division_forward
 from event_universe.features import currents, phase, volume
-from event_universe.loader.derived import FamilyRule, HeldWrite, row_sources, weight_of
+from event_universe.loader.derived import FamilyRule, HeldWrite, weight_of
 
 Rulers = tuple[Any, tuple[Any, Any, Any]]  # a read's paces at every Node: the clock p_0, each axis's p_a
 Families = tuple[FamilyRule, ...]  # the families as the loader derived them, in the file's order
@@ -55,7 +56,7 @@ def record_slice(family: FamilyRule, record: int) -> slice:
 
 def rows_total(family: FamilyRule, lines: Sequence[Record]) -> Record:
     """A holder of the sign's record as the board reads it whole, the sum of its rows' time lines at every Node, both levels (a node_detector or a body reads the sum of all rows, ALGEBRA.md, No record reads its own write of the sign; the light's record the free row 0 among them, light its own family, 2026-10-19), the remainder the free row's; the row's own line where it has one row, bit for bit."""
-    rows = [lines[row * family.width] for row in range(family.records)]
+    rows = [lines[row * family.width] for row in range(registry.records_of(family, lines))]
     if len(rows) == 1:
         return rows[0]
     now: Any = sum(row.now for row in rows)
@@ -68,7 +69,7 @@ def row_levels(
 ) -> Any:
     """The level of a holder of the sign's line `line` (0 its time line, 1 + a its odd line a) summed over every row but `skip`, the reader's own (ALGEBRA.md, No record reads its own write of the sign: a record's read and its turn take the sum of every sign row but its own), at the level the step in `direction` starts from; every row where the reader owns none; a holder of the content, one row, its one line."""
     total: Any = 0
-    for row in range(family.records):
+    for row in range(registry.records_of(family, lines)):
         if row != skip:
             total = total + level_at(lines[row * family.width + line], direction)
     return total
@@ -157,6 +158,7 @@ def write_sources(
     write: HeldWrite,
     rulers: dict[Sourcing, Rulers],
     gamma: int,
+    sourcing: Sequence[Sequence[Sourcing]],
     motion: tuple[Any, Any] | None = None,
     direction: int = 1,
     fixed: Sequence[Any] | None = None,
@@ -170,8 +172,7 @@ def write_sources(
     trace = (
         not family.wronskian
     )  # a holder of the content: the stress's trace the time line's, the axis lines traceless
-    for row in range(family.records):
-        sources = row_sources(families, held, row)
+    for row, sources in enumerate(sourcing):  # the row's sources, the registry's (`registry.sourcing`)
         forms = {source: bookings.get(source, 0) for source in sources}
         time, scale, weighed = scaled_sum(
             held,
@@ -184,7 +185,10 @@ def write_sources(
             row=row,
         )  # the sign holder's charge factors: the Wronskian per quantum (The constants, 2026-10-24)
         if trace:
-            time = time - pressure_term(held, families, stresses, rulers, gamma, intervals, row) * scale
+            time = (
+                time
+                - pressure_term(held, families, stresses, rulers, gamma, intervals, sources, row) * scale
+            )
         found.append(time)
         scales.append(scale)
         terms = weighed if row == 0 else terms
@@ -231,11 +235,16 @@ def exact(values: Any) -> Any:
 
 
 def walls_at(
-    held: int, families: Families, write: HeldWrite, rulers: dict[Sourcing, Rulers], gamma: int
+    held: int,
+    families: Families,
+    write: HeldWrite,
+    rulers: dict[Sourcing, Rulers],
+    gamma: int,
+    sourcing: Sequence[Sequence[Sourcing]],
 ) -> list[Any]:
     """Every line's wall of a held row's write at the rulers given, the write of no source (`write_sources` on bookings and stresses of 0 at every source): one integer per line under the rounded factor and under the carried factor the wall per Node, E_s T Gamma^power p_0^(3 - power) on the time line and E_s W_c Gamma^2 p_0 on each axis and shear line, the trace's three on a tension line, at the row's own clock where it reads the content and at its sources' shared clock where it reads none (`wall_rulers`, `derived.shared_clock`); the walls `Lattice.start` keeps for the run at the rest's paces under the volume form with the carried factor, the wall fixed per Node."""
     nothing: dict[Sourcing, Any] = {source: (0,) * (AXES * AXES) for source in rulers}
-    return write_sources(held, families, {}, nothing, write, rulers, gamma)[1]
+    return write_sources(held, families, {}, nothing, write, rulers, gamma, sourcing)[1]
 
 
 def pressure_term(
@@ -245,11 +254,12 @@ def pressure_term(
     rulers: dict[Sourcing, Rulers],
     gamma: int,
     power: int,
+    sources: Sequence[Sourcing],
     row: int = 0,
 ) -> Any:
     """The pressure's write in the time line at every Node, the stress's trace (ALGEBRA.md, The stress's trace is the time line's, a hypothesis under its own name, 2026-10-22: the pressure hand's derivation and the reader's build line read cold; the two channels of the rulers, the clock's h = e^U by h N = 1 and the tension's Gamma / (Gamma - t_a), nature's one a(t) stretching nothing by its isotropic pressure, so the isotropic part of the tension lines' uniform mode is 0 and not braked): the trace over three of each source's own stress parts at the Node, -num h_a as the tension lines take them (readings.stresses_of, one Link's reach), each part turned into the energy's units by the record's own gradient speed squared, (p_a / Gamma)^2 / (3 den) (The band at a pace: the gradient part of 2 (1 - cos omega') is (num / (3 den)) (p_a / Gamma)^2 2 (1 - cos k), so the stress times it is the gradient energy, T_xx = T_00 for light's long wave), summed over the three axes and divided by three, then scaled per proper volume and per proper interval as the row books its count sources (p_x p_y p_z over Gamma^power p_0^(3 - power)): one rounding per source per Node over the one wall 9 den Gamma^(2 + power) p_0^(3 - power) (a coefficient rounded at the read, kind D), at the read weight, the sign -1 taken by the caller (alpha = -d lambda = -1 at lambda = 1 / d: the pressure enters against the energy's hollow, no number of the file and none of nature); every quantity read from the records as they stand at the interval's start, so the inverse recomputes the same term (the reversibility hand's Theorem 1); under the carried factor the caller scales it to the wall per Node (records.write_sources)."""
     total: Any = 0
-    for source in row_sources(families, held, 0):
+    for source in sources:  # the row's sources, the registry's (`registry.sourcing`)
         if source not in stresses:
             continue
         family, (clock, p_axes) = families[source[0]], wall_rulers(held, families, rulers, row, source)
