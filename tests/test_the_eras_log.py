@@ -3,6 +3,7 @@
 import json
 
 from event_universe import world_files
+from event_universe.loader import universe
 from event_universe.loader.universe import MASSLESS, VOLUME
 from event_universe.world_files import load_world
 from tests.laws import ROOT, load_file, refused
@@ -17,6 +18,9 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
 ):
     """The log on the bare 3-cube torus of the one universe file over 8 intervals: the header names the world's integers and the held rows by name, no former key; each interval's line holds gravity's row (the level reading and its remainder, U, the velocity, the writes per family, n_eff the mix's exponent, the constraint's residual, the three tension lines' means and velocities, the volume's sums now and before and the volume form's own constraint R_vol from the second interval on, the seed's level, contrast and clock ratio where a seed stands) and each family of quanta's readings (the largest level, the quanta, the frozen count); the last line is the last interval's, nothing named unreturning (the volume form's run back is exact); the numbers are the engine's own: U the fine reading from the volume's sums with the level reading's own U beside it within a hundredth, the writes' keys the sourcing families, the mix's exponent between the pairs' integers, the tension lines' means alike and within one level per interval; the spans' estimator reads n_eff from the slope of 1 / v where the velocity is above 0; `--every` below 1 is refused by name; the page from the log holds its panels (the course, the writes, the residual with R_nat and R_vol, the mix's exponent, the seed, the clocks, the rulers, the tension lines, the Links' factors, the quanta), the blind's table where a blind is given, the notes where given, the held row's keys in its words, and refuses a log without the header by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        universe, "volume_pair", lambda den, gamma: (den, den)
+    )  # the massless holder, by name
     small_universe(tmp_path)  # the tests' small universe, den 1,021 with its two points
     world = tmp_path / "eras.json"
     world.write_text(json.dumps({"shape": [3, 3, 3], "intervals": 8, "universe": "u.json"}), "utf-8")

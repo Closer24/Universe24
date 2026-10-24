@@ -91,7 +91,10 @@ def test_the_bare_torus_is_seeded_with_the_hole_bangs_and_births_the_pairs(
         c["absorbed"] == MASSLESS and vector_of(c["realised"]) is not None for c in credits
     )
     assert all(0 <= c["node_detector"] < CUBE**3 for c in credits)  # the Nodes by index
-    for _ in range(20):
+    later = births
+    while (
+        len(later) == len(births) and board.interval < 40
+    ):  # the births go on: the next shell at 27 under the clock's gap with the exact take (the hole's six neighbours birth together at 4)
         board.step()
-    later = [line for line in lines if line.get("event") == "birth"]
+        later = [line for line in lines if line.get("event") == "birth"]
     assert len(later) > len(births) and board.credit.counts[names.index(later[-1]["children"][0])] > 0

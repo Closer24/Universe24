@@ -16,13 +16,13 @@ from event_universe.world_files import load_world
 from tests.laws import linear_sum, weighted_linear_sum
 from tests.laws_universe import CUBE, SMALL, bare_torus, uniform_sea
 
-BEFORE_THE_BIRTHS = 23  # the births at 24 on the bare 3-cube of the tests' small universe with the massless volume holder (2026-10-24; 30 at the one universe's gapped holder since the close reads the interval's start, 29 when it read the state after the step)
+BEFORE_THE_BIRTHS = 33  # the births at 34 on the bare 3-cube of the tests' small universe under the volume holder gapped by the clock's one level (24 under the massless holder of 2026-10-24; 30 at the one universe's gapped holder since the close reads the interval's start, 29 when it read the state after the step)
 
 
 def test_the_linear_sum_of_light_is_constant_on_the_bare_torus_until_the_births(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """The seed's light on the bare 3-cube torus: L is the same whole number after every one of the 29 intervals before the births, while the held row's write moves the paces (one content over the board at every interval, so the Link terms pair off) and the levels rise from the seed; at 29 the births' holes take the light and L falls."""
+    """The seed's light on the bare 3-cube torus: L is the same whole number after every one of the intervals before the births, while the held row's write moves the paces (one content over the board at every interval, so the Link terms pair off) and the levels rise from the seed; then the births' holes take the light and L falls."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     monkeypatch.setattr(
         seed, "uniform_seed", uniform_sea
