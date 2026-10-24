@@ -151,6 +151,7 @@ BORN_KEYS = (
     "records",
     "points",
 )  # the birth line's children's records and points, the click's view of the birth (2026-10-24)
+NODES = "nodes"  # the birth line's Nodes, the meeting's own (read by the slabs' runner to move a line to the board's frame)
 REFUSED_LAY, REFUSED_STOP, REFUSED_ORIGIN = (
     "lay",
     "stop",
@@ -195,7 +196,7 @@ def birth_line(
 ) -> dict[str, object]:
     """The birth line, the reading of the sentence's act beside the credit's (ALGEBRA.md, Matter's birth from light; act.py): the interval, the gapless family met, the children's families and senses and the Nodes, never a rate; the board's own birth names its take (`TAKE_KEYS`: the taken, the walls booked, the excess and the last level's step, the hole's clause of 2026-10-24)."""
     line = {"event": "birth", "label": "NODEDETECTOR", "interval": interval, "family": family}
-    found = {**line, "children": children, "senses": senses, "nodes": [list(node) for node in nodes]}
+    found = {**line, "children": children, "senses": senses, NODES: [list(node) for node in nodes]}
     if (
         records is not None
     ):  # the children's records and points, the click's view of the birth (2026-10-24)
