@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 
@@ -288,7 +288,28 @@ def pairs_of(
     record: int,
     amplitude: int,
 ) -> tuple[tuple[Any, ...], tuple[Any, ...]] | None:
-    """A record's Link pairs where it is turned or folded (`node.turning`, the sign's odd levels along the Links, `plane.link_levels`; `plane.odd_links`, the flux holder's; the record's row's phase lines through the six Ports at the amplitude X, `plane.phase_links`; `plane.link_pairs`, the pair (R^c, R^s) per Port), None for a plain record."""
+    """A record's Link pairs where it is turned or folded (`node.turning`, the sign's odd levels along the Links, `plane.link_levels`; `plane.odd_links`, the flux holder's; the record's row's phase lines through the six Ports at the amplitude X, `plane.phase_links`; `plane.link_pairs`, the pair (R^c, R^s) per Port), None for a plain record; made once per interval on the very records and given again (features/read `READS`, `read_again`: the step asks once per record, the board's own read at every meeting Node for every record, 2026-10-24)."""
+    from event_universe.features.read import (
+        READS,  # the reading made once per interval on the very records (the architect's economy of 2026-10-24): the Link pairs are asked by the step once and by the board's own read at every meeting Node for every record
+        read_again,
+    )
+
+    key = (pairs_of, index, record, direction, gamma, amplitude)
+    taken = (
+        *states[index].lines,
+        *(line for held, family in enumerate(families) if family.held for line in states[held].lines),
+        *(
+            line
+            for held, family in enumerate(families)
+            if family.held
+            for row in states[held].phases
+            for line in row
+        ),
+        content,
+        *(() if factors is None else tuple(factors)),
+    )
+    if (kept := read_again(key, taken)) is not None:
+        return cast(Pairs | None, kept[0])
     angles = node.turning(index, families, states, direction, record)
     flux = odd_links(index, families, states, direction, wrap)  # the fold, a folded plane's
     sign = (  # the sign's Link levels n_ij, the two ends weighed as the holder declares (`link_read`)
@@ -306,7 +327,9 @@ def pairs_of(
                 "for the fold: the caller passes features/phase.amplitude of the width"
             )
         phases = phase_links(states[node.sign_holder(index, families)].phases[row], wrap)
-    return link_pairs(families[index].pair, gamma, content, factors, flux, sign, phases, amplitude)
+    found = link_pairs(families[index].pair, gamma, content, factors, flux, sign, phases, amplitude)
+    READS[key] = (taken, (found, []))
+    return found
 
 
 def step_records(

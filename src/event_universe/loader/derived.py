@@ -145,13 +145,36 @@ def row_of(families: tuple[FamilyRule, ...], index: int, record: int) -> int | N
     )
 
 
+def children_of(families: tuple[FamilyRule, ...], index: int) -> int:
+    """The records a charged family needs for its births: the largest count of its children in any list a meeting selects (`conversion.birth_of` over every gapless parent, the exact lists; 2 at every list of the one universe, (k, -1), (k, 1)), 0 where no list births it (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24: N records of the write step, one per child of the list, each at its own sense; the owner's word, several can be born). Nothing here counts two: the list's own length."""
+    from event_universe.conversion import (
+        birth_of,  # conversion reads this module: imported here
+    )
+
+    return max(
+        (
+            sum(1 for out, _sense in table if out == index)
+            for parent in range(len(families))
+            if families[parent].quanta and families[parent].pair[0] == families[parent].pair[1]
+            for table in birth_of(families, parent)
+        ),
+        default=0,
+    )
+
+
 def with_records(families: tuple[FamilyRule, ...], laid: Sequence[int]) -> tuple[FamilyRule, ...]:
-    """The families with the world's records: a charged family's records are its bodies (`laid`, per family its bodies in the world's order; a packet of such a family, a packet and no standing record, adds into its first record), one at least, each its own lines and its own row of the sign; every holder of the sign carries one row per charged record beside the row no record owns, its lines that many times its row's lines (the time line, with its three odd lines under the rotation); every other family as the universe declares it."""
-    rows = 1 + sum(max(1, laid[index]) for index in range(len(families)) if charged(families, index))
+    """The families with the world's records: a charged family's records are its bodies (`laid`, per family its bodies in the world's order, 0 since no file declares one) or the children a meeting's list births of it (`children_of`; ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24: N records of the write step, one per child of the list, each at its own sense, so that each born child carries its Wronskian and sources its own row, where one record carrying both children of a pair read W = 0 and sourced nothing, the defect found on 1b670aaf2), one at least, each its own lines and its own row of the sign; every holder of the sign carries one row per charged record beside the row no record owns, its lines that many times its row's lines (the time line, with its three odd lines under the rotation); every other family as the universe declares it."""
+    rows = 1 + sum(
+        max(1, laid[index], children_of(families, index))
+        for index in range(len(families))
+        if charged(families, index)
+    )
     found = []
     for index, family in enumerate(families):
         if charged(families, index):
-            records = max(1, laid[index])
+            records = max(
+                1, laid[index], children_of(families, index)
+            )  # one per child of the list (2026-10-24)
             found.append(replace(family, lines=family.width * family.parts * records, records=records))
         elif family.wronskian:
             found.append(replace(family, lines=family.width * rows, records=rows))

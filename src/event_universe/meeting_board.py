@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe import credit, records, swap
-from event_universe.act import born_table, click
+from event_universe.act import born_items, born_table, click
 from event_universe.core.rule3 import division_forward
 from event_universe.digits import at_origin, frame_of, read_of
 from event_universe.features.click import drawn_from
@@ -15,7 +15,6 @@ from event_universe.lay import laid
 from event_universe.loader.keys import Node
 from event_universe.reports import birth_line
 from event_universe.reports import credit as credit_line
-from event_universe.take import Item
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -24,7 +23,7 @@ Table = tuple[tuple[int, int], ...]
 
 
 def child_of(board: Lattice, index: int, share: int, whole: int) -> Table | None:
-    """The pair two quanta of the seed family make at one Node: the heaviest conjugate pair whose two walls fit within the two quanta's own energy, two `whole`-ths of the share `share` read at the Node (`act.born_table`, the law's sentence of 2026-10-24; None where no pair's walls fit there)."""
+    """The list two quanta of the seed family make at one Node: the heaviest exact list whose summed walls fit within the two quanta's own energy (N children, one record each, 2026-10-24), two `whole`-ths of the share `share` read at the Node (`act.born_table`, the law's sentence of 2026-10-24; None where no pair's walls fit there)."""
     return born_table(board.families, index, board.world.quantum_action, 2 * share, max(whole, 2))
 
 
@@ -58,7 +57,7 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
         born: list[tuple[Node, Table]] = []
         for at, whole, rest in meetings(board, index, shares, frozen):
             table = child_of(board, index, int(shares[at]), whole)
-            if table is None:  # no pair's walls within the two quanta's energy there: nothing born
+            if table is None:  # no list's walls within the two quanta's energy there: nothing born
                 continue
             meet = whole >= 2
             if (
@@ -82,9 +81,7 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
             line = board.states[index].lines[number]
             change = (np.where(here, -line.now, 0), np.where(here, -line.before, 0))
             laid(board, index, number, change, None, None, here)
-        for out, sense in table:
-            den = board.families[out].pair[1]
-            items.append(Item(out, 1, (at,), (den, den), sense=sense))
+        items.extend(born_items(board.families, table, (at,)))  # one record per child (2026-10-24)
     click(board, items)
     for at, table in born:
         if board.output is not None:
