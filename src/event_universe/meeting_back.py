@@ -7,25 +7,20 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import cone, credit, growth, reports
-from event_universe.features import phase
+from event_universe import cone, credit, reports
 from event_universe.features.click import Face
 from event_universe.features.front import ball
-from event_universe.front import on_board
 from event_universe.lay import laid
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.draw import Gauss, Pattern, Ports, times
 from event_universe.records import NodeState, Record, largest
-from event_universe.walls import vacuum_walls
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
 Snapshot = list[tuple[str, np.ndarray]]  # every array of one family's NodeState with its name, copied
 Lines = list[dict[str, object]]  # output lines, as the lattice's output receives them (`reports.py`)
-Kept = tuple[
-    list[NodeState], list[growth.Growth]
-]  # the close as the run back took it: every array copied, the growths standing
+Kept = list[NodeState]  # the close as the run back took it: every array copied
 
 
 def named(name: str, state: NodeState) -> list[tuple[str, np.ndarray]]:
@@ -77,37 +72,15 @@ def frame_of(board: Lattice) -> list[NodeState]:
     ]
 
 
-def grown(board: Lattice, states: list[NodeState], found: growth.Growth, direction: int) -> None:
-    """Frame 0 regrown by one growth of the receding faces in `direction` (+1 as the board grew the layers, -1 as the run back takes them off): every family's NodeState resized as the board's is (`growth.resized`), every grown Node at the state of a Node with no level, the massless row's rest and the half wall."""
-    _interval, axis, side, layers = found
-    seed = phase.seed(board.amplitude, board.world.node_clock)
-    for index, (family, state) in enumerate(zip(board.families, states, strict=True)):
-        origin, walls, half = board.origins[index], board.walls(index), board.half_wall(index)
-        if (
-            index in board.fixed_walls
-        ):  # the carried factor: a grown Node is born at the rest's wall, as the board's layer is
-            walls = tuple(vacuum_walls(board, index))
-        growth.resized(
-            state, family, axis, side, layers, origin, walls, direction, board.world.kind, half, seed
-        )
-
-
 def frame_grown(board: Lattice, index: int) -> list[NodeState]:
     """The record's reference over the board as grown (ALGEBRA.md, The births' book, the born record's reference, 2026-10-20): the board as it stood at the record's birth (`credit.Books.reference`, frame 0 for a record laid at the start, the board at the birth for a record born during the run, one mechanism for both), grown by every growth standing that served an interval after the birth (`Lattice.growths`, in their order, the layers the receding faces added before the origin and beyond the far face, `grown`); the cone's own copy, kept in the books through the reading and resized with the growths the run back pops and the run forward finds anew (`credit.Books.regrown`, `cone.stepped_alone`, `cone.grown_at`); the board's own states where the books hold no reference."""
     books = board.credit
-    found = (
-        frame_of(board)
-        if index not in books.reference
-        else [
-            NodeState(list(s.lines), list(s.write_remainders), [list(r) for r in s.phases])
-            for s in books.reference[index]
-        ]
-    )
-    birth = books.births[index][0] if index in books.births else 0
-    for growth_found in board.growths:
-        if growth_found[0] > birth:
-            grown(board, found, growth_found, 1)
-    return found
+    if index not in books.reference:
+        return frame_of(board)
+    return [
+        NodeState(list(s.lines), list(s.write_remainders), [list(r) for r in s.phases])
+        for s in books.reference[index]
+    ]
 
 
 def radius(board: Lattice) -> int:
@@ -154,7 +127,7 @@ def crossed(board: Lattice, lines: Lines, direction: int = -1, log: bool = False
     ]  # a host's line naming a lay the books' log holds is skipped: the loop crosses the log itself (`logged`, `log` True), once, so nothing is crossed twice
     for line in own if direction > 0 else reversed(own):
         index, at = node_of(board, line)
-        here = on_board(board, at)
+        here = (int(at[0]), int(at[1]), int(at[2]))
         number = int(str(line[reports.LINE]))
         record = board.states[index].lines[number]
         was, after = line[reports.BEFORE], line[reports.AFTER]
@@ -224,7 +197,7 @@ def side_weights(
 
 def inside(board: Lattice) -> np.ndarray:
     """The record's light cone over the whole board at the board's interval, the ball about the birth's Nodes (`credit.Books.support`) at the cone's radius (`radius`, `features/front.ball`): the close's assertion of the cone's outside (`run_forward`)."""
-    origins = [on_board(board, at) for at in board.credit.support]
+    origins = [(int(at[0]), int(at[1]), int(at[2])) for at in board.credit.support]
     return ball(board.shape, origins, radius(board), board.world.periodic)
 
 
@@ -336,7 +309,7 @@ def run_back(board: Lattice, index: int) -> Kept:
     board.passes, board.heading = board.passes + (board.heading < 0), 1
     for observer in board.observers:
         observer(board.interval, 1, board.passes)
-    kept, books = (cone.copied(board), list(board.growths)), board.credit
+    kept, books = cone.copied(board), board.credit
     (books.birth, books.support), to = books.births[index], birth_of(board, index)
     books.regrown = frame_grown(board, index)
     while board.interval > to:
@@ -352,14 +325,7 @@ def run_forward(board: Lattice, index: int, to: int, kept: Kept) -> None:
         if board.interval + 1 >= first:
             booked_moments(board, index)
         cone.stepped_alone(board, 1)
-    states, growths = kept
-    shared = 0
-    while shared < min(len(growths), len(board.growths)) and growths[shared] == board.growths[shared]:
-        shared += 1
-    for popped in reversed(growths[shared:]):
-        grown(board, states, popped, -1)
-    for added in board.growths[shared:]:
-        grown(board, states, added, 1)
+    states = kept
     found = first_difference(snapshot(board, states), snapshot(board), ~inside(board))
     if found is not None:
         raise RuntimeError(

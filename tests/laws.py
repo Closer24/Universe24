@@ -11,7 +11,7 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import board_readings, credit, growth, node, readings, share
+from event_universe import board_readings, credit, node, readings, share
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
@@ -103,7 +103,6 @@ def shares_of(board: Lattice, index: int, read, pairs) -> np.ndarray:  # type: i
 
 def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fraction]]:  # type: ignore[no-untyped-def]
     """One step of the lattice with the booking identity per act on the families `indexes` (ALGEBRA.md S.6; the advisor's lines, #1563 comments 5954101082 and 5963391333): the share's change over the step is the currents at the pair the step started from with the paces' anisotropy term and Rule3's remainder term, within the division act's floors, plus the face term per face presented at the step, (next - before) R_face (value - arrival) over 2 p_i^2 G^2 (the hole over its two intervals, each shell of the front), the identity on the stepped levels before the lays; the lays (the absorption's and the emission's parts, the emitted quantum, the null window's re-lay) change the share form at the written Nodes and their six neighbours alone, exact; per family the paces' own change of the books' total and the slack."""
-    growth.grow(board)  # the receding faces read first, as the step reads them
     gamma, unit, begun, shape = board.world.node_clock, board.unit, {}, board.shape
     for index in indexes:
         read = board.read(index)
@@ -214,14 +213,14 @@ arrivals_rule3 = (
 )  # the first form of Rule3, written in the tool and in no file of src/
 
 
-def flux_world(tmp_path, shape, boundary, intervals=4, level_weight=1):  # type: ignore[no-untyped-def]
+def flux_world(tmp_path, shape, intervals=4, level_weight=1):  # type: ignore[no-untyped-def]
     """The rule's universe with the charged plane and gravity carrying the flux's odd lines, on a board."""
     universe_beside(tmp_path, charged=True)
     rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     gravity = next(row for row in rows["families"] if row["name"] == "gravity")["held"]
     gravity["sources"], gravity["level_weight"] = ["form", "tensions", "flux"], level_weight
     (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
-    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
+    world = dict(shape=list(shape), intervals=intervals)
     world.update(universe="u.json", bodies=[], node_detectors=[])
     (path := tmp_path / "flux.json").write_text(json.dumps(world), encoding="utf-8")
     return path

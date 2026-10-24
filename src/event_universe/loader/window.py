@@ -11,8 +11,7 @@ from event_universe.core.rule3 import division_forward
 from event_universe.features.click import along_cosine, envelope, line_total, wave_cosine
 from event_universe.loader.derived import FamilyRule
 from event_universe.loader.draw import Draw
-from event_universe.loader.faces import extent_across
-from event_universe.loader.keys import Node
+from event_universe.loader.keys import Node, extent_across
 from event_universe.loader.node_detector_declaration import Rate
 
 if TYPE_CHECKING:

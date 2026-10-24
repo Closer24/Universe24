@@ -15,7 +15,7 @@ from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import Emitter, Source, registered
 from event_universe.features.click import Face
-from event_universe.front import Front, declared
+from event_universe.front import Front
 from event_universe.loader.derived import FamilyRule, count_wall
 from event_universe.loader.draw import Draw, Gauss, Pattern, Ports, norm, ports_of, reduced_write
 from event_universe.loader.keys import Node
@@ -334,7 +334,9 @@ def booked(
     book = board.credit.intake.setdefault((index, name), {})
     for port, through in enumerate(weighted(facing, weighed[index])):
         for at in np.argwhere(through != 0):
-            book.setdefault(declared(board, at), [0] * PORTS)[port] += int(through[tuple(at)])
+            book.setdefault((int(at[0]), int(at[1]), int(at[2])), [0] * PORTS)[port] += int(
+                through[tuple(at)]
+            )
 
 
 def support_of(board: Lattice, index: int) -> tuple[Node, ...]:
@@ -342,7 +344,7 @@ def support_of(board: Lattice, index: int) -> tuple[Node, ...]:
     found = np.zeros(board.shape, dtype=bool)
     for line in board.states[index].lines:
         found |= np.asarray((line.now != 0) | (line.before != 0))
-    return tuple(declared(board, at) for at in np.argwhere(found))
+    return tuple((int(at[0]), int(at[1]), int(at[2])) for at in np.argwhere(found))
 
 
 def terms_of(exchange: int, parts: int, sides: int) -> Terms:

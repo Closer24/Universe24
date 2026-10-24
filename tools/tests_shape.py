@@ -91,13 +91,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "PR D's gate (the Boss's brief of 2026-10-03): no two integer literals multiplied, added or raised outside "
         "core/rule3.py, the composed number named from the Ports and the levels or taken from the files",
     ),
-    "tests/test_the_features.py::test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names": (
-        51,
-        "PR D, no number in the engine (the owner's word, the Boss's brief of 2026-10-03): the start's fine unit from "
-        "the six reads twice, the tent against the discrete parabola's top on three chains, the miss bound from the "
-        "six reads over the axis's two Ports on a chain, a slab and a cube, the rest's two powers by name and its "
-        "keyword-only `intervals`, the radiated total against (2 / 3) T sin k at two T, one PORTS under src/",
-    ),
     "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
         48,
         "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "
@@ -117,10 +110,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "check runs to its verdict, every check_ function of the proofs_ modules is a row's, the rows of the kinds A, B "
         "and C without a machine check are a ratchet that only falls, and no proofs_ module imports the engine or names "
         "a run's file; the imports stand inside the test so the file is the test alone",
-    ),
-    "tests/test_part_f_momentum.py::test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_toward_the_well": (
-        52,
-        "the engine V2 (Part F, Task 2; #2122): the lattice momentum under a held well, the gradient term the one change",
     ),
     "tests/test_part_b_sign_fold.py::test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_turn": (
         50,

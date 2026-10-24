@@ -15,7 +15,6 @@ from event_universe.core.rule3 import division_forward, largest_below
 from event_universe.digits import read_of, reads_of
 from event_universe.features.click import bias_bound, drawn_from, spread, squared
 from event_universe.features.phase import signed_rounded
-from event_universe.front import on_board
 from event_universe.loader.derived import count_wall, quanta_records, row_of
 from event_universe.loader.keys import Node
 from event_universe.loader.node_detector_declaration import NodeDetectorDeclaration, Transition
@@ -130,7 +129,7 @@ def arriving(board: Lattice, books: NodeBooks, drive: int) -> int:
     else:
         levels = lines[0].now
     total = sum(
-        int(levels[on_board(board, at)]) * amplitude
+        int(levels[(int(at[0]), int(at[1]), int(at[2]))]) * amplitude
         for at, amplitude in zip(books.nodes, books.amplitudes, strict=True)
     )
     return int(signed_rounded(total, books.norm))
@@ -140,7 +139,7 @@ def booked_inflow(board: Lattice, books: NodeBooks, drive: int, came: Sequence[A
     """The reader's book of a window's inflows per Node and per Port (ALGEBRA.md, The NodeDetector is one declaration kind for every world; the mathematician's hand with the advisor's second, two hands, one rule for the one kind): the arriving family's conserved form's own current through each of the NodeDetector's Nodes' front Ports this interval, the plain current times the Link's factor Q_ij in the unit G^2 (`reports.weighted`, per Port, the same read as the credit's `booked`; ALGEBRA.md #the-click-is-the-meeting, the credit's booking) added to the window's sum at that Node and Port, the sums the weights the absorption's Node is drawn by at the close, over G^2 once (`drawn_weights`), the Node the quantum entered through, and the Ports its face set (`arrival_ports`); emptied at the window's close (`jumped`)."""
     book = books.intake.setdefault(drive, [[0] * PORTS for _at in books.nodes])
     for index, at in enumerate(books.nodes):
-        here = on_board(board, at)
+        here = (int(at[0]), int(at[1]), int(at[2]))
         for port, through in enumerate(came):
             book[index][port] += int(through[here])
 
@@ -180,7 +179,7 @@ def dark(board: Lattice, books: NodeBooks, sourced: set[int]) -> bool:
                 levels = np.asarray(records.row_levels(family, lines, 0, side, own))
             else:
                 levels = lines[0].now if side == 1 else lines[0].before
-            if any(int(levels[on_board(board, at)]) for at in books.nodes):
+            if any(int(levels[(int(at[0]), int(at[1]), int(at[2]))]) for at in books.nodes):
                 return False
     return True
 
@@ -189,7 +188,10 @@ def own_clock(board: Lattice, books: NodeBooks) -> int:
     """The reader's own clock, the composed clock p_0 under its record's read of the content (`paces.clock_of`) at each of its Nodes, their mean rounded half up once (`paces.rounded`, as a region's clock is read, `credit.clocked_regions`): Gamma in the vacuum and below it in a well, the number the turn per proper interval and the dark's hazard read."""
     gamma = board.world.node_clock
     content = np.asarray(board.read(books.index, 1, books.record)[0])
-    levels = [int(content[on_board(board, at)]) if content.ndim else int(content) for at in books.nodes]
+    levels = [
+        int(content[(int(at[0]), int(at[1]), int(at[2]))]) if content.ndim else int(content)
+        for at in books.nodes
+    ]
     clocks = [int(paces.clock_of(gamma, level)) for level in levels]
     return int(paces.rounded(sum(clocks), len(clocks)))
 
@@ -259,7 +261,7 @@ def drawn_weights(board: Lattice, inflows: Iterable[int]) -> list[int]:
 def share_weights(board: Lattice, books: NodeBooks) -> list[int]:
     """The emission's and the conversion's draw weights (ALGEBRA.md, The NodeDetector is one declaration kind for every world: the emission's whole quantum laid at the Node drawn by its own record's share over its Nodes; the mathematician's words, #1793, A2 of the alignment audit): the record's family's share at each of the body's Nodes as the board holds it at the close, `Lattice.share_of` read once at the body's Nodes in the current's units, a lattice reading and no measurement, each floored at 0 as `drawn_weights` floors the inflows; the file's lay weights enter no draw and stand alone where every share is 0, nothing standing at the Nodes, so that a draw stays possible."""
     found = board.share_of(books.index, 1, board.mask(books.nodes))[0]
-    shares = [max(int(found[on_board(board, at)]), 0) for at in books.nodes]
+    shares = [max(int(found[(int(at[0]), int(at[1]), int(at[2]))]), 0) for at in books.nodes]
     return shares if sum(shares) > 0 else list(books.weights)
 
 
@@ -280,7 +282,7 @@ def face_ports(board: Lattice, index: int, at: Node, booked: Sequence[int]) -> t
     ports = arrival_ports(booked)
     content, factors = board.read(index)
     rule = node.rule_of(board.families[index], board.world.node_clock, content, factors, board.unit)
-    here = on_board(board, at)
+    here = (int(at[0]), int(at[1]), int(at[2]))
     reaches = [int(np.asarray(read)[here]) if np.ndim(read) else int(read) for read in rule.reaches]
     return ports if sum(reaches[p] for p in ports) <= int(rule.wall) else ()
 
@@ -366,12 +368,12 @@ def weighed_currents(board: Lattice) -> Weighed:
     return found
 
 
-def booked_inflows(board: Lattice, weighed: Weighed, wrap: Wrap, own: np.ndarray) -> None:
+def booked_inflows(board: Lattice, weighed: Weighed, wrap: Wrap) -> None:
     """Every reader's own book of this interval: for each family its transitions name among `weighed` (per record its currents and its Links' factors at the pair the step started from), the conserved form's own current entering through its Nodes' front Ports (`reports.front` on the region, `reports.weighted`, in the unit G^2), added to its book per Node (`booked_inflow`), and the family's passage through the region, its momentum terms and its share there, added to the piece's two sums from the same read (`Passage.booked`, C4); the credit's rule for a NodeDetector with Nodes alone, here for a NodeDetector with a record of its own. The beat's term of 2026-10-21 (an emitter's own record's current through the same front, booked beside them into the hazard at the close) deleted 2026-10-22, dead since the light book (`booked_light`)."""
     for books in board.credit.bodies:
         drives = sorted({t.drive for t in books.declared.transitions if t.drive in weighed})
         if drives:
-            facing = front(region := board.mask(books.nodes), wrap, region, own)
+            facing = front(region := board.mask(books.nodes), wrap, region)
             for drive in drives:
                 booked_inflow(board, books, drive, weighted(facing, weighed[drive]))
                 books.passages.setdefault(drive, Passage()).booked(region, weighed[drive])

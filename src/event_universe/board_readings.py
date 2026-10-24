@@ -62,7 +62,7 @@ def cut(board: Lattice, index: int) -> node.Factors | None:
         for side in (1, -1):
             mask = np.zeros(board.shape, dtype=bool)
             for at in regions:
-                mask |= at ^ arrival(at, axis, side, board.wrap, False)
+                mask |= at ^ arrival(at, axis, side, board.wrap)
             found.append(mask)
     return tuple(found)
 

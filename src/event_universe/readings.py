@@ -55,14 +55,9 @@ def slices(
     return tuple(lo), tuple(hi), tuple(first), tuple(last)
 
 
-def seen(level: Any, bad: Any, fill: Any) -> Any:
-    """A level as the Link's other end reads it: the fill where the Link touches a Node beyond the board (`bad`, the inner face's rule of core/ports.arrival), the level itself elsewhere."""
-    return level if bad is None else np.where(bad, fill, level)
-
-
-def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
-    """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port, `fill` beyond a face that does not wrap (0, or the row's rest for the massless row holding the content: the vacuum beyond the face is the same vacuum, ALGEBRA.md #what-is-open, item 22), the Node itself on a folded axis."""
-    return tuple(arrival(a, axis, side, wrap, fill) for axis in range(3) for side in (1, -1))
+def ports(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
+    """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port of the torus, the Node itself on a folded axis."""
+    return tuple(arrival(a, axis, side, wrap) for axis in range(3) for side in (1, -1))
 
 
 def sense_current_of(

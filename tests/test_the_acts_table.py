@@ -276,16 +276,13 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "carried",
         "division_back",
     ): "R",  # the write's remainder returned back
-    # growth.py
-    ("growth.py", "reached", "%"): "D",  # a line's index wrap, named
-    ("growth.py", "resized", "%"): "D",  # a line's index wrap, named
     # lattice.py, lay.py
     ("lattice.py", "Lattice.half_wall", "division_forward"): "D",  # the half wall, once
     # board_readings.py
     ("board_readings.py", "uniform_mode", "division_forward"): "D",  # the uniform level read, once
     ("lay.py", "shares_of", "division_forward"): "D",  # the shares' floors, once each
     # loader
-    ("loader/faces.py", "connected", "%"): "D",  # a walked coordinate's wrap, named
+    ("loader/keys.py", "connected", "%"): "D",  # a walked coordinate's wrap, named
     ("loader/derived.py", "FamilyRule.width", "//"): "D",  # exact, a row's lines, named
     ("loader/derived.py", "FamilyRule.planes", "//"): "D",  # exact, a part's planes, named
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once

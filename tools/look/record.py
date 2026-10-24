@@ -31,9 +31,6 @@ PASS_LINES = (
     "credit",
     "lay",
 )  # kept too in a look of several passes: the clicks the passes are about and the write at the birth (the lay lines at the birth's interval, placed in the birth frame of the run back where the run forward holds no frame at that interval)
-Growth = tuple[
-    int, int, int, int
-]  # a growth as the lattice logs it: the interval served, the axis, the side, the layers
 
 Encoder = Callable[[np.ndarray], object]
 Kept = dict[int, list[records.Record]]  # a family's lines copied at an interval's start, by its index
@@ -51,11 +48,9 @@ def sparse(array: np.ndarray) -> object:
     return {"at": at.tolist(), "values": flat[at].tolist()}
 
 
-def nodes_of(mask: np.ndarray, offset: tuple[int, int, int] = (0, 0, 0)) -> list[list[int]]:
-    """The Nodes of a mask over the lattice as [x, y, z] rows at the file's coordinates, `offset` the layers grown before the origin."""
-    return [
-        [int(i) - before for i, before in zip(row, offset, strict=True)] for row in np.argwhere(mask)
-    ]
+def nodes_of(mask: np.ndarray) -> list[list[int]]:
+    """The Nodes of a mask over the lattice as [x, y, z] rows."""
+    return [[int(i) for i in row] for row in np.argwhere(mask)]
 
 
 def family_row(family: FamilyRule, families: tuple[FamilyRule, ...], action: int) -> dict[str, object]:
@@ -78,19 +73,10 @@ def family_row(family: FamilyRule, families: tuple[FamilyRule, ...], action: int
 def declared(world: World, path: Path, board: Lattice) -> dict[str, object]:
     """The world's declared numbers as the loader read them (the inner faces as the world file declares them, each its axis, its coordinate and its gaps, the loader having admitted them), and the node_detectors as the lattice holds them (the open faces' layer among them)."""
     families = world.families
-    faces = [
-        "open" if opened else "periodic" if wraps else "closed"
-        for opened, wraps in zip(world.open_axes, world.periodic, strict=True)
-    ]
-    document = json.loads(path.read_text(encoding="utf-8"))
     return {
         "world": path.name,
         "shape": list(world.shape),
-        "boundary": dict(zip(AXES, faces, strict=True)),
         "folded": [extent == 1 for extent in world.shape],
-        "face_depth": world.face_depth,
-        "faces": document.get("faces", []),
-        "receding": document.get("receding", {}),
         "declared_intervals": world.intervals,
         "node_clock": world.node_clock,
         "quantum_action": world.quantum_action,
@@ -152,33 +138,19 @@ def frame(
         else:
             row = {"level": state.lines[0].now, "parts": [line.now for line in state.lines[1:]]}
         families[family.name] = row
-    bodies = [nodes_of(board.body_nodes(number), board.offset) for number in range(len(world.bodies))]
+    bodies = [nodes_of(board.body_nodes(number)) for number in range(len(world.bodies))]
     found: dict[str, object] = {"interval": board.interval, "direction": direction, "pass": pass_number}
     if tick is not None:
         found["tick"] = tick
     if cone_radius is not None:
         found["cone_radius"] = cone_radius
     found.update(families=families, bodies=bodies)
-    return {**found, "shape": list(board.shape), "offset": list(board.offset), "lines": []}
+    return {**found, "shape": list(board.shape), "lines": []}
 
 
 def copied(record: records.Record) -> records.Record:
     """A line's two levels copied, so the form is read from the interval's start after the step."""
     return records.Record(record.now.copy(), record.before.copy(), record.remainder)
-
-
-def resized(record: records.Record, removed: list[Growth], added: list[Growth]) -> records.Record:
-    """A kept line over the lattice as the interval sized it: the layers a receding face added before this interval's acts padded on (`added`, the growths the step logged, 0 at the interval's start), and the layers the inverse took off again shrunk away (`removed`, the growths the step back unlogged), so the form is read at every Node of the frame in either direction."""
-    from event_universe import (
-        growth,  # noqa: PLC0415  # inside the function: growth imported before the lattice meets the engine's import cycle through walls, lists and the books (2026-10-23)
-    )
-
-    now, before = record.now, record.before
-    for _served, axis, side, layers in removed:
-        now, before = (growth.shrunk(a, axis, side, layers) for a in (now, before))
-    for _served, axis, side, layers in added:
-        now, before = (growth.padded(a, axis, side, layers) for a in (now, before))
-    return records.Record(now, before, record.remainder)
 
 
 class Frames:
@@ -194,7 +166,7 @@ class Frames:
             1,
             board.interval,
         )  # the pass and the interval of the frame read last
-        self.kept, self.growths = self.copies(), list(board.growths)
+        self.kept = self.copies()
 
     def copies(self) -> Kept:
         """Every family's lines copied at this call, the start the next frame's form is read from."""
@@ -206,21 +178,15 @@ class Frames:
     def read(self, interval: int, direction: int, pass_number: int) -> None:
         """The observer: one frame of the board at the call, after a step (direction +1) or a step back (-1)."""
         board = self.board
-        if board.ended is not None:
-            return
         self.tagged += [(pass_number, line) for line in self.lines[self.since :]]
         self.since = len(self.lines)
-        removed, added = self.growths[len(board.growths) :], board.growths[len(self.growths) :]
-        kept = {
-            index: [resized(line, removed, added) for line in lines]
-            for index, lines in self.kept.items()
-        }
+        kept = self.kept
         coned = pass_number > 1 and bool(
             getattr(getattr(board, "credit", None), "reads_sides", False)
         )  # the run back and forward in the record's light cone, the one reach
         radius = cone_radius(board) if coned else None  # G(t): the lay's Nodes within t + 1 Links
         found = frame(board, kept, direction, pass_number, getattr(board, "tick", None), radius)
-        self.kept, self.growths = self.copies(), list(board.growths)
+        self.kept = self.copies()
         if self.last == (
             pass_number,
             interval,
@@ -311,7 +277,6 @@ def output_written(
         "input": path.name,
         "verdict": document["verdict"],
         "intervals": board.interval,
-        "ended": board.ended,
         "books": board.books() if board.interval else {},
     }
     if document["verdict"] != "LAWFUL":
@@ -337,11 +302,8 @@ def record(
     try:
         for _ in range(world.intervals if intervals is None else intervals):
             board.step()
-            if board.ended is not None:
-                break
     except (ValueError, RuntimeError) as refusal:
         document.update(verdict="REFUSED", reason=str(refusal))
-    document["ended"] = board.ended
     if output is not None:
         output_written(output, path, document, lines, board)
     document.update(reached(board))

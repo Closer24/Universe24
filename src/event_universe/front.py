@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import numpy as np
 
@@ -15,24 +15,6 @@ from event_universe.reports import erasure
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
-
-
-def on_board(board: Lattice, node: Any) -> Node:
-    """A Node declared at the file's coordinates on the lattice as grown, by the offset of the layers grown before the origin (`Lattice.offset`; ALGEBRA.md, The start, the layers grown beyond a receding face the vacuum's, and The receding face: the run the larger board's bit for bit), the engine's one file-to-board offset: every declared coordinate (a body's or a NodeDetector's Nodes, a packet's envelope, a lay's or a face's Node) is read on the board through it (`node_detector`, `take`, `emission.laid_packet`, `meeting_back`, `cone`), as `Lattice.mask` adds the offset to a whole set."""
-    return (
-        int(node[0]) + board.offset[0],
-        int(node[1]) + board.offset[1],
-        int(node[2]) + board.offset[2],
-    )
-
-
-def declared(board: Lattice, here: Any) -> Node:
-    """A Node of the lattice as grown at the file's coordinates, the offset taken back, `on_board` inverted: the one place the board's index returns to the file's coordinates (the books' Nodes, `credit.booked` and `credit.support_of`; the cone's Node named in a refusal, `cone.at_file`)."""
-    return (
-        int(here[0]) - board.offset[0],
-        int(here[1]) - board.offset[1],
-        int(here[2]) - board.offset[2],
-    )
 
 
 @dataclass(frozen=True)
@@ -52,10 +34,7 @@ def started(board: Lattice, index: int, holes: list[tuple[Node, tuple[int, ...]]
 
 def inward(inner: np.ndarray, board: Lattice) -> list[np.ndarray]:
     """Per Port the Nodes whose neighbour through it lies on the inner shell (the arrival of the inner shell's mask through that Port): a shell Node's inward Ports, at most one per axis by the shells' geometry (the click's plan, C6 (iii))."""
-    return [
-        np.asarray(arrival(inner, axis, side, board.wrap, False), dtype=bool)
-        for axis, side in PORT_SIDES
-    ]
+    return [np.asarray(arrival(inner, axis, side, board.wrap), dtype=bool) for axis, side in PORT_SIDES]
 
 
 def advanced_fronts(board: Lattice) -> None:
@@ -73,7 +52,7 @@ def advanced_fronts(board: Lattice) -> None:
 def erased(board: Lattice, front: Front, distance: int) -> bool:
     """The erasing front's interval (the body of the loop's act as built, bit for bit): the shell at `distance` faced to 0 for the next two intervals at L = 1, the taper above 1, one erasure line while a shell holds a Node and one last line where the shell leaves the board; whether the front goes on."""
     index, origin = front.family, front.origin
-    where = on_board(board, origin)
+    where = (int(origin[0]), int(origin[1]), int(origin[2]))
     mask = shell(board.shape, where, distance, board.world.periodic)
     family, unit = board.families[index], board.credit.units[index]
     holds = bool(mask.any())
@@ -105,7 +84,7 @@ def faced(
         return False
     toward = inward(shell(board.shape, at, distance - 1, board.world.periodic), board)
     for here in np.argwhere(mask):
-        node_at = declared(board, here)
+        node_at = (int(here[0]), int(here[1]), int(here[2]))
         ports = tuple(port for port, through in enumerate(toward) if through[tuple(here)])
         for line in range(lines):
             for interval in intervals:

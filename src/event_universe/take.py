@@ -14,7 +14,6 @@ from event_universe.core.ports import AXES
 from event_universe.emission import Emitter
 from event_universe.features.click import Face, standing
 from event_universe.features.phase import signed_rounded
-from event_universe.front import on_board
 from event_universe.lay import laid
 from event_universe.loader.derived import quanta_records
 from event_universe.loader.keys import Node
@@ -50,7 +49,7 @@ def relaid(board: Lattice, books: NodeBooks, part: int, count: int, phases: Sequ
         levels = levels or [
             (records.zeros(board.shape, object), records.zeros(board.shape, object)) for _ in pairs
         ]
-        where = on_board(board, here)
+        where = (int(here[0]), int(here[1]), int(here[2]))
         for (now, before), (nows, befores) in zip(pairs, levels, strict=True):
             nows[where], befores[where] = now, before
     origin = board.half_wall(
@@ -68,7 +67,8 @@ def levels_at(
     """A part's levels at one Node of the reader, (re_now, im_now, re_before, im_before), read from its two lines; the reader's first Node where none is named: the click's write lays each Node in its own direction (C3), a part standing at each Node in its own (Part H, MUST 1; `act.leaving_phase` reads every Node)."""
     family, state = board.families[books.index], board.states[books.index]
     first = records.record_slice(family, books.record).start + part * family.width
-    at = on_board(board, books.nodes[0] if here is None else here)
+    node = books.nodes[0] if here is None else here
+    at = (int(node[0]), int(node[1]), int(node[2]))
     re, im = state.lines[first], state.lines[first + 1 if family.plane else first]
     return int(re.now[at]), int(im.now[at]), int(re.before[at]), int(im.before[at])
 
@@ -117,7 +117,7 @@ def faced(board: Lattice, item: Item) -> list[tuple[Node, tuple[int, ...]]]:
     nodes = [(int(n[0]), int(n[1]), int(n[2])) for n in item.nodes]
     named = zip(nodes, item.ports or ((),) * len(nodes), strict=True)
     sided = not item.ports  # no face set named: a lay, or a record taken whole
-    whole = [(n, p) for n, p in named if int(shares[on_board(board, n)]) <= unit and (sided or p)]
+    whole = [(n, p) for n, p in named if int(shares[n]) <= unit and (sided or p)]
     for (at, ports), line, interval in itertools.product(
         whole if item.delta < 0 else [], lines, intervals
     ):
@@ -184,7 +184,7 @@ def faces_presented(board: Lattice, index: int) -> dict[int, Faces]:
     found: dict[int, Faces] = {}
     for presented in board.credit.faces.get(board.interval, []):
         if presented.family == index:
-            found.setdefault(presented.line, ([], board.offset))[0].append(presented)
+            found.setdefault(presented.line, []).append(presented)
     return found
 
 

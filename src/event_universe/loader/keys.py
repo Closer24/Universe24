@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
+from itertools import pairwise
 from typing import Any
 
 from event_universe.core.integer import MAX_WORK_INT
@@ -33,25 +34,40 @@ def integer(value: object, label: str, least: int, most: int = MAX_WORK_INT) -> 
     return value
 
 
-def node_of(value: object, label: str, shape: Node, beyond: tuple[Node, ...] = ()) -> Node:
-    """A Node's address on the lattice, three integers inside the shape and not beyond the board's inner faces, refused by name otherwise."""
+def node_of(value: object, label: str, shape: Node) -> Node:
+    """A Node's address on the lattice, three integers inside the shape, refused by name otherwise."""
     if not isinstance(value, list) or len(value) != 3:
         raise ValueError(f"{label} must be a Node [x, y, z]")
     found = tuple(integer(value[axis], f"{label}[{axis}]", 0, shape[axis] - 1) for axis in range(3))
-    node = found[0], found[1], found[2]
-    if node in beyond:
-        raise ValueError(
-            f"{label} is the Node {list(node)}, beyond the board's inner face: nothing stands there"
-        )
-    return node
+    return found[0], found[1], found[2]
 
 
-def span_of(value: object, label: str, extent: int) -> tuple[int, int]:
-    """A range of Nodes [first, last] along one axis, inside its extent, first at most last."""
-    if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(f"{label} must be a range [first, last]")
-    first = integer(value[0], f"{label}[0]", 0, extent - 1)
-    return first, integer(value[1], f"{label}[1]", first, extent - 1)
+def connected(nodes: tuple[Node, ...], shape: Node, periodic: tuple[bool, bool, bool]) -> bool:
+    """Whether a set of Nodes is one region through the six Ports, walked from its first Node through the wrap."""
+    region, seen, front = set(nodes), {nodes[0]}, [nodes[0]]
+    while front:
+        node = front.pop()
+        for axis in range(3):
+            for side in (1, -1):
+                there = list(node)
+                there[axis] += side
+                if periodic[axis]:
+                    there[axis] %= shape[axis]
+                at = (there[0], there[1], there[2])
+                if at in region and at not in seen:
+                    seen.add(at)
+                    front.append(at)
+    return seen == region
+
+
+def extent_across(coordinates: Iterable[int], length: int, wraps: bool) -> int:
+    """The extent of a set of coordinates along an axis of `length` Nodes: through the wrap the smallest arc of the ring that covers them, else from the least to the greatest."""
+    distinct = sorted(set(coordinates))
+    if not wraps:
+        return distinct[-1] - distinct[0] + 1
+    gaps = [after - before for before, after in pairwise(distinct)]
+    gaps.append(length - distinct[-1] + distinct[0])  # the wrap's gap, the whole ring at one coordinate
+    return length - max(gaps) + 1
 
 
 def document_at(files: Mapping[str, object], path: object, label: str) -> object:

@@ -97,13 +97,12 @@ def presented(
     other: Any,
     carry: Any,
     faces: list[Face],
-    offset: tuple[int, int, int],
     direction: int,
 ) -> tuple[Any, ...]:
     """The six arrivals of a line with the faces' values presented at their Ports and Nodes, every other arrival the neighbour's own: forward the value is computed at the Node from Rule3's flux line (`rule3.flux_total` with the face's arrival 0 among the six, the Node's two levels, its mass and its remainder as the step reads them; `face_value` at the target, 0, the hole to 0, or the taper's fraction of Rule3's own level, on the sum of the reaches of the face's Ports, every cut Port, its reach 0 at the Node, dropped from the set and the set kept in the face; a set left with no open Port refused by name), backward the kept value is presented again, so the inverse runs through the click; the arrays copied once per Port touched."""
     found, copied = list(arrived), set()
     for face in faces:
-        at = (face.at[0] + offset[0], face.at[1] + offset[1], face.at[2] + offset[2])
+        at = face.at
         here = [int(np.asarray(read)[at]) if np.ndim(read) else int(read) for read in rule.reaches]
         if face.value is None:
             assert direction == 1, "a face is computed forward and presented again backward"

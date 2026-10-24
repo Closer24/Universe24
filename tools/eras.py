@@ -350,8 +350,6 @@ def run(
                         {"interval": board.interval, "seconds": round(line["seconds"], 1), "U_v": rows}
                     )
                 )
-            if board.ended is not None:
-                break
     if kept_clicks is not None:
         kept_clicks.close()
     if kept_nodes is not None:

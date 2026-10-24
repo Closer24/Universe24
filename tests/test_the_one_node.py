@@ -143,14 +143,10 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
 
     assert set(loader_world.WORLD_KEYS) == {
         "shape",
-        "boundary",
-        "face_depth",
-        "faces",
         "intervals",
         "universe",
         "bodies",
         "node_detectors",
-        "receding",
         "draw",
     }
     assert set(universe.HELD_KEYS) == {"sources", "level_weight", "write_weight", "rest"}
@@ -259,7 +255,7 @@ LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the 
 
 def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  # type: ignore[no-untyped-def]
     """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, its bodies', node_detectors', draw's, lay's, receding faces' and packets', the universe's, its families' and their held rows', a body's transitions', rates' and parts'), and no former key stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
-    from event_universe.loader import faces, node_detector_declaration, universe
+    from event_universe.loader import node_detector_declaration, universe
     from event_universe.loader import world as loader_world
 
     tables = {
@@ -267,7 +263,6 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
         "bodies": set(loader_world.BODY_KEYS),
         "node_detectors": set(loader_world.NODEDETECTOR_KEYS),
         "draw": set(draw_keys := ("window",)),
-        "faces": set(faces.FACE_KEYS),
         "transitions": set(node_detector_declaration.TRANSITION_KEYS),
         "rates": set(node_detector_declaration.RATE_KEYS) | set(node_detector_declaration.RATE_OPTIONAL),
         "parts": set(node_detector_declaration.PART_KEYS),
@@ -343,7 +338,7 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
     integers = {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16}
     with pytest.raises(ValueError, match=f"unknown key '{key}'"):
         if place == "world":
-            world = {"shape": [3, 1, 1], "boundary": {}, "intervals": 1, "universe": "u.json", key: 1}
+            world = {"shape": [3, 1, 1], "intervals": 1, "universe": "u.json", key: 1}
             keyed(
                 {**world, "bodies": [], "node_detectors": []},
                 "the world",
@@ -420,7 +415,7 @@ def test_every_shipped_world_loads_and_runs_under_the_one_node(path):  # type: i
         return
     board = Lattice(world)
     board.step()
-    assert board.interval == 1 and board.ended is None
+    assert board.interval == 1
     assert set(board.fixed_walls) == set(board.held)  # every held row's wall fixed per Node
     if all(f.pair[0] == f.pair[1] for f in board.families if f.held):
         assert (

@@ -36,9 +36,7 @@ def run_input(path: str, out_dir: str) -> dict[str, object]:
         board = Lattice(load_world(source), lambda line: lines.append(line))
         for _ in range(board.world.intervals):
             board.step()
-            if board.ended is not None:
-                break
-        output.update(intervals=board.interval, ended=board.ended, books=board.books())
+        output.update(intervals=board.interval, books=board.books())
     except (ValueError, RuntimeError) as refusal:
         output.update(verdict="REFUSED", reason=str(refusal))
     output["lines"] = [line for line in lines if line["event"] in LINES]

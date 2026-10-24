@@ -175,8 +175,7 @@ def phase_counts(
         signs = frame_signs(phi.remainder, wrap)
         counts = []
         for axis in range(AXES):
-            beyond = arrival(np.ones_like(np.asarray(c)), axis, 1, wrap) == 0
-            counts.append(np.where(beyond, 0, k - signs[2 * axis] * arrival(k, axis, 1, wrap)))
+            counts.append(k - signs[2 * axis] * arrival(k, axis, 1, wrap))
         found[row] = counts
     return found
 

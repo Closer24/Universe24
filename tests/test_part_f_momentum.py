@@ -12,21 +12,18 @@ from event_universe.core.rule3 import division_forward
 from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws import GRAVITY
 
 GAMMA, T, UNIT, CHAIN = 6000, 32768, 16, 24
 LIGHT = {"name": "light", "pair": [GAMMA, GAMMA], "reads": {}, "dimension": 1}
 INTEGERS = {"node_clock": GAMMA, "quantum_action": T, "width": 63, "link_unit": UNIT}
 
 
-def chain_world(tmp_path, families, chain=CHAIN, boundary="periodic"):  # type: ignore[no-untyped-def]
-    """A chain of `chain` Nodes, x `boundary`, y and z folded, no body and no packet: the records laid by hand."""
+def chain_world(tmp_path, families, chain=CHAIN):  # type: ignore[no-untyped-def]
+    """A ring of `chain` Nodes along x, y and z folded, no body and no packet: the records laid by hand."""
     (tmp_path / "u.json").write_text(
         json.dumps({"integers": INTEGERS, "families": families}), encoding="utf-8"
     )
-    world = dict(
-        shape=[chain, 1, 1], boundary=dict(x=boundary, y="periodic", z="periodic"), face_depth=1
-    )
+    world = dict(shape=[chain, 1, 1])
     world.update(intervals=400, universe="u.json", bodies=[], node_detectors=[])
     (path := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
     return path
@@ -172,60 +169,6 @@ def test_the_plane_waves_momentum_over_its_action_is_the_pairs_s_integer(tmp_pat
         f"P_x / (num count T) = {momentum / (num * count * T):.4f} = 2 sin k / sin omega to the lay's rounding"
     )
     assert abs(engine - hands) <= 8  # the lay's rounding at A = 8,000: a few units of 2 T's 46,341
-
-
-def test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_toward_the_well(
-    tmp_path, monkeypatch
-):
-    """(c) A packet (the plane wave at k = pi / 4 under a raised-cosine envelope over 12 Nodes) on an open chain of 48 beside a well of the content, the gravity row's level raised by a bump of 400 over 9 Nodes at the far side and held static by the harness each interval (the hands' non-uniform static paces): per step the engine's integer Delta P_x equals the rational step's at the engine's own integers per Node (the gradient term; 0 at uniform paces) to the floor 2 num SUM |now_(i+1) - now_(i-1)|, and over 30 intervals P_x grows toward the well, the fall; the integers printed."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    light = dict(LIGHT, reads={"gravity": 1})
-    board = Lattice(load_world(chain_world(tmp_path, [GRAVITY, light], 48, "open")))
-    gravity, index = 0, 1
-    x = np.arange(48)
-    envelope = np.where((x >= 4) & (x < 16), np.sin(np.pi * (x - 3) / 13) ** 2, 0.0)
-    plane_wave(board, index, 5000, (1, 4), envelope)  # within the bound 6,949
-    well = np.where(abs(x - 36) <= 4, np.rint(400 * np.cos(np.pi * (x - 36) / 10) ** 2), 0).astype(
-        board.kind
-    )
-    row = board.states[gravity].lines[0]
-    level = (row.now + well.reshape(board.shape)).astype(board.kind)
-    board.states[gravity].lines[0] = records.Record(level, level.copy(), row.remainder)
-    kept = (
-        list(board.states[gravity].lines),
-        [r.copy() for r in board.states[gravity].write_remainders],
-    )
-    num = board.families[index].pair[0]
-    first = readings.momentum_of(num, board.states[index].lines, board.wrap)[0]
-    last, misses = first, []
-    for _ in range(30):
-        content = board.read(index, 1, 0)[0]
-        rules = [
-            node.rule_of(
-                board.families[index], GAMMA, int(np.asarray(content).reshape(-1)[i]), None, board.unit
-            )
-            for i in range(48)
-        ]
-        reads, self_coefficient, wall = ([r[k] for r in rules] for k in range(3))
-        lines = board.states[index].lines
-        now = [Fraction(int(v)) for v in lines[0].now.reshape(-1)]
-        before = [Fraction(int(v)) for v in lines[0].before.reshape(-1)]
-        predicted = momentum_fraction(
-            rational_step(now, before, reads, self_coefficient, wall, False), now, num
-        ) - Fraction(last)
-        bound = bound_of(board, index)
-        board.step()
-        board.states[gravity].lines = list(kept[0])
-        board.states[gravity].write_remainders = [r.copy() for r in kept[1]]
-        found = readings.momentum_of(num, board.states[index].lines, board.wrap)[0]
-        misses.append(abs(Fraction(found - last) - predicted))
-        assert abs(Fraction(found - last) - predicted) < bound
-        last = found
-    assert last > first  # the packet moves toward +x where the well stands: P_x grows, the fall
-    print(
-        f"Part F (c): P_x {first} -> {last} over 30 intervals toward the well (+{last - first}); the integer step against the "
-        f"rational step's gradient term: the largest miss {float(max(misses)):.0f} under the floor"
-    )
 
 
 def rounding_floor(board: Lattice, index: int, at: np.ndarray) -> float:

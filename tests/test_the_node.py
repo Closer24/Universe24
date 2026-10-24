@@ -77,7 +77,7 @@ def test_one_nodes_acts_are_rule3_called_by_hand():
             a,
             *(
                 np.asarray(x)
-                for x in rule3(flux.link_fluxes(a, reads, chain, 0), mass(2, 3, 1000), w, a, b, r)
+                for x in rule3(flux.link_fluxes(a, reads, chain), mass(2, 3, 1000), w, a, b, r)
             ),
         )
         assert np.array_equal(a, -a[::-1]) and (r[:20] == records.complement(r, w)[::-1][:20]).all()

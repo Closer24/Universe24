@@ -4,7 +4,7 @@ import json
 
 from event_universe import world_files
 from event_universe.lattice import Lattice
-from event_universe.loader import faces, keys, universe
+from event_universe.loader import keys, universe
 from event_universe.loader.derived import PLANE_LINE, REAL_LINE
 from event_universe.loader.node_detector_declaration import lit_families
 from event_universe.loader.world import bodies_of
@@ -18,10 +18,6 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     document = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     shape = (4, 2, 1)
     held = {"sources": ["form"], "level_weight": 1, "write_weight": 1}
-    face = {"sides": ["low"], "largest": 9, "layers": 1}
-
-    def receding(boundary="open", **keys):
-        return faces.receding_of({"x": {**face, **keys}}, shape, {"x": boundary})
 
     def rows(*entries):
         return universe.universe_of({**document, "families": list(entries)})
@@ -32,21 +28,9 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         ("lacks the key 'a'", lambda: keys.keyed({}, "k", ("a",), ("a",))),
         ("integer from 1 through 3", lambda: keys.integer(4, "n", 1, 3)),
         (r"must be a Node \[x, y, z\]", lambda: keys.node_of([1, 2], "node", shape)),
-        ("beyond the board's inner face", lambda: keys.node_of([1, 1, 0], "node", shape, ((1, 1, 0),))),
-        (r"must be a range \[first, last\]", lambda: keys.span_of([1], "span", 4)),
         ("no file stands at that repository path", lambda: keys.document_at({}, "u.json", "u")),
         ("each holder's name to the weight", lambda: keys.reads_of([], "reads")),
         ("read at the weight 0 is no read", lambda: keys.reads_of({"gravity": 0}, "reads")),
-        ("stands on an open or closed axis", lambda: receding("periodic")),
-        ("sides lists", lambda: receding(sides=[])),
-        ("a side is one of", lambda: receding(sides=["up"])),
-        ("faces must be a list", lambda: faces.faces_of({}, shape)),
-        ("axis is one of", lambda: faces.faces_of([{"axis": "w", "at": 1, "gaps": []}], shape)),
-        ("gaps must be a list", lambda: faces.faces_of([{"axis": "x", "at": 1, "gaps": {}}], shape)),
-        (
-            "faces leave no Node",
-            lambda: faces.faces_of([{"axis": "x", "at": x, "gaps": []} for x in range(4)], shape),
-        ),
         (
             "is a held row and declares no dimension",
             lambda: universe.shape_of({"held": {}, "dimension": 1}, "r"),
@@ -94,8 +78,6 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     ]
     for match, call in refusals:
         refused(match, call)
-    layer = faces.layer_of(shape, (True, False, False), 1, (faces.RecedingFace(0, 1, 9, 1),))
-    assert layer == ((0, 0, 0), (0, 1, 0))  # the high side recedes: the low face's two Nodes alone
 
 
 def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(
@@ -104,7 +86,7 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
     """The board against the massless row's second double root (`loader/world.even_box_refused`; the mathematician's reading of the shelved ion's refusal): on the tests' universe, whose gravity and charge rows are massless (the first named), a box of 4 by 4 by 2 periodic on all three axes is refused by name at load, the packet naming the family, the shape, the staggered mode (-1)^(x + y + z + t) walked by Rule3's own rounding and the way out (printed); the same box with one odd extent, 4 by 4 by 3, and the even box with its x axis open are admitted, the mode a bounded response there."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)
-    world = dict(boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=1, universe="u.json")
+    world = dict(intervals=1, universe="u.json")
     world.update(bodies=[], node_detectors=[])
 
     def written(name, **changes):
@@ -115,13 +97,15 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
 
     refusal = str(refused("staggered mode", load_world, written("even", shape=[4, 4, 2])))
     print(refusal)
-    assert "'gravity'" in refusal and "[4, 4, 2]" in refusal and "odd extent or open it" in refusal
+    assert "'gravity'" in refusal and "[4, 4, 2]" in refusal and "odd extent" in refusal
     assert Lattice(load_world(written("odd", shape=[4, 4, 3]))).shape == (4, 4, 3)
-    opened = dict(x="open", y="periodic", z="periodic")
-    assert (
-        Lattice(load_world(written("open", shape=[4, 4, 2], boundary=opened, face_depth=1))).shape[0]
-        == 4
-    )
+    for key in (
+        "boundary",
+        "face_depth",
+        "faces",
+        "receding",
+    ):  # the torus is the one board (2026-10-24)
+        refused(f"unknown key '{key}'", load_world, written(key, shape=[4, 4, 3], **{key: {}}))
 
 
 def test_a_click_names_light_its_own_family_and_never_the_holder_of_the_sign_a_family_reads():
@@ -141,7 +125,7 @@ def test_a_click_names_light_its_own_family_and_never_the_holder_of_the_sign_a_f
 
     def declared(**entry):
         body = {"family": "nuclide", "nodes": [{"node": [1, 0, 0]}], "node_detector": draw, **entry}
-        return bodies_of([body], families, (3, 1, 1), (), 32768)
+        return bodies_of([body], families, (3, 1, 1), 32768)
 
     admitted = declared(parts=parts, transitions=[{**turn, "drive": "photon"}])[0].detector
     assert admitted is not None and admitted.transitions[0].drive == 2  # light's own family named

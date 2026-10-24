@@ -2,15 +2,14 @@
 
 from __future__ import annotations
 
-from dataclasses import astuple, replace
-from typing import TYPE_CHECKING
+from dataclasses import astuple
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import growth, meeting_back
+from event_universe import meeting_back
 from event_universe.core.ports import AXES
 from event_universe.features.front import distance_map
-from event_universe.front import declared, on_board
 from event_universe.loader.keys import Node
 from event_universe.records import NodeState, Record
 
@@ -20,6 +19,12 @@ if TYPE_CHECKING:
 Box = tuple[
     slice, slice, slice
 ]  # the box of the cone's step over the board as grown, one slice per axis
+
+
+def spread(wall: Any, shape: tuple[int, int, int]) -> Any:
+    """A wall as an array over the board: the per-Node array as it stands, a scalar wall spread over the shape."""
+    found = np.asarray(wall, dtype=object)
+    return found if found.shape == shape else np.full(shape, int(found.reshape(-1)[0]), dtype=object)
 
 
 def extent_of(board: Lattice, box: Box) -> tuple[int, int, int]:
@@ -33,7 +38,7 @@ def distances_of(board: Lattice, box: Box) -> np.ndarray:
     lo = (int(box[0].start), int(box[1].start), int(box[2].start))
     origins = [
         (here[0] - lo[0], here[1] - lo[1], here[2] - lo[2])
-        for here in [on_board(board, at) for at in board.credit.support]
+        for here in [(int(at[0]), int(at[1]), int(at[2])) for at in board.credit.support]
     ]
     return distance_map(extent_of(board, box), origins, board.world.periodic)
 
@@ -42,7 +47,7 @@ def box_of(board: Lattice, reach: int) -> Box:
     """The box of one step of the cone stepped alone: the bounding box of the ball at `reach` Links with its ring, the Nodes one Link beyond the ball, cut to the board as grown, whole on a periodic axis (the wrap's Link stays the engine's) and on a folded axis of extent 1; the view's arrays are these slices of the board's (`viewed`)."""
     found = []
     for axis, extent in enumerate(board.shape):
-        along = [at[axis] + board.offset[axis] for at in board.credit.support]
+        along = [at[axis] for at in board.credit.support]
         if board.world.periodic[axis] or extent == 1:
             found.append(slice(0, extent))
         else:
@@ -93,22 +98,17 @@ def viewed(board: Lattice, box: Box, kept: np.ndarray) -> Lattice:
     vars(view).update(vars(board))
     view.states = [sliced(state, box) for state in board.states]
     view.fixed_walls = {  # the carried factor's wall per Node, a constant of the lattice, cut to the box with the states
-        index: [growth.spread(wall, board.shape)[box] for wall in walls]
+        index: [spread(wall, board.shape)[box] for wall in walls]
         for index, walls in board.fixed_walls.items()
     }
     view.shape = extent_of(board, box)
-    offset = board.offset
-    view.offset = (offset[0] - box[0].start, offset[1] - box[1].start, offset[2] - box[2].start)
-    beyond = board.wrap.beyond
-    view.wrap = board.wrap._replace(beyond=None if beyond is None else beyond[box])
-    view.world = replace(board.world, receding=())
-    view.growths, view.observers = [], []
+    view.observers = []
     return view
 
 
 def at_file(board: Lattice, box: Box, here: list[int]) -> list[int]:
     """A Node of the box at the file's coordinates: the box's start added, the layers grown before the origin taken back (`front.declared`)."""
-    return list(declared(board, [h + int(s.start) for h, s in zip(here, box, strict=True)]))
+    return [h + int(s.start) for h, s in zip(here, box, strict=True)]
 
 
 def differing(
@@ -162,7 +162,9 @@ def acts_inside(board: Lattice, interval: int, box: Box, kept: np.ndarray) -> No
     nodes = [meeting_back.node_of(board, line)[1] for line in books.lays.get(interval, [])]
     nodes += [face.at for face in books.faces.get(interval, [])]
     for at in nodes:
-        here = tuple(h - int(s.start) for h, s in zip(on_board(board, at), box, strict=True))
+        here = tuple(
+            h - int(s.start) for h, s in zip((int(at[0]), int(at[1]), int(at[2])), box, strict=True)
+        )
         inside = all(0 <= h < extent for h, extent in zip(here, kept.shape, strict=True))
         if not inside or not bool(kept[here]):
             raise RuntimeError(
@@ -212,29 +214,6 @@ def written_back(
         ]
 
 
-def grown_at(board: Lattice, reach: int, arrived: int) -> bool:
-    """The receding faces before a step forward of the cone stepped alone, read from the box alone (ALGEBRA.md, The objects, the unbounded board; the owner's word of 2026-10-20, only the cone moves): where the box's layer on a receding face's side is the board's own face layer, that layer is read for a level other than 0 (`growth.reached` over the box's slices of the board's arrays, the same reading `growth.grow` makes over the board), and the board grows by the face's layers (`growth.resize`), frame 0 regrown with it (`meeting_back.grown`) and the growth logged for the interval entered (`Lattice.growths`); where the box stops short of the face, the face's layer lies outside the record's cone at frame 0, where no level stands, so nothing is read and nothing grows; the growths are read anew on every run forward, since the write at the birth changes the record's history and may move the interval a face is reached (the log the run back pops is the history as it was); the lawful end as `growth.grow` names it where a face is grown to its largest size; whether the board grew."""
-    found = False
-    for face in board.world.receding:
-        box, extent = box_of(board, reach), board.shape[face.axis]  # the box over the board at the step
-        along = box[face.axis]
-        touches = along.start == 0 if face.side < 0 else along.stop == extent
-        if not touches:
-            continue
-        states = [sliced(state, box) for state in board.states]
-        if not growth.reached(states, board.families, face.axis, face.side):
-            continue
-        layers = min(face.layers, face.largest - extent)
-        if layers < 1:
-            board.ended = growth.ended(face, board.interval)
-            raise RuntimeError(f"the run ended at interval {board.interval}: {board.ended}")
-        growth.resize(board, face.axis, face.side, layers, 1)
-        meeting_back.grown(board, board.credit.regrown, (arrived, face.axis, face.side, layers), 1)
-        board.growths.append((arrived, face.axis, face.side, layers))
-        found = True
-    return found
-
-
 def copied(board: Lattice) -> list[NodeState]:
     """Every family's NodeState with every array copied, the lines, the write remainders and the phase lines (`dataclasses.astuple`, a deep copy of each line's three arrays): the close the run back takes (`run_back`), read and never written into the board, resized at the return as the board was resized by the growths the run forward found anew (`grown`, `growth.resized`) and compared bit for bit outside the record's cone (`run_forward`, `first_difference`; ALGEBRA.md, The click is the meeting of the future with the past)."""
     return [
@@ -253,8 +232,6 @@ def stepped_alone(board: Lattice, direction: int) -> None:
     arrived = interval + direction
     reach = meeting_back.radius(board) + (1 if direction > 0 else 0)
     box = box_of(board, reach)
-    if direction > 0 and grown_at(board, reach, arrived):
-        box = box_of(board, reach)  # the board grew: the box cut to the new shape
     distance = distances_of(board, box)
     kept, live = np.asarray(distance <= reach), np.asarray(distance <= meeting_back.radius(board))
     frame = [sliced(state, box) for state in books.regrown]
@@ -275,12 +252,6 @@ def stepped_alone(board: Lattice, direction: int) -> None:
     books.cone[arrived] = int(after.sum())
     written_back(board, view, box, kept, before)
     board.interval, board.passes, board.heading = view.interval, view.passes, view.heading
-    board.ended = view.ended
-    if direction < 0:
-        while board.growths and board.growths[-1][0] == interval:
-            found = board.growths.pop()
-            growth.resize(board, found[1], found[2], found[3], -1)
-            meeting_back.grown(board, books.regrown, found, -1)
     for observer in board.observers:
         observer(board.interval, direction, board.passes)
 

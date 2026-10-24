@@ -5,7 +5,6 @@ import json
 from tests.laws import UNIVERSE
 
 GAMMA, ACTION, CUBE, AMPLITUDE = 6000, 32768, 3, 435  # the rule's clock and quantum, a 3-cube torus
-TORUS = {"x": "periodic", "y": "periodic", "z": "periodic"}
 WIDTH = 92  # the width of the volume form, the record X inside 2^92 at the clock's last pace
 
 

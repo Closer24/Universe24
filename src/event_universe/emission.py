@@ -23,7 +23,6 @@ from event_universe.features.click import (
     squared,
     wave_cosine,
 )
-from event_universe.front import on_board
 from event_universe.guide import guide_total
 from event_universe.lay import laid, laid_in_time, written
 from event_universe.loader.derived import FamilyRule, count_wall
@@ -213,7 +212,7 @@ def laid_packet(board: Lattice, item: Item) -> tuple[int, int, int]:
                 for node_at in section:
                     there = list(node_at)
                     there[axis] += sign * distance
-                    nows[(here := on_board(board, there))] = slice_at[0]
+                    nows[(here := (int(there[0]), int(there[1]), int(there[2])))] = slice_at[0]
                     befores[here], weights[here] = slice_at[1], slice_at[2]
             origin = None  # the remainders as they stand: the packet adds to light's record (the branch's lay)
             for line in emitted_lines(family)[:: family.width]:  # the first line of every part, alike

@@ -270,9 +270,9 @@ def sense_at(board: Lattice, index: int, at: Node) -> int:
     if not family.plane:
         return 0
     where = (
-        int(at[0]) + int(board.offset[0]),
-        int(at[1]) + int(board.offset[1]),
-        int(at[2]) + int(board.offset[2]),
+        int(at[0]),
+        int(at[1]),
+        int(at[2]),
     )
     re, im = state.lines[0], state.lines[1]
     wronskian = int(re.now[where]) * int(im.before[where]) - int(im.now[where]) * int(re.before[where])

@@ -40,11 +40,8 @@ def verdict(board: Lattice, intervals: int) -> dict[str, object]:
     snapshots, run = {board.interval: snapshot(board)}, 0
     for _ in range(intervals):
         board.step()
-        if board.ended is not None:
-            break
         run += 1
         snapshots[board.interval] = snapshot(board)
-    ended = board.ended
     faces_from(board, lines)
     for _ in range(run):
         crossed(board, lines)
@@ -66,7 +63,6 @@ def verdict(board: Lattice, intervals: int) -> dict[str, object]:
         "verdict": "MATCH",
         "intervals": run,
         "interval": board.interval,
-        "ended": ended,
     }
 
 

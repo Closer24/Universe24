@@ -15,9 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_the_flux_step_equals_the_first_form_under_the_fold(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     """The fold of a flux holder on the chain of 25 with a moving packet, 40 intervals forward and back; the odd line written along the packet's way, so the fold was read."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(
-        load_world(flux_world(tmp_path, (25, 1, 1), dict(x="periodic", y="periodic", z="periodic"), 40))
-    )
+    board = Lattice(load_world(flux_world(tmp_path, (25, 1, 1), 40)))
     packet(board, 0, (1, 4), 7, 3)
     found = ORACLE.verdict(board, 40)
     assert found == {**found, "verdict": "EQUAL", "intervals": 40, "back": 40}, found

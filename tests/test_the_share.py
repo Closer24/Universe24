@@ -123,7 +123,7 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
     )
     rows["integers"]["link_unit"] = 1
     (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
-    world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=40)
+    world = dict(shape=[48, 1, 1], intervals=40)
     world.update(bodies=[], node_detectors=[])
     paths = {"turn": tmp_path / "turn_ring.json"}
     paths["turn"].write_text(json.dumps({**world, "universe": "turn.json"}), encoding="utf-8")

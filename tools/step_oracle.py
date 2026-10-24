@@ -19,7 +19,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import board_readings, credit, emission, flux, front, growth, meeting, node, swap
+from event_universe import board_readings, credit, emission, flux, front, meeting, node, swap
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.core.rule3 import Rule
@@ -51,14 +51,14 @@ def arrivals_rule3(reads, arrivals, self_coefficient, wall, now, other, carry, d
 
 
 def oracle_step(
-    record: Record, rule: Rule, wrap: Wrap, direction: int = 1, fill: int = 0, faces: Faces = NO_FACE
+    record: Record, rule: Rule, wrap: Wrap, direction: int = 1, faces: Faces = NO_FACE
 ) -> Record:
     """The first form's step on one line: the six arrivals of the level the step starts from, the faces presented, the first form."""
     reads, self_coefficient, wall, _mass = rule
     level, other = (record.now, record.before) if direction == 1 else (record.before, record.now)
-    arrived = ports(level, wrap, fill)
-    if faces[0]:
-        arrived = presented(arrived, rule, level, other, record.remainder, *faces, direction)
+    arrived = ports(level, wrap)
+    if faces:
+        arrived = presented(arrived, rule, level, other, record.remainder, faces, direction)
     found, remainder = arrivals_rule3(
         reads, arrived, self_coefficient, wall, level, other, record.remainder, direction
     )
@@ -76,10 +76,10 @@ def oracle_step_plane(re, im, rule, wrap, direction, faces, pairs):  # type: ign
         tuple(arrival(level, axis, side, wrap) for axis in range(AXES) for side in (1, -1))
         for level in now
     )
-    if faces[0][0] or faces[1][0]:
+    if faces[0] or faces[1]:
         faced = [
-            presented(at, rule, now[k], other[k], (re, im)[k].remainder, *faces[k], direction)
-            if faces[k][0]
+            presented(at, rule, now[k], other[k], (re, im)[k].remainder, faces[k], direction)
+            if faces[k]
             else at
             for k, at in enumerate(arrived)
         ]
@@ -127,9 +127,6 @@ def oracle_step_family(index, families, states, rule, wrap, direction, record, f
                 rule,
                 wrap,
                 direction,
-                (family.fill or family.rest)
-                if number == 0
-                else 0,  # the rest's volume beyond a face where the row carries it
                 faced.get(number, NO_FACE),
             )
             if not (traced and 1 <= number - span.start <= AXES)
@@ -172,10 +169,6 @@ def oracle_step_records(
 
 def oracle_interval(board: Lattice) -> None:
     """The one Node's `Lattice.step` with the oracle's step in the place of the engine's; every other act the engine's own, in the engine's order: the fifth act (swap.kept before the phase act, swap.stepped after the held writes) and the densities' reading after it, the state at the interval's end (2026-10-23, The floor)."""
-    if board.ended is not None:
-        raise RuntimeError(f"the run ended at interval {board.interval}: {board.ended}")
-    if not growth.grow(board):
-        return
     board.interval, forms, turns = board.interval + 1, Bookings(), Bookings()
     kept_state = swap.kept(board)
     node.phase_act(board.held, board.families, board.states, 1, board.wrap, board.world.node_clock)
@@ -227,9 +220,9 @@ def arrays(board: Lattice) -> list[tuple[str, np.ndarray]]:
 
 
 def digest(board: Lattice) -> str:
-    """One digest of the board's state: the interval, the shape, the offset and every array."""
+    """One digest of the board's state: the interval, the shape and every array."""
     h = hashlib.sha256()
-    h.update(repr((board.interval, tuple(board.shape), tuple(board.offset))).encode())
+    h.update(repr((board.interval, tuple(board.shape))).encode())
     for label, value in arrays(board):
         h.update(label.encode())
         h.update(
@@ -240,8 +233,8 @@ def digest(board: Lattice) -> str:
 
 def first_difference(a: Lattice, b: Lattice) -> str | None:
     """The first array and Node at which two boards differ, with the two values, or None where they agree bit for bit."""
-    if (a.interval, tuple(a.shape), a.ended is None) != (b.interval, tuple(b.shape), b.ended is None):
-        return f"interval/shape/ended: {a.interval, list(a.shape), a.ended} against {b.interval, list(b.shape), b.ended}"
+    if (a.interval, tuple(a.shape)) != (b.interval, tuple(b.shape)):
+        return f"interval/shape: {a.interval, list(a.shape)} against {b.interval, list(b.shape)}"
     for (label, was), (_label, now) in zip(arrays(a), arrays(b), strict=True):
         if was.shape != now.shape:
             return f"{label}: the shape {list(was.shape)} against {list(now.shape)}"
@@ -285,14 +278,6 @@ def verdict(board: Lattice, intervals: int | None) -> dict[str, Any]:
     for _ in range(ticks):
         oracle_interval(oracle)
         engine.step()
-        if oracle.ended is not None or engine.ended is not None:
-            if str(oracle.ended) != str(engine.ended):
-                return {
-                    "verdict": "DIFFERS",
-                    "interval": engine.interval,
-                    "what": f"ended: {oracle.ended} against {engine.ended}",
-                }
-            break
         run += 1
         digests[engine.interval] = digest(engine)
         difference = first_difference(oracle, engine)

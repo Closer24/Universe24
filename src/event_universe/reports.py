@@ -120,7 +120,6 @@ OUTPUT = (
     VALUE,
 )  # the lines' keys
 PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
-END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
 BOOKS = (
     "share",
     "quanta",
@@ -267,11 +266,6 @@ def book(
     return dict(zip(BOOKS, (share, quanta, count, deficit, drift, pace, frozen), strict=True))
 
 
-def end(interval: int, axis: str, side: str, largest: int) -> dict[str, object]:
-    """The lawful end, named: the front stands on the layer before the receding face of an axis grown to its largest size after this interval, and the next interval would reflect it."""
-    return dict(zip(END, (interval, axis, side, largest), strict=True))
-
-
 def standing_nodes(declared: np.ndarray, present: np.ndarray, wrap: Wrap) -> np.ndarray:
     """A body's Nodes as a report needs them (ALGEBRA.md #what-a-body-is (c)): the Nodes where its family's share stands in quanta (`present`), connected through the Links to its declared Nodes; the declared Nodes themselves where it stands on none of them; derived and kept nowhere."""
     region = declared & present
@@ -281,7 +275,7 @@ def standing_nodes(declared: np.ndarray, present: np.ndarray, wrap: Wrap) -> np.
         grown = region.copy()
         for axis in range(3):
             for side in (1, -1):
-                grown |= arrival(region, axis, side, wrap, False)
+                grown |= arrival(region, axis, side, wrap)
         grown &= present
         if np.array_equal(grown, region):
             return np.asarray(region, dtype=bool)
@@ -299,16 +293,9 @@ def ball(shape: tuple[int, ...], centre: Node, radius: int, wrap: Wrap) -> np.nd
     return found
 
 
-def front(
-    nodes: np.ndarray, wrap: Wrap, reader_nodes: np.ndarray, declared: np.ndarray
-) -> list[np.ndarray]:
+def front(nodes: np.ndarray, wrap: Wrap, reader_nodes: np.ndarray) -> list[np.ndarray]:
     """Per Port, the Nodes of the region at which that Port is a front boundary Port of the declared NodeDetectors: it leads in from a Node of the declared board outside them (`declared`, the file's own Nodes; the layers a receding face has grown lie beyond the declared board, and what leaves into them has left the world), so a Port between two regions, a Port toward the grown layers and a Port beyond a face are no front."""
-    return [
-        nodes
-        & ~arrival(reader_nodes, axis, side, wrap, True)
-        & arrival(declared, axis, side, wrap, False)
-        for axis, side in PORT_SIDES
-    ]
+    return [nodes & ~arrival(reader_nodes, axis, side, wrap) for axis, side in PORT_SIDES]
 
 
 def region_of(node_detector: NodeDetector, body_nodes: Callable[[int], np.ndarray]) -> np.ndarray:

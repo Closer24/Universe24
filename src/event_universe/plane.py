@@ -14,17 +14,14 @@ from event_universe.features.read import content_of
 from event_universe.loader.derived import FamilyRule
 from event_universe.records import NodeState, Record, level_at
 
-Offset = tuple[
-    int, int, int
-]  # the layers grown before the origin on each axis, the file's coordinates to the board's
 Angles = tuple[
     Any, tuple[Any, Any, Any]
 ]  # the sign's levels a record reads at every Node: the time level (the phase act's potential) and each axis's odd level
 Phases = tuple[
     tuple[Any, Any], ...
 ]  # the phase pair (c, s) read through each of the six Ports, in Port order
-Faces = tuple[list[Face], Offset]  # the faces presented to a line at this step, with the board's offset
-NO_FACE: Faces = ([], (0, 0, 0))
+Faces = list[Face]  # the faces presented to a line at this step
+NO_FACE: Faces = []
 
 
 def link_levels(
@@ -66,9 +63,8 @@ def frame_signs(frame: Any, wrap: Wrap) -> tuple[Any, ...]:
     found: list[Any] = []
     for axis in range(AXES):
         for sigma in (1, -1):
-            other = arrival(own, axis, sigma, wrap, fill=0)
-            beyond = arrival(np.ones_like(own), axis, sigma, wrap) == 0
-            found.append(np.where(beyond | (other == own), 1, -1))
+            other = arrival(own, axis, sigma, wrap)
+            found.append(np.where(other == own, 1, -1))
     return tuple(found)
 
 
