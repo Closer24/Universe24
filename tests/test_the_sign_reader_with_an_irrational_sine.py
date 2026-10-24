@@ -4,34 +4,14 @@ from __future__ import annotations
 
 import json
 
-import pytest
-
+from event_universe import world_files
 from event_universe.loader.universe import universe_of
 from event_universe.world_files import load_world
 from tests.laws import ROOT, refused
 
 IRRATIONAL = "a reader of the sign writes its charge per quantum by its count unit"
-REFUSED = (
-    "the read weight is one for every reader|" + IRRATIONAL
-)  # the record worlds on hydrogen_read3.json (the electron's read 3) meet the read weight's sentence first, the others the sine's
-EVENTS = ROOT / "examples" / "events"
-REFUSED_WORLDS = (
-    "atom/atom.json",
-    "atom/atom_free.json",
-    "atom/atom_1s.json",
-    "atom/atom_2p.json",
-    "atom/atom_line.json",
-    "atom/hydrogen_1s.json",
-    "atom/hydrogen_line.json",
-    "conserve/beat_c11.json",
-    "conserve/box_c15.json",
-    "conserve/giver_c5.json",
-    "conserve/mixed_c11.json",
-    "conserve/pure_c11.json",
-    "conserve/sum_c11.json",
-    "conserve/taker_c5.json",
-    "clicks/clicks_tube.json",
-)
+WEIGHT = "the read weight is one for every reader"
+UNIVERSE = ROOT / "examples" / "events" / "universe24" / "universe_universe24.json"
 
 
 def test_a_sign_reader_with_an_irrational_sine_is_refused_by_name_and_a_pythagorean_one_admitted():
@@ -55,18 +35,16 @@ def test_a_sign_reader_with_an_irrational_sine_is_refused_by_name_and_a_pythagor
     assert "'electron'" in str(refusal) and "556444" in str(refusal) and "2026-10-24" in str(refusal)
 
 
-@pytest.mark.parametrize("world", REFUSED_WORLDS)
-def test_the_shipped_worlds_with_the_electron_at_4000_over_6000_are_refused_at_load_by_name(world):  # type: ignore[no-untyped-def]
-    path = EVENTS / world
-    universe = json.loads(path.read_text(encoding="utf-8"))["universe"]
-    electron = next(
-        f
-        for f in json.loads((ROOT / universe).read_text(encoding="utf-8"))["families"]
-        if f["name"] == "electron"
-    )
-    assert electron["pair"] == [
-        4000,
-        6000,
-    ]  # the pair kept: the world stands as the record of the law to 2026-10-23
-    refusal = refused(REFUSED, load_world, path)
-    assert "'electron'" in str(refusal) and ("[4000, 6000]" in str(refusal) or "is 3" in str(refusal))
+def test_the_one_universe_with_the_electron_reading_the_charge_at_3_is_refused_by_name(
+    tmp_path, monkeypatch
+):  # type: ignore[no-untyped-def]
+    """The one universe file copied and changed in tmp_path, the electron's read of the charge 3 (the folded record's declaration to 2026-10-24), on the bare 3-cube torus: refused at load by the read weight's sentence (the owner's word of 2026-10-24, like nature; the cancelled worlds posed it to that day)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    electron = next(f for f in universe["families"] if f["name"] == "electron")
+    electron["reads"]["charge"] = 3
+    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    world = {"universe": "u.json", "shape": [3, 3, 3], "intervals": 1}
+    (path := tmp_path / "bare.json").write_text(json.dumps(world), encoding="utf-8")
+    refusal = refused(WEIGHT, load_world, path)
+    assert "'electron'" in str(refusal) and "is 3" in str(refusal)

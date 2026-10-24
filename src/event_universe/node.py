@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Sequence
+from collections.abc import Callable, Iterable, Sequence
 from dataclasses import replace
 from typing import TYPE_CHECKING, Any
 
@@ -43,9 +43,15 @@ Factors = tuple[Any, ...]  # the factor Q_ij of a Node's six Links in Port order
 
 
 def read_key(
-    name: str, index: int, families: Families, states: States, direction: int, gamma: int, record: int
+    name: Callable[..., Any],
+    index: int,
+    families: Families,
+    states: States,
+    direction: int,
+    gamma: int,
+    record: int,
 ) -> tuple[tuple[Any, ...], tuple[Any, ...]]:
-    """The read memo's key for one reading (`name`: the lines, the read or the rulers) of one record of a family in a direction (features/read READS; one entry per key, so the memo holds one board's records and grows with no interval), and the objects the reading takes, compared by identity: the families, the states and every record of the rows the family reads (every record the same object means every integer the same, a record never written in place)."""
+    """The read memo's key for one reading (`name`: the reading's own function, read_lines, read or rulers, no word of its own) of one record of a family in a direction (features/read READS; one entry per key, so the memo holds one board's records and grows with no interval), and the objects the reading takes, compared by identity: the families, the states and every record of the rows the family reads (every record the same object means every integer the same, a record never written in place)."""
     reads = [r for r in families[index].reads if not families[r.family].rotation]
     key = (name, index, record, direction, gamma)
     return key, (families, states, *(line for r in reads for line in states[r.family].lines))
@@ -56,7 +62,7 @@ def read_lines(
 ) -> tuple[Any, list[Any]]:
     """The lines a record's read takes at the interval's start in `direction` (ALGEBRA.md #the-paces, Every row reads the content): the content c = SUM over its reads of the holders acting on the pace of (weight x the read family's time line at the level the step in `direction` starts from, `level_at`), a held row of the content reading its own level among them and a holder of the sign read as the sum of every row but the record's own (`row_levels`, `derived.row_of`), and per read row carrying axis lines its weight and its three axis lines at the same level; the integer 0 and no axis lines where it reads nothing (the plain rule at Gamma); a holder declaring the rotation enters no pace (`turning`); the read made once per interval on the same records and given again to every act that reads them (features/read READS, the architect's second round of 2026-10-24: the same integers, read once)."""
     reads = [r for r in families[index].reads if not families[r.family].rotation]
-    key, taken = read_key("lines", index, families, states, direction, gamma, record)
+    key, taken = read_key(read_lines, index, families, states, direction, gamma, record)
     if (kept := read_again(key, taken)) is not None:
         return kept  # the same records read again: the read made before (features/read READS)
     own = row_of(families, index, record)
@@ -99,7 +105,7 @@ def read(
         factors: Factors = (unit * unit,) * PORTS
         content: Any = 0
     else:
-        key, taken = read_key("read", index, families, states, direction, gamma, record)
+        key, taken = read_key(read, index, families, states, direction, gamma, record)
         if (kept := read_again(key, taken)) is None:
             content, axes = read_lines(index, families, states, direction, gamma, record)
             factors = link_factors(gamma, unit, link_tensions(axes, wrap, gamma))
@@ -121,7 +127,7 @@ def rulers(
     """The paces a record's read gives it at every Node for the write's factor (ALGEBRA.md, The write per proper volume and per proper interval; The paces compose): the clock p_0 from its content and its pace along each axis, p_a = p_i (q_(+a) + q_(-a)) / (2 Gamma), the Node's pace p_i = p_0^2 / Gamma times the mean of its two a-Links' factors from their tensions, one reading per axis through its two Ports (`features/read`, `axis_paces`), the ruler h_a = p_0 / p_a; Gamma on the clock and on every axis where the family reads nothing (every factor 1 at the vacuum's paces); read at the level the step in `direction` starts from, the same numbers read back."""
     if not any(not families[r.family].rotation for r in families[index].reads):
         return gamma, (gamma, gamma, gamma)
-    key, taken = read_key("rulers", index, families, states, direction, gamma, record)
+    key, taken = read_key(rulers, index, families, states, direction, gamma, record)
     if (kept := read_again(key, taken)) is not None:
         return kept[0], tuple(kept[1])
     content, axes = read_lines(index, families, states, direction, gamma, record)
