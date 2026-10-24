@@ -226,3 +226,31 @@ def test_a_log_cut_mid_run_is_read_to_its_last_whole_line(tmp_path: Path) -> Non
         ]
         assert cycles[2][8] == "0" and cycles[1][8] == "125"
         assert "to the interval 400 of 2,400 declared" in (tmp_path / name).read_text()
+
+
+def test_the_captions_name_the_three_prime_lifts_by_rising_sine_at_every_den() -> None:
+    """The pages' captions are a look and no law (the owner's word of 2026-10-24 on the born-amplitude hand's reading): among the lifts of den's primes, the vectors with one entry twice the prime's exponent, by rising sine the electron, the proton and the neutron's candidate, the top point and the composite points their label alone; at den 1,021 the one lift is the electron, the least leg as before; at the top tier the former rule's names stand, point 0 2 0 electron and point 0 0 2 proton, with point 2 0 0 the neutron's; at the PeV tier point 0 0 2 electron, point 2 0 0 proton and point 0 2 0 neutron, where the former rule, the heaviest prime's point proton, named the least leg."""
+    from event_universe.loader.circle import circle_points, factors, label_of
+
+    def header(den: int) -> dict:  # type: ignore[type-arg]
+        points = {label_of(v): [n, s] for v, n, s in circle_points(den)}
+        return {"seed": "massless", "primes": sorted(factors(den).items()), "points": points}
+
+    assert CAPTIONS.captions_for(header(1021)) == {"massless": "light", "point 2": "electron"}
+    top = CAPTIONS.captions_for(header(1_166_991_900_949_580_266_237))
+    assert top == {
+        "massless": "light",
+        "point 0 2 0": "electron",
+        "point 0 0 2": "proton",
+        "point 2 0 0": "neutron",
+    }
+    pev = CAPTIONS.captions_for(header(21_397_363_965_165_989_151_899_244_775_347_635_252_768_274_397))
+    assert pev == {
+        "massless": "light",
+        "point 0 0 2": "electron",
+        "point 2 0 0": "proton",
+        "point 0 2 0": "neutron",
+    }
+    assert CAPTIONS.captions_for(None) == {} and CAPTIONS.captions_for({"seed": "light"}) == {
+        "light": "light"
+    }

@@ -22,9 +22,9 @@ def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first
     assert (
         born == [((k, -1), (k, 1)) for k in planes] and len(born) == 3**3 - 1
     )  # every point, the lightest first
-    assert names[born[0][0][0]] == "point 0 2 0" and all(
+    assert names[born[0][0][0]] == "point 0 0 2" and all(
         vector_of(names[k]) for k in planes
-    )  # the least leg first
+    )  # the least leg first (point 0 2 0 at the top tier)
     assert sorted(conversion.candidates(families)) == sorted(
         planes
     )  # the massless point and the holders no record out

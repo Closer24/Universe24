@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import cache
 from math import gcd
 
 from event_universe.core.ports import PORTS, SIDES
@@ -43,21 +44,36 @@ def is_prime(n: int) -> bool:
 
 
 def split(n: int) -> int:
-    """A proper factor of the composite n by Pollard's rho (Floyd's cycle on x -> x^2 + c modulo n, the squares by Python's modular power and the common divisor by Euclid's act, `gcd`), the loader's tool for the circle's primes: the constant c counted up from 1 where the cycle closes on n itself."""
+    """A proper factor of the composite n by Pollard's rho with Brent's cycle (the squares x -> x^2 + c modulo n by Python's modular power, the hare's run doubling, the differences x - y multiplied up over a batch of PORTS steps, six, the one small count the engine names and no number of this function's own, and the common divisor by Euclid's act, `gcd`, once per batch on the batch's product; where a batch's divisor is n itself the batch is walked again from its start one divisor at a time), the loader's tool for the circle's primes: the constant c counted up from 1 where the cycle closes on n itself; the same factors as Floyd's cycle with a divisor at every step, the loader's split to 2026-10-24 kept by name (three modular powers and one Euclid per step: 52 s on the PeV den's 155 bits, where this takes 17 s, the record-speed hands' kind of economy)."""
     c = 1
     while True:
-        x, y, d = 2, 2, 1
-        while d == 1:
-            x = pow(x, 2, n) + c
-            y = pow(pow(y, 2, n) + c, 2, n) + c
-            d = gcd(abs(x - y), n)
-        if d != n:
-            return d
+        y, r, q, g = 2, 1, 1, 1
+        x = ys = y
+        while g == 1:
+            x = y
+            for _ in range(r):
+                y = pow(y, 2, n) + c
+            k = 0
+            while k < r and g == 1:
+                ys = y
+                for _ in range(min(PORTS, r - k)):
+                    y = pow(y, 2, n) + c
+                    q *= x - y
+                g, q, k = gcd(q, n), 1, k + PORTS
+            r += r
+        if g == n:  # the batch's divisor is n itself: its start walked again, one divisor per step
+            g = 1
+            while g == 1:
+                ys = pow(ys, 2, n) + c
+                g = gcd(x - ys, n)
+        if g != n:
+            return g
         c += 1
 
 
+@cache
 def factors(n: int) -> dict[int, int]:
-    """The prime factors of n with their exponents (`is_prime`, `split`), 2 divided out first by the division act."""
+    """The prime factors of n with their exponents (`is_prime`, `split`), 2 divided out first by the division act; a pure function of n, memoized within the process (the loader's one derivation of the circle from den, asked by `circle_points`, `lightest_point` and the eras log's header; the pattern of `plane.turned_room`, 2026-10-24: the PeV den's factoring once per process, never a file, never a key)."""
     found: dict[int, int] = {}
     while n > 1 and division_forward(n, 2, 0)[1] == 0:
         found[2], n = found.get(2, 0) + 1, int(division_forward(n, 2, 0)[0])

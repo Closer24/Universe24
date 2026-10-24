@@ -98,6 +98,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         8,
         "the helper of the three tests above: the one universe file on the bare 3-cube with the births kept",
     ),
+    "tests/test_the_pages_carry_the_legend_of_kinds.py::test_the_captions_name_the_three_prime_lifts_by_rising_sine_at_every_den": (
+        26,
+        "the pages' captions a look and no law (the owner's word of 2026-10-24, the branch born-amplitude): den's three prime lifts by "
+        "rising sine the electron, the proton and the neutron's candidate, at den 1,021, the top tier and the PeV den; the former rule kept by name",
+    ),
     "tests/test_the_birth_is_a_list_of_records.py::born_here": (
         12,
         "the birth's own path at one Node of a fresh board (the branch born-amplitude, 2026-10-24): the seed's record at the Node to "
