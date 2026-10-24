@@ -5,7 +5,7 @@ from fractions import Fraction
 import numpy as np
 
 from event_universe import flux, node, plane, records
-from event_universe.core.ports import LINK_UNIT, PORT_SIDES, Wrap
+from event_universe.core.ports import LINK_UNIT, PORT_SIDES
 from event_universe.core.rule3 import rule_integers
 from event_universe.loader.derived import held_write_of
 from event_universe.loader.universe import SIGN, universe_of
@@ -19,7 +19,7 @@ ELECTRON = min(
     key=lambda i: FAMILIES[i].pair[1] ** 2 - FAMILIES[i].pair[0] ** 2,
 )  # the least leg, the lighter point
 PAIR, UNIT, T = FAMILIES[ELECTRON].pair, LINK_UNIT, INTEGERS["quantum_action"]
-SHAPE, TORUS = (CUBE,) * 3, Wrap(True, True, True)
+SHAPE = (CUBE,) * 3
 
 
 def test_the_sign_pair_is_even_and_odd_in_the_links_level():
@@ -46,8 +46,8 @@ def test_the_wronskian_is_conserved_on_the_bare_torus_under_the_folded_link_turn
     rule = rule_integers(*PAIR, GAMMA, GAMMA, GAMMA, None, UNIT)
     angles = node.turning(ELECTRON, FAMILIES, states, 1)
     assert angles is not None
-    links = plane.link_levels(angles[1], TORUS, FAMILIES[CHARGE].link_read)
-    pairs = plane.link_pairs(PAIR, GAMMA, 0, (UNIT * UNIT,) * 6, None, links)
+    links = plane.link_levels(angles[1], FAMILIES[CHARGE].link_read)
+    pairs = plane.link_pairs(PAIR, GAMMA, 0, (UNIT * UNIT,) * 6, links)
     assert pairs is not None and any(np.asarray(p).any() for p in pairs[1])
     lines = [
         records.Record(*(draw.integers(-5000, 5001, SHAPE).astype(object) for _ in range(2)), zero)
@@ -57,7 +57,7 @@ def test_the_wronskian_is_conserved_on_the_bare_torus_under_the_folded_link_turn
     for _ in range(200):
         states[ELECTRON].lines = lines
         floor += int((np.abs(lines[0].now) + np.abs(lines[1].now)).sum())
-        lines = flux.step_family(ELECTRON, FAMILIES, states, rule, TORUS, GAMMA, pairs=pairs)[0]
+        lines = flux.step_family(ELECTRON, FAMILIES, states, rule, pairs=pairs)[0]
     drift = int(records.wronskian(lines, True).sum()) - started
     assert started != 0 and abs(drift) <= floor, (drift, floor)
     print(
@@ -93,7 +93,7 @@ def test_the_wronskian_is_conserved_on_the_bare_torus_under_the_folded_link_turn
 
 def test_the_sign_holders_lines_stand_at_the_doubled_wall():
     """Every line of the sign holder's one write at one wall, 2 E_s T times the readers' charge multiple (The constants: the count units brought to one wall), a multiple of 2 E_s T; and the odd lines' unhalved sum J over the doubled wall against the halved path (J + 1) div 2 over E_s T, both by the carried division from the half wall: 2 (L_old W + r_old) - (L_new 2 W + r_new) = k_w x (the number of odd J so far) exactly at every interval, so the two are bit-identical, L_new = L_old and r_new = 2 r_old, while every J is even, and differ by the dropped half units otherwise; on random J within 10^6 over 300 intervals."""
-    write = held_write_of(FAMILIES, CHARGE, T, UNIT)
+    write = held_write_of(FAMILIES, CHARGE, T)
     weight, wall = FAMILIES[CHARGE].write, write.walls[0] // 2
     assert FAMILIES[CHARGE].level_weight is not None
     assert len(set(write.walls)) == 1 and wall % (FAMILIES[CHARGE].level_weight * T) == 0

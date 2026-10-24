@@ -6,13 +6,11 @@ import pytest
 from event_universe.features import start
 from event_universe.features.start import rests
 
-WRAP = None  # the loop hands it on; the faked rest reads nothing of it
-
 
 def faked(mapping):  # type: ignore[no-untyped-def]
     """`settled_rows` faked: one holder whose rest is `mapping` of the levels the pass began from (carried in the row's counts by `booked`)."""
 
-    def settled_rows(holders, wrap, width, gamma, unit, seeds=()):  # type: ignore[no-untyped-def]
+    def settled_rows(holders, width, gamma, unit, seeds=()):  # type: ignore[no-untyped-def]
         levels = mapping(holders[0][0])
         return [start.FieldAtRest(levels, levels, 1, 0, levels)]
 
@@ -28,7 +26,7 @@ def test_a_lay_rest_map_that_cycles_undamped_settles_to_its_fixed_point(monkeypa
         rests, "settled_rows", faked(lambda b: 10 - b)
     )  # the 2-cycle 0, 10 about the fixed point 5
     seed = [np.zeros((1, 1, 3), dtype=np.int64)]
-    (field,) = rests.held_rests(booked, seed, WRAP, 63, 1000, 1)  # type: ignore[arg-type]
+    (field,) = rests.held_rests(booked, seed, 63, 1000, 1)  # type: ignore[arg-type]
     assert field.levels.tolist() == [
         [[5, 5, 5]]
     ]  # the fixed point, b = F(b), the mean of the cycle's two states
@@ -40,7 +38,7 @@ def test_a_map_with_no_fixed_point_is_refused_by_name_under_the_damped_passes(mo
         rests, "settled_rows", faked(lambda b: (b + 4) % 8)
     )  # no b with b = F(b) in the integers
     with pytest.raises(ValueError, match="finds no fixed point"):
-        rests.held_rests(booked, [np.zeros((1, 1, 1), dtype=np.int64)], WRAP, 63, 1000, 1)  # type: ignore[arg-type]
+        rests.held_rests(booked, [np.zeros((1, 1, 1), dtype=np.int64)], 63, 1000, 1)  # type: ignore[arg-type]
 
 
 def test_the_damped_pass_is_the_integer_mean_with_the_remainder_carried():  # type: ignore[no-untyped-def]

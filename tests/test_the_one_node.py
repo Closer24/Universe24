@@ -292,10 +292,20 @@ def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]
 
 def test_the_one_world_loads_under_the_one_node_and_runs(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     """The shipped one world, examples/events/universe24 (125 Nodes), loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board periodic on every axis where the world declares no boundary), is laid on its board and stepped 12 intervals, every held row's wall fixed per Node, and a massless time line never fires (ALGEBRA.md, The swap at the top, the massless clause). The sweep over every shipped world under examples/ (60 worlds, their starts 142 s summed on the suite's clock) left on 2026-10-24: every world but Universe24 is cancelled (the owner's word)."""
-    from tests.laws_read import load_shipped
+    from tests.laws_read import redeclared
 
     path = SRC.parents[1] / "examples" / "events" / "universe24" / "universe24.json"
-    world = load_shipped(path)
+    document = json.loads(
+        path.read_text(encoding="utf-8")
+    )  # the shipped world's keys; the universe the top tier's, the PeV den factored by the loader's circle test alone (2026-10-24)
+    world = loader_world.parse_world(
+        redeclared(document),
+        {
+            document["universe"]: json.loads(
+                '{"integers": {"den": 1166991900949580266237, "node_clock": 1000, "quantum_action": 36000}}'
+            )
+        },
+    )
     assert len(world.periodic) == 3 and all(world.periodic) and world.families and world.intervals >= 1
     assert (
         int(np.prod(world.shape)) == 125

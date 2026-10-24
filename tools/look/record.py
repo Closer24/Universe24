@@ -113,7 +113,7 @@ def frame(
                 )  # the kept lines read whole as `Lattice.record` reads the family's: the sum of the rows for a holder of the sign, the record's lines else
                 row["form"] = records.form(began, lines) if direction > 0 else records.form(lines, began)
             row["pace"] = node.least_pace(
-                index, board.families, board.states, world.node_clock, board.wrap, world.link_unit
+                index, board.families, board.states, world.node_clock, world.link_unit
             )
         else:
             row = {"level": state.lines[0].now, "parts": [line.now for line in state.lines[1:]]}

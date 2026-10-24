@@ -32,5 +32,4 @@ def load_world(path: Path) -> World:
     """A world file read and parsed with the universe file it names."""
     document = json.loads(path.read_text(encoding="utf-8"))
     files = world_files(document)
-    digest = input_digest(document) if isinstance(document, dict) else ""
-    return parse_world(document, files, digest)
+    return parse_world(document, files)

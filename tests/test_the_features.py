@@ -7,7 +7,6 @@ import numpy as np
 
 from event_universe import flux, node, records
 from event_universe.core import paces
-from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.features.held_write import held_write
 from event_universe.features.read import (
@@ -20,7 +19,7 @@ from event_universe.features.read import (
 from event_universe.features.start.rests import read_content
 from event_universe.loader.derived import held_write_of, readers_of, weight_of
 from event_universe.loader.universe import universe_of
-from tests.laws import ROOT, refused, resolved, universe_copy
+from tests.laws import refused, resolved, universe_copy
 
 GAMMA, SHAPE = 10_000, (3, 3, 3)
 OWN = {"own_weight": 1, "intervals": paces.COUNT_POWER}  # a row reading its own level at 1, a count
@@ -105,7 +104,7 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
     assert [(f.level_weight, f.write_weight) for f in families] == [(1, 1), (1, 1), (None, None)] * 1 + [
         (None, None)
     ]
-    draw, wrap, action = np.random.default_rng(7), Wrap(True, True, True), integers["quantum_action"]
+    draw, action = np.random.default_rng(7), integers["quantum_action"]
     writes = {i: held_write_of(families, i, action) for i in (hollow, core)}
     walls = [writes[i].walls if f.held else () for i, f in enumerate(families)]
     states = [records.empty_state(f, SHAPE, w, np.int64) for f, w in zip(families, walls, strict=True)]
@@ -114,7 +113,7 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
         state.lines = [records.Record(*pair, 0 * SHAPE[0]) for pair in levels]
     levels = [states[i].lines[0].now for i in (hollow, core)]
     content = levels[0] + levels[1]  # the two holders' time lines, each at the weight 1
-    read = {i: node.read(i, families, states, 1, wrap, GAMMA, 1) for i in range(4)}
+    read = {i: node.read(i, families, states, 1, GAMMA, 1) for i in range(4)}
     for i in range(4):
         assert np.array_equal(read[i][0], content) and all((f == 1).all() for f in read[i][1])
     by_law = coefficients(4000, 6000, GAMMA, *paces.node_paces(GAMMA, content))[0]
@@ -123,12 +122,12 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
     forms, rulers = {}, {}
     for i in (stuff, other):
         own = node.rule_of(families[i], GAMMA, *read[i])
-        _lines, (first, second) = flux.step_family(i, families, states, own, wrap, GAMMA)
+        _lines, (first, second) = flux.step_family(i, families, states, own)
         forms[i, 0] = records.form(first, second)  # the bookings per record, (family, record)
-        rulers[i, 0] = node.rulers(i, families, states, 1, wrap, GAMMA)
+        rulers[i, 0] = node.rulers(i, families, states, 1, GAMMA)
     for held in (hollow, core):
         numerators, walls, _weight = records.write_sources(
-            held, families, forms, {}, writes[held], rulers, GAMMA
+            held, families, forms, {}, writes[held], rulers, GAMMA, [list(forms)]
         )
         power = families[held].power  # one power on every booking: the form's own clock
         assert (
@@ -167,7 +166,7 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
     two, level = np.zeros((2, 1, 1), dtype=np.int64), np.array([[[-5]], [[5]]], dtype=np.int64)
     board = [records.empty_state(f, (2, 1, 1), (), np.int64) for f in turning]
     board[0].lines[0] = records.Record(level, level, two)
-    paced_read = node.read(1, turning, board, 1, wrap, GAMMA, 1)[0]
+    paced_read = node.read(1, turning, board, 1, GAMMA, 1)[0]
     turn = node.turning(1, turning, board, 1)
     assert np.asarray(turn[0]).ravel().tolist() == [
         -5,
@@ -189,12 +188,10 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
         {"name": "charge", "pair": [6000, 6000]},
         {"name": "nuclide", "pair": [4004, 6000], "dimension": [2, 2]},
     )  # the deuteron's 'nuclide' [4004, 6000] reads the charge with an irrational sine, refused at load since 2026-10-24 (the owner's word; examples/events/deuteron.json the record of the law to 2026-10-23)
-    one_world = json.loads(
-        (ROOT / "examples" / "events" / "universe24" / "universe_universe24.json").read_text(
-            encoding="utf-8"
-        )
-    )
-    for name, document in (("tests", rule), ("universe24", one_world)):
+    top_tier = json.loads(
+        '{"integers": {"den": 1166991900949580266237, "node_clock": 1000, "quantum_action": 36000}}'
+    )  # the top tier's den as a literal, the PeV den factored by the loader's circle test alone (2026-10-24)
+    for name, document in (("tests", rule), ("top tier", top_tier)):
         integers, shipped = universe_of(json.loads(json.dumps(document)))
         held = [(i, f.wronskian) for i, f in enumerate(shipped) if f.held]
         for index, f in enumerate(shipped):

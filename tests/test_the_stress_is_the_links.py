@@ -3,10 +3,8 @@
 import numpy as np
 
 from event_universe import readings
-from event_universe.core.ports import AXES, Wrap
+from event_universe.core.ports import AXES
 from event_universe.records import Record
-
-WRAP = Wrap(True, True, True)
 
 
 def former(weight: int, now: np.ndarray) -> list[np.ndarray]:
@@ -15,7 +13,7 @@ def former(weight: int, now: np.ndarray) -> list[np.ndarray]:
 
 
 def reading(weight: int, now: np.ndarray) -> list[np.ndarray]:
-    return [np.asarray(part) for part in readings.stresses_of(weight, [Record(now, now, 0 * now)], WRAP)]
+    return [np.asarray(part) for part in readings.stresses_of(weight, [Record(now, now, 0 * now)])]
 
 
 def test_the_board_sums_of_the_former_and_the_new_reading_are_equal_to_the_bit_on_a_wrapped_board() -> (

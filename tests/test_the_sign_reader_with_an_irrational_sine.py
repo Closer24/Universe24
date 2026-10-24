@@ -26,10 +26,14 @@ def test_a_sign_reader_with_an_irrational_sine_is_refused_by_name_and_a_pythagor
         IRRATIONAL, resolved, sign, proton, electron, node_clock=1000, quantum_action=36_000
     )
     assert "'electron'" in str(refusal) and "556444" in str(refusal) and "2026-10-24" in str(refusal)
-    _integers, families = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
+    _integers, families = universe_of(
+        json.loads(
+            '{"integers": {"den": 1166991900949580266237, "node_clock": 1000, "quantum_action": 36000}}'
+        )
+    )
     assert all(
         sine_of(f.pair) is not None for f in families if f.plane
-    )  # every derived plane Pythagorean
+    )  # every derived plane Pythagorean (the top tier's 26 points; the PeV den's in the loader's circle test)
 
 
 def test_the_one_universe_with_a_family_row_written_back_is_refused_by_name(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]

@@ -17,7 +17,7 @@ from event_universe.loader.circle import circle_points, lightest_point
 from event_universe.loader.derived import amplitude_bound, count_wall, held_write_of
 from event_universe.take import Item
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, refused, resolved
+from tests.laws import refused, resolved
 from tests.laws_universe import SMALL, small_universe
 
 GAMMA, T = 1000, 36_000
@@ -141,19 +141,21 @@ def test_the_holes_board_runs_25_intervals_with_the_sign_holder_bounded(tmp_path
     assert births and all(
         c in points_of(board) for b in births for c in b["children"]
     )  # lists of the den's points born, one record per child (2026-10-24)
-    assert 0 < max(largest) < 16_427
+    assert (
+        0 < max(largest) < board.world.amplitude_bound
+    )  # bounded by the engine's own derived bound and no course number (the former factor's 16,427 struck 2026-10-24)
 
 
 def test_the_lightest_point_of_the_circle_is_the_electrons_pair():
     """The extremal sentence (the owner's word of 2026-10-24, 09:1x UTC: the charged plane family at rest is the lightest point of the circle; ALGEBRA.md, The lightest point is the electron): s_min(den) by `lightest_point`, the least leg among `circle_points`, at the former den and at the one universe's den, the PeV tier since 2026-10-24 (the top tier to that hour), whose file holds den alone (the same day's later word: no family row), the point the pages caption electron."""
     num, s = lightest_point(DEN)
     assert (num, s) == (53_567_757, 29_276) and num * num + s * s == DEN * DEN
-    den = json.loads((EVENTS / "universe24" / "universe_universe24.json").read_text(encoding="utf-8"))[
-        "integers"
-    ]["den"]
-    assert den == 8_909_066_857_637 * 79_961_009_336_473 * 30_036_532_038_439_967_297  # the PeV tier
-    assert lightest_point(den)[1] == 7_808_459_740_549_578_735_922_594_780_248_829_328  # its least leg
-    for d in (DEN, den, 1000, 65):
+    for d in (
+        DEN,
+        1_166_991_900_949_580_266_237,
+        1000,
+        65,
+    ):  # the PeV den's least leg in the loader's circle test, the one test that factors it (2026-10-24)
         assert lightest_point(d) == min(((n, s) for _v, n, s in circle_points(d)), key=lambda p: p[1])
     assert [lightest_point(d) for d in (1000, 5, 65, 25)] == [(960, 280), (4, 3), (63, 16), (24, 7)]
     refused("no prime 1 mod 4 divides it", lightest_point, 9)

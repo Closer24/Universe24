@@ -18,7 +18,9 @@ from event_universe.loader.derived import count_wall
 from event_universe.loader.universe import SIGN
 from event_universe.world_files import load_world
 from tests.laws import ROOT
-from tests.laws_universe import SMALL, UNIVERSE, small_universe, uniform_sea
+from tests.laws_universe import SMALL, small_universe, uniform_sea
+
+TOP_UNIVERSE = '{"integers": {"den": 1166991900949580266237, "node_clock": 1000, "quantum_action": 36000}}'  # the top tier's den, 649,421 x 13,586,597 x 132,260,701, three primes 1 mod 4 and 26 points, factored in a blink
 
 
 def bare_board(tmp_path, monkeypatch, intervals, births, den=None):  # type: ignore[no-untyped-def]
@@ -164,8 +166,8 @@ def test_a_born_child_carries_the_two_light_quantas_energy_and_the_charge_t_div_
     at, read = (1, 1, 1), {}
     for shipped in (False, True):
         board = bare_board(tmp_path, monkeypatch, 1, [])
-        if shipped:  # the shipped den's universe written in the small universe's place
-            (tmp_path / "u.json").write_text(UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8")
+        if shipped:  # the top tier's den written in the small universe's place (the PeV den factored by the loader's circle test alone, 2026-10-24)
+            (tmp_path / "u.json").write_text(TOP_UNIVERSE, encoding="utf-8")
             board = Lattice(load_world(tmp_path / "bare.json"))
         action, child = board.world.quantum_action, born_here(board, at)
         den, light = board.families[child].pair[1], board.families[board.world.seed]
@@ -185,8 +187,8 @@ def test_a_born_child_carries_the_two_light_quantas_energy_and_the_charge_t_div_
             read[den][0] == (share + unit // 2) // unit == (12 * den * size * size + unit // 2) // unit
         )
     assert (
-        read[1021][0] == 3 and read[den][0] == 2_973_411
-    )  # 2 den over s to the lay's rounding: 2.62 at den 1,021 (the lift (779, 660)); at the shipped den the former clause over the lifts picks the neutron's lift, point 0 2 0, s = 1.342e-6 den / 2, so 2 den / s = 2.973 x 10^6 (2.000 for the point nearest the top before the selector, 2026-10-24)
+        read[1021][0] == 3 and read[den][0] == 2
+    )  # 2 den over s to the lay's rounding: 2.62 at den 1,021 (the lift (779, 660)) and 2.000 at the top tier (the neutron's lift under the selector, s_n = 0.99766 den; the point nearest the top before it)
     lightest = min(
         (k for k, f in enumerate(board.families) if f.plane),
         key=lambda k: count_wall(board.families[k], action),

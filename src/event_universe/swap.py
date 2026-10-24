@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import node, records, shear
+from event_universe import node, records, registry, shear
 from event_universe.core.rule3 import wall_of
 from event_universe.features import volume
 from event_universe.loader.derived import turns
@@ -43,7 +43,7 @@ def floor_of(gamma: int) -> int:
     )
 
 
-def at_floor(x0: Any, x1: Any, x2: Any, floor: int) -> np.ndarray:
+def at_floor(x0: Any, x2: Any, floor: int) -> np.ndarray:
     """The floor's trigger at every Node from the time line's three levels (ALGEBRA.md, The floor): an outer level below the floor X_f, X0 < X_f or X2 < X_f, symmetric in X0 and X2 as the top's is, so that the same function read on the undone interval's triple (x2, x1, x0, the outer two exchanged) fires where the forward did; no level the board holds lies below the floor (the start at Gamma, every turn keeping its two levels, every output below the floor discarded), so forward it is X2 that fires and backward Y.before, the same number."""
     x0, x2 = (np.asarray(x, dtype=object) for x in (x0, x2))
     return np.asarray((x0 < floor) | (x2 < floor), dtype=bool)
@@ -60,7 +60,7 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
             int, records.Record
         ] = {}  # per tension line the row's own time line at the interval's start, the wall of the shear's momentum
         if shear.carried(family):
-            for record in range(family.records):
+            for record in range(registry.records_of(family, lines)):
                 first = records.record_slice(family, record).start
                 for number in shear.shear_lines(family):
                     if first < number <= first + family.width - 1:
@@ -128,7 +128,7 @@ def swapped_phases(board: Lattice, held: Kept, mask: np.ndarray, direction: int)
             continue
         state = board.states[index]
         potentials = (
-            node.clocked_potentials(index, board.families, board.states, 1, board.wrap, gamma)
+            node.clocked_potentials(index, board.families, board.states, 1, gamma)
             if direction == -1
             else {}
         )
@@ -159,7 +159,7 @@ def swapped_phases(board: Lattice, held: Kept, mask: np.ndarray, direction: int)
                     frame,
                 )
             state.phases[row] = lines[: node.PHI] + [image]
-        counts = node.phase_counts(index, board.families, board.states, -direction, board.wrap, gamma)
+        counts = node.phase_counts(index, board.families, board.states, -direction, gamma)
         state.phases = node.phase_carried(index, board.states, counts, gamma)
 
 
@@ -178,9 +178,9 @@ def acted(board: Lattice, held: Kept, direction: int) -> None:
         triple = (time_held.before, time_held.now, time_now.now)
     else:
         triple = (time_now.before, time_held.before, time_held.now)
-    mask = at_top(*triple) | at_floor(
-        *triple, floor
-    )  # the top's trigger and the floor's on the one triple (ALGEBRA.md, The swap at the top; The floor)
+    mask = (
+        at_top(*triple) | at_floor(triple[0], triple[2], floor)
+    )  # the top's trigger on the triple and the floor's on its two outer levels (ALGEBRA.md, The swap at the top; The floor)
     if not mask.any():
         return
     swapped(board, held, mask)

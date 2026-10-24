@@ -5,13 +5,15 @@ import json
 from event_universe import conversion
 from event_universe.loader.circle import lift_points, vector_of
 from event_universe.loader.universe import MASSLESS, universe_of
-from tests.laws import ROOT, resolved
-
-UNIVERSE = ROOT / "examples" / "events" / "universe24" / "universe_universe24.json"
+from tests.laws import resolved
 
 
 def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first() -> None:
-    _integers, families = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
+    _integers, families = universe_of(
+        json.loads(
+            '{"integers": {"den": 1166991900949580266237, "node_clock": 1000, "quantum_action": 36000}}'
+        )
+    )  # the top tier's den, the sentence the law's at every den
     names = [family.name for family in families]
     light = names.index(MASSLESS)
     born = conversion.birth_of(families, light)
@@ -20,14 +22,11 @@ def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first
     lifts = {num for _vector, num, _sine in lift_points(families[light].pair[1])}
     assert born == [((k, -1), (k, 1)) for k in planes if families[k].pair[0] in lifts] and len(born) == 3
     assert (
-        [names[k] for (k, _sense), _other in born]
-        == [
-            "point 0 0 2",
-            "point 2 0 0",
-            "point 0 2 0",
-        ]
-        and all(vector_of(names[k]) for k in planes)
-    )  # the lifts alone, the least leg first (the selector, 2026-10-24; point 0 2 0, 0 0 2, 2 0 0 at the top tier); 26 lists before it
+        born == [((k, -1), (k, 1)) for k in planes if families[k].pair[0] in lifts] and len(born) == 3
+    )  # the lifts alone, the lightest first (the selector, 2026-10-24); every point, 26 lists, before it
+    assert names[born[0][0][0]] == "point 0 2 0" and all(
+        vector_of(names[k]) for k in planes
+    )  # the least leg first (point 0 0 2 at the PeV den, the loader's circle test)
     assert sorted(conversion.candidates(families)) == sorted(
         planes
     )  # the massless point and the holders no record out

@@ -6,7 +6,7 @@ from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.loader import circle, keys, universe
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, refused, universe_beside, universe_copy
+from tests.laws import EVENTS, ROOT, load_file, refused, universe_beside, universe_copy
 
 ONE_UNIVERSE = EVENTS / "universe24" / "universe_universe24.json"  # the one universe file
 DEN = 53_567_765  # nature's den of the one universe file, 5 x 17 x 73 x 89 x 97
@@ -114,6 +114,47 @@ def test_dens_circle_is_read_from_its_integers_alone():
             30_036_532_038_439_967_297: 1,
         }
     )  # Brent's cycle (2026-10-24): the same factors as Floyd's split found on SMALL, the top tier and the PeV den
+    one = json.loads(
+        ONE_UNIVERSE.read_text(encoding="utf-8")
+    )  # the one test that factors the shipped den (2026-10-24): its rows and its own numbers here
+    assert set(one) == {"integers"} and set(one["integers"]) == {"den", "node_clock", "quantum_action"}
+    assert (
+        one["integers"]["den"] == PEV
+    )  # the PeV tier since 2026-10-24, the den chosen after the clicks
+    shipped, planes = universe.universe_of(one)
+    assert len(planes) == 3 + 3**3 - 1 and planes[0].pair == (PEV, PEV) and shipped["den"] == PEV
+    least = min((f for f in planes if f.plane), key=lambda f: f.pair[1] ** 2 - f.pair[0] ** 2)
+    assert (least.name, least.pair) == (
+        "point 0 0 2",
+        (21_397_363_965_165_989_150_474_488_818_982_086_595_722_885_795, PEV),
+    )  # the electron, the least leg, the heaviest prime's lift at this den (point 0 2 0 at the top tier)
+    proton = next(f for f in planes if f.name == "point 2 0 0")
+    assert proton.pair == (
+        21_397_363_965_161_185_649_061_722_838_116_504_985_189_627_435,
+        PEV,
+    )  # the proton, the lightest prime's lift, s_p / s_e = 1836.15265582 (point 0 0 2 at the top tier)
+    legs = [circle.largest_below(PEV * PEV - f.pair[0] ** 2) for f in (proton, least)]  # s_p and s_e
+    assert legs == [
+        14_337_524_090_452_503_379_101_009_450_350_924_059_372,
+        7_808_459_740_549_578_735_922_594_780_248_829_328,
+    ]
+    assert (
+        1_492_403 * legs[0] <= PEV < 1_492_404 * legs[0]
+    )  # den over the proton's leg, the massless point's wall over the proton's
+    assert PEV == 8_909_066_857_637 * 79_961_009_336_473 * 30_036_532_038_439_967_297  # the PeV tier
+    assert circle.lightest_point(PEV) == (least.pair[0], legs[1])  # the lightest point, the least leg
+    captions = load_file("captions_for_the_loader", ROOT / "tools" / "look" / "captions.py")
+    header = {
+        "seed": "massless",
+        "primes": sorted(circle.factors(PEV).items()),
+        "points": {circle.label_of(v): [n, s] for v, n, s in circle.circle_points(PEV)},
+    }
+    assert captions.captions_for(header) == {
+        "massless": "light",
+        "point 0 0 2": "electron",
+        "point 2 0 0": "proton",
+        "point 0 2 0": "neutron",
+    }  # the pages' captions at this den, the prime lifts named by rising sine (tools/look/captions.py)
 
 
 def test_the_rows_are_derived_from_den_and_the_one_file_loads():
@@ -148,22 +189,6 @@ def test_the_rows_are_derived_from_den_and_the_one_file_loads():
         2048,
         375,
     )  # alpha = T / Gamma reduced by 16, inside the write
-    one = json.loads(ONE_UNIVERSE.read_text(encoding="utf-8"))
-    assert set(one) == {"integers"} and set(one["integers"]) == {"den", "node_clock", "quantum_action"}
-    assert (
-        one["integers"]["den"] == PEV
-    )  # the PeV tier since 2026-10-24, the den chosen after the clicks
-    shipped, planes = universe.universe_of(one)
-    assert len(planes) == 3 + 3**3 - 1 and planes[0].pair == (PEV, PEV) and shipped["den"] == PEV
-    least = min((f for f in planes if f.plane), key=lambda f: f.pair[1] ** 2 - f.pair[0] ** 2)
-    assert (least.name, least.pair) == (
-        "point 0 0 2",
-        (21_397_363_965_165_989_150_474_488_818_982_086_595_722_885_795, PEV),
-    )  # the electron, the least leg, the heaviest prime's lift at this den (point 0 2 0 at the top tier)
-    assert next(f for f in planes if f.name == "point 2 0 0").pair == (
-        21_397_363_965_161_185_649_061_722_838_116_504_985_189_627_435,
-        PEV,
-    )  # the proton, the lightest prime's lift, s_p / s_e = 1836.15265582 (point 0 0 2 at the top tier)
 
 
 def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(
@@ -195,13 +220,13 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
 
 
 def test_a_file_integer_of_310_bits_loads_and_a_big_dens_turned_room_is_exact():
-    """The den enlarged as content (2026-10-24, the builder's two findings): a file's integer is bounded by 2^512 and not the host's 63 bits (`keys.FILE_INTEGER`; a den of 70 bits at the top tier), and plane.turned_room's arrivals at that den are exact in Python's integers, the room beyond 2^63, read against the pairs by hand."""
+    """The den enlarged as content (2026-10-24, the builder's two findings): a file's integer is bounded by no number of the tool's, Python's integers (the bound 2^512 gone 2026-10-24), and not the host's 63 bits (`keys.FILE_INTEGER`; a den of 70 bits at the top tier), and plane.turned_room's arrivals at that den are exact in Python's integers, the room beyond 2^63, read against the pairs by hand."""
     from event_universe.core.ports import LINK_UNIT
     from event_universe.plane import link_wall, sign_pairs, turned_room
 
     big = 2**310 - 1
-    assert keys.integer(big, "n", 1) == big
-    refused("integer from 1 through", keys.integer, 2**513, "n", 1)
+    assert keys.integer(big, "n", 1) == big and keys.integer(2**513, "n", 1) == 2**513
+    refused("integer from 1 through 3", keys.integer, 4, "n", 1, 3)
     pair, gamma, square = (1_166_991_729_163_826_857_995, TOP), 1000, LINK_UNIT * LINK_UNIT
     by_hand = max(
         abs(int(even[0])) + abs(int(odd[0]))

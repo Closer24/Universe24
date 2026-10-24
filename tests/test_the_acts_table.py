@@ -46,6 +46,16 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("core/paces.py", "rounded", "division_forward"): "D",  # the rounding half up, once
     ("seed.py", "drift_of", "largest_below"): "S",  # the seed's drift v^2 <= T by the search
     ("meeting_board.py", "meetings", "division_forward"): "D",  # the Node's own count, once
+    (
+        "meeting_board.py",
+        "closed",
+        "division_forward",
+    ): "D",  # the number read by the unit, once: the quotient the pick's (the selector, 2026-10-24)
+    (
+        "meeting_board.py",
+        "drawn_among",
+        "division_forward",
+    ): "D",  # the quotient's residue modulo the candidates' count, once
     ("core/paces.py", "sine_den", "largest_below"): "S",  # the integer sine by the search
     ("core/paces.py", "clock_alone", "rounded"): "D",  # the clock from the content, once
     ("core/paces.py", "Side.reach", "rounded"): "D",  # the side's table of clocks, once
@@ -95,10 +105,14 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # digits.py, the click's read of the board
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
-    ("digits.py", "read_of", "gcd"): "D",  # the bases less one, the plain sum's modulus, once
+    (
+        "registry.py",
+        "records_of",
+        "division_forward",
+    ): "D",  # the records a family's lines hold, a count over a count
     (
         "digits.py",
-        "frame_of",
+        "ported",
         "division_forward",
     ): "D",  # the torus's wrap of a frame Node's coordinate, an index
     # features/click
@@ -107,7 +121,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "drawn_from",
         "division_forward",
     ): "D",  # the click's read over the total, once per draw
-    ("features/click/__init__.py", "bias_bound", "gcd"): "D",  # the total's shared factors, F
+    # ("features/click/__init__.py", "bias_bound", "gcd"): "D", the total's shared factors: struck 2026-10-24 with the one-Link read, no base 0 modulo den
     # ("features/click/__init__.py", "face_value", "division_forward"): "D", the face's value: the declared taker's click, struck 2026-10-24 (the owner: no detector)
     ("features/click/__init__.py", "squared", "largest_below"): "S",  # the search on the lay's square
     (
@@ -116,12 +130,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the lay's quotient before the search
     ("features/click/__init__.py", "amplitude", "largest_below"): "S",  # the amplitude by the search
-    (
-        "features/click/__init__.py",
-        "two_squares",
-        "largest_below",
-    ): "S",  # a plane's (re, im) by the search
-    ("features/click/__init__.py", "plane_squares", "division_forward"): "D",  # the planes' target, once
+    # ("features/click/__init__.py", "two_squares", "largest_below"): "S" and ("plane_squares", "division_forward"): "D", the conversion's plane split: struck 2026-10-24, no record of several planes since the family-less file
     # features/held_write
     ("features/held_write/__init__.py", "held_write", "act"): "R",  # the held write's remainder returned
     # features/phase

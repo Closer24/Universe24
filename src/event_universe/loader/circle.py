@@ -5,12 +5,22 @@ from __future__ import annotations
 from functools import cache
 from math import gcd
 
-from event_universe.core.ports import PORTS, SIDES
 from event_universe.core.rule3 import division_forward, largest_below
 
+UNITS = (
+    (1, 0),
+    (0, 1),
+    (-1, 0),
+    (0, -1),
+)  # the units of the Gaussian integers, 1, i, -1 and -i, the powers of i (i^4 = 1)
+GAUSSIAN_UNITS = len(
+    UNITS
+)  # the two-squares theorem's modulus, the units' count: a prime 1 modulo it is a sum of two squares (Fermat) and splits in Z[i] into a Gaussian prime and its conjugate, a prime 3 modulo it stays prime there, so the circle's angles come from the primes 1 modulo 4 alone; the mathematics' own number and none of the lattice's
 
+
+@cache
 def primes_below(bound: int) -> list[int]:
-    """The primes below `bound`, each found by the division act against the primes before it (Eratosthenes by trial), the witnesses of `is_prime`."""
+    """The primes below `bound`, each found by the division act against the primes before it (Eratosthenes by trial), the witnesses of `is_prime`; memoized per bound within the process."""
     found: list[int] = []
     for n in range(2, bound):
         if all(division_forward(n, p, 0)[1] for p in found if p * p <= n):
@@ -19,10 +29,10 @@ def primes_below(bound: int) -> list[int]:
 
 
 def is_prime(n: int) -> bool:
-    """Whether n is prime, by Miller and Rabin's test with every prime below 2^6 as a witness (18 witnesses: exact below 3.3 x 10^24, the first twelve, and a probable prime beyond it, the loader's tool and no line of the law): n - 1 = d 2^s by the division act, a^d and its squares read modulo n by Python's own modular power."""
+    """Whether n is prime, by Miller and Rabin's test with every prime below the square of n's bit length as a witness, the tool's own bound from the tested integer and no number of the lattice: Miller's theorem under the extended Riemann hypothesis puts the least witness of a composite below 2 (ln n)^2, which the square of the bit length exceeds (ln n < 0.7 bits), so the test is exact for every n under that hypothesis; and without it, exact for every n below 3.3 x 10^24 (the first twelve primes decide primality there, Sorenson and Webster, and they stand among the witnesses from n above 37), so for every factor the loader meets (the PeV den's largest prime 3.0 x 10^22; den itself is only split or not): n - 1 = d 2^s by the division act, a^d and its squares read modulo n by Python's own modular power."""
     if n < 2:
         return False
-    witnesses = primes_below(SIDES**PORTS)
+    witnesses = primes_below(n.bit_length() ** 2)  # the bound from n itself, the docstring's derivation
     if n in witnesses:
         return True
     if any(division_forward(n, p, 0)[1] == 0 for p in witnesses):
@@ -100,7 +110,7 @@ def lightest_point(den: int) -> tuple[int, int]:
                 points = [(-b - b, a + a) for a, b in points]  # times 2 i
             continue
         if (
-            division_forward(prime, SIDES + SIDES, 0)[1] != 1
+            division_forward(prime, GAUSSIAN_UNITS, 0)[1] != 1
         ):  # a prime 3 mod 4: its real power, den^2 even in it
             points = [(a * prime**exponent, b * prime**exponent) for a, b in points]
             continue
@@ -153,7 +163,7 @@ def angled(den: int) -> tuple[list[tuple[int, int]], int]:
     primes = sorted(
         (prime, power)
         for prime, power in factors(den).items()
-        if division_forward(prime, SIDES + SIDES, 0)[1] == 1
+        if division_forward(prime, GAUSSIAN_UNITS, 0)[1] == 1
     )
     scale = den
     for prime, power in primes:
