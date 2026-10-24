@@ -316,6 +316,26 @@ draw();
 """
 
 
+CLICK_KEYS = (
+    "event",
+    "interval",
+    "family",
+    "node_detector",
+    "inflow",
+    "X",
+    "quanta",
+    "before",
+    "realised",
+)
+
+
+def lean(clicks: list[dict[str, Any]] | None) -> list[dict[str, Any]] | None:
+    """The clicks log's lines with the keys the page's script reads and no other (the take's walls, the readings and the points stay in the log beside the page): a record of many bodies' clicks writes tens of thousands of credit lines, and the page embeds what it draws."""
+    if clicks is None:
+        return None
+    return [{k: line[k] for k in CLICK_KEYS if k in line} for line in clicks]
+
+
 def page(
     log: list[dict[str, Any]],
     blind: dict[str, Any] | None,
@@ -342,7 +362,7 @@ def page(
         .replace("{{LOG}}", embed(log))
         .replace("{{BLIND}}", embed(blind))
         .replace("{{NOTES}}", embed(notes))
-        .replace("{{CLICKS}}", embed(clicks))
+        .replace("{{CLICKS}}", embed(lean(clicks)))
         .replace("{{SPAN}}", embed(span))
         .replace("{{LEAST}}", embed(least))
         .replace("{{CAPTIONS}}", embed(captions or []))
