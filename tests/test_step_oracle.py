@@ -1,7 +1,5 @@
 """The step's oracle inside the suite's bound (the owner's word of 2026-10-16: the engine matches the law in its implementation and not only in its results): tools/step_oracle.py keeps the law's first form of Rule3, SUM over the six Ports of R_ij m_ij + S a_now - w a_before + r, with the one Node's interval around it, in no file of src/, and runs it against the engine's step (Rule3's flux line, src/event_universe/flux.py, core/rule3.rule3): two boards from one load, every array and the output lines compared at every interval, then the engine's board back to the seed. On the bare 3-cube torus of the one universe file over the 28 intervals before the births."""
 
-from __future__ import annotations
-
 from pathlib import Path
 
 import pytest

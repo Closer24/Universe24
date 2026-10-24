@@ -1,7 +1,5 @@
 """The sign's Link phase in the fold form (ALGEBRA.md, The sign holder rotates the two-part record; The constants): the Link's turn by the sign holder's odd lines is the exact tangent half-angle triple rebooked in the Link's unit with one rounding per part, X^c even and X^s odd in the Link's level, so the pair read from the two ends is exact by direction and the count is conserved by Hermiticity; the odd lines' source is the two Links' Wronskian currents summed unhalved over the doubled wall 2 E_s T. On the one universe file's families (examples/events/universe24), the electron plane reading the charge holder, on the bare 3-cube torus."""
 
-from __future__ import annotations
-
 from fractions import Fraction
 
 import numpy as np

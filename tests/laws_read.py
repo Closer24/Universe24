@@ -1,7 +1,5 @@
 """The one world's file in the read's shape for the law's tests: a document with no engine start file and no generator constants (`redeclared`) and a shipped world parsed in that shape without a copy (`load_shipped`)."""
 
-from __future__ import annotations
-
 import json
 
 from event_universe import world_files
