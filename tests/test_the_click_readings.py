@@ -156,7 +156,7 @@ def test_the_hole_seeds_credits_read_their_own_clocks_and_differ_where_the_volum
 def test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_and_a_second_credit_reads_no_point(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The frame's running cosine along each axis with the Link current's sign, both at the interval's start (the blind of 2026-10-24 measured, the Boss's ruling on the sign): the travelling plane wave of the massless record at k = 2 pi / 3 along x on the 3-cube reads [1, -1, 2] on x (cos k_x = -1/2, p_x = T sin k_x = 0.866 T toward +x, the lay's own current) and [0, 1, 1] on y and z (no current, the double root) on every credit of its step, its point [1, 2]; on the hole seed's first four closes the hole's own credit reads [0, 5, 6] on every axis (its inflow symmetric, its spatial cosine its temporal point), its six neighbours [0, 1, 2] on the axis to the hole (cos k = 1/2; the sign 0, nothing flowing at the start, the inflow the step's) and [0, 25, 26] on the two cross axes (their neighbours there the edge Nodes at one level), the twelve edge Nodes [0, 714, 713] on the axis between two corners (outside the circle) and [0, 1, 2] on the other two, the eight corners [0, 1, 2] on every axis; a Node's second credit reads no point, no beat and no momentum (its level now 0 at the start from the hole's last close), its windows 2, and every first credit a pair."""
+    """The frame's running cosine along each axis with the Link current's sign, both at the interval's start (the blind of 2026-10-24 measured, the Boss's ruling on the sign): the travelling plane wave of the massless record at k = 2 pi / 3 along x on the 3-cube reads [1, -1, 2] on x (cos k_x = -1/2, p_x = T sin k_x = 0.866 T toward +x, the lay's own current) and [0, 1, 1] on y and z (no current, the double root) on every credit of its step, its point [1, 2]; on the hole seed's first four closes, every one the hole's own Node re-lit by its frame (the hole the Node's own level before, the drift stopped, since the Boss's ruling of 2026-10-24, ALGEBRA.md, The board reads itself: one hole per close at the origin, its windows 1 to 4, its proper rising), the first credit reads [0, 5, 6] on every axis (its inflow symmetric, its spatial cosine its temporal point) and every later credit reads a point (the Node's level now other than 0 at the start) with the momentum alike on the three axes and the sign 0 (the refill symmetric, no current), the beat None where the point lies beyond the band; the former course under the write to (0, 0), kept by name: the neighbours [0, 1, 2] toward the hole and [0, 25, 26] across, the edges [0, 714, 713], the corners [0, 1, 2], and a second credit reading no point, its level now 0."""
     lines: list[dict] = []  # type: ignore[type-arg]
     board = bare_board(tmp_path, monkeypatch, lines)
     light = board.world.seed
@@ -184,21 +184,12 @@ def test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_a
     while len({line["interval"] for line in lines if line.get("event") == "credit"}) < 4:
         board.step()
     credits = [line for line in lines if line.get("event") == "credit"]
-    closes = sorted({line["interval"] for line in credits})[:4]
-    (first,) = [line for line in credits if line["interval"] == closes[0]]
-    assert first["support"] == [0, 0, 0] and first["point"] == [5, 6]
-    assert first[MOMENTUM] == [[0, 5, 6]] * 3  # the symmetric inflow: no current, the point's cosine
-    shells = {
-        close: [line for line in credits if line["interval"] == close and line[WINDOWS] == 1]
-        for close in closes[1:]
-    }
-    assert [len(shells[close]) for close in closes[1:]] == [6, 12, 8]  # the neighbours, edges, corners
-    for close, across in zip(closes[1:], ([0, 25, 26], [0, 714, 713], None), strict=True):
-        for line in shells[close]:
-            off = [a for a in range(3) if line["support"][a]]  # the coordinates off the hole
-            assert all(line[MOMENTUM][a] == [0, 1, 2] for a in off)  # toward a zeroed Node: cos k 1/2
-            assert all(line[MOMENTUM][a] == across for a in range(3) if a not in off)
+    assert len(credits) == 4 and [line[WINDOWS] for line in credits] == [1, 2, 3, 4]
+    assert all(line["support"] == [0, 0, 0] for line in credits)  # the hole's Node alone, re-lit
+    assert credits[0]["point"] == [5, 6] and credits[0][MOMENTUM] == [[0, 5, 6]] * 3  # symmetric
+    assert [line[PROPER] for line in credits] == sorted({line[PROPER] for line in credits})
     for line in credits:
-        if line["interval"] in closes:
-            again = line[WINDOWS] > 1
-            assert (line["point"] is None) == (line["beat"] is None) == (line[MOMENTUM] is None) == again
+        num, den = line["point"]
+        assert den > 0 and np.gcd(abs(num), den) == 1  # every credit reads a point: the Node re-lit
+        assert line[MOMENTUM] == [line[MOMENTUM][0]] * 3 and line[MOMENTUM][0][0] == 0  # no current
+        assert (line["beat"] is None) == (abs(num) > den)  # beyond the band no beat

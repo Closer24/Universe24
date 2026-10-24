@@ -7,31 +7,12 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import digits, records, seed, world_files
-from event_universe.emission import emitted_lines
+from event_universe import digits, meeting_board, seed, world_files
 from event_universe.lattice import Lattice
-from event_universe.lay import laid
 from event_universe.world_files import load_world
-from tests.laws_universe import small_universe
+from tests.laws_universe import sea_plus_one, small_universe
 
-SIDE, INTERVALS, DRAWN = 3, 8, 3
-
-
-def sea_plus_one(at: tuple[int, int, int]) -> Any:
-    """The seed hand's S1: the law's uniform sea of light and one more quantum of it at the Node `at` (a test's seed, laid through the lay act as the law's own is)."""
-
-    def laid_seed(board: Lattice, index: int) -> None:
-        family, drift = board.families[index], seed.drift_of(board.world.quantum_action)
-        first, zeros = records.record_slice(family, 0).start, records.zeros(board.shape, board.kind)
-        mask = board.mask((at,))
-        for level, nodes in (
-            (records.full(board.shape, drift, board.kind), None),
-            (np.where(mask, drift, 0), mask),
-        ):
-            for line in emitted_lines(family):
-                laid(board, index, first + line, (level, zeros), None, None, nodes)
-
-    return laid_seed
+SIDE, INTERVALS = 3, 8
 
 
 def arrays_of(board: Lattice) -> list[np.ndarray]:
@@ -83,7 +64,12 @@ def test_a_seed_rolled_one_link_gives_the_rolled_board_bit_for_bit(
     world.write_text(
         json.dumps({"universe": "u.json", "shape": [SIDE] * 3, "intervals": INTERVALS}), encoding="utf-8"
     )
-    runs = []
+    runs, drawn, real = [], [], meeting_board.drawn_from
+    monkeypatch.setattr(
+        meeting_board,
+        "drawn_from",
+        lambda n, w, label, m: (lambda found: (drawn.append(found[0]), found)[1])(real(n, w, label, m)),
+    )  # the whethers drawn by the digits, their ports
     for at in ((0, 0, 0), (1, 0, 0)):
         monkeypatch.setattr(seed, "uniform_seed", sea_plus_one(at))
         lines: list[dict[str, Any]] = []
@@ -108,4 +94,4 @@ def test_a_seed_rolled_one_link_gives_the_rolled_board_bit_for_bit(
         )
         for lines, shift in ((origin_lines, 1), (rolled_lines, 0))
     ]
-    assert births[0] == births[1] and any(interval == DRAWN for _at, interval, _child in births[0])
+    assert births[0] == births[1] and births[0] and 0 in drawn  # a whether drawn by the digits and met
