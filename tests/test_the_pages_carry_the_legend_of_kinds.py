@@ -244,13 +244,7 @@ def test_the_captions_name_the_three_prime_lifts_by_rising_sine_at_every_den() -
         "point 0 0 2": "proton",
         "point 2 0 0": "neutron",
     }
-    pev = CAPTIONS.captions_for(header(21_397_363_965_165_989_151_899_244_775_347_635_252_768_274_397))
-    assert pev == {
-        "massless": "light",
-        "point 0 0 2": "electron",
-        "point 2 0 0": "proton",
-        "point 0 2 0": "neutron",
-    }
+    # the PeV den's captions stand in tests/test_the_loader.py::test_dens_circle_is_read_from_its_integers_alone, the one test that factors it (2026-10-24)
     assert CAPTIONS.captions_for(None) == {} and CAPTIONS.captions_for({"seed": "light"}) == {
         "light": "light"
     }

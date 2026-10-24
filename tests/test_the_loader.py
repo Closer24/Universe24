@@ -6,7 +6,7 @@ from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.loader import circle, keys, universe
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, refused, universe_beside, universe_copy
+from tests.laws import EVENTS, ROOT, load_file, refused, universe_beside, universe_copy
 
 ONE_UNIVERSE = EVENTS / "universe24" / "universe_universe24.json"  # the one universe file
 DEN = 53_567_765  # nature's den of the one universe file, 5 x 17 x 73 x 89 x 97
@@ -141,6 +141,20 @@ def test_dens_circle_is_read_from_its_integers_alone():
     assert (
         1_492_403 * legs[0] <= PEV < 1_492_404 * legs[0]
     )  # den over the proton's leg, the massless point's wall over the proton's
+    assert PEV == 8_909_066_857_637 * 79_961_009_336_473 * 30_036_532_038_439_967_297  # the PeV tier
+    assert circle.lightest_point(PEV) == (least.pair[0], legs[1])  # the lightest point, the least leg
+    captions = load_file("captions_for_the_loader", ROOT / "tools" / "look" / "captions.py")
+    header = {
+        "seed": "massless",
+        "primes": sorted(circle.factors(PEV).items()),
+        "points": {circle.label_of(v): [n, s] for v, n, s in circle.circle_points(PEV)},
+    }
+    assert captions.captions_for(header) == {
+        "massless": "light",
+        "point 0 0 2": "electron",
+        "point 2 0 0": "proton",
+        "point 0 2 0": "neutron",
+    }  # the pages' captions at this den, the prime lifts named by rising sine (tools/look/captions.py)
 
 
 def test_the_rows_are_derived_from_den_and_the_one_file_loads():
