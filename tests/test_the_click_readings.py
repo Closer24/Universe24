@@ -202,7 +202,9 @@ def test_the_momentum_is_the_frames_running_cosine_with_the_link_currents_sign_a
     origin = [line for line in credits if line["support"] == [0, 0, 0]]  # the hole's Node, re-lit
     assert origin and [line[WINDOWS] for line in origin] == list(range(1, len(origin) + 1))
     assert credits[0] is origin[0] and origin[0]["point"] == [5, 6]  # the first close the origin's
-    assert [line[PROPER] for line in origin] == sorted({line[PROPER] for line in origin})
+    assert (
+        [line[PROPER] for line in origin] == sorted(line[PROPER] for line in origin)
+    )  # the propers in order; a bound body's two records click at one close, two credits at one proper (the born gate of 2026-10-24, 21:5x UTC)
     for line in origin:  # the origin's frame symmetric under the 48: no current, the three axes alike
         assert line[MOMENTUM] == [line[MOMENTUM][0]] * 3 and line[MOMENTUM][0][0] == 0
     for line in credits:  # every credit reads a point: the Node re-lit; beyond the band no beat
