@@ -464,7 +464,10 @@ def one_world(world: Path, lines: list[dict[str, object]], expected: dict[str, A
         "world": world.name,
         "bases": {label: list(setting) for label, setting in zip(labels, settings, strict=True)},
         "settings_declared_as": {
-            label: "axis" if row.axis else "basis" for label, row in zip(labels, rows, strict=True)
+            label: (
+                "basis, the half-angle pair (c, s)" if row.axis else "basis, the coefficients (p, q)"
+            )
+            for label, row in zip(labels, rows, strict=True)
         },
         "lines_per_part": width,
         "patterns": {

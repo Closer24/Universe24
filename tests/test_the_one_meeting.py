@@ -274,7 +274,7 @@ def test_a_side_whose_realised_port_carries_no_overlap_is_refused_and_the_loader
 
     def turned(world):  # type: ignore[no-untyped-def]
         world["draw"].pop("meeting", None)
-        world["node_detectors"][0]["axis"] = [-12, 5]
+        world["node_detectors"][0]["basis"] = [-12, 5]
 
     with pytest.raises(
         ValueError, match="compound on the record of 'spin' to the coefficient 144"

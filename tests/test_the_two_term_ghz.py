@@ -43,7 +43,7 @@ def conj_times(a: Gauss, b: Gauss) -> Gauss:
 def test_the_quarter_turn_makes_the_hermitian_ports_and_the_loader_refuses_it_by_name(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The key `turn` (B2 of the reader's design): at the turn 0 the ports are the eighth's integers with 0 behind them; at the turn 3 the identity pattern at `axis` [1, 1] reads (1, -i) and (-i, 1), orthogonal in the Hermitian form with equal norms; every quarter turn's ports orthogonal with equal norms on the identity and on a general pattern; the loader refuses by name `turn` beside `basis`, `turn` without `axis` and a turn outside 0 to 3, and admits the key on a plane side (the singlet chain's sides at the turn 3 load and run)."""
+    """The key `turn` (B2 of the reader's design): at the turn 0 the ports are the eighth's integers with 0 behind them; at the turn 3 the identity pattern at the setting [1, 1] reads (1, -i) and (-i, 1), orthogonal in the Hermitian form with equal norms; every quarter turn's ports orthogonal with equal norms on the identity and on a general pattern; the loader refuses by name `turn` without `basis` and a turn outside 0 to 3 (and a turn on a record of real lines at the end of the load, tests/test_the_spin.py), and admits the key on a plane side (the singlet chain's sides at the turn 3 load and run)."""
     identity = tuple(tuple(pair) for pair in IDENTITY)
     plus, minus = ports_of((1, 1), identity)
     assert (plus, minus) == (
@@ -73,13 +73,11 @@ def test_the_quarter_turn_makes_the_hermitian_ports_and_the_loader_refuses_it_by
     path = spin_world(tmp_path / "turned", monkeypatch, sides, both=True, amplitude=64)
     world = json.loads(path.read_text(encoding="utf-8"))
     for turned, text in (
-        ({"turn": 3, "basis": [1, 1]}, "beside its `axis`"),
+        ({"turn": 3, "basis": None}, "without `basis`"),
         ({"turn": 5}, "from 0 through 3"),
         ({"turn": -1}, "from 0 through 3"),
     ):
-        row = {**world["node_detectors"][0], **turned}
-        if "basis" in row:
-            row.pop("axis")
+        row = {k: v for k, v in {**world["node_detectors"][0], **turned}.items() if v is not None}
         with pytest.raises(ValueError, match=text):  # the loader's reading of the row's setting
             setting_of(row, "node_detectors[0]")
     world["node_detectors"][1]["turn"] = 3
@@ -179,7 +177,7 @@ def ghz_plane_world(  # type: ignore[no-untyped-def]
         "top": [[x, y, 0] for x in range(13, 20) for y in range(29, 33)],
     }
     detectors = [
-        {"name": name, "positions": regions[name], "axis": [1, 1], "turn": turn, "pattern": IDENTITY}
+        {"name": name, "positions": regions[name], "basis": [1, 1], "turn": turn, "pattern": IDENTITY}
         for name, turn in zip(("left", "right", "top"), turns, strict=True)
     ]
     receding = {"sides": ["low", "high"], "largest": 400, "layers": 16}
