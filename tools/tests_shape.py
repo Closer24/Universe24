@@ -219,6 +219,35 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 4 (g)): the eras' log and its page, the two "
         "host tools of the test of the law's course read on the 3-cube light cube under the hypotheses' keys",
     ),
+    "tests/test_the_board_runs_in_slabs.py::test_the_5_cube_hole_seed_runs_the_same_by_two_and_by_five_slabs": (
+        7,
+        "the slabs' gate (slabs.py, the board stepped in slabs by processes with one-Link halos, 2026-10-24): the 5-cube hole seed "
+        "16 intervals through its births by two and by five slabs, every array, every line in its order and the swaps equal to the single process bit for bit",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::test_a_tube_cut_across_z_runs_the_same_by_three_slabs": (
+        5,
+        "the slabs' gate on a [3, 3, 9] tube by three slabs across z: the three slabs' lines interleaved into the board's x-major order",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::test_the_run_back_from_the_board_the_slabs_stepped_is_exact": (
+        13,
+        "the slabs' gate on the run back: the 3-cube through three slabs and back by the board's own inverse, every snapshot met again",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::test_the_slabs_count_is_the_machines_and_the_boards_and_no_files": (
+        12,
+        "the slabs' count the machine's cores and the board's longest axis, no key of any file: slabs_of by hand, the world file's three keys",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::board_of": (
+        8,
+        "the helper of the slabs' gate: the small universe on a bare torus with every output line kept",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::run": (
+        12,
+        "the helper of the slabs' gate: a run by so many slabs with every array after every interval, the lines and the swaps",
+    ),
+    "tests/test_the_board_runs_in_slabs.py::parting": (
+        12,
+        "the helper of the slabs' gate: the first parting from the single process named by interval and arrays, by line or by the swaps",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

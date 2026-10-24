@@ -84,6 +84,9 @@ class Lattice:
         self.closes = np.zeros(
             self.shape, dtype=np.int64
         )  # the count of every Node's own closes, the board's own clicks there, read by the click's view as `windows`
+        self.turned = np.zeros(
+            self.shape, dtype=bool
+        )  # the Nodes the fifth act turned this interval (swap.acted), a reading beside `swaps`, read per slab by the slabs' runner (slabs.py)
 
     def half_wall(self, index: int) -> int:
         """The half wall of the rule a family's lines step by, w div 2 with w = 6 den Gamma^2 G^2 (`wall_of`), the remainder every line is born with: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word; the mathematician's hand with the advisor's hand, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root)."""
