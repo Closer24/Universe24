@@ -66,7 +66,9 @@ PHYSICAL_MODULES += (
     "meeting_board.py",
     "loader/seed.py",
 )  # the fold: the uniform seed, the board's own read
-PHYSICAL_MODULES += ()  # the frame's run of a bound body's full beat at its first close (2026-10-22)
+PHYSICAL_MODULES += (
+    "slabs.py",
+)  # the board stepped in slabs by processes with one-Link halos (2026-10-24)
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
