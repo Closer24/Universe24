@@ -2,15 +2,13 @@
 
 from __future__ import annotations
 
-import json
-
 import numpy as np
 
 from event_universe import credit, digits, meeting_board, share, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
-from tests.laws_universe import bare_torus, small_universe
+from tests.laws_universe import bare_torus
 
 
 def hole_seed(tmp_path, monkeypatch, cube, intervals, lines):  # type: ignore[no-untyped-def]
@@ -85,13 +83,9 @@ def test_the_5_cube_keeps_its_light_above_zero_and_makes_nothing_under_the_takes
 
 
 def test_a_full_stop_that_cannot_pay_refuses_by_name_and_the_light_stands(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The refusal by name (the hole's clause): on the chain of three Nodes at den 1,021 a close whose full stop would take less than the children's walls is logged refused with the cause "stop" and its two numbers, the take below the walls, nothing is born at that close and the light's summed share stands through its writes."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    small_universe(tmp_path)
-    world = {"universe": "u.json", "shape": [1, 1, 3], "intervals": 12}
-    (tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
+    """The refusal by name (the hole's clause): on the 3-cube at den 1,021 a close whose full stop would take less than the children's walls is logged refused with the cause "stop" and its two numbers, the take below the walls, nothing is born at that close and the light's summed share stands through its writes."""
     lines: list[dict] = []  # type: ignore[type-arg]
-    board = Lattice(load_world(tmp_path / "chain.json"), output=lines.append)
+    board = hole_seed(tmp_path, monkeypatch, 3, 12, lines)
     kept = watched(monkeypatch)
     for _ in range(12):
         board.step()

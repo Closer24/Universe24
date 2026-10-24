@@ -7,6 +7,14 @@ from collections.abc import Sequence
 from event_universe.core.rule3 import division_forward, largest_below
 
 
+class Refused(RuntimeError):
+    """A refusal by name of the click's read or draw (ALGEBRA.md, The click's read of the board): the cause ("origin", every digit at the lay's origin; "vacuum", every digit on the exact vacuum paces' lattice; "unit", the number below the draw's total), the amount and the bound the refusal names, carried to the board's own close, where a refusal is a logged line and never a crash of the universe (`meeting_board.closed`, 2026-10-24, the gravity-top hand's finding: an empty gapped Node stands at the exact vacuum paces until light drifts in); a reader calling the read directly sees the RuntimeError it is."""
+
+    def __init__(self, message: str, cause: str, amount: int, bound: int) -> None:
+        super().__init__(message)
+        self.cause, self.amount, self.bound = cause, amount, bound
+
+
 def read_number(digits: Sequence[int], bases: Sequence[int]) -> int:
     """The click's read of the board as one integer (ALGEBRA.md, The click's read of the board, the sentence of 2026-10-24): the digits `digits`, each a kept remainder of Rule3 read as its index on a lattice, r div F (`digits.read_of`: the Node's own remainder on the Node's own lattice F_i, each neighbour's on the Link's lattice F_ij; the digits of the Node and its six Links, of every line and record, in the order of their values, no Port order and no records' order), each in [0, w div F), as one number with the first digit the most significant, x = ((d_1 b_2 + d_2) b_3 + d_3) ... in the mixed radix of the bases `bases`, each w div F + 1, one above its digit's count of values so that no total built of the wall's primes divides it (a digit carries log2(w div F) bits: 26.7 at the shipped universes' content 60, 11.9 for the atom [1, 1299], 1.6 for light at the exact vacuum paces), multiply and add in Python's integers, no division and no number of the run born here; the records' remainders are read and never written."""
     found = 0
@@ -25,16 +33,22 @@ def drawn_from(number: int, weights: Sequence[int], label: str, read: bool = Fal
         return live[0], int(number)  # a certain draw: one weight above 0 consumes nothing
     if number < total:
         if read:  # the interval's read itself below the total: the board does not carry the draw
-            raise RuntimeError(
+            raise Refused(
                 f"the click's read of the board at {label} has the number {number} read, below the draw's total "
                 f"{total}: the digits read at this interval do not carry the draw (a residue of a number below the "
                 "total is no residue of the whole); the world's declaration answers, the body's record over more "
-                "Nodes, a well, a drive with a content, no key on the draw"
+                "Nodes, a well, a drive with a content, no key on the draw",
+                "unit",
+                int(number),
+                total,
             )
-        raise RuntimeError(
+        raise Refused(
             f"the click's read of the board at {label} has the number {number} left, below the draw's total "
             f"{total}: the digits read are spent at this interval by its earlier draws (a residue of a number below "
-            "the total is no residue of the whole); a shorter window, fewer draws per close or more Nodes read"
+            "the total is no residue of the whole); a shorter window, fewer draws per close or more Nodes read",
+            "unit",
+            int(number),
+            total,
         )
     left, residue = division_forward(int(number), total, 0)
     reached = 0

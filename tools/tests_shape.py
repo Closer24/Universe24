@@ -265,6 +265,14 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         20,
         "the covariance test (b): the sea plus one at (1, 0, 0) carried by a rotation and by a reflection before the run gives the carried run, bit for bit; fails by name on the ordered read at 4",
     ),
+    "tests/test_the_reads_refusal_is_a_logged_line.py::test_a_refused_read_at_the_board_is_a_logged_line_and_the_run_goes_on": (
+        20,
+        "a refusal by name is a logged line, never a crash (2026-10-24, the gravity-top hand's finding): the 3-cube hole seed under the gapped holder of the volume through loader/universe.volume_pair runs 20 intervals with the read's vacuum refusal logged at the origin and births elsewhere",
+    ),
+    "tests/test_a_click_does_what_it_should.py::test_one_close_at_one_node_writes_the_take_there_and_nothing_elsewhere": (
+        80,
+        "the owner's standing test of the click (2026-10-24, 16:4x UTC, his word: a click does what it is supposed to, to the Nodes and to the Node): one close at one Node on the chain of three and on the 3-cube, the Node changed by exactly the take, every other Node unchanged, the children at the two senses with their Wronskians summing to 0, the log's take keys and the credit's support and windows, the draw from the Node and its six neighbours alone divided by the unit once, the run back exact; it stays whatever the tests hand prunes",
+    ),
     "tests/test_the_click_reads_one_link.py::test_the_link_lattice_is_the_neighbours_own_coarsened_and_no_port_order_enters_the_number": (
         34,
         "the one-Link read's unit test (2026-10-24, the builder's sentence): at the first draw of the hole-seed 3-cube each Link lattice F_ij a multiple of the neighbour's own F_j with the coarse index the floor of the fine one over the ratio, the frame's neighbours reversed and rolled reading the same number, a Node beyond no Port refused by name",

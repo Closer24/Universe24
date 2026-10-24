@@ -11,7 +11,7 @@ import numpy as np
 from event_universe import flux, node, registry
 from event_universe.core.ports import AXES, PORT_SIDES
 from event_universe.core.rule3 import Rule, division_forward, wall_of
-from event_universe.features.click import read_number
+from event_universe.features.click import Refused, read_number
 from event_universe.features.read import READS, read_again
 
 if TYPE_CHECKING:
@@ -143,14 +143,17 @@ def lattice_of(rule: Rule, at: Frame, pairs: flux.Pairs | None, ports: Sequence[
 def read_of(board: Lattice, reads: Reads, label: str) -> int:
     """The click's read of the board, one Link and one number (ALGEBRA.md, The click's read of the board, the sentence of 2026-10-24): for every family in `reads` in that order, every record of quanta in the records' order and every line of it in the declared order (`digits_of`), the Node's own remainder as its index on the Node's own lattice F_i and each neighbour's remainder as its index on the Link's lattice F_ij (`lattice_of`), r div F, one division act per digit, in the base w div F + 1 (one above the digit's count of values, so that a total built of the wall's primes never divides the base and every digit enters the residue); a remainder equal to an earlier line's at the same Node of the record, or w less it, is a copy and enters nothing (the reader's D2 of 2026-10-20: a record's lines laid alike carry one remainder at every Node, equal before the write and complementary after it; one comparison per later line and no act); the digits of the Node and its six Links, of every line and record, in the order of their values (the digit, and the base where two digits are equal: the pair is the digit's read, two equal pairs exchangeable, so the number is one function of the multiset of the read's digits and no Port order, no lines' order and no records' order enters it; the builder's all-sorted line of 2026-10-24, measured on the toy: the tiles equal through 120, the 48 at every interval, 0 refused, the picks spread; the sentence (A) of 2026-10-24 15:0x, the Node's digit first and the six Link digits sorted per line in the records' order, kept by name with its numbers, the tiles through 120 to 150 and the pick 5, 4, 4 at the three-way reads), all as one number in the mixed radix of the bases (`features/click.read_number`); read at the draw's moment, the close before that click's write, and never written, so the run back and the inverse stand as they are. The number is divided by the unit once by the caller (`features/click.drawn_from`: the remainder the whether, the quotient the close's later draws'). Refused by name, `label` naming the Node and the interval: every remainder at the lay's origin w div 2 (the records untouched at the Nodes read, or an exactly periodic standing record returned to its origin: nothing to read), and every digit on the lattice of the exact vacuum paces, three values or fewer each (w div F at or below `VACUUM_VALUES`, the lattice F at or above w div 3: the massless point's remainders at p_0 = p_i = Gamma with no tension; a record read for its digits reads a content, the shipped universes' 60)."""
     taken: list[tuple[int, int]] = []
-    origin, coarse = True, True
+    origin, coarse, widest = True, True, 0
     for index, at in reads:
         half, earlier = board.half_wall(index), dict[tuple[int, int], list[int]]()
         for record, _line, wall, kept, lattice in digits_of(board, index, at):
             for place, (remainder, found) in enumerate(zip(kept, lattice, strict=True)):
                 values = int(division_forward(wall, found, 0)[0])  # w div F, the digit's count of values
                 origin = origin and remainder == half
-                coarse = coarse and values <= VACUUM_VALUES  # the exact vacuum paces, refused by name
+                coarse, widest = (
+                    coarse and values <= VACUUM_VALUES,
+                    max(widest, values),
+                )  # the exact vacuum paces, refused by name
                 standing = earlier.setdefault((record, place), [])
                 copied = any(remainder in (seen, wall - seen) for seen in standing)
                 standing.append(remainder)
@@ -161,16 +164,23 @@ def read_of(board: Lattice, reads: Reads, label: str) -> int:
     taken.sort()  # every digit of the Node and its six Links, of every line and record, in the order of their values: the one composition line (2026-10-24)
     digits, bases = [digit for digit, _base in taken], [base for _digit, base in taken]
     if origin:
-        raise RuntimeError(
+        half = board.half_wall(reads[0][0]) if reads else 0
+        raise Refused(
             f"the click's read of the board at {label} finds every digit at the lay's origin w div 2: the "
-            "records stand untouched at the Nodes read, nothing to read; a draw asked there is refused"
+            "records stand untouched at the Nodes read, nothing to read; a draw asked there is refused",
+            "origin",
+            half,
+            half,
         )
     if coarse:
-        raise RuntimeError(
+        raise Refused(
             f"the click's read of the board at {label} finds every digit on the lattice of the exact vacuum "
             "paces, three values or fewer each (the lattice F at or above w div 3: the massless point's remainders "
             "at p_0 = p_i = Gamma with no tension; ALGEBRA.md, The click's read of the board); the number cannot "
             "spread over the unit, so the read is refused: a record read for its digits reads a content, the "
-            "paces off the exact band"
+            "paces off the exact band",
+            "vacuum",
+            widest,
+            VACUUM_VALUES,
         )
     return read_number(digits, bases)

@@ -13,7 +13,7 @@ from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.digits import at_origin, frame_of, read_of
-from event_universe.features.click import drawn_from
+from event_universe.features.click import Refused, drawn_from
 from event_universe.lay import laid
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
@@ -57,6 +57,9 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
     stepped = [(state.lines, state.phases) for state in board.states]
     for state, lines, phases in zip(board.states, begun[0], begun[2], strict=True):
         state.lines, state.phases = lines, phases  # the read on the interval's start
+    refusals: list[
+        tuple[Node, str, int, int]
+    ] = []  # the reads refused by name: logged lines, never a crash
     try:
         shares, frozen = board.share_of(index)
         born: list[tuple[Node, Table]] = []
@@ -71,16 +74,28 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
                 label = f"the Node {list(at)}'s read of itself and its Links at the interval {board.interval}"
                 region = frame_of(at, board.shape, board.world.periodic)  # the Node, then its six Ports
                 reads = [(family, region) for family in board.order]
-                if not at_origin(board, reads):
-                    number = read_of(board, reads, label)  # one Link and one number (2026-10-24)
-                    meet = (
-                        drawn_from(number, [rest, unit - rest], label, True)[0] == 0
-                    )  # the number divided by the unit once: the remainder the whether, the quotient the close's later draws' (kept for the pick where main's selector asks none)
+                if at_origin(
+                    board, reads
+                ):  # every digit at the lay's origin: nothing to read, nothing born
+                    refusals.append((at, "origin", board.half_wall(index), board.half_wall(index)))
+                else:
+                    try:
+                        number = read_of(board, reads, label)  # one Link and one number (2026-10-24)
+                        meet = (
+                            drawn_from(number, [rest, unit - rest], label, True)[0] == 0
+                        )  # the number divided by the unit once: the remainder the whether, the quotient the close's later draws' (kept for the pick where main's selector asks none)
+                    except (
+                        Refused
+                    ) as named:  # the read's or the draw's refusal by name: a logged line (2026-10-24)
+                        refusals.append((at, named.cause, named.amount, named.bound))
             if meet:
                 born.append((at, table))
     finally:
         for state, (lines, phases) in zip(board.states, stepped, strict=True):
             state.lines, state.phases = lines, phases  # the write on the state the step left
+    if board.output is not None:
+        for at, cause, amount, bound in refusals:
+            board.output(refused_line(board.interval, family.name, at, cause, amount, bound))
     takes: list[tuple[Node, Table, Take]] = []
     for at, table in born:  # every face read before any write, on the state the write acts on
         found = take_of(board, index, span, at, walls_of(board, table))

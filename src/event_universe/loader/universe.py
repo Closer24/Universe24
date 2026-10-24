@@ -66,6 +66,11 @@ def sign_holder(name: str, pair: tuple[int, int]) -> Row:
     return Row(name, pair, 1 + AXES, 1, False, True, True, 1, 1, 0, ())
 
 
+def volume_pair(den: int) -> tuple[int, int]:
+    """The holder of the volume's pair, the massless point (den, den) on this tree (2026-10-24; the gapped holder of the branch gravity-top lands over this hook, a test setting the pair through it)."""
+    return den, den
+
+
 def volume_holder(name: str, pair: tuple[int, int]) -> Row:
     """The holder of the volume by its role (the owner's word of 2026-10-24, no declarations): a held row of the time line and three axis lines sourced by its readers' form and tensions, no Wronskian and no rotation, the level weight 1 and the write weight 1, no rest and no flux; at the massless point (den, den) like the sign holder's (the owner's closure of 2026-10-24: the gap gone for good; the gapped holder at (den - gap, den), the one world's record to that day at the gap 38,024, the former form kept by name)."""
     return Row(name, pair, 1 + AXES, 1, False, False, False, 1, 1, 0, ())
@@ -75,7 +80,7 @@ def rows_of(integers: dict[str, int]) -> list[Row]:
     """The rows derived from den (the module's sentence): the holder of the volume and the holder of the sign, each by its role at the massless point (`sign_holder`, `volume_holder`; the owner's closure of 2026-10-24: the gap gone for good, the gapped holder the former record's form, kept by name), then the massless point on one real line, and den's circle, every point of the open quadrant a row of two lines (the room of a pair with a gap, the kind read from the lines) named by its vector (`circle_points`, `label_of`)."""
     den = integers["den"]
     rows = [  # the holders first, the volume's before the sign's, as the one world's file stood (its first held row the volume's)
-        volume_holder(VOLUME, (den, den)),
+        volume_holder(VOLUME, volume_pair(den)),
         sign_holder(SIGN, (den, den)),
         Row(MASSLESS, (den, den), 1, 1, False, False, False, None, None, 0, ()),
     ]
