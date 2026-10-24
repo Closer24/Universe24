@@ -85,7 +85,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # act.py, the born pair
     (
         "act.py",
-        "born_pair",
+        "born_list",
         "division_forward",
     ): "D",  # the whole quanta standing at the Node, the floor once
     # conversion.py

@@ -18,7 +18,7 @@ def families_of(path: Path):  # type: ignore[no-untyped-def]
     return families, [family.name for family in families]
 
 
-def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first() -> None:
+def test_the_sentence_lists_the_conjugate_pairs_of_the_plane_families_lightest_first() -> None:
     families, names = families_of(FOLDER / "universe_universe24.json")
     light = names.index("light")
     born = [[(names[k], sense) for k, sense in table] for table in conversion.birth_of(families, light)]
@@ -26,9 +26,12 @@ def test_the_sentence_births_the_conjugate_pair_of_a_plane_family_lightest_first
         born
         == [
             [("electron", -1), ("electron", 1)],
+            [("electron", -1), ("electron", -1), ("electron", 1), ("electron", 1)],
             [("proton", -1), ("proton", 1)],
+            [("proton", -1), ("proton", 1), ("electron", -1), ("electron", 1)],
+            [("proton", -1), ("proton", -1), ("proton", 1), ("proton", 1)],
         ]
-    )  # the lister's order, the lightest first: the electron's gap 29,276^2 before the proton's; the one born the heaviest within the two quanta's energy (act.born_table, 2026-10-24)
+    )  # the exact lists of at most 2 + BEYOND children, the lightest first by their summed walls: every multiset of conjugate pairs (2026-10-24, N children one record each); the one born the heaviest within the two quanta's energy (act.born_table)
     assert (
         conversion.birth_of(families, names.index("matter")) == []
     )  # a family with a gap births nothing: its own list is the conversion's

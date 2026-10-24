@@ -38,25 +38,25 @@ def written(board: Lattice, items: list[Item]) -> None:
         whole, was = faces[number], board.credit.counts[item.family]
         drawn = list(zip(item.nodes, item.ports or ((),) * len(item.nodes), strict=True))
         unwritten = not whole if item.delta < 0 else len(whole) < len(item.nodes)
-        pair = born_pair(board, item, whole) if unwritten and item.delta > 0 else []
+        born = born_list(board, item, whole) if unwritten and item.delta > 0 else []
         if item.delta > 0 and not unwritten:
             laid_by_count(board, item)
-        elif not pair:  # a quantum born into the pair is counted in its children, not in its own family
+        elif not born:  # a quantum born into a list is counted in its children, not in its own family
             board.credit.counts[item.family] += item.delta
         if item.delta > 0 and not unwritten:  # a lay that raised the count: the births' book
             credit.born(board, item.family, was)
         if item.delta < 0:  # the front from every drawn Node, faced or not (C6, the re-fix)
             holes.setdefault(item.family, []).extend(drawn)
-        if pair:  # Matter's birth from light: the second quantum of a gapless family meeting the first at a Node lays the conjugate pair there, the two items walking this same step
-            items.extend(pair)
+        if born:  # Matter's birth from light: the second quantum of a gapless family meeting the first at a Node lays the list's children there, N records, the items walking this same step
+            items.extend(born)
             if board.output is not None:
                 board.output(
                     birth_line(
                         board.interval,
                         board.families[item.family].name,
-                        [board.families[born.family].name for born in pair],
-                        [born.sense for born in pair],
-                        pair[0].nodes,
+                        [board.families[child.family].name for child in born],
+                        [child.sense for child in born],
+                        born[0].nodes,
                     )
                 )
         elif unwritten:  # the undepleted beam, or no Node with a side: the quantum in the books alone
@@ -69,17 +69,28 @@ def written(board: Lattice, items: list[Item]) -> None:
 def born_table(
     families: tuple[FamilyRule, ...], parent: int, action: int, energy: int, over: int
 ) -> conversion.Table | None:
-    """The pair two quanta of a gapless family make at one Node under the law's sentence of 2026-10-24 (ALGEBRA.md, Matter's birth from light, the owner's word, 05:2x UTC: the heaviest conjugate pair of a plane family the universe declares whose two walls fit within the two meeting quanta's own energy as read from the Node's own levels; the former clause, the lightest within the threshold 2 x 3 den T, two quanta at the top of the band, from 2026-10-23 to 2026-10-24, kept by name): among `conversion.birth_of`'s tables, the lightest first, the heaviest whose two walls, 2 x count_wall(child) = 2 x 3 T sqrt(den^2 - num^2) (`loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over`, the fraction the caller reads at the Node (the board's two n-ths of the Node's share where n whole quanta stand, `meeting_board.child_of`; the act's standing n-th with the arriving quantum's own unit, `born_pair`), the comparison cross-multiplied, 2 x count_wall(child) x over <= energy, exact in the integers with no division and no rounding; None where no pair fits, nothing then born."""
+    """The list the meeting of two quanta of a gapless family births at one Node under the law's sentence of 2026-10-24 (ALGEBRA.md, Matter's birth from light: the heaviest list whose summed walls fit within the two meeting quanta's own energy as read from the Node's own levels; the pair's two walls to the owner's word of that day, several can be born, N children one record each): among `conversion.birth_of`'s exact lists, the lightest first, the heaviest whose children's walls summed, SUM over the children of count_wall(child) (`loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over` (the fraction the caller reads at the Node, `meeting_board.child_of`, `born_list`), the comparison cross-multiplied, exact in the integers with no division and no rounding; None where no list fits, nothing then born; two distinct lists at one heaviest sum refused by name (The conversion's rule, several exact lists)."""
     fitting = [
-        table
+        (sum(count_wall(families[out], action) for out, _sense in table), table)
         for table in conversion.birth_of(families, parent)
-        if 2 * count_wall(families[table[0][0]], action) * over <= energy
     ]
-    return fitting[-1] if fitting else None
+    fitting = [(walls, table) for walls, table in fitting if walls * over <= energy]
+    if not fitting:
+        return None
+    heaviest = max(walls for walls, _table in fitting)
+    tables = [table for walls, table in fitting if walls == heaviest]
+    if len(tables) > 1:
+        raise RuntimeError(
+            f"two quanta of {families[parent].name!r} meeting with the energy {energy} / {over} have "
+            f"{len(tables)} exact lists at the heaviest walls {heaviest}: "
+            f"{[[families[out].name for out, _sense in table] for table in tables]}; the law has no "
+            "share among them (The conversion, several exact lists refused by name; Matter's birth from light)"
+        )
+    return tables[0]
 
 
-def born_pair(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...]]]) -> list[Item]:
-    """Matter's birth from light, the gapless meeting's own clause (ALGEBRA.md, the law's sentence on the owner's word of 2026-10-23, the heaviest within the two quanta's own energy on his word of 2026-10-24; `conversion.birth_of`, `born_table`): a quantum of a gapless family [den, den] given at a Node where its family's quantum already stands is not written there, and in place of the books' deficit the two quanta make the heaviest conjugate pair of a plane family the universe declares whose two walls fit within their own energy, laid at that Node as two items of this write step at the senses -1 and 1 (the senses summing to 0, the charge kept); the energy read at the Node by the law's own acts: the standing light's share there (`Lattice.share_of`, the count is the record's share, the Node's two levels and its six Links, the read `take.faced` took), n W_c sin omega(k) for the n whole quanta standing at the wave number k, n the floor of the share over the record's unit (one division act, the floor `meeting_board.meetings` takes), the standing quantum's n-th of it, and the arriving quantum's own W_c sin Omega at its resonance (`emission.born_unit`, the act that gives a record its unit at its first lay; W_c for a lay by the count, a one-Node lay carrying no wave number), the two together (share + n x arriving) / n; [] where the family has a gap, where the universe declares no such pair, or where no pair's walls fit, the deficit then booked as before (the former clause's lightest pair within 2 x 3 den T was born at every meeting whatever the light's frequency, the threshold a tautology). The items walk the same write step as a conversion's records out (`laid_by_count` at the pair [den, den] of the child, the births' book by `credit.born`), so the lay is logged at its interval and undone by the run back as every lay is (The lay's inverse)."""
+def born_list(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...]]]) -> list[Item]:
+    """Matter's birth from light, the gapless meeting's own clause (ALGEBRA.md, the law's sentence on the owner's word of 2026-10-23, the heaviest within the two quanta's own energy on his word of 2026-10-24, N children one record each on his word of the same day, several can be born; `conversion.birth_of`, `born_table`): a quantum of a gapless family [den, den] given at a Node where its family's quantum already stands is not written there, and in place of the books' deficit the two quanta make the heaviest exact list of children whose summed walls fit within their own energy, laid at that Node as the list's items of this write step, one record per child at the child's own sense (`born_items`, N records of the write step, 2026-10-24; the senses summing to 0, the charge kept, and each record's Wronskian its own, sourcing its own row of the sign); the energy read at the Node by the law's own acts: the standing light's share there (`Lattice.share_of`, the count is the record's share, the Node's two levels and its six Links, the read `take.faced` took), n W_c sin omega(k) for the n whole quanta standing at the wave number k, n the floor of the share over the record's unit (one division act, the floor `meeting_board.meetings` takes), the standing quantum's n-th of it, and the arriving quantum's own W_c sin Omega at its resonance (`emission.born_unit`, the act that gives a record its unit at its first lay; W_c for a lay by the count, a one-Node lay carrying no wave number), the two together (share + n x arriving) / n; [] where the family has a gap, where the universe declares no such pair, or where no pair's walls fit, the deficit then booked as before (the former clause's lightest pair within 2 x 3 den T was born at every meeting whatever the light's frequency, the threshold a tautology). The items walk the same write step as a conversion's records out (`laid_by_count` at the pair [den, den] of the child, the births' book by `credit.born`), so the lay is logged at its interval and undone by the run back as every lay is (The lay's inverse)."""
     family = board.families[item.family]
     if family.pair[0] != family.pair[1] or family.held:
         return []
@@ -100,5 +111,16 @@ def born_pair(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...
     table = born_table(board.families, item.family, action, share + standing * arriving, standing)
     if table is None:
         return []
-    den = board.families[table[0][0]].pair[1]
-    return [Item(out, 1, nodes, (den, den), sense=sense) for out, sense in table]
+    return born_items(board.families, table, nodes)
+
+
+def born_items(
+    families: tuple[FamilyRule, ...], table: conversion.Table, nodes: tuple[Node, ...]
+) -> list[Item]:
+    """The items of a list a meeting selects, one per child (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24 on the owner's word, several can be born: N records of the write step, one per child of the list, each at its own sense): each child one whole quantum at its family's massless pair [den, den] at the list's sense, laid on its own record of the family, its position among the list's children of that family (`Item.record`; `emission.laid_by_count`, `derived.children_of`), so that each born record carries its Wronskian and writes its own row of the sign; nothing here counts two."""
+    found: list[Item] = []
+    for number, (out, sense) in enumerate(table):
+        den = families[out].pair[1]
+        record = sum(1 for other, _sense in table[:number] if other == out)
+        found.append(Item(out, 1, nodes, (den, den), sense=sense, record=record))
+    return found

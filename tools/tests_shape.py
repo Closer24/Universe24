@@ -41,14 +41,32 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_birth_is_a_list_of_records.py::test_the_lists_two_light_quanta_make_are_exact_kept_and_ordered_by_their_walls": (
+        14,
+        "Matter's birth from light, N children one record each (2026-10-24, the owner's word, several can be born): the exact "
+        "lists two light quanta make, each exact and kept, at most 2 + BEYOND children, lightest first by their summed walls",
+    ),
+    "tests/test_the_birth_is_a_list_of_records.py::test_the_uniform_cube_births_the_list_one_record_per_child_each_at_its_sense": (
+        30,
+        "the same sentence on the uniform 3-cube's first meeting: the records laid number the list's children, each born record's "
+        "Wronskian its child's sense, opposite children opposite, the books one per child, the holder's row of every charged record written",
+    ),
+    "tests/test_the_birth_is_a_list_of_records.py::test_the_holes_board_runs_back_exact_through_its_births": (
+        16,
+        "the same sentence's run back: the sea with a hole 20 intervals through its births and back, MATCH, the N records' lays undone",
+    ),
+    "tests/test_the_birth_is_a_list_of_records.py::bare_board": (
+        8,
+        "the helper of the three tests above: the one universe file on the bare 3-cube with the births kept",
+    ),
     "tests/test_the_charge_per_quantum.py::test_equal_wronskians_of_two_families_write_equal_charge": (
         16,
         "the charge written is the Wronskian over T div 2 for every reader (the law's sentence of 2026-10-24, the owner's word): "
         "one quantum of the proton and one of the electron in the birth's own form write the same level into the holder of the sign",
     ),
-    "tests/test_the_charge_per_quantum.py::test_the_holes_board_runs_40_intervals_with_the_sign_holder_bounded": (
+    "tests/test_the_charge_per_quantum.py::test_the_holes_board_runs_25_intervals_with_the_sign_holder_bounded": (
         22,
-        "the same sentence on the sea with a hole over 40 intervals: electron pairs born by the draw and the holder of the sign "
+        "the same sentence on the sea with a hole over 25 intervals: electron pairs born by the draw and the holder of the sign "
         "below the former factor's one-electron write of two intervals, no exponential (the runaway hand's finding of 2026-10-24)",
     ),
     "tests/test_the_share.py::test_under_the_rotation_the_share_reads_the_level_pair_as_the_step_reads_it": (

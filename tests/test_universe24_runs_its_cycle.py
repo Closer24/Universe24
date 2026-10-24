@@ -92,7 +92,10 @@ def test_the_bare_torus_is_seeded_with_light_bangs_and_births_the_pairs_at_the_f
     assert births and len(set(alike)) == 1 and alike[0] > GAMMA  # the bang, uniform to the birth
     first = births[0]["interval"]
     assert len(births) == CUBE**3 and all(b["interval"] == first for b in births)  # every Node alike
-    assert all(b["children"] == ["proton"] * 2 and b["senses"] == [-1, 1] for b in births)
+    assert all(
+        b["children"] == births[0]["children"] and sum(b["senses"]) == 0 and "proton" in b["children"]
+        for b in births
+    )  # one list at every Node, the heaviest within the two quanta's energy at the top of the band, the proton pair among its children, the senses summing to 0 (N children one record each, 2026-10-24)
     credits = [line for line in lines if line.get("event") == "credit"]
     assert sorted(c["node_detector"] for c in credits) == list(range(CUBE**3))  # the Nodes by index
     assert all(c["absorbed"] == "light" and c["realised"] == "proton" for c in credits)
