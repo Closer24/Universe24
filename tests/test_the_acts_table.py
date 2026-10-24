@@ -108,7 +108,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the click's read over the total, once per draw
     ("features/click/__init__.py", "bias_bound", "gcd"): "D",  # the total's shared factors, F
-    ("features/click/__init__.py", "face_value", "division_forward"): "D",  # the face's value, once
+    # ("features/click/__init__.py", "face_value", "division_forward"): "D", the face's value: the declared taker's click, struck 2026-10-24 (the owner: no detector)
     ("features/click/__init__.py", "squared", "largest_below"): "S",  # the search on the lay's square
     (
         "features/click/__init__.py",

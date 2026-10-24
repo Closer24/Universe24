@@ -14,12 +14,10 @@ MEASUREMENT, DIAGNOSTIC = (
     "NODEDETECTOR",
     "LATTICE",
 )  # the labels of the output's lines (ALGEBRA.md #readings-and-measurements)
-CREDIT, ERASURE, LAY, FACE = (
+CREDIT, LAY = (
     "credit",
-    "erasure",
     "lay",
-    "face",
-)  # the output's four lines: the click written (every reader's, the region's credit and a record's absorption and emission alike), the front's shell, one line laid at one Node, one value presented at one Port
+)  # the output's two lines beside the birth's: the click written, one line laid at one Node
 REPORT_KEYS = ("event", "label", "interval", "family", "node_detector")  # every line's first keys
 INFLOW, READING, WELL, LEVELS = ("inflow", "reading", "well", "levels")  # the lines' own keys
 EXCHANGED = (
@@ -61,26 +59,13 @@ CREDIT_KEYS = (
     SOURCE,
     RECOIL,
 )  # the credit line's own keys, the one click line kind's
-ERASURE_KEYS = ("origin", "distance", "nodes", "take", "unit")  # the erasure line's own keys
-LINE, BEFORE, AFTER, PORT_SET, VALUE = (
-    "line",
-    "before",
-    "after",
-    "ports",
-    "value",
-)  # the two acts' words
+LINE, BEFORE, AFTER = ("line", "before", "after")  # the lay's words
 LAY_KEYS = (
     LINE,
     BEFORE,
     AFTER,
     "node",
 )  # the lay line's own keys: the line laid, its levels before and after
-FACE_KEYS = (
-    LINE,
-    PORT_SET,
-    VALUE,
-    "node",
-)  # the face line's own keys: the line, the Ports and the value presented
 AT = "at"  # the one Node written, a lattice diagnostic beside the credit's result
 OUTPUT = (
     *REPORT_KEYS,
@@ -89,10 +74,7 @@ OUTPUT = (
     WELL,
     LEVELS,
     *CREDIT_KEYS,
-    *ERASURE_KEYS,
     *LAY_KEYS[:3],
-    PORT_SET,
-    VALUE,
 )  # the lines' keys
 BOOKS = (
     "share",
@@ -158,29 +140,6 @@ def lay(
     written: dict[str, object] = {OUTPUT[1]: DIAGNOSTIC, AT: node}
     found.update(zip(LAY_KEYS, (line, before, after, written), strict=True))
     return found
-
-
-def face(
-    interval: int, family: str, line: int, node: list[int], ports: list[int], value: int
-) -> dict[str, object]:
-    """The face line, one value presented at the Ports of one Node's set for one interval's step (features/click, `Face`; the mathematician's hand with the advisor's second, the face value logged per line per interval; the click's plan, C6: the set in place of one Port), labelled LATTICE, a diagnostic for the host's tool and no result: the interval at whose step it is presented, the record's family, no node_detector, the line, the Ports, the set in Port order, and the value Rule3 read through each of them in the place of the neighbour's level (the click's hole and the front's shells alike), the one Node under `node`; the inverse presents the same value at the same Ports, so the tool crosses the click from the lines and not from the books' log."""
-    found: dict[str, object] = dict(
-        zip(REPORT_KEYS, (FACE, DIAGNOSTIC, interval, family, None), strict=True)
-    )
-    found.update(zip(FACE_KEYS, (line, ports, value, {OUTPUT[1]: DIAGNOSTIC, AT: node}), strict=True))
-    return found
-
-
-def erasure(
-    interval: int, family: str, origin: list[int], distance: int, nodes: int, take: int, unit: int
-) -> dict[str, object]:
-    """The erasure line, the front's shell of one interval (src/event_universe/front.py; the owner's word, the past going out at the speed of light), labelled LATTICE, a diagnostic beside the click line for the host's tool and no result: the interval, the clicked record's family, the click's Node at the file's coordinates (`origin`), the shell's Link-metric distance from it, the shell's Nodes, the record's share standing on the shell as the front reaches it in the current's units (`take`, what the shell's faces book for removal) and the record's quantum W_rec (`unit`), so that take over unit is the faces' take in quanta."""
-    line: dict[str, object] = dict(
-        zip(REPORT_KEYS, (ERASURE, DIAGNOSTIC, interval, family, None), strict=True)
-    )
-    for key, value in zip(ERASURE_KEYS, (origin, distance, nodes, take, unit), strict=True):
-        line[key] = value
-    return line
 
 
 def book(

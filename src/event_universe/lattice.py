@@ -14,7 +14,6 @@ import event_universe.readings as readings
 import event_universe.records as records
 from event_universe import (
     credit,
-    front,
     meeting,
     meeting_board,
     node,
@@ -22,7 +21,6 @@ from event_universe import (
     share,
     shear,
     swap,
-    take,
 )
 from event_universe.board_readings import Stresses
 from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
@@ -227,15 +225,12 @@ class Lattice:
                 for held, gained in zip((forms, turns), booked, strict=True):
                     held.update(gained)
             state.lines = lines
-        if acts:
-            take.faces_reported(self)
         for index in self.held:
             self.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
         swap.stepped(self, kept_state)
         if acts:
             self.tick += 1
             meeting_board.closed(self, kept_state)
-            front.advanced_fronts(self)
         else:
             meeting_back.logged(self, 1)
         self.passes, self.heading = self.passes + (self.heading < 0), 1

@@ -9,7 +9,6 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import AXES, SIDES, Wrap, arrival
-from event_universe.features.click import Face
 from event_universe.features.phase import fold, rotation_unit, signed_read, signed_rounded
 from event_universe.features.read import content_of
 from event_universe.loader.derived import FamilyRule
@@ -21,8 +20,6 @@ Angles = tuple[
 Phases = tuple[
     tuple[Any, Any], ...
 ]  # the phase pair (c, s) read through each of the six Ports, in Port order
-Faces = list[Face]  # the faces presented to a line at this step
-NO_FACE: Faces = []
 
 
 def link_levels(
