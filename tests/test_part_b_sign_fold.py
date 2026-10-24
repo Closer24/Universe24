@@ -1,20 +1,15 @@
 """Part B, the sign's Link phase in the fold form (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the two hands' lines of 2026-10-09, the advisor's (a), (c) and (1), the mathematician's (a) and (L2)): the Link's turn by the sign holder's odd lines is the exact tangent half-angle triple rebooked in the Link's unit with one rounding per part, X^c even and X^s odd in the Link's level n, so that the pair read from the two ends is exact by direction and the count is conserved by Hermiticity; the odd lines' source is the two Links' Wronskian currents summed unhalved over the doubled wall; the time turn stays the one shear. Every test under 30 seconds."""
 
 from fractions import Fraction
-from itertools import permutations, product
 
 import numpy as np
 
-from event_universe import flux, node, records, world_files
+from event_universe import flux, node, records
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import rule_integers
-from event_universe.lattice import Lattice
 from event_universe.loader.derived import held_write_of
 from event_universe.plane import link_levels, link_pairs, link_wall, sign_pairs
-from event_universe.world_files import load_world
-from tests import laws
-from tests.laws import CHARGE, RULE_WALL, TURNING, arrays, chain_body_world, imaged, sign_world
-from tests.laws import LINE_KEYS as KEYS
+from tests.laws import CHARGE, TURNING
 from tests.laws import TURNING_T as T
 
 GAMMA, PAIR, UNIT = 6000, (4000, 6000), 16
@@ -33,77 +28,6 @@ def test_the_sign_pair_is_even_and_odd_in_the_links_level():
     assert (np.abs(even * even + odd * odd - x * x) <= 2 * x + 1).all()
     assert (even[wall], odd[wall]) == (x, 0) and (even[-1], odd[-1]) == (0, x)
     assert (even[0], odd[0]) == (0, -x) and (np.abs(even) + np.abs(odd)).max() <= x * 14143 // 10000 + 1
-
-
-def test_the_48_returns_on_a_closed_cube_with_a_sign_holder(tmp_path, monkeypatch):
-    """(vector, the cube's 48 under the fold) A charged record by hand on a closed cube of 7^3 in turning.json's universe, the sign holder's free row carrying a radial odd field L_a = 40 (x_a - 3) laid by hand, a vector under the 48 with its remainders at the half wall (the two's-complement mirror of ALGEBRA.md, The cube's symmetry): over four intervals every scalar line (the plane's two, every time line, the content holders' lines) keeps the 48 in every part, the odd lines keep them as a vector (L_a'(g x) = s_a L_a(x) in both levels, the remainders carried as (w - r) mod w where the axis is reversed), the sign's odd lines of the record's row are written by its current (their remainders leave the half wall), and the back-in-time gate over twelve intervals returns every array bit for bit, MATCH."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    shape, centre = (7, 7, 7), (3, 3, 3)
-    d = np.abs(np.indices(shape) - 3).sum(axis=0)
-    profile = np.select([d == 0, d == 1, d == 2], [1200, 600, 200], 0)
-    closed = dict(x="closed", y="closed", z="closed")
-    board = Lattice(load_world(sign_world(tmp_path, "cube", shape, closed, 8, centre, profile)))
-    holder, kind = board.states[CHARGE], board.kind
-    for axis in range(3):  # the free row's odd lines, a radial vector field, static in both levels
-        level = (40 * (np.indices(shape)[axis] - 3)).astype(kind)
-        holder.lines[1 + axis] = records.Record(level, level.copy(), holder.lines[1 + axis].remainder)
-    for _ in range(4):
-        board.step()
-        for state, family in zip(board.states, board.families, strict=True):
-            vector = family.rotation  # the sign holder's rows: a time line and three odd lines each
-            for row in range(family.records if vector else 1):
-                lines = (
-                    state.lines[row * family.width : (row + 1) * family.width] if vector else state.lines
-                )
-                scalars, parts = (lines[:1], lines[1:]) if vector else (lines, [])
-                writes = state.write_remainders[row * family.width :][: family.width]
-                walls = [  # the write's walls fixed per Node for the run (the carried factor), one array per line
-                    np.asarray(w, dtype=object)
-                    for w in board.fixed_walls[CHARGE][row * family.width :][: family.width]
-                ]
-                for axes, signs in product(permutations(range(3)), product((1, -1), repeat=3)):
-                    for a in [getattr(r, k) for r in scalars for k in KEYS] + writes[:1]:
-                        assert np.array_equal(imaged(a, axes, signs), a)
-                    for key in ("now", "before"):  # the odd lines as a vector
-                        found = [getattr(r, key) for r in parts]
-                        for a in range(len(parts)):
-                            assert np.array_equal(
-                                signs[a] * imaged(found[axes[a]], axes, signs), found[a]
-                            )
-                    for a in range(len(parts)):  # the odd lines' remainders, the two's-complement mirror
-                        for r, w, source in (
-                            (parts[a].remainder, RULE_WALL, [p.remainder for p in parts]),
-                            (writes[1 + a], walls[1 + a], writes[1:]),
-                        ):
-                            image = imaged(source[axes[a]], axes, signs)
-                            wall = (
-                                imaged(w, axes, signs) if np.ndim(w) else w
-                            )  # the wall per Node, imaged with it
-                            assert np.array_equal(image if signs[a] == 1 else (wall - image) % wall, r)
-    halves = [
-        np.asarray(w, dtype=object) // 2 for w in board.fixed_walls[CHARGE][5:8]
-    ]  # the record's row's odd lines written: a current, the remainders off the half of the fixed wall
-    assert any((holder.write_remainders[5 + a] != halves[a]).any() for a in range(3))
-    assert laws.BACK.verdict(board, 12)["verdict"] == "MATCH"
-
-
-def test_back_in_time_on_the_turning_world_for_forty_intervals(tmp_path, monkeypatch):
-    """(the back-in-time gate, (e)) A chain of 25 (x open) in turning.json's universe with one charged record by hand and the free row's x odd line laid as a bump, 40 intervals forward and 40 back by `step_inverse`: every line's two levels and remainder and every write remainder bit for bit, the Links' pairs recomputed from the held rows' levels at each interval's start and the time turn's shear undone."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    shape, open_x = (25, 1, 1), dict(x="open", y="periodic", z="periodic")
-    profile = np.zeros(shape, dtype=int)
-    profile[9:16, 0, 0] = [200, 600, 1000, 1200, 1000, 600, 200]
-    board = Lattice(load_world(sign_world(tmp_path, "chain", shape, open_x, 80, (12, 0, 0), profile)))
-    holder = board.states[CHARGE]
-    bump = (300 * np.exp(-((np.arange(25) - 12) ** 2) / 18)).round().astype(board.kind).reshape(shape)
-    holder.lines[1] = records.Record(bump, bump.copy(), holder.lines[1].remainder)
-    begun = arrays(board)
-    for _ in range(40):
-        board.step()
-    assert holder.lines[5].now.any()  # the record's own row's x odd line written by its current
-    for _ in range(40):
-        board.step_inverse()
-    assert all(np.array_equal(a, b) for a, b in zip(begun, arrays(board), strict=True))
 
 
 def test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_turn():
@@ -156,23 +80,6 @@ def test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_tur
             following.append((re / wall, im / wall))
         z, z_before = following, z
     assert wronskian(z, z_before) == first != 0
-
-
-def test_two_charges_of_opposite_sense_run_a_hundred_intervals(tmp_path, monkeypatch):
-    """(a two-charge static world) Two charged bodies of opposite sense on the chain, laid by the generator at the count 1 each, run 100 intervals at width 63 without refusal: every level of every family stays under the world's amplitude bound, and the two records' Wronskians keep their opposite senses at their Nodes."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    at = (laws.CHAIN // 2 - 4, laws.CHAIN // 2 + 4)
-    board = Lattice(load_world(chain_body_world(tmp_path, laws.TOOL, at=at, senses=(1, -1))))
-    bound = board.world.amplitude_bound
-    for _ in range(100):
-        board.step()
-        assert all(records.largest(line) <= bound for state in board.states for line in state.lines)
-    index = [f.name for f in board.families].index("charged")
-    for record, sense in enumerate((1, -1)):
-        found = records.wronskian(board.lines_of(index, record), True)
-        assert np.sign(found[board.body_nodes(record)]).tolist() == [sense] * int(
-            board.body_nodes(record).sum()
-        )
 
 
 def test_the_halving_dropped_the_odd_line_over_the_doubled_wall():

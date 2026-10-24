@@ -2,31 +2,22 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 import event_universe.world_files as world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import ORACLE, flux_world, packet
-from tests.laws_interval import laid_torus, volume_universe
 
-
-def test_the_flux_step_equals_the_first_form_on_a_held_well_and_runs_back_to_the_lay(
-    tmp_path, monkeypatch
-) -> None:  # type: ignore[no-untyped-def]
-    """The laid 3-cube torus (tests/laws_interval.py, matter in its held well at the volume form's integers), every interval of 4 forward against the first form (every line's two levels and remainder, every write remainder, the record) and back with the record to the lay exactly (bell_a_b over its 100 intervals, 30 s on the suite's clock, left on 2026-10-24)."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    volume_universe(tmp_path)
-    found = ORACLE.verdict(Lattice(load_world(laid_torus(tmp_path, "well", intervals=4))), None)
-    assert found["verdict"] == "EQUAL" and found["intervals"] == found["back"] == 4, found
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_the_flux_step_equals_the_first_form_under_the_fold(tmp_path, monkeypatch) -> None:  # type: ignore[no-untyped-def]
     """The fold of a flux holder on the chain of 25 with a moving packet, 40 intervals forward and back; the odd line written along the packet's way, so the fold was read."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(
-        load_world(flux_world(tmp_path, (25, 1, 1), dict(x="periodic", y="periodic", z="periodic"), 40))
-    )
+    board = Lattice(load_world(flux_world(tmp_path, (25, 1, 1), 40)))
     packet(board, 0, (1, 4), 7, 3)
     with pytest.raises(RuntimeError, match="above the world's amplitude bound"):
         ORACLE.verdict(

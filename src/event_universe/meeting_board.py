@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-from functools import partial
 from typing import TYPE_CHECKING
 
 import numpy as np
 
 from event_universe import credit, records
-from event_universe.act import Alternative, born_table, click
+from event_universe.act import born_table, click
 from event_universe.core.rule3 import division_forward
 from event_universe.digits import at_origin, read_of
 from event_universe.features.click import drawn_from
@@ -77,8 +76,8 @@ def closed(board: Lattice) -> None:
         items = []
         for out, sense in table:
             den = board.families[out].pair[1]
-            items.append(Item(out, None, None, 1, (at,), (den, den), sense=sense))
-        click(board, None, [Alternative(1, partial(list, items))])
+            items.append(Item(out, 1, (at,), (den, den), sense=sense))
+        click(board, items)
         if board.output is not None:
             names = [board.families[out].name for out, _sense in table]
             seed = board.families[index].name

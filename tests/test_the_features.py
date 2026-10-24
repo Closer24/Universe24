@@ -4,13 +4,9 @@ import json
 from fractions import Fraction
 
 import numpy as np
-import pytest
-from scipy.sparse import diags, kronsum
-from scipy.sparse.linalg import spsolve
 
 from event_universe import flux, node, records
 from event_universe.core import paces
-from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.features.held_write import held_write
@@ -21,12 +17,11 @@ from event_universe.features.read import (
     paces_guard,
     stability_bound,
 )
-from event_universe.features.start import arrivals, rest, scaled_source
 from event_universe.features.start.rests import read_content
 from event_universe.features.write import carried
 from event_universe.loader.derived import held_write_of, readers_of, weight_of
 from event_universe.loader.universe import universe_of
-from tests.laws import CHARGED, ROOT, UNIVERSE, refused
+from tests.laws import CHARGED, UNIVERSE, refused
 
 GAMMA, SHAPE = 10_000, (3, 3, 3)
 OWN = {"own_weight": 1, "intervals": paces.COUNT_POWER}  # a row reading its own level at 1, a count
@@ -75,61 +70,6 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     assert link_tension([(1, level, -level), (1, full, full + 1)]).ravel().tolist() == [4, 4]
     refused("wall is from 1", carried, 5, 0, 0), refused("direction", carried, 5, 3, 0, 2)
     refused("wall E_s T is from 1", held_write, 0, 1, 0, 0)
-
-
-OPEN_CHAIN, OPEN_CUBE = Wrap(False, True, True), Wrap(False, False, False)
-
-
-def test_the_rest_is_the_lines_own_fixed_point_on_a_chain_and_a_box():
-    """On a chain and a box, at [1, 1], at the binding holder's pair [2400, 2401] and at short-range pairs (a periodic box too, at [24, 25], the screening its sink: the sink's rule is any screened pair's, and the long range converges in 170,000 passes), with sources of one sign and of both (a box with one open face, its sink): one more act of the line returns the fine levels (the first repeat is a fixed point), the line's residual at the row's own composed paces, (6 (den - num) p_0^2 + 6 num p_i^2) b - num p_i^2 S_6(b) - 3 den Gamma^2 sigma with sigma scaled per proper volume and per proper interval, is within one act's floor (0 to the divisor), and the levels are the fine levels over the unit to the nearest integer, of the sources' sign at the sources (a negative source beside a positive one at 0 at most) and, with one sign, never below 0. A point source of 3,000 quanta at the centre of the open 11-cube and of 30 at the centre of the open chain of 49 Nodes (odd, so the centre is centred), the massless row and the binding holder's pair of the tests' universe: the level at the six neighbours is one number (an isotropic rest, the vector test of the two rows), the level falls along each axis all the way to the face (the screened well of the six Ports, whose reach is the pair's, ALGEBRA.md #the-well), at every Node, the far ones among them, the level is within one unit of the self-consistent line at the row's own composed paces with the source scaled as the write scales it, solved sparse, and the exact line's ratio binding over massless at 0 to 4 Links, the pair's reach, is pinned; the ratio at 12 Links is the 25-cube's reading in ENGINE.md, section 8, and no assertion (a test runs under 30 seconds, the owner's word of 2026-10-03). A board periodic on its every axis at [1, 1] gives the sources no sink; a level weight below 1 is refused. The self-consistent line at the row's own paces, solved sparse at those paces, returns the levels. A one-Node source of 24,576 quanta on an open 11-cube at Gamma 6,000 under the binding pair: the levels re-read from their own rounding swing between two states 10,071 apart at the Node, no fixed point and no rounding tie, refused by name."""
-    chain, box = np.zeros((40, 1, 1), dtype=np.int64), np.zeros((6, 5, 4), dtype=np.int64)
-    chain[10:13, 0, 0], chain[25, 0, 0], box[1:3, 1:3, 1] = 30, 12, 9
-    mixed = box.copy()
-    mixed[4, 2:4, 2], mixed[1, 1, 1] = -13, -9  # sources of both signs, the tension and the senses
-    cases = [(chain, OPEN_CHAIN, pair, 7) for pair in ((1, 1), (2400, 2401), (1, 4))]
-    cases += [(box, OPEN_CHAIN, (1, 1), 7)] + [(mixed, OPEN_CHAIN, pair, 7) for pair in ((1, 1), (1, 2))]
-    cases += [(box, Wrap(True, True, True), (24, 25), 1), (box, Wrap(True, True, True), (3, 4), 7)]
-    for counts, faces, (num, den), level_weight in cases:
-        found = rest(counts, (num, den), faces, level_weight, MAX_WORK_INT, 3 * den, GAMMA, **OWN)
-        fine, own = found.fine.astype(object), found.content.astype(object)
-        side = counts.astype(object) * (3 * den * found.unit) // level_weight * GAMMA**2
-        clock, pace = paces.node_paces(GAMMA, own)  # the row's own level in its composed paces
-        side = paces.write_factor(side, pace, pace, pace, clock, GAMMA, 2)  # per proper volume
-        divisor = 6 * (den - num) * clock**2 + 6 * num * pace**2
-        left = divisor * fine - num * pace**2 * sum(arrivals(fine, faces)) - side
-        assert (np.abs(left) < 2 * divisor).all(), (num, den, faces)  # a fine unit off the line at most
-        assert (found.levels == (fine + found.unit // 2) // found.unit).all()
-        assert (found.levels[counts > 0] > 0).all() and (found.levels[counts < 0] <= 0).all()
-        assert (found.levels < 0).any() != (counts >= 0).all()  # only negative sources sink below 0
-        assert found.remainder == 3 * den // 2
-    rows = json.loads(UNIVERSE.read_text(encoding="utf-8"))["families"]
-    row = next(entry for entry in rows if entry["name"] == "binding")
-    (num, den), weight, exact = row["pair"], row["held"]["level_weight"], {}
-    for shape, wrap, q in (((11, 11, 11), OPEN_CUBE, 3000), ((49, 1, 1), OPEN_CHAIN, 30)):  # the source
-        counts, c = np.zeros(shape, dtype=np.int64), tuple(n // 2 for n in shape)
-        counts[c] = q  # q quanta at the centre at the divisor 1 (a chain's rest a tent, so a hundredth)
-        for pair in ((6000, 6000), (num, den)):
-            found = rest(counts, pair, wrap, 1, MAX_WORK_INT, 3 * pair[1], 6000, **OWN)
-            clock, pace = paces.node_paces(6000, found.content)  # the row's own composed paces
-            paths = [diags([1.0, 1.0], [-1, 1], shape=(n, n)) if n > 1 else [[2.0]] for n in shape]
-            links = kronsum(kronsum(paths[0], paths[1]), paths[2])  # a folded axis its Node twice
-            divisor = 6 * (pair[1] - pair[0]) * clock**2 + 6 * pair[0] * pace**2  # the Node's term
-            operator = (diags(divisor.ravel()) - diags((pair[0] * pace**2).ravel()) @ links).tocsr()
-            scaled = scaled_source(counts * 3 * pair[1] * found.unit * 6000**2, clock, pace, 6000, 2)
-            exact[shape[0], pair] = spsolve(operator, scaled.ravel() / found.unit).reshape(shape)
-            assert (np.abs(found.levels - exact[shape[0], pair]) <= 1).all(), (shape, pair)
-            long = [(a, s) for a in range(3) if shape[a] > 1 for s in (1, -1)]  # the long axes' Ports
-            at = {int(np.moveaxis(found.levels, a, 0)[(c[0] + s, *c[1:])]) for a, s in long}  # isotropy
-            assert len(at) == 1 and 0 < at.pop() < found.levels[c]
-            assert (np.diff(fall := found.levels[c[0] :, c[1], c[2]]) <= 0).all() and fall[-1] >= 0
-    ratio = (exact[11, (num, den)] / exact[11, (6000, 6000)])[5:10, 5, 5]  # 0 to 4 Links
-    assert np.allclose(ratio, [0.9982, 0.9949, 0.9907, 0.9869, 0.9841], 0, 1e-4), ratio
-    deep = np.pad(np.full((1, 1, 1), 24_576), 5)  # one Node of an 11-cube: open, the re-read swings
-    refused(
-        "a cycle", rest, deep, (1, 1), Wrap(True, True, True), 1, MAX_WORK_INT, 3, GAMMA, **OWN
-    )  # the wrapped board's massless rest is free under the one Node (no sink needed, the former refusal "needs a sink"); the one Node of 24,576 quanta at the pair [1, 1] re-reads in a cycle of 2, refused by name
-    refused("is from 1", rest, deep, (1, 2), OPEN_CHAIN, 0, MAX_WORK_INT, 6, GAMMA, **OWN)
-    refused("a cycle", rest, deep, (num, den), OPEN_CUBE, weight, MAX_WORK_INT, 3 * den, 6000, **OWN)
 
 
 def universe(*rows: dict, **integers: int) -> dict:  # type: ignore[type-arg]
@@ -307,37 +247,6 @@ def test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still
     universe_of(universe({**SIGN, "held": {**SIGN["held"]}}, plane, frozen))
 
 
-def test_the_rests_room_is_the_sources_own_bound_where_the_tent_leaves_no_unit():
-    """The fine unit of a rest (`unit_of`): under the tent where the tent leaves a unit, as every shipped world has it; where it leaves none, on a board with no folded axis, under the source's own bound, the source total over its wall plus one, since a point source's rest on the cubic lattice peaks at 3 G(0) of its source over the wall, below one (the mathematician's 249 with the advisor's second, two hands: the tent over-bounds a point source by 2 (L + 1), which held the atom's Node clock at a fiftieth of its reach). A point source on an open cube: at a Node clock the tent admits, the tent's unit; at one it refuses, the bound's unit, the levels the same rest within one level (the rest in levels is the clock's own at the vacuum's paces), its peak under the bound; at a clock the bound refuses too, the refusal by name; a chain, its axes folded, and a tube with two periodic axes keep the tent and the refusal (the mathematician's 260: a periodic axis folds the source's images onto it)."""
-    from event_universe.features.start import source_bound, tent_of, unit_from_bound, unit_of
-
-    counts, chain = np.zeros((9, 9, 9), dtype=np.int64), np.zeros((40, 1, 1), dtype=np.int64)
-    counts[4, 4, 4], chain[20, 0, 0], pair, width = 1000, 1000, (6000, 6000), MAX_WORK_INT
-    admitted, refused_by_the_tent, refused_by_both = 60_000, 70_000, 300_000
-    assert unit_from_bound(tent_of(counts, 1), pair, width, admitted) >= 1
-    assert unit_from_bound(tent_of(counts, 1), pair, width, refused_by_the_tent) == 0
-    assert unit_of(counts, pair, 1, width, admitted, OPEN_CUBE) == unit_from_bound(
-        tent_of(counts, 1), pair, width, admitted
-    )
-    assert unit_of(counts, pair, 1, width, refused_by_the_tent, OPEN_CUBE) == unit_from_bound(
-        source_bound(counts, 1), pair, width, refused_by_the_tent
-    )
-    sign = {"own_weight": 0, "intervals": paces.COUNT_POWER}  # the holder of the sign, a count source
-    by_the_tent = rest(counts, pair, OPEN_CUBE, 1, width, 3 * pair[1], admitted, **sign)
-    by_the_bound = rest(counts, pair, OPEN_CUBE, 1, width, 3 * pair[1], refused_by_the_tent, **sign)
-    assert by_the_bound.unit >= 1 and by_the_tent.unit >= 1  # the bound's unit where the tent's is none
-    assert int(np.abs(by_the_bound.levels - by_the_tent.levels).max()) <= 1
-    assert int(by_the_bound.levels.max()) < source_bound(counts, 1) < tent_of(counts, 1)
-    with pytest.raises(ValueError, match="no fine unit"):
-        unit_of(counts, pair, 1, width, refused_by_both, OPEN_CUBE)
-    with pytest.raises(ValueError, match="no fine unit"):
-        unit_of(chain, pair, 1, width, refused_by_the_tent, OPEN_CHAIN)
-    tube = np.zeros((2, 2, 40), dtype=np.int64)  # two periodic axes fold the source's images onto it
-    tube[0, 0, 20] = 1000
-    with pytest.raises(ValueError, match="no fine unit"):  # the slab's rest above the bound (260)
-        unit_of(tube, pair, 1, width, refused_by_the_tent, Wrap(True, True, False))
-
-
 def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions():
     """The register's room under a negative tension (ALGEBRA.md, The write per proper volume and per proper interval; the mathematician's 268 and the advisor's second with one precision, #1572 comments 5969128707 and 5969197876, two hands): the guard bounds p_i^2 Q_ij and not the Link's factor q = Gamma - t, so under a negative tension q exceeds Gamma, up to q_max = Gamma + W A, the sum of W_a A over the held rows with axis lines a source reads, and the write's factor in a hollow reaches (P / Gamma)^3 sqrt(q_max / P) on a count and (P / Gamma)^3 q_max / P on a Wronskian, beyond the hill's room (P / Gamma)^3 rounded up. At the rule's universe (Gamma 6,000, W 1, the hill's own bound A_1 = 9,266, q_max 15,266) the law's ceilings are 3 on a count and 4 on a Wronskian for matter's pair (P 6,572; the register's values 2.003 and 3.053 against the hill's room 2) and 2 and 3 for the three massless pairs (P 6,000; 1.595 and 2.544 against 1): `tension_room` returns them and exceeds `hill_scale` exactly where the register's values exceed it; the four shipped universes' bound stays 9,266, the write's total not their binding term; a universe where it is, a holder of the massless pair with axis lines at the write weight 10^6 read by one real line at 1 (Gamma 10,000, T 64, the width 63), has the hill's bound 2,147,483, isqrt((2^63 - 1 - 64) div (10^6 x 2 x 1)), and under the rooms 554,477, the tension's room 15 at q_max = 10,000 + 2,147,483, smaller by name."""
     from math import ceil, isqrt
@@ -403,59 +312,3 @@ def test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and
         universe_of,
         universe(well, deep, {**line, "reads": {"well": 1, "deep": 2}}),
     )
-
-
-def test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names():
-    """No number in the engine (ENGINE.md, the start; ALGEBRA.md, the ledger's row 5 and The emission): the start's fine unit under a bound equals the former 2 x 2 x |num| x 6 x L x Gamma^2 form, the six reads at the vacuum's paces taken twice for the two levels; on three open chains the rest of a point source peaks at the discrete parabola's top 3 S c (n + 1 - c) / (n + 1) within one level, under the tent; the miss bound is (6 div 2) ((n + 2) div 2)^2 + 1 on a chain, a slab and a cube of the same extent, the six reads over the axis's two Ports and no three of the axes; the rest's `intervals` is keyword-only, the two powers by name in its two callers, 2 on a count and 1 on a Wronskian, the write's factor p^3 / (p_0 Gamma^2) and p^3 / (p_0^2 Gamma); the radiated total within one of (2 / 3) T sin k at two T and two resonances; and `PORTS` is defined once under src/, in core/ports.py."""
-    from event_universe.emission import radiated_total
-    from event_universe.features.start import bound_of, tent_of, unit_from_bound
-    from event_universe.loader.lay import least_action
-
-    gamma, width, source = 6000, MAX_WORK_INT, 1000
-    former = width // (2 * 2 * 3 * 6 * source * gamma * gamma)  # 24 |num| L Gamma^2 at num = 3, L = 1000
-    assert unit_from_bound(source, (3, 4), width, gamma) == former > 0
-    reads, divisor = (gamma * gamma,) * 3, np.int64(6 * gamma * gamma)  # the massless line's
-    count = {"intervals": paces.COUNT_POWER}
-    for n in (5, 9, 17):
-        counts, c = np.zeros((n, 1, 1), dtype=np.int64), (n + 1) // 2
-        counts[c - 1] = source  # the point source at the chain's centre Node c, 1 to n
-        field = rest(counts, (1, 1), OPEN_CHAIN, 1, width, 3, gamma, own_weight=0, **count)
-        peak = (
-            3 * source * c * (n + 1 - c) // (n + 1)
-        )  # 2 b_x - b_(x-1) - b_(x+1) = 3 sigma, b_0 = b_(n+1) = 0
-        assert abs(int(field.levels.max()) - peak) <= 1 < tent_of(counts, 1) - peak
-        for shape in ((n, 1, 1), (n, n, 1), (n, n, n)):
-            wrap = Wrap(False, shape[1] == 1, shape[2] == 1)
-            assert (
-                bound_of(np.zeros(shape, dtype=np.int64), wrap, reads, divisor)
-                == 3 * ((n + 2) // 2) ** 2 + 1
-            )
-    with pytest.raises(TypeError):
-        rest(counts, (1, 1), OPEN_CHAIN, 1, width, 3, gamma, 0, 2, own_weight=0)  # no positional power
-    assert (paces.COUNT_POWER, paces.WRONSKIAN_POWER) == (2, 1)
-    powers = (paces.COUNT_POWER, paces.WRONSKIAN_POWER)
-    assert [int(paces.write_factor(np.int64(1), 6, 6, 6, 3, 6, k)) for k in powers] == [
-        2,
-        4,
-    ]  # 216 / (36 x 3), 216 / (6 x 9)
-    start = ROOT / "src" / "event_universe" / "features" / "start"
-    text = "".join(path.read_text(encoding="utf-8") for path in sorted(start.glob("*.py")))
-    rule = (ROOT / "src" / "event_universe" / "loader" / "derived.py").read_text(encoding="utf-8")
-    assert text.count("intervals=power") == 2 and "intervals=paces." not in text  # each row's own power
-    assert (
-        rule.count("return WRONSKIAN_POWER") == 1 and "COUNT_POWER if" not in rule
-    )  # the one power on every booking (the one Node; the two powers before it)
-    for action, (num, den) in ((32768, (2, 3)), (15000, (2, 3)), (32768, (4, 5)), (15000, (4, 5))):
-        cos_k = (3 * num - 2 * den) / den  # the guide's wave number at the resonance
-        assert abs(radiated_total(action, (num, den)) - 2 * action * (1 - cos_k**2) ** 0.5 / 3) <= 1
-    budget = [least_action((2, 3), 400, 50, (1, 100), k2) for k2 in ((32, 1), (8, 1), (32, 4))]
-    assert (
-        budget[0] == 4 * budget[1] == 4 * budget[2] and budget[0] & (budget[0] - 1) == 0
-    )  # T grows with k^2
-    sources = (ROOT / "src").rglob("*.py")
-    defined = [
-        p.name
-        for p in sources
-        if any(x.startswith("PORTS =") for x in p.read_text(encoding="utf-8").splitlines())
-    ]
-    assert defined == ["ports.py"]  # one definition of the six Ports under src/

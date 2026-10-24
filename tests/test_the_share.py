@@ -5,8 +5,8 @@ from fractions import Fraction
 
 import numpy as np
 
-from event_universe import flux, node_detector, readings, records, share, world_files
-from event_universe.core import paces, ports
+from event_universe import flux, readings, records, share, world_files
+from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, form_term, rule_integers
 from event_universe.features.read import edge_squared, paces_guard
@@ -15,7 +15,6 @@ from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.world_files import load_world
 from tests.laws import arrivals_rule3, real_rows, universe_beside
-from tests.laws_universe import small_world
 
 
 def law(num, den, gamma, clock, pace, factors=None, unit=1):  # type: ignore[no-untyped-def]
@@ -112,45 +111,6 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
         assert np.array_equal(through[port], expected)
 
 
-def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit(tmp_path, monkeypatch):
-    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_detectors' regions read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers inside the width): on the one world's small torus (tests/laws_universe.py: one clump, light on every other Node, the two-Node detector) (the three shipped worlds over 24 intervals, 86 s on the suite's clock, left on 2026-10-24), at every interval of 6 and for every family of quanta, the shortened read of the share equals the full read over the whole board bit for bit, the frozen mask with it, and the quanta read at the region's union equal the whole read masked to it; then the write factor's two branches, the hardware's inside the width and Python's beyond it, equal at the rounding, and the Ports' shift with its fill on an open axis, a wrapped one and a folded one."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(
-        load_world(small_world(tmp_path))
-    )  # the 3-cube torus with one clump, light and the two-Node detector
-    assert board.node_detectors and len(board.order) >= 2  # matter and light, the families of quanta
-    for _ in range(6):
-        board.step()
-        union, everywhere = node_detector.node_detector_nodes(board), np.ones(board.shape, dtype=bool)
-        assert int(union.sum()) == 2
-        for index in board.order:  # the families of quanta; a held row has no unit and no count
-            full, frozen = board.share_of(index, 1, everywhere)
-            short, frozen_short = board.share_of(index)
-            assert np.array_equal(full, short) and np.array_equal(frozen, frozen_short), index
-            whole, at_union = board.quanta(index)[0], board.quanta(index, union)[0]
-            assert np.array_equal(np.where(union, whole, 0), at_union), index
-    kind, wall = kind_of(63), 6000**3  # Gamma^2 p_0 at the vacuum's clock, the write's wall
-    counts = np.array([1, 2_000_000, 21_000_000, 22_000_000, 2**31], dtype=kind)
-    reference = paces.rounded(np.asarray(counts, dtype=object) * 5999 * 5999 * 5999, wall)
-    assert paces.within_width(kind, wall, counts[:2], 5999, 5999, 5999)  # the hardware's branch
-    assert not paces.within_width(kind, wall, counts, 5999, 5999, 5999)  # Python's beyond the width
-    found = paces.write_factor(counts, 5999, 5999, 5999, 6000, 6000, 2)
-    assert found.dtype == kind and np.array_equal(found, np.asarray(reference).astype(kind))
-    spread = np.full(counts.shape, 5999, dtype=kind)
-    assert np.array_equal(paces.write_factor(counts, spread, spread, 5999, 6000, 6000, 2), found)
-    a = np.random.default_rng(3).integers(-9, 9, size=(3, 4, 5)).astype(kind)
-    for axis in range(3):
-        for sigma in (-1, 1):
-            rolled = np.roll(a, -sigma, axis=axis)  # out[i] = a[i + sigma]
-            assert np.array_equal(ports.shifted(a, axis, sigma, True, 7), rolled)
-            beyond = [slice(None)] * 3
-            beyond[axis] = slice(-1, None) if sigma == 1 else slice(None, 1)
-            rolled[tuple(beyond)] = 7
-            assert np.array_equal(ports.shifted(a, axis, sigma, False, 7), rolled)
-    folded = ports.shifted(a[:1], 0, 1, False, 7)  # a folded axis returns the array
-    assert folded is a[:1] or np.array_equal(folded, a[:1])
-
-
 def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it(
     tmp_path, monkeypatch
 ):
@@ -163,8 +123,7 @@ def test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_
     )
     rows["integers"]["link_unit"] = 1
     (tmp_path / "turn.json").write_text(json.dumps(rows), encoding="utf-8")
-    world = dict(shape=[48, 1, 1], boundary=dict(x="periodic", y="periodic", z="periodic"), intervals=40)
-    world.update(bodies=[], node_detectors=[])
+    world = dict(shape=[48, 1, 1], intervals=40)
     paths = {"turn": tmp_path / "turn_ring.json"}
     paths["turn"].write_text(json.dumps({**world, "universe": "turn.json"}), encoding="utf-8")
 

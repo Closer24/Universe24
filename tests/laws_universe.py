@@ -55,7 +55,7 @@ DECLARED: dict[str, Any] = {
 
 
 def declared_universe() -> dict[str, Any]:
-    """The declared seed's universe, a copy of its own."""
+    """The declared seed's universe, a copy of its own (the heaviest-pair test's builder, tests/test_the_heaviest_pair_within_the_two_quanta.py)."""
     return json.loads(json.dumps(DECLARED))
 
 

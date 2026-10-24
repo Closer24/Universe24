@@ -2,21 +2,15 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Sequence
-from dataclasses import dataclass
+from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import readings
 from event_universe.core.ports import PORT_SIDES, PORTS, Wrap, arrival
-from event_universe.records import Record
 
 if TYPE_CHECKING:
-    from event_universe.lattice import Lattice
     from event_universe.loader.keys import Node
-    from event_universe.loader.node_detector_declaration import Transition
-    from event_universe.node_detector import NodeBooks
 
 MEASUREMENT, DIAGNOSTIC = (
     "NODEDETECTOR",
@@ -124,7 +118,6 @@ OUTPUT = (
     VALUE,
 )  # the lines' keys
 PORT_NAMES = ("plus", "minus")  # the two ports of a side in the credit line, the + port first
-END = ("interval", "axis", "side", "largest")  # the keys of the run's lawful end at a receding face
 BOOKS = (
     "share",
     "quanta",
@@ -134,45 +127,6 @@ BOOKS = (
     "pace",
     "frozen",
 )  # a family's books, a diagnostic
-
-
-@dataclass(frozen=True)
-class NodeDetector:
-    """A node_detector: its name, its Nodes (None: the Nodes of the body it names, derived each interval), that body's number, and whether it is a region of the declared NodeDetector (the faces' layer and a body's node_detector are not: each reads its own boundary and takes no field line); it declares no quantum of its own, counting in the record's own unit (`credit.record_unit`)."""
-
-    name: str
-    nodes: np.ndarray | None
-    body: int | None
-    declared: bool
-
-
-def click(interval: int, family: str, node_detector: str, inflow: int) -> dict[str, object]:
-    """The click line, the measurement: the node_detector's report of one interval, the net current into its region through the NodeDetector's front boundary Ports in the current's units (undivided; N over W_c is the host's reading), with the region's name and the family and never a Node, labelled NODEDETECTOR."""
-    return dict(
-        zip(
-            (*REPORT_KEYS, INFLOW),
-            (CLICK, MEASUREMENT, interval, family, node_detector, inflow),
-            strict=True,
-        )
-    )
-
-
-def density(
-    interval: int, family: str, node_detector: str, reading: int | None, well: int | None = None
-) -> dict[str, object]:
-    """The density line, a lattice reading labelled so and no measurement: the family's density over the region this interval; None where a Node of the region is frozen, every Link pace 0, the share not read there (ALGEBRA.md #the-count-is-the-records-share, the frozen Node), and then the frozen Nodes' wells D div T summed, their content reading, as `well`."""
-    line = dict(zip(REPORT_KEYS, (DENSITY, DIAGNOSTIC, interval, family, node_detector), strict=True))
-    line[READING] = reading
-    if well is not None:
-        line[WELL] = well
-    return line
-
-
-def parts(interval: int, family: str, node_detector: str, levels: list[list[int]]) -> dict[str, object]:
-    """The parts line, the NodeDetector's read of a record of several parts (ALGEBRA.md #the-click-is-the-meeting, the pair's form): per part the signed sums of its two levels over the region at the interval's start, [now, before], labelled NODEDETECTOR with the region's name and never a Node; the sides' books take their second moments from them (`credit.moments_booked`) and the reader its shares (`tools/bell_gate.py`), and nothing is handed over."""
-    line = dict(zip(REPORT_KEYS, (PARTS, MEASUREMENT, interval, family, node_detector), strict=True))
-    line[LEVELS] = levels
-    return line
 
 
 def credit(
@@ -250,14 +204,6 @@ def erasure(
     return line
 
 
-def level_sums(nodes: np.ndarray, lines: Sequence[Record]) -> list[list[int]]:
-    """Per line of a record, the signed sums of its two levels over a region's Nodes, [now, before], in Python's integers: the parts' read of the parts line, a reading of the lines that writes nothing."""
-    return [
-        [int(line.now[nodes].sum(dtype=object)), int(line.before[nodes].sum(dtype=object))]
-        for line in lines
-    ]
-
-
 def book(
     share: int | None,
     quanta: int | None,
@@ -271,35 +217,6 @@ def book(
     return dict(zip(BOOKS, (share, quanta, count, deficit, drift, pace, frozen), strict=True))
 
 
-def end(interval: int, axis: str, side: str, largest: int) -> dict[str, object]:
-    """The lawful end, named: the front stands on the layer before the receding face of an axis grown to its largest size after this interval, and the next interval would reflect it."""
-    return dict(zip(END, (interval, axis, side, largest), strict=True))
-
-
-def standing_nodes(declared: np.ndarray, present: np.ndarray, wrap: Wrap) -> np.ndarray:
-    """A body's Nodes as a report needs them (ALGEBRA.md #what-a-body-is (c)): the Nodes where its family's share stands in quanta (`present`), connected through the Links to its declared Nodes; the declared Nodes themselves where it stands on none of them; derived and kept nowhere."""
-    region = declared & present
-    if not bool(region.any()):
-        return declared
-    while True:
-        grown = region.copy()
-        for axis in range(3):
-            for side in (1, -1):
-                grown |= arrival(region, axis, side, wrap, False)
-        grown &= present
-        if np.array_equal(grown, region):
-            return np.asarray(region, dtype=bool)
-        region = grown
-
-
-def own_light_row(books: NodeBooks) -> Transition | None:
-    """The transition whose own-light row a bound body draws at its window's close (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22): the one into the part the body stands in, for a bound body declaring no rate out of that part; None otherwise, an instrument of the file keeping `hazard_weights`."""
-    into = [t for t in books.declared.transitions if t.enters == books.part]
-    if not books.bound or not into or any(r.leaves == books.part for r in books.declared.rates):
-        return None
-    return into[0]
-
-
 def ball(shape: tuple[int, ...], centre: Node, radius: int, wrap: Wrap) -> np.ndarray:
     """The Chebyshev ball of a radius about a Node as a mask of the board, the near zone of a bound body (ALGEBRA.md, The click writes on the lattice (5), the reader's ruling of 2026-10-22; `loader/instrument.near_zone`): every Node whose distance per axis is at most the radius, the distance the shorter way round on a periodic axis; its front (`front`) is the light's front, the shell's Ports that exist."""
     grid, found = np.indices(shape), np.ones(shape, dtype=bool)
@@ -311,32 +228,9 @@ def ball(shape: tuple[int, ...], centre: Node, radius: int, wrap: Wrap) -> np.nd
     return found
 
 
-def front(
-    nodes: np.ndarray, wrap: Wrap, reader_nodes: np.ndarray, declared: np.ndarray
-) -> list[np.ndarray]:
+def front(nodes: np.ndarray, wrap: Wrap, reader_nodes: np.ndarray) -> list[np.ndarray]:
     """Per Port, the Nodes of the region at which that Port is a front boundary Port of the declared NodeDetectors: it leads in from a Node of the declared board outside them (`declared`, the file's own Nodes; the layers a receding face has grown lie beyond the declared board, and what leaves into them has left the world), so a Port between two regions, a Port toward the grown layers and a Port beyond a face are no front."""
-    return [
-        nodes
-        & ~arrival(reader_nodes, axis, side, wrap, True)
-        & arrival(declared, axis, side, wrap, False)
-        for axis, side in PORT_SIDES
-    ]
-
-
-def region_of(node_detector: NodeDetector, body_nodes: Callable[[int], np.ndarray]) -> np.ndarray:
-    """A node_detector's Nodes as a report needs them: its declared Nodes, or the Nodes of the body it names derived now (`body_nodes`, the lattice's reading by the share, `standing`)."""
-    if node_detector.body is not None:
-        return body_nodes(node_detector.body)
-    assert node_detector.nodes is not None  # a node_detector declares its Nodes or names a body
-    return node_detector.nodes
-
-
-def entering(facing: Sequence[np.ndarray], through: tuple[Any, ...]) -> np.ndarray:
-    """Per Node of a region, the currents through its front boundary Ports (`facing`, the region's front per Port, `front`, read once per node_detector and interval for every family) summed with their signs, inward positive, in the current's units, 0 at every other Node: the node_detector's report per boundary Node, the shares of the NodeDetector's draw of the one Node it writes (features/click)."""
-    seen: Any = 0
-    for port in range(PORTS):
-        seen = seen + np.where(facing[port], np.asarray(through[port]), 0)
-    return np.asarray(seen)
+    return [nodes & ~arrival(reader_nodes, axis, side, wrap) for axis, side in PORT_SIDES]
 
 
 def weighted(
@@ -351,44 +245,6 @@ def weighted(
             factor = np.broadcast_to(np.asarray(factors[port]), at.shape)[at].astype(object)
             seen[port][at] += flow * factor
     return seen
-
-
-def shell_outflow(
-    board: Lattice,
-    index: int,
-    zone: tuple[Node, int],
-    shell: Sequence[Node],
-    wrap: Wrap,
-    own: np.ndarray,
-) -> list[int]:
-    """The holder's light through a bound body's light front this interval, per shell Node, outward positive, in the unit G^2 (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22; `index` the body's family): the near zone's ball at the board's shape now from the declared Node and the radius with the board's offset (`ball`; the board grows at a receding face), its front the shell's Ports that exist (`front`); for each holder of the sign the body's family reads, the holder's record lines as `Lattice.record` gives them, read by `readings.currents_of` at the covector's weights through those Ports with the holder's Link factors (`weighted`, the credit's booking of a drive, inward positive), the sign turned outward. `booked_light` sums it into the window's book; the pure level's run of the full beat reads the same number on its copy."""
-    centre, radius = zone
-    x, y, z = (c + o for c, o in zip(centre, board.offset, strict=True))
-    ball_now = ball(board.shape, (x, y, z), radius, wrap)  # the file's Node on the grown board
-    facing = front(ball_now, wrap, ball_now, own)
-    found = [0] * len(shell)
-    for read in board.families[index].reads:
-        holder = board.families[read.family]
-        if not holder.wronskian:
-            continue
-        _content, factors = board.read(read.family)
-        lines = board.record(read.family)
-        current = readings.currents_of(holder.pair[0], lines, wrap)
-        for through in weighted(facing, [(current, factors, None)]):
-            at = np.asarray(through, dtype=object)
-            for k, node_at in enumerate(shell):
-                found[k] -= int(at[tuple(c + o for c, o in zip(node_at, board.offset, strict=True))])
-    return found
-
-
-def booked_light(board: Lattice, books: NodeBooks, wrap: Wrap, own: np.ndarray) -> None:
-    """A bound body's book of its own light through its light front this interval (ALGEBRA.md, The click writes on the lattice (5), 2026-10-22: the bound body is a region detector of its own light; one new book, no new act): `shell_outflow` per shell Node summed into `NodeBooks.light`, the window's book; nothing for a body with no near zone (no transition into its part, or no bound body) or whose family reads no holder of the sign."""
-    if books.zone is None:
-        return
-    through = shell_outflow(board, books.index, books.zone, books.shell, wrap, own)
-    found = books.light or [0] * len(books.shell)
-    books.outflows = books.outflows or [0] * len(books.shell)  # the where's book, begun again at a click
-    books.light = [a + b for a, b in zip(found, through, strict=True)]
 
 
 def birth_line(

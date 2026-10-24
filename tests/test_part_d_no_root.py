@@ -7,8 +7,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from event_universe import emission, resonance
-from event_universe.core.rule3 import division_forward, largest_below
+from event_universe.core.rule3 import largest_below
 from event_universe.features import click, read
 from event_universe.loader import derived, rooms
 
@@ -49,7 +48,7 @@ def test_largest_below_equals_the_old_fixed_point_and_the_root_everywhere():
 
 
 def test_every_site_without_a_root_reads_the_same_integers_as_the_root():
-    """Task 2 (c), every site that read a root reads the same integers without one, against `math.isqrt` on the same products: features/click (`squared`, `spread`, `amplitude`, `direction`, `invariant`, `line_total` and `envelope`; the sites at `standing` and `laid_pairs` read the same `largest_below(den^2 - num^2)` as `invariant`) on the law's pair, T the examples' own and the two slits' lay; emission (`radiated_total`; `born_unit`, `laid_packet`, `start_of` and `increments_of` read a board and are covered by the suite's emission tests and the two slits' frozen output); features/read (`edge_of` against `math.isqrt` of `edge_squared`); loader/derived (`count_wall` and `tension_room`; `bound_under_rooms` reads whole families and is covered by the suite's loader tests and the two slits' frozen output); node_detector (the record's norm max(largest_below(SUM A_i^2), 1) over the amplitudes `click.spread` lays at the Nodes of a four-Node screen of the two slits, the public function reading a board); resonance (`references_of`, `turned_direction` and `window_turn` on the law's pair at the scale of the width's room)."""
+    """Task 2 (c), every site that read a root reads the same integers without one, against `math.isqrt` on the same products: features/click (`squared`, `spread` and `amplitude`; the declared emitters' sites left 2026-10-24) on the law's pair, T the examples' own; features/read (`edge_of` against `math.isqrt` of `edge_squared`); loader/derived (`count_wall` and `tension_room`; `bound_under_rooms` reads whole families and is covered by the suite's loader tests and the two slits' frozen output); the record's norm max(largest_below(SUM A_i^2), 1) over the amplitudes `click.spread` lays at four Nodes."""
     # features_click
     num, den = PAIR
     gap = den * den - num * num
@@ -57,25 +56,7 @@ def test_every_site_without_a_root_reads_the_same_integers_as_the_root():
     assert square == math.isqrt((T * den) ** 2 // (4 * gap)) == 21981
     assert click.spread(square, (3, 7)) == math.isqrt(square * 3 // 7)
     assert click.amplitude(1, T, PAIR) == math.isqrt(square)
-    assert click.direction(300, -400, 7) == (300 * 7 // 500, -400 * 7 // 500)
-    sine = math.isqrt(gap)
-    assert (
-        click.invariant(1, T, PAIR, 1)
-        == click.spread(T * den // (2 * sine), (1, 1))
-        == math.isqrt(T * den // (2 * sine))
-    )
-    assert click.line_total(T, PAIR) == math.isqrt(T * T * den * den // gap)
-    total = click.line_total(T, PAIR)
-    envelope = click.envelope(total, 48, 1)
-    assert envelope[0] == math.isqrt(total // 48) and envelope[-1] > 0
-    assert envelope[1] == math.isqrt((total - envelope[0] ** 2) // 48)
     assert click.squared(1, T, LIGHT) == T // 2 and click.amplitude(1, T, LIGHT) == math.isqrt(T // 2)
-    # emission
-    num, den = PAIR
-    inner = 3 * num - 2 * den
-    expected = math.isqrt((2 * T // 3) ** 2 * (den * den - inner * inner) // (den * den))
-    assert emission.radiated_total(T, PAIR) == expected
-    assert emission.radiated_total(T, (2, 3)) == 2 * T // 3
     # features_read
     assert read.edge_of(PAIR, GAMMA) == math.isqrt(read.edge_squared(PAIR, GAMMA))
     assert read.edge_of(PAIR, GAMMA) == math.isqrt(2 * PAIR[1] * GAMMA**2 // (PAIR[1] + PAIR[0]))
@@ -88,17 +69,8 @@ def test_every_site_without_a_root_reads_the_same_integers_as_the_root():
     q_max = 15266
     room = rooms.tension_room(PAIR, GAMMA, q_max, False)
     assert room == -((-(edge * edge * (math.isqrt(q_max * edge) + 1))) // GAMMA**3)
-    # node_detector
+    # the lay's amplitudes spread over four Nodes
     square = click.squared(1, T, LIGHT)
     amplitudes = [click.spread(square, (1, 4)) for _ in range(4)]
     assert max(largest_below(sum(a * a for a in amplitudes)), 1) == math.isqrt(4 * amplitudes[0] ** 2)
     assert amplitudes[0] == math.isqrt(square // 4)
-    # resonance
-    num, den = PAIR
-    scale = resonance.scale_of(63, 1 << 20, 130)
-    (reference,) = resonance.references_of(scale, (SimpleNamespace(resonance=PAIR),))
-    assert reference.sine == (0, -(math.isqrt(scale * scale * (den * den - num * num)) // den))
-    assert reference.cosine == (scale, int(division_forward(scale * num, den, den // 2)[0]))
-    assert resonance.turned_direction(scale, 0, 3, 4) == (scale * 3 // 5, scale * 4 // 5)
-    turned = resonance.Reference(PAIR, scale, reference.cosine, reference.sine, 3000, 4000)
-    assert resonance.window_turn(turned, 7) == 7 * math.isqrt(3000**2 + 4000**2) // scale

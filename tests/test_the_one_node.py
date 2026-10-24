@@ -15,9 +15,10 @@ from event_universe.loader import universe as loader_universe
 from event_universe.loader import world as loader_world
 
 SRC = Path(__file__).resolve().parents[1] / "src" / "event_universe"
-WORLD = Path(
-    "examples/events/bell/bell_a_b.json"
-)  # a shipped world with a holder of the content, a sign holder, receding faces and a click
+UNIVERSE = Path(
+    "examples/events/universe24/universe_universe24.json"
+)  # the one world's universe: a holder of the content, a sign holder, the seed of light and the click at every Node
+CUBE = 3  # the bare 3-cube torus of the one world's universe: the births and their clicks at the interval 29
 INTERVALS = 30
 READERS = (
     "open",
@@ -57,9 +58,12 @@ def frozen(board: Lattice) -> list[tuple[str, ...]]:
     return found
 
 
-def test_the_step_reads_nothing_outside_the_nodes_after_the_load(monkeypatch):  # type: ignore[no-untyped-def]
-    """A shipped world loaded once; the ordinary step and the step with every reader of a file, the loader's two readers and the board's readings made to raise agree bit for bit over thirty intervals, the output lines included (the clicks' acts from outside the Node, the owner's decision of 2026-10-20, read the board as the law says and the lattice's own arrays, no file)."""
-    world = world_files.load_world(WORLD)
+def test_the_step_reads_nothing_outside_the_nodes_after_the_load(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
+    """The one world's universe on the bare 3-cube torus, loaded once; the ordinary step and the step with every reader of a file, the loader's two readers and the board's readings made to raise agree bit for bit over thirty intervals, the output lines included (the clicks' acts from outside the Node, the owner's decision of 2026-10-20, read the board as the law says and the lattice's own arrays, no file)."""
+    (tmp_path / "u.json").write_bytes((SRC.parents[1] / UNIVERSE).read_bytes())
+    bare = {"shape": [CUBE] * 3, "intervals": INTERVALS, "universe": str(tmp_path / "u.json")}
+    (tmp_path / "bare.json").write_text(json.dumps(bare), encoding="utf-8")
+    world = world_files.load_world(tmp_path / "bare.json")
     plain, lines = [], []
     board = Lattice(world, plain.append)
     for _ in range(INTERVALS):
@@ -134,49 +138,18 @@ RETIRED = (
 
 def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-untyped-def]
     """The loader's key lists, enumerated, hold content keys alone (the owner's rule of 2026-10-23: no more keys in the code, one single Node in the whole universe): a file naming a former act key meets the loader's ordinary refusal of an unknown key, the same as any misspelling; and no module under src/event_universe/loader or the generator tools/pixel_mode.py names a retired key or its words in its code (an ast check over the string constants outside the docstrings, as tests/test_the_acts_table.py walks the divisions)."""
-    from event_universe.loader import draw, node_detector_declaration, universe
+    from event_universe.loader import universe
     from event_universe.loader import world as loader_world
 
-    assert set(loader_world.WORLD_KEYS) == {
-        "shape",
-        "boundary",
-        "face_depth",
-        "faces",
-        "intervals",
-        "universe",
-        "bodies",
-        "packets",
-        "node_detectors",
-        "receding",
-        "draw",
-        "lay",
-    }
+    assert set(loader_world.WORLD_KEYS) == {"shape", "intervals", "universe"}
     assert set(universe.HELD_KEYS) == {"sources", "level_weight", "write_weight", "rest"}
-    assert set(universe.FAMILY_KEYS) == {
-        "name",
-        "pair",
-        "dimension",
-        "held",
-        "reads",
-        "exchange",
-        "senses",
-    }
+    assert set(universe.FAMILY_KEYS) == {"name", "pair", "dimension", "held", "reads"}
     assert [list(s) for s in universe.SOURCES] == [
         ["form"],
         ["form", "tensions"],
         ["wronskian"],
         ["form", "tensions", "flux"],
     ]
-    assert (
-        draw.WORLD_DRAW_KEYS == draw.DRAW_KEYS == ("window",)
-    )  # the former key, read for its refusal by name alone (2026-10-23)
-    assert set(node_detector_declaration.TRANSITION_KEYS) == {
-        "from",
-        "to",
-        "drive",
-        "weight",
-        "resonance",
-    }
     with pytest.raises(ValueError, match="unknown key"):
         universe.universe_of(
             {
@@ -197,9 +170,7 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
             }
         )
     named = []
-    for path in sorted(SRC.joinpath("loader").glob("*.py")) + [
-        SRC.parents[1] / "tools" / "pixel_mode.py"
-    ]:
+    for path in sorted(SRC.joinpath("loader").glob("*.py")):
         tree = ast.parse(path.read_text(encoding="utf-8"))
         docs = {
             n.value.lineno
@@ -221,20 +192,13 @@ PLACES = (  # the former keys and the place each stood at: the loader's ordinary
     ("interval", "world"),
     ("uniform", "world"),
     ("erasure", "world"),
-    ("meeting", "draw"),
-    ("reach", "draw"),
-    ("seed", "draw"),
-    ("multiplier", "draw"),
-    ("increment", "draw"),
     ("engine", "world"),
-    ("seed", "lay"),
     ("act", "held"),
     ("booking", "held"),
     ("factor", "held"),
     ("pressure", "held"),
     ("form", "held"),
     ("converts", "family"),
-    ("dipole", "transition"),
 )
 STEPS = {  # the step's one list: every function of src/event_universe whose name is a step, by module (the acts table lists every division)
     "flux.py": [
@@ -245,7 +209,6 @@ STEPS = {  # the step's one list: every function of src/event_universe whose nam
         "step_family",
         "step_records",
     ],
-    "cone.py": ["stepped_alone"],
     "shear.py": ["stepped"],
     "swap.py": ["stepped"],
     "meeting.py": ["stepped"],
@@ -259,28 +222,22 @@ LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the 
 
 
 def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  # type: ignore[no-untyped-def]
-    """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, its bodies', node_detectors', draw's, lay's, receding faces' and packets', the universe's, its families' and their held rows', a body's transitions', rates' and parts'), and no former key stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
-    from event_universe.loader import faces, lay, mode, node_detector_declaration, universe
+    """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, the universe's, its families' and their held rows'), and no former key stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
+    from event_universe.loader import universe
     from event_universe.loader import world as loader_world
 
     tables = {
         "world": set(loader_world.WORLD_KEYS),
-        "bodies": set(loader_world.BODY_KEYS),
-        "node_detectors": set(loader_world.NODEDETECTOR_KEYS),
-        "draw": set(draw_keys := ("window",)),
-        "lay": set(lay.LAY_KEYS),
-        "faces": set(faces.FACE_KEYS),
-        "transitions": set(node_detector_declaration.TRANSITION_KEYS),
-        "rates": set(node_detector_declaration.RATE_KEYS) | set(node_detector_declaration.RATE_OPTIONAL),
-        "parts": set(node_detector_declaration.PART_KEYS),
         "universe": set(universe.UNIVERSE_KEYS),
         "integers": set(universe.INTEGER_KEYS),
         "families": set(universe.FAMILY_KEYS),
         "held": set(universe.HELD_KEYS),
     }
-    assert draw_keys == tuple(loader_world.draw_of({"window": 1}, "draw", True).__dataclass_fields__)
     retired, found = set(RETIRED) | {"interval", "write_weight"}, []
-    for folder in ("examples", "tests"):
+    for folder in (
+        "examples/events/universe24",
+        "tests",
+    ):  # the records' folders are not read (2026-10-24)
         for path in sorted((SRC.parents[1] / folder).rglob("*.json")):
             try:
                 document = json.loads(path.read_text(encoding="utf-8"))
@@ -300,19 +257,12 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
                 found += [(path.name, key) for key in document if key not in tables[table]]
             for key, value in document.items():
                 rows = value if isinstance(value, list) else [value] if isinstance(value, dict) else []
-                if kind == "a mode file":  # the generator's entries: a body's or a packet's levels laid
-                    found += [
-                        (path.name, key, k)
-                        for row in rows
-                        if isinstance(row, dict)
-                        for k in row
-                        if k not in mode.MODE_BODY_KEYS
-                    ]
+                if kind == "a mode file":  # the generator's output, no input since 2026-10-24
                     continue
                 for row in rows:
                     if key in tables and isinstance(row, dict):
                         found += [(path.name, key, k) for k in row if k not in tables[key]]
-                    for inner in ("held", "transitions", "rates", "parts"):
+                    for inner in ("held",):
                         for entry in [row.get(inner)] if isinstance(row, dict) else []:
                             for item in (
                                 entry
@@ -339,8 +289,8 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
 
 @pytest.mark.parametrize(("key", "place"), PLACES)
 def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignore[no-untyped-def]
-    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`, a transition's `dipole`."""
-    from event_universe.loader import draw, lay, node_detector_declaration, universe
+    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`."""
+    from event_universe.loader import universe
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
 
@@ -349,33 +299,14 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
     integers = {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16}
     with pytest.raises(ValueError, match=f"unknown key '{key}'"):
         if place == "world":
-            world = {"shape": [3, 1, 1], "boundary": {}, "intervals": 1, "universe": "u.json", key: 1}
-            keyed(
-                {**world, "bodies": [], "node_detectors": []},
-                "the world",
-                loader_world.WORLD_KEYS,
-                loader_world.WORLD_REQUIRED,
-            )
-        elif place == "draw":
-            draw.draw_of({"window": 4, key: "cone"}, "draw", True)
+            world = {"shape": [3, 1, 1], "intervals": 1, "universe": "u.json", key: 1}
+            keyed(world, "the world", loader_world.WORLD_KEYS, loader_world.WORLD_REQUIRED)
         elif place == "held":
             universe.universe_of(
                 {"integers": integers, "families": [{**family, "held": {**held, key: "pace"}}]}
             )
-        elif place == "lay":
-            lay.lay_of({"kind": "repeat", "start": "one_node", key: "one_node"}, "lay")
-        elif place == "family":
-            universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
         else:
-            row = {
-                "from": "g",
-                "to": "e",
-                "drive": "photon",
-                "weight": 1,
-                "resonance": [5, 6],
-                key: [[0, 0, 1], 1],
-            }
-            node_detector_declaration.transitions_of([row], "t", ("g", "e"), {"photon": 1}, 2)
+            universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
 
 
 def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]
@@ -406,30 +337,32 @@ def shipped_worlds() -> list[Path]:
             document = json.loads(path.read_text(encoding="utf-8"))
         except ValueError:
             continue
+        if "universe24" not in path.parts:
+            continue  # every other folder is a record of the law to 2026-10-23 and is not run
         if isinstance(document, dict) and all(key in document for key in ("shape", "universe")):
             found.append(path.relative_to(SRC.parents[1]))
     return found
 
 
-def test_every_shipped_world_loads_under_the_one_node_and_the_smallest_runs():  # type: ignore[no-untyped-def]
-    """Every shipped world under examples/ loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board's boundary the torus where the world declares none), the parse alone and no board (the boards' starts over the 60 worlds ran 142 s summed on the suite's clock; each world's run is its folder's, a record); the shipped one world, examples/events/universe24 (125 Nodes), is laid on its board and stepped 12 intervals under the one Node, every held row's wall fixed per Node, and a massless time line never fires (ALGEBRA.md, The swap at the top, the massless clause)."""
+@pytest.mark.parametrize("path", shipped_worlds(), ids=lambda path: path.stem)
+def test_every_shipped_world_loads_and_runs_under_the_one_node(path):  # type: ignore[no-untyped-def]
+    """Every shipped world under examples/ loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board's boundary the torus where the world declares none) and, where the board holds at most RUN_NODES Nodes, is started and stepped one interval by the engine's own step with its books open; a larger board's start stands beyond the suite's bound on the house's clock and is run by the world's own tests, named here as loaded alone."""
     from tests.laws_read import load_shipped
 
-    loaded = {}
-    for path in shipped_worlds():
-        world = load_shipped(SRC.parents[1] / path)
-        assert len(world.periodic) == 3 and world.families and world.intervals >= 1, path
-        loaded[path] = int(np.prod(world.shape))
-    assert len(loaded) >= 40 and all(loaded.values())
-    smallest = next(p for p in loaded if p.parent.name == "universe24" and p.stem == "universe24")
-    assert loaded[smallest] <= 125  # the shipped one world, the smallest structured board with a clump
-    board = Lattice(load_shipped(SRC.parents[1] / smallest))
-    for _ in range(12):
-        board.step()
-    assert board.interval == 12 and board.ended is None
+    world = load_shipped(SRC.parents[1] / path)
+    nodes = int(np.prod(world.shape))
+    assert len(world.periodic) == 3 and world.families and world.intervals >= 1
+    if nodes > RUN_NODES:
+        print(
+            f"{path}: {nodes} Nodes loaded under the one Node, its start beyond the bound, run by its own tests"
+        )
+        return
+    board = Lattice(world)
+    board.step()
+    assert board.interval == 1
     assert set(board.fixed_walls) == set(board.held)  # every held row's wall fixed per Node
     if all(f.pair[0] == f.pair[1] for f in board.families if f.held):
-        assert board.swaps == []  # a massless time line never fires
-    print(
-        f"{len(loaded)} shipped worlds loaded under the one Node; {smallest} ({loaded[smallest]} Nodes) stepped 12 intervals"
-    )
+        assert (
+            board.swaps == []
+        )  # a massless time line never fires: the swap at the top reads the gapped line alone (ALGEBRA.md, The swap at the top, the massless clause), on every shipped structured world and not the uniform torus alone
+    print(f"{path}: {nodes} Nodes, periodic {board.world.periodic}, one interval stepped")

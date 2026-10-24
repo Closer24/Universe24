@@ -33,25 +33,12 @@ def integer(value: object, label: str, least: int, most: int = MAX_WORK_INT) -> 
     return value
 
 
-def node_of(value: object, label: str, shape: Node, beyond: tuple[Node, ...] = ()) -> Node:
-    """A Node's address on the lattice, three integers inside the shape and not beyond the board's inner faces, refused by name otherwise."""
+def node_of(value: object, label: str, shape: Node) -> Node:
+    """A Node's address on the lattice, three integers inside the shape, refused by name otherwise."""
     if not isinstance(value, list) or len(value) != 3:
         raise ValueError(f"{label} must be a Node [x, y, z]")
     found = tuple(integer(value[axis], f"{label}[{axis}]", 0, shape[axis] - 1) for axis in range(3))
-    node = found[0], found[1], found[2]
-    if node in beyond:
-        raise ValueError(
-            f"{label} is the Node {list(node)}, beyond the board's inner face: nothing stands there"
-        )
-    return node
-
-
-def span_of(value: object, label: str, extent: int) -> tuple[int, int]:
-    """A range of Nodes [first, last] along one axis, inside its extent, first at most last."""
-    if not isinstance(value, list) or len(value) != 2:
-        raise ValueError(f"{label} must be a range [first, last]")
-    first = integer(value[0], f"{label}[0]", 0, extent - 1)
-    return first, integer(value[1], f"{label}[1]", first, extent - 1)
+    return found[0], found[1], found[2]
 
 
 def document_at(files: Mapping[str, object], path: object, label: str) -> object:
@@ -59,23 +46,6 @@ def document_at(files: Mapping[str, object], path: object, label: str) -> object
     if not isinstance(path, str) or path not in files:
         raise ValueError(f"{label} names {path!r}, and no file stands at that repository path")
     return files[path]
-
-
-def weights_of(value: object, label: str, lines: int, plane: bool) -> tuple[int, ...]:
-    """A laid record's weight on each laid line of its part (the world file's key `weights` on a body or a packet, `Lattice.lay`: the laid pair times the line's weight on that line, so a record of three real lines is laid at the weights (a, b, c) over its three lines): a list of one integer per real line, not all 0, refused by name on planes, whose second line is its sense and no weighted copy of the first; 1 on every laid line without the key (`FamilyRule.laid`, one per real line, one per plane), the pair laid alike."""
-    if value is None:
-        return (1,) * lines
-    if plane:
-        raise ValueError(
-            f"{label} weights the lines of a plane: a plane's second line is its sense (the second level pair), "
-            "and no weight is laid on it; the key is a record of real lines' (ALGEBRA.md #a-familys-declaration)"
-        )
-    if not isinstance(value, list) or len(value) != lines:
-        raise ValueError(f"{label} must list one integer weight per line of the record, {lines} here")
-    found = tuple(integer(weight, f"{label}[{at}]", -MAX_WORK_INT) for at, weight in enumerate(value))
-    if not any(found):
-        raise ValueError(f"{label} weights every line of the record at 0: nothing is laid")
-    return found
 
 
 def reads_of(value: object, label: str) -> tuple[tuple[str, int], ...]:

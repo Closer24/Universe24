@@ -41,69 +41,6 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
-    "tests/test_the_default_board_is_a_torus.py::test_a_world_without_boundary_is_a_torus_and_a_declared_face_stands": (
-        30,
-        "the default board (ALGEBRA.md, The board is a torus; the owner's word of 2026-10-23, the default a torus): a world "
-        "file without `boundary` periodic on every axis, a declared face kept as declared with its layer and its receding "
-        "sides, the cycle world with the key and without it the same board bit for bit over 12 intervals",
-    ),
-    "tests/test_the_window_is_derived.py::test_a_small_world_with_the_instrument_body_clicks_at_the_derived_cadence": (
-        20,
-        "the window derived and never declared (ALGEBRA.md, The click writes on the lattice, C2 and (5); the owner's decision of "
-        "2026-10-23): the key refused by name on a body and on the world, the body's own beat on the two instruments, the regions' "
-        "passage on the clicks chain and the Bell chain, the two rules meeting on one body, and Universe24's click world cut to 30 "
-        "intervals clicking at the closes 15 and 30",
-    ),
-    "tests/test_the_universe_runs_its_cycle.py::test_the_small_universe_rises_decelerates_turns_falls_and_keeps_its_clicks": (
-        80,
-        "the test of the law's course for the one universe (examples/events/universe/; ALGEBRA.md, The one Node, The swap at the "
-        "top): the 3-cube torus with one clump, the uniform light and the two-Node detector at the gap [990, 1000], the rise from "
-        "the seed, X'' below 0 at the clump's Node, the fifth act's staggered fires at the top, the fall, the light velocity reversed "
-        "bit for bit at every turned Node, the run back 40 of 40 through the fires, the clicks history kept, the crunch as the "
-        "small board's end",
-    ),
-    "tests/test_the_swap_on_a_structured_board.py::test_the_swap_on_a_structured_board": (
-        50,
-        "the swap at the top on a structured board (ALGEBRA.md, The swap at the top): the three-clump lay run 60 intervals with "
-        "no refusal, X at or above Gamma at every Node, the fires 122, 108, 76, 36, 8 at intervals 1 to 5 each at a weak maximum "
-        "of the Node's own time line, the run back 60 of 60 exact with the inverse's fires in reverse",
-    ),
-    "tests/test_the_swap_at_the_top.py::test_the_swap_fires_once_at_the_first_weak_top_and_the_fall_is_the_rise_run_back": (
-        60,
-        "the swap at the top (ALGEBRA.md, The swap at the top, the owner's decision of 2026-10-23; swap.py): on the 3-cube gapped "
-        "torus the fire once at the first weak maximum at every Node and never at the start, 40 T-images bit for bit after it with "
-        "every remainder complemented at its wall, the run back of 80 through the fire with the inverse's one fire",
-    ),
-    "tests/test_the_gapped_volume.py::test_the_gapped_row_carries_the_volume_and_its_step_is_rule3s_own_mass_at_the_fixed_wall": (
-        43,
-        "the gapped time line in the volume form (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return "
-        "hand's derivation read cold by the reader): the loader's clause on the tensions, the gapped row laid at the vacuum's "
-        "volume, the step's mass term -2 (1 - nu) (p_0 / Gamma)^2 X within one level over 50 intervals and the run back MATCH",
-    ),
-    "tests/test_the_gapped_volume.py::test_every_shipped_gravity_pair_is_massless_and_the_matter_world_runs_as_its_shipped_log": (
-        43,
-        "the same clause changing no shipped run: every held row of the content sourced by the tensions iff at [Gamma, Gamma] in "
-        "examples/ and tests/, the binding holder [2400, 2401] in the level form, and the shipped matter world stepped 100 intervals "
-        "bit for bit as its stored digest, whatever else the tree's step does",
-    ),
-    "tests/test_the_conversion.py::test_two_families_laid_toward_one_target_convert_by_their_own_lists_under_the_whether": (
-        45,
-        "the two-families chain world run its 210 intervals, past the derived window 197 (2026-10-23), the sentence needing "
-        "the whole run (the electron's credit alone at 197, the neutron unconverted through the 210; 2026-10-24); 37.8 s "
-        "alone under the universal charge, 33.6 s at the merge base",
-    ),
-    "tests/test_the_conversion.py::test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly": (
-        45,
-        "the conversion in the toy (2026-10-21): the chain world run to its first conversion at a "
-        "window's close, one conversion per credited quantum, the counts n -1 p +1 e +1, the Wronskian's sum 0 at the "
-        "lay by the exact split and the rotations' identity exact in the integers",
-    ),
-    "tests/test_the_hazard_window.py::test_a_declared_windows_hazard_spans_its_lit_intervals_alone_and_the_dark_ones_their_own_grain": (
-        39,
-        "the emission's hazard over a declared window (A3 of the alignment audit, #1793 comment 5982140872; the advisor's second "
-        "5982171035 (2)): the dark intervals drawn at their own grain as they pass, the close at the lit count, every interval "
-        "of the window in exactly one draw's span, and a window with no dark interval at its length bit for bit",
-    ),
     "tests/test_the_share.py::test_under_the_rotation_the_share_reads_the_level_before_turned_as_the_step_reads_it": (
         88,
         "the share under the rotation (the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker): the level "
@@ -125,45 +62,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the stress is the Links': the loader's tension lines at the doubled wall 2 E_s W_c, and a wrapped world with a "
         "structured record stepped and run back bit for bit",
     ),
-    "tests/test_the_stress_is_the_links.py::test_the_three_clumps_edge_at_one_node_holds_the_tension_below_gamma_through_the_top_and_names_the_returns_growth": (
-        34,
-        "the structured board's clause of The stress is the Links' (the owner's question of 2026-10-23): the three-clump torus's "
-        "edge Node read once, the one-interval write 59 and the Link at 48, the static bound 9 G_5(0) S = 110 below Gamma, "
-        "the return's growth 738 x 59 above it named",
-    ),
-    "tests/test_the_swap_on_a_structured_board.py::test_the_shipped_course_log_of_the_three_clumps_records_the_cut_at_2376_and_the_returns": (
-        22,
-        "the structured board's long course under the law with both acts read from the shipped course log (the structured-cycle "
-        "branch, 2026-10-23): the cut at 2,376 by a Link's tension 1,087, the void's four returns, 1,079 fires, the largest Link tension 975",
-    ),
-    "tests/test_the_swap_at_the_top.py::test_the_matter_worlds_run_back_reaches_interval_0_exactly_through_the_fires_and_the_declared_lay": (
-        10,
-        "the matter world's run back under both acts to interval 0 exactly through the six fires and the declared lay, the former "
-        "mismatch named by its cause (the lay's inverse, 2026-10-23)",
-    ),
-    "tests/test_the_swap_at_the_top.py::run_back_exact": (
-        16,
-        "a world stepped forward and back with every snapshot compared on the way back, the counts and the swaps read (the lay's inverse, 2026-10-23)",
-    ),
-    "tests/test_the_swap_at_the_top.py::test_the_big_bang_worlds_run_back_reaches_interval_0_exactly_through_its_lays_and_fires": (
-        10,
-        "the big bang world with light run back to interval 0 exactly through its whole lays at interval 1 and its fires, every fire mirrored (the lay's inverse, 2026-10-23)",
-    ),
     "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
         93,
         "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "
         "2026-10-04): the momentum identity with the carried remainders, the tension's Node part and the Link's mean, the "
         "two forms' walks under the rounding and the weighted coefficients' symmetry, on small integers",
-    ),
-    "tests/test_the_loader.py::test_a_massless_packet_lays_no_uniform_mode_and_the_board_refuses_one_that_does": (
-        24,
-        "the lay's uniform mode (the experimenter's bug report, #1827 comment 5975131359; the Boss's 5975430859): a massless "
-        "packet's two levels each sum to 0 on the committed worlds, and the board refuses at its construction, through the one lay act's guard, a mode entry whose sums are not 0",
-    ),
-    "tests/test_the_meeting.py::test_the_absorption_removes_the_photon_and_the_front_leaves_the_board_dark": (
-        14,
-        "the lay's uniform mode (#1827 comment 5975131359): the committed one-photon world's absorption at 48, the share never "
-        "above the lay's by more than the known transient, and 0 exactly once the front has swept both packets",
     ),
     "tests/test_documents.py::test_no_undated_history_clause_stands_in_the_law_or_the_engines_document": (
         10,
@@ -178,78 +81,15 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         4,
         "the documents' gates: every derived number of the table the output of its script under tools/derivations/",
     ),
-    "tests/test_the_bound_body.py::test_the_committed_worlds_load_and_every_blind_is_its_builders_byte_for_byte": (
-        25,
-        "the count gate on the smallest shipped world of every builder whose load is seconds (the Boss's 5971346856, item 2, "
-        "after #1788's lay defect in the committed worlds that the test without a board did not catch): one lattice per "
-        "folder, no interval, the long-loading folders the runner's gate by name",
-    ),
-    "tests/test_pixel_mode.py::test_a_packets_mode_count_is_the_books_count_read_once_over_the_board": (
-        16,
-        "the generator's count as the books read it (mode-count, the mathematician's finding of 2026-10-03): the share "
-        "summed over the board and read in quanta once, the shipped two slits and Zeno counts the books' own, the dilute wave",
-    ),
-    "tests/test_the_node_detector.py::test_a_count_is_one_quantum_of_the_invariant_in_the_familys_own_wall": (
-        26,
-        "count-unit (the two hands' word on #1793's R8): the taker's lay at 2 A^2 sin omega = T per quantum, the "
-        "family's wall W_c sin omega_0 by one root, light's W_c, the [1, 1299] amplitude unchanged, a laid body's books",
-    ),
-    "tests/test_the_draw.py::test_the_source_in_time_lays_the_form_it_radiates": (
-        30,
-        "the partial hole's second pass (the mathematician's 245 with the advisor's second): the source in time's "
-        "total (2 / 3) T sin k in the law's integers at [2, 3], [4, 5] and [9, 10], the root on the large number",
-    ),
-    "tests/test_the_draw.py::test_a_record_empty_at_the_origin_takes_its_unit_from_its_first_lay": (
-        24,
-        "the partial hole's round (the owner's decision 234, item 7; the Boss's brief of 2026-10-03): the unit of a "
-        "record empty at the books' origin set at its first lay to the emission's own W_c sin Omega, a born quantum "
-        "below the half-top energy credited 1 and not 0",
-    ),
-    "tests/test_the_draw.py::test_the_born_lights_frequency_is_the_declared_resonance_and_a_node_detector_counts_in_its_own_quantum": (
-        90,
-        "the generic node_detector round (the Boss's brief at the owner's decision 234, item 7, 2026-10-03): the record's "
-        "own unit W_rec read once at the books' origin, the transition key refused on a region, the one-Node "
-        "refusal of a travelling wave, the dark's hazard per proper interval in the vacuum and in a well",
-    ),
-    "tests/test_the_emission.py::test_the_source_in_time_lays_no_uniform_mode_where_its_span_holds_a_period": (
-        33,
-        'the emission lays no uniform mode (the owner\'s "yes to everything" of 2026-10-04, #1793 comment 5975629873; the '
-        "mathematician's 5975866852 and 5975925032): the source's increments corrected by the division act in time where the "
-        "span holds a period, the period by the rotation act, a short span laid as built, the resonance world's sums and share",
-    ),
-    "tests/test_the_emission.py::test_the_open_boards_packet_lays_no_uniform_mode": (
-        20,
-        "the emission lays no uniform mode (2026-10-04): the open board's packet's two levels through the packet lay's "
-        "division act, each summing to 0 over the board after the lay, the quantum standing",
-    ),
-    "tests/test_the_share.py::test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit": (
-        35,
-        "the step's speed's dedicated test (the owner's word of 2026-10-03, 15:12 Israel, let them do it): every "
-        "shortened read of the step, the share at the Nodes with a level, the write factor in the hardware's "
-        "integers inside the width and the Port's fill on the face layer, equals the full read bit for bit",
-    ),
     "tests/test_the_features.py::test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still_share_their_pair": (
         12,
         "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
         "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
     ),
-    "tests/test_the_meeting.py::test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window": (
-        33,
-        "the resonant two-mode act's dedicated test (the Boss, 2026-10-03): the scale derived from the file's "
-        "numbers, the two reference records by the emission's recurrence, A W / 2 at every arrival phase, the "
-        "detuned sinc, the root once per window on the shipped Zeno world, the window's turn as W sub-turns with the carry",
-    ),
     "tests/test_integer_algebra.py::test_a_composed_product_of_literals_is_refused_outside_core_rule3": (
         11,
         "PR D's gate (the Boss's brief of 2026-10-03): no two integer literals multiplied, added or raised outside "
         "core/rule3.py, the composed number named from the Ports and the levels or taken from the files",
-    ),
-    "tests/test_the_features.py::test_the_engines_numbers_are_written_from_the_ports_and_the_levels_names": (
-        51,
-        "PR D, no number in the engine (the owner's word, the Boss's brief of 2026-10-03): the start's fine unit from "
-        "the six reads twice, the tent against the discrete parabola's top on three chains, the miss bound from the "
-        "six reads over the axis's two Ports on a chain, a slab and a cube, the rest's two powers by name and its "
-        "keyword-only `intervals`, the radiated total against (2 / 3) T sin k at two T, one PORTS under src/",
     ),
     "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
         48,
@@ -257,34 +97,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "Boss's brief of 2026-10-03): the tension's room at the rule's universe's four pairs against the hill's, the four "
         "shipped universes' bound unmoved, a universe whose write binds the bound lowered by name",
     ),
-    "tests/test_the_bound_body.py::test_two_charged_records_of_count_one_write_their_own_sign_rows_and_a_count_above_one_is_refused": (
-        64,
-        "the count-1 gate's dedicated test (the Boss, 2026-10-03; ALGEBRA.md, No record reads its own write of "
-        "the sign, item 43 (1)): two charged records of count 1 on a chain, each its own record and its own row "
-        "of the sign, each row sourced by its own Wronskian alone, the turn reading the other's row alone and the "
-        "self-read 0 to the bit over three intervals, a count above 1 refused by name",
-    ),
     "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
         172,
         "the loader's refusals by name on the loader's own functions with no world run (the owner's word of "
         "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
         "budget's least T, the faces and the open faces' layer, the packets, the universe",
-    ),
-    "tests/test_the_node_detector.py::test_a_reader_with_its_own_record_stands_on_one_node": (
-        46,
-        "the relation seen from its two ends (the owner's decision of 2026-10-03, 16:30 UTC, on the mathematician's 323 "
-        "with the advisor's yes): the shipped Zeno reader declared at one Node, its lay A_1 = A, the turn reading the "
-        "drive's level exactly, its six Links cut, the uniform mode's recurrence, the click line naming no Node with "
-        "the hole and the lay at the only Node, the back-in-time gate across the run, and a NodeDetector with Nodes alone "
-        "at one Node still refused by name",
-    ),
-    "tests/test_the_paper_claims_engine.py::test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_outside": (
-        421,
-        "the claims table's engine-kind rows as unit tests (the Boss's brief of 2026-10-04 on the advisor's breakers): the "
-        "rows 26, 27, 76 and 133, the hand-named rows E.1 to E.3, the results table's row 1 and S.61, with S.59's re-lay "
-        "and S.42's credit current as the engine holds them, one nested function per row quoting its opening words and "
-        "its breaker, the claim inside its fence and the break outside it, and the owner's shout as the inventory of the "
-        "engine's thirteen write sites outside core/rule3 with their law lines; one function, the file the test alone",
     ),
     "tests/test_proofs_check_the_law.py::test_every_row_of_the_proofs_inventory_returns_its_verdict_and_the_unchecked_only_fall": (
         77,
@@ -294,41 +111,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "and C without a machine check are a ratchet that only falls, and no proofs_ module imports the engine or names "
         "a run's file; the imports stand inside the test so the file is the test alone",
     ),
-    "tests/test_pixel_mode.py::test_a_packet_of_a_gapped_family_is_advanced_by_its_own_band_and_a_massless_one_by_the_vacuums": (
-        20,
-        "R370: the generator's exact lay advances a packet by its family's own band, cos omega = (num / den) sum cos q_a / 3 "
-        "(the law's (h), L the line's own read), the massless band its case at num = den (#1793 comments 5984295586, "
-        "5984314233; the Boss's grant 5984406201)",
-    ),
-    "tests/test_part_h_fix.py::test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum": (
-        92,
-        "the engine V2 (Part H, MUST 3; #2122): the Link's count carries each end's clock as one coefficient rounding, "
-        "plain at the vacuum, the fold's turn per proper interval read on the Coulomb chain",
-    ),
-    "tests/test_part_f_momentum.py::test_in_a_held_well_the_momentum_changes_by_the_gradient_term_and_falls_toward_the_well": (
-        52,
-        "the engine V2 (Part F, Task 2; #2122): the lattice momentum under a held well, the gradient term the one change",
-    ),
     "tests/test_part_b_sign_fold.py::test_the_wronskian_is_conserved_on_a_periodic_ring_under_the_folded_link_turn": (
         50,
         "the engine V2 (Part B; #2122): the Wronskian conserved on a periodic ring under the sign's Link phase in the fold form",
-    ),
-    "tests/test_part_b_sign_fold.py::test_the_48_returns_on_a_closed_cube_with_a_sign_holder": (
-        42,
-        "the engine V2 (Part B; #2122): the cube's 48 returns on a closed cube with a sign holder, the fold form covariant",
-    ),
-    "tests/test_the_interval.py::test_the_forms_own_clock_books_a_count_once_and_the_write_dims_as_the_pairs_integer": (
-        36,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T6): the form's own clock as one "
-        "power of the write, the numerator bit for bit at the Wronskian's power on a count, the dimming exponent "
-        "within 0.3 of 4.8 under the key and of 5.8 without it",
-    ),
-    "tests/test_the_uniform_mode.py::test_the_volumes_write_is_bit_for_bit_at_the_fixed_wall_and_the_level_reading_relaxes_to_the_constraint": (
-        60,
-        "the directive's build (the reader's line on the volume form M12a, 2026-10-22, T2): the volume's write bit "
-        "for bit at the fixed wall under either factor against the engine's own functions, the level reading what the "
-        "board reads, the velocity under the volume form's bound, the level within 2 percent of the volume's map "
-        "integrated at the law's own interval, the residual rising",
     ),
     "tests/test_the_interval.py::test_the_volume_of_a_level_and_the_level_of_a_volume_are_one_division_and_one_search_each_the_others_inverse": (
         46,
@@ -336,46 +121,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "division and the level of a volume one search, the staircase's inverse bit for bit, the clock's zero, the "
         "refusals by name, the start's two functions",
     ),
-    "tests/test_the_interval.py::test_the_premise_is_a_test_the_volumes_write_reads_its_own_level_both_ways_and_the_velocity_is_no_datum_of_the_seed": (
-        56,
-        "the directive's build (the reader's line on the volume form M12a, 2026-10-22, T4): the premise as a test, the "
-        "volume's write reading its own level forward and back, every read the level reading, and the attractor from "
-        "rest and from a kicked start alike with the Lagrangian's constraint read by the test",
-    ),
-    "tests/test_the_interval.py::test_the_run_back_matches_at_every_interval_at_a_wall_that_never_moves": (
-        26,
-        "the directive's build (the reader's line on the volume form M12a, 2026-10-22, T5): the run back MATCH at every "
-        "interval under the key at either factor on the torus, the light cube and the kicked torus",
-    ),
-    "tests/test_the_interval.py::test_the_stresss_trace_is_the_time_lines_and_the_tension_lines_take_the_traceless_parts": (
-        92,
-        "the directive's build (the reader's build line of 2026-10-22 on the second smoke, T7 as the trace's test): the "
-        "traceless axis numerators, the time line's numerator less the pressure term and times the volume under the "
-        "key, the declaration",
-    ),
     "tests/test_the_eras_log.py::test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_them": (
         74,
         "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 4 (g)): the eras' log and its page, the two "
         "host tools of the test of the law's course read on the 3-cube light cube under the hypotheses' keys",
-    ),
-    "tests/test_the_interval.py::test_the_tension_lines_step_as_the_shears_momentum_at_the_volumes_wall_and_run_back_exactly": (
-        62,
-        "the shear's momentum (the symmetry hand's derivation of 2026-10-23 from the cube's group of 48, the branch "
-        "shear-momentum): the tension lines' births at 3 w X_0, the one carried division at the volume's wall bit for "
-        "bit, the law's step where the time line stands, the bijection and the mirror on random Node-intervals, the run "
-        "back after one and after 60 intervals, and the three lines' sum pinned while the x line's drift is drained",
-    ),
-    "tests/test_the_interval.py::test_an_isotropic_lays_tension_lines_stay_flat_under_the_trace": (
-        50,
-        "the directive's build (the reader's build line of 2026-10-22, the finding as a test): the tension lines' k = 0 "
-        "mode under an isotropic lay's mean stress, flat under the trace and running away without it",
-    ),
-    "tests/test_the_interval.py::test_the_carried_factor_is_the_one_division_at_the_wall_per_node_and_the_rounding_stays_bit_for_bit": (
-        90,
-        "the directive's build (the Boss's brief of 2026-10-22, DESIGN section 3, T8; the Boss's decision on the fixed "
-        "wall): the end's booking switch, the carried factor's terms and wall per Node bit for bit under the law's key, "
-        "the rounding kept, the loader's refusals, the run back, and under the hypothesis's key the wall fixed per Node "
-        "with the fraction carried where the rounding's write is 0",
     ),
 }
 CALLERS = ("src/", "tools/", "examples/")

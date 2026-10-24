@@ -2,28 +2,23 @@
 
 import importlib.util
 import json
-import math
 import sys
 from collections.abc import Sequence
-from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 import pytest
 
-from event_universe import board_readings, credit, growth, node, readings, share, world_files
+from event_universe import readings
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import FamilyRule, Row, quanta_records
-from event_universe.loader.keys import Node
+from event_universe.loader.derived import FamilyRule, Row
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import World
 from event_universe.records import Record
-from event_universe.world_files import input_digest, load_world
-from tests.laws_read import redeclared, redeclared_file
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
@@ -38,6 +33,12 @@ CHARGED = {
     "pair": [3600, 6000],
     "dimension": 2,
 }  # a Pythagorean plane under the sign (2026-10-24: the sign's reader is Pythagorean; matter's [4000, 6000] until then)
+LIGHT_ROW = {
+    "name": "light",
+    "pair": [6000, 6000],
+    "dimension": 1,
+    "reads": {},
+}  # the one massless family of quanta, the seed every world is laid with (ALGEBRA.md, The uniform seed is a lay)
 # the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
 TOP = [0, 6000]
 CHARGED["reads"] = {"gravity": 1, "binding": 1, "charge": 1}  # every holder, the sign's among them
@@ -49,8 +50,16 @@ def real_rows(*rows: tuple[str, tuple[int, int], int, int | None]) -> list[Row]:
     return [Row(n, p, k, 1, False, False, False, w, w and 1, 0, held) for n, p, k, w in rows]
 
 
+def load_file(name: str, path: Path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    assert spec is not None and spec.loader is not None
+    sys.modules[name] = module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def vacuum_content(world: World, family: FamilyRule) -> int:
-    """The content a record of `family` reads where nothing is laid: the declared rests of the holders its declaration names, each at its read weight (ALGEBRA.md, The vacuum content, item 22; the generator's `vacuum_of`), 60 on the shipped universes with a gravity row and 0 on the atom worlds'."""
+    """The content a record of `family` reads where nothing is laid: the declared rests of the holders its declaration names, each at its read weight (ALGEBRA.md, The vacuum content, item 22), 60 on the shipped universes with a gravity row."""
     return sum(world.families[read.family].rest * read.weight for read in family.reads)
 
 
@@ -63,33 +72,13 @@ def band_of(pair, gamma: int, content: int, unit: int, *cosines):  # type: ignor
     return (int(self_coefficient) + arrived) / (2 * int(wall))
 
 
-def load_file(name: str, path: Path):
-    spec = importlib.util.spec_from_file_location(name, path)
-    assert spec is not None and spec.loader is not None
-    sys.modules[name] = module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
 def refused(match: str, call, *args, **keys):
     with pytest.raises(ValueError, match=match) as refusal:
         call(*args, **keys)
     return refusal.value
 
 
-def design_beside(folder: Path, stem: str, **keys: object) -> Path:
-    """The folder's design file with the generator's keys for one world (`worlds[stem]`: `quanta`, `senses`, `pixels`, the inputs the generator reads from the design file beside the world and never from the command line; the owner's decision C2, #1793 comment 5982379080), the other worlds' entries kept."""
-    path = folder / "design.json"
-    design = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"worlds": {}}
-    design["worlds"][stem] = {**design["worlds"].get(stem, {}), **keys}
-    path.write_text(json.dumps(design), encoding="utf-8")
-    return path
-
-
-TOOLS = ("pixel_mode", "back_in_time", "run_inputs")  # the generator, the back-in-time gate, the runner
-TOOL, BACK, RUN = (load_file(name, ROOT / "tools" / f"{name}.py") for name in TOOLS)
-GATE = load_file("bell_gate", ROOT / "tools" / "bell_gate.py")  # the Bell and GHZ gates' reader
-RECORD = load_file("look_record", ROOT / "tools" / "look" / "record.py")  # the look's reader
+BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")  # the back-in-time gate
 
 
 def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]
@@ -100,141 +89,11 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
     for family in universe["families"]:
         family["pair"] = pairs.get(family["name"], family["pair"])
         family["reads"] = {name: w for name, w in family["reads"].items() if name not in drop}
+    if not any(  # the seed family where the universe holds no massless family of quanta, 2026-10-24
+        "held" not in f and f["pair"][0] == f["pair"][1] for f in universe["families"]
+    ):
+        universe["families"] += [json.loads(json.dumps(LIGHT_ROW))]
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-
-
-def chain_body_world(folder, tool, quanta=QUANTA, at=(), senses=(), taker=False, mode=True, chain=CHAIN):  # type: ignore[no-untyped-def]
-    """A chain of `chain` Nodes (x open) with a body of matter declared with `quanta` on each Node of `at` (the chain's centre where empty; the last read by the node_detector `taker` where asked), or, where `senses` gives the body a sense, a body of the charged family (matter's pair as a plane) rotating in that sense, one quantum of count 1 (the law's count per charged record, the loader's gate; ALGEBRA.md, No record reads its own write of the sign), laid by the generator as the one-Node record of its quantum (the design file's `pixels` and `senses` beside the chain, `design_beside`) where the matter body is laid at its fixed point: the bodies' Nodes with their counts and the mode file beside them; the node_detectors `left` and `right`, two Nodes each at the chain's two ends (never one Node), report the light's inflow there."""
-    at = at or (chain // 2,)  # the chain's centre where no Node is named
-    families = [CHARGED["name"] if i < len(senses) and senses[i] else "matter" for i in range(len(at))]
-    universe_beside(folder, charged=CHARGED["name"] in families)
-    charged = [f == CHARGED["name"] for f in families]  # one quantum per charged record, the law's count
-    nodes = [[dict(node=[x, 0, 0], count=1 if c else quanta)] for x, c in zip(at, charged, strict=True)]
-    bodies = [dict(family=f, nodes=n) for f, n in zip(families, nodes, strict=True)]
-    ends = [{"name": "left", "positions": [[0, 0, 0], [1, 0, 0]]}]
-    ends += [{"name": "right", "positions": [[chain - 2, 0, 0], [chain - 1, 0, 0]]}]
-    node_detectors = ends + ([{"name": "taker", "block": len(at) - 1}] if taker else [])
-    world = dict(
-        shape=[chain, 1, 1], node_detectors=node_detectors, bodies=bodies, intervals=400, face_depth=1
-    )
-    world.update(boundary=dict(x="open", y="periodic", z="periodic"), universe="u.json")
-    (path := folder / "chain.json").write_text(json.dumps(world), encoding="utf-8")
-    pixels = [n for n, c in enumerate(charged) if c]  # the charged body a one-Node record
-    design_beside(folder, path.stem, senses=list(senses), pixels=pixels)  # the design's keys beside
-    if mode:  # the charged body laid by the design's `pixels` in its sense, matter at its fixed point
-        tool.main(["--input", str(path)])
-    return path
-
-
-SLIT = dict(
-    shape=[24, 9, 1], boundary=dict(x="open", y="open", z="periodic"), face_depth=1, intervals=24
-)
-SLIT.update(universe="u.json", bodies=[], node_detectors=[])
-SLIT["faces"] = [{"axis": "x", "at": 12, "gaps": [{"y": [4, 4], "z": [0, 0]}]}]
-PACKET = {"family": "charge", "along": "x", "wave": [1, 4], "phase": [0, 1], "amplitude": 1328}
-PACKET.update(top={"x": [5, 5], "y": [0, 8], "z": [0, 0]}, edge={"x": 4, "y": 0, "z": 0})
-
-
-def packet_world(folder: Path, tool, lifetime: int = 8, width: int = 3, intervals: int = 60) -> Path:  # type: ignore[no-untyped-def]
-    """The open board's packet world cut small: the shipped packet emission's giver over two Nodes of a 160 by 5 by 5 board with one emission at `lifetime` and `width`, its window derived from its own train's passage (the lay's 69 slices at the lifetime 8 and the width 3: 194 intervals, `loader/window.py`; in the exact dark the giver gives at that close, `meeting.emission_fell`), the giver's detector declared with no key (its draw the click's read of the board), no world draw, its mode file written by the generator."""
-    world = json.loads((EVENTS / "packet_emission" / "packet_emission.json").read_text(encoding="utf-8"))
-    giver = world["bodies"][0]
-    rate = {**giver["rates"][0], "width": width, "lifetime": lifetime}
-    nodes = [{"node": [80, 2, 2], "weight": 1}, {"node": [81, 2, 2], "weight": 1}]
-    small = {**world, "shape": [160, 5, 5], "intervals": intervals, "node_detectors": []}
-    reader = {k: v for k, v in giver["node_detector"].items() if k != "window"}  # the window derived
-    small["bodies"] = [{**giver, "nodes": nodes, "rates": [rate], "node_detector": reader}]
-    del small["draw"]
-    redeclared(small)  # the read's shape: no engine start file, no generator
-    (path := folder / "small.json").write_text(json.dumps(small) + "\n", encoding="utf-8")
-    tool.main(["--input", str(path)])
-    return path
-
-
-def slit_world(folder: Path, tool, name: str = "slit", **changes: object) -> Path:  # type: ignore[no-untyped-def]
-    universe_beside(folder)
-    path = folder / f"{name}.json"
-    path.write_text(json.dumps({**SLIT, "packets": [PACKET], **changes}), encoding="utf-8")
-    tool.main(["--input", str(path)])
-    return path
-
-
-def credit_lines(lines: list[dict[str, object]], key: str) -> list[dict[str, object]]:
-    """The NodeDetectors' click lines with `key` set: the credit lines labelled NODEDETECTOR whose `key` is not None."""
-    return [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c[key]]
-
-
-def own_lines(board: Lattice, index: int) -> list[Record]:
-    """A family's record lines as the engine reads them: every record's lines, light the sum of its rows."""
-    return [line for r in quanta_records(board.families, index) for line in board.lines_of(index, r)]
-
-
-def shares_of(board: Lattice, index: int, read, pairs) -> np.ndarray:  # type: ignore[no-untyped-def]
-    """The share form per Node of a family's lines at the paces of its `read`, in Python's integers."""
-    gamma, unit = board.world.node_clock, board.unit
-    found = share.family_share(board.families[index], pairs, board.wrap, gamma, *read, unit)
-    return found.astype(object)
-
-
-def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fraction]]:  # type: ignore[no-untyped-def]
-    """One step of the lattice with the booking identity per act on the families `indexes` (ALGEBRA.md S.6; the advisor's lines, #1563 comments 5954101082 and 5963391333): the share's change over the step is the currents at the pair the step started from with the paces' anisotropy term and Rule3's remainder term, within the division act's floors, plus the face term per face presented at the step, (next - before) R_face (value - arrival) over 2 p_i^2 G^2 (the hole over its two intervals, each shell of the front), the identity on the stepped levels before the lays; the lays (the absorption's and the emission's parts, the emitted quantum, the null window's re-lay) change the share form at the written Nodes and their six neighbours alone, exact; per family the paces' own change of the books' total and the slack."""
-    growth.grow(board)  # the receding faces read first, as the step reads them
-    gamma, unit, begun, shape = board.world.node_clock, board.unit, {}, board.shape
-    for index in indexes:
-        read = board.read(index)
-        pace = np.asarray(paces.link_pace_of(gamma, read[0])).astype(object)
-        flow = [np.asarray(current, dtype=object) for current in board_readings.currents(board)[index]]
-        factors = [np.asarray(q).astype(object) - unit * unit for q in read[1]]
-        skew = [q * c for q, c in zip(factors, flow, strict=True)]
-        terms = sum(Fraction(int(n), unit * unit) for found in skew for n in found.ravel())
-        reads = node.rule_of(board.families[index], gamma, *read, unit)[0]
-        squares, net = np.broadcast_to(pace * pace, shape), int(sum(c.sum() for c in flow))
-        begun[index] = (read, own_lines(board, index), net, terms, squares, reads)
-    stepped, counted = {}, credit.counted_windows
-
-    def kept(b: Lattice) -> bool:  # the lines after the held write, before the NodeDetectors' acts
-        stepped.update({i: own_lines(b, i) for i in indexes})
-        return counted(b)
-
-    with monkeypatch.context() as swap:
-        swap.setattr(credit, "counted_windows", kept), board.step()
-    found = []
-    for index in indexes:
-        read, records, net, terms, squares, reads = begun[index]
-        moved, fixed = own_lines(board, index), int(shares_of(board, index, read, stepped[index]).sum())
-        for was, now in zip(records, stepped[index], strict=True):  # Rule3's remainder term per line
-            step = (now.now.astype(object) - was.before.astype(object)).ravel()  # next - before
-            carried = (now.remainder.astype(object) - was.remainder.astype(object)).ravel()  # r' - r
-            pairs = zip(step * carried, squares.ravel(), strict=True)
-            terms += sum(Fraction(-int(n), 2 * int(d) * unit * unit) for n, d in pairs)
-        for face in [f for f in board.credit.faces.get(board.interval, []) if f.family == index]:
-            here, fill = (
-                tuple(np.add(face.at, board.offset)),
-                board.families[index].rest * (face.line == 0),
-            )
-            arrivals = readings.ports(records[face.line].now, board.wrap, fill)  # the face term per Port
-            reach = [
-                int(np.asarray(reads[p])[here]) if np.ndim(reads[p]) else int(reads[p])
-                for p in face.ports
-            ]
-            step = int(stepped[index][face.line].now[here]) - int(records[face.line].before[here])
-            wall = 2 * int(squares[here]) * unit * unit
-            wiped = sum(
-                r * (face.value - int(arrivals[p][here])) for r, p in zip(reach, face.ports, strict=True)
-            )
-            terms += Fraction(step * wiped, wall)
-        floors = len(records) * records[0].now.size  # the division act's floor, under one unit per Node
-        start = int(shares_of(board, index, read, records).sum())
-        assert abs(Fraction(fixed - start - net) - terms) < floors, (index, fixed - start - net, terms)
-        delta = shares_of(board, index, read, moved) - shares_of(board, index, read, stepped[index])
-        laid = np.zeros(shape, dtype=bool)
-        for a, b in zip(stepped[index], moved, strict=True):  # the Nodes a lay wrote
-            laid |= (a.now != b.now) | (a.before != b.before) | (a.remainder != b.remainder)
-        ports = readings.ports(laid.astype(np.int64), board.wrap)
-        near = laid | np.logical_or.reduce([p != 0 for p in ports])
-        assert not delta[~near].any() and fixed + int(delta[near].sum()) == int(delta.sum()) + fixed
-        found.append((board.total_share(index)[0] - fixed - int(delta.sum()), abs(terms) + floors))  # type: ignore[operator]
-    return found
 
 
 # the builders the parts' tests share (tests/test_part_*.py; the shape of tests/: a helper imported by two files
@@ -250,12 +109,6 @@ CHARGE = [family.name for family in TURNING].index("charge")
 RULE_WALL = coefficients(*TURNING[CHARGE].pair, 6000, 6000, 6000, None, 16)[2]  # w = 6 den Gamma^2 G^2
 SINE = 4800  # isqrt(6000^2 - 3600^2): the charged pair's sin omega_0 times den (4472 for [4000, 6000] to 2026-10-24)
 COULOMB_CHAIN, COULOMB_AT, EMIT_RUN = 400, 280, 200
-GRAVITY = {
-    "name": "gravity",
-    "pair": [6000, 6000],
-    "reads": {"gravity": 1},
-    "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60},
-}
 COULOMB_UNIVERSE = {
     "integers": {
         "node_clock": 6000,
@@ -272,83 +125,13 @@ COULOMB_UNIVERSE = {
         },
         {"name": "charged", "pair": list(TURNING_PAIR), "reads": {"charge": 1}, "dimension": 2},
     ],
+}  # the energy line: E_h T num = 100 x 36,000 x 4,000 = k_w Gamma den = 400 x 6,000 x 6,000
+GRAVITY = {
+    "name": "gravity",
+    "pair": [6000, 6000],
+    "reads": {"gravity": 1},
+    "held": {"sources": ["form"], "level_weight": 1000, "write_weight": 1, "rest": 60},
 }
-
-
-def sign_world(tmp_path, name, shape, boundary, intervals, centre, profile):  # type: ignore[no-untyped-def]
-    """A world on turning.json's universe with one charged record by hand at the count 1 (the count-1 gate: the profile scaled to one quantum, 2 SUM L^2 sin omega_0 = T, as test_the_node lays it): the level now (L, 0) over `profile` and the level before the band's rest rotation in the sense +1, (L cos omega_0, L sin omega_0)."""
-    (tmp_path / "u.json").write_bytes(TURNING_FILE.read_bytes())
-    values = [int(v) for v in np.asarray(profile).ravel()]
-    scale = math.isqrt(
-        TURNING_T * TURNING_PAIR[1] * 1000 * 1000 // (2 * SINE * sum(v * v for v in values))
-    )  # one quantum
-    levels = [v * scale // 1000 for v in values]  # 2 SUM L^2 sin omega_0 = T, the law's one quantum
-    moving = dict(now=levels, before=[v * TURNING_PAIR[0] // TURNING_PAIR[1] for v in levels])
-    moving.update(im_now=[0] * len(levels), im_before=[v * SINE // TURNING_PAIR[1] for v in levels])
-    body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
-    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", node_detectors=[], bodies=[body])
-    (path := tmp_path / f"{name}.json").write_text(json.dumps(world), encoding="utf-8")
-    mode = {"family": "charged", "pair": list(TURNING_PAIR), "moving": moving}
-    beside = {"world_digest": input_digest(world), "bodies": [mode]}
-    path.with_suffix(".mode.json").write_text(json.dumps(beside), encoding="utf-8")
-    return path
-
-
-def imaged(a: np.ndarray, axes: tuple[int, ...], signs: tuple[int, ...]) -> np.ndarray:
-    return np.transpose(a, axes)[tuple(slice(None, None, s) for s in signs)]
-
-
-def coulomb_world(
-    tmp_path, shape=(COULOMB_CHAIN, 1, 1), boundary=None, intervals=3000, centre=(COULOMB_AT, 0, 0)
-):  # type: ignore[no-untyped-def]
-    """The Coulomb world: the sign holder alone with a plane record [3600, 6000] reading it (Pythagorean since 2026-10-24; [4000, 6000] to then) (no holder of the content: the vacuum's paces, as the hands' chain), the body a one-quantum profile at the centre (the count-1 gate), the chain x open, y and z periodic of size 1 (the hands' chain of 400)."""
-    (tmp_path / "u.json").write_text(json.dumps(COULOMB_UNIVERSE), encoding="utf-8")
-    profile = np.zeros(shape, dtype=np.int64)
-    profile[centre] = 1
-    values = [int(v) for v in profile.ravel()]
-    scale = math.isqrt(36000 * TURNING_PAIR[1] * 1000 * 1000 // (2 * SINE * sum(v * v for v in values)))
-    levels = [v * scale // 1000 for v in values]
-    moving = dict(now=levels, before=[v * TURNING_PAIR[0] // TURNING_PAIR[1] for v in levels])
-    moving.update(
-        im_now=[0] * len(levels), im_before=[0] * len(levels)
-    )  # W = 0: nothing sources the holder at the start (the massless fixed point on 400 Nodes is slow), the record laid by hand after
-    body = {"family": "charged", "nodes": [{"node": list(centre), "count": 1}]}
-    boundary = boundary or dict(x="open", y="periodic", z="periodic")
-    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", node_detectors=[], bodies=[body])
-    (path := tmp_path / "coulomb.json").write_text(json.dumps(world), encoding="utf-8")
-    mode = {"family": "charged", "pair": list(TURNING_PAIR), "moving": moving}
-    beside = {"world_digest": input_digest(world), "bodies": [mode]}
-    path.with_suffix(".mode.json").write_text(json.dumps(beside), encoding="utf-8")
-    return path
-
-
-def world_beside(tmp_path, source, edit):  # type: ignore[no-untyped-def]
-    """A shipped world copied under tmp_path at its repository paths with its universe and its mode file at the edited world's digest, the document in the read's shape first (`redeclared`) and `edit` applied after; the repository root moved there."""
-    world = redeclared(json.loads(source.read_text(encoding="utf-8")))
-    edit(world)
-    folder = tmp_path / source.parent.relative_to(EVENTS.parents[1])
-    folder.mkdir(parents=True, exist_ok=True)
-    (folder / source.name).write_text(json.dumps(world), encoding="utf-8")
-    target = tmp_path / world["universe"]
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_bytes((EVENTS.parents[1] / world["universe"]).read_bytes())
-    mode = json.loads(source.with_suffix(".mode.json").read_text(encoding="utf-8"))
-    mode["world_digest"] = input_digest(world)
-    (folder / source.with_suffix(".mode.json").name).write_text(json.dumps(mode), encoding="utf-8")
-    world_files.REPOSITORY_ROOT = tmp_path
-    return folder / source.name
-
-
-def levels_floor(board: Lattice, index: int, at: np.ndarray) -> int:
-    """The floor of a fold's roundings in T's unit (Part F, test 5's floor; the two hands' lines of 2026-10-09): one level unit per rounding at each Node of `at`, meeting the neighbour's level on two Links, 2 SUM over the family's lines and the Nodes of (|now| + |before|), plus one for the reading's own rounding half up."""
-    lines = own_lines(board, index)
-    levels = sum(
-        int(np.abs(r.now.astype(object))[at].sum()) + int(np.abs(r.before.astype(object))[at].sum())
-        for r in lines
-    )
-    return 2 * levels + 1
 
 
 ORACLE = load_file(
@@ -359,15 +142,15 @@ arrivals_rule3 = (
 )  # the first form of Rule3, written in the tool and in no file of src/
 
 
-def flux_world(tmp_path, shape, boundary, intervals=4, level_weight=1):  # type: ignore[no-untyped-def]
+def flux_world(tmp_path, shape, intervals=4, level_weight=1):  # type: ignore[no-untyped-def]
     """The rule's universe with the charged plane and gravity carrying the flux's odd lines, on a board."""
     universe_beside(tmp_path, charged=True)
     rows = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
     gravity = next(row for row in rows["families"] if row["name"] == "gravity")["held"]
     gravity["sources"], gravity["level_weight"] = ["form", "tensions", "flux"], level_weight
     (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
-    world = dict(shape=list(shape), boundary=boundary, face_depth=1, intervals=intervals)
-    world.update(universe="u.json", bodies=[], node_detectors=[])
+    world = dict(shape=list(shape), intervals=intervals)
+    world.update(universe="u.json")
     (path := tmp_path / "flux.json").write_text(json.dumps(world), encoding="utf-8")
     return path
 
@@ -396,42 +179,6 @@ def packet(board: Lattice, axis: int, wave: tuple[int, int], size: int, at: int)
         ),
     ]
     board.states[index].lines = lines
-
-
-def d4_bound(board: Lattice, index: int, nodes: Sequence[Node]) -> list[int]:
-    """D4's bound on a body's lattice momentum change at a re-lay, per axis, in T's unit (the click's plan, section D4; the chain folder's lay_bounds.py reads the same): one level's change per line and Node at most, so over the Links along the axis with an end at a body Node (a Link to the Node itself across a folded axis is no Link) and over the record's lines, |now_i| + |before_i| + |now_j| + |before_j| + 2; times num in the current's unit."""
-    lines = own_lines(board, index)
-    placed = [tuple(int(v) for v in np.add(node, board.offset)) for node in nodes]
-    found = []
-    for axis in range(3):
-        links = set()
-        for here in placed:
-            for step in (-1, 1):
-                there = list(here)
-                there[axis] += step
-                if board.wrap[axis]:
-                    there[axis] %= board.shape[axis]
-                elif not 0 <= there[axis] < board.shape[axis]:
-                    continue
-                if tuple(there) != here:
-                    links.add(frozenset((here, tuple(there))))
-        total = 0
-        for link in links:
-            for at in link:
-                total += sum(abs(int(r.now[at])) + abs(int(r.before[at])) for r in lines)
-            total += 2 * len(lines)
-        found.append(total)
-    return found
-
-
-def drift_bound(board: Lattice, index: int) -> int:
-    """The hands' bound on the integers' drift of P_x per step in T's unit, 2 SUM_i |now_(i+1) - now_(i-1)| over the chain's axis (Part F, test (a); D1, the floors in integers)."""
-    chain = board.shape[0]
-    found = 0
-    for r in own_lines(board, index):
-        now = r.now.reshape(-1).astype(object)
-        found += int(sum(abs(now[(i + 1) % chain] - now[(i - 1) % chain]) for i in range(chain)))
-    return 2 * found
 
 
 LINE_KEYS = ("now", "before", "remainder")  # a record's three arrays
@@ -477,42 +224,6 @@ def weighted_linear_sum(wall: int, line: Record, weights: Any) -> int:
     return int(((wall * (now - before) + line.remainder.astype(object)) * scaled).sum())
 
 
-def gate_worlds(build, folder, keys=None):  # type: ignore[no-untyped-def]
-    """A gate's folder built from its design beside tmp_path and its worlds run, every one LAWFUL with its parts lines equal across the parts, its credit lines at the window's close and the back-in-time gate MATCH over 4 intervals; `keys` the settings run (every world without): with them each world's own reading (`bell_gate.one_world`) by its setting, without them the folder's reading against the blind (`bell_gate.reading`: the combination, the correlations and the marginals the blind's); with the expectation."""
-    build.main(["--design", str(build.HERE / "design.json"), "--folder", str(folder)])
-    expected = json.loads((folder / "expectation.json").read_text(encoding="utf-8"))
-    worlds = {}
-    for key in keys or expected["runs"]:
-        name = expected["runs"][key]
-        redeclared_file(folder / f"{name}.json")  # the builder's world in the read's shape
-        TOOL.main(["--input", str(folder / f"{name}.json")])
-        assert RUN.run_input(str(folder / f"{name}.json"), str(folder))["verdict"] == "LAWFUL"
-        lines = json.loads((folder / f"{name}.output.json").read_text(encoding="utf-8"))["lines"]
-        parts = [line for line in lines if line["event"] == "parts"]
-        credits = [line for line in lines if line["event"] == "credit"]
-        first = min(c["interval"] for c in credits) if credits else None
-        equal = all(
-            len({*map(tuple, p["levels"])}) == 1 and p["label"] == "NODEDETECTOR"
-            for p in parts
-            if first is None or p["interval"] <= first
-        )  # equal across the parts to the sides' first close, as laws_spin.joint_shares takes the close (2026-10-23: the window derived, 30 on the Bell worlds, closes at 60 and 90 within the run of 100, the first side's write turning one part after 60; the declared window was the run, so every parts line stood before the write)
-        assert parts and equal and credits
-        assert all(c["interval"] == c["window"][1] for c in credits), [
-            (c["interval"], c["window"]) for c in credits
-        ]
-        board = Lattice(load_world(folder / f"{name}.json"))
-        assert BACK.verdict(board, 4)["verdict"] == "MATCH"  # exact before the click, the gate per step
-        worlds[key] = GATE.one_world(folder / f"{name}.json", lines, expected)
-    if keys:
-        return worlds, expected
-    outputs = [folder / f"{name}.output.json" for name in expected["runs"].values()]
-    read, name = GATE.reading(folder / "expectation.json", outputs), expected["combination"]["name"]
-    assert read[name] == expected["blind"][name]
-    assert read["correlation"] == expected["blind"]["correlation"]
-    assert read["marginals"] == expected["blind"]["marginals"]
-    return read, expected
-
-
 def board_state(board: Lattice) -> list[tuple[list[tuple[Any, Any, Any]], list[Any]]]:
     """Every family's lines (now, before, remainder) and write remainders copied as Python's integers, the state a run back is compared against bit for bit (the light mean's test)."""
     copied = lambda a: np.asarray(a, dtype=object).copy()  # noqa: E731
@@ -535,8 +246,3 @@ def same_state(
         and all(np.array_equal(u, v) for u, v in zip(ra, rb, strict=True))
         for (la, ra), (lb, rb) in zip(a, b, strict=True)
     )
-
-
-def state_of(board):  # type: ignore[no-untyped-def]
-    """Every line's three arrays and every write remainder of a board, copied, for a run back's comparison (the swap tests): `board_state` under the swap tests' name."""
-    return board_state(board)

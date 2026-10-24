@@ -628,7 +628,7 @@ const inCone = (i, k) => { const radius = CONE_RADIUS(k); return radius !== null
 const VIEW = LOOK.folded.indexOf(true) >= 0 ? LOOK.folded.indexOf(true) : 2, SIDE = VIEW === 2 ? 1 : -1;
 const ACROSS = [0, 1, 2].filter(a => a !== VIEW);
 const CENTRE = LOOK.shape.map((e, a) => (e - 1) / 2 - LOW[a] - ([X, Y, Z][a] - 1) / 2);
-let LAYER = LOOK.folded[VIEW] ? 0 : LOOK.bodies.length && LOOK.bodies[0].nodes.length ? LOOK.bodies[0].nodes[0][VIEW] : Math.floor(LOOK.shape[VIEW] / 2);
+let LAYER = LOOK.folded[VIEW] ? 0 : (LOOK.bodies || []).length && (LOOK.bodies || [])[0].nodes.length ? (LOOK.bodies || [])[0].nodes[0][VIEW] : Math.floor(LOOK.shape[VIEW] / 2);
 const FAMILIES = LOOK.families, QUANTA = FAMILIES.filter(f => f.quanta), HELD = FAMILIES.filter(f => !f.quanta);
 const AXES = ['x', 'y', 'z'], PARTS = ['x', 'y', 'z', 'xx', 'yy', 'zz', 'xy', 'xz', 'yz'];
 const colourOf = name => token('--' + ROLES[name].role);
@@ -735,7 +735,7 @@ if (OUTPUT) for (const line of OUTPUT.lines) {
   if (line.event === 'credit' && /^body \\d+$/.test(String(line.node_detector))) (RECORD_CREDITS[line.node_detector] || (RECORD_CREDITS[line.node_detector] = [])).push(line);
   if ((line.event === 'credit' || line.event === 'conversion') && !/^body \\d+$/.test(String(line.node_detector))) REGION_CREDITS.push(line);  // the conversion line beside a region's credit, a row of the table (2026-10-21)
 }
-const DETECTOR_BODIES = LOOK.bodies.filter(b => b.reader || b.detector || RECORD_CREDITS['body ' + b.number]).map(b => b.number);  // the records declared readers (the look's flag; the credits of an older look)
+const DETECTOR_BODIES = (LOOK.bodies || []).filter(b => b.reader || b.detector || RECORD_CREDITS['body ' + b.number]).map(b => b.number);  // the records declared readers (the look's flag; the credits of an older look)
 /* The clicks' light cones (the owner's word of 2026-10-22, "let them show in the experiment's run all the clicks with their cone and everything"): every credit line of the output file is a click, the one act at the window's close (reports.credit, the one click line kind of every reader: a region's credit, with the conversion's records out where a conversion line stands beside it, a record's absorption, its emission at a rate or by its own light, the null window's re-lay at the count 0), and the line names no Node, so the Nodes the click wrote are read from the LATTICE lines beside it in the output: the lay lines contiguous with the credit line at its interval that are no scaling write and are of the click's families (the credited record's, the one it absorbed from or emitted to, or the conversion's records out), the conversion line between them; and the hole, the face lines at the interval after of the family whose quantum the click took (the credited record's, or the absorbed one's), the erasure line of that family beginning there at the distance 1 naming it as its origin, else the Node faced at both of the two intervals after (the hole's faces stand two intervals, a front's shell passes a Node once); a click with no written Node in the output (a beam's quantum passing in the books alone) has no cone and says so; where two clicks of one family fall at one interval the page gives their lines to the first (the law's No click names a Node keeps the Node off the line, so the inference from the lines beside it is the source, with this limit named). The cone at the frame of interval t is the Nodes within t - t_c + 1 Links of the click's Nodes in the Link metric with the wrap, the run back's cone's own geometry with one support per click (linkDistanceTo; ALGEBRA.md, The interval's dependency radius is one Link: every act one Link's reach, so the cone grows one Link per interval and the pace of light on the board, 1 / sqrt 3 Links per interval, lies inside it), from the click's frame on; each click's cone in a tone of its own from the style block's list, the cones painted from the earliest click to the latest so that the latest lies on top at the full tint and each older one fades by --click-fade. Every number is the output's; nothing is drawn between Nodes or between frames. */
 const TONES = token('--click-tones').split(',').map(tone => tone.trim()).filter(Boolean);
 const nodeAt = line => line && line.node && Array.isArray(line.node.at) ? line.node.at.join(',') : null;
@@ -761,7 +761,7 @@ function holeBeside(credit) {  // the hole's Nodes: the erasure's origin of the 
   return found;
 }
 /* The light's front of a bound body (2026-10-22): the look's body row `shell`, the Nodes of the shell at r = 1 / k about the declared Node (the loader's own numbers, recorded; the page computes no radius), drawn as a ring of Nodes in the shell's tone, each ring scaled by the light booked at its Node at the frame shown (the frame's `own_light`, the window's running sum per shell Node as the books hold it after the interval, empty right after the close) against the largest booked over the run; the book's sum and the carry graphed in the records' panel. */
-const SHELLED = LOOK.bodies.filter(b => Array.isArray(b.shell) && b.shell.length);
+const SHELLED = (LOOK.bodies || []).filter(b => Array.isArray(b.shell) && b.shell.length);
 const SHELL_INDEX = new Map(); for (const b of SHELLED) b.shell.forEach((at, j) => SHELL_INDEX.set(at.join(','), [b.number, j]));
 const lightOf = (k, number) => { const own = LOOK.frames[k].own_light, row = own && own[String(number)]; return row && Array.isArray(row.light) ? row.light : []; };
 const streamOf = (k, number) => { const own = LOOK.frames[k].own_light, row = own && own[String(number)]; return row && Array.isArray(row.stream) && row.stream.length ? Number(row.stream[0]) : null; };  // the frame run's F at the last close, 0 before it
@@ -827,7 +827,7 @@ const emptyBox = () => [0, 1, 2].map(() => [Infinity, -Infinity]);
 const grow = (box, nodes) => { for (const n of nodes) for (let a = 0; a < 3; a++) { if (box[a][0] > n[a]) box[a][0] = n[a]; if (box[a][1] < n[a]) box[a][1] = n[a]; } return box; };
 const merge = (box, other) => { for (let a = 0; a < 3; a++) { box[a][0] = Math.min(box[a][0], other[a][0]); box[a][1] = Math.max(box[a][1], other[a][1]); } return box; };
 const REGION_NODES = LOOK.node_detectors.filter(d => d.body === null && d.name !== 'face' && d.nodes.length * 2 < LOOK.shape[0] * LOOK.shape[1] * LOOK.shape[2]).flatMap(d => d.nodes);
-const FIXED_BOX = grow(emptyBox(), [...LOOK.bodies.flatMap(b => b.nodes), ...REGION_NODES]);  // the bodies' and the regions' Nodes, lit or not
+const FIXED_BOX = grow(emptyBox(), [...(LOOK.bodies || []).flatMap(b => b.nodes), ...REGION_NODES]);  // the bodies' and the regions' Nodes, lit or not
 const LIT_AT = LOOK.frames.map(fr => grow(emptyBox(), litNodes(fr)));  // per frame, the box of the Nodes lit in it
 const LIT = LIT_AT.reduce(merge, merge(emptyBox(), FIXED_BOX));  // over the run
 const LIT_SEEN = LIT.every(([lo, hi]) => Number.isFinite(lo) && Number.isFinite(hi));
@@ -901,7 +901,7 @@ for (const f of HELD) {
     layers[f.name + ' tension bars'] = { on: false, objects: bars[f.name] };
   }
 }
-const bodyExtent = n => Math.max(1, ...LOOK.frames.map(fr => fr.bodies[n].length));
+const bodyExtent = n => Math.max(1, ...LOOK.frames.map(fr => (fr.bodies || [])[n] || [].length));
 const ringCapacity = LOOK.node_detectors.reduce((n, d) => n + (d.body === null ? d.nodes.length : bodyExtent(d.body)), 0) + DETECTOR_BODIES.reduce((n, b) => n + bodyExtent(b), 0);
 const ringGeometry = new THREE.TorusGeometry(size('--ring-radius'), size('--ring-tube'), 8, 32);  // the ring faces the eye: it lies across the axis seen along
 if (VIEW === 1) ringGeometry.rotateX(Math.PI / 2); else if (VIEW === 0) ringGeometry.rotateY(Math.PI / 2);
@@ -1042,7 +1042,7 @@ function draw() {
   const ringColour = new THREE.Color(token('--ring')), flashColour = new THREE.Color(token('--flash')), flashScale = size('--flash-scale');
   for (const d of LOOK.node_detectors) {
     if (d.name === 'face') continue;  // the open faces' layer reports, but is no declared region: not drawn
-    const nodes = d.body === null ? d.nodes : frame.bodies[d.body];
+    const nodes = d.body === null ? d.nodes : (frame.bodies || [])[d.body] || [];
     const flashing = frame.lines.some(line => line.event === 'click' && line.node_detector === d.name);
     for (const [x, y, z] of nodes) {
       rings.setMatrixAt(slot, inside(indexOf(x, y, z)) ? matrix.compose(position(indexOf(x, y, z)), quaternion, scale.setScalar(flashing ? flashScale : 1)) : hidden);
@@ -1051,7 +1051,7 @@ function draw() {
   }
   for (const n of DETECTOR_BODIES) {
     const flashing = (RECORD_CREDITS['body ' + n] || []).some(line => line.interval === INTERVAL(t) && positionOfLine(line) === t && line.count);
-    for (const [x, y, z] of frame.bodies[n]) {
+    for (const [x, y, z] of (frame.bodies || [])[n] || []) {
       rings.setMatrixAt(slot, inside(indexOf(x, y, z)) ? matrix.compose(position(indexOf(x, y, z)), quaternion, scale.setScalar(flashing ? flashScale : 1)) : hidden);
       rings.setColorAt(slot, flashing ? flashColour : ringColour); slot++;
     }
@@ -1259,7 +1259,7 @@ function addSpectrum(line, levels, formSeries) {
 const picker = byId('node-picker');
 picker.innerHTML = 'Node ' + AXES.map((axis, a) => `<label>${axis} <input type="number" id="node-${axis}" min="${LOW[a]}" max="${HIGH[a] - 1}" value="0"></label>`).join(' ') + ' <span>(click a cube to pick it)</span>';
 AXES.forEach(axis => byId('node-' + axis).addEventListener('change', () => { named = AXES.map((a, k) => Math.max(LOW[k], Math.min(HIGH[k] - 1, Number(byId('node-' + a).value) || 0))); drawGraphs(); }));
-if (LOOK.bodies.length && LOOK.bodies[0].nodes.length) { named = LOOK.bodies[0].nodes[0].slice(); AXES.forEach((axis, a) => { byId('node-' + axis).value = named[a]; }); }
+if ((LOOK.bodies || []).length && (LOOK.bodies || [])[0].nodes.length) { named = (LOOK.bodies || [])[0].nodes[0].slice(); AXES.forEach((axis, a) => { byId('node-' + axis).value = named[a]; }); }
 
 /* The measurement: with an expectation across an axis, one bar per reporter ordered along it, the rounded shares of what the reporters saw within the window, the expectation (the file's numbers embedded, the sums the page's), the dashed blind curve behind them, the pattern's range, the totals and the watch lines; otherwise the node_detectors' reports as bars, one each, what each saw over W_c up to the frame shown, the dashed blind curve behind them. */
 const measurePicker = byId('measure-picker'), select = document.createElement('select'); select.id = 'measure-family';
@@ -1349,7 +1349,7 @@ function numbers() {
   html += '<div class="scroll"><table><thead><tr><th>family</th><th>pair</th><th>holds</th><th>level weight</th><th>parts</th><th>reads</th><th>W_c</th><th>role</th></tr></thead><tbody>'
     + FAMILIES.map(f => `<tr><td>${esc(f.name)}</td><td class="num">[${f.pair.join(', ')}]</td><td>${f.held ? (f.sign ? 'the sign' : 'the content') : 'nothing'}</td><td class="num">${f.level_weight === null ? '' : f.level_weight}</td><td class="num">${f.parts.join(' + ')}</td><td>${f.reads.join(', ')}</td><td class="num">${f.wall === null ? '' : format(f.wall)}</td><td><i class="swatch${ROLES[f.name].dashed ? ' dashed' : ''}" style="border-color:${colourOf(f.name)}"></i> ${ROLES[f.name].role}</td></tr>`).join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>body</th><th>family</th><th>Nodes</th><th>declared count</th>' + (SHELLED.length ? "<th>the light's front</th>" : '') + '</tr></thead><tbody>'
-    + LOOK.bodies.map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td>` + (SHELLED.length ? `<td class="num">${Array.isArray(b.shell) && b.shell.length ? nodesWord(b.shell.length) + ' at r = ' + format(b.radius) + ' Links' : ''}</td>` : '') + '</tr>').join('') + '</tbody></table></div>';
+    + (LOOK.bodies || []).map(b => `<tr><td class="num">${b.number}</td><td>${esc(b.family)}</td><td class="num">${b.nodes.length}</td><td class="num">${format(b.declared)}</td>` + (SHELLED.length ? `<td class="num">${Array.isArray(b.shell) && b.shell.length ? nodesWord(b.shell.length) + ' at r = ' + format(b.radius) + ' Links' : ''}</td>` : '') + '</tr>').join('') + '</tbody></table></div>';
   html += '<div class="scroll"><table><thead><tr><th>node_detector</th><th>Nodes</th><th>reads</th></tr></thead><tbody>'
     + LOOK.node_detectors.map(d => `<tr><td>${esc(d.name)}</td><td class="num">${d.body === null ? d.nodes.length : 'the body\\'s'}</td><td>${d.body === null ? 'its Nodes' : 'body ' + d.body}</td></tr>`).join('') + '</tbody></table></div>';
   byId('numbers').innerHTML = html;
@@ -1448,7 +1448,7 @@ function drawRecords() {
   };
   const row = (line, record) => [line.interval, ...(PASSES > 1 ? [passLabel(positionOfLine(line))] : []), record, line.family, line.window ? line.window.join(' to ') : '', line.proper, line.before, line.realised, line.count, line.left, line.taken, line.given, ...WORDS.map(word => Array.isArray(line[word]) ? line[word].join(' ') : line[word]), ...(SHELLED.length ? [bookOf(line)] : []), line.label];
   for (const n of DETECTOR_BODIES) {
-    const lines = (RECORD_CREDITS['body ' + n] || []).slice().sort(byPosition), body = LOOK.bodies[n];
+    const lines = (RECORD_CREDITS['body ' + n] || []).slice().sort(byPosition), body = (LOOK.bodies || [])[n];
     const parts = []; for (const line of lines) for (const part of [line.before, line.realised]) if (part !== null && part !== undefined && !parts.includes(part)) parts.push(part);
     let part = lines.length ? lines[0].before : null, next = 0;
     const values = new Float64Array(T + 1), labels = [];
@@ -1633,7 +1633,7 @@ function drawAbove() {
   }
   const letter = Math.max(2, Math.min(s[U], s[V]) / 16);
   SIDES.forEach((label, k) => {
-    const region = regionOf(label), nodes = region.body === null ? region.nodes : frame.bodies[region.body], flashing = clickedAt(frame, region.name);
+    const region = regionOf(label), nodes = region.body === null ? region.nodes : (frame.bodies || [])[region.body] || [], flashing = clickedAt(frame, region.name);
     const stroke = flashing ? token('--flash') : sideColour(k);
     for (const n of nodes) body += `<rect x="${px(n[U]) + 0.1}" y="${py(n[V]) + 0.1}" width="0.8" height="0.8" fill="none" stroke="${stroke}" stroke-width="${flashing ? 0.3 : 0.15}"/>`;
     if (nodes.length) {

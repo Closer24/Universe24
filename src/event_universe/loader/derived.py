@@ -35,7 +35,6 @@ class Row:
     declared: tuple[tuple[str, int], ...]
     records: int = 1  # a charged family's laid records, each owning one row of the sign; a holder of the sign's rows, 1 + the world's charged records; 1 otherwise (ALGEBRA.md, No record reads its own write of the sign)
     flux: bool = False  # a holder of the content sourced by the count's flux too: three odd lines after its tension lines, V_a at the Node, the Link's V_ij = V_a(i) + V_a(j) read with the direction's sign (ALGEBRA.md, The clock family on the Ports)
-    exchange: int = 0  # the record's sign under the exchange of two of its parts, the files' key `exchange` on a family of several parts (antisymmetric -1, symmetric 1, 0 where none is declared): the family's declaration, read by the first side's coefficients (`meeting_back.coefficients_of`, `credit.terms_of`) and the lists' factor (`lists.exchange_factor`) and by nothing at the Node (ALGEBRA.md, Spin, closed for the paper as a route, The family's sign under exchange, 2026-10-19)
     motion_volume: bool = False  # the row carries its time line as the volume's level X = Gamma (Gamma / p_0)^(d + 1) (features/volume; the momentum hand's derivation M12a read cold by the reader, 2026-10-22): set by the loader from the volume form (every board's interval unobservable) alone on the held row of the content sourced by the tensions, massless or gapped (`axes`), that is not the sign's holder (loader/interval.volume_rows; the clause of 2026-10-23), no key of the row; Rule3's own line steps X with the one write (d + 1) X c over Gamma E_s T and no hill, the level a reading of the record (the paces, the readings)
     write_wall: int = 1  # the sign holder's wall multiplier Gamma under the charge's universality (2026-10-24; Gamma den under the law of one Node of 2026-10-23, kept by name): alpha carried inside the one write, the numerator times E_h T (`write_weight` set by the loader, `alpha_of`) and every wall of the row times Gamma and the charge multiple (`held_write_of`), the remainder keeping the fraction; 1 on every holder of the content, whose write weight is the file's
     fill: int = 0  # the time line's value beyond a face and on a grown layer, the Link to the fill (core/ports.arrival): the row's rest, or under the volume form the rest's volume X(rest), the rest beyond the face fixing the clock's unit (ALGEBRA.md, The board's interval is no observable; loader/interval.volume_rows, features/volume.fill_of); 0 for a row with no rest
@@ -54,12 +53,6 @@ class FamilyRule(Row):
     """A family as the rule resolves it from its row (`Row`) with its reads by position: the held rows whose time line it reads at the weights its declaration names, which by the held write's reciprocity it sources at the same weights; its rest the vacuum content of the massless row holding the content, the level at which the row rests everywhere, 0 for every other row (ALGEBRA.md #what-is-open, item 22)."""
 
     reads: tuple[Read, ...] = ()
-    converts: tuple[
-        tuple[int, int], ...
-    ] = ()  # the conversion's one list, (family, sense) per record out, derived at load from the pairs under the law's conservations with no key, () for a family with no list, which never converts (conversion.py)
-    senses: tuple[
-        tuple[int, int], ...
-    ] = ()  # the row's key `senses` resolved, the sense 1 or -1 per plane family out by index: the one residual declaration of The conversion, a real-line parent's (conversion.py)
 
     @property
     def held(self) -> bool:

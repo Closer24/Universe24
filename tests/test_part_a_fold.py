@@ -5,9 +5,9 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import node, records, world_files
+from event_universe import node, world_files
 from event_universe.core import paces
-from event_universe.features import phase, volume
+from event_universe.features import phase
 from event_universe.lattice import Lattice
 from event_universe.plane import link_pairs, odd_links
 from event_universe.world_files import load_world
@@ -18,7 +18,7 @@ from tests.laws import LINE_KEYS as KEYS
 def test_the_odd_line_is_odd(tmp_path, monkeypatch):
     """(b) On a periodic cube of 7^3 with a packet moving along +x: after eight intervals the x odd line is written and nonzero, V_ji = -V_ij on every Link (the +a Port's read at i equals minus the -a Port's read at i + a) and X^s_ji = -X^s_ij exactly, the Link quantity read the same size from both ends with the opposite sign; the vector test: the same packet laid along +y gives the same state transposed bit for bit, every line of every family, the odd lines as a vector (the three axes alike, the step knowing no axis and no name)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = flux_world(tmp_path, (7, 7, 7), dict(x="periodic", y="periodic", z="periodic"))
+    world = flux_world(tmp_path, (7, 7, 7))
     boards = []
     for axis in (0, 1):
         board = Lattice(load_world(world))
@@ -61,7 +61,7 @@ def test_the_odd_line_is_odd(tmp_path, monkeypatch):
 def test_the_back_step_is_exact_with_the_fold(tmp_path, monkeypatch):
     """(c) A chain of 25 with a flux holder and a moving packet: 30 intervals forward and 30 back by `step_inverse`, every line's two levels and remainder and every write remainder bit for bit, the fold's pair recomputed from the held rows' levels at each interval's start."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = flux_world(tmp_path, (25, 1, 1), dict(x="periodic", y="periodic", z="periodic"))
+    world = flux_world(tmp_path, (25, 1, 1))
     board = Lattice(load_world(world))
     packet(board, 0, (1, 4), 7, 3)
     board.amplitude = node.seed_phases(
@@ -75,44 +75,6 @@ def test_the_back_step_is_exact_with_the_fold(tmp_path, monkeypatch):
     for _ in range(30):
         board.step_inverse()
     assert all(np.array_equal(a, b) for a, b in zip(begun, arrays(board), strict=True))
-
-
-def test_the_one_link_reach_with_the_fold(tmp_path, monkeypatch):
-    """(d) The dependency radius under the fold: on a chain of 9 with a flux holder and every line at random levels (the odd lines among them), a difference two Links from the centre leaves the centre's NodeState bit for bit after one interval and a difference one Link away reaches it."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = flux_world(tmp_path, (9, 1, 1), dict(x="open", y="periodic", z="periodic"))
-
-    def state(far: int) -> Lattice:
-        board, draw = Lattice(load_world(world)), np.random.default_rng(3)
-        for index, (family, kept) in enumerate(zip(board.families, board.states, strict=True)):
-            low = 0 if family.held and not family.wronskian else -60
-            picks = [draw.integers(low, 60, (3, *board.shape)) for _ in kept.lines]
-            kept.lines = [records.Record(now, before, np.abs(r)) for now, before, r in picks]
-            if family.axes:  # the tension lines at 0, the odd lines at their random levels
-                kept.lines[1:4] = [records.empty_record(board.shape, board.kind) for _ in range(3)]
-            if family.motion_volume:  # the row carries its volume: the random levels through the volume
-                time = kept.lines[0]
-                gamma = board.world.node_clock
-                volumes = (volume.volume_of(gamma, a) for a in (time.now, time.before))
-                kept.lines[0] = records.Record(*volumes, time.remainder)
-            kept.write_remainders = [  # within 60, below every wall; Python's integers at the fixed walls
-                draw.integers(0, 60, board.shape).astype(
-                    object if index in board.fixed_walls else board.kind
-                )
-                for _wall in board.walls(index)
-            ]
-            for array in [*(getattr(r, k) for r in kept.lines for k in KEYS), *kept.write_remainders]:
-                array[4 + far, 0, 0] += 7 * bool(far)
-        return board
-
-    def centre(board: Lattice) -> list[int]:
-        return [int(a[4, 0, 0]) for a in arrays(board)]
-
-    (same := state(0)).step()
-    assert any(np.asarray(v).any() for v in odd_links(4, same.families, same.states, 1, same.wrap))
-    for far, reaches in ((1, True), (2, False)):
-        (other := state(far)).step()
-        assert (centre(other) != centre(same)) is reaches, far
 
 
 def test_the_rotation_unit_by_the_rotation_act():

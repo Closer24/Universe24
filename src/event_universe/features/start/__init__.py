@@ -10,7 +10,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.ports import PORTS, SIDES, Wrap, arrival
+from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import Reads, coefficients, division_forward
 
 Pair = tuple[int, int]
@@ -84,16 +84,7 @@ def unit_of(
     """The fine unit of a row's rest: under the tent where the tent leaves a unit (`tent_of`, the way of every shipped world), else, on a board open on every axis of more than one Node (no wrap and no fold there, `wrap` the board's), under the source's own bound (`source_bound`, the room the tent over-bounds by 2 (L + 1), which held the Node clock of the atom's world at a fiftieth of its reach), and on a board periodic on every axis of more than one Node whose uniform mode is free (`free`, the world's the volume form (ALGEBRA.md, The board's interval is no observable) or the level form's uniform line), under twice the source's bound: the zero-mean rest of a compact source stands within 3 G(0) of the source over the wall on either side of its mean, the torus's Green's function the open board's less its mean; a periodic axis with an open or a closed one folds the images of the source onto it and the rest is a slab's, a chain's or the gap's uniform mode, above the bound by 3 to 19 times on the tubes the mathematician solved, so the tent stays there; refused by name where every bound leaves none."""
     unit = unit_from_bound(tent_of(counts, divisor), pair, width, gamma)
     long = [axis for axis in range(len(counts.shape)) if counts.shape[axis] > 1]
-    open_board = wrap is not None and len(long) == 3 and not any(wrap[axis] for axis in long)
-    free_board = (
-        free
-        and wrap is not None
-        and len(long) == 3
-        and wrap.beyond is None
-        and all(wrap[axis] for axis in long)
-    )
-    if not unit and open_board:
-        unit = unit_from_bound(source_bound(counts, divisor), pair, width, gamma)
+    free_board = free and wrap is not None and len(long) == 3
     if not unit and free_board:
         unit = unit_from_bound(2 * source_bound(counts, divisor), pair, width, gamma)
     if unit < 1:
@@ -178,22 +169,13 @@ def bound_of(fine: np.ndarray, wrap: Wrap, reads: Reads, divisor: Any, free: boo
     if free:
         longest = int(max(fine.shape))
         return 3 * longest * longest + 1
-    open_axes = [n for axis, n in enumerate(fine.shape) if n > 1 and not wrap[axis]]
-    longest = max(open_axes if open_axes or wrap.beyond is None else fine.shape, default=0) + 1
-    half = int(division(1, 2, longest + 1))  # (n + 2) div 2, at or above (n + 1) / 2
-    peak = int(
-        division(PORTS, SIDES, half * half)
-    )  # the parabola's top: the six reads over the axis's two
-    bounds = [peak + 1] if longest > 1 else []
     gap = divisor - 2 * sum(reads)  # W - 6 R at every Node, 6 (den - num) p_0^2
     if bool((gap > 0).all()):
-        bounds.append(int(division(divisor, gap, 1).max()) + 1)
-    if not bounds:
-        raise ValueError(
-            "the rest's miss has no bound: a massless row on a board that wraps on every axis of more than one "
-            "Node is sunk by an inner face alone (ALGEBRA.md, The start)"
-        )
-    return min(bounds)
+        return int(division(divisor, gap, 1).max()) + 1
+    raise ValueError(
+        "the rest's miss has no bound: a massless row on the torus has no sink, and its uniform mode is free "
+        "on Rule3's own line at k = 0 (ALGEBRA.md, The start)"
+    )
 
 
 Correction = tuple[np.ndarray, int]  # a refinement's correction and the scale F it stands at
@@ -313,11 +295,7 @@ def rest(
         raise ValueError(
             f"the start's divisor, the row's level weight or its write's wall, is from 1, got {divisor}"
         )
-    long = [axis for axis in range(len(counts.shape)) if counts.shape[axis] > 1]
-    closed = all(wrap[axis] for axis in long) and wrap.beyond is None
-    double_root = (
-        num == den and closed and bool(counts.any())
-    )  # the double root with no sink: the free mode
+    double_root = num == den and bool(counts.any())  # the double root with no sink: the free mode
     unit = unit_of(counts, pair, divisor, width, gamma, wrap, double_root)
     largest = min(width, MAX_WORK_INT)
     source = division(3 * den * unit, divisor, counts) * gamma * gamma

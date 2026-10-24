@@ -2,25 +2,21 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any, NamedTuple
 
 import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import flux, node, reports
-from event_universe.bookings import Bookings, record_lines, sources_of
+from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
-from event_universe.core.ports import PORTS, arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.features import volume
 from event_universe.frames import frames_of
-from event_universe.loader.derived import count_wall, quanta_records, row_sources, weight_of
+from event_universe.loader.derived import row_sources, weight_of
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
-    from event_universe.node_detector import Weighed
 
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
 Stresses = dict[
@@ -38,128 +34,14 @@ class UniformMode(NamedTuple):
     nodes: int
 
 
-def currents(board: Lattice, weighed: Weighed | None = None) -> Currents:
-    """Every family of quanta's current through each Port at every Node, read from its record (`readings.currents_of`) before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); light's the current of its rows' sum; a turned record's the flux line's own with the Link pairs its step reads, per record and the records added (`turned_currents`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), every plain record's the plain bilinear bit for bit; the click line's number and every diagnostic's, the credit booking the weighted current (`node_detector.weighed_currents`); `weighed`, the bookings' read of the same interval where the step holds it, whose per-record currents of a turned family are the same integers and are added instead of read again."""
-    return {
-        index: turned_currents(board, index, weighed)
-        if index in board.turning
-        else readings.currents_of(
-            board.families[index].pair[0],
-            board.record(index),
-            board.wrap,
-            horizon=horizon_ports(board, index),
-        )
-        for index in board.order
-    }
-
-
-def cut(board: Lattice, index: int) -> node.Factors | None:
-    """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them (ALGEBRA.md, The NodeDetector is one declaration kind for every world: its outer Links cut and its inner Links open): the boundary Links of every region over which a record of the family is laid in its parts, the Links with one end in the region and one outside, read 0 from both ends; the Links between two Nodes of one region stay at G^2, so that the record's uniform mode rotates at cos omega_0 = num / den whatever the region's size; a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21) cuts nothing, its record standing in its well over the board and the step untouched; None where the family has no such record. A reading of the world's declarations and no act, read by the meeting (`meeting.cut`), the shear and the horizon's mask alike (moved from meeting.py 2026-10-23: the board's readings import no act, so that `node_detector` imports them first without a cycle)."""
-    regions = [
-        board.mask(row.nodes)
-        for row in board.world.bodies
-        if row.family == index and row.detector is not None and not row.region
-    ]
-    if not regions:
-        return None
-    found = []
-    for axis in range(3):
-        for side in (1, -1):
-            mask = np.zeros(board.shape, dtype=bool)
-            for at in regions:
-                mask |= at ^ arrival(at, axis, side, board.wrap, False)
-            found.append(mask)
-    return tuple(found)
-
-
 def horizon_ports(board: Lattice, index: int) -> tuple[Any, ...] | None:
-    """Per Port the mask of a family's Links at the wall, the horizon (ALGEBRA.md, The horizon, 2026-10-23): the Links whose factor the read gives at 0 (features/read.link_tensions, the tension at or past Gamma read at the wall) and which the world does not cut (`meeting.cut`, the declared cut Links keep their readings as written); None where no Link stands at the wall."""
+    """Per Port the mask of a family's Links at the wall, the horizon (ALGEBRA.md, The horizon, 2026-10-23): the Links whose factor the read gives at 0 (features/read.link_tensions, the tension at or past Gamma read at the wall); None where no Link stands at the wall."""
     factors = board.read(index)[1]
-    cuts = cut(board, index)
     found = []
-    for port, factor in enumerate(factors):
+    for factor in factors:
         at = np.asarray(np.asarray(factor) == 0)
-        if cuts is not None:
-            at = at & ~np.asarray(cuts[port], dtype=bool)
         found.append(at)
     return tuple(found) if any(bool(np.any(at)) for at in found) else None
-
-
-def turned_read(
-    board: Lattice,
-    index: int,
-    record: int,
-    direction: int = 1,
-    read: tuple[Any, node.Factors] | None = None,
-) -> readings.Turned:
-    """What the books read of one turned record beside its lines (`readings.Turned`): the Link pairs its step reads in `direction` (`flux.pairs_of` at its own read, the same integers the step takes, read after the interval's phase act as the step reads them), the pace squared they carry, the six Links' factors of the read (`read`, the record's content and factors where the caller holds them, `Lattice.read` otherwise), the family's quantum W_rec (loader/derived.count_wall), the quantum's measure of a current W_c = 3 den T and the frame signs of its six Ports (`flux.frames_of`, the Link's two ends read in one frame)."""
-    gamma, action, family = board.world.node_clock, board.world.quantum_action, board.families[index]
-    content, factors = board.read(index, direction, record) if read is None else read
-    pairs = flux.pairs_of(
-        index,
-        board.families,
-        board.states,
-        direction,
-        board.wrap,
-        gamma,
-        content,
-        factors,
-        record,
-        board.amplitude,
-    )
-    assert pairs is not None  # a turned record reads its holder's pairs
-    pace = paces.link_pace_of(gamma, content)
-    frames = frames_of(index, board.families, board.states, board.wrap, record)
-    return readings.Turned(
-        pairs, pace * pace, factors, count_wall(family, action), 3 * family.pair[1] * action, frames
-    )
-
-
-def turned_currents(
-    board: Lattice, index: int, weighed: Weighed | None = None
-) -> tuple[np.ndarray, ...]:
-    """A turned family's currents through each Port at every Node, every record's read with the Link pairs its own step reads (`turned_read`, `readings.currents_of`), the records added; where the bookings' read of the interval is given (`weighed`, node_detector.weighed_currents, the same call per record), its records' currents added and the lines not read twice."""
-    found: list[Any] = [0] * PORTS
-    if weighed is not None and index in weighed:
-        for through, _factors, _shares in weighed[index]:
-            found = [a + b for a, b in zip(found, through, strict=True)]
-        return tuple(np.asarray(value) for value in found)
-    for record in quanta_records(board.families, index):
-        through = readings.currents_of(
-            board.families[index].pair[0],
-            board.lines_of(index, record),
-            board.wrap,
-            turned_read(board, index, record),
-        )
-        found = [a + b for a, b in zip(found, through, strict=True)]
-    return tuple(np.asarray(value) for value in found)
-
-
-def gauged(
-    board: Lattice, currents: Currents, weighed: Weighed, begun: Sequence[Sequence[records.Record]]
-) -> tuple[Currents, Weighed]:
-    """The frame's currents from the plain ones, after Rule3 wrote the interval (ALGEBRA.md, The booking is the frame's, the owner's word of 2026-10-23): for every plain record of quanta (a holder of the sign's light, the sum of its rows, among them; a turned record's flux current stands as read) its six plain currents at the pair the step started from less the step's change of the Link's level term (`readings.gauge_terms`, from the lines the step started from, `begun`, to the lines it wrote), per record for the books (`weighed`, node_detector.weighed_currents, the same tuples with the frame's currents) and summed over the family's records for the click line (`currents`, the horizon's Links reading 0 as before); the one place the frame's current is formed, a reading and no act, the inverse untouched."""
-    found: Weighed = dict(weighed)
-    for index in board.order:
-        family = board.families[index]
-        if index in board.turning or index not in weighed:
-            continue
-        total: list[Any] = [0] * PORTS
-        reads = []
-        for record, (through, factors, shares) in zip(
-            quanta_records(board.families, index), weighed[index], strict=True
-        ):
-            was = record_lines(board.families, index, record, begun[index])
-            change = readings.gauge_terms(family.pair[0], was, board.lines_of(index, record), board.wrap)
-            framed = tuple(np.asarray(t) - c for t, c in zip(through, change, strict=True))
-            reads.append((framed, factors, shares))
-            total = [t + c for t, c in zip(total, change, strict=True)]
-        found[index] = reads
-        horizon = horizon_ports(board, index)
-        if horizon is not None:
-            total = [np.where(at, 0, value) for at, value in zip(horizon, total, strict=True)]
-        currents[index] = tuple(np.asarray(c) - t for c, t in zip(currents[index], total, strict=True))
-    return currents, found
 
 
 def stresses(board: Lattice) -> Stresses:
@@ -202,30 +84,6 @@ def uniform_mode(board: Lattice, index: int) -> UniformMode:
         level, remainder = division_forward(total, nodes, 0)
         found += [int(level), int(remainder)]
     return UniformMode(found[0], found[1], found[2], found[3], nodes)
-
-
-def densities_read(board: Lattice, forms: Bookings, at: np.ndarray) -> None:
-    """A lattice reading, no measurement, labelled so (`reports.density`; `Lattice.step` reads it after the held writes and the fifth act, the state at the interval's end, where `Lattice.report` read it before the writes and the act until 2026-10-23: the floor's turn discards an output below the floor, which no reading reads): per family and declared region, the family's density over the region this interval (its share read at the declared regions' Nodes alone, `at`, the union of the declared NodeDetectors' Nodes), one `field` line where it differs from the last interval's (`Lattice.densities`, the last readings): for a family of quanta its share in quanta summed over the region (the packet's passage), None over a region holding a frozen Node, every Link pace 0 (its share is not read and no number is invented; ALGEBRA.md #the-count-is-the-records-share, the frozen Node), with the frozen Nodes' wells D div T of the interval summed beside as their content reading (`records.well`); for a holder of the content the square of its time line's deviation from the row's rest summed over the region (a row with no count, its travelling events' passage; the advisor's reading of a kick's arrival); a reading over the declared regions and no act."""
-    for index, (family, state) in enumerate(zip(board.families, board.states, strict=True)):
-        frozen, well = np.zeros(board.shape, dtype=bool), None
-        if family.quanta:
-            found, frozen = board.quanta(index, at)
-            form = sum(forms[(index, record)] for record in quanta_records(board.families, index))
-            well = records.well(form, board.world.quantum_action)
-        else:
-            deviation = state.lines[0].now - family.fill  # the volume's deviation from the rest's volume
-            found = deviation * deviation
-        for detector in board.node_detectors:
-            if not detector.declared or detector.nodes is None:
-                continue
-            name, cold = detector.name, detector.nodes & frozen
-            reading = None if cold.any() else int(found[detector.nodes].sum(dtype=object))
-            content = int(well[cold].sum(dtype=object)) if well is not None and cold.any() else None
-            if board.densities.get((index, name)) == (reading, content):
-                continue
-            board.densities[(index, name)] = (reading, content)
-            if board.output is not None:
-                board.output(reports.density(board.interval, family.name, name, reading, content))
 
 
 class Eras(NamedTuple):
@@ -285,11 +143,6 @@ def eras(
         int(np.asarray(lines[1 + a].before, dtype=object).sum()) if family.axes else 0 for a in range(3)
     )
     seed = (0, 0, 0)
-    if board.world.wholes:
-        at = tuple(a + o for a, o in zip(board.world.wholes[0].at, board.offset, strict=True))
-        levels = np.asarray(row_level(board, index, lines[0].now), dtype=object)
-        level = int(levels[at])
-        seed = (level, int(levels.sum()) - level, read.nodes - 1)
     return Eras(
         read.level,
         read.level_remainder,

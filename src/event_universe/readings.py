@@ -3,33 +3,17 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Sequence
-from typing import Any, NamedTuple
+from typing import Any
 
 import numpy as np
 
-from event_universe.core.paces import within_width
-from event_universe.core.ports import AXES, PORTS, Wrap, arrival
-from event_universe.core.rule3 import division_forward
+from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.features import currents
-from event_universe.features.phase import signed_rounded
 from event_universe.records import Record
 
 Part = Callable[
     [int, tuple[currents.Neighbours, currents.Neighbours, currents.Neighbours]], currents.Vector
 ]  # a reading of one level's neighbours per axis or axis pair, the tension's or the shear's
-
-
-class Turned(NamedTuple):
-    """What the books read of a turned record beside its lines (`currents_of`, `turned_currents_of`; board_readings.turned_read): the pair its step reads on each of its six Links, (R^c_ij, R^s_ij) = p_i^2 (X^c_ij, X^s_ij) in Port order (`pairs`, flux.pairs_of, plane.link_pairs), the pace squared p_i^2 of its read (`square`, divided out exactly as covector.link_fluxes divides it), the factor Q_ij of each Link in the unit G^2 (`factors`, the read's), the family's quantum W_rec (`unit`, loader/derived.count_wall) and the quantum's measure of a current W_c = 3 den T (`wall`), the two the rest conversion sin omega_0 = W_rec / W_c between the Wronskian's unit and the share's, and the frame signs of its six Ports (`frames`, flux.frames_of: -1 across a Link whose two ends stand in different frames under the swap at the top, the neighbour's plane read conjugated, `framed`, so that every reading of the record across a Link takes its two ends in one frame as its step does)."""
-
-    pairs: tuple[tuple[Any, ...], tuple[Any, ...]]
-    square: Any
-    factors: tuple[Any, ...]
-    unit: int
-    wall: int
-    frames: tuple[Any, ...] | None = (
-        None  # per Port the sign the neighbour's im part is read with (plane.frame_signs)
-    )
 
 
 def framed(arrived: tuple[np.ndarray, ...], frames: Sequence[Any] | None) -> tuple[np.ndarray, ...]:
@@ -55,14 +39,9 @@ def slices(
     return tuple(lo), tuple(hi), tuple(first), tuple(last)
 
 
-def seen(level: Any, bad: Any, fill: Any) -> Any:
-    """A level as the Link's other end reads it: the fill where the Link touches a Node beyond the board (`bad`, the inner face's rule of core/ports.arrival), the level itself elsewhere."""
-    return level if bad is None else np.where(bad, fill, level)
-
-
-def ports(a: np.ndarray, wrap: Wrap, fill: int = 0) -> tuple[np.ndarray, ...]:
-    """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port, `fill` beyond a face that does not wrap (0, or the row's rest for the massless row holding the content: the vacuum beyond the face is the same vacuum, ALGEBRA.md #what-is-open, item 22), the Node itself on a folded axis."""
-    return tuple(arrival(a, axis, side, wrap, fill) for axis in range(3) for side in (1, -1))
+def ports(a: np.ndarray, wrap: Wrap) -> tuple[np.ndarray, ...]:
+    """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port of the torus, the Node itself on a folded axis."""
+    return tuple(arrival(a, axis, side, wrap) for axis in range(3) for side in (1, -1))
 
 
 def sense_current_of(
@@ -86,13 +65,10 @@ def currents_of(
     weight: int,
     lines: Sequence[Record],
     wrap: Wrap,
-    turned: Turned | None = None,
     frames: Sequence[Any] | None = None,
     horizon: Sequence[Any] | None = None,
 ) -> tuple[np.ndarray, ...]:
     """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a node_detector reads at its boundary; `weights`, one integer per line multiplying that line's currents (None: every line at 1), the covector's form of a holder under the Lorentz form, (-3, 1, 1, 1) over its time line and its three odd lines in thirds of the time line's unit (covector.weights); `turned`, the pairs a turned record's step reads with the unit of its booking (`Turned`, None for a plain record, whose currents are bit for bit the plain bilinear's): the record's currents are then the flux line's own with the Link's pair (`turned_currents_of`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), since the plain bilinear of a turned pair turns at the difference of the two Nodes' angles, the gauge's oscillation of zero mean, and books nothing; `frames`, the Port signs a turned plane's im lines (every second line) read their neighbours with (`framed`), None every Port at +1; `horizon`, per Port the mask of the Links at the wall (board_readings.horizon_ports), through which the current reads 0 as the step moves nothing across them (ALGEBRA.md, The horizon, 2026-10-23), None no such Link."""
-    if turned is not None:
-        return turned_currents_of(lines, wrap, turned)
     found: list[Any] = [0] * 6
     for number, record in enumerate(lines):
         here = currents.Levels(record.now, record.before)
@@ -104,65 +80,6 @@ def currents_of(
     if horizon is not None:  # a Link at the wall reads nothing: its current 0 (ALGEBRA.md, The horizon)
         found = [np.where(at, 0, value) for at, value in zip(horizon, found, strict=True)]
     return tuple(np.asarray(value) for value in found)
-
-
-def gauge_terms(
-    weight: int, begun: Sequence[Record], stepped: Sequence[Record], wrap: Wrap
-) -> tuple[np.ndarray, ...]:
-    """The step's change of the Link's level term through each of the six Ports at every Node: h_ij at the pair the step wrote (`stepped`, the lines after Rule3, now the level next and before the level now) less h_ij at the pair it started from (`begun`), every line of a plain record added (`currents.level_term`; ALGEBRA.md, The booking is the frame's). The plain currents `currents_of` read at the start less these are the frame's currents J_ij, what the books and the click line take for a plain record, so that a uniform shift of a massless level changes no booked number; in Python's integers, the products beyond the width on a drifting level."""
-    found: list[Any] = [0] * PORTS
-    present = ports(np.ones(begun[0].now.shape, dtype=object), wrap) if begun else ()
-    for sign, lines in ((-1, begun), (1, stepped)):
-        for record in lines:
-            now, before = record.now.astype(object), record.before.astype(object)
-            here = currents.Levels(now, before)
-            arrived_now, arrived_before = ports(now, wrap), ports(before, wrap)
-            for port in range(PORTS):  # a Link to a Node beyond the board carries no term, as no current
-                there = currents.Levels(arrived_now[port], arrived_before[port])
-                term = currents.level_term(weight, here, there) * present[port]
-                found[port] = found[port] + sign * term
-    return tuple(np.asarray(value) for value in found)
-
-
-def turned_currents_of(lines: Sequence[Record], wrap: Wrap, turned: Turned) -> tuple[np.ndarray, ...]:
-    """The currents of a turned record at every Node through each of its six Ports in the current's units, the flux line's own with the Link's pair (ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21; The flux form on a turned or folded Link; the identity w (W(t) - W(t - 1)) = p_i^2 SUM_j Phi_ij + the remainders' term of covector.link_fluxes, here through every Port and not the three +a Links alone): per plane Phi_ij = Im(conj(z_i) (X^c_ij + i X^s_ij) z_j) = re_i (X^s re_j + X^c im_j) - im_i (X^c re_j - X^s im_j) from the levels now and the Link's pair in the Link unit X_ij = 2 num Q_ij (`Turned.pairs` over `Turned.square`, the pace squared divided out exactly), the Wronskian's flux through the Link, exact to the step's own rounding and conserved by it, where the energy form of a turned pair moves by the angle's work; the plane's sense s = sign SUM_i (re_now im_before - im_now re_before), its Wronskian's (records.wronskian, + at 0), attached so that the flux counts positive inward along the share's flow as the plain current does (F_ij = -s sin omega Phi_ij / Q_ij on a monochromatic plain pair, the plain bilinear's -2 s num sin omega Im(conj(z_i) z_j)); then the Wronskian's unit into the share's, the family's rest conversion sin omega_0 = W_rec / W_c (one quantum's Wronskian T / 2 against its share W_rec = W_c sin omega_0, `Turned.unit` over `Turned.wall`), and the Link's factor Q_ij taken off for the booking to put it back (reports.weighted), F_ij = (-s SUM over the planes of Phi_ij) W_rec over Q_ij W_c, one signed rounding per Link per interval (features/phase.signed_rounded, half up on the magnitude with the sign after, so that the two ends of a Link read opposite exactly) below one unit of the current against a quantum's W_rec; a Link the world cuts (Q_ij = 0, the pair (0, 0)) reads 0. The integers: the fluxes in the lines' own kind (loader/world.kind_of, the one place the engine's integers are chosen) where their bound, 2 x the planes x the largest level squared x the widest pair, is within the width (core/paces.within_width, as the count's rounding is held to it), Python's integers otherwise; the product with W_rec, beyond the width on every shipped turned world, in Python's integers (one cast per Port), and the one rounding over Q_ij W_c there; the same integers either way. A standing record in its sign well reads 0 to the walk through a closed front (the 1s with a 7-Node ball: within 0.004 W_rec per window, found by the builder; the plain bilinear booked -3.07 and +2.76 W_rec), and the booking is in the share's unit W_rec G^2 as the plain one (credit.quanta_through); the neighbour's im part read with the Port's frame sign (`Turned.frames`, `framed`), the Link's two ends in one frame as the step reads them (ALGEBRA.md, The swap at the top, the frame clause)."""
-    evens, odds = turned.pairs
-    pairs = [  # exact: the pair times p_i^2
-        (
-            division_forward(evens[port], turned.square, 0)[0],
-            division_forward(odds[port], turned.square, 0)[0],
-        )
-        for port in range(PORTS)
-    ]
-    kind, planes = lines[0].now.dtype, len(lines[0::2])
-    largest = max(int(np.abs(line.now).max()) for line in lines)
-    widest = max(int(np.abs(np.asarray(value)).max()) for pair in pairs for value in pair)
-    hardware = within_width(
-        kind, 0, 2 * planes, largest, widest, largest
-    )  # every Port's flux within the kind
-    found: list[Any] = [0] * PORTS
-    for re_line, im_line in zip(lines[0::2], lines[1::2], strict=True):
-        re_i, im_i = (
-            (re_line.now, im_line.now)
-            if hardware
-            else (re_line.now.astype(object), im_line.now.astype(object))
-        )
-        wronskian = (re_i * im_line.before - im_i * re_line.before).sum(dtype=object)
-        sense = -1 if wronskian < 0 else 1
-        re_at, im_at = ports(re_i, wrap), framed(ports(im_i, wrap), turned.frames)
-        for port, (cosine, sine) in enumerate(pairs):
-            re_j, im_j = re_at[port], im_at[port]
-            flux = re_i * (sine * re_j + cosine * im_j) - im_i * (cosine * re_j - sine * im_j)
-            found[port] = found[port] - sense * flux
-    read = []
-    for port in range(PORTS):
-        factor = np.asarray(turned.factors[port], dtype=object)
-        wall = factor * turned.wall + (factor == 0)  # a cut Link's flux is 0 over the wall 1
-        numerator = (
-            np.asarray(found[port]).astype(object) * turned.unit
-        )  # Python's integers: beyond the width
-        read.append(np.asarray(signed_rounded(numerator, wall)))
-    return tuple(read)
 
 
 def momentum_of(

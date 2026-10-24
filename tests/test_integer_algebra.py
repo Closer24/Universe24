@@ -34,28 +34,22 @@ PHYSICAL_MODULES += (
     "bookings.py",
     "meeting.py",
     "act.py",
-    "lists.py",
     "front.py",
     "plane.py",
 )
 PHYSICAL_MODULES += (
     "emission.py",
-    "guide.py",
     "lay.py",
     "take.py",
     "readings.py",
     "flux.py",
     "meeting_back.py",
-    "cone.py",
     "conversion.py",
 )
-PHYSICAL_MODULES += ("growth.py", "core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
-PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys", "mode", "faces", "packets"))
-PHYSICAL_MODULES += ("loader/derived.py", "loader/draw.py", "loader/universe.py", "loader/lay.py")
-PHYSICAL_MODULES += ("resonance.py", "node_detector.py", "loader/node_detector_rows.py")
-PHYSICAL_MODULES += ("loader/node_detector_declaration.py", "loader/window.py")
+PHYSICAL_MODULES += ("core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
+PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys"))
+PHYSICAL_MODULES += ("loader/derived.py", "loader/universe.py")
 PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py")
-PHYSICAL_MODULES += ("loader/instrument.py",)  # the bound record declared an instrument body
 PHYSICAL_MODULES += (
     "shear.py",
     "walls.py",
@@ -69,9 +63,7 @@ PHYSICAL_MODULES += (
     "meeting_board.py",
     "loader/seed.py",
 )  # the fold: the uniform seed, the board's own read
-PHYSICAL_MODULES += (
-    "frame_run.py",
-)  # the frame's run of a bound body's full beat at its first close (2026-10-22)
+PHYSICAL_MODULES += ()  # the frame's run of a bound body's full beat at its first close (2026-10-22)
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
@@ -239,9 +231,6 @@ def test_a_composed_product_of_literals_is_refused_outside_core_rule3() -> None:
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
 INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the function, its responsibility
     ("core/ports.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
-    ("loader/faces.py", ast.Mod, "connected", "the periodic wrap of a walked neighbour's coordinate"),
-    ("growth.py", ast.Mod, "reached", "a line's number against the family's width, a part's first line"),
-    ("growth.py", ast.Mod, "resized", "a line's number against the family's width, a part's first line"),
     ("loader/derived.py", ast.FloorDiv, "width", "a row's lines over its parts and records, exact"),
     ("loader/derived.py", ast.FloorDiv, "planes", "a part's width over the plane's two lines, exact"),
 )

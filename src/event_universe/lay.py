@@ -9,7 +9,6 @@ import numpy as np
 
 from event_universe import records
 from event_universe.core.rule3 import division_forward
-from event_universe.front import declared
 from event_universe.reports import lay
 
 if TYPE_CHECKING:
@@ -44,19 +43,6 @@ def division_act(levels: np.ndarray, weights: np.ndarray) -> np.ndarray:
     return flat.reshape(np.shape(levels))
 
 
-def division_act_in_time(increments: list[int], amplitudes: list[int]) -> list[int]:
-    """The source in time's increments with the uniform mode's content taken out (ALGEBRA.md, The click writes on the lattice (5), the emission lays no uniform mode; the mathematician's hand): on the massless row a level delta added at the one Node at the interval t puts into the double root at wave number 0 the velocity delta and, by the interval s, the level (s - t + 1) delta, so a span of increments leaves the board a uniform velocity SUM delta_t and, once that is 0, a uniform level -SUM t delta_t, growing with no bound in the first case and standing for ever in the second; both are taken out by the division act, exact in the integers: the velocity's sum divided among the increments in proportion to the amplitudes (`shares_of`), then the moment SUM t delta_t divided among the running sums s_0 .. s_(tau - 2) in proportion to the parabola (t + 1) (tau - 1 - t), the increments corrected by the running sums' differences s_t - s_(t - 1) with s_(-1) = s_(tau - 1) = 0, which leave the sum at 0 and move the moment by -SUM s_t exactly; the correction a slope over the span below one level per interval at the shipped lifetimes, where the second difference of the moment, nature's dipole, would have amplified the onset's transient by the band's top over the resonance, 2 (1 - cos pi) / (2 (1 - cos Omega)); increments summing to 0 with the moment 0, or a span of one interval, are returned as they are."""
-    found = list(increments)
-    velocity = sum(found)
-    if velocity:
-        found = [d + c for d, c in zip(found, shares_of(-velocity, amplitudes), strict=True)]
-    span, moment = len(found), sum(t * d for t, d in enumerate(found))
-    if moment and span > 1:
-        running = [0, *shares_of(moment, [(t + 1) * (span - 1 - t) for t in range(span - 1)]), 0]
-        found = [d + (running[t + 1] - running[t]) for t, d in enumerate(found)]
-    return found
-
-
 def guarded(name: str, kept: bool, first: int, second: int, in_time: bool) -> None:
     """The guard of the act: where the two sums are kept (a massless family under the correction) the act's change of each is 0, else the act refuses by name with the family and the two changes, SUM now and SUM before over the board, or in time the sum and the first moment over the span. The guard reads the act's change and never the sums themselves, which Rule3's own floors walk."""
     if kept and (first or second):
@@ -80,13 +66,6 @@ def corrected(name: str, massless: bool, changes: Changes, weights: Any | None) 
     sums = (int(np.asarray(now, dtype=object).sum()), int(np.asarray(before, dtype=object).sum()))
     guarded(name, kept, sums[0], sums[1], False)
     return now, before
-
-
-def laid_in_time(name: str, massless: bool, increments: list[int], amplitudes: list[int]) -> list[int]:
-    """The one lay act in time, the source in time's increments over its span as one lay (ALGEBRA.md, The click writes on the lattice (5)): for a massless family the division act in time (`division_act_in_time`, in proportion to the amplitudes) and the guard on the change of the sum and of the first moment over the span; a gapped family's increments as given; each increment then written at its interval by the write step (`written`)."""
-    found = division_act_in_time(increments, amplitudes) if massless else list(increments)
-    guarded(name, massless, sum(found), sum(t * d for t, d in enumerate(found)), True)
-    return found
 
 
 def written(
@@ -122,7 +101,7 @@ def written(
             was = [int(r[where]) for r in (record.now, record.before, record.remainder)]
             after = [int(r[where]) for r in (laid_line.now, laid_line.before, laid_line.remainder)]
             if was != after:
-                node = list(declared(board, here))
+                node = [int(here[0]), int(here[1]), int(here[2])]
                 found = lay(board.interval, name, line, node, was, after)
                 if board.output is not None:
                     board.output(found)

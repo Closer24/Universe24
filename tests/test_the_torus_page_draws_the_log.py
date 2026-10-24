@@ -8,11 +8,11 @@ import pytest
 
 from event_universe import world_files
 from tests.laws import ROOT, load_file
-from tests.laws_universe import GAMMA, small_world
+from tests.laws_universe import GAMMA, UNIVERSE
 
 ERAS = load_file("eras_for_the_torus", ROOT / "tools" / "eras.py")
 TORUS = load_file("torus_page", ROOT / "tools" / "look" / "torus_page.py")
-INTERVALS = 32
+INTERVALS = 12
 
 
 def embedded(html: str, name: str) -> object:
@@ -25,7 +25,9 @@ def test_the_torus_page_holds_every_nodes_length_direction_and_content_from_the_
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world = small_world(tmp_path, detector=False, absorber=True)
+    (tmp_path / "u.json").write_bytes(UNIVERSE.read_bytes())  # the one world's universe on a bare 3-cube
+    world = tmp_path / "small.json"
+    world.write_text(json.dumps({"shape": [3, 3, 3], "intervals": INTERVALS, "universe": "u.json"}))
     eras, clicks, nodes = (tmp_path / f"small.{kind}.jsonl" for kind in ("eras", "clicks", "nodes"))
     ERAS.run(world, eras, 100, INTERVALS, clicks, nodes)
     logged = TORUS.read_log(nodes)
@@ -48,23 +50,5 @@ def test_the_torus_page_holds_every_nodes_length_direction_and_content_from_the_
     )  # (1) every Node's length, direction, turned list and quanta, line for line
     course = embedded(html, "course")
     assert course["shape"] == [3, 3, 3] and course["gamma"] == GAMMA and len(course["rows"]) == INTERVALS
-    charts = embedded(html, "charts")
-    assert len(charts) == 1, charts  # the one instrument body
-    chart = charts[0]
-    at = (2 * 3 + 2) * 3 + 2  # the absorber at [2, 2, 2], x-major
-    assert chart["inverse"] == [
-        1 / line["length"][at] for line in logged
-    ]  # (2) 1 / e^U at the Node, the log's
-    assert chart["light"] == [line["quanta"]["light"][at] for line in logged]
-    written = [
-        c["interval"]
-        for c in TORUS.read_log(clicks)
-        if c.get("event") == "credit" and c.get("before") != c.get("realised")
-    ]
-    assert chart["clicks"] == sorted(written) and written and all(c % 15 == 0 for c in written), (
-        written
-    )  # the clicks at the beat's closes
-    assert chart["rate"] == [
-        sum(1 for w in written if t - 99 <= w <= t) for t in range(1, INTERVALS + 1)
-    ]
+    assert embedded(html, "charts") == []  # no instrument body: the board reads itself (2026-10-24)
     assert "cdn" not in html.lower() and "<script src" not in html  # plain HTML, no library

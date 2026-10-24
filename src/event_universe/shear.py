@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import flux, meeting, node, records, take
+from event_universe import flux, node, records, take
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import wall_of
 from event_universe.plane import NO_FACE
@@ -64,14 +64,14 @@ def written(
 
 
 def stepped(board: Lattice, index: int, direction: int, begun: list[list[records.Record]]) -> None:
-    """(ALGEBRA.md, The shear's momentum is carried at the volume's wall; features/held_write) The three tension lines of one held row stepped as the shear's momentum (flux.step_momentum): the rule of the row's own read at the interval's start (`begun`, the lines the direction starts from), the Node's own three volumes in the direction, forward (X_before, X_now, X_next) with X_next the time line after its step and its write, backward (X_next, X_now, X_before) with X_before the time line's inverse's output (the reversibility hand's Theorem 1: every numerator a function of the post-state in that order), the faces the click act presents and the Links the world cuts."""
+    """(ALGEBRA.md, The shear's momentum is carried at the volume's wall; features/held_write) The three tension lines of one held row stepped as the shear's momentum (flux.step_momentum): the rule of the row's own read at the interval's start (`begun`, the lines the direction starts from), the Node's own three volumes in the direction, forward (X_before, X_now, X_next) with X_next the time line after its step and its write, backward (X_next, X_now, X_before) with X_before the time line's inverse's output (the reversibility hand's Theorem 1: every numerator a function of the post-state in that order) and the faces the click act presents."""
     family, gamma, unit = board.families[index], board.world.node_clock, board.unit
     started = [replace(s, lines=lines) for s, lines in zip(board.states, begun, strict=True)]
-    faces, cuts = take.faces_presented(board, index), meeting.cut(board, index)
+    faces = take.faces_presented(board, index)
     lines = list(board.states[index].lines)
     for record in range(family.records):
         content, factors = node.read(
-            index, board.families, started, direction, board.wrap, gamma, unit, record, cuts
+            index, board.families, started, direction, board.wrap, gamma, unit, record
         )
         rule = node.rule_of(family, gamma, content, factors, unit)
         first = records.record_slice(family, record).start
