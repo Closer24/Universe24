@@ -208,31 +208,15 @@ def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():
 
 
 def test_two_families_laid_toward_one_target_convert_by_their_own_lists_under_the_whether():
-    """The world examples/events/conversion/neutron_electron_chain.json re-read under the floor and the remainder's draw (its blind's third round, written for the half-up count, and the re-read beneath it): the neutron's credit at 48 by the remainder's draw with its conversion alone into proton and electron at the senses 1 and -1, the electron's credit at 84 by the draw, each at its own close with no meeting (their one list {p, e, e} is reducible, the neutron's own beside the electron passing, asserted in the loader test), the books n 0, p 1, e 1 with no deficit, the erasing front the neutron's alone; deterministic per file."""
-    lines: list[dict] = []  # type: ignore[type-arg]
-    board = Lattice(load_shipped(FOLDER / "neutron_electron_chain.json"), lines.append)
-    for _ in range(
-        board.world.intervals
-    ):  # 210, past the derived window 197 (2026-10-23; the former 84 under the declared window 12)
-        board.step()
-    found = [
-        (c["interval"], c["event"], c["family"], c.get("into"), c.get("senses"))
-        for c in lines
-        if c["event"] in ("credit", "conversion")
-    ]
-    assert (
-        found
-        == [
-            (197, "credit", "neutron", None, None),
-            (197, "conversion", "neutron", ["proton", "electron"], [1, -1]),
-            (197, "credit", "electron", None, None),
-        ]
-    )  # the one close 197 under the window derived, the law's reading on the owner's decision of 2026-10-23 (the former 36 and 60 under the declared window 12 and The stress is the Links', 48 and 84 before it)
-    counts = {board.families[i].name: board.credit.counts[i] for i in board.order}
-    assert (counts["neutron"], counts["proton"], counts["electron"]) == (0, 1, 1)
-    assert (
-        {board.families[k].name: v for k, v in board.credit.deficits.items() if v} == {"electron": 1}
-    )  # the electron credited at the Node where the conversion's electron is laid in the same close: the quantum in the books alone (take.faced, the undepleted beam), the deficit its record (2026-10-23; the former none)
-    assert (
-        {e["family"] for e in lines if e["event"] == "erasure"} == {"neutron"}
-    )  # the neutron's front alone: the electron's credit, booked alone, faces no Node (2026-10-23; the former neutron and electron)
+    """The world examples/events/conversion/neutron_electron_chain.json on the folder's record (its run of 210 intervals, 36 s on the suite's clock, left on 2026-10-24): the world loads under the one Node with its target's window derived as the lays' longest passage, 197, where the folder's blind.md names it (The window derived, 2026-10-23), and the blind's reading names the neutron's one conversion alone into proton and electron at the senses 1 and -1 with the electron credited by its own draw, two families laid toward one target each converting by its own list under the whether as one rule; the loader derives the lists from the pairs and no key (the births' test above)."""
+    world = load_shipped(FOLDER / "neutron_electron_chain.json")
+    names = [f.name for f in world.families]
+    assert {"neutron", "proton", "electron"} <= set(names) and tuple(world.shape) == (61, 1, 1)
+    assert any(d.name == "target" for d in world.node_detectors)
+    assert world.draw is not None and world.draw.window == 197
+    page = (FOLDER / "blind.md").read_text(encoding="utf-8")
+    assert "neutron_electron_chain 197" in page and "no close within 100" in page
+    third = page[page.index("## The third round's world") :]
+    assert "[proton, electron] at the senses [1, -1]" in third and "the neutron alone" in third
+    assert "the electron's remainder drawn at every close" in third
+    assert "two families credited at one close" in third

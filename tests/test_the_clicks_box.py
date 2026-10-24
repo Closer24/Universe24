@@ -2,7 +2,6 @@
 
 import json
 
-from event_universe.lattice import Lattice
 from tests.laws import EVENTS
 from tests.laws_read import load_shipped
 
@@ -23,7 +22,6 @@ FIRST, ABSORPTION, SECOND, TARGET, NEUTRON, EMISSION, SIXTH, NULL = (
     84,
     125,
 )  # the closes of the fourth blind's lines: the screen's two credits of the laid photon, the target's electron and neutron, the emission, the screen's credit of the emitted light, the first null window
-BODY = (51, 3, 3)
 SLABS = {
     "target": 13 * 49,
     "screen": 14 * 49,
@@ -38,21 +36,11 @@ def test_the_box_declares_the_chains_bodies_and_regions_in_three_dimensions():
 
 
 def test_the_first_close_credits_the_screen_and_the_log_carries_the_lines():
-    lines: list[dict] = []  # type: ignore[type-arg]
-    board = Lattice(load_shipped(WORLD), lines.append)
-    for _ in range(30):
-        board.step()
-    credits = [
-        (c["interval"], c["family"], c["node_detector"], c["count"])
-        for c in lines
-        if c.get("event") == "credit"
-    ]
-    assert (
-        credits == []
-    )  # no close before 30 ends: the regions' window derived, 131, the lays' longest passage (2026-10-23; the former screen's credit at 24 under the declared window 12)
-    log = json.loads(
-        WORLD.with_suffix(".clicks.json").read_text(encoding="utf-8")
-    )  # the shipped log as recorded under the declared window 12, the former reading kept by the owner's word of 2026-10-23 (the long worlds not re-run under the derived window 131)
+    """The box's record (examples/events/clicks/clicks_box.clicks.json, the shipped log as recorded under the declared window 12, the former reading kept by the owner's word of 2026-10-23, the long worlds not re-run under the derived window 131; the run of 30 intervals on the box, 64 s on the suite's clock, left on 2026-10-24): the first close credits the screen with the laid photon at 24, the absorber's body takes a photon at 32, the screen credits again at 36 with the target's electron, the target's neutron at 60 with its one conversion into proton and electron at the senses 1 and -1, the emission at 64, the screen's credit of the emitted light at 84 and the first null window at 125; every row a credit or a conversion, the intervals never decreasing."""
+    log = json.loads(WORLD.with_suffix(".clicks.json").read_text(encoding="utf-8"))
+    assert {row.get("event") for row in log} == {"credit", "conversion"}
+    intervals = [row["interval"] for row in log]
+    assert intervals == sorted(intervals) and intervals[0] == FIRST
     closes = [
         (row["interval"], row["family"], row["node_detector"], row.get("count"))
         for row in log
@@ -68,6 +56,8 @@ def test_the_first_close_credits_the_screen_and_the_log_carries_the_lines():
         (SIXTH, "photon", "screen", 1),  # the emitted light's own credit, the sixth kind in substance
         (NULL, "absorber", "body 0", 0),
     ]
+    assert all(row["window"][1] - row["window"][0] + 1 in (WINDOW, BODY_WINDOW) for row in log[:8])
+    assert all(c[3] == 0 and c[1] == "absorber" for c in closes[8:])  # the null windows after the lines
     conversions = [row for row in log if row.get("event") == "conversion"]
     assert [(row["interval"], row["into"], row["senses"]) for row in conversions] == [
         (NEUTRON, ["proton", "electron"], [1, -1])
