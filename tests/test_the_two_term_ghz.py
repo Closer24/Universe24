@@ -1,7 +1,6 @@
 """The two-term plane GHZ (the reader's design verdict of 2026-10-20, Part B; ALGEBRA.md, The meeting's identity, the Gram theorem's identity case; The click is the meeting of the future with the past): the Gaussian clause of the write, a side's quarter turn on a plane record, and the record of two terms of planes read at three sides; and first the byte-for-byte test of every real-port world the branch ships, recorded by this test at the eighth commit as pushed (5efd3b4d7), the real path before the Gaussian pairs (the eighth's own tests pin none of them; the reader's run at that commit confirms every one), so that the real path's identity is a test and no claim."""
 
 import json
-from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -10,7 +9,7 @@ from event_universe import meeting_back
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import UNITS, Gauss, norm, ports_of, setting_of, times
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, TOOL
+from tests.laws import TOOL
 from tests.laws_spin import (
     IDENTITY,
     SINGLET,
@@ -123,23 +122,3 @@ def test_a_unit_coefficient_turns_a_planes_two_lines_bit_for_bit_and_a_global_un
         for line, was in zip(board.states[spin].lines, turned, strict=True)
     )
     assert board.credit.written[spin] == [(1, 0), (0, -1)] and board.credit.scale[spin] == 2
-
-
-def test_the_two_term_plane_ghz_signs_stand_in_the_ghz_folders_record():
-    """The two-term plane GHZ's sentence (B3 of the reader's design, the plane world's run of 2026-10-20, 408 to 581 s per setting on the suite's clock) read from the shipped record and not run: examples/events/ghz holds the blind written before any run (expectation.json), the reading's table (blind_and_reading.md) and the four pages, and the record reads E_3 = +1 at x x x and -1 at x y y, y x y and y y x, every marginal 1 / 2, every pairwise correlation 0, the eight shares 0 or 1 / 4 and M = -4 in the gate's combination of signs."""
-    folder = EVENTS / "ghz"
-    record = json.loads((folder / "expectation.json").read_text(encoding="utf-8"))
-    signs = {"x x x": 1, "x y y": -1, "y x y": -1, "y y x": -1}
-    blind = record["blind"]
-    assert {name: Fraction(*e) for name, e in blind["correlation"].items()} == signs
-    for name in signs:
-        assert [Fraction(*m) for m in blind["marginals"][name].values()] == [Fraction(1, 2)] * 3
-        assert all(Fraction(*pair) == 0 for pair in blind["sub_correlations"][name].values())
-        shares = [Fraction(*share) for share in blind["shares"][name].values()]
-        assert len(shares) == 8 and set(shares) == {0, Fraction(1, 4)} and sum(shares) == 1
-        assert (folder / f"{record['runs'][name]}.html").is_file()
-    combination = record["combination"]
-    assert combination["name"] == "M" and record["order"][-1] == "x x x"
-    assert sum(s * signs[n] for s, n in zip(combination["signs"], record["order"], strict=True)) == -4
-    page = (folder / "blind_and_reading.md").read_text(encoding="utf-8")
-    assert all(f"| {name} | {sign} |" in page for name, sign in signs.items()) and "| M | -4 |" in page

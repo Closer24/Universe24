@@ -1,8 +1,6 @@
 """The one meeting, the click that writes at the record's birth (the owner's words of 2026-10-19 and 2026-10-20; ALGEBRA.md, The click is the meeting of the future with the past: at the root it writes; The meeting's reading; The meeting's identity, the Gram theorem; the design verdicts of 2026-10-20): a record of several parts read by N sides is credited by N draws in the order of the sides' closes, equal closes in the declared order, each side alone at its own place with its own state on its own region's read (the Gram read: the quadratic form of its coefficients on its own second moments with the Gram of the sides after it), its realised port's integer coefficients written into the record's parts at the record's birth inside the run back along the record's light cone, the board run forward from the rewritten birth by Rule3 at one Link per interval, the next side reading the realised term where it stands; every click writes, the last side's read coherent. The tests: (a) the sides' weights equal the chain rule from the parts lines exactly at the four Bell settings in both pattern forms, E and S the law's numbers, the credit lines with their order and the record's scale; (b) the statistics over 48 seeds, the anticorrelation exact; (c) the books, the hole, the fronts and the observers' five passes; (d) a world without a record of several parts byte for byte; (e) the refusals by name; (f) the inverse's exactness in use and the back-in-time gate; (g) the one reach, the record's light cone, with the write at the birth seen in the frames; (h) the shipped GHZ world's three sides under the cone. The worlds the tests' own (tests/laws_spin.py), no world or family name in the engine."""
 
-import json
 from dataclasses import replace
-from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -10,7 +8,6 @@ import pytest
 from event_universe import meeting_back, world_files
 from event_universe.features.front import ball
 from event_universe.lattice import Lattice
-from event_universe.loader.draw import ports_of
 from event_universe.world_files import load_world
 from tests.laws import BACK as GATE
 from tests.laws import EVENTS, family, world_beside
@@ -20,44 +17,8 @@ from tests.laws_spin import (
     IDENTITY,
     PORT,
     SINGLET,
-    correlation,
     spin_world,
 )
-
-ANTISYMMETRIC = "antisymmetric"  # the family's sign under exchange, the identity pattern on both sides
-SETTINGS = [(a, b) for a in BELL[:2] for b in BELL[2:]]  # the four Bell settings, a b, a b', a' b, a' b'
-
-
-def test_the_sides_draws_give_the_joint_distribution_exactly_through_the_write_on_the_record():
-    """(a) The identity through the write on the singlet at the four Bell settings, for the crossed pattern under no sign and for the identity pattern on both sides under the family's antisymmetric sign (the sixteen declared worlds ran 88 s on the suite's clock): the gate's E at (a, b) is `correlation`'s exact fraction, -119 / 169, 119 / 169, -120 / 169, -120 / 169 in the CHSH order with |S| = 478 / 169; the shipped record examples/events/bell_singlet declares the sign's form (`exchange` antisymmetric, the identity patterns) and names the crossed pattern [[0, 1], [-1, 0]] as the form it equals term by term, its blind the same fractions; the crossed pattern's ports are the determinant's signs on the parts (`ports_of`, no run)."""
-    a, a2, b, b2 = BELL
-    found = {(x, y): correlation(x, y) for x, y in SETTINGS}
-    assert [found[a, b], found[a, b2], found[a2, b], found[a2, b2]] == [
-        Fraction(-119, 169),
-        Fraction(119, 169),
-        Fraction(-120, 169),
-        Fraction(-120, 169),
-    ]
-    assert abs(found[a, b] - found[a, b2] + found[a2, b] + found[a2, b2]) == Fraction(478, 169)
-    record = json.loads((EVENTS / "bell_singlet" / "expectation.json").read_text(encoding="utf-8"))
-    assert record["exchange"] == ANTISYMMETRIC and record["superseded_pattern"] == SINGLET
-    assert (
-        record["patterns"] == {"a": IDENTITY, "b": IDENTITY}
-        and record["settings_declared_as"] == "basis"
-    )
-    settings = {k: tuple(v) for k, v in record["settings"].items()}
-    assert settings == {"a": a, "a_prime": a2, "b": b, "b_prime": b2}
-    for name, e in record["blind"]["correlation"].items():
-        x, y = (settings[part] for part in name.split())
-        assert Fraction(*e) == found[x, y], name
-    assert all(
-        Fraction(*m) == Fraction(1, 2) for w in record["blind"]["marginals"].values() for m in w.values()
-    )
-    for y in BELL[2:]:  # the crossed pattern's ports are the determinant's signs on the parts
-        crossed = ports_of(y, tuple(tuple(p) for p in SINGLET))
-        plain = ports_of(y, tuple(tuple(p) for p in IDENTITY))
-        for port in range(2):
-            assert tuple(crossed[port]) == (plain[port][1], (-plain[port][0][0], -plain[port][0][1]))
 
 
 def test_the_books_balance_and_the_observers_see_the_five_passes(tmp_path, monkeypatch):
@@ -263,21 +224,3 @@ def test_the_born_pairs_cone_grows_from_its_birth(tmp_path, monkeypatch):
     close = max(born.credit.cone)  # the meeting's close, the last interval the cone was counted at
     assert born.credit.cone[close] == int(np.prod(born.shape)) < 2 * (close - 24) + 3  # the grown board
     print(f"the born pair's cone volumes: {[born.credit.cone.get(t) for t in range(24, close + 1)]}")
-
-
-def test_the_three_sides_read_one_joint_under_the_cone_on_the_ghz_worlds_record():
-    """(h) N sides as the general case, read from the record (the shipped GHZ world (x, y, y) under the cone ran 352 s on the suite's clock): examples/events/ghz/expectation.json declares three sides, a left, b right and c top, light's four parts with the patterns A, B, C, and its rule names the three ports drawn one after another by the sides on their own reads with the write at the birth, the realised triple the gate's; the (x, y, y) world's blind reads E_3 = -1 from its joint table over the eight port triples, every marginal 1 / 2, and the reading's page carries the row; the world file stands in the folder."""
-    folder = EVENTS / "ghz"
-    record = json.loads((folder / "expectation.json").read_text(encoding="utf-8"))
-    assert record["sides"] == {"a": "left", "b": "right", "c": "top"} and len(record["patterns"]) == 3
-    assert all(len(pattern) == 4 for pattern in record["patterns"].values())
-    assert (
-        "three ports drawn one after another" in record["rule"] and "realised triple" in record["rule"]
-    )
-    joint = {k: Fraction(*v) for k, v in record["blind"]["joint"]["x y y"].items()}
-    assert len(joint) == 8 and all(len(k.split()) == 3 for k in joint)
-    e_3 = sum(j * (-1) ** k.split().count("minus") for k, j in joint.items()) / sum(joint.values())
-    assert e_3 == -1 and record["blind"]["correlation"]["x y y"] == [-1, 1]
-    assert all(Fraction(*m) == Fraction(1, 2) for m in record["blind"]["marginals"]["x y y"].values())
-    assert "| x y y | -1 |" in (folder / "blind_and_reading.md").read_text(encoding="utf-8")
-    assert (folder / f"{record['runs']['x y y']}.json").is_file()

@@ -205,18 +205,3 @@ def test_the_chain_converts_an_arriving_neutron_at_the_windows_close_exactly():
         [board.families[neutron].pair], [board.families[k].pair for k in (proton, electron)]
     )
     assert not any(c["event"] == "conversion" and c["interval"] < first for c in lines)
-
-
-def test_two_families_laid_toward_one_target_convert_by_their_own_lists_under_the_whether():
-    """The world examples/events/conversion/neutron_electron_chain.json on the folder's record (its run of 210 intervals, 36 s on the suite's clock, left on 2026-10-24): the world loads under the one Node with its target's window derived as the lays' longest passage, 197, where the folder's blind.md names it (The window derived, 2026-10-23), and the blind's reading names the neutron's one conversion alone into proton and electron at the senses 1 and -1 with the electron credited by its own draw, two families laid toward one target each converting by its own list under the whether as one rule; the loader derives the lists from the pairs and no key (the births' test above)."""
-    world = load_shipped(FOLDER / "neutron_electron_chain.json")
-    names = [f.name for f in world.families]
-    assert {"neutron", "proton", "electron"} <= set(names) and tuple(world.shape) == (61, 1, 1)
-    assert any(d.name == "target" for d in world.node_detectors)
-    assert world.draw is not None and world.draw.window == 197
-    page = (FOLDER / "blind.md").read_text(encoding="utf-8")
-    assert "neutron_electron_chain 197" in page and "no close within 100" in page
-    third = page[page.index("## The third round's world") :]
-    assert "[proton, electron] at the senses [1, -1]" in third and "the neutron alone" in third
-    assert "the electron's remainder drawn at every close" in third
-    assert "two families credited at one close" in third

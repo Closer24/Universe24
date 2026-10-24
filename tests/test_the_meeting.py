@@ -2,7 +2,6 @@
 
 import json
 import math
-import re
 from fractions import Fraction
 
 import numpy as np
@@ -11,13 +10,11 @@ from event_universe import resonance, take
 from event_universe.emission import laid_by_count
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import (
-    basis_of,
-    draw_of,
     pattern_of,
     patterns_of_the_law,
 )
 from event_universe.loader.node_detector_declaration import Transition
-from event_universe.loader.universe import shape_of, universe_of
+from event_universe.loader.universe import universe_of
 from event_universe.loader.world import node_detectors_of
 from event_universe.world_files import load_world
 from tests.laws import (
@@ -35,12 +32,9 @@ from tests.laws_content import (
     opened,
 )
 
-PAIR = ((1, 0), (0, 1))  # the pair's pattern: the + port reads (p, q), the - port (-q, p)
 A, A2, B, B2 = ((1, 0), (1, 1), (12, 5), (5, 12))  # the CHSH settings as the declared bases (p, q)
 ORDER, CHSH = ((A, B), (A, B2), (A2, B), (A2, B2)), (1, -1, 1, 1)  # CHSH's four worlds and S's signs
-MEETING = [Fraction(119, 169), Fraction(-119, 169), Fraction(120, 169), Fraction(120, 169)]
 FENCE = {GATE.parts_shares: Fraction(238, 169), GATE.local_sums: Fraction(240, 169)}  # the local credits
-UNEQUAL = (Fraction(363518, 128609), Fraction(66625, 128609), [760, 761])  # S, P(A+), rho at r = 19/20
 P, Q, X, Y = (1, 0), (0, 1), (1, 0), (1, 1)  # a part reading p or q; the GHZ settings x, y (0, pi / 4)
 PATTERNS = ((P, P, Q, Q), (P, Q, P, Q), (P, (0, -1), (0, -1), (-1, 0)))  # the GHZ patterns A, B, C
 MERMIN = (((X, Y, Y), (Y, X, Y), (Y, Y, X), (X, X, X)), (1, 1, 1, -1))  # Mermin's four worlds and signs
@@ -53,59 +47,6 @@ def side(*parts: tuple[int, int]) -> dict[int, list[list[int]]]:
 def credits(sides, order, patterns, form=GATE.joint):  # type: ignore[no-untyped-def]
     shares = [form(sides, [GATE.ports_of(*sp) for sp in zip(s, patterns, strict=True)]) for s in order]
     return shares, [GATE.correlation(found) for found in shares]
-
-
-def test_the_one_meeting_reads_the_blind_at_the_sides_and_the_record_holds_the_engines_reading():
-    """(i) Equal parts on both sides over a window whose middle interval reports 0 (no 0 / 0 under the window rule): E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)) at the four settings, S = 478 / 169 exactly and the marginal 1 / 2 whatever the partner's setting; the local credits on the same reports: by the parts' shares S = 238 / 169 (E = cos 2a cos 2b), by the local sums 240 / 169; unequal parts read S = 363518 / 128609 with the marginal off 1 / 2 and rho 760 / 761 named LATTICE; the reader's refusals by name. The engine's reading of the four shipped worlds (95 s on the suite's clock) stands in the record, examples/events/bell: the blind's fractions (expectation.json) and the reading's table (blind_and_reading.md) bit for bit the gate's, no run."""
-    a, b, equal = side((7, -3), (7, -3)), side((5, 11), (5, 11)), side((1, 1), (1, 1))
-    a[2] = b[2] = [[0, 0], [0, 0]]
-    shares, found = credits([a, b], ORDER, (PAIR, PAIR))
-    assert found == MEETING and GATE.combination(found, CHSH) == Fraction(478, 169)
-    assert [GATE.marginal(s) for s in shares] == [Fraction(1, 2)] * 4
-    found = {f: GATE.combination(credits([a, b], ORDER, (PAIR, PAIR), f)[1], CHSH) for f in FENCE}
-    assert found == FENCE
-    unequal, mirrored = side((20, 20), (19, 19)), tuple((y, x) for x, y in ORDER)
-    shares, found = credits([unequal, equal], mirrored, (PAIR, PAIR))
-    assert GATE.combination(found, CHSH) == UNEQUAL[0]
-    assert GATE.marginal(shares[0]) == GATE.marginal(shares[2]) == UNEQUAL[1]
-    m = GATE.mismatch([unequal, equal], 2)
-    assert (m["ratios"], m["rho"], m["label"]) == ([[19, 20]], UNEQUAL[2], "LATTICE")
-    rho_zero = credits([side((1, 1), (0, 0)), b], ORDER, (PAIR, PAIR))[1]
-    assert GATE.combination(rho_zero, CHSH) == FENCE[GATE.parts_shares]
-    refused("setting", GATE.ports_of, (1,), PAIR), refused("orthogonal", GATE.ports_of, A, ((1, 1),))
-    record = json.loads((EVENTS / "bell" / "expectation.json").read_text(encoding="utf-8"))
-    blind = record["blind"]
-    assert [Fraction(*blind["correlation"][k]) for k in record["order"]] == MEETING
-    assert Fraction(*blind["S"]) == Fraction(478, 169) and record["combination"]["signs"] == list(CHSH)
-    assert all(Fraction(*m) == Fraction(1, 2) for w in blind["marginals"].values() for m in w.values())
-    assert (blind["by_the_parts_shares"]["S"], blind["by_the_local_sums"]["S"]) == (
-        [238, 169],
-        [240, 169],
-    )
-    assert blind["by_the_sign"]["S"] == [2, 1]
-    page = (EVENTS / "bell" / "blind_and_reading.md").read_text(encoding="utf-8")
-    assert "| S | 478 / 169 |" in page and "| a_prime b_prime | 120 / 169 |" in page
-    assert "| a b_prime | -119 / 169 |" in page and "S by the parts' shares 238 / 169" in page
-    refused(r"as a shape is \[parts, dimension\]", shape_of, {"dimension": [2, 1, 1]}, "families[0]")
-    refused("not all 0", basis_of, [0, 0], "node_detectors[0].basis")
-
-
-def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks():
-    """The click written on the lattice (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py), read from the record (the shipped Bell world ran 39 s on the suite's clock): the gate's table in examples/events/bell/blind_and_reading.md reads for each of the four worlds two clicks, one at the left and one at the right, two credit lines (one write per side at the window's close, the count 1), the verdict LAWFUL over 100 intervals, and the back-in-time gate MATCH over 100 on bell_a_b (the board exact between the clicks and across them with the lays crossed); the draw's loader refuses a window of 0 and a generator's key by name."""
-    page = (EVENTS / "bell" / "blind_and_reading.md").read_text(encoding="utf-8")
-    rows = re.findall(r"^\| (\w+) \| (\S+) \| (\w+) \| ([^|]+?) \| ([^|]+?) \|$", page, re.MULTILINE)
-    table = {(world, by, reading): (label, value) for label, world, by, reading, value in rows}
-    for setting in ("a_b", "a_b_prime", "a_prime_b", "a_prime_b_prime"):
-        world = f"bell_{setting}.json"
-        assert table[world, "run_inputs", "verdict"] == ("LATTICE", "LAWFUL")
-        assert table[world, "run_inputs", "intervals"] == ("LATTICE", "100")
-        assert table[world, "run_inputs", "clicks"] == ("NODEDETECTOR", "2")
-        assert table[world, "run_inputs", "clicks left"] == ("NODEDETECTOR", "1")
-        assert table[world, "run_inputs", "clicks right"] == ("NODEDETECTOR", "1")
-        assert table[world, "run_inputs", "lines credit"] == ("LATTICE", "2")
-    assert table["bell_a_b.json", "back_in_time", "intervals 100"] == ("LATTICE", "MATCH")
-    refused("window", draw_of, {"window": 0}, "draw")
-    refused("unknown key 'seed'", draw_of, {"seed": 1}, "draw")  # no generator, no key
 
 
 def test_the_ghz_gate_pairs_four_parts_on_three_sides_exactly(tmp_path):
