@@ -301,7 +301,7 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, uni
     factors = {
         other: 1 if family.rotation else int(division_forward(multiple, families[other].pair[1], 0)[0])
         for other in sources
-    }  # the sign's sources at 1, the Wronskian as it stands (the holder of the sign rotates)
+    }  # the sign's sources at 1, the Wronskian whole (the holder of the sign rotates)
     return HeldWrite(tuple(walls), factors)
 
 
