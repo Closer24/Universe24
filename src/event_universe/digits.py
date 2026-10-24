@@ -11,7 +11,6 @@ import numpy as np
 from event_universe import flux, node
 from event_universe.core.rule3 import Rule, division_forward, wall_of
 from event_universe.features.click import read_number
-from event_universe.features.front import ball
 from event_universe.loader.derived import quanta_records
 
 if TYPE_CHECKING:
@@ -38,20 +37,6 @@ def digits_of(
             kept = [int(remainder) for remainder in np.asarray(line.remainder)[at]]
             for place, (remainder, found) in enumerate(zip(kept, lattice, strict=True)):
                 yield remainder, found, int(wall), (record, place)
-
-
-def reads_of(board: Lattice, families: Sequence[int], at: np.ndarray) -> list[tuple[int, np.ndarray]]:
-    """What a body reads (ALGEBRA.md, What a body reads, the reader's G2 of 2026-10-20): each of `families` (its drives, then its own record, `node_detector.read_families`) at the body's Nodes `at` and at the Nodes within one Link of them (`features/front.ball`, the Link metric with the wrap) where that family's record stands off the lay's origin, a remainder other than w div 2 on one of its lines: the light standing beside the body and the well's region the body's own record fills; a record at the origin beside the body adds no digit (a constant digit carries no entropy), each Node's distinct digits once (`read_of`), the digits of this interval alone; no key, no number, nothing at the Node."""
-    centres = [(int(a), int(b), int(c)) for a, b, c in np.argwhere(at)]
-    near = ball(board.shape, centres, 1, board.world.periodic)
-    found = []
-    for index in families:
-        half, standing = board.half_wall(index), np.zeros(board.shape, dtype=bool)
-        for record in quanta_records(board.families, index):
-            for line in board.lines_of(index, record):
-                standing |= np.asarray(line.remainder) != half
-        found.append((index, at | (near & standing)))
-    return found
 
 
 def at_origin(board: Lattice, reads: Reads) -> bool:

@@ -129,21 +129,6 @@ def quanta_of(share_now: Any, wall: int, kind: type) -> np.ndarray:
     return np.asarray(quanta, dtype=kind)
 
 
-def plain_quanta(board: Lattice, index: int) -> tuple[np.ndarray, np.ndarray]:
-    """A family's lay in quanta at every Node by the plain term, the lay's own support (ALGEBRA.md, The booking is the frame's, the last clause): the plain form's term at the Node, 0 where the record's two levels are 0 whatever its neighbours hold, the Links' terms at the lay's Nodes alone (`share` with the lines as their own read, `as_read`), in quanta over the record's unit (`quanta_of`) with the mask of its frozen Nodes; what a body's declared Nodes read as its standing (`Lattice.body_nodes`) and the start's count gate reads against the declared count (`lists.gate_count`), the frame's share standing at the Nodes beside the lay too and belonging to the Links, not to a declared Node (tools/frame_of.py reads the standing region the same way)."""
-    family, gamma = board.families[index], board.world.node_clock
-    found: Any = 0
-    cold = np.zeros(board.shape, dtype=bool)
-    for record in quanta_records(board.families, index):
-        content, factors = board.read(index, 1, record)
-        lines = board.lines_of(index, record)
-        found = found + family_share(
-            family, lines, board.wrap, gamma, content, factors, board.unit, None, lines
-        )
-        cold |= np.broadcast_to(frozen(gamma, content), board.shape)
-    return quanta_of(found, board.credit.units[index], board.kind), cold
-
-
 def half_action(action: int) -> int:
     """T div 2, the count's unit of a plane record on the board (the cold reader's ruling of 2026-10-22; ALGEBRA.md, The count on the board): one quantum of any plane family in any well carries the Wronskian T / 2, the charge's unit, the sign holder's own read, so a plane record's count is its charge over T / 2 and no reading of its share; one division act."""
     return int(division_forward(action, 2, 0)[0])

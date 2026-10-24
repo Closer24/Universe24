@@ -18,7 +18,6 @@ from event_universe.features.read import (
     stability_bound,
 )
 from event_universe.features.start.rests import read_content
-from event_universe.features.write import carried
 from event_universe.loader.derived import held_write_of, readers_of, weight_of
 from event_universe.loader.universe import universe_of
 from tests.laws import CHARGED, ROOT, refused, universe_copy
@@ -68,7 +67,6 @@ def test_a_hill_enters_as_it_is_and_the_guard_refuses_a_pace_beyond_the_edge_by_
     assert content_of([]) == 0 and link_tension([]) == 0
     assert link_tension([(1, level, level)]).ravel().tolist() == [7, -7]
     assert link_tension([(1, level, -level), (1, full, full + 1)]).ravel().tolist() == [4, 4]
-    refused("wall is from 1", carried, 5, 0, 0), refused("direction", carried, 5, 3, 0, 2)
     refused("wall E_s T is from 1", held_write, 0, 1, 0, 0)
 
 
