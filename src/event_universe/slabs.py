@@ -5,8 +5,8 @@ from __future__ import annotations
 import os
 from collections.abc import Iterator
 from dataclasses import replace
-from multiprocessing import get_context
 from multiprocessing.connection import Connection
+from multiprocessing.context import ForkContext
 from multiprocessing.process import BaseProcess
 from typing import TYPE_CHECKING, Any, cast
 
@@ -15,15 +15,16 @@ import numpy as np
 from event_universe import credit, records
 from event_universe.core.rule3 import division_forward
 from event_universe.lattice import Lattice
-from event_universe.reports import AT, CREDIT, LAY, LAY_KEYS, READINGS, REPORT_KEYS
+from event_universe.reports import AT, CREDIT, LAY, LAY_KEYS, NODES, READINGS, REPORT_KEYS
 
 if TYPE_CHECKING:
     from event_universe.loader.keys import Node
 
 Line = dict[str, object]
 Keyed = tuple[tuple[int, int], Line]  # a line with its place in the board's order: the write, the Node
-Answer = tuple[str, Any, Any, Any]  # a slab's word for an interval: stepped with its layers, or refused
-STEPPED, REFUSED = "stepped", "refused"
+Answer = tuple[
+    bool, Any, Any, Any
+]  # a slab's answer for an interval: True with its layers, its lines and its turned count, or False with its refusal's kind and words
 
 
 def axis_of(shape: Node) -> int:
@@ -124,7 +125,7 @@ def tile_of(board: Lattice, axis: int, slab: range) -> Lattice:
 
 
 def in_the_boards_frame(
-    line: Line, axis: int, slab: range, shape: Node, tile: Node, seed: str
+    line: Line, axis: int, slab: range, shape: Node, tile: Node, seed: str | None
 ) -> Keyed | None:
     """An output line of a slab's lattice moved to the board's frame: its Node's coordinate along the slabs' axis from the lattice's layer to the board's (the credit line's x-major index and its support, the birth line's Nodes, the lay line's Node), with the key of its place in the board's order, the close's write (0 the holes' lays of the seed family, 1 the children's lays, 2 the credit and birth lines) and the Node's x-major index on the board; None for a line at a halo Node, which the slab owning the Node writes."""
     extent = shape[axis]
@@ -151,10 +152,10 @@ def in_the_boards_frame(
             return None
         line[REPORT_KEYS[-1]], line[READINGS[3]] = int(np.ravel_multi_index(at, shape)), at
         return (2, int(np.ravel_multi_index(at, shape))), line
-    nodes = [moved(node) for node in cast(list[list[int]], line["nodes"])]
+    nodes = [moved(node) for node in cast(list[list[int]], line[NODES])]
     if nodes[0] is None:
         return None
-    line["nodes"] = nodes
+    line[NODES] = nodes
     return (2, int(np.ravel_multi_index(nodes[0], shape))), line
 
 
@@ -168,7 +169,7 @@ def served(board: Lattice, axis: int, slab: range, pipe: Connection) -> None:
     """One slab's process: its lattice made from the board at the fork, then per interval the layers the parent names imposed with the board's clocks, the lattice stepped with every act, and the answer sent, its own layers' arrays with its lines in the board's frame and its count of turned Nodes, or its refusal by name; None ends it."""
     tile, lines, shape = tile_of(board, axis, slab), list[Line](), board.shape
     tile.output = lines.append
-    seed = board.families[board.world.seed].name if board.world.seed is not None else ""
+    seed = board.families[board.world.seed].name if board.world.seed is not None else None
     own = list(range(1, len(slab) + 1))
     while (message := pipe.recv()) is not None:
         layers, pieces, interval, tick = message
@@ -178,11 +179,11 @@ def served(board: Lattice, axis: int, slab: range, pipe: Connection) -> None:
         try:
             tile.step()
         except (ValueError, RuntimeError) as refusal:
-            pipe.send((REFUSED, type(refusal).__name__, str(refusal), None))
+            pipe.send((False, type(refusal).__name__, str(refusal), None))
             continue
         moved = [in_the_boards_frame(line, axis, slab, shape, tile.shape, seed) for line in lines]
         turned = int(np.asarray(tile.turned)[selection(axis, own)].sum())
-        pipe.send((STEPPED, layers_of(arrays_of(tile), axis, own), [m for m in moved if m], turned))
+        pipe.send((True, layers_of(arrays_of(tile), axis, own), [m for m in moved if m], turned))
 
 
 class Slabs:
@@ -197,7 +198,9 @@ class Slabs:
         self.processes: list[BaseProcess] = []
         if len(self.slabs) == 1:
             return  # one slab is the board: the single process steps it, nothing forked
-        context = get_context("fork")
+        context = (
+            ForkContext()
+        )  # the fork: the slabs' lattices made from the board in the parent's memory
         for slab in self.slabs:
             parent, child = context.Pipe()
             process = context.Process(target=served, args=(board, self.axis, slab, child), daemon=True)
@@ -224,7 +227,7 @@ class Slabs:
             pieces = layers_of(arrays, self.axis, [layers[k] for k in kept])
             pipe.send((kept, pieces, board.interval, board.tick))
         answers: list[Answer] = [pipe.recv() for pipe in self.pipes]
-        self.whole = any(answer[0] == REFUSED for answer in answers)
+        self.whole = any(not answer[0] for answer in answers)
         if self.whole:
             board.step()
             return
