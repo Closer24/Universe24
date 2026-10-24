@@ -96,6 +96,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
     ("digits.py", "read_of", "gcd"): "D",  # the bases less one, the plain sum's modulus, once
+    (
+        "digits.py",
+        "frame_of",
+        "division_forward",
+    ): "D",  # the torus's wrap of a frame Node's coordinate, an index
     # features/click
     (
         "features/click/__init__.py",
@@ -103,11 +108,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the click's read over the total, once per draw
     ("features/click/__init__.py", "bias_bound", "gcd"): "D",  # the total's shared factors, F
-    (
-        "features/currents/__init__.py",
-        "level_term",
-        "division_forward",
-    ): "D",  # the Link's level term's half, the floor once, discarded (The booking is the frame's, 2026-10-23)
     ("features/click/__init__.py", "face_value", "division_forward"): "D",  # the face's value, once
     ("features/click/__init__.py", "squared", "largest_below"): "S",  # the search on the lay's square
     (
@@ -115,8 +115,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "squared",
         "division_forward",
     ): "D",  # the lay's quotient before the search
-    ("features/click/__init__.py", "spread", "largest_below"): "S",  # the search on the spread square
-    ("features/click/__init__.py", "spread", "division_forward"): "D",  # the Node's share of the square
     ("features/click/__init__.py", "amplitude", "largest_below"): "S",  # the amplitude by the search
     (
         "features/click/__init__.py",
@@ -208,17 +206,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "damped",
         "division_forward",
     ): "D",  # the damped pass's mean, carry dropped at the stop
-    # features/write
-    (
-        "features/write/__init__.py",
-        "carried",
-        "division_forward",
-    ): "R",  # the write's remainder returned forward
-    (
-        "features/write/__init__.py",
-        "carried",
-        "division_back",
-    ): "R",  # the write's remainder returned back
     # lattice.py, lay.py
     ("lattice.py", "Lattice.half_wall", "division_forward"): "D",  # the half wall, once
     # board_readings.py
@@ -232,28 +219,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "pythagorean_readers",
         "largest_below",
     ): "D",  # the integer sine of a sign reader's pair, the search on the share reading, once (the sign's reader is Pythagorean, 2026-10-24)
-    (
-        "loader/charge.py",
-        "charge_factors",
-        "division_forward",
-    ): "D",  # the readers' count units to one wall and the factors reduced, exact, no remainder (The constants, 2026-10-24)
-    (
-        "loader/charge.py",
-        "charge_factors",
-        "gcd",
-    ): "D",  # Euclid's remainders on the count units and the factors, once each
-    # the lightest point of the circle (2026-10-24): the loader's number theory on den, every division the act
-    ("loader/charge.py", "primes_below", "division_forward"): "D",  # trial division's remainders
-    ("loader/charge.py", "is_prime", "division_forward"): "D",  # n - 1 = d 2^s, the remainders by 2
-    ("loader/charge.py", "split", "gcd"): "D",  # Pollard's rho, Euclid on |x - y| and n
-    ("loader/charge.py", "factors", "division_forward"): "D",  # 2 divided out, the cofactor of a split
-    (
-        "loader/charge.py",
-        "two_squares",
-        "division_forward",
-    ): "D",  # (p - 1) div 4 and Euclid's remainders
-    ("loader/charge.py", "two_squares", "largest_below"): "D",  # the root of p, the remainders' floor
-    ("loader/charge.py", "lightest_point", "division_forward"): "D",  # a prime's class modulo 4
     (
         "loader/rooms.py",
         "held_room",
@@ -269,6 +234,18 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "width_of",
         "division_forward",
     ): "D",  # halving the width's search, discarded (the width derived, 2026-10-24)
+    # the lightest point of the circle (2026-10-24): the loader's number theory on den, every division the act
+    ("loader/circle.py", "primes_below", "division_forward"): "D",  # trial division's remainders
+    ("loader/circle.py", "is_prime", "division_forward"): "D",  # n - 1 = d 2^s, the remainders by 2
+    ("loader/circle.py", "split", "gcd"): "D",  # Pollard's rho, Euclid on |x - y| and n
+    ("loader/circle.py", "factors", "division_forward"): "D",  # 2 divided out, the cofactor of a split
+    (
+        "loader/circle.py",
+        "two_squares",
+        "division_forward",
+    ): "D",  # (p - 1) div 4 and Euclid's remainders
+    ("loader/circle.py", "two_squares", "largest_below"): "D",  # the root of p, the remainders' floor
+    ("loader/circle.py", "lightest_point", "division_forward"): "D",  # a prime's class modulo 4
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     (
@@ -309,7 +286,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "rule3",
     ): "R",  # Rule3's flux line at every Node of a plain line, the law's step
     ("flux.py", "step_plane", "rule3"): "R",  # the same on each part of a turned or folded plane
-    ("flux.py", "step_traceless", "rule3"): "R",  # the tension lines' traceless step, wall 3 w
     (
         "flux.py",
         "step_momentum",
@@ -318,6 +294,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # plane.py, records.py
     ("plane.py", "sign_pairs", "paces.rounded"): "D",  # the sign's pair, rounded once
     ("records.py", "write_origins", "division_forward"): "D",  # the write's origin, once
+    ("records.py", "well", "division_forward"): "D",  # the well, a reading in quanta, once
     # share.py
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
@@ -328,8 +305,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
 R_OUTSIDE_THE_STEP = frozenset(
     {
         ("features/held_write/__init__.py", "held_write", "act"),  # the held write's remainder
-        ("features/write/__init__.py", "carried", "division_forward"),  # the write's remainder forward
-        ("features/write/__init__.py", "carried", "division_back"),  # the write's remainder back
     }
 )
 

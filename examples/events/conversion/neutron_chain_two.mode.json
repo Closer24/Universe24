@@ -1,1 +1,0 @@
-{"world_digest":"464fb12c96a0efcb7ea620944618a94bc2ef8ec7e9c80c2ae53f7cb035f52358","bodies":[],"packets":[{"family":"neutron","pair":[-4800,6000],"amplitude":9,"count":2,"moving":{"now":{"at":[25,27,28,29,31,32,33,35],"values":[1,-4,-9,-8,8,9,4,-1]},"before":{"at":[26,27,28,30,31,32,34],"values":[3,7,7,-9,-11,-6,2]}}}]}

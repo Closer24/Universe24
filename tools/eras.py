@@ -19,7 +19,7 @@ from event_universe import board_readings, records
 from event_universe.bookings import sources_of
 from event_universe.features import volume
 from event_universe.lattice import Lattice
-from event_universe.loader.charge import lightest_point
+from event_universe.loader.circle import lightest_point
 from event_universe.world_files import load_world
 
 Node = tuple[int, int, int]
@@ -172,7 +172,7 @@ def spans(lines: list[dict[str, Any]], family: str, span: int, gamma: int) -> li
 
 
 def header_of(path: Path, board: Lattice, intervals: int | None) -> dict[str, Any]:
-    """The log's first line: the world's own numbers, the held rows by name (the page's legend names the hypotheses under their keys) and the lightest point of the circle of the seed's den, (num, s) with s the least leg, the electron's pair as the law derives it (`loader/charge.lightest_point`, 2026-10-24; None where the circle has no point)."""
+    """The log's first line: the world's own numbers, the held rows by name (the page's legend names the hypotheses under their keys) and the lightest point of the circle of the seed's den, (num, s) with s the least leg, the electron's pair as the law derives it (`loader/circle.lightest_point`, 2026-10-24; None where the circle has no point)."""
     world = board.world
     held = [family.name for family in world.families if family.held and not family.wronskian]
     try:

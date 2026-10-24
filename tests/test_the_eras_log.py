@@ -4,9 +4,9 @@ import json
 
 from event_universe import world_files
 from tests.laws import ROOT, load_file, refused
-from tests.laws_universe import GAMMA, declared_universe
+from tests.laws_universe import GAMMA, UNIVERSE
 
-WIDTH = 101  # the width derived at the declared seed universe (Gamma 1,000, den 1,000) (2026-10-24; the hardware's 63 declared to that day)
+WIDTH = 139  # the one universe file's width, derived (2026-10-24; 92 declared to that day)
 
 ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
 ERAS_PAGE = load_file("eras_page_tool", ROOT / "tools" / "look" / "eras_page.py")
@@ -15,10 +15,11 @@ ERAS_PAGE = load_file("eras_page_tool", ROOT / "tools" / "look" / "eras_page.py"
 def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_them(
     tmp_path, monkeypatch
 ):
-    """The log on the bare 3-cube torus of the one world's seed universe over 8 intervals: the header names the world's integers and the held rows by name, no former key; each interval's line holds gravity's row (the level reading and its remainder, U, the velocity, the writes per family, n_eff the mix's exponent, the constraint's residual, the three tension lines' means and velocities, the volume's sums now and before and the volume form's own constraint R_vol from the second interval on, the seed's level, contrast and clock ratio where a seed stands) and each family of quanta's readings (the largest level, the quanta, the frozen count); the last line is the last interval's, nothing named unreturning (the volume form's run back is exact); the numbers are the engine's own: U the fine reading from the volume's sums with the level reading's own U beside it within a hundredth, the writes' keys the sourcing families, the mix's exponent between the pairs' integers, the tension lines' means alike and within one level per interval; the spans' estimator reads n_eff from the slope of 1 / v where the velocity is above 0; `--every` below 1 is refused by name; the page from the log holds its panels (the course, the writes, the residual with R_nat and R_vol, the mix's exponent, the seed, the clocks, the rulers, the tension lines, the Links' factors, the quanta), the blind's table where a blind is given, the notes where given, the held row's keys in its words, and refuses a log without the header by name."""
+    """The log on the bare 3-cube torus of the one universe file over 8 intervals: the header names the world's integers and the held rows by name, no former key; each interval's line holds gravity's row (the level reading and its remainder, U, the velocity, the writes per family, n_eff the mix's exponent, the constraint's residual, the three tension lines' means and velocities, the volume's sums now and before and the volume form's own constraint R_vol from the second interval on, the seed's level, contrast and clock ratio where a seed stands) and each family of quanta's readings (the largest level, the quanta, the frozen count); the last line is the last interval's, nothing named unreturning (the volume form's run back is exact); the numbers are the engine's own: U the fine reading from the volume's sums with the level reading's own U beside it within a hundredth, the writes' keys the sourcing families, the mix's exponent between the pairs' integers, the tension lines' means alike and within one level per interval; the spans' estimator reads n_eff from the slope of 1 / v where the velocity is above 0; `--every` below 1 is refused by name; the page from the log holds its panels (the course, the writes, the residual with R_nat and R_vol, the mix's exponent, the seed, the clocks, the rulers, the tension lines, the Links' factors, the quanta), the blind's table where a blind is given, the notes where given, the held row's keys in its words, and refuses a log without the header by name."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    universe = declared_universe()  # the one world's seed universe (Gamma 1,000, gravity [999, 1000], the sign holder, matter and light, the seed at one quantum on every Node of the bare 3-cube torus), whose course moves from the first interval; the rule's universe at gravity's level weight 1 to 2026-10-24, whose gapped gravity [5994, 6000] at Gamma 6,000 stands pinned over these eight intervals since the holders are derived
-    (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
+    (tmp_path / "u.json").write_text(
+        UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8"
+    )  # the one universe file
     world = tmp_path / "eras.json"
     world.write_text(json.dumps({"shape": [3, 3, 3], "intervals": 8, "universe": "u.json"}), "utf-8")
     out = tmp_path / "eras.eras.jsonl"
@@ -29,7 +30,7 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
         header["held"] == ["gravity"] and "keys" not in header
     )  # the held rows by name, no former key reported (2026-10-23)
     assert (header["node_clock"], header["quantum_action"], header["intervals"]) == (GAMMA, 36000, 8)
-    assert header["width"] == WIDTH and "unobservable" not in header  # the derived width, no flag
+    assert header["width"] == WIDTH and "unobservable" not in header  # every board's, no flag
     assert len(lines) == 8 and [line["interval"] for line in lines] == list(range(1, 9))
     assert last == lines[-1] and last["interval"] == 8 and "unreturning" not in last
     for line in lines:
@@ -39,10 +40,11 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
             abs(row["U"] - row["U_level"]) < 0.01 and row["nodes"] == 27
         )  # the fine U beside the level's
         assert (
-            set(row["writes"]) == {"matter", "light", "proton", "electron"}
+            set(row["writes"])
+            == {"light", "proton", "electron"}  # matter's row left the file 2026-10-24
             and row["writes"]["light"] > 0
         )  # every family of quanta sources the holder it reads, the sign holder none (the reads derived, 2026-10-24; the charge among gravity's sources under rule.json's declared reads to that day)
-        assert 5 <= row["n_eff"] <= 6  # the mix of matter's 5 and light's 6
+        assert 5 <= row["n_eff"] <= 6  # the mix of the pairs' 5 and light's 6
         assert len(row["tension_means"]) == 3 and len(set(row["tension_means"])) == 1
         assert all(abs(v) <= 1 for v in row["tension_velocities"])
         assert -1 <= row["nature_residual"] and row["H"] == row["velocity"] / GAMMA

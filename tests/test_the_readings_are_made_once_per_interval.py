@@ -14,8 +14,8 @@ from tests.laws_universe import ERAS, bare_torus
 
 INTERVALS, FIRST_TURN = (
     32,
-    156,
-)  # the bare 3-cube torus at the enlarged den: the births at 29, the first turned Node at 156 (154 at den 53,567,765 to 2026-10-24; 20 and 34 on the small universe, laid with bodies, to that day)
+    205,
+)  # the bare 3-cube torus at the enlarged den (2026-10-24): the births at 30 and the first turned Node at 205 (208 at den 53,567,765 since the close reads the interval's start (29 and 157 on main with the write remainder born at the half of its own wall, 154 before that; 20 and 34 on the small universe, laid with bodies, to 2026-10-24)
 
 
 class Unkept(dict[Any, Any]):

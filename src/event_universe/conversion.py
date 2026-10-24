@@ -20,11 +20,6 @@ Parents = tuple[
 ]  # the records in, each its family and its sense as read, 0 for real lines
 
 
-def times(a: Gauss, b: Gauss) -> Gauss:
-    """The Gaussian product (a + i b)(c + i d) = (a c - b d) + i (a d + b c), angle addition on the circle."""
-    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
-
-
 def sine_of(pair: Pair) -> int | None:
     """The integer sine of a pair, s with s^2 = den^2 - num^2 (sin omega times den), None where the pair is not Pythagorean: the rotation's cosine and sine are both rational iff den^2 - num^2 is a square."""
     num, den = pair
@@ -37,34 +32,6 @@ def gaussian(pair: Pair) -> Gauss | None:
     """The pair's point on the circle as a Gaussian integer, num + i s of norm den, None where the pair is not Pythagorean (`sine_of`)."""
     sine = sine_of(pair)
     return None if sine is None else (pair[0], sine)
-
-
-def rotation(pairs: Sequence[Pair]) -> tuple[Gauss, int] | None:
-    """The rotations' sum of several pairs as one point over one scale, the Gaussian product of their points over the product of their dens (angle addition the Gaussian product, the rational points of the circle a group); None where a pair is not Pythagorean."""
-    point, scale = (1, 0), 1
-    for pair in pairs:
-        found = gaussian(pair)
-        if found is None:
-            return None
-        point, scale = times(point, found), scale * pair[1]
-    return point, scale
-
-
-def exact(parents: Sequence[Pair], products: Sequence[Pair]) -> bool:
-    """Whether the products' rotations sum exactly to the parents' in the integers (the exactness clause of The conversion): every pair Pythagorean and the two sums (`rotation`) equal once each is scaled by the other's dens' product, both components; one parent the conversion, several the collision."""
-    before, after = rotation(parents), rotation(products)
-    if before is None or after is None:
-        return False
-    (point, scale), (other, span) = before, after
-    return (point[0] * span, point[1] * span) == (other[0] * scale, other[1] * scale)
-
-
-def irrational(pair: Pair) -> str:
-    """The sentence why a pair is not Pythagorean: its den^2 - num^2 and that it is no square, so its sine is irrational and no sum of rotations is exact with it in the integers."""
-    num, den = pair
-    return (
-        f"[{num}, {den}] has den^2 - num^2 = {den * den - num * num}, no square: its sine is irrational"
-    )
 
 
 def candidates(families: tuple[FamilyRule, ...]) -> list[int]:

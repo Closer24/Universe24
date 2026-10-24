@@ -1,31 +1,25 @@
-"""The helpers of the law's tests: a module loaded by its path (a tool; the generator, the back-in-time gate and the runner loaded once for every test), and the generator's bodies of ALGEBRA.md #the-generator laid on a chain of the universe the tests run on (`UNIVERSE`); the chain is the shortest that holds the body of 50 quanta (about eleven Nodes about its centre) and the end node_detectors with their regions apart, since the lay's cost is the start's relaxation over the chain's length squared, and every bound the tests put on the chain is per Node, the same on any length."""
+"""The helpers of the law's tests: the tests' universe in the derived form (`UNIVERSE`, `universe_copy`, `universe_beside`, the charged row `CHARGED` and the seed row `LIGHT_ROW`), rows built by hand (`real_rows`), a module loaded by its path (`load_file`; the step's oracle `ORACLE` and its first form `arrivals_rule3`, tools/step_oracle.py), the refusal by name (`refused`), the flux form's linear sums (`linear_sum`, `weighted_linear_sum`) and a board's state for the run back (`board_state`, `same_state`). The builders of laid worlds (the packet, the flux world, the Coulomb chain, the turning universe) left 2026-10-24 with the tests of the cancelled worlds: the suite is the law's sentences at one Node on the bare torus with the one universe file."""
 
 import importlib.util
 import json
 import sys
-from collections.abc import Sequence
-from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 import pytest
 
-from event_universe import readings
-from event_universe.core import paces
-from event_universe.core.ports import Wrap
-from event_universe.core.rule3 import coefficients
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import FamilyRule, Row
-from event_universe.loader.universe import universe_of
-from event_universe.loader.world import World
+from event_universe.loader.derived import Row
 from event_universe.records import Record
-from event_universe.world_files import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
-UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,768; the width derived, 122 bits, and G the engine's 16, 2026-10-24, the width 63 and G declared to that day), its rows derived and nothing declared (2026-10-24): gravity, the holder of the volume, gapped at the declared seed's gap 999 over 1000 at the rule's den; the charge, the sign holder; the binding holder [2400, 2401], a second holder of the volume; matter, one real line; the rule's own universe examples/events/rule.json (gravity massless at the level weight 1,000 and the rest 60, the binding holder sourced by the form alone, every read declared) the tests' universe to 2026-10-24, kept by name as the record of the law to that day
-    "integers": {"node_clock": 6000, "quantum_action": 32768},
+UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,768, the width 63, G 16), its rows derived and nothing declared (2026-10-24): gravity, the holder of the volume, gapped at the declared seed's gap 999 over 1000 at the rule's den; the charge, the sign holder; the binding holder [2400, 2401], a second holder of the volume; matter, one real line; the rule's own universe examples/events/rule.json (gravity massless at the level weight 1,000 and the rest 60, the binding holder sourced by the form alone, every read declared) the tests' universe to 2026-10-24, kept by name as the record of the law to that day
+    "integers": {
+        "node_clock": 6000,
+        "quantum_action": 32768,
+    },  # the width derived and G the engine's, 2026-10-24
     "families": [
         {"name": "gravity", "pair": [5994, 6000]},
         {"name": "charge", "pair": [6000, 6000]},
@@ -33,10 +27,6 @@ UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,76
         {"name": "matter", "pair": [4000, 6000], "dimension": 1},
     ],
 }
-CHAIN, QUANTA = (
-    24,
-    6,
-)  # the shortest chain (x open) holding the body apart from the end node_detectors; the
 # smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
 CHARGED = {
     "name": "charged",
@@ -48,8 +38,6 @@ LIGHT_ROW = {
     "pair": [6000, 6000],
     "dimension": 1,
 }  # the one massless family of quanta, the seed every world is laid with (ALGEBRA.md, The uniform seed is a lay)
-# the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
-TOP = [0, 6000]
 
 
 def universe_copy() -> dict[str, Any]:
@@ -71,27 +59,10 @@ def load_file(name: str, path: Path):
     return module
 
 
-def vacuum_content(world: World, family: FamilyRule) -> int:
-    """The content a record of `family` reads where nothing is laid: the rests of the holders it reads, each at its read weight, 0 since no row rests at a level (2026-10-24; the declared rest 60 of the shipped universes with a gravity row to that day, kept by name)."""
-    return sum(world.families[read.family].rest * read.weight for read in family.reads)
-
-
-def band_of(pair, gamma: int, content: int, unit: int, *cosines):  # type: ignore[no-untyped-def]
-    """cos omega(q) in the test's floats from the line's own read at `content` (the law's (h), **L** the line's own read: 2 w cos omega(q) = S + SUM over the six Ports of R_ij cos q_a), Rule3's coefficients at the composed paces of the content with no tension; `cosines` the cos q_a of the three axes, numbers or arrays; (num / den) SUM_a cos q_a / 3 at the content 0."""
-    reads, self_coefficient, wall = coefficients(
-        *pair, gamma, *paces.node_paces(gamma, content), None, unit
-    )
-    arrived = sum(int(read) * cosines[port // 2] for port, read in enumerate(reads))
-    return (int(self_coefficient) + arrived) / (2 * int(wall))
-
-
 def refused(match: str, call, *args, **keys):
     with pytest.raises(ValueError, match=match) as refusal:
         call(*args, **keys)
     return refusal.value
-
-
-BACK = load_file("back_in_time", ROOT / "tools" / "back_in_time.py")  # the back-in-time gate
 
 
 def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[no-untyped-def]
@@ -108,35 +79,6 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
 
 
-# the builders the parts' tests share (tests/test_part_*.py; the shape of tests/: a helper imported by two files
-# lives here): the turning universe's charged record by hand, the Coulomb chain, the one photon's board, a shipped
-# world edited beside tmp_path, the emit-and-take world and the fold's floor
-TURNING_UNIVERSE = {  # the turning universe, examples/events/turning.json to 2026-10-24 (its sign holder at the level weight 100, every read declared) in the derived form: the tests' rows at T 36,000 with the charged plane
-    **UNIVERSE,
-    "integers": {**UNIVERSE["integers"], "quantum_action": 36000},
-    "families": [*UNIVERSE["families"], CHARGED],
-}
-TURNING_INTEGERS, TURNING = universe_of(json.loads(json.dumps(TURNING_UNIVERSE)))
-TURNING_T, TURNING_PAIR = (
-    TURNING_INTEGERS["quantum_action"],
-    (3600, 6000),
-)  # the tests' charged plane, Pythagorean since 2026-10-24 ((4000, 6000) until then, refused under the sign)
-CHARGE = [family.name for family in TURNING].index("charge")
-RULE_WALL = coefficients(*TURNING[CHARGE].pair, 6000, 6000, 6000, None, 16)[2]  # w = 6 den Gamma^2 G^2
-SINE = 4800  # isqrt(6000^2 - 3600^2): the charged pair's sin omega_0 times den (4472 for [4000, 6000] to 2026-10-24)
-COULOMB_CHAIN, COULOMB_AT, EMIT_RUN = 400, 280, 200
-COULOMB_UNIVERSE = {
-    "integers": {
-        "node_clock": 6000,
-        "quantum_action": 36000,  # the width derived (2026-10-24; 64 declared to that day, 63 before it: the sign holder's levels under the universal charge pass the content bound of 63 bits by 5 percent on this chain)
-    },
-    "families": [
-        {"name": "charge", "pair": [6000, 6000]},
-        {"name": "charged", "pair": list(TURNING_PAIR), "dimension": 2},
-    ],
-}  # the sign holder and one plane reading it; alpha = E_h T / Gamma = 6 (600 at the declared level weight 100 to 2026-10-24, kept by name)
-
-
 ORACLE = load_file(
     "step_oracle", ROOT / "tools" / "step_oracle.py"
 )  # the step's oracle: the law's first form with the one Node's interval around it
@@ -145,83 +87,10 @@ arrivals_rule3 = (
 )  # the first form of Rule3, written in the tool and in no file of src/
 
 
-def flux_world(tmp_path, shape, intervals=4):  # type: ignore[no-untyped-def]
-    """The tests' universe with the charged plane on a board, loaded, with gravity's row made by the test's hand the massless holder of the content carrying the flux's three odd lines (ALGEBRA.md, The clock family on the Ports, a hypothesis under its own name: no file declares it since 2026-10-24, a massless holder being the sign's and the key `sources` with `flux` gone, both kept by name; rule.json's row to that day): the row's lines 1 + 3 + 3, its flux marked, its walls the loader's for such a row. Under the gapped holder the volume moves and the swap fires, and the fold's run back and its x-y symmetry do not hold on these boards (read 2026-10-24, left open by name in FURTHER_RESEARCH.md)."""
-    universe_beside(
-        tmp_path, drop=("binding",), charged=True
-    )  # no second holder of the volume: at Gamma 6,000 and the declared width 63 the swap's complement 3 w X of a gapped row's volume passed int64 (the width derived since 2026-10-24; rule.json's binding holder, sourced by the form alone, carried no volume)
-    world = dict(shape=list(shape), intervals=intervals)
-    world.update(universe="u.json")
-    (path := tmp_path / "flux.json").write_text(json.dumps(world), encoding="utf-8")
-    loaded = load_world(path)
-    families = tuple(
-        replace(f, pair=(6000, 6000), lines=f.lines + 3, flux=True) if f.name == "gravity" else f
-        for f in loaded.families
-    )
-    return replace(loaded, families=families)
-
-
-def packet(board: Lattice, axis: int, wave: tuple[int, int], size: int, at: int) -> None:
-    """A plane-wave packet of the charged family laid by hand, moving along `axis` with the wave number 2 pi wave[0] / wave[1] per Link under a raised-cosine envelope over `size` Nodes from `at`, its level before the wave advanced by the band's own rotation at the vacuum's content, z_before = z_now e^(i omega), the record of positive Wronskian moving toward +a."""
-    index = [f.name for f in board.families].index(CHARGED["name"])
-    family, gamma = board.families[index], board.world.node_clock
-    k = 2 * np.pi * wave[0] / wave[1]
-    content = vacuum_content(board.world, family)
-    omega = np.arccos(band_of(family.pair, gamma, content, board.unit, np.cos(k), 1.0, 1.0))
-    x = np.indices(board.shape)[axis]
-    inside = (x >= at) & (x < at + size)  # a raised-cosine window: a locally plane wave
-    envelope = 600 * inside * np.sin(np.pi * (x - at + 1) / (size + 1)) ** 2
-    phase = k * x
-    laid = lambda values: np.rint(values).astype(np.int64).astype(board.kind)  # noqa: E731  # integers in the board's kind (Python's integers, not floats, in an object array: the width derived, 2026-10-24)
-    lines = [
-        Record(
-            laid(envelope * np.cos(phase)),
-            laid(envelope * np.cos(phase + omega)),
-            board.states[index].lines[0].remainder,
-        ),
-        Record(
-            laid(envelope * np.sin(phase)),
-            laid(envelope * np.sin(phase + omega)),
-            board.states[index].lines[1].remainder,
-        ),
-    ]
-    board.states[index].lines = lines
-
-
-LINE_KEYS = ("now", "before", "remainder")  # a record's three arrays
-
-
-def family(board: Lattice, name: str) -> int:
-    return [f.name for f in board.families].index(name)
-
-
-def arrays(board: Lattice) -> list[np.ndarray]:
-    """Every array of the state: the lines, the write remainders and the phase pairs."""
-    found = [getattr(r, k).copy() for s in board.states for r in s.lines for k in LINE_KEYS]
-    found += [r.copy() for s in board.states for r in s.write_remainders]
-    found += [
-        getattr(r, k).copy() for s in board.states for rows in s.phases for r in rows for k in LINE_KEYS
-    ]
-    return found
-
-
 def linear_sum(wall: int, line: Record) -> int:
     """The linear sum of one line over the board, L = SUM over the Nodes of [w (now - before) + r], w the family's wall 6 den Gamma^2 G^2 (the flux form of Rule3: w (next - 2 now + before) + r' - r = SUM over the Ports of R_ij (arrival - now) - D now, so the Link terms pair off on a closed board read at one rate and L moves by the mass term alone, zero for light); a lattice reading, no level written."""
     now, before = line.now.astype(object), line.before.astype(object)
     return int((wall * (now - before) + line.remainder.astype(object)).sum())
-
-
-def linear_exchange(reads: Sequence[Any], line: Record, wrap: Wrap) -> int:
-    """The change of a line's linear sum over one interval by its exchange with the board's faces, a family of light (num = den, so D = 0, at any content): -SUM over the Ports of R_ij times the Node's number over every Node whose Port arrives from beyond a face (the fill 0 there), 0 on a periodic axis; with the step's own six reads R_ij, the expected change of L where no other act writes the line, so that a jump beyond it names a level written outside Rule3's line."""
-    beyond = readings.ports(np.zeros_like(line.now), wrap, 1)
-    now = line.now.astype(object)
-    found = 0
-    for read, mask in zip(reads, beyond, strict=True):
-        where = np.asarray(mask, dtype=bool)
-        found += int(
-            (np.broadcast_to(np.asarray(read, dtype=object), now.shape)[where] * now[where]).sum()
-        )
-    return -found
 
 
 def weighted_linear_sum(wall: int, line: Record, weights: Any) -> int:

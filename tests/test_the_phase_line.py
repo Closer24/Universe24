@@ -1,15 +1,26 @@
-"""The phase line as a standalone module (features/phase; ALGEBRA.md #the-four-acts (b), #the-direction; the mathematician's repaired form of item (g), the advisor's second, the two hands' item (i)): a Rule3 pair at the one fixed angle theta_0 = 1 / Gamma (K_0 = 2 Gamma^2 - 1 over D = 2 Gamma^2), seeded on the half wall at an amplitude a multiple of Gamma, iterated by a level with the angle signed, read as the hop's two integers and folded into the Link's one coefficient rounding. The bound used throughout (item (i), both hands): the pair's magnitude within Gamma / 2 levels of X standing plus the walk's proved 1.42 N + 2.3 Gamma levels over the test's N acts (`bound`), never a count. Every test under 30 seconds (the owner's word); each prints its numbers with its time."""
+"""The phase line as a standalone module (features/phase; ALGEBRA.md #the-four-acts (b), #the-direction; the two hands' item (i)): a Rule3 pair at the one fixed angle theta_0 = 1 / Gamma (K_0 = 2 Gamma^2 - 1 over D = 2 Gamma^2), seeded on the half wall at an amplitude a multiple of Gamma, iterated by a level with the angle signed, read as the hop's two integers and folded into the Link's one coefficient rounding; and the family's rest rotation to the unit found by a bisection on the act and no root. The bound used throughout (item (i), both hands): the pair's magnitude within Gamma / 2 levels of X standing plus the walk's proved 1.42 N + 2.3 Gamma levels over the test's N acts (`bound`), never a count. Every test under 30 seconds; each prints its numbers with its time."""
 
 import math
 import time
+from fractions import Fraction
+from pathlib import Path
 
 import numpy as np
-import pytest
 
+from event_universe.core import paces
 from event_universe.core.paces import rounded
-from event_universe.core.rule3 import coefficients, division_forward
-from event_universe.features.phase import K0, D, act, fold, half_wall, iterate, read, seed
-from tests.laws import arrivals_rule3, refused
+from event_universe.features.phase import (
+    K0,
+    D,
+    act,
+    fold,
+    half_wall,
+    iterate,
+    read,
+    rotation_unit,
+    seed,
+)
+from tests.laws import refused
 
 GAMMA = 6_000
 WALL, COEFFICIENT = D(GAMMA), K0(GAMMA)
@@ -211,68 +222,17 @@ def test_the_half_wall_birth_cancels_the_walks_resonance():
     )
 
 
-def chain_centroid_shift(conjugate: bool, intervals: int) -> tuple[float, float]:
-    """The advisor's chain, pure numbers (6074924041 item (2); 6074833088 items 3-5): 400 Nodes, a plane record [4000, 6000] at the vacuum paces (Rule3's coefficients at G = 1, S = 0 and w = 6 den Gamma^2), the fold's unit X_ij = 2,048,000 with no window (the fold's pair (X_ij, 0)), a Gaussian packet at rest (A 6,000, sigma 30, about Node 280 and the conjugate about the mirror Node 119, each with the same room before the chain's end, the before a turn e^(-i omega) behind at cos omega = num / den, the conjugate the mirror im to -im), stepped by Rule3 on the re and im parts with the arrivals turned by the hop's pair: the Link between j and j + 1 owned by j + 1, its phase pair at X e^(i (Phi_(j+1) - Phi_j)) advanced one act per interval (a time level rising by one unit per Link along the chain, n = 1), read as the fold's product at the unit X_ij; the +a Port of j reads j + 1 through the pair and the -a Port of j + 1 reads j through it conjugated (the mathematician's item (g), K Hermitian); the four folded Ports read the Node itself; the chain's ends read 0. The wall and S are scaled by X_ij so the turned arrivals stay integers (Python's, beyond the width), the record's own rounding otherwise Rule3's. Returns the centroid before and after, weighted by |z_now|^2 + |z_before|^2."""
-    num, den, nodes, amplitude, sigma = 4_000, 6_000, 400, 6_000, 30
-    at = (
-        nodes - 1 - 280 if conjugate else 280
-    )  # the mirror packet starts at the mirror Node, the same room
-    reads, self_coefficient, wall = coefficients(num, den, gamma := GAMMA, GAMMA, GAMMA, None, 1)
-    self_coefficient, wall = self_coefficient * LINK_UNIT, wall * LINK_UNIT
-    omega, sense = math.acos(num / den), -1 if conjugate else 1
-    shape = [amplitude * math.exp(-((i - at) ** 2) / (2 * sigma**2)) for i in range(nodes)]
-
-    def column(values):  # type: ignore[no-untyped-def]
-        return np.array([int(v) for v in values], dtype=object)
-
-    re_now, im_now = column(round(v) for v in shape), column(0 for _ in shape)
-    re_before = column(round(v * math.cos(omega)) for v in shape)
-    im_before = column(round(-sense * v * math.sin(omega)) for v in shape)
-    half = int(division_forward(wall, 2, 0)[0])
-    carry_re, carry_im = column([half] * nodes), column([half] * nodes)
-    pair = seed(column([X35] * (nodes - 1)), gamma)
-    counts, zero = column([1] * (nodes - 1)), column([0])
-
-    def centroid() -> float:
-        weights = re_now * re_now + im_now * im_now + re_before * re_before + im_before * im_before
-        weights = np.array([float(v) for v in weights])
-        return float((np.arange(nodes) * weights).sum() / weights.sum())
-
-    before = centroid()
-    for _ in range(intervals):
-        pair = iterate(pair, counts, gamma)
-        c, s = read(pair)
-        hop_c, hop_s = fold(LINK_UNIT, 0, c, s, X35)
-        plus_re = np.concatenate([hop_c * re_now[1:] - hop_s * im_now[1:], zero])
-        plus_im = np.concatenate([hop_s * re_now[1:] + hop_c * im_now[1:], zero])
-        minus_re = np.concatenate([zero, hop_c * re_now[:-1] + hop_s * im_now[:-1]])
-        minus_im = np.concatenate([zero, -hop_s * re_now[:-1] + hop_c * im_now[:-1]])
-        self_re, self_im = LINK_UNIT * re_now, LINK_UNIT * im_now
-        arrivals_re = (plus_re, minus_re, self_re, self_re, self_re, self_re)
-        arrivals_im = (plus_im, minus_im, self_im, self_im, self_im, self_im)
-        re_next, carry_re = arrivals_rule3(
-            reads, arrivals_re, self_coefficient, wall, re_now, re_before, carry_re
-        )  # the twelve reads of a turned plane, the law's first form on the two parts
-        im_next, carry_im = arrivals_rule3(
-            reads, arrivals_im, self_coefficient, wall, im_now, im_before, carry_im
-        )
-        re_now, re_before, im_now, im_before = re_next, re_now, im_next, im_now
-    return before, centroid()
-
-
-@pytest.mark.parametrize("intervals", [2_500])
-def test_the_coulomb_harness_moves_the_centroid_by_the_hands_count(intervals: int):
-    """The advisor's second, item (2): after 2,500 intervals the record's centroid moves by about -151 Nodes (the hands: -151.20 in the rationals; the engine's -151.27 that day) and the conjugate's by +151.20 (+151.25), the force dk / dt = -theta_0 per Link the potential's gradient (the mathematician's item 5), within 2 percent; the chain a small local stepper on core/rule3 with no engine wiring (`chain_centroid_shift`)."""
-    started = time.perf_counter()
-    expected = -151.20 * (intervals / 2_500) ** 2  # the shift grows as t^2 at constant acceleration
-    shifts = {}
-    for conjugate in (False, True):
-        before, after = chain_centroid_shift(conjugate, intervals)
-        shifts[conjugate] = after - before
-    record, mirror = shifts[False], shifts[True]
-    tolerance = 0.02 * abs(expected)
-    assert abs(record - expected) <= tolerance, (record, expected, tolerance)
-    assert abs(mirror + expected) <= tolerance, (mirror, -expected, tolerance)
-    print(
-        f"{intervals} intervals: the record's centroid shift {record:+.2f} Nodes (the hands -151.20, the engine -151.27), the conjugate's {mirror:+.2f} (+151.20, +151.25); tolerance {tolerance:.2f}; {time.perf_counter() - started:.1f} s"
-    )
+def test_the_rotation_unit_by_the_rotation_act():
+    """The family's rest rotation to the unit, K = omega_0 Gamma, found by a bisection on the rotation act and no root (the two hands' (d) of 2026-10-09; features/phase at the fixed angle theta_0 = 1 / Gamma): 5,046 at [4000, 6000] and Gamma 6,000 (arccos(2 / 3) x 6,000 = 5,046.4), 0 at the massless pair [1, 1], and at [2, 3] within one unit of Gamma arccos(2 / 3); the value checked against the phase line itself in Python's fractions at an independent amplitude, the cosine line's level over X above 2 / 3 one act before K and below it one act after, the crossing within one unit of K; and core/paces.py takes no root."""
+    gamma = 6000
+    assert rotation_unit(4000, 6000, gamma) == 5046
+    assert rotation_unit(1, 1, gamma) == 0
+    found = rotation_unit(2, 3, gamma)
+    assert abs(found - gamma * np.arccos(2 / 3)) <= 1
+    amplitude = (2**36 // gamma) * gamma  # an amplitude of the test's own, a multiple of Gamma
+    pair = iterate(seed(amplitude, gamma), found - 1, gamma)
+    before = Fraction(int(read(pair)[0]), amplitude)
+    after = Fraction(int(read(iterate(pair, 2, gamma))[0]), amplitude)
+    assert before > Fraction(2, 3) > after, (before, after)
+    source = Path(paces.__file__).read_text(encoding="utf-8")
+    assert "division_fixed_point" not in source
