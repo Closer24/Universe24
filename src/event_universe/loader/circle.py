@@ -44,28 +44,19 @@ def is_prime(n: int) -> bool:
 
 
 def split(n: int) -> int:
-    """A proper factor of the composite n by Pollard's rho with Brent's cycle (the squares x -> x^2 + c modulo n by Python's modular power, the hare's run doubling, the differences x - y multiplied up over a batch of PORTS steps, six, the one small count the engine names and no number of this function's own, and the common divisor by Euclid's act, `gcd`, once per batch on the batch's product; where a batch's divisor is n itself the batch is walked again from its start one divisor at a time), the loader's tool for the circle's primes: the constant c counted up from 1 where the cycle closes on n itself; the same factors as Floyd's cycle with a divisor at every step, the loader's split to 2026-10-24 kept by name (three modular powers and one Euclid per step: 52 s on the PeV den's 155 bits, where this takes 17 s, the record-speed hands' kind of economy)."""
+    """A proper factor of the composite n by Pollard's rho with Brent's cycle (the squares x -> x^2 + c modulo n by Python's modular power, the hare's run doubling each round and the common divisor of x - y and n by Euclid's act, `gcd`, at every step of the run), the loader's tool for the circle's primes: the constant c counted up from 1 where the cycle closes on n itself; no count of this function's own (one divisor per round over the round's product needs the product reduced by the division act at every step and measured slower, 31 s against 22 s on the PeV den's 155 bits; a batch of six steps 17 s, set aside for its constant); the same factors as Floyd's cycle with three modular powers and one divisor per step, the loader's split to 2026-10-24, kept by name (52 s on the PeV den)."""
     c = 1
     while True:
-        y, r, q, g = 2, 1, 1, 1
-        x = ys = y
+        y, r, g = 2, 1, 1
         while g == 1:
             x = y
             for _ in range(r):
                 y = pow(y, 2, n) + c
             k = 0
             while k < r and g == 1:
-                ys = y
-                for _ in range(min(PORTS, r - k)):
-                    y = pow(y, 2, n) + c
-                    q *= x - y
-                g, q, k = gcd(q, n), 1, k + PORTS
+                y = pow(y, 2, n) + c
+                g, k = gcd(x - y, n), k + 1
             r += r
-        if g == n:  # the batch's divisor is n itself: its start walked again, one divisor per step
-            g = 1
-            while g == 1:
-                ys = pow(ys, 2, n) + c
-                g = gcd(x - ys, n)
         if g != n:
             return g
         c += 1
