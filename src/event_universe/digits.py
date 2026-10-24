@@ -4,13 +4,14 @@ from __future__ import annotations
 
 from collections.abc import Iterator, Sequence
 from math import gcd
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 import numpy as np
 
 from event_universe import flux, node
 from event_universe.core.rule3 import Rule, division_forward, wall_of
 from event_universe.features.click import read_number
+from event_universe.features.read import READS, read_again
 from event_universe.loader.derived import quanta_records
 
 if TYPE_CHECKING:
@@ -46,13 +47,25 @@ def picked(value: Any, nodes: Frame) -> list[int]:
     return [int(array[node]) if array.ndim else int(array) for node in nodes]
 
 
+def ruled(board: Lattice, index: int, record: int, content: Any, factors: node.Factors) -> Rule:
+    """Rule3's integers of one record's read (`node.rule_of`), made once per interval on the very read and given again at every Node's frame of the close (features/read READS, `read_again`, keyed as `flux.pairs_of` is, the content and the factors the memoized read returned held by identity: the board's own read asks every record's rule at every meeting Node; the architect's economy of 2026-10-24)."""
+    gamma, unit = board.world.node_clock, board.unit
+    key = (ruled, index, record, gamma, unit)
+    taken = (board.families, content, *(() if factors is None else tuple(factors)))
+    if (kept := read_again(key, taken)) is not None:
+        return cast(Rule, kept[0])
+    rule = node.rule_of(board.families[index], gamma, content, factors, unit)
+    READS[key] = (taken, (rule, []))
+    return rule
+
+
 def digits_of(board: Lattice, index: int, at: Frame) -> Iterator[tuple[int, int, int, tuple[int, int]]]:
     """One family's digits at the Nodes of the frame `at` in the frame's order (the reader's own: the Node first, then its six Ports in the Port order, `frame_of`; the lines outer in the record's declared order): every record of quanta of the family in its order (`loader/derived.quanta_records`; a holder of the sign its one record, light's free row, `Lattice.lines_of`), the digits' lattice F at the Nodes from Rule3's integers of the record's read and, where the record is turned or folded, the Link pairs its step reads (`lattice_of`, `flux.pairs_of` at the same read, None for a plain record), then every line of the record in the declared order and each line's kept remainder at the Nodes in the lattice's index order; per digit the remainder, its Node's F, the family's wall w and its place, the record and the Node's index in the lattice's order (the copies' comparison, `read_of`), Python's integers, the arrays read and never written."""
     family, gamma, unit = board.families[index], board.world.node_clock, board.unit
     wall = wall_of(family.pair[1], gamma, unit)
     for record in quanta_records(board.families, index):
         content, factors = board.read(index, 1, record)
-        rule = node.rule_of(family, gamma, content, factors, unit)
+        rule = ruled(board, index, record, content, factors)
         families, states, amplitude = board.families, board.states, board.amplitude
         pairs = flux.pairs_of(
             index, families, states, 1, board.wrap, gamma, content, factors, record, amplitude

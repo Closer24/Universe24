@@ -51,6 +51,16 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the same reader on a log with the eight keys: the velocity in Links per board and per proper interval, the bound and the free verdicts, "
         "the dilation ratio and the Delta x Delta p product, each number computed by hand",
     ),
+    "tests/test_the_readings_are_made_once_per_interval.py::test_the_rule_and_the_pairs_of_the_digits_read_are_made_once_per_close": (
+        22,
+        "the digits' read made once per record per interval (the branch record-speed, 2026-10-24): digits.ruled and flux.pairs_of asked at "
+        "every Node's frame of a close give the same integers memoized and not, and node.rule_of is called once per record over every frame",
+    ),
+    "tests/test_the_readings_are_made_once_per_interval.py::test_the_turned_room_is_computed_once_per_pair_at_load": (
+        14,
+        "plane.turned_room under functools.cache at load (the branch record-speed, 2026-10-24): the same room cold and warm per turned pair, "
+        "every warm call a hit, the amplitude bound the world's",
+    ),
     "tests/test_the_birth_is_a_list_of_records.py::test_the_lists_two_light_quanta_make_are_the_conjugate_pairs_and_the_general_enumeration_a_function": (
         16,
         "Matter's birth from light, N records one per child (2026-10-24, the owner's word, several can be born): the law as written "
