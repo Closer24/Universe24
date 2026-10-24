@@ -11,32 +11,14 @@
    "pair": [
     53529741,
     53567765
-   ],
-   "reads": {
-    "gravity": 1
-   },
-   "held": {
-    "sources": [
-     "form",
-     "tensions"
-    ],
-    "level_weight": 1,
-    "write_weight": 1
-   }
+   ]
   },
   {
    "name": "charge",
    "pair": [
     53567765,
     53567765
-   ],
-   "reads": {},
-   "held": {
-    "sources": [
-     "wronskian"
-    ],
-    "level_weight": 1
-   }
+   ]
   },
   {
    "name": "matter",
@@ -44,9 +26,6 @@
     32140659,
     53567765
    ],
-   "reads": {
-    "gravity": 1
-   },
    "dimension": 1
   },
   {
@@ -55,9 +34,6 @@
     53567765,
     53567765
    ],
-   "reads": {
-    "gravity": 1
-   },
    "dimension": 1
   },
   {
@@ -66,10 +42,6 @@
     4859756,
     53567765
    ],
-   "reads": {
-    "gravity": 1,
-    "charge": 1
-   },
    "dimension": 2
   },
   {
@@ -78,10 +50,6 @@
     53567757,
     53567765
    ],
-   "reads": {
-    "gravity": 1,
-    "charge": 1
-   },
    "dimension": 2
   }
  ]
