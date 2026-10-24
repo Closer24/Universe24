@@ -57,11 +57,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the stress is the Links': the reading invariant under the shift of every level by one number where the former gains "
         "m Delta_a a, even under the axis's inversion, a one-Node record's parts at its two neighbours",
     ),
-    "tests/test_the_stress_is_the_links.py::test_the_tension_lines_write_at_the_doubled_wall_and_a_wrapped_world_runs_back": (
-        32,
-        "the stress is the Links': the loader's tension lines at the doubled wall 2 E_s W_c, and a wrapped world with a "
-        "structured record stepped and run back bit for bit",
-    ),
     "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
         93,
         "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "
@@ -90,12 +85,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         11,
         "PR D's gate (the Boss's brief of 2026-10-03): no two integer literals multiplied, added or raised outside "
         "core/rule3.py, the composed number named from the Ports and the levels or taken from the files",
-    ),
-    "tests/test_the_features.py::test_the_writes_room_under_a_negative_tension_is_the_larger_of_the_hills_and_the_tensions": (
-        48,
-        "the register's room under a negative tension (the mathematician's 268 with the advisor's second, two hands; the "
-        "Boss's brief of 2026-10-03): the tension's room at the rule's universe's four pairs against the hill's, the four "
-        "shipped universes' bound unmoved, a universe whose write binds the bound lowered by name",
     ),
     "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
         172,
