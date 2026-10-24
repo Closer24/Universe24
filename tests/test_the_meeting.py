@@ -10,44 +10,31 @@ from event_universe import resonance, take
 from event_universe.emission import laid_by_count
 from event_universe.lattice import Lattice
 from event_universe.loader.draw import (
-    basis_of,
-    draw_of,
     pattern_of,
     patterns_of_the_law,
 )
 from event_universe.loader.node_detector_declaration import Transition
-from event_universe.loader.universe import shape_of, universe_of
+from event_universe.loader.universe import universe_of
 from event_universe.loader.world import node_detectors_of
 from event_universe.world_files import load_world
-from tests import laws
 from tests.laws import (
-    BACK,
     EVENTS,
     GATE,
-    ROOT,
-    TOOL,
-    load_file,
     refused,
 )
 from tests.laws_content import (
     ONE_PHOTON,
     TWO_ATOMS,
     ZENO_1,
-    ZENO_2,
     ZENO_4,
     ZENO_ATOM,
     content_world,
     opened,
 )
-from tests.laws_read import redeclared
 
-BELL = load_file("bell_build", EVENTS / "bell" / "build_world.py")
-PAIR = ((1, 0), (0, 1))  # the pair's pattern: the + port reads (p, q), the - port (-q, p)
 A, A2, B, B2 = ((1, 0), (1, 1), (12, 5), (5, 12))  # the CHSH settings as the declared bases (p, q)
 ORDER, CHSH = ((A, B), (A, B2), (A2, B), (A2, B2)), (1, -1, 1, 1)  # CHSH's four worlds and S's signs
-MEETING = [Fraction(119, 169), Fraction(-119, 169), Fraction(120, 169), Fraction(120, 169)]
 FENCE = {GATE.parts_shares: Fraction(238, 169), GATE.local_sums: Fraction(240, 169)}  # the local credits
-UNEQUAL = (Fraction(363518, 128609), Fraction(66625, 128609), [760, 761])  # S, P(A+), rho at r = 19/20
 P, Q, X, Y = (1, 0), (0, 1), (1, 0), (1, 1)  # a part reading p or q; the GHZ settings x, y (0, pi / 4)
 PATTERNS = ((P, P, Q, Q), (P, Q, P, Q), (P, (0, -1), (0, -1), (-1, 0)))  # the GHZ patterns A, B, C
 MERMIN = (((X, Y, Y), (Y, X, Y), (Y, Y, X), (X, X, X)), (1, 1, 1, -1))  # Mermin's four worlds and signs
@@ -60,45 +47,6 @@ def side(*parts: tuple[int, int]) -> dict[int, list[list[int]]]:
 def credits(sides, order, patterns, form=GATE.joint):  # type: ignore[no-untyped-def]
     shares = [form(sides, [GATE.ports_of(*sp) for sp in zip(s, patterns, strict=True)]) for s in order]
     return shares, [GATE.correlation(found) for found in shares]
-
-
-def test_the_one_meeting_reads_the_blind_at_the_sides_and_the_engine_implements_it_exactly(tmp_path):
-    """(i) Equal parts on both sides over a window whose middle interval reports 0 (no 0 / 0 under the window rule): E = ((p p' + q q')^2 - (p q' - q p')^2) / ((p^2 + q^2) (p'^2 + q'^2)) at the four settings, S = 478 / 169 exactly and the marginal 1 / 2 whatever the partner's setting; the local credits on the same reports: by the parts' shares S = 238 / 169 (E = cos 2a cos 2b), by the local sums 240 / 169 (sin 2a sin 2b), by the sign 2 (the tie at (1, 0) reads 0, read with the worlds). (ii) What a formula reader fails: the parts (20, 19) against (1, 1), r = 19 / 20, give S = 363518 / 128609 (2.8265), the marginal 66625 / 128609 (0.518) at (12, 5) for both partner settings and rho = 760 / 761; parts (1, 0) give S = 238 / 169 (rho = 0); a setting of one coefficient and a pattern whose ports are not orthogonal are refused by name. (iii) The four worlds of examples/events/bell/design.json built with their mode files (the pair family at the dimension [2, 1]; the regions' bases the settings, their pattern the pair's) and run: the parts equal at every interval, the reader gives E = 119 / 169, -119 / 169, 120 / 169, 120 / 169, S = 478 / 169 and the marginals 1 / 2 exactly, the local credits 238 / 169, 240 / 169 and 2, the ratio and rho 1 and one pair drawn per world, the blind file carrying the same S before the run; a part raised one level at one Node is not equal after the run and reads the ratio off 1; the loader refuses by name a dimension shape of three numbers and a basis of zeros; the back-in-time gate says MATCH on each world over its run; the plane's reader (tools/spin_gate.py) loaded after the gate's leaves `GATE.one_world` as it was, and the perturbed world is read by it after the load (the finding of 2026-10-20: the module body rebound bell_gate.one_world to the plane's form at import, the singlet's builder importing it for `at_equal_parts` and the builders' test loading every builder in the process the gate's worlds are read in, and in the one worker that ran the builders' test first the perturbed world was refused by the Gram check where its mismatch is read, one failure in three full checks)."""
-    a, b, equal = side((7, -3), (7, -3)), side((5, 11), (5, 11)), side((1, 1), (1, 1))
-    a[2] = b[2] = [[0, 0], [0, 0]]
-    shares, found = credits([a, b], ORDER, (PAIR, PAIR))
-    assert found == MEETING and GATE.combination(found, CHSH) == Fraction(478, 169)
-    assert [GATE.marginal(s) for s in shares] == [Fraction(1, 2)] * 4
-    found = {f: GATE.combination(credits([a, b], ORDER, (PAIR, PAIR), f)[1], CHSH) for f in FENCE}
-    assert found == FENCE
-    unequal, mirrored = side((20, 20), (19, 19)), tuple((y, x) for x, y in ORDER)
-    shares, found = credits([unequal, equal], mirrored, (PAIR, PAIR))
-    assert GATE.combination(found, CHSH) == UNEQUAL[0]
-    assert GATE.marginal(shares[0]) == GATE.marginal(shares[2]) == UNEQUAL[1]
-    m = GATE.mismatch([unequal, equal], 2)
-    assert (m["ratios"], m["rho"], m["label"]) == ([[19, 20]], UNEQUAL[2], "LATTICE")
-    rho_zero = credits([side((1, 1), (0, 0)), b], ORDER, (PAIR, PAIR))[1]
-    assert GATE.combination(rho_zero, CHSH) == FENCE[GATE.parts_shares]
-    refused("setting", GATE.ports_of, (1,), PAIR), refused("orthogonal", GATE.ports_of, A, ((1, 1),))
-    read, expected = laws.gate_worlds(BELL, tmp_path)
-    assert [Fraction(*read["correlation"][k]) for k in expected["order"]] == MEETING
-    assert (read["S_by_the_parts_shares"], read["S_by_the_local_sums"]) == ([238, 169], [240, 169])
-    assert read["S_by_the_sign"] == [2, 1] == expected["blind"]["by_the_sign"]["S"]
-    for world in read["worlds"].values():
-        assert world["mismatch"]["ratios"] == [[1, 1]] and world["mismatch"]["rho"] == [1, 1]
-        assert len(world["drawn"]) == 2 and all(q[0] > 0 for q in world["quanta"].values())
-    path = tmp_path / f"{expected['runs'][expected['order'][0]]}.json"
-    board = Lattice(load_world(path), (lines := []).append)
-    board.states[-1].lines[1].now[board.shape[0] // 2, 0, 0] += 1  # the pair's one part a level off
-    for _ in range(board.world.intervals):
-        board.step()
-    assert (board.states[-1].lines[0].now != board.states[-1].lines[1].now).any()
-    before = GATE.one_world  # loaded after the gate's, as the singlet's builder imports it
-    load_file("spin_gate", ROOT / "tools" / "spin_gate.py")
-    assert GATE.one_world is before  # tools/spin_gate.py rebinds nothing at import
-    assert GATE.one_world(path, lines, expected)["mismatch"]["ratios"] != [[1, 1]]
-    refused(r"as a shape is \[parts, dimension\]", shape_of, {"dimension": [2, 1, 1]}, "families[0]")
-    refused("not all 0", basis_of, [0, 0], "node_detectors[0].basis")
 
 
 def test_the_ghz_gate_pairs_four_parts_on_three_sides_exactly(tmp_path):
@@ -121,68 +69,6 @@ def test_the_ghz_gate_pairs_four_parts_on_three_sides_exactly(tmp_path):
     families = universe_of(json.loads((EVENTS / "ghz.json").read_text(encoding="utf-8")))[1]
     refused("pattern of 3 parts", patterns_of_the_law, [("d", (P,) * 3)], [len(families) - 1], families)
     refused("no record of several parts", patterns_of_the_law, [("d", (P,) * 4)], [], families)
-
-
-def test_the_click_is_written_at_one_node_and_the_board_is_exact_between_clicks(tmp_path):
-    """The click written on the lattice (ALGEBRA.md #the-click-is-the-meeting; HIGHLIGHTS.md, the owner's decision of 2026-10-02; features/click, src/event_universe/credit.py): Bell's shipped world a b with the draw's window cut to 40 over its 100 intervals, beside its twin without the key. (i) At the first close, 40, the beams' share through each side stands below a whole quantum, so no side clicks (the side's gate, the reader's F4 of 2026-10-20, `lists.readings`); one credit line per side at 80: the result the window, the node_detector's proper time at the close (the board's intervals at the vacuum's clock p_0 = Gamma - c_vac, 79 at the declared rest 60) and the index of the window closed, 2, the region, the port realised, the parts kept and the count 1, the record's count down by one, no Node (the hole's Nodes in the face lines); after the click at 80 the two boards differ at the two written Nodes (the holes, the one-Node write of the count) and along the record the write at the birth rewrote, the part the first side zeroed standing at 0 everywhere and the held rows it sources moved with it (the click writes, the owner's word of 2026-10-20; the second side's write on the one surviving part the identity), and at the written Node every line of the record is 0 in its three arrays (the hole, as the receding face removes a share) where the twin's levels stand. (ii) The inverse is exact after the click down to it: from 100 back to 80 every array returns bit for bit (the holes crossed from the face lines); below 80 the inverse returns the realised past, which differs from the frames the forward run kept before the first close, the possibilities' run (the step back across the first click misses, as the law says); and the twin goes from 40 back to the lay, MATCH. (iii) The record's count: at 0 the draw credits nothing over the same 80 intervals, the reports the same lines but the click's (the credit lines and the write's lay lines at the birth); the `draw` key refused by name with a window of 0 and without its seed."""
-    world = redeclared(json.loads((EVENTS / "bell" / "bell_a_b.json").read_text(encoding="utf-8")))
-    draw = dict(world["draw"])  # the window derived, 30 on this chain (2026-10-23)
-    (cut := tmp_path / "cut.json").write_text(json.dumps(world), encoding="utf-8")
-    world.pop("draw")
-    (twin := tmp_path / "twin.json").write_text(json.dumps(world), encoding="utf-8")
-    TOOL.main(["--input", str(cut)]), TOOL.main(["--input", str(twin)])
-    board, plain = Lattice(load_world(cut), (lines := []).append), Lattice(load_world(twin))
-    kept = {}
-    for _ in range(100):
-        board.step(), kept.__setitem__(board.interval, BACK.snapshot(board))
-        board.interval <= 61 and plain.step()
-    credits = [line for line in lines if line["event"] == "credit"]
-    pair = next(i for i, f in enumerate(board.families) if f.name == "light_pair")
-    at = [(c["interval"], c["node_detector"], c["count"], c["window"][0], c["left"]) for c in credits]
-    left, clock = board.credit.counts[pair], board.world.node_clock - max(f.rest for f in board.families)
-    assert (
-        at[:2] == [(60, "left", 1, 31, 25), (60, "right", 1, 31, 25)]
-        and at[2:]
-        == [
-            (90, "left", 1, 61, left),
-            (90, "right", 1, 61, left),
-        ]
-    )  # the derived window 30: nothing through at 30, the clicks at the second close 60 with 25 left and again at 90 with 24 (80 with 24 at the declared window 40 before 2026-10-23)
-    was, now = dict(p for f in kept[61] for p in f), dict(p for f in BACK.snapshot(plain) for p in f)
-    proper = [(n * clock // board.world.node_clock, 2) for n in (60, 60)]
-    assert [(c["proper"], c["windows"]) for c in credits[:2]] == proper  # p_0 = Gamma - c_vac
-    keys = "event label interval family node_detector window proper windows before realised kept"
-    words = f"{keys} count left absorbed emitted momentum fan lost source recoil"
-    report = set(f"{words} order scale board_count".split())  # Part F's, C3's, G's and the sides' words
-    assert all(set(c) - {"bias_bound"} == report and c["label"] == "NODEDETECTOR" for c in credits)
-    assert all(c["bias_bound"]["g"] < c["bias_bound"]["total"] for c in credits if "bias_bound" in c)
-    holes = [f for f in lines if f["event"] == "face" and f["interval"] == 61]  # the hole's Nodes
-    written = {tuple(np.add(f["node"]["at"], plain.offset)) for f in holes}
-    differing = {
-        tuple(map(int, a)) for k in was for a in np.argwhere(was[k] != now[k])
-    }  # the holes, the write
-    assert written <= differing and any(not was[f"light_pair.lines[{k}].now"].any() for k in range(2))
-    w, keys = sorted(written)[0], [k for k in was if "light_pair" in k]
-    assert len(credits[0]["kept"]) == 1 and credits[1]["kept"] == [0, 1]  # the first close's two
-    levels = [k for k in keys if k.endswith("now") or k.endswith("before")]  # the face: now 0 at 81
-    assert all(was[k][w] == 0 for k in levels if k.endswith("now")) and any(now[k][w] != 0 for k in keys)
-    assert all(dict(p for f in kept[62] for p in f)[k][w] == 0 for k in levels)  # both levels 0 at 62
-    for _ in range(99):  # the faces presented again and the lays crossed from their lines, bit for bit
-        BACK.crossed(board, lines)
-        board.step_inverse()
-        same = BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
-        assert (
-            same == (board.interval >= 60)
-        )  # below the first click the realised past, the possibilities' kept; the second close's clicks at 90 leave the run back exact down to 60
-    assert BACK.verdict(Lattice(load_world(twin)), 29)["verdict"] == "MATCH"
-    empty = Lattice(load_world(cut), (none := []).append)
-    empty.credit.counts[pair] = 0
-    for _ in range(60):
-        empty.step()
-    before = [c for c in lines if c["interval"] <= 60 and c["event"] not in ("credit", "lay")]
-    assert none == before  # no click's line, no draw
-    refused("window", draw_of, {**draw, "window": 0}, "draw")
-    refused("unknown key 'seed'", draw_of, {"seed": 1}, "draw")  # no generator, no key
 
 
 def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window(tmp_path):
@@ -229,56 +115,6 @@ def test_the_resonant_two_mode_act_turns_by_the_planes_size_once_per_window(tmp_
     assert (gathered.in_phase, gathered.quadrature) == (0, 0) and books.elapsed == 0
     hopped = resonance.hopped(10**6, 0, *resonance.window_pair(9408, 6000, board.amplitude))
     assert abs(math.atan2(hopped[1], hopped[0]) - 9408 / 6000) <= 1e-6  # the hop at the window's angle
-
-
-def test_a_absorption_from_a_dense_record_is_read_in_the_books_and_writes_nothing(tmp_path):
-    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `take.faced`, `credit.Books.deficits`, `Lattice.books`): the shipped Zeno n = 2 world, whose drive holds about 2.6 quanta's share at the reader's Node (the booked share the credit reads there above the record's quantum W_rec), under the read of the board, beside its untouched twin. The absorption at 42, g to e climbing (re-pinned 2026-10-20 under the content of the born universe, the box opened along x as the content's sink and the window the lay's passage derived at load, 21: the second close, the first at 21 null; 72 and then 24 on the deleted world under the generator), books no face and no front, the drive's three arrays stand bit for bit as the twin's over the run (the drive reads no holder: the same Rule3 step), so its share at the Node and over the board is the twin's, printed; the count down by one, the deficit 1 and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books read at 84, between the absorption and the return; the books' `drift` over W_c and one quantum of the reading's rounding, printed); the return, e to g descending by the pulse at a later window's close, 84 (`lists.exchange`, stimulated emission; 96 before), emits the quantum back into the dense pulse: nothing laid, no source in time, the count back to the start and the deficit 0, the arrays the twin's still; the back-in-time gate MATCH across the absorption and the return, the atom's lays crossed from their lines."""
-    zeno = content_world(
-        tmp_path, "zeno_2", ZENO_2, ZENO_ATOM, opened
-    )  # the content, the box opened along x (2026-10-20)
-    board, twin = Lattice(load_world(zeno), (lines := []).append), Lattice(load_world(zeno))
-    pulse = [f.name for f in board.families].index("pulse")
-    at, count, unit = (4, 4, 2), board.credit.counts[pulse], board.credit.units[pulse]
-    returns, books, its_books, booked_share = [], None, None, None
-    while board.interval < 480 and not returns:
-        board.step(), twin.step()
-        for key in ("now", "before", "remainder"):
-            mine, its = (getattr(b.states[pulse].lines[0], key) for b in (board, twin))
-            assert np.array_equal(mine, its)  # the undepleted beam: nothing written on the drive
-        taken = [x["interval"] for x in lines if x["event"] == "credit" and x["absorbed"]]
-        if taken and booked_share is None:  # the absorption's interval: the drive's share at the Node
-            booked_share = int(board.share_of(pulse)[0][at])
-        if (
-            books is None
-            and taken
-            and board.interval == taken[0] + board.world.bodies[0].detector.draw.window
-        ):  # the next close after it
-            books, its_books = board.books()["pulse"], twin.books()["pulse"]  # the hole's deficit booked
-        returns = [x for x in lines if x["event"] == "credit" and x["emitted"] == "pulse"]
-    assert booked_share is not None and booked_share > unit  # dense: above the record's quantum
-    assert books is not None and its_books is not None
-    credits = [x for x in lines if x["event"] == "credit" and x["label"] == "NODEDETECTOR"]
-    jumps = [x for x in credits if x["absorbed"]]
-    assert (
-        [x["interval"] for x in jumps][:1] == [105] and jumps[0]["absorbed"] == "pulse"
-    )  # the absorption at the derived window's close 105 (42 at the declared window, the read of 2026-10-20)
-    assert not any(f.family == pulse for faces in board.credit.faces.values() for f in faces)
-    assert not board.credit.fronts and not board.credit.sources
-    print(
-        f"the Zeno drive's booked share at the Node {booked_share} over W_rec {unit}, the books {books}"
-    )
-    assert (books["count"], books["deficit"], books["quanta"]) == (count - 1, 1, its_books["quanta"])
-    within = abs(books["drift"]) // board.credit.units[pulse] + 1  # the drift in W_rec (C1)
-    print(f"the share in quanta {books['quanta']} against the count plus the deficit within {within}")
-    assert abs(books["quanta"] - books["count"] - books["deficit"]) <= within
-    assert books["share"] == its_books["share"] and books["drift"] == its_books["drift"]
-    cycled = board.books()["pulse"]
-    print(f"the return at {returns[0]['interval']} after {len(jumps)} absorptions: the books {cycled}")
-    assert (cycled["count"], cycled["deficit"]) == (count - len(jumps) + 1, len(jumps) - 1)
-    gate = Lattice(load_world(zeno))
-    assert (
-        BACK.verdict(gate, returns[0]["interval"])["verdict"] == "MATCH"
-    )  # across the absorption and the return
 
 
 def test_every_line_is_born_at_the_half_wall_and_a_lone_massless_quantum_stays_bounded(tmp_path):

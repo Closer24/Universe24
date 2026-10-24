@@ -89,16 +89,19 @@ def test_a_massless_time_line_never_fires(tmp_path, monkeypatch):  # type: ignor
 def test_the_shipped_matter_world_fires_at_the_bodys_six_neighbours_at_interval_2_and_nowhere_after(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """(5) The shipped big bang's matter world (Gamma 6,000, gravity [6000, 6000], the seed at one Node: a structured massless board) under the law with both acts, read 2026-10-23: the fifth act fires nowhere over 50 intervals, board.swaps == [], since the swap reads the gapped time line alone (the clause of 2026-10-23 on the massless row, swap.acted: the gap on the pair is the one form within the law that turns a board, a massless row's weak maximum the rounding's dip and no top). The former reading (the structured-cycle branch, the same day) fired at the body's six Link neighbours at interval 2 and nowhere after, board.swaps == [(2, 1, 6)], its cause: under The stress is the Links' the body's pressure is read at its six neighbours one Link out and enters their time line's write as the trace at the weight -1 before the form's write reaches them by the step at interval 3, so their volume's step output dips below the rest they stand at (6,247), a weak maximum, and the act keeps the rest; the former stress reading put the pressure at the body's own Node, where the form's write outweighs it, and the world fired nowhere (the former clause). The course stands after the fires: X at the body 6,247, 16,785, 34,986 at 1, 2, 3, every Node rising from 3 on, U 1.283 at 100, 1.530 at 200 and 1.675 at 300 (the fine mean over the Nodes) against the shipped eras log's level reading under the former stress reading, 1.283, 1.535, 1.684, no further fire and no refusal (examples/events/big_bang/big_bang_matter.course.jsonl)."""
-    from tests.laws import EVENTS
+    """(5) A structured massless board under the law with both acts (the shipped big bang's matter world, Gamma 6,000, gravity [6000, 6000], the seed at one Node, 16 s at load and 50 intervals, left on 2026-10-24 for the one world's small torus with gravity made massless, tests/laws_universe.py): the fifth act never fires on the massless row over 20 intervals (the clause of 2026-10-23; the former reading fired at the body's six neighbours at the interval 2, [(2, 1, 6)])."""
+    from tests import laws_universe
 
-    board = Lattice(load_world(EVENTS / "big_bang" / "big_bang_matter.json"))
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(laws_universe, "GAP", laws_universe.GAMMA)  # gravity massless
+    monkeypatch.setattr(
+        Lattice, "gate", lambda board: None
+    )  # the clump's count is the gapped board's reading
+    board = Lattice(load_world(laws_universe.small_world(tmp_path, detector=False)))
     board.output = lambda line: None
-    for _ in range(50):
+    for _ in range(20):
         board.step()
-    assert (
-        board.swaps == []
-    )  # the massless row never turns (the clause of 2026-10-23): the former reading fired here, [(2, 1, 6)]
+    assert board.swaps == [], board.swaps  # the massless row never turns
 
 
 def run_back_exact(world, intervals):  # type: ignore[no-untyped-def]
@@ -118,22 +121,30 @@ def run_back_exact(world, intervals):  # type: ignore[no-untyped-def]
     return matched, list(board.credit.counts) == counts, board.swaps
 
 
-def test_the_matter_worlds_run_back_reaches_interval_0_exactly_through_the_fires_and_the_declared_lay():  # type: ignore[no-untyped-def]
-    """The shipped matter world under both acts run 60 intervals forward and back, every snapshot on the way back bit for bit, interval 0 included, the counts back (the lay's inverse, 2026-10-23). The former mismatch at the last step, named: the file's packets (`interval: 1`) are laid by the lay act from outside the Node after the held writes of interval 1, so the first interval writes nothing; before the lay's inverse the run back undid the books' log's lays alone (the clicks', where the world reads sides), the laid records stayed and the held write's inverse took off a write never added (the body's time line `before` 16,786 against 6,247, the same letter on the landing head before both acts, 16,208), and the swap's inverse fired at the six neighbours on the spurious dip; now every lay at an interval above 0 is logged and crossed back at its interval before the interval's inverse, the laid packets' counts with their levels (`lay.written`, `meeting_back.logged`), so the inverse finds the bookings of the first interval's start empty as the forward found them, and the six fires of interval 2 are mirrored by their inverse alone."""
-    from tests.laws import EVENTS
+def test_the_matter_worlds_run_back_reaches_interval_0_exactly_through_the_fires_and_the_declared_lay(
+    tmp_path, monkeypatch
+):  # type: ignore[no-untyped-def]
+    """The structured massless board under both acts run 20 intervals forward and back, every snapshot on the way back bit for bit, interval 0 included, the counts back, no fire on the massless row (the lay's inverse, 2026-10-23; the clause on the massless row): the one world's small torus with gravity made massless (tests/laws_universe.py) in place of the shipped big_bang_matter world over 60 (16 s at load, 27 s on the suite's clock, left on 2026-10-24)."""
+    from tests import laws_universe
 
-    matched, counts_back, swaps = run_back_exact(EVENTS / "big_bang" / "big_bang_matter.json", 60)
-    assert matched == 60 and counts_back
-    assert (
-        swaps == []
-    )  # no fire on the massless row (the clause of 2026-10-23); the former reading's [(2, 1, 6), (2, -1, 6)]
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(laws_universe, "GAP", laws_universe.GAMMA)  # gravity massless
+    monkeypatch.setattr(
+        Lattice, "gate", lambda board: None
+    )  # the clump's count is the gapped board's reading
+    matched, counts_back, swaps = run_back_exact(laws_universe.small_world(tmp_path, detector=False), 20)
+    assert matched == 20 and counts_back
+    assert swaps == []  # no fire on the massless row (the clause of 2026-10-23)
 
 
-def test_the_big_bang_worlds_run_back_reaches_interval_0_exactly_through_its_lays_and_fires():  # type: ignore[no-untyped-def]
-    """The shipped big bang world with light (three plane waves laid whole at interval 1 beside the matter) run 40 intervals forward and back under both acts: every snapshot on the way back bit for bit, interval 0 included, the counts back, every fire mirrored by its inverse (the lay's inverse, 2026-10-23)."""
-    from tests.laws import EVENTS
+def test_the_big_bang_worlds_run_back_reaches_interval_0_exactly_through_its_lays_and_fires(
+    tmp_path, monkeypatch
+):  # type: ignore[no-untyped-def]
+    """The structured gapped board with light (the one world's small torus, one clump and light on every other Node, gravity at [990, 1000], tests/laws_universe.py; the shipped big bang world with its three plane waves over 40, 16 s at load, left on 2026-10-24) run 40 intervals forward and back under both acts: every snapshot on the way back bit for bit, interval 0 included, the counts back, and the inverse's fires the forward run's in reverse (the fifth act fires at the top, within the 40)."""
+    from tests import laws_universe
 
-    matched, counts_back, swaps = run_back_exact(EVENTS / "big_bang" / "big_bang.json", 40)
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    matched, counts_back, swaps = run_back_exact(laws_universe.small_world(tmp_path, detector=False), 40)
     assert matched == 40 and counts_back
     forward = [s for s in swaps if s[1] == 1]
-    assert [(t, -1, n) for t, _d, n in reversed(forward)] == [s for s in swaps if s[1] == -1]
+    assert forward and [(t, -1, n) for t, _d, n in reversed(forward)] == [s for s in swaps if s[1] == -1]

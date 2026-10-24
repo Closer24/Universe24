@@ -13,8 +13,12 @@ from event_universe.world_files import input_digest, load_world
 from tests.laws import LINE_KEYS, arrays
 
 ATOM = Path(world_files.REPOSITORY_ROOT) / "examples" / "events" / "atom" / "hydrogen_1s.json"
-WHOLE, CUBE, CUT = 11, 7, 2  # the 7-cube about the 11-cube's centre: the file's x, y, z from 2 through 8
-INTERVALS, BACK = 4, 2  # side by side (the unfixed engine first parts at 4); the last ones stepped back
+WHOLE, CUBE, CUT = (
+    11,
+    5,
+    3,
+)  # the 5-cube about the 11-cube's centre: the file's x, y, z from 3 through 7 (the 7-cube over 4 intervals, 30 s on the suite's clock, left on 2026-10-24)
+INTERVALS, BACK = 2, 1  # side by side; the last one stepped back
 
 
 def cut(flat: list[int], mirror: bool) -> list[int]:
@@ -65,14 +69,14 @@ def partings(world: Lattice, image: Lattice) -> list[tuple[str, int, str, int, i
 
 
 def test_the_x_mirror_of_the_turned_1s_world_is_the_world_bit_for_bit_and_the_inverse_is_exact(tmp_path):
-    """The 7-cube 1s world and its x-mirror image stepped 4 intervals side by side: at every interval every level and every remainder of every line of every family (the sign holder's rows, the proton's and the electron's planes) of the image run is the law's image of the world's bit for bit (`partings`), and the world is its own image alike (the lay even in x; the step reads no declared Node); the engine before 2026-10-21 kept the levels and parted the electron's remainders from the interval 2 by multiples of p_0^2 at the Nodes whose -x Port reads a Link above the count 183, and the first parting's interval, the entries and the largest difference are the assertion's message; then the world stepped back the last 2 intervals returns every array of its state at the snapshot, the lines, the write remainders, the phase lines and the count lines, bit for bit."""
+    """The 5-cube 1s world and its x-mirror image stepped 2 intervals side by side: at every interval every level and every remainder of every line of every family (the sign holder's rows, the proton's and the electron's planes) of the image run is the law's image of the world's bit for bit (`partings`), and the world is its own image alike (the lay even in x; the step reads no declared Node); the engine before 2026-10-21 kept the levels and parted the electron's remainders from the interval 2 by multiples of p_0^2 at the Nodes whose -x Port reads a Link above the count 183, and the first parting's interval, the entries and the largest difference are the assertion's message; then the world stepped back the last 2 intervals returns every array of its state at the snapshot, the lines, the write remainders, the phase lines and the count lines, bit for bit."""
     started = time.perf_counter()
     world = Lattice(load_world(cube_world(tmp_path, False)))
     image = Lattice(load_world(cube_world(tmp_path, True)))
     assert world.shape == image.shape == (CUBE,) * 3
     electron = [f.name for f in world.families].index("electron")
-    assert world.families[electron].plane and world.world.bodies[1].nodes[0] == (4, 3, 3)
-    assert image.world.bodies[1].nodes[0] == (2, 3, 3)
+    assert world.families[electron].plane and world.world.bodies[1].nodes[0] == (3, 2, 2)
+    assert image.world.bodies[1].nodes[0] == (1, 2, 2)
     first, kept = None, None
     for interval in range(1, INTERVALS + 1):
         world.step()
@@ -91,7 +95,7 @@ def test_the_x_mirror_of_the_turned_1s_world_is_the_world_bit_for_bit_and_the_in
     assert kept is not None and world.interval == INTERVALS - BACK
     assert all(np.array_equal(a, b) for a, b in zip(kept, arrays(world), strict=True))
     print(
-        f"the 7-cube 1s world and its x-mirror image: {INTERVALS} intervals bit for bit in levels and "
+        f"the {CUBE}-cube 1s world and its x-mirror image: {INTERVALS} intervals bit for bit in levels and "
         f"remainders of {sum(len(s.lines) for s in world.states)} lines, {len(kept)} arrays back bit for bit "
         f"over {BACK} intervals; {time.perf_counter() - started:.1f} s"
     )

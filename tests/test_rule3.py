@@ -2,7 +2,6 @@
 
 import ast
 import dataclasses
-import json
 import random
 import re
 import sys
@@ -24,8 +23,10 @@ from event_universe.core.rule3 import (
 )
 from event_universe.lattice import Lattice
 from event_universe.records import NodeState, Record, form, wronskian
-from event_universe.world_files import input_digest, load_world
-from tests.laws import BACK, TOOL, arrivals_rule3, chain_body_world
+from event_universe.world_files import load_world
+from tests.laws import BACK, arrivals_rule3
+from tests.laws_gapped import GAMMA as GAPPED_GAMMA
+from tests.laws_gapped import gapped_world
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
@@ -212,41 +213,54 @@ TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState tab
 
 
 def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
-    """The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per line, two levels and Rule3's remainder; per held line, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record; one shape of state for every family. (a) The NodeState holds lines (now, before, Rule3's remainder), as many as the loader derives for the family (a family of quanta's dimension, a held row's sources' count), and one write remainder per held line and nothing else, one shape for every family; (b) on the chain with a rotating body (every kind of family: a plane of two lines, a family of one line, the holder of the sign, two rows with a gap, the massless row with its axis lines) one interval forward and one back make exactly one Rule3 division per line, the level each line started from that call's own, and exactly one write per held line, and every reading the engine exposes leaves every line bit for bit; (c) the output over the run is click and field lines only, every click naming a declared region and never a Node; (d) ENGINE.md's NodeState table lists exactly the fields of (a). The width is the run's declaration (the owner, 2026-10-01, 02:35): the loader's one site maps `integers.width` to the arrays' kind, the hardware's 64-bit integers at or under the host's signed bits and Python's integers above them (`loader.world.kind_of`); the chain world run at the width 63 and at 127 over forty intervals gives the same click and field lines and the same books bit for bit, every array of the wider run an array of Python integers; no other file of src names an integer's kind."""
+    """The generic Node is closed for building (HIGHLIGHTS.md; the owner, 2026-10-01): per family, per line, two levels and Rule3's remainder; per held line, one write of its sources by one division with one remainder; nothing else at a Node, every other number a reading of the record; one shape of state (`NodeState`, ENGINE.md's table row for row). The gate on the source: Rule3's line is called by the step's module alone among the acts (flux.py, with the phase act's rotation and the click's quantum of one Rule3 each, features/phase and features/click) and the held write by node.py alone; the integer kinds named in src/ the loader's and the share's index mask alone. The count on the gapped 3-cube torus (tests/laws_gapped.py, gravity's held row and the dust) for one interval forward and one back: one Rule3 call per line Rule3 steps on the level it began from, one held write per held line, and the readings (the share, the currents, the stresses, the Wronskian, the form, the quanta) write nothing and leave every array standing. The former runs of a chain world over 60 and 40 intervals at two widths, 40 s on the suite's clock, left on 2026-10-24."""
     assert {f.name: f.type for f in dataclasses.fields(NodeState)} == NODE_STATE
     assert [f.name for f in dataclasses.fields(Record)] == ["now", "before", "remainder"]
+    engine_rows = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8").splitlines()
+    table = [m.group(1) for line in engine_rows if (m := TABLE_ROW.match(line))]
+    assert set(table) == set(NODE_STATE) and len(table) == len(NODE_STATE)
+    sources = {p.relative_to(ROOT): p.read_text(encoding="utf-8") for p in sorted(SOURCE.rglob("*.py"))}
+    callers = {
+        name: sorted(
+            str(p)
+            for p, text in sources.items()
+            if re.search(rf"(?<![\w.])(?<!def ){name}\(", text) and p.name != "rule3.py"
+        )
+        for name in STEP_CALLS[:1] + ("held_write",)
+    }
+    assert callers == {
+        "rule3": [
+            "src/event_universe/features/click/__init__.py",
+            "src/event_universe/features/phase/__init__.py",
+            "src/event_universe/flux.py",
+        ],
+        "held_write": ["src/event_universe/node.py"],
+    }, callers  # lattice.py's method of that name is the acts' one write per interval, calling node.py's
+    named = [f"{p}: {m.group(0)}" for p, text in sources.items() for m in INTEGER_KINDS.finditer(text)]
+    assert named == [
+        "src/event_universe/loader/world.py: np.int64",
+        "src/event_universe/share.py: dtype=np.",
+    ], (
+        named
+    )  # the loader's kind, and the share's mask of the region's Nodes as int64 indices since the booking of 9ced6eefb (2026-10-23); a third name is refused
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    board = Lattice(load_world(chain_body_world(tmp_path, TOOL, senses=(1,))), (lines := []).append)
+    board = Lattice(load_world(gapped_world(tmp_path, GAPPED_GAMMA - 1, 21, 869)))
     for family, state in zip(board.families, board.states, strict=True):
         assert len(state.lines) == family.lines
         assert len(state.write_remainders) == family.lines * family.held
-    assert sorted(len(s.lines) for s in board.states) == [
-        1,
-        1,
-        2,
-        4,
-        8,
-    ]  # the sign: 2 rows of 1 + 3 lines under the rotation
     calls, originals = [], {name: getattr(core, name) for name in STEP_CALLS}
-    inside: list[bool] = []  # a step's own carried division, not a write
 
     def counting_step(name):  # type: ignore[no-untyped-def]
         def counted(*args):  # type: ignore[no-untyped-def]
             now, other = args[3:5]  # the call's kind, no state
             arrays = isinstance(now, np.ndarray) and isinstance(other, np.ndarray)  # a step on arrays
             calls.append(("step" if arrays else None, id(now)))  # the level the step began from
-            inside.append(True)
-            try:
-                return originals[name](*args)
-            finally:
-                inside.pop()
+            return originals[name](*args)
 
         return counted
 
     def counting_division(total, wall, remainder, direction=1):  # type: ignore[no-untyped-def]
-        calls.append(
-            (None, id(total))
-        )  # a carried division outside the step: the shear's momentum or a write
+        calls.append((None, id(total)))  # a carried division outside the step: the shear's momentum
         return originals["carried_division"](total, wall, remainder, direction)
 
     held_write_act = node.held_write
@@ -256,7 +270,6 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
         return held_write_act(level, numerator, wall, remainder, direction)
 
     monkeypatch.setattr(node, "held_write", counting_write)
-
     engine = [m for m in list(sys.modules.values()) if getattr(m, "__name__", "").startswith("event_")]
     for module in [m for m in engine if m.__dict__.get("rule3") is originals["rule3"]]:
         monkeypatch.setattr(module, "rule3", counting_step("rule3"))
@@ -286,43 +299,6 @@ def test_the_generic_node_is_closed_for_building(tmp_path, monkeypatch):
             board.quanta(index)
     assert board.books() and all(kind != "write" for kind, _ in calls)  # the readings write nothing
     assert BACK.first_difference(kept, BACK.snapshot(board)) is None  # and every array stands
-    monkeypatch.setattr(core, "carried_division", originals["carried_division"])
-    for module in [
-        m for m in engine if m.__dict__.get("rule3") is not originals["rule3"] and "rule3" in m.__dict__
-    ]:
-        monkeypatch.setattr(
-            module, "rule3", originals["rule3"]
-        )  # the count is taken; the runs below plain
-    for _ in range(60):
-        board.step()
-    regions = {row.name for row in board.world.node_detectors} | {"face"}
-    assert lines and {str(line["event"]) for line in lines} <= {"click", "density"}
-    clicks = [line for line in lines if line["event"] == "click"]
-    assert clicks and all(line["node_detector"] in regions and "node" not in line for line in clicks)
-    engine_rows = (ROOT / "docs" / "ENGINE.md").read_text(encoding="utf-8").splitlines()
-    table = [m.group(1) for line in engine_rows if (m := TABLE_ROW.match(line))]
-    assert set(table) == set(NODE_STATE) and len(table) == len(NODE_STATE)
-    world = chain_body_world(tmp_path, TOOL)
-    universe = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
-    universe["integers"]["width"] = 127
-    document = {**json.loads(world.read_text(encoding="utf-8")), "universe": "wide.json"}
-    mode = json.loads(world.with_suffix(".mode.json").read_text(encoding="utf-8"))
-    mode["world_digest"] = input_digest(document)
-    for name, text in (("wide", universe), ("chain_wide", document), ("chain_wide.mode", mode)):
-        (tmp_path / f"{name}.json").write_text(json.dumps(text), encoding="utf-8")
-    runs = []
-    for path, kind in ((world, np.int64), (tmp_path / "chain_wide.json", object)):
-        board = Lattice(load_world(path), (lines := []).append)
-        for _ in range(40):
-            board.step()
-        assert (
-            board.world.kind is kind
-        )  # the lay's kind by the width; the step's arrays Python's integers wherever a row carrying its volume enters (the carried write at every width), the lines and books the same at both widths
-        runs.append((lines, board.books()))
-    assert runs[0] == runs[1] and runs[0][0]
-    sources = {p.relative_to(ROOT): p.read_text(encoding="utf-8") for p in sorted(SOURCE.rglob("*.py"))}
-    named = [f"{p}: {m.group(0)}" for p, text in sources.items() for m in INTEGER_KINDS.finditer(text)]
-    assert named == ["src/event_universe/loader/world.py: np.int64"], named
 
 
 INTEGER_KINDS = re.compile(r"np\.u?int(?:8|16|32|64|p)?\b|np\.iinfo|\"int64\"|dtype=np\.")

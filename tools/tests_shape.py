@@ -194,12 +194,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "count-unit (the two hands' word on #1793's R8): the taker's lay at 2 A^2 sin omega = T per quantum, the "
         "family's wall W_c sin omega_0 by one root, light's W_c, the [1, 1299] amplitude unchanged, a laid body's books",
     ),
-    "tests/test_the_draw.py::test_the_open_boards_emission_is_a_packet_along_one_axis_with_the_carry": (
-        79,
-        "the open board's packet lay's dedicated test (the Boss, 2026-10-03): the exact root and the envelope, "
-        "the band's line with the transverse mode, the loader's three refusals, the lay on an open board with the "
-        "carrier's phase at Omega, the blind",
-    ),
     "tests/test_the_draw.py::test_the_source_in_time_lays_the_form_it_radiates": (
         30,
         "the partial hole's second pass (the mathematician's 245 with the advisor's second): the source in time's "
@@ -227,12 +221,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         20,
         "the emission lays no uniform mode (2026-10-04): the open board's packet's two levels through the packet lay's "
         "division act, each summing to 0 over the board after the lay, the quantum standing",
-    ),
-    "tests/test_the_emission.py::test_the_front_writes_to_zero_at_the_reach_and_the_board_ends_dark": (
-        38,
-        "the front's taper (the owner's \"yes to everything\" of 2026-10-04, #1793 comment 5975629873): the world's "
-        "`erasure` L, the ball behind the last L shells at (0, 0) exactly, the shells before the reach falling, the erasure "
-        "line's take and unit, the board dark at 200 and the back-in-time gate MATCH across the tapered faces",
     ),
     "tests/test_the_share.py::test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit": (
         35,
@@ -282,15 +270,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
         "budget's least T, the faces and the open faces' layer, the packets, the universe",
     ),
-    "tests/test_the_node_detector.py::test_a_record_declared_a_reader_over_two_nodes_takes_gives_and_stays": (
-        289,
-        "the NodeDetector round (the owner's word of 2026-10-03, a NodeDetector with Nodes alone is never on one Node; the "
-        "Boss's brief): the ion's record declared over two adjacent Nodes in equal weights, the lay A_n^2 = A^2 / n, "
-        "the share credited 1, the in-pieces and the count-on-a-Node refusals, the boundary cut with the inner Link open, the "
-        "uniform mode's recurrence to the bit, the drive projected on the reader's normalised mode, one draw per click "
-        "with the write's Node drawn after the outcome by the window's inflow booked per Node, the emission's Node by "
-        "the record's share (the mathematician's 299 with the advisor's second, two hands)",
-    ),
     "tests/test_the_node_detector.py::test_a_reader_with_its_own_record_stands_on_one_node": (
         46,
         "the relation seen from its two ends (the owner's decision of 2026-10-03, 16:30 UTC, on the mathematician's 323 "
@@ -298,14 +277,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "drive's level exactly, its six Links cut, the uniform mode's recurrence, the click line naming no Node with "
         "the hole and the lay at the only Node, the back-in-time gate across the run, and a NodeDetector with Nodes alone "
         "at one Node still refused by name",
-    ),
-    "tests/test_reading_gate.py::test_the_reading_gate_reruns_a_folder_and_compares_each_number_bit_for_bit": (
-        100,
-        "the reading gate's dedicated test in its own file (the owner's word of 2026-10-04 relayed by the advisor on "
-        "#1793, the Boss's brief): the gate's table of a copy of the shipped Zeno world re-read row by row, the run, "
-        "the trials over three seeds and the back-in-time pass, MATCH on the numbers the test reads from the same run, "
-        "DIFFERS on a wrong value and on a wrong label, the shipped screen table in the block's place, UNFILLED without "
-        "either, the report's shape and the exit code; the imports stand inside the test so the file is the test alone",
     ),
     "tests/test_the_paper_claims_engine.py::test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_outside": (
         421,
@@ -329,11 +300,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "(the law's (h), L the line's own read), the massless band its case at num = den (#1793 comments 5984295586, "
         "5984314233; the Boss's grant 5984406201)",
     ),
-    "tests/test_the_vacuum_content_above_the_swing.py::test_the_vacuum_content_declared_above_the_holders_swing_keeps_every_content_inside_the_edge": (
-        60,
-        "F2 fenced by way (alpha), the owner's words of 2026-10-04: the vacuum content at 60 above the holders' swing over "
-        "the declared run; the Boss's grant of 60 lines",
-    ),
     "tests/test_part_h_fix.py::test_the_links_count_carries_each_ends_clock_and_is_plain_at_the_vacuum": (
         92,
         "the engine V2 (Part H, MUST 3; #2122): the Link's count carries each end's clock as one coefficient rounding, "
@@ -350,11 +316,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_part_b_sign_fold.py::test_the_48_returns_on_a_closed_cube_with_a_sign_holder": (
         42,
         "the engine V2 (Part B; #2122): the cube's 48 returns on a closed cube with a sign holder, the fold form covariant",
-    ),
-    "tests/test_part_g_recoil.py::test_the_emit_and_take_world_runs_back_through_the_emission_the_click_and_the_two_folds": (
-        13,
-        "the engine V2 (Part G, Task 5 (d); #2122): the reversal with the books as its own test, so that each half of "
-        "Task 5 runs under the suite's bound of thirty seconds on CI's clock",
     ),
     "tests/test_the_interval.py::test_the_forms_own_clock_books_a_count_once_and_the_write_dims_as_the_pairs_integer": (
         36,

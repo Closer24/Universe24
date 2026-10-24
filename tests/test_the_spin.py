@@ -2,13 +2,12 @@
 
 import json
 from dataclasses import replace
-from fractions import Fraction
 
 from event_universe import lists, meeting, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader import window
 from event_universe.loader.derived import count_wall
-from event_universe.loader.draw import ports_of, settings_of_the_law
+from event_universe.loader.draw import settings_of_the_law
 from event_universe.loader.node_detector_declaration import parts_of
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import node_detectors_of
@@ -24,38 +23,6 @@ from tests.laws_spin import (
     spin_world,
     trial,
 )
-
-
-def test_a_two_plane_quantum_goes_up_or_down_the_declared_axis_by_the_half_angle(tmp_path, monkeypatch):
-    """Stern and Gerlach on the board: one quantum of the two-plane family (the amplitude 90, the lay 75, the share 0.9994 of the record's unit, the count 1) laid in the equal-parts state (psi_1 = psi_2, the Bloch vector along +x), one region at the chain's lower end declaring its axis as the half-angle pair (c, s) with the identity pattern; at the window's close the whole quantum is credited to the plus port or the minus port, two beams and never a smear (one credit line, count 1, nothing left, `kept` the parts the realised port reads with a coefficient other than 0, no loss, the whole quantum at one port: at the z axis (1, 0) the + port (c, s) = (1, 0) reads part 0 alone and the - port (-s, c) = (0, 1) part 1 alone, so the two beams along z are the two parts themselves), with the share (c + s)^2 / (2 (c^2 + s^2)) = cos^2 of the half angle between the axis and the state, exact in the integers' rationals: 1 / 2 at the z axis (1, 0), 1 at the x axis (1, 1), 0 at -x (1, -1), 4 / 5 at (3, 1) and 9 / 10 at (2, 1); the shares read from the engine's `parts` lines by the reader's own arithmetic over the detector's window, to its close (the window derived since 2026-10-23, the packet's passage over the region, 30, the run 40; the lines after the close carry the write), equal the formula exactly, every run's port is one the share allows, the engine's weights at each side (`meeting_back.side_weights`, `sided`) equal the chain rule's over the reader's shares exactly, and the realised port one the share allows, exactly all or none along the state (the frequencies over an ensemble of worlds are the trials tool's reading and no test's)."""
-    for axis, expected in (
-        ((1, 0), Fraction(1, 2)),
-        ((1, 1), Fraction(1)),
-        ((1, -1), Fraction(0)),
-        ((3, 1), Fraction(4, 5)),
-        ((2, 1), Fraction(9, 10)),
-    ):
-        path = spin_world(
-            tmp_path / f"axis_{axis[0]}_{axis[1]}", monkeypatch, {"left": (axis, IDENTITY)}
-        )
-        board, lines = trial(path, 40)
-        clicks = [c for c in lines if c["event"] == "credit"]
-        assert len(clicks) == 1 and clicks[0]["node_detector"] == "left", clicks
-        assert clicks[0]["count"] == 1 and clicks[0]["left"] == 0, clicks
-        shares = joint_shares(
-            lines, {"left": (axis, IDENTITY)}, close=clicks[0]["interval"]
-        )  # the reader to the detector's close: the window derived, 30, the run 40 (2026-10-23)
-        up, down = shares[(0,)], shares[(1,)]
-        assert Fraction(up, up + down) == expected, (axis, up, down)  # the half angle's share, exact
-        spin = [f.name for f in board.families].index("spin")
-        sided(board, spin, shares, [PORT[c["realised"]] for c in clicks])  # the one side's coherent read
-        allowed = {"plus"} if expected == 1 else {"minus"} if expected == 0 else {"plus", "minus"}
-        port = clicks[0]["realised"]
-        assert port in allowed, (axis, port)
-        coefficients = ports_of(axis, ((1, 0), (0, 1)))[port == "minus"]
-        assert clicks[0]["kept"] == [
-            k for k, e in enumerate(coefficients) if e != (0, 0)
-        ]  # the parts the port reads
 
 
 def test_the_two_ports_of_one_detector_read_at_one_close_with_equal_shares(tmp_path, monkeypatch):

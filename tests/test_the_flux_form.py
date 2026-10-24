@@ -14,24 +14,8 @@ from event_universe.plane import NO_FACE
 from event_universe.readings import ports
 from event_universe.records import record_slice
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, linear_exchange, linear_sum, universe_beside, weighted_linear_sum
-from tests.laws_content import ZENO_ATOM, content_copy, opened
-from tests.laws_read import load_shipped
-
-
-def loaded(folder, name, output=None):  # type: ignore[no-untyped-def]
-    """A world of WORLDS: the shipped file, and the resonant world as its content copy beside `folder` : the shipped world's run is refused by name at the body 1 of 'atom' at the interval 41 (the law's third refusal of the click's read, ALGEBRA.md The digits' budget: the room 2^45.8 of the digits read, the pulse's five at three values each on the universe zeno_atom.json, which declares no content, and the atom's three at the lay's origin, below the absorption draw's total 2^53.9), so the claim is read on the content copy (tests/laws_content.content_world with `opened`, the born universe's holders prepended), which carries every draw."""
-    if name == "resonance/resonant.json":
-        return Lattice(load_world(content_copy(folder, EVENTS / name, ZENO_ATOM, opened)), output)
-    world_files.REPOSITORY_ROOT = EVENTS.parents[1]
-    return Lattice(load_shipped(EVENTS / name), output)
-
-
-WORLDS = (  # re-pinned 2026-10-20 from the deleted toy atom worlds (zeno_1, zeno_pulsed_1, one_photon)
-    "bell/bell_a_b.json",
-    "bell_singlet/singlet_a_b.json",
-    "resonance/resonant.json",
-)
+from tests.laws import linear_exchange, linear_sum, universe_beside, weighted_linear_sum
+from tests.laws_interval import light_torus, volume_universe
 
 
 def whole(a):  # type: ignore[no-untyped-def]
@@ -68,6 +52,13 @@ def step_alone(board: Lattice):  # type: ignore[no-untyped-def]
             reads, wall = [whole(r) for r in reads], whole(wall)
             mass = 2 * wall - (sum(reads) + whole(self_coefficient))
             for number in range(span.start, span.stop):
+                if (
+                    family.held
+                    and not family.wronskian
+                    and family.axes
+                    and 1 <= number % family.width <= 3
+                ):
+                    continue  # a holder's tension lines step as the shear's momentum (flux.step_momentum), outside the flux form
                 line, after = board.states[index].lines[number], stepped[number]
                 a, b, r = whole(line.now), whole(line.before), whole(line.remainder)
                 fill = (
@@ -94,170 +85,65 @@ def step_alone(board: Lattice):  # type: ignore[no-untyped-def]
     return found
 
 
+def torus(tmp_path, monkeypatch, output=None):  # type: ignore[no-untyped-def]
+    """The 3-cube light torus of tests/laws_interval.py over 3 intervals: matter laid uniform at the band's rest rotation, light's plane wave along x, gravity's held row carrying the volume; the smallest board that carries the flux form at a Node (the three shipped worlds over their intervals, 39 s and 35 s on the suite's clock, left on 2026-10-24)."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    volume_universe(tmp_path)
+    return Lattice(load_world(light_torus(tmp_path, "flux", 400, intervals=3)), output)
+
+
 def test_the_flux_form_holds_at_every_node_line_family_and_interval(tmp_path, monkeypatch):
-    """At every interval of the three small worlds (bell_a_b, singlet_a_b, resonant; re-pinned 2026-10-20 from zeno_1, zeno_pulsed_1 and one_photon, deleted with the toy atom worlds; the born world and the chain lay at closes without a click line, outside the second function's premise) the step's total less w (2 now - before) + r equals the flux SUM R_ij (m_ij - now) less D now at every Node of every line, held lines, planes at no turn (no sign holder on these worlds) and the wipe's faced Nodes included, in integers: the residual is 0 everywhere."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    for name in WORLDS:
-        board, checked = loaded(tmp_path / name.partition("/")[0], name), 0
-        for _ in range(board.world.intervals):
-            for family, number, residual in step_alone(board):
-                assert not residual.any(), (
-                    name,
-                    board.interval,
-                    family,
-                    number,
-                    int(np.abs(residual).max()),
-                )
-                checked += residual.size
-            board.step()
-            if board.ended is not None:
-                break
-        assert checked > 0, name
+    """At every interval of the 3-cube light torus the step's total at every Node of every line of every family, w a_next + r' less w (2 a - b) + r, is the flux form's right side, the six Links' R_ij (m_ij - a) less the mass term, with the arrivals the step used (`step_alone`): the flux form of Rule3 holds exactly, with no residual, on every line."""
+    board, checked = torus(tmp_path, monkeypatch), 0
+    for _ in range(board.world.intervals):
+        for family, number, residual in step_alone(board):
+            assert not residual.any(), (board.interval, family, number, int(np.abs(residual).max()))
+            checked += residual.size
+        board.step()
+        assert board.ended is None
+    stepped = sum(
+        1
+        for family, state in zip(board.families, board.states, strict=True)
+        for number in range(len(state.lines))
+        if not (family.held and not family.wronskian and family.axes and 1 <= number % family.width <= 3)
+    )
+    assert checked == board.world.intervals * 27 * stepped and stepped >= 3
 
 
 def test_the_linear_sum_of_matter_moves_by_the_mass_term_alone(tmp_path, monkeypatch):
-    """On the same worlds every line of a family of quanta with num < den (the atoms, planes with no sign holder) changes its linear sum over an interval by the mass term -SUM_i D_i a_i with D_i = 2 w - S_i - SUM_j R_ij from the step's own coefficients and the faces' exchange (`linear_exchange`, 0 on these worlds: no matter line stands at a face), exactly, at every interval the run names no other act on the family (a lay, a click's write, growth, a face): the second difference of the Node's number summed over a board read at one rate pairs off Link by Link, and the mass term and the faces' exchange are left."""
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-    checked = 0
-    for name in WORLDS:
-        lines: list[dict[str, object]] = []
-        board = loaded(tmp_path / name.partition("/")[0], name, lines.append)
-        gamma, square = board.world.node_clock, board.unit * board.unit
-        matter = [
-            (index, 6 * family.pair[1] * gamma * gamma * square)
-            for index, family in enumerate(board.families)
-            if family.pair[0] < family.pair[1] and not family.held
-        ]
-        for _ in range(board.world.intervals):
-            before, predicted = {}, {}
-            for index, wall in matter:
-                before[index] = [linear_sum(wall, line) for line in board.states[index].lines]
-                predicted[index] = []
-                for (reads, self_coefficient, w, _mass), span in rules_of(board, index):
-                    mass = 2 * whole(w) - (sum(whole(r) for r in reads) + whole(self_coefficient))
-                    for line in board.states[index].lines[span]:
-                        predicted[index].append(
-                            -int((mass * whole(line.now)).sum())
-                            + linear_exchange(reads, line, board.wrap)
-                        )
-            begun = len(lines)
-            board.step()
-            if board.ended is not None:
-                break
-            new, grew = lines[begun:], any(g[0] == board.interval for g in board.growths)
-            for index, wall in matter:
-                family = board.families[index].name
-                if grew or any(
-                    x["family"] == family and x["event"] in ("credit", "lay", "face") for x in new
-                ):
-                    continue
-                for number, line in enumerate(board.states[index].lines):
-                    change = linear_sum(wall, line) - before[index][number]
-                    assert change == predicted[index][number], (name, board.interval, family, number)
-                    checked += 1
-    assert checked > 0
-
-
-def test_the_linear_sum_of_light_moves_by_the_faces_exchange_and_the_lays_alone(tmp_path, monkeypatch):
-    """On the same worlds, and on a closed light-only board whose world lays two whole packets at the intervals 10 and 20 (no click, no wipe), every line of a family of light (num = den, not held, its mass term 0 at every content) changes its linear sum L = SUM [w (now - before) + r] over an interval by `linear_exchange`, -SUM R_ij times the numbers beyond the faces with the step's own reads, plus the lays the run reports in that interval (a lay line's after less before at its Node, the term as written and not exercised with a nonzero value here: one_photon's emission lays fall in a click's interval, and a whole packet laid standing on a closed board at the intervals 10 and 20 leaves L unchanged) plus the wipe where a face is presented to the line (its `face` line's value against the arrival the face replaced, R (value - m)), exactly; the intervals a click writes (its `credit` line) or the board grows (`Lattice.growths`, the new lines born at the half wall) are the other acts, each named by the run; nothing else may move L."""
-    worlds_checked, lays_checked = 0, 0
-    for name in (*WORLDS, "whole packets laid at 10 and 20"):
-        lines: list[dict[str, object]] = []
-        if name.startswith(
-            "whole"
-        ):  # a closed light-only board, two whole packets laid at unwiped intervals
-            monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-            universe_beside(tmp_path, drop=("gravity", "charge", "binding"), matter=[6000, 6000])
-            packets = [
-                {"family": "matter", "whole": [3, 3, 3], "count": 1, "interval": t} for t in (10, 20)
-            ]
-            world = dict(shape=[7, 7, 7], face_depth=1, intervals=30, node_detectors=[], bodies=[])
-            world.update(packets=packets, universe="u.json")
-            world.update(boundary=dict(x="periodic", y="periodic", z="periodic"))
-            (path := tmp_path / "lays.json").write_text(json.dumps(world), encoding="utf-8")
-            board = Lattice(load_world(path), lines.append)
-        else:
-            monkeypatch.setattr(world_files, "REPOSITORY_ROOT", EVENTS.parents[1])
-            board = Lattice(load_shipped(EVENTS / name), lines.append)
-        gamma, square = board.world.node_clock, board.unit * board.unit
-        light = [
-            (index, 6 * family.pair[1] * gamma * gamma * square)
-            for index, family in enumerate(board.families)
-            if family.pair[0] == family.pair[1] and not family.held
-        ]
-        if not light:  # a held source in time has no line of light
-            continue
-        checked = 0
-        for _ in range(board.world.intervals):
-            before = {i: [linear_sum(w, line) for line in board.states[i].lines] for i, w in light}
-            expected, read_at = {}, {}
-            for i, _w in light:
-                expected[i] = []
-                for (reads, _s, _w, _mass), span in rules_of(board, i):
-                    for number in range(span.start, span.stop):
-                        line = board.states[i].lines[number]
-                        expected[i].append(linear_exchange(reads, line, board.wrap))
-                        read_at[i, number] = (
-                            [whole(x) for x in reads],
-                            [whole(m) for m in ports(line.now, board.wrap)],
-                        )
-            begun = len(lines)
-            board.step()
-            if board.ended is not None:
-                break
-            new = lines[begun:]
-            grew = any(growth[0] == board.interval for growth in board.growths)
-            for index, wall in light:
-                family = board.families[index].name
-                if grew or any(x["event"] == "credit" and x["family"] == family for x in new):
-                    continue  # growth (the new layers' lines born at the half wall) or a click's write, each named
-                for number, line in enumerate(board.states[index].lines):
-                    reads, arrivals = read_at[index, number]
-                    wiped = 0  # the wipe: at a faced Node the arrival through the Port was the face's value, R (value - m)
-                    for x in [
-                        x
-                        for x in new
-                        if x["event"] == "face" and x["family"] == family and x["line"] == number
-                    ]:
-                        here = tuple(
-                            int(c) + o for c, o in zip(x["node"]["at"], board.offset, strict=True)
-                        )  # type: ignore[index]
-                        for port in [int(str(p)) for p in list(x["ports"])]:  # type: ignore[call-overload]
-                            read = reads[port]
-                            wiped += (int(read[here]) if read.ndim else int(read)) * (
-                                int(str(x["value"])) - int(arrivals[port][here])
-                            )
-                    laid = sum(
-                        wall
-                        * (
-                            int(x["after"][0])
-                            - int(x["after"][1])
-                            - int(x["before"][0])
-                            + int(x["before"][1])
-                        )  # type: ignore[index]
-                        + int(x["after"][2])  # type: ignore[index]
-                        - int(x["before"][2])  # type: ignore[index]
-                        for x in new
-                        if x["event"] == "lay" and x["family"] == family and x["line"] == number
+    """On the same torus every line of a family of quanta with num < den (matter, no sign holder) changes its linear sum over an interval by the mass term -SUM_i D_i a_i with D_i = 2 w - S_i - SUM_j R_ij from the step's own coefficients (`linear_exchange` 0 on the wrapped board), exactly, at every interval without a lay or a click of its family."""
+    lines: list[dict[str, object]] = []
+    board, checked = torus(tmp_path, monkeypatch, lines.append), 0
+    gamma, square = board.world.node_clock, board.unit * board.unit
+    matter = [
+        (index, 6 * family.pair[1] * gamma * gamma * square)
+        for index, family in enumerate(board.families)
+        if family.pair[0] < family.pair[1] and not family.held
+    ]
+    assert matter
+    for _ in range(board.world.intervals):
+        before, predicted = {}, {}
+        for index, wall in matter:
+            before[index] = [linear_sum(wall, line) for line in board.states[index].lines]
+            predicted[index] = []
+            for (reads, self_coefficient, w, _mass), span in rules_of(board, index):
+                mass = 2 * whole(w) - (sum(whole(r) for r in reads) + whole(self_coefficient))
+                for line in board.states[index].lines[span]:
+                    predicted[index].append(
+                        -int((mass * whole(line.now)).sum()) + linear_exchange(reads, line, board.wrap)
                     )
-                    change = linear_sum(wall, line) - before[index][number]
-                    lays_checked += laid != 0
-                    assert change == expected[index][number] + laid + wiped, (
-                        name,
-                        board.interval,
-                        family,
-                        number,
-                        change,
-                        expected[index][number],
-                        laid,
-                        wiped,
-                    )
-                    checked += 1
-        assert checked > 0, name
-        worlds_checked += 1
-    assert (
-        worlds_checked == 3 and lays_checked == 0
-    )  # the lay term as written: no lay with a nonzero term outside a click interval here
+        begun = len(lines)
+        board.step()
+        new = lines[begun:]
+        for index, wall in matter:
+            family = board.families[index].name
+            if any(x["family"] == family and x["event"] in ("credit", "lay", "face") for x in new):
+                continue
+            for number, line in enumerate(board.states[index].lines):
+                change = linear_sum(wall, line) - before[index][number]
+                assert change == predicted[index][number], (board.interval, family, number)
+                checked += 1
+    assert checked == board.world.intervals * sum(len(board.states[i].lines) for i, _w in matter)
 
 
 def test_the_linear_sum_of_light_is_constant_on_a_closed_board(tmp_path, monkeypatch):

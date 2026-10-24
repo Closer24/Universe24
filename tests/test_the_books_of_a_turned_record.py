@@ -2,107 +2,16 @@
 
 from __future__ import annotations
 
-import json
-from pathlib import Path
-
 import numpy as np
 
-from event_universe import board_readings, credit, lattice, readings, reports, world_files
+from event_universe import board_readings, readings, world_files
 from event_universe.lattice import Lattice
-from event_universe.loader.universe import universe_of
 from event_universe.world_files import load_world
-from tests.laws import PACKET, ROOT, TOOL, load_file, refused, slit_world
+from tests.laws import PACKET, TOOL, slit_world
 
-STANDING = load_file("standing_lay", ROOT / "tools" / "standing_lay.py")  # the standing lay's tool
-UNIVERSE = ROOT / "examples" / "events" / "atom" / "hydrogen.json"  # the hydrogen worlds' integers
-CUBE, WINDOW, WINDOWS = 5, 4, 3
-HUNDREDTH = 100  # the walk's bound: the booked inflow per window below one count's hundredth
 INTERVALS = 4  # the plain path on the node detector test's chain, the packet crossing the region
 
 IRRATIONAL = "a reader of the sign writes its charge per quantum by its count unit"  # the refusal of 2026-10-24 (tests/test_the_sign_reader_with_an_irrational_sine.py)
-
-
-def standing_world(folder: Path) -> Path:
-    """The world: an open cube of CUBE Nodes, the proton's pixel of one quantum at the centre, the electron of one quantum at its +x neighbour laid standing by the tool, a region named ball on the centre and its six neighbours, the draw's window WINDOW, WINDOWS windows of intervals; the mode file the tool's."""
-    folder.mkdir(parents=True, exist_ok=True)
-    (folder / "u.json").write_text(UNIVERSE.read_text(encoding="utf-8"), encoding="utf-8")
-    c = CUBE // 2
-    ball = [[c, c, c]] + [
-        [c + d * (a == 0), c + d * (a == 1), c + d * (a == 2)] for a in range(3) for d in (-1, 1)
-    ]
-    world = {
-        "shape": [CUBE] * 3,
-        "boundary": {"x": "open", "y": "open", "z": "open"},
-        "face_depth": 1,
-        "intervals": WINDOW * WINDOWS,
-        "universe": "u.json",
-        "bodies": [
-            {"family": "proton", "nodes": [{"node": [c, c, c], "count": 1}]},
-            {"family": "electron", "nodes": [{"node": [c + 1, c, c], "count": 1}]},
-        ],
-        "node_detectors": [{"name": "ball", "positions": ball}],
-    }  # no draw: the standing world lays no wave with an end past the ball, so no window is derivable (2026-10-23)
-    path = folder / "w.json"
-    path.write_text(json.dumps(world) + "\n", encoding="utf-8")
-    STANDING.main(["--input", str(path), "--record", "electron", "--source", "proton", "--sense", "-1"])
-    return path
-
-
-def test_a_standing_charged_record_in_its_sign_well_books_no_inflow_and_no_credit(tmp_path, monkeypatch):
-    """Three windows on the standing electron: the booked inflow through the ball's front, the pair's reading (`reports.weighted` on `node_detector.weighed_currents`, as `credit.booked` books it), stays below one count's hundredth at every close, the plain bilinear's reading of the same lines through the same front (the old booking) does not, the count stays 1 and no credit line is written; the electron is turned (`Lattice.turning`) and reads its pairs."""
-    refused(
-        IRRATIONAL, universe_of, json.loads(UNIVERSE.read_text(encoding="utf-8"))
-    )  # hydrogen.json refused at load since 2026-10-24: the electron [4000, 6000] reads the sign with an irrational sine (the owner's word); the former assertions below stand as the record of the law to 2026-10-23, kept by name
-    return
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    path = standing_world(tmp_path)
-    booked: dict[str, int] = {"pair": 0, "plain": 0}
-    plain: dict[int, list[tuple[tuple[np.ndarray, ...], tuple, np.ndarray]]] = {}
-    weighed_currents, booked_was = lattice.weighed_currents, credit.booked
-
-    def weighed_and_plain(board: Lattice):  # type: ignore[no-untyped-def]
-        found = weighed_currents(board)  # the pair's read, the books' own
-        for index, reads in found.items():
-            if index in board.turning:  # the plain bilinear of the same lines, the old booking
-                plain[index] = [
-                    (
-                        readings.currents_of(
-                            board.families[index].pair[0], board.lines_of(index, r), board.wrap
-                        ),
-                        factors,
-                        shares,
-                    )
-                    for r, (_through, factors, shares) in enumerate(reads)
-                ]
-        return found
-
-    def hooked(board, index, name, nodes, facing, weighed):  # type: ignore[no-untyped-def]
-        if index in plain:
-            for key, reads in (("pair", weighed[index]), ("plain", plain[index])):
-                through = reports.weighted(facing, reads)
-                booked[key] += sum(int(np.asarray(t, dtype=object).sum()) for t in through)
-        return booked_was(board, index, name, nodes, facing, weighed)
-
-    monkeypatch.setattr(lattice, "weighed_currents", weighed_and_plain)
-    monkeypatch.setattr(credit, "booked", hooked)
-    board = Lattice(load_world(path), (lines := []).append)
-    electron = [f.name for f in board.families].index("electron")
-    unit = board.credit.units[electron] * board.unit * board.unit  # one count, W_rec G^2
-    assert electron in board.turning and board.credit.counts[electron] == 1
-    closes = []
-    for interval in range(1, board.world.intervals + 1):
-        board.step()
-        assert board.ended is None and board.credit.counts[electron] == 1
-        if interval % WINDOW == 0:
-            closes.append((booked["pair"] / unit, booked["plain"] / unit))
-            booked["pair"] = booked["plain"] = 0
-    print(f"the ball's booked inflow per window in W_rec, (the pair's, the plain bilinear's): {closes}")
-    assert len(closes) == WINDOWS
-    assert all(
-        abs(pair) * HUNDREDTH < 1 for pair, _plain in closes
-    )  # within the walk at every close (under the centred count with the readings framed, 2026-10-23: 0.00015, 0.0005, 0.00045; the unframed readings read 0.079, 0.022, 0.043)
-    assert max(abs(old) for _pair, old in closes) > 10 * max(abs(pair) for pair, _old in closes)
-    assert not [line for line in lines if line.get("event") == "credit"]  # no credit, the count 1
 
 
 def test_a_plain_records_currents_and_booking_stand_bit_for_bit(tmp_path, monkeypatch):
