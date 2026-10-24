@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
+from event_universe import registry
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, Wrap, arrival
 from event_universe.core.rule3 import Rule, division_back, division_forward, rule_integers
@@ -23,7 +24,7 @@ from event_universe.features.read import (
     plain,
     read_again,
 )
-from event_universe.loader.derived import FamilyRule, row_of, turns, weight_of
+from event_universe.loader.derived import FamilyRule, turns, weight_of
 from event_universe.plane import (
     Angles,
     fold_guard,
@@ -65,7 +66,7 @@ def read_lines(
     key, taken = read_key(read_lines, index, families, states, direction, gamma, record)
     if (kept := read_again(key, taken)) is not None:
         return kept  # the same records read again: the read made before (features/read READS)
-    own = row_of(families, index, record)
+    own = registry.row_of(families, states, index, record)
     levels = [
         plain(
             volume.levels_read(
@@ -144,7 +145,7 @@ def rulers_of(
     families, states, wrap, gamma = board.families, board.states, board.wrap, board.world.node_clock
     found = {s: rulers(s[0], families, states, direction, wrap, gamma, s[1]) for s in sources}
     for index in board.held:
-        for row in range(families[index].records):
+        for row in range(registry.records_of(families[index], states[index].lines)):
             found[(index, row)] = rulers(index, families, states, direction, wrap, gamma, row)
     return found
 
@@ -156,7 +157,7 @@ def turning(
     if not turns(families, index):
         return None
     reads = [r for r in families[index].reads if families[r.family].rotation]
-    own = row_of(families, index, record)
+    own = registry.row_of(families, states, index, record)
     levels = [
         content_of(
             [
@@ -191,10 +192,10 @@ def clocked_potentials(
     """The clocked potential of every row of the sign beyond the free row at every Node, c = rounded(L p_0 / Gamma) (`paces.turn_factor`, kind D; ALGEBRA.md, The turn per proper interval): L the holder's time level summed over every row but the row's own reader's (`row_levels`, at the weight the reader reads with, `weight_of`; No record reads its own write of the sign) and p_0 the reader's clock at that Node (`rulers`), both at the level `direction` names, 1 the level now and -1 the level before, the Node's own levels and nothing of the board; the write of the Node's phase row (`phased`)."""
     family, state = families[index], states[index]
     readers = {
-        row_of(families, reader, record): (reader, record)
+        registry.row_of(families, states, reader, record): (reader, record)
         for reader, other in enumerate(families)
         if turns(families, reader) and weight_of(index, other)
-        for record in range(other.records)
+        for record in registry.quanta_records(families, states, reader)
     }
     found: dict[int, Any] = {}
     for row, lines in enumerate(state.phases):
@@ -293,7 +294,7 @@ def phased(
 
 def guarded(index: int, families: Families, states: States, gamma: int, wrap: Wrap, unit: int) -> None:
     """The guard once at load (ALGEBRA.md #the-paces, The guard): every record's read of the initial state checked as squares, the content below the Link's zero (the lower side, a frozen clock refused by name) and p^2 (den + num) <= 2 den Gamma^2 at every Node on the clock, on the Node's pace and on each Link's pace p_i^2 Q_ij / G^2, refused by name outside; a family that reads nothing stands at Gamma, inside; no act of the interval reads it (features/read). A turned record's Links alike (`plane.link_guard`): each Link's two ends' sum n_ij of the sign's odd lines within 4 Gamma, a tangent half-angle at most 1, the guard on n the fold's Link keeps (`plane.sign_pairs`); the time level is guarded by nothing, the phase line's circle wrapping (features/phase); one holder of the sign under the rotation per turned family (`sign_holder`)."""
-    for record in range(families[index].records):
+    for record in range(registry.records_of(families[index], states[index].lines)):
         if families[index].reads:
             content, factors = read(index, families, states, 1, wrap, gamma, unit, record)
             paces_guard(families[index].pair, gamma, unit, content, factors, families[index].name)
@@ -315,7 +316,7 @@ def least_pace(index: int, families: Families, states: States, gamma: int, wrap:
                 paces.link_pace_of(gamma, read(index, families, states, 1, wrap, gamma, unit, record)[0])
             )
         )
-        for record in range(families[index].records)
+        for record in range(registry.records_of(families[index], states[index].lines))
     )
 
 

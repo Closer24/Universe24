@@ -8,19 +8,23 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import node, records
+from event_universe import node, records, registry
 from event_universe.core.ports import Wrap
 from event_universe.features.start import Sourced
 from event_universe.flux import step_records as stepped_records
-from event_universe.loader.derived import quanta_records, row_sources, weight_of
+from event_universe.loader.derived import weight_of
 
 Bookings = dict[records.Sourcing, Any]  # per record of quanta its form or its Wronskian
 Row = tuple[int, int]  # a held family's index and one row of it, the rows the start rests
 
 
-def sources_of(families: records.Families, order: Sequence[int]) -> list[records.Sourcing]:
-    """Every record of quanta of the families of quanta `order`, (family, record): the sources of the writes and the readers of the rows (`derived.quanta_records`)."""
-    return [(index, record) for index in order for record in quanta_records(families, index)]
+def sources_of(
+    families: records.Families, states: records.States, order: Sequence[int]
+) -> list[records.Sourcing]:
+    """Every record of quanta of the families of quanta `order`, (family, record): the sources of the writes and the readers of the rows (`registry.quanta_records`, the live count of each family's records)."""
+    return [
+        (index, record) for index in order for record in registry.quanta_records(families, states, index)
+    ]
 
 
 def record_lines(
@@ -94,7 +98,7 @@ def booked_sources(
     for index, row in rows:
         family, source = families[index], np.zeros_like(states[index].lines[0].now)
         bookings = turns if family.wronskian else forms
-        for reader, record in row_sources(families, index, row):
+        for reader, record in registry.sourcing(families, states, index)[row]:
             source = source + weight_of(index, families[reader]) * bookings[(reader, record)]
         reads = tuple((content.index(r.family), r.weight) for r in family.reads if r.family in content)
         found.append(

@@ -8,12 +8,11 @@ from typing import TYPE_CHECKING, Any, cast
 
 import numpy as np
 
-from event_universe import flux, node
+from event_universe import flux, node, registry
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import Rule, division_forward, wall_of
 from event_universe.features.click import read_number
 from event_universe.features.read import READS, read_again
-from event_universe.loader.derived import quanta_records
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -65,7 +64,7 @@ def digits_of(board: Lattice, index: int, at: Frame) -> Iterator[tuple[int, int,
     """One family's digits at the Nodes of the frame `at` in the frame's order (the reader's own: the Node first, then its six Ports in the Port order, `frame_of`; the lines outer in the record's declared order): every record of quanta of the family in its order (`loader/derived.quanta_records`; a holder of the sign its one record, light's free row, `Lattice.lines_of`), the digits' lattice F at the Nodes from Rule3's integers of the record's read and, where the record is turned or folded, the Link pairs its step reads (`lattice_of`, `flux.pairs_of` at the same read, None for a plain record), then every line of the record in the declared order and each line's kept remainder at the Nodes in the lattice's index order; per digit the remainder, its Node's F, the family's wall w and its place, the record and the Node's index in the lattice's order (the copies' comparison, `read_of`), Python's integers, the arrays read and never written."""
     family, gamma, unit = board.families[index], board.world.node_clock, board.unit
     wall = wall_of(family.pair[1], gamma, unit)
-    for record in quanta_records(board.families, index):
+    for record in registry.quanta_records(board.families, board.states, index):
         content, factors = board.read(index, 1, record)
         rule = ruled(board, index, record, content, factors)
         families, states, amplitude = board.families, board.states, board.amplitude
@@ -84,7 +83,7 @@ def at_origin(board: Lattice, reads: Reads) -> bool:
     return all(
         int(remainder) == board.half_wall(index)
         for index, at in reads
-        for record in quanta_records(board.families, index)
+        for record in registry.quanta_records(board.families, board.states, index)
         for line in board.lines_of(index, record)
         for remainder in picked(line.remainder, at)
     )

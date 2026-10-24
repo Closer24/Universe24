@@ -7,11 +7,11 @@ from typing import Any, cast
 
 import numpy as np
 
-from event_universe import node, records
+from event_universe import node, records, registry
 from event_universe.core.ports import AXES, Wrap
 from event_universe.core.rule3 import Rule, division_forward, rule3
 from event_universe.frames import frames_of
-from event_universe.loader.derived import PLANE, row_of
+from event_universe.loader.derived import PLANE
 from event_universe.plane import link_levels, link_pairs, odd_links, phase_links
 from event_universe.readings import at, slices
 from event_universe.records import Booking, Record, record_slice
@@ -258,7 +258,7 @@ def pairs_of(
     )
     phases = None
     if angles is not None:  # the record's row's phase pairs, the Link's hop through each Port
-        row = row_of(families, index, record)
+        row = registry.row_of(families, states, index, record)
         assert row is not None
         if amplitude < 1:
             raise ValueError(
@@ -284,7 +284,7 @@ def step_records(
     """Every record of a family stepped in `direction`, each with the rule of its own read (`node.read`, `node.rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own), its Links' pairs where the record is turned or folded (`node.turning`, `plane.odd_links`, `plane.phase_links`, `plane.link_pairs`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
     lines: list[Record] = []
     bookings: list[Booking] = []
-    for record in range(families[index].records):
+    for record in range(registry.records_of(families[index], states[index].lines)):
         content, factors = node.read(index, families, states, direction, wrap, gamma, unit, record)
         rule = node.rule_of(families[index], gamma, content, factors, unit)
         pairs = pairs_of(
