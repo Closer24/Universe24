@@ -38,7 +38,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import conversion, credit, flux, meeting_board, records
+from event_universe import conversion, credit, flux, meeting_board, records, share
 from event_universe.act import born_items, click
 from event_universe.core.ports import AXES, PORTS
 from event_universe.core.rule3 import division_forward, largest_below, wall_of
@@ -345,7 +345,7 @@ def orbit_key(node, L):
 
 
 def orbits_of(shape):
-    L = shape[0]
+    L = max(shape)
     found = {}
     for node in np.ndindex(*shape):
         found.setdefault(orbit_key(node, L), []).append(tuple(int(x) for x in node))
@@ -440,7 +440,9 @@ def read_switch(board, reads, label):
         number, moduli = read_ordered(board, reads, label)
         CURRENT.update(number=int(number), moduli=[int(m) for m in moduli])
         return number, moduli
-    source = link_digits if mode in ("link", "link_sum", "link_q", "rem_sum_q") else digits_of
+    source = (
+        link_digits if mode in ("link", "link_sum", "link_q", "rem_sum_q", "link_q_all") else digits_of
+    )
     groups, origin, coarse = digits_by_line(board, reads, source)
     if origin:
         raise RuntimeError(
@@ -451,6 +453,16 @@ def read_switch(board, reads, label):
             f"the read at {label} finds every digit on the lattice of the exact vacuum paces: refused ({mode} read)"
         )
     digits, bases, projected = [], [], []
+    if (
+        mode == "link_q_all"
+    ):  # every kept digit of the Node and its six Links, of every line and record, one multiset sorted
+        pairs = sorted((g[1], g[2]) for _key, group in groups for g in group)
+        digits, bases = [d for d, _b in pairs], [b for _d, b in pairs]
+        number = read_number(digits, bases)
+        summed = gcd(*(base - 1 for base in bases[1:])) if len(bases) > 1 else 1
+        moduli = (summed, bases[-1])
+        CURRENT.update(number=int(number), moduli=[int(m) for m in moduli], digits=len(digits))
+        return number, moduli
     for _key, group in groups:
         own = [g for g in group if g[0] == 0]
         rest = sorted((g[1], g[2], g[3], g[4]) for g in group if g[0] != 0)
@@ -573,7 +585,7 @@ def child_aprime(board, index, share, whole, at):
     try:
         number, moduli = read_switch(board, reads, label)
         if (
-            READ["mode"] in ("link_q", "rem_sum_q")
+            READ["mode"] in ("link_q", "rem_sum_q", "link_q_all")
         ):  # the one division act at every close: the number divided by the unit, the quotient the pick's
             quotient = int(division_forward(int(number), board.credit.units[index], 0)[0])
             k, _left = drawn_from(quotient, [1] * len(candidates), label, None)
@@ -611,7 +623,7 @@ def child_switch(board, index, share, whole, at):
 HOLE = {"mode": "zero"}
 
 
-def hole_changes(board, index, number, at_nodes):
+def hole_changes(board, index, number, at_nodes, amounts=None):
     """Per born Node the change the hole writes on the seed's line `number`, read on the state the step left before ANY write
     (every face before any write): zero: the line to (0, 0) at the Node (main's); mean: the six Ports' mean of now and of before by
     Rule3's division act at the wall, (w div 6) SUM_j m_j divided at w with the line's remainder as the carry, the remainder kept
@@ -620,6 +632,8 @@ def hole_changes(board, index, number, at_nodes):
     line = board.states[index].lines[number]
     found = {}
     mode = HOLE["mode"]
+    if mode == "exact_take":
+        return exact_take(board, index, number, at_nodes, amounts)
     if mode == "zero":
         for at in at_nodes:
             found[at] = (-int(line.now[at]), -int(line.before[at]), None)
@@ -643,6 +657,73 @@ def hole_changes(board, index, number, at_nodes):
         q_now, r1 = division_forward(sixth * int(now_sum[at]), wall, r)
         q_before, r2 = division_forward(sixth * int(before_sum[at]), wall, int(r1))
         found[at] = (int(q_now) - int(line.now[at]), int(q_before) - int(line.before[at]), int(r2))
+    return found
+
+
+TAKES = []
+
+
+def frame_share(board, index, record, lines, mask):
+    """The light's share summed over the Nodes of `mask` for the trial `lines` of the record, by the engine's own share
+    (share.family_share at the record's read: the content and the Links' factors of the state the write acts on)."""
+    family, gamma = board.families[index], board.world.node_clock
+    content, factors = board.read(index, 1, record)
+    found = share.family_share(family, lines, board.wrap, gamma, content, factors, board.unit, mask)
+    return int(np.asarray(found, dtype=object)[mask].sum())
+
+
+def exact_take(board, index, number, at_nodes, amounts):
+    """The exact take (DERIVATION.md section 10): at every born Node the Node's before is kept and its now is moved from n toward b
+    one level at a time until the frame's seven shares (the Node's and its six neighbours', read on the state the write acts on,
+    every face before any write) have dropped by the booked amount, the children's walls summed; the last step's overshoot is named
+    as the take's remainder; where the full stop's take is below the amount the hole refuses by name (None: nothing born)."""
+    line = board.states[index].lines[number]
+    found = {}
+    for at in at_nodes:
+        amount = amounts[at]
+        n, b = int(line.now[at]), int(line.before[at])
+        frame = frame_of(at, board.shape, board.world.periodic)
+        mask = board.mask(tuple(frame))
+        start = frame_share(board, index, 0, [line], mask)
+        step = -1 if n > b else 1
+        taken, chosen, previous = 0, None, 0
+        for k in range(1, abs(n - b) + 1):
+            trial_level = n + k * step
+            trial_now = np.asarray(line.now).copy()
+            trial_now[at] = trial_level
+            trial = records.Record(trial_now, line.before, line.remainder)
+            taken = start - frame_share(board, index, 0, [trial], mask)
+            if taken >= amount:
+                chosen = trial_level
+                break
+            previous = taken
+        record = {
+            "node": list(at),
+            "now": n,
+            "before": b,
+            "amount": str(amount),
+            "full_stop_take": None,
+            "q_frame_start": start,
+        }
+        if chosen is None:
+            record.update(
+                refused=True,
+                taken_at_full_stop=str(taken),
+                reason="the full stop's take is below the booked amount",
+            )
+            TAKES.append(record)
+            found[at] = None
+            continue
+        record.update(
+            level_after=chosen,
+            moved=chosen - n,
+            taken=str(taken),
+            overshoot=str(taken - amount),
+            overshoot_over_unit=(taken - amount) / board.credit.units[index],
+            step_share=str(taken - previous),
+        )
+        TAKES.append(record)
+        found[at] = (chosen - n, 0, None)
     return found
 
 
@@ -697,14 +778,25 @@ def closed_switch(board, begun):
     finally:
         for state, (lines, phases) in zip(board.states, stepped, strict=True):
             state.lines, state.phases = lines, phases
+    action = board.world.quantum_action
+    amounts = {
+        at: sum(count_wall(board.families[out], action) for out, _sense in table) for at, table in born
+    }
+    total_before = int(np.asarray(board.share_of(index)[0], dtype=object).sum()) if born else None
+    changes = {
+        number: hole_changes(board, index, number, [at for at, _t in born], amounts)
+        for number in range(span.start, span.stop)
+    }
+    refused = [
+        at
+        for at, _t in born
+        if any(changes[number][at] is None for number in range(span.start, span.stop))
+    ]
+    born = [(at, table) for at, table in born if at not in refused]
     for at, _table in born:
         board.closes[at] += 1
     readings = {at: readings_at(board, begun, index, 0, at) for at, _table in born}
     items = []
-    changes = {
-        number: hole_changes(board, index, number, [at for at, _t in born])
-        for number in range(span.start, span.stop)
-    }
     for at, table in born:
         here = board.mask((at,))
         for number in range(span.start, span.stop):
@@ -718,6 +810,27 @@ def closed_switch(board, begun):
             laid(board, index, number, change, None, origin, here)
         items.extend(born_items(board.families, table, (at,)))
     click(board, items)
+    if born or refused:
+        total_after = int(np.asarray(board.share_of(index)[0], dtype=object).sum())
+        booked = sum(amounts[at] for at, _t in born)
+        TAKES.append(
+            {
+                "event": "close",
+                "interval": board.interval,
+                "board": CURRENT.get("board", "main"),
+                "hole": HOLE["mode"],
+                "born": [list(at) for at, _t in born],
+                "refused": [list(at) for at in refused],
+                "light_before": str(total_before),
+                "light_after": str(total_after),
+                "booked": str(booked),
+                "taken": str(total_before - total_after),
+                "made": str(booked - (total_before - total_after)),
+                "taken_over_unit": (total_before - total_after) / unit,
+                "booked_over_unit": booked / unit,
+                "made_over_unit": (booked - (total_before - total_after)) / unit,
+            }
+        )
     for at, table in born:
         if board.output is not None:
             names = [board.families[out].name for out, _sense in table]
@@ -963,11 +1076,11 @@ class Tiles:
             path = build_world(
                 folder,
                 den,
-                (len(rows), side, side),
+                (len(rows), board.shape[1], board.shape[2]),
                 intervals,
                 gamma,
                 action,
-                f"tile_{den}_{side}_{len(rows)}",
+                f"tile_{den}_{side}x{board.shape[1]}x{board.shape[2]}_{len(rows)}",
             )
             self.tiles.append(Lattice(load_world(path), output=None))
         whole = arrays_of(board)
@@ -1017,7 +1130,11 @@ def orbit_table(board, orbits, with_digits):
     first = records.record_slice(board.families[index], 0).start
     line = board.states[index].lines[first]
     shares, _frozen = board.share_of(index)
-    source = link_digits if READ["mode"] in ("link", "link_sum", "link_q", "rem_sum_q") else digits_of
+    source = (
+        link_digits
+        if READ["mode"] in ("link", "link_sum", "link_q", "rem_sum_q", "link_q_all")
+        else digits_of
+    )
     rows = []
     for key, nodes in orbits.items():
         nows = sorted({int(line.now[n]) for n in nodes})
@@ -1075,12 +1192,13 @@ def commutation(board, element, conjugate=False):
     original = copy.deepcopy(board)
     original.output = None
     original.observers = []
-    saved = len(DRAWS), len(PICKS)
+    saved = len(DRAWS), len(PICKS), len(TAKES)
     CURRENT["board"] = "commute"
     original.step()
     image.step()
     del DRAWS[saved[0] :]
     del PICKS[saved[1] :]
+    del TAKES[saved[2] :]
     expected = transformed(original, element, conjugate)
     found = differences(expected, image)
     return found, summarised(found), int((image.closes != expected.closes).sum())
@@ -1098,11 +1216,14 @@ def main():
     ap.add_argument("--faces-level", type=int, default=219)
     ap.add_argument(
         "--read",
-        choices=("ordered", "sorted", "sum", "link", "link_sum", "link_q", "rem_sum_q"),
+        choices=("ordered", "sorted", "sum", "link", "link_sum", "link_q", "rem_sum_q", "link_q_all"),
         default="ordered",
     )
     ap.add_argument("--select", choices=("main", "aprime"), default="main")
-    ap.add_argument("--hole", choices=("zero", "mean", "before_mean", "own_before"), default="zero")
+    ap.add_argument(
+        "--hole", choices=("zero", "mean", "before_mean", "own_before", "exact_take"), default="zero"
+    )
+    ap.add_argument("--shape", type=str, default=None, help="X,Y,Z in place of --cube")
     ap.add_argument("--prefix", type=Path, required=True)
     ap.add_argument(
         "--commute",
@@ -1131,14 +1252,15 @@ def main():
     )
 
     folder = args.prefix.parent / "worlds"
+    shape = tuple(int(x) for x in args.shape.split(",")) if args.shape else (args.cube,) * 3
     world_path = build_world(
         folder,
         args.den,
-        (args.cube,) * 3,
+        shape,
         args.intervals,
         args.gamma,
         args.action,
-        f"bare_{args.den}_{args.cube}",
+        f"bare_{args.den}_{'x'.join(str(x) for x in shape)}",
     )
     world = load_world(world_path)
     lines = []
@@ -1299,6 +1421,11 @@ def main():
                 )
                 + "\n"
             )
+        for t in TAKES:
+            if t.get("event") == "close" or "node" in t:
+                t.setdefault("interval", board.interval)
+                out_lines.write(json.dumps(t) + "\n")
+        TAKES.clear()
         if tiles is not None:
             found = tiles.tick(board, board.interval)
             tiles_out.write(
