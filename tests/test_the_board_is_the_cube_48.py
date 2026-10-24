@@ -13,6 +13,7 @@ from event_universe import records, registry, seed, world_files
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import wall_of
 from event_universe.lattice import Lattice
+from event_universe.loader import universe
 from event_universe.world_files import load_world
 from tests.laws_universe import sea_plus_one, small_universe
 
@@ -178,6 +179,9 @@ def same(a: list[Any], b: list[Any]) -> bool:
 def board_of(tmp_path, monkeypatch, side, intervals, seeder):  # type: ignore[no-untyped-def]
     """The tests' small universe on the bare cube of `side`, seeded by the engine's own hole seed or by `seeder` in its place."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        universe, "volume_pair", lambda den, gamma: (den, den)
+    )  # the massless holder, by name
     small_universe(tmp_path)
     (tmp_path / "w.json").write_text(
         json.dumps({"universe": "u.json", "shape": [side] * 3, "intervals": intervals})

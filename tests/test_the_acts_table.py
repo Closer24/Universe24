@@ -254,6 +254,16 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # (largest - wall) div room, once per line
     (
+        "loader/universe.py",
+        "volume_pair",
+        "division_forward",
+    ): "D",  # den div Gamma, the clock's one level, once
+    (
+        "digits.py",
+        "odd_line",
+        "division_forward",
+    ): "D",  # a line number over the plane's two lines, the im line odd
+    (
         "loader/rooms.py",
         "width_of",
         "division_forward",

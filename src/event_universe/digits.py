@@ -114,7 +114,9 @@ def digits_of(
 
 def odd_line(family: FamilyRule, number: int) -> bool:
     """Whether the line `number` of a record of quanta is odd under the negation of an axis (ALGEBRA.md, The click's read of the board, the fold of 2026-10-24): a plane's im line, the second of its two (loader/derived.PLANE, re then im), which a reflection conjugates (im to -im, its remainder the ones' complement w - 1 - r, as the swap's turned Node conjugates it); every other line of the quanta is a scalar, even; a holder's odd axis lines are read for no digit (the digits are the quanta's, `registry.quanta_records`). The digit of an odd line maps d to B - 2 - d under the negation (B = w div F + 1 the base, F dividing w), so it enters the read folded, min(d, B - 2 - d): the unordered pair is the invariant, the one bit of orientation the cube's 48 forbids the read to carry (the improper half included)."""
-    return bool(family.plane) and number % PLANE == 1
+    return (
+        bool(family.plane) and int(division_forward(number, PLANE, 0)[1]) == 1
+    )  # the im line, the second of the two
 
 
 def at_origin(board: Lattice, reads: Reads) -> bool:
