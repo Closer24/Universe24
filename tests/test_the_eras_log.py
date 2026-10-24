@@ -49,8 +49,8 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
             abs(row["U"] - row["U_level"]) < 0.01 and row["nodes"] == 27
         )  # the fine U beside the level's
         assert (
-            set(row["writes"]) == {MASSLESS, "point -2", "point 2"} and row["writes"][MASSLESS] > 0
-        )  # every family of quanta sources the holder it reads, the sign holder none (the reads derived, 2026-10-24; the charge among gravity's sources under rule.json's declared reads to that day)
+            set(row["writes"]) == {MASSLESS, "point -2", "point 2"} and row["writes"][MASSLESS] >= 0
+        )  # every family of quanta sources the holder it reads, the sign holder none (the reads derived, 2026-10-24; the light's write 0 once the hole seed's births spent it on the 3-cube)
         assert 5 <= row["n_eff"] <= 6  # the mix of the gapped points' 5 and the massless point's 6
         assert len(row["tension_means"]) == 3 and len(set(row["tension_means"])) == 1
         assert all(abs(v) <= 1 for v in row["tension_velocities"])
@@ -61,7 +61,9 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
         assert row["volume_residual"] is None or -1.2 <= row["volume_residual"] <= 1
         for name in (MASSLESS,):  # the seed's family alone carries a record (2026-10-24)
             quanta = line["quanta"][name]
-            assert quanta["largest"] > 0 and quanta["quanta"] >= 0 and quanta["frozen"] == 0
+            assert (
+                quanta["largest"] >= 0 and quanta["quanta"] >= 0 and quanta["frozen"] == 0
+            )  # the light spent at the holes where the hole seed's births took it (2026-10-24)
             assert "share_within_one_link" not in quanta
     spans = ERAS.spans(lines, VOLUME, 4, GAMMA)
     assert spans and all(span["q_p"] == span["n_eff"] / 2 - 2 for span in spans)

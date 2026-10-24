@@ -107,7 +107,7 @@ def test_dens_circle_is_read_from_its_integers_alone():
 
 
 def test_the_rows_are_derived_from_den_and_the_one_file_loads():
-    """The rows at load from den (loader/universe.rows_of): the volume holder and the sign holder by their roles, both at the massless point (den, den), the volume's pair from `volume_pair` alone (the gapped alternative by name, no key of the file); then the massless point on one real line, the seed; every point of the circle a plane row named by its vector, reading the volume and the sign; the one universe file loads with its 26 planes at the three-prime den and no family row."""
+    """The rows at load from den (loader/universe.rows_of): the volume holder and the sign holder by their roles, both at the massless point (den, den), the gap gone for good (the gapped holder the former record's form, by name); then the massless point on one real line, the seed; every point of the circle a plane row named by its vector, reading the volume and the sign; the one universe file loads with its 26 planes at the three-prime den and no family row."""
     integers, families = universe.universe_of(universe_copy())
     names = [family.name for family in families]
     assert names[:3] == [universe.VOLUME, universe.SIGN, universe.MASSLESS] and len(names) == 3 + 6
@@ -124,10 +124,6 @@ def test_the_rows_are_derived_from_den_and_the_one_file_loads():
         1 + 6,
     )  # the time line and three odd lines per row, a row per plane and the free row
     assert volume.held and not volume.wronskian and not volume.rotation and volume.pair == (6000, 6000)
-    assert universe.volume_pair(6000) == (
-        6000,
-        6000,
-    )  # the one place the volume's pair is fixed, massless
     for plane in families[3:]:
         assert plane.plane and plane.lines == 2 and not plane.held and plane.pair[1] == 6000
         assert sorted(read.family for read in plane.reads) == [0, 1]  # the volume and the sign

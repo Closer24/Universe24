@@ -15,7 +15,7 @@ from event_universe.loader.universe import MASSLESS, universe_of
 from event_universe.readings import ports
 from event_universe.world_files import load_world
 from tests.laws import linear_sum, weighted_linear_sum
-from tests.laws_universe import CUBE, UNIVERSE, bare_torus
+from tests.laws_universe import CUBE, UNIVERSE, bare_torus, uniform_sea
 
 BEFORE_THE_BIRTHS = 23  # the births at 24 on the bare 3-cube of the tests' small universe with the massless volume holder (2026-10-24; 30 at the one universe's gapped holder since the close reads the interval's start, 29 when it read the state after the step)
 
@@ -25,6 +25,9 @@ def test_the_linear_sum_of_light_is_constant_on_the_bare_torus_until_the_births(
 ) -> None:
     """The seed's light on the bare 3-cube torus: L is the same whole number after every one of the 29 intervals before the births, while the held row's write moves the paces (one content over the board at every interval, so the Link terms pair off) and the levels rise from the seed; at 29 the births' holes take the light and L falls."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    monkeypatch.setattr(
+        seed, "uniform_seed", uniform_sea
+    )  # the uniform sea, the law's seed to 2026-10-24, by name: the sentence is the uniform content's
     lines: list[dict[str, object]] = []
     board = Lattice(load_world(bare_torus(tmp_path)), output=lines.append)
     light = board.world.seed

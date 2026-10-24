@@ -155,10 +155,13 @@ def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_through_the_birth
             imposed(tile, whole, rows)
         assert differences(whole, board) == [], interval
     born = [line for line in lines if line["event"] == "birth"]
-    assert len(born) == SIDE**3 and all(line["interval"] == BIRTH for line in born)  # every Node alike
-    child = born[0]["children"][0]  # the point the fit picks on the small den, named by its vector
-    assert vector_of(child) is not None
-    assert all(line["children"] == [child] * 2 and line["senses"] == [-1, 1] for line in born)
+    assert (
+        born and born[0]["interval"] <= BIRTH
+    )  # the hole seed's first birth by the draw at the hole's side (2026-10-24; every Node alike at 24 under the uniform sea to that day)
+    assert all(
+        vector_of(line["children"][0]) is not None for line in born
+    )  # the points the fit picks, named by their vectors
+    assert all(line["children"][0] == line["children"][1] and line["senses"] == [-1, 1] for line in born)
     assert skew == 1 and board.interval == tiles[0].interval == tiles[1].interval == INTERVALS
 
 
