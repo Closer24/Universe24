@@ -11,6 +11,15 @@ from typing import Any
 
 from event_universe.loader.circle import vector_of
 
+READINGS = (
+    "point",
+    "kind",
+    "sense",
+    "support",
+    "beat",
+    "identity",
+)  # the click's view's six keys on a credit line (src/event_universe/reports.READINGS; absent on the logs before 2026-10-24, read as absent)
+
 
 def spans_of(counts: list[tuple[int, int]]) -> list[tuple[int, int, int]]:
     """Runs of intervals with a count above 0, each (first, last, the largest count), from (interval, count) pairs in order."""
@@ -441,7 +450,12 @@ def legend_of(
         words = (
             f"{n(len(credits))} at {', '.join(n(a) for a in ats)}, {n(own)} the board's own (node_detector the Node's index), count {' or '.join(n(c) for c in counts)} each, "
             f"{' and '.join(absorbed) or 'nothing'} absorbed, {' and '.join(realised) or 'nothing'} realised; "
-            f"the fields {', '.join(null)} null in every line: every click counted whole, no part drawn"
+            + (
+                f"the click's view {', '.join(READINGS)} on every line; "
+                if all(all(key in c for key in READINGS) for c in credits)
+                else ""
+            )
+            + f"the fields {', '.join(null)} null in every line: every click counted whole, no part drawn"
         )
     else:
         words = "0: no credit line with a count and a changed part in the clicks log"

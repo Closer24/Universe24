@@ -51,6 +51,30 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the same reader on a log with the eight keys: the velocity in Links per board and per proper interval, the bound and the free verdicts, "
         "the dilation ratio and the Delta x Delta p product, each number computed by hand",
     ),
+    "tests/test_the_click_readings.py::test_the_point_is_the_reduced_pair_of_the_cosine_read_from_three_levels": (
+        7,
+        "the click's view (2026-10-24, the owner's frame, the builder's six readings): the point the reduced pair of the cosine read from three levels",
+    ),
+    "tests/test_the_click_readings.py::test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start": (
+        30,
+        "the click's view: the six readings at a Node equal to the board's own levels at the interval's start and the level the step left",
+    ),
+    "tests/test_the_click_readings.py::test_every_credit_of_the_first_meeting_carries_the_eight_readings_and_every_birth_its_childrens_records_and_points": (
+        32,
+        "the click's view on the uniform cube's first meeting: every credit's six keys as the board reads them, every birth's children's records and points",
+    ),
+    "tests/test_the_click_readings.py::test_the_hole_seeds_credits_read_their_own_clocks_and_differ_where_the_volume_differs": (
+        26,
+        "the click's view on the sea with a hole: every credit's proper the floor of its Node's clock summed to its interval, its windows the Node's closes, two propers differing where the clocks differ",
+    ),
+    "tests/test_the_click_readings.py::clock_of": (
+        6,
+        "the helper: the Node's composed clock at every Node from the seed's read, the time count's term summed by the tests apart from the engine",
+    ),
+    "tests/test_the_click_readings.py::bare_board": (
+        8,
+        "the helper of the three tests above: the one universe file on the bare 3-cube, every output line kept",
+    ),
     "tests/test_the_readings_are_made_once_per_interval.py::test_the_rule_and_the_pairs_of_the_digits_read_are_made_once_per_close": (
         22,
         "the digits' read made once per record per interval (the branch record-speed, 2026-10-24): digits.ruled and flux.pairs_of asked at "
