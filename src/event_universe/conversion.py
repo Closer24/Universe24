@@ -106,14 +106,16 @@ def walls_of(families: tuple[FamilyRule, ...], table: Table) -> int:
 
 def meeting_reducible(families: tuple[FamilyRule, ...], quanta: int, table: Table) -> bool:
     """Whether a list of a meeting of `quanta` massless quanta is the union of two lists each a meeting's own: over every split of the quanta into two parts of at least two each, a split of the table into two sub-multisets each kept and exact for its part (the identity, so for any part), the quanta's separate clicks and no meeting of all; a part of one quantum has the null list alone (two quanta meet, L188), so a list of two quanta is never reducible."""
-    if quanta < 2 + 2:  # two quanta meet (L188): no split of fewer than four into two meetings
+    meeting: Parents = ((0, 0), (0, 0))  # two quanta meet (L188), the parents of one meeting
+    if quanta < len(meeting) + len(
+        meeting
+    ):  # no split of fewer than two meetings' quanta into two meetings
         return False
     for take in range(1, 2 ** len(table) - 1):
         one = tuple(row for at, row in enumerate(table) if take >> at & 1)
         other = tuple(row for at, row in enumerate(table) if not take >> at & 1)
         if all(
-            kept(families, ((0, 0), (0, 0)), part) and conjugate_exact(families, part)
-            for part in (one, other)
+            kept(families, meeting, part) and conjugate_exact(families, part) for part in (one, other)
         ):
             return True
     return False
