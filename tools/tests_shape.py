@@ -290,6 +290,44 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         34,
         "the one-Link read's unit test (2026-10-24, the builder's sentence): at the first draw of the hole-seed 3-cube each Link lattice F_ij a multiple of the neighbour's own F_j with the coarse index the floor of the fine one over the ratio, the frame's neighbours reversed and rolled reading the same number, a Node beyond no Port refused by name",
     ),
+    "tests/test_the_readers_tables.py::test_the_density_the_ledger_and_the_births_read_the_epochs_the_erasure_and_the_senses_by_hand": (
+        148,
+        "the reader's seven tables (2026-10-24, the owner's word that all the epochs, the second bang, the attraction, relativity and the Links' lengthening show in the clicks; the architect's list): on a log of a few lines by hand with the eras lines beside it by hand, "
+        "the clicks per interval and the epochs bang, rise, top, fall, return with the eras log's bounds and the density's own runs, the first rise alone, the ledger's two cycles with the holder's quantum erased across the return and the tracks that cross it, the births per cycle per point per sense, the senses summing to 0, the lists equal to the legend's counts",
+    ),
+    "tests/test_the_readers_tables.py::test_the_tracks_the_distance_the_dilation_and_the_spacing_read_the_bodies_and_light_by_hand": (
+        97,
+        "the same tables on the bodies and light: the tracks per identity with the where per close, the distance A to B falling from 2 to 1 Links at the slope -1 / 8 Links per interval and B to C standing at 1 Link across the torus's edge by name, "
+        "the dilation at every where against the nodes log's pace within one interval at seven wheres and off by three at one, light's spacing against e^U longer where e^U is smaller on both sides of the return",
+    ),
+    "tests/test_the_readers_tables.py::test_the_back_in_time_window_runs_forward_to_k_with_no_snapshot_then_the_window_forward_and_back": (
+        14,
+        "the window of tools/back_in_time.py (--from K, 2026-10-24): the bare 3-cube forward to 4 with no snapshot, then 4 forward and 4 back, MATCH at the window's first interval with the report's `from`, the plain run's report as before",
+    ),
+    "tests/test_the_readers_tables.py::test_the_seven_tables_read_the_committed_record_through_the_command_line": (
+        25,
+        "the smoke check: the reader's command line with the eras and nodes logs beside the committed record, 26 epochs over 7 cycles, the ledger's 7 rows with nothing erased, 125 proton lists, the tracks and the clock tables unreadable with their keys named",
+    ),
+    "tests/test_the_readers_tables.py::hand_log": (
+        39,
+        "the helper of the tables' tests: the hand log written to a file, light's credits at eight closes over four Nodes, the body A moving one Link toward the bound body B, the body C bound a Link from B across the torus's edge, three births and two lays",
+    ),
+    "tests/test_the_readers_tables.py::era": (
+        19,
+        "the helper: one eras line by hand, the volume rising to 180 at 8, falling to 110 at 15 and rising again, one fire at the top, the quanta per family stepping at the births, the holder's one quantum spent at the return",
+    ),
+    "tests/test_the_readers_tables.py::birth": (
+        11,
+        "the helper: one birth line by hand with its children's records and points",
+    ),
+    "tests/test_the_readers_tables.py::credit": (
+        7,
+        "the helper: one credit line by hand with the click's view's eight keys, the board's own for light and `body n` for a body",
+    ),
+    "tests/test_the_readers_tables.py::node_line": (
+        6,
+        "the helper: one nodes line by hand, the Link's length 1 everywhere but at three Nodes",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"
