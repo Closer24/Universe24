@@ -16,7 +16,10 @@ from event_universe.records import Record
 ROOT = Path(__file__).resolve().parents[1]
 EVENTS = ROOT / "examples" / "events"
 UNIVERSE = {  # the tests' universe at the rule's integers (Gamma 6,000, T 32,768, the width 63, G 16), its rows derived and nothing declared (2026-10-24): gravity, the holder of the volume, gapped at the declared seed's gap 999 over 1000 at the rule's den; the charge, the sign holder; the binding holder [2400, 2401], a second holder of the volume; matter, one real line; the rule's own universe examples/events/rule.json (gravity massless at the level weight 1,000 and the rest 60, the binding holder sourced by the form alone, every read declared) the tests' universe to 2026-10-24, kept by name as the record of the law to that day
-    "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+    "integers": {
+        "node_clock": 6000,
+        "quantum_action": 32768,
+    },  # the width derived and G the engine's, 2026-10-24
     "families": [
         {"name": "gravity", "pair": [5994, 6000]},
         {"name": "charge", "pair": [6000, 6000]},

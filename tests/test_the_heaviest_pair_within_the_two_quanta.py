@@ -8,9 +8,7 @@ from event_universe.loader.universe import universe_of
 from tests.laws import ROOT
 
 UNIVERSE = ROOT / "examples" / "events" / "universe24" / "universe_universe24.json"
-SHARE_AT_29 = (
-    11_681_869_594_679  # every Node's share of light at the folded course's first meeting, 2.019227 W_c
-)
+SHARE_AT_29 = 254_493_485_120_013_736_379_770_556  # every Node's share of light at the folded course's first meeting at the enlarged den, 2.019227 W_c (11,681,869,594,679 at den 53,567,765 to 2026-10-24, the same 2.019227 W_c)
 
 
 def families_of(document: dict) -> tuple:  # type: ignore[type-arg]
@@ -19,21 +17,21 @@ def families_of(document: dict) -> tuple:  # type: ignore[type-arg]
 
 
 def test_the_heaviest_list_within_the_two_quanta_on_natures_den() -> None:
-    """On nature's den (den 53,567,765, T 36,000): W_c = 3 den T; the proton pair's walls 2 x 3 T x 53,346,867 are 483 / 485 of two quanta at the top and the electron pair's 2 x 3 T x 29,276; the lists of at most 2 + BEYOND children, their summed walls the energy they need (N children one record each, 2026-10-24): two quanta at the top birth the proton pair with the electron pair (2 u_p + 2 u_e within 2 W_c), the proton pair alone at exactly its own walls, four electrons one unit below them, four protons at twice them, the electron pair at exactly its walls and nothing below them."""
+    """On nature's den (the enlarged den 1,166,991,900,949,580,266,237 since 2026-10-24, 53,567,765 to that day, T 36,000): W_c = 3 den T; the proton pair's walls 2 x 3 T s_p are 483 / 485 of two quanta at the top at either den (s_p / den 0.99629 and 0.99588) and the electron pair's 2 x 3 T s_e; the lists of at most 2 + BEYOND children (N children one record each, 2026-10-24): two quanta at the top birth the proton pair with the electron pair, the proton pair alone at exactly its walls, four electrons one unit below them, four protons at twice them, the electron pair at its walls and nothing below them; the former clause's proton pair, two quanta one unit below the proton's walls the electron pair, two quanta below the electron's walls nothing; the fraction two n-ths of a share where n stand read cross-multiplied; the folded course's share at 29 births the proton pair. The former clause (2026-10-23 to 2026-10-24, the lightest within 2 x 3 den T): the electron pair at every one of these energies, the threshold a tautology."""
     families, names, action = families_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
     light, proton, electron = names.index("light"), names.index("proton"), names.index("electron")
     den = families[light].pair[1]
     wall_c, wall_p, wall_e = (count_wall(families[k], action) for k in (light, proton, electron))
-    assert (wall_c, wall_p, wall_e) == (3 * den * action, 3 * action * 53_346_867, 3 * action * 29_276)
+    assert (wall_c, wall_p, wall_e) == (
+        3 * den * action,
+        3 * action * 1_162_656_062_845_119_254_100,
+        3 * action * 633_202_287_062_780_012,
+    )  # the legs at the enlarged den (53,346,867 and 29,276 at den 53,567,765 to 2026-10-24)
     assert 2 * wall_p * 485 < 2 * wall_c * 483 + 2 * wall_c  # 483 / 485 of the top, within one 485th
     p, e = ((proton, -1), (proton, 1)), ((electron, -1), (electron, 1))
-    pp, ee, ppee, eeee, pppp = (
-        p,
-        e,
-        p + e,
-        ((electron, -1), (electron, -1), (electron, 1), (electron, 1)),
-        ((proton, -1), (proton, -1), (proton, 1), (proton, 1)),
-    )
+    pp, ee, ppee = p, e, p + e
+    eeee = ((electron, -1), (electron, -1), (electron, 1), (electron, 1))
+    pppp = ((proton, -1), (proton, -1), (proton, 1), (proton, 1))
     heaviest = lambda energy, over=1: born_table(families, light, action, energy, over)  # noqa: E731
     assert heaviest(2 * wall_c) == ppee  # two quanta at the top: the proton pair with the electron pair
     assert heaviest(2 * wall_p) == pp  # at the proton pair's walls exactly: the proton pair alone
@@ -49,5 +47,7 @@ def test_the_heaviest_list_within_the_two_quanta_on_natures_den() -> None:
     assert heaviest(2 * (3 * wall_p - 1), 3) == eeee  # three quanta a third of a unit below it
     assert (
         heaviest(2 * SHARE_AT_29, 2) == ppee
-    )  # the folded course at 29: 2.019227 W_c against 1.99285 W_c
-    assert heaviest(2 * (SHARE_AT_29 - 2 * wall_c + wall_c), 2) == eeee  # one quantum and the rest at 28
+    )  # the folded course's first meeting: 2.019227 W_c against 1.9937 W_c
+    assert (
+        heaviest(2 * (SHARE_AT_29 - 2 * wall_c + wall_c), 2) == eeee
+    )  # one quantum and the rest the interval before

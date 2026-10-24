@@ -47,9 +47,15 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
             lambda: universe.shape_of({"dimension": [1, 2, 3]}, "r"),
         ),
         (
-            "link_unit must be a power of two",
+            "the key 'link_unit', an integer of the engine and not of the universe",
             lambda: universe.universe_of(
-                {**document, "integers": {**document["integers"], "link_unit": 3}}
+                {**document, "integers": {**document["integers"], "link_unit": 16}}
+            ),
+        ),
+        (
+            "the key 'width', an integer of the engine and not of the universe",
+            lambda: universe.universe_of(
+                {**document, "integers": {**document["integers"], "width": 92}}
             ),
         ),
         ("families must be a list", lambda: universe.universe_of({**document, "families": {}})),
@@ -65,6 +71,23 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
     ]
     for match, call in refusals:
         refused(match, call)
+
+
+def test_a_file_integer_of_310_bits_loads_and_a_big_dens_turned_room_is_exact():
+    """The den enlarged as content (2026-10-24, the builder's two findings): a file's integer is bounded by 2^512 and not the host's 63 bits (`keys.FILE_INTEGER`; a den of 70 bits at the top tier, 154 at the PeV tier), so an integer of 310 bits loads and one of 513 is refused by name; and the turned room of a plane at the enlarged den is exact in Python's integers (`plane.turned_room`, its levels an object array: the hardware's overflowed on X_ij = 2 num G^2), equal to the room read Link level by Link level by hand."""
+    from event_universe.core.ports import LINK_UNIT
+    from event_universe.plane import link_wall, sign_pairs, turned_room
+
+    big = 2**310 - 1
+    assert keys.integer(big, "n", 1) == big and universe.pair_of([big - 1, big], "p") == (big - 1, big)
+    refused("integer from 1 through", keys.integer, 2**513, "n", 1)
+    pair, gamma, square = (1166991729163826857995, 1166991900949580266237), 1000, LINK_UNIT * LINK_UNIT
+    by_hand = max(
+        abs(int(even[0])) + abs(int(odd[0]))
+        for n in range(link_wall(gamma) + 1)
+        for even, odd in [sign_pairs(pair, gamma, (square,), (n,))]
+    )
+    assert turned_room(pair, gamma, LINK_UNIT) == by_hand + 1 > 2**63
 
 
 def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(

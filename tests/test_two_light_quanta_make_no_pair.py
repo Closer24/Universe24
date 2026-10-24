@@ -10,7 +10,7 @@ from tests.laws import ROOT
 FOLDER = ROOT / "examples" / "events" / "universe24"
 UNIVERSES = (
     "universe_universe24.json",
-)  # the one world's universe at nature's den (2026-10-24): gravity, the sign holder, matter, light, the proton and electron planes
+)  # the one world's universe at nature's den (2026-10-24): gravity, the sign holder, light, the proton and electron planes (matter's row left the same day)
 
 
 def families_of(path: Path):  # type: ignore[no-untyped-def]
@@ -33,5 +33,5 @@ def test_the_sentence_lists_the_conjugate_pairs_of_the_plane_families_lightest_f
         ]
     )  # the exact lists of at most 2 + BEYOND children, the lightest first by their summed walls: every multiset of conjugate pairs (2026-10-24, N children one record each); the one born the heaviest within the two quanta's energy (act.born_table)
     assert (
-        conversion.birth_of(families, names.index("matter")) == []
+        conversion.birth_of(families, names.index("proton")) == []
     )  # a family with a gap births nothing: its own list is the conversion's

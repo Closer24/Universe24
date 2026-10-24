@@ -6,7 +6,7 @@ from event_universe import world_files
 from tests.laws import ROOT, load_file, refused
 from tests.laws_universe import GAMMA, UNIVERSE
 
-WIDTH = 92  # the one universe file's width
+WIDTH = 139  # the one universe file's width, derived (2026-10-24; 92 declared to that day)
 
 ERAS = load_file("eras_tool", ROOT / "tools" / "eras.py")
 ERAS_PAGE = load_file("eras_page_tool", ROOT / "tools" / "look" / "eras_page.py")
@@ -40,10 +40,11 @@ def test_the_eras_log_holds_the_boards_readings_per_interval_and_the_page_draws_
             abs(row["U"] - row["U_level"]) < 0.01 and row["nodes"] == 27
         )  # the fine U beside the level's
         assert (
-            set(row["writes"]) == {"matter", "light", "proton", "electron"}
+            set(row["writes"])
+            == {"light", "proton", "electron"}  # matter's row left the file 2026-10-24
             and row["writes"]["light"] > 0
         )  # every family of quanta sources the holder it reads, the sign holder none (the reads derived, 2026-10-24; the charge among gravity's sources under rule.json's declared reads to that day)
-        assert 5 <= row["n_eff"] <= 6  # the mix of matter's 5 and light's 6
+        assert 5 <= row["n_eff"] <= 6  # the mix of the pairs' 5 and light's 6
         assert len(row["tension_means"]) == 3 and len(set(row["tension_means"])) == 1
         assert all(abs(v) <= 1 for v in row["tension_velocities"])
         assert -1 <= row["nature_residual"] and row["H"] == row["velocity"] / GAMMA
