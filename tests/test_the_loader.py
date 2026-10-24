@@ -1,26 +1,22 @@
-"""The loader's refusals by name, each called by hand on the loader's own function with no world run (ENGINE.md section 4, the files' keys; the architect's audit of 2026-10-03, the loader's pieces with no test of their own)."""
+"""The loader on the family-less universe file (the owner's word of 2026-10-24, "declaring a family is forbidden; they must emerge by themselves at the click"; ALGEBRA.md, A family's declaration, The circle of den; ENGINE.md section 4): a universe of den, the clock, the unit and the volume's gap alone loads, its rows derived from den (the massless point on one real line, the sign holder and the volume holder by their roles, every point of den's circle a plane named by its exponent vector), a file carrying a family row is refused by name with the derivation's sentence, the labels read from the integers meet the former names at the file's den, and every other refusal of the loader's own functions stands by name."""
 
 import json
 
 from event_universe import world_files
 from event_universe.lattice import Lattice
-from event_universe.loader import keys, universe
-from event_universe.loader.derived import PLANE_LINE, REAL_LINE
+from event_universe.loader import circle, keys, universe
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, refused, universe_beside
+from tests.laws import EVENTS, refused, universe_beside, universe_copy
 
 ONE_UNIVERSE = EVENTS / "universe24" / "universe_universe24.json"  # the one universe file
+DEN = 53_567_765  # nature's den of the one universe file, 5 x 17 x 73 x 89 x 97
+TOP = 1_166_991_900_949_580_266_237  # the constants hand's three-prime den, 649,421 x 13,586,597 x 132,260,701
 
 
-def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
-    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form and the Nodes beyond an inner face, a range's form, a repository path with no file, a record's line weights on a plane, at the wrong length and all 0, a read at the weight 0); the mode file (a level's sparse and dense forms, a family not the record's, the second level pair declared halfway or on a family of real lines, a level above the amplitude bound or beyond an inner face, a sense without a rotation, another world's digest, a missing entry); the lay (the kind, stop with the repeat, the tolerance's form, the seed, the profile with the one-Node seed and its form) and the budget (the least T is the law's inequality's least power of two, 81 den^6 e_num^4 c^2 T^2 >= 1024 num^4 n^2 e_den^4 (den^2 - num^2), and the gate refuses a universe below it); the faces (a receding face on a periodic axis, its sides and a side's word, the inner faces' list, axis and gaps, faces that leave no Node) and the open faces' layer without its receding side; the packets (the list, a lay by the count on a holder of the content, whole or count without interval, the family, the axis, the wave's form and p = 0, the phase's and a transverse wave number's form); the universe (the gone keys `reads` and `held`, each refused by name with the derivation that replaced it, 2026-10-24; the former key `act` an unknown key, a row's lines' kinds and a mixed record, a shape's form, the Link unit not a power of two, the families' list, a name twice, the pair's form, |num| = den on a massive pair)."""
-    universe_beside(tmp_path, charged=True)
-    document = json.loads((tmp_path / "u.json").read_text(encoding="utf-8"))
-    shape = (4, 2, 1)
-
-    def rows(*entries):
-        return universe.universe_of({**document, "families": list(entries)})
-
+def test_the_loader_refuses_every_wrong_key_of_the_files_by_name():
+    """Every refusal of the loader's own functions, by name and with no world run: the keys (an object, an unknown key, a lacking key, an integer's bounds, a Node's form, a repository path with no file), the gone key `families` with the derivation's sentence, an unknown key among the integers, a lacking integer, the volume's gap beyond den and the Link unit not a power of two."""
+    document, shape = universe_copy(), (4, 2, 1)
+    integers = document["integers"]
     refusals = [
         ("must be an object", lambda: keys.keyed(3, "k", ("a",), ())),
         ("unknown key 'b'", lambda: keys.keyed({"b": 1}, "k", ("a",), ())),
@@ -29,48 +25,100 @@ def test_the_loader_refuses_every_wrong_key_of_the_files_by_name(tmp_path):
         (r"must be a Node \[x, y, z\]", lambda: keys.node_of([1, 2], "node", shape)),
         ("no file stands at that repository path", lambda: keys.document_at({}, "u.json", "u")),
         (
-            r"\('a'\) holds the key 'reads', a declaration no file carries: the reads are derived",
-            lambda: rows({"name": "a", "pair": [2, 3], "dimension": 1, "reads": {"gravity": 1}}),
+            "the universe file holds the key 'families', a declaration no file carries: the families are no "
+            "rows of the file",
+            lambda: universe.universe_of(
+                {**document, "families": [{"name": "a", "pair": [2, 3], "dimension": 1}]}
+            ),
         ),
+        ("the universe file holds the unknown key 'reads'", lambda: universe.universe_of({**document, "reads": 1})),
+        ("integers holds the unknown key 'act'", lambda: universe.universe_of({"integers": {**integers, "act": 1}})),
+        ("integers lacks the key 'den'", lambda: universe.universe_of({"integers": {k: v for k, v in integers.items() if k != "den"}})),
         (
-            r"\('a'\) holds the key 'held', a declaration no file carries: a holder is derived",
-            lambda: rows({"name": "a", "pair": [2, 3], "held": {"sources": ["form"]}}),
-        ),
-        ("unknown key 'act'", lambda: rows({"name": "a", "pair": [2, 3], "act": "pace"})),
-        ("lists its lines' kinds", lambda: universe.shape_of({"dimension": ["x"]}, "r")),
-        (
-            "mixes real lines and planes",
-            lambda: universe.shape_of({"dimension": [REAL_LINE, PLANE_LINE]}, "r"),
-        ),
-        (
-            r"as a shape is \[parts, dimension\]",
-            lambda: universe.shape_of({"dimension": [1, 2, 3]}, "r"),
+            "integers.volume_gap must be an integer from 0 through 6000",
+            lambda: universe.universe_of({"integers": {**integers, "volume_gap": 6001}}),
         ),
         (
             "link_unit must be a power of two",
-            lambda: universe.universe_of(
-                {**document, "integers": {**document["integers"], "link_unit": 3}}
-            ),
-        ),
-        ("families must be a list", lambda: universe.universe_of({**document, "families": {}})),
-        ("name must be a name of its own", lambda: rows(*document["families"], document["families"][0])),
-        (
-            r"pair must be \[num, den\]",
-            lambda: rows({"name": "a", "pair": [2], "dimension": 1}),
-        ),
-        (
-            "a massive pair has den above",
-            lambda: rows({"name": "a", "pair": [-3, 3], "dimension": 1}),
+            lambda: universe.universe_of({"integers": {**integers, "link_unit": 3}}),
         ),
     ]
     for match, call in refusals:
         refused(match, call)
+    for key in universe.GONE:
+        assert "2026-10-24" in universe.GONE[key] and "kept by name" in universe.GONE[key]
+
+
+def test_dens_circle_is_read_from_its_integers_alone():
+    """The circle of den (loader/circle.py): den factored, its primes 1 mod 4 split as two squares, every point of the open quadrant a product of their Gaussian primes labelled by its exponent vector, 3^n - 1 points for n primes once each; at the file's den the least leg is the former electron's pair and the former proton's pair is the vector (-2, 0, 0, 0, 2), the file's gravity pair a point too; at the three-prime den the former electron and proton are the lifts of the two heavier primes; the vector -v the point with the legs swapped; den's part outside the primes 1 mod 4 carries no angle (den 6,000: six points of the prime 5's angle, scale 48)."""
+    assert circle.factored(DEN) == [(5, 1), (17, 1), (73, 1), (89, 1), (97, 1)]
+    assert circle.factored(6000) == [(2, 4), (3, 1), (5, 3)] and circle.factored(1) == []
+    assert circle.probable_prime(1021) and not circle.probable_prime(1105) and circle.probable_prime(132_260_701)
+    assert circle.split(5) == (2, 1) and circle.split(1021) == (30, 11)
+    points = circle.circle_points(DEN)
+    assert len(points) == 3**5 - 1 and len({vector for vector, _n, _s in points}) == len(points)
+    by_pair = {(num, sine): vector for vector, num, sine in points}
+    for _vector, num, sine in points:
+        assert num > 0 and sine > 0 and num * num + sine * sine == DEN * DEN
+        assert by_pair[(sine, num)] == tuple(-step for step in by_pair[(num, sine)])
+    least = min(points, key=lambda point: point[2])
+    assert least[1:] == (53_567_757, 29_276) and circle.label_of(least[0]) == "point 2 -2 -2 2 -2"
+    assert by_pair[(4_859_756, 53_346_867)] == (-2, 0, 0, 0, 2)  # the former proton's pair
+    assert by_pair[(53_529_741, 2_017_988)] == (2, -2, 2, -2, 0)  # the former gravity pair
+    assert by_pair[(32_140_659, 42_854_212)] == (2, 0, 0, 0, 0)  # the former matter pair, the prime 5's lift
+    assert circle.vector_of(circle.label_of((-2, 0, 0, 0, 2))) == (-2, 0, 0, 0, 2)
+    assert circle.vector_of("massless") is None and circle.vector_of("point x") is None
+    assert circle.angled(6000) == ([(5, 3)], 48)
+    small = {circle.label_of(v): (n, s) for v, n, s in circle.circle_points(6000)}
+    assert small == {
+        "point -6": (5616, 2112),
+        "point -4": (1680, 5760),
+        "point -2": (4800, 3600),
+        "point 2": (3600, 4800),
+        "point 4": (5760, 1680),
+        "point 6": (2112, 5616),
+    }
+    assert circle.circle_points(12) == []  # no prime 1 mod 4: no point, no plane row
+    top = {(num, sine): vector for vector, num, sine in circle.circle_points(TOP)}
+    assert len(top) == 3**3 - 1 and circle.factored(TOP) == [(649_421, 1), (13_586_597, 1), (132_260_701, 1)]
+    assert top[(1_166_991_729_163_826_857_995, 633_202_287_062_780_012)] == (0, 2, 0)  # the least leg
+    assert top[(100_503_613_922_092_705_013, 1_162_656_062_845_119_254_100)] == (0, 0, 2)
+
+
+def test_the_rows_are_derived_from_den_and_the_one_file_loads():
+    """The rows at load from den and the volume's gap (loader/universe.rows_of): the volume holder and the sign holder by their roles, then the massless point on one real line, the seed, the volume's pair from `volume_pair` alone, massless at the gap 0 or with no gap in the file; every point of the circle a plane row named by its vector, reading the volume and the sign; the one universe file loads with its 242 planes and no family row."""
+    integers, families = universe.universe_of(universe_copy())
+    names = [family.name for family in families]
+    assert names[:3] == [universe.VOLUME, universe.SIGN, universe.MASSLESS] and len(names) == 3 + 6
+    volume, sign, massless = families[:3]
+    assert (massless.pair, massless.lines, massless.plane, massless.held) == ((6000, 6000), 1, False, False)
+    assert sign.held and sign.wronskian and sign.rotation and sign.pair == (6000, 6000)
+    assert (sign.width, sign.records) == (4, 1 + 6)  # the time line and three odd lines per row, a row per plane and the free row
+    assert volume.held and not volume.wronskian and not volume.rotation and volume.pair == (5994, 6000)
+    assert universe.volume_pair(6000, 6) == (5994, 6000) and universe.volume_pair(6000, 0) == (6000, 6000)
+    for plane in families[3:]:
+        assert plane.plane and plane.lines == 2 and not plane.held and plane.pair[1] == 6000
+        assert sorted(read.family for read in plane.reads) == [0, 1]  # the volume and the sign
+        assert circle.vector_of(plane.name) is not None
+    assert [read.family for read in massless.reads] == [0] and sign.reads == ()
+    assert (sign.write_weight, sign.write_wall) == (2048, 375)  # alpha = T / Gamma reduced by 16, inside the write
+    document = universe_copy()
+    del document["integers"]["volume_gap"]
+    without, rows = universe.universe_of(document)
+    assert without["volume_gap"] == 0 and rows[0].pair == (6000, 6000) and not rows[0].wronskian
+    one = json.loads(ONE_UNIVERSE.read_text(encoding="utf-8"))
+    assert set(one) == {"integers"} and one["integers"]["den"] == DEN and one["integers"]["volume_gap"] == 38_024
+    shipped, planes = universe.universe_of(one)
+    assert len(planes) == 3 + 3**5 - 1 and planes[0].pair == (53_529_741, DEN) and shipped["den"] == DEN
+    least = min((f for f in planes if f.plane), key=lambda f: f.pair[1] ** 2 - f.pair[0] ** 2)
+    assert (least.name, least.pair) == ("point 2 -2 -2 2 -2", (53_567_757, DEN))  # the former electron
+    assert next(f.name for f in planes if f.pair == (4_859_756, DEN)) == "point -2 0 0 0 2"  # the former proton
 
 
 def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_axes(
     tmp_path, monkeypatch
 ):
-    """The board against the massless row's second double root (`loader/world.even_box_refused`; the mathematician's reading of the shelved ion's refusal): on the tests' universe, whose charge row is massless (the first named; gravity gapped since 2026-10-24), a box of 4 by 4 by 2 periodic on all three axes is refused by name at load, the packet naming the family, the shape, the staggered mode (-1)^(x + y + z + t) walked by Rule3's own rounding and the way out (printed); the same box with one odd extent, 4 by 4 by 3, and the even box with its x axis open are admitted, the mode a bounded response there."""
+    """The board against the massless row's second double root (`loader/world.even_box_refused`; the mathematician's reading of the shelved ion's refusal): on the tests' universe, whose sign holder is its first massless row, a box periodic on three even axes is refused by name with the family and the shape, an odd extent admitted; the torus's former face keys refused as unknown (2026-10-24)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path)
     world = dict(intervals=1, universe="u.json")
@@ -82,8 +130,7 @@ def test_the_loader_refuses_a_massless_family_on_a_box_periodic_on_three_even_ax
         return path
 
     refusal = str(refused("staggered mode", load_world, written("even", shape=[4, 4, 2])))
-    print(refusal)
-    assert "'charge'" in refusal and "[4, 4, 2]" in refusal and "odd extent" in refusal
+    assert f"'{universe.SIGN}'" in refusal and "[4, 4, 2]" in refusal and "odd extent" in refusal  # the first massless row, the sign holder
     assert Lattice(load_world(written("odd", shape=[4, 4, 3]))).shape == (4, 4, 3)
     for key in (
         "boundary",

@@ -141,16 +141,19 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
     from event_universe.loader import world as loader_world
 
     assert set(loader_world.WORLD_KEYS) == {"shape", "intervals", "universe"}
-    assert set(universe.FAMILY_KEYS) == {
-        "name",
-        "pair",
-        "dimension",
-    }  # `held` and `reads` gone 2026-10-24
-    assert set(universe.GONE) == {"reads", "held"}
-    with pytest.raises(ValueError, match="unknown key"):
+    assert set(universe.INTEGER_KEYS) == {
+        "den",
+        "node_clock",
+        "quantum_action",
+        "width",
+        "link_unit",
+        "volume_gap",
+    }  # no family row: `families` with `name`, `pair` and `dimension` gone 2026-10-24, `held` and `reads` before them
+    assert set(universe.GONE) == {"families"}
+    with pytest.raises(ValueError, match="holds the key 'families', a declaration no file carries"):
         universe.universe_of(
             {
-                "integers": {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
+                "integers": {"den": 6000, "node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16},
                 "families": [{"name": "g", "pair": [5999, 6000], "act": "pace"}],
             }
         )
@@ -200,7 +203,7 @@ STEPS = {  # the step's one list: every function of src/event_universe whose nam
 }
 LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the keys that name each kind
     (("shape", "universe"), "a world"),
-    (("families", "integers"), "a universe"),
+    (("integers",), "a universe"),
     (("world_digest",), "a mode file"),
 )
 
@@ -214,7 +217,6 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
         "world": set(loader_world.WORLD_KEYS),
         "universe": set(universe.UNIVERSE_KEYS),
         "integers": set(universe.INTEGER_KEYS),
-        "families": set(universe.FAMILY_KEYS),
     }
     retired, found = set(RETIRED) | {"interval", *universe.GONE}, []
     for folder in (
@@ -259,14 +261,13 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
 
-    family = {"name": "g", "pair": [5999, 6000]}  # a holder of the volume, derived from its pair
-    integers = {"node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16}
+    integers = {"den": 6000, "node_clock": 6000, "quantum_action": 32768, "width": 63, "link_unit": 16}
     with pytest.raises(ValueError, match=f"unknown key '{key}'"):
         if place == "world":
             world = {"shape": [3, 1, 1], "intervals": 1, "universe": "u.json", key: 1}
             keyed(world, "the world", loader_world.WORLD_KEYS, loader_world.WORLD_REQUIRED)
         else:
-            universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
+            universe.universe_of({"integers": {**integers, key: {}}})
 
 
 def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]
