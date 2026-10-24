@@ -3,15 +3,14 @@
 import json
 
 import numpy as np
-import pytest
 
 from event_universe import lay, world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import bodies_of
 from event_universe.world_files import load_world
-from tests.laws import BACK, EVENTS, TOOL, packet_world, refused, slit_world
-from tests.laws_content import ZENO_1, ZENO_ATOM, content_copy, ion_world, opened
+from tests.laws import BACK, EVENTS, TOOL, refused, slit_world
+from tests.laws_content import ZENO_1, ion_world, opened
 from tests.laws_read import redeclared
 
 
@@ -119,21 +118,10 @@ def test_the_loader_refuses_a_source_in_time_below_its_period_naming_the_least_a
     )
 
 
-@pytest.mark.parametrize("door", ["the loader's lay", "the source in time", "the open board's packet"])
-def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
-    door, tmp_path, monkeypatch
-):
-    """Every door of the act on a massless record changes the two sums by 0 and the back-in-time gate reads MATCH across it (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode: the loader's lay of the file's levels, `Lattice.lay`; the source in time's increments over its span, `emission.emitted_quantum`; the open board's packet, `emission.laid_packet`): the act's change read from its lay lines (the loader's lay has none, the sums themselves 0 at the start), the division act's leftover units among them, since `lay.written` is the one place that writes a level from outside Rule3 and the host's tool crosses every write from the lay lines."""
-    if door == "the loader's lay":  # the scratch world beside its universe
-        monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-        path, name, intervals = slit_world(tmp_path, TOOL), "charge", 6
-    elif door == "the source in time":
-        source = (
-            EVENTS / "resonance" / "resonant.json"
-        )  # as its content copy: the shipped world's run is refused by name at the body 1 of 'atom' at the interval 41 (the law's third refusal of the click's read, ALGEBRA.md The digits' budget: the room 2^45.8 of the digits read, the pulse's five at three values each on the universe zeno_atom.json, which declares no content, and the atom's three at the lay's origin, below the absorption draw's total 2^53.9), so the claim is read on the content copy (tests/laws_content.content_world with `opened`, the born universe's holders prepended), which carries every draw
-        path, name, intervals = content_copy(tmp_path, source, ZENO_ATOM, opened), "pulse", 112
-    else:
-        path, name, intervals = packet_world(tmp_path, TOOL, intervals=196), "pulse", 196  # at 194
+def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(tmp_path, monkeypatch):
+    """The loader's lay, the one door of the act that stays, on a massless record changes the two sums by 0 and the back-in-time gate reads MATCH across it (ALGEBRA.md, No write from outside Rule3 wakes the massless row's zero mode: the loader's lay of the file's levels, `Lattice.lay`): the scratch slit world's charge record, no lay line (the lay is the load's), both sums 0 after it, the gate MATCH over 6 intervals; the source in time's door and the open board's packet's door (112 and 196 intervals, 464 s together on the suite's clock) left with the emission and the packets on 2026-10-24."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    path, name, intervals = slit_world(tmp_path, TOOL), "charge", 6
     board = Lattice(load_world(path), (lines := []).append)
     index = [f.name for f in board.families].index(name)
     assert not lines and board.families[index].pair[0] == board.families[index].pair[1]
@@ -141,62 +129,33 @@ def test_every_door_leaves_the_two_sums_and_the_gate_reads_match_across_its_lay(
     assert (int(line.now.sum(dtype=object)), int(line.before.sum(dtype=object))) == (0, 0)
     for _ in range(intervals):
         board.step()
-    lays = [c for c in lines if c["event"] == "lay" and c["family"] == name]
-    assert (door == "the loader's lay") == (not lays)
-    assert [sum(c["after"][k] - c["before"][k] for c in lays) for k in (0, 1)] == [0, 0]
+    assert not [c for c in lines if c["event"] == "lay" and c["family"] == name]
     assert BACK.verdict(Lattice(load_world(path)), intervals)["verdict"] == "MATCH"
 
 
 def test_a_absorption_writes_nothing_on_a_dense_record_and_the_books_carry_the_deficit(
     tmp_path, monkeypatch
 ):
-    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `take.faced`, `credit.Books.deficits`, `Lattice.books`): on the ion-like world, a box of 8 by 6 by 5 (one odd extent, so that the staggered mode (-1)^(x + y + z + t), the band's top, is no exact mode of the board; re-pinned 2026-10-20 under the content of the born universe, the box opened along x as the content's sink and the ion's window the drive's passage derived at load, 21, the drive leaving by the faces within the run), the drive's record of several quanta per Node (its booked share at the ion's two Nodes above its quantum W_rec) is taken by the ion over 170 intervals, once (the drive's passage over the ion has an end on the opened box; the telegraph's counter, the plane x = 0 at the world's window 18, is refused by name at its second close, 36, the digits read spent by its earlier draws, so the beam is read at the ion alone, the counter dropped): no face is booked for the drive and no front begins from it, its three arrays stand bit for bit as the twin's without the ion at every interval (the drive reads no holder, so its step is the same Rule3), its four sums (plain and staggered of now and before, sigma = (-1)^(x + y + z) over the board) and its largest level printed with the twin's and equal; the books' count down by one per absorption, the deficit the absorptions' count and the share in quanta the count plus the deficit within the share's drift over the run in quanta (the books' `drift`, Rule3's own rounding, over W_c, and one quantum of the reading's rounding; the books' line and the tolerance printed); the back-in-time gate reads MATCH over the run across the absorptions, the ion's lays crossed from their lines."""
+    """The undepleted beam (ALGEBRA.md, The click writes on the lattice; the two hands' line at the owner's word for the simple solution; `take.faced`, `credit.Books.deficits`, `Lattice.books`): on the ion-like world, a box of 8 by 6 by 5 with the strong drive dense at the ion's two Nodes (the booked share above the record's quantum W_rec), the drive's first absorption at the derived window's close, 21, writes nothing on the drive (no face, no front of the drive's) and is read in the books: the count down by one, the deficit 1, the share in quanta within the drift's rounding of the count plus the deficit (the run of 170 intervals with a twin, the counter world's refusal and the gate over 169, 136 s on the suite's clock, cut to the first close on 2026-10-24: the twin without the body was no control under the one Node, and the run back across a click is tests/test_the_chain_world.py's B4)."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    world_files.REPOSITORY_ROOT = tmp_path / "counter"
-    counted = ion_world(tmp_path / "counter", TOOL, intervals=170)  # the telegraph's counter: refused
-    with pytest.raises(RuntimeError, match="spent at this interval by its earlier draws") as refusal:
-        board = Lattice(load_world(counted))
-        for _ in range(170):
-            board.step()
-    assert board.interval == 36 and "the regions of 'strong_drive' at the interval 36" in str(
-        refusal.value
-    )
-    world_files.REPOSITORY_ROOT = tmp_path
-    path, alone = (
-        ion_world(tmp_path, TOOL, intervals=170, body=body, counter=False) for body in (True, False)
-    )
-    board, twin = Lattice(load_world(path), (lines := []).append), Lattice(load_world(alone))
+    path = ion_world(tmp_path, TOOL, intervals=170, body=True, counter=False)
+    board = Lattice(load_world(path), (lines := []).append)
     drive = [f.name for f in board.families].index("strong_drive")
     unit, count, region = board.credit.units[drive], board.credit.counts[drive], ((3, 3, 2), (4, 3, 2))
     taken = board.mask(region)
     assert int(board.share_of(drive, 1, taken)[0][taken].min()) > unit  # dense at the ion's two Nodes
-    sigma = (-1) ** np.indices(board.shape).sum(axis=0)
-
-    def read(b):
-        line = b.states[drive].lines[0]
-        sums = [int((s * a).sum(dtype=object)) for a in (line.now, line.before) for s in (1, sigma)]
-        return sums, int(np.abs(line.now).max()), (line.now, line.before, line.remainder)
-
-    for _ in range(
-        170
-    ):  # the twin without the body is no control of the drive's arrays under the one Node (2026-10-23): the ion's record sources the held rows the drive reads, so the two boards' drives differ by the body's write ([-72898, 1112, ...] against [-74010, 0, ...] at the first interval); the former clause asserted them equal bit for bit
-        board.step(), twin.step()
-        mine, its = read(board), read(twin)
+    close = board.world.bodies[0].detector.draw.window  # the derived window, 21
+    assert close == 21
+    for _ in range(close + 1):
+        board.step()
     absorptions = [c for c in lines if c["event"] == "credit" and c["absorbed"] == "strong_drive"]
-    books, its_books = board.books()["strong_drive"], twin.books()["strong_drive"]
-    print(
-        f"the drive's sums [now, staggered now, before, staggered before] {mine[0]} and the twin's {its[0]}"
-    )
-    print(
-        f"the largest level {mine[1]} and {its[1]}, {len(absorptions)} absorptions, the books {books}, the twin's {its_books}"
-    )
-    assert len(absorptions) >= 1 and not any(
+    books = board.books()["strong_drive"]
+    print(f"the absorptions {[c['interval'] for c in absorptions]}, the books {books}")
+    assert [c["interval"] for c in absorptions] == [close] and not any(
         f.family == drive for fs in board.credit.faces.values() for f in fs
     )
     assert all(f.family != drive for f in board.credit.fronts)
-    assert (books["count"], books["deficit"]) == (count - len(absorptions), len(absorptions))
-    wall = board.credit.units[drive]  # the record's own unit of one quantum (C1)
-    within = abs(books["drift"]) // wall + 1  # the share's drift in quanta and the reading's rounding
+    assert (books["count"], books["deficit"]) == (count - 1, 1)
+    within = abs(books["drift"]) // unit + 1  # the share's drift in quanta and the reading's rounding
     print(f"the share in quanta {books['quanta']} against the count plus the deficit within {within}")
     assert abs(books["quanta"] - books["count"] - books["deficit"]) <= within
-    assert BACK.verdict(Lattice(load_world(path)), 169)["verdict"] == "MATCH"

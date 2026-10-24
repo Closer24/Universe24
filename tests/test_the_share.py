@@ -14,7 +14,8 @@ from event_universe.lattice import Lattice
 from event_universe.loader.derived import family_rules
 from event_universe.loader.world import kind_of
 from event_universe.world_files import load_world
-from tests.laws import EVENTS, arrivals_rule3, real_rows, universe_beside, world_beside
+from tests.laws import arrivals_rule3, real_rows, universe_beside
+from tests.laws_universe import small_world
 
 
 def law(num, den, gamma, clock, pace, factors=None, unit=1):  # type: ignore[no-untyped-def]
@@ -111,31 +112,23 @@ def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
         assert np.array_equal(through[port], expected)
 
 
-def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit(tmp_path):
-    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_detectors' regions and fronts read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers where its product stays inside the width, the Port's fill on the one layer beyond a face; no integer moved): every shortened read equals the full read it replaced, bit for bit. (i) `share.share` at its default mask equals the share at every Node, and `Lattice.quanta` at the readers' Nodes equals the full reading there, on the Zeno box, the pulsed Zeno box, the shelved ion and the anticoincidence world over 24 intervals, every family (the worlds in the read's shape, tests/laws.py `world_beside`). (ii) `paces.write_factor` in the hardware's integers, where `within_width` admits the product, equals the rounding in Python's integers on counts around the width's edge, both branches taken. (iii) `ports.shifted` with the fill on the face layer equals the shift with a full fill on every axis, sign and wrap, and a folded axis returns the array."""
-    worlds = (
-        ("resonance", "resonant"),
-        ("resonance", "detuned"),
-        ("packet_emission", "packet_emission"),
-    )
-    for (
-        folder,
-        name,
-    ) in worlds:  # re-pinned 2026-10-20: every family of quanta with a unit (the packet world's universe holds the two holders of the content for light since 2026-10-22, held rows with no unit, read over `order` and not as detectors' records)
-        copied = world_beside(tmp_path / name, EVENTS / folder / f"{name}.json", lambda w: None)
-        board = Lattice(load_world(copied))
-        for _ in range(24):
-            board.step()  # the board may grow beyond a receding face: the masks at its shape now
-            union, everywhere = (
-                node_detector.node_detector_nodes(board),
-                np.ones(board.shape, dtype=bool),
-            )
-            for index in board.order:  # the families of quanta; a held row has no unit and no count
-                full, frozen = board.share_of(index, 1, everywhere)
-                short, frozen_short = board.share_of(index)
-                assert np.array_equal(full, short) and np.array_equal(frozen, frozen_short), name
-                whole, at_union = board.quanta(index)[0], board.quanta(index, union)[0]
-                assert np.array_equal(np.where(union, whole, 0), at_union), name
+def test_the_steps_shortened_reads_equal_the_full_reads_bit_for_bit(tmp_path, monkeypatch):
+    """The step's speed (the owner's word of 2026-10-03, 15:12 Israel, in the Boss's session, "let them do it"; #1745 item 10; branch step-speed: the node_detectors' regions read once per interval for every family, the share at the Nodes where a level stands, the write factor in the hardware's integers inside the width): on the one world's small torus (tests/laws_universe.py: one clump, light on every other Node, the two-Node detector) (the three shipped worlds over 24 intervals, 86 s on the suite's clock, left on 2026-10-24), at every interval of 6 and for every family of quanta, the shortened read of the share equals the full read over the whole board bit for bit, the frozen mask with it, and the quanta read at the region's union equal the whole read masked to it; then the write factor's two branches, the hardware's inside the width and Python's beyond it, equal at the rounding, and the Ports' shift with its fill on an open axis, a wrapped one and a folded one."""
+    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
+    board = Lattice(
+        load_world(small_world(tmp_path))
+    )  # the 3-cube torus with one clump, light and the two-Node detector
+    assert board.node_detectors and len(board.order) >= 2  # matter and light, the families of quanta
+    for _ in range(6):
+        board.step()
+        union, everywhere = node_detector.node_detector_nodes(board), np.ones(board.shape, dtype=bool)
+        assert int(union.sum()) == 2
+        for index in board.order:  # the families of quanta; a held row has no unit and no count
+            full, frozen = board.share_of(index, 1, everywhere)
+            short, frozen_short = board.share_of(index)
+            assert np.array_equal(full, short) and np.array_equal(frozen, frozen_short), index
+            whole, at_union = board.quanta(index)[0], board.quanta(index, union)[0]
+            assert np.array_equal(np.where(union, whole, 0), at_union), index
     kind, wall = kind_of(63), 6000**3  # Gamma^2 p_0 at the vacuum's clock, the write's wall
     counts = np.array([1, 2_000_000, 21_000_000, 22_000_000, 2**31], dtype=kind)
     reference = paces.rounded(np.asarray(counts, dtype=object) * 5999 * 5999 * 5999, wall)

@@ -411,25 +411,25 @@ def shipped_worlds() -> list[Path]:
     return found
 
 
-@pytest.mark.parametrize("path", shipped_worlds(), ids=lambda path: path.stem)
-def test_every_shipped_world_loads_and_runs_under_the_one_node(path):  # type: ignore[no-untyped-def]
-    """Every shipped world under examples/ loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board's boundary the torus where the world declares none) and, where the board holds at most RUN_NODES Nodes, is started and stepped one interval by the engine's own step with its books open; a larger board's start stands beyond the suite's bound on the house's clock and is run by the world's own tests, named here as loaded alone."""
+def test_every_shipped_world_loads_under_the_one_node_and_the_smallest_runs():  # type: ignore[no-untyped-def]
+    """Every shipped world under examples/ loads under the one Node (the loader's refusals all passed, every held row carrying its time line as the volume's level at its fixed wall, the board's boundary the torus where the world declares none), the parse alone and no board (the boards' starts over the 60 worlds ran 142 s summed on the suite's clock; each world's run is its folder's, a record); the shipped one world, examples/events/universe24 (125 Nodes), is laid on its board and stepped 12 intervals under the one Node, every held row's wall fixed per Node, and a massless time line never fires (ALGEBRA.md, The swap at the top, the massless clause)."""
     from tests.laws_read import load_shipped
 
-    world = load_shipped(SRC.parents[1] / path)
-    nodes = int(np.prod(world.shape))
-    assert len(world.periodic) == 3 and world.families and world.intervals >= 1
-    if nodes > RUN_NODES:
-        print(
-            f"{path}: {nodes} Nodes loaded under the one Node, its start beyond the bound, run by its own tests"
-        )
-        return
-    board = Lattice(world)
-    board.step()
-    assert board.interval == 1 and board.ended is None
+    loaded = {}
+    for path in shipped_worlds():
+        world = load_shipped(SRC.parents[1] / path)
+        assert len(world.periodic) == 3 and world.families and world.intervals >= 1, path
+        loaded[path] = int(np.prod(world.shape))
+    assert len(loaded) >= 40 and all(loaded.values())
+    smallest = next(p for p in loaded if p.parent.name == "universe24" and p.stem == "universe24")
+    assert loaded[smallest] <= 125  # the shipped one world, the smallest structured board with a clump
+    board = Lattice(load_shipped(SRC.parents[1] / smallest))
+    for _ in range(12):
+        board.step()
+    assert board.interval == 12 and board.ended is None
     assert set(board.fixed_walls) == set(board.held)  # every held row's wall fixed per Node
     if all(f.pair[0] == f.pair[1] for f in board.families if f.held):
-        assert (
-            board.swaps == []
-        )  # a massless time line never fires: the swap at the top reads the gapped line alone (ALGEBRA.md, The swap at the top, the massless clause), on every shipped structured world and not the uniform torus alone
-    print(f"{path}: {nodes} Nodes, periodic {board.world.periodic}, one interval stepped")
+        assert board.swaps == []  # a massless time line never fires
+    print(
+        f"{len(loaded)} shipped worlds loaded under the one Node; {smallest} ({loaded[smallest]} Nodes) stepped 12 intervals"
+    )

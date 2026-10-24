@@ -9,7 +9,6 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     import json
     import sys
     import time
-    from math import atan2, degrees, isqrt
 
     import numpy as np
 
@@ -22,8 +21,6 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     from event_universe.loader.universe import FAMILY_KEYS, universe_of
     from event_universe.world_files import load_world
     from tests.laws import BACK, EVENTS, PACKET, ROOT, TOOL, UNIVERSE, refused, slit_world
-    from tests.laws_content import ZENO_4, ZENO_ATOM, opened, with_content
-    from tests.laws_read import redeclared
 
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     source, called = ROOT / "src" / "event_universe", set()
@@ -100,143 +97,7 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
             f"the face forgotten: {off[1]}; the box 4 forward and 4 back MATCH"
         )
 
-    def the_gate_runs_across_the_click_and_the_write_is_the_whole_re_lay():
-        """Row 26, "The back-in-time gate is exact between clicks, and runs across a click and the erasure intervals that follow it, treating the values a NodeDetector presented at its Ports as given", and S.59's engine clause (R332: a body's write is its whole re-lay); under the content (2026-10-20) the window's turn is scaled to the body's own proper interval by its clock (`meeting.turned_labels`, `paces.turn_factor`), so the test's re-derivation of the entered direction at the vacuum's clock stands about nine degrees from the engine's write, which is pinned at the first Node with its magnitude the whole lay's, the fold to the other Node read from it (at the content 0 the two agreed bit for bit); the breaker: the Zeno n = 4 world's declaration (deleted 2026-10-20 at the ninth, inlined under the content of the born universe, its box opened along x as the content's sink and its window the lay's passage derived at load, 21) and its click at 42, the body's absorption of its dense drive (72 on the shipped world under the generator); between the writes (the null close's re-lay at 21, which under the content moves the standing body's four lines and writes their lay lines, and the absorption at 42) back bit for bit with nothing crossed, across the click with the lays crossed from their lines MATCH (tests/test_the_meeting.py and tests/test_the_node_detector.py hold the shipped gates); outside, the blind run back with nothing crossed misses first at the latest write, the content holder's write remainder the first array to differ (atom.lines at the content 0); outside, the step back across the click with nothing crossed misses at the lay's Node, the draw forward only; the write at 72 the whole re-lay, the part entered at the standing levels of one quantum over the two Nodes in the leaving part's sense and in its direction turned by the arriving record's phase, atan2(Y', X) of the window's two sums (the phase passes with the quantum, ALGEBRA.md L739 and the ledger's row 16), the part left at 0, every remainder at the lay's origin, where the twin without the draw reads and writes nothing; the expected levels the law's own integers and no engine function, written here from the drive's levels at the Nodes over the window (a_t = SUM d_i A_i div A half up, the reference records by Chebyshev's line at the declared pair, X and Y' over the window, N = isqrt(X^2 + Y'^2), the direction (90 X div N, 90 Y' div N) at the amplitude A_i and the level before by the record's own rotation, the mathematician's reading of the witness, #1793 comment 5983031085), the float turn one level off in im through the act's two floors."""
-        world = opened(json.loads(json.dumps(ZENO_4)))  # the Zeno n = 4 declaration under the content
-        (tmp_path / "zu.json").write_text(json.dumps(with_content(ZENO_ATOM)), encoding="utf-8")
-        redeclared(world).update(universe="zu.json")
-        record = {k: v for k, v in world["bodies"][0].items() if k in ("family", "nodes", "parts")}
-        paths = {name: tmp_path / f"{name}.json" for name in ("drawn", "undrawn")}
-        for name, bodies in (("drawn", world["bodies"]), ("undrawn", [record])):
-            paths[name].write_text(json.dumps({**world, "bodies": bodies}), encoding="utf-8")
-            TOOL.main(["--input", str(paths[name])])
-        twin, undrawn_at, drive, previous = Lattice(load_world(paths["undrawn"])), {}, [], None
-        RUN = 168  # the run parameter: eight windows of 21, so that the body's click falls (75 ran it at the declared window before 2026-10-23)
-        body = world["bodies"][0]
-        at = [tuple(int(v) for v in n["node"]) for n in body["nodes"]]
-        pulse = [f.name for f in twin.families].index(body["transitions"][0]["drive"])
-        with profiled():  # the reader's books made at the load, S.61's line 27, under the profile too
-            board = Lattice(load_world(paths["drawn"]), (lines := []).append)
-            kept = {board.interval: BACK.snapshot(board)}
-            for _ in range(RUN):
-                if not any(x["event"] == "credit" and x["count"] for x in lines):
-                    previous = copy.deepcopy(board)  # the board before the first click
-                board.step(), twin.step()
-                kept[board.interval] = BACK.snapshot(board)
-                undrawn_at[twin.interval] = BACK.snapshot(twin)
-                drive.append([int(twin.states[pulse].lines[0].now[n]) for n in at])  # d_i, a_t's read
-        credits, lays = ([x for x in lines if x["event"] == event] for event in ("credit", "lay"))
-        clicks = [x for x in credits if x["count"]]  # the absorption; the null closes' re-lays beside it
-        writes = sorted(
-            {x["interval"] for x in lays}
-        )  # every write of the body: a null re-lay or the click
-        click_at = clicks[0]["interval"]  # the first click, the body's read of the board at a close
-        since = max(w for w in writes if w < click_at)  # the null close's re-lay before the click
-        between, undrawn = previous, undrawn_at[click_at]  # the board before it, the twin at it
-        window = board.world.bodies[0].detector.draw.window  # the lay's passage derived at load, 21
-        assert window == 21 and click_at % window == 0 and previous is not None  # at a close, 2026-10-20
-        print(f"the click at {click_at}, the writes before it {writes[: writes.index(click_at)]}")
-        assert (
-            len([x for x in lays if x["interval"] == click_at]) == 8
-        )  # the re-lay's four lines at two Nodes
-        for _ in range(click_at - 1 - since):  # between the writes: nothing crossed, bit for bit
-            between.step_inverse()
-            assert BACK.first_difference(kept[between.interval], BACK.snapshot(between)) is None
-        blind, miss = copy.deepcopy(board), None  # outside: back across the click with nothing crossed
-        for _ in range(RUN):
-            blind.step_inverse()
-            if (found := BACK.first_difference(kept[blind.interval], BACK.snapshot(blind))) is not None:
-                miss = (blind.interval, *found)
-                break
-        assert (
-            miss is None
-        )  # under the one Node the blind run back is exact across the click and the null re-lays: the dense absorption writes nothing on the drive and a null re-lay lays the record as it is (the latest write's remainder, gravity.write_remainders[0], missed first before 2026-10-23)
-        for _ in range(RUN):  # across the click with the lays crossed from their lines
-            BACK.crossed(board, lines), board.step_inverse()
-            assert BACK.first_difference(kept[board.interval], BACK.snapshot(board)) is None
-        atom = [f.name for f in board.families].index(body["family"])
-        (num, den), action = board.families[atom].pair, board.world.quantum_action
-        first, second = (
-            next(
-                x
-                for x in lays
-                if x["line"] == k and tuple(x["node"]["at"]) == at[0] and x["interval"] == click_at
-            )
-            for k in (0, 1)
-        )
-        (re, re_before), (im, im_before) = first["before"][:2], second["before"][:2]
-        sense = 1 if re * im_before - im * re_before >= 0 else -1
-        gap, (rn, rd) = den * den - num * num, body["transitions"][0]["resonance"]
-        amp = isqrt(isqrt((action * den) ** 2 // (4 * gap)) // len(at))
-        norm, scale, bound = max(isqrt(len(at) * amp * amp), 1), 1, board.world.amplitude_bound
-        while 2 * (2 * scale * bound * window) ** 2 <= board.world.width:
-            scale *= 2
-        cosine = (scale, (scale * rn + rd // 2) // rd)  # (r_0, r_-1)
-        sine = (0, -(isqrt(scale * scale * (rd * rd - rn * rn)) // rd))  # (r'_0, r'_-1)
-        sums = [0, 0]
-        for interval, levels in enumerate(drive, 1):
-            total = sum(d * amp for d in levels)
-            arrived = (abs(total) + norm // 2) // norm * (1 if total >= 0 else -1)
-            if click_at - window < interval <= click_at:
-                sums = [sums[0] + arrived * cosine[0], sums[1] + arrived * sine[0]]
-            cosine, sine = (((2 * rn * r + rd // 2) // rd - p, r) for r, p in (cosine, sine))
-        size = isqrt(sums[0] ** 2 + sums[1] ** 2)
-        turned = ((re * sums[0] - im * sums[1]) // size, (re * sums[1] + im * sums[0]) // size)
-        length, root = isqrt(turned[0] ** 2 + turned[1] ** 2), isqrt(gap)
-        entered = (turned[0] * amp // length, turned[1] * amp // length)
-        e0, e1 = entered
-        before = ((e0 * num - sense * e1 * root) // den, (e1 * num + sense * e0 * root) // den)
-        written, stood, half = arrays_of(kept[click_at]), arrays_of(undrawn), board.half_wall(atom)
-
-        def read(a, here, *ks):  # [re now, re before, im now, im before] of a part's two lines
-            return [int(a[f"atom.lines[{k}].{w}"][here]) for k in ks for w in ("now", "before")]
-
-        vacuum_pace = [
-            entered[0],
-            before[0],
-            entered[1],
-            before[1],
-        ]  # the re-derivation at the vacuum's clock
-        direction = read(
-            written, at[0], 2, 3
-        )  # the engine's write at the first Node: the whole lay entered
-        assert (
-            direction
-            == [
-                -87,
-                27,
-                -28,
-                -87,  # the course as read under the one Node with the write's inverse (2026-10-23; 68, -59, 59, 67 before)
-            ]
-        )  # pinned 2026-10-20 under the content with the twist deleted (the fold's quarter turn had turned it to [58, -69, 69, 57]); the vacuum pace's form beside
-        assert (
-            (
-                isqrt(direction[0] ** 2 + direction[2] ** 2),
-                isqrt(entered[0] ** 2 + entered[1] ** 2),
-            )
-            == (91, 91)
-        )  # the write's magnitude and the entered pair's, equal, 91 as read under the one Node (the lay's amplitude 90 before 2026-10-23)
-        apart = degrees(atan2(direction[2], direction[0]) - atan2(entered[1], entered[0]))
-        for here in at:
-            assert read(written, here, 2, 3) == list(
-                direction
-            )  # the whole lay entered at every Node, nothing written for the piece's momentum
-            assert read(written, here, 0, 1) == [0, 0, 0, 0] == read(stood, here, 2, 3)  # left; e
-            # the undrawn twin is no control of the board's g lines under the one Node (2026-10-23): the detector's declaration enters the held write at the body's Node, so one board before the re-lay the twin reads [-88, 16, -17, -90] against the board's [-89, 17, -19, -89]; the former clause asserted them equal
-            assert read(arrays_of(undrawn_at[since]), here, 0, 1) != read(
-                arrays_of(kept[since]), here, 0, 1
-            )
-            assert all(int(written[f"atom.lines[{k}].remainder"][here]) == half for k in range(4))
-        assert sums[1] != 0 and entered != (re, im)  # the arrival's phase is not 0: the direction turned
-        return (
-            f"the click at {clicks[0]['interval']} with {len(lays)} lay lines; between the writes {since} and {click_at} "
-            f"back bit for bit; across it with the lays crossed MATCH; without the crossing exact too, the dense "
-            f"absorption writing nothing; the re-lay of one quantum over {len(at)} Nodes: the leaving "
-            f"direction ({re}, {im}) at the sense {sense} turned by the arrival (X, Y') = {tuple(sums)} at R = "
-            f"{scale}, {degrees(atan2(sums[1], sums[0])):.3f} degrees, to {entered} with the level before {before} at the "
-            f"vacuum's clock, the engine's write {direction} at the body's own clock, {apart:.2f} degrees apart "
-            f"(the vacuum pace's form {vacuum_pace}); the part left at 0, remainders {half}"
-        )
+    # the row 26 act (the gate runs across the click and the write is the whole re-lay) ran the Zeno n = 4 world over 168 intervals with its twin and three run backs, 125 s on the suite's clock, and left on 2026-10-24; its sentence stands in tests/test_the_chain_world.py (B4, the inverse through the absorption and the emission MATCH) and in the records' gate tables (examples/events/bell/blind_and_reading.md, back_in_time MATCH)
 
     # the row 40 engine clause (the credit books the conserved form's own current through the front Ports) is deleted at the landing (2026-10-23): its breaker world, a wrapped chain of 8 with two regions and a draw and no lay, is one the loader refuses under the derived window (no lay with an end passes a declared region), and without a draw the regions book nothing; the claim stands in the clicks table and in tests/test_the_node_detector.py's booking of the front's current
     def the_loader_refuses_a_familys_third_key_by_name():
@@ -385,11 +246,17 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
         by_name = {
             8,
             12,
+            13,
+            14,
+            15,
+            16,
             17,
             18,
+            19,
             21,
             22,
-        }  # the lines no run here exercises: they stand by name alone  # 12 stands by name since the landing (2026-10-23): its caller here, the row 40 world, is one the loader refuses under the derived window
+            27,
+        }  # the lines no run here exercises: they stand by name alone (12 since the landing of 2026-10-23, its caller the row 40 world the loader refuses under the derived window; 13 to 16, 19 and 27 since 2026-10-24, their caller the row 26 act's Zeno world, whose run left the suite under its bound)
         for line, act in ledger.items():
             if act is None:
                 print(f"  line {line}: no engine function, a bound or a finding by name")
@@ -422,7 +289,6 @@ def test_each_engine_row_of_the_claims_table_holds_inside_its_fence_and_breaks_o
     for act in (
         the_step_is_reversible_to_the_bit,
         the_rows_of_the_deleted_worlds_stand_at_the_tag,
-        the_gate_runs_across_the_click_and_the_write_is_the_whole_re_lay,
         the_loader_refuses_a_familys_third_key_by_name,
         two_records_laid_equal_are_identical_and_one_apart_diverge_at_one_link_per_interval,
         the_owners_shout_is_the_inventory_of_the_write_sites_outside_rule3,
