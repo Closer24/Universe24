@@ -1,14 +1,13 @@
-"""The test of the law's course for Universe24, the one world (examples/events/universe24/; the fold of 2026-10-24, the owner's word: the file is the universe at nature's den, the board's shape and the run's length alone, no body, no detector, no option key; and the same day's later word: declaring a family is forbidden, the universe file one object of integers and no family row, ALGEBRA.md, The circle of den): (1) the bare world parses with the family-less universe, its seed the massless point and every point of den's circle a row of two lines; (11) the small bare torus of the tests' small universe is seeded with the massless point at one quantum on every Node but the origin (the owner's closure of 2026-10-24: the uniform sea births nothing, the hole opens the draw), bangs and births pairs of den's points at the senses -1 and 1; (12) the hole seed's run is the rolled run bit for bit (no label enters a number). The replay of the shipped eras log's first eight lines (the former (6)) left 2026-10-24 with the family-less file: the record stands as the law's to the former file, to be re-recorded once after everything (the Boss's word)."""
+"""The test of the law's course for Universe24, the one world (examples/events/universe24/; the fold of 2026-10-24, the owner's word: the file is the universe at nature's den, the board's shape and the run's length alone, no body, no detector, no option key; and the same day's later word: declaring a family is forbidden, the universe file one object of integers and no family row, ALGEBRA.md, The circle of den): (1) the bare world parses with the family-less universe, its seed the massless point and every point of den's circle a row of two lines; (11) the small bare torus of the tests' small universe is seeded with the massless point at one quantum on every Node but the origin (the owner's closure of 2026-10-24: the uniform sea births nothing, the hole opens the draw), bangs and births pairs of den's points at the senses -1 and 1 (the rolled run, the former (12), stands in tests/test_the_draw_reads_the_nodes_own_frame.py on every array since the tests' audit of 2026-10-24). The replay of the shipped eras log's first eight lines (the former (6)) left 2026-10-24 with the family-less file: the record stands as the law's to the former file, to be re-recorded once after everything (the Boss's word)."""
 
 import copy
 import json
 from pathlib import Path
 from typing import Any
 
-import numpy as np
 import pytest
 
-from event_universe import seed, world_files
+from event_universe import world_files
 from event_universe.lattice import Lattice
 from event_universe.loader.circle import vector_of
 from event_universe.loader.universe import MASSLESS, SIGN, VOLUME
@@ -96,38 +95,3 @@ def test_the_bare_torus_is_seeded_with_the_hole_bangs_and_births_the_pairs(
         board.step()
     later = [line for line in lines if line.get("event") == "birth"]
     assert len(later) > len(births) and board.credit.counts[names.index(later[-1]["children"][0])] > 0
-
-
-def test_the_hole_seeds_run_is_the_rolled_run_bit_for_bit(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    """(12) The lay's origin is a label of the file's coordinates and no number of the law: the run from the hole at (0, 0, 0) rolled one Link along x is the run from the hole at (1, 0, 0), every line of every row bit for bit over 20 intervals (the draw reads the Node's own frame, PUSH 9), so the torus has no marked Node."""
-    runs, law = [], seed.uniform_seed  # the law's seed, the hole at the origin, before the patch
-    for shift in (0, 1):
-
-        def shifted(board: Lattice, index: int, shift: int = shift) -> None:
-            law(board, index)
-            for line in board.states[index].lines:
-                line.now[...] = np.roll(line.now, shift, axis=0)
-                line.before[...] = np.roll(line.before, shift, axis=0)
-
-        monkeypatch.setattr(seed, "uniform_seed", shifted)
-        lines: list[dict[str, Any]] = []
-        board = bare_board(tmp_path, monkeypatch, lines, 20)
-        kept = []
-        for _ in range(20):
-            board.step()
-            kept.append(
-                [
-                    (np.asarray(line.now, dtype=object), np.asarray(line.before, dtype=object))
-                    for state in board.states
-                    for line in state.lines
-                ]
-            )
-        runs.append(kept)
-    origin, rolled = runs
-    for tick, (a, b) in enumerate(zip(origin, rolled, strict=True), start=1):
-        assert all(
-            np.array_equal(np.roll(x, 1, axis=0), y) and np.array_equal(np.roll(u, 1, axis=0), v)
-            for (x, u), (y, v) in zip(a, b, strict=True)
-        ), tick

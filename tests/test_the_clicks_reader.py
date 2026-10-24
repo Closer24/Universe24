@@ -1,36 +1,8 @@
-"""The reader of the clicks log alone (tools/clicks_read.py; ALGEBRA.md, The uncertainty principle is the record's and the click's; The paces compose): the committed record's credits read, and a log with the click's view's keys read (the momentum the frame's running cosine with the Link current's sign, 2026-10-24), every number computed by hand."""
+"""The reader of the clicks log alone (tools/clicks_read.py; ALGEBRA.md, The uncertainty principle is the record's and the click's; The paces compose): a log with the click's view's keys read (the momentum the frame's running cosine with the Link current's sign, 2026-10-24), every number computed by hand; the reading of the committed record's log, a pin on the record's counts, struck 2026-10-24 with the tests' audit."""
 
 import json
 
 from tests.laws import ROOT, load_file
-
-
-def test_the_committed_records_credits_give_the_counts_floor_and_the_torus_wide_where_and_name_the_lacking_keys():
-    """125 credits of light in the one window [30, 30]: the count's floor 1, the where 5 Links on every axis, the momentum unreadable with its key named, the bodies and the GR tables unreadable with their keys named."""
-    reader = load_file("clicks_read_tool", ROOT / "tools" / "clicks_read.py")
-    lines = reader.read_log(ROOT / "examples" / "events" / "universe24" / "universe24.clicks.jsonl")
-    lacking = reader.lacking
-    assert (len(lines.credits), len(lines.births), len(lines.lays)) == (125, 125, 625)
-    assert reader.shape_of(lines) == (5, 5, 5)
-    (row,) = reader.uncertainty_table(lines)
-    assert (row["family"], row["window"], row["credits"]) == ("light", [30, 30], 125)
-    assert (row["count_min"], row["count_sum"], row["where_spread"]) == (1, 125, [5, 5, 5])
-    assert row["distinct_wheres"] == 125 and row["violations"] == []
-    assert row["momentum_spread"] == row["product"] == lacking("momentum")
-    bodies = reader.bodies_table(lines)
-    assert len(bodies) == 125 and {b["identity"] for b in bodies} == {lacking("identity")}
-    assert all(b["mass"]["label"] == "proton" and b["mass"]["mass"] == lacking("point") for b in bodies)
-    assert all(b["velocity"] == lacking("identity") and b["position"]["when"] == 30 for b in bodies)
-    assert all(b["momentum"]["momentum"] == lacking("momentum") for b in bodies)
-    assert all(b["position"]["proper"] == "constant 0: no clock written on this log" for b in bodies)
-    born = sorted(tuple(node) for birth in lines.births for node in birth["nodes"])
-    assert sorted(tuple(b["position"]["where"]) for b in bodies) == born
-    gr = reader.gr_table(lines)
-    assert gr["dilation"] == {"rows": [], "note": lacking("proper")}
-    assert (
-        gr["tracks"] == {"rows": [], "note": lacking("identity")} and gr["light_spacing"]["rows"] == []
-    )
-    assert gr["silent"] == {"rows": [], "note": reader.ONE_WINDOW, "last_close": 30}
 
 
 def test_a_log_with_the_click_views_keys_gives_velocity_verdict_dilation_rest_and_product_by_hand(

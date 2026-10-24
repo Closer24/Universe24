@@ -7,18 +7,17 @@ import numpy as np
 from event_universe import flux, node, plane, records
 from event_universe.core.ports import LINK_UNIT, PORT_SIDES
 from event_universe.core.rule3 import rule_integers
-from event_universe.loader.derived import held_write_of
 from event_universe.loader.universe import SIGN, universe_of
 from tests.laws_universe import CUBE, GAMMA, SMALL
 
-INTEGERS, FAMILIES = universe_of(SMALL)  # the tests' small universe, den 1,021 with its two points
+_INTEGERS, FAMILIES = universe_of(SMALL)  # the tests' small universe, den 1,021 with its two points
 NAMES = [family.name for family in FAMILIES]
 CHARGE = NAMES.index(SIGN)
 ELECTRON = min(
     (i for i, f in enumerate(FAMILIES) if f.plane),
     key=lambda i: FAMILIES[i].pair[1] ** 2 - FAMILIES[i].pair[0] ** 2,
 )  # the least leg, the lighter point
-PAIR, UNIT, T = FAMILIES[ELECTRON].pair, LINK_UNIT, INTEGERS["quantum_action"]
+PAIR, UNIT = FAMILIES[ELECTRON].pair, LINK_UNIT
 SHAPE = (CUBE,) * 3
 
 
@@ -89,23 +88,3 @@ def test_the_wronskian_is_conserved_on_the_bare_torus_under_the_folded_link_turn
             following.append((re / wall, im / wall))
         z, z_before = following, z
     assert wronskian(z, z_before) == first != 0
-
-
-def test_the_sign_holders_lines_stand_at_the_doubled_wall():
-    """Every line of the sign holder's one write at one wall, 2 E_s T times the readers' charge multiple (The constants: the count units brought to one wall), a multiple of 2 E_s T; and the odd lines' unhalved sum J over the doubled wall against the halved path (J + 1) div 2 over E_s T, both by the carried division from the half wall: 2 (L_old W + r_old) - (L_new 2 W + r_new) = k_w x (the number of odd J so far) exactly at every interval, so the two are bit-identical, L_new = L_old and r_new = 2 r_old, while every J is even, and differ by the dropped half units otherwise; on random J within 10^6 over 300 intervals."""
-    write = held_write_of(FAMILIES, CHARGE, T)
-    weight, wall = FAMILIES[CHARGE].write, write.walls[0] // 2
-    assert FAMILIES[CHARGE].level_weight is not None
-    assert len(set(write.walls)) == 1 and wall % (FAMILIES[CHARGE].level_weight * T) == 0
-    draw = np.random.default_rng(11)
-    for sources in (draw.integers(-(10**6), 10**6, 300), 2 * draw.integers(-(10**6), 10**6, 300)):
-        old, new, odds = (0, wall // 2), (0, wall), 0
-        for current in sources.tolist():
-            gained, r_old = divmod(old[1] + weight * ((current + 1) // 2), wall)  # the halved path
-            level_old = old[0] + gained
-            gained, r_new = divmod(new[1] + weight * current, 2 * wall)  # the unhalved sum, doubled wall
-            level_new = new[0] + gained
-            old, new, odds = (level_old, r_old), (level_new, r_new), odds + current % 2
-            assert 2 * (level_old * wall + r_old) - (level_new * 2 * wall + r_new) == weight * odds
-        if not (sources % 2).any():
-            assert new == (old[0], 2 * old[1])

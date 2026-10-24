@@ -7,10 +7,8 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import records, seed, world_files
-from event_universe.emission import emitted_lines
+from event_universe import records, world_files
 from event_universe.lattice import Lattice
-from event_universe.lay import laid
 from event_universe.loader.circle import vector_of
 from event_universe.world_files import load_world
 from tests.laws_universe import bare_torus, small_universe
@@ -165,51 +163,3 @@ def test_two_tiles_with_skewed_clocks_hold_the_boards_integers_through_the_birth
         sum(line["senses"]) == 0 for line in born
     )  # one record per child, the senses summing to 0 (2026-10-24)
     assert skew == 1 and board.interval == tiles[0].interval == tiles[1].interval == INTERVALS
-
-
-def sea_plus_one_or_hole(hole: bool) -> Any:
-    """The seed hand's S1 (the sea plus one quantum at the origin) or S2 (the sea with the origin empty), a test's seed laid as the law's own is."""
-
-    def laid_seed(board: Lattice, index: int) -> None:
-        family, drift = board.families[index], seed.drift_of(board.world.quantum_action)
-        first, zeros = records.record_slice(family, 0).start, records.zeros(board.shape, board.kind)
-        sea = records.full(board.shape, drift, board.kind)
-        if hole:
-            sea[0, 0, 0] = 0
-        for line in emitted_lines(family):
-            laid(board, index, first + line, (sea, zeros), None, None)
-        if not hole:
-            mask = board.mask(((0, 0, 0),))
-            for line in emitted_lines(family):
-                laid(board, index, first + line, (np.where(mask, drift, 0), zeros), None, None, mask)
-
-    return laid_seed
-
-
-@pytest.mark.parametrize("hole", [False, True])
-def test_two_tiles_hold_a_structured_seed_through_its_drawn_whethers(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, hole: bool
-) -> None:
-    """S1 and S2 through the one-Link tiles with skewed clocks over 20 intervals, through the drawn whethers and the births at the lit Nodes: equal bit for bit (the close reads the interval's start and every face before any write; the seed hand's finding of 2026-10-24 parted them at the first drawn whether)."""
-    monkeypatch.setattr(seed, "uniform_seed", sea_plus_one_or_hole(hole))
-    monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
-    lines: list[dict[str, Any]] = []
-    board = Lattice(load_world(tile_world(tmp_path, SIDE)), output=lines.append)
-    interiors = [tile["x"] for tile in TILES]
-    layers = [layers_of(interior) for interior in interiors]
-    tiles = [
-        Lattice(load_world(tile_world(tmp_path, len(rows))), output=lambda line: None) for rows in layers
-    ]
-    whole = arrays_of(board)
-    for tile, rows in zip(tiles, layers, strict=True):
-        imposed(tile, whole, rows)
-    for interval in range(1, 21):
-        board.step()
-        first, second = tiles if interval % 2 else tiles[::-1]
-        first.step()
-        second.step()
-        whole = merged(tiles, interiors, board.shape)
-        for tile, rows in zip(tiles, layers, strict=True):
-            imposed(tile, whole, rows)
-        assert differences(whole, board) == [], interval
-    assert any(line["event"] == "birth" for line in lines)

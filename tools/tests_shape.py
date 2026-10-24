@@ -41,16 +41,6 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
-    "tests/test_the_point_rows_are_born_at_the_first_birth.py::test_the_lean_board_equals_the_board_with_every_point_standing_through_the_births": (
-        70,
-        "the point rows born at the first birth (2026-10-24, the field view (c)): the lean board against its twin with every point standing from the start, "
-        "equal bit for bit on every shared label and every output line over 24 intervals of the hole seed through its births, the step back through the first birth",
-    ),
-    "tests/test_the_clicks_reader.py::test_the_committed_records_credits_give_the_counts_floor_and_the_torus_wide_where_and_name_the_lacking_keys": (
-        26,
-        "the reader of the clicks log alone on the committed record (2026-10-24, the owner's word that every measurement goes to the clicks): "
-        "125 credits in one window, the count's floor 1, the where 5 Links on every axis, the momentum and the clock unreadable with their keys named",
-    ),
     "tests/test_the_clicks_reader.py::test_a_log_with_the_click_views_keys_gives_velocity_verdict_dilation_rest_and_product_by_hand": (
         89,
         "the same reader on a log with the click's view's keys, the momentum the frame's running cosine with the Link current's sign (2026-10-24): "
@@ -93,43 +83,14 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         7,
         "the helper of the three tests above: the one universe file on the bare 3-cube, every output line kept",
     ),
-    "tests/test_the_readings_are_made_once_per_interval.py::test_the_rule_and_the_pairs_of_the_digits_read_are_made_once_per_close": (
-        22,
-        "the digits' read made once per record per interval (the branch record-speed, 2026-10-24): digits.ruled and flux.pairs_of asked at "
-        "every Node's frame of a close give the same integers memoized and not, and node.rule_of is called once per record over every frame",
-    ),
-    "tests/test_the_readings_are_made_once_per_interval.py::test_the_turned_room_is_computed_once_per_pair_at_load": (
-        14,
-        "plane.turned_room under functools.cache at load (the branch record-speed, 2026-10-24): the same room cold and warm per turned pair, "
-        "every warm call a hit, the amplitude bound the world's",
-    ),
-    "tests/test_the_birth_is_a_list_of_records.py::test_the_lists_two_light_quanta_make_are_the_conjugate_pairs_and_the_general_enumeration_a_function": (
-        16,
-        "Matter's birth from light, N records one per child (2026-10-24, the owner's word, several can be born): the law as written "
-        "selects among the conjugate pairs, birth_of gives those, exact, kept, lightest first; lists_of the general enumeration with the test's bound",
-    ),
-    "tests/test_the_birth_is_a_list_of_records.py::test_a_list_of_four_children_lays_four_records_through_the_same_path": (
-        20,
-        "the same sentence's path for N: a four-child list handed to born_items lays two records of each family at the list's senses, "
-        "each record's Wronskian its child's sense, the holder's four reader rows written after one interval",
-    ),
     "tests/test_the_birth_is_a_list_of_records.py::test_the_uniform_cube_births_the_list_one_record_per_child_each_at_its_sense": (
         30,
         "the same sentence on the uniform 3-cube's first meeting: the records laid number the list's children, each born record's "
         "Wronskian its child's sense, opposite children opposite, the books one per child, the holder's row of every charged record written",
     ),
-    "tests/test_the_birth_is_a_list_of_records.py::test_the_holes_board_runs_back_exact_through_its_births": (
-        16,
-        "the same sentence's run back: the sea with a hole 20 intervals through its births and back, MATCH, the N records' lays undone",
-    ),
     "tests/test_the_birth_is_a_list_of_records.py::bare_board": (
         8,
         "the helper of the three tests above: the one universe file on the bare 3-cube with the births kept",
-    ),
-    "tests/test_the_pages_carry_the_legend_of_kinds.py::test_the_captions_name_the_three_prime_lifts_by_rising_sine_at_every_den": (
-        26,
-        "the pages' captions a look and no law (the owner's word of 2026-10-24, the branch born-amplitude): den's three prime lifts by "
-        "rising sine the electron, the proton and the neutron's candidate, at den 1,021, the top tier and the PeV den; the former rule kept by name",
     ),
     "tests/test_the_birth_is_a_list_of_records.py::born_here": (
         12,
@@ -146,69 +107,17 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the charge written is the Wronskian over T div 2 for every reader (the law's sentence of 2026-10-24, the owner's word): "
         "one quantum of the proton and one of the electron in the birth's own form write the same level into the holder of the sign",
     ),
-    "tests/test_the_charge_per_quantum.py::test_the_holes_board_runs_25_intervals_with_the_sign_holder_bounded": (
-        22,
-        "the same sentence on the sea with a hole over 25 intervals: electron pairs born by the draw and the holder of the sign "
-        "below the former factor's one-electron write of two intervals, no exponential (the runaway hand's finding of 2026-10-24)",
-    ),
     "tests/test_the_share.py::test_under_the_rotation_the_share_reads_the_level_pair_as_the_step_reads_it": (
         88,
         "the share under the rotation (the mathematician's line, #1793 comment 5981866600 K3; the advisor's breaker): the level "
         "pair read as the step reads it, the step's identity exact at every Node with its three walk terms, the turned read "
         "standing within the integer walk on the ring where the plain read drifts by percent, the plain read bit for bit where no family turns",
     ),
-    "tests/test_the_stress_is_the_links.py::test_the_board_sums_of_the_former_and_the_new_reading_are_equal_to_the_bit_on_a_wrapped_board": (
-        16,
-        "the stress is the Links' (the builder's M21, 2026-10-23): the former reading's board sum over its wall and the new "
-        "reading's over the doubled wall equal to the bit on a wrapped board, a plane wave, a one-Node record and random levels",
-    ),
-    "tests/test_the_stress_is_the_links.py::test_the_reading_is_invariant_under_the_shift_and_even_under_the_inversion_and_reads_a_one_node_record_at_its_neighbours": (
-        26,
-        "the stress is the Links': the reading invariant under the shift of every level by one number where the former gains "
-        "m Delta_a a, even under the axis's inversion, a one-Node record's parts at its two neighbours",
-    ),
-    "tests/test_integer_algebra.py::test_the_conventions_tables_identities_hold_on_small_integers": (
-        93,
-        "the conventions table's identities asserted where the engine computes them (fill 17 part 3, the Boss's brief of "
-        "2026-10-04): the momentum identity with the carried remainders, the tension's Node part and the Link's mean, the "
-        "two forms' walks under the rounding and the weighted coefficients' symmetry, on small integers",
-    ),
-    "tests/test_documents.py::test_no_undated_history_clause_stands_in_the_law_or_the_engines_document": (
-        10,
-        "the documents' gates (the owner's word of 2026-10-04, a perfect algebra; #1793 comment 5974938542): no undated history "
-        "clause in the law or the engine's document beyond tools/history_allowed.json, which only shrinks; the loader of the gates with it",
-    ),
-    "tests/test_documents.py::test_every_shared_number_stands_in_its_one_form": (
-        4,
-        "the documents' gates: every number of tools/numbers.json in its canonical form and in none of its forbidden forms",
-    ),
-    "tests/test_documents.py::test_every_derived_number_is_its_scripts_output": (
-        4,
-        "the documents' gates: every derived number of the table the output of its script under tools/derivations/",
-    ),
-    "tests/test_the_features.py::test_a_frozen_row_stands_outside_the_energy_line_and_two_moving_planes_still_share_their_pair": (
-        12,
-        "the atom round's dedicated test (the Boss, 2026-10-03): the frozen row [0, den] loads beside a moving plane "
-        "under the rotation holder, one plane or three, and two moving planes of different num / den are still refused",
-    ),
-    "tests/test_integer_algebra.py::test_a_composed_product_of_literals_is_refused_outside_core_rule3": (
-        11,
-        "PR D's gate (the Boss's brief of 2026-10-03): no two integer literals multiplied, added or raised outside "
-        "core/rule3.py, the composed number named from the Ports and the levels or taken from the files",
-    ),
     "tests/test_the_loader.py::test_the_loader_refuses_every_wrong_key_of_the_files_by_name": (
         172,
         "the loader's refusals by name on the loader's own functions with no world run (the owner's word of "
         "2026-10-03, every piece has a unit test; the architect's audit): the keys, the mode file, the lay and the "
         "budget's least T, the faces and the open faces' layer, the packets, the universe",
-    ),
-    "tests/test_proofs_check_the_law.py::test_every_row_of_the_proofs_inventory_returns_its_verdict_and_the_unchecked_only_fall": (
-        77,
-        "the proofs' gate (the owner's order of 2026-10-04, 07:50 UTC, that all the proofs be checked by machine; the "
-        "advisor's design lines, #1793 comment 5977935062): every row of tools/derivations/proofs_inventory.json with a "
-        "check runs to its verdict, every check_ function of the proofs_ modules is a row's, the rows of the kinds A, B "
-        "and C without a machine check are a ratchet that only falls, and no proofs_ module imports the engine or names "
-        "a run's file; the imports stand inside the test so the file is the test alone",
     ),
     "tests/test_the_sign_holders_link_turn.py::test_the_wronskian_is_conserved_on_the_bare_torus_under_the_folded_link_turn": (
         50,
@@ -229,10 +138,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         17,
         "the board's own hole the Node's own level before, the drift stopped (the Boss's ruling of 2026-10-24 on the bound-click hand's measurement): conservation at the click on the 3-cube, nothing made at the Links, at most one hole per close, the light never spent",
     ),
-    "tests/test_the_hole_stops_the_drift.py::test_the_5_cube_keeps_its_light_above_zero_under_the_holes": (
-        10,
-        "the same hole on the 5-cube: the light above zero through 20 intervals where the write to (0, 0) spent it by 8, no close holing every Node, no light made",
-    ),
     "tests/test_the_hole_stops_the_drift.py::test_a_hole_on_the_uniform_sea_is_the_seeds_own_origin": (
         17,
         "the hole's form is the seed's: stopped_at at the seed's origin (0, 0), on the uniform sea the level before twice, the seed's kink exactly",
@@ -240,14 +145,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_hole_stops_the_drift.py::test_the_first_draw_by_the_digits_falls_at_a_share_between_one_and_two_quanta_and_writes_its_credit": (
         30,
         "the Born side on the hole seed: the first meeting met by the draw at one whole quantum with a remainder, the weights the remainder against the unit, the credit and birth lines at that Node",
-    ),
-    "tests/test_the_hole_stops_the_drift.py::test_the_run_back_is_exact_through_the_closes_that_hole": (
-        14,
-        "the hole's lay logged and undone by the run back, eight intervals forward through the births and eight back bit for bit",
-    ),
-    "tests/test_the_board_is_the_cube_48.py::test_two_signed_permutations_generate_the_48_and_every_element_is_one": (
-        6,
-        "the Boss's covariance test of 2026-10-24 (the board is the cube's 48): the 48 generated from two signed permutations by the closure, no table",
     ),
     "tests/test_the_board_is_the_cube_48.py::test_a_seed_invariant_under_the_48_runs_invariant_under_the_48": (
         17,

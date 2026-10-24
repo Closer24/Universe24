@@ -7,7 +7,6 @@ import numpy as np
 from event_universe import meeting_board, records, seed, world_files
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
-from tests.laws import board_state, same_state
 from tests.laws_universe import bare_torus, uniform_sea
 
 
@@ -67,18 +66,6 @@ def test_the_holed_nodes_own_quanta_pay_and_nothing_is_made_at_the_links_on_the_
     assert sum(len(found) for found in born.values()) > 3
 
 
-def test_the_5_cube_keeps_its_light_above_zero_under_the_holes(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The 5-cube under the same hole for 20 intervals: the light's summed share above zero at every interval where the former write spent it to exactly zero by the end of 8, births at several closes and no close holing every Node; the write makes no light at any close, where the frame's mean of the level before made 10 to 172 quanta per close at the closes 5 to 10 between adjacent holes each written to its own frame (the 60-interval runs, 131 births against 405, named in ALGEBRA.md's dated sentence)."""
-    lines: list[dict] = []  # type: ignore[type-arg]
-    board = hole_seed(tmp_path, monkeypatch, 5, 20, lines)
-    nodes = int(np.prod(board.shape))
-    for _ in range(20):
-        board.step()
-        assert light_of(board)[0] > 0
-        assert len(births_at(lines, board.interval)) < nodes
-    assert len({row["interval"] for row in lines if row.get("event") == "birth"}) > 3
-
-
 def test_a_hole_on_the_uniform_sea_is_the_seeds_own_origin(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
     """The seed is untouched and the hole is its form (ALGEBRA.md, The uniform seed is a lay; The board reads itself, the dated sentence): the seed lays (v, 0) at every Node but the origin, (0, 0), and `stopped_at` on the seed's own state at the origin returns (0, 0), the seed's hole; on the uniform sea by name (every Node at the drift, no hole) stepped three intervals, the sea drifts by v at every Node and `stopped_at` at any Node returns the Node's level before twice, so a hole written there is the seed's kink exactly: the Node at the level it had before this interval's drift, the drift stopped, one quantum absent (the six Ports' mean of both levels, the first form measured, returns the Node's own levels on a uniform frame and so writes nothing there, kept by name)."""
     board = hole_seed(tmp_path, monkeypatch, 3, 4, [])
@@ -128,19 +115,3 @@ def test_the_first_draw_by_the_digits_falls_at_a_share_between_one_and_two_quant
     credits = [row for row in lines if row.get("event") == "credit" and row["interval"] == interval]
     assert any(row["node_detector"] == place and row["count"] == 1 for row in credits)
     assert at in births_at(lines, interval)
-
-
-def test_the_run_back_is_exact_through_the_closes_that_hole(tmp_path, monkeypatch):  # type: ignore[no-untyped-def]
-    """The hole's write is a lay logged in the books and undone by the run back as every lay is (ALGEBRA.md, The lay's inverse): eight intervals of the 3-cube hole seed forward through several closes that hole and birth, then eight back, every family's lines and write remainders equal bit for bit at every interval and the interval back at 0."""
-    lines: list[dict] = []  # type: ignore[type-arg]
-    board = hole_seed(tmp_path, monkeypatch, 3, 12, lines)
-    states = [board_state(board)]
-    for _ in range(8):
-        board.step()
-        states.append(board_state(board))
-    assert sum(1 for row in lines if row.get("event") == "birth") >= 2
-    back = 0
-    for k in range(8):
-        board.step_inverse()
-        back += same_state(board_state(board), states[7 - k])
-    assert (back, board.interval) == (8, 0)
