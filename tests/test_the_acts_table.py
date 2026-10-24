@@ -96,6 +96,11 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
     ("digits.py", "read_of", "gcd"): "D",  # the bases less one, the plain sum's modulus, once
+    (
+        "digits.py",
+        "frame_of",
+        "division_forward",
+    ): "D",  # the torus's wrap of a frame Node's coordinate, an index
     # features/click
     (
         "features/click/__init__.py",
