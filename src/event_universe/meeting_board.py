@@ -8,12 +8,13 @@ import numpy as np
 
 from event_universe import credit, records, swap
 from event_universe.act import born_items, born_table, click
+from event_universe.core.paces import sine_den
 from event_universe.core.rule3 import division_forward
 from event_universe.digits import at_origin, frame_of, read_of
 from event_universe.features.click import drawn_from
 from event_universe.lay import laid
 from event_universe.loader.keys import Node
-from event_universe.reports import birth_line
+from event_universe.reports import READINGS, birth_line, point_of
 from event_universe.reports import credit as credit_line
 
 if TYPE_CHECKING:
@@ -74,8 +75,11 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
     finally:
         for state, (lines, phases) in zip(board.states, stepped, strict=True):
             state.lines, state.phases = lines, phases  # the write on the state the step left
+    readings = {
+        at: readings_at(board, begun, index, 0, at) for at, _table in born
+    }  # the click's view read on the state the step left, before the hole (2026-10-24)
     items = []
-    for at, table in born:  # every hole at its own Node, then one click act for every pair born
+    for at, table in born:  # every hole at its own Node, then one click act for every list born
         here = board.mask((at,))  # the hole: the seed's record at this Node to 0, the two quanta paying
         for number in range(span.start, span.stop):
             line = board.states[index].lines[number]
@@ -104,13 +108,51 @@ def closed(board: Lattice, begun: swap.Kept) -> None:
                     None,
                     seed,
                     names[0],
+                    readings=readings[at],
                 )
             )
+            children = born_items(board.families, table, (at,))
             board.output(
-                birth_line(board.interval, seed, names, [sense for _out, sense in table], (at,))
+                birth_line(
+                    board.interval,
+                    seed,
+                    names,
+                    [sense for _out, sense in table],
+                    (at,),
+                    [child.record for child in children],
+                    [list(board.families[child.family].pair) for child in children],
+                )
             )
     counted = credit.count_of(
         board, index
     )  # the family's count a reading of the board, never an act's input
     if counted is not None:
         books.counts[index] = counted
+
+
+def readings_at(
+    board: Lattice, begun: swap.Kept, index: int, record: int, at: Node
+) -> dict[str, object]:
+    """The click's view at the credited Node, the six readings of the credit line (`reports.READINGS`; ALGEBRA.md, Readings and measurements, the click's view, 2026-10-24): the point, the credited record's cosine read from its lines' three levels around the step at the Node, the level before and the level now at the interval's start (`begun`) and the level the step left, as the reduced pair (num, den) (`reports.point_of`; one pair where every line reads the same, else the lines' pairs in order; None at a level now 0); the kind, the rank of the lines credited, the record's lines per part (one a real line, two a plane); the sense, the Wronskian's sign at the Node (0 for real lines); the support, the shell Node the credit left through, the hole's own Node here; the beat, the quantum's rotation W_c sin omega at the point read, 3 T times the integer sine of the pair (`paces.sine_den`; 0 at the uniform mode's double root, None where no cosine or a mode beyond the band); the identity, the record's family and index. Readings and no act: nothing of the board moves here."""
+    family = board.families[index]
+    span = records.record_slice(family, record)
+    where = (int(at[0]), int(at[1]), int(at[2]))
+    points = [
+        point_of(int(start.before[where]), int(start.now[where]), int(left.now[where]))
+        for start, left in zip(begun[0][index][span], board.states[index].lines[span], strict=True)
+    ]
+    point: object = points[0] if all(found == points[0] for found in points) else points
+    wronskian = records.wronskian(board.lines_of(index, record), family.plane)
+    value = int(np.asarray(wronskian, dtype=object)[where]) if family.plane else 0
+    beat = None
+    if isinstance(point, tuple) and abs(point[0]) <= point[1]:
+        beat = int(sine_den(abs(point[0]), point[1], 3 * board.world.quantum_action))
+    found = (
+        list(point) if isinstance(point, tuple) else point,
+        family.width,
+        0 if value == 0 else (1 if value > 0 else -1),
+        list(where),
+        beat,
+        [index, record],
+    )
+    return dict(zip(READINGS, found, strict=True))

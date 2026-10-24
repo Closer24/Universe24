@@ -41,6 +41,22 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_click_readings.py::test_the_point_is_the_reduced_pair_of_the_cosine_read_from_three_levels": (
+        7,
+        "the click's view (2026-10-24, the owner's frame, the builder's six readings): the point the reduced pair of the cosine read from three levels",
+    ),
+    "tests/test_the_click_readings.py::test_the_readings_at_a_node_are_the_boards_own_at_the_intervals_start": (
+        18,
+        "the click's view: the six readings at a Node equal to the board's own levels at the interval's start and the level the step left",
+    ),
+    "tests/test_the_click_readings.py::test_every_credit_of_the_first_meeting_carries_the_six_readings_and_every_birth_its_childrens_records_and_points": (
+        24,
+        "the click's view on the uniform cube's first meeting: every credit's six keys as the board reads them, every birth's children's records and points",
+    ),
+    "tests/test_the_click_readings.py::bare_board": (
+        8,
+        "the helper of the three tests above: the one universe file on the bare 3-cube, every output line kept",
+    ),
     "tests/test_the_birth_is_a_list_of_records.py::test_the_lists_two_light_quanta_make_are_the_conjugate_pairs_and_the_general_enumeration_a_function": (
         16,
         "Matter's birth from light, N records one per child (2026-10-24, the owner's word, several can be born): the law as written "
