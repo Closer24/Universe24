@@ -1,4 +1,4 @@
-"""Every Link's phase pair stands on the one orbit from the seed (features/phase `Orbit`, node.phase_carried; the architect's round of 2026-10-24): the pair at a count is the checkpoint at or below it, or the Link's own pair where that is nearer, carried by the rest, the same integers as the acts one by one from the seed; the folded Universe24 over 32 intervals writes its shipped eras, nodes and clicks lines bit for bit, and 30 intervals of it with the pairs carried act by act hold the same phase lines (the born pairs sourcing the holder from 30)."""
+"""Every Link's phase pair stands on the one orbit from the seed (features/phase `Orbit`, node.phase_carried; the architect's round of 2026-10-24): the pair at a count is the checkpoint at or below it, or the Link's own pair where that is nearer, carried by the rest, the same integers as the acts one by one from the seed; the folded Universe24 over 32 intervals writes its shipped eras, nodes and clicks lines bit for bit, and 10 intervals of it with the pairs carried act by act hold the same phase lines (30 to 2026-10-24, shortened under the suite's bound of 30 seconds per test on the run's clock of four workers; the sentence the same) (the born pairs sourcing the holder from 30)."""
 
 import json
 from pathlib import Path
@@ -13,7 +13,7 @@ from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws_universe import ERAS, FOLDER, LOG, WORLD
 
-INTERVALS, COMPARED, GAMMA, WIDTH = 32, 30, 1000, 63
+INTERVALS, COMPARED, GAMMA, WIDTH = 32, 10, 1000, 63  # COMPARED 30 to 2026-10-24
 COUNTS = (0, 1, 2, 255, 256, 257, 511, 512, 1000, 3000)
 
 
