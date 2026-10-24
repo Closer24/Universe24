@@ -8,18 +8,15 @@ import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import flux, node
 from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
-from event_universe.core.ports import PORTS, arrival
 from event_universe.core.rule3 import division_forward
 from event_universe.features import volume
 from event_universe.frames import frames_of
-from event_universe.loader.derived import count_wall, quanta_records, row_sources, weight_of
+from event_universe.loader.derived import row_sources, weight_of
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
-    from event_universe.node_detector import Weighed
 
 Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
 Stresses = dict[
@@ -37,97 +34,14 @@ class UniformMode(NamedTuple):
     nodes: int
 
 
-def currents(board: Lattice, weighed: Weighed | None = None) -> Currents:
-    """Every family of quanta's current through each Port at every Node, read from its record (`readings.currents_of`) before Rule3 acts, the pair the step starts from, so that the share's change over the step is exactly their sum where no tension stands (ALGEBRA.md #the-count-is-the-records-share); light's the current of its rows' sum; a turned record's the flux line's own with the Link pairs its step reads, per record and the records added (`turned_currents`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), every plain record's the plain bilinear bit for bit; the click line's number and every diagnostic's, the credit booking the weighted current (`node_detector.weighed_currents`); `weighed`, the bookings' read of the same interval where the step holds it, whose per-record currents of a turned family are the same integers and are added instead of read again."""
-    return {
-        index: turned_currents(board, index, weighed)
-        if index in board.turning
-        else readings.currents_of(
-            board.families[index].pair[0],
-            board.record(index),
-            board.wrap,
-            horizon=horizon_ports(board, index),
-        )
-        for index in board.order
-    }
-
-
-def cut(board: Lattice, index: int) -> node.Factors | None:
-    """The Links the world declares at the factor 0 for a family, per Port the mask of the Nodes whose Port faces them (ALGEBRA.md, The NodeDetector is one declaration kind for every world: its outer Links cut and its inner Links open): the boundary Links of every region over which a record of the family is laid in its parts, the Links with one end in the region and one outside, read 0 from both ends; the Links between two Nodes of one region stay at G^2, so that the record's uniform mode rotates at cos omega_0 = num / den whatever the region's size; a bound body declared an instrument body through the mode file (`BodyRow.region`, 2026-10-21) cuts nothing, its record standing in its well over the board and the step untouched; None where the family has no such record. A reading of the world's declarations and no act, read by the meeting (`meeting.cut`), the shear and the horizon's mask alike (moved from meeting.py 2026-10-23: the board's readings import no act, so that `node_detector` imports them first without a cycle)."""
-    regions = [board.mask(row.nodes) for row in board.world.bodies if row.family == index]
-    if not regions:
-        return None
-    found = []
-    for axis in range(3):
-        for side in (1, -1):
-            mask = np.zeros(board.shape, dtype=bool)
-            for at in regions:
-                mask |= at ^ arrival(at, axis, side, board.wrap)
-            found.append(mask)
-    return tuple(found)
-
-
 def horizon_ports(board: Lattice, index: int) -> tuple[Any, ...] | None:
-    """Per Port the mask of a family's Links at the wall, the horizon (ALGEBRA.md, The horizon, 2026-10-23): the Links whose factor the read gives at 0 (features/read.link_tensions, the tension at or past Gamma read at the wall) and which the world does not cut (`meeting.cut`, the declared cut Links keep their readings as written); None where no Link stands at the wall."""
+    """Per Port the mask of a family's Links at the wall, the horizon (ALGEBRA.md, The horizon, 2026-10-23): the Links whose factor the read gives at 0 (features/read.link_tensions, the tension at or past Gamma read at the wall); None where no Link stands at the wall."""
     factors = board.read(index)[1]
-    cuts = cut(board, index)
     found = []
-    for port, factor in enumerate(factors):
+    for factor in factors:
         at = np.asarray(np.asarray(factor) == 0)
-        if cuts is not None:
-            at = at & ~np.asarray(cuts[port], dtype=bool)
         found.append(at)
     return tuple(found) if any(bool(np.any(at)) for at in found) else None
-
-
-def turned_read(
-    board: Lattice,
-    index: int,
-    record: int,
-    direction: int = 1,
-    read: tuple[Any, node.Factors] | None = None,
-) -> readings.Turned:
-    """What the books read of one turned record beside its lines (`readings.Turned`): the Link pairs its step reads in `direction` (`flux.pairs_of` at its own read, the same integers the step takes, read after the interval's phase act as the step reads them), the pace squared they carry, the six Links' factors of the read (`read`, the record's content and factors where the caller holds them, `Lattice.read` otherwise), the family's quantum W_rec (loader/derived.count_wall), the quantum's measure of a current W_c = 3 den T and the frame signs of its six Ports (`flux.frames_of`, the Link's two ends read in one frame)."""
-    gamma, action, family = board.world.node_clock, board.world.quantum_action, board.families[index]
-    content, factors = board.read(index, direction, record) if read is None else read
-    pairs = flux.pairs_of(
-        index,
-        board.families,
-        board.states,
-        direction,
-        board.wrap,
-        gamma,
-        content,
-        factors,
-        record,
-        board.amplitude,
-    )
-    assert pairs is not None  # a turned record reads its holder's pairs
-    pace = paces.link_pace_of(gamma, content)
-    frames = frames_of(index, board.families, board.states, board.wrap, record)
-    return readings.Turned(
-        pairs, pace * pace, factors, count_wall(family, action), 3 * family.pair[1] * action, frames
-    )
-
-
-def turned_currents(
-    board: Lattice, index: int, weighed: Weighed | None = None
-) -> tuple[np.ndarray, ...]:
-    """A turned family's currents through each Port at every Node, every record's read with the Link pairs its own step reads (`turned_read`, `readings.currents_of`), the records added; where the bookings' read of the interval is given (`weighed`, node_detector.weighed_currents, the same call per record), its records' currents added and the lines not read twice."""
-    found: list[Any] = [0] * PORTS
-    if weighed is not None and index in weighed:
-        for through, _factors, _shares in weighed[index]:
-            found = [a + b for a, b in zip(found, through, strict=True)]
-        return tuple(np.asarray(value) for value in found)
-    for record in quanta_records(board.families, index):
-        through = readings.currents_of(
-            board.families[index].pair[0],
-            board.lines_of(index, record),
-            board.wrap,
-            turned_read(board, index, record),
-        )
-        found = [a + b for a, b in zip(found, through, strict=True)]
-    return tuple(np.asarray(value) for value in found)
 
 
 def stresses(board: Lattice) -> Stresses:

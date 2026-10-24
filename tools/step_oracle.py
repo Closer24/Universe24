@@ -19,18 +19,17 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import board_readings, emission, flux, front, meeting, node, swap
+from event_universe import board_readings, flux, front, node, swap
 from event_universe.bookings import Bookings, booked_of
 from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.core.rule3 import Rule
 from event_universe.features.click import presented
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import PLANE
-from event_universe.node_detector import weighed_currents
 from event_universe.plane import NO_FACE, Faces
 from event_universe.readings import ports
 from event_universe.records import Booking, Record, level_at, record_slice
-from event_universe.take import faces_presented
+from event_universe.take import faces_presented, faces_reported
 from event_universe.world_files import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -148,14 +147,14 @@ def oracle_step_family(index, families, states, rule, wrap, direction, record, f
 def oracle_step_records(
     board: Lattice, index: int, direction: int
 ) -> tuple[list[Record], list[Booking]]:
-    """The first form's step on every record of a family, with the engine's own read, rule and pairs (`flux.pairs_of` shares them), the cuts and the faces as `meeting.stepped` takes them."""
+    """The first form's step on every record of a family, with the engine's own read, rule and pairs (`flux.pairs_of` shares them) and the faces as `meeting.stepped` takes them."""
     families, states, wrap = board.families, board.states, board.wrap
-    gamma, unit, cut = board.world.node_clock, board.unit, meeting.cut(board, index)
+    gamma, unit = board.world.node_clock, board.unit
     faces = faces_presented(board, index)
     lines: list[Record] = []
     bookings: list[Booking] = []
     for record in range(families[index].records):
-        content, factors = node.read(index, families, states, direction, wrap, gamma, unit, record, cut)
+        content, factors = node.read(index, families, states, direction, wrap, gamma, unit, record)
         rule = node.rule_of(families[index], gamma, content, factors, unit)
         pairs = flux.pairs_of(
             index, families, states, direction, wrap, gamma, content, factors, record, board.amplitude
@@ -172,12 +171,7 @@ def oracle_interval(board: Lattice) -> None:
     board.interval, forms, turns = board.interval + 1, Bookings(), Bookings()
     kept_state = swap.kept(board)
     node.phase_act(board.held, board.families, board.states, 1, board.wrap, board.world.node_clock)
-    weighed = weighed_currents(board)
-    currents, senses, stresses = (
-        board_readings.currents(board, weighed),
-        board_readings.sense_currents(board),
-        board_readings.stresses(board),
-    )
+    senses, stresses = board_readings.sense_currents(board), board_readings.stresses(board)
     rulers, begun = board.rulers(1), [s.lines for s in board.states]
     found = {index: oracle_step_records(board, index, 1) for index in range(len(board.families))}
     for index, (lines, bookings) in found.items():
@@ -189,12 +183,10 @@ def oracle_interval(board: Lattice) -> None:
             for held, gained in zip((forms, turns), booked, strict=True):
                 held.update(gained)
         state.lines = lines
-    board.report(currents, weighed, forms, begun)
+    faces_reported(board)
     for index in board.held:
         board.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
     swap.stepped(board, kept_state)
-    meeting.jumped(board)
-    emission.sourced(board)
     front.advanced_fronts(board)
 
 

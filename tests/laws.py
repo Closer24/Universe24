@@ -4,20 +4,18 @@ import importlib.util
 import json
 import sys
 from collections.abc import Sequence
-from fractions import Fraction
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 import pytest
 
-from event_universe import board_readings, credit, node, readings, share
+from event_universe import readings
 from event_universe.core import paces
 from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients
 from event_universe.lattice import Lattice
-from event_universe.loader.derived import FamilyRule, Row, quanta_records
-from event_universe.loader.keys import Node
+from event_universe.loader.derived import FamilyRule, Row
 from event_universe.loader.universe import universe_of
 from event_universe.loader.world import World
 from event_universe.records import Record
@@ -31,6 +29,12 @@ CHAIN, QUANTA = (
 )  # the shortest chain (x open) holding the body apart from the end node_detectors; the
 # smallest body the generator lays on it in seconds (a test runs under 30 seconds, the owner's word)
 CHARGED = {"name": "charged", "pair": [4000, 6000], "dimension": 2}  # matter's pair as a plane
+LIGHT_ROW = {
+    "name": "light",
+    "pair": [6000, 6000],
+    "dimension": 1,
+    "reads": {},
+}  # the one massless family of quanta, the seed every world is laid with (ALGEBRA.md, The uniform seed is a lay)
 # the band's top as a resonance pair, cos Omega = 0; a region declares no quantum of its own
 TOP = [0, 6000]
 CHARGED["reads"] = {"gravity": 1, "binding": 1, "charge": 1}  # every holder, the sign's among them
@@ -42,8 +46,16 @@ def real_rows(*rows: tuple[str, tuple[int, int], int, int | None]) -> list[Row]:
     return [Row(n, p, k, 1, False, False, False, w, w and 1, 0, held) for n, p, k, w in rows]
 
 
+def load_file(name: str, path: Path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    assert spec is not None and spec.loader is not None
+    sys.modules[name] = module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def vacuum_content(world: World, family: FamilyRule) -> int:
-    """The content a record of `family` reads where nothing is laid: the declared rests of the holders its declaration names, each at its read weight (ALGEBRA.md, The vacuum content, item 22; the generator's `vacuum_of`), 60 on the shipped universes with a gravity row and 0 on the atom worlds'."""
+    """The content a record of `family` reads where nothing is laid: the declared rests of the holders its declaration names, each at its read weight (ALGEBRA.md, The vacuum content, item 22), 60 on the shipped universes with a gravity row."""
     return sum(world.families[read.family].rest * read.weight for read in family.reads)
 
 
@@ -54,14 +66,6 @@ def band_of(pair, gamma: int, content: int, unit: int, *cosines):  # type: ignor
     )
     arrived = sum(int(read) * cosines[port // 2] for port, read in enumerate(reads))
     return (int(self_coefficient) + arrived) / (2 * int(wall))
-
-
-def load_file(name: str, path: Path):
-    spec = importlib.util.spec_from_file_location(name, path)
-    assert spec is not None and spec.loader is not None
-    sys.modules[name] = module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def refused(match: str, call, *args, **keys):
@@ -81,84 +85,11 @@ def universe_beside(tmp_path, drop=(), charged=False, **pairs):  # type: ignore[
     for family in universe["families"]:
         family["pair"] = pairs.get(family["name"], family["pair"])
         family["reads"] = {name: w for name, w in family["reads"].items() if name not in drop}
+    if not any(  # the seed family where the universe holds no massless family of quanta, 2026-10-24
+        "held" not in f and f["pair"][0] == f["pair"][1] for f in universe["families"]
+    ):
+        universe["families"] += [json.loads(json.dumps(LIGHT_ROW))]
     (tmp_path / "u.json").write_text(json.dumps(universe), encoding="utf-8")
-
-
-def credit_lines(lines: list[dict[str, object]], key: str) -> list[dict[str, object]]:
-    """The NodeDetectors' click lines with `key` set: the credit lines labelled NODEDETECTOR whose `key` is not None."""
-    return [c for c in lines if c["event"] == "credit" and c["label"] == "NODEDETECTOR" and c[key]]
-
-
-def own_lines(board: Lattice, index: int) -> list[Record]:
-    """A family's record lines as the engine reads them: every record's lines, light the sum of its rows."""
-    return [line for r in quanta_records(board.families, index) for line in board.lines_of(index, r)]
-
-
-def shares_of(board: Lattice, index: int, read, pairs) -> np.ndarray:  # type: ignore[no-untyped-def]
-    """The share form per Node of a family's lines at the paces of its `read`, in Python's integers."""
-    gamma, unit = board.world.node_clock, board.unit
-    found = share.family_share(board.families[index], pairs, board.wrap, gamma, *read, unit)
-    return found.astype(object)
-
-
-def booked(board: Lattice, monkeypatch, *indexes: int) -> list[tuple[int, Fraction]]:  # type: ignore[no-untyped-def]
-    """One step of the lattice with the booking identity per act on the families `indexes` (ALGEBRA.md S.6; the advisor's lines, #1563 comments 5954101082 and 5963391333): the share's change over the step is the currents at the pair the step started from with the paces' anisotropy term and Rule3's remainder term, within the division act's floors, plus the face term per face presented at the step, (next - before) R_face (value - arrival) over 2 p_i^2 G^2 (the hole over its two intervals, each shell of the front), the identity on the stepped levels before the lays; the lays (the absorption's and the emission's parts, the emitted quantum, the null window's re-lay) change the share form at the written Nodes and their six neighbours alone, exact; per family the paces' own change of the books' total and the slack."""
-    gamma, unit, begun, shape = board.world.node_clock, board.unit, {}, board.shape
-    for index in indexes:
-        read = board.read(index)
-        pace = np.asarray(paces.link_pace_of(gamma, read[0])).astype(object)
-        flow = [np.asarray(current, dtype=object) for current in board_readings.currents(board)[index]]
-        factors = [np.asarray(q).astype(object) - unit * unit for q in read[1]]
-        skew = [q * c for q, c in zip(factors, flow, strict=True)]
-        terms = sum(Fraction(int(n), unit * unit) for found in skew for n in found.ravel())
-        reads = node.rule_of(board.families[index], gamma, *read, unit)[0]
-        squares, net = np.broadcast_to(pace * pace, shape), int(sum(c.sum() for c in flow))
-        begun[index] = (read, own_lines(board, index), net, terms, squares, reads)
-    stepped, counted = {}, credit.counted_windows
-
-    def kept(b: Lattice) -> bool:  # the lines after the held write, before the NodeDetectors' acts
-        stepped.update({i: own_lines(b, i) for i in indexes})
-        return counted(b)
-
-    with monkeypatch.context() as swap:
-        swap.setattr(credit, "counted_windows", kept), board.step()
-    found = []
-    for index in indexes:
-        read, records, net, terms, squares, reads = begun[index]
-        moved, fixed = own_lines(board, index), int(shares_of(board, index, read, stepped[index]).sum())
-        for was, now in zip(records, stepped[index], strict=True):  # Rule3's remainder term per line
-            step = (now.now.astype(object) - was.before.astype(object)).ravel()  # next - before
-            carried = (now.remainder.astype(object) - was.remainder.astype(object)).ravel()  # r' - r
-            pairs = zip(step * carried, squares.ravel(), strict=True)
-            terms += sum(Fraction(-int(n), 2 * int(d) * unit * unit) for n, d in pairs)
-        for face in [f for f in board.credit.faces.get(board.interval, []) if f.family == index]:
-            here, fill = (
-                tuple(np.add(face.at, board.offset)),
-                board.families[index].rest * (face.line == 0),
-            )
-            arrivals = readings.ports(records[face.line].now, board.wrap, fill)  # the face term per Port
-            reach = [
-                int(np.asarray(reads[p])[here]) if np.ndim(reads[p]) else int(reads[p])
-                for p in face.ports
-            ]
-            step = int(stepped[index][face.line].now[here]) - int(records[face.line].before[here])
-            wall = 2 * int(squares[here]) * unit * unit
-            wiped = sum(
-                r * (face.value - int(arrivals[p][here])) for r, p in zip(reach, face.ports, strict=True)
-            )
-            terms += Fraction(step * wiped, wall)
-        floors = len(records) * records[0].now.size  # the division act's floor, under one unit per Node
-        start = int(shares_of(board, index, read, records).sum())
-        assert abs(Fraction(fixed - start - net) - terms) < floors, (index, fixed - start - net, terms)
-        delta = shares_of(board, index, read, moved) - shares_of(board, index, read, stepped[index])
-        laid = np.zeros(shape, dtype=bool)
-        for a, b in zip(stepped[index], moved, strict=True):  # the Nodes a lay wrote
-            laid |= (a.now != b.now) | (a.before != b.before) | (a.remainder != b.remainder)
-        ports = readings.ports(laid.astype(np.int64), board.wrap)
-        near = laid | np.logical_or.reduce([p != 0 for p in ports])
-        assert not delta[~near].any() and fixed + int(delta[near].sum()) == int(delta.sum()) + fixed
-        found.append((board.total_share(index)[0] - fixed - int(delta.sum()), abs(terms) + floors))  # type: ignore[operator]
-    return found
 
 
 # the builders the parts' tests share (tests/test_part_*.py; the shape of tests/: a helper imported by two files
@@ -191,20 +122,6 @@ GRAVITY = {
 }
 
 
-def imaged(a: np.ndarray, axes: tuple[int, ...], signs: tuple[int, ...]) -> np.ndarray:
-    return np.transpose(a, axes)[tuple(slice(None, None, s) for s in signs)]
-
-
-def levels_floor(board: Lattice, index: int, at: np.ndarray) -> int:
-    """The floor of a fold's roundings in T's unit (Part F, test 5's floor; the two hands' lines of 2026-10-09): one level unit per rounding at each Node of `at`, meeting the neighbour's level on two Links, 2 SUM over the family's lines and the Nodes of (|now| + |before|), plus one for the reading's own rounding half up."""
-    lines = own_lines(board, index)
-    levels = sum(
-        int(np.abs(r.now.astype(object))[at].sum()) + int(np.abs(r.before.astype(object))[at].sum())
-        for r in lines
-    )
-    return 2 * levels + 1
-
-
 ORACLE = load_file(
     "step_oracle", ROOT / "tools" / "step_oracle.py"
 )  # the step's oracle: the law's first form with the one Node's interval around it
@@ -221,7 +138,7 @@ def flux_world(tmp_path, shape, intervals=4, level_weight=1):  # type: ignore[no
     gravity["sources"], gravity["level_weight"] = ["form", "tensions", "flux"], level_weight
     (tmp_path / "u.json").write_text(json.dumps(rows), encoding="utf-8")
     world = dict(shape=list(shape), intervals=intervals)
-    world.update(universe="u.json", bodies=[])
+    world.update(universe="u.json")
     (path := tmp_path / "flux.json").write_text(json.dumps(world), encoding="utf-8")
     return path
 
@@ -250,42 +167,6 @@ def packet(board: Lattice, axis: int, wave: tuple[int, int], size: int, at: int)
         ),
     ]
     board.states[index].lines = lines
-
-
-def d4_bound(board: Lattice, index: int, nodes: Sequence[Node]) -> list[int]:
-    """D4's bound on a body's lattice momentum change at a re-lay, per axis, in T's unit (the click's plan, section D4; the chain folder's lay_bounds.py reads the same): one level's change per line and Node at most, so over the Links along the axis with an end at a body Node (a Link to the Node itself across a folded axis is no Link) and over the record's lines, |now_i| + |before_i| + |now_j| + |before_j| + 2; times num in the current's unit."""
-    lines = own_lines(board, index)
-    placed = [tuple(int(v) for v in np.add(node, board.offset)) for node in nodes]
-    found = []
-    for axis in range(3):
-        links = set()
-        for here in placed:
-            for step in (-1, 1):
-                there = list(here)
-                there[axis] += step
-                if board.wrap[axis]:
-                    there[axis] %= board.shape[axis]
-                elif not 0 <= there[axis] < board.shape[axis]:
-                    continue
-                if tuple(there) != here:
-                    links.add(frozenset((here, tuple(there))))
-        total = 0
-        for link in links:
-            for at in link:
-                total += sum(abs(int(r.now[at])) + abs(int(r.before[at])) for r in lines)
-            total += 2 * len(lines)
-        found.append(total)
-    return found
-
-
-def drift_bound(board: Lattice, index: int) -> int:
-    """The hands' bound on the integers' drift of P_x per step in T's unit, 2 SUM_i |now_(i+1) - now_(i-1)| over the chain's axis (Part F, test (a); D1, the floors in integers)."""
-    chain = board.shape[0]
-    found = 0
-    for r in own_lines(board, index):
-        now = r.now.reshape(-1).astype(object)
-        found += int(sum(abs(now[(i + 1) % chain] - now[(i - 1) % chain]) for i in range(chain)))
-    return 2 * found
 
 
 LINE_KEYS = ("now", "before", "remainder")  # a record's three arrays
@@ -329,32 +210,3 @@ def weighted_linear_sum(wall: int, line: Record, weights: Any) -> int:
     now, before = line.now.astype(object), line.before.astype(object)
     scaled = np.broadcast_to(np.asarray(weights, dtype=object), now.shape)
     return int(((wall * (now - before) + line.remainder.astype(object)) * scaled).sum())
-
-
-def board_state(board: Lattice) -> list[tuple[list[tuple[Any, Any, Any]], list[Any]]]:
-    """Every family's lines (now, before, remainder) and write remainders copied as Python's integers, the state a run back is compared against bit for bit (the light mean's test)."""
-    copied = lambda a: np.asarray(a, dtype=object).copy()  # noqa: E731
-    return [
-        (
-            [(copied(line.now), copied(line.before), copied(line.remainder)) for line in st.lines],
-            [copied(r) for r in st.write_remainders],
-        )
-        for st in board.states
-    ]
-
-
-def same_state(
-    a: list[tuple[list[tuple[Any, Any, Any]], list[Any]]],
-    b: list[tuple[list[tuple[Any, Any, Any]], list[Any]]],
-) -> bool:
-    """Two states of `board_state` equal in every line and every write remainder."""
-    return all(
-        all(np.array_equal(u, v) for x, y in zip(la, lb, strict=True) for u, v in zip(x, y, strict=True))
-        and all(np.array_equal(u, v) for u, v in zip(ra, rb, strict=True))
-        for (la, ra), (lb, rb) in zip(a, b, strict=True)
-    )
-
-
-def state_of(board):  # type: ignore[no-untyped-def]
-    """Every line's three arrays and every write remainder of a board, copied, for a run back's comparison (the swap tests): `board_state` under the swap tests' name."""
-    return board_state(board)

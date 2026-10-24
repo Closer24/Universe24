@@ -24,7 +24,7 @@ def chain_world(tmp_path, families, chain=CHAIN):  # type: ignore[no-untyped-def
         json.dumps({"integers": INTEGERS, "families": families}), encoding="utf-8"
     )
     world = dict(shape=[chain, 1, 1])
-    world.update(intervals=400, universe="u.json", bodies=[])
+    world.update(intervals=400, universe="u.json")
     (path := tmp_path / "chain.json").write_text(json.dumps(world), encoding="utf-8")
     return path
 

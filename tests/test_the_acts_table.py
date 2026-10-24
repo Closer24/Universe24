@@ -88,50 +88,10 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "born_pair",
         "division_forward",
     ): "D",  # the whole quanta standing at the Node, the floor once
-    # credit.py
+    # conversion.py
     ("conversion.py", "sine_of", "largest_below"): "S",  # the pair's integer sine by the search
-    ("credit.py", "Books.unabsorbed_in", "division_forward"): "D",  # the units' lcm and the share
-    ("credit.py", "Books.unabsorbed_in", "gcd"): "D",  # Euclid's remainders on coefficients, once
     # emission.py
-    (
-        "emission.py",
-        "emitted_quantum",
-        "division_forward",
-    ): "D",  # the quantum's share over the parts laid alike, once
-    ("emission.py", "radiated_total", "division_forward"): "D",  # the total's coefficients, once each
-    ("emission.py", "radiated_total", "largest_below"): "S",  # the search on the total's square
-    ("emission.py", "born_unit", "largest_below"): "S",  # the search on the unit's square
-    ("emission.py", "born_unit", "division_forward"): "D",  # the unit over den squared, once
-    ("emission.py", "packet_unit", "division_forward"): "D",  # den cos omega of the packet's wave, once
     ("emission.py", "laid_by_count", "division_forward"): "D",  # the count's lay, one division
-    ("emission.py", "laid_packet", "division_forward"): "D",  # the envelope's part and the half cosine
-    ("emission.py", "laid_packet", "rounded"): "D",  # the packet's levels, rounded once
-    ("emission.py", "_offsets", "division_forward"): "D",  # the half width, an index
-    ("emission.py", "start_of", "largest_below"): "S",  # the parts' sizes by the search
-    ("emission.py", "start_of", "rounded"): "D",  # the start's two levels, rounded
-    ("emission.py", "increments_of", "division_forward"): "D",  # the aimed share, once
-    ("emission.py", "increments_of", "rounded"): "D",  # the increment, rounded once
-    ("emission.py", "increments_of", "largest_below"): "S",  # the amplitude by the search
-    ("emission.py", "holds_period", "division_forward"): "D",  # the doubled cosine, once
-    ("emission.py", "advanced", "rounded"): "D",  # the recurrence's one rounding half up
-    (
-        "meeting_board.py",
-        "meetings",
-        "division_forward",
-    ): "D",  # the share over the unit, floor and rest once
-    ("seed.py", "drift_of", "largest_below"): "S",  # the drift by the search on v^2 <= T
-    # guide.py, the guide clause of the emission
-    (
-        "guide.py",
-        "sine_of",
-        "largest_below",
-    ): "S",  # the sine by the search on den squared less cos squared
-    ("guide.py", "travelling", "division_forward"): "D",  # den cos k of the guide's wave, once
-    (
-        "guide.py",
-        "guide_total",
-        "division_forward",
-    ): "D",  # the total over the travelling share, one division
     # digits.py, the click's read of the board
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
@@ -159,41 +119,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "largest_below",
     ): "S",  # a plane's (re, im) by the search
     ("features/click/__init__.py", "plane_squares", "division_forward"): "D",  # the planes' target, once
-    ("features/click/__init__.py", "direction", "largest_below"): "S",  # the pair's norm by the search
-    (
-        "features/click/__init__.py",
-        "direction",
-        "division_forward",
-    ): "D",  # the direction's two levels, once
-    (
-        "features/click/__init__.py",
-        "standing",
-        "division_forward",
-    ): "D",  # the before level, rounded once
-    (
-        "features/click/__init__.py",
-        "invariant",
-        "division_forward",
-    ): "D",  # the invariant's quotient, once
-    ("features/click/__init__.py", "line_total", "largest_below"): "S",  # the search on the line's total
-    (
-        "features/click/__init__.py",
-        "line_total",
-        "division_forward",
-    ): "D",  # the line's quotient before search
-    (
-        "features/click/__init__.py",
-        "rotated",
-        "rule3",
-    ): "R",  # the lay's recurrence carrying its remainder
-    (
-        "features/click/__init__.py",
-        "wave_cosine",
-        "division_forward",
-    ): "D",  # the cosine's bisection, discarded
-    ("features/click/__init__.py", "along_cosine", "division_forward"): "D",  # the along cosine, once
-    ("features/click/__init__.py", "envelope", "division_forward"): "D",  # the slice's energy, once
-    ("features/click/__init__.py", "envelope", "largest_below"): "S",  # the slice's amplitude by search
     # features/held_write
     ("features/held_write/__init__.py", "held_write", "act"): "R",  # the held write's remainder returned
     # features/phase
@@ -270,7 +195,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("board_readings.py", "uniform_mode", "division_forward"): "D",  # the uniform level read, once
     ("lay.py", "shares_of", "division_forward"): "D",  # the shares' floors, once each
     # loader
-    ("loader/keys.py", "connected", "%"): "D",  # a walked coordinate's wrap, named
     ("loader/derived.py", "FamilyRule.width", "//"): "D",  # exact, a row's lines, named
     ("loader/derived.py", "FamilyRule.planes", "//"): "D",  # exact, a part's planes, named
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
@@ -294,18 +218,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the bound's quotients, once each
     ("loader/derived.py", "bound_under_rooms", "largest_below"): "S",  # the largest level by search
-    (
-        "loader/node_detector_declaration.py",
-        "packet_form",
-        "division_forward",
-    ): "D",  # the half width, an index
     ("loader/world.py", "even_box_refused", "division_forward"): "D",  # the extents' parity, once
-    ("loader/window.py", "passage", "division_forward"): "D",  # den cos omega and the passage's ceiling
-    ("loader/window.py", "rate_passage", "division_forward"): "D",  # half the doubled cosine, once
-    # lists.py
-    ("lists.py", "hazard_weights", "rounded"): "D",  # the hazard's weight, rounded once
-    ("lists.py", "absorption", "division_forward"): "D",  # the unit over the norm
-    # take.py
     # node.py
     (
         "node.py",
@@ -330,31 +243,9 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "step_momentum",
         "division_forward",
     ): "R",  # the shear's momentum at the volume's wall, remainder kept
-    # node_detector.py
-    ("node_detector.py", "books_of", "largest_below"): "S",  # the record's norm by search
-    ("node_detector.py", "own_clock", "paces.rounded"): "D",  # the mean clock, rounded once
-    ("node_detector.py", "clock_advanced", "division_forward"): "R",  # the reader's clock remainder kept
-    ("node_detector.py", "drawn_weights", "division_forward"): "D",  # the inflow over the unit
     # plane.py, records.py
     ("plane.py", "sign_pairs", "paces.rounded"): "D",  # the sign's pair, rounded once
     ("records.py", "write_origins", "division_forward"): "D",  # the write's origin, once
-    # resonance.py
-    ("resonance.py", "references_of", "paces.rounded"): "D",  # the cosine record's level, rounded once
-    ("resonance.py", "references_of", "division_forward"): "D",  # the sine record's level, the floor
-    ("resonance.py", "turned_direction", "largest_below"): "S",  # the arriving size by search
-    ("resonance.py", "turned_direction", "division_forward"): "D",  # the turned direction, floors
-    ("resonance.py", "window_turn", "largest_below"): "S",  # the plane's size by search
-    ("resonance.py", "window_turn", "division_forward"): "D",  # the turn over the scale
-    ("resonance.py", "unit_weight", "largest_below"): "S",  # the sine and S_1 by search
-    ("resonance.py", "unit_weight", "division_forward"): "D",  # (A_1 W)^2 over sin k, and the half
-    ("resonance.py", "window_pair", "phase.iterate"): "R",  # the window's pair, remainders carried
-    ("resonance.py", "hopped", "division_forward"): "R",  # the labels' hop, carries returned
-    # readings.py
-    (
-        "readings.py",
-        "turned_currents_of",
-        "division_forward",
-    ): "D",  # the pace squared off the pair, exact
     # share.py
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
@@ -364,13 +255,9 @@ INVENTORY: dict[tuple[str, str, str], str] = {
 # the carried divisions outside the step, named and reported, not moved (Part D, Task 3):
 R_OUTSIDE_THE_STEP = frozenset(
     {
-        ("features/click/__init__.py", "rotated", "rule3"),  # the lay's recurrence with its carry
         ("features/held_write/__init__.py", "held_write", "act"),  # the held write's remainder
         ("features/write/__init__.py", "carried", "division_forward"),  # the write's remainder forward
         ("features/write/__init__.py", "carried", "division_back"),  # the write's remainder back
-        ("node_detector.py", "clock_advanced", "division_forward"),  # the reader's clock remainder
-        ("resonance.py", "window_pair", "phase.iterate"),  # the window's pair in the memo
-        ("resonance.py", "hopped", "division_forward"),  # the labels' hop with its carries
     }
 )
 

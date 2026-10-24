@@ -21,7 +21,7 @@ def test_the_linear_sum_of_light_is_constant_on_a_closed_board(tmp_path, monkeyp
     """A board periodic on every axis with one family of light (the rule's universe with its holders dropped and matter's pair made 6000 over 6000), no body, no reader, a pattern laid by hand: L = SUM [w (now - before) + r] is the same whole number after every one of 40 intervals, the Link terms of the flux form pairing off Link by Link and the mass term 0; an exact linear invariant of Rule3 on a closed board at one rate, remainders included."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path, drop=("gravity", "charge", "binding"), matter=[6000, 6000])
-    world = dict(shape=[7, 7, 7], intervals=40, bodies=[], universe="u.json")
+    world = dict(shape=[7, 7, 7], intervals=40, universe="u.json")
     (path := tmp_path / "closed.json").write_text(json.dumps(world), encoding="utf-8")
     board = Lattice(load_world(path))
     now = records.zeros(board.shape, board.kind)
@@ -41,7 +41,7 @@ def test_the_rate_weighted_linear_sum_of_light_is_constant_at_a_fixed_content(tm
     """The smallest hand-laid well: a ring of 60 Nodes with one family of light (the rule's universe with its holders dropped and matter's pair made 6000 over 6000, Gamma 6,000), the content 0 on the Nodes 0 to 39 and 600 on 40 to 59, laid by hand and never stepped (the paces 6,000 and 4,912; the scale lcm(6000^2, 4912^2) = 3,392,964,000,000, the weights 94,249 and 140,625), one pulse of height 10^6 and 16 Nodes crest to crest laid on the empty side, 200 intervals by the engine's own `flux.step_line` with the rule `node.rule_of` gives at that content: L'' = SUM weight_i [w (now - before) + r] is the same whole number after every interval, while L moves by the pairing term SUM over the Links of (R_ij - R_ji)(a_j - a_i), nonzero only while the pulse straddles the two Links between the paces."""
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     universe_beside(tmp_path, drop=("gravity", "charge", "binding"), matter=[6000, 6000])
-    world = dict(shape=[60, 1, 1], intervals=200, bodies=[], universe="u.json")
+    world = dict(shape=[60, 1, 1], intervals=200, universe="u.json")
     (path := tmp_path / "ring.json").write_text(json.dumps(world), encoding="utf-8")
     board = Lattice(load_world(path))
     family, gamma, unit = board.families[0], board.world.node_clock, board.unit

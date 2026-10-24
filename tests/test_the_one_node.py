@@ -138,15 +138,10 @@ RETIRED = (
 
 def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-untyped-def]
     """The loader's key lists, enumerated, hold content keys alone (the owner's rule of 2026-10-23: no more keys in the code, one single Node in the whole universe): a file naming a former act key meets the loader's ordinary refusal of an unknown key, the same as any misspelling; and no module under src/event_universe/loader or the generator tools/pixel_mode.py names a retired key or its words in its code (an ast check over the string constants outside the docstrings, as tests/test_the_acts_table.py walks the divisions)."""
-    from event_universe.loader import draw, node_detector_declaration, universe
+    from event_universe.loader import universe
     from event_universe.loader import world as loader_world
 
-    assert set(loader_world.WORLD_KEYS) == {
-        "shape",
-        "intervals",
-        "universe",
-        "bodies",
-    }
+    assert set(loader_world.WORLD_KEYS) == {"shape", "intervals", "universe"}
     assert set(universe.HELD_KEYS) == {"sources", "level_weight", "write_weight", "rest"}
     assert set(universe.FAMILY_KEYS) == {
         "name",
@@ -163,16 +158,6 @@ def test_the_loaders_vocabulary_holds_content_keys_alone():  # type: ignore[no-u
         ["wronskian"],
         ["form", "tensions", "flux"],
     ]
-    assert draw.DRAW_KEYS == (
-        "window",
-    )  # the former key, read for its refusal by name alone (2026-10-23)
-    assert set(node_detector_declaration.TRANSITION_KEYS) == {
-        "from",
-        "to",
-        "drive",
-        "weight",
-        "resonance",
-    }
     with pytest.raises(ValueError, match="unknown key"):
         universe.universe_of(
             {
@@ -222,7 +207,6 @@ PLACES = (  # the former keys and the place each stood at: the loader's ordinary
     ("pressure", "held"),
     ("form", "held"),
     ("converts", "family"),
-    ("dipole", "transition"),
 )
 STEPS = {  # the step's one list: every function of src/event_universe whose name is a step, by module (the acts table lists every division)
     "flux.py": [
@@ -246,16 +230,12 @@ LOADER_FILES = (  # the loader's files under examples/ and tests/, found by the 
 
 
 def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  # type: ignore[no-untyped-def]
-    """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, its bodies', node_detectors', draw's, lay's, receding faces' and packets', the universe's, its families' and their held rows', a body's transitions', rates' and parts'), and no former key stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
-    from event_universe.loader import node_detector_declaration, universe
+    """Every world, universe and mode file under examples/ and tests/ (found by its own key: a world by `shape`, a universe by `families`, a mode file by `world_digest`) holds keys of the loader's vocabulary alone at every level the loader reads with a key table (the world's keys, the universe's, its families' and their held rows'), and no former key stands anywhere in them (the owner's rule of 2026-10-23: the files hold content and run parameters alone)."""
+    from event_universe.loader import universe
     from event_universe.loader import world as loader_world
 
     tables = {
         "world": set(loader_world.WORLD_KEYS),
-        "bodies": set(loader_world.BODY_KEYS),
-        "transitions": set(node_detector_declaration.TRANSITION_KEYS),
-        "rates": set(node_detector_declaration.RATE_KEYS) | set(node_detector_declaration.RATE_OPTIONAL),
-        "parts": set(node_detector_declaration.PART_KEYS),
         "universe": set(universe.UNIVERSE_KEYS),
         "integers": set(universe.INTEGER_KEYS),
         "families": set(universe.FAMILY_KEYS),
@@ -290,7 +270,7 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
                 for row in rows:
                     if key in tables and isinstance(row, dict):
                         found += [(path.name, key, k) for k in row if k not in tables[key]]
-                    for inner in ("held", "transitions", "rates", "parts"):
+                    for inner in ("held",):
                         for entry in [row.get(inner)] if isinstance(row, dict) else []:
                             for item in (
                                 entry
@@ -317,8 +297,8 @@ def test_every_shipped_and_test_file_holds_content_and_run_parameters_alone():  
 
 @pytest.mark.parametrize(("key", "place"), PLACES)
 def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignore[no-untyped-def]
-    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`, a transition's `dipole`."""
-    from event_universe.loader import node_detector_declaration, universe
+    """Every former key of the universe and world files meets the loader's ordinary refusal of an unknown key at the place it stood (the owner's rule of 2026-10-23: no more keys in the code, one Node): the world's `interval`, `uniform`, `erasure` and `engine` (the start file), the draw's `meeting`, `reach` and the generator's `seed`, `multiplier` and `increment`, the lay's `seed` (its first pass's `start` since 2026-10-23), a held row's `act`, `booking`, `factor`, `pressure` and `form`, a family's `converts`."""
+    from event_universe.loader import universe
     from event_universe.loader import world as loader_world
     from event_universe.loader.keys import keyed
 
@@ -328,28 +308,13 @@ def test_the_loader_refuses_every_former_key_by_name(key, place):  # type: ignor
     with pytest.raises(ValueError, match=f"unknown key '{key}'"):
         if place == "world":
             world = {"shape": [3, 1, 1], "intervals": 1, "universe": "u.json", key: 1}
-            keyed(
-                {**world, "bodies": []},
-                "the world",
-                loader_world.WORLD_KEYS,
-                loader_world.WORLD_REQUIRED,
-            )
+            keyed(world, "the world", loader_world.WORLD_KEYS, loader_world.WORLD_REQUIRED)
         elif place == "held":
             universe.universe_of(
                 {"integers": integers, "families": [{**family, "held": {**held, key: "pace"}}]}
             )
-        elif place == "family":
-            universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
         else:
-            row = {
-                "from": "g",
-                "to": "e",
-                "drive": "photon",
-                "weight": 1,
-                "resonance": [5, 6],
-                key: [[0, 0, 1], 1],
-            }
-            node_detector_declaration.transitions_of([row], "t", ("g", "e"), {"photon": 1}, 2)
+            universe.universe_of({"integers": integers, "families": [{**family, key: {}}]})
 
 
 def test_the_steps_act_list_is_the_one_list():  # type: ignore[no-untyped-def]

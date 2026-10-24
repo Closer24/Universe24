@@ -5,11 +5,10 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from dataclasses import replace
 from itertools import combinations_with_replacement, product
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from event_universe.core.rule3 import largest_below
 from event_universe.loader.derived import FamilyRule
-from event_universe.loader.draw import Gauss, times
 
 if TYPE_CHECKING:
     pass
@@ -19,12 +18,18 @@ BEYOND = (
     2  # the search's bound, named and no law: a list of N parents has at most N + BEYOND records out
 )
 Pair = tuple[int, int]
+Gauss = tuple[int, int]  # a Gaussian integer a + i b
 Table = tuple[tuple[int, int], ...]  # the records out, each its family by position and its sense
 Parents = tuple[
     tuple[int, int], ...
 ]  # the records in, each its family and its sense as read, 0 for real lines
 
 MET = 3  # the search's bound on the quanta met at one close, named and no law: the world's multisets of two to MET laid quanta derived at load
+
+
+def times(a: Gauss, b: Gauss) -> Gauss:
+    """The Gaussian product (a + i b)(c + i d) = (a c - b d) + i (a d + b c), angle addition on the circle."""
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
 
 
 def sine_of(pair: Pair) -> int | None:
@@ -231,35 +236,6 @@ def declared(
             )
         found[index] = replace(family, converts=tables[0], senses=tuple(sorted(senses.items())))
     return tuple(found)
-
-
-def together(families: tuple[FamilyRule, ...], bodies: Sequence[Any]) -> None:
-    """The lists of every multiset the world can credit at one close, derived at load (The conversion, the reader's sentence of 2026-10-21; `loader/world.parse_world`): the gapped Pythagorean families of quanta laid, each up to its laid count, a body's counts over its parts and a packet's count as the generator read it (`loader/world.BodyRow`, `loader/packets.PacketRow`), two to MET quanta at a time, every plane parent at either sense and the real-line parents' declared senses; refused by name where several irreducible lists keep both conservations for one multiset, the law having no share among them (`listed`)."""
-    counts: dict[int, int] = {}
-    for family, count in [(b.family, sum(b.counts)) for b in bodies]:
-        counts[family] = counts.get(family, 0) + int(count)
-    laid = [
-        k
-        for k in candidates(families)
-        if counts.get(k, 0) > 0 and gaussian(families[k].pair) is not None
-    ]
-    for size in range(2, MET + 1):
-        for outs in combinations_with_replacement(laid, size):
-            if any(outs.count(k) > counts[k] for k in set(outs)):
-                continue
-            planes = [at for at, k in enumerate(outs) if families[k].plane]
-            declared = {out: sense for k in set(outs) for out, sense in families[k].senses}
-            for choice in product((1, -1), repeat=len(planes)):
-                senses = [0] * size
-                for at, sense in zip(planes, choice, strict=True):
-                    senses[at] = sense
-                tables = listed(families, tuple(zip(outs, senses, strict=True)), declared)
-                if len(tables) > 1:
-                    raise ValueError(
-                        f"the quanta {names(families, [(k, 0) for k in outs])} the world can credit at one close, at "
-                        f"the senses {senses}, have several irreducible lists keeping the charge and the baryon: "
-                        f"{[names(families, table) for table in tables]}; the law has no share among them"
-                    )
 
 
 def birth_of(families: tuple[FamilyRule, ...], parent: int) -> list[Table]:

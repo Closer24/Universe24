@@ -10,7 +10,6 @@ from event_universe import digits
 from event_universe.core import paces
 from event_universe.core.rule3 import rule_integers, wall_of
 from event_universe.features.click import bias_bound, drawn_from, read_number
-from event_universe.loader.draw import DIGIT_ORDER
 
 GAMMA, UNIT = 6000, 16  # the shipped universes' Gamma and Link unit G
 LIGHT, ATOM = wall_of(6000, GAMMA, UNIT), wall_of(1299, GAMMA, UNIT)  # the walls w = 6 den Gamma^2 G^2
@@ -110,6 +109,3 @@ def test_the_digits_lattice_at_the_exact_vacuum_is_three_valued():
     lattice = digits.lattice_of(content, at)
     assert lattice == [3_072_000] * 2 and LIGHT // lattice[0] == 108_000_000
     assert lattice[0] == 2 * 6000 * UNIT * UNIT and all(3 * f < LIGHT for f in lattice)
-    assert (
-        "most significant" in DIGIT_ORDER and "index order" in DIGIT_ORDER and "r div F" in DIGIT_ORDER
-    )

@@ -24,6 +24,3 @@ def test_the_division_act_keeps_the_two_sums_and_the_guard_refuses_a_lay_that_mo
     assert (
         lay.corrected("light", True, (level, level), None)[1] is level
     )  # no weights: laid as built, named
-    fixed = lay.laid_in_time("light", True, [73, 49, -8, -60], [55, 55, 54, 54])
-    assert sum(fixed) == 0 and sum(t * d for t, d in enumerate(fixed)) == 0
-    assert lay.laid_in_time("matter", False, [73, 49, -8, -60], [55, 55, 54, 54]) == [73, 49, -8, -60]

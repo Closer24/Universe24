@@ -32,10 +32,10 @@ def test_the_fold_accepts_the_bare_world_and_refuses_a_former_key() -> None:
         set(world) == {"universe", "shape", "intervals"} and not WORLD.with_suffix(".mode.json").exists()
     )
     parsed = parse_world(world, files, input_digest(world))  # (1) the bare world, accepted
-    assert parsed.seed is not None and parsed.families[parsed.seed].name == "light"
-    assert not parsed.bodies
-    emptied = {**world, "bodies": []}  # an empty board declared: no seed, as before
-    assert parse_world(emptied, files, input_digest(emptied)).seed is None
+    assert parsed.families[parsed.seed].name == "light"
+    emptied = {**world, "bodies": []}  # the declared bodies, a key refused since 2026-10-24
+    with pytest.raises(ValueError, match="unknown key 'bodies'"):
+        parse_world(emptied, files, input_digest(emptied))
     former = copy.deepcopy(world)
     former["interval"] = "unobservable"
     with pytest.raises(ValueError, match="unknown key 'interval'"):

@@ -9,13 +9,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.paces import sine_den
-from event_universe.core.ports import AXES, PORTS, SIDES
-from event_universe.core.rule3 import Rule, division_forward, flux_total, largest_below, rule3
-
-SCALE_OF = (
-    2  # the emission's reference scale, the count's wall times itself: its rounding below one level
-)
+from event_universe.core.rule3 import Rule, division_forward, flux_total, largest_below
 
 
 def read_number(digits: Sequence[int], bases: Sequence[int]) -> int:
@@ -187,103 +181,3 @@ def plane_squares(total: int, planes: int) -> list[tuple[int, int]] | None:
             if found is not None:
                 return found
     return None
-
-
-def direction(re: int, im: int, size: int) -> tuple[int, int]:
-    """A level pair of the size `size` in the direction of (re, im) by the division act, (size, 0) where the pair is 0: the phase of the part the quantum leaves passed to the part it enters."""
-    norm = largest_below(re * re + im * im)
-    if norm == 0:
-        return size, 0
-    return int(division_forward(re * size, norm, 0)[0]), int(division_forward(im * size, norm, 0)[0])
-
-
-def standing(
-    count: int,
-    action: int,
-    pair: tuple[int, int],
-    phase: tuple[int, int],
-    sense: int,
-    share: tuple[int, int] = (1, 1),
-) -> tuple[tuple[int, int], tuple[int, int]]:
-    """The levels of `count` quanta of a plane standing at one Node, ((re_now, im_now), (re_before, im_before)): the amplitude `amplitude` in the direction `phase`, the level before the level now turned by the rest rotation in the record's sense, re_b = (re num - sense im s) div den and im_b = (im num + sense re s) div den with s = the largest integer whose square is at most den^2 - num^2 (sin omega den, `paces.sine_den`), so the Wronskian re_now im_before - im_now re_before is sense x A^2 sin omega; both 0 at the count 0."""
-    if count <= 0:
-        return (0, 0), (0, 0)
-    num, den = pair
-    re, im = direction(phase[0], phase[1], spread(squared(count, action, pair), share))
-    sine = sense * sine_den(num, den)
-    re_before = int(division_forward(re * num - im * sine, den, 0)[0])
-    im_before = int(division_forward(im * num + re * sine, den, 0)[0])
-    return (re, im), (re_before, im_before)
-
-
-def invariant(
-    count: int, action: int, pair: tuple[int, int], laid: int, share: tuple[int, int] = (1, 1)
-) -> int:
-    """The amplitude of `count` whole quanta laid at one Node on a record of `laid` real lines or planes, every one alike, by the invariant (the two hands, the advisor's (b) and (c) and the mathematician's hand: one unit of the invariant 2 A^2 sin omega = T per quantum over the record's lines, A_l^2 = count T den div (2 s laid) with s the largest integer whose square is at most den^2 - num^2, sin omega den (`paces.sine_den`); the proton's three planes at T / 6 at [0, den], the electron's plane at 148, the antineutrino's real line at the excess rotation), the generator's one-Node declaration (tools/pixel_mode.py, `pixel_record`) in the engine for the lay of a record converted whole at the start, cut at its Node (`take.relaid`); the share form of `amplitude` beside it, the reader's parts' lay, and the lay by the count of `standing` at the massless pair for a whole quantum given at an open-Link Node (the two hands); 0 at the count 0 and on a pair with no rotation (a massless lay has no finite amplitude by the invariant)."""
-    num, den = pair
-    sine = sine_den(num, den)
-    if count <= 0 or sine == 0:
-        return 0
-    return spread(int(division_forward(count * action * den, 2 * sine * laid, 0)[0]), share)
-
-
-def line_total(action: int, resonance: tuple[int, int]) -> int:
-    """The total of the squared amplitudes of one quantum of light on one real line, SUM a^2 = T / sin Omega, (the largest x with x^2 <= T^2 den^2 div (den^2 - num^2)) by the search on the share reading (`rule3.largest_below`), twice S (the mathematician's hand and the advisor's second, two hands): S = T / (2 sin Omega) is the SUM a^2 of one line of a plane record carrying one quantum, the taker's lay, the two lines together 2 A^2 sin Omega = T, and the packet is laid on the light record's first line alone, so the packet's root is T / sin Omega for a one-line packet (or S on each of two lines a quarter turn apart, the polarisation a world's choice by name; the branch lays one line); 43,962 at T = 32,768 and [2, 3]; one root at the lay, the NodeDetector's own act and no act of the interval. The source in time keeps S (`emission.laid_increment`): a source's increments are a drive and the field's energy is the response's."""
-    num, den = resonance
-    return largest_below(int(division_forward(action * action * den * den, den * den - num * num, 0)[0]))
-
-
-def rotated(first: int, second: int, doubled: int, unit: int, count: int) -> list[int]:
-    """Rule3's rotation act (ALGEBRA.md #the-four-acts (b)) from the levels `first` and `second`: a_next = (doubled a_now + r) div unit - a_before with the remainder kept, `count` levels in all; unit cos(n theta) from (unit, doubled div 2) and unit sin(n theta) from (0, unit sin theta) at 2 unit cos theta = doubled."""
-    levels, carry = [first, second], 0
-    mass = unit + unit - doubled  # the line's own term: Rule3's flux line with no Links
-    while len(levels) < count:
-        following, carry = rule3(0, mass, unit, levels[-1], levels[-2], carry)
-        levels.append(int(following))
-    return levels[:count]
-
-
-def wave_cosine(turns: int, halves: int, unit: int) -> int:
-    """unit cos(pi turns / halves) by the rotation act (the click's plan, C1: the cosine of a wave number pi p / q, as a packet's `wave` [p, q] declares it, by the integer search and no table; the quarter turn reads 0 exactly and an angle past it reads the negative of its mirror's, cos(pi - k) = -cos k, so one record has one unit at [1, 2] with den cos omega 4000 and not the search's 3999, the cold reader's line of 2026-10-19): the doubled cosine of the step pi / (2 halves) is the largest integer at which the rotation from the unit reaches 0 within `halves` steps (bisection on the integers, no root and no table, as the packet lay's generator finds its cosines), and 2 |turns| steps of it are the wave's cosine; at turns 1 and halves width + 1 the lowest mode of a top-hat of `width` Nodes with zero ends, cos(pi / (width + 1)) (`along_cosine`, `emission.holds_period`)."""
-    turns = abs(turns)  # the cosine is even
-    if 2 * turns == halves:
-        return 0  # the quarter turn exactly: cos(pi / 2) = 0, the circle's two halves mirror about it
-    if 2 * turns > halves:
-        return -wave_cosine(halves - turns, halves, unit)  # cos(pi - k) = -cos k, the mirror's half
-    lower, upper = 0, 2 * unit
-    while upper - lower > 1:
-        middle = int(division_forward(lower + upper, 2, 0)[0])
-        if min(rotated(unit, int(division_forward(middle, 2, 0)[0]), middle, unit, halves + 1)) <= 0:
-            lower = middle
-        else:
-            upper = middle
-    steps = 2 * turns  # the recurrence's two seeds and the steps after them to the wave's angle
-    return rotated(unit, int(division_forward(lower, 2, 0)[0]), lower, unit, steps + 1)[steps]
-
-
-def below_the_band(num: int, den: int) -> bool:
-    """Whether a resonance [num, den] lies below the width-one guide's band, no axis carrying the quantum: den cos k = (PORTS num - (PORTS - SIDES) den) div SIDES below -den, that is PORTS num below (PORTS - 2 SIDES) den (the guide of `emission.radiated_total`; the mathematician's hand)."""
-    return PORTS * num < (PORTS - SIDES - SIDES) * den
-
-
-def along_cosine(
-    light: tuple[int, int], resonance: tuple[int, int], width: int, unit: int
-) -> int | None:
-    """The doubled cosine 2 unit cos k_z of a packet's wave number along its axis, from the light family's band with the transverse mode of its width (the mathematician's hand, the advisor's second, two hands): cos Omega = (num_l / (3 den_l)) (cos k_z + 2 cos k_perp) with k_perp = pi / (width + 1) the lowest mode of the top-hat across, so 2 unit cos k_z = (6 unit den_l num) div (num_l den) - 2 x (2 unit cos k_perp), the two transverse axes each at the doubled cosine, every cosine at the unit by the rotation act; None where the width cannot carry Omega, cos k_z not strictly inside (-1, 1) (the band's edge k_z = 0, a wave of no wave number, refused with the outside; the top-hat's spectrum spreads the frequency by about (num_l / (3 den_l)) k_perp^2 / sin Omega, the open board's tolerance)."""
-    (num_l, den_l), (num, den) = light, resonance
-    across = 2 * wave_cosine(1, width + 1, unit)  # 2 unit cos k_perp, one transverse axis
-    doubled = int(division_forward(PORTS * unit * den_l * num, num_l * den, 0)[0]) - (AXES - 1) * across
-    return doubled if -2 * unit < doubled < 2 * unit else None
-
-
-def envelope(total: int, span: int, across: int) -> list[int]:
-    """A packet's amplitude per Node slice by slice along its axis in the energy form (the mathematician's hand, on the advisor's derivation, step 5, two hands): the energy left R_0 the packet's root (`line_total`, T / sin Omega for the one-line packet), each slice's energy R_t div span over the `across` Nodes of its cross-section, the amplitude per Node a_t = (the largest x with x^2 <= (R_t div span) div across), the carry R_(t+1) = R_t - across a_t^2, so that the energy decays at 1 / span per slice and the amplitude at 1 / (2 span), the survival under the declared constant hazard, the premise named in ALGEBRA.md, The click writes on the lattice (5); nature's linewidth the click's number beside it; the lay ends where a_t falls below 1, the deficit left below span level squared per Node (47 of 43,962, the one-line root at T = 32,768 and [2, 3], span 48, one Node across, the mathematician's number); the length L = 2 span ln a_0 in the continuous line (326 at a_0 = 30) and longer in the integers, whose tail at a_t = 1 falls linearly (456 slices there, SUM a_t^2 = 43,915)."""
-    found: list[int] = []
-    left = total
-    while True:
-        energy = int(division_forward(left, span, 0)[0])
-        amplitude = largest_below(int(division_forward(energy, across, 0)[0]))
-        if amplitude == 0:
-            return found
-        found.append(amplitude)
-        left -= across * amplitude * amplitude

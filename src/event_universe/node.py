@@ -73,17 +73,14 @@ def read(
     gamma: int,
     unit: int,
     record: int = 0,
-    cut: Factors | None = None,
 ) -> tuple[Any, Factors]:
-    """The read of a record of a family at the interval's start (ALGEBRA.md #the-paces, Every row reads the content; The clock is the Node's, the tension is the Link's; #the-interval, the dependency radius): the content at every Node (`read_lines`, every sign row but the record's own) and the factor of each of its six Links, Q_ij from the Link's tension, the read rows' axis lines at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the neighbour's line read through the Port the arrival is read through, one number per Link read the same from both ends, booked once per Link in the unit G^2 (features/read, `link_tensions`, `link_factors`); the integer 0 at the Node and G^2 on every Link where it reads nothing (the plain rule at Gamma); `cut`, per Port the mask of the Links the world declares at the factor 0, the six Links of a body that is a NodeDetector, read 0 from both ends so that its record stays at its Node (ALGEBRA.md, The click writes on the lattice; the frozen Link, the world's declaration as the node_detector's region is); no floor, no clamp and no guard in the interval; the same levels read back, so the inverse reads the same paces."""
+    """The read of a record of a family at the interval's start (ALGEBRA.md #the-paces, Every row reads the content; The clock is the Node's, the tension is the Link's; #the-interval, the dependency radius): the content at every Node (`read_lines`, every sign row but the record's own) and the factor of each of its six Links, Q_ij from the Link's tension, the read rows' axis lines at its two ends, (weight x (aa_i + aa_j) + 1) div 2, the neighbour's line read through the Port the arrival is read through, one number per Link read the same from both ends, booked once per Link in the unit G^2 (features/read, `link_tensions`, `link_factors`); the integer 0 at the Node and G^2 on every Link where it reads nothing (the plain rule at Gamma); no floor, no clamp and no guard in the interval; the same levels read back, so the inverse reads the same paces."""
     if not any(not families[r.family].rotation for r in families[index].reads):
         factors: Factors = (unit * unit,) * PORTS
         content: Any = 0
     else:
         content, axes = read_lines(index, families, states, direction, gamma, record)
         factors = link_factors(gamma, unit, link_tensions(axes, wrap, gamma))
-    if cut is not None:
-        factors = tuple(np.where(mask, 0, factor) for mask, factor in zip(cut, factors, strict=True))
     return content, factors
 
 

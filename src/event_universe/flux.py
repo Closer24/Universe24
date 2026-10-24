@@ -341,15 +341,14 @@ def step_records(
     gamma: int,
     unit: int,
     direction: int = 1,
-    cut: node.Factors | None = None,
     faces: Mapping[int, Faces] | None = None,
     amplitude: int = 0,
 ) -> tuple[list[Record], list[Booking]]:
-    """Every record of a family stepped in `direction`, each with the rule of its own read (`node.read`, `node.rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own, the Links the world cuts at 0, `cut`), its Links' pairs where the record is turned or folded (`node.turning`, `plane.odd_links`, `plane.phase_links`, `plane.link_pairs`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
+    """Every record of a family stepped in `direction`, each with the rule of its own read (`node.read`, `node.rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own), its Links' pairs where the record is turned or folded (`node.turning`, `plane.odd_links`, `plane.phase_links`, `plane.link_pairs`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
     lines: list[Record] = []
     bookings: list[Booking] = []
     for record in range(families[index].records):
-        content, factors = node.read(index, families, states, direction, wrap, gamma, unit, record, cut)
+        content, factors = node.read(index, families, states, direction, wrap, gamma, unit, record)
         rule = node.rule_of(families[index], gamma, content, factors, unit)
         pairs = pairs_of(
             index, families, states, direction, wrap, gamma, content, factors, record, amplitude

@@ -147,4 +147,3 @@ def test_the_loader_derives_every_familys_list_from_the_pairs_under_the_laws_con
         conversion.listed(families, ((n, 0), (e, 1)), senses) == []
     )  # {p, e, e} is n's list beside e passing
     assert conversion.reducible(families, ((n, 0), (n, 0)), ((n, 0), (p, 1), (e, -1)))
-    assert conversion.together(families, [laid_row(n, 2), laid_row(e, 1)]) is None  # no several lists

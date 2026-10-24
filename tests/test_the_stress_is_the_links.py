@@ -82,9 +82,13 @@ def test_the_tension_lines_write_at_the_doubled_wall_and_a_wrapped_world_runs_ba
     document = json.loads(
         (EVENTS / "m20" / "universe_m19_lay3_g1000.json").read_text(encoding="utf-8")
     )  # gravity, dust and matter, no holder of the sign: the reading's test is independent of the charge, and the fifth act refuses a holder under the rotation at a top by name
+    document[
+        "families"
+    ].append(  # the seed family, laid at one quantum on every Node and reading nothing, 2026-10-24
+        {"name": "light", "pair": [1000, 1000], "dimension": 1, "reads": {}}
+    )
     (tmp_path / "u.json").write_text(json.dumps(document), encoding="utf-8")
     world = dict(shape=[5, 5, 5], intervals=10, universe="u.json")
-    world.update(bodies=[])
     (path := tmp_path / "w.json").write_text(json.dumps(world), encoding="utf-8")
     world_files.REPOSITORY_ROOT = tmp_path
     loaded = load_world(path)

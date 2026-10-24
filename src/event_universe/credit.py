@@ -3,19 +3,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from math import gcd
 from typing import TYPE_CHECKING
 
 import numpy as np
 
 from event_universe import share
-from event_universe.core.rule3 import division_forward
-from event_universe.emission import Emitter, Source, registered
 from event_universe.features.click import Face
 from event_universe.front import Front
 from event_universe.loader.derived import count_wall
 from event_universe.loader.keys import Node
-from event_universe.node_detector import NodeBooks, books_of
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -36,37 +32,14 @@ class Books:
     """The credit's books: its declaration (None where the world declares none), the intervals elapsed in the window, the record's count per family of quanta, the count left to credit, the window's inflows per family and region per boundary Node in the unit G^2 (`booked`), the sides' own second moments per family of several parts (`moments`), the sides, the regions declaring a pattern with their two ports, in the file's order, the records at Nodes declared NodeDetectors with their own books (`node_detector.NodeBooks`), the erasing fronts begun where a record's count reached 0 (`Front`, the family, the click's Node and its interval), the faces the click act presents, per interval (features/click, `Face`), the log the inverse presents again, the sources in time, the unit of one quantum of each record, W_rec, read once at the books' origin (`record_unit`), the records that held no count at the origin, whose unit is set at their first lay to the lay's own share and held from there (the advisor's word; `emission.emitted_quantum`), each declared region's own clock per family it reads (`Clock`, the proper time carried over the board's intervals, `clocked_regions`), the count of the windows closed, the node_detectors' event clock, and per family the deficit, the quanta taken from its record and written nowhere (`deficits`, the undepleted beam, `take.faced`; the board's share exceeds the books' count by it, printed in the books' line, `Lattice.books`), and per family the share its windows left unabsorbed (`unabsorbed`, keyed by the family of quanta as the counts are, one record per family in every shipped world, an account to be split by record where a world declares several records of one family; in the readers' labels' unit: the count's share at the record's first draw, down by every null window's shares, dropped when a quantum passes into or out of the record, so that a later reader's draw reads its share conditionally on the earlier windows' nulls, `lists.absorption`, `act.written`; ALGEBRA.md, The click writes on the lattice (7), the mathematician's line) with the denominator each unabsorbed share is kept in (`unabsorbed_units`, the closing bodies' norms' least common multiple at the draw that wrote it, read in another closing set's denominator by the division act, `unabsorbed_in`; ALGEBRA.md, The absorption, the draw (b)); Part F, the piece's p_a per axis read at the close from the arriving record's momentum terms and share at the region's Nodes, scaled to one count (`node_detector.piece_momentum`), into the credit line; Part G (both hands' lines of 2026-10-10, the click with two receivers), the emitters' book per light family (`emitters`, `emission.Emitter`: per emitting body the quanta it gave that still stand in the record and whether the recoil was booked at the lay, kept after the Source's span is spent until its count reaches 0; the file's lays register nothing), the weights of the one draw of the piece's source at a click (`take.recoiled`); the click's plan, C7: per record the remainder of the credit's division carried into the next window (`remainders`, `quanta_through`), L759's row 12, kept in the books for the next window, nature's counter having no window edge, and signed since 2026-10-21 (the owner's word: the floor and the remainder's draw), the remainder below one quantum where the close's draw credited none and the remainder less the unit, the quantum owed, where it did (`whether`), so that over the run the counts sum to the inflow's whole quanta within one; C4: per family and region the record's passage over the window, its momentum terms and its share at the region summed, the piece's two sums (`passages`, `node_detector.Passage`, booked beside the inflow in `booked`); the click's read of the board: per record and side (None for a record of one part) the number the read left after the close's last draw (`left`, `node_detector.credit_draw`, emptied at the close, `meeting.closed`) and the bias bound of its first draw, booked on the side's or the region's line (`bias`, `features/click.bias_bound`, emptied with it), nothing of it across windows and no seed."""
 
     counts: dict[int, int]
-    bodies: list[NodeBooks]
     fronts: list[Front]
     faces: dict[int, list[Face]]
-    sources: list[Source]
     units: dict[int, int] = field(default_factory=dict)
     empty: set[int] = field(default_factory=set)
     deficits: dict[int, int] = field(default_factory=dict)
-    unabsorbed: dict[int, int] = field(default_factory=dict)
-    unabsorbed_units: dict[int, int] = field(default_factory=dict)
-    emitters: dict[int, list[Emitter]] = field(default_factory=dict)
     lays: dict[int, list[dict[str, object]]] = field(default_factory=dict)
     births: dict[int, tuple[int, tuple[Node, ...]]] = field(default_factory=dict)
     charges: dict[int, int] = field(default_factory=dict)  # every plane family's charge at the lay
-
-    def unabsorbed_in(self, drive: int, norms: list[int]) -> tuple[int, int]:
-        """The one denominator of the bodies closing a drive's interval and the record's unabsorbed share read in it (ALGEBRA.md, The absorption, the draw (b); `lists.absorption`): the denominator the least common multiple of the bodies' norms, each the sum of its labels' squares, by the division act, so that each body's transfer share scales to it exactly; the unabsorbed share the count's at the record's first draw, and a share left by an earlier draw in another denominator (`unabsorbed_units`) brought to this one by the division act and kept in it from here; a body with no labels, its norm 0, has no transfer and cannot close, refused by name."""
-        if min(norms) <= 0:
-            raise ValueError("a body closing a drive's interval holds labels: its norm is above 0")
-        unit = norms[0]
-        for other in norms[1:]:
-            unit = int(division_forward(unit * other, gcd(unit, other), 0)[0])
-        kept = self.unabsorbed.setdefault(drive, self.counts[drive] * unit)
-        born = self.unabsorbed_units.setdefault(drive, unit)
-        self.unabsorbed[drive] = share = int(division_forward(kept * unit, born, 0)[0])
-        self.unabsorbed_units[drive] = unit
-        return unit, share
-
-    def account_ended(self, family: int) -> None:
-        """The record's windows' account ends as a quantum passes into or out of it (`act.written`): its unabsorbed share and the denominator it is kept in dropped, to begin again at the count left."""
-        self.unabsorbed.pop(family, None)
-        self.unabsorbed_units.pop(family, None)
 
     @classmethod
     def of(cls, board: Lattice) -> Books:
@@ -76,21 +49,7 @@ class Books:
             i: counted(board, i, *share.count_read(board, i, board.laid[i], units[i]))
             for i in board.order
         }
-        bodies = books_of(board)
-        emitters: dict[int, list[Emitter]] = {}
-        for index in board.order:  # Part H (the hands' SHOULD): the file's lay in the emitters' draw
-            if counts[index] > 0:
-                registered(emitters, index, None, False, counts[index])
-        books = cls(
-            counts,
-            bodies,
-            [],
-            {},
-            [],
-            units,
-            {index for index in board.order if counts[index] <= 0},
-            emitters=emitters,
-        )
+        books = cls(counts, [], {}, units, {index for index in board.order if counts[index] <= 0})
         books.births = {  # the births' book: the records laid at the start, born at the interval 0
             index: (0, support_of(board, index)) for index in board.order if counts[index] > 0
         }

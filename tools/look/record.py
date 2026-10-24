@@ -82,17 +82,6 @@ def declared(world: World, path: Path, board: Lattice) -> dict[str, object]:
         "largest_integer": str(world.width),
         "amplitude_bound": world.amplitude_bound,
         "families": [family_row(family, families, world.quantum_action) for family in families],
-        "bodies": [
-            {
-                "number": number,
-                "family": families[row.family].name,
-                "nodes": [list(at) for at in row.nodes],
-                "counts": list(row.counts),
-                "declared": sum(row.counts),
-                "reader": row.detector is not None,
-            }
-            for number, row in enumerate(world.bodies)
-        ],
     }
 
 
@@ -129,13 +118,12 @@ def frame(
         else:
             row = {"level": state.lines[0].now, "parts": [line.now for line in state.lines[1:]]}
         families[family.name] = row
-    bodies = [[list(at) for at in row.nodes] for row in world.bodies]
     found: dict[str, object] = {"interval": board.interval, "direction": direction, "pass": pass_number}
     if tick is not None:
         found["tick"] = tick
     if cone_radius is not None:
         found["cone_radius"] = cone_radius
-    found.update(families=families, bodies=bodies)
+    found.update(families=families)
     return {**found, "shape": list(board.shape), "lines": []}
 
 

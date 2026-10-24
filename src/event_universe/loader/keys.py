@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Mapping
-from itertools import pairwise
+from collections.abc import Mapping
 from typing import Any
 
 from event_universe.core.integer import MAX_WORK_INT
@@ -40,34 +39,6 @@ def node_of(value: object, label: str, shape: Node) -> Node:
         raise ValueError(f"{label} must be a Node [x, y, z]")
     found = tuple(integer(value[axis], f"{label}[{axis}]", 0, shape[axis] - 1) for axis in range(3))
     return found[0], found[1], found[2]
-
-
-def connected(nodes: tuple[Node, ...], shape: Node, periodic: tuple[bool, bool, bool]) -> bool:
-    """Whether a set of Nodes is one region through the six Ports, walked from its first Node through the wrap."""
-    region, seen, front = set(nodes), {nodes[0]}, [nodes[0]]
-    while front:
-        node = front.pop()
-        for axis in range(3):
-            for side in (1, -1):
-                there = list(node)
-                there[axis] += side
-                if periodic[axis]:
-                    there[axis] %= shape[axis]
-                at = (there[0], there[1], there[2])
-                if at in region and at not in seen:
-                    seen.add(at)
-                    front.append(at)
-    return seen == region
-
-
-def extent_across(coordinates: Iterable[int], length: int, wraps: bool) -> int:
-    """The extent of a set of coordinates along an axis of `length` Nodes: through the wrap the smallest arc of the ring that covers them, else from the least to the greatest."""
-    distinct = sorted(set(coordinates))
-    if not wraps:
-        return distinct[-1] - distinct[0] + 1
-    gaps = [after - before for before, after in pairwise(distinct)]
-    gaps.append(length - distinct[-1] + distinct[0])  # the wrap's gap, the whole ring at one coordinate
-    return length - max(gaps) + 1
 
 
 def document_at(files: Mapping[str, object], path: object, label: str) -> object:
