@@ -9,9 +9,8 @@ import numpy as np
 from event_universe import credit, records
 from event_universe.act import born_table, click
 from event_universe.core.rule3 import division_forward
-from event_universe.digits import at_origin, read_of
+from event_universe.digits import at_origin, frame_of, read_of
 from event_universe.features.click import drawn_from
-from event_universe.features.front import ball
 from event_universe.lay import laid
 from event_universe.loader.keys import Node
 from event_universe.reports import birth_line
@@ -44,7 +43,7 @@ def meetings(
 
 
 def closed(board: Lattice) -> None:
-    """The board's own close at the end of an interval: the meetings read, the whether drawn, the pairs born, the lines written (the module's sentence)."""
+    """The board's own close at the end of an interval: every meeting read and every whether drawn from the one state the close finds (the Node and its six Ports, nothing of the board's labels), then the pairs born and the lines written, each write at its own Node alone, so that the order in which the Nodes are taken enters no number (the owner's rule of 2026-10-24: any Nodes in any order give the same board; the branch digit-order) (the module's sentence)."""
     index = board.world.seed
     if index is None:
         return
@@ -52,7 +51,10 @@ def closed(board: Lattice) -> None:
     shares, frozen = board.share_of(index)
     unit, family = books.units[index], board.families[index]
     span = records.record_slice(family, 0)
-    for at, whole, rest in meetings(board, index, shares, frozen):
+    born: list[tuple[Node, Table]] = []
+    for at, whole, rest in meetings(
+        board, index, shares, frozen
+    ):  # every Node's read first, from the one state at the close
         table = child_of(board, index, int(shares[at]), whole)
         if table is None:  # no pair's walls within the two quanta's energy there: nothing born
             continue
@@ -61,13 +63,17 @@ def closed(board: Lattice) -> None:
             label = (
                 f"the Node {list(at)}'s read of itself and its Links at the interval {board.interval}"
             )
-            region = ball(board.shape, [at], 1, board.world.periodic)  # the Node and its six neighbours
+            region = frame_of(at, board.shape, board.world.periodic)  # the Node, then its six Ports
             reads = [(family, region) for family in board.order]
             if not at_origin(board, reads):
                 number, moduli = read_of(board, reads, label)
                 meet = drawn_from(number, [rest, unit - rest], label, moduli)[0] == 0
-        if not meet:
-            continue
+        if meet:
+            born.append((at, table))
+    for (
+        at,
+        table,
+    ) in born:  # then every write, each at its own Node alone: the order of the Nodes enters nothing
         here = board.mask((at,))  # the hole: the seed's record at this Node to 0, the two quanta paying
         for number in range(span.start, span.stop):
             line = board.states[index].lines[number]

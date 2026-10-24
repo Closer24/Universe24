@@ -3,7 +3,6 @@
 import random
 from collections import Counter
 
-import numpy as np
 import pytest
 
 from event_universe import digits
@@ -95,7 +94,7 @@ def test_a_total_sharing_a_factor_with_the_bases_books_its_bias_bound_and_is_ref
 
 def test_the_digits_lattice_at_the_exact_vacuum_is_three_valued():
     """The digits' lattice F = gcd(w, D_i, R_ij) (`digits.lattice_of`): at the exact vacuum paces, p_0 = p_i = Gamma with no tension, light's digits lie on w div 2 + (w div 3) Z, three values each (the read refused there), the massive pair [4000, 6000] on nine; at the shipped universes' content 60 (the paces 5940 and 5881) F = 3,072,000 = 2 num G^2 and a digit takes 108,000,000 values; the atom [1, 1299] at the exact vacuum 3,897."""
-    at = np.ones((2, 1, 1), dtype=bool)
+    at = [(0, 0, 0), (1, 0, 0)]  # two Nodes in a frame's order
     light = rule_integers(6000, 6000, GAMMA, GAMMA, GAMMA, None, UNIT)
     found = digits.lattice_of(light, at)
     assert found == [LIGHT // 3] * 2 and all(3 * f >= LIGHT for f in found)
