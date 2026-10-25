@@ -1,0 +1,39 @@
+== worlds/universe_toy.json: den 15162856759112389 (54 bits), Gamma 1000, T 36000
+  the gap-0 unit u_0 = 3 den T = 1637588529984138012000; the merger's walls (two light quanta) 2 u_0 = 3275177059968276024000
+  lift num 15162854575528411: s 8137489624680 (on den's circle: True); u_s = 3 T s = 878848879465440000
+    default lay A = 8; child's share 6 den A^2 = 5822536995499157376
+    share / u_s = [6, 549443718706517376] (quotient, remainder): WHOLE at its own unit where quotient >= 1
+    share / (2 u_0) = [0, 5822536995499157376]: the merger's take at ONE end can pay where quotient >= 1
+    2 share / (2 u_0) = [0, 11645073990998314752]: the two ends summed
+    (2 den - num) / s = [1863, 2715771917527] (the stop's ratio, derived: always above 1)
+    MS-S1 child (A = B = 134): share 3 den (A^2 + B^2) = 1633585535799732341304; / u_s = [1858, 684317752944821304]; / u_0 = [0, 1633585535799732341304]; den / s = [1863, 2713588333549]
+  lift num 2458210083751875: s 14962266816278236 (on den's circle: True); u_s = 3 T s = 1615924816158049488000
+    default lay A = 241; child's share 6 den A^2 = 5284043300556039993054
+    share / u_s = [3, 436268852081891529054] (quotient, remainder): WHOLE at its own unit where quotient >= 1
+    share / (2 u_0) = [1, 2008866240587763969054]: the merger's take at ONE end can pay where quotient >= 1
+    2 share / (2 u_0) = [3, 742555421207251914108]: the two ends summed
+    (2 den - num) / s = [1, 12905236618194667] (the stop's ratio, derived: always above 1)
+    MS-S1 child (A = B = 134): share 3 den (A^2 + B^2) = 1633585535799732341304; / u_s = [1, 17660719641682853304]; / u_0 = [0, 1633585535799732341304]; den / s = [1, 200589942834153]
+  lift num 2580388913625285: s 14941680566515936 (on den's circle: True); u_s = 3 T s = 1613701501183721088000
+    default lay A = 242; child's share 6 den A^2 = 5327985259443947696376
+    share / u_s = [3, 486880755892784432376] (quotient, remainder): WHOLE at its own unit where quotient >= 1
+    share / (2 u_0) = [1, 2052808199475671672376]: the merger's take at ONE end can pay where quotient >= 1
+    2 share / (2 u_0) = [3, 830439338983067320752]: the two ends summed
+    (2 den - num) / s = [1, 12803644038083557] (the stop's ratio, derived: always above 1)
+    MS-S1 child (A = B = 134): share 3 den (A^2 + B^2) = 1633585535799732341304; / u_s = [1, 19884034616011253304]; / u_0 = [0, 1633585535799732341304]; den / s = [1, 221176192596453]
+== worlds/universe_middle.json: den 1655909141 (31 bits), Gamma 1000, T 36000
+  the gap-0 unit u_0 = 3 den T = 178838187228000; the merger's walls (two light quanta) 2 u_0 = 357676374456000
+  lift num 1655880909: s 9669460 (on den's circle: True); u_s = 3 T s = 1044301680000
+    default lay A = 26; child's share 6 den A^2 = 6716367475896
+    share / u_s = [6, 450557395896] (quotient, remainder): WHOLE at its own unit where quotient >= 1
+    share / (2 u_0) = [0, 6716367475896]: the merger's take at ONE end can pay where quotient >= 1
+    2 share / (2 u_0) = [0, 13432734951792]: the two ends summed
+    (2 den - num) / s = [171, 2459713] (the stop's ratio, derived: always above 1)
+    MS-S1 child (A = B = 134): share 3 den (A^2 + B^2) = 178401027214776; / u_s = [170, 869741614776]; / u_0 = [0, 178401027214776]; den / s = [171, 2431481]
+  lift num 506298091: s 1576609440 (on den's circle: True); u_s = 3 T s = 170273819520000
+    default lay A = 247; child's share 6 den A^2 = 606152164699614
+    share / u_s = [3, 95330706139614] (quotient, remainder): WHOLE at its own unit where quotient >= 1
+    share / (2 u_0) = [1, 248475790243614]: the merger's take at ONE end can pay where quotient >= 1
+    2 share / (2 u_0) = [3, 139275206031228]: the two ends summed
+    (2 den - num) / s = [1, 1228910751] (the stop's ratio, derived: always above 1)
+    MS-S1 child (A = B = 134): share 3 den (A^2 + B^2) = 178401027214776; / u_s = [1, 8127207694776]; / u_0 = [0, 178401027214776]; den / s = [1, 79299701]
