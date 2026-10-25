@@ -362,7 +362,7 @@ def page_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> str:
         '<div id="bar"><div id="cursor"></div></div>\n'
         '<div id="row"><button id="play">play / pause</button><button id="slower">slower</button><button id="faster">faster</button><span id="where"></span>'
         "<span>the reading: the verdicts in the reading file beside the record</span></div>\n"
-        '<div id="legend">green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the row's colour, the dot inside the levels taken, blue from the gap-0 row, else in the taken row's colour; a birth: the take's Node joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate as it first shows</div>\n'
+        '<div id="legend">green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate as it first shows</div>\n'
         '<script id="data" type="application/json">'
         + json.dumps(data_of(record, reading))
         + "</script>\n"
