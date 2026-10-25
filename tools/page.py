@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch), the board's size the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading names (each bang, the era of matter, the acceleration) and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding two seconds on every new label, a legend line under the controls, the reading's event lines as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch), the board's size the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading names (each bang, the era of matter, the acceleration) and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding a second on every new label and then running at a quarter pace for four seconds, a big round play button and the page's look its tokens' (the board a card, the controls pills, the labels glass), a legend line under the controls, the reading's event lines as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -16,21 +16,29 @@ TOKENS = """
   --wall: #d7dae0; --forward: #4ade80; --back: #f59e0b; --hole: #ffffff; --focus: #5f97ea; --label: #fde68a;
   --tones: #f472b6, #22d3ee, #a3e635, #fb923c, #c084fc, #facc15, #38bdf8, #f87171;
   --font: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace; color-scheme: dark; }
-html, body { margin: 0; background: var(--bg); color: var(--fg); font: 14px var(--font); }
-#head { padding: 8px 16px 4px; color: var(--muted); font-family: var(--mono); font-size: 11px; white-space: pre-wrap; }
+html, body { margin: 0; background: radial-gradient(1200px 700px at 50% -10%, #171c26 0%, var(--bg) 60%); color: var(--fg); font: 14px var(--font); }
+#title { padding: 14px 20px 0; font-size: 22px; font-weight: 700; letter-spacing: 0.3px; }
+#title small { margin-left: 12px; color: var(--muted); font-size: 13px; font-weight: 400; }
+#head { padding: 4px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 11px; white-space: pre-wrap; opacity: 0.85; }
 #stage { position: relative; }
-#board { display: block; margin: 0 auto; background: var(--board); border: 1px solid var(--line); }
-#bar { position: relative; height: 70px; margin: 8px 16px 4px; background: var(--panel); border: 1px solid var(--line); cursor: pointer; overflow: visible; }
-#bar .era { position: absolute; top: 0; bottom: 0; pointer-events: none; }
-#bar .tick { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--label); }
+#board { display: block; margin: 0 auto; background: radial-gradient(circle at 50% 45%, #0c0f14 0%, var(--board) 70%); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), inset 0 0 80px rgba(95, 151, 234, 0.06); }
+#bar { position: relative; height: 70px; margin: 12px 20px 6px; background: linear-gradient(180deg, #1a1e26, var(--panel)); border: 1px solid var(--line); border-radius: 12px; cursor: pointer; overflow: visible; }
+#bar .era { position: absolute; top: 0; bottom: 0; pointer-events: none; border-radius: 12px; }
+#bar .tick { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--label); opacity: 0.9; }
 #bar .name { position: absolute; font-size: 10px; color: var(--label); font-family: var(--mono); white-space: nowrap; padding-left: 4px; pointer-events: none; }
 #bar .bang { position: absolute; bottom: 1px; font-size: 10px; color: var(--muted); font-family: var(--mono); }
-#bar #cursor { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--focus); }
-#legend { margin: 0 16px 10px; color: var(--muted); font-family: var(--mono); font-size: 11px; }
-#row { display: flex; gap: 12px; align-items: center; margin: 0 16px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
-button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 3px 10px; font: inherit; cursor: pointer; }
+#bar #cursor { position: absolute; top: -4px; bottom: -4px; width: 3px; background: var(--focus); border-radius: 2px; box-shadow: 0 0 12px var(--focus), 0 0 24px rgba(95, 151, 234, 0.6); }
+#row { display: flex; gap: 14px; align-items: center; margin: 4px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
+button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 8px 16px; font: inherit; cursor: pointer; border-radius: 999px; transition: background 0.15s, transform 0.1s; }
+button:hover { background: #222733; } button:active { transform: scale(0.97); }
+#play { width: 64px; height: 64px; padding: 0; border: none; border-radius: 50%; background: linear-gradient(135deg, var(--focus), #22d3ee); box-shadow: 0 8px 28px rgba(95, 151, 234, 0.45); display: inline-flex; align-items: center; justify-content: center; }
+#play .tri { width: 0; height: 0; border-left: 24px solid var(--board); border-top: 14px solid transparent; border-bottom: 14px solid transparent; margin-left: 6px; }
+#play .bars { display: none; width: 8px; height: 28px; background: var(--board); box-shadow: 14px 0 0 var(--board); margin-right: 14px; }
+body.playing #play .tri { display: none; } body.playing #play .bars { display: block; }
+#where { font-size: 13px; color: var(--fg); }
+#legend { margin: 0 20px 14px; color: var(--muted); font-family: var(--mono); font-size: 11px; opacity: 0.8; }
 #labels { position: absolute; left: 0; top: 0; pointer-events: none; }
-.label { position: absolute; color: var(--label); font-family: var(--mono); font-size: 15px; font-weight: 600; white-space: nowrap; background: rgba(7, 8, 10, 0.82); border: 1px solid var(--line); border-left: 3px solid var(--label); border-radius: 3px; padding: 3px 8px 4px 8px; max-width: 420px; overflow: hidden; text-overflow: ellipsis; }
+.label { position: absolute; color: var(--label); font-family: var(--mono); font-size: 15px; font-weight: 600; white-space: nowrap; background: rgba(12, 14, 18, 0.72); backdrop-filter: blur(6px); border: 1px solid rgba(253, 230, 138, 0.25); border-left: 3px solid var(--label); border-radius: 8px; padding: 5px 10px 6px 10px; max-width: 420px; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); }
 .label small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
 a { color: var(--focus); }
 """
@@ -42,7 +50,8 @@ const canvas = document.getElementById("board"), ctx = canvas.getContext("2d");
 const stage = document.getElementById("stage"), labels = document.getElementById("labels"), cursor = document.getElementById("cursor");
 const bar = document.getElementById("bar"), where = document.getElementById("where");
 const head = document.getElementById("head"), row = document.getElementById("row");
-const size = Math.max(320, Math.min(window.innerWidth - 32, window.innerHeight - head.offsetHeight - bar.offsetHeight - row.offsetHeight - 40));
+const titleBox = document.getElementById("title"), legendBox = document.getElementById("legend");
+const size = Math.max(320, Math.min(window.innerWidth - 40, window.innerHeight - titleBox.offsetHeight - head.offsetHeight - bar.offsetHeight - row.offsetHeight - legendBox.offsetHeight - 64));
 canvas.width = size; canvas.height = size;
 function words(s) { return s.split(" ").map(w => parseInt(w, 36)); }
 function levels(s) { return Array.from(s, ch => ch === "." ? 0 : (ch >= "a" ? ch.charCodeAt(0) - 96 : 64 - ch.charCodeAt(0))); }
@@ -232,10 +241,12 @@ function draw() {
   const course = t === 1 ? "the seed" : up === line.X.length ? "every clock's volume rising" : down === line.X.length ? "every clock's volume falling" : up + " rising, " + down + " falling, " + (line.X.length - up - down) + " at rest";
   where.textContent = "interval " + line.i + " of " + N + (D.stride > 1 ? " (1 of every " + D.stride + " intervals kept)" : "") + "; " + course;
 }
-let hold = 0;
+let hold = 0, slow = 0, beat = 0;
 function tick() {
+  document.body.classList.toggle("playing", playing);
   if (playing && hold > 0) hold--;
-  else if (playing) { t = t % n + 1; draw(); const now = lines[t - 1].i, before = t > 1 ? lines[t - 2].i : 0; if (D.events.some(e => e.i !== null && e.i > before && e.i <= now) || bangs.some(b => b > before && b <= now)) hold = 3 * speed; }
+  else if (playing && slow > 0 && (++beat % 4) !== 0) slow--;
+  else if (playing) { if (slow > 0) slow--; t = t % n + 1; draw(); const now = lines[t - 1].i, before = t > 1 ? lines[t - 2].i : 0; if (D.events.some(e => e.i !== null && e.i > before && e.i <= now) || bangs.some(b => b > before && b <= now)) { hold = speed; slow = 4 * speed; } }
   setTimeout(tick, 1000 / speed);
 }
 const eras = D.events.filter(e => e.i !== null && /^(1|4|5|46) /.test(e.gate)).map(e => [e.i, e.gate]).concat(bangs.map(b => [b, "1 bang"])).sort((p, q) => p[0] - q[0]);
@@ -382,10 +393,13 @@ def page_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> str:
         + "</title><style>"
         + TOKENS
         + "</style></head>\n<body>\n"
+        '<div id="title">'
+        + title
+        + "<small>the record and its reading, from the seed alone</small></div>\n"
         '<div id="head">' + header_of(record) + "</div>\n"
         '<div id="stage"><canvas id="board" width="320" height="320"></canvas><div id="labels"></div></div>\n'
         '<div id="bar"><div id="cursor"></div></div>\n'
-        '<div id="row"><button id="play">play / pause</button><button id="slower">slower</button><button id="faster">faster</button><span id="where"></span>'
+        '<div id="row"><button id="play" title="play / pause"><span class="tri"></span><span class="bars"></span></button><button id="slower">slower</button><button id="faster">faster</button><span id="where"></span>'
         "<span>the reading: the verdicts in the reading file beside the record</span></div>\n"
         '<div id="legend">green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate as it first shows; the bands of the bar: the spans from each bang, from the era of matter and from the acceleration, as the reading names them</div>\n'
         '<script id="data" type="application/json">'
