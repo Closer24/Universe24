@@ -1,0 +1,64 @@
+{
+ "world": "world_chiral_300.json",
+ "intervals": 300,
+ "back": 10,
+ "state hash equal at intervals 0..n (David against fd2)": [
+  301,
+  301
+ ],
+ "first interval apart": null,
+ "log equal (JSON)": true,
+ "counts equal": true,
+ "counts": {
+  "births": "16",
+  "taken": "37450057102094138190653",
+  "booked": "35545794554425772736000",
+  "body_clicks": "311",
+  "refused_stop": "36",
+  "refused_origin": "0",
+  "refused_lay": "64931",
+  "refused_orientation": "26",
+  "refused_twist": "0",
+  "turns": "769",
+  "light_credits": "0",
+  "light_laid": "1",
+  "light_laid_nodes": "1"
+ },
+ "census David (integers per Node, max bits)": [
+  98,
+  115
+ ],
+ "census fd2": [
+  98,
+  115
+ ],
+ "run back: states equal David against fd2 at every step back": [
+  10,
+  10
+ ],
+ "run back exact within the kept window (David, fd2)": [
+  9,
+  9,
+  9
+ ],
+ "record JSON equal (rows, counts, turns, run_back, log)": false,
+ "record sha256 David": "108cf07a72e3b5f9bac10b91b3378f78d40864f889dae127bd909d3eecf6a407",
+ "record sha256 fd2": "b5a077e7d31e2d12dbcf7d2d40b387f6f8369acb183f1ec2c6dd91574c2b0880",
+ "record run_back David": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "record run_back fd2": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "gates equal (decoder output line by line)": true,
+ "gates lines": [
+  18,
+  18
+ ],
+ "seconds (side by side, records)": [
+  88,
+  98
+ ]
+}
