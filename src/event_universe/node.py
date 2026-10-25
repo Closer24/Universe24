@@ -111,6 +111,7 @@ class Node:
         self.orbit_lines = [seed_pair]
         self.orbit = [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
         self.start_content = self.content()
+        self.start_x = self.row(CARRIER).lines[0].now
 
     def ride_walls(self) -> None:
         """The riding lines' remainders at the start: a riding line's remainder lives at the mean wall (w div 2)(X_before + X_now) of the carrier's two levels at its Node, half of it at the seed."""
@@ -161,9 +162,9 @@ class Node:
         """The Link factor at each Port (readings.link_factors), 0 where either end is frozen."""
         return readings.link_factors(self, axis_levels, frozen)
 
-    def share(self, lines: list[Line], r: rule3.Rule, pace: Any = None, vacuum: bool = False) -> Any:
-        """A record's conserved form's share at every Node (gram.share)."""
-        return gram.share(self, lines, r, pace, vacuum)
+    def share(self, lines: list[Line], r: rule3.Rule) -> Any:
+        """A record's conserved form's share at every Node in the carrier's unit (gram.share)."""
+        return gram.share(self, lines, r)
 
     def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
         """The arrivals of a row's lines at one Port, read in the Node's frame (the row's conjugation where the frame sign is -1, gram.conjugated) and turned plane by plane by the Link's record (links.turned); a row of one line is turned by the identity; `turn` None is the identity for every shape."""

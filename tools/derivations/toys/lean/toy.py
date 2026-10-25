@@ -127,12 +127,11 @@ class Toy(Node):
         c = self.start_content
         gap0 = self.row(PLANE, gap=0)
         r_gap0 = self.rule_of(gap0, c, self.link_factors())
-        pace = paces.link_pace_of(self.gamma, c)
         z = gap0.lines[0]
         gap0_start = plane_starts[self.records().index(gap0)]
         sh_end, sh_vac = (
-            self.share([z], r_gap0, pace, vacuum=True),
-            self.share([gap0_start[0]], r_gap0, pace, vacuum=True),
+            self.share([z], r_gap0),
+            self.share([gap0_start[0]], r_gap0),
         )
         for det in self.detectors:
             rise = int(sh_end[det]) // self.unit_gap0 - int(sh_vac[det]) // self.unit_gap0

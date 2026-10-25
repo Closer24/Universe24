@@ -1,4 +1,4 @@
-"""The one-Node tests (the owner's word of 2026-10-25: every property tested on one Node fed through its six Links): the horizon (a Node whose x Links stand at the wall holds on that axis, is read by no Link close and births nothing), the frozen content (a Node at the Link pace 0 is not read and never clicks), the turn (the turned Node ends the interval at its pre-state exchanged and complemented, the exchange an involution), the run back exact through all of it; the step's reach of one Link forward and none back; the files' refusals by name."""
+"""The one-Node tests (the owner's word of 2026-10-25: every property tested on one Node fed through its six Links): the horizon (a Node whose x Links stand at the wall holds on that axis, is read by no Link close and births nothing; a body standing at it by a neighbour's shared half credits, PM-S1), the frozen content (a Node at the Link pace 0 is not read and never clicks), the turn (the turned Node ends the interval at its pre-state exchanged and complemented, the exchange an involution), the run back exact through all of it; the step's reach of one Link forward and none back; the files' refusals by name."""
 
 from __future__ import annotations
 
@@ -8,10 +8,11 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import paces
+from event_universe.core.rule3 import quotient
 from event_universe.features import volume
 from event_universe.loader.world import read_world
 from event_universe.node import Node
-from event_universe.rows import CARRIER, PLANE
+from event_universe.rows import CARRIER, PLANE, zeros
 from event_universe.take import frame_nodes
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
@@ -45,7 +46,8 @@ def fed_horizon(node: Node, at: tuple[int, ...]) -> Node:
     return node
 
 
-def test_the_horizon_holds_the_links_at_the_wall_and_the_node_never_clicks() -> None:
+def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -> None:
+    """The horizon: the fed Node's two x Links at the wall (the factor 0), its other four above; no Link close reads the Node (no birth at it, none with it as an end); under PM-S1 the near-massless plane's shared half from a child laid at a neighbour stands at the Node at its own unit, so one credit with W = 0 is read there (named: the bodies' closing is not the Link close); the run back exact."""
     node = fed_horizon(node_of("world_node.json"), CENTRE)
     factors = node.link_factors()
     assert [int(f[CENTRE]) for f in factors[:2]] == [0, 0]
@@ -53,7 +55,8 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_never_clicks() -> 
     fed = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
-    assert clicks_at(node, CENTRE) == []
+    assert [e for e in clicks_at(node, CENTRE) if e["event"] == "birth"] == []
+    assert [(e["sense"], e["line"]) for e in clicks_at(node, CENTRE)] == [(0, 0)]
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
@@ -230,3 +233,51 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
         )
     assert clicks_at(node, CENTRE) == [] and node.max_transient <= 128 and node.census()[1] <= 128
     assert run_back_exact(kept, 100) == 100
+
+
+def shares_of(node: Node) -> tuple[Any, Any, Any]:
+    """The gap-0 line's share in the carrier's unit, and by hand at the frame's weight (X set to Gamma^3 div p_i^2) and at the vacuum's (X set to Gamma)."""
+    gap0 = node.row(PLANE, gap=0)
+    rule = node.rule(gap0.pair, node.start_content, node.link_factors())
+    pace = np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)
+    x, carrier = node.start_x, node.share(gap0.lines, rule)
+    node.start_x = np.vectorize(lambda p: quotient(node.gamma**3, p * p), otypes=[object])(pace)
+    frame = node.share(gap0.lines, rule)
+    node.start_x = zeros(node.shape) + node.gamma
+    vacuum, node.start_x = node.share(gap0.lines, rule), x
+    return carrier, frame, vacuum
+
+
+def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
+    """PM-S1 (the owner's word of 2026-10-25, 15:18 UTC, through the Boss, 6399410929; PM_COMPARISON.md section 5): the identity Gamma^2 div p_i^2 = X(c) div Gamma at c = 0 to 1,000 by 100 (pm1); on the 3-cube hole the carrier's share within one unit of the frame's at 27 of 27 Nodes at the interval 1 (X / Gamma below 2) and equal to the vacuum's there (X = Gamma); at 20 the vacuum's below the carrier's by X / Gamma (390 thousandths at X / Gamma between 2.36 and 2.94) and the frame's within four per mille; the chiral 5-cube at 60: births 15, body clicks 24, the run back 10 of 10, 98 integers, 115 bits (pm2's numbers)."""
+    node = node_of("world_node.json")
+    for c in range(0, 1_001, 100):
+        pace = paces.link_pace(node.gamma, c)
+        assert quotient(node.gamma * node.gamma, pace * pace) == quotient(level_at(node, c), node.gamma)
+    node.step()
+    node.step_back()
+    carrier, frame, vacuum = shares_of(node)
+    assert bool((node.start_x < 2 * node.gamma).all()) and int((abs(carrier - frame) <= 1).sum()) == 27
+    assert carrier.tolist() == vacuum.tolist()
+    for _ in range(20):
+        node.step()
+    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
+    carrier, frame, vacuum = shares_of(node)
+    totals = [sum(int(v) for v in a.reshape(-1)) for a in (carrier, frame, vacuum)]
+    assert totals[2] * 1000 // totals[0] == 390 and abs(totals[1] - totals[0]) * 1000 <= 4 * totals[0]
+    assert (
+        2_356
+        <= int(node.start_x.min()) * 1000 // node.gamma
+        <= int(node.start_x.max()) * 1000 // node.gamma
+        <= 2_938
+    )
+    chiral = node_of("world_chiral.json")
+    kept = copy.deepcopy(chiral)
+    for _ in range(60):
+        chiral.step()
+    assert (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census()) == (
+        15,
+        24,
+        (98, 115),
+    )
+    assert run_back_exact(kept, 10) == 10

@@ -96,7 +96,7 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
 
 
 def births(
-    node: Node, kept: list[Birth], r_gap0: rule3.Rule, c: Any, factors: tuple[Any, ...], pace: Any
+    node: Node, kept: list[Birth], r_gap0: rule3.Rule, c: Any, factors: tuple[Any, ...]
 ) -> set[tuple[int, ...]]:
     """The births kept, every face read before any write: one exact take per Node of its children's walls summed, the start's gap-0 line paying; then each child laid as one quantum of its record at the quarter turn (`children`). Returns every Node a taken birth touched."""
     by_node: dict[tuple[int, ...], list[tuple[int, tuple[int, ...], tuple[int, ...], int]]] = {}
@@ -111,7 +111,7 @@ def births(
     touched: set[tuple[int, ...]] = set()
     for at, kids, walls, (levels, fall, now, before) in taken:
         node.closes[at] -= 1
-        touched |= children(node, at, kids, (walls, levels, fall, now, before), c, factors, pace)
+        touched |= children(node, at, kids, (walls, levels, fall, now, before), c, factors)
         node.counts["taken"] += fall
         node.counts["booked"] += walls
     return touched
@@ -147,14 +147,13 @@ def children(
     take: tuple[int, int, int, int, int],
     c: Any,
     factors: tuple[Any, ...],
-    pace: Any,
 ) -> set[tuple[int, ...]]:
     """One take's children laid (`child_laid`), each birth logged with its numbers. Returns the Nodes touched."""
     walls, levels, fall, now, before = take
     dp_take = node.last_dp
     touched = {at}
     for s, minus, plus, room in kids:
-        amplitude = lay_amplitude(node, s, at, c, factors, pace)
+        amplitude = lay_amplitude(node, s, at, c, factors)
         dp_lay, w_children = child_laid(node, s, minus, plus, amplitude)
         touched |= {minus, plus}
         node.counts["births"] += 1
@@ -323,13 +322,12 @@ def click(
     direction: int = 1,
     frame: dict[str, Any] | None = None,
 ) -> None:
-    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule), the Link close, the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame (`unclick`). `plane_starts` the records' lines at the interval's start, `held` every row's."""
+    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule in the carrier's unit, PM-S1), the Link close, the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame (`unclick`). `plane_starts` the records' lines at the interval's start, `held` every row's."""
     if direction == -1:
         assert frame is not None
         unclick(node, frame)
         return
     c = node.start_content
-    pace = readings.paces_of(node, c)[1]
     frozen = readings.frozen_of(node, c)
     factors = node.link_factors(None, frozen)
     gap0 = node.row(PLANE, gap=0)
@@ -339,10 +337,10 @@ def click(
     owns = []
     for rec, r in enumerate(node.records()):
         assert r.pair is not None
-        owns.append(node.share(plane_starts[rec], node.rule(r.pair, c, factors), pace, vacuum=True))
+        owns.append(node.share(plane_starts[rec], node.rule(r.pair, c, factors)))
     sh = owns[node.records().index(gap0)]
     born_nodes = births(
-        node, refuse(node, meet(node, gap0_start[0], sh, rules, frozen), owns), r_gap0, c, factors, pace
+        node, refuse(node, meet(node, gap0_start[0], sh, rules, frozen), owns), r_gap0, c, factors
     )
     bodies(node, plane_starts, owns, born_nodes, frozen, r_gap0)
 

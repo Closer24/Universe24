@@ -1,4 +1,4 @@
-"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name; the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
+"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube, regenerated under PM-S1 on 2026-10-25: the era of matter SHOWN on the hole seed, the bodies' credited Nodes receding) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name; the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ BASE = {
     "14 the horizon": "NOT REACHED",
 }
 SHOWN = {
-    "hole": {**BASE, "4 an era of matter": "NOT SHOWN"},
+    "hole": {**BASE, "4 an era of matter": "SHOWN"},
     "chiral": BASE,
     "bodies": {
         "18 the arrow of time": "SHOWN",
@@ -30,8 +30,8 @@ SHOWN = {
         "10 gravitational time dilation": "SHOWN in the reader's view",
         "2 the Links lengthening in the clicks": "SHOWN in the reader's view",
         "1 recurring bangs / 3 shortening then lengthening / 6 contraction (board, the reader's view)": "contraction SHOWN",
-        "9 collisions / 13 free fall": "SHOWN: two bodies' credited Nodes approached",
-        "8 families forming (whole view)": "SHOWN in part: every credit within the floor, tracks right 27 of 27",
+        "9 collisions / 13 free fall": "NOT SHOWN: the credited Nodes receding",
+        "8 families forming (whole view)": "SHOWN in part: every credit within the floor, tracks right 63 of 63",
         "16 uncertainty floor (one click)": "SHOWN as the law's floor",
         "the entropy of the clicks": "NOT READ",
     },

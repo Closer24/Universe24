@@ -91,6 +91,7 @@ class Interval:
         node.start_frames = self.frames
         self.cphi = paces.odd_rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
         self.x_now = self.at(self.carrier.lines[0])
+        node.start_x = self.x_now
         stress = stress_parts(
             [
                 ([self.at(line) for line in r.lines], r.pair[0], gram.gram(r.shape))

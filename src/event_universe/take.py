@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core import paces, rule3
+from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, wrap
 from event_universe.core.rule3 import half, lattice, mirrored, quotient, remainder
 from event_universe.links import cross
@@ -66,7 +66,7 @@ def read_number(
 def fall_of(
     node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, line: Line
 ) -> tuple[int | None, int]:
-    """The exact take at the Node: the gap-0 line's now moved toward its before by the least count of levels at which the Node's share falls by the walls; the fall f(s) an exact quadratic in s, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
+    """The exact take at the Node in the carrier's unit (PM-S1): the gap-0 line's now moved toward its before by the least count of levels at which the Node's share falls by the walls; the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
     now, before = int(line.now[at]), int(line.before[at])
     if now == before:
         return None, 0
@@ -75,19 +75,17 @@ def fall_of(
     reached = 0
     for port, reach in enumerate(r.reaches):
         reached += int(np.asarray(reach)[at]) * int(line.before[neighbour(node, at, port)])
-    pace = int(np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)[at])
-    weight = 2 * pace * pace * node.G * node.G + (1 if pace == 0 else 0)
+    pull = own * before + reached
+    x, weight = int(node.start_x[at]), 2 * node.gamma**3 * node.G * node.G
 
     def fall(s: int) -> int:
-        return int(
-            quotient(w * (now * now - (now + t * s) ** 2) - t * s * (own * before + reached), weight)
-        )
+        return int(quotient(x * (w * (now * now - (now + t * s) ** 2) - t * s * pull), weight))
 
     dist = abs(now - before)
     full = fall(dist)
     if full < walls:
         return None, full
-    for s in rule3.least_root(-w, -(2 * w * now + own * before + reached) * t, walls * weight, dist):
+    for s in rule3.least_root(-w * x, -(2 * w * now + pull) * t * x, walls * weight, dist):
         if s <= dist and fall(s) >= walls:
             return s, fall(s)
     for s in range(1, dist + 1):
@@ -151,16 +149,13 @@ def take_at(
     return levels, fall, now, before
 
 
-def lay_amplitude(
-    node: Node, s: int, at: tuple[int, ...], c: Any, factors: tuple[Any, ...], pace: Any
-) -> int:
-    """The lay of one quantum: the child's record laid at the Node with the least amplitude A at which its own share reads one quantum of its unit at the Node's paces, (2 D + SUM_j R_j) A^2 >= unit x 4 p^2 G^2 (the frame share's term of a lone record with now = before = A)."""
+def lay_amplitude(node: Node, s: int, at: tuple[int, ...], c: Any, factors: tuple[Any, ...]) -> int:
+    """The lay of one quantum in the carrier's unit (PM-S1): the child's record laid at the Node with the least amplitude A at which its own share reads one quantum of its unit, (2 D + SUM_j R_j) A^2 X >= unit x 4 Gamma^3 G^2 (the share's term of a lone record with now = before = A)."""
     r = node.rule_of(node.records()[s], c, factors)
     reaches = sum(int(np.asarray(x)[at]) for x in r.reaches)
     mass = 2 * int(np.asarray(r.wall)) - int(np.asarray(r.self_coefficient)[at]) - reaches
-    weight = 2 * mass + reaches
-    pc = int(np.asarray(pace, dtype=object)[at])
-    target = node.units[s] * 4 * pc * pc * node.G * node.G
+    weight = (2 * mass + reaches) * int(node.start_x[at])
+    target = node.units[s] * 4 * node.gamma**3 * node.G * node.G
     if weight <= 0:
         return node.A
     amplitude = rule3.largest_below(quotient(target, weight))

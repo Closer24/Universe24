@@ -41,6 +41,14 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_node.py::shares_of": (
+        11,
+        "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, PM_COMPARISON.md section 5: the tests under 15 s beside the sentence): the helper, the gap-0 line's share in the carrier's unit and by hand at the frame's and the vacuum's weights",
+    ),
+    "tests/test_the_node.py::test_every_count_is_read_in_the_carriers_unit_pm_s1": (
+        33,
+        "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, PM_COMPARISON.md section 5: the tests under 15 s beside the sentence): the identity Gamma^2 div p_i^2 = X div Gamma, the 3-cube hole's shares at 1 and at 20 against the frame's and the vacuum's, the chiral 5-cube at 60 by pm2's numbers",
+    ),
     "tests/test_the_quartet.py::toy_of": (
         9,
         "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the helper, the toy on the middle universe with the shape-8 row, one packet along a vector with the controls",

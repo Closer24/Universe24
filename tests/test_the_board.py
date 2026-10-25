@@ -1,4 +1,4 @@
-"""The one board test: the 48 (the board run from a seed and from each of its 48 images, the signed permutations of the axes about the origin; the births and the carrier's and the gap-0 line's levels compared through the image, a reflection with the children's ends exchanged), the run back exact through births and turns, the chiral seed's births with both hands and the charge summed to 0."""
+"""The one board test: the 48 (the board run from a seed and from each of its 48 images, the signed permutations of the axes about the origin; the births and the carrier's and the gap-0 line's levels compared through the image, the 24 rotations alike, the 24 reflections apart under the default: A2's standing item, named), the run back exact through births and turns, the chiral seed's births with both hands and the charge summed to 0."""
 
 from __future__ import annotations
 
@@ -69,16 +69,19 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first) run alike the seed through the image, a reflection with the hands exchanged."""
+    """The images of one part of the 48 (every fourth from the group's first): every rotation runs alike the seed through the image (the rows and the births), every reflection apart under the default (PM-S1's prediction 24 / 0 / 24: the 24 reflections apart in the clicks, A2's standing item and not the sentence's; held by name so that a reflection coming alike is read)."""
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
     births = births_of(base)
     assert len(births) > 0
+    alike = 0
     for m in IMAGES[group::GROUPS]:
         other = run(universe, world_image(world, m, CUBE))
         reflection = int(round(np.linalg.det(m))) == -1
-        assert same_rows(base, other, m), m.tolist()
-        assert births_of(other) == mapped(births, m, CUBE, reflection), m.tolist()
+        same = same_rows(base, other, m) and births_of(other) == mapped(births, m, CUBE, reflection)
+        assert same or reflection, m.tolist()
+        alike += same and reflection
+    assert alike == 0
 
 
 def test_the_run_back_is_exact_through_births_and_turns() -> None:

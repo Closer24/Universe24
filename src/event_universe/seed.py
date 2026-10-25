@@ -10,7 +10,7 @@ from event_universe import gram
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import quotient
-from event_universe.rows import PLANE, Line, Row, zeros
+from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -85,7 +85,7 @@ def rest_record(
 
 def packet_share(node: Node, row: Row, lines: list[Line], rule: Any) -> int:
     """A record's share at the vacuum's weight summed over the board."""
-    return int(sum(int(x) for x in node.share(lines, rule, vacuum=True).reshape(-1)))
+    return int(sum(int(x) for x in node.share(lines, rule).reshape(-1)))
 
 
 def fitted(node: Node, row: Row, envelope: Any, w0: int, target: int, vector: list[int]) -> int:
@@ -124,7 +124,7 @@ def lay_packet(
     named = None if vector is None else {"vector": [int(v) for v in vector], "sense": one_sense}
     vector = [1, 0] if vector is None else [int(v) for v in vector]
     envelope, w0 = envelope_of(node, at, h)
-    node.start_content = node.content()
+    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
     amplitude = fitted(node, row, envelope, w0, n * node.units[rec], vector)
     for sense in (-1, 1) if one_sense is None else (int(one_sense),):
         lines = rest_record(node, row, envelope, w0, amplitude, sense, vector)

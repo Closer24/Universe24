@@ -129,9 +129,8 @@ def term(shape: int, coefficient: Any, phi: list[Any], xs: list[Any]) -> list[An
     return found
 
 
-def share(node: Node, lines: list[Line], r: Any, pace: Any = None, vacuum: bool = False) -> Any:
-    """The conserved form's share of a record at the Node in the current's units over the weight, one division per line: for the line k, [w (n_k (G n)_k + b_k (G b)_k) - S n_k (G b)_k - n_k (G SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (G (n + n_j))_k, over 4 p^2 G^2 at the frame's weight or 4 Gamma^2 G^2 at the vacuum's (V-D); the plane's share line by line as the case G = I; at the row's unscaled rule."""
-    from event_universe.core import paces
+def share(node: Node, lines: list[Line], r: Any) -> Any:
+    """The conserved form's share of a record at the Node in the carrier's unit (PM-S1: every count of the Node read in the carrier's unit, the one weight for every read and every row alike), one division per line: for the line k, [w (n_k (G n)_k + b_k (G b)_k) - S n_k (G b)_k - n_k (G SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (G (n + n_j))_k, times X the carrier's level at the interval's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the plane's share line by line as the case G = I; at the row's unscaled rule."""
     from event_universe.core.rule3 import division_forward
 
     g = gram(len(lines))
@@ -158,12 +157,10 @@ def share(node: Node, lines: list[Line], r: Any, pace: Any = None, vacuum: bool 
             strict=True,
         )
     ]
-    pace = paces.link_pace_of(node.gamma, node.start_content) if pace is None else pace
-    sq = (node.gamma * node.gamma) if vacuum else pace * pace
-    wall = 4 * sq * node.G * node.G + (sq == 0)
+    wall = 4 * node.gamma * node.gamma * node.gamma * node.G * node.G
     found = zeros(node.shape)
     for o, s in zip(own, shared, strict=True):
-        found = found + np.asarray(division_forward(o + o - s, wall, 0)[0])
+        found = found + np.asarray(division_forward((o + o - s) * node.start_x, wall, 0)[0])
     return found
 
 
