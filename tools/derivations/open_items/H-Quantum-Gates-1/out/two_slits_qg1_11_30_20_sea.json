@@ -1,0 +1,462 @@
+{
+ "prediction": {
+  "wave h (den sin(pi/3))": 13131419147335911,
+  "wavelength (Links)": 3,
+  "group velocity (Links per interval, num/den)": [
+   1,
+   3
+  ],
+  "sources": [
+   [
+    3,
+    3,
+    5
+   ],
+   [
+    3,
+    7,
+    5
+   ]
+  ],
+  "far plane x": 8,
+  "midline row": 5,
+  "rows": {
+   "0": {
+    "s1": 41,
+    "s2": 34,
+    "half_reached": false,
+    "whole_reached": false
+   },
+   "1": {
+    "s1": 50,
+    "s2": 29,
+    "half_reached": true,
+    "whole_reached": false
+   },
+   "2": {
+    "s1": 50,
+    "s2": 26,
+    "half_reached": true,
+    "whole_reached": false
+   },
+   "3": {
+    "s1": 41,
+    "s2": 25,
+    "half_reached": false,
+    "whole_reached": false
+   },
+   "4": {
+    "s1": 34,
+    "s2": 26,
+    "half_reached": false,
+    "whole_reached": false
+   },
+   "5": {
+    "s1": 29,
+    "s2": 29,
+    "half_reached": false,
+    "whole_reached": false
+   },
+   "6": {
+    "s1": 34,
+    "s2": 26,
+    "half_reached": false,
+    "whole_reached": false
+   },
+   "7": {
+    "s1": 41,
+    "s2": 25,
+    "half_reached": false,
+    "whole_reached": false
+   },
+   "8": {
+    "s1": 50,
+    "s2": 26,
+    "half_reached": true,
+    "whole_reached": false
+   },
+   "9": {
+    "s1": 50,
+    "s2": 29,
+    "half_reached": true,
+    "whole_reached": false
+   },
+   "10": {
+    "s1": 41,
+    "s2": 34,
+    "half_reached": false,
+    "whole_reached": false
+   }
+  },
+  "expected": "the interference term summed over z and the intervals is largest at the midline row and at or below 0 at the first rows where the paths differ by half a wavelength; the births' count per row for AB above A + B at the midline and at or below A + B at those rows; the superposition now_AB - now_A - now_B within a few levels per Node"
+ },
+ "results": {
+  "empty": {
+   "seconds": 3,
+   "counts": {
+    "births": 0,
+    "taken": 0,
+    "booked": 0,
+    "body_clicks": 0,
+    "laid_back": 0,
+    "refused_stop": 0,
+    "refused_origin": 0,
+    "refused_lay": 0,
+    "refused_orientation": 0,
+    "refused_twist": 0,
+    "refused_sense": 0,
+    "turns": 0,
+    "met": 0,
+    "laid": 0,
+    "laid_nodes": 0
+   },
+   "state": "731e9824dac527fd9bd71e3edc85b0cd07267b1ecb1c4f1558f2729ddf4614b8",
+   "births_on_far_plane_by_row": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "met_on_far_plane_by_row": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "births_total": 0,
+   "turns": 0,
+   "births_by_x_plane": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "gap-0 meetings by x plane": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "met_total": 0
+  },
+  "A": {
+   "seconds": 18,
+   "counts": {
+    "births": 91,
+    "taken": 651363783706903487768808,
+    "booked": 609168238648166326391807,
+    "body_clicks": 4889,
+    "laid_back": 0,
+    "refused_stop": 2117,
+    "refused_origin": 0,
+    "refused_lay": 17434,
+    "refused_orientation": 4072,
+    "refused_twist": 5871,
+    "refused_sense": 31272,
+    "turns": 3924,
+    "met": 58812,
+    "laid": 0,
+    "laid_nodes": 0
+   },
+   "state": "f46336d42601a7291079d59b10a0eb9ff802eeb6416a5b958f3662599b97a865",
+   "births_on_far_plane_by_row": [
+    0,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "met_on_far_plane_by_row": [
+    7,
+    8,
+    14,
+    13,
+    12,
+    8,
+    7,
+    0,
+    2,
+    0,
+    0
+   ],
+   "births_total": 91,
+   "turns": 3924,
+   "births_by_x_plane": [
+    4,
+    8,
+    16,
+    7,
+    16,
+    6,
+    12,
+    4,
+    4,
+    6,
+    8
+   ],
+   "gap-0 meetings by x plane": [
+    379,
+    606,
+    1174,
+    1129,
+    1309,
+    1035,
+    574,
+    106,
+    71,
+    75,
+    104
+   ],
+   "met_total": 6562
+  },
+  "B": {
+   "seconds": 18,
+   "counts": {
+    "births": 91,
+    "taken": 651363783706903487768808,
+    "booked": 609168238648166326391807,
+    "body_clicks": 4889,
+    "laid_back": 0,
+    "refused_stop": 2117,
+    "refused_origin": 0,
+    "refused_lay": 17434,
+    "refused_orientation": 4072,
+    "refused_twist": 5871,
+    "refused_sense": 31272,
+    "turns": 3924,
+    "met": 58812,
+    "laid": 0,
+    "laid_nodes": 0
+   },
+   "state": "12b47592918bf1c7ef410ce81a843a8eee91dec1dda432aa750ca3d7c58878a2",
+   "births_on_far_plane_by_row": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0
+   ],
+   "met_on_far_plane_by_row": [
+    0,
+    2,
+    0,
+    0,
+    7,
+    8,
+    14,
+    13,
+    12,
+    8,
+    7
+   ],
+   "births_total": 91,
+   "turns": 3924,
+   "births_by_x_plane": [
+    4,
+    8,
+    16,
+    7,
+    16,
+    6,
+    12,
+    4,
+    4,
+    6,
+    8
+   ],
+   "gap-0 meetings by x plane": [
+    379,
+    606,
+    1174,
+    1129,
+    1309,
+    1035,
+    574,
+    106,
+    71,
+    75,
+    104
+   ],
+   "met_total": 6562
+  },
+  "AB": {
+   "seconds": 30,
+   "counts": {
+    "births": 90,
+    "taken": 434020175701874566405225,
+    "booked": 415034878641786455286682,
+    "body_clicks": 7613,
+    "laid_back": 1,
+    "refused_stop": 3301,
+    "refused_origin": 0,
+    "refused_lay": 37160,
+    "refused_orientation": 2435,
+    "refused_twist": 2238,
+    "refused_sense": 39885,
+    "turns": 4409,
+    "met": 81884,
+    "laid": 14,
+    "laid_nodes": 14
+   },
+   "state": "18198e8c4d11dcd2395bc8950052dff25119f20bd6568de5eb74c2dc28a0defd",
+   "births_on_far_plane_by_row": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    1,
+    0,
+    0,
+    2,
+    1
+   ],
+   "met_on_far_plane_by_row": [
+    9,
+    8,
+    8,
+    18,
+    21,
+    18,
+    21,
+    18,
+    8,
+    9,
+    11
+   ],
+   "births_total": 90,
+   "turns": 4409,
+   "births_by_x_plane": [
+    2,
+    7,
+    9,
+    6,
+    30,
+    6,
+    9,
+    7,
+    7,
+    4,
+    3
+   ],
+   "gap-0 meetings by x plane": [
+    281,
+    732,
+    1052,
+    1508,
+    1372,
+    1178,
+    622,
+    224,
+    149,
+    194,
+    147
+   ],
+   "met_total": 7459
+  }
+ },
+ "summary": {
+  "superposition: max |now_AB - now_A - now_B| (levels)": 2345,
+  "superposition: mean deviation in thousandths of a level": 745626,
+  "largest |level| on the far plane": 2656,
+  "interference term by row (sum over z and intervals of now_AB^2 - now_A^2 - now_B^2)": [
+   -337034972,
+   -345282039,
+   -353537690,
+   -347524479,
+   -348252841,
+   -351501523,
+   -348149858,
+   -347085387,
+   -352810579,
+   -344598214,
+   -336696665
+  ],
+  "single sources' squares by row": [
+   920868494,
+   936813114,
+   945151423,
+   937987455,
+   945209793,
+   946800242,
+   945126617,
+   937782593,
+   944780473,
+   936632401,
+   920700345
+  ],
+  "both sources' squares by row": [
+   583833522,
+   591531075,
+   591613733,
+   590462976,
+   596956952,
+   595298719,
+   596976759,
+   590697206,
+   591969894,
+   592034187,
+   584003680
+  ],
+  "visibility per row in thousandths: (both - singles) / singles": [
+   -366,
+   -369,
+   -375,
+   -371,
+   -369,
+   -372,
+   -369,
+   -371,
+   -374,
+   -368,
+   -366
+  ],
+  "predicted first half-wavelength rows": [
+   2,
+   8
+  ],
+  "board verdict (midline the largest, the half-wavelength rows at or below 0)": "NOT SHOWN",
+  "clicks verdict (births AB above A + B at the midline, at or below at the half rows)": "NOT SHOWN"
+ }
+}

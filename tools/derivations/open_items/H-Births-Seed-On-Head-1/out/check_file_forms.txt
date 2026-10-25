@@ -1,0 +1,11 @@
+wave_cycle REFUSED by the loader: ValueError a lay of no form of the law: 'wave'
+sea_gap0_quanta REFUSED by the loader: ValueError the fourth form lays a plane with a gap at a count: the plane at the gap 0 alone is the drift
+at_cycle_keys REFUSED by the loader: ValueError a field of no form of the law in the lay 'at': cz, p1
+sea_gap0_drift LAID
+   light share per Node: min 1624897218876760942407 max 1624897218876760942407 distinct 1 unit 1637588529984138012000 | Nodes at or above 5 units: 0 of 64 | sign quadrants (re, im) distinct: [(1, 0)] | levels at the origin: [189, 0] [0, 0]
+at_gap0_wave_h0_w2 REFUSED by the loader: ValueError a packet of the gap-0 row at the wave 0 has no rotation: the drift is its lay
+at_gap0_wave_h10722142120563800_w2 LAID
+   light share per Node: min 0 max 3090978676058578722428 distinct 12 unit 1637588529984138012000 | Nodes at or above 5 units: 0 of 64 | sign quadrants (re, im) distinct: [(0, 0), (1, 0)] | levels at the origin: [0, 0] [34, 0]
+at_gap0_wave_h15162856759112389_w2 LAID
+   light share per Node: min 0 max 4002690927270488448220 distinct 10 unit 1637588529984138012000 | Nodes at or above 5 units: 0 of 64 | sign quadrants (re, im) distinct: [(-1, 0), (0, 0), (1, 0)] | levels at the origin: [-42, 0] [-12, 0]
+at_gap0_wave_top3 REFUSED by the loader: ValueError a top is an odd count of Nodes about the centre that fits the board with its edges
