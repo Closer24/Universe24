@@ -1,0 +1,14 @@
+patterns 131072 with F and twist together on every Link 0 by eta {(0, 0, 0): 0, (0, 0, 1): 0, (0, 1, 0): 0, (0, 1, 1): 0, (1, 0, 0): 0, (1, 0, 1): 0, (1, 1, 0): 0, (1, 1, 1): 0}
+patterns by the count of Links with F and twist together [(144, 1152), (128, 2160), (120, 96), (112, 1440), (104, 96), (96, 1600), (88, 1536), (80, 288), (72, 960), (64, 4800), (48, 9568), (32, 19488)]
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101013 eta 111 symmetries (8, 8, False)
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101033 eta 111 symmetries (8, 8, False)
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101103 eta 111 symmetries (8, 8, False)
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101121 eta 111 symmetries (8, 8, False)
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101123 eta 111 symmetries (8, 8, False)
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101211 eta 111 symmetries (8, 8, False)
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101213 eta 111 symmetries (8, 8, False)
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101231 eta 111 symmetries (8, 8, False)
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101233 eta 111 symmetries (8, 8, False)
+both 144 F_links 168 twist_links 160 nbr_sums 0 cell 01101303 eta 111 symmetries (8, 8, False)
+product pattern chi(x)chi(y)chi(z): both, F, twist, nbr sums (0, 192, 0, 0) symmetries (16, 16, False)
+the S1/S2 pattern 00111320 eta 111: both, F, twist, nbr sums (144, 144, 192, 0)
