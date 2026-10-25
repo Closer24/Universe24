@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The hands SR1 and SR2 through the Boss (2026-10-25, 12:3x UTC): SR-S1 to SR-S4 (the spinor row as four planes on the orbit lattice, the double cover, the coupling term by shape, the exclusion at the lay) under The three shapes in docs/ALGEBRA.md as under derivation, the gates 41 to 43 of docs/UNIVERSE24.md updated with the hands' copies' numbers, docs/HIGHLIGHTS.md the line. No engine change.
 - The owner's word of 2026-10-25, 12:2x UTC, through the Boss (Universe24's results seen on the page, the passage through the Links): the page's line in docs/ENGINE.md gains the record's Link line and the drawn flow; docs/HIGHLIGHTS.md the decision. No engine change.
 - The owner's word of 2026-10-25, 12:2x UTC, through the Boss (the walls are algebra, not code): the walls' and units' derivations named under The constants of the universe in docs/ALGEBRA.md, and docs/ENGINE.md's list gains the row of the walls as named primitives with no literal in the Node; docs/HIGHLIGHTS.md the decision. No engine change.
 - The owner's word of 2026-10-25, 12:2x UTC, through the Boss (the Scribe approves none of these in the new code): the five refusals on every push of the new code in docs/ENGINE.md's head and docs/HIGHLIGHTS.md. No engine change.
