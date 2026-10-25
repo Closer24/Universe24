@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch) up to the record's largest, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and at their Node with a leader from the Node, a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch) up to the record's largest, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and at their Node with a leader from the Node, a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ html, body { margin: 0; background: var(--bg); color: var(--fg); font: 14px var(
 #head { padding: 8px 16px 4px; color: var(--muted); font-family: var(--mono); font-size: 11px; white-space: pre-wrap; }
 #stage { position: relative; }
 #board { display: block; margin: 0 auto; background: var(--board); border: 1px solid var(--line); }
-#bar { position: relative; height: 44px; margin: 8px 16px 4px; background: var(--panel); border: 1px solid var(--line); cursor: pointer; overflow: visible; }
+#bar { position: relative; height: 70px; margin: 8px 16px 4px; background: var(--panel); border: 1px solid var(--line); cursor: pointer; overflow: visible; }
 #bar .tick { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--label); }
 #bar .name { position: absolute; font-size: 10px; color: var(--label); font-family: var(--mono); white-space: nowrap; padding-left: 4px; pointer-events: none; }
 #bar .bang { position: absolute; bottom: 1px; font-size: 10px; color: var(--muted); font-family: var(--mono); }
@@ -157,11 +157,12 @@ function draw() {
   where.textContent = "interval " + line.i + " of " + N + (D.stride > 1 ? " (1 of every " + D.stride + " intervals kept)" : "");
 }
 function tick() { if (playing) { t = t % n + 1; draw(); } setTimeout(tick, 1000 / speed); }
-let named = 0;
+const rowEnds = [-100, -100, -100, -100, -100, -100];
 for (const e of D.events) if (e.i !== null) {
-  const at = (100 * (e.i - 1) / Math.max(N - 1, 1)) + "%";
+  const pct = 100 * (e.i - 1) / Math.max(N - 1, 1), at = pct + "%";
   const d = document.createElement("div"); d.className = "tick"; d.style.left = at; d.title = e.label + ": " + e.numbers; bar.appendChild(d);
-  const m = document.createElement("div"); m.className = "name"; m.style.top = (2 + 11 * (named++ % 3)) + "px"; m.textContent = e.label;
+  let row = rowEnds.findIndex(end => pct - end > 11); if (row < 0) row = rowEnds.indexOf(Math.min(...rowEnds)); rowEnds[row] = pct;
+  const m = document.createElement("div"); m.className = "name"; m.style.top = (2 + 11 * row) + "px"; m.textContent = e.label;
   if (4 * (e.i - 1) > 3 * Math.max(N - 1, 1)) { m.style.right = "calc(100% - " + at + ")"; m.style.paddingRight = "4px"; } else m.style.left = at;
   bar.appendChild(m);
 }
@@ -184,8 +185,17 @@ def header_of(record: dict[str, Any]) -> str:
         + (f"pair {r['pair'][0]}/{r['pair'][1]}" if r.get("pair") is not None else f"wall {r['wall']}")
         for r in universe["rows"]
     )
-    seed = "; ".join(json.dumps(lay) for lay in world.get("seed", []))
+    seed = "; ".join(lays_of(world.get("seed", [])))
     return f"universe {world['universe']}: {integers}\nrows: {rows}\nworld: shape {world['shape']}, {world['intervals']} intervals, seed {seed}"
+
+
+def lays_of(seed: list[dict[str, Any]]) -> list[str]:
+    """The seed's lays as they are, the lays alike in everything but their centre folded into one with their count, so a seed laid at every Node reads as one line."""
+    found: dict[str, int] = {}
+    for lay in seed:
+        key = json.dumps({k: v for k, v in lay.items() if k != "centre"})
+        found[key] = found.get(key, 0) + 1
+    return [key if n == 1 else f"{key} at {n} centres" for key, n in found.items()]
 
 
 def word(n: int) -> str:
