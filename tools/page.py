@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch) up to the record's largest, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and at their Node with a leader from the Node, a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch) up to the record's largest, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -28,8 +28,8 @@ html, body { margin: 0; background: var(--bg); color: var(--fg); font: 14px var(
 #row { display: flex; gap: 12px; align-items: center; margin: 0 16px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
 button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 3px 10px; font: inherit; cursor: pointer; }
 #labels { position: absolute; left: 0; top: 0; pointer-events: none; }
-.label { position: absolute; color: var(--label); font-family: var(--mono); font-size: 13px; text-shadow: 0 0 4px #000, 0 0 4px #000; white-space: nowrap; }
-.label small { display: block; color: var(--muted); font-size: 11px; }
+.label { position: absolute; color: var(--label); font-family: var(--mono); font-size: 15px; font-weight: 600; white-space: nowrap; background: rgba(7, 8, 10, 0.82); border: 1px solid var(--line); border-left: 3px solid var(--label); border-radius: 3px; padding: 3px 8px 4px 8px; max-width: 420px; overflow: hidden; text-overflow: ellipsis; }
+.label small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
 a { color: var(--focus); }
 """
 
@@ -83,6 +83,34 @@ function neighbour(i, axis) {
   q[axis] += 1;
   return q[0] * c * c + q[1] * c + q[2];
 }
+function glyph(gate, x, y) {
+  const g = parseInt(gate), r = 11, L = "#fde68a", M = "#9a9ea8";
+  ctx.save(); ctx.translate(x, y); ctx.lineWidth = 2; ctx.strokeStyle = L; ctx.fillStyle = L; ctx.lineCap = "round";
+  const dot = (cx, cy, rr, fill) => { ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 2 * Math.PI); if (fill) ctx.fill(); else ctx.stroke(); };
+  const arrow = (x1, y1, x2, y2) => { const a = Math.atan2(y2 - y1, x2 - x1); ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - 6 * Math.cos(a - 0.5), y2 - 6 * Math.sin(a - 0.5)); ctx.lineTo(x2 - 6 * Math.cos(a + 0.5), y2 - 6 * Math.sin(a + 0.5)); ctx.closePath(); ctx.fill(); };
+  const text = (t, cx, cy) => { ctx.font = "bold 11px monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(t, cx, cy); };
+  if (g === 1 || g === 46) { for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; ctx.beginPath(); ctx.moveTo(4 * Math.cos(a), 4 * Math.sin(a)); ctx.lineTo(r * Math.cos(a), r * Math.sin(a)); ctx.stroke(); } }
+  else if (g === 17 || g === 21) { dot(-7, 0, 6, false); dot(7, 0, 6, false); text("+", -7, 0); text("-", 7, 0); }
+  else if (g === 8) { dot(0, 0, 3, true); dot(0, 0, 7, false); dot(0, 0, 11, false); }
+  else if (g === 9 || g === 13 || g === 22) { dot(-9, 0, 4, true); dot(9, 0, 4, true); arrow(-4, -8, 4, -8); arrow(4, 8, -4, 8); }
+  else if (g === 14 || g === 34) { ctx.fillStyle = "#07080a"; dot(0, 0, 8, true); ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 3; dot(0, 0, 9, false); }
+  else if (g === 4) { dot(-7, 4, 4, true); dot(7, 4, 4, true); dot(0, -6, 4, true); }
+  else if (g === 10 || g === 30) { dot(0, 0, r, false); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -7); ctx.moveTo(0, 0); ctx.lineTo(5, 3); ctx.stroke(); }
+  else if (g === 2 || g === 5) { arrow(-2, 0, r + 2, 0); arrow(2, 0, -r - 2, 0); if (g === 5) { ctx.beginPath(); ctx.moveTo(-6, -7); ctx.lineTo(6, -7); ctx.stroke(); } }
+  else if (g === 3 || g === 6) { arrow(-r - 2, 0, -3, 0); arrow(r + 2, 0, 3, 0); }
+  else if (g === 7) { ctx.beginPath(); for (let k = -12; k <= 2; k++) ctx.lineTo(k, 4 * Math.sin(k * 0.9)); ctx.stroke(); dot(8, 0, 4, true); }
+  else if (g === 18) { ctx.beginPath(); ctx.arc(0, 0, 8, -0.5 * Math.PI, 1.1 * Math.PI); ctx.stroke(); arrow(-3, 7, -9, 3); }
+  else if (g === 16) { dot(0, -4, 4, true); ctx.beginPath(); ctx.moveTo(-r, 6); ctx.lineTo(r, 6); ctx.stroke(); }
+  else if (g === 19 || g === 26) { dot(-7, 2, 3, true); dot(4, 0, 6, true); }
+  else if (g === 25) { ctx.beginPath(); ctx.moveTo(-10, 8); ctx.lineTo(-4, 8); ctx.lineTo(-4, 2); ctx.lineTo(2, 2); ctx.lineTo(2, -4); ctx.lineTo(8, -4); ctx.lineTo(8, -10); ctx.stroke(); }
+  else if (g === 27) { dot(-7, 5, 3, true); dot(7, 5, 3, true); dot(0, -6, 3, true); ctx.beginPath(); ctx.moveTo(-7, 5); ctx.lineTo(0, -6); ctx.lineTo(7, 5); ctx.closePath(); ctx.stroke(); }
+  else if (g === 37) { dot(-9, 0, 3, true); dot(9, 0, 3, true); arrow(-5, 0, 5, 0); }
+  else if (g === 43) { dot(0, 0, 6, false); ctx.beginPath(); ctx.moveTo(-9, -9); ctx.lineTo(9, 9); ctx.moveTo(9, -9); ctx.lineTo(-9, 9); ctx.stroke(); }
+  else if (g === 45) { ctx.beginPath(); ctx.moveTo(-9, -8); ctx.lineTo(-9, 4); ctx.quadraticCurveTo(0, 12, 9, 4); ctx.lineTo(9, -8); ctx.stroke(); dot(0, 3, 3, true); }
+  else if (g === 49) { ctx.beginPath(); ctx.moveTo(-10, -8); ctx.quadraticCurveTo(-6, 8, 10, 8); ctx.stroke(); }
+  else { ctx.beginPath(); ctx.moveTo(0, -r); ctx.lineTo(r, 0); ctx.lineTo(0, r); ctx.lineTo(-r, 0); ctx.closePath(); ctx.stroke(); }
+  ctx.restore();
+}
 function seek(i) { let k = 0; while (k + 1 < n && lines[k].i < i) k++; return k + 1; }
 function draw() {
   const line = lines[t - 1], before = lines[Math.max(t - 2, 0)], step = Math.max(1, line.i - before.i);
@@ -132,7 +160,10 @@ function draw() {
   labels.innerHTML = "";
   let free = 0;
   const placed = [];
-  function settle(x, y) { for (const q of placed) if (Math.abs(q[0] - x) < 220 && Math.abs(q[1] - y) < 36) return settle(x, q[1] + 36); placed.push([x, y]); return y; }
+  function settle(x, y) {
+    for (let moved = true; moved;) { moved = false; for (const q of placed) if (Math.abs(q[0] - x) < 220 && Math.abs(q[1] - y) < 42 && q[1] + 42 > y) { y = q[1] + 42; moved = true; } }
+    placed.push([x, y]); return y;
+  }
   for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) {
     const div = document.createElement("div"); div.className = "label"; div.style.fontSize = "20px";
     div.innerHTML = "Big Bang<small>the board at its zero and rising, interval " + b + "</small>";
@@ -147,10 +178,11 @@ function draw() {
       const s = spots[node[0] * c * c + node[1] * c + node[2]];
       ctx.strokeStyle = "#fde68a"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(s[0] + 26, s[1] - 26); ctx.stroke();
       ctx.fillStyle = "#fde68a"; ctx.beginPath(); ctx.arc(s[0], s[1], 4, 0, 2 * Math.PI); ctx.fill();
-      const y = settle(s[0] + 28, s[1] - 40);
-      ctx.beginPath(); ctx.moveTo(s[0] + 26, s[1] - 26); ctx.lineTo(s[0] + 28, y + 14); ctx.stroke();
-      div.style.left = (canvas.offsetLeft + s[0] + 28) + "px"; div.style.top = (canvas.offsetTop + y) + "px";
-    } else { div.style.left = (canvas.offsetLeft + canvas.width / 2 - 80) + "px"; div.style.top = (canvas.offsetTop + canvas.height - 44 - 34 * free++) + "px"; }
+      const y = settle(s[0] + 28, s[1] - 44);
+      ctx.beginPath(); ctx.moveTo(s[0] + 26, s[1] - 26); ctx.lineTo(s[0] + 28, y + 18); ctx.stroke();
+      glyph(e.gate, s[0] + 44, y + 18);
+      div.style.left = (canvas.offsetLeft + s[0] + 60) + "px"; div.style.top = (canvas.offsetTop + y) + "px";
+    } else { const fy = canvas.height - 48 - 40 * free++; glyph(e.gate, canvas.width / 2 - 96, fy + 18); div.style.left = (canvas.offsetLeft + canvas.width / 2 - 80) + "px"; div.style.top = (canvas.offsetTop + fy) + "px"; }
     labels.appendChild(div);
   }
   cursor.style.left = (100 * (line.i - 1) / Math.max(N - 1, 1)) + "%";
@@ -161,7 +193,7 @@ const rowEnds = [-100, -100, -100, -100, -100, -100];
 for (const e of D.events) if (e.i !== null) {
   const pct = 100 * (e.i - 1) / Math.max(N - 1, 1), at = pct + "%";
   const d = document.createElement("div"); d.className = "tick"; d.style.left = at; d.title = e.label + ": " + e.numbers; bar.appendChild(d);
-  let row = rowEnds.findIndex(end => pct - end > 11); if (row < 0) row = rowEnds.indexOf(Math.min(...rowEnds)); rowEnds[row] = pct;
+  let row = rowEnds.findIndex(end => pct - end > 11); if (row < 0) continue; rowEnds[row] = pct;
   const m = document.createElement("div"); m.className = "name"; m.style.top = (2 + 11 * row) + "px"; m.textContent = e.label;
   if (4 * (e.i - 1) > 3 * Math.max(N - 1, 1)) { m.style.right = "calc(100% - " + at + ")"; m.style.paddingRight = "4px"; } else m.style.left = at;
   bar.appendChild(m);
