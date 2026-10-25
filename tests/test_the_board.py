@@ -13,7 +13,7 @@ from event_universe import gates as table
 from event_universe import run as writer
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE
-from tests.laws import node_of, run_back_exact, world_of
+from tests.laws import node_of, refused, run_back_exact, world_of
 
 CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 0, 0, 0)  # rotations alike per part (MS-S1)
 IMAGES = [
@@ -168,3 +168,63 @@ def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() 
     assert bang["verdict"].startswith("SHOWN: 2 exact returns")
     assert out["46 the bangs recurring with the same gates"]["verdict"].startswith("NOT SHOWN")
     assert found["run_back"] == {"intervals": 10, "exact": 10} and found["counts"]["births"] == "0"
+
+
+def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
+    """MV-S1 to MV-S3 (the Boss's ledger item 7, MV_COMPARISON.md's section for David): the heavy row's pair of 3 quanta laid under the sea at the centre of the 9-cube with the wave number h = den div 2 along x (k = pi / 3 exactly): W 0 at every Node of every lay, the share centroid's step at each of the first four closes (the paces still the vacuum's, before the sea deepens the board) within 40 milli-Links per interval of (1000 P) div (2 E) by cross multiplication (P_x = 2 num SUM_i (now_(i+x) before_i - now_i before_(i+x)) over the two lines, E the share summed), a top of 3 Nodes above the width-2 value, wave 0 hash-equal to no wave, the refusals by name, the run back exact through 10."""
+    universe, world = world_of("world_packet.json")
+    den, milli = int(universe["integers"]["den"]), 1000
+    packet = {"lay": "at", "row": 2, "centre": [4, 4, 4], "width": 2, "quanta": 3}
+    moving = dict(packet, wave=[den // 2, 0, 0])
+
+    def ints(a: Any) -> list[int]:
+        return [int(x) for x in a.reshape(-1)]
+
+    def laid(lay: dict[str, Any]) -> tuple[Node, int]:
+        node = Node(universe, dict(world, seed=[{"lay": "sea", "row": 0}, lay]))
+        row = node.by_index[2]
+        re, im = row.lines
+        assert row.pair is not None and not any(ints(re.now * im.before - im.now * re.before))
+        energy = sum(
+            ints(node.share(row.lines, node.rule(row.pair, node.content(), node.link_factors())))
+        )
+        momentum = sum(
+            sum(
+                ints(
+                    np.roll(line.now, -1, axis=0) * line.before
+                    - line.now * np.roll(line.before, -1, axis=0)
+                )
+            )
+            for line in row.lines
+        )
+        return node, milli * 2 * row.pair[0] * momentum // (2 * energy)
+
+    def centroid(node: Node) -> tuple[int, int]:
+        row = node.by_index[2]
+        assert row.pair is not None
+        share = node.share(row.lines, node.rule(row.pair, node.content(), node.link_factors()))
+        return sum(ints(share * np.indices(node.shape)[0])), sum(ints(share))
+
+    node, law = laid(moving)
+    assert laid(dict(moving, top=3))[1] > law > 0
+    kept = copy.deepcopy(node)
+    before = centroid(node)
+    for _ in range(4):
+        node.step()
+        after = centroid(node)
+        step, scale = milli * (after[0] * before[1] - before[0] * after[1]), after[1] * before[1]
+        assert abs(step - law * scale) <= 40 * scale, (law, step // scale)
+        before = after
+    assert node.counts["births"] == 0 and run_back_exact(kept, 10) == 10
+    rest, zero = laid(packet)[0], laid(dict(packet, wave=[0, 0, 0]))[0]
+    for _ in range(2):
+        assert rest.state_hash() == zero.state_hash()
+        rest.step()
+        zero.step()
+    for bad, match in (
+        (dict(moving, wave=[den + 1, 0, 0]), "beyond the band's edge"),
+        (dict(moving, row=0, wave=[0, 0, 0]), "a massless packet at the wave 0"),
+        (dict(moving, top=9), "a top is an odd count"),
+        (dict(moving, interval=3), "a field of no form"),
+    ):
+        refused(match, Node, universe, dict(world, seed=[bad]))

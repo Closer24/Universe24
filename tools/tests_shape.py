@@ -68,6 +68,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         17,
         "BB-S1 and MA-S1 (2026-10-25, the Boss's 6400540638 and 6400767119 (2), BB_COMPARISON.md section 4: gate 1 from the Node lines, the test under 15 s): the sea on the 3-cube to 240, the exact returns at 115 and 230, the whole board turning at 58 and 173, the bangs numbered, no birth between",
     ),
+    "tests/test_the_board.py::test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv": (
+        58,
+        "MV-S1 to MV-S3 (2026-10-25, the Boss's ledger item 7, MV_COMPARISON.md section for David: the test under 15 s): the heavy row's pair of 3 quanta laid with a wave number under the sea on the 9-cube, "
+        "W 0 at every Node, the share centroid's step at each of the first four closes against (1000 P) div (2 E) within 40 milli by cross multiplication, the top's value above, wave 0 hash-equal to no wave, the four refusals by name, the run back exact through 10",
+    ),
     "tests/test_the_node.py::shares_of": (
         11,
         "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, PM_COMPARISON.md section 5: the tests under 15 s beside the sentence): the helper, the gap-0 line's share in the carrier's unit and by hand at the frame's and the vacuum's weights",

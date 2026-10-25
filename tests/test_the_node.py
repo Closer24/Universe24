@@ -103,8 +103,7 @@ def bumped(node: Node) -> Node:
 
 
 def sea_only(name: str) -> Node:
-    universe, world = world_of(name)
-    return Node(universe, dict(world, seed=[lay for lay in world["seed"] if lay.get("lay") == "sea"]))
+    return node_of(name, seed=[x for x in world_of(name)[1]["seed"] if x.get("lay") == "sea"])
 
 
 def test_the_turn_is_the_pre_state_exchanged_and_complemented_and_runs_back_exact() -> None:
