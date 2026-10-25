@@ -142,8 +142,7 @@ class Node:
 
     def rule(self, pair: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
         """Rule3's integers of a pair at the Node's paces from the content."""
-        clock = paces.clock_of(self.gamma, c)
-        pace = paces.link_pace_of(self.gamma, c)
+        clock, pace = readings.paces_of(self, c)
         return rule3.rule_integers(pair[0], pair[1], self.gamma, clock, pace, factors, self.G)
 
     def rule_of(self, r: Row, c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
@@ -342,13 +341,15 @@ class Node:
         """One interval of the Node's program in the direction (interval.run)."""
         interval.run(self, direction)
 
-    def click(self, plane_starts: list[list[Line]], held: list[list[Line]]) -> None:
-        """The close (close.click), the Node's fourth act."""
-        close.click(self, plane_starts, held)
-
-    def unclick(self, frame: dict[str, Any]) -> None:
-        """The close undone from the log (close.unclick)."""
-        close.unclick(self, frame)
+    def click(
+        self,
+        plane_starts: list[list[Line]],
+        held: list[list[Line]],
+        direction: int = 1,
+        frame: dict[str, Any] | None = None,
+    ) -> None:
+        """The close (close.click), the Node's fourth act, in the direction: backward the close undone from the log's frame."""
+        close.click(self, plane_starts, held, direction, frame)
 
     def lay(self, rec: int, where: Any, levels: tuple[Any, Any, Any, Any], sign: int = 1) -> None:
         """The one lay act (take.lay)."""

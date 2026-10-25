@@ -36,7 +36,7 @@ class Interval:
             self.kept: list[list[Line]] | None = None
         else:
             frame = node.stack.pop()
-            node.unclick(frame)
+            node.click([], [], -1, frame)
             self.top = frame["turned"]
         self.held = [[line.copy() for line in row] for row in node.rows()]
         if direction == -1:
@@ -72,7 +72,7 @@ class Interval:
         node = self.node
         self.c = np.asarray(volume.level_of(node.gamma, self.at(self.carrier.lines[0])), dtype=object)
         node.start_content = self.c
-        self.p0 = paces.clock_of(node.gamma, self.c)
+        self.p0, self.pi = readings.paces_of(node, self.c)
         node.proper = node.proper + self.direction * self.p0
         self.factors = node.link_factors([self.at(line) for line in self.carrier.lines[1 : 1 + AXES]])
         node.start_factors = self.factors

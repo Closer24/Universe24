@@ -97,10 +97,16 @@ class Toy(Node):
         wall = values  # the lattice's values, the wall over its step
         return min(rem, wall - rem), wall // 2 + 1
 
-    def click(self, plane_starts: list[list[Line]], held: list[list[Line]]) -> None:
-        """The engine's close, then the detectors' reading."""
-        super().click(plane_starts, held)
-        if not self.detectors:
+    def click(
+        self,
+        plane_starts: list[list[Line]],
+        held: list[list[Line]],
+        direction: int = 1,
+        frame: dict[str, Any] | None = None,
+    ) -> None:
+        """The engine's close, then the detectors' reading (forward alone)."""
+        super().click(plane_starts, held, direction, frame)
+        if not self.detectors or direction == -1:
             return
         c = self.start_content
         gap0 = self.row(PLANE, gap=0)
@@ -144,7 +150,7 @@ class Toy(Node):
             kept = None
         else:
             frame = self.stack.pop()
-            self.unclick(frame)
+            self.click([], [], -1, frame)
             top = frame["turned"]
         held = [[line.copy() for line in row] for row in self.rows()]
         if direction == -1:

@@ -17,6 +17,11 @@ if TYPE_CHECKING:
     from event_universe.node import Node
 
 
+def paces_of(node: Node, content: Any) -> tuple[Any, Any]:
+    """The Node's two paces from its content, the clock p_0 and the Link's pace p_i (X2: paces(content)), one reading."""
+    return paces.clock_of(node.gamma, content), paces.link_pace_of(node.gamma, content)
+
+
 def content(node: Node) -> Any:
     """The content at every Node, the level of the carrier's time line."""
     return np.asarray(volume.level_of(node.gamma, node.row(CARRIER).lines[0].now), dtype=object)
