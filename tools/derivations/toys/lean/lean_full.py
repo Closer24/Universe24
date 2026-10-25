@@ -422,7 +422,7 @@ class Lean:
                 self.counts['births'] += 1; self.closes[at] += 1
                 self.log.append({'event': 'birth', 'i': self.interval, 'node': list(at), 'line_pair': s_, 'senses': [-1, 1], 'minus': list(minus), 'plus': list(plus), 'taken': fall, 'booked': walls, 'levels': levels, 'light_now_was': now, 'proper': int(self.proper[at]), 'content': int(c[at]), 'amplitude': A, 'children_at_node': len(children)})
             self.counts['taken'] += fall; self.counts['booked'] += walls
-        born_nodes = {at for at, _s, _m, _p in born} | {m for _a, _s, m, _p in born} | {p_ for _a, _s, _m, p_ in born}  # every Node of a birth, the take's and the two children's
+        born_nodes = {at for at, _c, _l, _f, _w in taken_births} | {m for _a, ch, _l, _f, _w in taken_births for _s, m, _p in ch} | {p_ for _a, ch, _l, _f, _w in taken_births for _s, _m, p_ in ch}  # every Node of a birth taken, the take's and the children's; a refused birth pre-empts no closing (meeting_board.closed)
         # the bodies' closing: a record at a whole quantum of its own unit through one period of its re line's upward crossings
         for rec in range(2 * self.nl):
             s_ = rec // 2; r = self.rule(self.pairs[s_], c, factors)
