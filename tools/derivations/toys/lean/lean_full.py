@@ -105,7 +105,7 @@ class Lean:
         seed_pair = phase.seed(self.X, gamma)
         self.orbit_lines = [seed_pair]  # the last pair as lines, for the next act
         self.orbit = [(int(seed_pair[0][0]), int(seed_pair[1][0]))]  # the table of (cos, sin) as plain integers
-        self.counts = {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 0, 'turns': 0, 'light_credits': 0}
+        self.counts = {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 0, 'turns': 0, 'light_credits': 0, 'light_laid': 0, 'light_laid_nodes': 0}
         self.max_transient = 0
         if plane_lays:
             c = self.content(); factors = self.link_factors(); pace = paces.link_pace_of(self.gamma, c)
@@ -269,6 +269,7 @@ class Lean:
         # W-S1 (the owner's sentence 3, 2026-10-25): a bound body's write lights the massless line: the change of the planes' Wronskian at the Node between two intervals, summed over every plane (one act over the rows), laid on the massless row's time line by the one lay act at the wall T; a static record lays nothing
         if not os.environ.get('LEAN_NO_WS1'):
             lq, self.light_wr = carried_division(W - W_start, self.T, self.light_wr); self.light.now = self.light.now + lq
+            self.counts['light_laid'] += int(sum(abs(int(x)) for x in lq.reshape(-1))); self.counts['light_laid_nodes'] += int(sum(1 for x in lq.reshape(-1) if int(x) != 0))  # the emission's size: the levels laid on the light and the Nodes they were laid at (a count of the run)
         # the phase potential: c_phi = rounded(L p0 / Gamma) per Node, the row stepped 2 phi_now - phi_before + write (the wall 2)
         wq, rem = carried_division(2 * cphi, 2, self.phi.rem)
         self.phi = Line(2 * self.phi.now - self.phi.before + wq, self.phi.now, rem)
