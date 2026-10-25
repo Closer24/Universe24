@@ -1,0 +1,5 @@
+intervals 1 83 167 170
+interval 1: sum X 27162; rising 0 falling 0 at rest 27
+interval 83: sum X 163701; rising 27 falling 0 at rest 0
+interval 167: sum X 25353; rising 0 falling 27 at rest 0
+interval 170: sum X 26163; rising 27 falling 0 at rest 0

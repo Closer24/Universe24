@@ -1,0 +1,8 @@
+record hole_60 exit=0 seconds=4
+reading hole_60 exit=0
+record plasma_3_170 exit=0 seconds=3
+reading plasma_3_170 exit=0
+record packet_6 exit=0 seconds=0
+reading packet_6 exit=0
+record universe_6 exit=0 seconds=0
+reading universe_6 exit=0

@@ -41,6 +41,11 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_board.py::test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1": (
+        37,
+        "PL-S1 (2026-10-25, the owner's word of 22:50 UTC, The-Plasma-Charge-At-The-Kick_COMPARISON.md; the Boss's room named in 6404974647 at the merge of toys-5 99a9ee860): nature's plasma on the 3-cube returning to Gamma exactly "
+        "at 166 and 167 with every credit laid back, the retrace the engine's own exchange at every k, the run back exact through the top",
+    ),
     "tests/test_rule3.py::test_the_composed_paces_are_the_laws_carried_division_at_gamma_squared_bit_for_bit_the_power": (
         29,
         "the composed paces (2026-10-25, PC-S1 in pc1's form, the owner's word K-S4 through the Boss; the room given at the merge of toys-5 84009e333): the clock the exact power rounded half up once by the carried division "
