@@ -190,8 +190,7 @@ class Lean:
             if share_of(middle) <= target: low = middle
             else: high = middle
         for sense in (-1, 1):
-            re, im = record(low, sense); pr, pi = self.planes[2 * s_ + (1 if sense > 0 else 0)]
-            pr.now = pr.now + re.now; pr.before = pr.before + re.before; pi.before = pi.before + im.before
+            re, im = record(low, sense); self.lay(2 * s_ + (1 if sense > 0 else 0), Ellipsis, (re.now, re.before, im.now, im.before))
         self.log.append({'event': 'lay', 'i': 0, 'node': list(at), 'line_pair': s_, 'width': h, 'quanta': n, 'amplitude': low, 'share': share_of(low), 'unit': self.units[s_], 'nodes': int(sum(1 for x in envelope.reshape(-1) if int(x) > 0))})
 
     # ---- the readings at the interval's start
@@ -344,7 +343,7 @@ class Lean:
     def run(self, direction=1):
         """One interval of the Node's program in the direction (ALGEBRA.md, The direction: every act but the click a bijection; the run back the same acts in the reverse order, each inverted). The readings at the start (the content, the paces, the Link factors, the frames, the sign's clocked potential, the stress), then one act on every row in the rows' order, then the swap at the top and the close (forward); backward the close is undone from the log first, the turned Nodes are returned to their pre-state by the same exchange, and the rows' acts are inverted in the same order. Every start level is read from the slot the direction names: forward the now slot; backward the before slot, which the forward act left holding the start's now, and the now slot at a turned Node."""
         if direction == 1: self.interval += 1; top = np.zeros(self.shape, dtype=bool); kept = None
-        else: frame = self.stack.pop(); self.unclose(frame); top = frame['turned']
+        else: frame = self.stack.pop(); self.unclick(frame); top = frame['turned']
         held = [[l.copy() for l in row] for row in self.rows()]  # the state at this end of the interval: the pre-state forward, the post-state backward
         if direction == -1:
             if top.any(): self.exchange(top, held)
@@ -398,7 +397,7 @@ class Lean:
         counters = ([a.copy() for a in self.standing], [a.copy() for a in self.crossed], [a.copy() for a in self.beats])
         top = self.swap(held)
         log_from = len(self.log)
-        self.close({'light': light_start, 'planes': plane_starts})
+        self.click({'light': light_start, 'planes': plane_starts})
         self.stack.append({'turned': top, 'counters': counters, 'log_from': log_from})
 
     def step(self): return self.run(1)
@@ -455,25 +454,25 @@ class Lean:
             if fall(s_) >= walls: return s_, fall(s_)
         return dist, full
 
-    def close(self, start):
-        """The click (ALGEBRA.md, The click writes on the lattice): the Link close by the light's current, the lays refused by name, one exact take per Node, the bodies' closing, the detectors' credits; `start` holds the massless row's and the planes' lines at the interval's start."""
-        c = self.start_content; factors = self.link_factors()
-        r_light = self.rule((self.den, self.den), c, factors)
-        rules = [(start['light'], r_light), (self.sign, r_light), (self.vol, self.rule(self.vol_pair, c, factors))]
-        for s_, pair in enumerate(self.pairs):
-            r = self.rule(pair, c, factors)
-            for sense in (0, 1):
-                rules += [(start['planes'][2 * s_ + sense][0], r), (start['planes'][2 * s_ + sense][1], r)]
-        pace = paces.link_pace_of(self.gamma, c)
-        sh = self.share(start['light'], r_light, pace, vacuum=True)  # V-D, the owner's sentence 7: the birth's threshold and the lay's refusal read the share at the vacuum's weight
-        owns = []  # each record's standing share at the interval's start (the lay's one comparison, take.below_quantum)
-        for rec in range(2 * self.nl):
-            r = self.rule(self.pairs[rec // 2], c, factors); re0, im0 = start['planes'][rec]
-            owns.append(self.share(re0, r, pace, vacuum=True) + self.share(im0, r, pace, vacuum=True))
-        born = []  # (the take's Node, the lift, the - child's Node, the + child's Node)
-        frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(self.shape, dtype=bool)
-        # the Link close (Q1/Q2, the owner's sentence 1): every Link once from its +a end; a meeting where both ends hold a whole quantum; the + child at the end the light's own current F_ij = num (now_i before_j - before_i now_j) flows into, read at the interval's start; F = 0 refused by name; the Link's one number read at that end
-        currents = [self.den * self.link_current(start['light'], 2 * axis) for axis in range(3)]  # the light's own current on the +a Link of every Node, read once through the Link's function
+    def lay(self, rec, where, levels, sign=1):
+        """The one lay act: a record's four levels (re_now, re_before, im_now, im_before) added at the Node `where` (or over the board where `where` is the whole), taken back with sign -1 (the inverse of the lay is the same act)."""
+        re, im = self.planes[rec]
+        for line, now, before in ((re, levels[0], levels[1]), (im, levels[2], levels[3])):
+            line.now[where] = line.now[where] + sign * now; line.before[where] = line.before[where] + sign * before
+
+    def take_at(self, at, walls, r_light, cause):
+        """One exact take at a Node of the walls booked: the light's level now moved toward its before by the least count of levels at which the Node's share falls by the walls (`take`); refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the light's now before the take) or None."""
+        levels, fall = self.take(at, walls, r_light, self.light)
+        if levels is None:
+            self.counts['refused_stop'] += cause; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'stop', 'fall': fall, 'walls': walls}); return None
+        now = int(self.light.now[at]); before = int(self.light.before[at]); toward = 1 if before > now else -1
+        self.light.now[at] = now + toward * levels; self.closes[at] += 1
+        return levels, fall, now
+
+    def meet(self, start, sh, rules, frozen):
+        """The Link close (Q1/Q2, the owner's sentence 1): every Link once from its +a end; a meeting where both ends hold a whole quantum of light at the vacuum's weight and neither end is frozen; the + child at the end the light's own current F_ij = num (now_i before_j - before_i now_j) flows into, read at the interval's start (F = 0 refused by name: no orientation); the Link's one number read at that end gives the lift. Returns the births as (the take's Node, the lift, the - child's Node, the + child's Node)."""
+        born = []
+        currents = [self.den * self.link_current(start['light'], 2 * axis) for axis in range(3)]
         for at in np.ndindex(*self.shape):
             if frozen[at]: continue
             for axis in range(3):
@@ -483,51 +482,50 @@ class Lean:
                 if F == 0:
                     self.counts['refused_orientation'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'orientation', 'link': list(j)}); continue
                 plus, minus = (j, at) if F > 0 else (at, j)
-                number = self.read_number(plus, rules)  # the Link's one number read at the end the current flows into (no label: the end is the current's)
+                number = self.read_number(plus, rules)
                 if number is None: continue
-                s_ = (number // self.unit_light) % self.nl
-                born.append((plus, s_, minus, plus))  # the take at the same end
-        # every face read before any write (meeting_board.closed): the lays refused first, then one exact take per Node of the children's walls summed, the start's light paying; the order of the Links enters no number
+                born.append((plus, (number // self.unit_light) % self.nl, minus, plus))
+        return born
+
+    def refuse(self, born, owns):
+        """The lay refused by name (ALGEBRA.md, The click writes on the lattice, line 186: the lay's Wronskian is exact only at an empty Node): where any of the child's family already stands at its Node, and where two children of one record would land at one Node in one close (the charge made at a crowded lay, W = n^2 A^2; a rule that reaches two Links, named open under the locality law). Returns the births kept."""
         kept = []
         for at, s_, minus, plus in born:
-            # the lay refused by name where a child's family already stands above one quantum at its Node (ALGEBRA.md, The click writes on the lattice (b) and (d), the undepleted beam; engine take.below_quantum, meeting_board.refused_by)
-            # the lay's Wronskian is exact only at an empty Node (ALGEBRA.md, The click writes on the lattice, line 186): a child laid onto standing levels of its family adds the cross terms A x (standing levels) to W, the charge made at the lay; so the lay is refused where any of the child's family stands at its Node
             if int(owns[2 * s_][minus]) > 0 or int(owns[2 * s_ + 1][plus]) > 0:
                 self.counts['refused_lay'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'lay', 'standing': int(owns[2 * s_][minus]), 'unit': self.units[s_]}); continue
             kept.append((at, s_, minus, plus))
-        # one child per Node per record (the owner's sentence 1 as approved, S3): where two children of one record would land at one Node in one close, W would grow as the square (n children n^2 A^2 against n A^2: the charge made at the lay, measured 1.4e6 at one close of 31 births); every such child is refused by name, none chosen by the Links' order
         landing = {}
         for at, s_, minus, plus in kept:
             landing[(2 * s_, minus)] = landing.get((2 * s_, minus), 0) + 1; landing[(2 * s_ + 1, plus)] = landing.get((2 * s_ + 1, plus), 0) + 1
         crowded = [(at, s_, minus, plus) for at, s_, minus, plus in kept if landing[(2 * s_, minus)] > 1 or landing[(2 * s_ + 1, plus)] > 1]
         for at, s_, minus, plus in crowded:
             self.counts['refused_lay'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'lay', 'children_at_one_node': max(landing[(2 * s_, minus)], landing[(2 * s_ + 1, plus)])})
-        kept = [k for k in kept if k not in crowded]
+        return [k for k in kept if k not in crowded]
+
+    def births(self, kept, r_light, c, factors, pace):
+        """The births kept, every face read before any write: one exact take per Node of its children's walls summed, the start's light paying; then each child laid as one quantum of its record at the quarter turn (re_now A at the - end, im_before -A; re_now A at the + end, im_before +A), the birth logged with its numbers. Returns every Node a taken birth touched."""
         by_node = {}
         for at, s_, minus, plus in kept: by_node.setdefault(at, []).append((s_, minus, plus))
-        taken_births = []
+        taken = []
         for at in sorted(by_node):
             children = by_node[at]; walls = sum(2 * self.units[s_] for s_, _m, _p in children)
-            levels, fall = self.take(at, walls, r_light, self.light)
-            if levels is None:
-                self.counts['refused_stop'] += len(children); self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'stop', 'fall': fall, 'walls': walls}); continue
-            taken_births.append((at, children, levels, fall, walls))
-        for at, children, levels, fall, walls in taken_births:
-            now = int(self.light.now[at]); before = int(self.light.before[at]); toward = 1 if before > now else -1
-            self.light.now[at] = now + toward * levels
+            got = self.take_at(at, walls, r_light, len(children))
+            if got is not None: taken.append((at, children, walls, got))
+        for at, children, walls, (levels, fall, now) in taken:
+            self.closes[at] -= 1  # the take counted once per child below
             for s_, minus, plus in children:
                 A = self.lay_amplitude(s_, at, c, factors, pace)
-                for sense, rec, where in ((-1, 2 * s_, minus), (1, 2 * s_ + 1, plus)):
-                    re, im = self.planes[rec]; re.now[where] = re.now[where] + A; im.before[where] = im.before[where] + sense * A
+                self.lay(2 * s_, minus, (A, 0, 0, -A)); self.lay(2 * s_ + 1, plus, (A, 0, 0, A))
                 self.counts['births'] += 1; self.closes[at] += 1
                 self.log.append({'event': 'birth', 'i': self.interval, 'node': list(at), 'line_pair': s_, 'senses': [-1, 1], 'minus': list(minus), 'plus': list(plus), 'taken': fall, 'booked': walls, 'levels': levels, 'light_now_was': now, 'proper': int(self.proper[at]), 'content': int(c[at]), 'amplitude': A, 'children_at_node': len(children)})
             self.counts['taken'] += fall; self.counts['booked'] += walls
-        born_nodes = {at for at, _c, _l, _f, _w in taken_births} | {m for _a, ch, _l, _f, _w in taken_births for _s, m, _p in ch} | {p_ for _a, ch, _l, _f, _w in taken_births for _s, _m, p_ in ch}  # every Node of a birth taken, the take's and the children's; a refused birth pre-empts no closing (meeting_board.closed)
-        # the bodies' closing: a record at a whole quantum of its own unit through one period of its re line's upward crossings
+        return {at for at, _c, _w, _g in taken} | {m for _a, ch, _w, _g in taken for _s, m, _p in ch} | {p_ for _a, ch, _w, _g in taken for _s, _m, p_ in ch}
+
+    def bodies(self, start, owns, born_nodes, frozen, r_light):
+        """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its re line's upward crossings clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart."""
         for rec in range(2 * self.nl):
-            s_ = rec // 2; r = self.rule(self.pairs[s_], c, factors)
-            own = owns[rec]
-            standing_now = np.vectorize(lambda v: 1 if int(v) >= self.units[s_] else 0, otypes=[object])(own)
+            s_ = rec // 2
+            standing_now = np.vectorize(lambda v: 1 if int(v) >= self.units[s_] else 0, otypes=[object])(owns[rec])
             self.standing[rec] = np.where(standing_now == 1, self.standing[rec] + 1, 0)
             re = self.planes[rec][0]
             upward = np.vectorize(lambda b, n: 1 if (int(b) < 0 <= int(n)) else 0, otypes=[object])(re.before, re.now)
@@ -538,21 +536,42 @@ class Lean:
             for at in zip(*np.nonzero(closing == 1)):
                 at = tuple(int(x) for x in at)
                 if at in born_nodes or frozen[at]: continue
-                levels, fall = self.take(at, self.units[s_], r_light, self.light)
-                if levels is None:
-                    self.counts['refused_stop'] += 1; self.standing[rec][at] = 0; continue
-                now = int(self.light.now[at]); before = int(self.light.before[at]); toward = 1 if before > now else -1
-                self.light.now[at] = now + toward * levels
-                self.counts['body_clicks'] += 1; self.closes[at] += 1; self.standing[rec][at] = 0
+                got = self.take_at(at, self.units[s_], r_light, 1)
+                self.standing[rec][at] = 0
+                if got is None: continue
+                levels, fall, now = got
+                self.counts['body_clicks'] += 1
                 self.log.append(self.credit(rec, at, start, fall, levels, now))
-        # the detectors: the light's whole quanta at the Node risen over the interval (the start's share against the share as the close leaves the light), each quantum a light credit with the Node's proper count; a reading, no state
-        if self.detectors:
-            sh_end = self.share(self.light, r_light, pace, vacuum=True); sh_vac = self.share(start['light'], r_light, pace, vacuum=True)
-            for det in self.detectors:
-                rise = int(sh_end[det]) // self.unit_light - int(sh_vac[det]) // self.unit_light
-                if rise > 0:
-                    self.counts['light_credits'] += rise
-                    self.log.append({'event': 'light', 'i': self.interval, 'node': list(det), 'quanta': rise, 'proper': int(self.proper[det]), 'content': int(c[det]), 'light_now': int(self.light.now[det]), 'light_before': int(self.light.before[det])})
+
+    def detect(self, start, r_light, pace, c):
+        """The detectors, a reading and no act: the light's whole quanta at the Node risen over the interval (the start's share against the share as the click leaves the light), each quantum a light credit with the Node's proper count."""
+        if not self.detectors: return
+        sh_end = self.share(self.light, r_light, pace, vacuum=True); sh_vac = self.share(start['light'], r_light, pace, vacuum=True)
+        for det in self.detectors:
+            rise = int(sh_end[det]) // self.unit_light - int(sh_vac[det]) // self.unit_light
+            if rise > 0:
+                self.counts['light_credits'] += rise
+                self.log.append({'event': 'light', 'i': self.interval, 'node': list(det), 'quanta': rise, 'proper': int(self.proper[det]), 'content': int(c[det]), 'light_now': int(self.light.now[det]), 'light_before': int(self.light.before[det])})
+
+    def click(self, start):
+        """The click (ALGEBRA.md, The click writes on the lattice), the Node's fourth act: the readings at the start (the rules of every row, the light's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`), the lays refused by name (`refuse`), the births taken and laid (`births`), the bodies' closing (`bodies`), the detectors' credits (`detect`); `start` holds the massless row's and the planes' lines at the interval's start."""
+        c = self.start_content; factors = self.link_factors()
+        r_light = self.rule((self.den, self.den), c, factors)
+        rules = [(start['light'], r_light), (self.sign, r_light), (self.vol, self.rule(self.vol_pair, c, factors))]
+        for s_, pair in enumerate(self.pairs):
+            r = self.rule(pair, c, factors)
+            for sense in (0, 1):
+                rules += [(start['planes'][2 * s_ + sense][0], r), (start['planes'][2 * s_ + sense][1], r)]
+        pace = paces.link_pace_of(self.gamma, c)
+        sh = self.share(start['light'], r_light, pace, vacuum=True)  # V-D, the owner's sentence 7: the birth's threshold and the lay's refusal read the share at the vacuum's weight
+        owns = []
+        for rec in range(2 * self.nl):
+            r = self.rule(self.pairs[rec // 2], c, factors); re0, im0 = start['planes'][rec]
+            owns.append(self.share(re0, r, pace, vacuum=True) + self.share(im0, r, pace, vacuum=True))
+        frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(self.shape, dtype=bool)
+        born_nodes = self.births(self.refuse(self.meet(start, sh, rules, frozen), owns), r_light, c, factors, pace)
+        self.bodies(start, owns, born_nodes, frozen, r_light)
+        self.detect(start, r_light, pace, c)
 
     def lay_amplitude(self, s_, at, c, factors, pace):
         """The lay of one quantum: the child's record laid at the Node with the least amplitude A at which its own share reads one quantum of its unit at the Node's paces, (2 D + SUM_j R_j) A^2 >= unit x 4 p^2 G^2 (the frame share's term of a lone record with now = before = A; ALGEBRA.md, the lay of the record out whole); the former toy laid the root of T / 2 for every species."""
@@ -581,15 +600,13 @@ class Lean:
                 'beat': int(self.beats[rec][at]), 'frame': frame, 'taken': fall, 'levels': levels, 'light_now_was': light_was, 'sign_level': int(self.sign.now[at]), 'turned': bool(self.turned[at])}
 
 
-    def unclose(self, frame):
+    def unclick(self, frame):
         """The close undone from the log, in the reverse order of its lines: the lays removed, the light restored, the readings' counters restored."""
         for entry in reversed(self.log[frame['log_from']:]):
             at = tuple(entry['node'])
             if entry['event'] == 'birth':
-                s_ = entry['line_pair']; minus, plus = tuple(entry['minus']), tuple(entry['plus'])
-                for sense, rec, where in ((-1, 2 * s_, minus), (1, 2 * s_ + 1, plus)):
-                    A = entry['amplitude']
-                    re, im = self.planes[rec]; re.now[where] = re.now[where] - A; im.before[where] = im.before[where] - sense * A
+                s_ = entry['line_pair']; A = entry['amplitude']
+                self.lay(2 * s_, tuple(entry['minus']), (A, 0, 0, -A), -1); self.lay(2 * s_ + 1, tuple(entry['plus']), (A, 0, 0, A), -1)
                 self.light.now[at] = entry['light_now_was']; self.closes[at] -= 1
             elif entry['event'] == 'credit':
                 self.light.now[at] = entry['light_now_was']; self.closes[at] -= 1
