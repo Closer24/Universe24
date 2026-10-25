@@ -18,7 +18,8 @@ class Record:
         self.NL = len(lifts)
         names = ['electron', 'proton', 'neutron'] if self.NL == 3 else ['lift %d' % k for k in range(self.NL)]
         self.NAMES = {num: (name, leg) for (leg, num), name in zip(lifts, names)}
-        self.line_num = [int(run['lifts'][i][1]) for i in range(self.NL)]
+        self.NAMES[self.den] = ('massless', 0)  # the plane at the gap 0: the decoder's name for it, never the Node's
+        self.line_num = [int(num) for num in run['planes']] if 'planes' in run else [int(run['lifts'][i][1]) for i in range(self.NL)]  # every plane's num by its row index among the planes (the credit's and the birth's line)
         self.log = run['log']; self.credits = [l for l in self.log if l['event'] == 'credit']; self.births = [l for l in self.log if l['event'] == 'birth']
         self.rows = run['rows']; self.w = rule3.wall_of(self.den, self.gamma, self.G)
 
@@ -82,19 +83,19 @@ def species(R):
         x = solve(R, c)
         if x is None: continue
         name = nearest(R, x)
-        truth = NAMES[line_num[c['line'] // 2]][0]; right += (name == truth); decoded.append((c, name, x))
-        N, D = x; num = line_num[c['line'] // 2]
+        truth = NAMES[line_num[c['line']]][0]; right += (name == truth); decoded.append((c, name, x))
+        N, D = x; num = line_num[c['line']]
         res2 = (N * den - num * D) ** 2; bound2 = 2 * (w_ * den) ** 2 * D
         within += (res2 <= bound2)
         floor_mil.append(rule3.largest_below((2 * w_ * w_ * den * den * MIL * MIL) // (D * num * num)) if num else None)
     tr = defaultdict(list); conf = Counter()
     for c, name, x in decoded:
-        tr[(tuple(c['node']), c['line'])].append(x); conf[(NAMES[line_num[c['line'] // 2]][0], name)] += 1
+        tr[(tuple(c['node']), c['line'])].append(x); conf[(NAMES[line_num[c['line']]][0], name)] += 1
     track_right = 0; track_n = 0
     for (node, line), xs in tr.items():
         xs.sort(key=cmp_to_key(cmp_rat)); k = len(xs)
         xm = xs[k // 2] if k % 2 else (xs[k // 2 - 1][0] * xs[k // 2][1] + xs[k // 2][0] * xs[k // 2 - 1][1], 2 * xs[k // 2 - 1][1] * xs[k // 2][1])
-        track_n += 1; track_right += (nearest(R, xm) == NAMES[line_num[line // 2]][0])
+        track_n += 1; track_right += (nearest(R, xm) == NAMES[line_num[line]][0])
     out['8b species over the track (one-place view: the middle solve of the body\'s track)'] = {'tracks': track_n, 'decoded right': track_right, 'confusion (truth->decoded) per credit': {f'{a}->{b}': n for (a, b), n in conf.items() if a != b}}
     out['8 families forming (whole view)'] = {'credits': len(credits), 'species readable': len(decoded), 'decoded right per credit': right, 'credits within the one-click floor': within, 'tracks right': [track_right, track_n], 'births by species (decoder)': dict(Counter(NAMES[line_num[b['line_pair']]][0] for b in births)), 'verdict': 'SHOWN (every credit within the one-click floor, every track read right)' if within == len(decoded) and track_right == track_n and len(set(NAMES[line_num[b['line_pair']]][0] for b in births)) >= 3 else ('SHOWN in part: every credit within the floor, tracks right %d of %d' % (track_right, track_n) if within == len(decoded) else 'NOT SHOWN: %d credits beyond the floor' % (len(decoded) - within))}
     legs = {v[0]: v[1] for v in NAMES.values()}; num_of = {v[0]: k for k, v in NAMES.items()}

@@ -28,7 +28,7 @@ out = {}
 # (i) the horizon
 b = Lean(universe, world)
 ax = b.row(10).lines[1]; ax.now[p] = 2 * b.gamma; ax.before[p] = 2 * b.gamma  # the x axis part at 2 Gamma: the tension of both x Links (2 Gamma + 0 + 1) div 2 = Gamma
-z = b.row(1, gap=0).lines[0]; z.now[p] = 4 * int(z.now[p])  # the light at the Node far above two quanta, so a meeting would be read were the Node read
+z = b.row(2, gap=0).lines[0]; z.now[p] = 4 * int(z.now[p])  # the light at the Node far above two quanta, so a meeting would be read were the Node read
 factors = b.link_factors()
 out['horizon: factors at the Node per Port (+x, -x, +y, -y, +z, -z)'] = [int(f[p]) for f in factors]
 out['horizon: factors at the +x neighbour'] = [int(f[ports_of(b, p)[0]]) for f in factors]
@@ -47,7 +47,7 @@ pace_at = lambda level: int(np.asarray(paces.link_pace_of(c.gamma, np.array([lev
 clock_at = lambda level: int(np.asarray(paces.clock_of(c.gamma, np.array([level], dtype=object)), dtype=object).reshape(-1)[0])
 frozen_level = next(level for level in range(1, 100000) if pace_at(level) == 0)
 out['frozen: the first content at the Link pace 0, and the clock there'] = [frozen_level, clock_at(frozen_level)]
-m = c.row(10).lines[0]; m.now[p] = volume_at(c, frozen_level); m.before[p] = m.now[p]; z = c.row(1, gap=0).lines[0]; z.now[p] = 4 * int(z.now[p])
+m = c.row(10).lines[0]; m.now[p] = volume_at(c, frozen_level); m.before[p] = m.now[p]; z = c.row(2, gap=0).lines[0]; z.now[p] = 4 * int(z.now[p])
 fed_c = copy.deepcopy(c)
 for _ in range(n): c.step()
 out['frozen: clicks at the Node in %d intervals, clicks on the board' % n] = [len([e for e in log_at(c, p) if e['event'] in ('birth', 'credit')]), c.counts['births'] + c.counts['body_clicks']]

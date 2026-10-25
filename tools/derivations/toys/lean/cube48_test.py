@@ -51,7 +51,7 @@ for m in signed_permutations():
     other = run(universe, world_image(world0, m, cube), n)
     same_events = events(other) == mapped(evs, m, cube)
     same_rows = True
-    for line_b, line_o in ((base.row(10).lines[0], other.row(10).lines[0]), (base.row(1, gap=0).lines[0], other.row(1, gap=0).lines[0])):
+    for line_b, line_o in ((base.row(10).lines[0], other.row(10).lines[0]), (base.row(2, gap=0).lines[0], other.row(2, gap=0).lines[0])):
         for at in np.ndindex(cube, cube, cube):
             if int(line_b.now[at]) != int(line_o.now[image(m, at, cube)]) or int(line_b.before[at]) != int(line_o.before[image(m, at, cube)]): same_rows = False; break
         if not same_rows: break

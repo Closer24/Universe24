@@ -23,7 +23,7 @@ nodes = list(np.ndindex(cube, cube, cube))
 
 def compare():
     apart = []
-    for name, la, lb in (('metric', a.row(10).lines[0], b.row(10).lines[0]), ('massless', a.row(1, gap=0).lines[0], b.row(1, gap=0).lines[0]), ('potential', a.row(4).lines[0], b.row(4).lines[0]), ('phase', a.walled().lines[0], b.walled().lines[0])):
+    for name, la, lb in (('metric', a.row(10).lines[0], b.row(10).lines[0]), ('massless', a.row(2, gap=0).lines[0], b.row(2, gap=0).lines[0]), ('potential', a.row(4).lines[0], b.row(4).lines[0]), ('phase', a.walled().lines[0], b.walled().lines[0])):
         for at in nodes:
             if int(la.now[at]) != int(lb.now[image(at)]) or int(la.before[at]) != int(lb.before[image(at)]): apart.append((name, at, 'level')); break
             if int(la.rem[at]) != int(lb.rem[image(at)]): apart.append((name, at, 'rem', int(la.rem[at]), int(lb.rem[image(at)]))); break

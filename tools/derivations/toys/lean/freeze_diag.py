@@ -8,7 +8,7 @@ at = tuple(int(x) for x in sys.argv[3].split(',')) if len(sys.argv) > 3 else (0,
 b = Lean(universe, world)
 marks = {1, 5, 10, 25, 50, 100, 200, 300, 400, 500, 600} | set(range(max(1, n - 12), n + 1))
 for t in range(n):
-    m = b.row(10).lines[0]; z = b.row(1, gap=0).lines[0]; vb, vn = int(m.before[at]), int(m.now[at])
+    m = b.row(10).lines[0]; z = b.row(2, gap=0).lines[0]; vb, vn = int(m.before[at]), int(m.now[at])
     b.step()
     if b.interval in marks:
         print(b.interval, 'turned', int(b.turned.sum()), 'node', at, 'vol before/now (start)', vb, vn, '-> now/before after', int(m.now[at]), int(m.before[at]), 'light', int(z.now[at]), int(z.before[at]), 'light share quanta', int(b.share(z, b.rule((b.den, b.den), b.content(), b.link_factors()))[at]) // b.unit_light)
