@@ -10,10 +10,10 @@ import numpy as np
 from event_universe import close, interval, readings, seed, take
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
-from event_universe.core.ports import AXES, PORT_SIDES, PORTS, across
-from event_universe.core.rule3 import carried_division, half, link_unit_of, unit_of, wall_of
+from event_universe.core.ports import AXES, PORTS, across
+from event_universe.core.rule3 import carried_division, half, link_unit_of, mirrored, unit_of, wall_of
 from event_universe.features import phase
-from event_universe.links import link, turn_pair
+from event_universe.links import Link, turn_pair
 from event_universe.rows import (
     CARRIER,
     HALF_WIDTH,
@@ -27,7 +27,6 @@ from event_universe.rows import (
     zeros,
 )
 
-Turn = tuple[list[tuple[Any, Any]], list[Any], list[Any]] | None
 COUNTS = {  # the run's counts, every one 0 at the start
     "births": 0,
     "taken": 0,
@@ -143,8 +142,7 @@ class Node:
 
     def rule(self, pair: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
         """Rule3's integers of a pair at the Node's paces from the content."""
-        clock = paces.clock_of(self.gamma, c)
-        pace = paces.link_pace_of(self.gamma, c)
+        clock, pace = readings.paces_of(self, c)
         return rule3.rule_integers(pair[0], pair[1], self.gamma, clock, pace, factors, self.G)
 
     def rule_of(self, r: Row, c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
@@ -158,30 +156,27 @@ class Node:
         """The content at every Node (readings.content)."""
         return readings.content(self)
 
-    def link_factors(self, axis_levels: list[Any] | None = None) -> tuple[Any, ...]:
-        """The Link factor at each Port (readings.link_factors)."""
-        return readings.link_factors(self, axis_levels)
+    def link_factors(self, axis_levels: list[Any] | None = None, frozen: Any = None) -> tuple[Any, ...]:
+        """The Link factor at each Port (readings.link_factors), 0 where either end is frozen."""
+        return readings.link_factors(self, axis_levels, frozen)
 
     def share(self, line: Line, r: rule3.Rule, pace: Any = None, vacuum: bool = False) -> Any:
         """The conserved form's share at every Node (readings.share)."""
         return readings.share(self, line, r, pace, vacuum)
 
-    def turned_arrival(self, arrivals: list[Any], port: int, turn: Turn) -> list[Any]:
-        """The arrivals of a row's lines at one Port, read in the Node's frame and turned by the Link's pair over X and by the odd line's tangent triple (W^2 - n^2, 2 W n, W^2 + n^2), W = 4 Gamma, one rounding per Link per part; a row of one line is turned by the identity; `turn` None is the identity for every shape."""
+    def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
+        """The arrivals of a row's lines at one Port, read in the Node's frame and turned by the Link's pair over X and by the odd line's tangent triple (W^2 - n^2, 2 W n, W^2 + n^2), W = 4 Gamma, one rounding per Link per part, every number the Link's record; a row of one line is turned by the identity; `turn` None is the identity for every shape."""
         if turn is None or len(arrivals) == 1:
             return arrivals
-        phases, odd, frames = turn
-        axis, _side = PORT_SIDES[port]
-        re_j, im_j = arrivals
-        im_j = frames[port] * im_j
-        c, s = phases[port]
-        _e, (n,), _f = link(port, odd=(odd[axis],))
+        at = turn[port]
+        re_j, im_j = arrivals[0], at.frame * arrivals[1]
         wl = 4 * self.gamma
-        tc, ts, tw = wl * wl - n * n, 2 * wl * n, wl * wl + n * n
-        a_re, a_im = turn_pair(re_j, im_j, c, s, self.X)
-        return list(turn_pair(a_re, a_im, tc, ts, tw))
+        a_re, a_im = turn_pair(re_j, im_j, at.cosine, at.sine, self.X)
+        return list(
+            turn_pair(a_re, a_im, wl * wl - at.odd * at.odd, 2 * wl * at.odd, wl * wl + at.odd * at.odd)
+        )
 
-    def arrivals(self, at: list[Any], r: rule3.Rule, turn: Turn) -> list[Any]:
+    def arrivals(self, at: list[Any], r: rule3.Rule, turn: list[Link] | None) -> list[Any]:
         """The Links' part of Rule3's total for a row's lines at every Node, SUM_j R_j m_j, the arrivals at each Port turned as the row's shape turns them."""
         totals: list[Any] = [0] * len(at)
         for port, reach in enumerate(r.reaches):
@@ -193,7 +188,7 @@ class Node:
         self,
         lines: list[Line],
         r: rule3.Rule,
-        turn: Turn,
+        turn: list[Link] | None,
         direction: int,
         flux: list[Any] | None,
         starts: list[Any] | None,
@@ -227,7 +222,7 @@ class Node:
         self,
         lines: list[Line],
         r: rule3.Rule,
-        turn: Turn,
+        turn: list[Link] | None,
         numerators: list[Any],
         direction: int,
         flux: list[Any] | None = None,
@@ -295,21 +290,21 @@ class Node:
         return [len(row) == PLANE and k == 1 for row in self.rows() for k in range(len(row))]
 
     def exchange(self, top: Any, held: list[list[Line]]) -> None:
-        """The swap's act at the Nodes `top`: every line set to the held line exchanged and complemented (the two levels exchanged, an im line conjugated, every remainder complemented at its wall, an im line's rotation remainder kept); an involution with the state it leaves."""
+        """The swap's act at the Nodes `top`: every line set to the held line exchanged and mirrored (the two levels exchanged, an im line conjugated, every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line, so an im line's rotation remainder is left; the write remainders and the frame bit once); an involution with the state it leaves."""
         for line, h, im in zip(
             self.all_lines(), [line for row in held for line in row], self.is_im(), strict=True
         ):
             sgn = -1 if im else 1
             line.now = np.where(top, sgn * h.before, line.now)
             line.before = np.where(top, sgn * h.now, line.before)
-            line.rem = np.where(top, h.rem if im else h.wall - 1 - h.rem, line.rem)
+            line.rem = np.where(top, mirrored(h.rem, h.wall, 1 + (sgn < 0)), line.rem)
             if np.ndim(h.wall):
                 line.wall = np.where(top, h.wall, line.wall)
             if line.wr is not None:
-                line.wr = np.where(top, line.wwall - 1 - h.wr, line.wr)
+                line.wr = np.where(top, mirrored(h.wr, line.wwall, 1), line.wr)
 
-    def swap(self, held: list[list[Line]]) -> Any:
-        """The swap at the top: the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f); the turned Node ends the interval at the state it started from, exchanged and complemented."""
+    def swap(self, held: list[list[Line]], frozen: Any = None) -> Any:
+        """The swap at the top: the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), a frozen Node never (BH-S1); the turned Node ends the interval at the state it started from, exchanged and complemented."""
         k = self.rows_.index(self.row(CARRIER))
         x0, x1, x2 = held[k][0].before, held[k][0].now, self.row(CARRIER).lines[0].now
         peak = np.vectorize(
@@ -321,6 +316,8 @@ class Node:
         xf = readings.floor(self)
         below = np.vectorize(lambda a, c: int(a) < xf or int(c) < xf, otypes=[bool])
         top = peak(x0, x1, x2) | below(x0, x2)
+        if frozen is not None:
+            top = top & ~frozen
         self.turned = top
         if top.any():
             self.counts["turns"] += int(top.sum())
@@ -346,13 +343,15 @@ class Node:
         """One interval of the Node's program in the direction (interval.run)."""
         interval.run(self, direction)
 
-    def click(self, plane_starts: list[list[Line]], held: list[list[Line]]) -> None:
-        """The close (close.click), the Node's fourth act."""
-        close.click(self, plane_starts, held)
-
-    def unclick(self, frame: dict[str, Any]) -> None:
-        """The close undone from the log (close.unclick)."""
-        close.unclick(self, frame)
+    def click(
+        self,
+        plane_starts: list[list[Line]],
+        held: list[list[Line]],
+        direction: int = 1,
+        frame: dict[str, Any] | None = None,
+    ) -> None:
+        """The close (close.click), the Node's fourth act, in the direction: backward the close undone from the log's frame."""
+        close.click(self, plane_starts, held, direction, frame)
 
     def lay(self, rec: int, where: Any, levels: tuple[Any, Any, Any, Any], sign: int = 1) -> None:
         """The one lay act (take.lay)."""

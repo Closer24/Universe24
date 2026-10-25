@@ -149,8 +149,29 @@ def horizon(record: Record) -> dict[str, Any]:
     }
 
 
+def approach(record: Record) -> tuple[int, int, bool]:
+    """Two bodies' credited Nodes over the intervals (W-S4, W-S5): the distance between the two credited Nodes farthest apart at the first interval with two and at the last, and whether two credited Nodes stood adjacent (one Link apart) at some interval."""
+    by_interval: dict[int, set[tuple[int, ...]]] = defaultdict(set)
+    for c in record.credits:
+        by_interval[int(c["i"])].add(tuple(c["node"]))
+    cube = int(record.run["cube"])
+
+    def distance(a: tuple[int, ...], b: tuple[int, ...]) -> int:
+        return sum(min(abs(x - y), cube - abs(x - y)) for x, y in zip(a, b, strict=True))
+
+    spans = []
+    adjacent = False
+    for i in sorted(by_interval):
+        nodes = sorted(by_interval[i])
+        if len(nodes) < 2:
+            continue
+        spans.append(max(distance(a, b) for a in nodes for b in nodes if a < b))
+        adjacent = adjacent or any(distance(a, b) == 1 for a in nodes for b in nodes if a < b)
+    return (spans[0], spans[-1], adjacent) if spans else (0, 0, False)
+
+
 def tracks(record: Record, decoded: list[tuple[dict[str, Any], str, Rational]]) -> dict[str, Any]:
-    """Gates 9 and 13: a body's track (its record's credits by line); a move is a credit of the same line at a new Node after the first; two bodies' tracks approaching to adjacent Nodes a collision."""
+    """Gates 9 and 13: a body's track (its record's credits by line), a move a credit of the same line at a new Node; the collision's verdict from two bodies' credited Nodes approaching to adjacency (the sentences W-S4 and W-S5 of the owner): shown where they approach and stand one Link apart, NOT SHOWN where apart or receding, NOT READ with one body."""
     found: dict[tuple[tuple[int, ...], str], int] = Counter()
     for c, n, _x in decoded:
         found[(tuple(c["node"]), n)] += 1
@@ -165,15 +186,20 @@ def tracks(record: Record, decoded: list[tuple[dict[str, Any], str, Rational]]) 
             if at not in seen:
                 moves += 1
                 seen.add(at)
-    if moves == 0:
-        verdict = "NOT SHOWN: no line is credited at a second Node (the bodies stand)"
+    first, last, adjacent = approach(record)
+    if first == 0:
+        verdict = "NOT READ: fewer than two bodies credited at one interval"
+    elif adjacent and last <= first:
+        verdict = "SHOWN: two bodies' credited Nodes approached and stood one Link apart"
     else:
-        verdict = f"read: {moves} lines credited at a new Node; the predicate (the tail falls, adjacent peaks collide) is the owner's sentence W-S4/W-S5"
+        verdict = f"NOT SHOWN: the credited Nodes {'receding' if last > first else 'apart'}, farthest {first} Links at first and {last} at last"
     return {
         "9 collisions / 13 free fall": {
             "tracks (node, species)": len(found),
             "longest track credits": max(found.values(), default=0),
             "lines credited at a new Node after their first": moves,
+            "farthest credited Nodes at the first and the last interval with two": [first, last],
+            "adjacent at some interval": adjacent,
             "verdict": verdict,
         }
     }
