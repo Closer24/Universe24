@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's "all yes" of 2026-10-25, 15:5x UTC by the Boss's clock (#2187 6399410929): PM-S1, MS-S1 and MS-S2 (ii) written as the law's sentences under The Node in docs/ALGEBRA.md with the former clauses kept by name; the ledger's rows approved and David's order of eight pushes in docs/UNIVERSE24.md, gate 17's magnitude NOT SHOWN until MS-S1 lands; one decision in docs/HIGHLIGHTS.md.
 - The ledger of docs/UNIVERSE24.md's section 4 current after the Boss's merge of X2's two folds (vf1's confirmation, engine-5.0-test 88ed48d24), David's frozen-mask fold with the reader's three faults (toys-5 015455cb4), BH-S1's reading of the chiral seed to 8,000 and the Scribe's three items closed.
 - The owner's three words of 2026-10-25, 15:2x UTC by the Boss's clock (#2187 6398778353) as one decision in docs/HIGHLIGHTS.md; the ledger of docs/UNIVERSE24.md's section 4 current: the comparisons PM and MS landed with the three words asked of the owner, light's click answered by the four hands, David's two pushes built on toys-5 (the remainder's primitive, BH-S1), the Reader's duty.
 - The owner's word of 2026-10-25, 14:3x UTC by the Boss's clock (#2187 6398664921, every gate seen happening in Universe24 from the seed alone): docs/UNIVERSE24.md's section 2 gains The gates' ledger on the current head (bcee6b39e, the Boss's table), kept on every merge; one decision bullet in docs/HIGHLIGHTS.md.
