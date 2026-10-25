@@ -9,7 +9,12 @@ theorem, assumption, declared, computed, fitted, a hypothesis under its own
 name, a finding by name, open by name, decided. Every symbol is named in
 English where it first appears. A scalar is written plain, a vector in bold
 lowercase (**n**), a matrix or an operator in bold uppercase (**C**). A line
-that no longer holds is not in this document. An id of the form R42 or W11
+that no longer holds is not in this document's body: since the owner's word of
+2026-10-25, 23:1x UTC ("go for it", on the Scribe's proposal), it stands, dated,
+in the closing section The former clauses, kept by name, and the body holds every
+formula once, in its final form, with the short derivation from the hands by name
+(the re-cut proceeds section by section beside the engine's cleaning, The Node and
+the sign row's write first; no law sentence changes without the owner's word). An id of the form R42 or W11
 beside a clause names a finding of the project's review, kept outside this tree.
 A decision named beside a line is in force as docs/HIGHLIGHTS.md records it.
 
@@ -1648,6 +1653,10 @@ The two lighter clouds lean on the box's faces (the level at the face 4 to 5 per
 
 A row outside its band is a finding: it names the missing law or the
 defect, and no body's numbers are patched to meet it. **Alignment, 2026-10-25** (the owner's word of 07:3x UTC GitHub's clock through the Boss, #2187 comment 6394916321): stands as written and is the owner's word of 11:0x UTC: a derived gate NOT SHOWN is a failure to root-cause, taken back to two hands.
+
+## The former clauses, kept by name
+
+The clauses the body no longer holds, each as it was written and dated, moved here by the re-cut of 2026-10-25, 23:1x UTC (the owner's word "go for it"); a clause stands here with the sentence that replaced it named. The section fills as the re-cut proceeds, The Node first.
 
 ## What is open
 
