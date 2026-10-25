@@ -41,6 +41,24 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_rule3.py::test_the_composed_paces_are_the_laws_carried_division_at_gamma_squared_bit_for_bit_the_power": (
+        29,
+        "the composed paces (2026-10-25, PC-S1 in pc1's form, the owner's word K-S4 through the Boss; the room given at the merge of toys-5 84009e333): the clock the exact power rounded half up once by the carried division "
+        "at the resolution Gamma squared, bit for bit at every content to the edge, the Link's pace the clock twice",
+    ),
+    "tests/test_the_node.py::test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing": (
+        13,
+        "the horizon (2026-10-25, BH-S1's second test, the Boss's room at the merge of toys-5 84009e333): the frozen Node's Links held at the wall and no birth at it",
+    ),
+    "tests/test_the_record.py::test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events": (
+        20,
+        "the record's Node lines and the reading's event lines (2026-10-25, the owner's word through the Reader, every gate its event line; the Boss's room at the merge of toys-5 84009e333): "
+        "one Node line per interval and the events the page labels",
+    ),
+    "tests/test_the_record.py::test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed": (
+        14,
+        "the page (2026-10-25, the third tool of the standard, the owner's word through the Boss; the Boss's room at the merge of toys-5 84009e333): one HTML from the record and the reading with nothing of a universe typed",
+    ),
     "tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1": (
         23,
         "SL-S1 (2026-10-25, the Boss's 6399718139, SL_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "

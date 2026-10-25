@@ -1,0 +1,5 @@
+2D eigenmodes on the 4x4 torus with p1(0,0) = 0: 324
+3D patterns p = p1 + c z measured: 648
+degree profiles (set of degrees over the 64 Nodes) and their counts: {"(0, 2, 4)": 256, "(0,)": 176, "(2,)": 192, "(4,)": 24}
+PERFECT matchings (every Node degree 1): 0
+partial matchings (every degree at most 1, some 0): 0
