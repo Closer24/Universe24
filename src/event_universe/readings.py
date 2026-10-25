@@ -22,6 +22,12 @@ def paces_of(node: Node, content: Any) -> tuple[Any, Any]:
     return paces.clock_of(node.gamma, content), paces.link_pace_of(node.gamma, content)
 
 
+def frozen_of(node: Node, content: Any) -> Any:
+    """The frozen mask from the content (BH-S1): the Nodes whose Link pace reads 0 at the interval's start, one reading for the interval, the close and the writer."""
+    pace = np.asarray(paces_of(node, content)[1], dtype=object)
+    return pace == 0 if np.ndim(pace) else np.zeros(node.shape, dtype=bool)
+
+
 def content(node: Node) -> Any:
     """The content at every Node, the level of the carrier's time line."""
     return np.asarray(volume.level_of(node.gamma, node.row(CARRIER).lines[0].now), dtype=object)

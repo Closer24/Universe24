@@ -106,10 +106,13 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
     return (p[0] * q[0] + p[1] * q[1], qq * den)
 
 
-def nearest(record: Record, x: Rational) -> str:
-    """The name whose num / den lies nearest the rational x = (N, D): the smallest |N den - num D|, all integers."""
+def nearest(record: Record, x: Rational, beat: int = 0) -> str:
+    """The name whose num / den lies nearest the rational x = (N, D): the smallest |N den - num D|, all integers; a credit with a rest beat is a body's and never the gap-0 plane's (pm1's reader item: light has no credit line), so the gap-0 name is left out where the beat is above 0."""
     n, d = x
-    return min(record.NAMES.items(), key=lambda kv: abs(cross(n, d, kv[0], record.den)))[1][0]
+    named = [
+        (num, name) for num, (name, leg) in record.NAMES.items() if not (beat > 0 and num == record.den)
+    ]
+    return min(named, key=lambda kv: abs(cross(n, d, kv[0], record.den)))[1]
 
 
 def middle(xs: list[Rational]) -> Rational:
@@ -133,7 +136,7 @@ def decoded_credits(
         x = solve(record, c)
         if x is None:
             continue
-        name = nearest(record, x)
+        name = nearest(record, x, int(c["beat"]))
         right += name == names[line_num[c["line"]]][0]
         decoded.append((c, name, x))
         n, d = x
@@ -160,7 +163,7 @@ def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], 
     track_right = 0
     for (_node, line), xs in tracks.items():
         xs.sort(key=cmp_to_key(cmp_rat))
-        track_right += nearest(record, middle(xs)) == names[line_num[line]][0]
+        track_right += nearest(record, middle(xs), 1) == names[line_num[line]][0]
     born = Counter(names[line_num[b["line_pair"]]][0] for b in record.births)
     out["8b species over the track (one-place view: the middle solve of the body's track)"] = {
         "tracks": len(tracks),
@@ -229,6 +232,7 @@ def charge_and_take(record: Record) -> tuple[dict[str, Any], int, int, int]:
     """Gates 17 and 15: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births) and the conservation at the click (taken against booked)."""
     births = record.births
     signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
+    sizes = sorted(abs(w) for b in births for w in b["W_children"])
     sense_sum = sum(signs)
     opposite = sum(
         1
@@ -240,7 +244,24 @@ def charge_and_take(record: Record) -> tuple[dict[str, Any], int, int, int]:
             "senses sum over births (from the children's Wronskian signs)": sense_sum,
             "children with W = 0": signs.count(0),
             "births with the two children at opposite signs": opposite,
-            "verdict": "SHOWN" if sense_sum == 0 and 0 not in signs else "NOT SHOWN",
+            "the children's |W| least / largest (the charge's magnitude, one e for every row in nature: MS)": [
+                sizes[0],
+                sizes[-1],
+            ]
+            if sizes
+            else None,
+            "verdict": (
+                "SHOWN: the senses sum to 0"
+                if sense_sum == 0 and 0 not in signs
+                else "NOT SHOWN: the senses"
+            )
+            + (
+                "; the magnitude SHOWN: one |W| on every child"
+                if sizes and sizes[0] == sizes[-1]
+                else "; the magnitude NOT SHOWN: |W| differs between the children (the pair's unit in the lay, MS-S1 owed)"
+                if sizes
+                else "; the magnitude NOT READ"
+            ),
         }
     }
     booked, taken = sum(b["booked"] for b in births), sum(b["taken"] for b in births)

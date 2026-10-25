@@ -10,6 +10,7 @@ from typing import Any
 
 import numpy as np
 
+from event_universe import readings
 from event_universe.core import paces
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES
@@ -99,7 +100,7 @@ def node_lines(node: Node) -> dict[str, Any]:
     carrier = node.row(CARRIER).lines[0]
     content = node.content()
     pace = paces.link_pace_of(node.gamma, content)
-    factors = node.link_factors(None, np.asarray(pace, dtype=object) == 0)
+    factors = node.link_factors(None, readings.frozen_of(node, content))
     held = [[i, axis] for axis in range(AXES) for i, f in enumerate(ints(factors[2 * axis])) if f == 0]
     gap0 = node.row(PLANE, gap=0).lines[0]
     return {

@@ -302,7 +302,7 @@ def click(
         return
     c = node.start_content
     pace = readings.paces_of(node, c)[1]
-    frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(node.shape, dtype=bool)
+    frozen = readings.frozen_of(node, c)
     factors = node.link_factors(None, frozen)
     gap0 = node.row(PLANE, gap=0)
     r_gap0 = node.rule_of(gap0, c, factors)

@@ -77,7 +77,7 @@ class Interval:
         node.start_content = self.c
         self.p0, self.pi = readings.paces_of(node, self.c)
         if self.frozen is None:
-            self.frozen = np.asarray(self.pi, dtype=object) == 0
+            self.frozen = readings.frozen_of(node, self.c)
             self.still = self.top | self.frozen
         node.proper = node.proper + self.direction * np.where(self.frozen, 0, self.p0)
         self.factors = node.link_factors(
