@@ -14,8 +14,7 @@ from event_universe.core.rule3 import carried_division
 from event_universe.loader.world import load_world
 from event_universe.node import Node
 
-ROOT = Path(__file__).resolve().parents[1]
-WORLDS = ROOT / "tests" / "worlds"
+WORLDS = (ROOT := Path(__file__).resolve().parents[1]) / "tests" / "worlds"
 
 
 def world_of(name: str) -> tuple[dict[str, Any], dict[str, Any]]:

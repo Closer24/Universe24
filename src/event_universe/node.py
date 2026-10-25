@@ -37,6 +37,7 @@ COUNTS = {  # the run's counts, every one 0 at the start
     "refused_lay": 0,
     "refused_orientation": 0,
     "refused_twist": 0,
+    "refused_sense": 0,
     "turns": 0,
     "met": 0,
     "laid": 0,

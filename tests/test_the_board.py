@@ -4,17 +4,18 @@ from __future__ import annotations
 
 import copy
 import itertools
+import json
 from typing import Any
 
 import numpy as np
 
+from event_universe import gates as table
+from event_universe import run as writer
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE
-from tests.laws import node_of, run_back_exact, world_of
+from tests.laws import node_of, refused, run_back_exact, world_of
 
-CUBE, INTERVALS, GROUPS = 5, 20, 4
-# the rotations alike per part under A2's digits at 20 intervals on the hole seed (MS-S1, 2026-10-25): the six negating neither y nor z
-ALIKE = (6, 0, 0, 0)
+CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 0, 0, 0)  # rotations alike per part (MS-S1)
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
     for pi in itertools.permutations(range(3))
@@ -128,8 +129,7 @@ def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_
     node = node_of("world_pair_3.json")
     assert int(node.by_index[2].lines[0].now.min()) == int(node.by_index[2].lines[0].now.max()) == 1170
     kept = copy.deepcopy(node)
-    alike = tops = 0
-    means = []
+    alike, tops, means = 0, 0, []
     for _ in range(400):
         node.step()
         x = [int(v) for v in node.row(CARRIER).lines[0].now.reshape(-1)]
@@ -150,3 +150,81 @@ def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_
     )
     assert bottoms == [(391, 949)] and node.counts["body_clicks"] == 135
     assert run_back_exact(kept, 10) == 10
+
+
+def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
+    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); BB_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to X = Gamma at every Node exactly at 115 and 230 (the bottoms), the bangs numbered 1, 116 and 231 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
+    universe, world = world_of("world_sea_3.json")
+    found = json.loads(json.dumps(writer.record(universe, world, 10, lambda line: None)))
+    out = table.gates(found)
+    bang = json.loads(json.dumps(out["1 recurring bangs"]))
+    assert bang["tops with every Node turning at once (interval)"] == [58, 173]
+    assert bang["bottoms (interval, mean X, at Gamma at every Node)"] == [
+        [115, 1000, True],
+        [230, 1000, True],
+    ]
+    assert bang["bangs numbered (the interval each begins)"] == [1, 116, 231]
+    assert bang["births and body credits between the bangs"] == [[0, 0], [0, 0], [0, 0]]
+    assert bang["verdict"].startswith("SHOWN: 2 exact returns")
+    assert out["46 the bangs recurring with the same gates"]["verdict"].startswith("NOT SHOWN")
+    assert found["run_back"] == {"intervals": 10, "exact": 10} and found["counts"]["births"] == "0"
+
+
+def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
+    """MV-S1 to MV-S3 (the Boss's ledger item 7, MV_COMPARISON.md's section for David): the heavy row's pair of 3 quanta laid under the sea at the centre of the 9-cube with the wave number h = den div 2 along x (k = pi / 3 exactly): W 0 at every Node of every lay, the share centroid's step at each of the first four closes (the paces still the vacuum's, before the sea deepens the board) within 40 milli-Links per interval of (1000 P) div (2 E) by cross multiplication (P_x = 2 num SUM_i (now_(i+x) before_i - now_i before_(i+x)) over the two lines, E the share summed), a top of 3 Nodes above the width-2 value, wave 0 hash-equal to no wave, the refusals by name, the run back exact through 10."""
+    universe, world = world_of("world_packet.json")
+    den, milli = int(universe["integers"]["den"]), 1000
+    packet = {"lay": "at", "row": 2, "centre": [4, 4, 4], "width": 2, "quanta": 3}
+    moving = dict(packet, wave=[den // 2, 0, 0])
+
+    def ints(a: Any) -> list[int]:
+        return [int(x) for x in a.reshape(-1)]
+
+    def laid(lay: dict[str, Any]) -> tuple[Node, int]:
+        node = Node(universe, dict(world, seed=[{"lay": "sea", "row": 0}, lay]))
+        row = node.by_index[2]
+        re, im = row.lines
+        assert row.pair is not None and not any(ints(re.now * im.before - im.now * re.before))
+        energy = sum(
+            ints(node.share(row.lines, node.rule(row.pair, node.content(), node.link_factors())))
+        )
+        momentum = sum(
+            sum(
+                ints(
+                    np.roll(line.now, -1, axis=0) * line.before
+                    - line.now * np.roll(line.before, -1, axis=0)
+                )
+            )
+            for line in row.lines
+        )
+        return node, milli * 2 * row.pair[0] * momentum // (2 * energy)
+
+    def centroid(node: Node) -> tuple[int, int]:
+        row = node.by_index[2]
+        assert row.pair is not None
+        share = node.share(row.lines, node.rule(row.pair, node.content(), node.link_factors()))
+        return sum(ints(share * np.indices(node.shape)[0])), sum(ints(share))
+
+    node, law = laid(moving)
+    assert laid(dict(moving, top=3))[1] > law > 0
+    kept = copy.deepcopy(node)
+    before = centroid(node)
+    for _ in range(4):
+        node.step()
+        after = centroid(node)
+        step, scale = milli * (after[0] * before[1] - before[0] * after[1]), after[1] * before[1]
+        assert abs(step - law * scale) <= 40 * scale, (law, step // scale)
+        before = after
+    assert node.counts["births"] == 0 and run_back_exact(kept, 10) == 10
+    rest, zero = laid(packet)[0], laid(dict(packet, wave=[0, 0, 0]))[0]
+    for _ in range(2):
+        assert rest.state_hash() == zero.state_hash()
+        rest.step()
+        zero.step()
+    for bad, match in (
+        (dict(moving, wave=[den + 1, 0, 0]), "beyond the band's edge"),
+        (dict(moving, row=0, wave=[0, 0, 0]), "a massless packet at the wave 0"),
+        (dict(moving, top=9), "a top is an odd count"),
+        (dict(moving, interval=3), "a field of no form"),
+    ):
+        refused(match, Node, universe, dict(world, seed=[bad]))

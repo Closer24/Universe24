@@ -16,8 +16,7 @@ from event_universe.rows import CARRIER, PLANE, zeros
 from event_universe.take import frame_nodes
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
-CENTRE = (1, 1, 1)  # the fed Node, the 3-cube's centre
-INTERVALS = 20
+CENTRE, INTERVALS = (1, 1, 1), 20  # the fed Node, the 3-cube's centre; the run's intervals
 
 
 def level_at(node: Node, content: int) -> int:
@@ -104,8 +103,7 @@ def bumped(node: Node) -> Node:
 
 
 def sea_only(name: str) -> Node:
-    universe, world = world_of(name)
-    return Node(universe, dict(world, seed=[lay for lay in world["seed"] if lay.get("lay") == "sea"]))
+    return node_of(name, seed=[x for x in world_of(name)[1]["seed"] if x.get("lay") == "sea"])
 
 
 def test_the_turn_is_the_pre_state_exchanged_and_complemented_and_runs_back_exact() -> None:
@@ -338,6 +336,43 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
             for e in node.log
         ), b
     assert run_back_exact(kept, 30) == 30
+
+
+def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the_light_sl_s2() -> None:
+    """SL-S2 (the Boss's ledger item 10, SL_COMPARISON.md section 3: the merger is the birth read at -1): the heaviest record's conjugate pair fed at two adjacent Nodes of the bare 5-cube (the + record at M and the - record at P at three times the lay's levels (A, B), one level pair on P's re line for a current across the Link and on two transverse neighbours for a twist) meets as the conjugate pair (the ends' charges opposite) and clicks into light: one birth whose taken row is the heaviest record and whose children are the gap-0 row, each child's wall one light quantum to the rounding paid by one exact take at its own end from the taken row's line, the gap-0 row standing at a whole quantum at each end where nothing stood, the children's charges -+(T div 2) summing to 0 and the gap-0 row's charge 0 over the board, taken at or above booked, the stop by name where an end could not pay; the run back exact."""
+    node = node_of("world_node.json", shape=[5, 5, 5], seed=[])
+    a, b, k = node.A, node.B, 3
+    heavy = max(range(len(node.records())), key=lambda r: node.records()[r].gap or 0)
+    light = node.row(PLANE, gap=0)
+    gap0, unit = node.records().index(light), node.unit_gap0
+    m, p = (1, 1, 1), (2, 1, 1)
+    feed = (
+        (m, (k * a, 0, 0, k * b)),
+        (p, (k * a, b, 0, -k * b)),
+        ((1, 2, 1), (a, b, 0, 0)),
+        ((2, 1, 2), (b, a, 0, 0)),
+    )
+    for at, levels in feed:
+        node.lay(heavy, at, levels)
+    kept = copy.deepcopy(node)
+    for _ in range(INTERVALS):
+        node.step()
+    births = [e for e in node.log if e["event"] == "birth"]
+    mergers = [e for e in births if e["taken_row"] == heavy]
+    assert len(mergers) == 1 and mergers[0]["line_pair"] == gap0 and births[0] is mergers[0]
+    (merger,) = mergers
+    assert {tuple(merger["minus"]), tuple(merger["plus"])} == {m, p}
+    assert [tuple(t["node"]) for t in merger["takes"]] == [tuple(merger["minus"]), tuple(merger["plus"])]
+    assert all(unit <= t["booked"] <= t["taken"] and t["booked"] < 2 * unit for t in merger["takes"])
+    assert merger["taken"] >= merger["booked"] == sum(t["booked"] for t in merger["takes"])
+    assert merger["W_children"] == [-(node.T // 2), node.T // 2] and merger["stood"] == [[0] * 4] * 2
+    refusals = [
+        e
+        for e in node.log
+        if e["event"] == "refused" and e.get("row") == heavy and e["i"] <= merger["i"]
+    ]
+    assert refusals and all(e["cause"] == "stop" and tuple(e["node"]) in (m, p) for e in refusals)
+    assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
 def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> None:

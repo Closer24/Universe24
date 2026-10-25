@@ -1,4 +1,4 @@
-"""The close, the Node's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every row's rule, the gap-0 plane's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`: every Link once from its +a end, both ends holding a whole quantum of the plane at the gap 0, the + child at the end the light's current flows into where the twist is right-handed, the one-Link read of a number at that end), the lays refused by name (`refuse`), the births taken and laid (`births`), the bodies' closing (`bodies`); the lay, the exact take and the momentum they book; the close undone from the log (`unclick`)."""
+"""The close, the Node's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every row's rule, the gap-0 plane's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`: every Link once from its +a end, both ends holding a whole quantum of the record, the + child at the end the record's current flows into where the twist is right-handed, the conjugate pair's selector for a record with a gap, the one-Link read of a number at that end), the lays refused by name (`refuse`), the births taken and laid (`births`: the birth's one take per Node from the gap-0 row, the merger's one take per end from the taken row, SL-S2), the bodies' closing (bodies.py); the lay, the exact take and the momentum they book; the close undone from the log (`unclick`)."""
 
 from __future__ import annotations
 
@@ -7,17 +7,19 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe import gram, readings
+from event_universe.bodies import bodies
 from event_universe.core import rule3
-from event_universe.core.ports import AXES, PORT_SIDES, across
+from event_universe.core.ports import AXES, across
 from event_universe.core.rule3 import quotient, remainder
 from event_universe.links import cross, row_current, row_twist
-from event_universe.rows import PLANE, POTENTIAL, Line
-from event_universe.take import frame_nodes, lay, momentum_of, neighbour, read_number, take_at
+from event_universe.rows import PLANE, Line
+from event_universe.take import fall_of, lay, momentum_of, neighbour, read_number, take_at
 
 if TYPE_CHECKING:
     from event_universe.node import Node
 
 Birth = tuple[tuple[int, ...], int, tuple[int, ...], tuple[int, ...], int, int]
+Kid = tuple[int, tuple[int, ...], tuple[int, ...], int]
 
 
 def refused(node: Node, at: tuple[int, ...], cause: str, **numbers: Any) -> None:
@@ -40,12 +42,13 @@ def list_of(node: Node, rec: int, number: int) -> int:
 def meet(
     node: Node, rec: int, start: list[Line], sh: Any, rules: list[tuple[Line, rule3.Rule]], frozen: Any
 ) -> list[Birth]:
-    """The Link close of one record, the same for every record (SL-S1, the generic close): every Link once from its +a end; a meeting where both ends hold a whole quantum of the record at the interval's start and neither end is frozen (counted as `met`); the + child at the end the record's own current flows into where the twist of its transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); the Link's one number read at the current's end names the children's record (`list_of`). Returns the births as (the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room, the taken record)."""
+    """The Link close of one record, the same for every record (SL-S1, the generic close): every Link once from its +a end; a meeting where both ends hold a whole quantum of the record at the interval's start and neither end is frozen (counted as `met`); the + child at the end the record's own current flows into where the twist of its transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); a record with a gap meets as the conjugate pair alone, the two ends' charges of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; refused by name `sense` where not); the Link's one number read at the current's end names the children's record (`list_of`). Returns the births as (the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room, the taken record)."""
     born: list[Birth] = []
-    unit = node.units[rec]
+    row, unit = node.records()[rec], node.units[rec]
     standing = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(sh) & ~frozen
     currents = [node.den * row_current(start, 2 * axis) for axis in range(AXES)]
     twists = [row_twist(start, axis) for axis in range(AXES)]
+    charges = gram.charge(row.shape, start) if row.gap else None
     for axis in range(AXES):
         both = standing & across(standing, 2 * axis)
         for where in zip(*np.nonzero(both), strict=True):
@@ -60,6 +63,10 @@ def meet(
             h = int(twists[axis][at])
             if h == 0:
                 refused(node, at, "twist", link=list(j), row=rec)
+                continue
+            if charges is not None and int(charges[at]) * int(charges[j]) >= 0:
+                w = [int(charges[at]), int(charges[j])]
+                refused(node, at, "sense", link=list(j), row=rec, charges=w)
                 continue
             plus, minus = (into, outof) if h > 0 else (outof, into)
             drawn = read_number(node, into, rules, unit)
@@ -91,76 +98,148 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
 
 
 def births(node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...]) -> set[tuple[int, ...]]:
-    """The births kept, every face read before any write: one exact take per Node and taken record of its children's walls summed, the walls the share the two lays add to their plane on the board (`lay_cost`, MS-S1: what is taken is what the lay books and nothing made), the taken record's first line paying at its rule; then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
-    by_node: dict[
-        tuple[tuple[int, ...], int], list[tuple[int, tuple[int, ...], tuple[int, ...], int]]
-    ] = {}
+    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made), then the takes by the taken pair's case, the taken row's first line paying at its rule: at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid by one exact take at its own end (`merger_take`, SL-S2: the birth read at -1); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
+    by_node: dict[tuple[tuple[int, ...], int], list[Kid]] = {}
     for at, s, minus, plus, room, rec in kept:
         by_node.setdefault((at, rec), []).append((s, minus, plus, room))
-    taken = []
+    walls = {k: walls_of(node, k[1], k[2], k[3], c, factors) for k in kept}
+    taken: list[tuple[tuple[int, ...], int, list[Kid], dict[str, Any]]] = []
     for at, rec in sorted(by_node):
         kids = by_node[(at, rec)]
-        walls = sum(lay_cost(node, s, minus, plus, c, factors) for s, minus, plus, _r in kids)
-        pair = node.records()[rec].pair
-        assert pair is not None
-        got = take_at(node, at, walls, node.rule(pair, c, factors), len(kids), rec)
-        if got is not None:
-            taken.append((at, rec, kids, walls, got, node.last_dp))
-    touched: set[tuple[int, ...]] = set()
-    for at, rec, kids, walls, (levels, fall, now, before), dp_take in taken:
+        row = node.records()[rec]
+        assert row.pair is not None
+        rule = node.rule(row.pair, c, factors)
+        if row.gap:
+            for kid in kids:
+                got = merger_take(node, kid[1], kid[2], walls[(at, *kid, rec)], rule, rec)
+                if got is not None:
+                    taken.append((at, rec, [kid], got))
+            continue
+        booked = sum(sum(walls[(at, *kid, rec)]) for kid in kids)
+        one = take_at(node, at, booked, rule, len(kids), rec)
+        if one is None:
+            continue
+        levels, fall, now, before = one
         node.closes[at] -= 1
-        touched |= children(node, at, kids, (walls, levels, fall, now, before, dp_take), rec)
-        node.counts["taken"] += fall
-        node.counts["booked"] += walls
+        take = take_line(fall, booked, levels, now, before, node.last_dp)
+        taken.append((at, rec, kids, take))
+    touched: set[tuple[int, ...]] = set()
+    for at, rec, kids, take in taken:
+        touched |= children(node, at, kids, take, rec)
+        node.counts["taken"] += take["taken"]
+        node.counts["booked"] += take["booked"]
     return touched
 
 
-def lay_cost(
+def take_line(
+    fall: int, booked: int, levels: int, now: int, before: int, dp: list[int]
+) -> dict[str, Any]:
+    """One take's numbers as the log carries them: the fall taken, the walls booked, the levels moved, the line's now before the take, the taker's three levels and the take's momentum."""
+    return {
+        "taken": fall,
+        "booked": booked,
+        "levels": levels,
+        "taken_now_was": now,
+        "taker": [now, before, levels],
+        "dP_take": dp,
+    }
+
+
+def merger_take(
+    node: Node,
+    minus: tuple[int, ...],
+    plus: tuple[int, ...],
+    walls: tuple[int, int],
+    rule: rule3.Rule,
+    rec: int,
+) -> dict[str, Any] | None:
+    """The merger's take (SL-S2, the birth's lay read at -1): each child's wall paid by one exact take at its own end from the taken row's first line at its rule, both ends read (`fall_of`) before either is written; refused by name `stop` where an end cannot pay. Returns the log's take fields, the two ends' takes summed and each end's own under `takes`, or None."""
+    line = node.records()[rec].lines[0]
+    for where, wall in zip((minus, plus), walls, strict=True):
+        levels, fall = fall_of(node, where, wall, rule, line)
+        if levels is None:
+            node.counts["refused_stop"] += 1
+            node.log.append(
+                {
+                    "event": "refused",
+                    "i": node.interval,
+                    "node": list(where),
+                    "cause": "stop",
+                    "fall": fall,
+                    "walls": wall,
+                    "row": rec,
+                }
+            )
+            return None
+    takes: list[dict[str, Any]] = []
+    for where, wall in zip((minus, plus), walls, strict=True):
+        got = take_at(node, where, wall, rule, 1, rec)
+        assert got is not None
+        levels, fall, now, before = got
+        node.closes[where] -= 1
+        takes.append({"node": list(where), **take_line(fall, wall, levels, now, before, node.last_dp)})
+    return {
+        "taken": takes[0]["taken"] + takes[1]["taken"],
+        "booked": takes[0]["booked"] + takes[1]["booked"],
+        "levels": takes[0]["levels"] + takes[1]["levels"],
+        "taken_now_was": [t["taken_now_was"] for t in takes],
+        "taker": [t["taker"] for t in takes],
+        "dP_take": [a + b for a, b in zip(takes[0]["dP_take"], takes[1]["dP_take"], strict=True)],
+        "takes": takes,
+    }
+
+
+def walls_of(
     node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], c: Any, factors: tuple[Any, ...]
-) -> int:
-    """The walls a birth books (MS-S1): the share the two children's lays add to their plane on the board in the carrier's unit, read by laying them, reading and taking them back."""
+) -> tuple[int, int]:
+    """Each child's wall (MS-S1): the share its lay adds to its plane on the board in the carrier's unit, read by laying the - child, then the + child, reading after each and taking both back; the birth's walls their sum."""
     row = node.records()[s]
     assert row.pair is not None
     rule = node.rule(row.pair, c, factors)
-    before = int(sum(int(x) for x in node.share(row.lines, rule).reshape(-1)))
-    child_laid(node, s, minus, plus)
-    after = int(sum(int(x) for x in node.share(row.lines, rule).reshape(-1)))
-    child_laid(node, s, minus, plus, -1)
-    return after - before
+
+    def total() -> int:
+        return int(sum(int(x) for x in node.share(row.lines, rule).reshape(-1)))
+
+    before = total()
+    child_at(node, s, minus, -1)
+    middle = total()
+    child_at(node, s, plus, 1)
+    after = total()
+    child_at(node, s, plus, 1, -1)
+    child_at(node, s, minus, -1, -1)
+    return middle - before, after - middle
 
 
-def child_laid(
-    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], sign: int = 1
-) -> tuple[list[int], list[int], list[list[int]]]:
-    """One child laid at the charge T div 2 at the quarter turn (MS-S1: re_now A at the - end, im_before -B; re_now A at the + end, im_before +B; A B = T div 2, the same two integers for every row), each lay's momentum booked; taken back with the sign -1; returns the lay's momentum, each child's Wronskian at its Node (its sense, the owner's word 3; T div 2 where the plane stood at nothing) and the plane's four levels at each Node before the lay (the residue)."""
+def child_at(node: Node, s: int, where: tuple[int, ...], sense: int, sign: int = 1) -> list[int]:
+    """One child laid at one end at the charge T div 2 at the quarter turn (MS-S1: re_now A, im_before sense B, A B = T div 2, the same two integers for every row), its lay's momentum booked and returned; taken back with the sign -1."""
     row = node.records()[s]
     re, im = row.lines
     assert row.pair is not None
-    dp_lay = [0, 0, 0]
+    num = row.pair[0]
+    dp = momentum_of(node, re.now, re.before, where, d_now=sign * node.A, num=num)
+    dp_im = momentum_of(node, im.now, im.before, where, d_before=sign * sense * node.B, num=num)
+    lay(node, s, where, (node.A, 0, 0, sense * node.B), sign)
+    return [a + b for a, b in zip(dp, dp_im, strict=True)]
+
+
+def child_laid(
+    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...]
+) -> tuple[list[int], list[int], list[list[int]]]:
+    """The two children laid by the one lay act (`child_at`: the - child at the - end, the + child at the + end); returns the lays' momentum, each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the plane's four levels at each Node before the lay (the residue)."""
+    re, im = node.records()[s].lines
     stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
+    dp_lay = [0, 0, 0]
     for where, sense in ((minus, -1), (plus, 1)):
-        for a, d in enumerate(
-            momentum_of(node, re.now, re.before, where, d_now=sign * node.A, num=row.pair[0])
-        ):
+        for a, d in enumerate(child_at(node, s, where, sense)):
             dp_lay[a] += d
-        for a, d in enumerate(
-            momentum_of(node, im.now, im.before, where, d_before=sign * sense * node.B, num=row.pair[0])
-        ):
-            dp_lay[a] += d
-        lay(node, s, where, (node.A, 0, 0, sense * node.B), sign)
     senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
     return dp_lay, senses, stood
 
 
 def children(
-    node: Node,
-    at: tuple[int, ...],
-    kids: list[tuple[int, tuple[int, ...], tuple[int, ...], int]],
-    take: tuple[int, int, int, int, int, list[int]],
-    rec: int,
+    node: Node, at: tuple[int, ...], kids: list[Kid], take: dict[str, Any], rec: int
 ) -> set[tuple[int, ...]]:
-    """One take's children laid (`child_laid`), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last). Returns the Nodes touched."""
-    walls, levels, fall, now, before, dp_take = take
+    """One take's children laid (`child_laid`), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last), a merger's two ends' takes under `takes`. Returns the Nodes touched."""
     touched = {at}
     for s, minus, plus, room in kids:
         dp_lay, w_children, stood = child_laid(node, s, minus, plus)
@@ -177,11 +256,11 @@ def children(
                 "W_children": w_children,
                 "minus": list(minus),
                 "plus": list(plus),
-                "taken": fall,
-                "booked": walls,
-                "levels": levels,
-                "taken_now_was": now,
-                "taker": [now, before, levels],
+                "taken": take["taken"],
+                "booked": take["booked"],
+                "levels": take["levels"],
+                "taken_now_was": take["taken_now_was"],
+                "taker": take["taker"],
                 "taken_row": rec,
                 "proper": int(node.proper[at]),
                 "content": int(node.start_content[at]),
@@ -189,141 +268,12 @@ def children(
                 "stood": stood,
                 "children_at_node": len(kids),
                 "room": room,
-                "dP_take": dp_take,
+                "dP_take": take["dP_take"],
                 "dP_lay": dp_lay,
+                **({"takes": take["takes"]} if "takes" in take else {}),
             }
         )
     return touched
-
-
-def bodies(
-    node: Node,
-    plane_starts: list[list[Line]],
-    owns: list[Any],
-    born_nodes: set[tuple[int, ...]],
-    frozen: Any,
-    r_gap0: rule3.Rule,
-) -> None:
-    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; the beat a plane's by its re line's upward crossings counted, a quartet's from the invariant ratio N.G.B / N.G.N along the law's orbit (gram.period)."""
-    for rec, row in enumerate(node.records()):
-        standing_now = np.vectorize(
-            lambda v, unit=node.units[rec]: 1 if int(v) >= unit else 0, otypes=[object]
-        )(owns[rec])
-        node.standing[rec] = np.where(standing_now == 1, node.standing[rec] + 1, 0)
-        if row.shape == PLANE:
-            re = row.lines[0]
-            upward = np.vectorize(lambda b, n: 1 if (int(b) < 0 <= int(n)) else 0, otypes=[object])(
-                re.before, re.now
-            )
-            counting = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(node.crossed[rec])
-            node.beats[rec] = np.where(
-                (upward == 1) & (counting == 1), node.crossed[rec], node.beats[rec]
-            )
-            node.crossed[rec] = np.where(
-                upward == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0)
-            )
-        else:
-            node.beats[rec] = gram.period(node, row.lines, standing_now)
-        closing = np.vectorize(
-            lambda st, bt: 1 if (int(bt) > 0 and int(st) >= int(bt)) else 0, otypes=[object]
-        )(node.standing[rec], node.beats[rec])
-        for where in zip(*np.nonzero(closing == 1), strict=True):
-            at = tuple(int(x) for x in where)
-            if at in born_nodes or frozen[at]:
-                continue
-            got = take_at(node, at, node.units[rec], r_gap0, 1)
-            node.standing[rec][at] = 0
-            if got is None:
-                continue
-            levels, fall, now, before = got
-            node.counts["body_clicks"] += 1
-            node.log.append(credit(node, rec, at, plane_starts, fall, levels, now, before))
-
-
-def frame_of(
-    node: Node, rec: int, at: tuple[int, ...], plane_starts: list[list[Line]]
-) -> dict[str, Any]:
-    """A credit's frame: the record's levels at the Node now, stepped and at the start, its neighbours' at the start, the Link phases, frames, odd lines and factors the Node read at the start."""
-    re, im = node.records()[rec].lines
-    re0, im0 = plane_starts[rec]
-    nodes = frame_nodes(node, at)[1:]
-    sre, sim = node.stepped[rec]
-    return {
-        "re_now": int(re.now[at]),
-        "im_now": int(im.now[at]),
-        "re_before": int(re.before[at]),
-        "im_before": int(im.before[at]),
-        "re_stepped": int(sre.now[at]),
-        "im_stepped": int(sim.now[at]),
-        "re_start_now": int(re0.now[at]),
-        "re_start_before": int(re0.before[at]),
-        "im_start_now": int(im0.now[at]),
-        "im_start_before": int(im0.before[at]),
-        "re_neighbours_start": [int(re0.now[n]) for n in nodes],
-        "im_neighbours_start": [int(im0.now[n]) for n in nodes],
-        "phases": [[int(c[at]), int(sn[at])] for c, sn in node.start_phases],
-        "frames": [int(f[at]) for f in node.start_frames],
-        "odd": [
-            int(side * (node.start_odd[axis][at] + node.start_odd[axis][n]))
-            for (axis, side), n in zip(PORT_SIDES, nodes, strict=True)
-        ],
-        "X": node.X,
-        "factors": [int(f[at]) for f in node.start_factors],
-    }
-
-
-def bilinears_of(node: Node, rec: int, at: tuple[int, ...]) -> dict[str, Any]:
-    """A quartet's credit frame: its levels at the Node, its charge W, its spin density (the record's axial vector, signed per axis) and its axial Wronskians B.GJ Gamma_a.N (SR-S2; the decoder's species solve is a plane's, owed for the quartet by name)."""
-    row = node.records()[rec]
-    nows, befores = [line.now for line in row.lines], [line.before for line in row.lines]
-    gj = gram.matmul(gram.gram(row.shape), gram.rotation(row.shape))
-    axial = [int(s[at]) for s in gram.density(row.shape, nows)]
-    return {
-        "levels_now": [int(n[at]) for n in nows],
-        "levels_before": [int(b[at]) for b in befores],
-        "W": int(gram.charge(row.shape, row.lines)[at]),
-        "axial": axial,
-        "axial_sign": [(s > 0) - (s < 0) for s in axial],
-        "axial_wronskian": [
-            int(gram.form(gj, befores, gram.matvec(ga, nows))[at]) for ga in gram.axes(row.shape)
-        ],
-    }
-
-
-def credit(
-    node: Node,
-    rec: int,
-    at: tuple[int, ...],
-    plane_starts: list[list[Line]],
-    fall: int,
-    levels: int,
-    taken_was: int,
-    taken_before: int,
-) -> dict[str, Any]:
-    """A body's credit with its frame (a plane's `frame_of`, a quartet's `bilinears_of`), its sense the sign of its charge at the Node, its beat, the take's numbers and momentum, the taker's three levels (the gap-0 line's now before the take, its before, the levels taken: PC-S2), the sign level and whether the Node turned."""
-    row = node.records()[rec]
-    w = int(gram.charge(row.shape, row.lines)[at])
-    return {
-        "event": "credit",
-        "i": node.interval,
-        "node": list(at),
-        "proper": int(node.proper[at]),
-        "closes": int(node.closes[at]),
-        "content": int(node.start_content[at]),
-        "line": rec,
-        "sense": 1 if w > 0 else -1 if w < 0 else 0,
-        "beat": int(node.beats[rec][at]),
-        "frame": frame_of(node, rec, at, plane_starts)
-        if row.shape == PLANE
-        else bilinears_of(node, rec, at),
-        "taken": fall,
-        "levels": levels,
-        "taken_now_was": taken_was,
-        "taker": [taken_was, taken_before, levels],
-        "dP_take": node.last_dp,
-        "sign_level": int(node.row(POTENTIAL).lines[0].now[at]),
-        "turned": bool(node.turned[at]),
-    }
 
 
 def click(
@@ -359,7 +309,7 @@ def click(
 
 
 def unclick(node: Node, frame: dict[str, Any]) -> None:
-    """The close undone from the log, in the reverse order of its lines: the lays removed, the taken row's line restored, the readings' counters restored."""
+    """The close undone from the log, in the reverse order of its lines: the lays removed, the taken row's line restored at every take's Node (a merger's two ends under `takes`), the readings' counters restored."""
     gap0 = node.row(PLANE, gap=0)
     rec0 = node.records().index(gap0)
     for entry in reversed(node.log[frame["log_from"] :]):
@@ -371,13 +321,15 @@ def unclick(node: Node, frame: dict[str, Any]) -> None:
         if entry["event"] in ("birth", "credit"):
             row = entry.get("taken_row", rec0)
             line = node.records()[row].lines[0]
-            lay(
-                node,
-                row,
-                at,
-                (entry["taken_now_was"] - int(line.now[at]),)
-                + (0,) * (2 * node.records()[row].shape - 1),
-            )
+            for take in entry.get("takes", [entry]):
+                where = tuple(take["node"])
+                lay(
+                    node,
+                    row,
+                    where,
+                    (take["taken_now_was"] - int(line.now[where]),)
+                    + (0,) * (2 * node.records()[row].shape - 1),
+                )
             node.closes[at] -= 1
     del node.log[frame["log_from"] :]
     node.standing, node.crossed, node.beats = frame["counters"]

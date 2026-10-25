@@ -320,7 +320,7 @@ def lengthening(record: Record) -> dict[str, Any]:
 
 
 def merger(record: Record) -> dict[str, Any]:
-    """Row 24 (the Boss's 6400767119, the premise reader): the merger, a pair into light, from the log: a gapped record's meeting (SL-S1: both ends whole, the current's end, the twist) births the gap-0 record's children from the gapped record's take, so a birth whose taken row is a gapped record is a merger; the gapped meetings refused by name counted per cause (the orientation F = 0, the twist h = 0, the lay where the gap-0 record stands, the stop)."""
+    """Row 24 (the Boss's 6400767119, the premise reader): the merger, a pair into light, from the log: a gapped record's meeting (SL-S1: both ends whole, the current's end, the twist) births the gap-0 record's children from the gapped record's take, so a birth whose taken row is a gapped record is a merger; the gapped meetings refused by name counted per cause (the orientation F = 0, the twist h = 0, the sense where the ends' charges are not opposite (SL-S2), the lay where the gap-0 record stands, the stop where an end cannot pay)."""
     gap0 = record.line_num.index(record.den)
     mergers = [b for b in record.births if int(b.get("taken_row", gap0)) != gap0]
     refusals: Counter[str] = Counter(
