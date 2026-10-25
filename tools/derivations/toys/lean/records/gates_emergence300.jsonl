@@ -13,5 +13,6 @@
 {"7 light with its redshift / 11 / 12": {"light credits in the record": 0, "verdict": "NOT SHOWN: the record holds no light credit"}}
 {"18 the arrow of time": {"run back on the record": {"intervals": 25, "exact": 25}, "verdict": "SHOWN: the run back exact bit for bit, 25 of 25 intervals"}}
 {"the conservations in the clicks": {"charge: the senses summed over the births": 0, "count: taken against booked over the births (hundredths)": 105, "energy: the beat (intervals per period) of a body unchanged from one click to the next": {"click pairs": 141, "unchanged": 137, "changed by one": 0, "changed by more": 4}, "momentum: the credits running cosine": "NOT READ in this toy"}}
-{"the three constants": {"integers per Node": [95], "max state bits": 115, "max transient bits": 129, "first interval past the width": 300, "verdict": "NOT SHOWN: a transient past 128 bits"}}
+{"the three constants": {"integers per Node": [119], "max state bits": 115, "max transient bits": 129, "first interval past the width": 300, "verdict": "NOT SHOWN: a transient past 128 bits"}}
+{"the entropy of the clicks": {"births with a room": 19, "H at the end (bits)": 1387, "course (interval, H) at every eighth": [[6, 73], [7, 438], [8, 511], [10, 876], [27, 1168]], "verdict": "SHOWN: H never falls (a sum of bit lengths), 1387 bits over 19 births"}}
 {"the decoder": {"floats used": 0, "readings": "quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication"}}
