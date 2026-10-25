@@ -12,8 +12,12 @@ everything is read. The project's four documents (the owner's word of 2026-10-25
 kept coherent by one keeper, who changes them on the Boss's requests alone) are this one, the
 postulates and the decisions, [docs/ALGEBRA.md](ALGEBRA.md), the law, [docs/ENGINE.md](ENGINE.md),
 the engine, and [docs/UNIVERSE24.md](UNIVERSE24.md), the run: what the one run must show, its
-gates, the record's verdicts and what is open; [docs/FURTHER_RESEARCH.md](FURTHER_RESEARCH.md)
-holds the further research beside them. Where a line
+gates, the record's verdicts and what is open. The division of the documents is the keeper's (the
+owner's word of 2026-10-25, 11:3x UTC): beside the four, [docs/FURTHER_RESEARCH.md](FURTHER_RESEARCH.md)
+holds what does not match nature and the law's and the engine's open items (the run's open items
+stand in UNIVERSE24.md, section 4), [docs/FOLLOW_UP_PAPERS.md](FOLLOW_UP_PAPERS.md) the papers'
+proposals, README.md and CHANGELOG.md the repository's front matter pointing at the four; the
+claims map and the errata of the paper days left the tree on the owner's word of that day. Where a line
 points at the law, the law's line governs and no formula is restated here.
 
 ## The postulates (the owner's words of 2026-10-24 and 2026-10-25, approved 2026-10-25, 08:5x UTC)
