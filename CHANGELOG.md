@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- EQ-S1 in cs7's letter marked built on toys-5 ae8e3ceac in docs/ALGEBRA.md with its measure (the hand's confirmation at the merge owed); the ledger of docs/UNIVERSE24.md's section 4 current with the push read whole and run, the chiral's one laid-back click named, David's question on TRACE 54 answered from the documents, cs8 and pl1 landed and pl2 running.
 - The hand cs8's two findings for the law, CS8-S1 and CS8-S2 (the merger's take of the whole quantum at each end; a child's wall its own quantum), and the owner's question on the annihilation's interval in the open table of docs/UNIVERSE24.md's section 4 beside the question on the clicks, answered by EQ-S1 and the retrace (the Boss's 6403630255).
 - CS7-S1, the letter of nothing arrives read on the Node's net current, as EQ-S1's letter entering as built in docs/ALGEBRA.md (the hand cs7, the Boss's 6403341352; eq2's reading kept by name) with the theorem of the K div 2 bangs as a finding; the ledger of docs/UNIVERSE24.md's section 4 current with the Boss's merge of toys-5 f3c03eea9 at 8101ae3ee, the module count nineteen on the head and the room's rule; docs/HIGHLIGHTS.md's decision amended.
 - The even crossing marked mended on toys-5 f3c03eea9 in the CK-S1 note of docs/ALGEBRA.md with David's finding of the 24 rotations alike under it; the ledger of docs/UNIVERSE24.md's section 4 current with the push read whole and run, the Boss's build order of 6402908585, eq2 landed and the Reader's 23 of 50.
