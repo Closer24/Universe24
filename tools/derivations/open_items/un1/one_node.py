@@ -2,7 +2,7 @@
 re-derived here from the same primitives so the test needs no flag).
  1. THE UNIT as one function of the pair: for every pair row of both universe files, David's unit (3 T s with a gap, 3 T den at
     (den, den)) against leg_of's one arithmetic s + den (1 - min(s, 1)) and the residue form sine_den(num mod den, den); the bits.
- 2. THE LAY'S SHARE: the share at the vacuum's weight of MS-S1's quarter-turn lay (re_now A, im_before B, A B = T div 2) at one Node
+ 2. the lay's share: the share at the vacuum's weight of MS-S1's quarter-turn lay (re_now A, im_before B, A B = T div 2) at one Node
     of the 3-cube board at rest, for EVERY record alike: predicted 3 den (A^2 + B^2), the same integer on every row, the pair absent;
     the share of the rest record (A, A num div den, 0, A s div den) laid uniform: predicted 6 den A^2 s^2 div den^2 to the roundings
     (0 for the massless pair), the Wronskian A^2 s div den; so 3 T s is the share of the rest record carrying W = T div 2 and 3 T den
