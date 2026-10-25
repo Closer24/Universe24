@@ -189,6 +189,18 @@ def test_the_files_are_refused_by_name() -> None:
         ("the gap-0 row is the plane", dict(universe, rows=rows + [{"shape": 1, "pair": [1, 2]}])),
         ("one shape-10 row", dict(universe, rows=[r for r in rows if r["shape"] != 10])),
         (
+            "off den's circle",
+            dict(
+                universe,
+                rows=[
+                    dict(r, pair=[r["pair"][0] - 1, den])
+                    if r["shape"] == 2 and r["pair"][0] != den
+                    else r
+                    for r in rows
+                ],
+            ),
+        ),
+        (
             "the shape-4 row stands at",
             dict(universe, rows=[dict(r, pair=[1, den]) if r["shape"] == 4 else r for r in rows]),
         ),

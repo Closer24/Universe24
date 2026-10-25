@@ -63,6 +63,9 @@ class Node:
         self.w = wall_of(self.den, self.gamma, self.G)
         paces.certified(self.gamma)
         self.rows_, self.by_index = rows_of(universe, shape, self.w)
+        for r in self.records():
+            if r.pair and r.gap and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
+                raise ValueError("a gapped pair off den's circle: num^2 + s^2 is not den^2 (MS-S2)")
         self.gapped = [r for r in self.records() if r.gap is not None and r.gap > 0]
         self.units = [
             unit_of(sine_den(r.pair[0], self.den) if r.gap else self.den, self.T)

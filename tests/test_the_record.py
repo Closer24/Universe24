@@ -1,4 +1,4 @@
-"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube, regenerated under PM-S1 on 2026-10-25: the era of matter SHOWN on the hole seed, the bodies' credited Nodes receding) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name; the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
+"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube, regenerated under PM-S1 on 2026-10-25: the era of matter SHOWN on the hole seed, the bodies' credited Nodes receding) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, den's circle under gate 19 by its count (MS-S2: 26 points at the toy's den, 8 at the middle's, the typed pairs among them); the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
 
 from __future__ import annotations
 
@@ -50,6 +50,14 @@ def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
     for gate, verdict in SHOWN[name].items():
         assert found[gate]["verdict"].startswith(verdict), (name, gate, found[gate]["verdict"])
+    circle = next(
+        v for k, v in found["19 mass ratios (parts per million)"].items() if k.startswith("den's circle")
+    )
+    assert (len(circle), sum(1 for _ratio, typed in circle if typed)) == {
+        "bodies": (8, 2),
+        "chiral": (26, 3),
+        "hole": (26, 3),
+    }[name]
 
 
 @pytest.mark.parametrize("name", sorted(SHOWN))

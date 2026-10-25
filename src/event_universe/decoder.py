@@ -6,6 +6,7 @@ from collections import Counter, defaultdict
 from functools import cmp_to_key
 from typing import Any
 
+from event_universe.circle import circle_of
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.links import cross, turn_pair
@@ -253,6 +254,11 @@ def ratios(
             if clicks is None
             else "NOT SHOWN: the ratio in the clicks is off the header's beyond the floor"
         )
+    circle = circle_of(record.den)
+    least = min((s for _num, s in circle), default=0)
+    found[
+        "den's circle: the points' legs over the least (parts per million), the typed among them marked"
+    ] = [[quot(s, least, MIL), num in record.NAMES] for num, s in sorted(circle, key=lambda p: p[1])]
     out = {"19 mass ratios (parts per million)": found | {"verdict": read}}
     fl = sorted(f for f in floor_mil if f is not None)
     if fl:
