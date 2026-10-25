@@ -59,6 +59,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         27,
         "MA-S1 (2026-10-25, the Boss's 6400767119 (4), MA_COMPARISON.md section 4: the test under 15 s): the pair at every Node of the 3-cube by the file's `at` lays to 400, every Node alike, the whole board turning at once at the top, births 0, the bottom named against Gamma, the run back exact",
     ),
+    "tests/test_the_board.py::test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb": (
+        17,
+        "BB-S1 and MA-S1 (2026-10-25, the Boss's 6400540638 and 6400767119 (2), BB_COMPARISON.md section 4: gate 1 from the Node lines, the test under 15 s): the sea on the 3-cube to 240, the exact returns at 115 and 230, the whole board turning at 58 and 173, the bangs numbered, no birth between",
+    ),
     "tests/test_the_node.py::shares_of": (
         11,
         "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, PM_COMPARISON.md section 5: the tests under 15 s beside the sentence): the helper, the gap-0 line's share in the carrier's unit and by hand at the frame's and the vacuum's weights",

@@ -4,17 +4,19 @@ from __future__ import annotations
 
 import copy
 import itertools
+import json
 from typing import Any
 
 import numpy as np
 
+from event_universe import gates as table
+from event_universe import run as writer
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE
 from tests.laws import node_of, run_back_exact, world_of
 
 CUBE, INTERVALS, GROUPS = 5, 20, 4
-# the rotations alike per part under A2's digits at 20 intervals on the hole seed (MS-S1, 2026-10-25): the six negating neither y nor z
-ALIKE = (6, 0, 0, 0)
+ALIKE = (6, 0, 0, 0)  # alike per part at 20 on the hole seed (MS-S1): negating neither y nor z
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
     for pi in itertools.permutations(range(3))
@@ -128,8 +130,7 @@ def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_
     node = node_of("world_pair_3.json")
     assert int(node.by_index[2].lines[0].now.min()) == int(node.by_index[2].lines[0].now.max()) == 1170
     kept = copy.deepcopy(node)
-    alike = tops = 0
-    means = []
+    alike, tops, means = 0, 0, []
     for _ in range(400):
         node.step()
         x = [int(v) for v in node.row(CARRIER).lines[0].now.reshape(-1)]
@@ -150,3 +151,21 @@ def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_
     )
     assert bottoms == [(391, 949)] and node.counts["body_clicks"] == 135
     assert run_back_exact(kept, 10) == 10
+
+
+def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
+    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); BB_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to X = Gamma at every Node exactly at 115 and 230 (the bottoms), the bangs numbered 1, 116 and 231 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
+    universe, world = world_of("world_sea_3.json")
+    found = json.loads(json.dumps(writer.record(universe, world, 10, lambda line: None)))
+    out = table.gates(found)
+    bang = json.loads(json.dumps(out["1 recurring bangs"]))
+    assert bang["tops with every Node turning at once (interval)"] == [58, 173]
+    assert bang["bottoms (interval, mean X, at Gamma at every Node)"] == [
+        [115, 1000, True],
+        [230, 1000, True],
+    ]
+    assert bang["bangs numbered (the interval each begins)"] == [1, 116, 231]
+    assert bang["births and body credits between the bangs"] == [[0, 0], [0, 0], [0, 0]]
+    assert bang["verdict"].startswith("SHOWN: 2 exact returns")
+    assert out["46 the bangs recurring with the same gates"]["verdict"].startswith("NOT SHOWN")
+    assert found["run_back"] == {"intervals": 10, "exact": 10} and found["counts"]["births"] == "0"

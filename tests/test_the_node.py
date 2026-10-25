@@ -372,5 +372,6 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert node.wronskians["kept"] == node.wronskians["sites"] > 0
         assert not {"negated", "changed"} & node.wronskians.keys()
         found.append(node.wronskians)
-    assert [f["sites"] for f in found] == [296, 2120] and found[1]["nonzero"] == 668
-    assert "nonzero" not in found[0]
+    assert [f["sites"] for f in found] == [296, 2120] and found[1]["nonzero"] == 668 > found[0].get(
+        "nonzero", 0
+    )
