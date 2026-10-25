@@ -1,0 +1,64 @@
+{
+ "file": "chiral300_zero.json",
+ "counts": {
+  "births": "19",
+  "taken": "3855369443917277094180423101",
+  "booked": "45232450191476756064000",
+  "body_clicks": "366",
+  "refused_stop": "13",
+  "refused_origin": "0",
+  "refused_lay": "65158",
+  "refused_orientation": "26",
+  "refused_twist": "0",
+  "turns": "778",
+  "laid": "11",
+  "laid_nodes": "10",
+  "light_credits": "0"
+ },
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "integers": 99,
+ "max_bits": 115,
+ "births": {
+  "lines": 19,
+  "taken": 3855369443917277094180423101,
+  "booked": 45232450191476756064000,
+  "taken_per_booked_hundredths_rem": [
+   8523459,
+   9715133429653536934100
+  ],
+  "excess_min_max": [
+   1857823382803588748,
+   3855321993950575712323737146
+  ],
+  "excess_zero_count": 0,
+  "excess_sum": 3855324211467085617424359101,
+  "paid_eq_booked_count": 19,
+  "paid_per_booked_hundredths_rem": [
+   100,
+   0
+  ],
+  "remainder_net_change": 3855324211467085617424359101,
+  "remainder_max": 3855321993950575712323737146
+ },
+ "credits": {
+  "lines": 366,
+  "taken": 5514122876414594550969138896,
+  "paid_eq_owed_unit_count": 366,
+  "booked": 16465448417747206320000,
+  "taken_per_booked_hundredths_rem": [
+   33489053,
+   12910757122044498929600
+  ],
+  "remainder_net_change": 5514106410966176803762818896,
+  "remainder_max": 3902778418779501667659737554,
+  "levels_min_max": [
+   0,
+   7
+  ]
+ },
+ "charge_sum_over_births": 0,
+ "W_children_sum": -284
+}

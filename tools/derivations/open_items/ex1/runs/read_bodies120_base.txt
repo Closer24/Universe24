@@ -1,0 +1,57 @@
+{
+ "file": "bodies120_base.json",
+ "counts": {
+  "births": "0",
+  "taken": "0",
+  "booked": "0",
+  "body_clicks": "303",
+  "refused_stop": "0",
+  "refused_origin": "0",
+  "refused_lay": "0",
+  "refused_orientation": "125",
+  "refused_twist": "10",
+  "turns": "0",
+  "laid": "0",
+  "laid_nodes": "0",
+  "light_credits": "0"
+ },
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "integers": 89,
+ "max_bits": 92,
+ "births": {
+  "lines": 0,
+  "taken": 0,
+  "booked": 0,
+  "taken_per_booked_hundredths_rem": [
+   null,
+   null
+  ],
+  "excess_min_max": null,
+  "excess_zero_count": 0,
+  "excess_sum": 0
+ },
+ "credits": {
+  "lines": 303,
+  "taken": 127221558519575682906,
+  "booked_from_units": true,
+  "booked": 51592967314560000,
+  "taken_per_booked_hundredths_rem": [
+   246587,
+   820762161570600
+  ],
+  "excess_min_max": [
+   2060983607090,
+   45002473326570070402
+  ],
+  "excess_per_booked_max_hundredths": 26429473,
+  "levels_min_max": [
+   1,
+   3
+  ]
+ },
+ "charge_sum_over_births": 0,
+ "W_children_sum": 0
+}

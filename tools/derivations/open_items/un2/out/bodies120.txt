@@ -1,0 +1,5 @@
+base bodies120 seconds 6 run back {'intervals': 10, 'exact': 10} counts {"births": "0", "body_clicks": "83", "turns": "1573", "refused_lay": "48", "refused_orientation": "49", "refused_twist": "110", "refused_stop": "76", "taken": "0", "booked": "0", "laid": "0"}
+off bodies120 seconds 7 run back {'intervals': 10, 'exact': 10} counts {"births": "0", "body_clicks": "83", "turns": "1573", "refused_lay": "48", "refused_orientation": "49", "refused_twist": "110", "refused_stop": "76", "taken": "0", "booked": "0", "laid": "0"}
+on bodies120 seconds 7 run back {'intervals': 10, 'exact': 10} counts {"births": "0", "body_clicks": "83", "turns": "1573", "refused_lay": "48", "refused_orientation": "49", "refused_twist": "110", "refused_stop": "76", "taken": "0", "booked": "0", "laid": "0"}
+compare bodies120 base against off EQUAL
+compare bodies120 base against on EQUAL
