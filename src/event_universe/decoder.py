@@ -8,6 +8,7 @@ from typing import Any
 
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
+from event_universe.links import cross, turn_pair
 from event_universe.rows import PLANE
 
 MIL = 1000000  # readings in parts per million
@@ -53,21 +54,13 @@ class Record:
 
 def quot(a: int, b: int, scale: int = 1) -> int | None:
     """The integer reading of a / b: the quotient of the scaled numerator (the remainder dropped)."""
-    return None if b == 0 else (a * scale) // b
+    return None if b == 0 else int(rule3.division_forward(a * scale, b, 0)[0])
 
 
 def cmp_rat(p: Rational, q: Rational) -> int:
     """Order two rationals (n, d) with d > 0 by cross multiplication."""
-    s = p[0] * q[1] - q[0] * p[1]
+    s = int(cross(p[0], p[1], q[0], q[1]))
     return (s > 0) - (s < 0)
-
-
-def turned(a: Rational, m: Rational, over: int) -> Rational:
-    """A complex pair turned by the pair (c, s) over the scale, one half-up rounding per part."""
-    c, s = a
-    return (2 * (c * m[0] - s * m[1]) + over) // (2 * over), (2 * (s * m[0] + c * m[1]) + over) // (
-        2 * over
-    )
 
 
 def carrier_levels(record: Record, credit: dict[str, Any]) -> tuple[int, int, int]:
@@ -100,9 +93,9 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
     a_re = a_im = 0
     for port, (a, b) in enumerate(zip(f["re_neighbours_start"], f["im_neighbours_start"], strict=True)):
         m: Rational = (a, frames[port] * b)
-        m = turned(tuple(phases[port]), m, scale)
+        m = turn_pair(m[0], m[1], phases[port][0], phases[port][1], scale)
         n = odd[port]
-        m = turned((wl * wl - n * n, 2 * wl * n), m, wl * wl + n * n)
+        m = turn_pair(m[0], m[1], wl * wl - n * n, 2 * wl * n, wl * wl + n * n)
         reach = 2 * pi * pi * f["factors"][port]
         a_re, a_im = a_re + reach * (m[0] - zn[0]), a_im + reach * (m[1] - zn[1])
     p = (e[0] + weight * den * zn[0] * x_n, e[1] + weight * den * zn[1] * x_n)
@@ -116,7 +109,7 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
 def nearest(record: Record, x: Rational) -> str:
     """The name whose num / den lies nearest the rational x = (N, D): the smallest |N den - num D|, all integers."""
     n, d = x
-    return min(record.NAMES.items(), key=lambda kv: abs(n * record.den - kv[0] * d))[1][0]
+    return min(record.NAMES.items(), key=lambda kv: abs(cross(n, d, kv[0], record.den)))[1][0]
 
 
 def middle(xs: list[Rational]) -> Rational:
