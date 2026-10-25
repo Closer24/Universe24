@@ -1,0 +1,67 @@
+{
+ "den": 348893,
+ "Gamma": 6000,
+ "T": 36000,
+ "G": 16,
+ "cube": 3,
+ "load_seconds": 0,
+ "width_bits": 121,
+ "A": 867308847047,
+ "A_bits": 40,
+ "rows": 11,
+ "kind": "object",
+ "rule3_total_bits_at_A_(vac,frozen-1,-Gamma)": [
+  94,
+  96,
+  102
+ ],
+ "wall_bits": 55,
+ "state_largest_bits_over_run": 91,
+ "integers_per_node_at_start": 35,
+ "integers_per_node_at_end": 243,
+ "same_count_at_every_node": true,
+ "births": {
+  "5": [
+   7
+  ],
+  "8": [
+   9
+  ]
+ },
+ "credits": 14,
+ "births_lines": 14,
+ "run_back_MATCH_intervals": 12,
+ "run_back_lines_during": 0,
+ "interval_after_back": 0,
+ "run_seconds": 13,
+ "exact_bands": {
+  "G_16": {
+   "period_0_over_den": [
+    4,
+    0
+   ],
+   "period_half_at_2den": [
+    6,
+    0
+   ],
+   "period_minus_half_at_2den": [
+    3,
+    0
+   ]
+  },
+  "G_1": {
+   "period_0_over_den": [
+    4,
+    0
+   ],
+   "period_half_at_2den": [
+    6,
+    0
+   ],
+   "period_minus_half_at_2den": [
+    3,
+    0
+   ]
+  }
+ }
+}

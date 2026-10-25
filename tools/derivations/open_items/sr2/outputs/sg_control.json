@@ -1,0 +1,397 @@
+{
+ "world": "sg_control.json",
+ "cube": 9,
+ "intervals": 60,
+ "milliseconds": 5656,
+ "records (index: shape, gap)": {
+  "0": [
+   2,
+   28232
+  ],
+  "1": [
+   2,
+   1149611050
+  ],
+  "2": [
+   8,
+   1149611050
+  ],
+  "3": [
+   2,
+   0
+  ]
+ },
+ "centre": [
+  4,
+  4,
+  4
+ ],
+ "crossings at the centre (record, line): count": {
+  "2,0": 5,
+  "2,4": 5,
+  "0,0": 0,
+  "1,0": 0
+ },
+ "crossing intervals (record, line)": {
+  "2,0": [
+   4,
+   10,
+   16,
+   23,
+   35
+  ],
+  "2,4": [
+   4,
+   10,
+   16,
+   23,
+   35
+  ],
+  "0,0": [],
+  "1,0": []
+ },
+ "traces (record, line): line 0 values early and every 20th": {
+  "2,0": [
+   130,
+   -766,
+   -660,
+   263,
+   897,
+   503,
+   -488,
+   -969,
+   -391,
+   644,
+   1048,
+   385,
+   -706,
+   -1163,
+   -531,
+   630,
+   1299,
+   918,
+   -201,
+   -1228,
+   -1476,
+   -827,
+   309,
+   1326,
+   1763,
+   1488,
+   663,
+   -392,
+   -1348,
+   -1968,
+   -2147,
+   -1898,
+   -1311,
+   -515,
+   355,
+   1179,
+   1868,
+   2363,
+   2636,
+   2686,
+   2528
+  ],
+  "2,4": [
+   130,
+   -766,
+   -660,
+   263,
+   897,
+   503,
+   -488,
+   -969,
+   -391,
+   644,
+   1048,
+   385,
+   -706,
+   -1163,
+   -531,
+   630,
+   1299,
+   918,
+   -201,
+   -1228,
+   -1476,
+   -827,
+   309,
+   1326,
+   1763,
+   1488,
+   663,
+   -392,
+   -1348,
+   -1968,
+   -2147,
+   -1898,
+   -1311,
+   -515,
+   355,
+   1179,
+   1868,
+   2363,
+   2636,
+   2686,
+   2528
+  ],
+  "0,0": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "1,0": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "start share per record": {
+  "0": {
+   "share at centre": 0,
+   "units at centre (thousandths)": 0,
+   "board units (thousandths)": 0,
+   "unit": 1044301680000
+  },
+  "1": {
+   "share at centre": 0,
+   "units at centre (thousandths)": 0,
+   "board units (thousandths)": 0,
+   "unit": 170273819520000
+  },
+  "2": {
+   "share at centre": 6488708293547856,
+   "units at centre (thousandths)": 38107,
+   "board units (thousandths)": 443350,
+   "unit": 170273819520000
+  },
+  "3": {
+   "share at centre": 177452191276983,
+   "units at centre (thousandths)": 992,
+   "board units (thousandths)": 723350,
+   "unit": 178838187228000
+  }
+ },
+ "credits per record": {
+  "0": {
+   "credits": 0,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+   },
+   "beats": {}
+  },
+  "1": {
+   "credits": 0,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+   },
+   "beats": {}
+  },
+  "2": {
+   "credits": 304,
+   "senses": {
+    "-1": 0,
+    "0": 304,
+    "1": 0
+   },
+   "beats": {
+    "5": 100,
+    "6": 85,
+    "7": 61,
+    "8": 14,
+    "12": 14,
+    "9": 6,
+    "10": 12,
+    "14": 12
+   },
+   "component +": {
+    "credits": 0,
+    "per position along axis 2": {},
+    "centroid (thousandths)": null,
+    "beats": {},
+    "senses": {
+     "-1": 0,
+     "0": 0,
+     "1": 0
+    }
+   },
+   "component -": {
+    "credits": 0,
+    "per position along axis 2": {},
+    "centroid (thousandths)": null,
+    "beats": {},
+    "senses": {
+     "-1": 0,
+     "0": 0,
+     "1": 0
+    }
+   },
+   "component 0": {
+    "credits": 304,
+    "per position along axis 2": {
+     "2": 22,
+     "3": 71,
+     "4": 118,
+     "5": 71,
+     "6": 22
+    },
+    "centroid (thousandths)": [
+     4000,
+     4000,
+     4000
+    ],
+    "beats": {
+     "5": 100,
+     "6": 85,
+     "7": 61,
+     "8": 14,
+     "12": 14,
+     "9": 6,
+     "10": 12,
+     "14": 12
+    },
+    "senses": {
+     "-1": 0,
+     "0": 304,
+     "1": 0
+    }
+   },
+   "s_D sums over credits": [
+    75100356,
+    0,
+    0
+   ],
+   "s_W sums over credits": [
+    0,
+    0,
+    0
+   ]
+  },
+  "3": {
+   "credits": 0,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+   },
+   "beats": {}
+  }
+ },
+ "counts": {
+  "births": "0",
+  "taken": "0",
+  "booked": "0",
+  "body_clicks": "304",
+  "refused_stop": "0",
+  "refused_origin": "0",
+  "refused_lay": "144",
+  "refused_orientation": "930",
+  "refused_twist": "648",
+  "turns": "0",
+  "light_credits": "0",
+  "light_laid": "0",
+  "light_laid_nodes": "0"
+ },
+ "taken >= booked": true,
+ "births": 0,
+ "spinor births": 0,
+ "W of the children at every birth (sum)": [],
+ "W of the children sum 0 at every birth": true,
+ "spinor births: chi and axis": [],
+ "W total per record at the end": {
+  "0": 0,
+  "1": 0,
+  "2": 0,
+  "3": 0
+ },
+ "integers per Node": 116,
+ "max bits": 92,
+ "max transient bits": 84,
+ "turns": 0,
+ "run back": {
+  "intervals": 10,
+  "exact": 10
+ }
+}

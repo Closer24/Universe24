@@ -1,0 +1,42 @@
+{"1000": {"plain_iterated_fixed_point_p": 500, "reached_at_content": 500, "Gamma_div_2": 500, "frozen_engine": 3793, "carried_contents_compared": 3793, "carried_differing_contents": 485, "carried_largest_difference_units": 1, "carried_first_differing_content": 33, "carried_frozen_content": 3792, "carried_p_before_frozen": 23, "engine_p_before_frozen": 23, "X_carried": 3573457785, "X_engine": 3573457785, "exact_fraction_bits_at_deepest": 37796, "carried_largest_integer_bits": 20, "p0_at_content_Gamma_engine": 368, "p0_at_content_Gamma_carried": 368}}
+{"6000": {"plain_iterated_fixed_point_p": 3000, "reached_at_content": 3000, "Gamma_div_2": 3000, "frozen_engine": 28206, "carried_contents_compared": 400, "carried_differing_contents": 167, "carried_largest_difference_units": 1, "carried_first_differing_content": 79, "carried_frozen_content": -1, "carried_p_before_frozen": null, "engine_p_before_frozen": 55, "X_carried": null, "X_engine": 849778020628, "exact_fraction_bits_at_deepest": 354001, "carried_largest_integer_bits": 26, "p0_at_content_Gamma_engine": 2207, "p0_at_content_Gamma_carried": null}}
+{
+ "1000": {
+  "plain_iterated_fixed_point_p": 500,
+  "reached_at_content": 500,
+  "Gamma_div_2": 500,
+  "frozen_engine": 3793,
+  "carried_contents_compared": 3793,
+  "carried_differing_contents": 485,
+  "carried_largest_difference_units": 1,
+  "carried_first_differing_content": 33,
+  "carried_frozen_content": 3792,
+  "carried_p_before_frozen": 23,
+  "engine_p_before_frozen": 23,
+  "X_carried": 3573457785,
+  "X_engine": 3573457785,
+  "exact_fraction_bits_at_deepest": 37796,
+  "carried_largest_integer_bits": 20,
+  "p0_at_content_Gamma_engine": 368,
+  "p0_at_content_Gamma_carried": 368
+ },
+ "6000": {
+  "plain_iterated_fixed_point_p": 3000,
+  "reached_at_content": 3000,
+  "Gamma_div_2": 3000,
+  "frozen_engine": 28206,
+  "carried_contents_compared": 400,
+  "carried_differing_contents": 167,
+  "carried_largest_difference_units": 1,
+  "carried_first_differing_content": 79,
+  "carried_frozen_content": -1,
+  "carried_p_before_frozen": null,
+  "engine_p_before_frozen": 55,
+  "X_carried": null,
+  "X_engine": 849778020628,
+  "exact_fraction_bits_at_deepest": 354001,
+  "carried_largest_integer_bits": 26,
+  "p0_at_content_Gamma_engine": 2207,
+  "p0_at_content_Gamma_carried": null
+ }
+}

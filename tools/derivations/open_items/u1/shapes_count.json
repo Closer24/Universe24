@@ -1,0 +1,631 @@
+{
+ "universe": {
+  "integers": {
+   "den": 1021,
+   "node_clock": 1000,
+   "quantum_action": 36000
+  }
+ },
+ "shape": [
+  3,
+  3,
+  3
+ ],
+ "width_bits": 100,
+ "universe_file_keys": [
+  "den",
+  "node_clock",
+  "quantum_action"
+ ],
+ "rows_derived_from_den": [
+  [
+   "volume",
+   [
+    1020,
+    1021
+   ],
+   4
+  ],
+  [
+   "sign",
+   [
+    1021,
+    1021
+   ],
+   4
+  ],
+  [
+   "massless",
+   [
+    1021,
+    1021
+   ],
+   1
+  ],
+  [
+   "point -2",
+   [
+    660,
+    1021
+   ],
+   2
+  ],
+  [
+   "point 2",
+   [
+    779,
+    1021
+   ],
+   2
+  ]
+ ],
+ "families_at_the_start": [
+  {
+   "family": "volume",
+   "pair": [
+    1020,
+    1021
+   ],
+   "held": true,
+   "wronskian": false,
+   "rotation": false,
+   "axes": true,
+   "plane": false,
+   "flux": false,
+   "width": 4,
+   "rows_or_records": 1,
+   "lines": 4,
+   "write_remainders": 4,
+   "phase_lines": 0,
+   "shape": "10 (the metric g)",
+   "lines_named": [
+    "g_00: the time line (the volume X, the clock; the stress's trace written into it)",
+    "g_xx: tension line x (3 T_aa - SUM T_bb, the traceless diagonal; even under the axis's inversion)",
+    "g_yy: tension line y (3 T_aa - SUM T_bb, the traceless diagonal; even under the axis's inversion)",
+    "g_zz: tension line z (3 T_aa - SUM T_bb, the traceless diagonal; even under the axis's inversion)"
+   ],
+   "held_of_the_10": 4,
+   "missing_of_the_10": [
+    "g_xy, g_yz, g_zx: the three shear lines (T_2g), named in the docstrings (records.axis_positions, derived.held_write_of) and held by no row of the loader",
+    "g_0x, g_0y, g_0z: the three odd lines of the flux (T_1u, Row.flux False in universe.rows_of), the momentum density's seat"
+   ],
+   "extra": [
+    "4 write remainders (one per held line, the write's carried division)"
+   ]
+  },
+  {
+   "family": "sign",
+   "pair": [
+    1021,
+    1021
+   ],
+   "held": true,
+   "wronskian": true,
+   "rotation": true,
+   "axes": true,
+   "plane": false,
+   "flux": false,
+   "width": 4,
+   "rows_or_records": 1,
+   "lines": 4,
+   "write_remainders": 4,
+   "phase_lines": 0,
+   "shape": "4 (the potential A_mu) per row",
+   "lines_named_per_row": [
+    "A_0: the time line (sourced by the Wronskian, the charge density)",
+    "A_x: odd line x (sourced by the sense current J_x; negated under the axis's inversion)",
+    "A_y: odd line y (sourced by the sense current J_y; negated under the axis's inversion)",
+    "A_z: odd line z (sourced by the sense current J_z; negated under the axis's inversion)"
+   ],
+   "held_of_the_4": 4,
+   "rows": 1,
+   "extra": [
+    "4 write remainders (one per held line)",
+    "0 phase lines (0 rows beyond the free row x 10: 6 pair lines cos/sin per owned Link, 3 count lines, 1 phase row Phi)",
+    "0 rows beyond the one row (one per charged record, No record reads its own write; the law's sentence of 19:0x UTC has one row)"
+   ]
+  },
+  {
+   "family": "massless",
+   "pair": [
+    1021,
+    1021
+   ],
+   "held": false,
+   "wronskian": false,
+   "rotation": false,
+   "axes": false,
+   "plane": false,
+   "flux": false,
+   "width": 1,
+   "rows_or_records": 1,
+   "lines": 1,
+   "write_remainders": 0,
+   "phase_lines": 0,
+   "shape": "1 (a scalar line): a fourth shape, light's own row, outside the owner's three",
+   "lines_named": [
+    "the massless line (den, den), the seed laid on every Node but the origin"
+   ]
+  },
+  {
+   "family": "point -2",
+   "pair": [
+    660,
+    1021
+   ],
+   "held": false,
+   "wronskian": false,
+   "rotation": false,
+   "axes": false,
+   "plane": true,
+   "flux": false,
+   "width": 2,
+   "rows_or_records": 0,
+   "lines": 0,
+   "write_remainders": 0,
+   "phase_lines": 0,
+   "shape": "2 (a plane: re, im) per record",
+   "lines_named_per_record": [
+    "re",
+    "im (the sense its Wronskian's sign)"
+   ]
+  },
+  {
+   "family": "point 2",
+   "pair": [
+    779,
+    1021
+   ],
+   "held": false,
+   "wronskian": false,
+   "rotation": false,
+   "axes": false,
+   "plane": true,
+   "flux": false,
+   "width": 2,
+   "rows_or_records": 0,
+   "lines": 0,
+   "write_remainders": 0,
+   "phase_lines": 0,
+   "shape": "2 (a plane: re, im) per record",
+   "lines_named_per_record": [
+    "re",
+    "im (the sense its Wronskian's sign)"
+   ]
+  }
+ ],
+ "integers_before_the_first_birth": {
+  "integers": 35,
+  "per_family": {
+   "volume": {
+    "lines": 4,
+    "write_remainders": 4,
+    "phase_lines": 0,
+    "integers": 16
+   },
+   "sign": {
+    "lines": 4,
+    "write_remainders": 4,
+    "phase_lines": 0,
+    "integers": 16
+   },
+   "massless": {
+    "lines": 1,
+    "write_remainders": 0,
+    "phase_lines": 0,
+    "integers": 3
+   },
+   "point -2": {
+    "lines": 0,
+    "write_remainders": 0,
+    "phase_lines": 0,
+    "integers": 0
+   },
+   "point 2": {
+    "lines": 0,
+    "write_remainders": 0,
+    "phase_lines": 0,
+    "integers": 0
+   }
+  },
+  "same_at_every_node": true,
+  "largest_bit_length": 59,
+  "largest_at": "volume write 1"
+ },
+ "first_birth_interval": 4,
+ "born_families": [
+  "point 2"
+ ],
+ "integers_after_the_first_birth": {
+  "integers": 139,
+  "per_family": {
+   "volume": {
+    "lines": 4,
+    "write_remainders": 4,
+    "phase_lines": 0,
+    "integers": 16
+   },
+   "sign": {
+    "lines": 12,
+    "write_remainders": 12,
+    "phase_lines": 20,
+    "integers": 108
+   },
+   "massless": {
+    "lines": 1,
+    "write_remainders": 0,
+    "phase_lines": 0,
+    "integers": 3
+   },
+   "point -2": {
+    "lines": 0,
+    "write_remainders": 0,
+    "phase_lines": 0,
+    "integers": 0
+   },
+   "point 2": {
+    "lines": 4,
+    "write_remainders": 0,
+    "phase_lines": 0,
+    "integers": 12
+   }
+  },
+  "same_at_every_node": true,
+  "largest_bit_length": 76,
+  "largest_at": "sign row 1 phase 0 now"
+ },
+ "growth_per_record": {
+  "records_born": 2,
+  "integers_grown": 104
+ },
+ "families_after_the_first_birth": [
+  {
+   "family": "volume",
+   "pair": [
+    1020,
+    1021
+   ],
+   "held": true,
+   "wronskian": false,
+   "rotation": false,
+   "axes": true,
+   "plane": false,
+   "flux": false,
+   "width": 4,
+   "rows_or_records": 1,
+   "lines": 4,
+   "write_remainders": 4,
+   "phase_lines": 0,
+   "shape": "10 (the metric g)",
+   "lines_named": [
+    "g_00: the time line (the volume X, the clock; the stress's trace written into it)",
+    "g_xx: tension line x (3 T_aa - SUM T_bb, the traceless diagonal; even under the axis's inversion)",
+    "g_yy: tension line y (3 T_aa - SUM T_bb, the traceless diagonal; even under the axis's inversion)",
+    "g_zz: tension line z (3 T_aa - SUM T_bb, the traceless diagonal; even under the axis's inversion)"
+   ],
+   "held_of_the_10": 4,
+   "missing_of_the_10": [
+    "g_xy, g_yz, g_zx: the three shear lines (T_2g), named in the docstrings (records.axis_positions, derived.held_write_of) and held by no row of the loader",
+    "g_0x, g_0y, g_0z: the three odd lines of the flux (T_1u, Row.flux False in universe.rows_of), the momentum density's seat"
+   ],
+   "extra": [
+    "4 write remainders (one per held line, the write's carried division)"
+   ]
+  },
+  {
+   "family": "sign",
+   "pair": [
+    1021,
+    1021
+   ],
+   "held": true,
+   "wronskian": true,
+   "rotation": true,
+   "axes": true,
+   "plane": false,
+   "flux": false,
+   "width": 4,
+   "rows_or_records": 3,
+   "lines": 12,
+   "write_remainders": 12,
+   "phase_lines": 20,
+   "shape": "4 (the potential A_mu) per row",
+   "lines_named_per_row": [
+    "A_0: the time line (sourced by the Wronskian, the charge density)",
+    "A_x: odd line x (sourced by the sense current J_x; negated under the axis's inversion)",
+    "A_y: odd line y (sourced by the sense current J_y; negated under the axis's inversion)",
+    "A_z: odd line z (sourced by the sense current J_z; negated under the axis's inversion)"
+   ],
+   "held_of_the_4": 4,
+   "rows": 3,
+   "extra": [
+    "12 write remainders (one per held line)",
+    "20 phase lines (2 rows beyond the free row x 10: 6 pair lines cos/sin per owned Link, 3 count lines, 1 phase row Phi)",
+    "2 rows beyond the one row (one per charged record, No record reads its own write; the law's sentence of 19:0x UTC has one row)"
+   ]
+  },
+  {
+   "family": "massless",
+   "pair": [
+    1021,
+    1021
+   ],
+   "held": false,
+   "wronskian": false,
+   "rotation": false,
+   "axes": false,
+   "plane": false,
+   "flux": false,
+   "width": 1,
+   "rows_or_records": 1,
+   "lines": 1,
+   "write_remainders": 0,
+   "phase_lines": 0,
+   "shape": "1 (a scalar line): a fourth shape, light's own row, outside the owner's three",
+   "lines_named": [
+    "the massless line (den, den), the seed laid on every Node but the origin"
+   ]
+  },
+  {
+   "family": "point -2",
+   "pair": [
+    660,
+    1021
+   ],
+   "held": false,
+   "wronskian": false,
+   "rotation": false,
+   "axes": false,
+   "plane": true,
+   "flux": false,
+   "width": 2,
+   "rows_or_records": 0,
+   "lines": 0,
+   "write_remainders": 0,
+   "phase_lines": 0,
+   "shape": "2 (a plane: re, im) per record",
+   "lines_named_per_record": [
+    "re",
+    "im (the sense its Wronskian's sign)"
+   ]
+  },
+  {
+   "family": "point 2",
+   "pair": [
+    779,
+    1021
+   ],
+   "held": false,
+   "wronskian": false,
+   "rotation": false,
+   "axes": false,
+   "plane": true,
+   "flux": false,
+   "width": 2,
+   "rows_or_records": 2,
+   "lines": 4,
+   "write_remainders": 0,
+   "phase_lines": 0,
+   "shape": "2 (a plane: re, im) per record",
+   "lines_named_per_record": [
+    "re",
+    "im (the sense its Wronskian's sign)"
+   ]
+  }
+ ],
+ "walls": {
+  "rule3_wall": 1568256000000,
+  "rule3_wall_bits": 41,
+  "volume": {
+   "write_walls": [
+    36000000000000000,
+    661608000000000000,
+    661608000000000000,
+    661608000000000000
+   ],
+   "write_wall_bits": [
+    55,
+    60,
+    60,
+    60
+   ],
+   "product_with_rule3_wall_bits": [
+    96,
+    100,
+    100,
+    100
+   ]
+  },
+  "sign": {
+   "write_walls": [
+    72000,
+    72000,
+    72000,
+    72000
+   ],
+   "write_wall_bits": [
+    17,
+    17,
+    17,
+    17
+   ],
+   "product_with_rule3_wall_bits": [
+    57,
+    57,
+    57,
+    57
+   ]
+  },
+  "product_bits_at_the_54_bit_den": {
+   "den": 15162856759112389,
+   "rule3_wall_bits": 85,
+   "volume_time_wall_bits_scaled": 99,
+   "product_bits": 184
+  }
+ },
+ "rule3_sign_against_light": {
+  "vacuum_light": {
+   "reach": 522752000000,
+   "mass": 0,
+   "wall": 1568256000000
+  },
+  "vacuum_sign": {
+   "reach": 522752000000,
+   "mass": 0,
+   "wall": 1568256000000
+  },
+  "same_at_the_vacuum": true,
+  "light_at_the_boards_content_centre": {
+   "content": 9,
+   "reach_port_0": 504102299648,
+   "mass": 0
+  },
+  "sign_reads_content": false,
+  "note": "the sign's row reads no content (derived.with_reads): its Rule3 steps at the vacuum's paces at every Node while light steps at the Node's; the potential does not gravitate on this engine"
+ },
+ "count_arithmetic_three_planes": {
+  "engine_as_it_stands_one_record_per_plane": 191,
+  "three_shapes_sign_one_row_no_phase_lines": 74,
+  "plus_phase_lines_as_the_engine_holds_them_one_row": 104,
+  "plus_phase_without_the_count_cache": 95,
+  "plus_phi_alone": 77,
+  "lights_own_row_if_kept": 3,
+  "engine_holds_of_the_10": 4,
+  "engine_holds_of_the_4": 4,
+  "engine_holds_of_the_2": 2
+ },
+ "births_lines": [
+  {
+   "event": "refused",
+   "interval": 2,
+   "family": "massless",
+   "nodes": [
+    [
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "event": "refused",
+   "interval": 3,
+   "family": "massless",
+   "nodes": [
+    [
+     0,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "event": "birth",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "taken": 143513854,
+   "walls": 142560000,
+   "excess": 953854
+  },
+  {
+   "event": "birth",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     0,
+     0,
+     2
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "taken": 143513854,
+   "walls": 142560000,
+   "excess": 953854
+  },
+  {
+   "event": "birth",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "taken": 143513854,
+   "walls": 142560000,
+   "excess": 953854
+  },
+  {
+   "event": "birth",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     0,
+     2,
+     0
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "taken": 143513854,
+   "walls": 142560000,
+   "excess": 953854
+  }
+ ]
+}

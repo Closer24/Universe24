@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/kit/conservation_check.py", line 510, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/kit/conservation_check.py", line 118, in main
+    row_nums = [None] + [b.pairs[k // 2][0] for k in range(n_rec)] + [den, den, b.vol_pair[0]]
+                                                                                ^^^^^^^^^^
+AttributeError: 'Checked' object has no attribute 'vol_pair'

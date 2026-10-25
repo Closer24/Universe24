@@ -1,0 +1,1 @@
+{"run": "cube48", "exit": 0, "seconds": 61}

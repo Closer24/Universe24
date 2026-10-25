@@ -1,0 +1,602 @@
+{
+ "window_g_thousandths": [
+  620,
+  700
+ ],
+ "primes_1_mod_4_below": 2097152,
+ "count": 77779,
+ "heavy_in_window": 4221,
+ "light_cloud_10_to_100": 2625,
+ "heavy_lifts_in_window_smallest_primes": [
+  {
+   "p": 149,
+   "a": 10,
+   "b": 7,
+   "g": "98/149",
+   "sin": "140/149",
+   "g_thousandths": [
+    657,
+    107
+   ],
+   "sin_thousandths": 939,
+   "compton_thousandths": 472,
+   "float_check": {
+    "omega0": 1.2214519287784171,
+    "compton": 0.4726753919550792
+   }
+  },
+  {
+   "p": 433,
+   "a": 17,
+   "b": 12,
+   "g": "288/433",
+   "sin": "408/433",
+   "g_thousandths": [
+    665,
+    55
+   ],
+   "sin_thousandths": 942,
+   "compton_thousandths": 469,
+   "float_check": {
+    "omega0": 1.229325903844331,
+    "compton": 0.4696478512200418
+   }
+  },
+  {
+   "p": 709,
+   "a": 22,
+   "b": 15,
+   "g": "450/709",
+   "sin": "660/709",
+   "g_thousandths": [
+    634,
+    494
+   ],
+   "sin_thousandths": 930,
+   "compton_thousandths": 482,
+   "float_check": {
+    "omega0": 1.1968377869570745,
+    "compton": 0.48239642454598813
+   }
+  },
+  {
+   "p": 1553,
+   "a": 32,
+   "b": 23,
+   "g": "1058/1553",
+   "sin": "1472/1553",
+   "g_thousandths": [
+    681,
+    407
+   ],
+   "sin_thousandths": 947,
+   "compton_thousandths": 463,
+   "float_check": {
+    "omega0": 1.2463986598681318,
+    "compton": 0.4632147705058581
+   }
+  },
+  {
+   "p": 1801,
+   "a": 35,
+   "b": 24,
+   "g": "1152/1801",
+   "sin": "1680/1801",
+   "g_thousandths": [
+    639,
+    1161
+   ],
+   "sin_thousandths": 932,
+   "compton_thousandths": 480,
+   "float_check": {
+    "omega0": 1.2021475089954985,
+    "compton": 0.48026574515140275
+   }
+  },
+  {
+   "p": 2441,
+   "a": 40,
+   "b": 29,
+   "g": "1682/2441",
+   "sin": "2320/2441",
+   "g_thousandths": [
+    689,
+    151
+   ],
+   "sin_thousandths": 950,
+   "compton_thousandths": 460,
+   "float_check": {
+    "omega0": 1.2546163845515252,
+    "compton": 0.46018071842414626
+   }
+  },
+  {
+   "p": 2749,
+   "a": 43,
+   "b": 30,
+   "g": "1800/2749",
+   "sin": "2580/2749",
+   "g_thousandths": [
+    654,
+    2154
+   ],
+   "sin_thousandths": 938,
+   "compton_thousandths": 473,
+   "float_check": {
+    "omega0": 1.218326931321545,
+    "compton": 0.47388780002044417
+   }
+  },
+  {
+   "p": 2897,
+   "a": 44,
+   "b": 31,
+   "g": "1922/2897",
+   "sin": "2728/2897",
+   "g_thousandths": [
+    663,
+    1289
+   ],
+   "sin_thousandths": 941,
+   "compton_thousandths": 470,
+   "float_check": {
+    "omega0": 1.2275401900331366,
+    "compton": 0.4703310521947478
+   }
+  },
+  {
+   "p": 3049,
+   "a": 45,
+   "b": 32,
+   "g": "2048/3049",
+   "sin": "2880/3049",
+   "g_thousandths": [
+    671,
+    2121
+   ],
+   "sin_thousandths": 944,
+   "compton_thousandths": 467,
+   "float_check": {
+    "omega0": 1.2362884518703745,
+    "compton": 0.4670028813390237
+   }
+  },
+  {
+   "p": 3529,
+   "a": 48,
+   "b": 35,
+   "g": "2450/3529",
+   "sin": "3360/3529",
+   "g_thousandths": [
+    694,
+    874
+   ],
+   "sin_thousandths": 952,
+   "compton_thousandths": 458,
+   "float_check": {
+    "omega0": 1.2600678190918304,
+    "compton": 0.4581898374372737
+   }
+  },
+  {
+   "p": 3557,
+   "a": 49,
+   "b": 34,
+   "g": "2312/3557",
+   "sin": "3332/3557",
+   "g_thousandths": [
+    649,
+    3507
+   ],
+   "sin_thousandths": 936,
+   "compton_thousandths": 475,
+   "float_check": {
+    "omega0": 1.2132102171890538,
+    "compton": 0.47588642183323926
+   }
+  },
+  {
+   "p": 3929,
+   "a": 52,
+   "b": 35,
+   "g": "2450/3929",
+   "sin": "3640/3929",
+   "g_thousandths": [
+    623,
+    2233
+   ],
+   "sin_thousandths": 926,
+   "compton_thousandths": 487,
+   "float_check": {
+    "omega0": 1.1848547068637572,
+    "compton": 0.48727516196297105
+   }
+  }
+ ],
+ "compton_window_2_to_4_links_lifts_smallest_primes": [
+  {
+   "p": 101,
+   "a": 10,
+   "b": 1,
+   "g": "2/101",
+   "sin": "20/101",
+   "g_thousandths": [
+    19,
+    81
+   ],
+   "sin_thousandths": 198,
+   "compton_thousandths": 2896,
+   "float_check": {
+    "omega0": 0.19933730498232413,
+    "compton": 2.8963483239668624
+   }
+  },
+  {
+   "p": 229,
+   "a": 15,
+   "b": 2,
+   "g": "8/229",
+   "sin": "60/229",
+   "g_thousandths": [
+    34,
+    214
+   ],
+   "sin_thousandths": 262,
+   "compton_thousandths": 2177,
+   "float_check": {
+    "omega0": 0.2651030645933479,
+    "compton": 2.1778332516647674
+   }
+  },
+  {
+   "p": 293,
+   "a": 17,
+   "b": 2,
+   "g": "8/293",
+   "sin": "68/293",
+   "g_thousandths": [
+    27,
+    89
+   ],
+   "sin_thousandths": 232,
+   "compton_thousandths": 2465,
+   "float_check": {
+    "omega0": 0.2342174891337284,
+    "compton": 2.465017754758625
+   }
+  },
+  {
+   "p": 733,
+   "a": 27,
+   "b": 2,
+   "g": "8/733",
+   "sin": "108/733",
+   "g_thousandths": [
+    10,
+    670
+   ],
+   "sin_thousandths": 147,
+   "compton_thousandths": 3904,
+   "float_check": {
+    "omega0": 0.1478780753158804,
+    "compton": 3.904231698690664
+   }
+  },
+  {
+   "p": 857,
+   "a": 29,
+   "b": 4,
+   "g": "32/857",
+   "sin": "232/857",
+   "g_thousandths": [
+    37,
+    291
+   ],
+   "sin_thousandths": 270,
+   "compton_thousandths": 2106,
+   "float_check": {
+    "omega0": 0.2741323486203752,
+    "compton": 2.1061004733489286
+   }
+  },
+  {
+   "p": 977,
+   "a": 31,
+   "b": 4,
+   "g": "32/977",
+   "sin": "248/977",
+   "g_thousandths": [
+    32,
+    736
+   ],
+   "sin_thousandths": 253,
+   "compton_thousandths": 2249,
+   "float_check": {
+    "omega0": 0.25664645537158953,
+    "compton": 2.2495937781556354
+   }
+  },
+  {
+   "p": 1033,
+   "a": 32,
+   "b": 3,
+   "g": "18/1033",
+   "sin": "192/1033",
+   "g_thousandths": [
+    17,
+    439
+   ],
+   "sin_thousandths": 185,
+   "compton_thousandths": 3088,
+   "float_check": {
+    "omega0": 0.1869535623171792,
+    "compton": 3.0882014872234023
+   }
+  },
+  {
+   "p": 1321,
+   "a": 36,
+   "b": 5,
+   "g": "50/1321",
+   "sin": "360/1321",
+   "g_thousandths": [
+    37,
+    1123
+   ],
+   "sin_thousandths": 272,
+   "compton_thousandths": 2091,
+   "float_check": {
+    "omega0": 0.2760120473150388,
+    "compton": 2.091757496840857
+   }
+  }
+ ],
+ "dens_two_primes_count": 11080125,
+ "best_three_by_mass_ratio": [
+  {
+   "den": 1655909141,
+   "bits": 31,
+   "within_59_bits": true,
+   "heavy": {
+    "p": 3529,
+    "a": 48,
+    "b": 35,
+    "g": "2450/3529",
+    "sin": "3360/3529",
+    "g_thousandths": [
+     694,
+     874
+    ],
+    "sin_thousandths": 952,
+    "compton_thousandths": 458,
+    "float_check": {
+     "omega0": 1.2600678190918304,
+     "compton": 0.4581898374372737
+    }
+   },
+   "light": {
+    "p": 469229,
+    "a": 685,
+    "b": 2,
+    "g": "8/469229",
+    "sin": "2740/469229",
+    "g_thousandths": [
+     0,
+     8000
+    ],
+    "sin_thousandths": 5,
+    "compton_thousandths": 98871,
+    "float_check": {
+     "omega0": 0.005839399465393922,
+     "compton": 98.87151454720322
+    }
+   },
+   "mass_ratio_quotient_remainder_divisor": [
+    163,
+    24373,
+    483473
+   ]
+  },
+  {
+   "den": 2260276093,
+   "bits": 32,
+   "within_59_bits": true,
+   "heavy": {
+    "p": 4817,
+    "a": 56,
+    "b": 41,
+    "g": "3362/4817",
+    "sin": "4592/4817",
+    "g_thousandths": [
+     697,
+     4551
+    ],
+    "sin_thousandths": 953,
+    "compton_thousandths": 456,
+    "float_check": {
+     "omega0": 1.2639484836372064,
+     "compton": 0.45678307040506233
+    }
+   },
+   "light": {
+    "p": 469229,
+    "a": 685,
+    "b": 2,
+    "g": "8/469229",
+    "sin": "2740/469229",
+    "g_thousandths": [
+     0,
+     8000
+    ],
+    "sin_thousandths": 5,
+    "compton_thousandths": 98871,
+    "float_check": {
+     "omega0": 0.005839399465393922,
+     "compton": 98.87151454720322
+    }
+   },
+   "mass_ratio_quotient_remainder_divisor": [
+    163,
+    832757,
+    3299645
+   ]
+  },
+  {
+   "den": 3729422497,
+   "bits": 32,
+   "within_59_bits": true,
+   "heavy": {
+    "p": 3529,
+    "a": 48,
+    "b": 35,
+    "g": "2450/3529",
+    "sin": "3360/3529",
+    "g_thousandths": [
+     694,
+     874
+    ],
+    "sin_thousandths": 952,
+    "compton_thousandths": 458,
+    "float_check": {
+     "omega0": 1.2600678190918304,
+     "compton": 0.4581898374372737
+    }
+   },
+   "light": {
+    "p": 1056793,
+    "a": 1028,
+    "b": 3,
+    "g": "18/1056793",
+    "sin": "6168/1056793",
+    "g_thousandths": [
+     0,
+     18000
+    ],
+    "sin_thousandths": 5,
+    "compton_thousandths": 98919,
+    "float_check": {
+     "omega0": 0.0058365593066838995,
+     "compton": 98.91962693302146
+    }
+   },
+   "mass_ratio_quotient_remainder_divisor": [
+    163,
+    117681,
+    906953
+   ]
+  }
+ ],
+ "smallest_den_of_window": {
+  "den": 193253,
+  "bits": 18,
+  "within_59_bits": true,
+  "heavy": {
+   "p": 149,
+   "a": 10,
+   "b": 7,
+   "g": "98/149",
+   "sin": "140/149",
+   "g_thousandths": [
+    657,
+    107
+   ],
+   "sin_thousandths": 939,
+   "compton_thousandths": 472,
+   "float_check": {
+    "omega0": 1.2214519287784171,
+    "compton": 0.4726753919550792
+   }
+  },
+  "light": {
+   "p": 1297,
+   "a": 36,
+   "b": 1,
+   "g": "2/1297",
+   "sin": "72/1297",
+   "g_thousandths": [
+    1,
+    703
+   ],
+   "sin_thousandths": 55,
+   "compton_thousandths": 10394,
+   "float_check": {
+    "omega0": 0.05554127318684175,
+    "compton": 10.394977213565307
+   }
+  },
+  "mass_ratio_quotient_remainder_divisor": [
+   16,
+   2483,
+   2682
+  ]
+ },
+ "control_den": {
+  "den": 15162856759112389,
+  "bits": 54,
+  "lifts": [
+   {
+    "p": 617,
+    "a": 19,
+    "b": 16,
+    "g": "512/617",
+    "sin": "608/617",
+    "g_thousandths": [
+     829,
+     507
+    ],
+    "sin_thousandths": 985,
+    "compton_thousandths": 412,
+    "float_check": {
+     "omega0": 1.3997857394384874,
+     "compton": 0.41245617305776033
+    }
+   },
+   {
+    "p": 196613,
+    "a": 338,
+    "b": 287,
+    "g": "164738/196613",
+    "sin": "194012/196613",
+    "g_thousandths": [
+     837,
+     172919
+    ],
+    "sin_thousandths": 986,
+    "compton_thousandths": 410,
+    "float_check": {
+     "omega0": 1.4079571121654213,
+     "compton": 0.4100623976405559
+    }
+   },
+   {
+    "p": 124992409,
+    "a": 11180,
+    "b": 3,
+    "g": "18/124992409",
+    "sin": "67080/124992409",
+    "g_thousandths": [
+     0,
+     18000
+    ],
+    "sin_thousandths": 0,
+    "compton_thousandths": 1075796,
+    "float_check": {
+     "omega0": 0.0005366726168334551,
+     "compton": 1075.7960273736012
+    }
+   }
+  ],
+  "mass_ratio_heavy_over_light": [
+   [
+    1836,
+    794464,
+    5173545
+   ],
+   [
+    1838,
+    173322719,
+    253630770
+   ]
+  ]
+ }
+}

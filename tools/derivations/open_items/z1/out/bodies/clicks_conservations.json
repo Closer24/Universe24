@@ -1,0 +1,167 @@
+{
+ "folder": "bodies",
+ "credits": 1584,
+ "births": 114,
+ "lays": 1521,
+ "light_credits": 114,
+ "body_credits": 1470,
+ "charge": {
+  "births": 114,
+  "births_summing_to_zero": 114,
+  "births_not_zero": [],
+  "body_closes": 95,
+  "body_closes_senses_zero": 95
+ },
+ "count": {
+  "take_lines": 1584,
+  "identity_holds": 1584,
+  "excess_zero": 0,
+  "excess_below_step": 1584,
+  "excess_over_taken_milli_max": 567
+ },
+ "momentum": {
+  "credits_with_momentum": 1584,
+  "sign_counts_per_axis_minus_zero_plus": [
+   [
+    551,
+    482,
+    551
+   ],
+   [
+    551,
+    482,
+    551
+   ],
+   [
+    614,
+    356,
+    614
+   ]
+  ],
+  "sign_sum_per_axis": [
+   0,
+   0,
+   0
+  ]
+ },
+ "energy": {
+  "credits_with_beat": 84,
+  "credits_beat_none": 1478,
+  "credits_beat_zero": 22,
+  "light_beats": [
+   [
+    0,
+    22
+   ],
+   [
+    10258863,
+    8
+   ],
+   [
+    17494666,
+    8
+   ],
+   [
+    3216514,
+    16
+   ],
+   [
+    34046389,
+    8
+   ],
+   [
+    46491083,
+    4
+   ]
+  ],
+  "body_beats": [
+   [
+    1724621,
+    32
+   ],
+   [
+    null,
+    1438
+   ]
+  ],
+  "proper_spacing_body": []
+ },
+ "species": {
+  "point 0 2 [348355, 348893]": 76,
+  "point 2 0 [89493, 348893]": 152
+ },
+ "births_per_interval": [
+  [
+   4,
+   8
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   6,
+   16
+  ],
+  [
+   7,
+   8
+  ],
+  [
+   12,
+   8
+  ],
+  [
+   13,
+   20
+  ],
+  [
+   14,
+   8
+  ],
+  [
+   17,
+   8
+  ],
+  [
+   19,
+   4
+  ],
+  [
+   21,
+   4
+  ],
+  [
+   22,
+   8
+  ],
+  [
+   28,
+   16
+  ]
+ ],
+ "birth_intervals_first_last": [
+  4,
+  28
+ ],
+ "credits_per_interval_first_last": [
+  4,
+  299
+ ],
+ "cube_48_in_the_clicks": {
+  "kept": 4,
+  "of": 48,
+  "mirrors_kept": 2,
+  "mirrors": 8
+ },
+ "one_place": {
+  "nodes_credited": 175,
+  "busiest_node": 86,
+  "busiest_credits": 22,
+  "busiest_proper_first_last": [
+   8,
+   116
+  ],
+  "proper_monotone": true
+ }
+}

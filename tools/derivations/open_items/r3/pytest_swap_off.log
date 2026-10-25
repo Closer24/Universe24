@@ -1,0 +1,48 @@
+....F................                                                    [100%]
+=================================== FAILURES ===================================
+______ test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools ______
+
+    def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
+        """No integer literal in src/event_universe or in any tool that touches the engine's arrays (the owner, 2026-09-30: every coordinate, gap, wavelength, width, amplitude, count and window comes from the world's files) beyond the law's own (LAW_INTEGERS: 0 and 1, the identity and the direction, -1 the inverse and the hole; 2, the halves, W_c div 2, the half wall, the axis contents' rounding, two levels; 3, the three axes, 3 den; 6, the six Ports, 6 den; and in Rule3's own line, core/rule3.py alone, 4 and 12 of S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2, RULE_LINE_INTEGERS): every other number is a file's key or the rule's own act, so a number cannot enter the engine again. The root leaves everywhere (the owner, 2026-09-30): no file of src/ or tools/ imports `isqrt` or `math`, or calls a name `isqrt` or `sqrt`; the loader and the generator read the fixed point of the division act, and the run reads no root. The names gate (HIGHLIGHTS.md **The engine works only with families of dimension one**; the owner, 2026-10-01, 03:25): no string literal stands in src/event_universe outside docstrings, the packets of `raise` and `assert` and f-strings, but in the loader (the files' key tables), in reports.py (the output's words), in world_files.py (the host's files) and in the package's version; so no act or reading of the engine names a family, a key or a kind, and a family name cannot enter the engine again."""
+        texts = {p: p.read_text(encoding="utf-8") for p in sorted((ROOT / "tools").glob("*.py"))}
+        tools = [p for p, text in texts.items() if re.search(r"^(from|import) event_universe\b", text, re.M)]
+        assert {"back_in_time", "run_inputs"} <= {p.stem for p in tools}
+        found = []
+        for path in [*sorted(SOURCE.rglob("*.py")), *tools]:
+            allowed = LAW_INTEGERS | (RULE_LINE_INTEGERS if path.name == "rule3.py" else frozenset())
+            for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+                if isinstance(item, ast.Constant) and type(item.value) in (int, float, complex):
+                    if item.value not in allowed or type(item.value) is not int:
+                        found.append(f"{path.relative_to(ROOT)}:{item.lineno} {item.value!r}")
+        assert not found, found
+        found = []
+        for path in sorted([*SOURCE.rglob("*.py"), *(ROOT / "tools").glob("*.py")]):
+            for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+                importing = isinstance(item, ast.Import | ast.ImportFrom)
+                imported = [a.name for a in item.names] if importing else []
+                callee = item.func if isinstance(item, ast.Call) else None
+                called = callee.id if isinstance(callee, ast.Name) else getattr(callee, "attr", "")
+                if "math" in imported or any("sqrt" in name for name in imported) or "sqrt" in called:
+                    found.append(f"{path.relative_to(ROOT)}:{item.lineno} {imported or called}")
+        assert not found, found
+        found = []
+        for path in sorted(SOURCE.rglob("*.py")):
+            name = path.relative_to(SOURCE).as_posix()
+            if name.startswith("loader/") or name in ("reports.py", "world_files.py", "__init__.py"):
+                continue
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+            spoken = {id(item.value) for item in ast.walk(tree) if isinstance(item, ast.Expr)}
+            for item in ast.walk(tree):
+                if isinstance(item, ast.Raise | ast.Assert | ast.JoinedStr):
+                    spoken |= {id(part) for part in ast.walk(item)}
+            for item in ast.walk(tree):
+                if isinstance(item, ast.Constant) and isinstance(item.value, str) and id(item) not in spoken:
+                    found.append(f"{path.relative_to(ROOT)}:{item.lineno} {item.value!r}")
+>       assert not found, found
+E       AssertionError: ["src/event_universe/flux.py:27 '2'", "src/event_universe/flux.py:22 'U24_RIDES'", "src/event_universe/flux.py:23 '1'", "src/event_universe/flux.py:24 '2'", "src/event_universe/flux.py:27 'U24_RIDES'"]
+E       assert not ["src/event_universe/flux.py:27 '2'", "src/event_universe/flux.py:22 'U24_RIDES'", "src/event_universe/flux.py:23 '1'", "src/event_universe/flux.py:24 '2'", "src/event_universe/flux.py:27 'U24_RIDES'"]
+
+tests/test_rule3.py:146: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rule3.py::test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools
+1 failed, 20 passed in 17.78s

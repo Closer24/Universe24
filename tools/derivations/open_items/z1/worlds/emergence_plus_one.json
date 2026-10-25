@@ -1,0 +1,3 @@
+{"universe": "universe_348893.json", "shape": [5, 5, 5], "intervals": 300,
+ "seed": [{"lay": "sea", "row": [348893, 348893]},
+          {"lay": "at", "row": [348893, 348893], "centre": [1, 0, 0], "quanta": 1}]}

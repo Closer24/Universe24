@@ -1,0 +1,1737 @@
+{
+ "verdicts": {
+  "recurring_bangs": "NOT SHOWN",
+  "links_lengthening": "SHOWN",
+  "links_cycle": "SHOWN",
+  "era_of_matter": "SHOWN",
+  "acceleration": "SHOWN",
+  "contraction": "SHOWN",
+  "light.present_absorbed": "SHOWN",
+  "light.redshift": "NOT SHOWN",
+  "families_forming": "SHOWN",
+  "collisions": "NOT SHOWN",
+  "gravitational_time_dilation": "SHOWN",
+  "gravitational_redshift": "NOT SHOWN",
+  "light_path": "NOT SHOWN",
+  "free_fall": "NOT SHOWN",
+  "horizon.links_and_silence": "SHOWN",
+  "horizon.stopped_clock": "NOT SHOWN",
+  "conservation.identity": "SHOWN",
+  "conservation.exact": "NOT SHOWN",
+  "uncertainty": "NOT SHOWN",
+  "charge_conservation": "SHOWN",
+  "arrow_of_time": "SHOWN",
+  "mass_ratios.fit": "SHOWN",
+  "mass_ratios.from_clicks": "NOT SHOWN"
+ },
+ "gates": [
+  {
+   "gate": "recurring_bangs",
+   "verdict": "NOT SHOWN",
+   "view": "board",
+   "reads": "the volume's returns and tops (the board's) and the births per cycle (the clicks); pass: more than one return and births in a later cycle",
+   "numbers": {
+    "returns": [
+     1,
+     601,
+     1530
+    ],
+    "tops": [
+     425,
+     1360
+    ],
+    "births_per_cycle": [
+     54,
+     0,
+     0
+    ]
+   },
+   "missing": "a birth after a return (the lay lock)"
+  },
+  {
+   "gate": "links_lengthening",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the Node's pace, delta proper over delta interval between its successive credits (the clicks), the mean length beside; pass: the pace falls at more Nodes than it rises, first span to last, and its slope over the run is negative",
+   "numbers": {
+    "nodes_pace_fell": 113,
+    "nodes_pace_rose": 0,
+    "nodes_pace_equal": 12,
+    "pace_slope_per_interval": -0.00010373612320369559,
+    "mean_length_first_last": [
+     1.000496,
+     11.532168760000001
+    ]
+   },
+   "missing": null
+  },
+  {
+   "gate": "links_cycle",
+   "verdict": "SHOWN",
+   "view": "board",
+   "reads": "the mean length's monotone runs (the board's), the Nodes' pooled pace over the rise before, the fall and the rise after each top beside, which falls through the fall too (the contraction is the sum's); pass: a falling run between two rising runs",
+   "numbers": {
+    "mean_length_runs": [
+     [
+      1,
+      1,
+      1.000496,
+      426,
+      6.068952272000001
+     ],
+     [
+      -1,
+      426,
+      6.068952272000001,
+      601,
+      5.882663144
+     ],
+     [
+      1,
+      601,
+      5.882663144,
+      1356,
+      8.695566424
+     ],
+     [
+      -1,
+      1356,
+      8.695566424,
+      1527,
+      8.47287508
+     ],
+     [
+      1,
+      1527,
+      8.47287508,
+      2400,
+      11.532168760000001
+     ]
+    ],
+    "nodes_pooled_pace_around": {
+     "425-601": [
+      0.16885778908679672,
+      0.1668834239772996,
+      0.16377810259622747
+     ],
+     "1360-1530": [
+      0.11737285187504348,
+      0.11687871077184055,
+      0.11574328030718596
+     ]
+    }
+   },
+   "missing": null
+  },
+  {
+   "gate": "era_of_matter",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the credits by identity against light's (the clicks), the writes per family (the board's); pass: light's credits precede the bodies', the bodies' outnumber light's, and intervals exist where the points' write exceeds the massless write",
+   "numbers": {
+    "light_credits": 54,
+    "light_span": [
+     12,
+     17
+    ],
+    "body_credits": 11921,
+    "body_span": [
+     21,
+     2394
+    ],
+    "matter_above_light": 1764,
+    "runs": [
+     [
+      20,
+      20
+     ],
+     [
+      23,
+      23
+     ],
+     [
+      46,
+      46
+     ],
+     [
+      55,
+      1372
+     ],
+     [
+      1374,
+      1374
+     ],
+     [
+      1376,
+      1376
+     ],
+     [
+      1381,
+      1382
+     ],
+     [
+      1385,
+      1387
+     ],
+     [
+      1395,
+      1395
+     ],
+     [
+      1407,
+      1407
+     ],
+     [
+      1435,
+      1436
+     ],
+     [
+      1438,
+      1438
+     ],
+     [
+      1440,
+      1440
+     ],
+     [
+      1445,
+      1511
+     ],
+     [
+      1513,
+      1515
+     ],
+     [
+      1521,
+      1522
+     ],
+     [
+      1526,
+      1526
+     ],
+     [
+      1533,
+      1533
+     ],
+     [
+      1541,
+      1541
+     ],
+     [
+      1546,
+      1593
+     ],
+     [
+      1595,
+      1602
+     ],
+     [
+      1604,
+      1604
+     ],
+     [
+      1617,
+      1621
+     ],
+     [
+      1623,
+      1623
+     ],
+     [
+      1632,
+      1633
+     ],
+     [
+      1635,
+      1637
+     ],
+     [
+      1639,
+      1649
+     ],
+     [
+      1651,
+      1724
+     ],
+     [
+      1726,
+      1729
+     ],
+     [
+      1731,
+      1731
+     ],
+     [
+      1733,
+      1733
+     ],
+     [
+      1735,
+      1738
+     ],
+     [
+      1740,
+      1744
+     ],
+     [
+      1746,
+      1750
+     ],
+     [
+      1753,
+      1755
+     ],
+     [
+      1757,
+      1762
+     ],
+     [
+      1764,
+      1784
+     ],
+     [
+      1786,
+      1798
+     ],
+     [
+      1800,
+      1803
+     ],
+     [
+      1805,
+      1850
+     ],
+     [
+      1906,
+      1906
+     ],
+     [
+      1909,
+      1909
+     ],
+     [
+      1960,
+      1978
+     ],
+     [
+      1981,
+      1981
+     ],
+     [
+      1983,
+      1983
+     ],
+     [
+      1985,
+      1987
+     ],
+     [
+      2007,
+      2008
+     ],
+     [
+      2067,
+      2068
+     ],
+     [
+      2101,
+      2101
+     ],
+     [
+      2130,
+      2130
+     ],
+     [
+      2132,
+      2132
+     ],
+     [
+      2136,
+      2139
+     ],
+     [
+      2142,
+      2147
+     ],
+     [
+      2233,
+      2233
+     ],
+     [
+      2259,
+      2259
+     ],
+     [
+      2265,
+      2265
+     ],
+     [
+      2267,
+      2267
+     ],
+     [
+      2269,
+      2270
+     ],
+     [
+      2272,
+      2274
+     ],
+     [
+      2279,
+      2279
+     ],
+     [
+      2283,
+      2283
+     ],
+     [
+      2286,
+      2286
+     ],
+     [
+      2292,
+      2292
+     ],
+     [
+      2295,
+      2297
+     ],
+     [
+      2299,
+      2305
+     ],
+     [
+      2307,
+      2307
+     ],
+     [
+      2310,
+      2310
+     ],
+     [
+      2315,
+      2315
+     ],
+     [
+      2317,
+      2317
+     ],
+     [
+      2320,
+      2320
+     ],
+     [
+      2327,
+      2327
+     ],
+     [
+      2330,
+      2330
+     ],
+     [
+      2333,
+      2333
+     ],
+     [
+      2336,
+      2336
+     ],
+     [
+      2338,
+      2348
+     ],
+     [
+      2351,
+      2351
+     ],
+     [
+      2354,
+      2354
+     ],
+     [
+      2371,
+      2371
+     ]
+    ]
+   },
+   "missing": null
+  },
+  {
+   "gate": "acceleration",
+   "verdict": "SHOWN",
+   "view": "board",
+   "reads": "the velocity's differences per interval (the board's), the Nodes' pooled pace over thirds of a rise beside; pass: an interval with the velocity rising in every rise from a return",
+   "numbers": {
+    "rises": [
+     [
+      1,
+      425
+     ],
+     [
+      601,
+      1360
+     ],
+     [
+      1530,
+      2400
+     ]
+    ],
+    "accelerating_per_rise": [
+     24,
+     282,
+     402
+    ],
+    "nodes_pace_over_thirds": {
+     "601": [
+      0.15755032911197506,
+      0.13000439947206335,
+      0.11850557133493554
+     ],
+     "1530": [
+      0.11562588530494962,
+      0.10110635924135367,
+      0.09023711639882065
+     ]
+    },
+    "intervals_accelerating": 825
+   },
+   "missing": null
+  },
+  {
+   "gate": "contraction",
+   "verdict": "SHOWN",
+   "view": "board",
+   "reads": "the velocity below 0 (the board's), the Nodes' pooled pace within the run against the span before beside, not above it (the contraction is the sum's); pass: a run of velocity below 0",
+   "numbers": {
+    "intervals_below_zero": 346,
+    "runs": [
+     [
+      426,
+      601
+     ],
+     [
+      1361,
+      1530
+     ]
+    ],
+    "nodes_pace_before_within": {
+     "426-601": [
+      0.1680592201700381,
+      0.1668834239772996
+     ],
+     "1361-1530": [
+      0.11737285187504348,
+      0.11687871077184055
+     ]
+    }
+   },
+   "missing": null
+  },
+  {
+   "gate": "light",
+   "verdict": {
+    "present_absorbed": "SHOWN",
+    "redshift": "NOT SHOWN"
+   },
+   "view": "clicks",
+   "reads": "light's quanta per interval (the board's), the massless lays, every credit's absorbed family, light's beat against the length at its Node (the clicks); pass: quanta above 0 at every interval, lays at the births and at the bodies' closes, every credit absorbing light (present_absorbed), the beat's slope over the length negative (redshift)",
+   "numbers": {
+    "intervals_with_light": [
+     2400,
+     2400
+    ],
+    "light_lays": 9769,
+    "quanta_least_most": [
+     121,
+     26686870
+    ],
+    "lays_at_births": 54,
+    "lays_at_body_closes": 9715,
+    "beat_slope": 87288657.19577913,
+    "credits_absorbing_light": [
+     11975,
+     11975
+    ],
+    "light_credits": 54,
+    "light_credits_with_beat": 17,
+    "light_last_interval": 17
+   },
+   "missing": "a light click with a beat after the births, the beat lower where the Link is longer"
+  },
+  {
+   "gate": "families_forming",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the births' children, points and senses, the credits' identity recurring (the clicks), the rest from the credits' point unread (the decoder's pair of pairs); pass: two or more points recur, every birth's senses sum to 0, every born identity is credited more than once",
+   "numbers": {
+    "births_per_point": {
+     "point 2 0 0 (proton)": 7,
+     "point 0 0 2 (electron)": 14,
+     "point 0 2 0 (neutron)": 33
+    },
+    "births": 54,
+    "births_summing_to_zero": 54,
+    "closes_per_identity": {
+     "[24, 0]": 189,
+     "[24, 1]": 192,
+     "[18, 0]": 139,
+     "[18, 1]": 137,
+     "[16, 0]": 101,
+     "[16, 1]": 101
+    }
+   },
+   "missing": null
+  },
+  {
+   "gate": "collisions",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "the credits' rims per close, the least torus distance between two rims at their shared closes, the conversion lines (the clicks); pass: a conversion line, or two bodies each at one Node per close whose distance falls then rises",
+   "numbers": {
+    "conversion_lines": 0,
+    "rim_nodes_per_close_min_max": {
+     "[24, 0]": [
+      1,
+      48
+     ],
+     "[24, 1]": [
+      1,
+      48
+     ],
+     "[18, 0]": [
+      1,
+      24
+     ],
+     "[18, 1]": [
+      1,
+      30
+     ],
+     "[16, 0]": [
+      1,
+      32
+     ],
+     "[16, 1]": [
+      1,
+      30
+     ]
+    },
+    "pairs": {
+     "[16, 0] x [16, 1]": {
+      "shared_closes": 9,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       5
+      ]
+     },
+     "[16, 0] x [18, 0]": {
+      "shared_closes": 3,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       2
+      ]
+     },
+     "[16, 0] x [18, 1]": {
+      "shared_closes": 7,
+      "one_node_closes": 0,
+      "least_distance": [
+       1,
+       4
+      ]
+     },
+     "[16, 0] x [24, 0]": {
+      "shared_closes": 10,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       2
+      ]
+     },
+     "[16, 0] x [24, 1]": {
+      "shared_closes": 12,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       5
+      ]
+     },
+     "[16, 1] x [18, 0]": {
+      "shared_closes": 5,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       4
+      ]
+     },
+     "[16, 1] x [18, 1]": {
+      "shared_closes": 4,
+      "one_node_closes": 0,
+      "least_distance": [
+       1,
+       3
+      ]
+     },
+     "[16, 1] x [24, 0]": {
+      "shared_closes": 7,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       5
+      ]
+     },
+     "[16, 1] x [24, 1]": {
+      "shared_closes": 10,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       3
+      ]
+     },
+     "[18, 0] x [18, 1]": {
+      "shared_closes": 49,
+      "one_node_closes": 40,
+      "least_distance": [
+       0,
+       3
+      ]
+     },
+     "[18, 0] x [24, 0]": {
+      "shared_closes": 36,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       5
+      ]
+     },
+     "[18, 0] x [24, 1]": {
+      "shared_closes": 36,
+      "one_node_closes": 0,
+      "least_distance": [
+       1,
+       4
+      ]
+     },
+     "[18, 1] x [24, 0]": {
+      "shared_closes": 35,
+      "one_node_closes": 0,
+      "least_distance": [
+       1,
+       4
+      ]
+     },
+     "[18, 1] x [24, 1]": {
+      "shared_closes": 34,
+      "one_node_closes": 0,
+      "least_distance": [
+       1,
+       5
+      ]
+     },
+     "[24, 0] x [24, 1]": {
+      "shared_closes": 99,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       2
+      ]
+     }
+    }
+   },
+   "missing": "a position per close (the decoder); a body at one place (the physics)"
+  },
+  {
+   "gate": "gravitational_time_dilation",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "two Nodes' proper increments between shared closes, the deeper by births as matter (the clicks); pass: among pairs with one birthed Node, the birthed one counts fewer proper intervals more often than not",
+   "numbers": {
+    "node_pairs_unequal_proper": 3708,
+    "pairs_one_birthed": 1878,
+    "birthed_slower": 1338,
+    "other_slower": 540
+   },
+   "missing": null
+  },
+  {
+   "gate": "gravitational_redshift",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "light's beat at two Nodes at one interval (the clicks), the length at each beside; pass: a pair of beats at two lengths with the beat lower where longer",
+   "numbers": {
+    "beats_per_interval": {
+     "13": 1,
+     "14": 1,
+     "17": 1
+    },
+    "pairs_at_two_lengths_two_beats": 0,
+    "beat_lower_where_longer": 0
+   },
+   "missing": "two beats of light at two lengths at one interval, lower where longer"
+  },
+  {
+   "gate": "light_path",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "light's identity across Nodes (the clicks); pass: more than one light identity, one credited at two Nodes",
+   "numbers": {
+    "light_credits": 54,
+    "distinct_light_identities": 1,
+    "nodes_credited": 47
+   },
+   "missing": "light's identity per quantum: every light credit carries the family's identity at its birth Node"
+  },
+  {
+   "gate": "free_fall",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "a body's one-Node closes against matter's seat (the Node with most body credits), the distance's second differences (the clicks); pass: a track with negative second differences and no positive one",
+   "numbers": {
+    "seat_of_matter": [
+     [
+      0,
+      1,
+      2
+     ],
+     171
+    ],
+    "tracks": {
+     "[24, 0]": {
+      "closes": 189,
+      "one_node_closes": 9,
+      "second_signs": [
+       0,
+       0
+      ]
+     },
+     "[24, 1]": {
+      "closes": 192,
+      "one_node_closes": 6,
+      "second_signs": [
+       0,
+       0
+      ]
+     },
+     "[18, 0]": {
+      "closes": 139,
+      "one_node_closes": 47,
+      "second_signs": [
+       0,
+       0
+      ]
+     },
+     "[18, 1]": {
+      "closes": 137,
+      "one_node_closes": 47,
+      "second_signs": [
+       0,
+       0
+      ]
+     },
+     "[16, 0]": {
+      "closes": 101,
+      "one_node_closes": 7,
+      "second_signs": [
+       0,
+       0
+      ]
+     },
+     "[16, 1]": {
+      "closes": 101,
+      "one_node_closes": 8,
+      "second_signs": [
+       0,
+       0
+      ]
+     }
+    }
+   },
+   "missing": "a position per close; a body at one place"
+  },
+  {
+   "gate": "horizon",
+   "verdict": {
+    "links_and_silence": "SHOWN",
+    "stopped_clock": "NOT SHOWN"
+   },
+   "view": "board",
+   "reads": "the Links at the wall (the board's), the wall Nodes' credits, silences and pooled pace (the clicks); pass: Links at the wall and a wall Node with no credit through a wall run while other Nodes are credited (links_and_silence), the wall Nodes' pooled pace below the others' within a hole (stopped_clock)",
+   "numbers": {
+    "holes": {
+     "1524-1566": {
+      "links_most": 54,
+      "wall_nodes": 56,
+      "pace_wall_off": [
+       0.125,
+       null
+      ]
+     },
+     "1865-2035": {
+      "links_most": 75,
+      "wall_nodes": 74,
+      "pace_wall_off": [
+       0.1125,
+       0.09550989345509893
+      ]
+     },
+     "2046-2400": {
+      "links_most": 78,
+      "wall_nodes": 81,
+      "pace_wall_off": [
+       0.0936069455406472,
+       0.08489884393063583
+      ]
+     }
+    },
+    "wall_nodes": 81,
+    "silent_wall_runs": [
+     {
+      "node": [
+       2,
+       0,
+       0
+      ],
+      "wall_run": [
+       2371,
+       2400
+      ],
+      "last_credit_before": 2180
+     },
+     {
+      "node": [
+       3,
+       0,
+       0
+      ],
+      "wall_run": [
+       2371,
+       2400
+      ],
+      "last_credit_before": 2180
+     },
+     {
+      "node": [
+       0,
+       2,
+       0
+      ],
+      "wall_run": [
+       2371,
+       2400
+      ],
+      "last_credit_before": 2180
+     },
+     {
+      "node": [
+       0,
+       3,
+       0
+      ],
+      "wall_run": [
+       2371,
+       2400
+      ],
+      "last_credit_before": 2180
+     },
+     {
+      "node": [
+       0,
+       0,
+       2
+      ],
+      "wall_run": [
+       2371,
+       2400
+      ],
+      "last_credit_before": 2180
+     },
+     {
+      "node": [
+       0,
+       0,
+       3
+      ],
+      "wall_run": [
+       2371,
+       2400
+      ],
+      "last_credit_before": 2180
+     },
+     {
+      "node": [
+       0,
+       2,
+       2
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       0,
+       2,
+       2
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       0,
+       2,
+       3
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       0,
+       2,
+       3
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       0,
+       3,
+       2
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       0,
+       3,
+       2
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       0,
+       3,
+       3
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       0,
+       3,
+       3
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       2,
+       0,
+       2
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       2,
+       0,
+       2
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       2,
+       0,
+       3
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       2,
+       0,
+       3
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       3,
+       0,
+       2
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       3,
+       0,
+       2
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       3,
+       0,
+       3
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       3,
+       0,
+       3
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       2,
+       2,
+       0
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       2,
+       2,
+       0
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       2,
+       3,
+       0
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       2,
+       3,
+       0
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       3,
+       2,
+       0
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       3,
+       2,
+       0
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       3,
+       3,
+       0
+      ],
+      "wall_run": [
+       1936,
+       2035
+      ],
+      "last_credit_before": 1900
+     },
+     {
+      "node": [
+       3,
+       3,
+       0
+      ],
+      "wall_run": [
+       2092,
+       2101
+      ],
+      "last_credit_before": 2088
+     },
+     {
+      "node": [
+       2,
+       2,
+       2
+      ],
+      "wall_run": [
+       1946,
+       2032
+      ],
+      "last_credit_before": 1929
+     },
+     {
+      "node": [
+       2,
+       2,
+       3
+      ],
+      "wall_run": [
+       1946,
+       2032
+      ],
+      "last_credit_before": 1929
+     },
+     {
+      "node": [
+       2,
+       3,
+       2
+      ],
+      "wall_run": [
+       1946,
+       2032
+      ],
+      "last_credit_before": 1929
+     },
+     {
+      "node": [
+       2,
+       3,
+       3
+      ],
+      "wall_run": [
+       1946,
+       2032
+      ],
+      "last_credit_before": 1929
+     },
+     {
+      "node": [
+       3,
+       2,
+       2
+      ],
+      "wall_run": [
+       1946,
+       2032
+      ],
+      "last_credit_before": 1929
+     },
+     {
+      "node": [
+       3,
+       2,
+       3
+      ],
+      "wall_run": [
+       1946,
+       2032
+      ],
+      "last_credit_before": 1929
+     },
+     {
+      "node": [
+       3,
+       3,
+       2
+      ],
+      "wall_run": [
+       1946,
+       2032
+      ],
+      "last_credit_before": 1929
+     },
+     {
+      "node": [
+       3,
+       3,
+       3
+      ],
+      "wall_run": [
+       1946,
+       2032
+      ],
+      "last_credit_before": 1929
+     },
+     {
+      "node": [
+       1,
+       0,
+       2
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       1,
+       0,
+       3
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       1,
+       2,
+       0
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       1,
+       3,
+       0
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       4,
+       0,
+       2
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       4,
+       0,
+       3
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       4,
+       2,
+       0
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       4,
+       3,
+       0
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       0,
+       1,
+       2
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       0,
+       1,
+       3
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       0,
+       4,
+       2
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       0,
+       4,
+       3
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       2,
+       1,
+       0
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       2,
+       4,
+       0
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       3,
+       1,
+       0
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       3,
+       4,
+       0
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       0,
+       2,
+       1
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       0,
+       2,
+       4
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       0,
+       3,
+       1
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       0,
+       3,
+       4
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       2,
+       0,
+       1
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       2,
+       0,
+       4
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       3,
+       0,
+       1
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     },
+     {
+      "node": [
+       3,
+       0,
+       4
+      ],
+      "wall_run": [
+       1936,
+       1975
+      ],
+      "last_credit_before": 1931
+     }
+    ]
+   },
+   "missing": "a wall Node's clock slower than the others' (a credit behind the wall)"
+  },
+  {
+   "gate": "conservation",
+   "verdict": {
+    "identity": "SHOWN",
+    "exact": "NOT SHOWN"
+   },
+   "view": "clicks",
+   "reads": "every line's taken, walls and excess (the clicks); pass: taken equals walls plus excess on every line (identity), the excess 0 on every line (exact)",
+   "numbers": {
+    "lines": 11975,
+    "identity_holds": 11975,
+    "excess_zero": 0,
+    "excess_over_taken": [
+     0.999889987345746,
+     0.9999999999997908
+    ]
+   },
+   "missing": "the exact take: the excess above 0 (the take in w-ths)"
+  },
+  {
+   "gate": "uncertainty",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "the proper spacing of one record at one Node and the point's sine with the count (the clicks); pass: every row readable and (count sin omega Delta t)^2 at or above 1/4 in T's unit",
+   "numbers": {
+    "rows": 11178,
+    "proper_spacing_zero": 237,
+    "point_readable": 356,
+    "point_pair_of_pairs": 10816,
+    "floor_squared": 0.25,
+    "point_outside_circle": 6,
+    "least_squared_product_in_t_units": 0.0
+   },
+   "missing": "the body credit's point decoded (a pair of pairs) and the proper's fraction"
+  },
+  {
+   "gate": "charge_conservation",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the births' senses, the credits' sense per close, the Wronskian's sign at the credited Node and not the record's charge (the clicks), the sign holder's quanta (the board's); pass: every birth's senses sum to 0",
+   "numbers": {
+    "births": 54,
+    "births_summing_to_zero": 54,
+    "closes": 611,
+    "closes_senses_zero": 105,
+    "sign_holder_quanta": [
+     0,
+     13,
+     59
+    ]
+   },
+   "missing": null
+  },
+  {
+   "gate": "arrow_of_time",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the proper's monotonicity at every Node (the clicks), the turns (the board's), the run back across a return being the engine's test (tools/back_in_time.py --from K); pass: no proper runs back while turns exist",
+   "numbers": {
+    "nodes": 125,
+    "proper_back": 0,
+    "turns": 1494,
+    "turn_intervals": 95,
+    "turned_at_end": 70
+   },
+   "missing": null
+  },
+  {
+   "gate": "mass_ratios",
+   "verdict": {
+    "fit": "SHOWN",
+    "from_clicks": "NOT SHOWN"
+   },
+   "view": "clicks",
+   "reads": "the births' points' legs with the legend's names, a fit by den's choice, the body credits' point per track (the clicks); pass: the legs distinct and ordered electron, proton, neutron (fit), one readable pair per track (from_clicks)",
+   "numbers": {
+    "legs": {
+     "proton": "14337524090452503379101009450350924059372",
+     "electron": "7808459740549578735922594780248829328",
+     "neutron": "14357287287022039657823019457938337076328"
+    },
+    "ratios_from_the_legs": {
+     "proton_over_electron": 1836.152655817291,
+     "neutron_over_electron": 1838.6836538919695,
+     "neutron_over_proton": 1.0013784246460444
+    },
+    "point_pair_of_pairs": 11566,
+    "point_single_pair": 355,
+    "distinct_pairs_per_identity": {
+     "[18, 1]": 1,
+     "[16, 0]": 1,
+     "[24, 1]": 1,
+     "[18, 0]": 1,
+     "[24, 0]": 1,
+     "[16, 1]": 1
+    }
+   },
+   "missing": "the rest from the clicks: the body credit's point decoded"
+  }
+ ]
+}

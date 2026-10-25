@@ -1,0 +1,63 @@
+# pc2: David's test on the flagged copy lean_carried.py (the import the one change)
+"""The 48 on the lean toy: the toy run from a seed and from each of its 48 images (the signed permutations of the axes about the origin), the births compared through the image (interval, the take's Node, the lift, the - child's Node, the + child's Node), the whole volume and light rows compared through the image at the last interval.
+Usage: python cube48_test.py <world.json> <cube> <intervals>   (the world's shape replaced by the cube; the seed's 'at' entries carried through each image)"""
+import sys, os, itertools, copy
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import numpy as np
+from lean_carried import Lean, load_world
+
+
+def signed_permutations():
+    axes = range(3)
+    return [np.array([[s[a] if pi[a] == b else 0 for a in axes] for b in axes]) for pi in itertools.permutations(axes) for s in itertools.product((1, -1), repeat=3)]
+
+
+def image(m, node, cube):
+    v = m @ np.array(node, dtype=int)
+    return tuple(int(x) % cube for x in v)
+
+
+def events(b):
+    return sorted((e['i'], tuple(e['node']), e['line_pair'], tuple(e['minus']), tuple(e['plus'])) for e in b.log if e['event'] == 'birth')
+
+
+def mapped(evs, m, cube):
+    return sorted((i, image(m, at, cube), s_, image(m, mi, cube), image(m, pl, cube)) for i, at, s_, mi, pl in evs)
+
+
+def world_image(world, m, cube):
+    w = copy.deepcopy(world); w['shape'] = [cube, cube, cube]
+    for lay in w.get('seed', []):
+        for key in ('at', 'centre'):
+            if key in lay: lay[key] = list(image(m, tuple(lay[key]), cube))
+    if 'well' in w.get('control', {}): w['control']['well']['at'] = list(image(m, tuple(w['control']['well']['at']), cube))
+    w['detectors'] = [list(image(m, tuple(d), cube)) for d in w.get('detectors', [])]
+    return w
+
+
+def run(universe, world, n):
+    b = Lean(universe, world)
+    for _ in range(n): b.step()
+    return b
+
+
+universe, world0 = load_world(sys.argv[1]); cube, n = int(sys.argv[2]), int(sys.argv[3])
+
+identity = np.eye(3, dtype=int)
+base = run(universe, world_image(world0, identity, cube), n)
+evs = events(base)
+print({'seed': world0.get('seed'), 'cube': cube, 'intervals': n, 'births': len(evs), 'refused orientation': base.counts['refused_orientation'], 'refused lay': base.counts['refused_lay'], 'refused stop': base.counts['refused_stop'], 'turns': base.counts['turns']})
+held = 0; apart = []; swapped = []
+for m in signed_permutations():
+    other = run(universe, world_image(world0, m, cube), n)
+    same_events = events(other) == mapped(evs, m, cube)
+    same_rows = True
+    for line_b, line_o in ((base.row(10).lines[0], other.row(10).lines[0]), (base.row(2, gap=0).lines[0], other.row(2, gap=0).lines[0])):
+        for at in np.ndindex(cube, cube, cube):
+            if int(line_b.now[at]) != int(line_o.now[image(m, at, cube)]) or int(line_b.before[at]) != int(line_o.before[image(m, at, cube)]): same_rows = False; break
+        if not same_rows: break
+    exchanged = (not same_events) and same_rows and events(other) == sorted((i, at, s_, pl, mi) for i, at, s_, mi, pl in mapped(evs, m, cube))  # the births equal with the two children's ends exchanged: the image's senses are the conjugates (the twist's parity: a reflection flips the handedness)
+    if same_events and same_rows: held += 1
+    elif exchanged: swapped.append(int(round(np.linalg.det(m))))
+    else: apart.append((m.tolist(), 'events' if not same_events else 'rows'))
+print({'images holding': held, 'of': 48, 'senses exchanged (det +1 rotations / -1 reflections)': [swapped.count(1), swapped.count(-1)], 'apart': apart[:6]})

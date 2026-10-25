@@ -1,0 +1,1 @@
+{"universe": "../toy/universe_middle.json", "shape": [9, 9, 9], "intervals": 3, "seed": [{"lay": "at", "row": 2, "centre": [4, 4, 4], "width": 2, "quanta": 100}]}

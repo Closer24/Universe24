@@ -1,0 +1,442 @@
+{
+ "world": "sg_grad_y.json",
+ "cube": 9,
+ "intervals": 60,
+ "milliseconds": 7508,
+ "records (index: shape, gap)": {
+  "0": [
+   2,
+   28232
+  ],
+  "1": [
+   2,
+   1149611050
+  ],
+  "2": [
+   8,
+   1149611050
+  ],
+  "3": [
+   2,
+   0
+  ]
+ },
+ "centre": [
+  4,
+  4,
+  4
+ ],
+ "crossings at the centre (record, line): count": {
+  "2,0": 5,
+  "2,4": 5,
+  "0,0": 0,
+  "1,0": 3
+ },
+ "crossing intervals (record, line)": {
+  "2,0": [
+   4,
+   10,
+   16,
+   23,
+   36
+  ],
+  "2,4": [
+   4,
+   10,
+   16,
+   23,
+   35
+  ],
+  "0,0": [],
+  "1,0": [
+   21,
+   31,
+   53
+  ]
+ },
+ "traces (record, line): line 0 values early and every 20th": {
+  "2,0": [
+   147,
+   -753,
+   -680,
+   225,
+   888,
+   546,
+   -435,
+   -970,
+   -458,
+   577,
+   1057,
+   474,
+   -618,
+   -1168,
+   -646,
+   497,
+   1269,
+   1035,
+   -13,
+   -1102,
+   -1509,
+   -1017,
+   55,
+   1135,
+   1733,
+   1647,
+   967,
+   -33,
+   -1037,
+   -1791,
+   -2152,
+   -2091,
+   -1664,
+   -976,
+   -151,
+   693,
+   1458,
+   2074,
+   2499,
+   2714,
+   2722
+  ],
+  "2,4": [
+   112,
+   -777,
+   -639,
+   300,
+   903,
+   459,
+   -540,
+   -965,
+   -321,
+   712,
+   1035,
+   289,
+   -797,
+   -1153,
+   -420,
+   747,
+   1316,
+   812,
+   -357,
+   -1322,
+   -1442,
+   -681,
+   489,
+   1449,
+   1776,
+   1388,
+   489,
+   -582,
+   -1500,
+   -2048,
+   -2143,
+   -1814,
+   -1165,
+   -333,
+   546,
+   1357,
+   2014,
+   2464,
+   2687,
+   2685,
+   2478
+  ],
+  "0,0": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   4,
+   5,
+   4,
+   3,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   0,
+   -1,
+   -1,
+   -1,
+   -1,
+   -1,
+   -1,
+   -1
+  ],
+  "1,0": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   2,
+   1,
+   -2,
+   -5,
+   -4,
+   1,
+   7,
+   9,
+   6,
+   -1,
+   -8,
+   -12,
+   -12,
+   -8,
+   -2,
+   5,
+   10,
+   14,
+   15,
+   14,
+   11,
+   7,
+   2,
+   -3,
+   -7,
+   -11
+  ]
+ },
+ "start share per record": {
+  "0": {
+   "share at centre": 0,
+   "units at centre (thousandths)": 0,
+   "board units (thousandths)": 0,
+   "unit": 1044301680000
+  },
+  "1": {
+   "share at centre": 0,
+   "units at centre (thousandths)": 0,
+   "board units (thousandths)": 0,
+   "unit": 170273819520000
+  },
+  "2": {
+   "share at centre": 6488708293547856,
+   "units at centre (thousandths)": 38107,
+   "board units (thousandths)": 443350,
+   "unit": 170273819520000
+  },
+  "3": {
+   "share at centre": 177452191276983,
+   "units at centre (thousandths)": 992,
+   "board units (thousandths)": 723350,
+   "unit": 178838187228000
+  }
+ },
+ "credits per record": {
+  "0": {
+   "credits": 0,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+   },
+   "beats": {}
+  },
+  "1": {
+   "credits": 0,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+   },
+   "beats": {}
+  },
+  "2": {
+   "credits": 297,
+   "senses": {
+    "-1": 107,
+    "0": 80,
+    "1": 110
+   },
+   "beats": {
+    "5": 56,
+    "6": 138,
+    "7": 54,
+    "8": 7,
+    "9": 8,
+    "13": 2,
+    "10": 11,
+    "12": 11,
+    "14": 10
+   },
+   "component +": {
+    "credits": 109,
+    "per position along axis 1": {
+     "2": 1,
+     "3": 31,
+     "4": 41,
+     "5": 28,
+     "6": 8
+    },
+    "centroid (thousandths)": [
+     3990,
+     4100,
+     3981
+    ],
+    "beats": {
+     "5": 24,
+     "6": 29,
+     "7": 24,
+     "13": 2,
+     "10": 10,
+     "9": 2,
+     "12": 11,
+     "14": 7
+    },
+    "senses": {
+     "-1": 44,
+     "0": 19,
+     "1": 46
+    }
+   },
+   "component -": {
+    "credits": 188,
+    "per position along axis 1": {
+     "2": 21,
+     "3": 40,
+     "4": 71,
+     "5": 42,
+     "6": 14
+    },
+    "centroid (thousandths)": [
+     4005,
+     3936,
+     4010
+    ],
+    "beats": {
+     "5": 32,
+     "6": 109,
+     "7": 30,
+     "8": 7,
+     "9": 6,
+     "10": 1,
+     "14": 3
+    },
+    "senses": {
+     "-1": 63,
+     "0": 61,
+     "1": 64
+    }
+   },
+   "component 0": {
+    "credits": 0,
+    "per position along axis 1": {},
+    "centroid (thousandths)": null,
+    "beats": {},
+    "senses": {
+     "-1": 0,
+     "0": 0,
+     "1": 0
+    }
+   },
+   "s_D sums over credits": [
+    64758769,
+    5660,
+    3502709
+   ],
+   "s_W sums over credits": [
+    2294,
+    10703807,
+    6074
+   ]
+  },
+  "3": {
+   "credits": 0,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+   },
+   "beats": {}
+  }
+ },
+ "counts": {
+  "births": "21",
+  "taken": "9894555880972117",
+  "booked": "5797664277120000",
+  "body_clicks": "297",
+  "refused_stop": "0",
+  "refused_origin": "0",
+  "refused_lay": "951",
+  "refused_orientation": "175",
+  "refused_twist": "59",
+  "turns": "0",
+  "light_credits": "0",
+  "light_laid": "8",
+  "light_laid_nodes": "8"
+ },
+ "taken >= booked": true,
+ "births": 21,
+ "spinor births": 0,
+ "W of the children at every birth (sum)": [
+  0,
+  0,
+  0,
+  -15,
+  0,
+  0,
+  0,
+  -15,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "W of the children sum 0 at every birth": false,
+ "spinor births: chi and axis": [],
+ "W total per record at the end": {
+  "0": -204,
+  "1": -842,
+  "2": -457,
+  "3": 0
+ },
+ "integers per Node": 116,
+ "max bits": 92,
+ "max transient bits": 84,
+ "turns": 0,
+ "run back": {
+  "intervals": 10,
+  "exact": 10
+ }
+}

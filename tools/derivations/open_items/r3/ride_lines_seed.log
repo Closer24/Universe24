@@ -1,0 +1,12 @@
+seed level     0 X      1000 e^U x1e6   1000000 v  189 r 784128000000000 v X / Gamma x1e6 189000000 quanta ride 1 (rule3 1) push x1e6 3969000 pull x1e6 1958863
+seed level   108 X      1538 e^U x1e6   1113585 v  123 r 933112320000000 v X / Gamma x1e6 189174000 quanta ride 1 (rule3 2) push x1e6 1681000 pull x1e6 2429479
+seed level   173 X      2000 e^U x1e6   1189060 v   95 r 0 v X / Gamma x1e6 190000000 quanta ride 1 (rule3 2) push x1e6 1002777 pull x1e6 2770934
+seed level   346 X      4003 e^U x1e6   1414427 v   47 r 4485996288000000 v X / Gamma x1e6 188141000 quanta ride 0 (rule3 4) push x1e6 245444 pull x1e6 3919481
+seed level   500 X      7415 e^U x1e6   1650165 v   25 r 11499237120000000 v X / Gamma x1e6 185375000 quanta ride 0 (rule3 7) push x1e6 69444 pull x1e6 5334093
+seed level   509 X      7665 e^U x1e6   1663893 v   25 r 1893669120000000 v X / Gamma x1e6 191625000 quanta ride 0 (rule3 8) push x1e6 69444 pull x1e6 5423321
+seed level  1000 X     54527 e^U x1e6   2717391 v    3 r 82619646720000000 v X / Gamma x1e6 163581000 quanta ride 0 (rule3 54) push x1e6 1000 pull x1e6 14464768
+seed level  1500 X    404372 e^U x1e6   4484304 v    0 r 613479791616000000 v X / Gamma x1e6 0 quanta ride 0 (rule3 397) push x1e6 0 pull x1e6 39390823
+seed level  2000 X   3010683 e^U x1e6   7407407 v    0 r 2657161223424000000 v X / Gamma x1e6 0 quanta ride 0 (rule3 3063) push x1e6 0 pull x1e6 107482267
+seed level  2500 X  22117936 e^U x1e6  12195121 v    0 r 17639693303808000000 v X / Gamma x1e6 0 quanta ride 0 (rule3 20250) push x1e6 0 pull x1e6 291324195
+
+written /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/r3/tools/derivations/r3/ride_lines_seed.json

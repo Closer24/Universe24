@@ -1,0 +1,296 @@
+{
+ "K": {
+  "779": {
+   "K_integer": 703,
+   "float_check_acos_times_Gamma": 702.89
+  },
+  "660": {
+   "K_integer": 868,
+   "float_check_acos_times_Gamma": 867.907
+  },
+  "1021": {
+   "K_integer": 0,
+   "float_check_acos_times_Gamma": 0.0
+  }
+ },
+ "fold_pairs": [
+  {
+   "V_ij": -50,
+   "X_ij": 398848,
+   "Xs_gravity": -84117,
+   "composed_with_sign_n0": [
+    398848,
+    -84117
+   ],
+   "sign_pair_n200": [
+    396859,
+    39785
+   ],
+   "composed_with_sign_n200": [
+    405250,
+    -43913
+   ]
+  },
+  {
+   "V_ij": -5,
+   "X_ij": 398848,
+   "Xs_gravity": -8412,
+   "composed_with_sign_n0": [
+    398848,
+    -8412
+   ],
+   "sign_pair_n200": [
+    396859,
+    39785
+   ],
+   "composed_with_sign_n200": [
+    397698,
+    31415
+   ]
+  },
+  {
+   "V_ij": -1,
+   "X_ij": 398848,
+   "Xs_gravity": -1682,
+   "composed_with_sign_n0": [
+    398848,
+    -1682
+   ],
+   "sign_pair_n200": [
+    396859,
+    39785
+   ],
+   "composed_with_sign_n200": [
+    397027,
+    38111
+   ]
+  },
+  {
+   "V_ij": 0,
+   "X_ij": 398848,
+   "Xs_gravity": 0,
+   "composed_with_sign_n0": [
+    398848,
+    0
+   ],
+   "sign_pair_n200": [
+    396859,
+    39785
+   ],
+   "composed_with_sign_n200": [
+    396859,
+    39785
+   ]
+  },
+  {
+   "V_ij": 1,
+   "X_ij": 398848,
+   "Xs_gravity": 1682,
+   "composed_with_sign_n0": [
+    398848,
+    1682
+   ],
+   "sign_pair_n200": [
+    396859,
+    39785
+   ],
+   "composed_with_sign_n200": [
+    396691,
+    41459
+   ]
+  },
+  {
+   "V_ij": 5,
+   "X_ij": 398848,
+   "Xs_gravity": 8412,
+   "composed_with_sign_n0": [
+    398848,
+    8412
+   ],
+   "sign_pair_n200": [
+    396859,
+    39785
+   ],
+   "composed_with_sign_n200": [
+    396020,
+    48155
+   ]
+  },
+  {
+   "V_ij": 50,
+   "X_ij": 398848,
+   "Xs_gravity": 84117,
+   "composed_with_sign_n0": [
+    398848,
+    84117
+   ],
+   "sign_pair_n200": [
+    396859,
+    39785
+   ],
+   "composed_with_sign_n200": [
+    388468,
+    123483
+   ]
+  }
+ ],
+ "two_ends": [
+  {
+   "fed": "uniform_20",
+   "links": 162,
+   "even_equal_from_both_ends": 66,
+   "odd_opposite_from_both_ends": 66,
+   "nonzero_odd_parts": 162,
+   "light_pairs_is_None": 1
+  },
+  {
+   "fed": "random_60",
+   "links": 162,
+   "even_equal_from_both_ends": 66,
+   "odd_opposite_from_both_ends": 66,
+   "nonzero_odd_parts": 162,
+   "light_pairs_is_None": 1
+  }
+ ],
+ "ring": {
+  "N": 24,
+  "R": 522752000000,
+  "w": 1568256000000,
+  "real_line": [
+   {
+    "e": 0,
+    "largest_level_at": [
+     [
+      50,
+      244
+     ],
+     [
+      100,
+      374
+     ],
+     [
+      200,
+      335
+     ],
+     [
+      300,
+      375
+     ]
+    ],
+    "bits_at_end": 9
+   },
+   {
+    "e": 5227520000,
+    "largest_level_at": [
+     [
+      50,
+      282
+     ],
+     [
+      100,
+      443
+     ],
+     [
+      200,
+      655
+     ],
+     [
+      300,
+      810
+     ]
+    ],
+    "bits_at_end": 10
+   },
+   {
+    "e": 52275200000,
+    "largest_level_at": [
+     [
+      50,
+      2570
+     ],
+     [
+      100,
+      36311
+     ],
+     [
+      200,
+      7657451
+     ],
+     [
+      300,
+      1642679884
+     ]
+    ],
+    "bits_at_end": 31
+   }
+  ],
+  "plane_peierls": [
+   {
+    "e": 0,
+    "largest_level_at": [
+     [
+      50,
+      244
+     ],
+     [
+      100,
+      374
+     ],
+     [
+      200,
+      335
+     ],
+     [
+      300,
+      375
+     ]
+    ],
+    "bits_at_end": 9
+   },
+   {
+    "e": 5227520000,
+    "largest_level_at": [
+     [
+      50,
+      242
+     ],
+     [
+      100,
+      342
+     ],
+     [
+      200,
+      249
+     ],
+     [
+      300,
+      263
+     ]
+    ],
+    "bits_at_end": 9
+   },
+   {
+    "e": 52275200000,
+    "largest_level_at": [
+     [
+      50,
+      189
+     ],
+     [
+      100,
+      237
+     ],
+     [
+      200,
+      211
+     ],
+     [
+      300,
+      247
+     ]
+    ],
+    "bits_at_end": 8
+   }
+  ]
+ }
+}

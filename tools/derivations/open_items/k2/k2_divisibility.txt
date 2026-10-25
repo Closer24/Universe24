@@ -1,0 +1,589 @@
+{
+ "paces_group_law": {
+  "1000": {
+   "remainders_(Gamma-1)^c_mod_Gamma^(c-1)_c_2_to_6": [
+    1,
+    2999,
+    5996001,
+    9990004999,
+    14980014994001
+   ],
+   "group_law_defect_count_nonzero_c1_c2_le_60": 1157,
+   "group_law_defect_largest_units": 1,
+   "pairs": 3721
+  },
+  "1021": {
+   "remainders_(Gamma-1)^c_mod_Gamma^(c-1)_c_2_to_6": [
+    1,
+    3062,
+    6250563,
+    10632903304,
+    16278977562485
+   ],
+   "group_law_defect_count_nonzero_c1_c2_le_60": 1190,
+   "group_law_defect_largest_units": 1,
+   "pairs": 3721
+  },
+  "6000": {
+   "remainders_(Gamma-1)^c_mod_Gamma^(c-1)_c_2_to_6": [
+    1,
+    17999,
+    215976001,
+    2159640029999,
+    19435680539964001
+   ],
+   "group_law_defect_count_nonzero_c1_c2_le_60": 837,
+   "group_law_defect_largest_units": 1,
+   "pairs": 3721
+  },
+  "1024": {
+   "remainders_(Gamma-1)^c_mod_Gamma^(c-1)_c_2_to_6": [
+    1,
+    3071,
+    6287361,
+    10726937599,
+    16471215302657
+   ],
+   "group_law_defect_count_nonzero_c1_c2_le_60": 1186,
+   "group_law_defect_largest_units": 1,
+   "pairs": 3721
+  },
+  "972": {
+   "remainders_(Gamma-1)^c_mod_Gamma^(c-1)_c_2_to_6": [
+    1,
+    2915,
+    5664817,
+    9173857499,
+    13370899664809
+   ],
+   "group_law_defect_count_nonzero_c1_c2_le_60": 1160,
+   "group_law_defect_largest_units": 1,
+   "pairs": 3721
+  }
+ },
+ "half_walls": {
+  "den_1021_Gamma_1000": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 0,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 0,
+   "count_unit_3denT_mod_2_T36000": 0
+  },
+  "den_1021_Gamma_1021": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 1,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 1568256,
+   "count_unit_3denT_mod_2_T36000": 0
+  },
+  "den_348893_Gamma_1000": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 0,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 0,
+   "count_unit_3denT_mod_2_T36000": 0
+  },
+  "den_348893_Gamma_1021": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 1,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 535899648,
+   "count_unit_3denT_mod_2_T36000": 0
+  },
+  "den_1655909141_Gamma_1000": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 0,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 0,
+   "count_unit_3denT_mod_2_T36000": 0
+  },
+  "den_1655909141_Gamma_1021": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 1,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 2543476440576,
+   "count_unit_3denT_mod_2_T36000": 0
+  },
+  "den_4471099877_Gamma_1000": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 0,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 0,
+   "count_unit_3denT_mod_2_T36000": 0
+  },
+  "den_4471099877_Gamma_1021": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 1,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 6867609411072,
+   "count_unit_3denT_mod_2_T36000": 0
+  },
+  "den_15162856759112389_Gamma_1000": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 0,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 0,
+   "count_unit_3denT_mod_2_T36000": 0
+  },
+  "den_15162856759112389_Gamma_1021": {
+   "w_mod_2": 0,
+   "Gamma2_mod_2": 1,
+   "D_phase_mod_2": 0,
+   "w_mod_12_den_G2": 23290147981996629504,
+   "count_unit_3denT_mod_2_T36000": 0
+  }
+ },
+ "ties": {
+  "1000": {
+   "contents_scanned": 3000,
+   "link_pace_rounding_ties": 41,
+   "turn_odd_rounding_ties_angles_pm2000_clocks_0_to_20": 256,
+   "link_factor_ties_over_all_t_G16": 0,
+   "Gamma_even": true
+  },
+  "1021": {
+   "contents_scanned": 3063,
+   "link_pace_rounding_ties": 0,
+   "turn_odd_rounding_ties_angles_pm2000_clocks_0_to_20": 0,
+   "link_factor_ties_over_all_t_G16": 0,
+   "Gamma_even": false
+  },
+  "6000": {
+   "contents_scanned": 18000,
+   "link_pace_rounding_ties": 0,
+   "turn_odd_rounding_ties_angles_pm2000_clocks_0_to_20": 66,
+   "link_factor_ties_over_all_t_G16": 0,
+   "Gamma_even": true
+  }
+ },
+ "take_walls_and_lay": {
+  "1021": {
+   "points": 2,
+   "3Ts_exact_at_every_point": true,
+   "W_c_even_at_every_point_T36000": true,
+   "lifts": [
+    {
+     "p": 1021,
+     "a": 30,
+     "b": 11,
+     "num": 779,
+     "s": 660,
+     "T_den_mod_2s_at_T36000": 600,
+     "4ab": 1320,
+     "T36000_mod_4ab": 360,
+     "least_T_with_A2_square": 1347720
+    }
+   ],
+   "lcm_4ab_over_lifts": 1320
+  },
+  "348893": {
+   "points": 8,
+   "3Ts_exact_at_every_point": true,
+   "W_c_even_at_every_point_T36000": true,
+   "lifts": [
+    {
+     "p": 269,
+     "a": 13,
+     "b": 10,
+     "num": 348355,
+     "s": 19368,
+     "T_den_mod_2s_at_T36000": 0,
+     "4ab": 520,
+     "T36000_mod_4ab": 120,
+     "least_T_with_A2_square": 139880
+    },
+    {
+     "p": 1297,
+     "a": 36,
+     "b": 1,
+     "num": 89493,
+     "s": 337220,
+     "T_den_mod_2s_at_T36000": 51880,
+     "4ab": 144,
+     "T36000_mod_4ab": 0,
+     "least_T_with_A2_square": 186768
+    }
+   ],
+   "lcm_4ab_over_lifts": 9360
+  },
+  "1655909141": {
+   "points": 8,
+   "3Ts_exact_at_every_point": true,
+   "W_c_even_at_every_point_T36000": true,
+   "lifts": [
+    {
+     "p": 3529,
+     "a": 48,
+     "b": 35,
+     "num": 1655880909,
+     "s": 9669460,
+     "T_den_mod_2s_at_T36000": 5364080,
+     "4ab": 6720,
+     "T36000_mod_4ab": 2400,
+     "least_T_with_A2_square": 23714880
+    },
+    {
+     "p": 469229,
+     "a": 685,
+     "b": 2,
+     "num": 506298091,
+     "s": 1576609440,
+     "T_den_mod_2s_at_T36000": 1126149600,
+     "4ab": 5480,
+     "T36000_mod_4ab": 3120,
+     "least_T_with_A2_square": 2571374920
+    }
+   ],
+   "lcm_4ab_over_lifts": 920640
+  },
+  "4471099877": {
+   "points": 8,
+   "3Ts_exact_at_every_point": true,
+   "W_c_even_at_every_point_T36000": true,
+   "lifts": [
+    {
+     "p": 38677,
+     "a": 151,
+     "b": 126,
+     "num": 4471022523,
+     "s": 26300360,
+     "T_den_mod_2s_at_T36000": 24753280,
+     "4ab": 76104,
+     "T36000_mod_4ab": 36000,
+     "least_T_with_A2_square": 2943474408
+    },
+    {
+     "p": 115601,
+     "a": 340,
+     "b": 1,
+     "num": 800536925,
+     "s": 4398849252,
+     "T_den_mod_2s_at_T36000": 5701441320,
+     "4ab": 1360,
+     "T36000_mod_4ab": 640,
+     "least_T_with_A2_square": 157217360
+    }
+   ],
+   "lcm_4ab_over_lifts": 12937680
+  },
+  "15162856759112389": {
+   "points": 26,
+   "3Ts_exact_at_every_point": true,
+   "W_c_even_at_every_point_T36000": true,
+   "lifts": [
+    {
+     "p": 617,
+     "a": 19,
+     "b": 16,
+     "num": 15162854575528411,
+     "s": 8137489624680,
+     "T_den_mod_2s_at_T36000": 6754553105280,
+     "4ab": 1216,
+     "T36000_mod_4ab": 736,
+     "least_T_with_A2_square": 750272
+    },
+    {
+     "p": 196613,
+     "a": 338,
+     "b": 287,
+     "num": 2458210083751875,
+     "s": 14962266816278236,
+     "T_den_mod_2s_at_T36000": 9425336583398248,
+     "4ab": 388024,
+     "T36000_mod_4ab": 36000,
+     "least_T_with_A2_square": 76290562712
+    },
+    {
+     "p": 124992409,
+     "a": 11180,
+     "b": 3,
+     "num": 2580388913625285,
+     "s": 14941680566515936,
+     "T_den_mod_2s_at_T36000": 13368872085830048,
+     "4ab": 134160,
+     "T36000_mod_4ab": 36000,
+     "least_T_with_A2_square": 16768981591440
+    }
+   ],
+   "lcm_4ab_over_lifts": 38041872960
+  }
+ },
+ "T_with_both_lays_exact_den_1021_T_le_2e6": 0,
+ "T": {
+  "36000": {
+   "mod_2": 0,
+   "mod_6": 0,
+   "mod_12": 0
+  },
+  "36001": {
+   "mod_2": 1,
+   "mod_6": 1,
+   "mod_12": 1
+  },
+  "32768": {
+   "mod_2": 0,
+   "mod_6": 2,
+   "mod_12": 8
+  }
+ },
+ "volume_pair": {
+  "den_1021_Gamma_1000": {
+   "pair": [
+    1020,
+    1021
+   ],
+   "den_mod_Gamma": 21,
+   "gap_x_Gamma_over_den_exact": false,
+   "gap_defect_per_million": 20568
+  },
+  "den_1021_Gamma_1021": {
+   "pair": [
+    1020,
+    1021
+   ],
+   "den_mod_Gamma": 0,
+   "gap_x_Gamma_over_den_exact": true,
+   "gap_defect_per_million": 0
+  },
+  "den_1021000_Gamma_1000": {
+   "pair": [
+    1019979,
+    1021000
+   ],
+   "den_mod_Gamma": 0,
+   "gap_x_Gamma_over_den_exact": true,
+   "gap_defect_per_million": 0
+  },
+  "den_348893_Gamma_1000": {
+   "pair": [
+    348545,
+    348893
+   ],
+   "den_mod_Gamma": 893,
+   "gap_x_Gamma_over_den_exact": false,
+   "gap_defect_per_million": 2559
+  },
+  "den_348893_Gamma_1297": {
+   "pair": [
+    348624,
+    348893
+   ],
+   "den_mod_Gamma": 0,
+   "gap_x_Gamma_over_den_exact": true,
+   "gap_defect_per_million": 0
+  },
+  "den_348893_Gamma_269": {
+   "pair": [
+    347596,
+    348893
+   ],
+   "den_mod_Gamma": 0,
+   "gap_x_Gamma_over_den_exact": true,
+   "gap_defect_per_million": 0
+  },
+  "den_15162856759112389_Gamma_1000": {
+   "pair": [
+    15147693902353277,
+    15162856759112389
+   ],
+   "den_mod_Gamma": 389,
+   "gap_x_Gamma_over_den_exact": false,
+   "gap_defect_per_million": 0
+  }
+ },
+ "den_54bit_factors": {
+  "124992409": 1,
+  "196613": 1,
+  "617": 1
+ },
+ "den_348893_factors": {
+  "269": 1,
+  "1297": 1
+ },
+ "den_1655909141_factors": {
+  "469229": 1,
+  "3529": 1
+ },
+ "den_4471099877_factors": {
+  "38677": 1,
+  "115601": 1
+ },
+ "link_factor_exactness": {
+  "Gamma_1000_G_1": {
+   "tensions_exact_of_Gamma": 1,
+   "G_divides_Gamma": true,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1000_G_8": {
+   "tensions_exact_of_Gamma": 8,
+   "G_divides_Gamma": true,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1000_G_16": {
+   "tensions_exact_of_Gamma": 8,
+   "G_divides_Gamma": false,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1000_G_125": {
+   "tensions_exact_of_Gamma": 125,
+   "G_divides_Gamma": true,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1000_G_200": {
+   "tensions_exact_of_Gamma": 200,
+   "G_divides_Gamma": true,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1000_G_1000": {
+   "tensions_exact_of_Gamma": 1000,
+   "G_divides_Gamma": true,
+   "Gamma_divides_G": true
+  },
+  "Gamma_1000_G_1024": {
+   "tensions_exact_of_Gamma": 8,
+   "G_divides_Gamma": false,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1024_G_1": {
+   "tensions_exact_of_Gamma": 1,
+   "G_divides_Gamma": true,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1024_G_8": {
+   "tensions_exact_of_Gamma": 8,
+   "G_divides_Gamma": true,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1024_G_16": {
+   "tensions_exact_of_Gamma": 16,
+   "G_divides_Gamma": true,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1024_G_125": {
+   "tensions_exact_of_Gamma": 1,
+   "G_divides_Gamma": false,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1024_G_200": {
+   "tensions_exact_of_Gamma": 8,
+   "G_divides_Gamma": false,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1024_G_1000": {
+   "tensions_exact_of_Gamma": 8,
+   "G_divides_Gamma": false,
+   "Gamma_divides_G": false
+  },
+  "Gamma_1024_G_1024": {
+   "tensions_exact_of_Gamma": 1024,
+   "G_divides_Gamma": true,
+   "Gamma_divides_G": true
+  }
+ },
+ "smallest_integral_set": {
+  "den": 10,
+  "Gamma": 2,
+  "T": 8,
+  "G": 1,
+  "points": [
+   [
+    8,
+    6
+   ],
+   [
+    6,
+    8
+   ]
+  ],
+  "volume_pair": [
+   5,
+   10
+  ],
+  "wall": 240,
+  "A2_lift_T_den_over_2s": [
+   6,
+   5
+  ],
+  "A2_light_T_div_2": 4
+ },
+ "largest_integral_within_128": {
+  "angled_1021_G_16": {
+   "Gamma": 139968,
+   "2^a_3^b": [
+    6,
+    7
+   ],
+   "den": 142907328,
+   "den_bits": 28,
+   "wall_bits": 72,
+   "light_total_bits_at_4Gamma3": 128,
+   "T_least_multiple": 1320,
+   "volume_pair_exact": true
+  },
+  "angled_1021_G_1": {
+   "Gamma": 354294,
+   "2^a_3^b": [
+    1,
+    11
+   ],
+   "den": 361734174,
+   "den_bits": 29,
+   "wall_bits": 68,
+   "light_total_bits_at_4Gamma3": 128,
+   "T_least_multiple": 1320,
+   "volume_pair_exact": true
+  },
+  "angled_348893_G_16": {
+   "Gamma": 52488,
+   "2^a_3^b": [
+    3,
+    8
+   ],
+   "den": 18312695784,
+   "den_bits": 35,
+   "wall_bits": 77,
+   "light_total_bits_at_4Gamma3": 128,
+   "T_least_multiple": 9360,
+   "volume_pair_exact": true
+  },
+  "angled_348893_G_1": {
+   "Gamma": 131072,
+   "2^a_3^b": [
+    17,
+    0
+   ],
+   "den": 45730103296,
+   "den_bits": 36,
+   "wall_bits": 72,
+   "light_total_bits_at_4Gamma3": 128,
+   "T_least_multiple": 9360,
+   "volume_pair_exact": true
+  },
+  "angled_121310221_G_16": {
+   "Gamma": 18432,
+   "2^a_3^b": [
+    11,
+    2
+   ],
+   "den": 2235989993472,
+   "den_bits": 42,
+   "wall_bits": 80,
+   "light_total_bits_at_4Gamma3": 128,
+   "T_least_multiple": 58979648,
+   "volume_pair_exact": true
+  },
+  "angled_121310221_G_1": {
+   "Gamma": 49152,
+   "2^a_3^b": [
+    14,
+    1
+   ],
+   "den": 5962639982592,
+   "den_bits": 43,
+   "wall_bits": 77,
+   "light_total_bits_at_4Gamma3": 128,
+   "T_least_multiple": 58979648,
+   "volume_pair_exact": true
+  }
+ }
+}

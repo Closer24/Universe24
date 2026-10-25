@@ -1,0 +1,13 @@
+{"interval": 50, "seconds": 5.8, "U_v": {"volume": [0.587, 7.94]}}
+{"interval": 100, "seconds": 16.2, "U_v": {"volume": [1.175, 9.9]}}
+{"interval": 150, "seconds": 32.0, "U_v": {"volume": [1.484, 3.93]}}
+{"interval": 200, "seconds": 49.4, "U_v": {"volume": [1.628, 2.16]}}
+{"interval": 250, "seconds": 70.2, "U_v": {"volume": [1.71, 1.25]}}
+{"interval": 300, "seconds": 94.5, "U_v": {"volume": [1.757, 0.65]}}
+{"family": "volume", "span": 50, "interval": 1, "U": 0.0, "velocity": 0.481, "n_eff": -77.977, "q_board": -39.988, "q_p": -40.988}
+{"family": "volume", "span": 50, "interval": 51, "U": 0.594, "velocity": 7.722, "n_eff": -1.044, "q_board": -1.522, "q_p": -2.522}
+{"family": "volume", "span": 50, "interval": 101, "U": 1.185, "velocity": 9.671, "n_eff": 6.203, "q_board": 2.101, "q_p": 1.101}
+{"family": "volume", "span": 50, "interval": 151, "U": 1.488, "velocity": 3.869, "n_eff": 8.456, "q_board": 3.228, "q_p": 2.228}
+{"family": "volume", "span": 50, "interval": 201, "U": 1.63, "velocity": 2.128, "n_eff": 13.613, "q_board": 5.807, "q_p": 4.807}
+{"log": "tools/derivations/n1/run300_697786.eras.jsonl", "intervals": 300}
+RUN300 EXIT 0

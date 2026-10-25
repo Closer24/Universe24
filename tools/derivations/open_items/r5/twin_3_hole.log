@@ -1,0 +1,2 @@
+{"board": "hole", "forward": 60, "local_trigger": [], "former_reading": [], "delta_largest_abs": 54, "false_top_conditions_met": 0, "false_tops_by_the_candidate_trigger": 0, "false_top_rows": []}
+delta histogram: {"-4": 1, "-1": 5, "0": 1371, "1": 93, "2": 8, "3": 7, "4": 1, "5": 2, "6": 2, "7": 2, "9": 2, "12": 2, "22": 1, "54": 1}

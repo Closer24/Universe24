@@ -1,0 +1,2 @@
+{"seed": [{"lay": "sea", "row": 0}, {"lay": "at", "row": 2, "centre": [1, 2, 3], "width": 2, "quanta": 60, "wave": [827954570, 0, 0]}], "cube": 5, "intervals": 6, "births": 0, "credits": 0, "turns": 7, "P base": null}
+{"images holding (births through the image, every line of every row through the image)": 48, "of": 48, "apart": []}

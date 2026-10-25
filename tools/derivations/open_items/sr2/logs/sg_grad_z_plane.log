@@ -1,0 +1,1 @@
+{"world": "sg_grad_z_plane.json", "ms": 7278, "credits": {"0": 0, "1": 298, "2": 0, "3": 0}, "crossings": {"2,0": 3, "2,4": 0, "0,0": 0, "1,0": 5}, "births": 20, "spinor births": 18, "run back": {"intervals": 10, "exact": 10}, "integers": 116, "bits": 92, "transient": 84, "taken>=booked": true}

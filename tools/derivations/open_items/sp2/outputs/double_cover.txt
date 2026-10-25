@@ -1,0 +1,16 @@
+(1) the 48: 24 rotations, 24 reflections
+    rotation orders (order: count): {1: 1, 2: 9, 3: 8, 4: 6} ; every R^order = I: a turn by 2 pi (a quarter turn four times) is the group's identity
+(2) signed permutations of four lines: 384
+    rotations realised on the doublet's bilinears by a signed permutation of its four lines: 8 of 24; not realised: 16 of 24
+    order 1: 1 rotations; realised: 1; Q^1 over the realisations: {'+I': 1, '-I': 1, 'other': 2}
+    order 2: 9 rotations; realised: 5; Q^2 over the realisations: {'+I': 6, '-I': 6, 'other': 8}
+    order 3: 8 rotations; realised: 0; Q^3 over the realisations: {'+I': 0, '-I': 0, 'other': 0}
+    order 4: 6 rotations; realised: 2; Q^4 over the realisations: {'+I': 8, '-I': 0, 'other': 0}
+    realised rotations by axis of the fixed direction (order, axis): [(1, 'x'), (2, 'diag'), (2, 'diag'), (2, 'x'), (2, 'y'), (2, 'z'), (4, 'z'), (4, 'z')]
+    not realised (order, axis): [(2, 'diag'), (2, 'diag'), (2, 'diag'), (2, 'diag'), (3, 'diag'), (3, 'diag'), (3, 'diag'), (3, 'diag'), (3, 'diag'), (3, 'diag'), (3, 'diag'), (3, 'diag'), (4, 'x'), (4, 'x'), (4, 'y'), (4, 'y')]
+(3) 2Q (2Q)^dagger = (((4, 0), (0, 0)), ((0, 0), (4, 0))) (4 I: unitary after the halving)
+    s((2Q) z) div 4 = R_x s(z) on the test vectors: 10 of 10 ; remainders mod 4 all zero: True
+    entries of 2Q: modulus squared [2, 2, 2, 2] of 4: each 2 of 4, so Q's entries have modulus squared 1/2: no signed permutation (modulus squared 0 or 1)
+    (2Q)^4 = (((16, 0), (0, 0)), ((0, 0), (16, 0))) = 16 I, so Q^4 = +I (the common phase (1+i)/sqrt2 to the fourth is -1 and cancels the lift's -1)
+(4) the SU(2) lift of a quarter turn has trace t with t^2 = 2 (2 cos(pi/4) squared); integers n with n^2 = 2: none (1^2 = 1, 2^2 = 4); rationals p/q with p^2 = 2 q^2: none (the parity of p and q): the spinor character is irrational, the vector characters (traces of signed permutations) are integers: [-1, 0, 1, 3]
+    the half turns' lifts i sigma_a squared: {'x': True, 'y': True, 'z': True} (-I: the quaternion group Q8 on the four lines is integer-exact, the double cover of the three half turns alone)

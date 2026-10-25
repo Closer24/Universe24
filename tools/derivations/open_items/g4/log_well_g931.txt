@@ -1,0 +1,31 @@
+{"event": "header", "mode": "well", "den": 546037, "den_bits": 20, "cube": 9, "family": "point 2 0", "pair": [37613, 546037], "g_milli": 931, "sin_milli": 997, "unit": 58831920000, "width_bits": 95, "kind": "<class 'object'>", "amplitude_bound": 4135867852, "depth": 300, "offset": 3, "sigma_tenths": 12, "bodies": [[[4, 4, 1], 1, 0]], "lays": [{"amplitude": 116, "c_lay": 75, "p0_lay": 928, "cos_milli": 198, "sin_milli": 980, "share_total": 1451617006952, "unit": 58831920000, "quanta_milli": 24673}], "intervals": 200, "pump": null, "margin": null, "quanta": 25}
+{"event": "reading", "interval": 0, "bodies": [{"total": 1451617006952, "peak": [4, 4, 1], "peak_offset": [0, 0, 0], "centroid_milli": [0, 0, 61], "rms_milli": 2042, "within_milli": [39, 202, 481, 752], "c_peak": 75, "c_lay": 75, "share_lay_milli": 39, "re_now_lay": 116, "re_before_lay": 22, "crossings_lay": 0, "beat_engine_lay": 0, "proper_lay": 0}], "turned": 0, "seconds": 0.0}
+{"event": "reading", "interval": 1, "bodies": [{"total": 1451522604061, "peak": [4, 4, 1], "peak_offset": [0, 0, 0], "centroid_milli": [0, 0, 61], "rms_milli": 2042, "within_milli": [39, 202, 482, 752], "c_peak": 75, "c_lay": 75, "share_lay_milli": 39, "re_now_lay": 22, "re_before_lay": 116, "crossings_lay": 0, "beat_engine_lay": 0, "proper_lay": 928}], "turned": 0, "seconds": 0.5}
+{"event": "reading", "interval": 2, "bodies": [{"total": 1451550252600, "peak": [4, 4, 1], "peak_offset": [0, 0, 0], "centroid_milli": [0, 0, 61], "rms_milli": 2041, "within_milli": [39, 203, 482, 753], "c_peak": 75, "c_lay": 75, "share_lay_milli": 39, "re_now_lay": -108, "re_before_lay": 22, "crossings_lay": 0, "beat_engine_lay": 0, "proper_lay": 1856}], "turned": 0, "seconds": 0.7}
+{"event": "reading", "interval": 5, "bodies": [{"total": 1452295885100, "peak": [4, 4, 1], "peak_offset": [0, 0, 0], "centroid_milli": [0, 0, 67], "rms_milli": 2045, "within_milli": [39, 204, 483, 754], "c_peak": 75, "c_lay": 75, "share_lay_milli": 39, "re_now_lay": 95, "re_before_lay": 85, "crossings_lay": 1, "beat_engine_lay": 0, "proper_lay": 4640}], "turned": 0, "seconds": 1.7}
+{"event": "reading", "interval": 10, "bodies": [{"total": 1457244915600, "peak": [4, 4, 1], "peak_offset": [0, 0, 0], "centroid_milli": [0, 0, 78], "rms_milli": 2048, "within_milli": [41, 207, 484, 754], "c_peak": 75, "c_lay": 75, "share_lay_milli": 41, "re_now_lay": 38, "re_before_lay": 119, "crossings_lay": 2, "beat_engine_lay": 4, "proper_lay": 9280}], "turned": 0, "seconds": 4.0}
+{"event": "reading", "interval": 20, "bodies": [{"total": 1460537193325, "peak": [4, 4, 1], "peak_offset": [0, 0, 0], "centroid_milli": [0, 0, 117], "rms_milli": 2049, "within_milli": [47, 220, 503, 757], "c_peak": 75, "c_lay": 75, "share_lay_milli": 47, "re_now_lay": -106, "re_before_lay": 52, "crossings_lay": 4, "beat_engine_lay": 5, "proper_lay": 18560}], "turned": 0, "seconds": 8.8}
+{"event": "reading", "interval": 30, "bodies": [{"total": 1467033823583, "peak": [4, 4, 2], "peak_offset": [0, 0, 1], "centroid_milli": [0, 0, 180], "rms_milli": 2027, "within_milli": [60, 238, 472, 721], "c_peak": 100, "c_lay": 75, "share_lay_milli": 57, "re_now_lay": -102, "re_before_lay": -112, "crossings_lay": 6, "beat_engine_lay": 5, "proper_lay": 27840}], "turned": 0, "seconds": 14.9}
+{"event": "reading", "interval": 50, "bodies": [{"total": 1477614241457, "peak": [4, 4, 2], "peak_offset": [0, 0, 1], "centroid_milli": [0, 0, 322], "rms_milli": 1966, "within_milli": [130, 335, 574, 773], "c_peak": 100, "c_lay": 75, "share_lay_milli": 80, "re_now_lay": 146, "re_before_lay": 102, "crossings_lay": 11, "beat_engine_lay": 4, "proper_lay": 46400}], "turned": 0, "seconds": 52.5}
+{"event": "reading", "interval": 75, "bodies": [{"total": 1483552517811, "peak": [4, 4, 2], "peak_offset": [0, 0, 1], "centroid_milli": [0, 0, 450], "rms_milli": 1869, "within_milli": [282, 417, 701, 808], "c_peak": 100, "c_lay": 75, "share_lay_milli": 107, "re_now_lay": -39, "re_before_lay": -195, "crossings_lay": 16, "beat_engine_lay": 4, "proper_lay": 69600}], "turned": 0, "seconds": 123.2}
+{"event": "reading", "interval": 100, "bodies": [{"total": 1483047653586, "peak": [4, 4, 2], "peak_offset": [0, 0, 1], "centroid_milli": [0, 0, 562], "rms_milli": 1831, "within_milli": [265, 543, 748, 842], "c_peak": 100, "c_lay": 75, "share_lay_milli": 153, "re_now_lay": -189, "re_before_lay": 108, "crossings_lay": 22, "beat_engine_lay": 5, "proper_lay": 92800}], "turned": 0, "seconds": 207.3}
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/g4/tools/derivations/g4/fall.py", line 328, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/g4/tools/derivations/g4/fall.py", line 291, in main
+    board.step()
+    ~~~~~~~~~~^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/g4/src/event_universe/lattice.py", line 276, in step
+    kept_state = self.advanced_to_the_close()
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/g4/src/event_universe/lattice.py", line 265, in advanced_to_the_close
+    self.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/g4/src/event_universe/lattice.py", line 325, in held_write
+    self.bounded(family.name, line, number == 0 and family.motion_volume)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/g4/src/event_universe/lattice.py", line 337, in bounded
+    raise RuntimeError(
+        f"the family {name!r} reached the level {records.largest(record)} at interval {self.interval}, above the world's amplitude bound A = {self.world.amplitude_bound}: the run is refused"
+    )
+RuntimeError: the family 'sign' reached the level 514618670881 at interval 117, above the world's amplitude bound A = 4135867852: the run is refused

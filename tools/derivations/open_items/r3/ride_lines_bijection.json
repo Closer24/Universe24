@@ -1,0 +1,16 @@
+{
+ "trials": 800,
+ "returned_bit_for_bit": 800,
+ "returned_rising": 328,
+ "returned_falling": 298,
+ "x_pair_for_collisions": [
+  16523,
+  3317
+ ],
+ "rescaled_r_states_lost_per_node_interval": 20710388736000000,
+ "rescaled_r_sampled": {
+  "drawn": 20000,
+  "distinct_images": 20000
+ },
+ "r_as_is_at_new_wall_states_folded_per_node_interval": 20710388736000000
+}

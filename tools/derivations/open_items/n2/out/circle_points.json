@@ -1,0 +1,726 @@
+[
+ {
+  "den": 3311818282,
+  "den_bits": 32,
+  "primes": {
+   "2": 1,
+   "3529": 1,
+   "469229": 1
+  },
+  "primes_1_mod_4": [
+   3529,
+   469229
+  ],
+  "points_in_the_open_quadrant": 8,
+  "wall_w_bits": 63,
+  "W_c_bits": 49,
+  "half_wall_bits_at_two_light_quanta": 50,
+  "lifts_by_rising_leg": [
+   {
+    "vector": [
+     0,
+     2
+    ],
+    "num": 3311761818,
+    "s": 19338920,
+    "gap_den_minus_num": 56464,
+    "g_milli": [
+     0,
+     56464000
+    ],
+    "s_over_den_micro": [
+     5839,
+     1213051402
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 98872,
+    "wall_3Ts": 2088603360000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     5,
+     600442975440000
+    ]
+   },
+   {
+    "vector": [
+     2,
+     0
+    ],
+    "num": 1012596182,
+    "s": 3153218880,
+    "gap_den_minus_num": 2299222100,
+    "g_milli": [
+     694,
+     820212292
+    ],
+    "s_over_den_micro": [
+     952111,
+     263706698
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 606,
+    "wall_3Ts": 340547639040000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     952,
+     79461115776000
+    ]
+   }
+  ],
+  "mass_ratio_heaviest_lift_over_lightest_milli": [
+   163050,
+   7974000
+  ],
+  "nature_p_over_e_milli": 1836153,
+  "lift_steps": [
+   {
+    "from_vector": [
+     0,
+     2
+    ],
+    "to_vector": [
+     2,
+     0
+    ],
+    "leg_ratio_per_million": [
+     163050412,
+     6364960
+    ]
+   }
+  ],
+  "neutron_like_step_nearest_nature": {
+   "light_leg": 3153218880,
+   "light_point": [
+    [
+     2,
+     0
+    ],
+    1012596182
+   ],
+   "heavy_leg": 3159078040,
+   "heavy_point": [
+    [
+     2,
+     2
+    ],
+    994166118
+   ],
+   "leg_ratio_per_million": 1001858,
+   "nature_per_million": 1001378,
+   "miss_per_million": 480,
+   "heavy_is_a_lift": false,
+   "light_is_a_lift": true
+  },
+  "lightest_point": {
+   "num": 3311761818,
+   "s": 19338920,
+   "gap": 56464,
+   "g_micro": [
+    17,
+    163089206
+   ],
+   "den_over_s_milli": [
+    171251,
+    8893080
+   ],
+   "is_a_lift": true
+  }
+ },
+ {
+  "den": 697786,
+  "den_bits": 20,
+  "primes": {
+   "2": 1,
+   "269": 1,
+   "1297": 1
+  },
+  "primes_1_mod_4": [
+   269,
+   1297
+  ],
+  "points_in_the_open_quadrant": 8,
+  "wall_w_bits": 50,
+  "W_c_bits": 37,
+  "half_wall_bits_at_two_light_quanta": 38,
+  "lifts_by_rising_leg": [
+   {
+    "vector": [
+     0,
+     2
+    ],
+    "num": 696710,
+    "s": 38736,
+    "gap_den_minus_num": 1076,
+    "g_milli": [
+     1,
+     378214
+    ],
+    "s_over_den_micro": [
+     55512,
+     503568
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 10400,
+    "wall_3Ts": 4183488000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     55,
+     77278320000
+    ]
+   },
+   {
+    "vector": [
+     2,
+     0
+    ],
+    "num": 178986,
+    "s": 674440,
+    "gap_den_minus_num": 518800,
+    "g_milli": [
+     743,
+     345002
+    ],
+    "s_over_den_micro": [
+     966542,
+     523988
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 597,
+    "wall_3Ts": 72839520000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     966,
+     81804384000
+    ]
+   }
+  ],
+  "mass_ratio_heaviest_lift_over_lightest_milli": [
+   17411,
+   7504
+  ],
+  "nature_p_over_e_milli": 1836153,
+  "lift_steps": [
+   {
+    "from_vector": [
+     0,
+     2
+    ],
+    "to_vector": [
+     2,
+     0
+    ],
+    "leg_ratio_per_million": [
+     17411193,
+     27952
+    ]
+   }
+  ],
+  "neutron_like_step_nearest_nature": {
+   "light_leg": 674440,
+   "light_point": [
+    [
+     2,
+     0
+    ],
+    178986
+   ],
+   "heavy_leg": 683336,
+   "heavy_point": [
+    [
+     2,
+     2
+    ],
+    141270
+   ],
+   "leg_ratio_per_million": 1013190,
+   "nature_per_million": 1001378,
+   "miss_per_million": 11812,
+   "heavy_is_a_lift": false,
+   "light_is_a_lift": true
+  },
+  "lightest_point": {
+   "num": 696710,
+   "s": 38736,
+   "gap": 1076,
+   "g_micro": [
+    1542,
+    13988
+   ],
+   "den_over_s_milli": [
+    18013,
+    34432
+   ],
+   "is_a_lift": true
+  }
+ },
+ {
+  "den": 1655909141,
+  "den_bits": 31,
+  "primes": {
+   "3529": 1,
+   "469229": 1
+  },
+  "primes_1_mod_4": [
+   3529,
+   469229
+  ],
+  "points_in_the_open_quadrant": 8,
+  "wall_w_bits": 62,
+  "W_c_bits": 48,
+  "half_wall_bits_at_two_light_quanta": 49,
+  "lifts_by_rising_leg": [
+   {
+    "vector": [
+     0,
+     2
+    ],
+    "num": 1655880909,
+    "s": 9669460,
+    "gap_den_minus_num": 28232,
+    "g_milli": [
+     0,
+     28232000
+    ],
+    "s_over_den_micro": [
+     5839,
+     606525701
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 98872,
+    "wall_3Ts": 1044301680000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     5,
+     300221487720000
+    ]
+   },
+   {
+    "vector": [
+     2,
+     0
+    ],
+    "num": 506298091,
+    "s": 1576609440,
+    "gap_den_minus_num": 1149611050,
+    "g_milli": [
+     694,
+     410106146
+    ],
+    "s_over_den_micro": [
+     952111,
+     131853349
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 606,
+    "wall_3Ts": 170273819520000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     952,
+     39730557888000
+    ]
+   }
+  ],
+  "mass_ratio_heaviest_lift_over_lightest_milli": [
+   163050,
+   3987000
+  ],
+  "nature_p_over_e_milli": 1836153,
+  "lift_steps": [
+   {
+    "from_vector": [
+     0,
+     2
+    ],
+    "to_vector": [
+     2,
+     0
+    ],
+    "leg_ratio_per_million": [
+     163050412,
+     3182480
+    ]
+   }
+  ],
+  "neutron_like_step_nearest_nature": {
+   "light_leg": 1576609440,
+   "light_point": [
+    [
+     2,
+     0
+    ],
+    506298091
+   ],
+   "heavy_leg": 1579539020,
+   "heavy_point": [
+    [
+     2,
+     2
+    ],
+    497083059
+   ],
+   "leg_ratio_per_million": 1001858,
+   "nature_per_million": 1001378,
+   "miss_per_million": 480,
+   "heavy_is_a_lift": false,
+   "light_is_a_lift": true
+  },
+  "lightest_point": {
+   "num": 1655880909,
+   "s": 9669460,
+   "gap": 28232,
+   "g_micro": [
+    17,
+    81544603
+   ],
+   "den_over_s_milli": [
+    171251,
+    4446540
+   ],
+   "is_a_lift": true
+  }
+ },
+ {
+  "den": 348893,
+  "den_bits": 19,
+  "primes": {
+   "269": 1,
+   "1297": 1
+  },
+  "primes_1_mod_4": [
+   269,
+   1297
+  ],
+  "points_in_the_open_quadrant": 8,
+  "wall_w_bits": 49,
+  "W_c_bits": 36,
+  "half_wall_bits_at_two_light_quanta": 37,
+  "lifts_by_rising_leg": [
+   {
+    "vector": [
+     0,
+     2
+    ],
+    "num": 348355,
+    "s": 19368,
+    "gap_den_minus_num": 538,
+    "g_milli": [
+     1,
+     189107
+    ],
+    "s_over_den_micro": [
+     55512,
+     251784
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 10400,
+    "wall_3Ts": 2091744000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     55,
+     38639160000
+    ]
+   },
+   {
+    "vector": [
+     2,
+     0
+    ],
+    "num": 89493,
+    "s": 337220,
+    "gap_den_minus_num": 259400,
+    "g_milli": [
+     743,
+     172501
+    ],
+    "s_over_den_micro": [
+     966542,
+     261994
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 597,
+    "wall_3Ts": 36419760000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     966,
+     40902192000
+    ]
+   }
+  ],
+  "mass_ratio_heaviest_lift_over_lightest_milli": [
+   17411,
+   3752
+  ],
+  "nature_p_over_e_milli": 1836153,
+  "lift_steps": [
+   {
+    "from_vector": [
+     0,
+     2
+    ],
+    "to_vector": [
+     2,
+     0
+    ],
+    "leg_ratio_per_million": [
+     17411193,
+     13976
+    ]
+   }
+  ],
+  "neutron_like_step_nearest_nature": {
+   "light_leg": 337220,
+   "light_point": [
+    [
+     2,
+     0
+    ],
+    89493
+   ],
+   "heavy_leg": 341668,
+   "heavy_point": [
+    [
+     2,
+     2
+    ],
+    70635
+   ],
+   "leg_ratio_per_million": 1013190,
+   "nature_per_million": 1001378,
+   "miss_per_million": 11812,
+   "heavy_is_a_lift": false,
+   "light_is_a_lift": true
+  },
+  "lightest_point": {
+   "num": 348355,
+   "s": 19368,
+   "gap": 538,
+   "g_micro": [
+    1542,
+    6994
+   ],
+   "den_over_s_milli": [
+    18013,
+    17216
+   ],
+   "is_a_lift": true
+  }
+ },
+ {
+  "den": 1021,
+  "den_bits": 10,
+  "primes": {
+   "1021": 1
+  },
+  "primes_1_mod_4": [
+   1021
+  ],
+  "points_in_the_open_quadrant": 2,
+  "wall_w_bits": 41,
+  "W_c_bits": 27,
+  "half_wall_bits_at_two_light_quanta": 28,
+  "lifts_by_rising_leg": [
+   {
+    "vector": [
+     2
+    ],
+    "num": 779,
+    "s": 660,
+    "gap_den_minus_num": 242,
+    "g_milli": [
+     237,
+     23
+    ],
+    "s_over_den_micro": [
+     646425,
+     75
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 893,
+    "wall_3Ts": 71280000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     646,
+     93744000
+    ]
+   }
+  ],
+  "lightest_point": {
+   "num": 779,
+   "s": 660,
+   "gap": 242,
+   "g_micro": [
+    237022,
+    538
+   ],
+   "den_over_s_milli": [
+    1546,
+    640
+   ],
+   "is_a_lift": true
+  }
+ },
+ {
+  "den": 21397363965165989151899244775347635252768274397,
+  "den_bits": 154,
+  "primes": {
+   "8909066857637": 1,
+   "79961009336473": 1,
+   "30036532038439967297": 1
+  },
+  "primes_1_mod_4": [
+   8909066857637,
+   79961009336473,
+   30036532038439967297
+  ],
+  "points_in_the_open_quadrant": 26,
+  "wall_w_bits": 185,
+  "W_c_bits": 171,
+  "half_wall_bits_at_two_light_quanta": 172,
+  "lifts_by_rising_leg": [
+   {
+    "vector": [
+     0,
+     0,
+     2
+    ],
+    "num": 21397363965165989150474488818982086595722885795,
+    "s": 7808459740549578735922594780248829328,
+    "gap_den_minus_num": 1424755956365548657045388602,
+    "g_milli": [
+     0,
+     1424755956365548657045388602000
+    ],
+    "s_over_den_micro": [
+     0,
+     7808459740549578735922594780248829328000000
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 1582101240925,
+    "wall_3Ts": 843313651979354503479640236266873567424000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     0,
+     1686627303958709006959280472533747134848000000
+    ]
+   },
+   {
+    "vector": [
+     2,
+     0,
+     0
+    ],
+    "num": 21397363965161185649061722838116504985189627435,
+    "s": 14337524090452503379101009450350924059372,
+    "gap_den_minus_num": 4803502837521937231130267578646962,
+    "g_milli": [
+     0,
+     4803502837521937231130267578646962000
+    ],
+    "s_over_den_micro": [
+     0,
+     14337524090452503379101009450350924059372000000
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 861639273,
+    "wall_3Ts": 1548452601768870364942909020637899798412176000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     0,
+     3096905203537740729885818041275799596824352000000
+    ]
+   },
+   {
+    "vector": [
+     0,
+     2,
+     0
+    ],
+    "num": 21397363965161172397401408461543944901743724995,
+    "s": 14357287287022039657823019457938337076328,
+    "gap_den_minus_num": 4816754497836313803690351024549402,
+    "g_milli": [
+     0,
+     4816754497836313803690351024549402000
+    ],
+    "s_over_den_micro": [
+     0,
+     14357287287022039657823019457938337076328000000
+    ],
+    "compton_milli_links_isqrt_den2_over_3s2": 860453203,
+    "wall_3Ts": 1550587026998380283044886101457340404243424000,
+    "pair_walls_fit_two_light_quanta": true,
+    "pair_walls_over_two_quanta_milli": [
+     0,
+     3101174053996760566089772202914680808486848000000
+    ]
+   }
+  ],
+  "mass_ratio_heaviest_lift_over_lightest_milli": [
+   1838683,
+   5105889118578920655119606078821032976
+  ],
+  "nature_p_over_e_milli": 1836153,
+  "lift_steps": [
+   {
+    "from_vector": [
+     0,
+     0,
+     2
+    ],
+    "to_vector": [
+     2,
+     0,
+     0
+    ],
+    "leg_ratio_per_million": [
+     1836152655,
+     6381783224005193170107894528122934160
+    ]
+   },
+   {
+    "from_vector": [
+     2,
+     0,
+     0
+    ],
+    "to_vector": [
+     0,
+     2,
+     0
+    ],
+    "leg_ratio_per_million": [
+     1001378,
+     6088372892729065608816564829443602185384
+    ]
+   }
+  ],
+  "neutron_like_step_nearest_nature": {
+   "light_leg": 14337524090452503379101009450350924059372,
+   "light_point": [
+    [
+     2,
+     0,
+     0
+    ],
+    21397363965161185649061722838116504985189627435
+   ],
+   "heavy_leg": 14357287287022039657823019457938337076328,
+   "heavy_point": [
+    [
+     0,
+     2,
+     0
+    ],
+    21397363965161172397401408461543944901743724995
+   ],
+   "leg_ratio_per_million": 1001378,
+   "nature_per_million": 1001378,
+   "miss_per_million": 0,
+   "heavy_is_a_lift": true,
+   "light_is_a_lift": true
+  },
+  "lightest_point": {
+   "num": 21397363965165989150474488818982086595722885795,
+   "s": 7808459740549578735922594780248829328,
+   "gap": 1424755956365548657045388602,
+   "g_micro": [
+    0,
+    1424755956365548657045388602000000
+   ],
+   "den_over_s_milli": [
+    2740279732000,
+    712377978182774328522694301000
+   ],
+   "is_a_lift": true
+  }
+ }
+]

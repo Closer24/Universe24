@@ -1,0 +1,8 @@
+Gamma 1000: the Link's zero at content 3793; the memo's exact fraction at c = 3792: 37785 bits over 37781 bits (beyond 128)
+Gamma 1000 K 32: hollows 0..3792: clock mismatches against clock_alone 0 (first []), Link's pace mismatches 0 (first []); hills 0..-3000: mismatches 0 (first []); largest transient 57 bits (within 128: True)
+Gamma 1000 K 64: hollows 0..3792: clock mismatches against clock_alone 0 (first []), Link's pace mismatches 0 (first []); hills 0..-3000: mismatches 0 (first []); largest transient 89 bits (within 128: True)
+Gamma 1000 K 96: hollows 0..3792: clock mismatches against clock_alone 0 (first []), Link's pace mismatches 0 (first []); hills 0..-3000: mismatches 0 (first []); largest transient 121 bits (within 128: True)
+Gamma 6000: the Link's zero at content 28206; the memo's exact fraction at c = 28205: 353988 bits over 353982 bits (beyond 128)
+Gamma 6000 K 32: hollows 0..28205: clock mismatches against clock_alone 0 (first []), Link's pace mismatches 0 (first []); hills 0..-18000: mismatches 0 (first []); largest transient 62 bits (within 128: True)
+Gamma 6000 K 64: hollows 0..28205: clock mismatches against clock_alone 0 (first []), Link's pace mismatches 0 (first []); hills 0..-18000: mismatches 0 (first []); largest transient 94 bits (within 128: True)
+Gamma 6000 K 96: hollows 0..28205: clock mismatches against clock_alone 0 (first []), Link's pace mismatches 0 (first []); hills 0..-18000: mismatches 0 (first []); largest transient 126 bits (within 128: True)

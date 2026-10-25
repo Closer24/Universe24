@@ -1,0 +1,5 @@
+{"universe": "universe_z2.json", "shape": [5, 5, 5], "intervals": 300,
+ "seed": [
+  {"sea": {"quanta_per_mode": 1, "modes": [[1, 0, 0], [0, 1, 0], [0, 0, 1]], "centre": [2, 2, 2]}},
+  {"at": {"pair": [1655909141, 1655909141], "centre": [3, 2, 2], "sigma_tenths": 0, "quanta": 1}}
+ ]}

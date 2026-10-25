@@ -1,0 +1,526 @@
+diff --git a/src/event_universe/bookings.py b/src/event_universe/bookings.py
+index 34d37ec3c..64ab9aecf 100644
+--- a/src/event_universe/bookings.py
++++ b/src/event_universe/bookings.py
+@@ -8,7 +8,8 @@ from typing import Any
+ 
+ import numpy as np
+ 
+-from event_universe import node, records, registry
++from event_universe import node, readings, records, registry
++from event_universe.core.rule3 import division_forward
+ from event_universe.features.start import Sourced
+ from event_universe.flux import step_records as stepped_records
+ from event_universe.loader.derived import weight_of
+@@ -38,6 +39,28 @@ def record_lines(
+     )
+ 
+ 
++def form_a(
++    rule: Any, lines: Sequence[records.Record], frames: Sequence[Any] | None = None
++) -> Any:
++    """Form A (the owner's word of the third round, R4's two-level term, hand R3's build, 2026-10-25, behind the flag U24_RIDES): a record's booking for the rows of the content read from the two levels the step left, F = [w (next^2 + now^2) - S next now - next SUM over the six Ports of R_ij m_j] div w at every Node, summed over the record's lines, next the line's level now and now its level before as the state stands after the step (and as the post-state holds them before any line is inverted), m_j the neighbours' level before through each Port, S, w and R_ij the rule of the record's read at the content the step started from; the conserved form's Node term on the pair (next, now) (ALGEBRA.md, The conserved form; share.share), equal to w D - next (r' - r) under Rule3's line and to D = v^2 exactly on the uniform drift, so the law's form D to the remainders' term; every term a function of the post-state, which is what gives the riding lines' inverse the born wall without a search (Lattice.inverse_body_rides); the division one quotient on a booking (the acts table, kind D), the plain reaches on a turned plane (its pairs' odd parts enter no booking here)."""
++    total: Any = 0
++    for number, line in enumerate(lines):
++        next_level = np.asarray(line.now, dtype=object)
++        now_level = np.asarray(line.before, dtype=object)
++        arrived = readings.framed(
++            readings.ports(now_level), frames if number & 1 else None
++        )  # the frame's sign on a plane's im lines alone, as every reading across a Link has it (readings.stresses_of)
++        links: Any = 0
++        for reach, arrival in zip(rule.reaches, arrived, strict=True):
++            links = links + np.asarray(reach, dtype=object) * np.asarray(arrival, dtype=object)
++        total = total + (
++            rule.wall * (next_level * next_level + now_level * now_level)
++            - rule.self_coefficient * next_level * now_level
++            - next_level * links
++        )
++    return np.asarray(division_forward(total, rule.wall, 0)[0], dtype=object)
++
++
+ def booked_of(
+     families: records.Families, index: int, bookings: list[records.Booking]
+ ) -> tuple[Bookings, Bookings]:
+diff --git a/src/event_universe/emission.py b/src/event_universe/emission.py
+index b7db8f5dd..efb491331 100644
+--- a/src/event_universe/emission.py
++++ b/src/event_universe/emission.py
+@@ -6,7 +6,8 @@ from typing import TYPE_CHECKING
+ 
+ import numpy as np
+ 
+-from event_universe import records, registry
++from event_universe import flux, records, registry
++from event_universe.core.ports import AXES
+ from event_universe.core.rule3 import division_forward
+ from event_universe.features.click import amplitude
+ from event_universe.lay import laid
+@@ -61,15 +62,25 @@ def born_point(board: Lattice, index: int) -> None:
+     sign = next(r.family for r in family.reads if board.families[r.family].wronskian)
+     holder, width, gamma = board.states[sign], board.families[sign].width, board.world.node_clock
+     divided = records.divided_walls(board.families[sign], board.row_walls[index], gamma)
++
++    def half_wall_at(family_index: int) -> object:
++        """The half wall a line of the family is born at: w div 2 (`Lattice.half_wall`); under the flag U24_RIDES (hand R3, 2026-10-25) a riding line's own half wall at the Node at the lay, (w / 2) X_before = AXES den Gamma^2 G^2 times the volume holder's level before (the wall the line's first step is born under), a product and no division."""
++        if not flux.riding(board.families, family_index):
++            return board.half_wall(family_index)
++        carrier = next(i for i, f in enumerate(board.families) if f.motion_volume)
++        x_before = np.asarray(board.states[carrier].lines[0].before, dtype=object)
++        unit = board.unit
++        return AXES * board.families[family_index].pair[1] * gamma * gamma * unit * unit * x_before
++
+     for record in range(family.records):
+         state.lines = state.lines + records.born_lines(
+-            family, board.shape, board.kind, board.half_wall(index)
++            family, board.shape, board.kind, half_wall_at(index)
+         )
+         place = registry.row_of(board.families, board.states, index, record)
+         assert place is not None
+         at = place * width
+         empty = [
+-            records.empty_record(board.shape, board.kind, board.half_wall(sign)) for _ in range(width)
++            records.empty_record(board.shape, board.kind, half_wall_at(sign)) for _ in range(width)
+         ]
+         holder.lines = holder.lines[:at] + empty + holder.lines[at:]
+         origins = records.write_origins(divided, board.shape, object)
+diff --git a/src/event_universe/flux.py b/src/event_universe/flux.py
+index 96c307f2a..87eb61e8e 100644
+--- a/src/event_universe/flux.py
++++ b/src/event_universe/flux.py
+@@ -2,6 +2,7 @@
+ 
+ from __future__ import annotations
+ 
++import os
+ from collections.abc import Sequence
+ from typing import Any, cast
+ 
+@@ -17,6 +18,68 @@ from event_universe.readings import at, slices
+ from event_universe.records import Booking, Record, record_slice
+ 
+ Pairs = tuple[tuple[Any, ...], tuple[Any, ...]]  # a turned plane's reads per Port, (R^c_ij, R^s_ij)
++Volumes = tuple[Any, Any]  # the volume holder's time line at every Node, (X_now, X_before), the riding line's two walls over w
++RIDES = os.environ.get("U24_RIDES") in (
++    "1",
++    "2",
++)  # hand R3 (2026-10-25, under measurement, no line of the law): every line rides the volume, w [X_now (a_next - a_now) - X_before (a_now - a_before)] + r' - r = X_now F + w (X_now - X_before) div 2, one carried division at the wall w X_now; off, the branch's path bit for bit
++RIDE_HELD = (
++    os.environ.get("U24_RIDES") != "2"
++)  # the held rows' exception (the third round): at the flag's value 1 the sign holder's rows ride and the carrier of the volume alone is excepted; at 2 both held rows are excepted as a kind, the written rows, and the quanta's lines alone ride
++RIDE_BEFORE: Any = None  # backward, the born wall's level X_before at every Node, computed by the lattice from the carrier's own Rule3 back after its write back from form A (no search) and handed to the riding lines' inverse while the carrier's line still stands at (X_next, X_now), so that every read of the content takes X_now as the forward read did; None forward
++
++
++def ride_division(
++    flux: Any, mass: Any, wall: Any, now: Any, other: Any, remainder: Any, direction: int, volumes: Volumes
++) -> tuple[Any, Any]:
++    """The riding line's one carried division (hand R3, 2026-10-25; the form of flux.step_momentum on a plain line): the momentum P = w X_born (a_now - a_before) + r, r in [0, w X_born), moved by X_now F and by the half wall's move w (X_now - X_before) div 2 (the remainder born at half its wall standing at half the wall entered, w even) and divided once at the wall w X_now; forward from (a_now, a_before, r) to (a_next, r'), backward from (a_now, a_next, r') to (a_before, r) at the born wall w X_before, the same function at -1; Rule3's line bit for bit in the levels where X_now = X_before (the remainder X times Rule3's)."""
++    x_now, x_before = (np.asarray(x, dtype=object) for x in volumes)
++    now_o, other_o, kept = (np.asarray(a, dtype=object) for a in (now, other, remainder))
++    force = x_now * (np.asarray(flux, dtype=object) - mass * now_o) + division_forward(
++        wall * (x_now - x_before), 2, 0
++    )[0]
++    if direction == 1:
++        momentum = wall * x_before * (now_o - other_o) + kept
++        velocity, carried = division_forward(momentum + force, wall * x_now, 0)
++        return now_o + velocity, carried
++    momentum = wall * x_now * (other_o - now_o) + kept
++    velocity, carried = division_forward(momentum - force, wall * x_before, 0)
++    return now_o - velocity, carried
++
++
++def riding(families: records.Families, index: int) -> bool:
++    """Whether a family's lines ride under the flag: every family but the carrier of the volume (the kind `motion_volume`), and at the flag's value 2 no held row (the kind written rows); the one predicate every site reads (`ride_volumes`, the swap's complement wall, the lay's and the born lines' half wall)."""
++    family = families[index]
++    return RIDES and not family.motion_volume and (RIDE_HELD or not family.held)
++
++
++def ride_volumes(index: int, families: records.Families, states: records.States, direction: int) -> Volumes | None:
++    """The two walls over w of a family's riding lines at every Node under the flag (None off; None for the volume holder's own time line, which does not ride its own level: the wall would be the level divided, and the pair (X_before, r) to the momentum w X_before (X_now - X_before) + r is no bijection; None for every held row at the flag's value 2, `RIDE_HELD`): (X_now, X_before) the holder's time line's two levels as they stand, forward at the interval's start and backward after the holder's own inverse, which the lattice runs first under form A (Lattice.inverse_body_rides: the volume's write back from the two-level form of the post-state, then its Rule3 back, then the riding lines at the born wall it returns)."""
++    if not riding(families, index):
++        return None
++    holders = [i for i, family in enumerate(families) if family.motion_volume]
++    if not holders:
++        return None
++    time = states[holders[0]].lines[0]
++    if direction == -1 and RIDE_BEFORE is not None:
++        return np.asarray(time.before, dtype=object), np.asarray(RIDE_BEFORE, dtype=object)
++    return np.asarray(time.now, dtype=object), np.asarray(time.before, dtype=object)
++
++
++def divided(
++    flux: Any,
++    mass: Any,
++    wall: Any,
++    now: Any,
++    other: Any,
++    remainder: Any,
++    direction: int,
++    volumes: Volumes | None,
++) -> tuple[Any, Any]:
++    """Rule3's division (`core/rule3.rule3`) where no volumes are given, the riding division (`ride_division`) where they are."""
++    if volumes is None:
++        return rule3(flux, mass, wall, now, other, remainder, direction)
++    return ride_division(flux, mass, wall, now, other, remainder, direction, volumes)
+ 
+ 
+ def link_fluxes(level: np.ndarray, reaches: tuple[Any, ...]) -> np.ndarray:
+@@ -77,10 +140,10 @@ def gathered_line(record: Record, rule: Rule, direction: int) -> tuple[np.ndarra
+     return flux, level, other
+ 
+ 
+-def step_line(record: Record, rule: Rule, direction: int = 1) -> Record:
+-    """Rule3 on one plain line in the law's flux form (ALGEBRA.md #the-line, #the-direction): the Links' sum gathered (`gathered_line`), the division Rule3's (`core/rule3.rule3`); forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r)."""
++def step_line(record: Record, rule: Rule, direction: int = 1, volumes: Volumes | None = None) -> Record:
++    """Rule3 on one plain line in the law's flux form (ALGEBRA.md #the-line, #the-direction): the Links' sum gathered (`gathered_line`), the division Rule3's (`core/rule3.rule3`; the riding division under the flag where `volumes` are given, `divided`); forward from (now, before, r) to (next, now, r'), backward from (next, now, r') to (now, before, r)."""
+     flux, level, other = gathered_line(record, rule, direction)
+-    found, remainder = rule3(flux, rule.mass, rule.wall, level, other, record.remainder, direction)
++    found, remainder = divided(flux, rule.mass, rule.wall, level, other, record.remainder, direction, volumes)
+     if direction == 1:
+         return Record(np.asarray(found), record.now, np.asarray(remainder))
+     return Record(record.before, np.asarray(found), np.asarray(remainder))
+@@ -138,17 +201,18 @@ def step_plane(
+     direction: int,
+     pairs: Pairs | None,
+     frames: tuple[Any, ...] | None = None,
++    volumes: Volumes | None = None,
+ ) -> tuple[list[Record], Booking]:
+     """A plane's two lines by Rule3's flux line (ALGEBRA.md #the-line, The flux form on a turned or folded Link): at no turn (`pairs` None) each line a plain line (`step_line`); turned or folded, the one complex line w (z_next - 2 z_now + z_before) + (r' - r) = SUM over the six Links of [(R^c_ij + i R^s_ij) z_j - R_ij z_now] - D_i z_now, its two real parts gathered (`gathered_plane`, with `frames` the sign each Port reads its neighbour's im part with, plane.frame_signs) and each divided by Rule3 with its own remainder (`core/rule3.rule3`); the bookings (first, second) the form and the Wronskian are read from: first the pair the step started from with the level it left behind, second the level it wrote with the pair it started from (ALGEBRA.md #the-interval)."""
+     now = (re.now, im.now) if direction == 1 else (re.before, im.before)
+     other = (re.before, im.before) if direction == 1 else (re.now, im.now)
+     if pairs is None:
+-        found = [step_line(record, rule, direction) for record in (re, im)]
++        found = [step_line(record, rule, direction, volumes) for record in (re, im)]
+     else:
+         remainders = (re.remainder, im.remainder)
+         fluxes = gathered_plane(rule, now, pairs, frames)
+         stepped = [
+-            rule3(fluxes[part], rule.mass, rule.wall, now[part], other[part], remainder, direction)
++            divided(fluxes[part], rule.mass, rule.wall, now[part], other[part], remainder, direction, volumes)
+             for part, remainder in enumerate(remainders)
+         ]
+         found = [
+@@ -174,8 +238,9 @@ def step_family(
+     record: int = 0,
+     pairs: Pairs | None = None,
+     frames: tuple[Any, ...] | None = None,
++    volumes: Volumes | None = None,
+ ) -> tuple[list[Record], Booking]:
+-    """Every line of one record of a family stepped in `direction` with its rule (ALGEBRA.md #the-interval): line by line in the law's flux form (`step_line`, the time line of a holder of the content reading its rest beyond every face), a plane plane by plane (`step_plane`: at no turn two plain lines, turned or folded the one complex line with the pairs `pairs`, each Link's read the pair (R^c, R^s), `plane.link_pairs`, and `frames` the sign each Port reads its neighbour's im part with, `frames_of`); every line with the faces the click act presents to it at this step; with the lines, the booking (first, second) the form and the Wronskian are read from."""
++    """Every line of one record of a family stepped in `direction` with its rule (ALGEBRA.md #the-interval): line by line in the law's flux form (`step_line`, the time line of a holder of the content reading its rest beyond every face), a plane plane by plane (`step_plane`: at no turn two plain lines, turned or folded the one complex line with the pairs `pairs`, each Link's read the pair (R^c, R^s), `plane.link_pairs`, and `frames` the sign each Port reads its neighbour's im part with, `frames_of`); every line with the faces the click act presents to it at this step; with the lines, the booking (first, second) the form and the Wronskian are read from; `volumes` the riding line's walls under the flag (`ride_volumes`), None the branch's division."""
+     family, state = families[index], states[index]
+     span = record_slice(family, record)
+     own = state.lines[span]
+@@ -184,7 +249,7 @@ def step_family(
+             family.axes and not family.wronskian
+         )  # a holder of the content's tension lines: the shear's momentum
+         found = [
+-            step_line(line, rule, direction)
++            step_line(line, rule, direction, volumes)
+             if not (traced and 1 <= number - span.start <= AXES)
+             else line
+             for number, line in enumerate(own, span.start)
+@@ -198,7 +263,7 @@ def step_family(
+     second: list[Record] = []
+     for start in range(0, len(own), PLANE):  # plane by plane, each its two lines, re and im
+         pair = own[start], own[start + 1]
+-        found, (begun, left) = step_plane(*pair, rule, direction, pairs, frames)
++        found, (begun, left) = step_plane(*pair, rule, direction, pairs, frames, volumes)
+         lines, first, second = lines + found, first + begun, second + left
+     return lines, (first, second)
+ 
+@@ -269,11 +334,14 @@ def step_records(
+     """Every record of a family stepped in `direction`, each with the rule of its own read (`node.read`, `node.rule_of`: the content and the six Links' factors from the held rows' levels the step starts from, every sign row but the record's own), its Links' pairs where the record is turned or folded (`node.turning`, `plane.odd_links`, `plane.phase_links`, `plane.link_pairs`), the faces the click act presents at this step among its arrivals (`faces`, per line); the lines in the records' order and one booking per record, the lines its form and its Wronskian are read from."""
+     lines: list[Record] = []
+     bookings: list[Booking] = []
++    volumes = ride_volumes(index, families, states, direction)
+     for record in range(registry.records_of(families[index], states[index].lines)):
+         content, factors = node.read(index, families, states, direction, gamma, unit, record)
+         rule = node.rule_of(families[index], gamma, content, factors, unit)
+         pairs = pairs_of(index, families, states, direction, gamma, content, factors, record, amplitude)
+         frames = frames_of(index, families, states, record)
+-        found, booking = step_family(index, families, states, rule, direction, record, pairs, frames)
++        found, booking = step_family(
++            index, families, states, rule, direction, record, pairs, frames, volumes
++        )
+         lines, bookings = lines + found, bookings + [booking]
+     return lines, bookings
+diff --git a/src/event_universe/lattice.py b/src/event_universe/lattice.py
+index d03a78376..5b885ede2 100644
+--- a/src/event_universe/lattice.py
++++ b/src/event_universe/lattice.py
+@@ -15,6 +15,7 @@ import event_universe.records as records
+ from event_universe import (
+     credit,
+     emission,
++    flux,
+     meeting,
+     meeting_board,
+     node,
+@@ -25,7 +26,14 @@ from event_universe import (
+     swap,
+ )
+ from event_universe.board_readings import Stresses
+-from event_universe.bookings import Bookings, booked_of, booked_sources, record_lines, sources_of
++from event_universe.bookings import (
++    Bookings,
++    booked_of,
++    booked_sources,
++    form_a,
++    record_lines,
++    sources_of,
++)
+ from event_universe.core import paces
+ from event_universe.core.rule3 import division_forward, wall_of
+ from event_universe.features import phase, read, volume
+@@ -108,6 +116,8 @@ class Lattice:
+     def half_wall(self, index: int) -> int:
+         """The half wall of the rule a family's lines step by, w div 2 with w = 6 den Gamma^2 G^2 (`wall_of`), the remainder every line is born with: every Node's remainder is born at the half wall, the vacuum (0, 0, w div 2) at every Node, the lay's origin and the start's alike, so that the one rounding of Rule3 is half up at every Node and no neighbour reads a floor (ALGEBRA.md, the start; the owner's word; the mathematician's hand with the advisor's hand, two hands: under the floor a lone massless quantum laid at one Node of an even periodic box grew as t^2 on the uniform mode's double root)."""
+         wall = wall_of(self.families[index].pair[1], self.world.node_clock, self.unit)
++        if flux.riding(self.world.families, index):
++            wall = wall * self.world.node_clock  # hand R3 (2026-10-25): a riding line's wall at the start is w X with X = Gamma, the seed at rest; its remainder is born at half that wall
+         return int(division_forward(wall, 2, 0)[0])
+ 
+     def walls(self, index: int) -> tuple[int, ...]:
+@@ -251,6 +261,7 @@ class Lattice:
+                 rulers[(self.world.seed, 0)][0], dtype=object
+             )
+         stresses, senses = board_readings.stresses(self), board_readings.sense_currents(self)
++        rules_a = self.form_a_rules(1) if flux.RIDES else {}  # form A's rules read at the interval's start, as every act's are
+         found = {index: self.stepped(index, 1) for index in range(len(self.families))}
+         for index, (lines, bookings) in found.items():
+             family, state = self.families[index], self.states[index]
+@@ -261,11 +272,91 @@ class Lattice:
+                 for held, gained in zip((forms, turns), booked, strict=True):
+                     held.update(gained)
+             state.lines = lines
++        if flux.RIDES:  # form A (the third round): the rows of the content sourced by the two-level term of the step's output
++            forms.update(self.form_a_bookings(rules_a))
+         for index in self.held:
+             self.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
+         swap.stepped(self, kept_state)
+         return kept_state
+ 
++    def form_a_rules(self, direction: int) -> dict[tuple[int, int], Any]:
++        """The rule of every record of quanta that is no held row at the interval's start (the content and the six Links' factors the step reads, `node.read` and `node.rule_of`): forward at +1 before the step, backward at -1 on the post-state, whose levels before are the start's (the volume's level and the tension lines' alike); the same integers either way."""
++        found: dict[tuple[int, int], Any] = {}
++        gamma, unit = self.world.node_clock, self.unit
++        for index in self.order:
++            if self.families[index].held:
++                continue
++            for record in range(registry.records_of(self.families[index], self.states[index].lines)):
++                content, factors = self.read(index, direction, record)
++                found[(index, record)] = node.rule_of(self.families[index], gamma, content, factors, unit)
++        return found
++
++    def form_a_bookings(self, rules: dict[tuple[int, int], Any]) -> Bookings:
++        """Form A's bookings of every record of quanta that is no held row (bookings.form_a; the third round, hand R3): read from the record's lines as they stand, (next, now) after the step forward and the same two levels of the post-state backward, at the rules of the interval's start (`form_a_rules`); the same integers in both directions, which is what the riding inverse needs; a record born at this interval's close has no rule of the start and books nothing."""
++        found = Bookings()
++        for index in self.order:
++            if self.families[index].held:
++                continue
++            for record in range(registry.records_of(self.families[index], self.states[index].lines)):
++                if (index, record) not in rules:
++                    continue
++                found[(index, record)] = form_a(
++                    rules[(index, record)],
++                    self.lines_of(index, record),
++                    frames_of(index, self.families, self.states, record),
++                )
++        return found
++
++    def stresses_before(self) -> Stresses:
++        """The tensions' parts of every record of quanta read from the levels the interval started from as the post-state holds them, its levels before (the tension's part h_a(i) = now_(i-a) now_(i+a) - now_i^2 reads the one level, ALGEBRA.md, The clock is the Node's, the tension is the Link's): the lines with their two levels exchanged handed to the branch's reading, so that the volume's write back needs no line inverted (the flux parts beside them read both levels and enter no write of the volume holder, which carries no flux line)."""
++        found = Stresses()
++        for s in sources_of(self.families, self.states, self.order):
++            lines = [records.Record(line.before, line.now, line.remainder) for line in self.lines_of(*s)]
++            found[s] = readings.axis_sources_of(
++                self.families[s[0]].pair[0], lines, frames_of(s[0], self.families, self.states, s[1])
++            )
++        return found
++
++    def inverse_body_rides(self) -> None:
++        """One interval back under the flag U24_RIDES with form A (the third round, hand R3), the same acts at -1 in the order the riding walls allow and no search: the lays undone and the points unborn as in `inverse_body`; the rulers from the held rows' levels before; the carrier of the volume written back from form A's bookings and the tensions read from the post-state's levels before (`form_a_bookings`, `stresses_before`), then its time line back by Rule3, which returns the born wall X_before every riding line divides at; then every family of quanta back at that wall with its bookings (the Wronskians for the holder of the sign); then the holder of the sign written back and its rows back; then the shear's momentum back, the swap at the top back and the phase act back, as in `inverse_body`."""
++        meeting_back.logged(self, -1)
++        for index in reversed(self.born_at.get(self.interval, [])):
++            self.unborn_point(index)
++        rulers, ended = self.rulers(-1), [s.lines for s in self.states]
++        kept_state = swap.kept(self)
++        carriers = [i for i in self.held if self.families[i].motion_volume]
++        others = [i for i in self.held if i not in carriers]
++        forms, stresses = self.form_a_bookings(self.form_a_rules(-1)), self.stresses_before()
++        books: dict[int, list[records.Record]] = {}
++        for held in carriers:
++            self.held_write(held, forms, Bookings(), -1, stresses, Stresses(), rulers)
++            books[held] = self.stepped(held, -1)[
++                0
++            ]  # the carrier's time line back by Rule3, computed before it is assigned: its level before is X_before, the born wall
++        flux.RIDE_BEFORE = (
++            np.asarray(books[carriers[0]][0].before, dtype=object) if carriers else None
++        )  # every read of the content below still takes the carrier's level before as the state holds it, X_now, as the forward read did
++        try:
++            forms_back, turns, stresses_back, senses = Bookings(), Bookings(), Stresses(), Stresses()
++            for index in self.order:
++                if index not in self.held:
++                    self.booked_back(index, books, forms_back, turns, stresses_back, senses)
++            for held in others:
++                self.held_write(held, forms_back, turns, -1, stresses_back, senses, rulers)
++                books[held] = self.stepped(held, -1)[0]
++        finally:
++            flux.RIDE_BEFORE = None
++        for index, lines in books.items():
++            self.states[index].lines = lines
++        shear.inverted(self, ended)
++        swap.inverted(self, kept_state)
++        node.phase_act(self.held, self.families, self.states, -1, self.world.node_clock)
++        self.interval -= 1
++        self.passes, self.heading = self.passes + (self.heading > 0), -1
++        self.ride_trials = 1
++        for observer in self.observers:
++            observer(self.interval, -1, self.passes)
++
+     def closed_after(self, kept_state: swap.Kept) -> None:
+         """The board's own close after every other act of the interval (`meeting_board.closed` on the state the acts left, reading the interval's start `kept_state`), the tick counted; the second half of `step`."""
+         self.tick += 1
+@@ -363,6 +454,14 @@ class Lattice:
+         books[index] = lines
+ 
+     def step_inverse(self) -> None:
++        """One interval back (`inverse_body`); under the flag U24_RIDES (hand R3, 2026-10-25) the riding lines' inverse divides at the born wall w X_before, which the volume holder's own inverse gives only after the write back, whose numerator is the lines' booking: the interval's inverse is then the fixed point X_before = Phi(X_before), one at most where the write's gain is below one, found by trials on a copy of the board from the guess X_before = X_now (a search by comparison, the law's kind S as the volume's level reading is, no bound typed: the trials run to the fixed point and a guess seen twice is refused by name), the copy adopted where the trial's X_before equals the guess at every Node."""
++        holders = [i for i in self.held if self.families[i].motion_volume]
++        if not flux.RIDES or not holders:
++            self.inverse_body()
++            return
++        self.inverse_body_rides()  # form A: the explicit inverse, the fixed-point search of the second round struck
++
++    def inverse_body(self) -> None:
+         """One interval back, the same acts in reverse order with Rule3's direction -1 (ALGEBRA.md #the-direction): first the acts' lays of the interval undone from the books' log where the world's draw runs back (`meeting_back.logged`; where the books hold no log, a world with no record of several parts at declared sides, the host tool crosses them from the lines), then the write's rulers read from the held rows' levels at the interval's start, which the state after the interval still holds as their `before` (the write touched the level now alone), then a held family's write back once every family that sources it is booked back, a family of quanta booked back once its own write is off (the holder of the sign before the rows it sources), then every held row of the content stepped back, and last, every line standing at the previous interval's start again, the sign holder's phase lines back by the potentials read there (`phased` at -1, features/phase); the lay is not taken back; the observers called with the interval, the direction -1 and the pass; refused by name first on a world (every board's interval unobservable) (`motion_back`)."""
+         meeting_back.logged(self, -1)
+         for index in reversed(
+diff --git a/src/event_universe/swap.py b/src/event_universe/swap.py
+index a89aab36a..ebba10e0c 100644
+--- a/src/event_universe/swap.py
++++ b/src/event_universe/swap.py
+@@ -6,7 +6,8 @@ from typing import TYPE_CHECKING, Any
+ 
+ import numpy as np
+ 
+-from event_universe import node, records, registry, shear
++from event_universe import flux, node, records, registry, shear
++from event_universe.core.ports import AXES
+ from event_universe.core.rule3 import wall_of
+ from event_universe.features import volume
+ from event_universe.loader.derived import turns
+@@ -53,9 +54,19 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
+     """The act where `mask` holds (ALGEBRA.md, The swap at the top: the fifth act, the Node's own time line at its weak maximum): every line of every family and every write remainder of the state `held` swapped and complemented at its wall, the interval's output kept elsewhere."""
+     kind = board.kind  # the board's kind, the loader's choice by the width
+     gamma, unit = board.world.node_clock, board.unit
++    ride_wall: Any = None  # hand R3 (2026-10-25), the riding line under the flag: a riding line's remainder is complemented at the mean wall w (X0 + X1) div 2 of the pre-state's time line (w even), symmetric in the two levels as the trigger is (an involution), carrying the remainders' centre from half the born wall w X0 / 2 to w X1 / 2 - 1, the law's turned gauge at the wall the swapped state's next step is born under (the complement at w X1 or at w X0 alone leaves the centre off by w (X1 - X0) / 2 and the next division's floor breaks the odd lines' mirror by one unit at some Nodes: the 42 negating elements of the 48 lost from the first turn at a Node whose two volumes differ, measured)
++    holders = [i for i, f in enumerate(board.families) if f.motion_volume]
++    if flux.RIDES and holders:
++        time_line = held[0][holders[0]][0]
++        ride_wall = np.asarray(time_line.now, dtype=object) + np.asarray(time_line.before, dtype=object)
+     for index, family in enumerate(board.families):
+         state, lines, remainders = board.states[index], held[0][index], held[1][index]
+         wall = wall_of(family.pair[1], gamma, unit)
++        riding = (
++            AXES * family.pair[1] * gamma * gamma * unit * unit * ride_wall
++            if ride_wall is not None and flux.riding(board.families, index)
++            else wall
++        )  # the plain lines' complement wall: the mean riding wall (w / 2) (X0 + X1) for every riding family (flux.riding), w / 2 = 3 den Gamma^2 G^2 a product (the fifth act divides nothing)
+         times: dict[
+             int, records.Record
+         ] = {}  # per tension line the row's own time line at the interval's start, the wall of the shear's momentum
+@@ -67,7 +78,7 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
+                         times[number] = lines[first]
+         found = []
+         for number, (line, out) in enumerate(zip(lines, state.lines, strict=True)):
+-            own: Any = wall
++            own: Any = riding
+             if number in times:  # 3 w (X_now + X_before) of the row's own time line
+                 time = times[number]
+                 own = (
+@@ -97,7 +108,7 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
+                     np.asarray(
+                         np.where(
+                             mask,
+-                            records.complement(np.asarray(im.remainder, dtype=object), wall),
++                            records.complement(np.asarray(im.remainder, dtype=object), riding),
+                             np.asarray(im.remainder, dtype=object),
+                         ),
+                         dtype=kind,
+diff --git a/tests/test_the_acts_table.py b/tests/test_the_acts_table.py
+index f10a549a8..0b918d91e 100644
+--- a/tests/test_the_acts_table.py
++++ b/tests/test_the_acts_table.py
+@@ -337,10 +337,19 @@ INVENTORY: dict[tuple[str, str, str], str] = {
+     # flux.py, the step
+     (
+         "flux.py",
+-        "step_line",
++        "divided",
+         "rule3",
+-    ): "R",  # Rule3's flux line at every Node of a plain line, the law's step
+-    ("flux.py", "step_plane", "rule3"): "R",  # the same on each part of a turned or folded plane
++    ): "R",  # Rule3's flux line at every Node of a plain line and of each part of a turned or folded plane, the law's step (the one call since the flag U24_RIDES, hand R3, 2026-10-25)
++    (
++        "flux.py",
++        "ride_division",
++        "division_forward",
++    ): "R",  # the riding line's one carried division at the wall w X_now, the remainder kept, forward and back (hand R3, 2026-10-25, behind the flag U24_RIDES; the half wall's move w (X_now - X_before) div 2 the same act on a coefficient)
++    (
++        "bookings.py",
++        "form_a",
++        "division_forward",
++    ): "D",  # form A's booking, the two-level term over w, one quotient on a booking, no remainder kept (the third round, hand R3, 2026-10-25, behind the flag U24_RIDES)
+     (
+         "flux.py",
+         "step_momentum",
+diff --git a/tests/test_the_board_is_the_cube_48.py b/tests/test_the_board_is_the_cube_48.py
+index 6bface9c5..1aead87a1 100644
+--- a/tests/test_the_board_is_the_cube_48.py
++++ b/tests/test_the_board_is_the_cube_48.py
+@@ -9,7 +9,7 @@ from typing import Any
+ import numpy as np
+ import pytest
+ 
+-from event_universe import records, registry, seed, world_files
++from event_universe import flux, records, registry, seed, world_files
+ from event_universe.core.ports import AXES
+ from event_universe.core.rule3 import wall_of
+ from event_universe.lattice import Lattice
+@@ -112,6 +112,9 @@ def carried(board: Lattice, m: Matrix, turns: Turns | None = None, former: str =
+         else:  # a holder: per row the time line, then the axis lines in triples
+             rows, per_row = registry.records_of(family, state.lines), family.width
+             wall = wall_of(family.pair[1], board.world.node_clock, board.unit)
++            if flux.RIDES and not family.motion_volume:  # hand R3 (2026-10-25): a riding line's remainder lives at the wall w X_before of its Node, the volume holder's level before as the state stands
++                holder = next(i for i, f in enumerate(board.families) if f.motion_volume)
++                wall = wall * np.asarray(board.states[holder].lines[0].before, dtype=object)
+             divided = records.divided_walls(family, board.fixed_walls[index], board.world.node_clock)
+             for row in range(rows):
+                 base = row * per_row
+diff --git a/tests/test_the_node_holds_the_same_count_of_integers.py b/tests/test_the_node_holds_the_same_count_of_integers.py
+index 9226bec8e..fa27ba548 100644
+--- a/tests/test_the_node_holds_the_same_count_of_integers.py
++++ b/tests/test_the_node_holds_the_same_count_of_integers.py
+@@ -6,7 +6,7 @@ from dataclasses import fields
+ import numpy as np
+ import pytest
+ 
+-from event_universe import registry, world_files
++from event_universe import flux, registry, world_files
+ from event_universe.core.ports import AXES, LINK_UNIT
+ from event_universe.core.rule3 import division_forward, wall_of
+ from event_universe.lattice import Lattice
+@@ -62,8 +62,11 @@ def test_every_node_holds_the_same_count_of_integers_and_the_count_grows_by_a_po
+     assert start["same_at_every_node"] and TOOL.same_shape(board)
+     assert start["integers"] == TOOL.total_of(board) == at_the_start(board)
+     assert {np.asarray(a).shape for _label, a in TOOL.arrays_of(board)} == {tuple(board.shape)}
+-    half = int(division_forward(wall_of(den, GAMMA, LINK_UNIT), 2, 0)[0])
+     for index in board.order:
++        wall = wall_of(den, GAMMA, LINK_UNIT)
++        if flux.RIDES and not board.families[index].motion_volume:  # hand R3 (2026-10-25): a riding line's wall at the start is w Gamma, the seed at rest
++            wall = wall * GAMMA
++        half = int(division_forward(wall, 2, 0)[0])
+         assert all(
+             np.array_equal(line.remainder, np.full(board.shape, half, dtype=object))
+             for line in board.states[index].lines

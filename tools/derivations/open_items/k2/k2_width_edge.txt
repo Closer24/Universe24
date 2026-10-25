@@ -1,0 +1,65 @@
+{
+ "den_348893": {
+  "Gamma_max_width_le_128": 9902,
+  "width_at_Gamma_max": 128,
+  "width_at_Gamma_max_plus_1": 129,
+  "seconds": 8
+ },
+ "den_15162856759112389": {
+  "Gamma_max_width_le_128": 1515,
+  "width_at_Gamma_max": 128,
+  "width_at_Gamma_max_plus_1": 129,
+  "seconds": 2
+ },
+ "den_1655909141": {
+  "Gamma_max_width_le_128": 9999,
+  "width_at_Gamma_max": 121,
+  "width_at_Gamma_max_plus_1": 121,
+  "seconds": 11
+ },
+ "den_4471099877": {
+  "Gamma_max_width_le_128": 9999,
+  "width_at_Gamma_max": 122,
+  "width_at_Gamma_max_plus_1": 122,
+  "seconds": 11
+ },
+ "den_1021": {
+  "width_at_Gamma_1021": 101,
+  "width_at_Gamma_1022": 101,
+  "volume_pair_at_1022": [
+   1021,
+   1021
+  ],
+  "width_at_Gamma_4096_if_loads": 121
+ },
+ "T_bound_den_1021_Gamma_1021": {
+  "T_2^60": {
+   "loaded": true,
+   "A": 4443114412,
+   "A_bits": 33,
+   "drift_isqrt_T_bits": 31,
+   "lay_isqrt_T_div_2_bits": 30,
+   "stepped": true
+  },
+  "T_2^64": {
+   "loaded": false,
+   "refusal": "the family 'massless' reached the level 8589934592 at interval 1, above the world's amplitude bound A = 4443114412: the run is refused"
+  },
+  "T_2^66": {
+   "loaded": false,
+   "refusal": "the family 'massless' reached the level 17179869184 at interval 1, above the world's amplitude bound A = 5283783272: the run is refused"
+  },
+  "T_2^67": {
+   "loaded": false,
+   "refusal": "the family 'massless' reached the level 24296003998 at interval 1, above the world's amplitude bound A = 7472397964: the run is refused"
+  },
+  "T_2^68": {
+   "loaded": false,
+   "refusal": "the family 'massless' reached the level 34359738368 at interval 1, above the world's amplitude bound A = 10567566545: the run is refused"
+  },
+  "T_2^70": {
+   "loaded": false,
+   "refusal": "the family 'massless' reached the level 68719476736 at interval 1, above the world's amplitude bound A = 21135133090: the run is refused"
+  }
+ }
+}

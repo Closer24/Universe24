@@ -1,0 +1,880 @@
+{
+ "den": 1021,
+ "group_order": 48,
+ "negating_elements": 42,
+ "per_interval": [
+  {
+   "interval": 1,
+   "held_of_48": 48,
+   "births": 0,
+   "plane_records_live": 0
+  },
+  {
+   "interval": 2,
+   "held_of_48": 48,
+   "births": 0,
+   "plane_records_live": 0
+  },
+  {
+   "interval": 3,
+   "held_of_48": 48,
+   "births": 0,
+   "plane_records_live": 0
+  },
+  {
+   "interval": 4,
+   "held_of_48": 48,
+   "births": 6,
+   "plane_records_live": 2
+  },
+  {
+   "interval": 5,
+   "held_of_48": 48,
+   "births": 0,
+   "plane_records_live": 2
+  },
+  {
+   "interval": 6,
+   "held_of_48": 48,
+   "births": 0,
+   "plane_records_live": 2
+  },
+  {
+   "interval": 7,
+   "held_of_48": 48,
+   "births": 0,
+   "plane_records_live": 2
+  },
+  {
+   "interval": 8,
+   "held_of_48": 48,
+   "births": 0,
+   "plane_records_live": 2
+  }
+ ],
+ "negative_control_senses_exchanged": [
+  {
+   "interval": 1,
+   "senses_exchanged_held_of_42": 42
+  },
+  {
+   "interval": 2,
+   "senses_exchanged_held_of_42": 42
+  },
+  {
+   "interval": 3,
+   "senses_exchanged_held_of_42": 42
+  },
+  {
+   "interval": 4,
+   "senses_exchanged_held_of_42": 0
+  },
+  {
+   "interval": 5,
+   "senses_exchanged_held_of_42": 0
+  },
+  {
+   "interval": 6,
+   "senses_exchanged_held_of_42": 0
+  },
+  {
+   "interval": 7,
+   "senses_exchanged_held_of_42": 0
+  },
+  {
+   "interval": 8,
+   "senses_exchanged_held_of_42": 0
+  }
+ ],
+ "elements_with_mixing_between_families": 0,
+ "elements_axis_lines_permuted_with_no_sign_of_48": 48,
+ "elements_odd_lines_permuted_with_the_axis_sign_of_48": 48,
+ "elements_time_lines_and_plane_lines_fixed_of_48": 48,
+ "character_sums_over_48": {
+  "time_line_scalar_A1g": 48,
+  "three_axis_lines_diagonal_permuted": 48,
+  "three_odd_lines_vector": 0,
+  "three_shears_xy_yz_zx": 0,
+  "plane_two_scalars": 96,
+  "determinant_sum": 0
+ },
+ "trivial_copies": {
+  "time_line": 1,
+  "three_axis_lines": 1,
+  "three_odd_lines": 0,
+  "three_shears": 0,
+  "plane": 2,
+  "metric_10_as_1_plus_3_plus_6": 2,
+  "potential_4_as_1_plus_3": 1
+ },
+ "per_element": [
+  {
+   "pi": [
+    0,
+    1,
+    2
+   ],
+   "s": [
+    1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    2,
+    1
+   ],
+   "s": [
+    1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    0,
+    2
+   ],
+   "s": [
+    1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    2,
+    0
+   ],
+   "s": [
+    1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    0,
+    1
+   ],
+   "s": [
+    1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    1,
+    2
+   ],
+   "s": [
+    -1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    1,
+    0
+   ],
+   "s": [
+    1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    2,
+    1
+   ],
+   "s": [
+    -1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    1,
+    0
+   ],
+   "s": [
+    1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    2,
+    1
+   ],
+   "s": [
+    -1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    0,
+    2
+   ],
+   "s": [
+    -1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    0,
+    1
+   ],
+   "s": [
+    1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    1,
+    2
+   ],
+   "s": [
+    -1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    2,
+    0
+   ],
+   "s": [
+    -1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    2,
+    0
+   ],
+   "s": [
+    1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    0,
+    1
+   ],
+   "s": [
+    1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    2,
+    0
+   ],
+   "s": [
+    -1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    0,
+    1
+   ],
+   "s": [
+    -1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    0,
+    2
+   ],
+   "s": [
+    1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    1,
+    0
+   ],
+   "s": [
+    1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    0,
+    2
+   ],
+   "s": [
+    -1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    1,
+    0
+   ],
+   "s": [
+    -1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    2,
+    1
+   ],
+   "s": [
+    -1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    0,
+    2
+   ],
+   "s": [
+    1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    1,
+    0
+   ],
+   "s": [
+    1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    1,
+    0
+   ],
+   "s": [
+    -1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    2,
+    1
+   ],
+   "s": [
+    1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    1,
+    0
+   ],
+   "s": [
+    -1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    1,
+    2
+   ],
+   "s": [
+    -1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    2,
+    0
+   ],
+   "s": [
+    1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    0,
+    1
+   ],
+   "s": [
+    1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    0,
+    1
+   ],
+   "s": [
+    -1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    1,
+    2
+   ],
+   "s": [
+    1,
+    -1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    0,
+    1
+   ],
+   "s": [
+    -1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    2,
+    0
+   ],
+   "s": [
+    -1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    2,
+    0
+   ],
+   "s": [
+    1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    0,
+    1
+   ],
+   "s": [
+    -1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    2,
+    0
+   ],
+   "s": [
+    -1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    0,
+    2
+   ],
+   "s": [
+    -1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    0,
+    2
+   ],
+   "s": [
+    1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    2,
+    1,
+    0
+   ],
+   "s": [
+    -1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    1,
+    0,
+    2
+   ],
+   "s": [
+    -1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    2,
+    1
+   ],
+   "s": [
+    1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    2,
+    1
+   ],
+   "s": [
+    -1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    2,
+    1
+   ],
+   "s": [
+    1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    1,
+    2
+   ],
+   "s": [
+    1,
+    1,
+    -1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    1,
+    2
+   ],
+   "s": [
+    -1,
+    1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  },
+  {
+   "pi": [
+    0,
+    1,
+    2
+   ],
+   "s": [
+    1,
+    -1,
+    1
+   ],
+   "mixed": 0,
+   "axis_lines_permuted_no_sign": true,
+   "odd_lines_permuted_with_sign": true,
+   "scalars_fixed": true
+  }
+ ]
+}

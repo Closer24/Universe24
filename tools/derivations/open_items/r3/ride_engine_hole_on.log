@@ -1,0 +1,44 @@
+hole on interval    1 births 0 refused {} X 1000..1002 level 0..0 light quanta 28 drift 0..189 turned 1
+hole on interval    2 births 0 refused {'origin': 1} X 1000..1007 level 0..1 light quanta 27 drift -126..630 turned 6
+hole on interval    4 births 6 refused {} X 1002..1058 level 0..13 light quanta 28 drift -89..253 turned 13
+hole on interval    5 births 0 refused {'lay': 1} X 1015..1072 level 3..17 light quanta 16 drift -207..409 turned 8
+hole on interval    6 births 0 refused {'lay': 1} X 1015..1240 level 3..53 light quanta 15 drift -627..207 turned 6
+hole on interval    7 births 0 refused {'lay': 1} X 1042..1153 level 10..35 light quanta 17 drift -29..627 turned 13
+hole on interval    8 births 0 refused {'lay': 1} X 1058..1146 level 13..34 light quanta 17 drift -225..520 turned 6
+hole on interval    9 births 0 refused {'lay': 1} X 949..1280 level -14..61 light quanta 26 drift -1031..329 turned 8
+hole on interval   10 births 0 refused {'lay': 1} X 1077..1295 level 18..64 light quanta 20 drift 20..1031 turned 13
+hole on interval   11 births 0 refused {'lay': 1} X 1100..1446 level 23..92 light quanta 38 drift -72..276 turned 8
+hole on interval   12 births 0 refused {'lay': 1, 'unit': 6} X 1105..1871 level 24..155 light quanta 34 drift -825..67 turned 6
+hole on interval   13 births 0 refused {'lay': 1} X 1294..1446 level 64..92 light quanta 34 drift -64..825 turned 1
+hole on interval   15 births 0 refused {'lay': 7} X 1392..1767 level 82..142 light quanta 57 drift -1036..185 turned 6
+hole on interval   17 births 0 refused {'lay': 7} X 1663..1857 level 127..154 light quanta 35 drift -130..389 turned 9
+hole on interval   20 births 0 refused {'lay': 1, 'stop': 1, 'unit': 6} X 2142..3165 level 190..288 light quanta 45 drift -301..83 turned 0
+hole on interval   22 births 0 refused {'lay': 1} X 2511..3165 level 229..288 light quanta 33 drift -62..394 turned 1
+hole on interval   30 births 0 refused {'unit': 1, 'lay': 6} X 3883..4267 level 338..362 light quanta 32 drift -123..166 turned 1
+hole on interval   39 births 0 refused {'lay': 1} X 5470..5683 level 425..434 light quanta 18 drift -27..250 turned 1
+hole on interval   40 births 0 refused {'lay': 1} X 5524..5737 level 426..435 light quanta 15 drift -23..322 turned 0
+hole on interval   48 births 0 refused {'lay': 1, 'unit': 6} X 6773..7345 level 478..498 light quanta 14 drift -9..81 turned 1
+hole on interval   57 births 0 refused {'lay': 1} X 7839..8196 level 514..524 light quanta 12 drift -108..24 turned 12
+hole on interval   60 births 0 refused {'lay': 1, 'unit': 6} X 7977..8509 level 518..535 light quanta 17 drift -90..149 turned 0
+hole on interval   61 births 0 refused {'lay': 1, 'unit': 6} X 8132..8576 level 523..536 light quanta 17 drift -89..149 turned 8
+hole on interval   62 births 0 refused {'lay': 1, 'unit': 6} X 8114..8643 level 523..538 light quanta 16 drift -6..92 turned 6
+hole on interval   64 births 0 refused {'unit': 1, 'lay': 6} X 8155..8643 level 524..538 light quanta 13 drift -36..88 turned 1
+hole on interval   67 births 0 refused {} X 8282..8709 level 528..540 light quanta 18 drift -48..8 turned 12
+hole on interval   71 births 6 refused {} X 8656..9165 level 538..553 light quanta 7 drift -36..66 turned 6
+hole on interval   73 births 0 refused {} X 8661..9179 level 540..553 light quanta 7 drift -44..46 turned 8
+hole on interval   75 births 0 refused {} X 8747..9179 level 541..553 light quanta 1 drift 2..36 turned 1
+hole on interval   79 births 0 refused {'unit': 12} X 8584..9377 level 536..559 light quanta 9 drift -31..50 turned 12
+hole on interval   80 births 0 refused {} X 8761..9441 level 541..560 light quanta 9 drift -29..43 turned 0
+hole on interval   81 births 0 refused {} X 8842..9377 level 545..559 light quanta 9 drift -20..26 turned 6
+hole on interval   85 births 0 refused {'unit': 1, 'stop': 1} X 8898..9844 level 547..571 light quanta 9 drift -49..71 turned 1
+hole on interval   88 births 0 refused {} X 8396..9240 level 531..555 light quanta 8 drift 5..49 turned 8
+hole on interval   92 births 0 refused {} X 8139..8969 level 523..548 light quanta 8 drift -11..41 turned 12
+hole on interval   98 births 0 refused {'unit': 2} X 8422..9728 level 531..567 light quanta 6 drift -14..31 turned 1
+hole on interval   99 births 0 refused {} X 8379..9496 level 531..562 light quanta 6 drift -17..10 turned 6
+hole on interval  100 births 0 refused {'stop': 6} X 8311..9142 level 529..552 light quanta 6 drift -24..15 turned 0
+hole on interval  103 births 0 refused {} X 7871..8401 level 514..531 light quanta 7 drift -10..49 turned 12
+hole on interval  108 births 0 refused {'lay': 1, 'unit': 16} X 7584..8180 level 506..524 light quanta 3 drift -33..109 turned 8
+hole on interval  112 births 0 refused {'unit': 9} X 7392..7939 level 499..518 light quanta 14 drift -7..45 turned 1
+hole on interval  120 births 0 refused {'unit': 9} X 6546..7028 level 468..486 light quanta 7 drift 12..69 turned 1
+hole on summary {'births_total': 12, 'birth_intervals': [4, 71], 'first_bang': 4, 'births_after_the_first_bang_plus_10': [71], 'turn_intervals': [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17, 22, 30, 39, 48, 57, 61, 62, 64, 67, 71, 73, 75, 79, 81, 85, 88, 92, 98, 99, 103, 108, 112, 120], 'credits': 20}
+written /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/r3/tools/derivations/r3/ride_engine_hole_on.json

@@ -1,0 +1,74 @@
+{
+ "A_no_move": {
+  "cases": 20000,
+  "exact_ceil_form": 20000,
+  "exact_engine_carried_division_minus_one": 20000,
+  "cases_volume_shrinking": 9921,
+  "cases_volume_growing": 10079,
+  "cases_remainder_at_or_above_new_wall": 4854,
+  "wall_w": 1568256000000
+ },
+ "A_half_wall_move": {
+  "cases": 20000,
+  "exact_ceil_form": 20000,
+  "exact_engine_carried_division_minus_one": 20000,
+  "cases_volume_shrinking": 9921,
+  "cases_volume_growing": 10079,
+  "cases_remainder_at_or_above_new_wall": 4854,
+  "wall_w": 1568256000000
+ },
+ "B": {
+  "cases": 20000,
+  "failures_rescaled": 4894,
+  "failures_folded": 19528,
+  "collisions_rescaled": {
+   "X_now 2, X_before 5": {
+    "domain": 1230,
+    "distinct_images": 492,
+    "states_lost": 738
+   },
+   "X_now 5, X_before 2": {
+    "domain": 492,
+    "distinct_images": 492,
+    "states_lost": 0
+   },
+   "X_now 3, X_before 7": {
+    "domain": 1722,
+    "distinct_images": 738,
+    "states_lost": 984
+   },
+   "X_now 7, X_before 3": {
+    "domain": 738,
+    "distinct_images": 738,
+    "states_lost": 0
+   }
+  }
+ },
+ "C": {
+  "parameters": {
+   "w": 6,
+   "w_t": 6,
+   "mass_t": 2,
+   "write_wall": 5,
+   "exponent": 4,
+   "levels": 3,
+   "x_max": 4
+  },
+  "pre_states_in_domain": 315084,
+  "distinct_post_states": 313944,
+  "collisions_of_the_whole_map": 1140,
+  "failures_of_the_light_inverse_in_the_engine_order": 280884,
+  "joint_inverse_unique_and_right": 311592,
+  "joint_inverse_not_unique_or_missing": 3492
+ },
+ "D": {
+  "pre_states": 253200,
+  "distinct_extended_post_states": 63300,
+  "pre_images_per_post_state": [
+   4
+  ],
+  "light_inverse_exact_one_step_with_held_level": 253200,
+  "integers_added_per_node": 1,
+  "dropped_by_the_forward_map": "X two intervals back (one pre-image per value)"
+ }
+}

@@ -1,0 +1,240 @@
+{
+ "world_chiral.json at 300": {
+  "memo": {
+   "seconds": 41,
+   "counts": {
+    "births": "16",
+    "taken": "37450057102094138190653",
+    "booked": "35545794554425772736000",
+    "body_clicks": "311",
+    "refused_stop": "36",
+    "refused_origin": "0",
+    "refused_lay": "64931",
+    "refused_orientation": "26",
+    "refused_twist": "0",
+    "turns": "769",
+    "light_credits": "0",
+    "light_laid": "1",
+    "light_laid_nodes": "1"
+   },
+   "run_back": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "turns": 170,
+   "max bits": 115,
+   "max transient bits": 130,
+   "integers": 98,
+   "transient class": {
+    "bits": 130,
+    "interval": 297,
+    "row_wall": 23290147981996629504000000,
+    "lines_in_row": 10,
+    "node": [
+     1,
+     1,
+     1
+    ],
+    "content_at_node": 5988,
+    "level_before_bits": 45,
+    "self_coefficient_bits": 86
+   },
+   "paces memo bits": 71674,
+   "contents visited": 1021,
+   "content visited min/max": [
+    -64,
+    5988
+   ],
+   "content max at end": 5988,
+   "log events": {
+    "lay": 0,
+    "birth": 16,
+    "credit": 311,
+    "refused": 64993,
+    "detector": 0
+   },
+   "out": "out/records/world_chiral_300_memo.json"
+  },
+  "scaled": {
+   "seconds": 38,
+   "counts": {
+    "births": "16",
+    "taken": "37450057102094138190653",
+    "booked": "35545794554425772736000",
+    "body_clicks": "311",
+    "refused_stop": "36",
+    "refused_origin": "0",
+    "refused_lay": "64931",
+    "refused_orientation": "26",
+    "refused_twist": "0",
+    "turns": "769",
+    "light_credits": "0",
+    "light_laid": "1",
+    "light_laid_nodes": "1"
+   },
+   "run_back": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "turns": 170,
+   "max bits": 115,
+   "max transient bits": 130,
+   "integers": 98,
+   "transient class": {
+    "bits": 130,
+    "interval": 297,
+    "row_wall": 23290147981996629504000000,
+    "lines_in_row": 10,
+    "node": [
+     1,
+     1,
+     1
+    ],
+    "content_at_node": 5988,
+    "level_before_bits": 45,
+    "self_coefficient_bits": 86
+   },
+   "paces memo bits": 84,
+   "contents visited": 1021,
+   "content visited min/max": [
+    -64,
+    5988
+   ],
+   "content max at end": 5988,
+   "log events": {
+    "lay": 0,
+    "birth": 16,
+    "credit": 311,
+    "refused": 64993,
+    "detector": 0
+   },
+   "out": "out/records/world_chiral_300_scaled.json"
+  },
+  "differences memo vs scaled": {
+   "lines a": 65320,
+   "lines b": 65320,
+   "first differing line": null,
+   "at interval": null,
+   "identical": true
+  }
+ },
+ "world_bodies.json at 120": {
+  "memo": {
+   "seconds": 5,
+   "counts": {
+    "births": "0",
+    "taken": "0",
+    "booked": "0",
+    "body_clicks": "303",
+    "refused_stop": "0",
+    "refused_origin": "0",
+    "refused_lay": "0",
+    "refused_orientation": "125",
+    "refused_twist": "10",
+    "turns": "0",
+    "light_credits": "0",
+    "light_laid": "0",
+    "light_laid_nodes": "0"
+   },
+   "run_back": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "turns": 0,
+   "max bits": 92,
+   "max transient bits": 89,
+   "integers": 89,
+   "transient class": {
+    "bits": 89,
+    "interval": 108,
+    "row_wall": 2543476440576000000,
+    "lines_in_row": 10,
+    "node": [
+     3,
+     3,
+     2
+    ],
+    "content_at_node": 2926,
+    "level_before_bits": 27,
+    "self_coefficient_bits": 63
+   },
+   "paces memo bits": 30860,
+   "contents visited": 912,
+   "content visited min/max": [
+    0,
+    3045
+   ],
+   "content max at end": 3045,
+   "log events": {
+    "lay": 2,
+    "birth": 0,
+    "credit": 303,
+    "refused": 135,
+    "detector": 0
+   },
+   "out": "out/records/world_bodies_120_memo.json"
+  },
+  "scaled": {
+   "seconds": 4,
+   "counts": {
+    "births": "0",
+    "taken": "0",
+    "booked": "0",
+    "body_clicks": "303",
+    "refused_stop": "0",
+    "refused_origin": "0",
+    "refused_lay": "0",
+    "refused_orientation": "125",
+    "refused_twist": "10",
+    "turns": "0",
+    "light_credits": "0",
+    "light_laid": "0",
+    "light_laid_nodes": "0"
+   },
+   "run_back": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "turns": 0,
+   "max bits": 92,
+   "max transient bits": 89,
+   "integers": 89,
+   "transient class": {
+    "bits": 89,
+    "interval": 108,
+    "row_wall": 2543476440576000000,
+    "lines_in_row": 10,
+    "node": [
+     3,
+     3,
+     2
+    ],
+    "content_at_node": 2926,
+    "level_before_bits": 27,
+    "self_coefficient_bits": 63
+   },
+   "paces memo bits": 83,
+   "contents visited": 912,
+   "content visited min/max": [
+    0,
+    3045
+   ],
+   "content max at end": 3045,
+   "log events": {
+    "lay": 2,
+    "birth": 0,
+    "credit": 303,
+    "refused": 135,
+    "detector": 0
+   },
+   "out": "out/records/world_bodies_120_scaled.json"
+  },
+  "differences memo vs scaled": {
+   "lines a": 438,
+   "lines b": 438,
+   "first differing line": null,
+   "at interval": null,
+   "identical": true
+  }
+ }
+}

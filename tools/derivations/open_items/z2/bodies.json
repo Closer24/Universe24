@@ -1,0 +1,8 @@
+{"universe": "universe_z2.json", "shape": [7, 7, 7], "intervals": 300,
+ "seed": [
+  {"sea": 1},
+  {"at": {"pair": [506298091, 1655909141], "centre": [3, 3, 2], "sigma_tenths": 12, "quanta": 125, "sense": 1, "record": 0}},
+  {"at": {"pair": [506298091, 1655909141], "centre": [3, 3, 2], "sigma_tenths": 12, "quanta": 125, "sense": -1, "record": 1}},
+  {"at": {"pair": [506298091, 1655909141], "centre": [3, 3, 5], "sigma_tenths": 12, "quanta": 125, "sense": 1, "record": 0}},
+  {"at": {"pair": [506298091, 1655909141], "centre": [3, 3, 5], "sigma_tenths": 12, "quanta": 125, "sense": -1, "record": 1}}
+ ]}

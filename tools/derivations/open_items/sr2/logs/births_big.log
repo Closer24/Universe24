@@ -1,0 +1,1 @@
+{"world": "births_big.json", "ms": 27634, "credits": {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0}, "crossings": {"3,0": 0, "3,4": 0, "0,0": 0, "1,0": 0, "2,0": 0}, "births": 90, "spinor births": 24, "run back": {"intervals": 10, "exact": 10}, "integers": 125, "bits": 115, "transient": 123, "taken>=booked": true}

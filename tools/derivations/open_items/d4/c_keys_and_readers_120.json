@@ -1,0 +1,420 @@
+{
+ "intervals": 120,
+ "credits": 50,
+ "keys": [
+  {
+   "key": "event",
+   "class": "board",
+   "on_credits": 50,
+   "types": {
+    "str": 50
+   },
+   "sample": [
+    "\"credit\""
+   ]
+  },
+  {
+   "key": "label",
+   "class": "board",
+   "on_credits": 50,
+   "types": {
+    "str": 50
+   },
+   "sample": [
+    "\"NODEDETECTOR\""
+   ]
+  },
+  {
+   "key": "interval",
+   "class": "board",
+   "on_credits": 50,
+   "types": {
+    "int": 50
+   },
+   "sample": [
+    "16",
+    "18",
+    "22",
+    "26"
+   ]
+  },
+  {
+   "key": "family",
+   "class": "name",
+   "on_credits": 50,
+   "types": {
+    "str": 50
+   },
+   "sample": [
+    "\"massless\""
+   ]
+  },
+  {
+   "key": "node_detector",
+   "class": "position",
+   "on_credits": 50,
+   "types": {
+    "int": 50
+   },
+   "sample": [
+    "1",
+    "18",
+    "2",
+    "3"
+   ]
+  },
+  {
+   "key": "window",
+   "class": "board",
+   "on_credits": 50,
+   "types": {
+    "list": 50
+   },
+   "sample": [
+    "[16, 16]",
+    "[18, 18]",
+    "[22, 22]",
+    "[26, 26]"
+   ]
+  },
+  {
+   "key": "proper",
+   "class": "own",
+   "on_credits": 50,
+   "types": {
+    "int": 50
+   },
+   "sample": [
+    "15",
+    "17",
+    "20",
+    "23"
+   ]
+  },
+  {
+   "key": "windows",
+   "class": "own",
+   "on_credits": 50,
+   "types": {
+    "int": 50
+   },
+   "sample": [
+    "1",
+    "2",
+    "3",
+    "4"
+   ]
+  },
+  {
+   "key": "before",
+   "class": "name",
+   "on_credits": 50,
+   "types": {
+    "NoneType": 50
+   },
+   "sample": [
+    "null"
+   ]
+  },
+  {
+   "key": "realised",
+   "class": "name",
+   "on_credits": 50,
+   "types": {
+    "str": 50
+   },
+   "sample": [
+    "\"point 2\""
+   ]
+  },
+  {
+   "key": "kept",
+   "class": "constant",
+   "on_credits": 50,
+   "types": {
+    "NoneType": 50
+   },
+   "sample": [
+    "null"
+   ]
+  },
+  {
+   "key": "count",
+   "class": "constant",
+   "on_credits": 50,
+   "types": {
+    "int": 50
+   },
+   "sample": [
+    "1"
+   ]
+  },
+  {
+   "key": "left",
+   "class": "constant",
+   "on_credits": 50,
+   "types": {
+    "NoneType": 50
+   },
+   "sample": [
+    "null"
+   ]
+  },
+  {
+   "key": "absorbed",
+   "class": "name",
+   "on_credits": 50,
+   "types": {
+    "str": 50
+   },
+   "sample": [
+    "\"massless\""
+   ]
+  },
+  {
+   "key": "emitted",
+   "class": "name",
+   "on_credits": 50,
+   "types": {
+    "str": 50
+   },
+   "sample": [
+    "\"point 2\""
+   ]
+  },
+  {
+   "key": "momentum",
+   "class": "own",
+   "on_credits": 50,
+   "types": {
+    "list": 50
+   },
+   "sample": [
+    "[[-1, 37, 47], [0, 477, 658], [0, 477, 658]]",
+    "[[0, 477, 658], [-1, 37, 47], [0, 477, 658]]",
+    "[[0, 477, 658], [0, 477, 658], [-1, 37, 47]]",
+    "[[0, 477, 658], [0, 477, 658], [1, 37, 47]]"
+   ]
+  },
+  {
+   "key": "lost",
+   "class": "constant",
+   "on_credits": 50,
+   "types": {
+    "NoneType": 50
+   },
+   "sample": [
+    "null"
+   ]
+  },
+  {
+   "key": "source",
+   "class": "name",
+   "on_credits": 50,
+   "types": {
+    "NoneType": 50
+   },
+   "sample": [
+    "null"
+   ]
+  },
+  {
+   "key": "point",
+   "class": "own",
+   "on_credits": 50,
+   "types": {
+    "list": 50
+   },
+   "sample": [
+    "[1463, 1475]",
+    "[244, 329]",
+    "[[-73, 52], [185, 382]]",
+    "[[-9, 26], [85, 382]]"
+   ]
+  },
+  {
+   "key": "kind",
+   "class": "own",
+   "on_credits": 50,
+   "types": {
+    "int": 50
+   },
+   "sample": [
+    "1",
+    "2"
+   ]
+  },
+  {
+   "key": "sense",
+   "class": "own",
+   "on_credits": 50,
+   "types": {
+    "int": 50
+   },
+   "sample": [
+    "-1",
+    "0",
+    "1"
+   ]
+  },
+  {
+   "key": "support",
+   "class": "position",
+   "on_credits": 50,
+   "types": {
+    "list": 50
+   },
+   "sample": [
+    "[0, 0, 1]",
+    "[0, 0, 2]",
+    "[0, 1, 0]",
+    "[0, 2, 0]"
+   ]
+  },
+  {
+   "key": "beat",
+   "class": "own",
+   "on_credits": 50,
+   "types": {
+    "int": 18,
+    "NoneType": 32
+   },
+   "sample": [
+    "20278707",
+    "23834746",
+    "null"
+   ]
+  },
+  {
+   "key": "identity",
+   "class": "own",
+   "on_credits": 50,
+   "types": {
+    "list": 50
+   },
+   "sample": [
+    "[2, 0]",
+    "[4, 0]",
+    "[4, 1]"
+   ]
+  },
+  {
+   "key": "taken",
+   "class": "own",
+   "on_credits": 32,
+   "types": {
+    "int": 32
+   },
+   "sample": [
+    "142582737",
+    "142873345",
+    "144079041",
+    "144403427"
+   ]
+  },
+  {
+   "key": "walls",
+   "class": "own",
+   "on_credits": 32,
+   "types": {
+    "int": 32
+   },
+   "sample": [
+    "142560000"
+   ]
+  },
+  {
+   "key": "excess",
+   "class": "own",
+   "on_credits": 32,
+   "types": {
+    "int": 32
+   },
+   "sample": [
+    "1519041",
+    "1843427",
+    "2014855",
+    "22737"
+   ]
+  },
+  {
+   "key": "step",
+   "class": "own",
+   "on_credits": 32,
+   "types": {
+    "int": 32
+   },
+   "sample": [
+    "11373886",
+    "3252916",
+    "3332649",
+    "3794733"
+   ]
+  }
+ ],
+ "node_detector_unravels_to_support_on": 50,
+ "window_equals_[interval, interval]_on": 50,
+ "string_values_on_credits": 300,
+ "readers_interval_uses": {
+  "tools/clicks_read.py": {
+   "total": 21,
+   "per_function": {
+    "where_of": 3,
+    "birth_beside": 2,
+    "born_bodies": 1,
+    "uncertainty_table": 2,
+    "interval_of": 2,
+    "density_table": 4,
+    "ledger_table": 1,
+    "by_interval_of": 2,
+    "conservation_table": 4
+   }
+  },
+  "tools/record_gates.py": {
+   "total": 18,
+   "per_function": {
+    "record_of": 4,
+    "length_of": 1,
+    "gate_recurring_bangs": 1,
+    "gate_links_cycle": 1,
+    "gate_era_of_matter": 3,
+    "gate_light": 4,
+    "gate_gravitational_redshift": 1,
+    "gate_horizon": 2,
+    "gate_charge_conservation": 1
+   }
+  },
+  "tools/back_in_time.py": {
+   "total": 10,
+   "per_function": {
+    "verdict": 10
+   }
+  },
+  "tools/look/captions.py": {
+   "total": 25,
+   "per_function": {
+    "captions_of": 9,
+    "held_rows": 1,
+    "legend_of": 10,
+    "ledger_of": 5
+   }
+  },
+  "tools/look/eras_page.py": {
+   "total": 2,
+   "per_function": {
+    "<module>": 1,
+    "least_of": 1
+   }
+  },
+  "tools/look/torus_page.py": {
+   "total": 15,
+   "per_function": {
+    "bangs_of": 1,
+    "returns_of": 1,
+    "course_of": 2,
+    "charts_of": 2,
+    "stages_of": 9
+   }
+  }
+ }
+}

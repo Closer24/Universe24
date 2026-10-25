@@ -1,0 +1,73 @@
+== the odd rounding's ties: turn_factor(angle, p_0, Gamma) = odd_rounded(angle p_0, Gamma); a tie where 2 angle p_0 = Gamma mod 2 Gamma ==
+Gamma 1000 (even): turn ties over angles [-5000, 5000] at p_0 = Gamma - 1: 10; Link's pace rounding ties over c in [0, 3793): 46; clock's rounding ties over c in [1, 400): 0; Q's ties at G 16 over t in [0, Gamma]: 0
+Gamma 1001 (odd): turn ties over angles [-5000, 5000] at p_0 = Gamma - 1: 0; Link's pace rounding ties over c in [0, 3798): 0; clock's rounding ties over c in [1, 400): 0; Q's ties at G 16 over t in [0, Gamma]: 0
+Gamma 6000 (even): turn ties over angles [-5000, 5000] at p_0 = Gamma - 1: 2; Link's pace rounding ties over c in [0, 28206): 0; clock's rounding ties over c in [1, 400): 0; Q's ties at G 16 over t in [0, Gamma]: 0
+Gamma 6001 (odd): turn ties over angles [-5000, 5000] at p_0 = Gamma - 1: 0; Link's pace rounding ties over c in [0, 28212): 0; clock's rounding ties over c in [1, 400): 0; Q's ties at G 16 over t in [0, Gamma]: 0
+== the Link's factor exact (no rounding) at every tension iff Gamma | G ==
+Gamma 1000 G 16: tensions t in [0, Gamma] with Q exact: 9 of 1001; Gamma | G: False; link_factor exact everywhere: None
+Gamma 1000 G 32: tensions t in [0, Gamma] with Q exact: 9 of 1001; Gamma | G: False; link_factor exact everywhere: None
+Gamma 1000 G 1000: tensions t in [0, Gamma] with Q exact: 1001 of 1001; Gamma | G: True; link_factor exact everywhere: True
+Gamma 1000 G 2000: tensions t in [0, Gamma] with Q exact: 1001 of 1001; Gamma | G: True; link_factor exact everywhere: True
+Gamma 1001 G 16: tensions t in [0, Gamma] with Q exact: 2 of 1002; Gamma | G: False; link_factor exact everywhere: None
+Gamma 1001 G 32: tensions t in [0, Gamma] with Q exact: 2 of 1002; Gamma | G: False; link_factor exact everywhere: None
+Gamma 1001 G 1001: tensions t in [0, Gamma] with Q exact: 1002 of 1002; Gamma | G: True; link_factor exact everywhere: True
+Gamma 1001 G 2002: tensions t in [0, Gamma] with Q exact: 1002 of 1002; Gamma | G: True; link_factor exact everywhere: True
+== the walls, the half wall, the pairs ==
+den 10 Gamma 1000 G 16: w = 6 den Gamma^2 G^2 = 15360000000 (34 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 10 (the volume holder's rest exactly 1/Gamma: False), volume pair (10, 10)
+den 10 Gamma 1000 G 1000: w = 6 den Gamma^2 G^2 = 60000000000000 (46 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 10 (the volume holder's rest exactly 1/Gamma: False), volume pair (10, 10)
+den 10 Gamma 1001 G 16: w = 6 den Gamma^2 G^2 = 15390735360 (34 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 10 (the volume holder's rest exactly 1/Gamma: False), volume pair (10, 10)
+den 10 Gamma 1001 G 1001: w = 6 den Gamma^2 G^2 = 60240360240060 (46 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 10 (the volume holder's rest exactly 1/Gamma: False), volume pair (10, 10)
+den 1021 Gamma 1000 G 16: w = 6 den Gamma^2 G^2 = 1568256000000 (41 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 21 (the volume holder's rest exactly 1/Gamma: False), volume pair (1020, 1021)
+den 1021 Gamma 1000 G 1000: w = 6 den Gamma^2 G^2 = 6126000000000000 (53 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 21 (the volume holder's rest exactly 1/Gamma: False), volume pair (1020, 1021)
+den 1021 Gamma 1001 G 16: w = 6 den Gamma^2 G^2 = 1571394080256 (41 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 20 (the volume holder's rest exactly 1/Gamma: False), volume pair (1020, 1021)
+den 1021 Gamma 1001 G 1001: w = 6 den Gamma^2 G^2 = 6150540780510126 (53 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 6; den mod Gamma = 20 (the volume holder's rest exactly 1/Gamma: False), volume pair (1020, 1021)
+den 2042 Gamma 1000 G 16: w = 6 den Gamma^2 G^2 = 3136512000000 (42 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 42 (the volume holder's rest exactly 1/Gamma: False), volume pair (2040, 2042)
+den 2042 Gamma 1000 G 1000: w = 6 den Gamma^2 G^2 = 12252000000000000 (54 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 42 (the volume holder's rest exactly 1/Gamma: False), volume pair (2040, 2042)
+den 2042 Gamma 1001 G 16: w = 6 den Gamma^2 G^2 = 3142788160512 (42 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 40 (the volume holder's rest exactly 1/Gamma: False), volume pair (2040, 2042)
+den 2042 Gamma 1001 G 1001: w = 6 den Gamma^2 G^2 = 12301081561020252 (54 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 40 (the volume holder's rest exactly 1/Gamma: False), volume pair (2040, 2042)
+den 348893 Gamma 1000 G 16: w = 6 den Gamma^2 G^2 = 535899648000000 (49 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 893 (the volume holder's rest exactly 1/Gamma: False), volume pair (348545, 348893)
+den 348893 Gamma 1000 G 1000: w = 6 den Gamma^2 G^2 = 2093358000000000000 (61 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 893 (the volume holder's rest exactly 1/Gamma: False), volume pair (348545, 348893)
+den 348893 Gamma 1001 G 16: w = 6 den Gamma^2 G^2 = 536971983195648 (49 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 545 (the volume holder's rest exactly 1/Gamma: False), volume pair (348545, 348893)
+den 348893 Gamma 1001 G 1001: w = 6 den Gamma^2 G^2 = 2101744000523525358 (61 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 6; den mod Gamma = 545 (the volume holder's rest exactly 1/Gamma: False), volume pair (348545, 348893)
+den 697786 Gamma 1000 G 16: w = 6 den Gamma^2 G^2 = 1071799296000000 (50 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 786 (the volume holder's rest exactly 1/Gamma: False), volume pair (697089, 697786)
+den 697786 Gamma 1000 G 1000: w = 6 den Gamma^2 G^2 = 4186716000000000000 (62 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 786 (the volume holder's rest exactly 1/Gamma: False), volume pair (697089, 697786)
+den 697786 Gamma 1001 G 16: w = 6 den Gamma^2 G^2 = 1073943966391296 (50 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 89 (the volume holder's rest exactly 1/Gamma: False), volume pair (697089, 697786)
+den 697786 Gamma 1001 G 1001: w = 6 den Gamma^2 G^2 = 4203488001047050716 (62 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 89 (the volume holder's rest exactly 1/Gamma: False), volume pair (697089, 697786)
+den 1655909141 Gamma 1000 G 16: w = 6 den Gamma^2 G^2 = 2543476440576000000 (62 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 141 (the volume holder's rest exactly 1/Gamma: False), volume pair (1654253232, 1655909141)
+den 1655909141 Gamma 1000 G 1000: w = 6 den Gamma^2 G^2 = 9935454846000000000000 (74 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 141 (the volume holder's rest exactly 1/Gamma: False), volume pair (1654253232, 1655909141)
+den 1655909141 Gamma 1001 G 16: w = 6 den Gamma^2 G^2 = 2548565936933592576 (62 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 887 (the volume holder's rest exactly 1/Gamma: False), volume pair (1654254887, 1655909141)
+den 1655909141 Gamma 1001 G 1001: w = 6 den Gamma^2 G^2 = 9975256317864830838846 (74 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 6; den mod Gamma = 887 (the volume holder's rest exactly 1/Gamma: False), volume pair (1654254887, 1655909141)
+den 3311818282 Gamma 1000 G 16: w = 6 den Gamma^2 G^2 = 5086952881152000000 (63 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 282 (the volume holder's rest exactly 1/Gamma: False), volume pair (3308506464, 3311818282)
+den 3311818282 Gamma 1000 G 1000: w = 6 den Gamma^2 G^2 = 19870909692000000000000 (75 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 282 (the volume holder's rest exactly 1/Gamma: False), volume pair (3308506464, 3311818282)
+den 3311818282 Gamma 1001 G 16: w = 6 den Gamma^2 G^2 = 5097131873867185152 (63 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 773 (the volume holder's rest exactly 1/Gamma: False), volume pair (3308509773, 3311818282)
+den 3311818282 Gamma 1001 G 1001: w = 6 den Gamma^2 G^2 = 19950512635729661677692 (75 bits), w mod 2 = 0 (the half wall's move exact: True), w mod 12 = 0; den mod Gamma = 773 (the volume holder's rest exactly 1/Gamma: False), volume pair (3308509773, 3311818282)
+T 36000: T even True; T div 2 = 18000 a square: False (A = 134, short 44); T a square: False (drift 189, short 279); T mod 1000 = 0, T mod 1001 = 965, T mod 12 = 0
+T 32768: T even True; T div 2 = 16384 a square: True (A = 128, short 0); T a square: False (drift 181, short 7); T mod 1000 = 768, T mod 1001 = 736, T mod 12 = 8
+T 35912: T even True; T div 2 = 17956 a square: True (A = 134, short 0); T a square: False (drift 189, short 191); T mod 1000 = 912, T mod 1001 = 877, T mod 12 = 8
+T 36100: T even True; T div 2 = 18050 a square: False (A = 134, short 94); T a square: True (drift 190, short 0); T mod 1000 = 100, T mod 1001 = 64, T mod 12 = 4
+T 18: T even True; T div 2 = 9 a square: True (A = 3, short 0); T a square: False (drift 4, short 2); T mod 1000 = 18, T mod 1001 = 18, T mod 12 = 6
+T 50: T even True; T div 2 = 25 a square: True (A = 5, short 0); T a square: False (drift 7, short 1); T mod 1000 = 50, T mod 1001 = 50, T mod 12 = 2
+T 2004002: T even True; T div 2 = 1002001 a square: True (A = 1001, short 0); T a square: False (drift 1415, short 1777); T mod 1000 = 2, T mod 1001 = 0, T mod 12 = 2
+== the take's quotient at a lift: den / s with s = 2 a b den / p, never an integer (p odd) ==
+den 10 lift (2,): s = 8, den mod s = 2, den div s = 1 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 1 rem 216000
+den 1021 lift (2,): s = 660, den mod s = 361, den div s = 1 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 1 rem 38988000
+den 2042 lift (2,): s = 1320, den mod s = 722, den div s = 1 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 1 rem 77976000
+den 348893 lift (0, 2): s = 19368, den mod s = 269, den div s = 18 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 18 rem 29052000
+den 348893 lift (2, 0): s = 337220, den mod s = 11673, den div s = 1 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 1 rem 1260684000
+den 1655909141 lift (0, 2): s = 9669460, den mod s = 2431481, den div s = 171 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 171 rem 262599948000
+den 1655909141 lift (2, 0): s = 1576609440, den mod s = 79299701, den div s = 1 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 1 rem 8564367708000
+den 15162856759112389 lift (0, 0, 2): s = 8137489624680, den mod s = 2713588333549, den div s = 1863 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 1863 rem 293067540023292000
+den 15162856759112389 lift (0, 2, 0): s = 14962266816278236, den mod s = 200589942834153, den div s = 1 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 1 rem 21663713826088524000
+den 15162856759112389 lift (2, 0, 0): s = 14941680566515936, den mod s = 221176192596453, den div s = 1 (3 T s | 3 den T iff den mod s = 0: False); 6 den (T div 2) at T 36000 over 3 T s: 1 rem 23887028800416924000
+== the loader on integral sets: den even with a lift, Gamma odd, T = 2 Gamma^2 (A = Gamma, Gamma | T), G = Gamma ==
+den 10 Gamma 3 T 18 G 3: families 5, width 19 bits (within 128: True), w 13 bits, A = isqrt(T div 2) = 3 (0.0 s)
+den 10 Gamma 5 T 50 G 5: families 5, width 25 bits (within 128: True), w 16 bits, A = isqrt(T div 2) = 5 (0.0 s)
+den 10 Gamma 15 T 450 G 15: families 5, width 45 bits (within 128: True), w 22 bits, A = isqrt(T div 2) = 15 (0.0 s)
+den 10 Gamma 101 T 20402 G 101: families 5, width 72 bits (within 128: True), w 33 bits, A = isqrt(T div 2) = 101 (0.0 s)
+den 2042 Gamma 1001 T 2004002 G 1001: families 5, width 99 bits (within 128: True), w 54 bits, A = isqrt(T div 2) = 1001 (0.0 s)
+den 2042 Gamma 1001 T 36036 G 16: families 5, width 99 bits (within 128: True), w 42 bits, A = isqrt(T div 2) = 134 (0.0 s)
+den 3311818282 Gamma 1001 T 2004002 G 1001: families 11, width 109 bits (within 128: True), w 75 bits, A = isqrt(T div 2) = 1001 (0.1 s)
+den 3311818282 Gamma 1001 T 36036 G 16: families 11, width 101 bits (within 128: True), w 63 bits, A = isqrt(T div 2) = 134 (0.1 s)
+== the largest odd Gamma within 128 bits with T = 2 Gamma^2 and G = Gamma, at den 2042 and 3311818282 ==
+den 2042: the largest odd Gamma with T = 2 Gamma^2, G = Gamma within 128 bits: 7323 (T = 107252658, w bits 65); next odd 7325 fits: False
+den 3311818282: the largest odd Gamma with T = 2 Gamma^2, G = Gamma within 128 bits: 7101 (T = 100848402, w bits 86); next odd 7103 fits: False

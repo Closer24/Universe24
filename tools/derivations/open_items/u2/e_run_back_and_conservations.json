@@ -1,0 +1,333 @@
+{
+ "den": 1021,
+ "intervals_forward": 8,
+ "run_back_match_of_8": 8,
+ "interval_after_run_back": 0,
+ "on_board": [
+  {
+   "interval": 1,
+   "charge_sum_W": 0,
+   "momentum": {
+    "massless record 0": [
+     0,
+     0,
+     0
+    ]
+   },
+   "turned_nodes": 1
+  },
+  {
+   "interval": 2,
+   "charge_sum_W": 0,
+   "momentum": {
+    "massless record 0": [
+     0,
+     0,
+     0
+    ]
+   },
+   "turned_nodes": 6
+  },
+  {
+   "interval": 3,
+   "charge_sum_W": 0,
+   "momentum": {
+    "massless record 0": [
+     0,
+     0,
+     0
+    ]
+   },
+   "turned_nodes": 0
+  },
+  {
+   "interval": 4,
+   "charge_sum_W": 0,
+   "momentum": {
+    "massless record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 1": [
+     0,
+     0,
+     0
+    ]
+   },
+   "turned_nodes": 13
+  },
+  {
+   "interval": 5,
+   "charge_sum_W": 0,
+   "momentum": {
+    "massless record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 1": [
+     0,
+     0,
+     0
+    ]
+   },
+   "turned_nodes": 8
+  },
+  {
+   "interval": 6,
+   "charge_sum_W": 0,
+   "momentum": {
+    "massless record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 1": [
+     0,
+     0,
+     0
+    ]
+   },
+   "turned_nodes": 6
+  },
+  {
+   "interval": 7,
+   "charge_sum_W": 0,
+   "momentum": {
+    "massless record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 1": [
+     0,
+     0,
+     0
+    ]
+   },
+   "turned_nodes": 13
+  },
+  {
+   "interval": 8,
+   "charge_sum_W": 0,
+   "momentum": {
+    "massless record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 0": [
+     0,
+     0,
+     0
+    ],
+    "point 2 record 1": [
+     0,
+     0,
+     0
+    ]
+   },
+   "turned_nodes": 6
+  }
+ ],
+ "clicks": {
+  "birth_lines": 6,
+  "credit_lines": 6,
+  "refused_lines": 6,
+  "senses_summed_over_births": 0,
+  "births_with_taken_equal_walls_plus_excess": 6,
+  "taken_walls_excess_step_per_birth": [
+   [
+    143513854,
+    142560000,
+    953854,
+    1266121
+   ],
+   [
+    143513854,
+    142560000,
+    953854,
+    1266121
+   ],
+   [
+    143513854,
+    142560000,
+    953854,
+    1266121
+   ],
+   [
+    143513854,
+    142560000,
+    953854,
+    1266121
+   ],
+   [
+    143513854,
+    142560000,
+    953854,
+    1266121
+   ],
+   [
+    143513854,
+    142560000,
+    953854,
+    1266121
+   ]
+  ],
+  "credit_momentum": [
+   [
+    [
+     0,
+     477,
+     658
+    ],
+    [
+     0,
+     477,
+     658
+    ],
+    [
+     1,
+     37,
+     47
+    ]
+   ],
+   [
+    [
+     0,
+     477,
+     658
+    ],
+    [
+     0,
+     477,
+     658
+    ],
+    [
+     -1,
+     37,
+     47
+    ]
+   ],
+   [
+    [
+     0,
+     477,
+     658
+    ],
+    [
+     1,
+     37,
+     47
+    ],
+    [
+     0,
+     477,
+     658
+    ]
+   ],
+   [
+    [
+     0,
+     477,
+     658
+    ],
+    [
+     -1,
+     37,
+     47
+    ],
+    [
+     0,
+     477,
+     658
+    ]
+   ],
+   [
+    [
+     1,
+     37,
+     47
+    ],
+    [
+     0,
+     477,
+     658
+    ],
+    [
+     0,
+     477,
+     658
+    ]
+   ],
+   [
+    [
+     -1,
+     37,
+     47
+    ],
+    [
+     0,
+     477,
+     658
+    ],
+    [
+     0,
+     477,
+     658
+    ]
+   ]
+  ],
+  "credit_beat_proper": [
+   [
+    23834746,
+    4
+   ],
+   [
+    23834746,
+    4
+   ],
+   [
+    23834746,
+    4
+   ],
+   [
+    23834746,
+    4
+   ],
+   [
+    23834746,
+    4
+   ],
+   [
+    23834746,
+    4
+   ]
+  ]
+ },
+ "integers_per_node_at_8": 139,
+ "largest_bit_length_at_8": 76,
+ "largest_at": "sign row 1 phase 0 now",
+ "same_at_every_node": true
+}
