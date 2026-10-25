@@ -12,6 +12,7 @@ from event_universe.features import volume
 from event_universe.loader.world import read_world
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE
+from event_universe.take import frame_nodes
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
 CENTRE = (1, 1, 1)  # the fed Node, the 3-cube's centre
@@ -28,7 +29,6 @@ def level_at(node: Node, content: int) -> int:
 
 
 def clicks_at(node: Node, at: tuple[int, ...]) -> list[dict[str, Any]]:
-    """The births and credits logged at the Node, and the births whose children land there."""
     own = [e for e in node.log if tuple(e["node"]) == at and e["event"] in ("birth", "credit")]
     ends = [e for e in node.log if e["event"] == "birth" and at in (tuple(e["minus"]), tuple(e["plus"]))]
     return own + ends
@@ -74,7 +74,6 @@ def test_the_frozen_node_is_not_read_and_never_clicks() -> None:
 
 
 def exchanged(node: Node, held: list[list[Any]], at: tuple[int, ...]) -> bool:
-    """Every line at the Node is the held line exchanged and complemented: the levels exchanged (an im line conjugated), the rotation remainder complemented at its wall (an im line's kept), the write remainder complemented at the write wall."""
     flat = [line for row in held for line in row]
     for line, h, im in zip(node.all_lines(), flat, node.is_im(), strict=True):
         sign = -1 if im else 1
@@ -210,3 +209,31 @@ def test_the_files_are_refused_by_name() -> None:
     ):
         refused(match, Node, universe, dict(world, **change))
     assert [r.shape for r in node_of("world_node.json").rows_] == [1, 2, 2, 2, 2, 4, 10]
+
+
+def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
+    """BH-S1 (the owner's word of 2026-10-25 through the Boss, 6398593790; BH_COMPARISON.md section 6): a Node whose Link pace reads 0 at the interval's start is frozen: no act changes any integer of its state and its proper count rests, no click reads it, every Link with a frozen end is at the wall from both ends; the frozen mask booked in the frame for the run back. The 3-cube centre fed to the frozen content 3,793 at Gamma 1,000 (X 4,268,834,097), 100 intervals: the centre's lines equal to the fed values at every interval, proper[centre] unchanged, the twelve factors 0, 0 clicks at it, the frozen count 1 at every interval, the transient within 128, the run back exact 100 of 100."""
+    node = node_of("world_node.json")
+    frozen = paces.frozen_content(node.gamma)
+    carrier = node.row(CARRIER).lines[0]
+    carrier.now[CENTRE] = level_at(node, frozen)
+    carrier.before[CENTRE] = carrier.now[CENTRE]
+    node.ride_walls()
+    assert int(carrier.now[CENTRE]) == 4_268_834_097
+    fed = [[int(a[CENTRE]) for a in (line.now, line.before, line.rem)] for line in node.all_lines()]
+    proper = int(node.proper[CENTRE])
+    kept = copy.deepcopy(node)
+    for _ in range(100):
+        node.step()
+        lines = node.all_lines()
+        assert [[int(a[CENTRE]) for a in (line.now, line.before, line.rem)] for line in lines] == fed
+        assert int(node.proper[CENTRE]) == proper and not node.turned[CENTRE]
+        frozen_now = np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object) == 0
+        assert int(frozen_now.sum()) == 1 and frozen_now[CENTRE]
+        assert all(int(f[CENTRE]) == 0 for f in node.link_factors(None, frozen_now))
+        assert all(
+            int(node.link_factors(None, frozen_now)[port ^ 1][n]) == 0
+            for port, n in enumerate(frame_nodes(node, CENTRE)[1:])
+        )
+    assert clicks_at(node, CENTRE) == [] and node.max_transient <= 128 and node.census()[1] <= 128
+    assert run_back_exact(kept, 100) == 100

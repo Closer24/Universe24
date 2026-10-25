@@ -41,8 +41,10 @@ def pair_angle(node: Node, n: Any) -> tuple[int, int]:
     return c_, s * sn_
 
 
-def link_factors(node: Node, axis_levels: list[Any] | None = None) -> tuple[Any, ...]:
-    """The Link factor at each Port from the two ends' axis parts of the carrier: the tension the mean of the two ends' levels rounded half up (the one rounding not reached by the remainder's rule: fd1 measured the odd rounding here parts the 48's reflections), a tension at or past Gamma read at the wall, the factor 0 (the horizon)."""
+def link_factors(
+    node: Node, axis_levels: list[Any] | None = None, frozen: Any = None
+) -> tuple[Any, ...]:
+    """The Link factor at each Port from the two ends' axis parts of the carrier: the tension the mean of the two ends' levels rounded half up (the one rounding not reached by the remainder's rule: fd1 measured the odd rounding here parts the 48's reflections), a tension at or past Gamma read at the wall, the factor 0 (the horizon); and 0 where either end is frozen, the Link pace 0 at the interval's start (BH-S1: every Link with a frozen end is at the wall, from both ends)."""
     levels = [line.now for line in node.row(CARRIER).lines[1:4]] if axis_levels is None else axis_levels
     found = []
     for port, (axis, _side) in enumerate(PORT_SIDES):
@@ -52,7 +54,8 @@ def link_factors(node: Node, axis_levels: list[Any] | None = None) -> tuple[Any,
             lambda tt: int(link_factor(node.gamma, node.G, min(int(tt), node.gamma))),
             otypes=[object],
         )
-        found.append(factor(t))
+        at_wall = None if frozen is None else frozen | across(frozen, port)
+        found.append(factor(t) if at_wall is None else np.where(at_wall, 0, factor(t)))
     return tuple(found)
 
 

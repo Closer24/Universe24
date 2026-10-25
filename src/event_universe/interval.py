@@ -1,4 +1,4 @@
-"""The interval, the Node's one program in both directions (ALGEBRA.md, The direction: every act but the click a bijection; the run back the same acts in the reverse order, each inverted), in the symmetric ride's form (R5; the owner's approved sentence 1 of 2026-10-25, the held carrier of the wall and every riding row step as one pair at the mean wall): the readings at the start, the walled row's act, every riding line's force and kick, the carrier's one division sourced by the riding momenta, every riding line's one division at the mean wall of the carrier's two levels, the riding rows' writes from numbers known before them, the swap at the top and the close; one class holds the interval's readings so that each act is one short function."""
+"""The interval, the Node's one program in both directions (ALGEBRA.md, The direction: every act but the click a bijection; the run back the same acts in the reverse order, each inverted), in the symmetric ride's form (R5; the owner's approved sentence 1 of 2026-10-25, the held carrier of the wall and every riding row step as one pair at the mean wall): the readings at the start (the frozen mask among them, BH-S1), the walled row's act, every riding line's force and kick, the carrier's one division sourced by the riding momenta, every riding line's one division at the mean wall of the carrier's two levels, the riding rows' writes from numbers known before them, the swap at the top and the close; one class holds the interval's readings so that each act is one short function."""
 
 from __future__ import annotations
 
@@ -34,10 +34,13 @@ class Interval:
             node.interval += 1
             self.top: Any = np.zeros(node.shape, dtype=bool)
             self.kept: list[list[Line]] | None = None
+            self.frozen: Any = None
         else:
             frame = node.stack.pop()
             node.click([], [], -1, frame)
             self.top = frame["turned"]
+            self.frozen = frame["frozen"]
+        self.still: Any = self.top if self.frozen is None else self.top | self.frozen
         self.held = [[line.copy() for line in row] for row in node.rows()]
         if direction == -1:
             if self.top.any():
@@ -56,8 +59,8 @@ class Interval:
         self.readings()
 
     def at(self, line: Line) -> Any:
-        """A line's start level: forward the now slot; backward the before slot, and the now slot at a turned Node."""
-        return line.now if self.direction == 1 else np.where(self.top, line.now, line.before)
+        """A line's start level: forward the now slot; backward the before slot, and the now slot at a still Node, turned or frozen (BH-S1), which ended the interval at its pre-state."""
+        return line.now if self.direction == 1 else np.where(self.still, line.now, line.before)
 
     def lines(self, row: Row) -> list[Line]:
         """A row's lines as the interval holds them."""
@@ -73,8 +76,13 @@ class Interval:
         self.c = np.asarray(volume.level_of(node.gamma, self.at(self.carrier.lines[0])), dtype=object)
         node.start_content = self.c
         self.p0, self.pi = readings.paces_of(node, self.c)
-        node.proper = node.proper + self.direction * self.p0
-        self.factors = node.link_factors([self.at(line) for line in self.carrier.lines[1 : 1 + AXES]])
+        if self.frozen is None:
+            self.frozen = np.asarray(self.pi, dtype=object) == 0
+            self.still = self.top | self.frozen
+        node.proper = node.proper + self.direction * np.where(self.frozen, 0, self.p0)
+        self.factors = node.link_factors(
+            [self.at(line) for line in self.carrier.lines[1 : 1 + AXES]], self.frozen
+        )
         node.start_factors = self.factors
         self.frames = readings.frames(node, self.walled.lines[0].rem)
         node.start_frames = self.frames
@@ -225,6 +233,12 @@ class Interval:
         ):
             node.write(line, n, 1)
 
+    def rest(self) -> None:
+        """BH-S1: every line at a frozen Node restored to the held line after the acts (its levels, its remainders and its wall, by the Node's one restore), so no act changes any integer of a frozen Node's state in either direction."""
+        self.node.restore(
+            self.node.all_lines(), [line for row in self.held for line in row], self.frozen
+        )
+
     def close(self) -> None:
         """Forward after the acts: the swap at the top, the close, the frame pushed for the run back."""
         node = self.node
@@ -233,10 +247,12 @@ class Interval:
             [a.copy() for a in node.crossed],
             [a.copy() for a in node.beats],
         )
-        top = node.swap(self.held)
+        top = node.swap(self.held, self.frozen)
         log_from = len(node.log)
         node.click(self.plane_starts, self.held)
-        node.stack.append({"turned": top, "counters": counters, "log_from": log_from})
+        node.stack.append(
+            {"turned": top, "counters": counters, "log_from": log_from, "frozen": self.frozen}
+        )
 
 
 def run(node: Node, direction: int) -> None:
@@ -252,6 +268,7 @@ def run(node: Node, direction: int) -> None:
     if direction == 1:
         interval.writes()
     node.set_rows(interval.out)
+    interval.rest()
     if direction == -1:
         node.interval -= 1
         return

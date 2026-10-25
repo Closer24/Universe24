@@ -156,9 +156,9 @@ class Node:
         """The content at every Node (readings.content)."""
         return readings.content(self)
 
-    def link_factors(self, axis_levels: list[Any] | None = None) -> tuple[Any, ...]:
-        """The Link factor at each Port (readings.link_factors)."""
-        return readings.link_factors(self, axis_levels)
+    def link_factors(self, axis_levels: list[Any] | None = None, frozen: Any = None) -> tuple[Any, ...]:
+        """The Link factor at each Port (readings.link_factors), 0 where either end is frozen."""
+        return readings.link_factors(self, axis_levels, frozen)
 
     def share(self, line: Line, r: rule3.Rule, pace: Any = None, vacuum: bool = False) -> Any:
         """The conserved form's share at every Node (readings.share)."""
@@ -303,8 +303,8 @@ class Node:
             if line.wr is not None:
                 line.wr = np.where(top, mirrored(h.wr, line.wwall, 1), line.wr)
 
-    def swap(self, held: list[list[Line]]) -> Any:
-        """The swap at the top: the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f); the turned Node ends the interval at the state it started from, exchanged and complemented."""
+    def swap(self, held: list[list[Line]], frozen: Any = None) -> Any:
+        """The swap at the top: the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), a frozen Node never (BH-S1); the turned Node ends the interval at the state it started from, exchanged and complemented."""
         k = self.rows_.index(self.row(CARRIER))
         x0, x1, x2 = held[k][0].before, held[k][0].now, self.row(CARRIER).lines[0].now
         peak = np.vectorize(
@@ -316,6 +316,8 @@ class Node:
         xf = readings.floor(self)
         below = np.vectorize(lambda a, c: int(a) < xf or int(c) < xf, otypes=[bool])
         top = peak(x0, x1, x2) | below(x0, x2)
+        if frozen is not None:
+            top = top & ~frozen
         self.turned = top
         if top.any():
             self.counts["turns"] += int(top.sum())

@@ -301,19 +301,19 @@ def click(
         unclick(node, frame)
         return
     c = node.start_content
-    factors = node.link_factors()
+    pace = readings.paces_of(node, c)[1]
+    frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(node.shape, dtype=bool)
+    factors = node.link_factors(None, frozen)
     gap0 = node.row(PLANE, gap=0)
     r_gap0 = node.rule_of(gap0, c, factors)
     gap0_start = plane_starts[node.records().index(gap0)]
     rules = node.read_lines(held, plane_starts, c, factors)
-    pace = readings.paces_of(node, c)[1]
     owns = []
     for rec, r in enumerate(node.records()):
         rr = node.rule_of(r, c, factors)
         re0, im0 = plane_starts[rec]
         owns.append(node.share(re0, rr, pace, vacuum=True) + node.share(im0, rr, pace, vacuum=True))
     sh = owns[node.records().index(gap0)]
-    frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(node.shape, dtype=bool)
     born_nodes = births(
         node, refuse(node, meet(node, gap0_start[0], sh, rules, frozen), owns), r_gap0, c, factors, pace
     )
