@@ -1,0 +1,57 @@
+# the window of g (hand g4), Gamma 1000, span 100 intervals, Watson W_3 = 1516386 x 10^-6
+# columns: g | sin omega_0 (milli) | t = (1-g)/3 | Delta (micro Links^2/interval) | a/(dU/dx) (milli) | U_c (milli) c_c (levels) | T_double at sigma_0 1, 1.5, 2 (intervals) | sigma at 100 intervals from sigma_0 1, 1.5, 2 (milli Links) | fall in 100 intervals at G = 10, 30, 100 levels/Link (milli Links) | omega_0 CHECK | Compton 1/(sqrt3 omega_0) CHECK | beat factor 2g/(omega sin omega) CHECK
+g 10 | sin 141 | t 330 | Delta 2339307 | a/G 331 rem 131/199 | U_c 164 rem 1871084/50293469 c_c 164 rem 1871084/50293469 | T_d 1 3 5 | sigma100 116969 77991 58516 | fall 16582 rem 182/199 49748 rem 148/199 165829 rem 29/199 | omega0 0.1415 | Compton 4.079 | F 1.0017
+g 20 | sin 198 | t 326 rem 100/150 | Delta 1641561 | a/G 329 rem 287/297 | U_c 163 rem 15039559/75061107 c_c 163 rem 15039559/75061107 | T_d 2 4 8 | sigma100 82084 54739 41087 | fall 16498 rem 94/297 49494 rem 94/99 164983 rem 49/297 | omega0 0.2003 | Compton 2.882 | F 1.0034
+g 41 | sin 283 | t 319 rem 2000/3000 | Delta 1127945 | a/G 326 rem 2098/5877 | U_c 161 rem 616685993/1485300087 c_c 161 rem 616685993/1485300087 | T_d 3 6 12 | sigma100 56406 37628 28269 | fall 16317 rem 4991/5877 48953 rem 1073/1959 163178 rem 2894/5877 | omega0 0.2873 | Compton 2.009 | F 1.0069
+g 100 | sin 435 | t 300 | Delta 688247 | a/G 315 rem 15/19 | U_c 156 rem 905316/4801889 c_c 156 rem 905316/4801889 | T_d 5 11 20 | sigma100 34426 22990 17322 | fall 15789 rem 9/19 47368 rem 8/19 157894 rem 14/19 | omega0 0.4510 | Compton 1.280 | F 1.0173
+g 150 | sin 526 | t 283 rem 20/60 | Delta 537856 | a/G 306 rem 34/111 | U_c 151 rem 13975709/28053141 c_c 151 rem 13975709/28053141 | T_d 6 14 25 | sigma100 26911 17991 13594 | fall 15315 rem 35/111 45945 rem 35/37 153153 rem 17/111 | omega0 0.5548 | Compton 1.041 | F 1.0265
+g 200 | sin 600 | t 266 rem 10/15 | Delta 444444 | a/G 296 rem 8/27 | U_c 146 rem 3734398/6823737 c_c 146 rem 3734398/6823737 | T_d 7 17 31 | sigma100 22244 14890 11289 | fall 14814 rem 22/27 44444 rem 4/9 148148 rem 4/27 | omega0 0.6435 | Compton 0.897 | F 1.0360
+g 300 | sin 714 | t 233 rem 10/30 | Delta 326732 | a/G 274 rem 26/51 | U_c 135 rem 9947065/12889281 c_c 135 rem 9947065/12889281 | T_d 10 23 42 | sigma100 16367 10993 8409 | fall 13725 rem 25/51 41176 rem 8/17 137254 rem 46/51 | omega0 0.7954 | Compton 0.726 | F 1.0563
+g 400 | sin 800 | t 200 | Delta 250000 | a/G 250 | U_c 123 rem 164087/252731 c_c 123 rem 164087/252731 | T_d 13 31 55 | sigma100 12539 8467 6562 | fall 12500 37500 125000 | omega0 0.9273 | Compton 0.623 | F 1.0784
+g 500 | sin 866 | t 166 rem 4/6 | Delta 192450 | a/G 222 rem 2/9 | U_c 109 rem 2070889/2274579 c_c 109 rem 2070889/2274579 | T_d 18 40 72 | sigma100 9674 6588 5210 | fall 11111 rem 1/9 33333 rem 1/3 111111 rem 1/9 | omega0 1.0472 | Compton 0.551 | F 1.1027
+g 600 | sin 916 | t 133 rem 5/15 | Delta 145478 | a/G 190 rem 10/21 | U_c 94 rem 1109006/5307351 c_c 94 rem 1109006/5307351 | T_d 23 53 95 | sigma100 7342 5075 4150 | fall 9523 rem 17/21 28571 rem 3/7 95238 rem 2/21 | omega0 1.1593 | Compton 0.498 | F 1.1294
+g 616 | sin 923 | t 128 | Delta 138628 | a/G 184 rem 168/173 | U_c 91 rem 21255867/43722463 c_c 91 rem 21255867/43722463 | T_d 24 56 99 | sigma100 7003 4858 4001 | fall 9248 rem 96/173 27745 rem 115/173 92485 rem 95/173 | omega0 1.1767 | Compton 0.491 | F 1.1340
+g 700 | sin 953 | t 100 | Delta 104828 | a/G 153 rem 11/13 | U_c 76 rem 301772/3285503 c_c 76 rem 301772/3285503 | T_d 33 74 132 | sigma100 5335 3802 3296 | fall 7692 rem 4/13 23076 rem 12/13 76923 rem 1/13 | omega0 1.2661 | Compton 0.456 | F 1.1591
+g 772 | sin 973 | t 76 | Delta 78055 | a/G 123 rem 239/307 | U_c 61 rem 17106563/77588417 c_c 61 rem 17106563/77588417 | T_d 44 99 177 | sigma100 4028 3003 2794 | fall 6188 rem 284/307 18566 rem 238/307 61889 rem 77/307 | omega0 1.3408 | Compton 0.431 | F 1.1827
+g 800 | sin 979 | t 66 rem 10/15 | Delta 68041 | a/G 111 rem 1/9 | U_c 54 rem 2172734/2274579 c_c 54 rem 2172734/2274579 | T_d 50 114 203 | sigma100 3545 2719 2625 | fall 5555 rem 5/9 16666 rem 2/3 55555 rem 5/9 | omega0 1.3694 | Compton 0.422 | F 1.1925
+g 830 | sin 985 | t 56 rem 200/300 | Delta 57503 | a/G 96 rem 304/351 | U_c 47 rem 80696693/88708581 c_c 47 rem 80696693/88708581 | T_d 60 135 240 | sigma100 3044 2433 2463 | fall 4843 rem 107/351 14529 rem 107/117 48433 rem 17/351 | omega0 1.4000 | Compton 0.412 | F 1.2033
+g 840 | sin 987 | t 53 rem 25/75 | Delta 54029 | a/G 91 rem 83/87 | U_c 45 rem 10558135/21987597 c_c 45 rem 10558135/21987597 | T_d 64 144 256 | sigma100 2880 2343 2413 | fall 4597 rem 61/87 13793 rem 3/29 45977 rem 1/87 | omega0 1.4101 | Compton 0.409 | F 1.2069
+g 880 | sin 992 | t 40 | Delta 40291 | a/G 71 rem 6/14 | U_c 35 rem 580905/1769117 c_c 35 rem 580905/1769117 | T_d 85 193 343 | sigma100 2249 2013 2239 | fall 3571 rem 3/7 10714 rem 2/7 35714 rem 2/7 | omega0 1.4505 | Compton 0.398 | F 1.2222
+g 897 | sin 994 | t 34 rem 1000/3000 | Delta 34516 | a/G 62 rem 842/3309 | U_c 30 rem 661393630/836286879 c_c 30 rem 661393630/836286879 | T_d 100 225 401 | sigma100 1994 1890 2178 | fall 3112 rem 2392/3309 9338 rem 186/1103 31127 rem 757/3309 | omega0 1.4676 | Compton 0.393 | F 1.2289
+g 920 | sin 996 | t 26 rem 50/75 | Delta 26752 | a/G 49 rem 31/81 | U_c 24 rem 8690936/20471211 c_c 24 rem 8690936/20471211 | T_d 129 291 517 | sigma100 1670 1745 2108 | fall 2469 rem 11/81 7407 rem 11/27 24691 rem 29/81 | omega0 1.4907 | Compton 0.387 | F 1.2383
+g 950 | sin 998 | t 16 rem 40/60 | Delta 16687 | a/G 31 rem 47/63 | U_c 15 rem 11169205/15922053 c_c 15 rem 11169205/15922053 | T_d 207 467 830 | sigma100 1302 1599 2043 | fall 1587 rem 19/63 4761 rem 19/21 15873 rem 1/63 | omega0 1.5208 | Compton 0.380 | F 1.2509
+g 970 | sin 999 | t 10 | Delta 10004 | a/G 19 rem 43/103 | U_c 9 rem 15718363/26031293 c_c 9 rem 15718363/26031293 | T_d 346 779 1385 | sigma100 1118 1536 2015 | fall 970 rem 90/103 2912 rem 64/103 9708 rem 76/103 | omega0 1.5408 | Compton 0.375 | F 1.2597
+g 990 | sin 999 | t 3 rem 100/300 | Delta 3333 | a/G 6 rem 182/303 | U_c 3 rem 20267521/76577493 c_c 3 rem 20267521/76577493 | T_d 1039 2338 4156 | sigma100 1013 1504 2001 | fall 330 rem 10/303 990 rem 10/101 3300 rem 100/303 | omega0 1.5608 | Compton 0.370 | F 1.2686
+# the window's edges (g):
+  g_low_localised_sigma_1: 0.8966
+  g_low_localised_sigma_3/2: 0.7723
+  g_low_localised_sigma_2: 0.6162
+  g_high_fall_one_link_G_10: 94/97 = 969 rem 7/97 milli
+  g_high_fall_one_link_G_30: 98/99 = 989 rem 89/99 milli
+  g_high_fall_one_link_G_100: 994/997 = 996 rem 988/997 milli
+  g_high_beat_within_1/100: 0.0587
+  g_high_beat_within_1/20: 0.2699
+  g_high_beat_within_1/10: 0.4895
+  g_high_beat_within_1/5: 0.8211
+  g_high_beat_within_1/4: 0.9478
+# the beat's factor as an integer reading on the exact recurrence (20,000 intervals, amplitude 10^12): lifts (num, den) at contents c
+  617 lift (19,16): g 512/617: g 829 rem 507/617 milli; c 50: crossings n_0 4455 n_c 4197 over 20000, p_0(c) 951; factor x1000 = 1193 rem 13971 (CHECK 2g/(omega sin omega) at U=0: 1203; the clock's 1000)
+  617 lift (19,16): g 512/617: g 829 rem 507/617 milli; c 300: crossings n_0 4455 n_c 3167 over 20000, p_0(c) 741; factor x1000 = 1163 rem 453761 (CHECK 2g/(omega sin omega) at U=0: 1203; the clock's 1000)
+  196613 lift (338,287): g 837 rem 172919/196613 milli; c 50: crossings n_0 4481 n_c 4221 over 20000, p_0(c) 951; factor x1000 = 1195 rem 99345 (CHECK 2g/(omega sin omega) at U=0: 1206; the clock's 1000)
+  196613 lift (338,287): g 837 rem 172919/196613 milli; c 300: crossings n_0 4481 n_c 3184 over 20000, p_0(c) 741; factor x1000 = 1165 rem 352760 (CHECK 2g/(omega sin omega) at U=0: 1206; the clock's 1000)
+  1013 lift (23,22): g 955 rem 585/1013 milli; c 50: crossings n_0 4858 n_c 4566 over 20000, p_0(c) 951; factor x1000 = 1241 rem 38106 (CHECK 2g/(omega sin omega) at U=0: 1253; the clock's 1000)
+  1013 lift (23,22): g 955 rem 585/1013 milli; c 300: crossings n_0 4858 n_c 3423 over 20000, p_0(c) 741; factor x1000 = 1199 rem 353157 (CHECK 2g/(omega sin omega) at U=0: 1253; the clock's 1000)
+  421 lift (15,14): g 931 rem 49/421 milli; c 50: crossings n_0 4780 n_c 4495 over 20000, p_0(c) 951; factor x1000 = 1230 rem 121350 (CHECK 2g/(omega sin omega) at U=0: 1243; the clock's 1000)
+  421 lift (15,14): g 931 rem 49/421 milli; c 300: crossings n_0 4780 n_c 3374 over 20000, p_0(c) 741; factor x1000 = 1192 rem 197728 (CHECK 2g/(omega sin omega) at U=0: 1243; the clock's 1000)
+  181 lift (10,9): g 895 rem 5/181 milli; c 50: crossings n_0 4665 n_c 4389 over 20000, p_0(c) 951; factor x1000 = 1220 rem 101580 (CHECK 2g/(omega sin omega) at U=0: 1228; the clock's 1000)
+  181 lift (10,9): g 895 rem 5/181 milli; c 300: crossings n_0 4665 n_c 3301 over 20000, p_0(c) 741; factor x1000 = 1182 rem 162462 (CHECK 2g/(omega sin omega) at U=0: 1228; the clock's 1000)
+  89 lift (8,5): g 561 rem 71/89 milli; c 50: crossings n_0 3556 n_c 3363 over 20000, p_0(c) 951; factor x1000 = 1113 rem 135069 (CHECK 2g/(omega sin omega) at U=0: 1119; the clock's 1000)
+  89 lift (8,5): g 561 rem 71/89 milli; c 300: crossings n_0 3556 n_c 2569 over 20000, p_0(c) 741; factor x1000 = 1099 rem 124271 (CHECK 2g/(omega sin omega) at U=0: 1119; the clock's 1000)
+  13 lift (3,2): g 615 rem 5/13 milli; c 50: crossings n_0 3743 n_c 3537 over 20000, p_0(c) 951; factor x1000 = 1130 rem 62310 (CHECK 2g/(omega sin omega) at U=0: 1134; the clock's 1000)
+  13 lift (3,2): g 615 rem 5/13 milli; c 300: crossings n_0 3743 n_c 2696 over 20000, p_0(c) 741; factor x1000 = 1111 rem 55696 (CHECK 2g/(omega sin omega) at U=0: 1134; the clock's 1000)
+  5 lift (2,1): g 400 milli; c 50: crossings n_0 2951 n_c 2796 over 20000, p_0(c) 951; factor x1000 = 1075 rem 125700 (CHECK 2g/(omega sin omega) at U=0: 1078; the clock's 1000)
+  5 lift (2,1): g 400 milli; c 300: crossings n_0 2951 n_c 2150 over 20000, p_0(c) 741; factor x1000 = 1065 rem 495750 (CHECK 2g/(omega sin omega) at U=0: 1078; the clock's 1000)
+  1297 lift (36,1): g 1 rem 703/1297 milli; c 50: crossings n_0 176 n_c 168 over 20000, p_0(c) 951; factor x1000 = 924 rem 1632 (CHECK 2g/(omega sin omega) at U=0: 1000; the clock's 1000)
+  1297 lift (36,1): g 1 rem 703/1297 milli; c 300: crossings n_0 176 n_c 131 over 20000, p_0(c) 741; factor x1000 = 982 rem 26722 (CHECK 2g/(omega sin omega) at U=0: 1000; the clock's 1000)
+  37 lift (6,1): g 54 rem 2/37 milli; c 50: crossings n_0 1051 n_c 999 over 20000, p_0(c) 951; factor x1000 = 1010 rem 11490 (CHECK 2g/(omega sin omega) at U=0: 1009; the clock's 1000)
+  37 lift (6,1): g 54 rem 2/37 milli; c 300: crossings n_0 1051 n_c 777 over 20000, p_0(c) 741; factor x1000 = 1008 rem 181056 (CHECK 2g/(omega sin omega) at U=0: 1009; the clock's 1000)
