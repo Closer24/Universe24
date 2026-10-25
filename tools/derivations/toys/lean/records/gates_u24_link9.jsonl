@@ -1,0 +1,16 @@
+{"8b species over the track (one-place view: the middle solve of the body's track)": {"tracks": 724, "decoded right": 643, "confusion (truth->decoded) per credit": {"neutron->proton": 377, "proton->neutron": 321}}}
+{"8 families forming (whole view)": {"credits": 5438, "species readable": 5438, "decoded right per credit": 4740, "credits within the one-click floor": 5438, "tracks right": [643, 724], "births by species (decoder)": {"electron": 12, "proton": 97, "neutron": 91}, "verdict": "SHOWN in part: every credit within the floor, tracks right 643 of 724"}}
+{"19 mass ratios (parts per million)": {"p/e": 1836153562, "n/e": 1838683366, "verdict": "SHOWN as a fit of den (the legs), read from the decoded points"}}
+{"17 charge conservation": {"senses sum over births": 0, "verdict": "SHOWN"}}
+{"15 conservation at the click": {"births": 200, "taken per booked at the births (hundredths)": 102, "verdict": "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light, the known item)"}}
+{"10 gravitational time dilation (one-place view)": {"proper per thousand intervals, shallow / deep": [773022, 728092], "verdict": "SHOWN"}}
+{"2 the Links lengthening in the clicks (one-place view)": {"spans": 3864, "spacing in hundredths of an interval, shallow / deep": [775, 925], "verdict": "SHOWN"}}
+{"1 recurring bangs / 3 shortening then lengthening / 6 contraction (board)": {"volume mean course (interval, mean)": [[1, 1000], [5, 1023], [10, 1029], [25, 1167], [50, 3337], [100, 6809], [150, 8802], [200, 5602], [300, 7281]], "intervals with the mean volume falling": [200], "turns (Node swaps) total": 3128, "verdict": "contraction SHOWN at the board"}}
+{"4 an era of matter": {"births early/late": [200, 0], "body credits early/late": [3462, 1976], "verdict": "SHOWN"}}
+{"14 the horizon": {"frozen content": 3793, "max content in the rows": 603, "credits at frozen Nodes": 0, "verdict": "NOT REACHED"}}
+{"16 uncertainty floor (one click)": {"floor on x per credit, parts per million: min / middle / max": [1455, 18348, 16543574], "species spacing p-n, parts per million": 47348, "credits beyond the floor": 0, "verdict": "SHOWN as the law's floor: no credit reads beyond it; one click cannot split p from n where the floor exceeds their spacing, the track can (not calibrated to h-bar / 2)"}}
+{"9 collisions / 13 free fall": {"tracks (node, species)": 375, "longest track credits": 61, "verdict": "NOT SHOWN: the bodies stand at their Nodes (no track moves)"}}
+{"7 light with its redshift / 11 / 12": {"verdict": "NOT SHOWN: the toy credits no light click with a beat (as the record)"}}
+{"18 the arrow of time": {"verdict": "SHOWN: the run back exact bit for bit, 60 of 60 intervals through births, clicks and turns (the test beside the toy)"}}
+{"the three constants": {"integers per Node": 94, "max state bits": 121, "max transient bits": 99, "verdict": "SHOWN: the count constant, every integer and transient within 128"}}
+{"the decoder": {"floats used": 0, "readings": "quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication"}}
