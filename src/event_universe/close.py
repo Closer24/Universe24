@@ -9,7 +9,7 @@ import numpy as np
 from event_universe.core import paces, rule3
 from event_universe.core.ports import AXES, PORT_SIDES
 from event_universe.core.rule3 import quotient, remainder
-from event_universe.links import link_current, twist
+from event_universe.links import cross, link_current, twist
 from event_universe.rows import PLANE, POTENTIAL, Line
 from event_universe.take import (
     frame_nodes,
@@ -46,7 +46,7 @@ def meet(
         if frozen[at]:
             continue
         for axis in range(AXES):
-            j = neighbour(node, at, axis, 1)
+            j = neighbour(node, at, 2 * axis)
             if frozen[j] or int(sh[at]) < node.unit_gap0 or int(sh[j]) < node.unit_gap0:
                 continue
             flow = int(currents[axis][at])
@@ -133,7 +133,9 @@ def child_laid(
         ):
             dp_lay[a] += d
         lay(node, s, where, (amplitude, 0, 0, sense * amplitude))
-    return dp_lay, [int(re.now[w_] * im.before[w_] - im.now[w_] * re.before[w_]) for w_ in (minus, plus)]
+    return dp_lay, [
+        int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)
+    ]
 
 
 def children(
@@ -263,7 +265,7 @@ def credit(
 ) -> dict[str, Any]:
     """A body's credit with its frame (`frame_of`), its sense the sign of its Wronskian at the Node, its beat, the take's numbers and momentum, the taker's three levels (the gap-0 line's now before the take, its before, the levels taken: PC-S2), the sign level and whether the Node turned."""
     re, im = node.records()[rec].lines
-    w = int(re.now[at] * im.before[at] - im.now[at] * re.before[at])
+    w = int(cross(re.now[at], im.now[at], re.before[at], im.before[at]))
     return {
         "event": "credit",
         "i": node.interval,

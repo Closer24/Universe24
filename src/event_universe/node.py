@@ -13,7 +13,7 @@ from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, across
 from event_universe.core.rule3 import carried_division, half, link_unit_of, unit_of, wall_of
 from event_universe.features import phase
-from event_universe.links import link
+from event_universe.links import link, turn_pair
 from event_universe.rows import (
     CARRIER,
     HALF_WIDTH,
@@ -178,10 +178,8 @@ class Node:
         _e, (n,), _f = link(port, odd=(odd[axis],))
         wl = 4 * self.gamma
         tc, ts, tw = wl * wl - n * n, 2 * wl * n, wl * wl + n * n
-        a_re, a_im = c * re_j - s * im_j, s * re_j + c * im_j
-        a_re, a_im = paces.rounded(a_re, self.X), paces.rounded(a_im, self.X)
-        b_re, b_im = tc * a_re - ts * a_im, ts * a_re + tc * a_im
-        return [paces.rounded(b_re, tw), paces.rounded(b_im, tw)]
+        a_re, a_im = turn_pair(re_j, im_j, c, s, self.X)
+        return list(turn_pair(a_re, a_im, tc, ts, tw))
 
     def arrivals(self, at: list[Any], r: rule3.Rule, turn: Turn) -> list[Any]:
         """The Links' part of Rule3's total for a row's lines at every Node, SUM_j R_j m_j, the arrivals at each Port turned as the row's shape turns them."""

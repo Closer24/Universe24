@@ -18,11 +18,6 @@ if TYPE_CHECKING:
     from event_universe.node import Node
 
 
-def odd_round(q: Any, d: Any) -> Any:
-    """round(q / d) to the nearest for q odd and d even (never a half), the paces' rounding (2 q + d) div (2 d); the odd rounding of the ride's momenta."""
-    return paces.rounded(q, d)
-
-
 def laid_on(node: Node, line: Line, levels: Any) -> None:
     """The emission's size, a reading of the run: the levels laid on the gap-0 line and the Nodes they were laid at."""
     laid = line.now - levels
@@ -165,7 +160,7 @@ class Interval:
             for a, f, p1, p2 in zip(self.starts[k], self.force[k], p_side, p_other, strict=True):
                 self.forms = (
                     self.forms
-                    + odd_round(2 * p1 + 1, d) * odd_round(2 * p2 + 1, d)
+                    + paces.rounded(2 * p1 + 1, d) * paces.rounded(2 * p2 + 1, d)
                     + quotient(-a * f, node.w)
                 )
             self.kicked[k] = p_other

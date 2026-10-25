@@ -4,18 +4,30 @@ from __future__ import annotations
 
 from typing import Any
 
+from event_universe.core.paces import rounded
 from event_universe.core.ports import AXES, PORT_SIDES, across, wrap
+from event_universe.core.rule3 import remainder
 from event_universe.rows import Line, zeros
+
+
+def cross(x_i: Any, y_i: Any, x_j: Any, y_j: Any) -> Any:
+    """The one bilinear of the law (fd2, U1): x_i y_j - y_i x_j, the 2 x 2 determinant of two readings (x, y) at two places (i, j), odd under the exchange of the places and of the readings; the Wronskian, the current across a Link, the plane's sign current, the twist, the lattice momentum's change, the children's and the credit's senses, the decoder's order of rationals."""
+    return x_i * y_j - y_i * x_j
+
+
+def turn_pair(re: Any, im: Any, c: Any, s: Any, scale: Any) -> tuple[Any, Any]:
+    """The pair (re, im) turned by the pair (c, s) over the scale, one rounding half up per part (fd2, U2): the phase pair over the amplitude X, the odd tangent triple over its wall, the decoder's solve."""
+    return rounded(c * re - s * im, scale), rounded(s * re + c * im, scale)
 
 
 def link(
     port: int, even: tuple[Any, ...] = (), odd: tuple[Any, ...] = (), frame_bits: Any = None
 ) -> tuple[list[Any], list[Any], Any]:
-    """The Link's numbers at one Port, read the same from both ends: for each `even` array the two ends' sum (symmetric), for each `odd` array the two ends' sum signed by the Port's side (antisymmetric: the other end reads the negative), and the frame sign f_ij = 1 where the two ends' frame bits agree and -1 where they differ (from `frame_bits`)."""
+    """The Link's numbers at one Port, read the same from both ends: for each `even` array the two ends' sum (symmetric), for each `odd` array the two ends' sum signed by the Port's side (antisymmetric: the other end reads the negative), and the frame sign f_ij = 1 where the two ends' frame bits agree and -1 where they differ, the parity of the Link's even part (fd2, U5)."""
     _axis, side = PORT_SIDES[port]
     evens = [a + across(a, port) for a in even]
     odds = [side * (a + across(a, port)) for a in odd]
-    f = None if frame_bits is None else 1 - 2 * (frame_bits ^ across(frame_bits, port))
+    f = None if frame_bits is None else 1 - 2 * remainder(frame_bits + across(frame_bits, port), 2)
     return evens, odds, f
 
 
@@ -26,7 +38,7 @@ def gradient(a: Any, axis: int) -> Any:
 
 def wronskian(re: Line, im: Line) -> Any:
     """The plane's bilinear W = re_now im_before - im_now re_before at every Node (the charge density, the sign's source)."""
-    return re.now * im.before - im.now * re.before
+    return cross(re.now, im.now, re.before, im.before)
 
 
 def plane_current(re: Line, im: Line, frames: list[Any]) -> list[Any]:
@@ -36,7 +48,7 @@ def plane_current(re: Line, im: Line, frames: list[Any]) -> list[Any]:
         fp, fm = frames[2 * a], frames[2 * a + 1]
         dz_re = gradient(re.now, a)
         dz_im = fp * across(im.now, 2 * a) - fm * across(im.now, 2 * a + 1)
-        found.append(re.now * dz_im - im.now * dz_re)
+        found.append(cross(re.now, im.now, dz_re, dz_im))
     return found
 
 
@@ -58,7 +70,7 @@ def tensor_parts(parts: list[Any]) -> tuple[Any, list[Any]]:
 
 def link_current(line: Line, port: int) -> Any:
     """The line's own current on the Link at the Port, F_ij = now_i before_j - before_i now_j: odd under the exchange of the ends (the other end reads -F), read at the interval's start; the + child of a Link birth goes to the end the current flows into."""
-    return line.now * across(line.before, port) - line.before * across(line.now, port)
+    return cross(line.now, line.before, across(line.now, port), across(line.before, port))
 
 
 def net_current(line: Line, axis: int) -> Any:
@@ -70,4 +82,4 @@ def twist(line: Line, axis: int) -> Any:
     """The twist of a line's transverse current along the +axis Link of every Node (PA2's form, the owner's sentence 4): h(k, k + e_a) = u_b(k) u_c(k + e_a) - u_c(k) u_b(k + e_a) with (a, b, c) cyclic, the cross product of the two ends' transverse currents read at each end from its own Links; a pseudoscalar of the unoriented Link, the handedness of the born pair."""
     a, b, c = axis, wrap(axis + 1, AXES), wrap(axis + 2, AXES)
     ub, uc = net_current(line, b), net_current(line, c)
-    return ub * across(uc, 2 * a) - uc * across(ub, 2 * a)
+    return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
