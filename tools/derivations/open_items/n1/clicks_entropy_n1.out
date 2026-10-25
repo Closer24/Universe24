@@ -1,0 +1,20 @@
+log tools/derivations/n1/run300_697786.clicks.jsonl: 977 lines to interval 273; events {'lay': 379, 'credit': 578, 'birth': 20}
+births 20: senses sum 0 at 20 of 20 (the charge in the clicks); running sum of the senses 0; taken = walls + excess at 20 of 20 (the count in the clicks); excess below the step at 20 of 20
+children born per point: {'point 2 0': 38, 'point 0 2': 2}
+credits 578: light's 20, the bodies' 558; beat an integer on 19, None on 559; point one pair 20, a pair of pairs 558, None 0; momentum present 578
+senses on the credits {0: 20, 1: 279, -1: 279}; kinds {'1': 20, '2': 558}; identities 5 with credits [20, 131, 131, 148, 148]...
+refused lines 0: {}
+the births' intervals: [5, 8, 20, 20, 20, 20, 20, 20, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26]
+  identity [2, 0]: credits 20 from interval 5 to 26; its first proper counts [4, 7, 18, 18, 18, 18, 18, 18, 23, 23, 23, 23]
+  identity [7, 0]: credits 148 from interval 19 to 273; its first proper counts [18, 21, 21, 21, 21, 21, 21, 25, 25, 25, 25, 25]
+  identity [7, 1]: credits 148 from interval 19 to 273; its first proper counts [18, 21, 21, 21, 21, 21, 21, 25, 25, 25, 25, 25]
+  identity [9, 0]: credits 131 from interval 20 to 248; its first proper counts [18, 37, 37, 37, 37, 37, 37, 39, 41, 41, 41, 41]
+  identity [9, 1]: credits 131 from interval 20 to 248; its first proper counts [18, 37, 37, 37, 37, 37, 37, 39, 41, 41, 41, 41]
+the record's growth (interval, N credits, B births, D distinct credit records, bits(D), bits(N)):
+   (50, 142, 20, 142, 8, 8)
+   (100, 252, 20, 252, 8, 8)
+   (150, 426, 20, 426, 9, 9)
+   (200, 504, 20, 504, 9, 9)
+   (250, 562, 20, 562, 10, 10)
+   (300, 578, 20, 578, 10, 10)
+monotone: N and D never fall (by construction of the log, appended only); the per-click entropy of the law, the digits' budget log2 of the draw's total, is on NO line of this log (keys lack the weights' total and the candidates' count): the lack named.

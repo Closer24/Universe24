@@ -1,0 +1,151 @@
+{
+ "rows": [
+  {
+   "T": 36000,
+   "unit_T_div_2": 18000,
+   "lay_amplitude_isqrt": 134,
+   "lay_wronskian_A2": 17956,
+   "lay_short_of_unit": 44,
+   "unit_exact_square": false,
+   "T_div_6": 6000,
+   "T_div_6_times_3_equals_unit": true,
+   "third_isqrt": 77,
+   "third_square": 5929,
+   "third_exact_square": false,
+   "three_planes_at_isqrt_T_div_6_sum": 17787,
+   "three_planes_short_of_unit": 213,
+   "integer_thirds_exact_iff_6_divides_T": true,
+   "integer_thirds_of_unit": [
+    6000,
+    6000,
+    6000
+   ],
+   "nature_fractions_two_thirds_one_third_of_unit": [
+    12000,
+    6000,
+    0,
+    0
+   ],
+   "tightest_split_of_unit": [
+    96,
+    72,
+    60
+   ],
+   "tightest_split_fractions_of_unit": [
+    [
+     64,
+     125
+    ],
+    [
+     36,
+     125
+    ],
+    [
+     1,
+     5
+    ]
+   ],
+   "tightest_split_spread": 36,
+   "tightest_split_thirds_exact": false
+  },
+  {
+   "T": 32768,
+   "unit_T_div_2": 16384,
+   "lay_amplitude_isqrt": 128,
+   "lay_wronskian_A2": 16384,
+   "lay_short_of_unit": 0,
+   "unit_exact_square": true,
+   "T_div_6": 5461,
+   "T_div_6_times_3_equals_unit": false,
+   "third_isqrt": 73,
+   "third_square": 5329,
+   "third_exact_square": false,
+   "three_planes_at_isqrt_T_div_6_sum": 15987,
+   "three_planes_short_of_unit": 397,
+   "integer_thirds_exact_iff_6_divides_T": false,
+   "integer_thirds_of_unit": [
+    5462,
+    5461,
+    5461
+   ],
+   "nature_fractions_two_thirds_one_third_of_unit": [
+    10922,
+    5461,
+    2,
+    1
+   ],
+   "tightest_split_of_unit": [
+    128,
+    0,
+    0
+   ],
+   "tightest_split_fractions_of_unit": [
+    [
+     1,
+     1
+    ],
+    [
+     0,
+     1
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "tightest_split_spread": 128,
+   "tightest_split_thirds_exact": false
+  },
+  {
+   "T": 35574,
+   "unit_T_div_2": 17787,
+   "lay_amplitude_isqrt": 133,
+   "lay_wronskian_A2": 17689,
+   "lay_short_of_unit": 98,
+   "unit_exact_square": false,
+   "T_div_6": 5929,
+   "T_div_6_times_3_equals_unit": true,
+   "third_isqrt": 77,
+   "third_square": 5929,
+   "third_exact_square": true,
+   "three_planes_at_isqrt_T_div_6_sum": 17787,
+   "three_planes_short_of_unit": 0,
+   "integer_thirds_exact_iff_6_divides_T": true,
+   "integer_thirds_of_unit": [
+    5929,
+    5929,
+    5929
+   ],
+   "nature_fractions_two_thirds_one_third_of_unit": [
+    11858,
+    5929,
+    0,
+    0
+   ],
+   "tightest_split_of_unit": [
+    77,
+    77,
+    77
+   ],
+   "tightest_split_fractions_of_unit": [
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     3
+    ]
+   ],
+   "tightest_split_spread": 0,
+   "tightest_split_thirds_exact": true
+  }
+ ],
+ "T_below_100000_with_unit_square_and_sixth_square": [],
+ "T_below_100000_with_unit_square": 446,
+ "T_below_100000_with_sixth_square": 129
+}
