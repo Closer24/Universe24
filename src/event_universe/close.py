@@ -9,7 +9,7 @@ import numpy as np
 from event_universe.core import paces, rule3
 from event_universe.core.ports import AXES, PORT_SIDES
 from event_universe.core.rule3 import quotient, remainder
-from event_universe.links import link_current, twist
+from event_universe.links import cross, link_current, twist
 from event_universe.rows import PLANE, POTENTIAL, Line
 from event_universe.take import (
     frame_nodes,
@@ -46,7 +46,7 @@ def meet(
         if frozen[at]:
             continue
         for axis in range(AXES):
-            j = neighbour(node, at, axis, 1)
+            j = neighbour(node, at, 2 * axis)
             if frozen[j] or int(sh[at]) < node.unit_gap0 or int(sh[j]) < node.unit_gap0:
                 continue
             flow = int(currents[axis][at])
@@ -107,9 +107,9 @@ def births(
         if got is not None:
             taken.append((at, by_node[at], walls, got))
     touched: set[tuple[int, ...]] = set()
-    for at, kids, walls, (levels, fall, now) in taken:
+    for at, kids, walls, (levels, fall, now, before) in taken:
         node.closes[at] -= 1
-        touched |= children(node, at, kids, (walls, levels, fall, now), c, factors, pace)
+        touched |= children(node, at, kids, (walls, levels, fall, now, before), c, factors, pace)
         node.counts["taken"] += fall
         node.counts["booked"] += walls
     return touched
@@ -133,20 +133,22 @@ def child_laid(
         ):
             dp_lay[a] += d
         lay(node, s, where, (amplitude, 0, 0, sense * amplitude))
-    return dp_lay, [int(re.now[w_] * im.before[w_] - im.now[w_] * re.before[w_]) for w_ in (minus, plus)]
+    return dp_lay, [
+        int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)
+    ]
 
 
 def children(
     node: Node,
     at: tuple[int, ...],
     kids: list[tuple[int, tuple[int, ...], tuple[int, ...], int]],
-    take: tuple[int, int, int, int],
+    take: tuple[int, int, int, int, int],
     c: Any,
     factors: tuple[Any, ...],
     pace: Any,
 ) -> set[tuple[int, ...]]:
     """One take's children laid (`child_laid`), each birth logged with its numbers. Returns the Nodes touched."""
-    walls, levels, fall, now = take
+    walls, levels, fall, now, before = take
     dp_take = node.last_dp
     touched = {at}
     for s, minus, plus, room in kids:
@@ -169,6 +171,7 @@ def children(
                 "booked": walls,
                 "levels": levels,
                 "taken_now_was": now,
+                "taker": [now, before, levels],
                 "proper": int(node.proper[at]),
                 "content": int(c[at]),
                 "amplitude": amplitude,
@@ -213,9 +216,9 @@ def bodies(
             node.standing[rec][at] = 0
             if got is None:
                 continue
-            levels, fall, now = got
+            levels, fall, now, before = got
             node.counts["body_clicks"] += 1
-            node.log.append(credit(node, rec, at, plane_starts, fall, levels, now))
+            node.log.append(credit(node, rec, at, plane_starts, fall, levels, now, before))
 
 
 def frame_of(
@@ -258,10 +261,11 @@ def credit(
     fall: int,
     levels: int,
     taken_was: int,
+    taken_before: int,
 ) -> dict[str, Any]:
-    """A body's credit with its frame (`frame_of`), its sense the sign of its Wronskian at the Node, its beat, the take's numbers and momentum, the sign level and whether the Node turned."""
+    """A body's credit with its frame (`frame_of`), its sense the sign of its Wronskian at the Node, its beat, the take's numbers and momentum, the taker's three levels (the gap-0 line's now before the take, its before, the levels taken: PC-S2), the sign level and whether the Node turned."""
     re, im = node.records()[rec].lines
-    w = int(re.now[at] * im.before[at] - im.now[at] * re.before[at])
+    w = int(cross(re.now[at], im.now[at], re.before[at], im.before[at]))
     return {
         "event": "credit",
         "i": node.interval,
@@ -276,6 +280,7 @@ def credit(
         "taken": fall,
         "levels": levels,
         "taken_now_was": taken_was,
+        "taker": [taken_was, taken_before, levels],
         "dP_take": node.last_dp,
         "sign_level": int(node.row(POTENTIAL).lines[0].now[at]),
         "turned": bool(node.turned[at]),

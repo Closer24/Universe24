@@ -7,22 +7,24 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core import paces, rule3
-from event_universe.core.ports import AXES, PORT_SIDES, wrap
+from event_universe.core.ports import AXES, PORT_SIDES, PORTS, wrap
 from event_universe.core.rule3 import half, lattice, quotient, remainder
+from event_universe.links import cross
 from event_universe.rows import PLANE, Line
 
 if TYPE_CHECKING:
     from event_universe.node import Node
 
 
-def neighbour(node: Node, at: tuple[int, ...], axis: int, side: int) -> tuple[int, ...]:
-    """The Node one Link along the axis toward the side, on the torus."""
+def neighbour(node: Node, at: tuple[int, ...], port: int) -> tuple[int, ...]:
+    """The Node beyond the Port of the Node `at`, on the torus (fd2, U3): the one spelling of a neighbour's place, as `across` is the one read of a neighbour's array."""
+    axis, side = PORT_SIDES[port]
     return tuple(wrap(at[a] + (side if a == axis else 0), node.cube) for a in range(AXES))
 
 
 def frame_nodes(node: Node, at: tuple[int, ...]) -> list[tuple[int, ...]]:
     """The Node and its six neighbours in Port order."""
-    return [at] + [neighbour(node, at, axis, side) for axis, side in PORT_SIDES]
+    return [at] + [neighbour(node, at, port) for port in range(PORTS)]
 
 
 def at_node(x: Any, at: tuple[int, ...]) -> int:
@@ -71,8 +73,8 @@ def fall_of(
     t = 1 if before > now else -1
     own, w = int(np.asarray(r.self_coefficient)[at]), int(r.wall)
     reached = 0
-    for (axis, side), reach in zip(PORT_SIDES, r.reaches, strict=True):
-        reached += int(np.asarray(reach)[at]) * int(line.before[neighbour(node, at, axis, side)])
+    for port, reach in enumerate(r.reaches):
+        reached += int(np.asarray(reach)[at]) * int(line.before[neighbour(node, at, port)])
     pace = int(np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)[at])
     weight = 2 * pace * pace * node.G * node.G + (1 if pace == 0 else 0)
 
@@ -114,22 +116,16 @@ def momentum_of(
     """The change of the lattice momentum P_a = 2 num SUM_i (now_(i+a) before_i - now_i before_(i+a)) when a line's level now at the Node moves by d_now and its level before by d_before: 2 num [d_now (before_(i-a) - before_(i+a)) + d_before (now_(i+a) - now_(i-a))] per axis."""
     found = []
     for a in range(AXES):
-        up, down = neighbour(node, at, a, 1), neighbour(node, at, a, -1)
-        found.append(
-            2
-            * num
-            * (
-                d_now * (int(line_before[down]) - int(line_before[up]))
-                + d_before * (int(line_now[up]) - int(line_now[down]))
-            )
-        )
+        up, down = neighbour(node, at, 2 * a), neighbour(node, at, 2 * a + 1)
+        dn, db = int(line_now[down]) - int(line_now[up]), int(line_before[down]) - int(line_before[up])
+        found.append(2 * num * cross(d_now, d_before, dn, db))
     return found
 
 
 def take_at(
     node: Node, at: tuple[int, ...], walls: int, r_gap0: rule3.Rule, cause: int
-) -> tuple[int, int, int] | None:
-    """One exact take at a Node of the walls booked: the gap-0 line's level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the gap-0 line's now before the take) or None."""
+) -> tuple[int, int, int, int] | None:
+    """One exact take at a Node of the walls booked: the gap-0 line's level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the gap-0 line's now before the take, its before) or None."""
     gap0 = node.row(PLANE, gap=0)
     z = gap0.lines[0]
     levels, fall = fall_of(node, at, walls, r_gap0, z)
@@ -148,11 +144,11 @@ def take_at(
         return None
     now, before = int(z.now[at]), int(z.before[at])
     toward = 1 if before > now else -1
-    z.now[at] = now + toward * levels
+    lay(node, node.records().index(gap0), at, (toward * levels, 0, 0, 0))
     node.closes[at] += 1
     assert gap0.pair is not None
     node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=gap0.pair[0])
-    return levels, fall, now
+    return levels, fall, now, before
 
 
 def lay_amplitude(

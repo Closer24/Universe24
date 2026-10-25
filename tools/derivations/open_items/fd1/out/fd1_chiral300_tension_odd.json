@@ -1,0 +1,49 @@
+{
+ "toy": "toy_fd1",
+ "world": "worlds/chiral300_tension_odd.json",
+ "intervals": 300,
+ "flag": "unify",
+ "state hash at the end": "ea69279c86576fd5d9ee84983cb5a4464ea1f1f5382a05efbb9bf8918607d61c",
+ "log sha256": "750b72c9883ff57b39183697bb24e5b47663d71350c0bf0cf016f65318bec748",
+ "log lines": null,
+ "counts": {
+  "births": 17,
+  "taken": 42838061448935027328240,
+  "booked": 38773197556793214912000,
+  "body_clicks": 340,
+  "refused_stop": 28,
+  "refused_origin": 0,
+  "refused_lay": 64042,
+  "refused_orientation": 26,
+  "refused_twist": 0,
+  "turns": 785,
+  "light_credits": 0,
+  "light_laid": 1,
+  "light_laid_nodes": 1
+ },
+ "integers per Node": 98,
+ "max state bits": 115,
+ "max transient bits": 136,
+ "run back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "remainders at 0 at the end (where w - r would fail the mirror)": 55,
+ "seconds": 40,
+ "readings": {
+  "ties negative (odd rounding differs from half up)": 61,
+  "ties positive (the two agree)": 86,
+  "turned Node-records": 3140,
+  "W kept at the turned Node": 3135,
+  "wall identity 2w = S + D + sum R held at Nodes": 37500,
+  "wall identity Nodes": 37500,
+  "Links with F_ij + F_ji = 0": 112500,
+  "Links": 112500
+ },
+ "ties": {
+  "arrival ties at X (first rounding)": 0,
+  "arrival roundings at X": 1395000,
+  "arrival ties at the tangent wall (second rounding)": 0,
+  "tension sums negative and odd": 156356
+ }
+}

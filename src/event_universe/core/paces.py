@@ -1,4 +1,4 @@
-"""The composed paces, the law's two functions of the content (ALGEBRA.md #the-paces; K-S4, the owner's approved sentence built 2026-10-25): the clock p_0(c) = Gamma (1 - 1 / Gamma)^c to the unit by ONE carried division per content, p_0(c + 1) = (p_0(c) (Gamma - 1) + r_c) div Gamma with the remainder r carried in [0, Gamma) and started at the half wall (the engine's rounding), Gamma at c = 0; a negative content, a hill, the same act turned over, p_0(c - 1) = (p_0(c) Gamma + r) div (Gamma - 1); the Link's pace the clock twice, p_a(c) = p_0(c)^2 div Gamma rounded once (h N = 1, the ruler goes with the clock), the clock the primary number and its square derived, so no act takes a root and every integer stays within the width (the memo's running fraction of 4.0, the one transient beyond 128 bits, is gone). The table per Gamma holds each content's clock and remainder once, two sides, the hollows (c >= 0) and the hills (c < 0); the vectorised entries look every Node's content up in the array's own kind. The rounding of a coefficient (`rounded`, half up) and of a signed one (`odd_rounded`, half away from zero), and the integer sine of a pair (`sine_den`) stand beside. The Link's pace rounds to 0 first, where p_0^2 falls below Gamma div 2 (`frozen_content`, the horizon's content): the Node there is read by no Link and clicks nothing."""
+"""The composed paces, the law's two functions of the content (ALGEBRA.md #the-paces; PC-S1, the owner's approved sentence K-S4 in pc1's form, 2026-10-25): the clock p_0(c) = Gamma (1 - 1 / Gamma)^c to the unit, the exact power rounded half up once, by the law's carried division at the resolution Gamma^2: N_0 = Gamma^3 with the remainder r_0 = Gamma div 2, N(c + 1) Gamma + r(c + 1) = N(c) (Gamma - 1) + r(c), one carried division per content at the wall Gamma, the pace rounded(N, Gamma^2) half up, bit for bit the exact power at every content to the edge; a hill (c < 0) by the inverse factors, N Gamma + r over Gamma - 1; the Link's pace the clock twice, p_a = p_0^2 div Gamma rounded once (h N = 1, the ruler goes with the clock), the clock the primary number and its square derived, so no act takes a root and every integer stays within the width (40 bits at Gamma 1,000; the former running fraction of 4.0, the one transient beyond 128 bits, kept by name and gone). The loader certifies the margin once per Gamma, one pass to the frozen content, and refuses by name where the half lies within one of N (`certified`). The table per Gamma holds each content's clock once, two sides, the hollows (c >= 0) and the hills (c < 0); the vectorised entries look every Node's content up in the array's own kind. The rounding of a coefficient (`rounded`, half up) and of a signed one (`odd_rounded`), and the integer sine of a pair (`sine_den`) stand beside. The Link's pace rounds to 0 first, where p_0^2 falls below Gamma div 2 (`frozen_content`, the horizon's content)."""
 
 from __future__ import annotations
 
@@ -32,31 +32,54 @@ def sine_den(num: int, den: int, scale: int = 1) -> int:
 
 @dataclass
 class Side:
-    """One side of the clock's table at one Gamma, the hollows or the hills: the clocks and the Links' paces found so far by the content's size |c|, and the carried division's state at the next content, its clock and its remainder, the numerator's factor and the wall."""
+    """One side of the clock's table at one Gamma, the hollows or the hills: the clocks and the Links' paces found so far by the content's size |c|, and the carried division's state at the next content, N at the resolution Gamma^2 with its remainder, the numerator's factor and the wall."""
 
     factor: int
     wall: int
-    pace: int
+    scaled: int
     carry: int
     clocks: list[int] = field(default_factory=list)
     links: list[int] = field(default_factory=list)
 
     def reach(self, gamma: int, size: int) -> None:
-        """The side filled through the size |c|, one carried division per content, and the Link's pace from each clock, p_0^2 over Gamma rounded once."""
+        """The side filled through the size |c|: the pace rounded(N, Gamma^2) half up, the Link's pace from it, p_0^2 over Gamma rounded once, then one carried division per content."""
         while len(self.clocks) <= size:
-            self.clocks.append(self.pace)
-            self.links.append(int(rounded(self.pace * self.pace, gamma)))
-            pace, carry = division_forward(self.pace * self.factor, self.wall, self.carry)
-            self.pace, self.carry = int(pace), int(carry)
+            pace = int(rounded(self.scaled, gamma * gamma))
+            self.clocks.append(pace)
+            self.links.append(int(rounded(pace * pace, gamma)))
+            scaled, carry = division_forward(self.scaled * self.factor, self.wall, self.carry)
+            self.scaled, self.carry = int(scaled), int(carry)
+
+    def undecided(self, gamma: int, size: int) -> list[int]:
+        """The contents through the size where the half lies within one of N, rounded(N - 1) != rounded(N + 1) at the resolution Gamma^2: none at a certified Gamma."""
+        self.reach(gamma, size)
+        found, scaled, carry = [], gamma**3, int(half(self.wall))
+        for content in range(size + 1):
+            if rounded(scaled - 1, gamma * gamma) != rounded(scaled + 1, gamma * gamma):
+                found.append(content)
+            scaled, carry = (int(x) for x in division_forward(scaled * self.factor, self.wall, carry))
+        return found
 
 
 @cache
 def sides(gamma: int) -> tuple[Side, Side]:
-    """The table at one Gamma, the hollows' side and the hills', each starting at the vacuum's clock Gamma with its remainder at the half wall, the hollows by Gamma - 1 over Gamma per content and the hills by Gamma over Gamma - 1."""
+    """The table at one Gamma, the hollows' side and the hills', each starting at N_0 = Gamma^3 with its remainder at the half wall, the hollows by Gamma - 1 over Gamma per content and the hills by Gamma over Gamma - 1."""
     return (
-        Side(gamma - 1, gamma, gamma, int(half(gamma))),
-        Side(gamma, gamma - 1, gamma, int(half(gamma - 1))),
+        Side(gamma - 1, gamma, gamma**3, int(half(gamma))),
+        Side(gamma, gamma - 1, gamma**3, int(half(gamma - 1))),
     )
+
+
+@cache
+def certified(gamma: int) -> int:
+    """The loader's certificate once per Gamma: one pass to the frozen content on the hollows' side, refused by name where a content is undecided (the half within one of N); the frozen content returned."""
+    frozen = frozen_content(gamma)
+    undecided = sides(gamma)[0].undecided(gamma, frozen)
+    if undecided:
+        raise ValueError(
+            f"the clock at Gamma {gamma} is undecided at the contents {undecided[:3]}: the paces are refused"
+        )
+    return frozen
 
 
 def side_of(gamma: int, content: int) -> Side:

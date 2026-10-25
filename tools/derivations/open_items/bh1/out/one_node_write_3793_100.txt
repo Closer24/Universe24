@@ -1,0 +1,27 @@
+world worlds5/world_node.json cube 3 den 15162856759112389 Gamma 1000 G 16 form write
+centre (1, 1, 1) fed to the content 3793 X 4268834097 bits 32 ; the frozen content 3793 ; clock there 22 ; w bits 85
+i | X bits | content | p0 | pace | v | q (write quotient) | rim max content | rim X bits | frozen | held | transient bits | state bits | turned at centre
+1 32 3837 22 0 0 4132 3556 31 1 0 117 116 True
+2 32 3837 22 0 0 4132 3707 32 1 0 117 116 True
+3 32 3837 22 0 0 4132 3792 32 1 0 117 116 True
+4 32 3837 22 0 0 4132 3885 33 7 0 117 116 True
+5 32 3837 22 0 0 4132 3935 33 7 0 117 116 True
+6 32 3837 22 0 0 4132 3987 33 19 0 118 117 True
+7 32 3837 22 0 0 4132 4043 34 27 0 118 117 True
+8 32 3837 22 0 0 4132 4043 34 27 0 118 117 True
+9 32 3837 22 0 0 4132 4102 34 27 0 118 117 True
+10 32 3837 22 0 0 4132 4102 34 27 0 118 117 True
+11 32 3837 22 0 0 4132 4164 34 27 0 119 118 True
+12 32 3837 22 0 0 4132 4164 34 27 0 119 118 True
+20 32 3837 22 0 0 4132 4302 35 27 0 119 118 True
+30 32 3837 22 0 0 4132 4379 36 27 0 120 119 True
+40 32 3837 22 0 0 4132 4462 36 27 0 120 119 True
+50 32 3837 22 0 0 4132 4553 37 27 0 121 120 True
+60 32 3837 22 0 0 4132 4553 37 27 0 121 120 True
+70 32 3837 22 0 0 4132 4553 37 27 0 121 120 True
+80 32 3837 22 0 0 4132 4653 37 27 0 121 120 True
+90 32 3837 22 0 0 4132 4653 37 27 0 122 121 True
+100 32 3837 22 0 0 4132 4653 38 27 0 122 121 True
+clicks at the centre: 0 ; births with a child at the centre: 0 ; counts: {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 1, 'refused_twist': 0, 'turns': 103, 'laid': 0, 'laid_nodes': 0}
+X at the centre at the end: 4268834097 bits 32 ; content 3837 ; max transient bits 122 ; state bits 121
+run back: 100 of 100
