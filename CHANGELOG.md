@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's words of 2026-10-25, 23:08 UTC (#2187 6404507484): the hands' H-names and the not-forgotten list in four groups at the head of the open table of docs/UNIVERSE24.md's section 4, the Boss's reading with the Scribe's items added by name; docs/HIGHLIGHTS.md the decision.
 - The owner's word of 2026-10-25, 23:00 UTC (#2187 6404497762): the two hands of the algebra of the whole in the ledger of docs/UNIVERSE24.md's section 4; docs/HIGHLIGHTS.md the decision.
 - The owner's word of 2026-10-25, 22:56 UTC (#2187 6404445529): the builds and the cleaning first, heading the open table of docs/UNIVERSE24.md's section 4 with the Boss's order of the cleaning; docs/HIGHLIGHTS.md the decision.
 - The owner's word of 2026-10-25, 22:50 UTC (#2187 6404425423, "all of them"): PL-S1 and MG-S1 and CS4-S2 and CS5-S2 and the crowd's rule as written entered under The five sentences of the owner's return in docs/ALGEBRA.md as approved, entering as built, with their measures and OL-S1 as a one-hand finding; the paragraph For the owner's return in docs/UNIVERSE24.md re-pointed; docs/HIGHLIGHTS.md the decision.
