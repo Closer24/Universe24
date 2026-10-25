@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The Boss's request of 2026-10-25, 19:4x UTC by his clock (#2187 6400087245): BG-S1 the bang's return and the generic well as the finding under The sign side of the exponent in docs/ALGEBRA.md, BG-S2 beside it by the owner's criterion; gates 1 and 46 the owner's word asked and gate 5's predicate the board's three sums in docs/UNIVERSE24.md; one decision in docs/HIGHLIGHTS.md.
 - The Scribe's full read of toys-5 7a634fec3 on the owner's word of 2026-10-25, 16:1x UTC (every module of src whole): the findings in the ledger of docs/UNIVERSE24.md's section 4; no contradiction of the law's sentences beyond them.
 - The ledger of docs/UNIVERSE24.md's section 4 current after David's pushes of PM-S1 (toys-5 7a634fec3) and the shape-8 row (099dfe6d3) with their predictions met and not met, the hands sl1 and sl2 landed, SL-S2 and SL-S3 for the owner's direct word, the module count at the merge of the shape-8 row, the Reader named Animate.
 - The Boss's request of 2026-10-25, 17:4x UTC by his clock (#2187 6399612901): the gates' ledger on the current head re-cut to 88ed48d24 in docs/UNIVERSE24.md's section 2, the count read against all 54 rows (SHOWN in Universe24: 5 of 54; Animate's 10 of 50 beside it), the row of the three constants added, the former table kept by name.
