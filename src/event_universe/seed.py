@@ -1,4 +1,4 @@
-"""The seed as the world file lays it: a list of lays in the three forms of the law and no fourth (the owner's word of 2026-10-25): `sea` lays the massless plane's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the massless plane N drifts at the centre, on a plane with a gap the conjugate pair at rest over the raised cosine's envelope of the half-width 2 or 3. Refused by name: a fourth form, a lay onto a row of another shape, a sea of a plane with a gap, a Node off the board, a packet of another width."""
+"""The seed as the world file lays it: a list of lays in the three forms of the law and no fourth (the owner's word of 2026-10-25): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a plane with a gap the conjugate pair at rest over the raised cosine's envelope of the half-width 2 or 3. Refused by name: a fourth form, a lay onto a row of another shape, a sea of a plane with a gap, a Node off the board, a packet of another width."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import numpy as np
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import quotient
-from event_universe.rows import PLANE, Line, zeros
+from event_universe.rows import PLANE, Line, Row, zeros
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -27,21 +27,18 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
             raise ValueError("a lay is onto a plane (shape 2)")
         if form == "sea":
             if row is None or row.gap != 0:
-                raise ValueError("a sea is the massless plane's alone: the drift is its double root")
-            z = row.lines[0]
-            z.now[:] = z.now + node.drift
+                raise ValueError("a sea is the plane at the gap 0 alone: the drift is its double root")
+            node.lay(node.records().index(row), Ellipsis, (node.drift, 0, 0, 0))
         elif form == "hole":
             at = node.node_of(lay["at"])
-            z = node.row(PLANE, gap=0).lines[0]
-            z.now[at] = z.now[at] - node.drift
+            node.lay(node.records().index(node.row(PLANE, gap=0)), at, (-node.drift, 0, 0, 0))
         elif form == "at":
             n = int(lay["quanta"])
             at = node.node_of(lay["centre"])
             if row is None:
                 raise ValueError("a packet names its row")
             if row.gap == 0:
-                z = row.lines[0]
-                z.now[at] = z.now[at] + n * node.drift
+                node.lay(node.records().index(row), at, (n * node.drift, 0, 0, 0))
             else:
                 packets.append((node.records().index(row), at, int(lay.get("width", 0)), n))
         else:
@@ -63,25 +60,25 @@ def envelope_of(node: Node, at: tuple[int, ...], h: int) -> tuple[Any, int]:
     return envelope, weights[0] ** AXES
 
 
-def lay_packet(node: Node, rec: int, at: tuple[int, ...], h: int, n: int) -> None:
-    """The `at` lay of a plane with a gap: the conjugate pair (the two records at the senses -1 and 1) laid at rest over the envelope, each record at the largest amplitude A at which its share at the vacuum's weight, summed over the packet, is at most n quanta of its unit (a search by comparisons); each Node's lines at the band's rest rotation: re_now = A w_i div w_0, re_before = re_now num div den, im_now = 0, im_before = sense re_now s div den with s the pair's sine."""
-    row = node.records()[rec]
+def rest_record(
+    node: Node, row: Row, envelope: Any, w0: int, amplitude: int, sense: int
+) -> tuple[Line, Line]:
+    """A record at rest over the envelope at an amplitude: re_now = A w_i div w_0, re_before = re_now num div den, im_now = 0, im_before = sense re_now s div den with s the pair's sine."""
     assert row.pair is not None
     num = row.pair[0]
-    sn = sine_den(num, node.den)
-    envelope, w0 = envelope_of(node, at, h)
-    c = node.content()
-    rule = node.rule_of(row, c, node.link_factors())
-    node.start_content = c
+    re_now = quotient(amplitude * envelope, w0)
+    before = sense * quotient(re_now * sine_den(num, node.den), node.den)
+    return Line(re_now, quotient(re_now * num, node.den), None, node.w), Line(
+        zeros(node.shape), before, None, node.w
+    )
 
-    def record(amplitude: int, sense: int) -> tuple[Line, Line]:
-        re_now = quotient(amplitude * envelope, w0)
-        return Line(re_now, quotient(re_now * num, node.den), None, node.w), Line(
-            zeros(node.shape), sense * quotient(re_now * sn, node.den), None, node.w
-        )
+
+def fitted(node: Node, row: Row, envelope: Any, w0: int, target: int) -> int:
+    """The largest amplitude at which the record's share at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
+    rule = node.rule_of(row, node.content(), node.link_factors())
 
     def share_of(amplitude: int) -> int:
-        re, im = record(amplitude, 1)
+        re, im = rest_record(node, row, envelope, w0, amplitude, 1)
         return int(
             sum(
                 int(x)
@@ -91,7 +88,6 @@ def lay_packet(node: Node, rec: int, at: tuple[int, ...], h: int, n: int) -> Non
             )
         )
 
-    target = n * node.units[rec]
     high = 1
     while share_of(high) <= target:
         high = high + high
@@ -102,9 +98,26 @@ def lay_packet(node: Node, rec: int, at: tuple[int, ...], h: int, n: int) -> Non
             low = middle
         else:
             high = middle
+    return low
+
+
+def lay_packet(node: Node, rec: int, at: tuple[int, ...], h: int, n: int) -> None:
+    """The `at` lay of a plane with a gap: the conjugate pair (the two records at the senses -1 and 1) laid at rest over the envelope (`rest_record`), each record at the largest amplitude whose share, summed over the packet, is at most n quanta of its unit (`fitted`); the lay logged."""
+    row = node.records()[rec]
+    envelope, w0 = envelope_of(node, at, h)
+    node.start_content = node.content()
+    amplitude = fitted(node, row, envelope, w0, n * node.units[rec])
     for sense in (-1, 1):
-        re, im = record(low, sense)
+        re, im = rest_record(node, row, envelope, w0, amplitude, sense)
         node.lay(rec, Ellipsis, (re.now, re.before, im.now, im.before))
+    re, im = rest_record(node, row, envelope, w0, amplitude, 1)
+    rule = node.rule_of(row, node.start_content, node.link_factors())
+    share = int(
+        sum(
+            int(x)
+            for x in (node.share(re, rule, vacuum=True) + node.share(im, rule, vacuum=True)).reshape(-1)
+        )
+    )
     node.log.append(
         {
             "event": "lay",
@@ -113,8 +126,8 @@ def lay_packet(node: Node, rec: int, at: tuple[int, ...], h: int, n: int) -> Non
             "line_pair": rec,
             "width": h,
             "quanta": n,
-            "amplitude": low,
-            "share": share_of(low),
+            "amplitude": amplitude,
+            "share": share,
             "unit": node.units[rec],
             "nodes": int(sum(1 for x in envelope.reshape(-1) if int(x) > 0)),
         }

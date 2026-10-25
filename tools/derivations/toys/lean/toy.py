@@ -1,4 +1,4 @@
-"""The toy's measurement controls over the engine's Node, kept by name (the fold of 2026-10-25: the engine refuses the `control` and `detectors` keys; this subclass reads them): `ride` absent runs the former interval (one loop over the rows at the fixed wall, the metric's write from the forms) in place of the symmetric ride; `digits` former or folded changes the one-Link read's digit set; `metric_sources` names the rows whose form sources the metric's write in the former loop; `well` holds the volume by hand; `detectors` names the Nodes whose light the record credits. Usage: `python toy.py <world.json> <out.json> [back N]`."""
+"""The toy's measurement controls over the engine's Node, kept by name (the fold of 2026-10-25: the engine refuses the `control` and `detectors` keys; this subclass reads them): `ride` absent runs the former interval (one loop over the rows at the fixed wall, the metric's write from the forms) in place of the symmetric ride; `digits` former or folded changes the one-Link read's digit set; `metric_sources` names the rows whose form sources the metric's write in the former loop; `well` holds the volume by hand; `detectors` names the Nodes whose gap-0 quanta the record credits. Usage: `python toy.py <world.json> <out.json> [back N]`."""
 
 from __future__ import annotations
 
@@ -103,11 +103,11 @@ class Toy(Node):
         if not self.detectors:
             return
         c = self.start_content
-        massless = self.row(PLANE, gap=0)
-        r_gap0 = self.rule_of(massless, c, self.link_factors())
+        gap0 = self.row(PLANE, gap=0)
+        r_gap0 = self.rule_of(gap0, c, self.link_factors())
         pace = paces.link_pace_of(self.gamma, c)
-        z = massless.lines[0]
-        gap0_start = plane_starts[self.records().index(massless)]
+        z = gap0.lines[0]
+        gap0_start = plane_starts[self.records().index(gap0)]
         sh_end, sh_vac = (
             self.share(z, r_gap0, pace, vacuum=True),
             self.share(gap0_start[0], r_gap0, pace, vacuum=True),
@@ -121,7 +121,7 @@ class Toy(Node):
                         "event": "detector",
                         "i": self.interval,
                         "node": list(det),
-                        "line": self.records().index(massless),
+                        "line": self.records().index(gap0),
                         "quanta": rise,
                         "proper": int(self.proper[det]),
                         "content": int(c[det]),
@@ -227,10 +227,8 @@ class Toy(Node):
                     current[a] = current[a] + j_a
                 if r.gap == 0 and direction == 1:
                     laid = out[k][0].now - levels[0]
-                    self.counts["light_laid"] += int(sum(abs(int(x)) for x in laid.reshape(-1)))
-                    self.counts["light_laid_nodes"] += int(
-                        sum(1 for x in laid.reshape(-1) if int(x) != 0)
-                    )
+                    self.counts["laid"] += int(sum(abs(int(x)) for x in laid.reshape(-1)))
+                    self.counts["laid_nodes"] += int(sum(1 for x in laid.reshape(-1) if int(x) != 0))
         self.stepped = stepped
         self.set_rows(out)
         if direction == -1:

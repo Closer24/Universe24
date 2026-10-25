@@ -10,7 +10,7 @@ import pytest
 
 from event_universe.gates import gates
 from event_universe.run import record
-from tests.laws import ROOT, world_of
+from tests.laws import ROOT, load_file, world_of
 
 RECORDS = ROOT / "examples" / "records"
 WIDTH = 128
@@ -84,3 +84,50 @@ def test_the_hole_record_is_the_engines_own_bit_for_bit() -> None:
     ]
     assert found["run_back"] == {"intervals": 20, "exact": 20}
     assert Path(RECORDS / "hole.json").stat().st_size < 10**6
+
+
+def reading_of(name: str) -> list[dict[str, Any]]:
+    """The committed reading beside the record, one JSON per line (the gates' output)."""
+    lines = (RECORDS / f"{name}.reading.jsonl").read_text(encoding="utf-8").splitlines()
+    return [json.loads(line) for line in lines if line.strip()]
+
+
+@pytest.mark.parametrize("name", sorted(SHOWN))
+def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(name: str) -> None:
+    run = loaded(name)
+    count = int(run["cube"]) ** 3
+    assert [line["i"] for line in run["nodes"]] == list(range(1, int(run["intervals"]) + 1))
+    for line in run["nodes"]:
+        assert len(line["X"]) == len(line["content"]) == count
+        assert all(
+            0 <= i < count for i in line["turned"] + line["frozen"] + [h[0] for h in line["held"]]
+        )
+        assert all(h[1] in (0, 1, 2) for h in line["held"])
+    assert sum(len(line["turned"]) for line in run["nodes"]) == int(run["counts"]["turns"])
+    events = next(line["events"] for line in reading_of(name) if "events" in line)
+    assert events == gates(run)["events"]
+    labels = [e["label"] for e in events]
+    assert "the run back exact" in labels
+    first = next((e for e in events if e["label"] in ("a pair born", "a body clicks")), None)
+    assert first is not None and first["i"] == min(
+        e["i"] for e in run["log"] if e["event"] in ("birth", "credit")
+    )
+    assert all(len(e["label"].split()) <= 6 for e in events)
+
+
+def test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed(tmp_path: Path) -> None:
+    page = load_file("page", ROOT / "tools" / "page.py")
+    out = tmp_path / "hole.html"
+    page.write_page(RECORDS / "hole.json", RECORDS / "hole.reading.jsonl", out)
+    text = out.read_text(encoding="utf-8")
+    run = loaded("hole")
+    assert text.isascii() and text.count("<canvas") == 1 and "color-scheme: dark" in text
+    assert (
+        f"den {run['universe']['integers']['den']}" in text and f"shape {run['world']['shape']}" in text
+    )
+    assert all(
+        e["label"] in text
+        for e in next(line["events"] for line in reading_of("hole") if "events" in line)
+    )
+    source = (ROOT / "tools" / "page.py").read_text(encoding="utf-8")
+    assert str(run["den"]) not in source and "electron" not in source and "light" not in source

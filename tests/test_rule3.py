@@ -116,6 +116,7 @@ READERS = (
     "run.py",
     "decoder.py",
     "gates.py",
+    "events.py",
 )  # the record's writer and readers, no act of the Node: their scales are their own
 NAMED_CALLS = {
     "refused",
@@ -181,26 +182,34 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     assert not found, found
 
 
-def test_the_composed_paces_are_the_laws_two_functions_of_the_content_and_their_factors():
-    """The clock p_0(c) = Gamma (1 - 1 / Gamma)^c to the unit, (Gamma - 1)^c over Gamma^(c - 1) rounded half up, floor(exact + 1 / 2) in exact fractions, the fraction turned over for a hill (c below 0), by the memo's running fraction and by the power alone bit for bit; the Link's pace the clock twice, p_0^2 over Gamma rounded once; both Gamma at the vacuum; the Link's pace rounds to 0 at the content 28,206 at Gamma 6,000 (the clock 54 there, `frozen_content`, by the power alone, the memo kept to the run's contents) and the clock at 56,352; the group law Gamma p(c_1 + c_2) = p(c_1) p(c_2) within the roundings' floor, (p_1 + p_2 + Gamma) div 2 + 1 on the clock and three times it on the Link's pace, and not to zero, most pairs differing; the vectorised entries give the memo's value at every Node in the array's kind, the hardware's integers and Python's, on a narrow range (one table) and a sparse spread (the distinct values), the same after the memo is cleared; the write's factor is the source at the vacuum's paces for a count (two proper-interval powers) and for a Wronskian (one) alike, and elsewhere ((D p_x div Gamma) p_y div Gamma) p_z div p_0 on a count and ((D p_x div Gamma) p_y div p_0) p_z div p_0 on a Wronskian, one axis at a time (every intermediate within A^2 Gamma, inside 63 bits where A^2 Gamma^3 is not), 0 at a frozen clock; the turn's factor the angle at the vacuum and angle p_0 div Gamma elsewhere."""
-    gamma, half, small = 6_000, Fraction(1, 2), range(-13, 1_300, 13)
-    spread, zeros = [*small, 3_000], (0, 28_206, 56_351, 56_352)
-    clocks = {c: paces.clock(gamma, c) for c in spread}
-    assert clocks == {c: int(Fraction(gamma) * Fraction(gamma - 1, gamma) ** c + half) for c in spread}
-    assert clocks == {c: paces.clock_alone(gamma, c) for c in spread}
-    assert all(paces.link_pace(gamma, c) == int(Fraction(clocks[c] ** 2, gamma) + half) for c in spread)
-    assert [paces.clock_alone(gamma, c) for c in zeros] == [gamma, 54, 1, 0]
-    links = [paces.rounded(paces.clock_alone(gamma, c) ** 2, gamma) for c in (0, 28_205, zeros[1])]
-    assert links == [gamma, 1, 0] and paces.frozen_content(gamma) == zeros[1]
-    for f, times in ((paces.clock, 1), (paces.link_pace, 3)):
-        off = [gamma * f(gamma, a + b) - f(gamma, a) * f(gamma, b) for a in small for b in small]
-        room = [times * ((clocks[a] + clocks[b] + gamma) // 2 + 1) for a in small for b in small]
-        assert all(abs(d) <= g for d, g in zip(off, room, strict=True))
-        assert 2 * sum(d != 0 for d in off) > len(off)
+def test_the_composed_paces_are_one_carried_division_per_content_within_a_unit_of_the_power():
+    """K-S4 (the owner's approved sentence, built 2026-10-25): the clock p_0(c + 1) = (p_0(c) (Gamma - 1) + r_c) div Gamma with the remainder carried from the half wall, Gamma at the vacuum, a hill the act turned over; each clock within one unit of the exact power Gamma (1 - 1 / Gamma)^c rounded half up (150 of 7,886 contents off by one at Gamma 1,000, the carried form's own) and never above it by more; the Link's pace the clock's square over Gamma rounded once; the frozen content 3,793 at Gamma 1,000 where the Link's pace first reads 0 and the clock 22; every integer of the table within Gamma's bits; the vectorised entries the table's own integers in the array's kind."""
+    gamma, half = 1_000, Fraction(1, 2)
+    frozen = paces.frozen_content(gamma)
+    assert (
+        frozen == 3_793
+        and paces.link_pace(gamma, frozen) == 0
+        and paces.link_pace(gamma, frozen - 1) > 0
+    )
+    assert paces.clock(gamma, frozen) == 22 and paces.clock(gamma, 0) == gamma
+    pace, remainder = gamma, gamma // 2
+    for c in range(2 * frozen):
+        assert paces.clock(gamma, c) == pace
+        assert paces.link_pace(gamma, c) == int(Fraction(pace * pace, gamma) + half)
+        pace, remainder = divmod(pace * (gamma - 1) + remainder, gamma)
+    pace, remainder = gamma, (gamma - 1) // 2
+    for c in range(0, -300, -1):
+        assert paces.clock(gamma, c) == pace
+        pace, remainder = divmod(pace * gamma + remainder, gamma - 1)
+    span = range(-300, 2 * frozen)
+    exact = {c: int(Fraction(gamma) * Fraction(gamma - 1, gamma) ** c + half) for c in span}
+    off = [c for c in span if paces.clock(gamma, c) != exact[c]]
+    assert all(abs(paces.clock(gamma, c) - exact[c]) == 1 for c in off) and len(off) == 150
+    assert all(paces.clock(gamma, c + 1) <= paces.clock(gamma, c) for c in span[:-1])
+    assert max(paces.clock(gamma, c) for c in span).bit_length() <= gamma.bit_length() + 1
     plain, entries = (paces.clock, paces.link_pace), (paces.clock_of, paces.link_pace_of)
-    narrow, sparse = np.arange(-7, 53).reshape(5, 4, 3), np.array(spread[-60:]).reshape(5, 4, 3)
+    narrow, sparse = np.arange(-7, 53).reshape(5, 4, 3), np.array(list(span)[-60:]).reshape(5, 4, 3)
     for held in (narrow, sparse, narrow.astype(object), sparse.astype(object)):
         found, flat = [f(gamma, held) for f in entries], held.ravel().tolist()
-        assert all(np.array_equal(a, f(gamma, held)) for a, f in zip(found, entries, strict=True))
         assert all(a.dtype == held.dtype for a in found)
         assert [a.ravel().tolist() for a in found] == [[f(gamma, c) for c in flat] for f in plain]

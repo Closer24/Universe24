@@ -1,4 +1,4 @@
-"""The one board test: the 48 (the board run from a seed and from each of its 48 images, the signed permutations of the axes about the origin; the births and the carrier's and the light's levels compared through the image, a reflection with the children's ends exchanged), the run back exact through births and turns, the chiral seed's births with both hands and the charge summed to 0."""
+"""The one board test: the 48 (the board run from a seed and from each of its 48 images, the signed permutations of the axes about the origin; the births and the carrier's and the gap-0 line's levels compared through the image, a reflection with the children's ends exchanged), the run back exact through births and turns, the chiral seed's births with both hands and the charge summed to 0."""
 
 from __future__ import annotations
 

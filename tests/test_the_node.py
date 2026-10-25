@@ -28,14 +28,6 @@ def level_at(node: Node, content: int) -> int:
     )
 
 
-def pace_at(node: Node, content: int) -> int:
-    return int(
-        np.asarray(
-            paces.link_pace_of(node.gamma, np.array([content], dtype=object)), dtype=object
-        ).reshape(-1)[0]
-    )
-
-
 def clicks_at(node: Node, at: tuple[int, ...]) -> list[dict[str, Any]]:
     """The births and credits logged at the Node, and the births whose children land there."""
     own = [e for e in node.log if tuple(e["node"]) == at and e["event"] in ("birth", "credit")]
@@ -68,8 +60,7 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_never_clicks() -> 
 
 def test_the_frozen_node_is_not_read_and_never_clicks() -> None:
     node = node_of("world_node.json")
-    frozen = next(c for c in range(1, 100000) if pace_at(node, c) == 0)
-    assert frozen == paces.frozen_content(node.gamma)
+    frozen = paces.frozen_content(node.gamma)
     carrier = node.row(CARRIER).lines[0]
     carrier.now[CENTRE] = level_at(node, frozen)
     carrier.before[CENTRE] = carrier.now[CENTRE]
@@ -182,44 +173,35 @@ def test_the_step_reaches_one_link_forward_and_none_back() -> None:
 
 def test_the_files_are_refused_by_name() -> None:
     universe, world = world_of("world_node.json")
+    den = universe["integers"]["den"]
     refused("keys of no law: control", read_world, dict(world, control={"ride": "symmetric"}), universe)
     refused("keys of no law: detectors", read_world, dict(world, detectors=[[0, 0, 0]]), universe)
     refused(
         "a pair or a wall", read_world, world, dict(universe, rows=universe["rows"] + [{"shape": 1}])
     )
-    refused(
-        "light is the plane",
-        Node,
-        dict(universe, rows=universe["rows"] + [{"shape": 1, "pair": [1, 2]}]),
-        world,
-    )
-    refused(
-        "one shape-10 row",
-        Node,
-        dict(universe, rows=[r for r in universe["rows"] if r["shape"] != 10]),
-        world,
-    )
-    refused(
-        "the shape-4 row stands at",
-        Node,
-        dict(
-            universe,
-            rows=[
-                dict(r, pair=[1, universe["integers"]["den"]]) if r["shape"] == 4 else r
-                for r in universe["rows"]
-            ],
+    rows = universe["rows"]
+    for match, change in (
+        (
+            "the row at the gap 0 is the plane",
+            dict(universe, rows=rows + [{"shape": 1, "pair": [1, 2]}]),
         ),
-        world,
-    )
-    refused("a cube", Node, universe, dict(world, shape=[3, 3, 4]))
-    refused("off the board", Node, universe, dict(world, seed=[{"lay": "hole", "at": [3, 0, 0]}]))
-    refused("no form of the law", Node, universe, dict(world, seed=[{"lay": "wave", "row": 0}]))
-    refused("the massless plane's alone", Node, universe, dict(world, seed=[{"lay": "sea", "row": 1}]))
-    refused(
-        "half-width 2 or 3",
-        Node,
-        universe,
-        dict(world, seed=[{"lay": "at", "row": 1, "centre": [1, 1, 1], "quanta": 1, "width": 4}]),
-    )
+        ("one shape-10 row", dict(universe, rows=[r for r in rows if r["shape"] != 10])),
+        (
+            "the shape-4 row stands at",
+            dict(universe, rows=[dict(r, pair=[1, den]) if r["shape"] == 4 else r for r in rows]),
+        ),
+    ):
+        refused(match, Node, change, world)
+    for match, change in (
+        ("a cube", {"shape": [3, 3, 4]}),
+        ("off the board", {"seed": [{"lay": "hole", "at": [3, 0, 0]}]}),
+        ("no form of the law", {"seed": [{"lay": "wave", "row": 0}]}),
+        ("the plane at the gap 0 alone", {"seed": [{"lay": "sea", "row": 1}]}),
+        (
+            "half-width 2 or 3",
+            {"seed": [{"lay": "at", "row": 1, "centre": [1, 1, 1], "quanta": 1, "width": 4}]},
+        ),
+    ):
+        refused(match, Node, universe, dict(world, **change))
     assert [r.shape for r in node_of("world_node.json").rows_] == [1, 2, 2, 2, 2, 4, 10]
     assert [(axis, side) for axis, side in PORT_SIDES][:2] == [(0, 1), (0, -1)]

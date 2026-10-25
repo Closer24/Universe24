@@ -39,8 +39,8 @@ COUNTS = {  # the run's counts, every one 0 at the start
     "refused_orientation": 0,
     "refused_twist": 0,
     "turns": 0,
-    "light_laid": 0,
-    "light_laid_nodes": 0,
+    "laid": 0,
+    "laid_nodes": 0,
 }
 
 
@@ -59,26 +59,29 @@ class Node:
 
     def __init__(self, universe: dict[str, Any], world: dict[str, Any]) -> None:
         ints = universe["integers"]
-        den, gamma, action, unit = (
-            int(ints["den"]),
-            int(ints["node_clock"]),
-            int(ints["quantum_action"]),
-            int(ints["link_unit"]),
-        )
+        self.den, self.gamma = int(ints["den"]), int(ints["node_clock"])
+        self.T, self.G = int(ints["quantum_action"]), int(ints["link_unit"])
         shape = tuple(int(x) for x in world["shape"])
         if len(shape) != AXES or len(set(shape)) != 1:
             raise ValueError("the board is a cube: the shape is [c, c, c]")
-        self.den, self.cube, self.gamma, self.T, self.G = den, shape[0], gamma, action, unit
+        self.cube = shape[0]
         self.shape: tuple[int, ...] = shape
-        self.w = wall_of(den, gamma, unit)
+        self.w = wall_of(self.den, self.gamma, self.G)
         self.rows_, self.by_index = rows_of(universe, shape, self.w)
         self.lifts = [r for r in self.records() if r.gap is not None and r.gap > 0]
         self.units = [
-            AXES * action * (sine_den(r.pair[0], den) if r.gap else den)
+            AXES * self.T * (sine_den(r.pair[0], self.den) if r.gap else self.den)
             for r in self.records()
             if r.pair
         ]
-        nr = len(self.records())
+        self.unit_gap0 = self.units[self.records().index(self.row(PLANE, gap=0))]
+        self.start_state()
+        seed.lay_world(self, world.get("seed", []))
+        self.ride_walls()
+
+    def start_state(self) -> None:
+        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's amplitude where the rule has no positive term, the phase pair's amplitude from half the width less one and the orbit's seed."""
+        shape, nr = self.shape, len(self.records())
         self.standing = [zeros(shape) for _ in range(nr)]
         self.crossed = [zeros(shape) for _ in range(nr)]
         self.beats = [zeros(shape) for _ in range(nr)]
@@ -88,28 +91,27 @@ class Node:
         self.turns: list[tuple[int, int]] = []
         self.stack: list[dict[str, Any]] = []
         self.turned = np.zeros(shape, dtype=bool)
+        self.counts: dict[str, int] = dict(COUNTS)
+        self.max_transient = 0
+        self.count_max = 0
+        self.last_dp = [0, 0, 0]
+        self.start_factors: tuple[Any, ...] = ()
+        self.start_frames: list[Any] = []
+        self.start_phases: list[tuple[Any, Any]] = []
+        self.start_odd: list[Any] = []
+        self.stepped: list[list[Line]] = []
+
+        gamma, action = self.gamma, self.T
         for line in self.row(CARRIER).lines[:1]:
             line.now[:] = gamma
             line.before[:] = gamma
-        self.unit_gap0 = self.units[self.records().index(self.row(PLANE, gap=0))]
         self.drift = rule3.largest_below(action)
         self.A = rule3.largest_below(half(action))
         self.X = phase.amplitude(phase.unit(gamma), HALF_WIDTH - 1)
         seed_pair = phase.seed(self.X, gamma)
         self.orbit_lines = [seed_pair]
         self.orbit = [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
-        self.counts: dict[str, int] = dict(COUNTS)
-        self.max_transient = 0
-        self.count_max = 0
-        self.last_dp = [0, 0, 0]
         self.start_content = self.content()
-        self.start_factors: tuple[Any, ...] = ()
-        self.start_frames: list[Any] = []
-        self.start_phases: list[tuple[Any, Any]] = []
-        self.start_odd: list[Any] = []
-        self.stepped: list[list[Line]] = []
-        seed.lay_world(self, world.get("seed", []))
-        self.ride_walls()
 
     def ride_walls(self) -> None:
         """The riding lines' remainders at the start: a riding line's remainder lives at the mean wall (w div 2)(X_before + X_now) of the carrier's two levels at its Node, half of it at the seed."""
@@ -359,11 +361,9 @@ class Node:
         take.lay(self, rec, where, levels, sign)
 
     def step(self) -> None:
-        """One interval forward."""
         self.run(1)
 
     def step_back(self) -> None:
-        """One interval back."""
         self.run(-1)
 
     def census(self) -> tuple[int, int]:

@@ -1,4 +1,4 @@
-"""The writer: the world's intervals run, a reader's row at every twelfth and two early marks, then N intervals run back and compared bit for bit by the state's hash (the arrow's reading on the record); the record is the two files, the constants, the counts, the turns, the rows, the run back and the log as the run left it. Usage: `python -m event_universe.run <world.json> <out.json> [back N]`."""
+"""The writer: the world's intervals run, a reader's row at every twelfth and two early marks, then N intervals run back and compared bit for bit by the state's hash (the arrow's reading on the record); the record is the two files, the constants, the counts, the turns, the rows, the run back and the log as the run left it. Usage: `python -m event_universe.run <world.json> <out.json> [back N]`; the record carries a Node line per interval (X, content, turned, frozen, the Links held at the wall) for the page."""
 
 from __future__ import annotations
 
@@ -10,7 +10,9 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core import paces
 from event_universe.core.paces import sine_den
+from event_universe.core.ports import AXES
 from event_universe.links import wronskian
 from event_universe.loader.world import load_world
 from event_universe.node import Node
@@ -52,12 +54,12 @@ def packets_of(node: Node) -> dict[str, Any]:
 
 def reading(node: Node, maxbits: int) -> dict[str, Any]:
     """The reader's row at an interval: the board's numbers read from outside (no Node reads them)."""
-    metric, potential, massless = node.row(CARRIER), node.row(POTENTIAL), node.row(PLANE, gap=0).lines[0]
+    metric, potential, gap0 = node.row(CARRIER), node.row(POTENTIAL), node.row(PLANE, gap=0).lines[0]
     planes = [r.lines for r in node.records()]
     cs, vs = ints(node.content()), ints(metric.lines[0].now)
     energy = sum(x * x for rec in planes for line in rec for x in ints(line.now))
     odd_max = max(abs(x) for line in potential.lines[1:] for x in ints(line.now))
-    light_v = max(abs(a - b) for a, b in zip(ints(massless.now), ints(massless.before), strict=True))
+    gap0_v = max(abs(a - b) for a, b in zip(ints(gap0.now), ints(gap0.before), strict=True))
     total = zeros(node.shape)
     for re, im in planes:
         total = total + wronskian(re, im)
@@ -85,19 +87,43 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
         "odd max bits": odd_max.bit_length(),
         "link count max": node.count_max,
         "orbit table": len(node.orbit),
-        "massless W abs max": max(abs(x) for x in ints(wronskian(*node.row(PLANE, gap=0).lines))),
+        "gap-0 W abs max": max(abs(x) for x in ints(wronskian(*node.row(PLANE, gap=0).lines))),
         "W total": sum(ints(total)),
         "W abs sum": sum(abs(x) for re, im in planes for x in ints(wronskian(re, im))),
-        "light velocity max": light_v,
+        "gap-0 velocity max": gap0_v,
     }
 
 
-def record(
-    universe: dict[str, Any], world: dict[str, Any], back: int = 0, out: Callable[[str], Any] = print
-) -> dict[str, Any]:
-    """The world's intervals run with the reader's rows written as they come, then `back` intervals run back and compared by the state's hash; the record returned."""
-    node = Node(universe, world)
-    intervals = int(world["intervals"])
+def node_lines(node: Node) -> dict[str, Any]:
+    """The record's Node line at an interval, every Node by its index in the board's order: the carrier's level X, the content, the turned Nodes, the frozen Nodes (the Link pace 0) and the Links held at the wall (the factor 0) as [Node, axis] pairs; the page draws the board from these and nothing else."""
+    carrier = node.row(CARRIER).lines[0]
+    content = node.content()
+    pace = paces.link_pace_of(node.gamma, content)
+    factors = node.link_factors()
+    held = [[i, axis] for axis in range(AXES) for i, f in enumerate(ints(factors[2 * axis])) if f == 0]
+    return {
+        "i": node.interval,
+        "X": ints(carrier.now),
+        "content": ints(content),
+        "turned": [i for i, t in enumerate(node.turned.reshape(-1).tolist()) if t],
+        "frozen": [i for i, p in enumerate(ints(pace)) if p == 0],
+        "held": held,
+    }
+
+
+def run_back(node: Node, hashes: list[str]) -> dict[str, int]:
+    """The run back: as many intervals back as states were kept, each compared with the kept state's hash."""
+    exact = 0
+    for k in range(len(hashes)):
+        node.step_back()
+        exact += node.state_hash() == hashes[len(hashes) - 1 - k]
+    return {"intervals": len(hashes), "exact": exact}
+
+
+def forward(
+    node: Node, intervals: int, back: int, out: Callable[[str], Any]
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[str]]:
+    """The intervals run forward: the reader's rows at the marks written as they come, a Node line at every interval, the last `back` states' hashes kept for the run back."""
     t0 = time.monotonic_ns()
     marks = (
         {1, intervals}
@@ -105,6 +131,7 @@ def record(
         | {intervals // e for e in EARLY}
     )
     rows: list[dict[str, Any]] = []
+    nodes: list[dict[str, Any]] = []
     hashes = []
     maxbits = 0
     for t in range(intervals):
@@ -112,6 +139,7 @@ def record(
             hashes.append(node.state_hash())
         node.step()
         maxbits = max(maxbits, node.census()[1])
+        nodes.append(node_lines(node))
         if node.interval in marks:
             rows.append(
                 dict(
@@ -120,15 +148,20 @@ def record(
                 )
             )
             out(json.dumps(rows[-1]))
+    return rows, nodes, hashes
+
+
+def record(
+    universe: dict[str, Any], world: dict[str, Any], back: int = 0, out: Callable[[str], Any] = print
+) -> dict[str, Any]:
+    """The world's intervals run (`forward`), then `back` intervals run back and compared by the state's hash (`run_back`); the record returned."""
+    node = Node(universe, world)
+    intervals = int(world["intervals"])
+    rows, nodes, hashes = forward(node, intervals, back, out)
     kept_log = list(node.log)
-    run_back = None
-    if back:
-        exact = 0
-        for k in range(back):
-            node.step_back()
-            exact += node.state_hash() == hashes[back - 1 - k]
-        run_back = {"intervals": back, "exact": exact}
-        out(json.dumps({"run back": run_back}))
+    returned = run_back(node, hashes) if back else None
+    if returned:
+        out(json.dumps({"run back": returned}))
     counts = {k: str(v) for k, v in node.counts.items()}
     out(json.dumps({"counts": counts}))
     return {
@@ -147,7 +180,8 @@ def record(
         "counts": counts,
         "turns": node.turns,
         "rows": rows,
-        "run_back": run_back,
+        "nodes": nodes,
+        "run_back": returned,
         "log": kept_log,
     }
 

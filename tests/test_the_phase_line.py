@@ -6,17 +6,22 @@ import time
 import numpy as np
 
 from event_universe.core.paces import rounded
-from event_universe.features.phase import (
-    K0,
-    D,
-    act,
-    fold,
-    half_wall,
-    iterate,
-    read,
-    seed,
-)
+from event_universe.features.phase import K0, D, act, half_wall, seed
 from tests.laws import refused
+
+
+def read(pair):
+    """The pair's two levels now, the cosine's and the sine's."""
+    return pair[0][0], pair[1][0]
+
+
+def iterate(pair, count, gamma, direction=1):
+    """The pair's two lines acted on `count` times in the direction (count below 0 the other direction)."""
+    direction, count = (direction, count) if count >= 0 else (-direction, -count)
+    for _ in range(count):
+        pair = tuple(act(line, gamma, direction) for line in pair)
+    return pair
+
 
 GAMMA = 6_000
 WALL, COEFFICIENT = D(GAMMA), K0(GAMMA)
@@ -81,47 +86,4 @@ def test_the_reversal_is_bit_exact_over_ten_thousand_acts():
     refused("direction is 1 or -1", act, pair[0], GAMMA, 0)
     print(
         f"10^4 acts forward and back: bit for bit, remainders {forward[0][2]}, {forward[1][2]} on the way; {time.perf_counter() - started:.2f} s"
-    )
-
-
-def test_the_folds_pair_is_antisymmetric_by_direction_for_every_signed_count():
-    """The fold (X^c, X^s) = (1,228,800, 1,638,400) at the unit X_ij = 2,048,000 (a Pythagorean pair, |X^c + i X^s| = X_ij): for n sampled over [-4 Gamma, 4 Gamma], the Link read from its other end, (X^c, -X^s) with (c, -s), gives X^s_ji = -X^s_ij exactly and X^c_ji = X^c_ij (the magnitude rounding with the sign after is odd); the product's magnitude within the bound over X of X_ij; the same over the whole sample at once as an array."""
-    started = time.perf_counter()
-    fold_cosine, fold_sine = 1_228_800, 1_638_400
-    assert fold_cosine**2 + fold_sine**2 == LINK_UNIT**2
-    step = 97
-    counts = sorted({*range(-4 * GAMMA, 4 * GAMMA + 1, step), -4 * GAMMA, 4 * GAMMA, 0, 1, -1})
-    pair = seed(X35, GAMMA)
-    pairs, forward, backward = {0: pair}, pair, pair
-    for n in counts:
-        if n > 0:
-            forward = iterate(forward, n - max(k for k in counts if 0 <= k < n), GAMMA)
-            pairs[n] = forward
-    for n in reversed(counts):
-        if n < 0:
-            backward = iterate(backward, n - min(k for k in counts if n < k <= 0), GAMMA)
-            pairs[n] = backward
-    worst = 0.0
-    for n in counts:
-        c, s = read(pairs[n])
-        re_ij, im_ij = fold(fold_cosine, fold_sine, c, s, X35)
-        re_ji, im_ji = fold(fold_cosine, -fold_sine, c, -s, X35)
-        assert (re_ji, im_ji) == (re_ij, -im_ij), n
-        assert isinstance(int(re_ij), int)
-        worst = max(worst, abs(math.hypot(int(re_ij), int(im_ij)) - LINK_UNIT))
-        angle = math.atan2(int(im_ij), int(re_ij)) - math.atan2(fold_sine, fold_cosine)
-        assert (
-            abs(math.remainder(angle - n * THETA, 2 * math.pi))
-            <= (bound(abs(n)) + 1) / X35 + 1 / LINK_UNIT
-        )
-    assert worst <= LINK_UNIT * bound(4 * GAMMA) / X35 + 1
-    cs = np.array([read(pairs[n]) for n in counts], dtype=np.int64)
-    re_all, im_all = fold(fold_cosine, fold_sine, cs[:, 0], cs[:, 1], X35)
-    re_back, im_back = fold(fold_cosine, -fold_sine, cs[:, 0], -cs[:, 1], X35)
-    assert np.array_equal(re_back, re_all) and np.array_equal(im_back, -im_all)
-    assert [int(v) for v in im_all] == [
-        int(fold(fold_cosine, fold_sine, *read(pairs[n]), X35)[1]) for n in counts
-    ]
-    print(
-        f"{len(counts)} counts in [-4 Gamma, 4 Gamma]: X^s_ji = -X^s_ij exactly; worst |product| - X_ij {worst:.2f} units of X_ij; {time.perf_counter() - started:.2f} s"
     )

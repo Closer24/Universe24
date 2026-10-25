@@ -112,7 +112,7 @@ def order_of(row: Row) -> int:
 
 
 def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[list[Row], list[Row]]:
-    """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (light is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the plane at the gap 0 or the walled row other than one, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den)."""
+    """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the row at the gap 0 is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the plane at the gap 0 or the walled row other than one, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den)."""
     ints = universe["integers"]
     den, gamma, action = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
     by_index: list[Row] = []
@@ -122,7 +122,7 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
         wall = None if r.get("wall") is None else int(r["wall"])
         if shape == 1 and wall is None:
             raise ValueError(
-                "a shape-1 row with a pair: light is the plane whose pair is (den, den), no fourth shape"
+                "a shape-1 row with a pair: the row at the gap 0 is the plane whose pair is (den, den), no fourth shape"
             )
         lines = lines_of(board, shape, pair, wall, w, write_walls(shape, pair, den, gamma, action))
         by_index.append(Row(shape, pair, wall, lines))

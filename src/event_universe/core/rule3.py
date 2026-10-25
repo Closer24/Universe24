@@ -120,6 +120,16 @@ def lattice(*values: Any) -> Any:
     return found
 
 
+def least_root(a: int, b: int, target: int, dist: int) -> list[int]:
+    """The least root's neighbours of a s^2 + b s >= target by one integer root (largest_below), checked exactly at s - 1, s, s + 1, s + 2; the full move alone where the discriminant is negative."""
+    disc = b * b + 4 * a * target
+    if disc < 0:
+        return [dist]
+    root = largest_below(disc)
+    s1 = quotient(b - root, -2 * a) if a < 0 else quotient(-b + root, 2 * a)
+    return sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
+
+
 def largest_below(square: int) -> int:
     """The largest x with x^2 <= square, found by a bisection on the share reading x * x against square: products and comparisons of integers, no division on the count and no root (the hands' prescription for the rotation unit, `paces.rotation_unit`, applied to a count: a search by comparisons, issue #1793 comment 6077053307, "no root anywhere"). The upper end is the smallest power of two whose square exceeds square, found by doubling; the halving of the span of candidates is the division act on a count, `division_forward(low + high, 2, 0)`, kind D in the acts table (tests/test_the_acts_table.py), its remainder discarded; 0 at 0; a negative square is refused by name (ALGEBRA.md #the-four-acts, #the-guard)."""
     if square < 0:

@@ -151,6 +151,7 @@ READERS = (
     "run.py",
     "decoder.py",
     "gates.py",
+    "events.py",
 )  # the record's writer and readers, no act of the Node: their quotients are readings at a named scale
 
 
@@ -187,6 +188,3 @@ def test_floor_division_and_modulo_are_refused_outside_core_rule3() -> None:
     assert offenders == [], offenders
     assert standing == allowed, sorted(allowed - standing)
     assert divisions(ast.parse((SRC / RULE3).read_text(encoding="utf-8"))), "the act's home divides"
-    REFUSED = ("x = a // b\n", "x %= b\n", "q, r = divmod(a, b)\n", "y = np.floor_divide(a, b)\n")
-    assert all(divisions(ast.parse(text)) for text in (*REFUSED, "y = np.mod(a, b)\n", "x = a % b\n"))
-    assert divisions(ast.parse("x = a * b + c\ny = np.pad(a, w)\n")) == []

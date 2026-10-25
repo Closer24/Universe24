@@ -48,7 +48,7 @@ def dilation(decoded: list[tuple[dict[str, Any], str, Rational]]) -> dict[str, A
                 quot(*rate_hi, THOUSAND),
             ],
             "verdict": shown
-            + "; NOT READ in the one-place view: two bodies' clocks compare only through the light between them (gate 7)",
+            + "; NOT READ in the one-place view: two bodies' clocks compare only through the gap-0 plane between them (gate 7)",
         }
     }
 
@@ -79,7 +79,8 @@ def lengthening(record: Record) -> dict[str, Any]:
         "2 the Links lengthening in the clicks": {
             "reader's view: spans": len(spans),
             "spacing in hundredths of a board interval, shallow / deep": [shallow, deep],
-            "verdict": shown + "; NOT READ in the one-place view (the light between two bodies, gate 7)",
+            "verdict": shown
+            + "; NOT READ in the one-place view (the gap-0 plane between two bodies, gate 7)",
         }
     }
 
@@ -179,7 +180,7 @@ def tracks(record: Record, decoded: list[tuple[dict[str, Any], str, Rational]]) 
 
 
 def light_and_arrow(record: Record) -> dict[str, Any]:
-    """Gates 7, 11, 12 and 18: the light's credits (none in the engine's record: a detector is the toy's reading, kept by name in tools/derivations/toys/lean) and the run back on the record, exact bit for bit or not."""
+    """Gates 7, 11, 12 and 18: the gap-0 plane's credits (none in the engine's record: a detector is the toy's reading, kept by name in tools/derivations/toys/lean) and the run back on the record, exact bit for bit or not."""
     light = sum(1 for entry in record.log if entry["event"] == "detector")
     rb = record.run.get("run_back")
     if not rb:
@@ -190,17 +191,64 @@ def light_and_arrow(record: Record) -> dict[str, Any]:
         verdict = f"NOT SHOWN: {rb['exact']} of {rb['intervals']}"
     return {
         "7 light with its redshift / 11 / 12": {
-            "light credits in the record": light,
-            "verdict": "read: the light credited at a detector"
+            "gap-0 credits in the record": light,
+            "verdict": "read: the gap-0 plane credited at a detector"
             if light
-            else "NOT READ: the record holds no light credit",
+            else "NOT READ: the record holds no gap-0 credit",
         },
         "18 the arrow of time": {"run back on the record": rb, "verdict": verdict},
     }
 
 
+def momentum(record: Record) -> Any:
+    """The momentum the close wrote (the credit lines' dP_a): the takes' and the lays' sums per axis and the births where the recoil passed to the laid pair."""
+    takes = [c["dP_take"] for c in record.credits + record.births if c.get("dP_take")]
+    lays = [b["dP_lay"] for b in record.births if b.get("dP_lay")]
+    if not takes:
+        return "NOT READ: no click booked its momentum"
+    passed = sum(
+        1
+        for b in record.births
+        if b.get("dP_lay") and all(b["dP_take"][a] + b["dP_lay"][a] == 0 for a in range(3))
+    )
+    return {
+        "clicks booking dP": len(takes),
+        "takes dP_a summed": [sum(t[a] for t in takes) for a in range(3)],
+        "lays dP_a summed": [sum(lay[a] for lay in lays) for a in range(3)],
+        "recoil passed to the laid pair (take + lay = 0 per birth)": passed,
+        "of births": len(lays),
+    }
+
+
+def constants(record: Record) -> dict[str, Any]:
+    """The three constants: the count of integers per Node constant, every integer of the state and every transient within the width."""
+    rows = record.rows
+    counts_seen = sorted({r["integers"] for r in rows})
+    state_bits, transient_bits = (
+        max(r["max bits"] for r in rows),
+        max(r["max transient bits"] for r in rows),
+    )
+    lacks = ("the count changes; " if len(counts_seen) != 1 else "") + (
+        "the state past the width; " if state_bits > WIDTH else ""
+    )
+    lacks += "a transient past the width" if transient_bits > WIDTH else ""
+    return {
+        "the three constants": {
+            "integers per Node": counts_seen,
+            "max state bits": state_bits,
+            "max transient bits": transient_bits,
+            "first interval past the width": next(
+                (r["i"] for r in rows if r["max transient bits"] > WIDTH or r["max bits"] > WIDTH), None
+            ),
+            "verdict": "SHOWN: the count constant, every integer and transient within the width"
+            if not lacks
+            else "NOT SHOWN: " + lacks,
+        }
+    }
+
+
 def conservations(record: Record, sense_sum: int, taken: int, booked: int) -> dict[str, Any]:
-    """The conservations in the clicks (the owner's word: what the lattice conserves is shown conserved in the clicks) and the three constants."""
+    """The conservations in the clicks (the owner's word: what the lattice conserves is shown conserved in the clicks): the charge, the count, the energy as the beat unchanged from one click to the next, the momentum."""
     cons: dict[str, Any] = {
         "charge: the senses summed over the births": sense_sum,
         "count: taken against booked over the births (hundredths)": quot(taken, booked, HUNDRED),
@@ -220,50 +268,8 @@ def conservations(record: Record, sense_sum: int, taken: int, booked: int) -> di
         "changed by one": sum(1 for a, b in pairs if abs(a - b) == 1),
         "changed by more": sum(1 for a, b in pairs if abs(a - b) > 1),
     }
-    takes = [c["dP_take"] for c in record.credits + record.births if c.get("dP_take")]
-    lays = [b["dP_lay"] for b in record.births if b.get("dP_lay")]
-    if takes:
-        passed = sum(
-            1
-            for b in record.births
-            if b.get("dP_lay") and all(b["dP_take"][a] + b["dP_lay"][a] == 0 for a in range(3))
-        )
-        cons["momentum: the close wrote (the credit lines' dP_a)"] = {
-            "clicks booking dP": len(takes),
-            "takes dP_a summed": [sum(t[a] for t in takes) for a in range(3)],
-            "lays dP_a summed": [sum(lay[a] for lay in lays) for a in range(3)],
-            "recoil passed to the laid pair (take + lay = 0 per birth)": passed,
-            "of births": len(lays),
-        }
-    else:
-        cons["momentum: the close wrote (the credit lines' dP_a)"] = (
-            "NOT READ: no click booked its momentum"
-        )
-    rows = record.rows
-    counts_seen = sorted({r["integers"] for r in rows})
-    state_bits, transient_bits = (
-        max(r["max bits"] for r in rows),
-        max(r["max transient bits"] for r in rows),
-    )
-    lacks = (
-        ("the count changes; " if len(counts_seen) != 1 else "")
-        + ("the state past the width; " if state_bits > WIDTH else "")
-        + ("a transient past the width" if transient_bits > WIDTH else "")
-    )
-    return {
-        "the conservations in the clicks": cons,
-        "the three constants": {
-            "integers per Node": counts_seen,
-            "max state bits": state_bits,
-            "max transient bits": transient_bits,
-            "first interval past the width": next(
-                (r["i"] for r in rows if r["max transient bits"] > WIDTH or r["max bits"] > WIDTH), None
-            ),
-            "verdict": "SHOWN: the count constant, every integer and transient within the width"
-            if not lacks
-            else "NOT SHOWN: " + lacks,
-        },
-    }
+    cons["momentum: the close wrote (the credit lines' dP_a)"] = momentum(record)
+    return {"the conservations in the clicks": cons} | constants(record)
 
 
 def entropy(record: Record) -> dict[str, Any]:
@@ -291,25 +297,21 @@ def entropy(record: Record) -> dict[str, Any]:
 
 
 def gates(run: dict[str, Any]) -> dict[str, Any]:
-    """Every gate's verdict with its numbers from the record alone."""
+    """Every gate's verdict with its numbers from the record alone, and the event lines of the gates' first SHOWN (`first_shown`)."""
     record = Record(run)
     out, decoded = species(record)
     found, sense_sum, taken, booked = charge_and_take(record)
     out |= found
-    out |= (
-        dilation(decoded)
-        | lengthening(record)
-        | course(record)
-        | era(record)
-        | horizon(record)
-        | tracks(record, decoded)
-        | light_and_arrow(record)
-    )
+    out |= dilation(decoded) | lengthening(record) | course(record) | era(record) | horizon(record)
+    out |= tracks(record, decoded) | light_and_arrow(record)
     out |= conservations(record, sense_sum, taken, booked) | entropy(record)
     out["the decoder"] = {
         "floats used": 0,
         "readings": "quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication",
     }
+    from event_universe import events  # the events read the gates, after them
+
+    out["events"] = events.first_shown(record, decoded)
     return out
 
 

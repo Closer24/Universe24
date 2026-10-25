@@ -35,13 +35,20 @@ class Record:
         self.NAMES: dict[int, tuple[str, int]] = {
             num: (f"lift {k}", leg) for k, (leg, num) in enumerate(lifts)
         }
-        self.NAMES[self.den] = ("massless", 0)
+        self.NAMES[self.den] = ("gap 0", 0)
         self.line_num = [int(num) for num in run["planes"]]
         self.log = run["log"]
         self.credits = [entry for entry in self.log if entry["event"] == "credit"]
         self.births = [entry for entry in self.log if entry["event"] == "birth"]
         self.rows = run["rows"]
         self.w = rule3.wall_of(self.den, self.gamma, self.G)
+
+    def through(self, k: int) -> Record:
+        """The record with its credits cut to the first k, for a gate read as it first shows."""
+        found = Record.__new__(Record)
+        found.__dict__.update(self.__dict__)
+        found.credits = sorted(self.credits, key=lambda c: int(c["i"]))[:k]
+        return found
 
 
 def quot(a: int, b: int, scale: int = 1) -> int | None:
@@ -110,29 +117,37 @@ def middle(xs: list[Rational]) -> Rational:
     return (p[0] * q[1] + q[0] * p[1], 2 * p[1] * q[1])
 
 
-def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], str, Rational]]]:
-    """Gates 8, 8b, 19 and 16: the species from the frame of every credit (the whole view) and over a body's track (the one-place view: the middle solve), the mass ratios from den's legs, the one-click floor."""
-    out: dict[str, Any] = {}
+def decoded_credits(
+    record: Record,
+) -> tuple[list[tuple[dict[str, Any], str, Rational]], int, int, list[int | None]]:
+    """Every credit's species solved from its frame: the decoded (credit, name, x), the count read right, the count within the one-click floor, and each credit's floor on x in parts per million."""
     den, names, line_num = record.den, record.NAMES, record.line_num
     decoded = []
     right = within = 0
-    floor_mil = []
-    for c in record.credits:
+    floors: list[int | None] = []
+    for c in sorted(record.credits, key=lambda c: int(c["i"])):
         x = solve(record, c)
         if x is None:
             continue
         name = nearest(record, x)
-        truth = names[line_num[c["line"]]][0]
-        right += name == truth
+        right += name == names[line_num[c["line"]]][0]
         decoded.append((c, name, x))
         n, d = x
         num = line_num[c["line"]]
         within += (n * den - num * d) ** 2 <= 2 * (record.w * den) ** 2 * d
-        floor_mil.append(
+        floors.append(
             rule3.largest_below((2 * record.w * record.w * den * den * MIL * MIL) // (d * num * num))
             if num
             else None
         )
+    return decoded, right, within, floors
+
+
+def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], str, Rational]]]:
+    """Gates 8, 8b, 19 and 16: the species from the frame of every credit (the whole view) and over a body's track (the one-place view: the middle solve), the mass ratios from den's legs, the one-click floor."""
+    out: dict[str, Any] = {}
+    names, line_num = record.NAMES, record.line_num
+    decoded, right, within, floor_mil = decoded_credits(record)
     tracks: dict[tuple[Any, int], list[Rational]] = defaultdict(list)
     confusion: Counter[tuple[str, str]] = Counter()
     for c, name, x in decoded:
@@ -167,11 +182,18 @@ def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], 
         "births by species (decoder)": dict(born),
         "verdict": verdict,
     }
+    return out | ratios(record, floor_mil, within, len(decoded)), decoded
+
+
+def ratios(record: Record, floor_mil: list[int | None], within: int, decoded: int) -> dict[str, Any]:
+    """Gates 19 and 16: the mass ratios from den's legs (the lifts against the lightest) and the one-click floor on x per credit."""
+    names = record.NAMES
     legs = sorted(((name, leg) for name, leg in names.values() if leg), key=lambda kv: kv[1])
     num_of = {v[0]: k for k, v in names.items()}
-    ratios: dict[str, Any] = {f"{nm}/{legs[0][0]}": quot(leg, legs[0][1], MIL) for nm, leg in legs[1:]}
-    out["19 mass ratios (parts per million)"] = ratios | {
-        "verdict": "SHOWN as a fit of den (the legs), read from the decoded points"
+    found: dict[str, Any] = {f"{nm}/{legs[0][0]}": quot(leg, legs[0][1], MIL) for nm, leg in legs[1:]}
+    out = {
+        "19 mass ratios (parts per million)": found
+        | {"verdict": "SHOWN as a fit of den (the legs), read from the decoded points"}
     }
     fl = sorted(f for f in floor_mil if f is not None)
     if fl:
@@ -187,12 +209,12 @@ def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], 
                 fl[-1],
             ],
             "species spacing of the two heaviest, parts per million": spacing,
-            "credits beyond the floor": len(decoded) - within,
+            "credits beyond the floor": decoded - within,
             "verdict": "SHOWN as the law's floor: no credit reads beyond it"
-            if within == len(decoded)
+            if within == decoded
             else "NOT SHOWN",
         }
-    return out, decoded
+    return out
 
 
 def charge_and_take(record: Record) -> tuple[dict[str, Any], int, int, int]:
