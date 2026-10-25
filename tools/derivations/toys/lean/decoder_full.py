@@ -109,32 +109,37 @@ booked = sum(b['booked'] for b in births); taken_b = sum(b['taken'] for b in bir
 out['15 conservation at the click'] = {'births': len(births), 'taken per booked at the births (hundredths)': quot(taken_b, booked, 100), 'verdict': 'SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light, the known item)' if all(b['taken'] >= b['booked'] for b in births) else 'NOT SHOWN'}
 # gate 10 dilation (one-place view): a body's proper count against the intervals it stood, deep against shallow
 if len(decoded) > 10:
-    pairs = [(c['content'], c['proper'], c['i']) for c, _n, _x in decoded]
+    pairs = [(c['content'], c['proper'], c['i']) for c, _n, _x in decoded]  # the reader's view alone
     med = sorted(p[0] for p in pairs)[len(pairs) // 2]
     lo = [p for p in pairs if p[0] <= med]; hi = [p for p in pairs if p[0] > med]
     rate_lo = (sum(p[1] for p in lo), sum(p[2] for p in lo)); rate_hi = (sum(p[1] for p in hi), sum(p[2] for p in hi))
-    out['10 gravitational time dilation (one-place view)'] = {'proper per thousand intervals, shallow / deep': [quot(*rate_lo, 1000), quot(*rate_hi, 1000)], 'verdict': 'SHOWN' if cmp_rat(rate_hi, rate_lo) < 0 else 'NOT SHOWN'}
+    out['10 gravitational time dilation'] = {'reader\'s view (the board\'s interval, which no Node has): proper per thousand intervals, shallow / deep': [quot(*rate_lo, 1000), quot(*rate_hi, 1000)], 'verdict': ('SHOWN in the reader\'s view' if cmp_rat(rate_hi, rate_lo) < 0 else 'NOT SHOWN in the reader\'s view') + '; NOT READ in the one-place view: two bodies\' clocks compare only through the light between them (gate 7)'}
 # gate 2 the Links lengthening in the clicks (one-place view): the spacing of a body's credits longer where the content is deeper
 by_node = defaultdict(list)
 for c in credits: by_node[tuple(c['node'])].append(c)
 spans = []
 for node, cs in by_node.items():
-    cs.sort(key=lambda c: c['i'])
+    cs.sort(key=lambda c: c['i'])  # the reader's view alone
     for a, b in zip(cs, cs[1:]):
         if b['i'] > a['i']: spans.append(((a['content'] + b['content']) // 2, b['i'] - a['i']))
 if len(spans) > 20:
     med = sorted(s[0] for s in spans)[len(spans) // 2]
     lo = [s[1] for s in spans if s[0] <= med]; hi = [s[1] for s in spans if s[0] > med]
-    out['2 the Links lengthening in the clicks (one-place view)'] = {'spans': len(spans), 'spacing in hundredths of an interval, shallow / deep': [quot(sum(lo), len(lo), 100), quot(sum(hi), len(hi), 100)], 'verdict': 'SHOWN' if quot(sum(hi), len(hi), 100) > quot(sum(lo), len(lo), 100) else ('NOT SHOWN: equal to the hundredth' if quot(sum(hi), len(hi), 100) == quot(sum(lo), len(lo), 100) else 'NOT SHOWN (the spacing shorter where deeper)')}
+    out['2 the Links lengthening in the clicks'] = {'reader\'s view: spans': len(spans), 'spacing in hundredths of a board interval, shallow / deep': [quot(sum(lo), len(lo), 100), quot(sum(hi), len(hi), 100)], 'verdict': ('SHOWN in the reader\'s view' if quot(sum(hi), len(hi), 100) > quot(sum(lo), len(lo), 100) else 'NOT SHOWN in the reader\'s view') + '; NOT READ in the one-place view (the light between two bodies, gate 7)'}
 # gates 1, 3, 5, 6: the board's course from the rows (whole view): the mean volume's rises and falls, the turns
 course = [(r['i'], int(r['volume mean']), r['births']) for r in rows]
 vel = [(b[0], b[1] - a[1]) for a, b in zip(course, course[1:])]
 falls = [i for i, v in vel if v < 0]
-out['1 recurring bangs / 3 shortening then lengthening / 6 contraction (board)'] = {'volume mean course (interval, mean)': [(i, v) for i, v, _b in course[:: max(1, len(course) // 8)]], 'intervals with the mean volume falling': falls[:6], 'turns (Node swaps) total': int(run['counts']['turns']), 'verdict': 'contraction SHOWN at the board' if falls else 'NOT SHOWN: the mean volume rises throughout (the pump); the turns are local'}
+out['1 recurring bangs / 3 shortening then lengthening / 6 contraction (board, the reader\'s view)'] = {'volume mean course (interval, mean)': [(i, v) for i, v, _b in course[:: max(1, len(course) // 8)]], 'intervals with the mean volume falling': falls[:6], 'turns (Node swaps) total': int(run['counts']['turns']), 'verdict': 'contraction SHOWN at the board' if falls else 'NOT SHOWN: the mean volume rises throughout (the pump); the turns are local'}
 # gate 4 era of matter
 half = run['intervals'] // 2
-by_half = Counter('early' if l['i'] <= half else 'late' for l in credits)
-out['4 an era of matter'] = {'births early/late': [sum(1 for b in births if b['i'] <= half), sum(1 for b in births if b['i'] > half)], 'body credits early/late': [by_half['early'], by_half['late']], 'verdict': 'SHOWN' if by_half['late'] > 0 else 'NOT SHOWN'}
+# the era of matter in the Nodes' own clocks: at every Node with a birth and a body's credit, the credits go on past the last birth in that Node's proper count
+last_birth = {}; last_credit = {}
+for b in births: last_birth[tuple(b['node'])] = max(last_birth.get(tuple(b['node']), 0), b['proper'])
+for c in credits: last_credit[tuple(c['node'])] = max(last_credit.get(tuple(c['node']), 0), c['proper'])
+both = [n for n in last_birth if n in last_credit]
+past = sum(1 for n in both if last_credit[n] > last_birth[n])
+out['4 an era of matter'] = {'Nodes with a birth and a body credit': len(both), 'of them with credits past the last birth in the Node\'s own clock': past, 'births': len(births), 'body credits': len(credits), 'verdict': 'SHOWN' if both and past == len(both) else ('SHOWN in part: %d of %d' % (past, len(both)) if past else 'NOT SHOWN')}
 # gate 14 horizon
 frozen = paces.frozen_content(gamma)
 fr = [c for c in credits if c['content'] >= frozen]
@@ -146,11 +151,11 @@ if fl:
     out['16 uncertainty floor (one click)'] = {'floor on x per credit, parts per million: min / middle / max': [fl[0], fl[len(fl) // 2], fl[-1]], 'species spacing of the two heaviest, parts per million': quot(abs(num_of[ordered[-1][0]] - num_of[ordered[-2][0]]), num_of[ordered[-1][0]], MIL) if NL >= 2 else None, 'credits beyond the floor': len(decoded) - within, 'verdict': 'SHOWN as the law\'s floor: no credit reads beyond it; one click cannot split p from n where the floor exceeds their spacing, the track can (not calibrated to h-bar / 2)' if within == len(decoded) else 'NOT SHOWN'}
 # gate 9 and 13: tracks
 tracks = defaultdict(list)
-for c, n, _x in decoded: tracks[(tuple(c['node']), n)].append(c['i'])
+for c, n, _x in decoded: tracks[(tuple(c['node']), n)].append(c['proper'])
 longest = max((len(v) for v in tracks.values()), default=0)
 # a body's track: its record's credits by line; a move is a credit of the same line at a neighbouring Node after the last (read from the record)
 by_line = defaultdict(list)
-for c in credits: by_line[c['line']].append((c['i'], tuple(c['node'])))
+for c in credits: by_line[c['line']].append((c['proper'], tuple(c['node'])))
 moves = 0
 for line, cs in by_line.items():
     cs.sort(); nodes_seen = {cs[0][1]}
@@ -158,7 +163,7 @@ for line, cs in by_line.items():
         if at not in nodes_seen: moves += 1; nodes_seen.add(at)
 out['9 collisions / 13 free fall'] = {'tracks (node, species)': len(tracks), 'longest track credits': longest, 'lines credited at a new Node after their first': moves, 'verdict': 'NOT SHOWN: no line is credited at a second Node (the bodies stand)' if moves == 0 else 'read: %d lines credited at a new Node; the predicate (the tail falls, adjacent peaks collide) is the sentence W-S4/W-S5 of the owner, not read here' % moves}
 beats_by_line = defaultdict(list)
-for c in credits: beats_by_line[(tuple(c['node']), c['line'])].append((c['i'], c['beat'], c['proper']))
+for c in credits: beats_by_line[(tuple(c['node']), c['line'])].append((c['proper'], c['beat'], c['proper']))
 light_credits = [l for l in log if l['event'] == 'light']
 if light_credits:
     # the detector's clock: the spacing of its light credits in its own proper count (the middle spacing); the bodies' clocks: the spacing of a record's clicks in its proper count at its Node; the ratio against the two Nodes' contents (the volume's level)
