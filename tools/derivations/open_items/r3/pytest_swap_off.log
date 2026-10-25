@@ -1,5 +1,4 @@
-....F................................................................... [ 94%]
-....                                                                     [100%]
+....F................                                                    [100%]
 =================================== FAILURES ===================================
 ______ test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools ______
 
@@ -40,10 +39,10 @@ ______ test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools ______
                 if isinstance(item, ast.Constant) and isinstance(item.value, str) and id(item) not in spoken:
                     found.append(f"{path.relative_to(ROOT)}:{item.lineno} {item.value!r}")
 >       assert not found, found
-E       AssertionError: ["src/event_universe/flux.py:23 '1'", "src/event_universe/flux.py:23 'U24_RIDES'"]
-E       assert not ["src/event_universe/flux.py:23 '1'", "src/event_universe/flux.py:23 'U24_RIDES'"]
+E       AssertionError: ["src/event_universe/flux.py:27 '2'", "src/event_universe/flux.py:22 'U24_RIDES'", "src/event_universe/flux.py:23 '1'", "src/event_universe/flux.py:24 '2'", "src/event_universe/flux.py:27 'U24_RIDES'"]
+E       assert not ["src/event_universe/flux.py:27 '2'", "src/event_universe/flux.py:22 'U24_RIDES'", "src/event_universe/flux.py:23 '1'", "src/event_universe/flux.py:24 '2'", "src/event_universe/flux.py:27 'U24_RIDES'"]
 
 tests/test_rule3.py:146: AssertionError
 =========================== short test summary info ============================
 FAILED tests/test_rule3.py::test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools
-1 failed, 75 passed in 19.84s
+1 failed, 20 passed in 17.78s

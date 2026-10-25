@@ -1,0 +1,36 @@
+wave on: amplitude 178, seed count per Node 1..1 total 27 at the frequency's unit 30
+wave on interval    1 X 1000..1022 level 5 quanta/Node 0..6 total 20 at frequency unit 31 broken 0 turned 12
+wave on interval    3 X 1010..1022 level 5 quanta/Node 1..4 total 30 at frequency unit 30 broken 0 turned 1
+wave on interval    8 X 1057..1071 level 17 quanta/Node 0..6 total 20 at frequency unit 31 broken 0 turned 1
+wave on interval    9 X 1048..1101 level 23 quanta/Node 0..12 total 30 at frequency unit 32 broken 0 turned 6
+wave on interval   10 X 1057..1088 level 20 quanta/Node 0..16 total 22 at frequency unit 31 broken 0 turned 13
+wave on interval   11 X 1066..1120 level 27 quanta/Node 1..8 total 34 at frequency unit 33 broken 0 turned 8
+wave on interval   12 X 1050..1202 level 45 quanta/Node -1..16 total 22 at frequency unit 36 broken 0 turned 6
+wave on interval   13 X 1060..1121 level 28 quanta/Node 0..15 total 35 at frequency unit 33 broken 0 turned 1
+wave on interval   14 X 1083..1125 level 29 quanta/Node 0..8 total 22 at frequency unit 34 broken 0 turned 6
+wave on interval   15 X 1064..1140 level 33 quanta/Node 0..16 total 30 at frequency unit 34 broken 0 turned 12
+wave on interval   16 X 1081..1154 level 36 quanta/Node -1..21 total 27 at frequency unit 34 broken 0 turned 1
+wave on interval   17 X 1064..1177 level 40 quanta/Node 0..14 total 20 at frequency unit 35 broken 0 turned 14
+wave on interval   18 X 1125..1172 level 39 quanta/Node 0..5 total 33 at frequency unit 39 broken 0 turned 1
+wave on interval   19 X 1026..1311 level 67 quanta/Node 0..3 total 32 at frequency unit 39 broken 0 turned 12
+wave on interval   20 X 1135..1458 level 93 quanta/Node 0..6 total 36 at frequency unit 45 broken 0 turned 6
+wave on interval   22 X 1223..1458 level 93 quanta/Node 0..3 total 25 at frequency unit 40 broken 0 turned 13
+wave on interval   24 X 1319..1442 level 91 quanta/Node 0..2 total 37 at frequency unit 43 broken 0 turned 6
+wave on interval   25 X 1316..1502 level 101 quanta/Node 0..5 total 29 at frequency unit 41 broken 0 turned 1
+wave on interval   26 X 1141..1570 level 112 quanta/Node 0..15 total 27 at frequency unit 40 broken 0 turned 12
+wave on interval   28 X 1463..2211 level 197 quanta/Node 0..23 total 41 at frequency unit 68 broken 0 turned 14
+wave on interval   29 X 1482..1659 level 126 quanta/Node 0..18 total 30 at frequency unit 51 broken 0 turned 1
+wave on interval   30 X 1289..1778 level 144 quanta/Node 0..9 total 43 at frequency unit 59 broken 0 turned 0
+wave on interval   31 X 1614..1867 level 155 quanta/Node 0..32 total 62 at frequency unit 78 broken 0 turned 6
+wave on interval   32 X 1610..2195 level 196 quanta/Node 1..11 total 45 at frequency unit 60 broken 0 turned 12
+wave on interval   33 X 1710..2040 level 178 quanta/Node 1..8 total 34 at frequency unit 55 broken 0 turned 1
+wave on interval   35 X 1710..2092 level 184 quanta/Node 0..6 total 32 at frequency unit 62 broken 0 turned 14
+wave on interval   37 X 2092..2352 level 213 quanta/Node 0..10 total 36 at frequency unit 67 broken 0 turned 12
+wave on interval   38 X 2018..2573 level 236 quanta/Node 0..14 total 36 at frequency unit 64 broken 0 turned 1
+wave on interval   39 X 2144..2582 level 237 quanta/Node -1..28 total 38 at frequency unit 70 broken 0 turned 8
+wave on interval   40 X 2078..2806 level 257 quanta/Node 0..15 total 37 at frequency unit 70 broken 0 turned 6
+wave on interval   43 X 2682..3216 level 292 quanta/Node 0..12 total 30 at frequency unit 74 broken 0 turned 13
+wave on interval   46 X 3105..3501 level 312 quanta/Node 1..14 total 46 at frequency unit 75 broken 0 turned 6
+wave on interval   47 X 3195..3814 level 334 quanta/Node 1..16 total 42 at frequency unit 76 broken 0 turned 8
+wave on summary {"amplitude": 178, "first_turn": 17, "intervals_run": 47, "returned_bit_for_bit": 47, "verdict": "MATCH", "misses": [], "X_top": 3814, "seed": {"quanta_min": 1, "quanta_max": 1, "quanta_total": 27, "count_total_over_W_c": 27, "count_total_at_frequency_unit": 30}, "top": {"interval": 47, "X_max": 3814, "level_max": 334, "quanta_min": 1, "quanta_max": 16, "quanta_total": 42, "count_total_over_W_c": 38, "count_total_at_frequency_unit": 76}, "intervals_with_every_element_equal": 47, "first_broken_interval": null, "beat_windows": [{"start": 0, "crossings": 3, "proper_between": 12752, "E_proper_scaled": 156838, "level_max": 20}]}
+written /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/r3/tools/derivations/r3/ride_engine_wave_on.json

@@ -1,0 +1,32 @@
+cube48 on interval   1 elements broken  0 of 48, unequal entries 0, turned 1, births 0
+cube48 on interval   2 elements broken  0 of 48, unequal entries 0, turned 6, births 0
+cube48 on interval   3 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval   4 elements broken  0 of 48, unequal entries 0, turned 13, births 6
+cube48 on interval   5 elements broken  0 of 48, unequal entries 0, turned 8, births 0
+cube48 on interval   6 elements broken  0 of 48, unequal entries 0, turned 6, births 0
+cube48 on interval   7 elements broken  0 of 48, unequal entries 0, turned 13, births 0
+cube48 on interval   8 elements broken  0 of 48, unequal entries 0, turned 6, births 0
+cube48 on interval   9 elements broken  0 of 48, unequal entries 0, turned 8, births 0
+cube48 on interval  10 elements broken  0 of 48, unequal entries 0, turned 13, births 0
+cube48 on interval  11 elements broken  0 of 48, unequal entries 0, turned 8, births 0
+cube48 on interval  12 elements broken  0 of 48, unequal entries 0, turned 6, births 0
+cube48 on interval  13 elements broken  0 of 48, unequal entries 0, turned 1, births 0
+cube48 on interval  14 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  15 elements broken  0 of 48, unequal entries 0, turned 6, births 0
+cube48 on interval  16 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  17 elements broken  0 of 48, unequal entries 0, turned 9, births 0
+cube48 on interval  18 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  19 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  20 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  21 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  22 elements broken  0 of 48, unequal entries 0, turned 1, births 0
+cube48 on interval  23 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  24 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  25 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  26 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  27 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  28 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  29 elements broken  0 of 48, unequal entries 0, turned 0, births 0
+cube48 on interval  30 elements broken  0 of 48, unequal entries 0, turned 1, births 0
+cube48 on summary {'intervals': 30, 'intervals_with_every_element_equal': 30, 'first_broken_interval': None, 'births': 6, 'turn_intervals': [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17, 22, 30]}
+written /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/r3/tools/derivations/r3/ride_engine_cube48_on.json
