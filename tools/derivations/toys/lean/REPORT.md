@@ -1,14 +1,14 @@
 # The lean Node toy (tools/derivations/toys/lean), David's report of 2026-10-25
 
-A generic Node of 95 integers, every integer within 128 bits, the same acts at every Node, built from the engine's exact primitives (core.rule3, core.paces, features.phase, loader.circle, features.volume) with the architecture the toy's; its decoder reads the run's log alone, in integers; the run back is exact. The toy is a derivation tool, not the engine: it names what the law does on a lean Node and what it does not do, with numbers.
+A generic Node of 119 integers (95 with the metric's six zero lines apart), every integer within 128 bits, the same acts at every Node, built from the engine's exact primitives (core.rule3, core.paces, features.phase, loader.circle, features.volume) with the architecture the toy's; its decoder reads the run's log alone, in integers; the run back is exact. The toy is a derivation tool, not the engine: it names what the law does on a lean Node and what it does not do, with numbers.
 
 Files: `lean_full.py` (the Node and the board, built from the two files and nothing else), `decoder_full.py` (the gates read from the record alone, every verdict from the record's numbers), `runback_test.py`, `cube48_test.py` (the 48 images), `mirror_diag.py` (where one mirror breaks), `residuals.py` (the one-click floor), `freeze_diag.py`, `records/` (the gates' tables), `universe_toy.json` (the integers den, node_clock, quantum_action, link_unit; the rows by shape and pair: the light at (den, den) and the three lifts) and `world_toy.json` (the shape, the intervals, the seed as lays: the sea with its hole, one quantum more at (1,0,0)). No number of a universe stands in the toy's code: the two held rows are the law's (the volume at (den - den div Gamma, den), the sign at (den, den)), the phase pair's amplitude is derived from half the law's width 128 less one, every root is the law's search `largest_below`. The probes that read the 4.0 record are under `../probes`.
 
 Run: `PYTHONPATH=src python tools/derivations/toys/lean/lean_full.py <world.json> <out.json> [back N]` (the Link close by the light's current, the law's; `back N` runs N intervals back at the end and writes the result on the record; the former modes `link` and `node` and every environment switch were struck on 2026-10-25 with the fold: the two files decide everything), then `python tools/derivations/toys/lean/decoder_full.py <out.json>`. The runs below are at the den 15162856759112389 (54 bits, three lifts), the cube 5, Gamma 1000, T 36000, G 16, as `universe_toy.json` has them; the runs before the rebuild took the same numbers on the command line.
 
-## The state at every Node (95 integers, fixed)
+## The state at every Node (119 integers, fixed; 95 before the metric's six zero lines of 2026-10-25)
 
-- the volume row: the time line (now, before, remainder) carrying X, three axis lines (the tensions), four write remainders: 16
+- the volume row, the metric's ten lines: the time line (now, before, remainder) carrying X, three axis lines (the tensions), six lines standing at zero (the three flux g_0a and the three shears g_ab, rotated with the row, written and read by nothing until their derivation lands), ten write remainders: 40
 - the light row: 3, and its lay remainder at the wall T (W-S1): 1
 - the sign row: the time line, three odd lines, four write remainders: 16; its phase row (wall 2): 3
 - the three lifts' planes, two senses each, re and im lines: 36

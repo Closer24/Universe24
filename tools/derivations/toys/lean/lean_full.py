@@ -109,6 +109,7 @@ class Lean:
         # every remainder starts at half its wall (the engine rounds half up: a remainder at the half wall carries the same); the write walls: the volume's time line 54 den Gamma^4 T, its axis lines 54 den T Gamma^2, the sign's four and the massless row's lay T
         mk = lambda wwall=None: Line(Z(S), Z(S), Z(S) + self.w // 2, self.w, None if wwall is None else Z(S) + wwall // 2, wwall)
         self.vol = mk(54 * den * gamma ** 4 * action); self.vol_axes = [mk(54 * den * action * gamma ** 2) for _ in range(3)]
+        self.vol_more = [mk(54 * den * action * gamma ** 2) for _ in range(6)]  # the metric's six other lines (the three flux g_0a, the three shears g_ab): standing at zero, rotated with the row, written by nothing and read by nothing until the derivation of their write and read lands (the owner's question of 2026-10-25, the 10, 4, 2 in the code); then one input more of act and link, no new function
         self.light = mk(action)
         self.sign = mk(action); self.sign_axes = [mk(action) for _ in range(3)]
         self.phi = Line(Z(S), Z(S), Z(S) + 1, 2)  # the phase potential row: the wall 2, the write 2 c_phi inside its division
@@ -305,11 +306,11 @@ class Lean:
 
     def rows(self):
         """The Node's rows in the order their writes depend on each other: the phase row (its count read by every plane), the planes (no write), the massless row (W-S1 from the planes' Wronskian), the sign's row (its time line from the Wronskian, its odd lines from the planes' current), the volume's row (its time line from every form, its axis lines from the stress)."""
-        return [[self.phi], *self.planes, [self.light], [self.sign, *self.sign_axes], [self.vol, *self.vol_axes]]
+        return [[self.phi], *self.planes, [self.light], [self.sign, *self.sign_axes], [self.vol, *self.vol_axes, *self.vol_more]]
 
     def set_rows(self, rows):
         n = 2 * self.nl
-        (self.phi,) = rows[0]; self.planes = [list(r) for r in rows[1:1 + n]]; (self.light,) = rows[1 + n]; self.sign, *self.sign_axes = rows[2 + n]; self.vol, *self.vol_axes = rows[3 + n]
+        (self.phi,) = rows[0]; self.planes = [list(r) for r in rows[1:1 + n]]; (self.light,) = rows[1 + n]; self.sign, *self.sign_axes = rows[2 + n]; self.vol, *self.vol_axes = rows[3 + n][:4]; self.vol_more = list(rows[3 + n][4:])
 
     def all_lines(self): return [l for row in self.rows() for l in row]
 
@@ -390,7 +391,7 @@ class Lean:
         if self.hold_volume: out[3 + n] = rows[3 + n]  # the control: the volume held by hand, no act on it in either direction
         else:
             X = at(self.vol); p02 = p0 * p0
-            numerators = [4 * X * (forms * 54 * self.den * self.gamma ** 2 - trace * p02) * p0] + [traceless[a] * p02 for a in range(3)]
+            numerators = [4 * X * (forms * 54 * self.den * self.gamma ** 2 - trace * p02) * p0] + [traceless[a] * p02 for a in range(3)] + [None] * len(self.vol_more)
             _s, _l, out[3 + n] = self.act(rows[3 + n], self.rule(self.vol_pair, c, factors), None, numerators, direction, None, *ends(3 + n))
         self.set_rows(out)
         if direction == -1: self.interval -= 1; return
@@ -631,7 +632,7 @@ if __name__ == '__main__':
                     if total == 0: continue
                     idx = np.indices(b.shape); cen = [int(sum(int(w) * int(x) for w, x in zip(wgt.reshape(-1), idx[a].reshape(-1)))) * 1000 // total for a in range(3)]
                     packets['row %d sense %d' % (s_ + 1, 1 if sense else -1)] = {'centroid (thousandths of a Link)': cen, 'nodes with levels': int(sum(1 for x in wgt.reshape(-1) if int(x) > 0)), 'energy bits': total.bit_length()}
-            rows.append({'i': b.interval, 'packets (reader)': packets, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'], 'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'], 'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(), 'tension min/max': [min(int(x) for l in b.vol_axes for x in l.now.reshape(-1)), max(int(x) for l in b.vol_axes for x in l.now.reshape(-1))], 'odd max bits': odd_max.bit_length(), 'link count max': getattr(b, 'count_max', 0), 'orbit table': len(b.orbit), 'W total': sum(int(x) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'W abs sum': sum(abs(int(x)) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'light velocity max': light_v, 'milliseconds': (time.monotonic_ns() - t0) // 1000000})
+            rows.append({'i': b.interval, 'packets (reader)': packets, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'], 'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'], 'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(), 'links at the wall': int(sum(1 for f in b.link_factors()[0::2] for x in f.reshape(-1) if int(x) == 0)), 'tension min/max': [min(int(x) for l in b.vol_axes for x in l.now.reshape(-1)), max(int(x) for l in b.vol_axes for x in l.now.reshape(-1))], 'odd max bits': odd_max.bit_length(), 'link count max': getattr(b, 'count_max', 0), 'orbit table': len(b.orbit), 'W total': sum(int(x) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'W abs sum': sum(abs(int(x)) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'light velocity max': light_v, 'milliseconds': (time.monotonic_ns() - t0) // 1000000})
             print(json.dumps(rows[-1]), flush=True)
     run_back = None; kept_log = list(b.log)  # the record's log as the run left it; the run back below removes its lines as it undoes them
     if back:
