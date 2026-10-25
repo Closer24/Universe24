@@ -64,9 +64,9 @@ class Node:
         shape = tuple(int(x) for x in world["shape"])
         if len(shape) != AXES or len(set(shape)) != 1:
             raise ValueError("the board is a cube: the shape is [c, c, c]")
-        self.cube = shape[0]
-        self.shape: tuple[int, ...] = shape
+        self.cube, self.shape = shape[0], shape
         self.w = wall_of(self.den, self.gamma, self.G)
+        paces.certified(self.gamma)
         self.rows_, self.by_index = rows_of(universe, shape, self.w)
         self.gapped = [r for r in self.records() if r.gap is not None and r.gap > 0]
         self.units = [

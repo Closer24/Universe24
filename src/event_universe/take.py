@@ -128,8 +128,8 @@ def momentum_of(
 
 def take_at(
     node: Node, at: tuple[int, ...], walls: int, r_gap0: rule3.Rule, cause: int
-) -> tuple[int, int, int] | None:
-    """One exact take at a Node of the walls booked: the gap-0 line's level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the gap-0 line's now before the take) or None."""
+) -> tuple[int, int, int, int] | None:
+    """One exact take at a Node of the walls booked: the gap-0 line's level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the gap-0 line's now before the take, its before) or None."""
     gap0 = node.row(PLANE, gap=0)
     z = gap0.lines[0]
     levels, fall = fall_of(node, at, walls, r_gap0, z)
@@ -148,11 +148,11 @@ def take_at(
         return None
     now, before = int(z.now[at]), int(z.before[at])
     toward = 1 if before > now else -1
-    z.now[at] = now + toward * levels
+    lay(node, node.records().index(gap0), at, (toward * levels, 0, 0, 0))
     node.closes[at] += 1
     assert gap0.pair is not None
     node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=gap0.pair[0])
-    return levels, fall, now
+    return levels, fall, now, before
 
 
 def lay_amplitude(

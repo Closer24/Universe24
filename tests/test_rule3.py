@@ -182,33 +182,31 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     assert not found, found
 
 
-def test_the_composed_paces_are_one_carried_division_per_content_within_a_unit_of_the_power():
-    """K-S4 (the owner's approved sentence, built 2026-10-25): the clock p_0(c + 1) = (p_0(c) (Gamma - 1) + r_c) div Gamma with the remainder carried from the half wall, Gamma at the vacuum, a hill the act turned over; each clock within one unit of the exact power Gamma (1 - 1 / Gamma)^c rounded half up (150 of 7,886 contents off by one at Gamma 1,000, the carried form's own) and never above it by more; the Link's pace the clock's square over Gamma rounded once; the frozen content 3,793 at Gamma 1,000 where the Link's pace first reads 0 and the clock 22; every integer of the table within Gamma's bits; the vectorised entries the table's own integers in the array's kind."""
-    gamma, half = 1_000, Fraction(1, 2)
-    frozen = paces.frozen_content(gamma)
+def test_the_composed_paces_are_the_laws_carried_division_at_gamma_squared_bit_for_bit_the_power():
+    """PC-S1 (K-S4 in pc1's form, 2026-10-25): the clock by one carried division per content at the resolution Gamma^2, N_0 = Gamma^3 with the remainder Gamma div 2, N(c + 1) Gamma + r(c + 1) = N(c) (Gamma - 1) + r(c), the pace rounded(N, Gamma^2) half up, equal to the exact power Gamma (1 - 1 / Gamma)^c rounded half up at every content to the edge at Gamma 1,000 and 1,021 and on the hills -1 to -300; the Link's pace the clock's square over Gamma rounded once; the loader's certificate finds no undecided content; the frozen content 3,793 at Gamma 1,000 where the Link's pace first reads 0 and the clock 22; the table's largest integer below 2^60; the vectorised entries the table's own integers in the array's kind."""
+    half = Fraction(1, 2)
+    for gamma in (1_000, 1_021):
+        frozen = paces.certified(gamma)
+        assert paces.link_pace(gamma, frozen) == 0 and paces.link_pace(gamma, frozen - 1) > 0
+        for c in range(-300, 2 * frozen):
+            exact = int(Fraction(gamma) * Fraction(gamma - 1, gamma) ** c + half)
+            assert paces.clock(gamma, c) == exact, (gamma, c)
+            assert paces.link_pace(gamma, c) == int(Fraction(exact * exact, gamma) + half)
+        sides = paces.sides(gamma)
+        assert max(abs(side.scaled) for side in sides) < 2**60 and all(
+            0 <= side.carry < side.wall for side in sides
+        )
+    gamma = 1_000
     assert (
-        frozen == 3_793
-        and paces.link_pace(gamma, frozen) == 0
-        and paces.link_pace(gamma, frozen - 1) > 0
+        paces.frozen_content(gamma) == 3_793
+        and paces.clock(gamma, 3_793) == 22
+        and paces.clock(gamma, 0) == gamma
     )
-    assert paces.clock(gamma, frozen) == 22 and paces.clock(gamma, 0) == gamma
-    pace, remainder = gamma, gamma // 2
-    for c in range(2 * frozen):
-        assert paces.clock(gamma, c) == pace
-        assert paces.link_pace(gamma, c) == int(Fraction(pace * pace, gamma) + half)
-        pace, remainder = divmod(pace * (gamma - 1) + remainder, gamma)
-    pace, remainder = gamma, (gamma - 1) // 2
-    for c in range(0, -300, -1):
-        assert paces.clock(gamma, c) == pace
-        pace, remainder = divmod(pace * gamma + remainder, gamma - 1)
-    span = range(-300, 2 * frozen)
-    exact = {c: int(Fraction(gamma) * Fraction(gamma - 1, gamma) ** c + half) for c in span}
-    off = [c for c in span if paces.clock(gamma, c) != exact[c]]
-    assert all(abs(paces.clock(gamma, c) - exact[c]) == 1 for c in off) and len(off) == 150
-    assert all(paces.clock(gamma, c + 1) <= paces.clock(gamma, c) for c in span[:-1])
-    assert max(paces.clock(gamma, c) for c in span).bit_length() <= gamma.bit_length() + 1
     plain, entries = (paces.clock, paces.link_pace), (paces.clock_of, paces.link_pace_of)
-    narrow, sparse = np.arange(-7, 53).reshape(5, 4, 3), np.array(list(span)[-60:]).reshape(5, 4, 3)
+    narrow, sparse = (
+        np.arange(-7, 53).reshape(5, 4, 3),
+        np.array(list(range(7_000, 7_600, 10))).reshape(5, 4, 3),
+    )
     for held in (narrow, sparse, narrow.astype(object), sparse.astype(object)):
         found, flat = [f(gamma, held) for f in entries], held.ravel().tolist()
         assert all(a.dtype == held.dtype for a in found)
