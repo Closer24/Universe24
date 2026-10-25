@@ -1,4 +1,4 @@
-"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name; the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
+"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube, regenerated under PM-S1 on 2026-10-25: the era of matter SHOWN on the hole seed, the bodies' credited Nodes receding) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, den's circle under gate 19 by its count (MS-S2: 26 points at the toy's den, 8 at the middle's, the typed pairs among them); the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
 
 from __future__ import annotations
 
@@ -8,34 +8,24 @@ from typing import Any
 
 import pytest
 
-from event_universe.gates import gates
+from event_universe.gates import gates, kind_of
 from event_universe.run import record
 from tests.laws import ROOT, load_file, world_of
 
 RECORDS = ROOT / "examples" / "records"
 WIDTH = 128
-BASE = {
-    "17 charge conservation": "SHOWN",
-    "18 the arrow of time": "SHOWN",
-    "the three constants": "SHOWN",
-    "the entropy of the clicks": "SHOWN",
-    "14 the horizon": "NOT REACHED",
+SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
+    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43},
+    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45},
+    "bodies": {2, 3, 5, 6, 7, 8, 10, 16, 18, 30, 37, 43, 45},
 }
-SHOWN = {
-    "hole": {**BASE, "4 an era of matter": "NOT SHOWN"},
-    "chiral": BASE,
-    "bodies": {
-        "18 the arrow of time": "SHOWN",
-        "the three constants": "SHOWN",
-        "10 gravitational time dilation": "SHOWN in the reader's view",
-        "2 the Links lengthening in the clicks": "SHOWN in the reader's view",
-        "1 recurring bangs / 3 shortening then lengthening / 6 contraction (board, the reader's view)": "contraction SHOWN",
-        "9 collisions / 13 free fall": "SHOWN: two bodies' credited Nodes approached",
-        "8 families forming (whole view)": "SHOWN in part: every credit within the floor, tracks right 27 of 27",
-        "16 uncertainty floor (one click)": "SHOWN as the law's floor",
-        "the entropy of the clicks": "NOT READ",
-    },
+UNREACHED = {14, 34}  # the horizon on the three records: NOT REACHED
+VERDICTS = {  # the verdicts' words by name
+    "hole": {"22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part"},
+    "chiral": {"9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart"},
+    "bodies": {"37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link"},
 }
+SHOWN = dict.fromkeys(SHOWN_ROWS)
 
 
 def loaded(name: str) -> dict[str, Any]:
@@ -45,8 +35,23 @@ def loaded(name: str) -> dict[str, Any]:
 @pytest.mark.parametrize("name", sorted(SHOWN))
 def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
-    for gate, verdict in SHOWN[name].items():
+    kinds = {
+        int(k.split()[0]): kind_of(v["verdict"]) for k, v in found.items() if k.split()[0].isdigit()
+    }
+    assert len(kinds) == 54
+    assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
+    assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == UNREACHED
+    for gate, verdict in VERDICTS[name].items():
         assert found[gate]["verdict"].startswith(verdict), (name, gate, found[gate]["verdict"])
+    assert found["the three constants"]["verdict"].startswith("SHOWN")
+    circle = next(
+        v for k, v in found["19 mass ratios (parts per million)"].items() if k.startswith("den's circle")
+    )
+    assert (len(circle), sum(1 for _ratio, typed in circle if typed)) == {
+        "bodies": (8, 2),
+        "chiral": (26, 3),
+        "hole": (26, 3),
+    }[name]
 
 
 @pytest.mark.parametrize("name", sorted(SHOWN))
@@ -68,16 +73,10 @@ def test_the_hole_record_is_the_engines_own_bit_for_bit() -> None:
     committed = loaded("hole")
     assert committed["world"] == world and committed["universe"] == universe
     found = json.loads(json.dumps(record(universe, world, 20, lambda line: None)))
-    assert (
-        found["log"] == committed["log"]
-        and found["counts"] == committed["counts"]
-        and found["turns"] == committed["turns"]
-    )
+    assert found["log"] == committed["log"] and found["counts"] == committed["counts"]
+    assert found["turns"] == committed["turns"] and found["run_back"] == {"intervals": 20, "exact": 20}
     timeless = [{k: v for k, v in row.items() if k != "milliseconds"} for row in found["rows"]]
-    assert timeless == [
-        {k: v for k, v in row.items() if k != "milliseconds"} for row in committed["rows"]
-    ]
-    assert found["run_back"] == {"intervals": 20, "exact": 20}
+    assert timeless == [{k: v for k, v in r.items() if k != "milliseconds"} for r in committed["rows"]]
 
 
 def reading_of(name: str) -> list[dict[str, Any]]:
@@ -119,9 +118,7 @@ def test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed
     assert (
         f"den {run['universe']['integers']['den']}" in text and f"shape {run['world']['shape']}" in text
     )
-    assert all(
-        e["label"] in text
-        for e in next(line["events"] for line in reading_of("hole") if "events" in line)
-    )
+    events = next(line["events"] for line in reading_of("hole") if "events" in line)
+    assert all(e["label"] in text for e in events)
     source = (ROOT / "tools" / "page.py").read_text(encoding="utf-8")
     assert str(run["den"]) not in source and "electron" not in source and "light" not in source

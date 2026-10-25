@@ -70,6 +70,18 @@ def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
     return division_forward(unit * unit * pace * pace, wall, half)[0]
 
 
+def scaled(rule: Rule, scale: Any) -> Rule:
+    """A rule's four names scaled alike (the reaches, the own weight, the wall, the mass): the line's units a multiple, its quotients unchanged, a term the scale carries exact inside the division (SR-S3); the identity at 1."""
+    if scale == 1:
+        return rule
+    return Rule(
+        tuple(scale * x for x in rule.reaches),
+        scale * rule.self_coefficient,
+        scale * rule.wall,
+        scale * rule.mass,
+    )
+
+
 def carried_division(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[Any, Any]:
     """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = sigma total + r, the quotient sigma (u div w) and the remainder u mod w kept in [0, w) for a total of either sign; +1 forward, -1 the same act back, exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
     total = direction * total + remainder
@@ -124,6 +136,12 @@ def mirrored(remainder: Any, wall: Any, reversals: int) -> Any:
     return remainder if reversals % 2 == 0 else wall - 1 - remainder
 
 
+def signed_quotient(numerator: Any, wall: Any) -> Any:
+    """The quotient of the magnitude with the sign after, sign(x) (|x| div w): the lay's rounding of a signed level at rest (the one rule's mirror by the numerator's sign at a remainder born at 0), so the negated vector's lay is the lay negated."""
+    sign = (numerator >= 0) * 2 - 1
+    return sign * quotient(sign * numerator, wall)
+
+
 def half(wall: Any) -> Any:
     """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor."""
     return division_forward(wall, 2, 0)[0]
@@ -158,6 +176,14 @@ def least_root(a: int, b: int, target: int, dist: int) -> list[int]:
     root = largest_below(disc)
     s1 = quotient(b - root, -2 * a) if a < 0 else quotient(-b + root, 2 * a)
     return sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
+
+
+def balanced_pair(product: int) -> tuple[int, int]:
+    """The pair (a, b) with a b = product exactly and a the largest divisor at most largest_below(product), found by a search by comparisons down from the root's floor (MS-S1: the lay's two levels with A B = T div 2 for every row, the same two integers from T alone; 125 and 144 at T 36,000)."""
+    a = largest_below(product)
+    while remainder(product, a):
+        a -= 1
+    return a, quotient(product, a)
 
 
 def largest_below(square: int) -> int:

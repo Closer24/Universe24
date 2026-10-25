@@ -10,7 +10,8 @@ from event_universe.core.rule3 import half, held_wall, quotient
 
 CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
 POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
-PLANE = 2  # the shape of a conjugate pair of records
+PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
+QUARTET = 8
 HALF_WIDTH = 64  # half the law's width of 128 bits: the phase pair's amplitude is read from it less one
 TRACE = 54  # the trace's weight of the held walls and the carrier's write, 2 x 27 (ALGEBRA.md, the held write)
 
@@ -103,10 +104,10 @@ def lines_of(
 
 
 def order_of(row: Row) -> int:
-    """The acts' order: a row whose write reads other rows comes after them: the row with its own wall, the planes with a gap, the plane at the gap 0 (its lay reads the planes' Wronskian), the shape-4 row, the carrier."""
+    """The acts' order: a row whose write reads other rows comes after them: the row with its own wall, the records with a gap (the planes and the quartets), the plane at the gap 0 (its lay reads the records' charge), the shape-4 row, the carrier."""
     if row.wall is not None:
         return 0
-    if row.shape == PLANE:
+    if row.shape in (PLANE, QUARTET):
         return 1 + (row.gap == 0)
     return {POTENTIAL: 3, CARRIER: 4}.get(row.shape, CARRIER + 1)
 
@@ -121,9 +122,7 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
         pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
         wall = None if r.get("wall") is None else int(r["wall"])
         if shape == 1 and wall is None:
-            raise ValueError(
-                "a shape-1 row with a pair: the row at the gap 0 is the plane whose pair is (den, den), no fourth shape"
-            )
+            raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
         lines = lines_of(board, shape, pair, wall, w, write_walls(shape, pair, den, gamma, action))
         by_index.append(Row(shape, pair, wall, lines))
     rows = sorted(by_index, key=order_of)
@@ -157,5 +156,5 @@ def walled_of(rows: list[Row]) -> Row:
 
 
 def records_of(rows: list[Row]) -> list[Row]:
-    """The shape-2 rows in the acts' order, every one a conjugate pair of records (the plane at the gap 0 among them)."""
-    return [r for r in rows if r.shape == PLANE]
+    """The record rows in the acts' order, the planes (the one at the gap 0 among them) and the quartets."""
+    return [r for r in rows if r.shape in (PLANE, QUARTET)]

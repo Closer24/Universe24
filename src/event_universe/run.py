@@ -10,11 +10,11 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import readings
+from event_universe import gram, readings
 from event_universe.core import paces
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES
-from event_universe.links import link_current, wronskian
+from event_universe.links import link_current
 from event_universe.loader.world import load_world
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
@@ -35,8 +35,8 @@ def packets_of(node: Node) -> dict[str, Any]:
     for rec, row in enumerate(node.records()):
         if row.gap == 0:
             continue
-        re, im = row.lines
-        weight = re.now * re.now + im.now * im.now
+        nows = [line.now for line in row.lines]
+        weight = gram.form(gram.gram(row.shape), nows, nows)
         total = sum(ints(weight))
         if total == 0:
             continue
@@ -56,14 +56,15 @@ def packets_of(node: Node) -> dict[str, Any]:
 def reading(node: Node, maxbits: int) -> dict[str, Any]:
     """The reader's row at an interval: the board's numbers read from outside (no Node reads them)."""
     metric, potential, gap0 = node.row(CARRIER), node.row(POTENTIAL), node.row(PLANE, gap=0).lines[0]
-    planes = [r.lines for r in node.records()]
+    records = node.records()
     cs, vs = ints(node.content()), ints(metric.lines[0].now)
-    energy = sum(x * x for rec in planes for line in rec for x in ints(line.now))
+    energy = sum(x * x for r in records for line in r.lines for x in ints(line.now))
     odd_max = max(abs(x) for line in potential.lines[1:] for x in ints(line.now))
     gap0_v = max(abs(a - b) for a, b in zip(ints(gap0.now), ints(gap0.before), strict=True))
     total = zeros(node.shape)
-    for re, im in planes:
-        total = total + wronskian(re, im)
+    charges = [gram.charge(r.shape, r.lines) for r in records]
+    for w in charges:
+        total = total + w
     n, _bits = node.census()
     tens = [x for line in metric.lines[1:] for x in ints(line.now)]
     counts = node.counts
@@ -88,9 +89,9 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
         "odd max bits": odd_max.bit_length(),
         "link count max": node.count_max,
         "orbit table": len(node.orbit),
-        "gap-0 W abs max": max(abs(x) for x in ints(wronskian(*node.row(PLANE, gap=0).lines))),
+        "gap-0 W abs max": max(abs(x) for x in ints(charges[records.index(node.row(PLANE, gap=0))])),
         "W total": sum(ints(total)),
-        "W abs sum": sum(abs(x) for re, im in planes for x in ints(wronskian(re, im))),
+        "W abs sum": sum(abs(x) for w in charges for x in ints(w)),
         "gap-0 velocity max": gap0_v,
     }
 

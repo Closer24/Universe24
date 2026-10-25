@@ -144,15 +144,11 @@ INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the func
         "core/ports.py",
         ast.Mod,
         "wrap",
-        "the periodic wrap of a Node's index or an axis, the torus's one index arithmetic",
+        "the periodic wrap of a Node's index or an axis, the torus's own",
     ),
 )
-READERS = (
-    "run.py",
-    "decoder.py",
-    "gates.py",
-    "events.py",
-)  # the record's writer and readers, no act of the Node: their quotients are readings at a named scale
+# the record's writer and readers, no act of the Node: their quotients are readings at a named scale
+READERS = tuple(f"{n}.py" for n in "run decoder gates events circle board clicks predicates".split())
 
 
 def divisions(tree: ast.AST) -> list[tuple[int, type[ast.AST], str]]:
