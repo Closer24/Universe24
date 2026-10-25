@@ -372,6 +372,11 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
         if e["event"] == "refused" and e.get("row") == heavy and e["i"] <= merger["i"]
     ]
     assert refusals and all(e["cause"] == "stop" and tuple(e["node"]) in (m, p) for e in refusals)
+    probe = copy.deepcopy(kept)
+    for _ in range(merger["i"]):
+        probe.step()
+    re, im = probe.row(PLANE, gap=0).lines
+    assert int((re.now * im.before - im.now * re.before).sum()) == 0  # the light's charge at the merger
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 

@@ -163,6 +163,11 @@ def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() 
     assert bang["verdict"].startswith("SHOWN: 2 exact returns")
     assert out["46 the bangs recurring with the same gates"]["verdict"].startswith("NOT SHOWN")
     assert found["run_back"] == {"intervals": 10, "exact": 10} and found["counts"]["births"] == "0"
+    universe, world = world_of("world_pair_3.json")
+    tied = table.gates(
+        json.loads(json.dumps(writer.record(universe, dict(world, intervals=12), 0, lambda line: None)))
+    )
+    assert len(tied["2 the Links lengthening in the clicks"]["at"]) == 3  # every Node's spacing ties
 
 
 def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
@@ -218,8 +223,67 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
         zero.step()
     for bad, match in (
         (dict(moving, wave=[den + 1, 0, 0]), "beyond the band's edge"),
-        (dict(moving, row=0, wave=[0, 0, 0]), "a massless packet at the wave 0"),
+        (dict(moving, row=0, wave=[0, 0, 0]), "the gap-0 row at the wave 0"),
         (dict(moving, top=9), "a top is an odd count"),
         (dict(moving, interval=3), "a field of no form"),
     ):
         refused(match, Node, universe, dict(world, seed=[bad]))
+
+
+def test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv() -> None:
+    """MV-S1's 48 (vf5's item (a), the Boss's 6401916517; MV_COMPARISON.md's spec: the 48 with the centre and the wave transformed): the heavy row's pair of 3 quanta laid under the sea on the 5-cube at the wave [den div 2, den div 3, 0] and run two intervals, against the 48 worlds whose centre and wave are the image's: carried back by the image's inverse, the carrier's X and the row's re lines equal bit for bit, the im lines equal under a rotation and negated under a reflection (the senses exchanged), 24 and 24, 0 apart."""
+    universe, world = world_of("world_packet.json")
+    den, cube, centre = int(universe["integers"]["den"]), 5, [2, 2, 1]
+    wave = [den // 2, den // 3, 0]
+
+    def moved(g: tuple[tuple[int, ...], tuple[int, ...]], x: list[int], wrap: int) -> list[int]:
+        pi, s = g
+        y = [0, 0, 0]
+        for a in range(3):
+            y[pi[a]] = (s[a] * x[a]) % wrap if wrap else s[a] * x[a]
+        return y
+
+    def run(g: tuple[tuple[int, ...], tuple[int, ...]]) -> Node:
+        lay = {
+            "lay": "at",
+            "row": 2,
+            "centre": moved(g, centre, cube),
+            "width": 2,
+            "quanta": 3,
+            "wave": moved(g, wave, 0),
+        }
+        node = Node(
+            universe, dict(world, shape=[cube] * 3, intervals=2, seed=[{"lay": "sea", "row": 0}, lay])
+        )
+        node.step()
+        node.step()
+        return node
+
+    def back(a: Any, g: tuple[tuple[int, ...], tuple[int, ...]]) -> Any:
+        out = np.empty_like(a)
+        for idx in np.ndindex(*a.shape):
+            out[idx] = a[tuple(moved(g, list(idx), cube))]
+        return out
+
+    base = run(((0, 1, 2), (1, 1, 1)))
+    alike = {1: 0, -1: 0}
+    for pi in itertools.permutations(range(3)):
+        for s in itertools.product((1, -1), repeat=3):
+            g = (pi, s)
+            det = (
+                (-1) ** sum(1 for a in range(3) for b in range(a + 1, 3) if pi[a] > pi[b])
+                * s[0]
+                * s[1]
+                * s[2]
+            )
+            img = run(g)
+            same = bool((back(img.row(CARRIER).lines[0].now, g) == base.row(CARRIER).lines[0].now).all())
+            for (lb, li), sign in zip(
+                zip(base.by_index[2].lines, img.by_index[2].lines, strict=True), (1, det), strict=True
+            ):
+                same = same and bool(
+                    (back(li.now, g) == sign * lb.now).all()
+                    and (back(li.before, g) == sign * lb.before).all()
+                )
+            alike[det] += same
+    assert alike == {1: 24, -1: 24}
