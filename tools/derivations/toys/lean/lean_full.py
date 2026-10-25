@@ -116,11 +116,11 @@ class Lean:
             elif shape_ == 2 and pair is not None and pair[0] == pair[1]: wwalls = [action, None]  # the massless plane's first line takes the lay of W-S1 at the wall T
             else: wwalls = [None] * shape_
             return [Line(Z(S), Z(S), Z(S) + self.w // 2, self.w, None if ww is None else Z(S) + ww // 2, ww) for ww in wwalls]
-        self.rows_ = []
+        self.rows_ = []; self.by_index = []  # the rows in the file's order (a lay names a row by its index in the file)
         for r in universe['rows']:
             shape_ = int(r['shape']); pair = None if r.get('pair') is None else (int(r['pair'][0]), int(r['pair'][1])); wall = None if r.get('wall') is None else int(r['wall'])
             if shape_ == 1 and wall is None: raise ValueError('a shape-1 row with a pair: light is the plane whose pair is (den, den) (U-S2, the owner\'s word of 2026-10-25), no fourth shape')
-            self.rows_.append(Row(shape_, pair, wall, lines_of(shape_, pair, wall)))
+            self.rows_.append(Row(shape_, pair, wall, lines_of(shape_, pair, wall))); self.by_index.append(self.rows_[-1])
         # the acts' order: a row whose write reads other rows comes after them: the row with its own wall, the planes with a gap, the plane at the gap 0 (its lay reads the planes' Wronskian), the shape-4 row, the shape-10 row
         order = lambda r: 0 if r.wall is not None else {2: 1 + (r.gap == 0), 4: 3, 10: 4}.get(r.shape, 5)
         self.rows_.sort(key=order)
@@ -144,21 +144,21 @@ class Lean:
         self.drift = rule3.largest_below(action)
         packets = []
         for lay in world.get('seed', []):
-            form = lay.get('lay'); row = tuple(int(x) for x in lay['row']) if 'row' in lay else None
+            form = lay.get('lay'); r_ = self.by_index[int(lay['row'])] if 'row' in lay else None  # the row by its index in the universe file (the Boss's ruling of 2026-10-25: the index names it, not the pair)
+            if r_ is not None and r_.shape != 2: raise ValueError('a lay is onto a plane (shape 2)')
             if form == 'sea':
-                if row != (den, den): raise ValueError('a sea is the massless row\'s alone: the drift is its double root')
-                z = self.row(2, gap=0).lines[0]; z.now[:] = z.now + self.drift
+                if r_.gap != 0: raise ValueError('a sea is the massless plane\'s alone: the drift is its double root')
+                z = r_.lines[0]; z.now[:] = z.now + self.drift
             elif form == 'hole':
                 at = self.node_of(lay['at']); z = self.row(2, gap=0).lines[0]; z.now[at] = z.now[at] - self.drift
             elif form == 'at':
                 n = int(lay['quanta']); at = self.node_of(lay['centre'])
-                if row == (den, den): z = self.row(2, gap=0).lines[0]; z.now[at] = z.now[at] + n * self.drift
-                elif row in self.pairs: packets.append((self.records().index(self.lifts[self.pairs.index(row)]), at, int(lay.get('width', 0)), n))
-                else: raise ValueError('the world lays a row the universe has not')
+                if r_.gap == 0: z = r_.lines[0]; z.now[at] = z.now[at] + n * self.drift
+                else: packets.append((self.records().index(r_), at, int(lay.get('width', 0)), n))
             else: raise ValueError('a lay of no form of the law: %r' % (form,))
         # the toy's controls and readings, no lay of the law (named open for the owner's word): `control.well` a hand-held well of the volume (the content laid as a parabola within the radius, held fixed where the file says so), `detectors` the Nodes whose light credits the record reads
-        self.hold_volume = False
-        well = world.get('control', {}).get('well')
+        self.control = world.get('control', {}); self.hold_volume = False
+        well = self.control.get('well')
         if well:
             at = self.node_of(well['at']); levels, R = int(well['levels']), int(well['radius']); self.hold_volume = bool(well.get('held', False))
             for node in np.ndindex(*self.shape):
@@ -391,40 +391,38 @@ class Lean:
         frames = self.frames(walled.lines[0].rem); self.start_frames = frames
         cphi = paces.rounded(at(potential.lines[0]) * p0, self.gamma)  # the clocked potential at the potential's start level
         out = [None] * len(rows); ends = lambda k: (top, None if kept is None else kept[k])
-        # the row with its own wall (the phase row): its write 2 c_phi inside its division at its wall (the row 2 phi_now - phi_before + c_phi); the Links' count from the row at the start
-        k = where(walled); (phi_start,), _l, out[k] = self.act(rows[k], self.rule_of(walled, c, factors), None, [None], direction, [2 * cphi], *ends(k))
-        K = self.centred_count(cphi, phi_start)
-        self.count_max = max(int(abs(int(x))) for port in range(6) for x in (K - frames[port] * across(K, port)).reshape(-1))  # the Links' count's size this interval (a reading)
-        phases = self.link_phases(frames, K); odd = [at(l) for l in potential.lines[1:4]]
-        self.start_phases, self.start_odd = phases, [o.copy() for o in odd]
-        stress = stress_parts([(at(l), r.pair[0]) for r in records for l in r.lines], self.shape)
-        trace, traceless = tensor_parts(stress)
-        # the planes: no write; their forms, Wronskians and currents feed the other rows' writes
-        forms = Z(self.shape); W_start = Z(self.shape); W = Z(self.shape); J = [Z(self.shape) for _ in range(3)]; plane_starts = []; stepped = []
-        # the planes, every one the same act: Rule3 with the arrivals turned by the Link's pair and the odd tangent for a plane with a gap, by nothing for the plane at the gap 0 (K = omega_0 Gamma = 0: the massless pair turns nothing); the plane at the gap 0 comes last and its first line is written W-S1 (the owner's sentence 3): the change of the planes' Wronskian over the interval, summed over the planes acted before it, at the wall T; a steady rotation lays nothing
-        for r in records:
-            k = where(r); numerators = [W - W_start, None] if r.gap == 0 else [None, None]
-            start, levels, out[k] = self.act(rows[k], self.rule_of(r, c, factors), None if r.gap == 0 else (phases, odd, frames), numerators, direction, None, *ends(k))
-            re, im = start
-            forms = forms + (re.now * re.now - levels[0] * re.before) + (im.now * im.now - levels[1] * im.before)
-            W_start = W_start + wronskian(re, im)
-            after = out[k] if direction == 1 else held[k]  # the planes as the step left them
-            W = W + wronskian(*after); stepped.append([l.copy() for l in after])
-            for a, j_a in enumerate(plane_current(re, im, frames)): J[a] = J[a] + j_a
-            plane_starts.append(start)
-            if r.gap == 0 and direction == 1:  # the emission's size, a reading of the run: the levels laid on the massless line and the Nodes they were laid at
-                laid = out[k][0].now - levels[0]
-                self.counts['light_laid'] += int(sum(abs(int(x)) for x in laid.reshape(-1))); self.counts['light_laid_nodes'] += int(sum(1 for x in laid.reshape(-1) if int(x) != 0))
+        riding = records + ([potential] if self.control.get('metric_sources') == 'every riding row' else [])  # the rows whose form and tensions source the metric's write: the planes alone, or every row that divides at the carrier's wall (the shape-4 row too; the Boss's 2(a), measured against the planes alone)
+        trace, traceless = tensor_parts(stress_parts([(at(l), r.pair[0]) for r in riding for l in r.lines], self.shape))
+        forms = Z(self.shape); W_start = Z(self.shape); W = Z(self.shape); J = [Z(self.shape) for _ in range(3)]; plane_starts = []; stepped = []; phases = odd = None
+        # one loop over the rows in the acts' order, one act on every row alike; what a row's write reads and what turns its arrivals is a function of its shape and its pair (the law's table): the walled row carries its write 2 c_phi inside its division and gives the Links' count; a plane with a gap is turned by the Link's pair and the odd tangent, the plane at the gap 0 by nothing (K = omega_0 Gamma = 0) and its first line takes W-S1 (the planes' Wronskian change, the planes acted before it); the shape-4 row's time line takes 2 W and its other lines the planes' current; the shape-10 row's time line takes every riding row's form less the pressure and its axis lines the traceless stress, its other lines nothing
+        for r in self.rows_:
+            k = where(r); rule = self.rule_of(r, c, factors); turn = None; flux = None; numerators = [None] * r.shape
+            if r.wall is not None: flux = [2 * cphi]
+            elif r.shape == 2:
+                turn = None if r.gap == 0 else (phases, odd, frames)
+                if r.gap == 0: numerators = [W - W_start, None]
+            elif r.shape == 4: numerators = [2 * W, *J]
+            elif r.shape == 10:
+                if self.hold_volume: out[k] = rows[k]; continue  # the control: the metric's row held by hand, no act on it in either direction
+                X = at(r.lines[0]); p02 = p0 * p0
+                numerators = [4 * X * (forms * 54 * self.den * self.gamma ** 2 - trace * p02) * p0] + [traceless[a] * p02 for a in range(3)] + [None] * (r.shape - 4)
+            start, levels, out[k] = self.act(rows[k], rule, turn, numerators, direction, flux, *ends(k))
+            if r in riding:  # the form of every line that rides the carrier, read for the metric's write
+                for l0, lv in zip(start, levels): forms = forms + (l0.now * l0.now - lv * l0.before)
+            if r.wall is not None:  # the Links' count from the walled row at the start, the phase pair and the odd tangent for the planes' turn
+                K = self.centred_count(cphi, start[0])
+                self.count_max = max(int(abs(int(x))) for port in range(6) for x in (K - frames[port] * across(K, port)).reshape(-1))  # the Links' count's size this interval (a reading)
+                phases = self.link_phases(frames, K); odd = [at(l) for l in potential.lines[1:4]]
+                self.start_phases, self.start_odd = phases, [o.copy() for o in odd]
+            elif r.shape == 2:  # a plane's readings for the writes after it: its Wronskian before and after the step, its current
+                re, im = start; W_start = W_start + wronskian(re, im)
+                after = out[k] if direction == 1 else held[k]  # the plane as the step left it
+                W = W + wronskian(*after); stepped.append([l.copy() for l in after]); plane_starts.append(start)
+                for a, j_a in enumerate(plane_current(re, im, frames)): J[a] = J[a] + j_a
+                if r.gap == 0 and direction == 1:  # the emission's size, a reading of the run: the levels laid on the massless line and the Nodes they were laid at
+                    laid = out[k][0].now - levels[0]
+                    self.counts['light_laid'] += int(sum(abs(int(x)) for x in laid.reshape(-1))); self.counts['light_laid_nodes'] += int(sum(1 for x in laid.reshape(-1) if int(x) != 0))
         self.stepped = stepped  # kept for the credits' frame (the swap discards it at a turned Node)
-        # the potential's row: its time line written 2 W, its three other lines the planes' current, at the wall T
-        k = where(potential); _s, _l, out[k] = self.act(rows[k], self.rule_of(potential, c, factors), None, [2 * W, *J], direction, None, *ends(k))
-        # the metric's row: its time line written (d + 1) X c over Gamma E_s T less the pressure (the stress's trace at the pace squared, engine records.pressure_term), its three axis lines the traceless stress at the write's factor (p0 / Gamma)^2 (engine held_write_of), its six other lines written by nothing
-        k = where(metric)
-        if self.hold_volume: out[k] = rows[k]  # the control: the metric's row held by hand, no act on it in either direction
-        else:
-            X = at(metric.lines[0]); p02 = p0 * p0
-            numerators = [4 * X * (forms * 54 * self.den * self.gamma ** 2 - trace * p02) * p0] + [traceless[a] * p02 for a in range(3)] + [None] * (metric.shape - 4)
-            _s, _l, out[k] = self.act(rows[k], self.rule_of(metric, c, factors), None, numerators, direction, None, *ends(k))
         self.set_rows(out)
         if direction == -1: self.interval -= 1; return
         counters = ([a.copy() for a in self.standing], [a.copy() for a in self.crossed], [a.copy() for a in self.beats])
@@ -442,7 +440,7 @@ class Lean:
 
     def read_number(self, at, rules):
         """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = unit x 3 (the carry); the three refusals by name."""
-        M = self.unit_gap0 * 3
+        M = self.unit_gap0 * len(self.records())  # the draw composed modulo the planes' count times the massless unit: the quotient names the plane, over every plane alike
         nodes = self.frame_nodes(at); digits = []; origin = True; coarse = True
         half = self.w // 2
         for line, r in rules:
@@ -528,7 +526,7 @@ class Lean:
                 drawn = self.read_number(plus, rules)
                 if drawn is None: continue
                 number, room = drawn
-                born.append((plus, self.records().index(self.lifts[(number // self.unit_gap0) % self.nl]), minus, plus, room))  # the lift drawn, as its row's index among the planes
+                born.append((plus, (number // self.unit_gap0) % len(self.records()), minus, plus, room))  # the plane drawn, over every plane alike (the massless plane among them)
         return born
 
     def refuse(self, born, owns):
@@ -601,7 +599,7 @@ class Lean:
             rise = int(sh_end[det]) // self.unit_gap0 - int(sh_vac[det]) // self.unit_gap0
             if rise > 0:
                 self.counts['light_credits'] += rise
-                self.log.append({'event': 'light', 'i': self.interval, 'node': list(det), 'quanta': rise, 'proper': int(self.proper[det]), 'content': int(c[det]), 'light_now': int(z.now[det]), 'light_before': int(z.before[det])})
+                self.log.append({'event': 'detector', 'i': self.interval, 'node': list(det), 'line': self.records().index(self.row(2, gap=0)), 'quanta': rise, 'proper': int(self.proper[det]), 'content': int(c[det]), 'light_now': int(z.now[det]), 'light_before': int(z.before[det])})
 
     def click(self, plane_starts):
         """The click (ALGEBRA.md, The click writes on the lattice), the Node's fourth act: the readings at the start (the rules of every row, the massless row's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`), the lays refused by name (`refuse`), the births taken and laid (`births`), the bodies' closing (`bodies`), the detectors' credits (`detect`); `gap0_start` and `plane_starts` the massless row's line and the planes' lines at the interval's start. The one-Link read of a number takes every row's first line and a plane's both (the former toy's digit set, kept until the Boss's word on reading every line)."""

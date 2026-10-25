@@ -14,12 +14,13 @@ class Record:
     """The record as the decoder reads it: the two files' integers, the lifts by their legs (the decoder's names, never the Node's), the log's credits, births and refusals, the rows of the board's course."""
     def __init__(self, run):
         self.run = run; self.den = int(run['den']); self.gamma, self.G, self.T = run['gamma'], run['G'], run['T']
-        lifts = sorted([(sine_den(int(num), self.den), int(num)) for _v, num, _s in run['lifts']])
+        planes = [tuple(int(x) for x in r['pair']) for r in run['universe']['rows'] if int(r['shape']) == 2 and r.get('pair')]  # the planes from the universe file by shape and pair (the decoder's own names below, never the Node's)
+        lifts = sorted([(sine_den(num, self.den), num) for num, _den in planes if num != _den])
         self.NL = len(lifts)
         names = ['electron', 'proton', 'neutron'] if self.NL == 3 else ['lift %d' % k for k in range(self.NL)]
         self.NAMES = {num: (name, leg) for (leg, num), name in zip(lifts, names)}
         self.NAMES[self.den] = ('massless', 0)  # the plane at the gap 0: the decoder's name for it, never the Node's
-        self.line_num = [int(num) for num in run['planes']] if 'planes' in run else [int(run['lifts'][i][1]) for i in range(self.NL)]  # every plane's num by its row index among the planes (the credit's and the birth's line)
+        self.line_num = [int(num) for num in run['planes']]  # every plane's num by its row index among the planes (the credit's and the birth's line)
         self.log = run['log']; self.credits = [l for l in self.log if l['event'] == 'credit']; self.births = [l for l in self.log if l['event'] == 'birth']
         self.rows = run['rows']; self.w = rule3.wall_of(self.den, self.gamma, self.G)
 
@@ -209,7 +210,7 @@ def light_and_arrow(R):
     credits, log, run = R.credits, R.log, R.run
     beats_by_line = defaultdict(list)
     for c in credits: beats_by_line[(tuple(c['node']), c['line'])].append((c['proper'], c['beat'], c['proper']))
-    light_credits = [l for l in log if l['event'] == 'light']
+    light_credits = [l for l in log if l['event'] == 'detector']
     if light_credits:
         # the detector's clock: the spacing of its light credits in its own proper count (the middle spacing); the bodies' clocks: the spacing of a record's clicks in its proper count at its Node; the ratio against the two Nodes' contents (the volume's level)
         by_det = defaultdict(list)
