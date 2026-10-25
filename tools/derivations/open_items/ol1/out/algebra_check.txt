@@ -1,0 +1,2 @@
+{'J(K N) = -J(N) at every Node and axis': True, 'kick form its own mirror': True, 'PL-S1 charge form its own mirror': True, 'turn by (tc, -ts) of K z = K (turn of z)': True, 'J at the origin': [34520, -25744, -25636], 'kick form at the origin': [-1745, -9228, 5818]}
+PASS
