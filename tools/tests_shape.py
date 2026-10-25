@@ -64,6 +64,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "SL-S1 (2026-10-25, the Boss's 6399718139, SL_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "
         "every born pair's Link meeting at the next close with no current and refused by the orientation (5 of 5), the meetings counted, the run back exact",
     ),
+    "tests/test_the_node.py::test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the_light_sl_s2": (
+        35,
+        "SL-S2 (2026-10-25, the Boss's ledger item 10, SL_COMPARISON.md: the test under 15 s): the heaviest record's conjugate pair fed at two adjacent Nodes of the bare 5-cube at 20 intervals, "
+        "one merger (the taken row the heaviest record, the children the gap-0 row), each child's wall one light quantum to the rounding paid by one exact take at its own end, the gap-0 row whole at each end, the charge 0, the stop by name, the run back exact",
+    ),
     "tests/test_the_node.py::test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1": (
         17,
         "MS-S1 (2026-10-25, the owner's word through the Boss, 6399410929, MS_COMPARISON.md section 5: the test under 15 s beside the sentence): the lay's pair (A, B) with A B = T div 2 from T alone, "
@@ -76,6 +81,15 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_board.py::test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma": (
         27,
         "MA-S1 (2026-10-25, the Boss's 6400767119 (4), MA_COMPARISON.md section 4: the test under 15 s): the pair at every Node of the 3-cube by the file's `at` lays to 400, every Node alike, the whole board turning at once at the top, births 0, the bottom named against Gamma, the run back exact",
+    ),
+    "tests/test_the_board.py::test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb": (
+        17,
+        "BB-S1 and MA-S1 (2026-10-25, the Boss's 6400540638 and 6400767119 (2), BB_COMPARISON.md section 4: gate 1 from the Node lines, the test under 15 s): the sea on the 3-cube to 240, the exact returns at 115 and 230, the whole board turning at 58 and 173, the bangs numbered, no birth between",
+    ),
+    "tests/test_the_board.py::test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv": (
+        58,
+        "MV-S1 to MV-S3 (2026-10-25, the Boss's ledger item 7, MV_COMPARISON.md section for David: the test under 15 s): the heavy row's pair of 3 quanta laid with a wave number under the sea on the 9-cube, "
+        "W 0 at every Node, the share centroid's step at each of the first four closes against (1000 P) div (2 E) within 40 milli by cross multiplication, the top's value above, wave 0 hash-equal to no wave, the four refusals by name, the run back exact through 10",
     ),
     "tests/test_the_node.py::shares_of": (
         11,

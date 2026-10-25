@@ -144,6 +144,7 @@ def take_at(
                 "cause": "stop",
                 "fall": fall,
                 "walls": walls,
+                "row": taken,
             }
         )
         return None

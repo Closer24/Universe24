@@ -12,27 +12,24 @@ from event_universe.gates import gates, kind_of
 from event_universe.run import record
 from tests.laws import ROOT, load_file, world_of
 
-RECORDS = ROOT / "examples" / "records"
-WIDTH = 128
+RECORDS, WIDTH = ROOT / "examples" / "records", 128
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43},
     "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45},
     "bodies": {2, 3, 5, 6, 7, 8, 10, 16, 18, 30, 37, 43, 45},
 }
-UNREACHED = {14, 34}  # the horizon on the three records: NOT REACHED
 VERDICTS = {  # the verdicts' words by name
     "hole": {"22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part"},
     "chiral": {"9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart"},
     "bodies": {"37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link"},
 }
-SHOWN = dict.fromkeys(SHOWN_ROWS)
 
 
 def loaded(name: str) -> dict[str, Any]:
     return json.loads((RECORDS / f"{name}.json").read_text(encoding="utf-8"))
 
 
-@pytest.mark.parametrize("name", sorted(SHOWN))
+@pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
 def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
     kinds = {
@@ -40,7 +37,7 @@ def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     }
     assert len(kinds) == 54
     assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
-    assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == UNREACHED
+    assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == {14, 34}  # the horizon
     for gate, verdict in VERDICTS[name].items():
         assert found[gate]["verdict"].startswith(verdict), (name, gate, found[gate]["verdict"])
     assert found["the three constants"]["verdict"].startswith("SHOWN")
@@ -54,7 +51,7 @@ def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     }[name]
 
 
-@pytest.mark.parametrize("name", sorted(SHOWN))
+@pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
 def test_the_conservations_hold_on_the_record(name: str) -> None:
     run = loaded(name)
     births = [e for e in run["log"] if e["event"] == "birth"]
@@ -85,7 +82,7 @@ def reading_of(name: str) -> list[dict[str, Any]]:
     return [json.loads(line) for line in lines if line.strip()]
 
 
-@pytest.mark.parametrize("name", sorted(SHOWN))
+@pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
 def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(name: str) -> None:
     run = loaded(name)
     count = int(run["cube"]) ** 3
