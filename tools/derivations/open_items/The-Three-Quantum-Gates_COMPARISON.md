@@ -1,4 +1,4 @@
-# The three quantum gates (the two slits, Bell, the GHZ gate): two blind hands on Universe24's records (the Boss's cold read, 2026-10-26, 00:0x UTC; engine-5.0-test 457beb22e)
+# The three quantum gates (the two slits, Bell, the GHZ gate): two blind hands on Universe24's records (the Boss's cold read, 2026-10-25, 23:2x UTC; engine-5.0-test 457beb22e)
 
 The owner's words (2026-10-25, 23:27, 23:40, 23:43, 23:50 UTC, in translation): run the derivations that are not for the code or the decoder, Bell, GHZ, the two slits; must they appear in Universe24; will they appear after the bang; "you say the trials are proven in Universe24 without real slits on the board?" (his word for the three, rendered here as trials); "right, the one run is Universe24, everything must happen there". The brief to both hands: the three as predicates on Universe24's records from the seed, one function each in gates.py's shape, no act; a laid world only as a test of the edge, never the count. The folders: H-Quantum-Gates-1 (qg1) and H-Quantum-Gates-2 (qg2). Every run back 10 of 10; integers only; no src edit by either.
 
