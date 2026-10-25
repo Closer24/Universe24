@@ -1,17 +1,13 @@
-"""The phase line as a standalone module (features/phase; ALGEBRA.md #the-four-acts (b), #the-direction; the two hands' item (i)): a Rule3 pair at the one fixed angle theta_0 = 1 / Gamma (K_0 = 2 Gamma^2 - 1 over D = 2 Gamma^2), seeded on the half wall at an amplitude a multiple of Gamma, iterated by a level with the angle signed, read as the hop's two integers and folded into the Link's one coefficient rounding; and the family's rest rotation to the unit found by a bisection on the act and no root. The bound used throughout (item (i), both hands): the pair's magnitude within Gamma / 2 levels of X standing plus the walk's proved 1.42 N + 2.3 Gamma levels over the test's N acts (`bound`), never a count. Every test under 30 seconds; each prints its numbers with its time."""
+"""The phase line as a standalone module (features/phase; ALGEBRA.md #the-four-acts (b), #the-direction; the two hands' item (i)): a Rule3 pair at the one fixed angle theta_0 = 1 / Gamma (K_0 = 2 Gamma^2 - 1 over D = 2 Gamma^2), seeded on the half wall at an amplitude a multiple of Gamma, iterated by a level with the angle signed, read as the hop's two integers and folded into the Link's one coefficient rounding. Integers throughout, the owner's word (no float anywhere in the system, the tests inside it): a magnitude within B levels of X is the inequality (X - B)^2 <= c^2 + s^2 <= (X + B)^2; the cosine is the exact rational K_0 / D by cross multiplication; the sine is the module's own integer sine (`core/paces.sine_den`, the largest integer whose square is at most the product, no root); the angle is bracketed by the cosine's Taylor bounds as one integer inequality. The bound used throughout (item (i), both hands): the pair's magnitude within Gamma / 2 levels of X standing plus the walk's proved 1.42 N + 2.3 Gamma levels over the test's N acts, taken at the integer ceiling (`bound`), never a count. Every test under 15 seconds; each prints its numbers with its time."""
 
-import math
 import time
 
 import numpy as np
 
-from event_universe.core.paces import rounded
+from event_universe.core.paces import rounded, sine_den
+from event_universe.core.rule3 import largest_below
 from event_universe.features.phase import K0, D, act, half_wall, seed
 from tests.laws import refused
-
-
-def read(pair):
-    return pair[0][0], pair[1][0]
 
 
 def iterate(pair, count, gamma, direction=1):
@@ -22,48 +18,54 @@ def iterate(pair, count, gamma, direction=1):
 
 
 GAMMA = 6_000
-WALL, COEFFICIENT = D(GAMMA), K0(GAMMA)
-THETA = math.acos(COEFFICIENT / WALL)  # the angle per act, the integer pair's own
+WALL, COEFFICIENT, X175 = D(GAMMA), K0(GAMMA), 175 * GAMMA
 X35 = (2**35 // GAMMA) * GAMMA  # 2^35's size, the largest multiple of Gamma below it: 34,359,738,000
-X175 = 175 * GAMMA
-LINK_UNIT = 2_048_000  # the fold's unit X_ij of the hands' chains
+TENTH, ROOM = 10**10, 10**10 + 26  # the angle's relative unit, and (1 + 2.6 x 10^-9) 10^10
 
 
-def bound(acts: int) -> float:
-    """The hands' bound in levels after `acts` acts: Gamma / 2 standing (the mean remainder, a telescoping sum) plus the walk's proved 1.42 N + 2.3 Gamma (item (i), the mathematician's 2)."""
-    return GAMMA / 2 + 1.42 * acts + 2.3 * GAMMA
+def bound(acts: int) -> int:
+    """The hands' bound in levels after `acts` acts, at its integer ceiling: (Gamma + 1) div 2 standing (the mean remainder, a telescoping sum) plus the walk's proved 1.42 N + 2.3 Gamma (item (i), the mathematician's 2), (142 N + 230 Gamma + 99) div 100."""
+    return (GAMMA + 1) // 2 + (142 * acts + 230 * GAMMA + 99) // 100
 
 
-def magnitude_off(pair, amplitude) -> float:  # type: ignore[no-untyped-def]
-    """|c + i s| - X in levels at the pair's now."""
-    c, s = read(pair)
-    return math.hypot(int(c), int(s)) - amplitude
+def within(pair, x: int, room: int, index: int = 0) -> bool:
+    """The pair's (c, s) at the now (index 0) or at the before (index 1) within `room` levels of X in magnitude, as the integer inequality (X - room)^2 <= c^2 + s^2 <= (X + room)^2."""
+    c, s = int(pair[0][index]), int(pair[1][index])
+    return (x - room) ** 2 <= c * c + s * s <= (x + room) ** 2
+
+
+def off(pair, x: int, index: int = 0) -> tuple[int, int]:
+    """|c + i s| - X in levels as a quotient with its remainder: the largest integer whose square is at most c^2 + s^2 (`rule3.largest_below`, no root), less X, and the square's excess over that integer's square."""
+    c, s = int(pair[0][index]), int(pair[1][index])
+    floor = largest_below(c * c + s * s)
+    return floor - x, c * c + s * s - floor * floor
 
 
 def test_the_seed_stands_on_the_circle_at_the_half_wall_and_refuses_an_amplitude_off_gamma():
-    """The fixed angle: D = 2 Gamma^2 = 72,000,000, K_0 = 71,999,999, 2 K_0 / D = 2 - 1 / Gamma^2 exactly, theta_0 within 2.6 x 10^-9 of 1 / Gamma relative. The seed at X of 2^35's size and at X = 175 Gamma: the cosine line (X, X cos theta_0 rounded half up, D div 2), the sine line (0, -(X div Gamma), D div 2), the sine seed within a level of X sin theta_0 (the advisor's second, item 4); c^2 + s^2 within the bound of X^2 at the now and at the before, and after ten acts; 2^35 itself and 2^35 + 1 refused by name (neither a multiple of Gamma = 2^4 3 5^3)."""
+    """The fixed angle: D = 2 Gamma^2 = 72,000,000, K_0 = D - 1 = 71,999,999, 2 K_0 / D = 2 - 1 / Gamma^2 exactly by cross multiplication; theta_0 Gamma in [1, 1 + 2.6 x 10^-9]: cos x > 1 - x^2 / 2 at x = 1 / Gamma = cos theta_0, and cos x <= 1 - x^2 / 2 + x^4 / 24 at x = ROOM / (Gamma 10^10) is at most cos theta_0 by the integer inequality 12 Gamma^2 (ROOM^2 10^20 - 10^40) >= ROOM^4. The seed at X of 2^35's size and at X = 175 Gamma: the cosine line (X, X cos theta_0 rounded half up, D div 2), the before within half a level of X K_0 / D (2 |D before - X K_0| <= D), the sine line (0, -(X div Gamma), D div 2), the sine seed within a level of X sin theta_0 (the advisor's second, item 4) against the module's integer sine floor(X D sin theta_0); c^2 + s^2 within the bound of X^2 at the now and at the before, and after ten acts; 2^35 itself and 2^35 + 1 refused by name (neither a multiple of Gamma = 2^4 3 5^3)."""
     started = time.perf_counter()
-    assert (WALL, COEFFICIENT) == (72_000_000, 71_999_999)
-    assert 2 * COEFFICIENT / WALL == 2 - 1 / GAMMA**2
-    assert abs(THETA * GAMMA - 1) < 2.7e-9 and half_wall(GAMMA) == GAMMA**2 == WALL // 2
-    for amplitude in (X35, X175):
-        cosine, sine = pair = seed(amplitude, GAMMA)
-        assert cosine == (amplitude, rounded(amplitude * COEFFICIENT, WALL), WALL // 2)
-        assert sine == (0, -(amplitude // GAMMA), WALL // 2)
-        assert abs(cosine[1] - amplitude * math.cos(THETA)) <= 0.5
-        assert abs(-sine[1] - amplitude * math.sin(THETA)) <= 1
-        assert abs(magnitude_off(pair, amplitude)) <= bound(0)
-        before = math.hypot(cosine[1], sine[1]) - amplitude
-        assert abs(before) <= bound(0)
-        turned = iterate(pair, 10, GAMMA)
-        assert abs(magnitude_off(turned, amplitude)) <= bound(10)
+    assert (WALL, COEFFICIENT) == (2 * GAMMA**2, WALL - 1) == (72_000_000, 71_999_999)
+    assert 2 * COEFFICIENT * GAMMA**2 == (2 * GAMMA**2 - 1) * WALL  # 2 K_0 / D = 2 - 1 / Gamma^2
+    margin = 12 * GAMMA**2 * (ROOM**2 * TENTH**2 - TENTH**4) - ROOM**4
+    assert margin >= 0 and half_wall(GAMMA) == GAMMA**2 == WALL // 2
+    for x in (X35, X175):
+        cosine, sine = pair = seed(x, GAMMA)
+        assert cosine == (x, rounded(x * COEFFICIENT, WALL), WALL // 2)
+        assert sine == (0, -(x // GAMMA), WALL // 2)
+        assert 2 * abs(WALL * int(cosine[1]) - x * COEFFICIENT) <= WALL
+        scaled = -int(sine[1]) * WALL  # (X div Gamma) D against floor(X D sin theta_0)
+        assert scaled - WALL <= sine_den(COEFFICIENT, WALL, x) < scaled + WALL
+        assert within(pair, x, bound(0)) and within(pair, x, bound(0), 1)
+        assert within(turned := iterate(pair, 10, GAMMA), x, bound(10))
         print(
-            f"seed X = {amplitude}: now off {magnitude_off(pair, amplitude):.3f} levels, before off {before:.3f}, after 10 acts {magnitude_off(turned, amplitude):.3f} (bound {bound(10):.0f})"
+            f"seed X = {x}: now off {off(pair, x)} levels (floor, the square's excess), before off {off(pair, x, 1)}, after 10 acts {off(turned, x)} (bound {bound(10)})"
         )
     refused("not a multiple of Gamma", seed, 2**35, GAMMA)
     refused("not a multiple of Gamma", seed, 2**35 + 1, GAMMA)
     refused("not a multiple", seed, np.array([X35, X35 + 1], dtype=np.int64), GAMMA)
-    print(f"theta_0 Gamma - 1 = {THETA * GAMMA - 1:.3e}; {time.perf_counter() - started:.2f} s")
+    print(
+        f"theta_0 Gamma - 1 <= {ROOM - TENTH} / 10^10, margin {margin}; {time.perf_counter() - started:.2f} s"
+    )
 
 
 def test_the_reversal_is_bit_exact_over_ten_thousand_acts():

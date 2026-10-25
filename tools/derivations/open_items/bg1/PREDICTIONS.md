@@ -1,0 +1,12 @@
+# bg1: the predictions, written before the runs are read (2026-10-25, 16:0x UTC)
+
+The one-Node line under the ride (the algebra in the report, section 1): X'' = -2 (X / Gamma)^(1/2) [the pair's gap, floor] + 4 X forms p_0 / (Gamma^2 T) - trace term + the Links' term (0 on the uniform board).
+
+- sea3 default (the uniform 3-cube, the drift alone, 400 intervals): the drift's forms 189^2 per Node die as (Gamma / X)^2; the energy balance gives the top near X 2,000 to 2,100 (the mean), between intervals 55 and 90; every Node turns at once (the uniform board), the retrace exact, the seed reached again at twice the top's interval; the second rise bit for bit the first (a closed orbit); births 0 throughout; the run back 10 of 10.
+- chiral 2,400 default: the Boss's marks reproduced (1,002 at 1; 39,099 at 100; about 25,800 at 200; 6,551,770 at 2,400); one top between 60 and 130, one fall to about 200, no second top; births 14, body clicks 0, turns 5,141; state 115 bits, transient 108; run back 10 of 10. The decomposition: the gap-0 drift's forms below 1 per Node by interval 300; the write held above the mass term at 2,400 (mass about 160 per Node) by the riding rows written each interval (the shape-4 row, its time line written by 2 W) or by the gapped rows; which one the run says.
+- collapse 800 at 400 default: max content about 1,185 (bh1); the core's X rises to its first weak maximum and turns (the swap), the max content set at that first top; body credits about 212 (PM's default number).
+- bodies 120 default: 83 credits (PM's default number); max content below 1,000.
+- (a) forms x X div Gamma: births 14 (X / Gamma 1 at the births); the mean volume above the default's at every mark after 100; no return by 2,400; the transient bits above the default's by the bits of X / Gamma (about 13 at 2,400), run back 10 of 10, 98 integers.
+- (b) the wall at Y = largest_below(X Gamma): the riders' velocity dies as 1 / Y (a^(-2)); the write's source dims one power slower than the default's in a; the top later and higher than the default's; the run back 10 of 10; the state bits at most the default's (Y below X).
+- (c) the strict trigger: turns well below 5,141 on the chiral 2,400 (the flat tops and the rest's dips not fired); the births 14; the run back 10 of 10 (the strict maximum an involution).
+- (d) the trailing p_0 replaced by Gamma: the push larger by Gamma / p_0 (1 at the seed, about 9 at X 6.5 x 10^6); births 14; the mean volume above the default's at every mark; no return by 2,400; the transient bits about the default's plus 3.
