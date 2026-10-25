@@ -1,0 +1,43 @@
+{
+ "toy": "toy",
+ "world": "worlds/chiral300.json",
+ "intervals": 300,
+ "flag": null,
+ "state hash at the end": "21a35d9adea6954dc4646b99e6b27733aefba60d9bad6598ec5cefc2d3df396d",
+ "log sha256": "7ed51d7bd679fa92dd211371564d38abe3a8a4f900f7c09c7e9f225a6236aa85",
+ "log lines": null,
+ "counts": {
+  "births": 16,
+  "taken": 37450057102094138190653,
+  "booked": 35545794554425772736000,
+  "body_clicks": 311,
+  "refused_stop": 36,
+  "refused_origin": 0,
+  "refused_lay": 64931,
+  "refused_orientation": 26,
+  "refused_twist": 0,
+  "turns": 769,
+  "light_credits": 0,
+  "light_laid": 1,
+  "light_laid_nodes": 1
+ },
+ "integers per Node": 98,
+ "max state bits": 115,
+ "max transient bits": 130,
+ "run back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "remainders at 0 at the end (where w - r would fail the mirror)": 67,
+ "seconds": 54,
+ "readings": {
+  "ties negative (odd rounding differs from half up)": 67,
+  "ties positive (the two agree)": 70,
+  "turned Node-records": 3076,
+  "W kept at the turned Node": 3071,
+  "wall identity 2w = S + D + sum R held at Nodes": 37500,
+  "wall identity Nodes": 37500,
+  "Links with F_ij + F_ji = 0": 112500,
+  "Links": 112500
+ }
+}
