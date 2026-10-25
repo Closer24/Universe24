@@ -1,0 +1,18 @@
+== world_hole60.json
+src flag '' FREE False state 284cc652cfec62b9 log 286cc0edd89c5639 303 rows a4ae8f35c796da65 nodes 10839b0e1b79a2d1 births 8 credits 0 turns 570 run back {'intervals': 10, 'exact': 10} census [98, 115] transient 99 charge 0 zero senses 0 taken>=booked 8 of 8
+copy_off flag '' FREE False state 284cc652cfec62b9 log 286cc0edd89c5639 303 rows a4ae8f35c796da65 nodes 10839b0e1b79a2d1 births 8 credits 0 turns 570 run back {'intervals': 10, 'exact': 10} census [98, 115] transient 99 charge 0 zero senses 0 taken>=booked 8 of 8
+copy_free flag '1' FREE True state 284cc652cfec62b9 log 286cc0edd89c5639 303 rows a4ae8f35c796da65 nodes 10839b0e1b79a2d1 births 8 credits 0 turns 570 run back {'intervals': 10, 'exact': 10} census [98, 115] transient 99 charge 0 zero senses 0 taken>=booked 8 of 8
+  copy_off against src: equal ['state_hash', 'log_digest', 'rows_digest', 'nodes_digest', 'counts', 'run_back', 'census', 'max_transient', 'turns_total']; apart []
+  copy_free against src: equal ['state_hash', 'log_digest', 'rows_digest', 'nodes_digest', 'counts', 'run_back', 'census', 'max_transient', 'turns_total']; apart []
+== world_chiral300.json
+src flag '' FREE False state 151a630ba8cf9c52 log e654fb79e2dd7b88 405 rows e39500b3d5866526 nodes 3567b104ac151c13 births 14 credits 0 turns 1877 run back {'intervals': 10, 'exact': 10} census [98, 115] transient 101 charge 0 zero senses 0 taken>=booked 14 of 14
+copy_off flag '' FREE False state 151a630ba8cf9c52 log e654fb79e2dd7b88 405 rows e39500b3d5866526 nodes 3567b104ac151c13 births 14 credits 0 turns 1877 run back {'intervals': 10, 'exact': 10} census [98, 115] transient 101 charge 0 zero senses 0 taken>=booked 14 of 14
+copy_free flag '1' FREE True state 151a630ba8cf9c52 log e654fb79e2dd7b88 405 rows e39500b3d5866526 nodes 3567b104ac151c13 births 14 credits 0 turns 1877 run back {'intervals': 10, 'exact': 10} census [98, 115] transient 101 charge 0 zero senses 0 taken>=booked 14 of 14
+  copy_off against src: equal ['state_hash', 'log_digest', 'rows_digest', 'nodes_digest', 'counts', 'run_back', 'census', 'max_transient', 'turns_total']; apart []
+  copy_free against src: equal ['state_hash', 'log_digest', 'rows_digest', 'nodes_digest', 'counts', 'run_back', 'census', 'max_transient', 'turns_total']; apart []
+== world_bodies120.json
+src flag '' FREE False state 83823e616ca50f90 log b681400e992845c6 368 rows 255d20cac27676f4 nodes 136c0a5a4fc3b64a births 0 credits 83 turns 1573 run back {'intervals': 10, 'exact': 10} census [89, 92] transient 77 charge 0 zero senses 0 taken>=booked 0 of 0
+copy_off flag '' FREE False state 83823e616ca50f90 log b681400e992845c6 368 rows 255d20cac27676f4 nodes 136c0a5a4fc3b64a births 0 credits 83 turns 1573 run back {'intervals': 10, 'exact': 10} census [89, 92] transient 77 charge 0 zero senses 0 taken>=booked 0 of 0
+copy_free flag '1' FREE True state 83823e616ca50f90 log b681400e992845c6 368 rows 255d20cac27676f4 nodes 136c0a5a4fc3b64a births 0 credits 83 turns 1573 run back {'intervals': 10, 'exact': 10} census [89, 92] transient 77 charge 0 zero senses 0 taken>=booked 0 of 0
+  copy_off against src: equal ['state_hash', 'log_digest', 'rows_digest', 'nodes_digest', 'counts', 'run_back', 'census', 'max_transient', 'turns_total']; apart []
+  copy_free against src: equal ['state_hash', 'log_digest', 'rows_digest', 'nodes_digest', 'counts', 'run_back', 'census', 'max_transient', 'turns_total']; apart []
