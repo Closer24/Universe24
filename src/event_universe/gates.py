@@ -182,6 +182,8 @@ def tracks(record: Record, decoded: list[tuple[dict[str, Any], str, Rational]]) 
 def light_and_arrow(record: Record) -> dict[str, Any]:
     """Gates 7, 11, 12 and 18: the gap-0 plane's credits (none in the engine's record: a detector is the toy's reading, kept by name in tools/derivations/toys/lean) and the run back on the record, exact bit for bit or not."""
     light = sum(1 for entry in record.log if entry["event"] == "detector")
+    takes = [entry for entry in record.log if entry["event"] in ("birth", "credit")]
+    absorbed = sum(int(entry["levels"]) for entry in takes)
     rb = record.run.get("run_back")
     if not rb:
         verdict = "NOT READ: the record carries no run back (the writer with back N)"
@@ -192,9 +194,11 @@ def light_and_arrow(record: Record) -> dict[str, Any]:
     return {
         "7 light with its redshift / 11 / 12": {
             "gap-0 credits in the record": light,
-            "verdict": "read: the gap-0 plane credited at a detector"
-            if light
-            else "NOT READ: the record holds no gap-0 credit",
+            "absorbed: the takes of the gap-0 line at births and credits (PC-S2)": len(takes),
+            "levels taken in all": absorbed,
+            "verdict": "read: the gap-0 line's quanta absorbed at the takes, its credit the taker's line (PC-S2); the redshift needs light with a period"
+            if takes
+            else "NOT READ: no take in the record",
         },
         "18 the arrow of time": {"run back on the record": rb, "verdict": verdict},
     }
