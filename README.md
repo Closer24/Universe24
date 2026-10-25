@@ -2,9 +2,9 @@
 
 **The aim of Universe24 is to represent reality as it is, inside its own simulator, the engine: a lattice of Nodes stepped by one rule in whole numbers and read through clicks, a world that shows what nature shows.**
 
-## The branch engine-5.0: the generic Node's program
+## The branch engine-5.0-test: the generic Node's program, a TEST branch
 
-This branch holds every change of 2026-10-25 after main was returned to the tree of 0fcc0403d (the tag v4.0.0, the families and the parameters declared, where Universe24 ran). Main stays at 4.0; this branch is the engine's continuation, a test branch, and nothing on it is a release.
+This branch is a TEST branch, separate from main. It holds the former main (d62af7f10, the day's documents and the generic Node's stage 0) and every change of 2026-10-25 after main was returned to the tree of 0fcc0403d (the tag v4.0.0, the families and the parameters declared, where Universe24 ran). Main stays at 4.0; this branch is the engine's continuation under test, and nothing on it is a release.
 
 What it attempts, in the owner's words of 2026-10-25 (docs/HIGHLIGHTS.md, the postulates; docs/ALGEBRA.md, The Node): a Node generic and lean, holding a fixed count of integers (tens), every integer within 128 bits, knowing no family, no body, no well and no click; the same acts at every Node by Rule3 over one Link; the loader lays the seeds and reads three integers; everything else (the species, the bodies, the births, general relativity and the physics of reality) read by the decoder from the clicks alone, the decoder standing at a place; and every property the engine showed with the families declared kept, each with a small test.
 

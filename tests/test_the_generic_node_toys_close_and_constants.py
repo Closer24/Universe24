@@ -413,7 +413,7 @@ def test_constant_2_the_list_of_acts_is_the_same_for_a_feed_that_births_and_one_
 def test_constant_3_the_state_stands_within_128_bits_at_the_fed_extremes_and_the_transients_beyond_are_named(
     tmp_path, monkeypatch
 ):  # type: ignore[no-untyped-def]
-    """The owner's constant 3 at the Node: every integer of the state stands within 128 bits at the fed extremes (the light at +2^24 at the centre among six neighbours at -2^24, the largest level the volume's write admits; the volume at the deepest content before the frozen clock) and through a birth at the centre; the transients measured through the acts and named, not asserted within 128: Rule3's total at the amplitude bound A by `flux_total` on the rule's integers (73 to 74 bits at den 1,021, within), the take's common denominator (4 p^2 G^2)^7 over the frame (about 210 bits), the carried write's ratio product exact(n) x exact(f) in `records.write_sources` (140 bits at den 1,021), the read's number (the click test's, hundreds of bits) and the paces' running fraction at the deepest content (`paces.Side.reach`, 2 Gamma (Gamma - 1)^c + Gamma^c, tens of thousands of bits), the four beyond 128 the deviation kept by name; the phase act's numerator 2 K_0 X + D at the amplitude within 128 at this den."""
+    """The owner's constant 3 at the Node: every integer of the state stands within 128 bits at the fed extremes (the light at +2^24 at the centre among six neighbours at -2^24, the largest level the volume's write admits; the volume at the deepest content before the frozen clock) and through a birth at the centre; the transients measured through the acts and named, not asserted within 128: Rule3's total at the amplitude bound A by `flux_total` on the rule's integers (73 to 74 bits at den 1,021, within), the take's common denominator (4 p^2 G^2)^7 over the frame (about 210 bits), the carried write's ratio product exact(n) x exact(f) in `records.write_sources`, consumed by `paces.odd_rounded` since the odd rounding (140 bits at den 1,021), the read's number (the click test's, hundreds of bits) and the paces' running fraction at the deepest content (`paces.Side.reach`, 2 Gamma (Gamma - 1)^c + Gamma^c, tens of thousands of bits), the four beyond 128 the deviation kept by name; the phase act's numerator 2 K_0 X + D at the amplitude within 128 at this den."""
     board, draw = node_toy(tmp_path, monkeypatch), np.random.default_rng(23)
     light, unit = board.world.seed, board.unit
     bound = board.world.amplitude_bound
@@ -457,14 +457,18 @@ def test_constant_3_the_state_stands_within_128_bits_at_the_fed_extremes_and_the
             measured["division"] = max(measured["division"], int(np.max(np.abs(summed))).bit_length())
         return real_division(total, wall, remainder, direction)
 
-    def rounded(numerator, wall):  # type: ignore[no-untyped-def]
-        if np.ndim(
-            wall
-        ):  # the carried write's one rounding at the wall per Node; the paces' fraction divides at one integer
-            measured["write"] = max(
-                measured["write"], int(np.max(np.abs(np.asarray(numerator, dtype=object)))).bit_length()
-            )
-        return real_rounded(numerator, wall)
+    def measuring(real):  # type: ignore[no-untyped-def]
+        """The carried write's one rounding at the wall per Node measured, at `paces.rounded` and at `paces.odd_rounded` (the odd rounding, 2026-10-25); the paces' fraction divides at one integer and is not measured here."""
+
+        def hook(numerator, wall):  # type: ignore[no-untyped-def]
+            if np.ndim(wall):
+                measured["write"] = max(
+                    measured["write"],
+                    int(np.max(np.abs(np.asarray(numerator, dtype=object)))).bit_length(),
+                )
+            return real(numerator, wall)
+
+        return hook
 
     def taken(*a):  # type: ignore[no-untyped-def]
         found = real_taken(*a)
@@ -472,7 +476,8 @@ def test_constant_3_the_state_stands_within_128_bits_at_the_fed_extremes_and_the
         return found
 
     monkeypatch.setattr(rule3, "carried_division", division)
-    monkeypatch.setattr(paces, "rounded", rounded)
+    monkeypatch.setattr(paces, "rounded", measuring(real_rounded))
+    monkeypatch.setattr(paces, "odd_rounded", measuring(paces.odd_rounded))
     monkeypatch.setattr(hole, "taken_at", taken)
     monkeypatch.setattr(flux, "rule3", ruled("rule3"))
     fed_interval(board, extreme)
