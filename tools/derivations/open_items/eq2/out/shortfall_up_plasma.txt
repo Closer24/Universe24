@@ -1,0 +1,134 @@
+{
+ "record": "out/up_plasma.json",
+ "top": 85,
+ "clicks at one Node in the rise (m, s)": [
+  [
+   8,
+   6
+  ],
+  [
+   12,
+   4
+  ]
+ ],
+ "rows": [
+  {
+   "interval m": 8,
+   "levels s": 6,
+   "v before": 159,
+   "v after": 153,
+   "v^2 lost": 1872,
+   "D1 (thousandths)": 7488
+  },
+  {
+   "interval m": 12,
+   "levels s": 4,
+   "v before": 130,
+   "v after": 126,
+   "v^2 lost": 1024,
+   "D1 (thousandths)": 8874
+  }
+ ],
+ "D1 first order (thousandths)": 16362,
+ "measured: X(seed's mirror) = X(2 top - 2)": 983,
+ "measured shortfall at the seed's mirror": 17,
+ "measured bottom (X, interval)": [
+  979,
+  169
+ ],
+ "measured shortfall at the bottom": 21,
+ "the parting (k, X_rise(k), X_fall(mirror k), fall - rise)": [
+  [
+   1,
+   1006,
+   993,
+   -13
+  ],
+  [
+   2,
+   1018,
+   1008,
+   -10
+  ],
+  [
+   3,
+   1036,
+   1029,
+   -7
+  ],
+  [
+   4,
+   1060,
+   1055,
+   -5
+  ],
+  [
+   5,
+   1089,
+   1086,
+   -3
+  ],
+  [
+   6,
+   1124,
+   1122,
+   -2
+  ],
+  [
+   7,
+   1164,
+   1163,
+   -1
+  ],
+  [
+   8,
+   1209,
+   1208,
+   -1
+  ],
+  [
+   9,
+   1258,
+   1257,
+   -1
+  ],
+  [
+   10,
+   1311,
+   1311,
+   0
+  ],
+  [
+   11,
+   1369,
+   1369,
+   0
+  ],
+  [
+   12,
+   1430,
+   1430,
+   0
+  ],
+  [
+   13,
+   1495,
+   1495,
+   0
+  ],
+  [
+   14,
+   1563,
+   1563,
+   0
+  ],
+  [
+   15,
+   1634,
+   1634,
+   0
+  ]
+ ],
+ "levels taken per Node in the rise": 10,
+ "credits in the rise": 250
+}
