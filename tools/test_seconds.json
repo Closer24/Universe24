@@ -75,6 +75,8 @@
   "tests/test_the_readers_tables.py::test_the_seven_tables_read_the_committed_record_through_the_command_line": 3.0,
   "tests/test_the_readers_tables.py::test_the_tracks_the_distance_the_dilation_and_the_spacing_read_the_bodies_and_light_by_hand": 0.0,
   "tests/test_the_reads_refusal_is_a_logged_line.py::test_a_refused_read_at_the_board_is_a_logged_line_and_the_run_goes_on": 1.1,
+  "tests/test_the_record_gates.py::test_the_committed_record_shows_the_agreed_gates_by_name": 3.1,
+  "tests/test_the_record_gates.py::test_three_predicates_on_a_record_by_hand": 0.0,
   "tests/test_the_run_back_is_exact.py::test_the_bare_torus_runs_back_exact_over_32_intervals": 3.3,
   "tests/test_the_share.py::test_the_engine_reads_the_currents_from_the_record_through_the_six_ports": 0.0,
   "tests/test_the_share.py::test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floor": 0.2,
