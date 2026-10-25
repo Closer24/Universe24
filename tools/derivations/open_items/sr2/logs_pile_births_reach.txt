@@ -1,0 +1,6 @@
+{"run": "pile_one_up", "exit": 0, "seconds": 3}
+{"run": "pile_two_up", "exit": 0, "seconds": 2}
+{"run": "pile_up_down", "exit": 0, "seconds": 2}
+{"run": "pile_one_80", "exit": 0, "seconds": 2}
+{"run": "births_big", "exit": 0, "seconds": 5}
+{"run": "reach", "exit": 0, "seconds": 1}

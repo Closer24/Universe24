@@ -1,0 +1,9 @@
+{"run": "sg_control", "exit": 0, "seconds": 6}
+{"run": "sg_uniform", "exit": 0, "seconds": 8}
+{"run": "sg_grad_z", "exit": 0, "seconds": 8}
+{"run": "sg_grad_y", "exit": 0, "seconds": 8}
+{"run": "sg_second_axis", "exit": 0, "seconds": 9}
+{"run": "sg_grad_z_plane", "exit": 0, "seconds": 8}
+{"run": "zeeman9_B1600", "exit": 0, "seconds": 9}
+{"run": "zeeman9_B3200", "exit": 0, "seconds": 8}
+{"run": "zeeman9_plane_B3200", "exit": 0, "seconds": 9}

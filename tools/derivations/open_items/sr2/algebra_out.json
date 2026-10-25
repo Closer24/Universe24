@@ -1,0 +1,416 @@
+{
+ "(1) multiplication by zeta on the 8 lines is a signed permutation": true,
+ "(1) zeta as a signed permutation (row: the line it reads, with sign)": [
+  [
+   3,
+   -1
+  ],
+  [
+   2,
+   1
+  ],
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   1
+  ],
+  [
+   7,
+   -1
+  ],
+  [
+   6,
+   1
+  ],
+  [
+   4,
+   1
+  ],
+  [
+   5,
+   1
+  ]
+ ],
+ "(1) the plane rotation (3, 4) / 5 on the four planes alike commutes with zeta and with i": true,
+ "(2) sigma_a integer on the 8 lines": {
+  "x": true,
+  "y": true,
+  "z": true
+ },
+ "(2) sigma_a symmetric": {
+  "x": true,
+  "y": true,
+  "z": true
+ },
+ "(2) sigma_a orthogonal (sigma^T sigma = I)": {
+  "x": true,
+  "y": true,
+  "z": true
+ },
+ "(2) J (multiplication by i) antisymmetric, J^2 = -I, J sigma_a = sigma_a J": [
+  true,
+  true,
+  true
+ ],
+ "(2) the plane rotation commutes with every sigma_a": true,
+ "(2) sigma_x rows (line read, sign)": [
+  [
+   [
+    4,
+    1
+   ]
+  ],
+  [
+   [
+    5,
+    1
+   ]
+  ],
+  [
+   [
+    6,
+    1
+   ]
+  ],
+  [
+   [
+    7,
+    1
+   ]
+  ],
+  [
+   [
+    0,
+    1
+   ]
+  ],
+  [
+   [
+    1,
+    1
+   ]
+  ],
+  [
+   [
+    2,
+    1
+   ]
+  ],
+  [
+   [
+    3,
+    1
+   ]
+  ]
+ ],
+ "(2) sigma_y rows (line read, sign)": [
+  [
+   [
+    5,
+    1
+   ]
+  ],
+  [
+   [
+    4,
+    -1
+   ]
+  ],
+  [
+   [
+    7,
+    1
+   ]
+  ],
+  [
+   [
+    6,
+    -1
+   ]
+  ],
+  [
+   [
+    1,
+    -1
+   ]
+  ],
+  [
+   [
+    0,
+    1
+   ]
+  ],
+  [
+   [
+    3,
+    -1
+   ]
+  ],
+  [
+   [
+    2,
+    1
+   ]
+  ]
+ ],
+ "(2) sigma_z diagonal": [
+  1,
+  1,
+  1,
+  1,
+  -1,
+  -1,
+  -1,
+  -1
+ ],
+ "(3) group order": 48,
+ "(3) elements integer in the plane basis": 16,
+ "(3) elements monomial (signed permutations of the 8 lines)": 16,
+ "(3) denominators over the 48 (denominator: count of elements whose largest denominator is it)": {
+  "1": 16,
+  "2": 32
+ },
+ "(3) all 48 orthogonal in the plane basis (M^T M = I: the trace form)": true,
+ "(3) -I among them": true,
+ "(3) u_z^4 = -I (the 2 pi turn)": true,
+ "(3) traces of the 48 (all integers)": [
+  "-4",
+  "-8",
+  "0",
+  "4",
+  "8"
+ ],
+ "(3) every element carries the Pauli triple as a signed permutation": true,
+ "(3) distinct rotations (24)": 24,
+ "(3) the monomial lifts: the rotations they lift, by the axes kept": [
+  "{\"word\": \"\", \"fixed\": [\"x\", \"y\", \"z\"], \"perm\": {\"x\": [\"x\", 1], \"y\": [\"y\", 1], \"z\": [\"z\", 1]}}",
+  "{\"word\": \"xx\", \"fixed\": [\"x\"], \"perm\": {\"x\": [\"x\", 1], \"y\": [\"y\", -1], \"z\": [\"z\", -1]}}",
+  "{\"word\": \"xxxx\", \"fixed\": [\"x\", \"y\", \"z\"], \"perm\": {\"x\": [\"x\", 1], \"y\": [\"y\", 1], \"z\": [\"z\", 1]}}",
+  "{\"word\": \"xxyy\", \"fixed\": [\"z\"], \"perm\": {\"x\": [\"x\", -1], \"y\": [\"y\", -1], \"z\": [\"z\", 1]}}",
+  "{\"word\": \"xyx\", \"fixed\": [], \"perm\": {\"x\": [\"y\", 1], \"y\": [\"x\", 1], \"z\": [\"z\", -1]}}",
+  "{\"word\": \"yy\", \"fixed\": [\"y\"], \"perm\": {\"x\": [\"x\", -1], \"y\": [\"y\", 1], \"z\": [\"z\", -1]}}",
+  "{\"word\": \"yyz\", \"fixed\": [], \"perm\": {\"x\": [\"y\", -1], \"y\": [\"x\", -1], \"z\": [\"z\", -1]}}",
+  "{\"word\": \"yyzz\", \"fixed\": [\"x\"], \"perm\": {\"x\": [\"x\", 1], \"y\": [\"y\", -1], \"z\": [\"z\", -1]}}",
+  "{\"word\": \"z\", \"fixed\": [\"z\"], \"perm\": {\"x\": [\"y\", -1], \"y\": [\"x\", 1], \"z\": [\"z\", 1]}}",
+  "{\"word\": \"zxx\", \"fixed\": [], \"perm\": {\"x\": [\"y\", -1], \"y\": [\"x\", -1], \"z\": [\"z\", -1]}}",
+  "{\"word\": \"zxxxx\", \"fixed\": [\"z\"], \"perm\": {\"x\": [\"y\", -1], \"y\": [\"x\", 1], \"z\": [\"z\", 1]}}",
+  "{\"word\": \"zxxyy\", \"fixed\": [\"z\"], \"perm\": {\"x\": [\"y\", 1], \"y\": [\"x\", -1], \"z\": [\"z\", 1]}}",
+  "{\"word\": \"zz\", \"fixed\": [\"z\"], \"perm\": {\"x\": [\"x\", -1], \"y\": [\"y\", -1], \"z\": [\"z\", 1]}}",
+  "{\"word\": \"zzxx\", \"fixed\": [\"y\"], \"perm\": {\"x\": [\"x\", -1], \"y\": [\"y\", 1], \"z\": [\"z\", -1]}}",
+  "{\"word\": \"zzz\", \"fixed\": [\"z\"], \"perm\": {\"x\": [\"y\", 1], \"y\": [\"x\", -1], \"z\": [\"z\", 1]}}",
+  "{\"word\": \"zzzxx\", \"fixed\": [], \"perm\": {\"x\": [\"y\", 1], \"y\": [\"x\", 1], \"z\": [\"z\", -1]}}"
+ ],
+ "(4) W kept under the 48 (elements x tests)": [
+  288,
+  288
+ ],
+ "(4) s carried as the rotation's signed permutation (a vector), elements x tests": [
+  288,
+  288,
+  "failures",
+  0
+ ],
+ "(4) under the Pin lift of the reflections (Gamma_a times the 48): W kept (a scalar), s axial (det times the signed permutation), failures": [
+  864,
+  864,
+  0,
+  "of",
+  864
+ ],
+ "(4) the 2 pi turn -I: the lines negated, W and s kept, the share kept": [
+  true,
+  true
+ ],
+ "(5) T = 1 (the identity of the double cover): the rest operator SUM_a (T_a + T_a^-1)": {
+  "a scalar on the 8 lines": true,
+  "that scalar": "6",
+  "Op^2 e0 = c^2 e0 with c^2": "36",
+  "integer matrix": true
+ },
+ "(5) T = i sigma_a (the half turn's lift): the rest operator SUM_a (T_a + T_a^-1)": {
+  "a scalar on the 8 lines": true,
+  "that scalar": "0",
+  "Op^2 e0 = c^2 e0 with c^2": "0",
+  "integer matrix": true
+ },
+ "(5) T = u_a (the quarter turn's lift): the rest operator SUM_a (T_a + T_a^-1)": {
+  "a scalar on the 8 lines": false,
+  "that scalar": null,
+  "Op^2 e0 = c^2 e0 with c^2": "18",
+  "integer matrix": true
+ },
+ "(5) at the vacuum S = 12 den Gamma^2 - 12 (den - num) Gamma^2 - 6 R = 0 for every pair; R / w = num / (3 den); so 2 cos omega_rest = (num / (3 den)) x the eigenvalue": {
+  "T = 1: cos omega_rest = num / den": "1079/3529",
+  "T = i sigma: cos omega_rest = 0 (a quarter turn per interval, the pair's gap lost)": "0",
+  "T = u_a: cos omega_rest = +- (num / den) sqrt 2 / 2 x 2 ... = +- sqrt 2 num / den on the two halves; squared": "2328482/12453841",
+  "above 1 (no real rotation, growth) when 2 num^2 > den^2": false
+ },
+ "(6) Phi . sigma symmetric (D = I in the plane basis): the conserved form holds with its term": true,
+ "(6) Phi . sigma squared = |Phi|^2 I (the two eigen-senses +- |Phi|)": true,
+ "(6) L (the orbit lattice, sp1) in the basis (e_1, i e_1, zeta e_1, zeta i e_1, f_2, ...): 2 x Gram integer, Gram not diagonal": [
+  true,
+  true,
+  [
+   [
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    -1
+   ],
+   [
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1
+   ],
+   [
+    0,
+    0,
+    2,
+    0,
+    1,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    2,
+    -1,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    -1,
+    2,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    1,
+    0,
+    2,
+    0,
+    0
+   ],
+   [
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0
+   ],
+   [
+    -1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2
+   ]
+  ]
+ ],
+ "(6) all 48 integer in L's basis": true,
+ "(6) monomial in L's basis": 4,
+ "(6) largest entry over the 48 in L's basis": 1,
+ "(6) in L's basis the plain share of e_1 + f_2 and of its image under u_x": [
+  "2",
+  "4"
+ ],
+ "(7) element orders (order: count)": {
+  "1": 1,
+  "2": 1,
+  "3": 8,
+  "4": 18,
+  "6": 8,
+  "8": 12
+ },
+ "(7) traces: order 6 elements, order 3 elements": [
+  [
+   "4"
+  ],
+  [
+   "-4"
+  ]
+ ],
+ "(8) the spin-up states along x, y, z as the 8 lines, (1 + sigma_a) e_1 reduced": {
+  "x": [
+   1,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0,
+   0
+  ],
+  "y": [
+   1,
+   0,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0
+  ],
+  "z": [
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "(8) sigma_a chi_a = chi_a": {
+  "x": true,
+  "y": true,
+  "z": true
+ },
+ "(8) the densities (psi^T sigma psi) of chi_x, chi_y, chi_z: along the axis the norm, 0 across": {
+  "x": [
+   "2",
+   "0",
+   "0"
+  ],
+  "y": [
+   "0",
+   "2",
+   "0"
+  ],
+  "z": [
+   "0",
+   "0",
+   "1"
+  ]
+ }
+}

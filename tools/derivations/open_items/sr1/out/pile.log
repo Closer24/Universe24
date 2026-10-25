@@ -1,0 +1,4 @@
+{"one quantum, up": {"share total": 169870590394224, "units": 0, "remainder": 169870590394224, "share at centre": 51756332206284, "W total": 17280, "s total": [0, 0, 18840], "amplitudes": [38]}}
+{"two lays of one, up and up": {"share total": 679482361576896, "units": 3, "remainder": 168660903016896, "share at centre": 207025328825136, "W total": 69120, "s total": [0, 0, 75360], "amplitudes": [38, 38]}}
+{"two lays of one, up and down": {"share total": 332289978175560, "units": 1, "remainder": 162016158655560, "share at centre": 102154646240676, "W total": 33870, "s total": [0, -36464, 1188], "amplitudes": [38, 37]}}
+{"one lay of two, up": {"share total": 334035222887412, "units": 1, "remainder": 163761403367412, "share at centre": 101589758339820, "W total": 34024, "s total": [0, 0, 36724], "amplitudes": [53]}}
