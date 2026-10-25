@@ -30,8 +30,8 @@ for path in (ROOT / "src", ROOT):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
-from event_universe import flux, readings, registry, seed, share, world_files  # noqa: E402
-from event_universe.core.rule3 import division_forward  # noqa: E402
+from event_universe import flux, readings, records, registry, seed, share, world_files  # noqa: E402
+from event_universe.core.rule3 import division_forward, largest_below  # noqa: E402
 from event_universe.features import volume  # noqa: E402
 from event_universe.frames import frames_of  # noqa: E402
 from event_universe.lattice import Lattice  # noqa: E402
@@ -454,10 +454,198 @@ def cube48(folder: Path) -> dict:
     return {"flag": FLAG, "rows": rows, "summary": summary}
 
 
+def wave_seed_of(amplitude_cells: list):  # type: ignore[no-untyped-def]
+    """The standing-wave seed (the owner's word of the third round, read so by this hand): light laid as the 48-symmetric standing wave of the lowest orbit, a(x) = A [cos(2 pi x / 3) + cos(2 pi y / 3) + cos(2 pi z / 3)] on the 3-cube (the values 3 A, 3 A / 2, 0, -3 A / 2 at the origin, the six axis Nodes, the twelve edge Nodes and the eight corner Nodes), now and before alike at the half rotation (cos(omega_0 / 2), the lay of V2), the remainder at the line's half wall; A the largest with the board's share at the vacuum's paces at most 27 quanta of W_c (one quantum per Node over the board, read as the mean: the count per Node of a standing wave is not uniform), found by comparison. The amplitude chosen is written into `amplitude_cells`."""
+
+    def laid_seed(board, index):  # type: ignore[no-untyped-def]
+        from event_universe.core import paces
+        from event_universe.lay import laid
+
+        family = board.families[index]
+        gamma = board.world.node_clock
+        p_a = int(paces.node_paces(gamma, 0)[1])
+        cos_omega_num, cos_omega_den = 2 * gamma * gamma - p_a * p_a, 2 * gamma * gamma  # cos omega at k = 2 pi / 3: 1 - p_a^2 / (2 Gamma^2)
+        # cos(omega / 2) = sqrt((1 + cos omega) / 2) as a ratio of integers to the unit 10^6 by the search on comparisons
+        half_cos = largest_below((cos_omega_den + cos_omega_num) * (10**12) // (2 * cos_omega_den))
+        profile = np.zeros(board.shape, dtype=object)
+        for node in np.ndindex(*board.shape):
+            value = 0
+            for coordinate in node:
+                value += 2 if coordinate == 0 else -1  # 2 cos(2 pi x / 3) in halves: 2, -1, -1
+            profile[node] = value
+        unit = board.credit.units[index] if hasattr(board, "credit") else 3 * family.pair[1] * board.world.quantum_action
+        w_c = 3 * family.pair[1] * board.world.quantum_action
+
+        def shares_of(a: int) -> int:
+            now = np.array([int(division_forward(a * int(v) * half_cos, 2 * 10**6, 0)[0]) for v in profile.ravel()], dtype=object).reshape(board.shape)
+            record = records.Record(now, now.copy(), records.full(board.shape, board.half_wall(index), board.kind))
+            return int(np.asarray(share.family_share(family, [record], gamma, 0, None, board.unit), dtype=object).sum())
+
+        low, high = 0, 1
+        while shares_of(high) <= 27 * w_c:
+            high += high
+        while high - low > 1:
+            middle = int(division_forward(low + high, 2, 0)[0])
+            if shares_of(middle) <= 27 * w_c:
+                low = middle
+            else:
+                high = middle
+        amplitude_cells.append(low)
+        now = np.array([int(division_forward(low * int(v) * half_cos, 2 * 10**6, 0)[0]) for v in profile.ravel()], dtype=object).reshape(board.shape)
+        first = records.record_slice(family, 0).start
+        from event_universe.emission import emitted_lines
+
+        for line in emitted_lines(family):
+            laid(board, index, first + line, (now.astype(board.kind), now.astype(board.kind).copy()), None, None)
+
+    return laid_seed
+
+
+def levels_unequal_under(board, group):  # type: ignore[no-untyped-def]
+    """The count of unequal level entries under every element of the 48 (the body of `cube48`, shared)."""
+    from tests.test_the_board_is_the_cube_48 import axis_map
+
+    shape, side = board.shape, board.shape[0]
+    nodes = np.array(list(np.ndindex(*shape)))
+
+    def moved(array, m):  # type: ignore[no-untyped-def]
+        a = np.asarray(array, dtype=object)
+        images = np.mod(nodes @ m.T, side)
+        out = np.empty_like(a)
+        out[tuple(images.T)] = a[tuple(nodes.T)]
+        return out
+
+    broken = []
+    for m in group:
+        pi, s = axis_map(m)
+        count = 0
+        for index, state in enumerate(board.states):
+            family = board.families[index]
+            if not family.held:
+                for line in state.lines:
+                    for level in (line.now, line.before):
+                        count += int(np.sum(moved(level, m) != np.asarray(level, dtype=object)))
+                continue
+            rows, per_row = registry.records_of(family, state.lines), family.width
+            for row in range(rows):
+                base = row * per_row
+                for level in (state.lines[base].now, state.lines[base].before):
+                    count += int(np.sum(moved(level, m) != np.asarray(level, dtype=object)))
+                for triple in range((per_row - 1) // 3):
+                    for a in range(3):
+                        k, target = base + 1 + triple * 3 + a, base + 1 + triple * 3 + pi[a]
+                        sign = -1 if (family.wronskian and s[a] < 0) else 1
+                        for part in (0, 1):
+                            source = (state.lines[k].now, state.lines[k].before)[part]
+                            image = (state.lines[target].now, state.lines[target].before)[part]
+                            count += int(np.sum(moved(np.asarray(source, dtype=object) * sign, m) != np.asarray(image, dtype=object)))
+        broken.append(count)
+    return broken
+
+
+def wave(folder: Path) -> dict:
+    """The standing-wave seed on the 3-cube with the volume's write on, the acts without the close, through the first top and 40 beyond: per interval X, the turned Nodes, the light's count per Node (the engine's, share div W_c) and the board's count at the frequency's unit (share x 2 Gamma^2 div (W_c x largest_below(4 Gamma^2 p_a^2 - p_a^4)), one quantum of a wave at k = 2 pi / 3 being W_c sin omega), the 48 on the levels; the origin's level and the proper count kept for the beat per proper interval over windows of 20 (the upward crossings n, the proper count P between the first and the last, E_proper = (n - 1) Gamma 10^6 div P); then the run back to the start, MATCH counted."""
+    from tests.test_the_board_is_the_cube_48 import cube_48
+
+    folder.mkdir(parents=True, exist_ok=True)
+    world_files.REPOSITORY_ROOT = folder
+    cells: list = []
+    seed.uniform_seed = wave_seed_of(cells)
+    board = Lattice(load_world(bare_torus(folder, 3, 400)))
+    light, held = board.world.seed, board.held[0]
+    group = cube_48()
+    gamma = board.world.node_clock
+    w_c = int(board.credit.units[light])
+    states = [board_state(board)]
+    rows = []
+    trace, propers = [], []
+    first_turn = None
+
+    def reading_wave() -> dict:
+        shares, _ = board.share_of(light)
+        quanta, _ = board.quanta(light)
+        x = np.asarray(board.states[held].lines[0].now, dtype=object)
+        content = int(np.asarray(volume.level_of(gamma, x), dtype=object).max())
+        from event_universe.core import paces as paces_module
+
+        p_a = int(paces_module.node_paces(gamma, content)[1])
+        s2 = 4 * gamma * gamma * p_a * p_a - p_a**4
+        total = int(np.asarray(shares, dtype=object).sum())
+        return {
+            "interval": board.interval,
+            "X_min": int(x.min()),
+            "X_max": int(x.max()),
+            "level_max": content,
+            "quanta_min": int(np.asarray(quanta).min()),
+            "quanta_max": int(np.asarray(quanta).max()),
+            "quanta_total": int(np.asarray(quanta, dtype=object).sum()),
+            "share_total": total,
+            "count_total_over_W_c": int(division_forward(total + w_c // 2, w_c, 0)[0]),
+            "count_total_at_frequency_unit": int(division_forward(total * 2 * gamma * gamma, w_c * largest_below(s2), 0)[0]),
+            "turned": int(board.turned.sum()),
+            "elements_broken": sum(1 for b in levels_unequal_under(board, group) if b),
+            "origin_level": int(np.asarray(board.states[light].lines[0].now, dtype=object)[0, 0, 0]),
+        }
+
+    rows.append(reading_wave())
+    print(f"wave {FLAG}: amplitude {cells[0]}, seed count per Node {rows[0]['quanta_min']}..{rows[0]['quanta_max']} total {rows[0]['quanta_total']} at the frequency's unit {rows[0]['count_total_at_frequency_unit']}", flush=True)
+    while True:
+        rulers = board.rulers(1)
+        propers.append(int(np.asarray(rulers[(light, 0)][0], dtype=object).reshape(-1)[0]))
+        trace.append(rows[-1]["origin_level"])
+        board.advanced_to_the_close()
+        states.append(board_state(board))
+        rows.append(reading_wave())
+        row = rows[-1]
+        if row["turned"] >= 14 and first_turn is None:  # the top: more than half the Nodes turning in one interval (the pinned rest's turns at the seed's resting Nodes are not it)
+            first_turn = board.interval
+        if board.interval % 10 == 0 or row["turned"]:
+            print(f"wave {FLAG} interval {row['interval']:4d} X {row['X_min']}..{row['X_max']} level {row['level_max']} quanta/Node {row['quanta_min']}..{row['quanta_max']} total {row['quanta_total']} at frequency unit {row['count_total_at_frequency_unit']} broken {row['elements_broken']} turned {row['turned']}", flush=True)
+        if (first_turn is not None and board.interval >= first_turn + 30) or board.interval >= 200:
+            break
+    run = board.interval
+    windows = []
+    for start in range(0, len(trace) - 20, 20):
+        piece = trace[start : start + 21]
+        crossings = [t for t in range(1, len(piece)) if piece[t - 1] < 0 <= piece[t]]
+        if len(crossings) >= 2:
+            between = sum(propers[start + crossings[0] : start + crossings[-1]])
+            windows.append({"start": start, "crossings": len(crossings), "proper_between": between, "E_proper_scaled": int(division_forward((len(crossings) - 1) * gamma * SCALE, between, 0)[0]), "level_max": rows[min(start + 10, len(rows) - 1)]["level_max"]})
+    returned, misses = 0, []
+    for k in range(run):
+        try:
+            board.step_inverse()
+        except RuntimeError as refusal:
+            misses.append({"interval": board.interval, "refused": str(refusal)})
+            break
+        if same_state(board_state(board), states[run - 1 - k]):
+            returned += 1
+        else:
+            misses.append({"interval": board.interval})
+            if len(misses) > 3:
+                break
+    summary = {
+        "amplitude": cells[0],
+        "first_turn": first_turn,
+        "intervals_run": run,
+        "returned_bit_for_bit": returned,
+        "verdict": "MATCH" if returned == run and board.interval == 0 else "MISS",
+        "misses": misses[:4],
+        "X_top": max(r["X_max"] for r in rows),
+        "seed": {k: rows[0][k] for k in ("quanta_min", "quanta_max", "quanta_total", "count_total_over_W_c", "count_total_at_frequency_unit")},
+        "top": {k: max(rows, key=lambda r: r["X_max"])[k] for k in ("interval", "X_max", "level_max", "quanta_min", "quanta_max", "quanta_total", "count_total_over_W_c", "count_total_at_frequency_unit")},
+        "intervals_with_every_element_equal": sum(1 for r in rows[1:] if r["elements_broken"] == 0),
+        "first_broken_interval": next((r["interval"] for r in rows[1:] if r["elements_broken"]), None),
+        "beat_windows": windows,
+    }
+    print(f"wave {FLAG} summary {json.dumps(summary, default=str)}")
+    return {"flag": FLAG, "rows": rows, "summary": summary}
+
+
 def main() -> None:
     part = sys.argv[1]
     folder = Path(tempfile.mkdtemp(prefix=f"r3_{part}_{FLAG}_", dir=os.environ.get("TMPDIR", "/dev/shm/tmp")))
-    found = {"sea": sea, "hole": hole, "back": back, "top": top, "back60": back60, "clicks": clicks, "cube48": cube48}[part](folder)
+    found = {"sea": sea, "hole": hole, "back": back, "top": top, "back60": back60, "clicks": clicks, "cube48": cube48, "wave": wave}[part](folder)
     out = HERE.parent / f"ride_engine_{part}_{FLAG}.json"
     out.write_text(json.dumps(found, indent=1, default=str), encoding="utf-8")
     print("written", out)
