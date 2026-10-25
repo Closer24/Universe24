@@ -1,0 +1,39 @@
+# A48: the 48 in the clicks, the Boss's comparison of a48 and a48b (2026-10-25, head e17067147; a48 on 8ea6a4676's base, a48b on b9cec88e0)
+
+The question: the cube's 48 holds on the board at every interval and parts in the CLICKS (the first parting birth at interval 7 of the chiral 5-cube: 24 rotations equal, 24 reflections apart under pm2's test). Two hands, blind to each other: a48 (landed at 8ea6a4676, its REPORT.md under a48/) and a48b (under a48b/).
+
+## 1. Where the two agree (the cause, by name)
+
+- **The cause is the same, found twice.** The reflected world is the base's conjugate (C P): every plane's im line, the shape-4 row's time line and its three odd lines negated; every act is exactly odd in them, so the LEVELS agree to the bit (a48: 0 levels apart through interval 6; a48b: 0 scalar mismatches before the first parting draw on every image). What parts is the REMAINDER's carry: the lay puts every rotation remainder at the half wall W div 2 of an even wall, which is its own two's complement and not its own ones' complement; a negated line's remainder in the actual reflected run is carried by the two's complement (W - r) mod W, while the swap at the top mirrors by the ones' complement (W - 1 - r), so after an odd count of turns the image stands at W - 2 - r (a48: 16 of 16 apart remainders at the turned Nodes, offset -2 exactly; a48b: the ones' carry failing at interval 1 everywhere, the two's at the turned Nodes on once-mirrored lines). No act reads the gauge but A2's draw: the digit r div F is not covariant under the mirror, the sorted digit set differs, the plane drawn differs, the records part. **The digit set of A2 is not covariant under the remainder's mirror**: both hands, the same sentence.
+- **The twist, the orientation and the one rule of the remainder for the coefficients are not the cause** (both).
+- **Both mends measure 24 rotations equal, 24 reflections with the senses exchanged, 0 apart** on the chiral 3-cube at 30 and the 5-cube at 24 (a48b's 5-cube run finished after its hand-back: 48 of 48 images, 24 equal, 24 senses exchanged, 0 apart, read from out/c48_chiral5_24_frame2.stdout); the flag off bit for bit the engine; run back 10 of 10; the charge 0 at every birth; 98 / 115 and 89 / 92 bits unchanged; integers only.
+
+## 2. Where they differ
+
+| item | a48 | a48b | the Boss |
+|---|---|---|---|
+| the mend | two parts: the SWAP mirrors a born remainder about its birth (2 half(W) - r, 0 its own mirror; rotation and write remainders alike; the coefficients' carries keep the ones' complement), and the DRAW reads every remainder by its distance from the half, abs(r - half(W)) | one rule in the DRAW alone: every remainder returned to the frame it was laid in by the exchange's own count of reversals, rho = mirrored(r, W, (1 - b)(1 + [im line])), b the frame bit (the walled row's remainder, complemented at every swap), then folded by the two's complement, min(rho, (W - rho) mod W) div F, base (W div F) div 2 + 1; no act changed; bit for bit where no birth draws | **a48b's form (A48-S1)** by the owner's criterion: one rule for every remainder of every line, in the one reader, no act changed (the conserved form, the exchange's involution and the record's bits untouched where nothing draws), the same measured result. a48's form changes the exchange at every turn of every record and splits the remainders into two classes (born against carried) with two rules; a48b composes the two complements into one read. a48's is kept by name as the equivalent that moves the act. |
+| the test's criterion | pm2's test's criterion right (not the cause) | pm2's clicks_48.py compares a birth with the Nodes in place and negates the two signs, so "senses exchanged" is unreachable on any birth: every reflection reads apart whatever the engine does (criterion A); the lawful criterion (the kit's own clicks_48_example.py, pa2's: the children's Nodes swapped in the conjugate) still parts the default engine, 24 of 24, by the digits | **a48b**: the standing "24 reflections apart" of PM / MS is in part the test's. The test is corrected (the Boss's or a hand's: tests are not David's) before any measurement of the 48 on the clicks is read again. |
+| the records' counts under the mend | not run to 300 | chiral 300: 15 births, 1 credit, 1,859 turns (the default 14 / 0 / 1,877); hole 60: 8 / 8 / 574 (8 / 0 / 570); bodies 120 bit for bit (no draw) | the predicted numbers of the spec |
+| the clause to state | the half-wall seed is not its own ones' complement at an even wall | the frame bit is the turn parity only because the walled row's flux 2 cphi is even: a universe file with an odd flux there would break the read (a clause owed) | both carried; the second is the one sentence A48-S1 needs beside it |
+
+## 3. The sentence carried to the Scribe, for the owner's word (the owner's criterion: generic, the same for every row, fits nature)
+
+**A48-S1 (2026-10-25, a48b's form; a48's kept by name):** "The one-Link read takes every line's remainder at the Node and its six neighbours in the frame the line was laid in: each remainder mirrored by the one rule as many times as the exchange mirrored it (once per turn of its Node, twice for an im line; the Node's turn count the walled row's remainder), and read folded by the two's complement of its wall, min(rho, (W - rho) mod W), the digit the folded remainder div the lattice, the base (W div F) div 2 + 1. In that frame the image of a negated line's remainder under the cube's 48 is its fold's own, so the digit set of the image is the image of the digit set and the clicks of a reflected world are the senses exchanged, of a rotated world equal, to the bit, the ties of the riding division apart. The former read, the bare remainder r div F at the base W div F + 1, is kept by name with its record."
+
+The Boss's reading for the owner: the 48 in the clicks is nature's C P on the integers (matter's clicks mirrored are antimatter's clicks: the senses exchanged under a reflection, equal under a rotation), and the engine parts from it only in the reader's digit; one rule in the reader restores it to the bit on both boards with every other law held. Recommended. The owner's word is on the sentence; the build is the spec below.
+
+## 4. For David (after the owner's word)
+
+take.py read_number, no new function (a48b's section 6): `is_im = node.is_im()` before the loop; `bit = int(rules[0][0].rem[n]); rho = mirrored(rem, wl, (1 - bit) * (1 + is_im[li])); folded = min(rho, remainder(wl - rho, wl)); digits.append((quotient(folded, f), quotient(values, 2) + 1))`. Nothing enters the two files. The pass predicate: the 48 on the clicks by the conjugate criterion (the children's Nodes swapped, every sense negated) 24 / 24 / 0 on world_chiral_3_30.json at 30 and world_chiral_5_24.json at 24; run back 10 of 10 on the hole 60, the chiral 300, the bodies 120; the charge 0; taken >= booked; the chiral 300 counts 15 / 1 / 1,859, the hole 60 8 / 8 / 574, the bodies 120 0 / 83 / 1,573 bit for bit.
+
+The test (the Boss's or a hand's): pm2's clicks_48 on the engine corrected to swap the children's Nodes in the conjugate; the 48 on the clicks as a test under 15 s on the chiral 3-cube at a short run.
+
+## 5. Open, by name
+
+- (a) The ties of the riding division and of the odd roundings, where the conjugate is off by one: 0 met on these records; a count on the chiral 2,400 owed.
+- (b) The chiral 300 and 2,400 under the 48 with the corrected criterion (Animate, once the reader lands).
+- (c) read_number's `origin` refusal compares a riding remainder with half of node.w, a wall it never lives at: dead code, a hand to read.
+- (d) The frame bit as the turn parity: the clause that it holds because the walled row's flux 2 cphi is even.
+- (e) The digits' base halved by the fold: the draw's entropy re-read against gn2's digits' budget.
+- (f) The default's rotation parting at 40 intervals on the 5-cube under A48-S1.
