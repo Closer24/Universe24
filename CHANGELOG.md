@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The hand cs5's sentences for the owner's return, CS5-S2 (one pair in several rows of the universe file) and the crowd's word, with CS4-S2's line per take and cs5's finding of the recurring bang with matter born at every Node, in the open table of docs/UNIVERSE24.md's section 4 (the Boss's 6402183716).
 - SL-S2 and MV-S1 to MV-S3 marked built in docs/ALGEBRA.md (toys-5 e5f22fb53 and 608d06ad3, merged 0e1caf464, the hand vf5 confirming; the sentences' standing unchanged, the owner's word owed) and the fourth form built on toys-5 e3cfce303; the `at` lay's `wave` and `top` fields and the merger's row in docs/ENGINE.md; the ledger of docs/UNIVERSE24.md's section 4 current with the two pushes read whole and run, cs4's finding, the Boss's line on the odd write and his merge.
 - The hand cs4's two sentences for the owner's return, CS4-S2 (the take moving the line farther from zero) and The light no body (the gap-0 plane never credited as a body), in the open table of docs/UNIVERSE24.md's section 4 beside CK-S1 (the Boss's 6401793115).
 - The tests' room given by name at the merge of toys-5 84009e333 (the Boss's 6401380660): the four rooms with their lines and reasons recorded in docs/ENGINE.md's The gates beside tools/tests_shape.py's ROOM, the docstring's "section 9" read as that paragraph.
