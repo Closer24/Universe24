@@ -110,8 +110,9 @@ def charge_and_take(R):
     """Gates 17 and 15: the charge (the senses summed over the births) and the conservation at the click (taken against booked)."""
     out = {}
     births = R.births
-    sense_sum = sum(s for b in births for s in b['senses'])
-    out['17 charge conservation'] = {'senses sum over births': sense_sum, 'verdict': 'SHOWN' if sense_sum == 0 else 'NOT SHOWN'}
+    signs = [(w > 0) - (w < 0) for b in births for w in b.get('W_children', [])]  # each child's sense read from the sign of its own Wronskian at its Node (the owner's word: the sense is the Wronskian's sign, never indexed)
+    sense_sum = sum(signs) if signs else sum(s for b in births for s in b['senses'])
+    out['17 charge conservation'] = {'senses sum over births (from the children\'s Wronskian signs)': sense_sum, 'children with W = 0': sum(1 for x in signs if x == 0), 'births with the two children at opposite signs': sum(1 for b in births if 'W_children' in b and (b['W_children'][0] > 0) != (b['W_children'][1] > 0) and 0 not in b['W_children']), 'verdict': 'SHOWN' if sense_sum == 0 and 0 not in signs else 'NOT SHOWN'}
     # gate 15 conservation at the click
     booked = sum(b['booked'] for b in births); taken_b = sum(b['taken'] for b in births)
     out['15 conservation at the click'] = {'births': len(births), 'taken per booked at the births (hundredths)': quot(taken_b, booked, 100), 'verdict': 'SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light, the known item)' if all(b['taken'] >= b['booked'] for b in births) else 'NOT SHOWN'}
@@ -243,7 +244,8 @@ def conservations(R, sense_sum, taken_b, booked, beats_by_line):
         for (i1, b1, p1), (i2, b2, p2) in zip(cs, cs[1:]):
             if b1 > 0 and b2 > 0: total_pairs += 1; same += (b1 == b2); changes.append(abs(b2 - b1))
     cons['energy: the beat (intervals per period) of a body unchanged from one click to the next'] = {'click pairs': total_pairs, 'unchanged': same, 'changed by one': sum(1 for d in changes if d == 1), 'changed by more': sum(1 for d in changes if d > 1)}
-    cons['momentum: the credits running cosine'] = 'NOT READ in this toy'
+    takes = [c.get('dP_take') for c in R.credits + R.births if c.get('dP_take')]; lays = [b.get('dP_lay') for b in R.births if b.get('dP_lay')]
+    cons['momentum: the close wrote (co1\'s reading, the credit lines\' dP_a)'] = {'clicks booking dP': len(takes), 'takes dP_a summed': [sum(t[a] for t in takes) for a in range(3)], 'lays dP_a summed': [sum(l[a] for l in lays) for a in range(3)], 'recoil passed to the laid pair (take + lay = 0 per birth)': sum(1 for b in R.births if b.get('dP_lay') and all(b['dP_take'][a] + b['dP_lay'][a] == 0 for a in range(3))), 'of births': len(lays)} if takes else 'NOT READ: no click booked its momentum'
     out['the conservations in the clicks'] = cons
     counts_seen = sorted({r['integers'] for r in rows}); state_bits = max(r['max bits'] for r in rows); transient_bits = max(r['max transient bits'] for r in rows)
     out['the three constants'] = {'integers per Node': counts_seen, 'max state bits': state_bits, 'max transient bits': transient_bits, 'first interval past the width': next((r['i'] for r in rows if r['max transient bits'] > 128 or r['max bits'] > 128), None),

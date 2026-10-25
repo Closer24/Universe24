@@ -126,6 +126,8 @@ class Lean:
         self.rows_.sort(key=order)
         if sum(1 for r in self.rows_ if r.wall is not None) != 1 or len([r for r in self.rows_ if r.shape == 2 and r.gap == 0]) != 1 or len([r for r in self.rows_ if r.shape == 10]) != 1 or len([r for r in self.rows_ if r.shape == 4]) != 1:
             raise ValueError('the universe names one row with its own wall, one massless plane (shape 2 at the gap 0), one shape-10 row and one shape-4 row')
+        if self.row(10).pair != (den - den // gamma, den): raise ValueError('the shape-10 row is the clock\'s one level: its pair (den - den div Gamma, den)')
+        if self.row(4).pair != (den, den): raise ValueError('the shape-4 row stands at (den, den)')
         # the planes (shape 2): every one a record of two lines; the massless plane among them; the lifts the planes with a gap, in the file's order (the draw's list); each plane's quantum its unit: 3 T s for a plane with a gap (s the pair's sine), 3 T den for the plane at the gap 0 (the drift's double root)
         self.lifts = [r for r in self.records() if r.gap > 0]
         self.pairs = [r.pair for r in self.lifts]
@@ -136,7 +138,7 @@ class Lean:
         self.proper = Z(S); self.closes = Z(S)
         self.interval = 0; self.log = []; self.turns = []; self.stack = []
         for l in self.row(10).lines[:1]: l.now[:] = gamma; l.before[:] = gamma  # the metric's time line at the vacuum's level
-        self.unit_light = self.units[self.records().index(self.row(2, gap=0))]  # the massless plane's quantum, W_c = 3 den T
+        self.unit_gap0 = self.units[self.records().index(self.row(2, gap=0))]  # the massless plane's quantum, W_c = 3 den T
         self.detectors = []  # the Nodes whose light the record credits (the world names them; a reading, no state)
         # the seed as the world lays it: a list of lays in the three forms of the law and no fourth (the owner's word of 2026-10-25, "2, 3, 4 approved"; the Z hands' form): `sea` lays the massless row's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet: on the massless row N drifts at the centre, on a plane row the conjugate pair, N quanta each record, over the raised cosine's envelope of the half-width 2 or 3 (exact in integers there and at no other width below 6). Refused by name: a fourth form, a row no pair of the universe carries, a sea of a plane row, a Node off the board, a plane packet of another width (a body is laid over its packet, never one Node)
         self.drift = rule3.largest_below(action)
@@ -440,7 +442,7 @@ class Lean:
 
     def read_number(self, at, rules):
         """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = unit x 3 (the carry); the three refusals by name."""
-        M = self.unit_light * 3
+        M = self.unit_gap0 * 3
         nodes = self.frame_nodes(at); digits = []; origin = True; coarse = True
         half = self.w // 2
         for line, r in rules:
@@ -456,14 +458,14 @@ class Lean:
         for d, b in digits: carry = (carry * b + d) % M; room = min(room * b, M)
         return carry, room  # the number drawn and the draw's room: the count of numbers the read could give (the digits' bases' product, at most M), the click's entropy its bit length
 
-    def take(self, at, walls, r_light, line):
+    def take(self, at, walls, r_gap0, line):
         """The exact take at the Node: the light's now moved toward its before by the least count of levels at which the Node's share falls by the walls. The share's term at the Node is w (now^2 + before^2) - S now before - now L, L = SUM_j R_j before_j, over W_i = 2 p_i^2 G^2; moving now by t s (t the direction) its fall is f(s) = [w (now^2 - (now + t s)^2) - t s (S before + L)] div W_i, an exact quadratic in s: the least s with f(s) >= walls by one integer root (largest_below), checked exactly at s - 1, s, s + 1; refused by name where the full move cannot pay."""
         now, before = int(line.now[at]), int(line.before[at])
         if now == before: return None, 0
         t = 1 if before > now else -1
-        S = int(np.asarray(r_light.self_coefficient)[at]); w = int(r_light.wall)
+        S = int(np.asarray(r_gap0.self_coefficient)[at]); w = int(r_gap0.wall)
         L = 0
-        for (axis, side), reach in zip(AXES, r_light.reaches):
+        for (axis, side), reach in zip(AXES, r_gap0.reaches):
             n = tuple((at[a] + (side if a == axis else 0)) % self.cube for a in range(3))
             L += int(np.asarray(reach)[at]) * int(line.before[n])
         pace = int(np.asarray(paces.link_pace_of(self.gamma, self.start_content), dtype=object)[at]); Wi = 2 * pace * pace * self.G * self.G + (1 if pace == 0 else 0)
@@ -491,25 +493,34 @@ class Lean:
         for line, now, before in ((re, levels[0], levels[1]), (im, levels[2], levels[3])):
             line.now[where] = line.now[where] + sign * now; line.before[where] = line.before[where] + sign * before
 
-    def take_at(self, at, walls, r_light, cause):
+    def momentum_of(self, line_now, line_before, at, d_now=0, d_before=0, num=1):
+        """The change of the lattice momentum P_a = 2 num SUM_i (now_(i+a) before_i - now_i before_(i+a)) when a line's level now at the Node moves by d_now and its level before by d_before (co1's reading of the close): 2 num [d_now (before_(i-a) - before_(i+a)) + d_before (now_(i+a) - now_(i-a))] per axis."""
+        found = []
+        for a in range(3):
+            up = tuple((at[k] + (1 if k == a else 0)) % self.cube for k in range(3)); down = tuple((at[k] - (1 if k == a else 0)) % self.cube for k in range(3))
+            found.append(2 * num * (d_now * (int(line_before[down]) - int(line_before[up])) + d_before * (int(line_now[up]) - int(line_now[down]))))
+        return found
+
+    def take_at(self, at, walls, r_gap0, cause):
         """One exact take at a Node of the walls booked: the light's level now moved toward its before by the least count of levels at which the Node's share falls by the walls (`take`); refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the light's now before the take) or None."""
         z = self.row(2, gap=0).lines[0]
-        levels, fall = self.take(at, walls, r_light, z)
+        levels, fall = self.take(at, walls, r_gap0, z)
         if levels is None:
             self.counts['refused_stop'] += cause; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'stop', 'fall': fall, 'walls': walls}); return None
         now = int(z.now[at]); before = int(z.before[at]); toward = 1 if before > now else -1
         z.now[at] = now + toward * levels; self.closes[at] += 1
+        self.last_dp = self.momentum_of(z.now, z.before, at, d_now=toward * levels, num=self.row(2, gap=0).pair[0])  # the take's momentum, booked on the click's line (N-S3's reading)
         return levels, fall, now
 
-    def meet(self, light_start, sh, rules, frozen):
+    def meet(self, gap0_start, sh, rules, frozen):
         """The Link close (Q1/Q2, the owner's sentence 1): every Link once from its +a end; a meeting where both ends hold a whole quantum of light at the vacuum's weight and neither end is frozen; the + child at the end the light's own current F_ij = num (now_i before_j - before_i now_j) flows into, read at the interval's start (F = 0 refused by name: no orientation); the Link's one number read at that end gives the lift. Returns the births as (the take's Node, the lift, the - child's Node, the + child's Node)."""
         born = []
-        currents = [self.den * self.link_current(light_start[0], 2 * axis) for axis in range(3)]  # the massless plane's first line's current orients the Link
+        currents = [self.den * self.link_current(gap0_start[0], 2 * axis) for axis in range(3)]  # the massless plane's first line's current orients the Link
         for at in np.ndindex(*self.shape):
             if frozen[at]: continue
             for axis in range(3):
                 j = tuple((at[a] + (1 if a == axis else 0)) % self.cube for a in range(3))
-                if frozen[j] or int(sh[at]) < self.unit_light or int(sh[j]) < self.unit_light: continue
+                if frozen[j] or int(sh[at]) < self.unit_gap0 or int(sh[j]) < self.unit_gap0: continue
                 F = int(currents[axis][at])
                 if F == 0:
                     self.counts['refused_orientation'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'orientation', 'link': list(j)}); continue
@@ -517,7 +528,7 @@ class Lean:
                 drawn = self.read_number(plus, rules)
                 if drawn is None: continue
                 number, room = drawn
-                born.append((plus, self.records().index(self.lifts[(number // self.unit_light) % self.nl]), minus, plus, room))  # the lift drawn, as its row's index among the planes
+                born.append((plus, self.records().index(self.lifts[(number // self.unit_gap0) % self.nl]), minus, plus, room))  # the lift drawn, as its row's index among the planes
         return born
 
     def refuse(self, born, owns):
@@ -535,26 +546,32 @@ class Lean:
             self.counts['refused_lay'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'lay', 'children_at_one_node': max(landing[(s_, minus)], landing[(s_, plus)])})
         return [k for k in kept if k not in crowded]
 
-    def births(self, kept, r_light, c, factors, pace):
+    def births(self, kept, r_gap0, c, factors, pace):
         """The births kept, every face read before any write: one exact take per Node of its children's walls summed, the start's light paying; then each child laid as one quantum of its record at the quarter turn (re_now A at the - end, im_before -A; re_now A at the + end, im_before +A), the birth logged with its numbers. Returns every Node a taken birth touched."""
         by_node = {}
         for at, s_, minus, plus, room in kept: by_node.setdefault(at, []).append((s_, minus, plus, room))
         taken = []
         for at in sorted(by_node):
             children = by_node[at]; walls = sum(2 * self.units[s_] for s_, _m, _p, _r in children)
-            got = self.take_at(at, walls, r_light, len(children))
+            got = self.take_at(at, walls, r_gap0, len(children))
             if got is not None: taken.append((at, children, walls, got))
         for at, children, walls, (levels, fall, now) in taken:
             self.closes[at] -= 1  # the take counted once per child below
+            dp_take = self.last_dp
             for s_, minus, plus, room in children:
-                A = self.lay_amplitude(s_, at, c, factors, pace)
-                self.lay(s_, minus, (A, 0, 0, -A)); self.lay(s_, plus, (A, 0, 0, A))  # the conjugate pair onto the one plane, one child at each end
+                A = self.lay_amplitude(s_, at, c, factors, pace); re, im = self.records()[s_].lines; num = self.records()[s_].pair[0]
+                dp_lay = [0, 0, 0]
+                for where, sense in ((minus, -1), (plus, 1)):  # the conjugate pair onto the one plane, one child at each end; each lay's momentum booked (the re line's now by A, the im line's before by sense A)
+                    for a, d in enumerate(self.momentum_of(re.now, re.before, where, d_now=A, num=num)): dp_lay[a] += d
+                    for a, d in enumerate(self.momentum_of(im.now, im.before, where, d_before=sense * A, num=num)): dp_lay[a] += d
+                    self.lay(s_, where, (A, 0, 0, sense * A))
+                W_children = [int(re.now[w_] * im.before[w_] - im.now[w_] * re.before[w_]) for w_ in (minus, plus)]  # each child's sense is the sign of its own Wronskian at its Node (the owner's word 3)
                 self.counts['births'] += 1; self.closes[at] += 1
-                self.log.append({'event': 'birth', 'i': self.interval, 'node': list(at), 'line_pair': s_, 'senses': [-1, 1], 'minus': list(minus), 'plus': list(plus), 'taken': fall, 'booked': walls, 'levels': levels, 'light_now_was': now, 'proper': int(self.proper[at]), 'content': int(c[at]), 'amplitude': A, 'children_at_node': len(children), 'room': room})
+                self.log.append({'event': 'birth', 'i': self.interval, 'node': list(at), 'line_pair': s_, 'senses': [-1, 1], 'W_children': W_children, 'minus': list(minus), 'plus': list(plus), 'taken': fall, 'booked': walls, 'levels': levels, 'light_now_was': now, 'proper': int(self.proper[at]), 'content': int(c[at]), 'amplitude': A, 'children_at_node': len(children), 'room': room, 'dP_take': dp_take, 'dP_lay': dp_lay})
             self.counts['taken'] += fall; self.counts['booked'] += walls
         return {at for at, _c, _w, _g in taken} | {m for _a, ch, _w, _g in taken for _s, m, _p, _r in ch} | {p_ for _a, ch, _w, _g in taken for _s, _m, p_, _r in ch}
 
-    def bodies(self, light_start, plane_starts, owns, born_nodes, frozen, r_light):
+    def bodies(self, gap0_start, plane_starts, owns, born_nodes, frozen, r_gap0):
         """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its re line's upward crossings clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart."""
         for rec in range(len(self.records())):
             s_ = rec
@@ -569,27 +586,27 @@ class Lean:
             for at in zip(*np.nonzero(closing == 1)):
                 at = tuple(int(x) for x in at)
                 if at in born_nodes or frozen[at]: continue
-                got = self.take_at(at, self.units[s_], r_light, 1)
+                got = self.take_at(at, self.units[s_], r_gap0, 1)
                 self.standing[rec][at] = 0
                 if got is None: continue
                 levels, fall, now = got
                 self.counts['body_clicks'] += 1
                 self.log.append(self.credit(rec, at, plane_starts, fall, levels, now))
 
-    def detect(self, light_start, r_light, pace, c):
+    def detect(self, gap0_start, r_gap0, pace, c):
         """The detectors, a reading and no act: the light's whole quanta at the Node risen over the interval (the start's share against the share as the click leaves the light), each quantum a light credit with the Node's proper count."""
         if not self.detectors: return
-        z = self.row(2, gap=0).lines[0]; sh_end = self.share(z, r_light, pace, vacuum=True); sh_vac = self.share(light_start[0], r_light, pace, vacuum=True)
+        z = self.row(2, gap=0).lines[0]; sh_end = self.share(z, r_gap0, pace, vacuum=True); sh_vac = self.share(gap0_start[0], r_gap0, pace, vacuum=True)
         for det in self.detectors:
-            rise = int(sh_end[det]) // self.unit_light - int(sh_vac[det]) // self.unit_light
+            rise = int(sh_end[det]) // self.unit_gap0 - int(sh_vac[det]) // self.unit_gap0
             if rise > 0:
                 self.counts['light_credits'] += rise
                 self.log.append({'event': 'light', 'i': self.interval, 'node': list(det), 'quanta': rise, 'proper': int(self.proper[det]), 'content': int(c[det]), 'light_now': int(z.now[det]), 'light_before': int(z.before[det])})
 
     def click(self, plane_starts):
-        """The click (ALGEBRA.md, The click writes on the lattice), the Node's fourth act: the readings at the start (the rules of every row, the massless row's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`), the lays refused by name (`refuse`), the births taken and laid (`births`), the bodies' closing (`bodies`), the detectors' credits (`detect`); `light_start` and `plane_starts` the massless row's line and the planes' lines at the interval's start. The one-Link read of a number takes every row's first line and a plane's both (the former toy's digit set, kept until the Boss's word on reading every line)."""
+        """The click (ALGEBRA.md, The click writes on the lattice), the Node's fourth act: the readings at the start (the rules of every row, the massless row's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`), the lays refused by name (`refuse`), the births taken and laid (`births`), the bodies' closing (`bodies`), the detectors' credits (`detect`); `gap0_start` and `plane_starts` the massless row's line and the planes' lines at the interval's start. The one-Link read of a number takes every row's first line and a plane's both (the former toy's digit set, kept until the Boss's word on reading every line)."""
         c = self.start_content; factors = self.link_factors()
-        massless = self.row(2, gap=0); r_light = self.rule_of(massless, c, factors); light_start = plane_starts[self.records().index(massless)]
+        massless = self.row(2, gap=0); r_gap0 = self.rule_of(massless, c, factors); gap0_start = plane_starts[self.records().index(massless)]
         rules = [(r.lines[0], self.rule_of(r, c, factors)) for r in (self.row(4), self.row(10))]
         for rec, r in enumerate(self.records()):
             rules += [(l, self.rule_of(r, c, factors)) for l in plane_starts[rec]]
@@ -600,9 +617,9 @@ class Lean:
             owns.append(self.share(re0, rr, pace, vacuum=True) + self.share(im0, rr, pace, vacuum=True))
         sh = owns[self.records().index(massless)]
         frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(self.shape, dtype=bool)
-        born_nodes = self.births(self.refuse(self.meet(light_start, sh, rules, frozen), owns), r_light, c, factors, pace)
-        self.bodies(light_start, plane_starts, owns, born_nodes, frozen, r_light)
-        self.detect(light_start, r_light, pace, c)
+        born_nodes = self.births(self.refuse(self.meet(gap0_start, sh, rules, frozen), owns), r_gap0, c, factors, pace)
+        self.bodies(gap0_start, plane_starts, owns, born_nodes, frozen, r_gap0)
+        self.detect(gap0_start, r_gap0, pace, c)
 
     def lay_amplitude(self, s_, at, c, factors, pace):
         """The lay of one quantum: the child's record laid at the Node with the least amplitude A at which its own share reads one quantum of its unit at the Node's paces, (2 D + SUM_j R_j) A^2 >= unit x 4 p^2 G^2 (the frame share's term of a lone record with now = before = A; ALGEBRA.md, the lay of the record out whole); the former toy laid the root of T / 2 for every species."""
@@ -628,7 +645,7 @@ class Lean:
         frame['X'] = self.X
         frame['factors'] = [int(f[at]) for f in self.start_factors]
         return {'event': 'credit', 'i': self.interval, 'node': list(at), 'proper': int(self.proper[at]), 'closes': int(self.closes[at]), 'content': int(self.start_content[at]), 'line': rec, 'sense': 1 if W > 0 else -1 if W < 0 else 0,
-                'beat': int(self.beats[rec][at]), 'frame': frame, 'taken': fall, 'levels': levels, 'light_now_was': light_was, 'sign_level': int(self.row(4).lines[0].now[at]), 'turned': bool(self.turned[at])}
+                'beat': int(self.beats[rec][at]), 'frame': frame, 'taken': fall, 'levels': levels, 'light_now_was': light_was, 'dP_take': self.last_dp, 'sign_level': int(self.row(4).lines[0].now[at]), 'turned': bool(self.turned[at])}
 
 
     def unclick(self, frame):
