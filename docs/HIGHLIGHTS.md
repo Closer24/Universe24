@@ -4,8 +4,13 @@ This document holds the decisions of the model owner that are in force, one line
 each, in the present tense. A decision of the owner replaces the line it changes:
 the old line is deleted, not kept, and the law's clause it rests on keeps the old
 sentence by name and dated. It carries no narrative; the narrative lives in the
-git history and in the owner's recorded words. What the decisions govern since
-4.0.0 (2026-10-25) is one world, Universe24: one line of whole-number arithmetic,
+git history and in the owner's recorded words. This document stands on the branch
+engine-5.0-test, the engine 5.0 under test (the Boss's word of the owner, 2026-10-25, 16:3x UTC);
+main is 4.0, the tree of 0fcc0403d (2026-10-24, 10:12 UTC, the families and the parameters
+declared, where Universe24 ran), returned by the owner's word of 2026-10-25 (15:2x UTC), its
+documents 4.0's and not edited, the tag v4.0.0 the owner's push; everyone works on the branch
+alone, nothing is pushed to main, and the four documents are kept on the branch. What the
+decisions govern on the branch is one world, Universe24: one line of whole-number arithmetic,
 Rule3, at one Node of a cubic lattice wrapped on every axis, one universe file of
 three integers, and the click, the board's own read of itself, through which
 everything is read. The project's four documents (the owner's word of 2026-10-25, 10:0x UTC;
@@ -36,19 +41,23 @@ points at the law, the law's line governs and no formula is restated here.
 ## The generic Node: the owner's words of 2026-10-25
 
 - The Node's sentence is the head of the law (03:4x to 05:1x UTC, "closed"; ALGEBRA.md, **The Node**): a place on the torus with six Links, holding the same integers as every other place, stepping every interval by Rule3 and a fixed list of acts from what it reads over one Link, writing a line when it reads a whole quantum; it knows no body, mass, well, family, birth or click; those are the decoder's readings, as nature's observers read nature; the mass appears at the click and nowhere on the board.
-- Three constants (00:2x UTC through the adviser, 01:4x UTC confirmed): a Node always holds the same count of integers, no birth adds a row; it always does the same acts, no loop grows with the records or the board; every integer stands within 128 bits, in the state and in every act's transient.
+- Three constants (00:2x UTC through the adviser, 01:4x UTC confirmed): a Node always holds the same count of integers, no birth adds a row; it always does the same acts, no loop grows with the records or the board; every integer stands within 128 bits, in the state and in every act's transient; the engine departs from the three by name (35 integers then 52 per record born, the transients beyond 128; ALGEBRA.md, The Node; FURTHER_RESEARCH.md, the generic Node; the gate tools/node_integers.py).
 - 128 bits and no den of nature (04:1x UTC): den is bounded by the width (the wall 6 den Gamma^2 G^2 within 128 bits, den near 2^101 at Gamma 1,000 and G 16) and chosen by its structure, the primes 1 mod 4, no larger than what shows the phenomenon; two worlds on one engine, a den within the width for the record and a small den for the fast demonstration.
 - The birth is the Link's (04:3x UTC, under derivation by two hands): two quanta of light meeting on a Link lay a child at each end at opposite senses; a Node takes up to six children in one close, one per Link; the sign's one shared row stands or falls with it (the one-Node pair cancels bit for bit, measured 2026-10-25).
 - The decoder reads only the Node's clock and the position, by the uncertainty principle (07:2x UTC), and stands at a place, a detector Node reading its own credits (08:3x UTC); general relativity and the physics of reality must show in the clicks at the decoder (08:0x UTC).
-- The Node stays lean and generic, a law not to be crossed; the species and den's circle are the decoder's (07:5x UTC); a bound body is spread over several Nodes and clicks at its rim, the one-Node body no body of nature (08:2x UTC, under measurement).
+- The Node stays lean and generic, a law not to be crossed; the species and den's circle are the decoder's (07:5x UTC); a bound body is spread over several Nodes and clicks at its rim, the one-Node body no body of nature (08:2x UTC, under measurement: David's toy of the same day reads the pixel at a gap near 1 and the cloud at a small gap, the body's size its Compton length, ALGEBRA.md, The two branches).
 - The den: the top tier's 22-digit den for the record, a small den for the demonstration (07:2x UTC, "goes with you").
 - The record's gates, approved (08:5x UTC): the nine phenomena (recurring bangs, the Links lengthening, shortening then lengthening, an era of matter, acceleration, contraction, light with its redshift, families forming, collisions), general relativity by name (gravitational time dilation and redshift, light's delay or deflection, free fall, the horizon) and the physics of reality (conservation at the click, the uncertainty principle, charge conservation, the arrow of time and its reversal, the mass ratios as fits), each a reading of the run's logs through the decoder with no declaration in the loader, each SHOWN or NOT SHOWN by name on every record.
-- The click moves one whole quantum within the fixed lines of the Node and its six Links and knows no family; the decoder names the families from the beat before and after; the click satisfies the uncertainty principle, read in the decoder's uncertainty table on every record.
+- The click moves one whole quantum within the fixed lines of the Node and its six Links and knows no family; the decoder names the families from the beat before and after; the click is to satisfy the uncertainty principle, read at the decoder on every record (the gate 16 of UNIVERSE24.md: the energy-time floor read on every window of the record's table; the position-momentum product NOT SHOWN as read, the body credit's point a pair of pairs).
 - Everything that showed once must show again: the record's six checks, the run back exact, the lay guard, the cube's 48 and the bijection of every act but the line stand as gates on every stage of the generic Node.
 - Only the Boss writes code, with his hands; the adviser (David) derives, measures on his own toys and advises on #2187 and writes nothing into the repository (01:3x UTC).
 - Two hands derive, blind to each other, before any code or document; a cold read compares them number by number; code is written from the agreed derivation alone (01:1x UTC).
+- The two half-up roundings of signed coefficients (the turn's factor, the write's fixed-wall ratio) round half away from zero, the law's own mirror of a carry deciding the negative side ("2 approved", 10:0x UTC; two hands R1 and R2; `paces.odd_rounded` on the branch; ALGEBRA.md, the clauses of 2026-10-25); the committed record is the half-up engine's output, kept by name.
+- Main returned to the tree of 0fcc0403d, the families and the parameters declared, where Universe24 ran (15:2x UTC: the option to return the git to before the great changes of 2026-10-24, made main by his word); it is 4.0, the tag v4.0.0 his push, its documents 4.0's and not edited; the generic Node's program continues on the branch engine-5.0-test alone, a test branch and no release, where every derivation, build and document change lands by the Boss (16:3x UTC).
+- The pair rides the quantum (the pair a value of the Node, the species drawn from the Link's read) is refused by two blind hands as posed (H1, H2; tools/derivations/pair_rides): the acceptance barren at nature's den, nothing riding, nothing binding in a massless band; sound in form.
+- The gap binds (David's toy on the night's engine, 2026-10-25): a born pair with a gap of order one keeps its share at its Node and clicks there, the law's bound state under the continuum; the record's PeV den gave the lifts gaps of 10^-13 to 10^-20 and dissolved every body; the den with g of order one on the heavy lifts, within the 128 bits, is the owner's word.
 
-## Universe24 at 4.0.0: the owner's words of 2026-10-24
+## Universe24, one Node and one universe: the owner's words of 2026-10-24
 
 - Only the new Universe24; everything unrelated out (05:4x UTC: "Make sure you work only on things related to the new Universe24... everything unrelated, throw out, and move on. A clean main that is only Universe24.. no parameters."): one world, one universe, one Node, everything local; the former worlds stand as frozen records and run nothing.
 - No parameters, no declarations: the universe file holds `den`, `node_clock` and `quantum_action` and nothing else, nature's constants alone (09:2x and 09:4x UTC); the one world is `{universe, shape, intervals}` (01:5x UTC, the fold); a file naming any other key is refused.
@@ -64,7 +73,7 @@ points at the law, the law's line governs and no formula is restated here.
 
 ## The day's structure in the law's own words (2026-10-24)
 
-Each line names the clause of [docs/ALGEBRA.md](ALGEBRA.md) that governs it by its heading, dated; the record's numbers stand as placeholders until the record of 4.0.0 is run.
+Each line names the clause of [docs/ALGEBRA.md](ALGEBRA.md) that governs it by its heading, dated; the record's numbers are those of c60804dc7 (PUSH 37).
 
 - **The one Node and the local law.** Every Node of the one world does the same acts in the same order, each reading the Node and its six neighbours at the interval's start and nothing farther; every face is read before any write (**The one Node**, 2026-10-23; **Only local**, 2026-10-22; **The read at the interval's start** and **Every face before any write**, 2026-10-24; **The interval's dependency radius is one Link**; **The board is a torus**).
 - **The fold: the one world.** A world that declares nothing is seeded with light at one quantum on every Node, and the torus reads itself at every Node once per interval (**The uniform seed is a lay**; **The board reads itself**, 2026-10-24, 02:1x UTC).
@@ -85,7 +94,7 @@ Each line names the clause of [docs/ALGEBRA.md](ALGEBRA.md) that governs it by i
 
 ## The engine
 
-- Rule3 is not changed; a problem is solved with Rule3 unchanged, and floor division and modulo live in Rule3's module alone; the engine's step is Rule3 written in the law's flux form (ALGEBRA.md, **The flux form of Rule3**; the owner's word of 2026-10-16: the engine matches the law in its implementation, not only in its results), the first form kept in `tools/step_oracle.py` as the step's oracle.
+- Rule3 is not changed; a problem is solved with Rule3 unchanged, and floor division and modulo live in Rule3's module alone but for the three index and shape divisions the gate names (tests/test_integer_algebra.py, INDEX_ARITHMETIC: the Ports' wrap and the loader's two shape divisions); the engine's step is Rule3 written in the law's flux form (ALGEBRA.md, **The flux form of Rule3**; the owner's word of 2026-10-16: the engine matches the law in its implementation, not only in its results), the first form kept in `tools/step_oracle.py` as the step's oracle.
 - The engine is Rule3 only: every act on a level is Rule3's one carried division with the remainder kept, everything else a coefficient's one division or a search by comparison; integers only, no root, no shear, no rotation act, no sine or cosine, no table; three gates keep it on every run and are the contributor's law: no root anywhere, no shear and no rotation act, and the acts table that lists every division in the engine with its kind and fails on any new one.
 - The engine holds no number but Rule3's own and the universe file's three integers; every physical value comes from the run's files; no family's name and no formula stands in `src/`.
 - Every engine change enters by its dedicated test and the check; every test runs under 30 seconds and the suite's CI under ten minutes; a slower test is split or dropped.
@@ -105,7 +114,7 @@ Each line names the clause of [docs/ALGEBRA.md](ALGEBRA.md) that governs it by i
 - A finding changes no engine: an open thing goes by name, with where to start, to docs/FURTHER_RESEARCH.md, which holds nothing closed; what does not match nature stands there first, by name, with the reading or the row the law lacks; a sentence closed by a theorem enters the law as its bold line.
 - The project proposes follow-up papers, from the careful to the bold, listed in docs/FOLLOW_UP_PAPERS.md, each a proposal with its one question; nothing in it is claimed.
 - The law's postulates open with the owner's premise, an assumption: nature is always described by equations, so the world is taken to be only numbers, and a world of numbers and Nodes has every Node doing one operation on whole numbers.
-- The law's eight first-person words stand until the owner's word on the law's voice (2026-10-21); the decisions' own first-person sentences in this document are the owner's words and stand.
+- The law's ten first-person words, every one inside the owner's quoted words, stand until the owner's word on the law's voice (2026-10-21); the decisions' own first-person sentences in this document are the owner's words and stand.
 
 ## The runs and the record
 
