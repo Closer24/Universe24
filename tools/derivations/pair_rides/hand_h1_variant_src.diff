@@ -1,0 +1,94 @@
+diff --git a/src/event_universe/node.py b/src/event_universe/node.py
+index 98e9ea766..8eb751021 100644
+--- a/src/event_universe/node.py
++++ b/src/event_universe/node.py
+@@ -10,7 +10,7 @@ import numpy as np
+ 
+ from event_universe import registry
+ from event_universe.core import paces
+-from event_universe.core.ports import AXES, PORTS, arrival
++from event_universe.core.ports import AXES, PORT_SIDES, PORTS, arrival
+ from event_universe.core.rule3 import Rule, division_back, division_forward, rule_integers
+ from event_universe.features import phase, volume
+ from event_universe.features.held_write import held_write
+@@ -40,6 +40,32 @@ if TYPE_CHECKING:
+ 
+ Factors = tuple[Any, ...]  # the factor Q_ij of a Node's six Links in Port order, in the unit G^2
+ 
++# The measurement variant of 2026-10-25 (the hand h1, "the pair rides the quantum"), behind the environment flag
++# U24_PAIR_RIDES=1 and never pushed: per family pair, one array over the board of the Node's own num_i (den at the
++# vacuum), filled by the harness and read by `rule_of`, `share.share` and `plane.link_pairs`; empty with the flag off,
++# where every line below `pair_rule` runs main's path bit for bit.
++import os as _os
++
++PAIR_RIDES = _os.environ.get("U24_PAIR_RIDES") == "1"
++NUMS: dict[tuple[int, int], Any] = {}
++
++
++def link_nums(nums: Any) -> tuple[Any, ...]:
++    """The Link's num read the same from both ends, the lesser of its two ends' nums, per Port in Port order (the variant's mending rule for the current's antisymmetry: R_ij / p_i^2 = R_ji / p_j^2 needs one num per Link)."""
++    own = np.asarray(nums, dtype=object)
++    return tuple(np.minimum(own, arrival(own, axis, side)) for axis, side in PORT_SIDES)
++
++
++def pair_rule(nums: Any, den: Any, gamma: Any, clock: Any, pace: Any, factors: Factors | None, unit: Any) -> Rule:
++    """Rule3's integers with the Node's own pair: D_i = 12 (den - num_i) p_0^2 G^2 from the Node's num_i, R_ij = 2 num_ij p_i^2 Q_ij G^2 with num_ij the Link's num (`link_nums`), S_i = 2 w - D_i - SUM_j R_ij."""
++    square = unit * unit
++    links = (square,) * PORTS if factors is None else factors
++    pace_squared = np.asarray(pace, dtype=object) * np.asarray(pace, dtype=object)
++    reaches = tuple(2 * pace_squared * factor * num for factor, num in zip(links, link_nums(nums), strict=True))
++    wall = 6 * den * gamma * gamma * square
++    own = 12 * (den - np.asarray(nums, dtype=object)) * np.asarray(clock, dtype=object) * np.asarray(clock, dtype=object) * square
++    return Rule(reaches, wall + wall - own - sum(reaches), wall, own)
++
+ 
+ def read_key(
+     name: Callable[..., Any],
+@@ -310,6 +336,8 @@ def rule_of(
+     """The rule every line of a family steps by, Rule3's integers at every Node from its pair and the paces of its read, (the six reaches R_ij, the own weight S_i, the wall w, the mass D_i), the clock and the Node's pace from the Node's content (`paces.node_paces`, The paces compose) and each Link's factor (ALGEBRA.md #the-line, the flux form; #the-interval): a family of quanta's (the holder of the sign included, its line its record) and a held row's alike, the row's own level among the content it reads (Every row reads the content); None no tension, G^2 on every Link; the step's module takes it (flux.py)."""
+     num, den = family.pair
+     clock, pace = paces.node_paces(gamma, content)
++    if PAIR_RIDES and family.pair in NUMS:  # the measurement variant: the Node's own pair in the rule
++        return pair_rule(NUMS[family.pair], den, gamma, clock, pace, factors, unit)
+     return rule_integers(num, den, gamma, clock, pace, factors, unit)
+ 
+ 
+diff --git a/src/event_universe/plane.py b/src/event_universe/plane.py
+index 33bccb9f1..40e24ea46 100644
+--- a/src/event_universe/plane.py
++++ b/src/event_universe/plane.py
+@@ -81,8 +81,15 @@ def sign_pairs(
+ ) -> tuple[tuple[Any, ...], tuple[Any, ...]]:
+     """The sign's pair on each Link in Port order, in the Link unit (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the two hands' lines of 2026-10-09, the advisor's (a) and (1), the mathematician's (a)): the Link's angle theta with tan(theta / 2) = n / W at the Link's wall W = 4 Gamma (features/rotation.link_wall), n = n_ij the sign holder's odd line along the Link, the two ends' sum with the direction's sign (`link_levels`), is the exact tangent half-angle triple (W^2 - n^2, 2 W n, W^2 + n^2) rebooked in the Link's unit X_ij = 2 num Q_ij with one rounding each: X^c = rounded(X_ij (W^2 - n^2), W^2 + n^2) and X^s = sgn(n) rounded(X_ij 2 W |n|, W^2 + n^2) (features/phase.signed_rounded, the sign attached after), X^c even in n and X^s odd in n, so that X^c_ji = X^c_ij and X^s_ji = -X^s_ij exactly (K = D M Hermitian, the count exact by Theorem 3) and the pair's magnitude is X_ij to the rounding; no shear and no time turn: the Link turn is the phase pair (`step_plane`, `phase_links`)."""
+     num, wall = pair[0], link_wall(gamma)
++    from event_universe import node as _node  # the measurement variant of 2026-10-25 (flag U24_PAIR_RIDES)
++
++    nums = (
++        _node.link_nums(_node.NUMS[pair])
++        if _node.PAIR_RIDES and pair in _node.NUMS and len(factors) == len(_node.PORT_SIDES)
++        else (num,) * len(factors)
++    )
+     even, odd = [], []
+-    for factor, link in zip(factors, links, strict=True):
++    for factor, link, num in zip(factors, links, nums, strict=True):
+         x, circle = 2 * num * factor, wall * wall + link * link  # X_ij and the triple's hypotenuse
+         even.append(paces.rounded(x * (wall * wall - link * link), circle))
+         odd.append(signed_rounded(x * 2 * wall * link, circle))
+diff --git a/src/event_universe/share.py b/src/event_universe/share.py
+index 82fc42eee..4797ffd3a 100644
+--- a/src/event_universe/share.py
++++ b/src/event_universe/share.py
+@@ -55,6 +55,13 @@ def share(
+     clock, pace = paces.node_paces(gamma, paces.at_nodes(content, at))
+     links = None if factors is None else tuple(paces.at_nodes(factor, at) for factor in factors)
+     reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, links, unit)
++    from event_universe import node as _node  # the measurement variant of 2026-10-25 (flag U24_PAIR_RIDES)
++
++    if _node.PAIR_RIDES and pair in _node.NUMS:
++        full_clock, full_pace = paces.node_paces(gamma, content)
++        rule = _node.pair_rule(_node.NUMS[pair], den, gamma, full_clock, full_pace, factors, unit)
++        reads = tuple(np.asarray(r, dtype=object)[at] for r in rule.reaches)
++        self_coefficient = np.asarray(rule.self_coefficient, dtype=object)[at]
+     arrived = tuple(value[at].astype(object) for value in ports(read.before))
+     link = sum(read * arrival for read, arrival in zip(reads, arrived, strict=True))  # the Links' sum
+     turn = self_coefficient * (read.before[at].astype(object) - before)  # the cross product's turn

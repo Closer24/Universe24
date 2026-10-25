@@ -1,0 +1,164 @@
+[
+ {
+  "cube": 3,
+  "den": 1021,
+  "block": 1,
+  "light": true,
+  "variant": true,
+  "amplitude": 160,
+  "unit": 71280000,
+  "pair": [
+   779,
+   660
+  ],
+  "intervals": 300,
+  "seconds": 503.6,
+  "history": [
+   {
+    "interval": 0,
+    "total_over_unit": 2.196,
+    "within_one_link": 2.196,
+    "fraction_within": 1.0,
+    "nodes_whole": 1,
+    "nodes_with_level": 7,
+    "paired_nodes": 1,
+    "pair_reach": 0
+   },
+   {
+    "interval": 1,
+    "total_over_unit": 2.214,
+    "within_one_link": 2.214,
+    "fraction_within": 1.0,
+    "nodes_whole": 1,
+    "nodes_with_level": 7,
+    "paired_nodes": 1,
+    "pair_reach": 0
+   },
+   {
+    "interval": 2,
+    "total_over_unit": 2.223,
+    "within_one_link": 2.181,
+    "fraction_within": 0.981,
+    "nodes_whole": 1,
+    "nodes_with_level": 19,
+    "paired_nodes": 1,
+    "pair_reach": 0
+   },
+   {
+    "interval": 5,
+    "total_over_unit": 12.239,
+    "within_one_link": 3.381,
+    "fraction_within": 0.276,
+    "nodes_whole": 4,
+    "nodes_with_level": 27,
+    "paired_nodes": 7,
+    "pair_reach": 3
+   },
+   {
+    "interval": 10,
+    "total_over_unit": 13.737,
+    "within_one_link": 4.878,
+    "fraction_within": 0.355,
+    "nodes_whole": 8,
+    "nodes_with_level": 27,
+    "paired_nodes": 9,
+    "pair_reach": 3
+   },
+   {
+    "interval": 20,
+    "total_over_unit": 33.779,
+    "within_one_link": 13.602,
+    "fraction_within": 0.403,
+    "nodes_whole": 15,
+    "nodes_with_level": 27,
+    "paired_nodes": 21,
+    "pair_reach": 3
+   },
+   {
+    "interval": 40,
+    "total_over_unit": 78.366,
+    "within_one_link": 16.546,
+    "fraction_within": 0.211,
+    "nodes_whole": 24,
+    "nodes_with_level": 27,
+    "paired_nodes": 27,
+    "pair_reach": 3
+   },
+   {
+    "interval": 60,
+    "total_over_unit": 145.185,
+    "within_one_link": 44.084,
+    "fraction_within": 0.304,
+    "nodes_whole": 21,
+    "nodes_with_level": 27,
+    "paired_nodes": 27,
+    "pair_reach": 3
+   },
+   {
+    "interval": 100,
+    "total_over_unit": 224.766,
+    "within_one_link": 41.028,
+    "fraction_within": 0.183,
+    "nodes_whole": 27,
+    "nodes_with_level": 27,
+    "paired_nodes": 27,
+    "pair_reach": 3
+   },
+   {
+    "interval": 150,
+    "total_over_unit": 256.259,
+    "within_one_link": 54.625,
+    "fraction_within": 0.213,
+    "nodes_whole": 27,
+    "nodes_with_level": 27,
+    "paired_nodes": 27,
+    "pair_reach": 3
+   },
+   {
+    "interval": 200,
+    "total_over_unit": 212.177,
+    "within_one_link": 58.205,
+    "fraction_within": 0.274,
+    "nodes_whole": 27,
+    "nodes_with_level": 27,
+    "paired_nodes": 27,
+    "pair_reach": 3
+   },
+   {
+    "interval": 250,
+    "total_over_unit": 148.137,
+    "within_one_link": 68.869,
+    "fraction_within": 0.465,
+    "nodes_whole": 27,
+    "nodes_with_level": 27,
+    "paired_nodes": 27,
+    "pair_reach": 3
+   },
+   {
+    "interval": 300,
+    "total_over_unit": 194.883,
+    "within_one_link": 88.218,
+    "fraction_within": 0.453,
+    "nodes_whole": 27,
+    "nodes_with_level": 27,
+    "paired_nodes": 27,
+    "pair_reach": 3
+   }
+  ],
+  "credits_of_pattern": [],
+  "credits_all": 152,
+  "births": 12,
+  "ride_counts": {
+   "rides": 91,
+   "holes": 76,
+   "births": 11,
+   "ties": 0
+  },
+  "run_back": {
+   "steps": 300,
+   "matched": 300,
+   "interval_after": 0
+  },
+  "integers_at_start_plus_pair": null
+ }
+]
