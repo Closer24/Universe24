@@ -20,6 +20,26 @@ def turn_pair(re: Any, im: Any, c: Any, s: Any, scale: Any) -> tuple[Any, Any]:
     return rounded(c * re - s * im, scale), rounded(s * re + c * im, scale)
 
 
+class Link:
+    """The Link's record at one Port for the interval, read once from its two ends and the same from both (X2's link(i, j)): the factor Q_ij from the two ends' tensions, the frame sign f_ij, the Link's phase pair (cos, sin) over X from the two ends' centred counts, and the odd part n_ij of the shape-4 row's odd line on the Link's axis for the tangent triple; every act reads these and recomputes none."""
+
+    __slots__ = ("factor", "frame", "cosine", "sine", "odd")
+
+    def __init__(self, factor: Any, frame: Any, cosine: Any, sine: Any, odd: Any) -> None:
+        self.factor, self.frame, self.cosine, self.sine, self.odd = factor, frame, cosine, sine, odd
+
+
+def links_of(
+    factors: tuple[Any, ...], frames: list[Any], phases: list[tuple[Any, Any]], odd_lines: list[Any]
+) -> list[Link]:
+    """The six Links' records from the interval's readings: the factors, the frame signs, the phase pairs and, per Port, the odd line of its axis summed over the two ends with the Port's sign (the one Link read of an odd part)."""
+    found = []
+    for port, (axis, _side) in enumerate(PORT_SIDES):
+        _even, (n,), _f = link(port, odd=(odd_lines[axis],))
+        found.append(Link(factors[port], frames[port], phases[port][0], phases[port][1], n))
+    return found
+
+
 def link(
     port: int, even: tuple[Any, ...] = (), odd: tuple[Any, ...] = (), frame_bits: Any = None
 ) -> tuple[list[Any], list[Any], Any]:

@@ -10,10 +10,10 @@ import numpy as np
 from event_universe import close, interval, readings, seed, take
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
-from event_universe.core.ports import AXES, PORT_SIDES, PORTS, across
+from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import carried_division, half, link_unit_of, unit_of, wall_of
 from event_universe.features import phase
-from event_universe.links import link, turn_pair
+from event_universe.links import Link, turn_pair
 from event_universe.rows import (
     CARRIER,
     HALF_WIDTH,
@@ -27,7 +27,6 @@ from event_universe.rows import (
     zeros,
 )
 
-Turn = tuple[list[tuple[Any, Any]], list[Any], list[Any]] | None
 COUNTS = {  # the run's counts, every one 0 at the start
     "births": 0,
     "taken": 0,
@@ -166,22 +165,19 @@ class Node:
         """The conserved form's share at every Node (readings.share)."""
         return readings.share(self, line, r, pace, vacuum)
 
-    def turned_arrival(self, arrivals: list[Any], port: int, turn: Turn) -> list[Any]:
-        """The arrivals of a row's lines at one Port, read in the Node's frame and turned by the Link's pair over X and by the odd line's tangent triple (W^2 - n^2, 2 W n, W^2 + n^2), W = 4 Gamma, one rounding per Link per part; a row of one line is turned by the identity; `turn` None is the identity for every shape."""
+    def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
+        """The arrivals of a row's lines at one Port, read in the Node's frame and turned by the Link's pair over X and by the odd line's tangent triple (W^2 - n^2, 2 W n, W^2 + n^2), W = 4 Gamma, one rounding per Link per part, every number the Link's record; a row of one line is turned by the identity; `turn` None is the identity for every shape."""
         if turn is None or len(arrivals) == 1:
             return arrivals
-        phases, odd, frames = turn
-        axis, _side = PORT_SIDES[port]
-        re_j, im_j = arrivals
-        im_j = frames[port] * im_j
-        c, s = phases[port]
-        _e, (n,), _f = link(port, odd=(odd[axis],))
+        at = turn[port]
+        re_j, im_j = arrivals[0], at.frame * arrivals[1]
         wl = 4 * self.gamma
-        tc, ts, tw = wl * wl - n * n, 2 * wl * n, wl * wl + n * n
-        a_re, a_im = turn_pair(re_j, im_j, c, s, self.X)
-        return list(turn_pair(a_re, a_im, tc, ts, tw))
+        a_re, a_im = turn_pair(re_j, im_j, at.cosine, at.sine, self.X)
+        return list(
+            turn_pair(a_re, a_im, wl * wl - at.odd * at.odd, 2 * wl * at.odd, wl * wl + at.odd * at.odd)
+        )
 
-    def arrivals(self, at: list[Any], r: rule3.Rule, turn: Turn) -> list[Any]:
+    def arrivals(self, at: list[Any], r: rule3.Rule, turn: list[Link] | None) -> list[Any]:
         """The Links' part of Rule3's total for a row's lines at every Node, SUM_j R_j m_j, the arrivals at each Port turned as the row's shape turns them."""
         totals: list[Any] = [0] * len(at)
         for port, reach in enumerate(r.reaches):
@@ -193,7 +189,7 @@ class Node:
         self,
         lines: list[Line],
         r: rule3.Rule,
-        turn: Turn,
+        turn: list[Link] | None,
         direction: int,
         flux: list[Any] | None,
         starts: list[Any] | None,
@@ -227,7 +223,7 @@ class Node:
         self,
         lines: list[Line],
         r: rule3.Rule,
-        turn: Turn,
+        turn: list[Link] | None,
         numerators: list[Any],
         direction: int,
         flux: list[Any] | None = None,

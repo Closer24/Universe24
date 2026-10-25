@@ -11,7 +11,7 @@ from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import division_forward, half, held_numerator, quotient
 from event_universe.features import volume
-from event_universe.links import plane_current, stress_parts, tensor_parts, wronskian
+from event_universe.links import links_of, plane_current, stress_parts, tensor_parts, wronskian
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, Row, zeros
 
 if TYPE_CHECKING:
@@ -87,7 +87,7 @@ class Interval:
         self.trace, self.traceless = tensor_parts(stress)
 
     def walled_act(self) -> None:
-        """The walled row first: its act carries its own write; the Links' count, phases and the odd lines come from it for the planes' turn."""
+        """The walled row first: its act carries its own write; the Links' count and phases come from it, and the six Links' records (the factor, the frame, the pair, the odd part) are read once for the planes' turn."""
         node, walled = self.node, self.walled
         k = self.where[id(walled)]
         rule = node.rule_of(walled, self.c, self.factors)
@@ -103,6 +103,7 @@ class Interval:
         self.phases = readings.link_phases(node, self.frames, count)
         self.odd = [self.at(line) for line in self.potential.lines[1 : 1 + AXES]]
         node.start_phases, node.start_odd = self.phases, [o.copy() for o in self.odd]
+        self.links = links_of(self.factors, self.frames, self.phases, self.odd)
 
     def forces(self) -> None:
         """Every riding line's force at the start, SUM_j R_j (m_j - a) - D a, the planes' Wronskian and current at this end, and the emission read from the kick, X_now SUM over the planes with a gap of (re F_im - im F_re)."""
@@ -118,7 +119,7 @@ class Interval:
         self.force: dict[int, list[Any]] = {}
         for r in self.riders:
             rule = node.rule_of(r, self.c, self.factors)
-            turn = (self.phases, self.odd, self.frames) if r.shape == PLANE and r.gap else None
+            turn = self.links if r.shape == PLANE and r.gap else None
             k = self.where[id(r)]
             self.starts[k] = [self.at(line) for line in self.lines(r)]
             arrivals = node.arrivals(self.starts[k], rule, turn)

@@ -14,7 +14,7 @@ from event_universe.core import paces, rule3
 from event_universe.core.ports import PORTS, across
 from event_universe.core.rule3 import half
 from event_universe.features import volume
-from event_universe.links import plane_current, stress_parts, tensor_parts, wronskian
+from event_universe.links import links_of, plane_current, stress_parts, tensor_parts, wronskian
 from event_universe.loader.world import read_world
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, zeros
@@ -179,8 +179,7 @@ class Toy(Node):
         current = [zeros(self.shape) for _ in range(AXES)]
         plane_starts: list[list[Line]] = []
         stepped: list[list[Line]] = []
-        phases: Any = None
-        odd: Any = None
+        links: Any = None
         for k, r in enumerate(self.rows_):
             rule = self.rule_of(r, c, factors)
             turn = None
@@ -189,7 +188,7 @@ class Toy(Node):
             if r.wall is not None:
                 flux = [2 * cphi]
             elif r.shape == PLANE:
-                turn = None if r.gap == 0 else (phases, odd, frames)
+                turn = None if r.gap == 0 else links
                 if r.gap == 0:
                     numerators = [w_after - w_start, None]
             elif r.shape == POTENTIAL:
@@ -216,6 +215,7 @@ class Toy(Node):
                 phases = readings.link_phases(self, frames, count)
                 odd = [at(line) for line in potential.lines[1 : 1 + AXES]]
                 self.start_phases, self.start_odd = phases, [o.copy() for o in odd]
+                links = links_of(factors, frames, phases, odd)
             elif r.shape == PLANE:
                 re, im = start
                 w_start = w_start + wronskian(re, im)
