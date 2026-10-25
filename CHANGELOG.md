@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's order of the work of 2026-10-25, 17:16 UTC (#2187 6400711613) and the Boss's requests of 6400711613 and 6400767119: LC-S1, BB-S1 and MA-S1 as findings beside BG-S1 in docs/ALGEBRA.md; the open table of docs/UNIVERSE24.md's section 4 in the owner's four priorities; one decision in docs/HIGHLIGHTS.md.
 - The owner's word of 2026-10-25, 17:16 UTC (#2187 6400636699, A48-S1 in a48b's form): the one-Link read in the frame the line was laid in written under The click writes on the lattice in docs/ALGEBRA.md, the former read and A2 kept by name with their record, the frame bit's clause beside it; gates 20 and 21 in docs/UNIVERSE24.md; one decision in docs/HIGHLIGHTS.md.
 - The ledger of docs/UNIVERSE24.md's section 4 current after David's generic close, MS-S2 and the readers (toys-5 88fd425f6), the hands a48b, bb1 and bb2 and ws1 landed on engine-5.0-test with A48-S1 and BB-S1 for the owner's word, Animate's uniform-board run and the owner's words of 16:4x to 17:2x on the page, the module count at the merge sixteen.
 - The Boss's request of 2026-10-25, 17:0x UTC by his clock (#2187 6400357538, the hand ws1): The swap keeps the charge under The swap at the top in docs/ALGEBRA.md, the former wording kept by name, the finding The plain charge drifts at moving paces and the open item of the charge's invariant at moving paces; one decision in docs/HIGHLIGHTS.md.
