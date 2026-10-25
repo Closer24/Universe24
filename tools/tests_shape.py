@@ -51,6 +51,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "MS-S1 (2026-10-25, the owner's word through the Boss, 6399410929, MS_COMPARISON.md section 5: the test under 15 s beside the sentence): the lay's pair (A, B) with A B = T div 2 from T alone, "
         "the chiral 5-cube at 12 intervals with every child's Wronskian +-(T div 2) where its plane stood at nothing, the senses opposite and summing to 0, taken at or above booked, the run back exact",
     ),
+    "tests/test_the_node.py::test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws": (
+        34,
+        "WS (2026-10-25, the Boss's 6400357538, WS_VERDICT.md section 4: the test under 15 s): the reading Node within the test (its click reads W of the held pre-state against W after the swap at every turned Node and every plane before it lays), the Boss's 3-cube to 60 and the chiral 5-cube at 20, kept = sites, negated 0, changed 0, the nonzero sites counted",
+    ),
     "tests/test_the_node.py::shares_of": (
         11,
         "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, PM_COMPARISON.md section 5: the tests under 15 s beside the sentence): the helper, the gap-0 line's share in the carrier's unit and by hand at the frame's and the vacuum's weights",

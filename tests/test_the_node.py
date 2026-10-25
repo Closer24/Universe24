@@ -338,3 +338,39 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
             for e in node.log
         ), b
     assert run_back_exact(kept, 30) == 30
+
+
+def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> None:
+    """WS (the Boss's 6400357538, WS_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the swap at the top is the conjugation composed with the exchange of the two levels, and W = re_now im_before - im_now re_before, odd under each, is even under the two: at every turned Node and every plane (the gap-0 plane with the gapped), W after the swap equals W of the held pre-state exactly (read by a Node whose click reads before it lays; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one quantum of row 1 at the centre, the first turn at 42) 296 of 296 sites by 60 (74 turned Nodes), every W 0 there; on the chiral 5-cube at 20 intervals 2,120 of 2,120 sites (530 turned Nodes by the four planes), 668 of them with W not 0 (at 60 the probe reads 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head)."""
+    from event_universe.links import wronskian
+
+    class Reading(Node):
+        wronskians: dict[str, int] = {}
+
+        def click(self, *args: Any, **keys: Any) -> Any:
+            where = list(zip(*np.nonzero(self.turned), strict=True))
+            for r, row, hrow in zip(self.rows_, self.rows(), args[1], strict=True):
+                if r.shape == PLANE:
+                    pre, after = wronskian(*hrow), wronskian(*row)
+                    for at in where:
+                        wp, wa = int(pre[at]), int(after[at])
+                        key = "kept" if wa == wp else "negated" if wa == -wp else "changed"
+                        for k in ("sites", key, "nonzero" if wp else "zero"):
+                            self.wronskians[k] = self.wronskians.get(k, 0) + 1
+            return super().click(*args, **keys)
+
+    universe, world = world_of("world_node.json")
+    one = {"lay": "at", "row": 1, "centre": [1, 1, 1], "quanta": 1, "width": 2, "sense": 1}
+    found = []
+    for node, n in (
+        (Reading(universe, dict(world, seed=[world["seed"][0], one])), 60),
+        (Reading(*world_of("world_chiral.json")), 20),
+    ):
+        node.wronskians = {}
+        for _ in range(n):
+            node.step()
+        assert node.wronskians["kept"] == node.wronskians["sites"] > 0
+        assert not {"negated", "changed"} & node.wronskians.keys()
+        found.append(node.wronskians)
+    assert [f["sites"] for f in found] == [296, 2120] and found[1]["nonzero"] == 668
+    assert "nonzero" not in found[0]
