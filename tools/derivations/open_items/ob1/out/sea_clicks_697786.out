@@ -1,0 +1,19 @@
+{"lines": 977}
+{"credits": 578}
+{"births": 20}
+{"lays": 379}
+{"refused": 0}
+{"momentum signs summed per axis over the credits": [0, 0, 0]}
+{"credits without a momentum key": 0}
+{"running cosine pairs (the orbit of the 48: equal counts per orbit)": {"[[-9, 38], [9, 106]]": 48, "[[-1385, 542], [209, 920]]": 48, "[[-13, 33], [69, 211]]": 48, "[[-1025, 482], [421, 6802]]": 48, "[[-2087, 6194], [2981, 2938]]": 48, "[[43, 193], [132, 245]]": 48, "[[-191, 130], [-13, 14]]": 48, "[[3, 10], [199, 224]]": 48, "[[-257, 208], [125, 6]]": 48, "[[-121, 118], [48, 25]]": 48, "[[657, 9524], [-2084, 2713]]": 48, "[[-13, 18], [24, 43]]": 48}}
+{"senses over the credits": {"0": 20, "1": 279, "-1": 279}}
+{"kinds": {"1": 20, "2": 558}}
+{"beats (W_c sin omega) with their counts": {"3641698": 12, "45497235": 6, "12623070": 1}}
+{"credits with the beat None (a body credit without a beat: D-S2 the lack)": 559}
+{"births: the senses summed": 0}
+{"births: taken = walls + excess": [20, 20]}
+{"births: exact (excess 0)": [0, 20]}
+{"births: taken, walls, excess summed": [2785373643458, 2776268736000, 9104907458]}
+{"light credits with a beat": 19}
+{"light credits per Node (the first eight)": {"0": 1, "1": 1, "2": 1, "3": 1, "6": 1, "9": 1, "18": 1, "4": 1}}
+{"light credits (interval, proper) distinct pairs (the first twelve)": [[8, 7], [20, 18], [26, 23]]}

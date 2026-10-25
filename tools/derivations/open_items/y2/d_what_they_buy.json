@@ -1,0 +1,120 @@
+{
+ "rotation_unit_K": {
+  "lift_779_1021": 702,
+  "massless_1021_1021": 0,
+  "guard_6K_2V_le_Gamma2": true,
+  "V": 50
+ },
+ "flux_read": {
+  "light_line_nodes_differing_V_against_0": [
+   0,
+   0,
+   0
+  ],
+  "plane_lines_nodes_differing_V_against_0_re_im": [
+   [
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0
+   ]
+  ],
+  "sign_rows_arrays_differing": 0,
+  "volume_row_lines_nodes_differing": [
+   0,
+   0,
+   0,
+   0,
+   61,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "link_pair_plus_x_at_centre_even_odd_V0": [
+   398848000000,
+   0
+  ],
+  "link_pair_plus_x_at_centre_even_odd_V": [
+   398848000000,
+   167995000000
+  ],
+  "turned_nodes": [
+   20,
+   20
+  ],
+  "points": {
+   "0": {
+    "re_point_2cos_at_centre": [
+     61,
+     80
+    ],
+    "im_point_2cos_at_centre": [
+     229,
+     300
+    ],
+    "re_now_after_at_centre": 230,
+    "im_now_after_at_centre": 138,
+    "light_now_after_at_centre": 0
+   },
+   "50": {
+    "re_point_2cos_at_centre": [
+     61,
+     80
+    ],
+    "im_point_2cos_at_centre": [
+     229,
+     300
+    ],
+    "re_now_after_at_centre": 230,
+    "im_now_after_at_centre": 138,
+    "light_now_after_at_centre": 0
+   }
+  }
+ },
+ "shear_write_two_body": {
+  "one_at_111": {
+   "g_xx_source_T_xx_at_211": 36471141,
+   "g_xy_source_DxDy_at_211": 0,
+   "g_yz_source_at_211": 0,
+   "g_zx_source_at_211": 0,
+   "g_xy_source_nonzero_nodes": 0,
+   "g_xx_source_nonzero_nodes": 2
+  },
+  "two_at_111_and_221": {
+   "g_xx_source_T_xx_at_211": 36471141,
+   "g_xy_source_DxDy_at_211": -36471141,
+   "g_yz_source_at_211": 0,
+   "g_zx_source_at_211": 0,
+   "g_xy_source_nonzero_nodes": 2,
+   "g_xx_source_nonzero_nodes": 4
+  }
+ },
+ "flux_lines_carry_the_lattice_momentum": {
+  "flux_source_board_sums": [
+   656480538,
+   0,
+   0
+  ],
+  "num_times_P": [
+   670266629298,
+   0,
+   0
+  ],
+  "equal_exactly": false,
+  "P_x_light": 656480538,
+  "written_g_0a_board_change_after_one_interval_levels": [
+   0,
+   0,
+   0
+  ],
+  "write_wall_largest_at_the_node": 220536000000000000,
+  "g_0x_nonzero_nodes_after": 0,
+  "turned_nodes": 10
+ }
+}

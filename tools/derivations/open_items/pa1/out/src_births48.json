@@ -1,0 +1,1127 @@
+{
+ "engine": "src at 8b1237234, meeting_board.closed (both children at one Node)",
+ "den": 1021,
+ "seed": "sea plus one quantum at (1,0,0), the hole at the origin",
+ "intervals": 8,
+ "births": 6,
+ "credits": 6,
+ "births with the two children at different Nodes (the dipole)": 0,
+ "charge: senses sum over births": 0,
+ "birth intervals": [
+  5
+ ],
+ "the 48 on the birth records": {
+  "equal": 48,
+  "exchanged (and not equal)": 0,
+  "neither": 0,
+  "note": "with both children at one Node the exchange of the senses maps the pair to itself, so every equal element is also exchanged; the count above names the elements equal first"
+ },
+ "the 48: equal and also exchanged (the pair at one Node is C-even)": 48,
+ "per element": [
+  {
+   "element": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "det": 1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  },
+  {
+   "element": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "det": -1,
+   "equal": true,
+   "exchanged": true,
+   "births": 6
+  }
+ ],
+ "milliseconds": 20755
+}

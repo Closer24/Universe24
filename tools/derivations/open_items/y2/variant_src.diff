@@ -1,0 +1,326 @@
+diff --git a/src/event_universe/flux.py b/src/event_universe/flux.py
+index 96c307f2a..3bdf227b6 100644
+--- a/src/event_universe/flux.py
++++ b/src/event_universe/flux.py
+@@ -11,10 +11,10 @@ from event_universe import node, records, registry
+ from event_universe.core.ports import AXES
+ from event_universe.core.rule3 import Rule, division_forward, rule3
+ from event_universe.frames import frames_of
+-from event_universe.loader.derived import PLANE
+-from event_universe.plane import link_levels, link_pairs, phase_links
++from event_universe.loader.derived import METRIC, PLANE
++from event_universe.plane import link_levels, link_pairs, phase_links, rotation_unit
+ from event_universe.readings import at, slices
+-from event_universe.records import Booking, Record, record_slice
++from event_universe.records import Booking, Record, level_at, record_slice
+ 
+ Pairs = tuple[tuple[Any, ...], tuple[Any, ...]]  # a turned plane's reads per Port, (R^c_ij, R^s_ij)
+ 
+@@ -87,13 +87,20 @@ def step_line(record: Record, rule: Rule, direction: int = 1) -> Record:
+ 
+ 
+ def step_momentum(
+-    own: Sequence[Record], rule: Rule, direction: int, volumes: tuple[Any, Any, Any]
++    own: Sequence[Record],
++    rule: Rule,
++    direction: int,
++    volumes: tuple[Any, Any, Any],
++    traceless: bool = True,
+ ) -> list[Record]:
+     """The three tension lines of a held row of the content stepped as the shear's momentum at the volume's wall (ALGEBRA.md, The shear's momentum is carried at the volume's wall, a hypothesis under its own name, 2026-10-23; the symmetry hand's derivation read cold by the reader): Rule3's line on the traceless part of the line's own three Link terms with its wall 3 w split across the interval, the wall of the pair the act enters 3 w (X_now + X_ahead) on the level stepped to and on the remainder's range, the wall the velocity carried in was born under, 3 w (X_now + X_behind), on that velocity, and the one volume of the start, 2 X_now, on the Links' term and the mass, `volumes` the Node's own time line (X_behind, X_now, X_ahead) in `direction` (forward X_before, X_now, X_next after the time line's step and write; backward X_next, X_now, X_before after the time line's inverse), so that the shear's momentum (X / Gamma) T_a' in the board's interval is what the Links' traceless terms move and the shear's velocity falls as the volume grows, nature's -3 H sigma in proper time with the weight the volume's exponent d + 1 in the board's interval and no number typed; with the half wall's move (3 w (X_ahead - X_behind)) / 2 in the numerator, so that the rest's remainder at half the wall born under stands at half the wall entered (the law's birth at the half wall carried across the wall's change: the momentum less half the wall is what the flux moves, the floor a rounding to the nearest, no bias as the wall grows), one carried division per line (`core/rule3.division_forward`, the remainder Python's integer in [0, 3 w (X_now + X_ahead))), a bijection at every Node-interval whether the volume grows or shrinks (the incoming remainder's range is the incoming level's coefficient), the inverse the same function at -1 with every remainder complemented at its own wall, the wall it was born under (the forward act on the swapped pair; `records.complement`, the mirror of The cube's symmetry), and the law's own `step_traceless` bit for bit where the time line stands (X_behind = X_now = X_ahead), the remainder 2 X times the law's."""
+     behind, now, ahead = (np.asarray(volume, dtype=object) for volume in volumes)
+     gathered = [gathered_line(line, rule, direction) for line in own]
+     total: Any = sum(np.asarray(flux, dtype=object) for flux, _level, _other in gathered)
+-    wall3, mass3 = AXES * rule.wall, AXES * rule.mass
++    parts = (
++        AXES if traceless else 1
++    )  # the trace's three on the diagonal triple; 1 on a triple holding no trace, the flux lines and the shears (Y2, U24_METRIC: T_1u and T_2g hold no A_1g, so the projection is refused by the 48 and each line steps on its own Link term whole)
++    wall3, mass3 = parts * rule.wall, parts * rule.mass
+     entered, born = (
+         wall3 * (now + ahead),
+         wall3 * (now + behind),
+@@ -106,11 +113,9 @@ def step_momentum(
+     found = []
+     for line, (flux, level, other) in zip(own, gathered, strict=True):
+         kind = line.now.dtype
+-        traceless = AXES * np.asarray(flux, dtype=object) - total
++        term = parts * np.asarray(flux, dtype=object) - (total if traceless else 0)
+         level, other = np.asarray(level, dtype=object), np.asarray(other, dtype=object)
+-        numerator = (
+-            entered * level + born * (level - other) + (now + now) * (traceless - mass3 * level) + rest
+-        )
++        numerator = entered * level + born * (level - other) + (now + now) * (term - mass3 * level) + rest
+         remainder = np.asarray(line.remainder, dtype=object)
+         carry = (
+             remainder if direction == 1 else born - 1 - remainder
+@@ -185,7 +190,7 @@ def step_family(
+         )  # a holder of the content's tension lines: the shear's momentum
+         found = [
+             step_line(line, rule, direction)
+-            if not (traced and 1 <= number - span.start <= AXES)
++            if not (traced and 1 <= number - span.start <= (AXES * AXES if METRIC else AXES))
+             else line
+             for number, line in enumerate(own, span.start)
+         ]
+@@ -252,7 +257,16 @@ def pairs_of(
+                 "for the fold: the caller passes features/phase.amplitude of the width"
+             )
+         phases = phase_links(states[node.sign_holder(index, families)].phases[row])
+-    found = link_pairs(families[index].pair, gamma, content, factors, sign, phases, amplitude)
++    flux_levels, rotation = None, 0
++    if METRIC and sign is not None:  # gravity's fold (Y2): the metric's flux lines along the six Links, V_ij = V_a(i) + V_a(j), and the family's rotation to the unit
++        rows = [h for h, f in enumerate(families) if f.held and f.flux]
++        if rows:
++            levels = tuple(level_at(states[rows[0]].lines[1 + AXES + a], direction) for a in range(AXES))
++            flux_levels = link_levels(levels, (1, 1))
++            rotation = rotation_unit(families[index].pair, gamma)
++    found = link_pairs(
++        families[index].pair, gamma, content, factors, sign, phases, amplitude, flux_levels, rotation
++    )
+     READS[key] = (taken, (found, []))
+     return found
+ 
+diff --git a/src/event_universe/loader/derived.py b/src/event_universe/loader/derived.py
+index efe64654f..a14d61733 100644
+--- a/src/event_universe/loader/derived.py
++++ b/src/event_universe/loader/derived.py
+@@ -5,6 +5,11 @@ from __future__ import annotations
+ from collections.abc import Sequence
+ from dataclasses import dataclass, replace
+ from math import gcd
++from os import environ
++
++METRIC = (
++    environ.get("U24_METRIC") == "1"
++)  # the hand Y2's flag (2026-10-25): the metric's ten lines written, stepped and read; off, the branch bit for bit
+ 
+ from event_universe.core.paces import WRONSKIAN_POWER, sine_den
+ from event_universe.core.ports import AXES, PORTS, SIDES
+@@ -273,7 +278,9 @@ def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) ->
+     if family.axes:  # the tension lines: the centred difference squared over the doubled wall 2 E_s W_c (The stress is the Links', 2026-10-23)
+         row[1 : 1 + AXES] = [SIDES * family.level_weight * measure] * AXES
+     if family.flux:  # the odd lines: the two Links' flux summed unhalved over twice the count's wall
+-        row[1 + AXES :] = [SIDES * family.level_weight * measure] * AXES
++        row[1 + AXES :] = [SIDES * family.level_weight * measure] * (
++            family.width - 1 - AXES
++        )  # every line after the tensions (the flux lines and the shears alike, Y2): the slice's own length
+     if family.rotation:  # the sign's odd lines: the two Links' currents summed unhalved over 2 E_s T
+         row[1:] = [SIDES * family.level_weight * measure] * AXES
+     row = [
+diff --git a/src/event_universe/loader/rooms.py b/src/event_universe/loader/rooms.py
+index e1dc6d6cc..9916e256c 100644
+--- a/src/event_universe/loader/rooms.py
++++ b/src/event_universe/loader/rooms.py
+@@ -91,7 +91,7 @@ def write_rooms(
+     if (
+         family.flux
+     ):  # an odd line: the flux through the axis's two Ports, two products each, |num| on each
+-        rooms[1 + AXES :] = [SIDES * axis] * AXES
++        rooms[1 + AXES :] = [SIDES * axis] * (family.width - 1 - AXES)  # the slice's own length (Y2)
+     return [abs(family.write) * room for room in rooms * family.records]
+ 
+ 
+diff --git a/src/event_universe/loader/universe.py b/src/event_universe/loader/universe.py
+index 242ff9e04..4d913883d 100644
+--- a/src/event_universe/loader/universe.py
++++ b/src/event_universe/loader/universe.py
+@@ -69,6 +69,8 @@ def sign_holder(name: str, pair: tuple[int, int]) -> Row:
+ 
+ def volume_holder(name: str, pair: tuple[int, int]) -> Row:
+     """The holder of the volume by its role (the owner's word of 2026-10-24, no declarations): a held row of the time line and three axis lines sourced by its readers' form and tensions, no Wronskian and no rotation, the level weight 1 and the write weight 1, no rest and no flux; its pair's rest the Node's clock's one level, (den - den div Gamma, den) (`volume_pair`; the owner's word of 2026-10-24, 15:0x UTC, the holder's mass a number at the Node). Kept by name: the massless point (den, den) of that day's closure, one bang and the expansion for ever; the gapped holder at (den - gap, den) with the file's gap, the one world's record to that day at the gap 38,024 at the den 53,567,765, the point of that den's circle nearest to the clock's level."""
++    if derived.METRIC:  # the metric's ten lines (U-S1; the hand Y2): the time line, three tensions, three flux lines, three shears
++        return Row(name, pair, 1 + AXES * AXES, 1, False, False, False, 1, 1, 0, (), flux=True)
+     return Row(name, pair, 1 + AXES, 1, False, False, False, 1, 1, 0, ())
+ 
+ 
+diff --git a/src/event_universe/plane.py b/src/event_universe/plane.py
+index 33bccb9f1..7427036c6 100644
+--- a/src/event_universe/plane.py
++++ b/src/event_universe/plane.py
+@@ -9,7 +9,8 @@ import numpy as np
+ 
+ from event_universe.core import paces
+ from event_universe.core.ports import AXES, SIDES, arrival
+-from event_universe.features.phase import fold, signed_read, signed_rounded
++from event_universe.core.rule3 import division_forward
++from event_universe.features.phase import fold, iterate, read, seed, signed_read, signed_rounded
+ from event_universe.records import Record
+ 
+ Angles = tuple[
+@@ -97,6 +98,8 @@ def link_pairs(
+     sign: tuple[Any, ...] | None,
+     phases: Phases | None = None,
+     amplitude: int = 0,
++    flux: tuple[Any, ...] | None = None,
++    rotation: int = 0,
+ ) -> tuple[tuple[Any, ...], tuple[Any, ...]] | None:
+     """Each Link's read as a pair (R^c_ij, R^s_ij) = p_i^2 (X^c_ij, X^s_ij) in Port order, the even read and the odd read of a folded plane (`step_plane`): gravity's pair from the flux holder's odd lines along the Links (`flux`, `odd_links`; `fold_pairs`), the sign's from the sign holder's odd lines (`sign`, `link_levels` of the odd levels; `sign_pairs`) folded with the Link's phase pair (c, s) at the amplitude X (`phases`, `phase_links`; `amplitude`, features/phase.amplitude): ((X^c c - X^s s) div X, (X^s c + X^c s) div X), the hop's pair X e^(i (Phi_i - Phi_j)) inside the sign's one coefficient rounding (features/phase.fold, rounded half up on the magnitude with the sign after, so that the pair read from the two ends is exact by direction; the mathematician's item (g)), and where a plane reads the flux holder too the two pairs multiplied, the product pair rounded once into the Link unit X_ij (((X^c_s X_ij - X^s_s X^s_g) div X_ij, (X^s_s X_ij + X^c_s X^s_g) div X_ij), the same integers in either order, and each alone bit for bit its own pair, the division by X_ij exact then), a Link the world cuts (X_ij = 0) staying at the pair (0, 0); None where the plane reads neither, the plain reads R_ij (ALGEBRA.md, The clock family on the Ports; the two hands' (b) of 2026-10-09)."""
+     if sign is None:
+@@ -107,11 +110,37 @@ def link_pairs(
+             fold(c, s, hop[0], hop[1], amplitude) for c, s, hop in zip(evens, odds, phases, strict=True)
+         ]
+         evens, odds = tuple(f[0] for f in phased), tuple(f[1] for f in phased)
++    if flux is not None and rotation:  # gravity's fold (ALGEBRA.md, The clock family on the Ports, the fold form; the hand Y2, U24_METRIC): the pair (X_ij, X^s_g) with X^s_g = odd_rounded(6 X_ij K V_ij, Gamma^2), K the family's rotation to the unit, times the sign's pair, rounded once into X_ij; 0 at the massless pair (K = 0), so light is turned by nothing
++        folded = []
++        for factor, link, c, s in zip(factors, flux, evens, odds, strict=True):
++            x = 2 * pair[0] * factor  # X_ij, the Link's unit
++            odd_g = signed_rounded(6 * x * rotation * link, gamma * gamma)
++            unit_x = np.where(np.asarray(x) == 0, 1, x) if np.ndim(x) else (x if x else 1)
++            folded.append(fold(x, odd_g, c, s, unit_x))
++        evens, odds = tuple(f[0] for f in folded), tuple(f[1] for f in folded)
+     pace = paces.link_pace_of(gamma, content)
+     square = pace * pace
+     return tuple(square * x for x in evens), tuple(square * x for x in odds)
+ 
+ 
++@cache
++def rotation_unit(pair: tuple[int, int], gamma: int) -> int:
++    """The family's rest rotation to the unit, K = omega_0 Gamma with cos omega_0 = num / den (ALGEBRA.md, The clock family on the Ports: "K = omega_0 Gamma the family's rotation to the unit (`phase.rotation_unit`, found by a bisection on the rotation act and no root)"; struck as dead code 2026-10-24 and re-derived here by the hand Y2, U24_METRIC): the largest count n of acts of the phase line at the angle 1 / Gamma (`phase.seed`, `phase.iterate` at the amplitude Gamma^3, a multiple of Gamma) whose cosine line stands at or above X num / den, the pair carried along the probe as `quarter_turn` carries it (kind S, a search by comparisons); 0 at the massless pair, where no count but 0 reaches X. The search's upper end is a count above pi Gamma, 22 Gamma div 7 + 1 (the hand's bound and no number of the law)."""
++    num, den = pair
++    if abs(num) >= den:
++        return 0
++    amplitude = gamma * gamma * gamma
++    low, high, probe = 0, int(division_forward(22 * gamma, 7, 0)[0]) + 1, seed(amplitude, gamma)
++    while high - low > 1:
++        middle = int(division_forward(low + high, 2, 0)[0])
++        carried = iterate(probe, middle - low, gamma)
++        if int(read(carried)[0]) * den >= num * amplitude:
++            low, probe = middle, carried
++        else:
++            high = middle
++    return low
++
++
+ @cache
+ def turned_room(pair: tuple[int, int], gamma: int, unit: int) -> int:
+     """The room of a turned plane's six arrivals under the sign's pair with the Link's phase, in the Link unit: the largest |X^c| + |X^s| over every Link level n the guard admits, |n| <= 4 Gamma (`node.guarded`), read from the sign's pair as the run books it (`plane.sign_pairs` at the vacuum's factor G^2, X_ij = 2 num G^2 the Link quantity), one evaluation per n at load and no root, plus one for the fold with the phase pair (features/phase.fold, the one rounding per part): the sign's pair's magnitude is X to the rounding and the phase pair's X_phase to the walk's bound (the advisor: 1.9 x 10^-7 of X_phase at 2^35, taken as X_phase exactly, a Link weight), so the product pair's two parts' sum reaches X 2^(1/2) at the angle pi / 4, which the sweep over n passes at the tangent half-angle 2^(1/2) - 1, and no more, under FOLD_REACH's 2 X (the advisor's second of 2026-10-09: the shears' reach 2 on the arrivals becomes 2^(1/2)); |X^c re_j - X^s im_j| <= (|X^c| + |X^s|) A at the level A."""
+diff --git a/src/event_universe/readings.py b/src/event_universe/readings.py
+index 517ff53c5..9fbd4f10c 100644
+--- a/src/event_universe/readings.py
++++ b/src/event_universe/readings.py
+@@ -9,6 +9,7 @@ import numpy as np
+ 
+ from event_universe.core.ports import AXES, arrival
+ from event_universe.features import currents
++from event_universe.loader.derived import METRIC
+ from event_universe.records import Record
+ 
+ Part = Callable[
+@@ -113,7 +114,23 @@ def axis_sources_of(
+     """The axis sources of a record at every Node, six readings of its lines at the interval's start, nine where a held row of the world declares the shear, one Link's reach: the tension's part on each axis (`stresses_of`, into the held rows' tension lines), then the count's flux along each axis, the current through the -a Port less the current through the +a Port, F_(i, i-a) - F_(i, i+a) (`currents_of`, the pair the step starts from), the axis's two Links' flux summed unhalved into the flux holder's odd lines (ALGEBRA.md, The clock family on the Ports), then, with `off_diagonal`, the shear's part on each axis pair xy, yz, zx (`off_diagonals_of`, into the shear lines); a holder takes the readings its lines name, by position (`records.write_sources`)."""
+     through = currents_of(weight, lines, frames=frames)
+     fluxes = [through[2 * axis + 1] - through[2 * axis] for axis in range(AXES)]
+-    return (*stresses_of(weight, lines, currents.stress, frames), *fluxes)
++    found = (*stresses_of(weight, lines, currents.stress, frames), *fluxes)
++    if METRIC:  # the three shear parts after the fluxes, the nine readings of the metric's axis lines (Y2)
++        return (*found, *off_diagonals_of(weight, lines, frames))
++    return found
++
++
++def off_diagonals_of(
++    weight: int, lines: Sequence[Record], frames: Sequence[Any] | None = None
++) -> currents.Vector:
++    """The shear's part at every Node on each axis pair xy, yz, zx from a record's levels now at the interval's start, weight x D_a now x D_b now, the product of the Node's own two centred differences (ALGEBRA.md, The off-diagonal parts where declared: each Node's half of the Link's off-diagonal booking -num G_ab in the mean), every line's parts added, one Link's reach, no division; `frames` the Port signs a plane's im line reads with (`framed`); the source of the metric's three shear lines (the hand Y2, U24_METRIC)."""
++    found: list[Any] = [0, 0, 0]
++    for number, record in enumerate(lines):
++        n = axis_neighbours(record.now, frames if number & 1 else None)
++        differences = [n[a].ahead - n[a].behind for a in range(AXES)]
++        for k, (a, b) in enumerate(((0, 1), (1, 2), (2, 0))):
++            found[k] = found[k] + weight * differences[a] * differences[b]
++    return np.asarray(found[0]), np.asarray(found[1]), np.asarray(found[2])
+ 
+ 
+ def axis_neighbours(
+diff --git a/src/event_universe/records.py b/src/event_universe/records.py
+index 5032cee4b..a77c7e3da 100644
+--- a/src/event_universe/records.py
++++ b/src/event_universe/records.py
+@@ -287,6 +287,8 @@ def axis_positions(family: FamilyRule) -> list[int]:
+     positions = list(range(AXES)) if family.axes else []  # a row sourced by the form alone has none
+     if family.flux:
+         positions += [AXES + axis for axis in range(AXES)]
++    if family.flux and family.width - 1 >= AXES * AXES:  # the three shears xy, yz, zx after the flux lines (Y2)
++        positions += [2 * AXES + axis for axis in range(AXES)]
+     assert len(positions) == family.width - 1, f"{family.name!r}: {family.width - 1} axis lines"
+     return positions
+ 
+diff --git a/src/event_universe/shear.py b/src/event_universe/shear.py
+index 1bee751c9..489b7b7c7 100644
+--- a/src/event_universe/shear.py
++++ b/src/event_universe/shear.py
+@@ -10,6 +10,7 @@ import numpy as np
+ from event_universe import flux, node, records
+ from event_universe.core.ports import AXES
+ from event_universe.core.rule3 import wall_of
++from event_universe.loader.derived import METRIC
+ 
+ if TYPE_CHECKING:
+     from event_universe.lattice import Lattice
+@@ -25,7 +26,7 @@ def shear_lines(family: Any) -> list[int]:
+     return [
+         records.record_slice(family, record).start + 1 + a
+         for record in range(family.records)
+-        for a in range(AXES)
++        for a in range(family.width - 1 if METRIC else AXES)  # under the flag every axis line of the metric (Y2)
+     ]
+ 
+ 
+@@ -80,6 +81,10 @@ def stepped(board: Lattice, index: int, direction: int, begun: list[list[records
+         lines[first + 1 : first + 1 + AXES] = flux.step_momentum(
+             lines[first + 1 : first + 1 + AXES], rule, direction, volumes
+         )
++        if METRIC and family.width - 1 > AXES:  # the six lines at the volume's wall, no projection (Y2)
++            lines[first + 1 + AXES : first + family.width] = flux.step_momentum(
++                lines[first + 1 + AXES : first + family.width], rule, direction, volumes, False
++            )
+     board.states[index].lines = lines
+ 
+ 
+@@ -101,3 +106,7 @@ def born(board: Lattice, family: Any, lines: list[records.Record]) -> None:
+         )
+         for number in range(1, 1 + AXES):
+             lines[number] = replace(lines[number], remainder=np.asarray(half, dtype=object))
++        if METRIC:  # the six lines born at half their wall w (X_0 + X_0) = w X_0 (Y2)
++            whole = wall_of(family.pair[1], board.world.node_clock, board.unit) * records.exact(lines[0].now)
++            for number in range(1 + AXES, family.width):
++                lines[number] = replace(lines[number], remainder=np.asarray(whole, dtype=object))
+diff --git a/src/event_universe/swap.py b/src/event_universe/swap.py
+index a89aab36a..68027069e 100644
+--- a/src/event_universe/swap.py
++++ b/src/event_universe/swap.py
+@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any
+ import numpy as np
+ 
+ from event_universe import node, records, registry, shear
++from event_universe.core.ports import AXES
+ from event_universe.core.rule3 import wall_of
+ from event_universe.features import volume
+ from event_universe.loader.derived import turns
+@@ -57,21 +58,21 @@ def swapped(board: Lattice, held: Kept, mask: np.ndarray) -> None:
+         state, lines, remainders = board.states[index], held[0][index], held[1][index]
+         wall = wall_of(family.pair[1], gamma, unit)
+         times: dict[
+-            int, records.Record
+-        ] = {}  # per tension line the row's own time line at the interval's start, the wall of the shear's momentum
++            int, tuple[records.Record, int]
++        ] = {}  # per tension line the row's own time line at the interval's start, the wall of the shear's momentum, with the trace's 3 on the tension lines and 1 on the six (Y2)
+         if shear.carried(family):
+             for record in range(registry.records_of(family, lines)):
+                 first = records.record_slice(family, record).start
+                 for number in shear.shear_lines(family):
+                     if first < number <= first + family.width - 1:
+-                        times[number] = lines[first]
++                        times[number] = (lines[first], 3 if number - first <= AXES else 1)
+         found = []
+         for number, (line, out) in enumerate(zip(lines, state.lines, strict=True)):
+             own: Any = wall
+-            if number in times:  # 3 w (X_now + X_before) of the row's own time line
+-                time = times[number]
++            if number in times:  # 3 w (X_now + X_before) of the row's own time line; w (X_now + X_before) on the six
++                time, parts = times[number]
+                 own = (
+-                    3
++                    parts
+                     * wall
+                     * (np.asarray(time.now, dtype=object) + np.asarray(time.before, dtype=object))
+                 )
