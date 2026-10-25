@@ -1,6 +1,4 @@
-"""The phase line as a standalone module (features/phase; ALGEBRA.md #the-four-acts (b), #the-direction; the two hands' item (i)): a Rule3 pair at the one fixed angle theta_0 = 1 / Gamma (K_0 = 2 Gamma^2 - 1 over D = 2 Gamma^2), seeded on the half wall at an amplitude a multiple of Gamma, iterated by a level with the angle signed, read as the hop's two integers and folded into the Link's one coefficient rounding. Integers throughout, the owner's word (no float anywhere in the system, the tests inside it): a magnitude within B levels of X is the inequality (X - B)^2 <= c^2 + s^2 <= (X + B)^2; the cosine is the exact rational K_0 / D by cross multiplication; the sine is the module's own integer sine (`core/paces.sine_den`, the largest integer whose square is at most the product, no root); the angle is bracketed by the cosine's Taylor bounds as one integer inequality. The bound used throughout (item (i), both hands): the pair's magnitude within Gamma / 2 levels of X standing plus the walk's proved 1.42 N + 2.3 Gamma levels over the test's N acts, taken at the integer ceiling (`bound`), never a count. Every test under 15 seconds; each prints its numbers with its time."""
-
-import time
+"""The phase line as a standalone module (features/phase; ALGEBRA.md #the-four-acts (b), #the-direction; the two hands' item (i)): a Rule3 pair at the one fixed angle theta_0 = 1 / Gamma (K_0 = 2 Gamma^2 - 1 over D = 2 Gamma^2), seeded on the half wall at an amplitude a multiple of Gamma, iterated by a level with the angle signed, read as the hop's two integers and folded into the Link's one coefficient rounding. Integers throughout, the owner's word (no float anywhere in the system, the tests inside it): a magnitude within B levels of X is the inequality (X - B)^2 <= c^2 + s^2 <= (X + B)^2; the cosine is the exact rational K_0 / D by cross multiplication; the sine is the module's own integer sine (`core/paces.sine_den`, the largest integer whose square is at most the product, no root); the angle is bracketed by the cosine's Taylor bounds as one integer inequality. The bound used throughout (item (i), both hands): the pair's magnitude within Gamma / 2 levels of X standing plus the walk's proved 1.42 N + 2.3 Gamma levels over the test's N acts, taken at the integer ceiling (`bound`), never a count. Every test under 15 seconds; each prints its numbers (the clock's seconds, a float, taken out 2026-10-25 by the owner's rule)."""
 
 import numpy as np
 
@@ -43,7 +41,6 @@ def off(pair, x: int, index: int = 0) -> tuple[int, int]:
 
 def test_the_seed_stands_on_the_circle_at_the_half_wall_and_refuses_an_amplitude_off_gamma():
     """The fixed angle: D = 2 Gamma^2 = 72,000,000, K_0 = D - 1 = 71,999,999, 2 K_0 / D = 2 - 1 / Gamma^2 exactly by cross multiplication; theta_0 Gamma in [1, 1 + 2.6 x 10^-9]: cos x > 1 - x^2 / 2 at x = 1 / Gamma = cos theta_0, and cos x <= 1 - x^2 / 2 + x^4 / 24 at x = ROOM / (Gamma 10^10) is at most cos theta_0 by the integer inequality 12 Gamma^2 (ROOM^2 10^20 - 10^40) >= ROOM^4. The seed at X of 2^35's size and at X = 175 Gamma: the cosine line (X, X cos theta_0 rounded half up, D div 2), the before within half a level of X K_0 / D (2 |D before - X K_0| <= D), the sine line (0, -(X div Gamma), D div 2), the sine seed within a level of X sin theta_0 (the advisor's second, item 4) against the module's integer sine floor(X D sin theta_0); c^2 + s^2 within the bound of X^2 at the now and at the before, and after ten acts; 2^35 itself and 2^35 + 1 refused by name (neither a multiple of Gamma = 2^4 3 5^3)."""
-    started = time.perf_counter()
     assert (WALL, COEFFICIENT) == (2 * GAMMA**2, WALL - 1) == (72_000_000, 71_999_999)
     assert 2 * COEFFICIENT * GAMMA**2 == (2 * GAMMA**2 - 1) * WALL  # 2 K_0 / D = 2 - 1 / Gamma^2
     margin = 12 * GAMMA**2 * (ROOM**2 * TENTH**2 - TENTH**4) - ROOM**4
@@ -63,14 +60,11 @@ def test_the_seed_stands_on_the_circle_at_the_half_wall_and_refuses_an_amplitude
     refused("not a multiple of Gamma", seed, 2**35, GAMMA)
     refused("not a multiple of Gamma", seed, 2**35 + 1, GAMMA)
     refused("not a multiple", seed, np.array([X35, X35 + 1], dtype=np.int64), GAMMA)
-    print(
-        f"theta_0 Gamma - 1 <= {ROOM - TENTH} / 10^10, margin {margin}; {time.perf_counter() - started:.2f} s"
-    )
+    print(f"theta_0 Gamma - 1 <= {ROOM - TENTH} / 10^10, margin {margin}")
 
 
 def test_the_reversal_is_bit_exact_over_ten_thousand_acts():
     """10^4 acts forward then 10^4 inverse acts (direction -1): both lines, levels and remainders, bit for bit the seed; the same through `iterate` at direction -1 and through the signed count."""
-    started = time.perf_counter()
     pair = seed(X35, GAMMA)
     cosine, sine = pair
     acts = 10**4
@@ -85,5 +79,5 @@ def test_the_reversal_is_bit_exact_over_ten_thousand_acts():
     assert iterate(pair, acts, GAMMA) == forward
     refused("direction is 1 or -1", act, pair[0], GAMMA, 0)
     print(
-        f"10^4 acts forward and back: bit for bit, remainders {forward[0][2]}, {forward[1][2]} on the way; {time.perf_counter() - started:.2f} s"
+        f"10^4 acts forward and back: bit for bit, remainders {forward[0][2]}, {forward[1][2]} on the way"
     )

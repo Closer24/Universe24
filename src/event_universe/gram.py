@@ -164,16 +164,32 @@ def share(node: Node, lines: list[Line], r: Any) -> Any:
     return found
 
 
+def moving(
+    shape: int,
+    base: Any,
+    vector: list[int],
+    now_pair: tuple[Any, Any],
+    before_pair: tuple[Any, Any],
+    den: int,
+    sense: int,
+) -> list[Line]:
+    """A record laid at a phase over the envelope (MV-S1): now = base (C v + sense S (J v)) over den at the Node's phase pair (C, S) and before the same at the pair (C', S') turned by the band's rotation, each product's quotient toward zero line by line (rule3.signed_quotient), so the two senses' J lines cancel exactly and the lay at the conjugate pair is the conjugate lay; the rest lay the case (den, 0) and (num, s)."""
+    turned = matvec(rotation(shape), list(vector))
+
+    def levels(c: Any, s: Any) -> list[Any]:
+        return [
+            signed_quotient(base * c * v, den) + sense * signed_quotient(base * s * j, den)
+            for v, j in zip(vector, turned, strict=True)
+        ]
+
+    return [Line(n, b, None, None) for n, b in zip(levels(*now_pair), levels(*before_pair), strict=True)]
+
+
 def rest(
     shape: int, re_now: Any, vector: list[int], num: int, den: int, sine: int, sense: int
 ) -> list[Line]:
-    """A record at rest over the envelope: now = re_now v (v the lay's vector, (1, 0) for a plane), before = num now div den + sense sine (J now) div den, each quotient toward zero (the plane's re_before = re_now num div den, im_before = sense re_now s div den as the case v = (1, 0))."""
-    nows = [re_now * v for v in vector]
-    turned = matvec(rotation(shape), nows)
-    return [
-        Line(n, signed_quotient(n * num, den) + sense * signed_quotient(j * sine, den), None, None)
-        for n, j in zip(nows, turned, strict=True)
-    ]
+    """A record at rest over the envelope (`moving` at the pair (den, 0) now and the row's (num, s) before): now = re_now v (v the lay's vector, (1, 0) for a plane), before = num now div den + sense sine (J now) div den, each quotient toward zero (the plane's re_before = re_now num div den, im_before = sense re_now s div den as the case v = (1, 0))."""
+    return moving(shape, re_now, vector, (den, 0), (num, sine), den, sense)
 
 
 def cosine_count(node: Node, p: int, d: int) -> int:
