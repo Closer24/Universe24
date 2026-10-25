@@ -11,11 +11,14 @@ import numpy as np
 
 from event_universe import gates as table
 from event_universe import run as writer
+from event_universe.core.ports import PORTS
+from event_universe.links import row_current
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE
 from tests.laws import node_of, refused, run_back_exact, world_of
 
 CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 6, 6, 6)  # rotations alike per part (CK-S1 even)
+COUNTED = ("births", "laid_back", "refused_stop")  # the counts the EQ-S1 test reads per world
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
     for pi in itertools.permutations(range(3))
@@ -125,7 +128,7 @@ def test_the_fourth_part_of_the_48_images_runs_alike_a_reflection_with_the_hands
 
 
 def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma() -> None:
-    """MA-S1 by the fourth form of the file (the owner's word of 17:57 through the Boss, 6401141446; ma2's spelling, the Boss's 6401095909): the pair of the heavy row laid at every Node of the 3-cube at one quantum (tests/worlds/world_pair_3.json, {"lay": "sea", "row": 2, "quanta": 1, "sense": 0}: the amplitude 96, ma1's, re_now 192 the two senses summed, W 0) keeps every Node alike to the integer (400 of 400), turns every Node at once at both tops (27 at 85, ma1's, and at 255), births nothing, and bottoms at 171 and 342; the bottoms 953 and 888 against ma1's exact 1,000 at 168 / 169 and 333 / 334, NOT MET on this head and named: the body at every Node clicks from interval 4 on at every second interval (PM-S1's unit: the pair stands at a whole quantum from the lay; CK-S1: the beat the half period, 2), 351 credits in all against ma1's 27 at 336, and the light taken is the return's shortfall (under the upward crossing alone the bottoms read 992 and 966 with 162 credits); the run back exact 10 of 10."""
+    """MA-S1 by the fourth form of the file (the owner's word of 17:57 through the Boss, 6401141446; ma2's spelling, the Boss's 6401095909) with EQ-S1 in cs7's letter (6403341352): the pair of the heavy row laid at every Node of the 3-cube at one quantum (tests/worlds/world_pair_3.json, {"lay": "sea", "row": 2, "quanta": 1, "sense": 0}: the amplitude 96, ma1's, re_now 192 the two senses summed, W 0) keeps every Node alike to the integer (400 of 400), turns every Node at once at both tops (27 at 85, ma1's, and at 252), births nothing, and returns to Gamma EXACTLY at 169 and 334 (ma1's 168 / 169 and 333 / 334) with a body credited at every Node in every cycle: 297 credits, 27 at each of 4, 6 and 8 and after each return, every one laid back (nothing arrives at a Node of the board alike); before EQ-S1 the take stood and the bottoms read 953 at 171 and 888 at 342 with 351 credits and the second top at 255 (992 and 966 with 162 credits under the upward crossing alone); the run back exact 10 of 10."""
     node = node_of("world_pair_3.json")
     assert int(node.by_index[2].lines[0].now.min()) == int(node.by_index[2].lines[0].now.max()) == 192
     kept = copy.deepcopy(node)
@@ -137,14 +140,41 @@ def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_
         means.append(sum(x) // len(x))
         if node.turned.any():
             tops += 1
-            assert (node.interval, int(node.turned.sum())) in ((85, 27), (255, 27))
+            assert (node.interval, int(node.turned.sum())) in ((85, 27), (252, 27))
     bottoms = [
         (k + 1, means[k]) for k in range(1, 399) if means[k] <= means[k - 1] and means[k] < means[k + 1]
     ]
     credits = [e for e in node.log if e["event"] == "credit"]
-    assert (alike, tops, node.counts["births"], len(credits)) == (400, 2, 0, 351)
-    assert bottoms == [(171, 953), (342, 888)] and sum(1 for c in credits if c["i"] == 4) == 27
+    assert (alike, tops, node.counts["births"], len(credits)) == (400, 2, 0, 297)
+    assert bottoms == [(169, 1000), (334, 1000)] and sum(1 for c in credits if c["i"] == 4) == 27
+    assert node.counts["laid_back"] == 297
     assert run_back_exact(kept, 10) == 10
+
+
+def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1() -> None:
+    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 56 credits and 12 births as before EQ-S1 (the records where light flows bit for bit), the run back exact."""
+    found = {}
+    for world, quiet in (("world_pair_3.json", True), ("world_hole.json", False)):
+        node, kept = node_of(world), node_of(world)
+        by_interval: dict[int, int] = {}
+        for _ in range(INTERVALS):
+            lines = node.row(PLANE, gap=0).lines
+            net = sum((row_current(lines, port) for port in range(PORTS)), start=0)
+            seen = len(node.log)
+            node.step()
+            credits = [e for e in node.log[seen:] if e["event"] == "credit"]
+            for c in credits:
+                at = tuple(c["node"])
+                assert (int(net[at]) == 0) == ("laid_back" in c) == quiet
+                if quiet:
+                    assert c["laid_back"] == c["levels"] > 0 and c["dP_take"] == [0, 0, 0]
+                    assert int(node.row(PLANE, gap=0).lines[0].now[at]) == c["taken_now_was"]
+            by_interval[node.interval] = len(credits)
+        counts = node.counts
+        found[world] = ({i: n for i, n in by_interval.items() if n}, *(counts[k] for k in COUNTED))
+        assert run_back_exact(kept, 10) == 10
+    assert found["world_pair_3.json"] == ({4: 27, 6: 27, 8: 27}, 0, 81, 0)
+    assert found["world_hole.json"][1:3] == (12, 0) and sum(found["world_hole.json"][0].values()) == 56
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
