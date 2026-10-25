@@ -1,9 +1,9 @@
 """The 48 on the lean toy: the toy run from a seed and from each of its 48 images (the signed permutations of the axes about the origin), the births compared through the image (interval, the take's Node, the lift, the - child's Node, the + child's Node), the whole volume and light rows compared through the image at the last interval.
-Usage: python cube48_test.py <den> <cube> <intervals> <mode> [extra]   mode: node | link | current;   extra: x,y,z of the one quantum more (the seed's asymmetry)."""
-import sys, os, itertools
+Usage: python cube48_test.py <world.json> <cube> <intervals> <mode: current|link|node>   (the world's shape replaced by the cube; the seed's 'at' entries carried through each image)"""
+import sys, os, itertools, copy
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
-from lean_full import Lean
+from lean_full import Lean, load_world
 
 
 def signed_permutations():
@@ -24,24 +24,30 @@ def mapped(evs, m, cube):
     return sorted((i, image(m, at, cube), s_, image(m, mi, cube), image(m, pl, cube)) for i, at, s_, mi, pl in evs)
 
 
-def run(den, cube, n, mode, extra):
-    link = True if mode == 'link' else ('current' if mode == 'current' else False)
-    b = Lean(den, cube, link_birth=link, seed_extra=extra)
+def world_image(world, m, cube):
+    w = copy.deepcopy(world); w['shape'] = [cube, cube, cube]
+    for lay in w.get('seed', []):
+        if 'at' in lay: lay['at'] = list(image(m, tuple(lay['at']), cube))
+        if 'hole' in lay: lay['hole'] = list(image(m, tuple(lay['hole']), cube))
+    return w
+
+
+def run(universe, world, n, link):
+    b = Lean(universe, world, link_birth=link)
     for _ in range(n): b.step()
     return b
 
 
-den, cube, n, mode = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
-extra = tuple(int(x) for x in sys.argv[5].split(',')) if len(sys.argv) > 5 else None
-base = run(den, cube, n, mode, extra)
+universe, world0 = load_world(sys.argv[1]); cube, n, mode = int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
+link = {'current': 'current', 'link': True, 'node': False}[mode]
+identity = np.eye(3, dtype=int)
+base = run(universe, world_image(world0, identity, cube), n, link)
 evs = events(base)
-print({'mode': mode, 'extra': extra, 'intervals': n, 'births': len(evs), 'refused orientation': base.counts['refused_orientation'], 'refused lay': base.counts['refused_lay'], 'refused stop': base.counts['refused_stop'], 'turns': base.counts['turns']})
+print({'mode': mode, 'seed': world0.get('seed'), 'cube': cube, 'intervals': n, 'births': len(evs), 'refused orientation': base.counts['refused_orientation'], 'refused lay': base.counts['refused_lay'], 'refused stop': base.counts['refused_stop'], 'turns': base.counts['turns']})
 held = 0; apart = []
 for m in signed_permutations():
-    img_extra = None if extra is None else image(m, extra, cube)
-    other = run(den, cube, n, mode, img_extra)
+    other = run(universe, world_image(world0, m, cube), n, link)
     same_events = events(other) == mapped(evs, m, cube)
-    # the rows through the image: the volume's and the light's time lines at every Node
     same_rows = True
     for line_b, line_o in ((base.vol, other.vol), (base.light, other.light)):
         for at in np.ndindex(cube, cube, cube):

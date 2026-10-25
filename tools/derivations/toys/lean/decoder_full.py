@@ -9,9 +9,11 @@ from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 run = json.load(open(sys.argv[1])); den = int(run['den'])
 gamma, G, T = run['gamma'], run['G'], run['T']
-lifts = sorted([(sine_den(int(num), den), int(num), tuple(v)) for v, num, s in run['lifts']])
-NAMES = {num: (name, leg) for (leg, num, v), name in zip(lifts, ['electron', 'proton', 'neutron'])}
-line_num = [int(run['lifts'][i][1]) for i in range(3)]
+lifts = sorted([(sine_den(int(num), den), int(num)) for _v, num, _s in run['lifts']])  # the lifts by their legs (T sin omega): the decoder's names, never the Node's
+NL = len(lifts)
+names = ['electron', 'proton', 'neutron'] if NL == 3 else ['lift %d' % k for k in range(NL)]
+NAMES = {num: (name, leg) for (leg, num), name in zip(lifts, names)}
+line_num = [int(run['lifts'][i][1]) for i in range(NL)]
 log = run['log']; credits = [l for l in log if l['event'] == 'credit']; births = [l for l in log if l['event'] == 'birth']; refused = [l for l in log if l['event'] == 'refused']
 rows = run['rows']; turns = run.get('turns', [])
 out = {}
@@ -97,7 +99,8 @@ for (node, line), xs in tr.items():
 out['8b species over the track (one-place view: the middle solve of the body\'s track)'] = {'tracks': track_n, 'decoded right': track_right, 'confusion (truth->decoded) per credit': {f'{a}->{b}': n for (a, b), n in conf.items() if a != b}}
 out['8 families forming (whole view)'] = {'credits': len(credits), 'species readable': len(decoded), 'decoded right per credit': right, 'credits within the one-click floor': within, 'tracks right': [track_right, track_n], 'births by species (decoder)': dict(Counter(NAMES[line_num[b['line_pair']]][0] for b in births)), 'verdict': 'SHOWN (every credit within the one-click floor, every track read right)' if within == len(decoded) and track_right == track_n and len(set(NAMES[line_num[b['line_pair']]][0] for b in births)) >= 3 else ('SHOWN in part: every credit within the floor, tracks right %d of %d' % (track_right, track_n) if within == len(decoded) else 'NOT SHOWN: %d credits beyond the floor' % (len(decoded) - within))}
 legs = {v[0]: v[1] for v in NAMES.values()}; num_of = {v[0]: k for k, v in NAMES.items()}
-out['19 mass ratios (parts per million)'] = {'p/e': quot(legs['proton'], legs['electron'], MIL), 'n/e': quot(legs['neutron'], legs['electron'], MIL), 'verdict': 'SHOWN as a fit of den (the legs), read from the decoded points'}
+ordered = sorted(legs.items(), key=lambda kv: kv[1])
+out['19 mass ratios (parts per million)'] = {'%s/%s' % (nm, ordered[0][0]): quot(leg, ordered[0][1], MIL) for nm, leg in ordered[1:]} | {'verdict': 'SHOWN as a fit of den (the legs), read from the decoded points'}
 # gate 17 charge
 sense_sum = sum(s for b in births for s in b['senses'])
 out['17 charge conservation'] = {'senses sum over births': sense_sum, 'verdict': 'SHOWN' if sense_sum == 0 else 'NOT SHOWN'}
@@ -140,14 +143,38 @@ out['14 the horizon'] = {'frozen content': frozen, 'max content in the rows': cm
 # gate 16 the uncertainty floor: one click reads the species within w sqrt 2 / |denom| (the two remainders of the Node's own line); the floor falls as 1 / |z| (the amplitude) and the track of many clicks resolves it
 fl = sorted(f for f in floor_mil if f is not None)
 if fl:
-    out['16 uncertainty floor (one click)'] = {'floor on x per credit, parts per million: min / middle / max': [fl[0], fl[len(fl) // 2], fl[-1]], 'species spacing p-n, parts per million': quot(abs(num_of['proton'] - num_of['neutron']), num_of['proton'], MIL), 'credits beyond the floor': len(decoded) - within, 'verdict': 'SHOWN as the law\'s floor: no credit reads beyond it; one click cannot split p from n where the floor exceeds their spacing, the track can (not calibrated to h-bar / 2)' if within == len(decoded) else 'NOT SHOWN'}
+    out['16 uncertainty floor (one click)'] = {'floor on x per credit, parts per million: min / middle / max': [fl[0], fl[len(fl) // 2], fl[-1]], 'species spacing of the two heaviest, parts per million': quot(abs(num_of[ordered[-1][0]] - num_of[ordered[-2][0]]), num_of[ordered[-1][0]], MIL) if NL >= 2 else None, 'credits beyond the floor': len(decoded) - within, 'verdict': 'SHOWN as the law\'s floor: no credit reads beyond it; one click cannot split p from n where the floor exceeds their spacing, the track can (not calibrated to h-bar / 2)' if within == len(decoded) else 'NOT SHOWN'}
 # gate 9 and 13: tracks
 tracks = defaultdict(list)
 for c, n, _x in decoded: tracks[(tuple(c['node']), n)].append(c['i'])
 longest = max((len(v) for v in tracks.values()), default=0)
-out['9 collisions / 13 free fall'] = {'tracks (node, species)': len(tracks), 'longest track credits': longest, 'verdict': 'NOT SHOWN: the bodies stand at their Nodes (no track moves)'}
-out['7 light with its redshift / 11 / 12'] = {'verdict': 'NOT SHOWN: the toy credits no light click with a beat (as the record)'}
-out['18 the arrow of time'] = {'verdict': 'SHOWN: the run back exact bit for bit, 60 of 60 intervals through births, clicks and turns (the test beside the toy)'}
+# a body's track: its record's credits by line; a move is a credit of the same line at a neighbouring Node after the last (read from the record)
+by_line = defaultdict(list)
+for c in credits: by_line[c['line']].append((c['i'], tuple(c['node'])))
+moves = 0
+for line, cs in by_line.items():
+    cs.sort(); nodes_seen = {cs[0][1]}
+    for (_i, at) in cs[1:]:
+        if at not in nodes_seen: moves += 1; nodes_seen.add(at)
+out['9 collisions / 13 free fall'] = {'tracks (node, species)': len(tracks), 'longest track credits': longest, 'lines credited at a new Node after their first': moves, 'verdict': 'NOT SHOWN: no line is credited at a second Node (the bodies stand)' if moves == 0 else 'read: %d lines credited at a new Node; the predicate (the tail falls, adjacent peaks collide) is the sentence W-S4/W-S5 of the owner, not read here' % moves}
+light_credits = [c for c in credits if c.get('light')]
+out['7 light with its redshift / 11 / 12'] = {'light credits in the record': len(light_credits), 'verdict': 'NOT SHOWN: the record holds no light click with a beat' if not light_credits else 'read: %d light credits (the redshift reading to be derived)' % len(light_credits)}
+rb = run.get('run_back')
+out['18 the arrow of time'] = {'run back on the record': rb, 'verdict': ('SHOWN: the run back exact bit for bit, %d of %d intervals' % (rb['exact'], rb['intervals']) if rb['exact'] == rb['intervals'] else 'NOT SHOWN: %d of %d' % (rb['exact'], rb['intervals'])) if rb else 'NOT READ: the record carries no run back (run lean_full.py with back N)'}
+# the conservations in the clicks (the owner's word of 06:2x: what the lattice conserves is shown conserved in the clicks)
+cons = {}
+cons['charge: the senses summed over the births'] = sense_sum
+cons['count: taken against booked over the births (hundredths)'] = quot(taken_b, booked, 100)
+beats_by_line = defaultdict(list)
+for c in credits: beats_by_line[(tuple(c['node']), c['line'])].append((c['i'], c['beat'], c['proper']))
+changes = []; same = 0; total_pairs = 0
+for key, cs in beats_by_line.items():
+    cs.sort()
+    for (i1, b1, p1), (i2, b2, p2) in zip(cs, cs[1:]):
+        if b1 > 0 and b2 > 0: total_pairs += 1; same += (b1 == b2); changes.append(abs(b2 - b1))
+cons['energy: the beat (intervals per period) of a body unchanged from one click to the next'] = {'click pairs': total_pairs, 'unchanged': same, 'changed by one': sum(1 for d in changes if d == 1), 'changed by more': sum(1 for d in changes if d > 1)}
+cons['momentum: the credits running cosine'] = 'NOT READ in this toy'
+out['the conservations in the clicks'] = cons
 out['the three constants'] = {'integers per Node': rows[-1]['integers'], 'max state bits': rows[-1]['max bits'], 'max transient bits': rows[-1]['max transient bits'], 'verdict': 'SHOWN: the count constant, every integer and transient within 128'}
 out['the decoder'] = {'floats used': 0, 'readings': 'quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication'}
 for k, v in out.items(): print(json.dumps({k: v}))

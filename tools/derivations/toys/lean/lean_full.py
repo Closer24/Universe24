@@ -10,7 +10,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'
 from event_universe.core import rule3, paces
 from event_universe.core.rule3 import division_forward, carried_division, division_back, wall_of, form_term, link_factor
 from event_universe.core.paces import sine_den
-from event_universe.loader import circle
 from event_universe.features import volume as volform, phase
 
 AXES = ((0, 1), (0, -1), (1, 1), (1, -1), (2, 1), (2, -1))
@@ -35,14 +34,39 @@ class Line:
     def copy(self): return Line(self.now.copy(), self.before.copy(), self.rem.copy())
 
 
+WIDTH = 128  # the law's one constant: every integer of the state and of every act's transient within 128 bits
+
+
+def load_world(path):
+    """The two files, read once: the world (shape, intervals, seed) and the universe it names (integers, rows), the universe's path relative to the world's folder."""
+    world = json.load(open(path)); folder = os.path.dirname(os.path.abspath(path))
+    universe = json.load(open(os.path.join(folder, world['universe'])))
+    return universe, world
+
+
 class Lean:
-    def __init__(self, den, cube, gamma=1000, action=36000, unit=16, seed_hole=(0, 0, 0), swap_on=True, link_birth=False, seed_extra=None):
-        self.link_birth = link_birth  # False: both children at the Node; True: the + child at the +x end (the label, the negative control of the 48); 'current': the Link close oriented by the light's current F_ij
-        self.seed_extra = seed_extra
+    @classmethod
+    def from_files(cls, path, **kw):
+        universe, world = load_world(path)
+        return cls(universe, world, **kw)
+
+    def __init__(self, universe, world, swap_on=True, link_birth='current'):
+        """The Node from the universe's integers and rows and the world's shape and seed, nothing else (the owner's rule: no number in the code); the rows by kind: the one shape-1 row at (den, den) the massless quanta (light), the shape-2 rows the lifts (planes); the two held rows the law's at every Node, the volume at (den - den div Gamma, den) and the sign at (den, den)."""
+        self.link_birth = link_birth  # 'current': the Link close oriented by the light's current F_ij (the law's); True: the + child at the +x end (the label, the negative control of the 48); False: both children at the Node (the former toy)
+        ints = universe['integers']
+        den, gamma, action, unit = int(ints['den']), int(ints['node_clock']), int(ints['quantum_action']), int(ints['link_unit'])
+        shape = tuple(int(x) for x in world['shape'])
+        if len(set(shape)) != 1: raise ValueError('the toy runs on a cube: the shape must be [c, c, c]')
+        cube = shape[0]
         self.den, self.cube, self.gamma, self.T, self.G = den, cube, gamma, action, unit
         self.shape = (cube,) * 3; S = self.shape
-        self.lifts = [(p[0], p[1], sine_den(p[1], den)) for p in circle.lift_points(den)]
-        self.pairs = [(num, den) for _v, num, _s in self.lifts]
+        rows = [(int(r['shape']), (int(r['pair'][0]), int(r['pair'][1]))) for r in universe['rows']]
+        light_rows = [pair for shape_, pair in rows if shape_ == 1]
+        if len(light_rows) != 1 or light_rows[0] != (den, den): raise ValueError('the universe names one massless shape-1 row at (den, den), the light')
+        self.pairs = [pair for shape_, pair in rows if shape_ == 2]
+        self.nl = len(self.pairs)
+        if self.nl == 0: raise ValueError('the universe names no plane row')
+        self.lifts = [(None, num, sine_den(num, den)) for num, _den in self.pairs]  # the legs from the pairs: T sin omega as the universe's circle gives it
         self.w = wall_of(den, gamma, unit)
         half = self.w // 2
         mk = lambda: Line(Z(S), Z(S), Z(S) + half)
@@ -50,19 +74,25 @@ class Lean:
         self.light = mk()
         self.sign = mk(); self.sign_axes = [mk() for _ in range(3)]; self.sign_wr = [Z(S) + action // 2 for _ in range(4)]
         self.phi = Line(Z(S), Z(S), Z(S) + 1)  # the phase potential row: the wall 2, the write 2c
-        self.planes = [[mk(), mk()] for _ in range(6)]  # record 2s + (0: sense -1, 1: sense +1): [re, im]
-        self.standing = [Z(S) for _ in range(6)]; self.crossed = [Z(S) for _ in range(6)]; self.beats = [Z(S) for _ in range(6)]
+        self.planes = [[mk(), mk()] for _ in range(2 * self.nl)]  # record 2s + (0: sense -1, 1: sense +1): [re, im]
+        self.standing = [Z(S) for _ in range(2 * self.nl)]; self.crossed = [Z(S) for _ in range(2 * self.nl)]; self.beats = [Z(S) for _ in range(2 * self.nl)]
         self.proper = Z(S); self.closes = Z(S)
         self.interval = 0; self.log = []; self.swap_on = swap_on; self.turns = []; self.stack = []
-        drift = math.isqrt(action)
-        self.light.now[:] = drift; self.light.now[seed_hole] = 0
-        if seed_extra is not None: self.light.now[tuple(seed_extra)] = math.isqrt(2 * drift * drift)  # one quantum more off the origin: the share doubled (the first pair needs a current)
+        # the seed as the world lays it: a sea of the row at one level with a hole, and one quantum more at a Node (the level v with v^2 = (1 + n) sea^2, the share reading n quanta more)
+        for lay in world.get('seed', []):
+            if int(lay['row']) != 0: raise ValueError('the toy seeds the light row (row 0) alone')
+            if 'sea' in lay:
+                self.light.now[:] = int(lay['sea'])
+                if 'hole' in lay: self.light.now[tuple(int(x) for x in lay['hole'])] = 0
+            elif 'at' in lay:
+                at = tuple(int(x) for x in lay['at']); sea = int(self.light.now[at]); n = int(lay.get('quanta', 1))
+                self.light.now[at] = rule3.largest_below((1 + n) * sea * sea)
         self.vol.now[:] = gamma; self.vol.before[:] = gamma
         self.unit_light = 3 * den * action  # W_c
         self.units = [3 * action * s for _v, _n, s in self.lifts]  # one quantum of a record, 3 T s
-        self.A = math.isqrt(action // 2)
+        self.A = rule3.largest_below(action // 2)  # the former toy's fixed lay amplitude (the switch LEAN_FIXED_A), kept by name
         self.vol_pair = (den - den // gamma, den)
-        self.X = phase.amplitude(gamma, 63)  # the phase pair's amplitude from the width 63
+        self.X = phase.amplitude(phase.unit(gamma), WIDTH // 2 - 1)  # the phase pair's amplitude from half the law's width less one, so that a pair's product with a level stays within the width
         seed_pair = phase.seed(self.X, gamma)
         self.orbit_lines = [seed_pair]  # the last pair as lines, for the next act
         self.orbit = [(int(seed_pair[0][0]), int(seed_pair[1][0]))]  # the table of (cos, sin) as plain integers
@@ -73,7 +103,7 @@ class Lean:
     def content(self): return np.asarray(volform.level_of(self.gamma, self.vol.now), dtype=object)
     def pair_angle(self, n):
         """The integer (cos, sin) pair at the count n along the one orbit from the seed (features/phase), the orbit a table of the toy."""
-        n = int(n); s = 1 if n >= 0 else -1; n = abs(n) % 65536  # the toy's orbit capped at 2^16 acts, named
+        n = int(n); s = 1 if n >= 0 else -1; n = abs(n)  # the orbit a table built as far as the counts reach
         while len(self.orbit) <= n:
             c, sn = self.orbit_lines[-1]; c, sn = phase.act(c, self.gamma, 1), phase.act(sn, self.gamma, 1)
             self.orbit_lines = [(c, sn)]; self.orbit.append((int(c[0]), int(sn[0])))
@@ -83,7 +113,7 @@ class Lean:
     def tensions(self):
         """The axis parts: -num h_a(i) summed over every line of quanta, h_a = now(i-a) now(i+a) - now(i)^2; the axis lines of the volume row carry them (written below); the Link factor from the two ends' axis levels."""
         parts = [Z(self.shape) for _ in range(3)]
-        lines = [(self.light, self.den)] + [(l, self.pairs[r // 2][0]) for r in range(6) for l in self.planes[r]]
+        lines = [(self.light, self.den)] + [(l, self.pairs[r // 2][0]) for r in range(2 * self.nl) for l in self.planes[r]]
         for line, num in lines:
             for a in range(3):
                 if os.environ.get('LEAN_FORMER_TENSION'):  # the former reading, kept by name: -weight h_a, h_a = now(i-a) now(i+a) - now(i)^2
@@ -236,8 +266,8 @@ class Lean:
 
     def is_im(self):
         """Which of all_lines() are the planes' im lines (conjugated at a turned Node)."""
-        n_plain = len(self.all_lines()) - 12
-        return [False] * n_plain + [k % 2 == 1 for k in range(12)]
+        n_plain = len(self.all_lines()) - 4 * self.nl
+        return [False] * n_plain + [k % 2 == 1 for k in range(4 * self.nl)]
 
     def floor(self):
         return int(np.asarray(volform.volume_of(self.gamma, np.array([-self.gamma], dtype=object)), dtype=object).reshape(-1)[0])
@@ -311,7 +341,7 @@ class Lean:
         disc = bcoef * bcoef + 4 * a * target
         if disc < 0: cands = [dist]
         else:
-            root = math.isqrt(disc); s1 = (bcoef - root) // (-2 * a) if a < 0 else (-bcoef + root) // (2 * a)
+            root = rule3.largest_below(disc); s1 = (bcoef - root) // (-2 * a) if a < 0 else (-bcoef + root) // (2 * a)
             cands = sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
         for s_ in cands:
             if s_ <= dist and fall(s_) >= walls: return s_, fall(s_)
@@ -330,7 +360,7 @@ class Lean:
         pace = paces.link_pace_of(self.gamma, c)
         sh = self.share(start['light'], r_light, pace)
         owns = []  # each record's standing share at the interval's start (the lay's one comparison, take.below_quantum)
-        for rec in range(6):
+        for rec in range(2 * self.nl):
             r = self.rule(self.pairs[rec // 2], c, factors); re0, im0 = start['planes'][rec]
             owns.append(self.share(re0, r, pace) + self.share(im0, r, pace))
         born = []  # (the take's Node, the lift, the - child's Node, the + child's Node)
@@ -349,7 +379,7 @@ class Lean:
                     plus, minus = (j, at) if F > 0 else (at, j)
                     number = self.read_number(plus, rules)  # the Link's one number read at the end the current flows into (no label: the end is the current's)
                     if number is None: continue
-                    s_ = (number // self.unit_light) % 3
+                    s_ = (number // self.unit_light) % self.nl
                     born.append((plus, s_, minus, plus))  # the take at the same end
         else:
             for at in np.ndindex(*self.shape):
@@ -359,11 +389,11 @@ class Lean:
                 if whole >= 2:
                     number = self.read_number(at, rules)
                     if number is None: continue
-                    born.append((at, (number // self.unit_light) % 3, at, nb))
+                    born.append((at, (number // self.unit_light) % self.nl, at, nb))
                 elif whole == 1 and rest > 0:
                     number = self.read_number(at, rules)
                     if number is None: continue
-                    if number % self.unit_light < rest: born.append((at, (number // self.unit_light) % 3, at, nb))
+                    if number % self.unit_light < rest: born.append((at, (number // self.unit_light) % self.nl, at, nb))
         # every face read before any write (meeting_board.closed): the lays refused first, then one exact take per Node of the children's walls summed, the start's light paying; the order of the Links enters no number
         kept = []
         for at, s_, minus, plus in born:
@@ -392,7 +422,7 @@ class Lean:
             self.counts['taken'] += fall; self.counts['booked'] += walls
         born_nodes = {at for at, _s, _m, _p in born} | {m for _a, _s, m, _p in born} | {p_ for _a, _s, _m, p_ in born}  # every Node of a birth, the take's and the two children's
         # the bodies' closing: a record at a whole quantum of its own unit through one period of its re line's upward crossings
-        for rec in range(6):
+        for rec in range(2 * self.nl):
             s_ = rec // 2; r = self.rule(self.pairs[s_], c, factors)
             own = owns[rec]
             standing_now = np.vectorize(lambda v: 1 if int(v) >= self.units[s_] else 0, otypes=[object])(own)
@@ -415,14 +445,14 @@ class Lean:
                 self.log.append(self.credit(rec, at, start, fall, levels, now))
 
     def lay_amplitude(self, s_, at, c, factors, pace):
-        """The lay of one quantum: the child's record laid at the Node with the least amplitude A at which its own share reads one quantum of its unit at the Node's paces, (2 D + SUM_j R_j) A^2 >= unit x 4 p^2 G^2 (the frame share's term of a lone record with now = before = A; ALGEBRA.md, the lay of the record out whole); the former toy laid isqrt(T / 2) for every species."""
+        """The lay of one quantum: the child's record laid at the Node with the least amplitude A at which its own share reads one quantum of its unit at the Node's paces, (2 D + SUM_j R_j) A^2 >= unit x 4 p^2 G^2 (the frame share's term of a lone record with now = before = A; ALGEBRA.md, the lay of the record out whole); the former toy laid the root of T / 2 for every species."""
         if os.environ.get('LEAN_FIXED_A'): return self.A
         r = self.rule(self.pairs[s_], c, factors)
         D = 2 * int(np.asarray(r.wall)) - int(np.asarray(r.self_coefficient)[at]) - sum(int(np.asarray(x)[at]) for x in r.reaches)  # D from S = 2 w - D - SUM R
         C = 2 * D + sum(int(np.asarray(x)[at]) for x in r.reaches)
         pc = int(np.asarray(pace, dtype=object)[at]); target = self.units[s_] * 4 * pc * pc * self.G * self.G
         if C <= 0: return self.A
-        A = math.isqrt(target // C)
+        A = rule3.largest_below(target // C)
         while C * A * A < target: A += 1
         return A
 
@@ -501,7 +531,7 @@ class Lean:
         phi_before = np.where(top, self.phi.now, phi_before); rem = np.where(top, 1 - self.phi.rem, rem)
         self.phi = Line(phi_now, phi_before, rem)
         # the tensions and factors at the start from the before slots
-        start_lines = [(Line(self.light.before, None, None), self.den)] + [(Line(l.before, None, None), self.pairs[r // 2][0]) for r in range(6) for l in self.planes[r]]
+        start_lines = [(Line(self.light.before, None, None), self.den)] + [(Line(l.before, None, None), self.pairs[r // 2][0]) for r in range(2 * self.nl) for l in self.planes[r]]
         parts = [Z(self.shape) for _ in range(3)]
         for line, num in start_lines:
             for a in range(3):
@@ -521,7 +551,7 @@ class Lean:
         factors = tuple(factors)
         # the sign's writes undone: W from the stepped planes at the Node (now and before slots), J from the start's levels (the before slots) in the Node's frame
         J = [Z(self.shape) for _ in range(3)]; W = Z(self.shape)
-        for rec in range(6):
+        for rec in range(2 * self.nl):
             re, im = self.planes[rec]
             W = W + (re.now * im.before - im.now * re.before)
             for a in range(3):
@@ -565,21 +595,34 @@ class Lean:
 
 if __name__ == '__main__':
     sys.set_int_max_str_digits(0)
-    den, cube, intervals, out = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
-    link = (sys.argv[5] if sys.argv[5] in ('link', 'current') else False) if len(sys.argv) > 5 else False
-    link = True if link == 'link' else link
-    extra = tuple(int(x) for x in sys.argv[6].split(',')) if len(sys.argv) > 6 else None
-    b = Lean(den, cube, link_birth=link, seed_extra=extra)
+    # usage: lean_full.py <world.json> <out.json> [mode: current|link|node] [back N]: the run of the world's intervals, the record dumped, then N intervals run back and compared (the arrow's reading on the record)
+    world_path, out = sys.argv[1], sys.argv[2]
+    mode = sys.argv[3] if len(sys.argv) > 3 else 'current'
+    back = int(sys.argv[sys.argv.index('back') + 1]) if 'back' in sys.argv else 0
+    link = {'current': 'current', 'link': True, 'node': False}[mode]
+    universe, world = load_world(world_path)
+    intervals = int(world['intervals'])
+    b = Lean(universe, world, link_birth=link)
     rows = []; maxbits = 0
-    import time; t0 = time.monotonic_ns()
+    import time, hashlib; t0 = time.monotonic_ns()
+    marks = sorted({1, intervals} | {(k * intervals) // 12 for k in range(1, 12)} | {intervals // 60, intervals // 24})  # the rows' cadence: twelfths of the run and two early marks
+    hashes = []
+    def state_hash(): return hashlib.sha256(b.state_bytes() + str(b.interval).encode()).hexdigest()
     for t in range(intervals):
+        if back and t >= intervals - back: hashes.append(state_hash())
         b.step(); n, bits = b.census(); maxbits = max(maxbits, bits)
-        if b.interval in (1, 5, 10, 25, 50, 100, 150, 200, 300, 400, 600, 800, 1000, 1200, 1600, 2000, 2400) or b.interval == intervals:
+        if b.interval in marks:
             c = b.content()
             cs = [int(x) for x in c.reshape(-1)]; vs = [int(x) for x in b.vol.now.reshape(-1)]
             energy = sum(int(x) * int(x) for rec in b.planes for l in rec for x in l.now.reshape(-1)); odd_max = max(abs(int(x)) for l in b.sign_axes for x in l.now.reshape(-1)); light_v = max(abs(int(a) - int(bb)) for a, bb in zip(b.light.now.reshape(-1), b.light.before.reshape(-1)))
-            # integers only (the owner's word of 05:08): the means as quotients, the clock in milliseconds
-            rows.append({'i': b.interval, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'], 'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'], 'refused_lay': b.counts['refused_lay'], 'turns': b.counts['turns'], 'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(), 'tension min/max': [min(int(x) for l in b.vol_axes for x in l.now.reshape(-1)), max(int(x) for l in b.vol_axes for x in l.now.reshape(-1))], 'odd max bits': odd_max.bit_length(), 'light velocity max': light_v, 'milliseconds': (time.monotonic_ns() - t0) // 1000000})
+            rows.append({'i': b.interval, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'], 'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'], 'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(), 'tension min/max': [min(int(x) for l in b.vol_axes for x in l.now.reshape(-1)), max(int(x) for l in b.vol_axes for x in l.now.reshape(-1))], 'odd max bits': odd_max.bit_length(), 'light velocity max': light_v, 'milliseconds': (time.monotonic_ns() - t0) // 1000000})
             print(json.dumps(rows[-1]), flush=True)
-    json.dump({'den': den, 'cube': cube, 'intervals': intervals, 'lifts': [(list(v), str(num), str(s)) for v, num, s in b.lifts], 'T': b.T, 'gamma': b.gamma, 'G': b.G, 'counts': {k: str(v) for k, v in b.counts.items()}, 'turns': b.turns, 'rows': rows, 'log': b.log}, open(out, 'w'))
+    run_back = None; kept_log = list(b.log)  # the record's log as the run left it; the run back below removes its lines as it undoes them
+    if back:
+        exact = 0
+        for k in range(back):
+            b.step_back(); exact += (state_hash() == hashes[back - 1 - k])
+        run_back = {'intervals': back, 'exact': exact}
+        print(json.dumps({'run back': run_back}), flush=True)
+    json.dump({'world': world, 'universe': universe, 'mode': mode, 'den': den_ if (den_ := b.den) else 0, 'cube': b.cube, 'intervals': intervals, 'lifts': [(None, str(num), str(s)) for _v, num, s in b.lifts], 'T': b.T, 'gamma': b.gamma, 'G': b.G, 'counts': {k: str(v) for k, v in b.counts.items()}, 'turns': b.turns, 'rows': rows, 'run_back': run_back, 'log': kept_log}, open(out, 'w'))
     print(json.dumps({'counts': {k: str(v) for k, v in b.counts.items()}}))

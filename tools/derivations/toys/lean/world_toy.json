@@ -1,8 +1,9 @@
 {
   "universe": "universe_toy.json",
   "shape": [5, 5, 5],
-  "intervals": 600,
+  "intervals": 300,
   "seed": [
-    {"row": 0, "sea": 189, "hole": [0, 0, 0]}
+    {"row": 0, "sea": 189, "hole": [0, 0, 0]},
+    {"row": 0, "at": [1, 0, 0], "quanta": 1}
   ]
 }
