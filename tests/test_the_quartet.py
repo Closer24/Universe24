@@ -7,6 +7,7 @@ import json
 from typing import Any
 
 from event_universe import gram
+from event_universe.core.rule3 import signed_quotient
 from event_universe.rows import POTENTIAL, QUARTET
 from tests.laws import ROOT, load_file, refused, run_back_exact, world_of
 
@@ -49,7 +50,7 @@ def test_the_zeeman_doublet_is_the_derived_shift_with_the_two_spins_opposite_sr_
             for a, b in zip(lines_of(on), lines_of(off), strict=True)
         ]
         num, den, gamma = on.records()[2].pair[0], on.den, on.gamma
-        derived = [sign * int(gram.toward_zero(num * 400 * x, 3 * den * gamma)) for x in now]
+        derived = [sign * int(signed_quotient(num * 400 * x, 3 * den * gamma)) for x in now]
         assert all(abs(s - d) <= 1 for s, d in zip(shifts, derived, strict=True)), (shifts, derived)
         assert all(
             (s == 0) == (x == 0) and (s > 0) == (sign * x > 0) for s, x in zip(shifts, now, strict=True)

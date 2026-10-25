@@ -7,7 +7,7 @@ import sys
 from collections import Counter, defaultdict
 from typing import Any
 
-from event_universe.core import paces
+from event_universe.board import course, era, horizon
 from event_universe.decoder import (
     FEW,
     HUNDRED,
@@ -85,71 +85,7 @@ def lengthening(record: Record) -> dict[str, Any]:
     }
 
 
-def course(record: Record) -> dict[str, Any]:
-    """Gates 1, 3, 5, 6: the board's course from the rows (the reader's view): the mean volume's rises and falls, the turns."""
-    rows = [(r["i"], int(r["volume mean"]), r["births"]) for r in record.rows]
-    falls = [b[0] for a, b in zip(rows, rows[1:], strict=False) if b[1] - a[1] < 0]
-    return {
-        "1 recurring bangs / 3 shortening then lengthening / 6 contraction (board, the reader's view)": {
-            "volume mean course (interval, mean)": [
-                (i, v) for i, v, _b in rows[:: max(1, len(rows) // 8)]
-            ],
-            "intervals with the mean volume falling": falls[:6],
-            "turns (Node swaps) total": int(record.run["counts"]["turns"]),
-            "verdict": "contraction SHOWN at the board"
-            if falls
-            else "NOT SHOWN: the mean volume rises throughout; the turns are local",
-        }
-    }
-
-
-def era(record: Record) -> dict[str, Any]:
-    """Gate 4: the era of matter in the Nodes' own clocks: at every Node with a birth and a body's credit, the credits go on past the last birth in that Node's proper count."""
-    last_birth: dict[tuple[int, ...], int] = {}
-    last_credit: dict[tuple[int, ...], int] = {}
-    for b in record.births:
-        last_birth[tuple(b["node"])] = max(last_birth.get(tuple(b["node"]), 0), b["proper"])
-    for c in record.credits:
-        last_credit[tuple(c["node"])] = max(last_credit.get(tuple(c["node"]), 0), c["proper"])
-    both = [n for n in last_birth if n in last_credit]
-    past = sum(1 for n in both if last_credit[n] > last_birth[n])
-    verdict = (
-        "SHOWN"
-        if both and past == len(both)
-        else (f"SHOWN in part: {past} of {len(both)}" if past else "NOT SHOWN")
-    )
-    return {
-        "4 an era of matter": {
-            "Nodes with a birth and a body credit": len(both),
-            "of them with credits past the last birth in the Node's own clock": past,
-            "births": len(record.births),
-            "body credits": len(record.credits),
-            "verdict": verdict,
-        }
-    }
-
-
-def horizon(record: Record) -> dict[str, Any]:
-    """Gate 14: the frozen content against the rows' max content; a credit at a frozen Node would deny the horizon."""
-    frozen = paces.frozen_content(record.gamma)
-    at_frozen = [c for c in record.credits if c["content"] >= frozen]
-    cmax = max(int(r["content min/mean/max"][2]) for r in record.rows)
-    verdict = (
-        "SHOWN as silence (no credit at a frozen Node)"
-        if cmax >= frozen and not at_frozen
-        else ("NOT REACHED" if cmax < frozen else "NOT SHOWN")
-    )
-    return {
-        "14 the horizon": {
-            "frozen content": frozen,
-            "max content in the rows": cmax,
-            "credits at frozen Nodes": len(at_frozen),
-            "verdict": verdict,
-        }
-    }
-
-
-def approach(record: Record) -> tuple[int, int, bool]:
+def approach(record: Record) -> tuple[int, int, bool, list[int]]:
     """Two bodies' credited Nodes over the intervals (W-S4, W-S5): the distance between the two credited Nodes farthest apart at the first interval with two and at the last, and whether two credited Nodes stood adjacent (one Link apart) at some interval."""
     by_interval: dict[int, set[tuple[int, ...]]] = defaultdict(set)
     for c in record.credits:
@@ -167,11 +103,11 @@ def approach(record: Record) -> tuple[int, int, bool]:
             continue
         spans.append(max(distance(a, b) for a in nodes for b in nodes if a < b))
         adjacent = adjacent or any(distance(a, b) == 1 for a in nodes for b in nodes if a < b)
-    return (spans[0], spans[-1], adjacent) if spans else (0, 0, False)
+    return (spans[0], spans[-1], adjacent, spans) if spans else (0, 0, False, [])
 
 
 def tracks(record: Record, decoded: list[tuple[dict[str, Any], str, Rational]]) -> dict[str, Any]:
-    """Gates 9 and 13: a body's track (its record's credits by line), a move a credit of the same line at a new Node; the collision's verdict from two bodies' credited Nodes approaching to adjacency (the sentences W-S4 and W-S5 of the owner): shown where they approach and stand one Link apart, NOT SHOWN where apart or receding, NOT READ with one body."""
+    """Gates 9 and 13, each its own line: a body's track (its record's credits by line), a move a credit of the same line at a new Node; the collision's verdict from two bodies' credited Nodes approaching to adjacency (the sentences W-S4 and W-S5 of the owner): shown where they approach and stand one Link apart, NOT SHOWN where apart or receding, NOT READ with one body; the free fall where the closing quickens from interval to interval."""
     found: dict[tuple[tuple[int, ...], str], int] = Counter()
     for c, n, _x in decoded:
         found[(tuple(c["node"]), n)] += 1
@@ -186,27 +122,41 @@ def tracks(record: Record, decoded: list[tuple[dict[str, Any], str, Rational]]) 
             if at not in seen:
                 moves += 1
                 seen.add(at)
-    first, last, adjacent = approach(record)
+    first, last, adjacent, spans = approach(record)
     if first == 0:
         verdict = "NOT READ: fewer than two bodies credited at one interval"
     elif adjacent and last <= first:
         verdict = "SHOWN: two bodies' credited Nodes approached and stood one Link apart"
     else:
         verdict = f"NOT SHOWN: the credited Nodes {'receding' if last > first else 'apart'}, farthest {first} Links at first and {last} at last"
+    closing = [a - b for a, b in zip(spans, spans[1:], strict=False)]
+    quickening = sum(1 for a, b in zip(closing, closing[1:], strict=False) if b > a > 0)
+    fall = (
+        "NOT READ: fewer than two bodies credited at one interval"
+        if first == 0
+        else "SHOWN: the approach quickens from interval to interval (the tail's second difference toward matter)"
+        if quickening * 2 > max(len(closing) - 1, 1)
+        else "NOT SHOWN: the approach does not quicken"
+    )
     return {
-        "9 collisions / 13 free fall": {
+        "9 collisions": {
             "tracks (node, species)": len(found),
             "longest track credits": max(found.values(), default=0),
             "lines credited at a new Node after their first": moves,
             "farthest credited Nodes at the first and the last interval with two": [first, last],
             "adjacent at some interval": adjacent,
             "verdict": verdict,
-        }
+        },
+        "13 free fall": {
+            "the farthest credited Nodes' distance per interval with two (first eight)": spans[:8],
+            "intervals the closing quickens": [quickening, max(len(closing) - 1, 0)],
+            "verdict": fall,
+        },
     }
 
 
 def light_and_arrow(record: Record) -> dict[str, Any]:
-    """Gates 7, 11, 12 and 18: the gap-0 plane's credits (none in the engine's record: a detector is the toy's reading, kept by name in tools/derivations/toys/lean) and the run back on the record, exact bit for bit or not."""
+    """Gates 7, 11, 12 and 18, each its own line: the gap-0 plane's credits (none in the engine's record: a detector is the toy's reading, kept by name in tools/derivations/toys/lean) and the takes (light absorbed), the redshift and the delay NOT READ with their predicates where the record carries no gap-0 credit, and the run back on the record, exact bit for bit or not."""
     light = sum(1 for entry in record.log if entry["event"] == "detector")
     takes = [entry for entry in record.log if entry["event"] in ("birth", "credit")]
     absorbed = sum(int(entry["levels"]) for entry in takes)
@@ -217,14 +167,23 @@ def light_and_arrow(record: Record) -> dict[str, Any]:
         verdict = f"SHOWN: the run back exact bit for bit, {rb['exact']} of {rb['intervals']} intervals"
     else:
         verdict = f"NOT SHOWN: {rb['exact']} of {rb['intervals']}"
+    unread = "NOT READ: the record carries no credit of the gap-0 row (light has no period on the sea); the predicate: "
     return {
-        "7 light with its redshift / 11 / 12": {
+        "7 light present and absorbed": {
             "gap-0 credits in the record": light,
             "absorbed: the takes of the gap-0 line at births and credits (PC-S2)": len(takes),
             "levels taken in all": absorbed,
-            "verdict": "read: the gap-0 line's quanta absorbed at the takes, its credit the taker's line (PC-S2); the redshift needs light with a period"
+            "verdict": "SHOWN: the gap-0 line's quanta absorbed at the takes, at matter (the credits) and at the births; its credit the taker's line (PC-S2)"
             if takes
             else "NOT READ: no take in the record",
+        },
+        "11 gravitational redshift": {
+            "verdict": unread
+            + "the gap-0 credits' period longer where the content is deeper, by the clocks squared"
+        },
+        "12 light's delay or deflection": {
+            "verdict": unread
+            + "the gap-0 credits' first interval against the Link distance from the emitter, later or off the line where deeper"
         },
         "18 the arrow of time": {"run back on the record": rb, "verdict": verdict},
     }

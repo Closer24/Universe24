@@ -136,6 +136,12 @@ def mirrored(remainder: Any, wall: Any, reversals: int) -> Any:
     return remainder if reversals % 2 == 0 else wall - 1 - remainder
 
 
+def signed_quotient(numerator: Any, wall: Any) -> Any:
+    """The quotient of the magnitude with the sign after, sign(x) (|x| div w): the lay's rounding of a signed level at rest (the one rule's mirror by the numerator's sign at a remainder born at 0), so the negated vector's lay is the lay negated."""
+    sign = (numerator >= 0) * 2 - 1
+    return sign * quotient(sign * numerator, wall)
+
+
 def half(wall: Any) -> Any:
     """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor."""
     return division_forward(wall, 2, 0)[0]

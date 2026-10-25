@@ -41,6 +41,16 @@ class Record:
         }
         self.NAMES[self.den] = ("gap 0", 0)
         self.line_num = [int(num) for num in run["planes"]]
+        records = sorted(
+            (r for r in rows if r.get("pair") and int(r["shape"]) in (PLANE, QUARTET)),
+            key=lambda r: int(r["pair"][0]) == int(r["pair"][1]),
+        )
+        shapes = [int(r["shape"]) for r in records]
+        assert [int(r["pair"][0]) for r in records] == self.line_num
+        self.line_name = [
+            self.NAMES[num][0] if shape == PLANE else f"shape-{shape} at {self.NAMES[num][0]}"
+            for num, shape in zip(self.line_num, shapes, strict=True)
+        ]
         self.log = run["log"]
         self.credits = [entry for entry in self.log if entry["event"] == "credit"]
         self.births = [entry for entry in self.log if entry["event"] == "birth"]
@@ -133,7 +143,7 @@ def decoded_credits(
     record: Record,
 ) -> tuple[list[tuple[dict[str, Any], str, Rational]], int, int, list[int | None]]:
     """Every credit's species solved from its frame: the decoded (credit, name, x), the count read right, the count within the one-click floor, and each credit's floor on x in parts per million."""
-    den, names, line_num = record.den, record.NAMES, record.line_num
+    den, line_num = record.den, record.line_num
     decoded = []
     right = within = 0
     floors: list[int | None] = []
@@ -142,7 +152,7 @@ def decoded_credits(
         if x is None:
             continue
         name = nearest(record, x, int(c["beat"]))
-        right += name == names[line_num[c["line"]]][0]
+        right += name == record.line_name[c["line"]]
         decoded.append((c, name, x))
         n, d = x
         num = line_num[c["line"]]
@@ -158,18 +168,17 @@ def decoded_credits(
 def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], str, Rational]]]:
     """Gates 8, 8b, 19 and 16: the species from the frame of every credit (the whole view) and over a body's track (the one-place view: the middle solve), the mass ratios from den's legs, the one-click floor."""
     out: dict[str, Any] = {}
-    names, line_num = record.NAMES, record.line_num
     decoded, right, within, floor_mil = decoded_credits(record)
     tracks: dict[tuple[Any, int], list[Rational]] = defaultdict(list)
     confusion: Counter[tuple[str, str]] = Counter()
     for c, name, x in decoded:
         tracks[(tuple(c["node"]), c["line"])].append(x)
-        confusion[(names[line_num[c["line"]]][0], name)] += 1
+        confusion[(record.line_name[c["line"]], name)] += 1
     track_right = 0
     for (_node, line), xs in tracks.items():
         xs.sort(key=cmp_to_key(cmp_rat))
-        track_right += nearest(record, middle(xs), 1) == names[line_num[line]][0]
-    born = Counter(names[line_num[b["line_pair"]]][0] for b in record.births)
+        track_right += nearest(record, middle(xs), 1) == record.line_name[line]
+    born = Counter(record.line_name[b["line_pair"]] for b in record.births)
     out["8b species over the track (one-place view: the middle solve of the body's track)"] = {
         "tracks": len(tracks),
         "decoded right": track_right,
@@ -313,7 +322,9 @@ def charge_and_take(record: Record) -> tuple[dict[str, Any], int, int, int]:
             else None,
             "children laid on a residue of their plane (W the Node's, not the lay's)": residue,
             "verdict": (
-                "SHOWN: the senses sum to 0"
+                "NOT READ: no birth in the record"
+                if not births
+                else "SHOWN: the senses sum to 0"
                 if sense_sum == 0 and 0 not in signs
                 else "NOT SHOWN: the senses"
             )
@@ -331,7 +342,9 @@ def charge_and_take(record: Record) -> tuple[dict[str, Any], int, int, int]:
     out["15 conservation at the click"] = {
         "births": len(births),
         "taken per booked at the births (hundredths)": quot(taken, booked, HUNDRED),
-        "verdict": "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light)"
+        "verdict": "NOT READ: no birth in the record"
+        if not births
+        else "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light)"
         if exact
         else "NOT SHOWN",
     }

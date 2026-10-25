@@ -1,4 +1,4 @@
-"""The record rows' bilinears by shape, one act on every record alike (SR-S1 to SR-S4): a record of 2k lines is k planes on one lattice with a Gram matrix G (the identity for a plane, the derived trace form for a quartet, quartet.py), a rotation J (the quarter turn per plane), a conjugation K (the im line's negation for a plane, the lattice's K0 for a quartet) and axis matrices (none for a plane, the three Gamma_a for a quartet): the charge B.GJ.N (the plane's Wronskian), the current, the spin density N.G Gamma_a.N (the record's axial vector), the frame's conjugation of a neighbour's lines, the Node term from the curl of the odd lines (the coupling by shape, SR-S3), the row's scale 2 x 6 Gamma that carries the term's coefficient R / (2 Gamma) inside the one division, the quotient toward zero of the lay at rest and the period from the rotation's cosine N.G.B / N.G.N read along the law's own orbit."""
+"""The record rows' bilinears by shape, one act on every record alike (SR-S1 to SR-S4): a record of 2k lines is k planes on one lattice with a Gram matrix G (the identity for a plane, the derived trace form for a quartet, quartet.py), a rotation J (the quarter turn per plane), a conjugation K (the im line's negation for a plane, the lattice's K0 for a quartet) and axis matrices (none for a plane, the three Gamma_a for a quartet): the charge B.GJ.N (the plane's Wronskian), the current, the spin density N.G Gamma_a.N (the record's axial vector), the frame's conjugation of a neighbour's lines, the Node term from the curl of the odd lines (the coupling by shape, SR-S3), the row's scale 2 x 6 Gamma that carries the term's coefficient R / (2 Gamma) inside the one division, the lay at rest by rule3's signed quotient and the period from the rotation's cosine N.G.B / N.G.N read along the law's own orbit."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core.ports import AXES, PORTS, across, wrap
-from event_universe.core.rule3 import quotient
+from event_universe.core.rule3 import quotient, signed_quotient
 from event_universe.links import gradient
 from event_universe.quartet import quartet
 from event_universe.readings import pair_angle
@@ -164,11 +164,6 @@ def share(node: Node, lines: list[Line], r: Any) -> Any:
     return found
 
 
-def toward_zero(numerator: Any, wall: Any) -> Any:
-    """The quotient of the magnitude with the sign after, the lay's rounding of a signed level at rest, so the negated vector's lay is the lay negated and two senses' lays sum with the J term cancelled exactly."""
-    return np.where(numerator < 0, -quotient(-numerator, wall), quotient(numerator, wall))
-
-
 def rest(
     shape: int, re_now: Any, vector: list[int], num: int, den: int, sine: int, sense: int
 ) -> list[Line]:
@@ -176,7 +171,7 @@ def rest(
     nows = [re_now * v for v in vector]
     turned = matvec(rotation(shape), nows)
     return [
-        Line(n, toward_zero(n * num, den) + sense * toward_zero(j * sine, den), None, None)
+        Line(n, signed_quotient(n * num, den) + sense * signed_quotient(j * sine, den), None, None)
         for n, j in zip(nows, turned, strict=True)
     ]
 

@@ -14,16 +14,10 @@ from tests.laws import ROOT, load_file, world_of
 
 RECORDS = ROOT / "examples" / "records"
 WIDTH = 128
-BASE = {
-    "17 charge conservation": "SHOWN",
-    "18 the arrow of time": "SHOWN",
-    "the three constants": "SHOWN",
-    "the entropy of the clicks": "SHOWN",
-    "14 the horizon": "NOT REACHED",
-}
-CHARGE = (
-    "SHOWN: the senses sum to 0; the magnitude SHOWN"  # MS-S1: one |W| where the plane stood at nothing
-)
+BASE = dict.fromkeys(("17 charge conservation", "18 the arrow of time", "the three constants"), "SHOWN")
+BASE |= {"the entropy of the clicks": "SHOWN", "14 the horizon": "NOT REACHED"}
+# MS-S1: one |W| where the plane stood at nothing
+CHARGE = "SHOWN: the senses sum to 0; the magnitude SHOWN"
 SHOWN = {
     "hole": {**BASE, "4 an era of matter": "SHOWN", "17 charge conservation": CHARGE},
     "chiral": {**BASE, "17 charge conservation": CHARGE},
@@ -32,8 +26,10 @@ SHOWN = {
         "the three constants": "SHOWN",
         "10 gravitational time dilation": "SHOWN in the reader's view",
         "2 the Links lengthening in the clicks": "SHOWN in the reader's view",
-        "1 recurring bangs / 3 shortening then lengthening / 6 contraction (board, the reader's view)": "contraction SHOWN",
-        "9 collisions / 13 free fall": "NOT SHOWN: the credited Nodes receding",
+        "6 contraction (the board, the reader's view)": "SHOWN at the board",
+        "9 collisions": "NOT SHOWN: the credited Nodes receding",
+        "17 charge conservation": "NOT READ: no birth",
+        "15 conservation at the click": "NOT READ: no birth",
         "8 families forming (whole view)": "SHOWN in part: every credit within the floor, tracks right 63 of 63",
         "16 uncertainty floor (one click)": "SHOWN as the law's floor",
         "the entropy of the clicks": "NOT READ",

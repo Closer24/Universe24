@@ -47,7 +47,7 @@ def first_click(record: Record) -> list[dict[str, Any]]:
         if seen[c["line"]] and tuple(c["node"]) not in seen[c["line"]]:
             found.append(
                 event(
-                    "9 collisions / 13 free fall",
+                    "9 collisions",
                     "a body at a new Node",
                     c["i"],
                     c["node"],
@@ -76,7 +76,7 @@ def first_course(record: Record) -> list[dict[str, Any]]:
     rows = [(r["i"], int(r["volume mean"])) for r in record.rows]
     fall = next((b[0] for a, b in zip(rows, rows[1:], strict=False) if b[1] < a[1]), None)
     if fall is not None:
-        gate = "1 recurring bangs / 3 shortening then lengthening / 6 contraction (board, the reader's view)"
+        gate = "6 contraction (the board, the reader's view)"
         found.append(event(gate, "the board contracts", fall, None, "the mean volume falls"))
     last_birth = {tuple(b["node"]): b["proper"] for b in record.births}
     credits = sorted(record.credits, key=lambda c: int(c["i"]))
