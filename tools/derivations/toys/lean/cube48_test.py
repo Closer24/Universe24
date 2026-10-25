@@ -1,5 +1,5 @@
 """The 48 on the lean toy: the toy run from a seed and from each of its 48 images (the signed permutations of the axes about the origin), the births compared through the image (interval, the take's Node, the lift, the - child's Node, the + child's Node), the whole volume and light rows compared through the image at the last interval.
-Usage: python cube48_test.py <world.json> <cube> <intervals> <mode: current|link|node>   (the world's shape replaced by the cube; the seed's 'at' entries carried through each image)"""
+Usage: python cube48_test.py <world.json> <cube> <intervals>   (the world's shape replaced by the cube; the seed's 'at' entries carried through each image)"""
 import sys, os, itertools, copy
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
@@ -32,21 +32,21 @@ def world_image(world, m, cube):
     return w
 
 
-def run(universe, world, n, link):
-    b = Lean(universe, world, link_birth=link)
+def run(universe, world, n):
+    b = Lean(universe, world)
     for _ in range(n): b.step()
     return b
 
 
-universe, world0 = load_world(sys.argv[1]); cube, n, mode = int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
-link = {'current': 'current', 'link': True, 'node': False}[mode]
+universe, world0 = load_world(sys.argv[1]); cube, n = int(sys.argv[2]), int(sys.argv[3])
+
 identity = np.eye(3, dtype=int)
-base = run(universe, world_image(world0, identity, cube), n, link)
+base = run(universe, world_image(world0, identity, cube), n)
 evs = events(base)
-print({'mode': mode, 'seed': world0.get('seed'), 'cube': cube, 'intervals': n, 'births': len(evs), 'refused orientation': base.counts['refused_orientation'], 'refused lay': base.counts['refused_lay'], 'refused stop': base.counts['refused_stop'], 'turns': base.counts['turns']})
+print({'seed': world0.get('seed'), 'cube': cube, 'intervals': n, 'births': len(evs), 'refused orientation': base.counts['refused_orientation'], 'refused lay': base.counts['refused_lay'], 'refused stop': base.counts['refused_stop'], 'turns': base.counts['turns']})
 held = 0; apart = []
 for m in signed_permutations():
-    other = run(universe, world_image(world0, m, cube), n, link)
+    other = run(universe, world_image(world0, m, cube), n)
     same_events = events(other) == mapped(evs, m, cube)
     same_rows = True
     for line_b, line_o in ((base.vol, other.vol), (base.light, other.light)):

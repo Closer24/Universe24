@@ -1,13 +1,13 @@
 """Where a mirror of the toy's run breaks: the run from a seed and from its image under one signed permutation, compared interval by interval through the image (the even rows by value, the odd lines along a negated axis by sign, the planes by |z|^2 and by W), the first interval and the first quantity apart named.
-Usage: python mirror_diag.py <world.json> <cube> <intervals> <mode> <sx,sy,sz> [perm as pi0,pi1,pi2]"""
+Usage: python mirror_diag.py <world.json> <cube> <intervals> <sx,sy,sz> [perm as pi0,pi1,pi2]"""
 import sys, os, copy
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 from lean_full import Lean, load_world
 
-universe, world0 = load_world(sys.argv[1]); cube, n, mode = int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
-signs = [int(x) for x in sys.argv[5].split(',')]
-perm = [int(x) for x in sys.argv[6].split(',')] if len(sys.argv) > 6 else [0, 1, 2]
+universe, world0 = load_world(sys.argv[1]); cube, n = int(sys.argv[2]), int(sys.argv[3])
+signs = [int(x) for x in sys.argv[4].split(",")]
+perm = [int(x) for x in sys.argv[5].split(",")] if len(sys.argv) > 5 else [0, 1, 2]
 m = np.zeros((3, 3), dtype=int)
 for a in range(3): m[perm[a], a] = signs[a]  # e_a -> s_a e_pi(a)
 def image(node): return tuple(int(x) % cube for x in (m @ np.array(node, dtype=int)))
@@ -17,8 +17,8 @@ def world_image(mm):
         for key in ('at', 'hole'):
             if key in lay: lay[key] = [int(x) % cube for x in (mm @ np.array(lay[key], dtype=int))]
     return w
-link = {'current': 'current', 'link': True, 'node': False}[mode]
-a = Lean(universe, world_image(np.eye(3, dtype=int)), link_birth=link); b = Lean(universe, world_image(m), link_birth=link)
+
+a = Lean(universe, world_image(np.eye(3, dtype=int))); b = Lean(universe, world_image(m))
 nodes = list(np.ndindex(cube, cube, cube))
 
 def compare():
