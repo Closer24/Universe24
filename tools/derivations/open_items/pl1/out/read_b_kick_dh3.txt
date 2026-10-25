@@ -1,0 +1,867 @@
+{
+ "record": "out/b_kick_dh3.json",
+ "cube": 3,
+ "intervals": 400,
+ "laid": [
+  {
+   "row": 2,
+   "sense": 1,
+   "how": "fitted",
+   "amplitude": 136,
+   "unit": 1615924816158049488000,
+   "share at the Node": 1636036044340211940312,
+   "levels (re_now, re_before, im_now, im_before)": [
+    136,
+    22,
+    0,
+    134
+   ],
+   "W of the lay": 18224,
+   "W standing before": 0,
+   "W of the Node after": 18224
+  },
+  {
+   "row": 3,
+   "sense": -1,
+   "how": "fitted",
+   "amplitude": 136,
+   "unit": 1613701501183721088000,
+   "share at the Node": 1633784078295286423947,
+   "levels (re_now, re_before, im_now, im_before)": [
+    136,
+    23,
+    0,
+    -134
+   ],
+   "W of the lay": -18224,
+   "W standing before": 18224,
+   "W of the Node after": 0
+  }
+ ],
+ "summary": {
+  "run back": {
+   "intervals": 10,
+   "exact": 10
+  },
+  "counts": {
+   "births": 0,
+   "taken": 0,
+   "booked": 0,
+   "body_clicks": 135,
+   "refused_stop": 27,
+   "refused_origin": 0,
+   "refused_lay": 0,
+   "refused_orientation": 3807,
+   "refused_twist": 0,
+   "refused_sense": 0,
+   "turns": 54,
+   "met": 3807,
+   "laid": 0,
+   "laid_nodes": 0,
+   "laid_back": 135
+  },
+  "integers": 98,
+  "max bits": 115,
+  "max transient bits": 98,
+  "48": {
+   "levels equal": 48,
+   "apart": 0
+  },
+  "invariance at the end": {
+   "arrays constant over the board": 84,
+   "of": 84
+  },
+  "turns": [
+   [
+    101,
+    27
+   ],
+   [
+    301,
+    27
+   ]
+  ]
+ },
+ "alike (spread 0) of intervals": [
+  401,
+  401
+ ],
+ "tops (every Node turning)": [
+  101,
+  301
+ ],
+ "partial turns": [],
+ "bottoms (i, mean X, X - Gamma, alike)": [
+  [
+   201,
+   1000,
+   0,
+   true
+  ]
+ ],
+ "intervals at Gamma exactly at every Node": [
+  200,
+  201,
+  399,
+  400
+ ],
+ "W total (Node 0) at 0, 1, 2, 10, 50, top, 2top-2, 400": [
+  [
+   0,
+   0,
+   [
+    0,
+    18224,
+    -18224,
+    0
+   ]
+  ],
+  [
+   1,
+   0,
+   [
+    0,
+    18088,
+    -18088,
+    0
+   ]
+  ],
+  [
+   2,
+   40,
+   [
+    0,
+    17926,
+    -17886,
+    0
+   ]
+  ],
+  [
+   10,
+   155,
+   [
+    0,
+    12532,
+    -12377,
+    0
+   ]
+  ],
+  [
+   50,
+   202,
+   [
+    0,
+    2548,
+    -2346,
+    0
+   ]
+  ],
+  [
+   101,
+   151,
+   [
+    0,
+    1625,
+    -1474,
+    0
+   ]
+  ],
+  [
+   200,
+   0,
+   [
+    0,
+    18088,
+    -18088,
+    0
+   ]
+  ],
+  [
+   400,
+   0,
+   [
+    0,
+    18224,
+    -18224,
+    0
+   ]
+  ]
+ ],
+ "W total: intervals where W(t) != W(t+1) in the first cycle": 99,
+ "W total: least / largest over the run": [
+  -68,
+  253
+ ],
+ "X retrace about the first top: X(top + k) against X(top - 2 - k)": {
+  "top": 101,
+  "equal k": 99,
+  "first parting (k, i_fall, X_fall, i_rise, X_rise, fall - rise)": null,
+  "table (k, X_fall, X_rise, diff)": [
+   [
+    1,
+    11826,
+    11826,
+    0
+   ],
+   [
+    2,
+    11816,
+    11816,
+    0
+   ],
+   [
+    3,
+    11802,
+    11802,
+    0
+   ],
+   [
+    4,
+    11785,
+    11785,
+    0
+   ],
+   [
+    5,
+    11764,
+    11764,
+    0
+   ],
+   [
+    6,
+    11739,
+    11739,
+    0
+   ],
+   [
+    7,
+    11711,
+    11711,
+    0
+   ],
+   [
+    8,
+    11679,
+    11679,
+    0
+   ],
+   [
+    9,
+    11643,
+    11643,
+    0
+   ],
+   [
+    10,
+    11603,
+    11603,
+    0
+   ],
+   [
+    11,
+    11559,
+    11559,
+    0
+   ],
+   [
+    12,
+    11512,
+    11512,
+    0
+   ],
+   [
+    13,
+    11462,
+    11462,
+    0
+   ],
+   [
+    14,
+    11408,
+    11408,
+    0
+   ]
+  ]
+ },
+ "lines' retrace about the first top (each line of the Node 0: S(top + k) against the exchange's image of S(top - 1 - k))": [
+  {
+   "row": 0,
+   "shape": 1,
+   "line": 0,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": true,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 1,
+   "shape": 2,
+   "line": 0,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": true,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 1,
+   "shape": 2,
+   "line": 1,
+   "K": -1,
+   "is_potential": false,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": true,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 2,
+   "shape": 2,
+   "line": 0,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": true,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 2,
+   "shape": 2,
+   "line": 1,
+   "K": -1,
+   "is_potential": false,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": true,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 3,
+   "shape": 2,
+   "line": 0,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": true,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 3,
+   "shape": 2,
+   "line": 1,
+   "K": -1,
+   "is_potential": false,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": true,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 4,
+   "shape": 2,
+   "line": 0,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": false,
+   "is_gap0": true,
+   "is_walled": false,
+   "is_record": true,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 4,
+   "shape": 2,
+   "line": 1,
+   "K": -1,
+   "is_potential": false,
+   "is_carrier": false,
+   "is_gap0": true,
+   "is_walled": false,
+   "is_record": true,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 5,
+   "shape": 4,
+   "line": 0,
+   "K": 1,
+   "is_potential": true,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 5,
+   "first parting": {
+    "k": 1,
+    "i_fall": 102,
+    "i_rise_mirror": 99,
+    "fields parting": [
+     [
+      "wr",
+      28801,
+      28847,
+      -46
+     ]
+    ]
+   }
+  },
+  {
+   "row": 5,
+   "shape": 4,
+   "line": 1,
+   "K": 1,
+   "is_potential": true,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 5,
+   "shape": 4,
+   "line": 2,
+   "K": 1,
+   "is_potential": true,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 5,
+   "shape": 4,
+   "line": 3,
+   "K": 1,
+   "is_potential": true,
+   "is_carrier": false,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 0,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 1,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 2,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 3,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 4,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 5,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 6,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 7,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 8,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  },
+  {
+   "row": 6,
+   "shape": 10,
+   "line": 9,
+   "K": 1,
+   "is_potential": false,
+   "is_carrier": true,
+   "is_gap0": false,
+   "is_walled": false,
+   "is_record": false,
+   "k held": 101,
+   "first parting": null
+  }
+ ],
+ "the first lines to part (k ascending)": [
+  [
+   5,
+   4,
+   0,
+   1,
+   [
+    [
+     "wr",
+     28801,
+     28847,
+     -46
+    ]
+   ]
+  ]
+ ],
+ "sign row time line (i, now, before, wr, W total) from top - 12 to top + 12": [
+  [
+   89,
+   0,
+   0,
+   5904,
+   168
+  ],
+  [
+   90,
+   0,
+   0,
+   26640,
+   241
+  ],
+  [
+   91,
+   0,
+   0,
+   32496,
+   200
+  ],
+  [
+   92,
+   0,
+   0,
+   1488,
+   212
+  ],
+  [
+   93,
+   0,
+   0,
+   26352,
+   194
+  ],
+  [
+   94,
+   0,
+   0,
+   10992,
+   197
+  ],
+  [
+   95,
+   0,
+   0,
+   34800,
+   160
+  ],
+  [
+   96,
+   0,
+   0,
+   16560,
+   133
+  ],
+  [
+   97,
+   1,
+   0,
+   13488,
+   119
+  ],
+  [
+   98,
+   2,
+   1,
+   15216,
+   141
+  ],
+  [
+   99,
+   3,
+   2,
+   7152,
+   132
+  ],
+  [
+   100,
+   4,
+   3,
+   18576,
+   151
+  ],
+  [
+   101,
+   3,
+   4,
+   17423,
+   151
+  ],
+  [
+   102,
+   2,
+   3,
+   28801,
+   132
+  ],
+  [
+   103,
+   1,
+   2,
+   20697,
+   141
+  ],
+  [
+   104,
+   0,
+   1,
+   22411,
+   119
+  ],
+  [
+   105,
+   0,
+   0,
+   19359,
+   133
+  ],
+  [
+   106,
+   0,
+   0,
+   1163,
+   160
+  ],
+  [
+   107,
+   0,
+   0,
+   25017,
+   197
+  ],
+  [
+   108,
+   0,
+   0,
+   9681,
+   194
+  ],
+  [
+   109,
+   0,
+   0,
+   34537,
+   212
+  ],
+  [
+   110,
+   0,
+   0,
+   3493,
+   200
+  ],
+  [
+   111,
+   0,
+   0,
+   9303,
+   241
+  ],
+  [
+   112,
+   0,
+   0,
+   30007,
+   168
+  ],
+  [
+   113,
+   0,
+   0,
+   18577,
+   177
+  ]
+ ],
+ "sign row time line at 0..6": [
+  [
+   0,
+   0,
+   0,
+   18000,
+   0
+  ],
+  [
+   1,
+   0,
+   0,
+   18000,
+   0
+  ],
+  [
+   2,
+   0,
+   0,
+   18000,
+   40
+  ],
+  [
+   3,
+   0,
+   0,
+   13200,
+   94
+  ],
+  [
+   4,
+   0,
+   0,
+   8400,
+   -43
+  ],
+  [
+   5,
+   0,
+   0,
+   20400,
+   147
+  ],
+  [
+   6,
+   0,
+   0,
+   9552,
+   170
+  ]
+ ],
+ "credits": 135,
+ "credits laid back": 135,
+ "credit intervals (i: count)": [
+  [
+   9,
+   54
+  ],
+  [
+   203,
+   27
+  ],
+  [
+   207,
+   27
+  ],
+  [
+   208,
+   27
+  ]
+ ],
+ "refusals by cause": {
+  "orientation": 3807,
+  "stop": 27
+ }
+}

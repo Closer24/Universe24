@@ -1,0 +1,15 @@
+# pl1: predictions written before the runs (2026-10-25, engine-5.0-test 57220fc0a)
+
+The lay (measured in the smoke run, ma1's numbers): the heavy row 2 at +1, amplitude 136, levels (136, 22, 0, 134), W +18,224 per Node; the light row 1 at -1, amplitude 5,690, levels (5690, 5689, 0, -3), W -17,070; the Node's charge +1,154 (eq2's 144,250 on the 5-cube = 125 x 1,154).
+
+P0 (the control): the flag absent on src_pl1 equals src bit for bit (the smoke run: states and readings equal). The head's plasma (src, no click flag) clicks in the first cycle (27 at 8, 27 at 12: the pre-CK numbers of eq2) and bottoms near 979 at 169 and 952 at 338 (eq2's pre-CK plasma on the 5-cube; the 3-cube equal).
+P1 (EQ2_CLICK=a, the clicks refused): ma1's and eq2's numbers to the integer: the top at 84 with 27 turning, the bottom 939 at 167, the second top at 251, 946 at 333; the retrace X(top + k) = X(top - 2 - k) parting first at k = 9 in X; the first line to part is the sign row's (shape 4) time line, its write remainder at k = 1 and its level within a few intervals; every plane's line retraces until the carrier parts.
+P2 (a + PL1_SIGN=none, the sign row written 0: the control of the cause): the return EXACT to 1,000 at every Node at 2 top - 2 and 2 top - 1 (166 / 167 if the top is 84), e 0, run back 10 of 10.
+P3 (a + PL1_SIGN=sym, the symmetric source W_pre + W_after): the return EXACT at 2 top - 2 and 2 top - 1 (the theorem: the write's quotient and remainder mirror exactly under the exchange); the run back NOT exact (the pre charge unknown at the unwrite): MATCH below 10 of 10, the first mismatch at the first interval run back.
+P4 (a + PL1_SIGN=pre, 2 W_pre): not exact, the parting of the same size as the head's (the mirror asymmetry the same, the sign reversed); run back not exact.
+P5 (a + PL1_SIGN=odd, reading (a)): WORSE than the head: the sign row's level parts at k = 1 by about 2 q (the write doubled instead of undone), X parts earlier than k = 9, the bottom farther from 1,000 than 939 (the direction not predicted).
+P6 (the neutral lay n3 under a, reading (b)): an amplitude pair with the Node's charge 0 exactly or within a few units at the lay; the sign row's write quotient 0 at most intervals; the return within 2 of 1,000 at the seed's mirror, exact where the quotient never moves in the cycle.
+P7 (b + sym on h3; b on n3): the same boards as under a (the Node lines equal) with every credit laid back (27 per credit interval).
+P8 (the heavy pair dh3 under a): the Node's charge 0 at the lay (136 x 134 on both rows), the return exact at 1,000 (ma2's), the sign row's write quotient 0 at every interval.
+P9 (the 5-cube h5 and n5 under a, a + sym, b): equal to the 3-cube at every mark (every Node's arrivals its own level).
+P10 (the records hole 60, chiral 60, bodies 300): the flag absent bit for bit the head; under sym CHANGED where the records' charge moves within an interval (the sign level differs; births and credits may move: the change named, not predicted in number).
