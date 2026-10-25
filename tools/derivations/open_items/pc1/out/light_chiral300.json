@@ -1,0 +1,325 @@
+{
+ "world": "pc1_world_chiral_300.json",
+ "intervals": 300,
+ "W_c (3 den T)": 1637588529984138012000,
+ "drift per Node": 189,
+ "flag": "memo",
+ "max massless share over the run (units, remainder thousandths)": [
+  598,
+  275
+ ],
+ "node-intervals at or above one quantum": 29755,
+ "node-intervals with an upward crossing of the massless re line": 0,
+ "node-intervals with both (the close condition for light)": 0,
+ "per interval": [
+  {
+   "i": 1,
+   "max share units": 3,
+   "max share remainder thousandths": 969,
+   "nodes at or above one quantum": 3,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    0,
+    378
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 2,
+   "max share units": 1,
+   "max share remainder thousandths": 929,
+   "nodes at or above one quantum": 18,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    0,
+    441
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 3,
+   "max share units": 7,
+   "max share remainder thousandths": 456,
+   "nodes at or above one quantum": 41,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    189,
+    651
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 25,
+   "max share units": 7,
+   "max share remainder thousandths": 362,
+   "nodes at or above one quantum": 51,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    2388,
+    3677
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 50,
+   "max share units": 7,
+   "max share remainder thousandths": 651,
+   "nodes at or above one quantum": 64,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    5655,
+    8385
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 75,
+   "max share units": 7,
+   "max share remainder thousandths": 710,
+   "nodes at or above one quantum": 73,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    8698,
+    15419
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 100,
+   "max share units": 9,
+   "max share remainder thousandths": 36,
+   "nodes at or above one quantum": 81,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    11881,
+    22633
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 125,
+   "max share units": 14,
+   "max share remainder thousandths": 539,
+   "nodes at or above one quantum": 99,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    15465,
+    31745
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 150,
+   "max share units": 41,
+   "max share remainder thousandths": 811,
+   "nodes at or above one quantum": 112,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    17834,
+    42648
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 175,
+   "max share units": 59,
+   "max share remainder thousandths": 152,
+   "nodes at or above one quantum": 118,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    21235,
+    57877
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 200,
+   "max share units": 124,
+   "max share remainder thousandths": 732,
+   "nodes at or above one quantum": 124,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    23813,
+    82867
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 225,
+   "max share units": 563,
+   "max share remainder thousandths": 512,
+   "nodes at or above one quantum": 125,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    30020,
+    119187
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 250,
+   "max share units": 543,
+   "max share remainder thousandths": 906,
+   "nodes at or above one quantum": 124,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    33391,
+    200256
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 275,
+   "max share units": 543,
+   "max share remainder thousandths": 906,
+   "nodes at or above one quantum": 124,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    32383,
+    310881
+   ],
+   "light im abs max": 0
+  },
+  {
+   "i": 300,
+   "max share units": 543,
+   "max share remainder thousandths": 906,
+   "nodes at or above one quantum": 125,
+   "nodes with an upward crossing of the massless re line": 0,
+   "light re min/max": [
+    32044,
+    421506
+   ],
+   "light im abs max": 0
+  }
+ ],
+ "counts": {
+  "births": "16",
+  "taken": "37450057102094138190653",
+  "booked": "35545794554425772736000",
+  "body_clicks": "311",
+  "refused_stop": "36",
+  "refused_origin": "0",
+  "refused_lay": "64931",
+  "refused_orientation": "26",
+  "refused_twist": "0",
+  "turns": "769",
+  "light_credits": "0",
+  "light_laid": "1",
+  "light_laid_nodes": "1"
+ },
+ "births": 16,
+ "births: light taken in quanta of W_c (fall div W_c, remainder thousandths) per birth, first 16": [
+  [
+   1,
+   988,
+   1,
+   973
+  ],
+  [
+   2,
+   35,
+   1,
+   973
+  ],
+  [
+   2,
+   35,
+   1,
+   973
+  ],
+  [
+   0,
+   98,
+   0,
+   1
+  ],
+  [
+   0,
+   98,
+   0,
+   1
+  ],
+  [
+   0,
+   86,
+   0,
+   1
+  ],
+  [
+   1,
+   991,
+   1,
+   970
+  ],
+  [
+   2,
+   43,
+   1,
+   973
+  ],
+  [
+   2,
+   71,
+   1,
+   973
+  ],
+  [
+   2,
+   22,
+   1,
+   973
+  ],
+  [
+   0,
+   123,
+   0,
+   1
+  ],
+  [
+   1,
+   974,
+   1,
+   973
+  ],
+  [
+   0,
+   127,
+   0,
+   1
+  ],
+  [
+   2,
+   47,
+   1,
+   973
+  ],
+  [
+   2,
+   34,
+   1,
+   970
+  ],
+  [
+   2,
+   88,
+   1,
+   970
+  ]
+ ],
+ "births: light taken total in quanta": [
+  22,
+  869
+ ],
+ "body credits": 311,
+ "body credits: light taken per close in thousandths of W_c (min, max)": [
+  151,
+  13300583333
+ ],
+ "body credits: light taken total in quanta": [
+  224904840,
+  609
+ ],
+ "body credits on the massless plane (line index of light)": 0,
+ "light credits (detector lines)": 0
+}

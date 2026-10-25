@@ -1,0 +1,23 @@
+{"files": ["hole60_david.json", "hole60_memo.json"]}
+{"counts a": {"births": "16", "taken": "37450057102094138190653", "booked": "35545794554425772736000", "body_clicks": "67", "refused_stop": "10", "refused_origin": "0", "refused_lay": "3762", "refused_orientation": "26", "refused_twist": "0", "turns": "619", "light_credits": "0", "light_laid": "0", "light_laid_nodes": "0"}}
+{"counts b": {"births": "16", "taken": "37450057102094138190653", "booked": "35545794554425772736000", "body_clicks": "67", "refused_stop": "10", "refused_origin": "0", "refused_lay": "3762", "refused_orientation": "26", "refused_twist": "0", "turns": "619", "light_credits": "0", "light_laid": "0", "light_laid_nodes": "0"}}
+{"run back a, b": [{"intervals": 10, "exact": 10}, {"intervals": 10, "exact": 10}]}
+{"last row integers (a, b)": [98, 98]}
+{"last row max bits (a, b)": [115, 115]}
+{"last row max transient bits (a, b)": [102, 102]}
+{"last row transient where (bits, row shape, interval) (a, b)": [null, [102, 10, 52]]}
+{"last row content min/mean/max (a, b)": [[1005, 1162, 1325], [1005, 1162, 1325]]}
+{"last row volume mean (a, b)": [108439, 108439]}
+{"last row turns (a, b)": [619, 619]}
+{"last row light share quanta max (a, b)": [null, 9]}
+{"last row nodes with light at or above one quantum (a, b)": [null, 68]}
+{"last row massless im abs max (a, b)": [null, 0]}
+{"last row light velocity max (a, b)": [590, 590]}
+{"births a, b; equal as sets; first birth differing": [16, 16, true, null]}
+{"credits a, b; equal as sets; common; a only; b only": [67, 67, true, 67, 0, 0]}
+{"first interval where the logs part": null}
+{"whole log equal line for line": true}
+{"contents visited by the clicks: count, min, max; contents where the carried clock differs from the memo (clock; link pace)": [64, -22, 1175, [], []]}
+{"board content range (rows) and the contents in it where the two clocks differ": [-23, 1325, 6, [72, 210, 584, 797, 1128, 1267]]}
+{"light taken a: births (count, quanta taken, thousandths), credits (count, quanta taken, thousandths), per birth min/max in thousandths of a quantum, per credit min/max in thousandths, detector lines (light credits), W-S1 light laid": [16, [22, 869], 67, [1965, 994], [86, 2088], [151, 107287], 0, "0"]}
+{"light taken b: births (count, quanta taken, thousandths), credits (count, quanta taken, thousandths), per birth min/max in thousandths of a quantum, per credit min/max in thousandths, detector lines (light credits), W-S1 light laid": [16, [22, 869], 67, [1965, 994], [86, 2088], [151, 107287], 0, "0"]}

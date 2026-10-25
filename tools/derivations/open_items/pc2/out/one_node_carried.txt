@@ -1,0 +1,21 @@
+horizon: factors at the Node per Port (+x, -x, +y, -y, +z, -z) : [0, 0, 256, 256, 256, 256]
+horizon: factors at the +x neighbour : [256, 0, 256, 256, 256, 256]
+horizon: clicks at the Node in 20 intervals : 2
+horizon: clicks on the board : 12
+horizon: the Node named in the log as an end of a refused or born Link : 0
+horizon: x Link factors at the Node after the run : [857, 1062]
+horizon: run back exact of 20 : 20
+frozen: the first content at the Link pace 0, and the clock there : [3793, 22]
+frozen: clicks at the Node in 20 intervals, clicks on the board : [0, 5]
+frozen: the Node an end of a born Link : 0
+frozen: content at the Node start/end : [3793, 3885]
+frozen: run back exact of 20 : 20
+re-coupling: the factor at the tensions Gamma, Gamma - 1, the largest coupled tension, 0 : {1000: 0, 999: 0, 955: 1, 956: 0, 0: 256}
+horizon: the interval at which the +x Link re-coupled of itself (the axis line relaxing by Rule3) : 1
+horizon: light credits and births on the board, the Node apart : [7, 5, 2, 541, 3]
+turn: turned Nodes at the first interval : [(1, 1, 1)]
+turn: every line at the Node is the pre-state exchanged and complemented : True
+turn: the exchange applied twice is the identity : True
+turn: run back exact of 20 : 20
+turn at the horizon: turned Nodes at the first interval : [(1, 1, 1)]
+turn at the horizon: run back exact of 20 : 20

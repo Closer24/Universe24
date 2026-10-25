@@ -1,0 +1,1 @@
+{"universe": "universe_middle.json", "shape": [7, 7, 7], "intervals": 120, "seed": [{"lay": "sea", "row": 0}, {"lay": "at", "row": 2, "centre": [3, 3, 2], "width": 2, "quanta": 125}, {"lay": "at", "row": 2, "centre": [3, 3, 5], "width": 2, "quanta": 125}], "control": {"clock": "carried"}}

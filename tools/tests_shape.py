@@ -25,13 +25,13 @@ from __future__ import annotations
 import ast
 import hashlib
 import io
-import os
 import re
 import subprocess
 import sys
 import tokenize
 from pathlib import Path
 
+import merge_base
 from record_code_shape import Abstracted, docstring_of
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -685,7 +685,7 @@ def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
 
 
 def base_ref() -> str:
-    return os.environ.get("CHECK_BASE") or "origin/main"
+    return merge_base.base_ref()
 
 
 def main() -> None:

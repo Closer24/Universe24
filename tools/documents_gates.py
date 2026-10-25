@@ -24,6 +24,20 @@ CODE = ("src", "tools", "tests")  # the folders whose docstrings, comments and s
 CAPS = re.compile(r"[A-Z][A-Z0-9'-]+")
 HEADING = re.compile(r"(\d+\.\s+)?[A-Z](?![A-Z0-9'-]*\s+[A-Z][A-Z0-9'-]+(\s|$))")
 WORDS = {  # the counted words gate (5) reads
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10,
+    "eleven": 11,
+    "twelve": 12,
+    "thirteen": 13,
+    "fourteen": 14,
+    "fifteen": 15,
+    "sixteen": 16,
+    "seventeen": 17,
+    "eighteen": 18,
     "nineteen": 19,
     "twenty": 20,
     "twenty-one": 21,

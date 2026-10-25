@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-import weakref
 from typing import Any
 
 import numpy as np
 
-from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.paces import odd_rounded, rounded
+from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward, rule3
 
 # a line of the phase, (now, before, remainder), each an integer or an integer array over the Links
@@ -70,130 +68,6 @@ def act(line: Line, gamma: Any, direction: int = 1) -> Line:
     return before, previous, carried
 
 
-def chosen(mask: Any, taken: Line, kept: Line) -> Line:
-    """A line's three integers from `taken` where the mask holds and from `kept` elsewhere, over the Links; the mask over the whole board or one truth."""
-    now, before, remainder = (np.where(mask, a, b) for a, b in zip(taken, kept, strict=True))
-    return now, before, remainder
-
-
-def iterate(pair: Pair, count: Any, gamma: Any, direction: int = 1) -> Pair:
-    """The act applied |n| times to both lines, n = `count` a level (one integer, or an integer array per Link), in the sense of n's sign: n < 0 applies the inverse act, so that the angle is signed, n theta_0; `direction` -1 is the back-step of the same n (the inverse of every act in the reverse order, |n| acts in the opposite sense), so iterate(iterate(pair, n), n, -1) is the pair bit for bit. Over arrays, each Link takes its own count: the k-th round applies the act where |n| >= k, forward where n is positive and inverse where negative, through the largest |n| on the board; a Link at n = 0 is untouched."""
-    if direction not in (1, -1):
-        raise ValueError(f"the phase line's direction is 1 or -1, not {direction}")
-    levels = np.asarray(count)
-    if levels.ndim == 0:
-        sense = direction * (1 if int(levels) >= 0 else -1)
-        cosine, sine = pair
-        for _ in range(abs(int(levels))):
-            cosine, sine = act(cosine, gamma, sense), act(sine, gamma, sense)
-        return cosine, sine
-    cosine, sine = pair
-    if levels.size == 0:
-        return cosine, sine
-    signed = direction * levels
-    for round_ in range(1, int(np.abs(levels).max()) + 1):
-        forward, backward = signed >= round_, signed <= -round_
-        cosine = chosen(forward, act(cosine, gamma, 1), chosen(backward, act(cosine, gamma, -1), cosine))
-        sine = chosen(forward, act(sine, gamma, 1), chosen(backward, act(sine, gamma, -1), sine))
-    return cosine, sine
-
-
-SPACING = (
-    1 << (MAX_WORK_INT.bit_length() >> 3)
-)  # the orbit's checkpoints, one pair kept every so many acts along the orbit from the seed: 2^7 = 128 at the hardware's 63 bits, a size of the table and no number of the law
-
-
-class Orbit:
-    """The one orbit of the phase pair from its seed at one amplitude and one Gamma (node.phase_carried: every Link's pair stands at the orbit's count |K|, the acts from the seed one by one, forward and inverse exact; the acts compose in sequence and in no closed form, every act rounding at its wall, so the pair at a count is reached by that many acts and no fewer): the pair at every SPACING-th count kept (`checkpoints`) with the farthest pair reached (`reached`, `pair`), so that the pair at any count is the checkpoint at or below it carried by fewer than SPACING acts (`pairs_at`), the same integers as the acts one by one from the seed, and the acts of an interval over the board number the farthest count's advance and not the Links' sum (the architect's round of 2026-10-24)."""
-
-    def __init__(self, gamma: int, amplitude: int) -> None:
-        self.gamma, self.reached, self.pair = gamma, 0, seed(amplitude, gamma)
-        self.checkpoints: dict[int, Pair] = {0: self.pair}
-
-    def carried_to(self, count: int) -> None:
-        """The orbit carried forward act by act to `count` where it stands short of it, the checkpoints laid on the way."""
-        while self.reached < count:
-            self.pair = (act(self.pair[0], self.gamma, 1), act(self.pair[1], self.gamma, 1))
-            self.reached += 1
-            if division_forward(self.reached, SPACING, 0)[1] == 0:
-                self.checkpoints[self.reached] = self.pair
-
-    def pairs_at(self, counts: Any, standing: Any, pair: Pair, kind: Any) -> Pair:
-        """The pairs at the counts `counts` (an array of sizes |K'| over the Links, every one at or above 0) in the arrays' `kind`, from the pairs `pair` standing at the sizes `standing`: each Link carried from its own pair by |K'| - |K| acts (forward where the size grows, the inverse act where it shrinks) where that is the shorter way, and from the checkpoint at or below |K'| by the rest otherwise, both the orbit's own integers; the Links together in one iteration of as many rounds as the longest way, fewer than SPACING (`iterate`, each Link its own count)."""
-        sizes = np.asarray(counts, dtype=object)
-        flat = [int(x) for x in sizes.reshape(-1).tolist()]
-        self.carried_to(max(flat, default=0))
-        places = [division_forward(m, SPACING, 0) for m in flat]
-        bases = [self.checkpoints[int(q) * SPACING] for q, _rest in places]
-        rest = np.array([r for _q, r in places], dtype=object).reshape(sizes.shape)
-        moved = sizes - np.asarray(standing, dtype=object)
-        own = np.abs(moved) < rest  # the shorter way from the pair standing
-
-        def line_at(line: int) -> Line:
-            now, before, remainder = (
-                np.where(
-                    own,
-                    np.asarray(pair[line][part], dtype=object),
-                    np.array([base[line][part] for base in bases], dtype=object).reshape(sizes.shape),
-                )
-                for part in range(3)
-            )
-            return now, before, remainder
-
-        def in_kind(line: Line) -> Line:
-            now, before, remainder = (np.asarray(a, dtype=kind) for a in line)
-            return now, before, remainder
-
-        cosine, sine = iterate((line_at(0), line_at(1)), np.where(own, moved, rest), self.gamma)
-        return in_kind(cosine), in_kind(sine)
-
-
-ORBITS: dict[
-    tuple[int, int], Orbit
-] = {}  # the orbits by (Gamma, amplitude), cleared at a run's start (Lattice.__init__)
-SEEDED: dict[
-    int, tuple[Any, Orbit]
-] = {}  # per seeded NodeState (by id, with a weak reference that tells a reused id apart) the orbit its Links' pairs stand on (node.seed_phases), a dead state's entry dropped at the next seeding, a living lattice's kept across another lattice's making
-
-
-def seeded(state: Any, gamma: int, amplitude: int) -> None:
-    """A holder's NodeState seeded at the angle 0 registered with the orbit its pairs stand on, the orbit made once per (Gamma, amplitude)."""
-    for key in [k for k, (ref, _orbit) in SEEDED.items() if ref() is None]:
-        del SEEDED[key]
-    orbit = ORBITS.setdefault((gamma, amplitude), Orbit(gamma, amplitude))
-    SEEDED[id(state)] = (weakref.ref(state), orbit)
-
-
-def orbit_of(state: Any) -> Orbit | None:
-    """The orbit a NodeState's pairs stand on, None where the state was not seeded by the lattice (a state built by hand; its pairs then carried act by act)."""
-    kept = SEEDED.get(id(state))
-    return kept[1] if kept is not None and kept[0]() is state else None
-
-
-def read(pair: Pair) -> tuple[Any, Any]:
-    """The hop's two integers at the amplitude X, (c, s) = (cosine now, sine now) = (X cos theta, X sin theta) at the pair's angle theta = n theta_0, to the walk's bound (item (i): within (Gamma + 1) / 2 levels standing and 1.42 N + 2.3 Gamma levels over N acts, proved); the Port at the -a end reads the same pair conjugated, (c, -s)."""
-    cosine, sine = pair
-    return cosine[0], sine[0]
-
-
-def signed_read(pair: Pair, count: Any) -> tuple[Any, Any]:
-    """The hop's two integers at a signed count (`read`): (c, s) at a count at or above 0 and (c, -s) below it, the pair at -n the conjugate of the pair at +n, so that the cube's 48 map the remainders as they map the levels (2026-10-21; `orbit_moves`); at the count 0 the sine line stands at 0 and the sign is nothing."""
-    cosine, sine = read(pair)
-    return cosine, np.where(np.asarray(count) < 0, -sine, sine)
-
-
-def signed_rounded(numerator: Any, wall: Any) -> Any:
-    """The numerator over the wall rounded half away from zero, the law's odd rounding (`core/paces.odd_rounded`, bit for bit the magnitude rounded half up with the sign attached after), the engine's one signed rounding, so that the rounding is odd: signed_rounded(-v, X) = -signed_rounded(v, X) exactly, the fold's pair exact by direction (ALGEBRA.md, The clock family on the Ports and The sign holder rotates the two-part record: one rounding on the magnitude with the direction's sign attached after, the mathematician's item (g)); a scalar in its own integers, Python's exact beyond the width, as the piece's momentum, the reader's projected level and the momentum reading in T's unit take it (`node_detector.piece_momentum`, `node_detector.arriving`, `take.scaled`), a whole-board array in the array's kind (`fold`; the Link pairs, plane.py)."""
-    return odd_rounded(numerator, wall)
-
-
-def fold(fold_cosine: Any, fold_sine: Any, cosine: Any, sine: Any, amplitude: Any) -> tuple[Any, Any]:
-    """The product pair of the fold's (X^c, X^s) with the phase pair (c, s) at the amplitude X, rounded once into the Link's unit: ((X^c c - X^s s) div X, (X^s c + X^c s) div X), each the engine's one rounding half up on the magnitude with the direction's sign attached after (`signed_rounded`), so that the Link read from its other end, (X^c, -X^s) with (c, -s), gives the conjugate pair exactly, X^s_ji = -X^s_ij (the count exact by Hermiticity, Theorem 3's K_ji = conj K_ij)."""
-    real = fold_cosine * cosine - fold_sine * sine
-    imaginary = fold_sine * cosine + fold_cosine * sine
-    return signed_rounded(real, amplitude), signed_rounded(imaginary, amplitude)
-
-
 def amplitude(gamma: Any, width: int) -> int:
     """The phase line's amplitude X, derived from the width and never written (the two hands' item (i): X of 2^35's size at width 63, 2 K_0 X + D below 2^width): half of the act's room, (2^width - 1) div (2 D) div 2, the half the walk's room (the pair's magnitude within 1.42 N + 2.3 Gamma levels of X over N acts), rounded down to a multiple of Gamma (the half-wall birth cancels the resonance at a multiple of Gamma alone, `seed`): 32,025,594,000 at Gamma 6,000 and width 63 (2^34.9; the hands' 2^35 div Gamma times Gamma is 34,359,738,000, 35 being no literal of the law); refused by name where the width leaves no multiple of Gamma."""
     largest = 2**width - 1
@@ -206,16 +80,3 @@ def amplitude(gamma: Any, width: int) -> int:
             f"2 K_0 X + D < 2^{width}: the phase line's amplitude is refused"
         )
     return int(found)
-
-
-def quarter_turn(amplitude: int, gamma: int) -> int:
-    """The count of acts to the quarter turn, the largest n with the cosine line at or above 0, found by bisection on the phase line seeded at the amplitude X as `rotation_unit` found the rest rotation (kind S; the rest rotation's bisection struck 2026-10-24 as dead code, no caller in the tree, and kept by name), the pair carried along the probe: pi Gamma / 2 to the walk's bound, 9,424 at Gamma 6,000; the exclusivity bound reads it (`resonance.unit_weight`)."""
-    low, high, pair = 0, 2 * gamma, seed(amplitude, gamma)
-    while high - low > 1:
-        middle = int(division_forward(low + high, 2, 0)[0])
-        probe = iterate(pair, middle - low, gamma)
-        if int(read(probe)[0]) >= 0:
-            low, pair = middle, probe
-        else:
-            high = middle
-    return low
