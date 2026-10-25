@@ -160,9 +160,13 @@ class Interval:
         return self.w_half * (self.carrier.lines[0].before + self.carrier.lines[0].now)
 
     def unwrite(self) -> None:
-        """Backward: the riding rows' writes come off first, from the post state (the gap-0 line's W-S1 lay at the post mean wall at the common scale, the shape-4 row's 2 W and the current)."""
+        """Backward: the riding rows' writes come off first, from the post state (the gap-0 line's W-S1 lay at the post mean wall at the common scale, the emission's quotient rounded odd as the forward write rounds it, the shape-4 row's 2 W and the current)."""
         node = self.node
-        node.write(self.lines(self.gap0)[0], quotient(self.emission, self.common * self.mean_wall()), -1)
+        node.write(
+            self.lines(self.gap0)[0],
+            paces.odd_rounded(self.emission, self.common * self.mean_wall()),
+            -1,
+        )
         for line, n in zip(self.lines(self.potential), [2 * self.w_end, *self.current], strict=True):
             node.write(line, n, -1)
 
@@ -236,11 +240,11 @@ class Interval:
         node.stepped = self.stepped
 
     def writes(self) -> None:
-        """Forward: the riding rows' writes after the divisions, from numbers known before them: the gap-0 line's W-S1 lay, the emission over the mean wall after at the common scale; the shape-4 row's 2 W of the records after the step and the current at the start."""
+        """Forward: the riding rows' writes after the divisions, from numbers known before them: the gap-0 line's W-S1 lay, the emission over the mean wall after at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.odd_rounded: the write exactly odd under the sense's flip, the former floor kept by name); the shape-4 row's 2 W of the records after the step and the current at the start."""
         node = self.node
         laid_line = self.out[self.where[id(self.gap0)]][0]
         before_write = laid_line.now
-        node.write(laid_line, quotient(self.emission, self.common * self.w_div), 1)
+        node.write(laid_line, paces.odd_rounded(self.emission, self.common * self.w_div), 1)
         laid_on(node, laid_line, before_write)
         for line, n in zip(
             self.out[self.where[id(self.potential)]], [2 * self.w_after, *self.current], strict=True

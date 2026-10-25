@@ -1,0 +1,170 @@
+{
+ "record": "out/base_pair_3.json",
+ "top": 85,
+ "clicks at one Node in the rise (m, s)": [
+  [
+   4,
+   11
+  ],
+  [
+   6,
+   8
+  ],
+  [
+   8,
+   6
+  ],
+  [
+   10,
+   5
+  ],
+  [
+   13,
+   4
+  ]
+ ],
+ "rows": [
+  {
+   "interval m": 4,
+   "levels s": 11,
+   "v before": 180,
+   "v after": 169,
+   "v^2 lost": 3839,
+   "D1 (thousandths)": 4265
+  },
+  {
+   "interval m": 6,
+   "levels s": 8,
+   "v before": 160,
+   "v after": 152,
+   "v^2 lost": 2496,
+   "D1 (thousandths)": 5824
+  },
+  {
+   "interval m": 8,
+   "levels s": 6,
+   "v before": 143,
+   "v after": 137,
+   "v^2 lost": 1680,
+   "D1 (thousandths)": 6720
+  },
+  {
+   "interval m": 10,
+   "levels s": 5,
+   "v before": 127,
+   "v after": 122,
+   "v^2 lost": 1245,
+   "D1 (thousandths)": 7608
+  },
+  {
+   "interval m": 13,
+   "levels s": 4,
+   "v before": 108,
+   "v after": 104,
+   "v^2 lost": 848,
+   "D1 (thousandths)": 8574
+  }
+ ],
+ "D1 first order (thousandths)": 32991,
+ "measured: X(seed's mirror) = X(2 top - 2)": 967,
+ "measured shortfall at the seed's mirror": 33,
+ "measured bottom (X, interval)": [
+  953,
+  170
+ ],
+ "measured shortfall at the bottom": 47,
+ "the parting (k, X_rise(k), X_fall(mirror k), fall - rise)": [
+  [
+   1,
+   1006,
+   981,
+   -25
+  ],
+  [
+   2,
+   1018,
+   1000,
+   -18
+  ],
+  [
+   3,
+   1036,
+   1023,
+   -13
+  ],
+  [
+   4,
+   1060,
+   1050,
+   -10
+  ],
+  [
+   5,
+   1089,
+   1082,
+   -7
+  ],
+  [
+   6,
+   1123,
+   1118,
+   -5
+  ],
+  [
+   7,
+   1161,
+   1158,
+   -3
+  ],
+  [
+   8,
+   1204,
+   1202,
+   -2
+  ],
+  [
+   9,
+   1250,
+   1249,
+   -1
+  ],
+  [
+   10,
+   1300,
+   1299,
+   -1
+  ],
+  [
+   11,
+   1353,
+   1353,
+   0
+  ],
+  [
+   12,
+   1409,
+   1409,
+   0
+  ],
+  [
+   13,
+   1468,
+   1468,
+   0
+  ],
+  [
+   14,
+   1530,
+   1530,
+   0
+  ],
+  [
+   15,
+   1594,
+   1594,
+   0
+  ]
+ ],
+ "levels taken per Node in the rise": 34,
+ "credits in the rise": 135
+}

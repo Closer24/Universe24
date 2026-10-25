@@ -8,9 +8,10 @@ import numpy as np
 
 from event_universe import gram
 from event_universe.core import rule3
-from event_universe.core.ports import PORT_SIDES
+from event_universe.core.ports import PORT_SIDES, PORTS
+from event_universe.links import row_current
 from event_universe.rows import PLANE, POTENTIAL, Line
-from event_universe.take import frame_nodes, take_at
+from event_universe.take import frame_nodes, lay, take_at
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -24,23 +25,28 @@ def bodies(
     frozen: Any,
     r_gap0: rule3.Rule,
 ) -> None:
-    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; the beat a plane's by its re line's upward crossings counted, a quartet's from the invariant ratio N.G.B / N.G.N along the law's orbit (gram.period)."""
+    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352): where nothing arrives at the Node, the taken row's current across its six Links summed 0 at the interval's start (links.row_current as close.meet reads it; what flows in flows out), the take is laid back on the taken line by the one lay act in the same close, the credit written with laid_back the levels and its momentum booked 0, so a board alike at every Node returns to Gamma exactly with a body credited at every Node in every cycle, and where light accumulates the take stands (the former closing, the take alone, kept by name; eq2's reading, every one of the six currents 0, kept by name); the plane at the gap 0 is never credited as a body (the light no body, cs4's sentence through the Boss, 6402358120: light at rest is no body in nature, its quanta taken at a meeting and by a body's click alone; the former closing of the standing light, credited at every interval where its beat stood at 1, kept by name); the beat a plane's by its re line's zero crossings counted in either direction (CK-S1: the crossing read even under the negation of the line, the two levels' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike, so the closing is covariant under the conjugation and the colour exchange alike; the beat the half period; the former upward crossing, and the form `b < 0 <= n or n < 0 <= b` odd where exactly one level is 0, kept by name), a quartet's from the invariant ratio N.G.B / N.G.N along the law's orbit (gram.period)."""
+    rec0 = node.records().index(node.row(PLANE, gap=0))
+    net = sum((row_current(plane_starts[rec0], port) for port in range(PORTS)), start=0)
     for rec, row in enumerate(node.records()):
+        if row.gap == 0:
+            continue
         standing_now = np.vectorize(
             lambda v, unit=node.units[rec]: 1 if int(v) >= unit else 0, otypes=[object]
         )(owns[rec])
         node.standing[rec] = np.where(standing_now == 1, node.standing[rec] + 1, 0)
         if row.shape == PLANE:
             re = row.lines[0]
-            upward = np.vectorize(lambda b, n: 1 if (int(b) < 0 <= int(n)) else 0, otypes=[object])(
-                re.before, re.now
-            )
+            crossing = np.vectorize(
+                lambda b, n: 1 if (int(b) * int(n) < 0 or (int(b) == 0) != (int(n) == 0)) else 0,
+                otypes=[object],
+            )(re.before, re.now)
             counting = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(node.crossed[rec])
             node.beats[rec] = np.where(
-                (upward == 1) & (counting == 1), node.crossed[rec], node.beats[rec]
+                (crossing == 1) & (counting == 1), node.crossed[rec], node.beats[rec]
             )
             node.crossed[rec] = np.where(
-                upward == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0)
+                crossing == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0)
             )
         else:
             node.beats[rec] = gram.period(node, row.lines, standing_now)
@@ -57,7 +63,13 @@ def bodies(
                 continue
             levels, fall, now, before = got
             node.counts["body_clicks"] += 1
-            node.log.append(credit(node, rec, at, plane_starts, fall, levels, now, before))
+            entry = credit(node, rec, at, plane_starts, fall, levels, now, before)
+            if int(net[at]) == 0:
+                line = node.records()[rec0].lines[0]
+                lay(node, rec0, at, (now - int(line.now[at]),) + (0,) * (2 * PLANE - 1))
+                entry["laid_back"], entry["dP_take"] = levels, [0, 0, 0]
+                node.counts["laid_back"] += 1
+            node.log.append(entry)
 
 
 def frame_of(

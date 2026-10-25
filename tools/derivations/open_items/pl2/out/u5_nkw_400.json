@@ -1,0 +1,285 @@
+{
+ "world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/pl2/tests/worlds/world_universe.json",
+ "engine": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/pl2/tools/derivations/pl2/src_pl2b",
+ "flags": {
+  "CS7_EQ": "n",
+  "PL2_WRITE": "kick"
+ },
+ "intervals": 400,
+ "forward ms": 9057,
+ "cube": 5,
+ "gamma": 1000,
+ "T": 36000,
+ "uniform (spread 0) of intervals": [
+  400,
+  400
+ ],
+ "turns (interval, count)": [
+  [
+   101,
+   125
+  ],
+  [
+   301,
+   125
+  ]
+ ],
+ "tops": [
+  101,
+  301
+ ],
+ "bottoms (interval, mean X)": [
+  [
+   201,
+   1000
+  ]
+ ],
+ "exact at Gamma at every Node": [
+  200,
+  201,
+  399,
+  400
+ ],
+ "X at marks": {
+  "1": 1010,
+  "2": 1030,
+  "3": 1060,
+  "25": 3462,
+  "50": 7530,
+  "75": 10673,
+  "100": 11834,
+  "125": 10673,
+  "150": 7530,
+  "175": 3462,
+  "200": 1000,
+  "225": 3280,
+  "250": 7268,
+  "275": 10380,
+  "300": 11540,
+  "325": 10380,
+  "350": 7268,
+  "375": 3280,
+  "400": 1000
+ },
+ "credits": 1875,
+ "laid back": 1875,
+ "credits in the first rise": 875,
+ "counts": {
+  "births": 0,
+  "taken": 0,
+  "booked": 0,
+  "body_clicks": 1875,
+  "refused_stop": 250,
+  "refused_origin": 0,
+  "refused_lay": 0,
+  "refused_orientation": 17625,
+  "refused_twist": 0,
+  "refused_sense": 0,
+  "turns": 250,
+  "met": 17625,
+  "laid": 0,
+  "laid_nodes": 0,
+  "laid_back": 1875
+ },
+ "sign level at the origin at marks": {
+  "25": 0,
+  "50": 0,
+  "75": 14,
+  "100": 39,
+  "125": 14,
+  "150": 0,
+  "175": 0,
+  "200": 0,
+  "225": 0,
+  "250": 0,
+  "275": 0,
+  "300": 0,
+  "325": 0,
+  "350": 0,
+  "375": 0,
+  "400": 0
+ },
+ "W per gapped record at the origin at marks": {
+  "1": [
+   0,
+   18088,
+   -18088
+  ],
+  "25": [
+   0,
+   5521,
+   -5398
+  ],
+  "50": [
+   0,
+   2548,
+   -2346
+  ],
+  "75": [
+   0,
+   1818,
+   -1682
+  ],
+  "100": [
+   0,
+   1625,
+   -1474
+  ],
+  "125": [
+   0,
+   1794,
+   -1684
+  ],
+  "150": [
+   0,
+   2516,
+   -2301
+  ],
+  "175": [
+   0,
+   5259,
+   -5166
+  ],
+  "200": [
+   0,
+   18088,
+   -18088
+  ],
+  "225": [
+   0,
+   5563,
+   -5469
+  ],
+  "250": [
+   0,
+   2560,
+   -2435
+  ],
+  "275": [
+   0,
+   1804,
+   -1734
+  ],
+  "300": [
+   0,
+   1620,
+   -1607
+  ],
+  "325": [
+   0,
+   1759,
+   -1738
+  ],
+  "350": [
+   0,
+   2492,
+   -2385
+  ],
+  "375": [
+   0,
+   5360,
+   -5252
+  ],
+  "400": [
+   0,
+   18224,
+   -18224
+  ]
+ },
+ "retrace": [
+  {
+   "top": 101,
+   "equal k before the parting": 100,
+   "first parting (state)": null,
+   "first parting (levels)": null,
+   "first parting (X)": null,
+   "W per gapped record at the origin around the mirrored rise interval": {
+    "98": [
+     0,
+     1611,
+     -1470
+    ],
+    "99": [
+     0,
+     1602,
+     -1470
+    ],
+    "100": [
+     0,
+     1625,
+     -1474
+    ],
+    "101": [
+     0,
+     1625,
+     -1474
+    ],
+    "102": [
+     0,
+     1602,
+     -1470
+    ],
+    "103": [
+     0,
+     1611,
+     -1470
+    ],
+    "104": [
+     0,
+     1617,
+     -1498
+    ]
+   }
+  },
+  {
+   "top": 301,
+   "equal k before the parting": 99,
+   "first parting (state)": null,
+   "first parting (levels)": null,
+   "first parting (X)": null,
+   "W per gapped record at the origin around the mirrored rise interval": {
+    "298": [
+     0,
+     1592,
+     -1603
+    ],
+    "299": [
+     0,
+     1592,
+     -1623
+    ],
+    "300": [
+     0,
+     1620,
+     -1607
+    ],
+    "301": [
+     0,
+     1620,
+     -1607
+    ],
+    "302": [
+     0,
+     1592,
+     -1623
+    ],
+    "303": [
+     0,
+     1592,
+     -1603
+    ],
+    "304": [
+     0,
+     1567,
+     -1599
+    ]
+   }
+  }
+ ],
+ "run back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "integers": 98,
+ "bits": 111
+}

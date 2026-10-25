@@ -1,0 +1,2 @@
+{"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/pl2/tests/worlds/world_plasma_3.json", "flags": {"CS7_EQ": "n", "PL2_WRITE": "kick"}, "tops": [84], "bottoms (interval, mean X)": [], "exact at Gamma at every Node": [], "credits": 135, "laid back": 135, "run back": {"intervals": 10, "exact": 10}, "integers": 98, "bits": 111, "forward ms": 1128}
+{"top": 84, "equal k": 6, "state parting": null, "level parting": null, "X parting": null}

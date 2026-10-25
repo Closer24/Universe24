@@ -1,0 +1,1 @@
+diag equal True nodes equal True counts equal True log equal (taken_line apart) True run back {'intervals': 6, 'exact': 6} {'intervals': 6, 'exact': 6}

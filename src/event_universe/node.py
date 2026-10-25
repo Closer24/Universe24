@@ -32,6 +32,7 @@ COUNTS = {  # the run's counts, every one 0 at the start
     "taken": 0,
     "booked": 0,
     "body_clicks": 0,
+    "laid_back": 0,
     "refused_stop": 0,
     "refused_origin": 0,
     "refused_lay": 0,
@@ -81,18 +82,14 @@ class Node:
     def start_state(self) -> None:
         """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
         shape, nr = self.shape, len(self.records())
-        self.standing = [zeros(shape) for _ in range(nr)]
-        self.crossed = [zeros(shape) for _ in range(nr)]
-        self.beats = [zeros(shape) for _ in range(nr)]
-        self.proper, self.closes = zeros(shape), zeros(shape)
-        self.interval = 0
+        self.standing, self.crossed, self.beats = ([zeros(shape) for _ in range(nr)] for _ in range(3))
+        self.proper, self.closes, self.interval = zeros(shape), zeros(shape), 0
         self.log: list[dict[str, Any]] = []
         self.turns: list[tuple[int, int]] = []
         self.stack: list[dict[str, Any]] = []
         self.turned = np.zeros(shape, dtype=bool)
         self.counts: dict[str, int] = dict(COUNTS)
-        self.max_transient = 0
-        self.count_max = 0
+        self.max_transient = self.count_max = 0
         self.last_dp = [0, 0, 0]
         self.start_factors: tuple[Any, ...] = ()
         self.start_frames: list[Any] = []
