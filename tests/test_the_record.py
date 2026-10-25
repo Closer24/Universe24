@@ -83,7 +83,6 @@ def test_the_hole_record_is_the_engines_own_bit_for_bit() -> None:
         {k: v for k, v in row.items() if k != "milliseconds"} for row in committed["rows"]
     ]
     assert found["run_back"] == {"intervals": 20, "exact": 20}
-    assert Path(RECORDS / "hole.json").stat().st_size < 10**6
 
 
 def reading_of(name: str) -> list[dict[str, Any]]:

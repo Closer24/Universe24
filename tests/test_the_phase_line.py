@@ -11,12 +11,10 @@ from tests.laws import refused
 
 
 def read(pair):
-    """The pair's two levels now, the cosine's and the sine's."""
     return pair[0][0], pair[1][0]
 
 
 def iterate(pair, count, gamma, direction=1):
-    """The pair's two lines acted on `count` times in the direction (count below 0 the other direction)."""
     direction, count = (direction, count) if count >= 0 else (-direction, -count)
     for _ in range(count):
         pair = tuple(act(line, gamma, direction) for line in pair)

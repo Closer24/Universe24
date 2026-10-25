@@ -6,7 +6,6 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.paces import rounded
 from event_universe.core.rule3 import division_forward, rule3
 
@@ -67,11 +66,6 @@ def act(line: Line, gamma: Any, direction: int = 1) -> Line:
         return following, now, carried
     previous, carried = rule3(0, mass, wall, before, now, remainder, -1)
     return before, previous, carried
-
-
-SPACING = (
-    1 << (MAX_WORK_INT.bit_length() >> 3)
-)  # the orbit's checkpoints, one pair kept every so many acts along the orbit from the seed: 2^7 = 128 at the hardware's 63 bits, a size of the table and no number of the law
 
 
 def amplitude(gamma: Any, width: int) -> int:

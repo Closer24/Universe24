@@ -11,7 +11,7 @@ from event_universe import close, interval, readings, seed, take
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, across
-from event_universe.core.rule3 import carried_division, half, wall_of
+from event_universe.core.rule3 import carried_division, half, link_unit_of, unit_of, wall_of
 from event_universe.features import phase
 from event_universe.links import link
 from event_universe.rows import (
@@ -60,7 +60,7 @@ class Node:
     def __init__(self, universe: dict[str, Any], world: dict[str, Any]) -> None:
         ints = universe["integers"]
         self.den, self.gamma = int(ints["den"]), int(ints["node_clock"])
-        self.T, self.G = int(ints["quantum_action"]), int(ints["link_unit"])
+        self.T, self.G = int(ints["quantum_action"]), link_unit_of(self.gamma)
         shape = tuple(int(x) for x in world["shape"])
         if len(shape) != AXES or len(set(shape)) != 1:
             raise ValueError("the board is a cube: the shape is [c, c, c]")
@@ -68,9 +68,9 @@ class Node:
         self.shape: tuple[int, ...] = shape
         self.w = wall_of(self.den, self.gamma, self.G)
         self.rows_, self.by_index = rows_of(universe, shape, self.w)
-        self.lifts = [r for r in self.records() if r.gap is not None and r.gap > 0]
+        self.gapped = [r for r in self.records() if r.gap is not None and r.gap > 0]
         self.units = [
-            AXES * self.T * (sine_den(r.pair[0], self.den) if r.gap else self.den)
+            unit_of(sine_den(r.pair[0], self.den) if r.gap else self.den, self.T)
             for r in self.records()
             if r.pair
         ]

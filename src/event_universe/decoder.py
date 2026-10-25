@@ -20,7 +20,7 @@ Rational = tuple[int, int]
 
 
 class Record:
-    """The record as the decoder reads it: the two files' integers, the lifts by their legs under the decoder's names, the log's credits and births, the rows of the board's course."""
+    """The record as the decoder reads it: the two files' integers, the planes with a gap by their legs under the decoder's names, the log's credits and births, the rows of the board's course."""
 
     def __init__(self, run: dict[str, Any]) -> None:
         self.run = run
@@ -30,10 +30,10 @@ class Record:
         planes = [
             tuple(int(x) for x in r["pair"]) for r in rows if int(r["shape"]) == PLANE and r.get("pair")
         ]
-        lifts = sorted((sine_den(num, self.den), num) for num, den in planes if num != den)
-        self.NL = len(lifts)
+        gapped = sorted((sine_den(num, self.den), num) for num, den in planes if num != den)
+        self.NL = len(gapped)
         self.NAMES: dict[int, tuple[str, int]] = {
-            num: (f"lift {k}", leg) for k, (leg, num) in enumerate(lifts)
+            num: (f"gapped {k}", leg) for k, (leg, num) in enumerate(gapped)
         }
         self.NAMES[self.den] = ("gap 0", 0)
         self.line_num = [int(num) for num in run["planes"]]
@@ -186,7 +186,7 @@ def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], 
 
 
 def ratios(record: Record, floor_mil: list[int | None], within: int, decoded: int) -> dict[str, Any]:
-    """Gates 19 and 16: the mass ratios from den's legs (the lifts against the lightest) and the one-click floor on x per credit."""
+    """Gates 19 and 16: the mass ratios from den's legs (the planes with a gap against the lightest) and the one-click floor on x per credit."""
     names = record.NAMES
     legs = sorted(((name, leg) for name, leg in names.values() if leg), key=lambda kv: kv[1])
     num_of = {v[0]: k for k, v in names.items()}

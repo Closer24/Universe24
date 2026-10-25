@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, the turned and the frozen Nodes marked, the Links from the world's shape alone, a Link held at the wall drawn thick), the clicks as marks by row, the reading's event lines as labels at their interval and Node and as ticks on the bar; one header line from the two files as they are. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, the turned and the frozen Nodes marked, the Links from the world's shape alone, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and Node and as ticks on the bar; one header line from the two files as they are. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -55,6 +55,7 @@ function length(X) { return Math.pow(Math.max(X, 1) / G, 0.25); }
 function draw() {
   const line = D.nodes[t - 1], before = D.nodes[Math.max(t - 2, 0)];
   const held = new Set(line.held.map(h => h[0] + ":" + h[1]));
+  const flowMax = Math.max(...line.current.map(axis => Math.max(...axis.map(Math.abs))));
   const frozen = new Set(line.frozen), turned = new Set(line.turned);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.lineCap = "round";
@@ -65,6 +66,15 @@ function draw() {
     ctx.strokeStyle = isHeld ? getComputedStyle(document.documentElement).getPropertyValue("--wall") : "rgba(154,158,168," + (0.25 + 0.5 * Math.min(mean, 1.6) / 1.6) + ")";
     ctx.lineWidth = isHeld ? 4 : 1 + mean;
     ctx.beginPath(); ctx.moveTo(spots[i][0], spots[i][1]); ctx.lineTo(spots[j][0], spots[j][1]); ctx.stroke();
+    const flow = line.current[a][i];
+    if (flow !== 0 && flowMax > 0) {
+      const size = Math.abs(flow) / flowMax, dir = flow > 0 ? 1 : -1;
+      const mx = (spots[i][0] + spots[j][0]) / 2, my = (spots[i][1] + spots[j][1]) / 2;
+      const dx = (spots[j][0] - spots[i][0]) * dir, dy = (spots[j][1] - spots[i][1]) * dir, len = Math.hypot(dx, dy) || 1;
+      const ux = dx / len, uy = dy / len, h = 4 + 10 * size;
+      ctx.fillStyle = "rgba(95,151,234," + (0.35 + 0.65 * size) + ")";
+      ctx.beginPath(); ctx.moveTo(mx + ux * h, my + uy * h); ctx.lineTo(mx - uy * h * 0.5, my + ux * h * 0.5); ctx.lineTo(mx + uy * h * 0.5, my - ux * h * 0.5); ctx.closePath(); ctx.fill();
+    }
   }
   const order = spots.map((s, i) => i).sort((p, q) => spots[p][2] - spots[q][2]);
   const cmin = Math.min(...line.content), cmax = Math.max(...line.content);

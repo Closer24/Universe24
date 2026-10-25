@@ -1,6 +1,6 @@
-{"8b species over the track (one-place view: the middle solve of the body's track)": {"tracks": 27, "decoded right": 15, "confusion (truth->decoded) per credit": {"lift 1->gap 0": 12, "lift 1->lift 0": 20}}}
+{"8b species over the track (one-place view: the middle solve of the body's track)": {"tracks": 27, "decoded right": 15, "confusion (truth->decoded) per credit": {"gapped 1->gap 0": 12, "gapped 1->gapped 0": 20}}}
 {"8 families forming (whole view)": {"credits": 83, "species readable": 83, "decoded right per credit": 51, "credits within the one-click floor": 2, "tracks right": [15, 27], "births by species (decoder)": {}, "verdict": "NOT SHOWN: 81 credits beyond the floor"}}
-{"19 mass ratios (parts per million)": {"lift 1/lift 0": 163050412, "verdict": "SHOWN as a fit of den (the legs), read from the decoded points"}}
+{"19 mass ratios (parts per million)": {"gapped 1/gapped 0": 163050412, "verdict": "SHOWN as a fit of den (the legs), read from the decoded points"}}
 {"16 uncertainty floor (one click)": {"floor on x per credit, parts per million: min / middle / max": [5036, 54269, 277381], "species spacing of the two heaviest, parts per million": 2270565, "credits beyond the floor": 81, "verdict": "NOT SHOWN"}}
 {"17 charge conservation": {"senses sum over births (from the children's Wronskian signs)": 0, "children with W = 0": 0, "births with the two children at opposite signs": 0, "verdict": "SHOWN"}}
 {"15 conservation at the click": {"births": 0, "taken per booked at the births (hundredths)": null, "verdict": "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light)"}}

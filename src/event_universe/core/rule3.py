@@ -94,6 +94,31 @@ def division_forward(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
     return carried_division(numerator, wall, carry, 1)
 
 
+def link_unit_of(gamma: Any) -> int:
+    """The Link's unit G derived from Gamma (K-S1, the owner's word of 2026-10-25: the conditions in the laws and the code enforces them; no key of the file): the least G at which one level of tension at the vacuum resolves in the Link's factor, Q(1) < Q(0) in `link_factor`, 2 G^2 (2 Gamma - 1) > Gamma^2, found by a search by comparisons (16 at Gamma 1,000)."""
+    unit = 1
+    while 2 * unit * unit * (2 * gamma - 1) <= gamma * gamma:
+        unit += 1
+    return unit
+
+
+def held_wall(weight: Any, den: Any, gamma: Any, action: Any, power: int) -> Any:
+    """A held row's write wall (K-S1 to K-S3, Y-S1): weight den Gamma^power T with the trace's weight 54 (rows.TRACE), the time line's at the power 4 and the nine lines' at 2."""
+    return weight * den * gamma**power * action
+
+
+def held_numerator(
+    weight: Any, level: Any, forms: Any, trace: Any, clock: Any, den: Any, gamma: Any
+) -> Any:
+    """The carrier's time line's write numerator (the metric time line, the held write): 4 X (forms 54 den Gamma^2 - trace p_0^2) p_0 with the trace's weight 54 (rows.TRACE)."""
+    return 4 * level * (forms * weight * den * gamma**2 - trace * clock * clock) * clock
+
+
+def unit_of(sine: Any, action: Any) -> Any:
+    """A plane's quantum, its unit 3 T s (the conventions' row 12: W_c sin omega_0 to the unit), s the pair's sine or den at the gap 0."""
+    return 3 * action * sine
+
+
 def half(wall: Any) -> Any:
     """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor."""
     return division_forward(wall, 2, 0)[0]

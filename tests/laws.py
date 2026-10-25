@@ -19,7 +19,6 @@ WORLDS = ROOT / "tests" / "worlds"
 
 
 def world_of(name: str) -> tuple[dict[str, Any], dict[str, Any]]:
-    """The universe and the world of a test world by its file name."""
     return load_world(WORLDS / name)
 
 

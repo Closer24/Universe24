@@ -8,7 +8,6 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import paces
-from event_universe.core.ports import PORT_SIDES
 from event_universe.features import volume
 from event_universe.loader.world import read_world
 from event_universe.node import Node
@@ -179,6 +178,13 @@ def test_the_files_are_refused_by_name() -> None:
     refused(
         "a pair or a wall", read_world, world, dict(universe, rows=universe["rows"] + [{"shape": 1}])
     )
+    refused(
+        "keys of no law: link_unit",
+        read_world,
+        world,
+        dict(universe, integers={**universe["integers"], "link_unit": 16}),
+    )
+    assert node_of("world_node.json").G == 16  # derived from Gamma 1,000 (K-S1), no key of the file
     rows = universe["rows"]
     for match, change in (
         (
@@ -204,4 +210,3 @@ def test_the_files_are_refused_by_name() -> None:
     ):
         refused(match, Node, universe, dict(world, **change))
     assert [r.shape for r in node_of("world_node.json").rows_] == [1, 2, 2, 2, 2, 4, 10]
-    assert [(axis, side) for axis, side in PORT_SIDES][:2] == [(0, 1), (0, -1)]

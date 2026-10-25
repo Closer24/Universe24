@@ -8,7 +8,9 @@ from typing import Any
 
 WORLD_KEYS = frozenset({"universe", "shape", "intervals", "seed"})
 UNIVERSE_KEYS = frozenset({"integers", "rows"})
-INTEGERS = frozenset({"den", "node_clock", "quantum_action", "link_unit"})
+INTEGERS = frozenset(
+    {"den", "node_clock", "quantum_action"}
+)  # the Link unit G is derived from Gamma (K-S1), no key
 ROW_KEYS = frozenset({"shape", "pair", "wall"})
 
 

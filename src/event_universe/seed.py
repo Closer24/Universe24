@@ -14,8 +14,6 @@ from event_universe.rows import PLANE, Line, Row, zeros
 if TYPE_CHECKING:
     from event_universe.node import Node
 
-ENVELOPES = {2: (2, 1), 3: (4, 3, 1)}  # the raised cosine's weights by half-width, exact in integers
-
 
 def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
     """Every lay of the world file onto the Node's rows, the packets after the sea and the holes."""
@@ -47,11 +45,19 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
         lay_packet(node, rec, at, h, n)
 
 
+def raised_cosine(h: int) -> tuple[int, ...]:
+    """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer, at h = 2 (0) and h = 3 (1) and at no other width: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 (the weights 2, 1 and 4, 3, 1); another width refused by name."""
+    if h not in (2, 3):
+        raise ValueError("a plane packet has the half-width 2 or 3: a body is laid over its packet")
+    doubled = [2, h - 2]
+    while len(doubled) < h:
+        doubled.append(doubled[1] * doubled[-1] - doubled[-2])
+    return tuple(2 + t for t in doubled[:h])
+
+
 def envelope_of(node: Node, at: tuple[int, ...], h: int) -> tuple[Any, int]:
     """The raised cosine's envelope of the half-width h about the Node, the product of the weights over the three axes, and the centre's weight."""
-    weights = ENVELOPES.get(h)
-    if weights is None:
-        raise ValueError("a plane packet has the half-width 2 or 3: a body is laid over its packet")
+    weights = raised_cosine(h)
     envelope = zeros(node.shape)
     for j in np.ndindex(*(2 * h - 1,) * AXES):
         off = [x - (h - 1) for x in j]

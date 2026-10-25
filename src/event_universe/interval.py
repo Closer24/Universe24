@@ -9,7 +9,7 @@ import numpy as np
 from event_universe import readings
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, across
-from event_universe.core.rule3 import division_forward, half, quotient
+from event_universe.core.rule3 import division_forward, half, held_numerator, quotient
 from event_universe.features import volume
 from event_universe.links import plane_current, stress_parts, tensor_parts, wronskian
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, Row, zeros
@@ -176,7 +176,7 @@ class Interval:
         k = self.where[id(carrier)]
         p02 = self.p0 * self.p0
         numerators = [
-            4 * self.x_now * (self.forms * TRACE * node.den * node.gamma**2 - self.trace * p02) * self.p0
+            held_numerator(TRACE, self.x_now, self.forms, self.trace, self.p0, node.den, node.gamma)
         ]
         numerators += [self.traceless[a] * p02 for a in range(AXES)] + [None] * (
             carrier.shape - 1 - AXES

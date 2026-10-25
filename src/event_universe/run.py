@@ -13,7 +13,7 @@ import numpy as np
 from event_universe.core import paces
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES
-from event_universe.links import wronskian
+from event_universe.links import link_current, wronskian
 from event_universe.loader.world import load_world
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
@@ -95,12 +95,13 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
 
 
 def node_lines(node: Node) -> dict[str, Any]:
-    """The record's Node line at an interval, every Node by its index in the board's order: the carrier's level X, the content, the turned Nodes, the frozen Nodes (the Link pace 0) and the Links held at the wall (the factor 0) as [Node, axis] pairs; the page draws the board from these and nothing else."""
+    """The record's Node and Link line at an interval, every Node by its index in the board's order: the carrier's level X, the content, the turned Nodes, the frozen Nodes (the Link pace 0), the Links held at the wall (the factor 0) as [Node, axis] pairs, and every Link's current of the gap-0 line, F_ij from the Node along each axis (the sign the direction, the size the flow); the page draws the board from these and nothing else."""
     carrier = node.row(CARRIER).lines[0]
     content = node.content()
     pace = paces.link_pace_of(node.gamma, content)
     factors = node.link_factors()
     held = [[i, axis] for axis in range(AXES) for i, f in enumerate(ints(factors[2 * axis])) if f == 0]
+    gap0 = node.row(PLANE, gap=0).lines[0]
     return {
         "i": node.interval,
         "X": ints(carrier.now),
@@ -108,6 +109,7 @@ def node_lines(node: Node) -> dict[str, Any]:
         "turned": [i for i, t in enumerate(node.turned.reshape(-1).tolist()) if t],
         "frozen": [i for i, p in enumerate(ints(pace)) if p == 0],
         "held": held,
+        "current": [ints(link_current(gap0, 2 * axis)) for axis in range(AXES)],
     }
 
 
@@ -170,9 +172,7 @@ def record(
         "den": node.den,
         "cube": node.cube,
         "intervals": intervals,
-        "lifts": [
-            (None, str(r.pair[0]), str(sine_den(r.pair[0], node.den))) for r in node.lifts if r.pair
-        ],
+        "gapped": [(str(r.pair[0]), str(sine_den(r.pair[0], node.den))) for r in node.gapped if r.pair],
         "planes": [str(r.pair[0]) for r in node.records() if r.pair],
         "T": node.T,
         "gamma": node.gamma,

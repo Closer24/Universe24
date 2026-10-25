@@ -6,13 +6,13 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.rule3 import half, quotient
+from event_universe.core.rule3 import half, held_wall, quotient
 
 CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
 POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
 PLANE = 2  # the shape of a conjugate pair of records
 HALF_WIDTH = 64  # half the law's width of 128 bits: the phase pair's amplitude is read from it less one
-TRACE = 54  # the trace's weight in the carrier's write walls, 2 x 27
+TRACE = 54  # the trace's weight of the held walls and the carrier's write, 2 x 27 (ALGEBRA.md, the held write)
 
 
 def zeros(shape: tuple[int, ...]) -> Any:
@@ -68,9 +68,9 @@ class Line:
 def write_walls(
     shape: int, pair: tuple[int, int] | None, den: int, gamma: int, action: int
 ) -> list[Any]:
-    """The write walls of a row's lines by its shape: the carrier's time line 54 den Gamma^4 T and its other lines 54 den T Gamma^2, the shape-4 row's four lines T, the plane at the gap 0 its first line T (the lay of W-S1), a plane with a gap none; 54 = 2 x 27, the trace's weight."""
+    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls (rule3.held_wall at the powers 4 and 2), the shape-4 row's four lines T, the plane at the gap 0 its first line T (the lay of W-S1), a plane with a gap none."""
     if shape == CARRIER:
-        return [TRACE * den * gamma**4 * action] + [TRACE * den * action * gamma**2] * (shape - 1)
+        return [held_wall(TRACE, den, gamma, action, p) for p in (4, *[2] * (shape - 1))]
     if shape == POTENTIAL:
         return [action] * shape
     if shape == PLANE and pair is not None and pair[0] == pair[1]:
