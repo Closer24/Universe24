@@ -25,7 +25,7 @@ def bodies(
     frozen: Any,
     r_gap0: rule3.Rule,
 ) -> None:
-    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352): where nothing arrives at the Node, the taken row's current across its six Links summed 0 at the interval's start (links.row_current as close.meet reads it; what flows in flows out), the take is laid back on the taken line by the one lay act in the same close, the credit written with laid_back the levels and its momentum booked 0, so a board alike at every Node returns to Gamma exactly with a body credited at every Node in every cycle, and where light accumulates the take stands (the former closing, the take alone, kept by name; eq2's reading, every one of the six currents 0, kept by name); the plane at the gap 0 is never credited as a body (the light no body, cs4's sentence through the Boss, 6402358120: light at rest is no body in nature, its quanta taken at a meeting and by a body's click alone; the former closing of the standing light, credited at every interval where its beat stood at 1, kept by name); the beat a plane's by its re line's zero crossings counted in either direction (CK-S1: the crossing read even under the negation of the line, the two levels' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike, so the closing is covariant under the conjugation and the colour exchange alike; the beat the half period; the former upward crossing, and the form `b < 0 <= n or n < 0 <= b` odd where exactly one level is 0, kept by name), a quartet's from the invariant ratio N.G.B / N.G.N along the law's orbit (gram.period)."""
+    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352): where nothing arrives at the Node, the taken row's current across its six Links summed 0 at the interval's start (links.row_current as close.meet reads it; what flows in flows out), the take is laid back on the taken line (the line the take moved, logged as `taken_line`: CS4-S2) by the one lay act in the same close, the credit written with laid_back the levels and its momentum booked 0, so a board alike at every Node returns to Gamma exactly with a body credited at every Node in every cycle, and where light accumulates the take stands (the former closing, the take alone, kept by name; eq2's reading, every one of the six currents 0, kept by name); the plane at the gap 0 is never credited as a body (the light no body, cs4's sentence through the Boss, 6402358120: light at rest is no body in nature, its quanta taken at a meeting and by a body's click alone; the former closing of the standing light, credited at every interval where its beat stood at 1, kept by name); the beat a plane's by its re line's zero crossings counted in either direction (CK-S1: the crossing read even under the negation of the line, the two levels' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike, so the closing is covariant under the conjugation and the colour exchange alike; the beat the half period; the former upward crossing, and the form `b < 0 <= n or n < 0 <= b` odd where exactly one level is 0, kept by name), a quartet's from the invariant ratio N.G.B / N.G.N along the law's orbit (gram.period)."""
     rec0 = node.records().index(node.row(PLANE, gap=0))
     net = sum((row_current(plane_starts[rec0], port) for port in range(PORTS)), start=0)
     for rec, row in enumerate(node.records()):
@@ -61,12 +61,11 @@ def bodies(
             node.standing[rec][at] = 0
             if got is None:
                 continue
-            levels, fall, now, before = got
+            levels, fall, now, before, k = got
             node.counts["body_clicks"] += 1
-            entry = credit(node, rec, at, plane_starts, fall, levels, now, before)
+            entry = credit(node, rec, at, plane_starts, fall, levels, now, before, k)
             if int(net[at]) == 0:
-                taken = node.records()[rec0]
-                lay(node, rec0, at, (now - int(taken.lines[0].now[at]),) + (0,) * (2 * taken.shape - 1))
+                lay(node, rec0, at, now - int(node.records()[rec0].lines[k].now[at]), line=k)
                 entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
                 node.counts["laid_back"] += 1
             node.log.append(entry)
@@ -131,8 +130,9 @@ def credit(
     levels: int,
     taken_was: int,
     taken_before: int,
+    line: int,
 ) -> dict[str, Any]:
-    """A body's credit with its frame (a plane's `frame_of`, a quartet's `bilinears_of`), its sense the sign of its charge at the Node, its beat, the take's numbers and momentum, the taker's three levels (the gap-0 line's now before the take, its before, the levels taken: PC-S2), the sign level and whether the Node turned."""
+    """A body's credit with its frame (a plane's `frame_of`, a quartet's `bilinears_of`), its sense the sign of its charge at the Node, its beat, the take's numbers and momentum, the taker's three levels (the taken line's now before the take, its before, the levels taken: PC-S2), the line taken (`taken_line`, CS4-S2), the sign level and whether the Node turned."""
     row = node.records()[rec]
     w = int(gram.charge(row.shape, row.lines)[at])
     return {
@@ -153,6 +153,7 @@ def credit(
         "taken_now_was": taken_was,
         "taker": [taken_was, taken_before, levels],
         "dP_take": node.last_dp,
+        "taken_line": line,
         "sign_level": int(node.row(POTENTIAL).lines[0].now[at]),
         "turned": bool(node.turned[at]),
     }

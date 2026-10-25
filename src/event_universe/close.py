@@ -98,7 +98,7 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
 
 
 def births(node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...]) -> set[tuple[int, ...]]:
-    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made), then the takes by the taken pair's case, the taken row's first line paying at its rule: at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid by one exact take at its own end (`merger_take`, SL-S2: the birth read at -1); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
+    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid by one exact take at its own end (`merger_take`, SL-S2: the birth read at -1); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
     by_node: dict[tuple[tuple[int, ...], int], list[Kid]] = {}
     for at, s, minus, plus, room, rec in kept:
         by_node.setdefault((at, rec), []).append((s, minus, plus, room))
@@ -119,9 +119,9 @@ def births(node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...]) -> s
         one = take_at(node, at, booked, rule, len(kids), rec)
         if one is None:
             continue
-        levels, fall, now, before = one
+        levels, fall, now, before, k = one
         node.closes[at] -= 1
-        take = take_line(fall, booked, levels, now, before, node.last_dp)
+        take = take_line(fall, booked, levels, now, before, node.last_dp, k)
         taken.append((at, rec, kids, take))
     touched: set[tuple[int, ...]] = set()
     for at, rec, kids, take in taken:
@@ -132,9 +132,9 @@ def births(node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...]) -> s
 
 
 def take_line(
-    fall: int, booked: int, levels: int, now: int, before: int, dp: list[int]
+    fall: int, booked: int, levels: int, now: int, before: int, dp: list[int], line: int
 ) -> dict[str, Any]:
-    """One take's numbers as the log carries them: the fall taken, the walls booked, the levels moved, the line's now before the take, the taker's three levels and the take's momentum."""
+    """One take's numbers as the log carries them: the fall taken, the walls booked, the levels moved, the line's now before the take, the taker's three levels, the take's momentum and the line taken (`taken_line`, logged per take: CS4-S2, unclick restoring that line)."""
     return {
         "taken": fall,
         "booked": booked,
@@ -142,6 +142,7 @@ def take_line(
         "taken_now_was": now,
         "taker": [now, before, levels],
         "dP_take": dp,
+        "taken_line": line,
     }
 
 
@@ -153,31 +154,22 @@ def merger_take(
     rule: rule3.Rule,
     rec: int,
 ) -> dict[str, Any] | None:
-    """The merger's take (SL-S2, the birth's lay read at -1): each child's wall paid by one exact take at its own end from the taken row's first line at its rule, both ends read (`fall_of`) before either is written; refused by name `stop` where an end cannot pay. Returns the log's take fields, the two ends' takes summed and each end's own under `takes`, or None."""
-    line = node.records()[rec].lines[0]
+    """The merger's take (SL-S2, the birth's lay read at -1): each child's wall paid by one exact take at its own end from the taken row's line by the fall's sign at that end (take.fall_of's choice, CS4-S2) at its rule, both ends read (`fall_of`) before either is written; refused by name `stop` where an end cannot pay. Returns the log's take fields, the two ends' takes summed and each end's own under `takes`, or None."""
+    row = node.records()[rec]
     for where, wall in zip((minus, plus), walls, strict=True):
-        levels, fall = fall_of(node, where, wall, rule, line)
+        levels, fall, _line = fall_of(node, where, wall, rule, row)
         if levels is None:
-            node.counts["refused_stop"] += 1
-            node.log.append(
-                {
-                    "event": "refused",
-                    "i": node.interval,
-                    "node": list(where),
-                    "cause": "stop",
-                    "fall": fall,
-                    "walls": wall,
-                    "row": rec,
-                }
-            )
+            refused(node, where, "stop", fall=fall, walls=wall, row=rec)
             return None
     takes: list[dict[str, Any]] = []
     for where, wall in zip((minus, plus), walls, strict=True):
         got = take_at(node, where, wall, rule, 1, rec)
         assert got is not None
-        levels, fall, now, before = got
+        levels, fall, now, before, k = got
         node.closes[where] -= 1
-        takes.append({"node": list(where), **take_line(fall, wall, levels, now, before, node.last_dp)})
+        takes.append(
+            {"node": list(where), **take_line(fall, wall, levels, now, before, node.last_dp, k)}
+        )
     return {
         "taken": takes[0]["taken"] + takes[1]["taken"],
         "booked": takes[0]["booked"] + takes[1]["booked"],
@@ -185,6 +177,7 @@ def merger_take(
         "taken_now_was": [t["taken_now_was"] for t in takes],
         "taker": [t["taker"] for t in takes],
         "dP_take": [a + b for a, b in zip(takes[0]["dP_take"], takes[1]["dP_take"], strict=True)],
+        "taken_line": [t["taken_line"] for t in takes],
         "takes": takes,
     }
 
@@ -262,6 +255,7 @@ def children(
                 "taken_now_was": take["taken_now_was"],
                 "taker": take["taker"],
                 "taken_row": rec,
+                "taken_line": take["taken_line"],
                 "proper": int(node.proper[at]),
                 "content": int(node.start_content[at]),
                 "amplitude": [node.A, node.B],
@@ -309,7 +303,7 @@ def click(
 
 
 def unclick(node: Node, frame: dict[str, Any]) -> None:
-    """The close undone from the log, in the reverse order of its lines: the lays removed, the taken row's line restored at every take's Node (a merger's two ends under `takes`), the readings' counters restored."""
+    """The close undone from the log, in the reverse order of its lines: the lays removed, the taken line restored at every take's Node (the line each take logged, `taken_line`, CS4-S2; a merger's two ends under `takes`), the readings' counters restored."""
     gap0 = node.row(PLANE, gap=0)
     rec0 = node.records().index(gap0)
     for entry in reversed(node.log[frame["log_from"] :]):
@@ -320,16 +314,10 @@ def unclick(node: Node, frame: dict[str, Any]) -> None:
             lay(node, s, tuple(entry["plus"]), (a, 0, 0, b), -1)
         if entry["event"] in ("birth", "credit"):
             row = entry.get("taken_row", rec0)
-            line = node.records()[row].lines[0]
             for take in entry.get("takes", [entry]):
-                where = tuple(take["node"])
-                lay(
-                    node,
-                    row,
-                    where,
-                    (take["taken_now_was"] - int(line.now[where]),)
-                    + (0,) * (2 * node.records()[row].shape - 1),
-                )
+                where, k = tuple(take["node"]), take["taken_line"]
+                line = node.records()[row].lines[k]
+                lay(node, row, where, take["taken_now_was"] - int(line.now[where]), line=k)
             node.closes[at] -= 1
     del node.log[frame["log_from"] :]
     node.standing, node.crossed, node.beats = frame["counters"]

@@ -339,7 +339,7 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
 
 
 def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the_light_sl_s2() -> None:
-    """SL-S2 (the Boss's ledger item 10, SL_COMPARISON.md section 3: the merger is the birth read at -1): the heaviest record's conjugate pair fed at two adjacent Nodes of the bare 5-cube (the + record at M and the - record at P at three times the lay's levels (A, B), one level pair on P's re line for a current across the Link and on two transverse neighbours for a twist) meets as the conjugate pair (the ends' charges opposite) and clicks into light: one birth whose taken row is the heaviest record and whose children are the gap-0 row, each child's wall one light quantum to the rounding paid by one exact take at its own end from the taken row's line, the gap-0 row standing at a whole quantum at each end where nothing stood, the children's charges -+(T div 2) summing to 0 and the gap-0 row's charge 0 over the board, taken at or above booked, the stop by name where an end could not pay; the run back exact."""
+    """SL-S2 (the Boss's ledger item 10, SL_COMPARISON.md section 3: the merger is the birth read at -1): the heaviest record's conjugate pair fed at two adjacent Nodes of the bare 5-cube (the + record at M and the - record at P at three times the lay's levels (A, B), one level pair on P's re line for a current across the Link and on two transverse neighbours for a twist) meets as the conjugate pair (the ends' charges opposite) and clicks into light: one birth whose taken row is the heaviest record and whose children are the gap-0 row, each child's wall one light quantum to the rounding paid by one exact take at its own end from the taken row's line, the gap-0 row standing at a whole quantum at each end where nothing stood, the children's charges -+(T div 2) summing to 0 and the gap-0 row's charge 0 over the board, taken at or above booked, the merger at the first close with no stop before it (CS4-S2: each end's take on the heavy row's second line, 3 B against 0 the farthest, logged per take as `taken_line` [1, 1]; under the former first line's take the stop refused both ends by name before the merger paid); the run back exact."""
     node = node_of("world_node.json", shape=[5, 5, 5], seed=[])
     a, b, k = node.A, node.B, 3
     heavy = max(range(len(node.records())), key=lambda r: node.records()[r].gap or 0)
@@ -371,7 +371,7 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
         for e in node.log
         if e["event"] == "refused" and e.get("row") == heavy and e["i"] <= merger["i"]
     ]
-    assert refusals and all(e["cause"] == "stop" and tuple(e["node"]) in (m, p) for e in refusals)
+    assert merger["i"] == 1 and refusals == [] and merger["taken_line"] == [1, 1]
     probe = copy.deepcopy(kept)
     for _ in range(merger["i"]):
         probe.step()
@@ -459,4 +459,62 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         assert e["beat"] == seen[-1][0] - seen[-2][0], e
         upward.append(seen[-1][1])
     assert (len(credits), sum(upward)) == (825, 697)
+    assert run_back_exact(kept, INTERVALS) == INTERVALS
+
+
+def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2() -> None:
+    """CS4-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss; cs4's REPORT.md sections 1.2, 1.5 and 4, CS_COMPARISON.md's finding (a) and cs5's mend, the line logged PER TAKE; the test under 15 s): the exact take moves the taken record's line whose level now stands farthest from its before (the largest now^2 - before^2, the first where equal), the line logged as `taken_line` on every birth, credit and merger take, unclick restoring that line. The pair's 3-cube at 20 intervals beside its image with the light turned a quarter at the seed ((re, im) -> (-im, re): the light on its second line, the first at 0): the two boards' X equal at every Node at 20 of 20 intervals and the 81 credits equal take for take in their numbers, every take on the first line on the board and on the second on the image, where the former act (the first line's take) is the stop by name (fall_of (None, 0) on a line at 0), the run back exact 20 of 20 through the takes on the second line; SL-S2's merger board (the heaviest record's conjugate pair at two adjacent Nodes of the bare 5-cube) at 20: the merger at the first close with no stop before it (the heavy row's second line, 3 B against 0, the farthest at both ends: its two takes on the second line; under the former act the first line's fall came short and the stop refused both ends before the merger paid), the ten light births after it taking the light's second line but one (at 19, where the first line's gap is the larger), 74 credits, each of the 87 takes' lines re-derived by hand from the Node's levels after the close (the other line untouched by the take, the taken line as the take found it), 66 of 87 on a line other than the first (0 under the former act; under the sign row's former write of 2 W after the step, before PL-S1, the board read 9 births every one on the second line, 318 takes with 219 on it and 308 credits), the run back exact."""
+    pair, image = node_of("world_pair_3.json"), node_of("world_pair_3.json")
+    re, im = image.row(PLANE, gap=0).lines
+    im.now[...], im.before[...], re.now[...], re.before[...] = re.now.copy(), re.before.copy(), 0, 0
+    kept = copy.deepcopy(image)
+    for _ in range(INTERVALS):
+        pair.step()
+        image.step()
+        assert (pair.row(CARRIER).lines[0].now == image.row(CARRIER).lines[0].now).all()
+    credits = [
+        [
+            (e["i"], e["node"], e["taken"], e["levels"], e["taker"], e["taken_line"])
+            for e in n.log
+            if e["event"] == "credit"
+        ]
+        for n in (pair, image)
+    ]
+    assert len(credits[0]) == 81 and [c[:5] for c in credits[0]] == [c[:5] for c in credits[1]]
+    assert {c[5] for c in credits[0]} == {0} and {c[5] for c in credits[1]} == {1}
+    assert all(int(re.now[tuple(c[1])]) == int(re.before[tuple(c[1])]) for c in credits[1])
+    assert run_back_exact(kept, INTERVALS) == INTERVALS
+    node = node_of("world_node.json", shape=[5, 5, 5], seed=[])
+    a, b, k = node.A, node.B, 3
+    heavy = max(range(len(node.records())), key=lambda r: node.records()[r].gap or 0)
+    for at, levels in (
+        ((1, 1, 1), (k * a, 0, 0, k * b)),
+        ((2, 1, 1), (k * a, b, 0, -k * b)),
+        ((1, 2, 1), (a, b, 0, 0)),
+        ((2, 1, 2), (b, a, 0, 0)),
+    ):
+        node.lay(heavy, at, levels)
+    kept, lines_taken = copy.deepcopy(node), []
+    for _ in range(INTERVALS):
+        seen = len(node.log)
+        node.step()
+        for e in node.log[seen:]:
+            if e["event"] not in ("birth", "credit"):
+                continue
+            lines = node.records()[
+                e.get("taken_row", node.records().index(node.row(PLANE, gap=0)))
+            ].lines
+            for t in e.get("takes", [e]):
+                at, k = tuple(t["node"]), t["taken_line"]
+                gaps = [int(line.now[at]) ** 2 - int(line.before[at]) ** 2 for line in lines]
+                gaps[k] = t["taken_now_was"] ** 2 - t["taker"][1] ** 2
+                assert gaps.index(max(gaps)) == k and t["taker"][0] == t["taken_now_was"]
+                lines_taken.append(k)
+    births = [e for e in node.log if e["event"] == "birth"]
+    assert births[0]["taken_row"] == heavy and births[0]["taken_line"] == [1, 1]
+    on_first = [
+        (e["i"], t["taken_line"]) for e in births for t in e.get("takes", [e]) if not t["taken_line"]
+    ]
+    assert on_first == [(19, 0)] and len(births) == 11
+    assert (len(lines_taken), sum(lines_taken), node.counts["body_clicks"]) == (87, 66, 74)
     assert run_back_exact(kept, INTERVALS) == INTERVALS
