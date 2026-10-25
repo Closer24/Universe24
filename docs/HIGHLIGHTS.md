@@ -8,9 +8,12 @@ git history and in the owner's recorded words. What the decisions govern since
 4.0.0 (2026-10-25) is one world, Universe24: one line of whole-number arithmetic,
 Rule3, at one Node of a cubic lattice wrapped on every axis, one universe file of
 three integers, and the click, the board's own read of itself, through which
-everything is read. The project's four documents are [docs/ALGEBRA.md](ALGEBRA.md), the law,
-[docs/ENGINE.md](ENGINE.md), the engine, [docs/FURTHER_RESEARCH.md](FURTHER_RESEARCH.md), the
-further research, and this one, the decisions. Where a line
+everything is read. The project's four documents (the owner's word of 2026-10-25, 10:0x UTC;
+kept coherent by one keeper, who changes them on the Boss's requests alone) are this one, the
+postulates and the decisions, [docs/ALGEBRA.md](ALGEBRA.md), the law, [docs/ENGINE.md](ENGINE.md),
+the engine, and [docs/UNIVERSE24.md](UNIVERSE24.md), the run: what the one run must show, its
+gates, the record's verdicts and what is open; [docs/FURTHER_RESEARCH.md](FURTHER_RESEARCH.md)
+holds the further research beside them. Where a line
 points at the law, the law's line governs and no formula is restated here.
 
 ## The postulates (the owner's words of 2026-10-24 and 2026-10-25, approved 2026-10-25, 08:5x UTC)
