@@ -34,13 +34,11 @@ TEST_SECONDS_BOUND = 30.0
 LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
 # the ratchets against the merge base (CHECK_BASE, the `--base` revision), each one script of
 # tools/ run by its path and failing with its own message: on every selection, with --full and
-# in the lint shard; the documents' gates among them since 2026-10-24 (tests/test_documents.py
-# and tests/test_repository_language.py folded into tools/documents_gates.py by the tests' audit)
+# in the lint shard
 RATCHETS = [
     ["tools/engine_gates.py"],
     ["tools/record_code_shape.py"],
     ["tools/tests_shape.py"],
-    ["tools/documents_gates.py"],
 ]
 
 

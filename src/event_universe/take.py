@@ -2,10 +2,17 @@
 
 from __future__ import annotations
 
+import itertools
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
+from event_universe.features.click import Face
+from event_universe.front import framed_record
 from event_universe.loader.keys import Node
+from event_universe.plane import Faces
+from event_universe.reports import (
+    face,
+)
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -20,12 +27,44 @@ class Item:
     nodes: tuple[Node, ...]
     pair: tuple[int, int] | None = None
     sense: int = 0
-    record: int = 0  # the record of the family the item is laid on: a born child's position among its family's children in the list the meeting selected (`act.born_items`; ALGEBRA.md, Matter's birth from light, N records of the write step, 2026-10-24), 0 otherwise
+    ports: tuple[tuple[int, ...], ...] = ()  # C6 (i): per Node named, the Ports the quantum entered by
 
 
-def below_quantum(board: Lattice, item: Item) -> list[Node]:
-    """The one comparison of the lay at a spread record's Nodes (ALGEBRA.md, The click writes on the lattice (b) and (d), the undepleted beam; the board's own click, 2026-10-24, the one click since the declared taker was struck): at each Node named the record's booked share, the share the credit reads there (`Lattice.share_of`, the conserved form's density at the Node in the current's units, read before any item's write), against its own quantum W_rec (`credit.record_unit`, the books' unit): the Nodes where the share is at most one quantum, where the lay writes; a Node whose share stands above one quantum takes the quantum in the books alone (`act.written`, the deficit path)."""
+def faced(board: Lattice, item: Item) -> list[tuple[Node, tuple[int, ...]]]:
+    """The one comparison of the absorption and the emission at a spread record's Nodes (features/click, `Face`; ALGEBRA.md, The click writes on the lattice (b) and (d), the undepleted beam): at each Node named the record's booked share, the share the credit reads there (`Lattice.share_of`, the conserved form's density at the Node, `share.share`, read at the click from the levels the next step reads), against the record's own quantum W_rec (`credit.Books.units`); the Nodes where it is at most W_rec, the record there local and whole, are returned with their Ports (a Node whose face set is empty, an arrival two-sided on every axis, is not among them: the quantum is taken in the books and the levels stand, the deficit path below, with the reading `NO_SIDE` on the credit line; the click's plan, C6, the cold reader's fix of 2026-10-18), the Nodes the click writes, and for an absorption the hole to 0 is booked there: for every line of the record one face at the next two intervals on the Ports the quantum entered the Node by, the item's set for that Node (`Item.ports`; the click's plan, C6 (i)), so that Rule3 writes the level 0 and then the level before 0 with its own remainder (the mathematician's hand; the front erasing what spread beyond the Node where the count reaches 0); at a Node where the share is above W_rec a record of many quanta per Node is a beam, nature's undepleted beam, exact as the count per Node grows: no face, no lay and no front there, the levels standing (a one-Node lay into a beam would be the same point defect the hole of a dense record was), the quantum passing in the books alone (`written`: the count and the deficit); nothing assigned at any Node."""
+    lines = range(board.families[item.family].record)
+    intervals = (board.interval + 1, board.interval + 2)
     unit = board.credit.units[item.family]
     shares = board.share_of(item.family, 1, board.mask(item.nodes))[0]
     nodes = [(int(n[0]), int(n[1]), int(n[2])) for n in item.nodes]
-    return [n for n in nodes if int(shares[n]) <= unit]
+    named = zip(nodes, item.ports or ((),) * len(nodes), strict=True)
+    sided = not item.ports  # no face set named: a lay, or a record taken whole
+    whole = [(n, p) for n, p in named if int(shares[n]) <= unit and (sided or p)]
+    framed = framed_record(
+        board, item.family
+    )  # the hole's target the frame's level on a plain massless record
+    for (at, ports), line, interval in itertools.product(
+        whole if item.delta < 0 else [], lines, intervals
+    ):
+        face = Face(item.family, line, at, ports, interval, framed=framed)
+        board.credit.faces.setdefault(interval, []).append(face)
+    return whole
+
+
+def faces_presented(board: Lattice, index: int) -> dict[int, Faces]:
+    """The faces presented to a family's lines at this interval's step, per line, with the board's offset (the layers grown before the origin), forward and back alike (`flux.step_records`)."""
+    found: dict[int, Faces] = {}
+    for presented in board.credit.faces.get(board.interval, []):
+        if presented.family == index:
+            found.setdefault(presented.line, []).append(presented)
+    return found
+
+
+def faces_reported(board: Lattice) -> None:
+    """The faces presented at this interval's step, one `face` line each (`reports.face`): the family, the line, the Node, the Ports and the value Rule3 read through them, written after the step computed them, for the host's tool, which presents them again on the way back from the lines and not from the books' log (`tools/back_in_time.py`)."""
+    if board.output is None:
+        return
+    for found in board.credit.faces.get(board.interval, []):
+        assert found.value is not None  # computed at this interval's step
+        name, at = board.families[found.family].name, list(found.at)
+        board.output(face(board.interval, name, found.line, at, list(found.ports), found.value))

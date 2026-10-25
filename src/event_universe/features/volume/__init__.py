@@ -126,10 +126,12 @@ def at_start[Row: DataclassInstance](families: tuple[Row, ...]) -> tuple[Row, ..
 
 def resting(held: Sequence[int], families: Any, loaded: Any) -> list[tuple[int, int]]:
     """The held rows whose rests the start solves, the holders of the content as (index, 0) (`Lattice.start`): every held row that is not the sign's holder and not the gapped row carrying its volume, which the start lays at the vacuum instead, its two levels the empty state's 0 converted once to the volume Gamma with the remainder at the half wall, the seed at rest the design's initial condition (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return hand's derivation read cold by the reader; The closed lattice has no rest: the vacuum is no rest state of a gapped uniform mode, so no rest of its line is solved); `families` the start's rows with the volume's flag off (`at_start`), `loaded` the loader's with it set."""
-    # the massless volume holder (2026-10-24, the gravity hand's trial read into the family-less file): every row
-    # carrying its volume, massless or gapped, is laid at the vacuum's volume Gamma and no rest of its line is
-    # solved (the uniform seed's source is uniform, its zero-mean part 0, so the rest it would solve is the vacuum)
-    return [(i, 0) for i in held if not families[i].wronskian and not loaded[i].motion_volume]
+    return [
+        (i, 0)
+        for i in held
+        if not families[i].wronskian
+        and not (loaded[i].motion_volume and loaded[i].pair[0] != loaded[i].pair[1])
+    ]
 
 
 def started(gamma: int, family: Any, line: Any) -> Any:

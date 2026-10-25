@@ -1,23 +1,72 @@
-"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate); and the one division act Rule3's, no raw floor division or modulo outside core/rule3.py but the named index wraps and shape divisions. PHYSICAL_MODULES is every module of the package, of core/ and of loader/, read from the tree (the hand list, the checkers' self-tests, the composed literals' gate, the conventions table and the import-cycle check struck or folded 2026-10-24 with the tests' audit: the composed literals tools/engine_gates.py's numbers ratchet, the rule's arithmetic sites tools/record_code_shape.py's)."""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate); and the one division act Rule3's, no raw floor division or modulo outside core/rule3.py but the named index wraps and shape divisions. PHYSICAL_MODULES names every module that runs a physical step of the interval or forms the tables it reads, each one's docstring saying why."""
 
 import ast
 import io
+import os
+import random
+import subprocess
+import sys
 import tokenize
+from fractions import Fraction
 from pathlib import Path
 
 import pytest
 
+from event_universe.core.rule3 import coefficients
+from event_universe.features.currents import Levels, Neighbours, current, tension
+from event_universe.features.read import link_tension
+from tests.laws import arrivals_rule3
+
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
-PHYSICAL_MODULES = tuple(  # every module of the package, of core/ and of loader/ but the package markers, read from the tree so that no module escapes the gate unnamed (2026-10-24: the hand list and its own test folded here)
-    sorted(
-        path.relative_to(SRC).as_posix()
-        for folder in (SRC, SRC / "core", SRC / "loader")
-        for path in folder.glob("*.py")
-        if path.name != "__init__.py"
-    )
+PHYSICAL_MODULES = (
+    "node.py",
+    "lattice.py",
+    "share.py",
+    "reports.py",
+    "credit.py",
+    "world_files.py",
+    "digits.py",
 )
+PHYSICAL_MODULES += (
+    "records.py",
+    "bookings.py",
+    "meeting.py",
+    "act.py",
+    "front.py",
+    "plane.py",
+)
+PHYSICAL_MODULES += (
+    "emission.py",
+    "lay.py",
+    "take.py",
+    "readings.py",
+    "flux.py",
+    "meeting_back.py",
+    "conversion.py",
+)
+PHYSICAL_MODULES += ("core/rule3.py", "core/integer.py", "core/paces.py", "core/ports.py")
+PHYSICAL_MODULES += tuple(f"loader/{m}.py" for m in ("world", "keys"))
+PHYSICAL_MODULES += ("loader/derived.py", "loader/universe.py")
+PHYSICAL_MODULES += ("board_readings.py", "loader/rooms.py", "loader/interval.py")
+PHYSICAL_MODULES += (
+    "loader/charge.py",
+)  # the sign's readers Pythagorean and their charge factors (2026-10-24)
+PHYSICAL_MODULES += (
+    "shear.py",
+    "walls.py",
+)  # the tension lines stepped as the shear's momentum at the volume's wall
+PHYSICAL_MODULES += (
+    "swap.py",
+    "frames.py",
+)  # the swap at the top, the fifth act; the frames of a turned record's read the step shares
+PHYSICAL_MODULES += (
+    "seed.py",
+    "meeting_board.py",
+    "loader/seed.py",
+)  # the fold: the uniform seed, the board's own read
+PHYSICAL_MODULES += ()  # the frame's run of a bound body's full beat at its first close (2026-10-22)
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
 MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
@@ -134,7 +183,52 @@ def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
     assert numpy_violations(tree) == [], (name, numpy_violations(tree))
 
 
+def test_the_module_list_names_every_module_that_runs_a_step() -> None:
+    """Every module of the package, of `core/` and of `loader/` but the package markers is a physical module here, so a new one cannot escape the gate unnamed. Every float literal, true division, forbidden import and numpy departure from the integers is caught; integer numpy, the carry, the greatest common divisor and a hexadecimal literal pass."""
+    files = [path for folder in (SRC, SRC / "core", SRC / "loader") for path in folder.glob("*.py")]
+    modules = {path.relative_to(SRC).as_posix() for path in files if path.name != "__init__.py"}
+    assert modules == set(PHYSICAL_MODULES), sorted(modules ^ set(PHYSICAL_MODULES))
+    SOURCES = {"x = 1.5\n": float_literals, "x = 3 / 2\n": true_divisions, "x /= 2\n": true_divisions}
+    IMPORT_CHECKS = ("import random\n", "from math import sqrt\n", "import math\ny = math.sqrt(4)\n")
+    IMPORT_CHECKS += ("import math as m\n", "from math import isqrt as r\n")
+    NUMPY_CHECKS = ("y = np.sqrt(x)\n", "y = np.zeros(3, dtype=np.float64)\n", "y = x.mean()\n")
+    NUMPY_CHECKS += ("y = np.zeros(3, dtype=float)\n", "y = np.zeros(3)\n", "y = np.full(3, 0)\n")
+    NUMPY_CHECKS += ("y = np.array([1.5, 2])\n", "y = float(x)\n", "y = x.astype(np.int32)\n")
+    NUMPY_CHECKS += ("y = x.astype(dtype)\n", "y = np.linalg.norm(x)\n", "y = np.linspace(0, 1, 3)\n")
+    NUMPY_CHECKS += ("y = np.random.default_rng()\n", "y = x.astype(scale)\n")
+    PASSING = "import numpy as np\nimport math\nx = np.zeros(3, dtype=np.int64)\no = np.full(2, None, dtype=object)\n"
+    PASSING += "y = 7 // 2\ng = math.gcd(6, 4)\nh = 0x1F\nk = np.arange(4)\nr = np.array([1, -2, 3])\nz = x.astype(object)\nm = np.ones(3, dtype=bool)\n"
+    assert all(checker(source) != [] for source, checker in SOURCES.items())
+    assert all(forbidden_imports(ast.parse(source)) != [] for source in IMPORT_CHECKS)
+    assert all(numpy_violations(ast.parse("import numpy as np\n" + text)) for text in NUMPY_CHECKS)
+    assert float_literals(PASSING) == [] and true_divisions(PASSING) == []
+    assert forbidden_imports(tree := ast.parse(PASSING)) == [] and numpy_violations(tree) == []
+
+
 RULE3, DIVISIONS = "core/rule3.py", {ast.FloorDiv, ast.Mod}
+
+
+def literal_products(tree: ast.AST) -> list[int]:
+    """Every product, sum, difference or power of two integer literals (`2 * 2`, `1 + 3`, `2 ** 10`), by line: a number composed in the engine and named nowhere."""
+    return [
+        node.lineno
+        for node in ast.walk(tree)
+        if isinstance(node, ast.BinOp)
+        and all(isinstance(x, ast.Constant) and type(x.value) is int for x in (node.left, node.right))
+    ]
+
+
+def test_a_composed_product_of_literals_is_refused_outside_core_rule3() -> None:
+    """No number in the engine (the owner's word of 2026-10-03, "where there are numbers, throw them out or close them"; PR D): outside core/rule3.py no two integer literals are multiplied, added, subtracted or raised to each other, since the product would be a number the engine should take from a name of the Ports and the levels or from the run's files; Rule3's own 2, 3, 6 and 12 stand in its home."""
+    offenders = [
+        f"{path.relative_to(SRC).as_posix()}:{line}"
+        for path in sorted(SRC.rglob("*.py"))
+        if path.relative_to(SRC).as_posix() != RULE3
+        for line in literal_products(ast.parse(path.read_text(encoding="utf-8")))
+    ]
+    assert offenders == [], offenders
+    assert literal_products(ast.parse("x = 2 * 2\ny = 1 + 3\nz = 2**10\n")) == [1, 2, 3]
+    assert literal_products(ast.parse("x = 2 * a\ny = -3\nz = (1, 2)\n")) == []
 
 
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
@@ -179,3 +273,111 @@ def test_floor_division_and_modulo_are_refused_outside_core_rule3() -> None:
     REFUSED = ("x = a // b\n", "x %= b\n", "q, r = divmod(a, b)\n", "y = np.floor_divide(a, b)\n")
     assert all(divisions(ast.parse(text)) for text in (*REFUSED, "y = np.mod(a, b)\n", "x = a % b\n"))
     assert divisions(ast.parse("x = a * b + c\ny = np.pad(a, w)\n")) == []
+
+
+def ring_step(now, before, carry, reads, self_coefficient, wall):  # type: ignore[no-untyped-def]
+    """One interval of Rule3 on a ring folded to one axis: the two axis neighbours read, the four folded Ports read the Node itself."""
+    n = len(now)
+    nexts, carries = [], []
+    for i in range(n):
+        arrivals = (now[(i + 1) % n], now[(i - 1) % n], now[i], now[i], now[i], now[i])
+        value, rest = arrivals_rule3(
+            reads, arrivals, self_coefficient, wall, now[i], before[i], carry[i]
+        )
+        nexts.append(int(value))
+        carries.append(int(rest))
+    return nexts, carries
+
+
+def two_level_form(a, b, reads, self_coefficient, wall):  # type: ignore[no-untyped-def]
+    """Q(a, b) = SUM_i (a_i^2 + b_i^2) - (1 / w) SUM_i (SUM_j R_ij a_j + S a_i) b_i at uniform paces (row 7 of the conventions)."""
+    n = len(a)
+    total = Fraction(0)
+    for i in range(n):
+        linked = (
+            reads[0] * (a[(i + 1) % n] + a[(i - 1) % n])
+            + sum(reads[2:]) * a[i]
+            + self_coefficient * a[i]
+        )
+        total += a[i] * a[i] + b[i] * b[i] - Fraction(linked * b[i], wall)
+    return total
+
+
+def momentum(num, now, before):  # type: ignore[no-untyped-def]
+    """P_a(i) = (F_(i, i-a) - F_(i, i+a)) / num on the ring, F_ij = num (now_i before_j - before_i now_j) (row 5 of the conventions)."""
+    n = len(now)
+    flux = [
+        current(num, Levels(now[i], before[i]), Levels(now[(i + d) % n], before[(i + d) % n]))
+        for i in range(n)
+        for d in (-1, 1)
+    ]
+    return [Fraction(flux[2 * i] - flux[2 * i + 1], num) for i in range(n)]
+
+
+def test_the_conventions_tables_identities_hold_on_small_integers() -> None:
+    """Rows 5 to 8 of the conventions table (ALGEBRA.md, The conventions and the units) on small integers at the toy pair [2, 3]: (5) the momentum identity with the carried remainders, w [P_a(t+1) - P_a(t)] = R [G(i) - G(i-1)] - [delta_i Delta now_i - now_i Delta delta_i], delta = r - r', on a nine-Node ring, every Node of forty random states; (6) the Node's own tension on the axis wave [2, 0, -2, 0] is 0 and 16 x the weight by turns at the doubled wall (The stress is the Links', 2026-10-23), 16 x the weight on every Link as its two ends' sum, and the Link's reading of the tension lines the mean of its two ends; (7) with the rounding the two-level form Q walks by SUM epsilon_i (next_i - before_i) and the three-level form E_3 by SUM [epsilon_i(t) next_i - epsilon_i(t+1) now_i], epsilon = (r - r') / w, exactly; (8) the weighted coefficients R_ij / p_i^2 are the same from both ends of a Link at different paces, D M symmetric."""
+    num, den, gamma, ring = 2, 3, 20, 9
+    wave = [2, 0, -2, 0]
+    for i in range(4):
+        n = Neighbours(now=wave[i], ahead=wave[(i + 1) % 4], behind=wave[(i - 1) % 4])
+        assert (
+            tension(1, n) == (0, 16)[i % 2] and tension(3, n) == (0, 48)[i % 2]
+        )  # 16 at the doubled wall on every Link
+    assert (
+        link_tension([(1, 4, 4)]) == 4
+    )  # the mean of the two ends' parts, their sum 8 the Link's booking
+    reads, self_coefficient, wall = coefficients(num, den, gamma, gamma, gamma)
+    draw = random.Random(24)
+    for _ in range(40):
+        before = [draw.randint(-50, 50) for _ in range(ring)]
+        now = [draw.randint(-50, 50) for _ in range(ring)]
+        carry = [draw.randrange(wall) for _ in range(ring)]
+        nexts, carry_next = ring_step(now, before, carry, reads, self_coefficient, wall)
+        after, carry_after = ring_step(nexts, now, carry_next, reads, self_coefficient, wall)
+        epsilon = [Fraction(r - r_next, wall) for r, r_next in zip(carry, carry_next, strict=True)]
+        epsilon_next = [
+            Fraction(r - r_after, wall) for r, r_after in zip(carry_next, carry_after, strict=True)
+        ]
+        walk_q = two_level_form(nexts, now, reads, self_coefficient, wall) - two_level_form(
+            now, before, reads, self_coefficient, wall
+        )
+        assert walk_q == sum(e * (x - b) for e, x, b in zip(epsilon, nexts, before, strict=True))
+        three = [Fraction(n * n - x * b) for n, x, b in zip(now, nexts, before, strict=True)]
+        three_next = [Fraction(x * x - a * n) for x, a, n in zip(nexts, after, now, strict=True)]
+        assert sum(three_next) - sum(three) == sum(
+            e * x - e2 * n for e, e2, x, n in zip(epsilon, epsilon_next, nexts, now, strict=True)
+        )
+        delta = [r - r_next for r, r_next in zip(carry, carry_next, strict=True)]
+        p_now, p_next = momentum(num, now, before), momentum(num, nexts, now)
+        for i in range(ring):
+            h = [now[(j - 1) % ring] * now[(j + 1) % ring] - now[j] * now[j] for j in range(ring)]
+            stress = [h[j] + h[(j + 1) % ring] for j in range(ring)]  # G_aa(j) = h(j) + h(j + 1)
+            centred_now = now[(i + 1) % ring] - now[(i - 1) % ring]
+            centred_delta = delta[(i + 1) % ring] - delta[(i - 1) % ring]
+            remainder_term = delta[i] * centred_now - now[i] * centred_delta
+            assert (
+                wall * (p_next[i] - p_now[i])
+                == reads[0] * (stress[i] - stress[(i - 1) % ring]) - remainder_term
+            )
+    for clock_i, clock_j in ((gamma, gamma - 3), (gamma - 2, gamma - 7)):
+        pace_i, pace_j = clock_i * clock_i // gamma, clock_j * clock_j // gamma
+        reads_i = coefficients(num, den, gamma, clock_i, pace_i, factors=(5,) * 6, unit=2)[0]
+        reads_j = coefficients(num, den, gamma, clock_j, pace_j, factors=(5,) * 6, unit=2)[0]
+        assert Fraction(reads_i[0], pace_i * pace_i) == Fraction(reads_j[0], pace_j * pace_j)
+
+
+def test_every_physical_module_imports_first_on_its_own() -> None:
+    """Every module of the package imports first, before any other of the package, in one fresh interpreter with the package's modules evicted between the imports (the cycle through the top lines of walls, lists, credit and meeting_back, and the one through board_readings and meeting, closed 2026-10-23): a cycle is refused by the module and the name it meets."""
+    names = sorted("event_universe." + name[:-3].replace("/", ".") for name in PHYSICAL_MODULES)
+    program = (
+        "import importlib, sys\n"
+        "for name in sys.argv[1:]:\n"
+        "    for held in [k for k in sys.modules if k.startswith('event_universe')]:\n"
+        "        del sys.modules[held]\n"
+        "    importlib.import_module(name)\n"
+    )
+    env = {**os.environ, "PYTHONPATH": str(SRC.parent)}
+    found = subprocess.run(
+        [sys.executable, "-c", program, *names], capture_output=True, text=True, env=env, check=False
+    )
+    assert found.returncode == 0, found.stderr.strip().splitlines()[-1:]

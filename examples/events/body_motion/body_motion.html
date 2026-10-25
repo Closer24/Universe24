@@ -104,10 +104,10 @@ async function inflate(b64) { const bytes = Uint8Array.from(atob(b64), c => c.ch
   function mix(a, b, t) { return [Math.round(a[0] + (b[0] - a[0]) * t), Math.round(a[1] + (b[1] - a[1]) * t), Math.round(a[2] + (b[2] - a[2]) * t)]; }
   let maxAbs = 1; for (const sl of S.now) for (const col of sl) for (const v of col) maxAbs = Math.max(maxAbs, Math.abs(v));
   let cMax = 61; for (const sl of S.content) for (const col of sl) for (const v of col) cMax = Math.max(cMax, v);
-  document.getElementById('lvl-scale').textContent = '+-' + maxAbs;
+  document.getElementById('lvl-scale').textContent = '±' + maxAbs;
   const cVac = S.content[0][0][0];
   document.getElementById('vac').textContent = cVac;
-  document.getElementById('well-scale').textContent = cVac + ' ... ' + cMax;
+  document.getElementById('well-scale').textContent = cVac + ' … ' + cMax;
   const cvL = document.getElementById('board-level'), cvW = document.getElementById('board-well');
   const bars = document.getElementById('bars');
   const centreLevel = rows.map((r, t) => { const xi = Math.min(X - 1, Math.max(0, Math.round(r.cx))); const yi = Math.min(YZ - 1, Math.max(0, Math.round(r.cy))); return S.now[t][xi][yi]; });

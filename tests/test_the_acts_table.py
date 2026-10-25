@@ -46,26 +46,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("core/paces.py", "rounded", "division_forward"): "D",  # the rounding half up, once
     ("seed.py", "drift_of", "largest_below"): "S",  # the seed's drift v^2 <= T by the search
     ("meeting_board.py", "meetings", "division_forward"): "D",  # the Node's own count, once
-    (
-        "bound_body.py",
-        "bodies_closing",
-        "division_forward",
-    ): "D",  # the light at the body's Node over the record's unit, once per window's close
-    (
-        "hole.py",
-        "take_of.fallen",
-        "division_forward",
-    ): "D",  # the take's fall in the current's units, the exact numerator over the common denominator, once per level compared (2026-10-24, the one-Link form)
-    (
-        "meeting_board.py",
-        "closed",
-        "division_forward",
-    ): "D",  # the number read by the unit, once: the quotient the pick's (the selector, 2026-10-24)
-    (
-        "meeting_board.py",
-        "drawn_among",
-        "division_forward",
-    ): "D",  # the quotient's residue modulo the candidates' count, once
     ("core/paces.py", "sine_den", "largest_below"): "S",  # the integer sine by the search
     ("core/paces.py", "clock_alone", "rounded"): "D",  # the clock from the content, once
     ("core/paces.py", "Side.reach", "rounded"): "D",  # the side's table of clocks, once
@@ -83,7 +63,16 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "paces.rounded",
     ): "D",  # the stress's trace in the energy's units, once
     ("records.py", "write_sources", "paces.rounded"): "D",  # the fixed wall's ratio, rounded once
-    # ("features/phase/__init__.py", "rotation_unit", "division_forward"): "D" and ("rotation_unit", "iterate"): "R", the rest rotation's bisection: struck 2026-10-24, dead code, no caller in the tree
+    (
+        "features/phase/__init__.py",
+        "rotation_unit",
+        "division_forward",
+    ): "D",  # the seed's multiple and the halving
+    (
+        "features/phase/__init__.py",
+        "rotation_unit",
+        "iterate",
+    ): "R",  # the one carried act on a pair (the bisection around it S)
     (
         "features/phase/__init__.py",
         "quarter_turn",
@@ -96,7 +85,7 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # act.py, the born pair
     (
         "act.py",
-        "born_list",
+        "born_pair",
         "division_forward",
     ): "D",  # the whole quanta standing at the Node, the floor once
     # conversion.py
@@ -106,14 +95,10 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     # digits.py, the click's read of the board
     ("digits.py", "lattice_of", "gcd"): "D",  # the digits' lattice, Euclid on the rule's integers
     ("digits.py", "read_of", "division_forward"): "D",  # each digit its index on the lattice, r div F
-    (
-        "registry.py",
-        "records_of",
-        "division_forward",
-    ): "D",  # the records a family's lines hold, a count over a count
+    ("digits.py", "read_of", "gcd"): "D",  # the bases less one, the plain sum's modulus, once
     (
         "digits.py",
-        "ported",
+        "frame_of",
         "division_forward",
     ): "D",  # the torus's wrap of a frame Node's coordinate, an index
     # features/click
@@ -122,8 +107,8 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "drawn_from",
         "division_forward",
     ): "D",  # the click's read over the total, once per draw
-    # ("features/click/__init__.py", "bias_bound", "gcd"): "D", the total's shared factors: struck 2026-10-24 with the one-Link read, no base 0 modulo den
-    # ("features/click/__init__.py", "face_value", "division_forward"): "D", the face's value: the declared taker's click, struck 2026-10-24 (the owner: no detector)
+    ("features/click/__init__.py", "bias_bound", "gcd"): "D",  # the total's shared factors, F
+    ("features/click/__init__.py", "face_value", "division_forward"): "D",  # the face's value, once
     ("features/click/__init__.py", "squared", "largest_below"): "S",  # the search on the lay's square
     (
         "features/click/__init__.py",
@@ -131,7 +116,12 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "division_forward",
     ): "D",  # the lay's quotient before the search
     ("features/click/__init__.py", "amplitude", "largest_below"): "S",  # the amplitude by the search
-    # ("features/click/__init__.py", "two_squares", "largest_below"): "S" and ("plane_squares", "division_forward"): "D", the conversion's plane split: struck 2026-10-24, no record of several planes since the family-less file
+    (
+        "features/click/__init__.py",
+        "two_squares",
+        "largest_below",
+    ): "S",  # a plane's (re, im) by the search
+    ("features/click/__init__.py", "plane_squares", "division_forward"): "D",  # the planes' target, once
     # features/held_write
     ("features/held_write/__init__.py", "held_write", "act"): "R",  # the held write's remainder returned
     # features/phase
@@ -218,21 +208,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ): "D",  # the damped pass's mean, carry dropped at the stop
     # lattice.py, lay.py
     ("lattice.py", "Lattice.half_wall", "division_forward"): "D",  # the half wall, once
-    (
-        "reports.py",
-        "point_of",
-        "division_forward",
-    ): "D",  # the point read, the pair over its greatest common divisor, exact (the click's view, 2026-10-24)
-    (
-        "reports.py",
-        "point_of",
-        "gcd",
-    ): "D",  # Euclid's remainders on the pair's two integers, once
-    (
-        "meeting_board.py",
-        "readings_at",
-        "division_forward",
-    ): "D",  # the click's view: the proper time count div Gamma, exact (2026-10-24; the momentum's former division, p_a = P_a x W_rec div (num x W), struck the same day for the frame's running cosine, `reports.point_of`)
     # board_readings.py
     ("board_readings.py", "uniform_mode", "division_forward"): "D",  # the uniform level read, once
     ("lay.py", "shares_of", "division_forward"): "D",  # the shares' floors, once each
@@ -254,43 +229,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
         "held_room",
         "division_forward",
     ): "D",  # (largest - wall) div room, once per line
-    (
-        "loader/universe.py",
-        "volume_pair",
-        "division_forward",
-    ): "D",  # den div Gamma, the clock's one level, once
-    (
-        "digits.py",
-        "odd_line",
-        "division_forward",
-    ): "D",  # a line number over the plane's two lines, the im line odd
-    (
-        "loader/rooms.py",
-        "width_of",
-        "division_forward",
-    ): "D",  # halving the width's search, discarded (the width derived, 2026-10-24)
-    # the lightest point of the circle (2026-10-24): the loader's number theory on den, every division the act
-    ("loader/circle.py", "primes_below", "division_forward"): "D",  # trial division's remainders
-    ("loader/circle.py", "is_prime", "division_forward"): "D",  # n - 1 = d 2^s, the remainders by 2
-    ("loader/circle.py", "split", "gcd"): "D",  # Pollard's rho, Euclid on |x - y| and n
-    ("loader/circle.py", "factors", "division_forward"): "D",  # 2 divided out, the cofactor of a split
-    (
-        "loader/circle.py",
-        "two_squares",
-        "division_forward",
-    ): "D",  # (p - 1) div 4 and Euclid's remainders
-    ("loader/circle.py", "two_squares", "largest_below"): "D",  # the root of p, the remainders' floor
-    ("loader/circle.py", "lightest_point", "division_forward"): "D",  # a prime's class modulo 4
-    (
-        "loader/circle.py",
-        "angled",
-        "division_forward",
-    ): "D",  # a prime's class modulo 4, den over its angled primes
-    (
-        "loader/circle.py",
-        "circle_points",
-        "division_forward",
-    ): "D",  # a vector's lift, (step + 2 e) over 2
     ("loader/derived.py", "held_write_of", "division_forward"): "D",  # the held write's wall, once
     ("loader/derived.py", "held_write_of", "gcd"): "D",  # Euclid's remainders on coefficients, once
     (
@@ -344,12 +282,6 @@ INVENTORY: dict[tuple[str, str, str], str] = {
     ("share.py", "over_pace", "division_forward"): "D",  # the share over the pace
     ("share.py", "quanta_of", "division_forward"): "D",  # the quanta's rounding, once
     ("share.py", "half_action", "division_forward"): "D",  # T div 2, the count's unit of a plane record
-    (
-        "slabs.py",
-        "slabs_of",
-        "division_forward",
-    ): "D",  # the axis's layers among the slabs, once, no law's number
-    ("slabs.py", "wrapped", "division_forward"): "D",  # a layer's index on the torus, the halo's layer
 }
 
 # the carried divisions outside the step, named and reported, not moved (Part D, Task 3):

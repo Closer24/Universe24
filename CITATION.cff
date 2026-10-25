@@ -2,16 +2,13 @@ cff-version: 1.2.0
 message: "If you use this software, please cite the paper below and the software's Zenodo record."
 title: "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks"
 type: software
-version: 4.0.0
-date-released: 2026-10-25
+version: 3.0.0
+date-released: 2026-10-19
 license: MIT
 doi: 10.5281/zenodo.23466436
 repository-code: "https://github.com/Closer24/Universe24"
 url: "https://github.com/Closer24/Universe24"
 identifiers:
-  - type: doi
-    value: 10.5281/zenodo.23466436
-    description: "Version 4.0.0, Universe24: one Node, one universe (the engine 4.0), under the concept DOI: no release is tagged for 4.0.0 by the owner's word of 2026-10-24, the version number stands in the files, the concept DOI resolves to the latest deposit (3.0.0)"
   - type: doi
     value: 10.5281/zenodo.23466436
     description: "Zenodo concept DOI of the releases from 3.0.0 on, resolving to the latest version"
@@ -50,7 +47,7 @@ abstract: >-
   its six Links at each Link's reach, less the Node's own mass term, the
   remainder carried; whole numbers of any size, the bound the engine's; the tick
   the count of rounds that no Node reads; every run returning its past to the
-  bit; and read only through the clicks of the board's own read of itself at every Node. The engine
+  bit; and read only through the clicks of declared NodeDetectors. The engine
   holds no number of physics, no formula and no family's name; every physical
   value comes from the run's files, and every primitive is one folder found by
   its name. The paper's documents, files and scripts are in the repository.

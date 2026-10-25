@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from event_universe import reports
+from event_universe.features.click import Face
 from event_universe.records import NodeState, Record
 
 if TYPE_CHECKING:
@@ -62,6 +63,18 @@ def node_of(board: Lattice, line: dict[str, object]) -> tuple[int, tuple[int, in
     names = [family.name for family in board.families]
     at = [int(a) for a in line[reports.LAY_KEYS[3]][reports.AT]]  # type: ignore[index]
     return names.index(str(line[reports.REPORT_KEYS[3]])), (at[0], at[1], at[2])
+
+
+def faces_from(board: Lattice, lines: Lines) -> None:
+    """The faces of a run rebuilt from its `face` lines into the books' log, the log emptied first: per line the family, the line, the Node, the Ports, the interval and the value, so the inverse presents what the lines carry (the host tool's way, tools/back_in_time.py; the engine's own run back presents the books' log whole)."""
+    board.credit.faces = {}
+    event, when = reports.REPORT_KEYS[0], reports.REPORT_KEYS[2]
+    for line in [line for line in lines if line[event] == reports.FACE]:
+        index, at = node_of(board, line)
+        interval, value = (int(str(line[key])) for key in (when, reports.VALUE))
+        ports = tuple(int(str(port)) for port in list(line[reports.PORT_SET]))  # type: ignore[call-overload]
+        found = Face(index, int(str(line[reports.LINE])), at, ports, interval, value)
+        board.credit.faces.setdefault(interval, []).append(found)
 
 
 def same_lay(line: dict[str, object], kept: dict[str, object]) -> bool:

@@ -6,14 +6,24 @@ from typing import TYPE_CHECKING
 
 from event_universe import flux
 from event_universe.records import Booking, Record
+from event_universe.take import faces_presented
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
 
 def stepped(board: Lattice, index: int, direction: int) -> tuple[list[Record], list[Booking]]:
-    """Every record of a family stepped by Rule3 in flux form in `direction` with the rule of its own read (`flux.step_records`)."""
+    """Every record of a family stepped by Rule3 in flux form in `direction` with the rule of its own read (`flux.step_records`) and the faces the click act presents at this interval among its arrivals (`faces_presented`)."""
     gamma, unit = board.world.node_clock, board.unit
+    faces = faces_presented(board, index)
     return flux.step_records(
-        index, board.families, board.states, gamma, unit, direction, board.amplitude
+        index,
+        board.families,
+        board.states,
+        board.wrap,
+        gamma,
+        unit,
+        direction,
+        faces,
+        board.amplitude,
     )

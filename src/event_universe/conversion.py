@@ -3,11 +3,9 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from functools import cache
 from typing import TYPE_CHECKING
 
 from event_universe.core.rule3 import largest_below
-from event_universe.loader.circle import lift_points
 from event_universe.loader.derived import FamilyRule
 
 if TYPE_CHECKING:
@@ -56,83 +54,18 @@ def kept(families: tuple[FamilyRule, ...], parents: Parents, table: Table) -> bo
     return baryons(families, table) == baryons(families, parents)
 
 
-def conjugate_exact(families: tuple[FamilyRule, ...], table: Table) -> bool:
-    """Whether a list of children completes the identity of massless parents (ALGEBRA.md, Matter's birth from light: their points (den, 0) multiply to the identity, and the children at their senses complete it, (num + i s)(num - i s) = den^2): the product over the children of (num_k + i sense_k s_k), each the family's point at the child's sense, equal to (the product of their dens, 0), exact in the Gaussian integers; the birth's own exactness, the conjugate point at the sense -1 (the conversion's exactness reads the same point at both senses, L188)."""
-    point: Gauss = (1, 0)
-    scale = 1
-    for out, sense in table:
-        found = gaussian(families[out].pair)
-        if found is None:
-            return False
-        point = times(point, (found[0], sense * found[1]))
-        scale *= families[out].pair[1]
-    return point == (scale, 0)
-
-
-def times(a: Gauss, b: Gauss) -> Gauss:
-    """The product of two Gaussian integers, the rotations composed."""
-    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
-
-
-@cache
-def lists_of(families: tuple[FamilyRule, ...], quanta: int, bound: int) -> list[Table]:
-    """The general enumeration of the exact lists `quanta` whole quanta of a massless family could make at one Node, a function and no birth (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24 on the owner's word, several can be born; the selection among them open, the law as written selecting the pair, `birth_of`): every multiset of at most `bound` children of the plane families with a Pythagorean pair, each child at a sense, that completes the parents' identity (`conjugate_exact`) and keeps the two conservations (`kept`, the senses summing to the parents' 0 and the baryons to 0), the irreducible ones alone (`meeting_reducible`: a list that is the union of two parts' own lists over a split of the quanta into two meetings is the quanta's separate clicks and no meeting of all), each list its (family, sense) rows in the families' order, the lightest first by the sum of its children's walls (`walls_of`); `bound` the caller's (a test's or a tool's), no number of the engine's; a function of its arguments alone (`cache`)."""
-    from itertools import combinations_with_replacement, product
-
-    outs_at = [
-        k for k in candidates(families) if families[k].plane and gaussian(families[k].pair) is not None
-    ]
-    parents: Parents = tuple((0, 0) for _ in range(quanta))
-    found: set[Table] = set()
-    for size in range(1, bound + 1):
-        for outs in combinations_with_replacement(outs_at, size):
-            for senses in product((-1, 1), repeat=size):
-                table: Table = tuple(sorted(zip(outs, senses, strict=True)))
-                if (
-                    table not in found
-                    and kept(families, parents, table)
-                    and conjugate_exact(families, table)
-                    and not meeting_reducible(families, quanta, table)
-                ):
-                    found.add(table)
-    return sorted(found, key=lambda table: (walls_of(families, table), table))
-
-
-def walls_of(families: tuple[FamilyRule, ...], table: Table) -> int:
-    """The sum of a list's children's walls, the energy the list needs, each child one quantum of its family at its own wall (`derived.count_wall` at the quantum action; the families' pairs alone, so the sum stands at every T up to the one factor: here at T = 1, the ordering of the lists)."""
-    from event_universe.loader.derived import count_wall  # derived reads this module: imported here
-
-    return sum(count_wall(families[out], 1) for out, _sense in table)
-
-
-def meeting_reducible(families: tuple[FamilyRule, ...], quanta: int, table: Table) -> bool:
-    """Whether a list of a meeting of `quanta` massless quanta is the union of two lists each a meeting's own: over every split of the quanta into two parts of at least two each, a split of the table into two sub-multisets each kept and exact for its part (the identity, so for any part), the quanta's separate clicks and no meeting of all; a part of one quantum has the null list alone (two quanta meet, L188), so a list of two quanta is never reducible."""
-    meeting: Parents = ((0, 0), (0, 0))  # two quanta meet (L188), the parents of one meeting
-    if quanta < len(meeting) + len(
-        meeting
-    ):  # no split of fewer than two meetings' quanta into two meetings
-        return False
-    for take in range(1, 2 ** len(table) - 1):
-        one = tuple(row for at, row in enumerate(table) if take >> at & 1)
-        other = tuple(row for at, row in enumerate(table) if not take >> at & 1)
-        if all(
-            kept(families, meeting, part) and conjugate_exact(families, part) for part in (one, other)
-        ):
-            return True
-    return False
-
-
 def birth_of(families: tuple[FamilyRule, ...], parent: int) -> list[Table]:
-    """Matter's birth from light, the gapless meeting's own clause (the law's sentence on the owner's word of 2026-10-23; the birth's selector on the owner's method of 2026-10-24, 12:5x UTC, the lifts' draw within the energy): the lists two quanta of the gapless family `parent` make at one Node, as the law selects them (ALGEBRA.md, Matter's birth from light; No family is declared: each charged family is the lift of its prime's point, a point nature shows at no click is no family): the conjugate pair ((k, -1), (k, 1)) of every plane row standing at a LIFT of den's primes (`loader/circle.lift_points`, the point pi_k^(2 e_k) x the other primes, one per prime 1 mod 4; three at a den of three primes, the lightest lift by its leg, the next and the heaviest, the names the captions tool's), each completing the parents' identity (`conjugate_exact`) and keeping the two conservations (`kept`), the lightest first by its summed walls (`walls_of`, the gap's order); the swaps, the composed points and the top (den, 0) are no bodies and never candidates, though their rows stand and their walls fit; [] for a parent with a gap, whose quanta convert and are not born from (The conversion). The former list, every plane row of the circle (26 at the three-prime den, the law from 2026-10-24, 05:2x UTC, to the selector's build of 13:xx UTC), kept by name: over it the heaviest fitting pair was the point nearest the top, no body. A list of any length lays its children one record each through the same path (`act.born_items`); the general enumeration `lists_of` stands as a function."""
+    """Matter's birth from light, the gapless meeting's own clause (the law's sentence on the owner's word of 2026-10-23): the lists two quanta of a gapless family [den, den] make at one Node, where the parents' own list is empty (a massless family is no record out, `candidates`): every plane family with a gap and a Pythagorean pair at the senses 1 and -1, the conjugate pair, whose product is the identity the two gapless points' product is ((num + i s)(num - i s) = den^2), the children's senses summing to 0 and the charge kept (`kept`); The conversion's exactness and its charge convention stay as written for every other parent (the sense the charge's sign, the point the same at both senses, the neutron's chain standing on it). The lists in order of the pair's gap den^2 - num^2, the lightest first, the lister's order; the one born is the heaviest whose two walls fit within the two quanta's own energy at the Node, read by the act (`act.born_table`, `act.born_pair`; the law's sentence of 2026-10-24, the lightest within the top's threshold from 2026-10-23 to 2026-10-24 kept by name)."""
     if families[parent].pair[0] != families[parent].pair[1]:
         return []
-    lifts = {num for _vector, num, _sine in lift_points(families[parent].pair[1])}
-    parents: Parents = ((parent, 0), (parent, 0))
-    found = [
-        table
-        for k in candidates(families)
-        if families[k].plane and families[k].pair[0] in lifts and gaussian(families[k].pair) is not None
-        for table in (((k, -1), (k, 1)),)
-        if kept(families, parents, table) and conjugate_exact(families, table)
-    ]
-    return sorted(found, key=lambda table: walls_of(families, table))
+    found: list[Table] = []
+    for k in candidates(families):
+        family = families[k]
+        if not family.plane or gaussian(family.pair) is None:
+            continue
+        table: Table = ((k, -1), (k, 1))
+        if kept(families, ((parent, 0), (parent, 0)), table):
+            found.append(table)
+    return sorted(
+        found, key=lambda table: families[table[0][0]].pair[1] ** 2 - families[table[0][0]].pair[0] ** 2
+    )

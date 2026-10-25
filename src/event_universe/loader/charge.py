@@ -1,4 +1,4 @@
-"""The sign's reader is Pythagorean (ALGEBRA.md, The constants, the owner's word of 2026-10-24): a reader of the holder of the sign whose sine is irrational is refused by name (`pythagorean_readers`). The charge factors that stood here the same morning (`charge_factors`, each reader's Wronskian times 3 T den over its own count unit, the units brought to one wall) left with the law's sentence The charge written is the Wronskian over T div 2 for every reader: the write reads no family's sine and no count unit, one wall 2 E_s T Gamma (`derived.held_write_of`); kept by name as the defect, the lightest point's factor 1,822 times the heaviest prime's lift's on the one universe file."""
+"""The sign's reader is Pythagorean (ALGEBRA.md, The constants, the owner's word of 2026-10-24): a reader of the holder of the sign whose sine is irrational is refused by name (`pythagorean_readers`). The charge factors that stood here the same morning (`charge_factors`, each reader's Wronskian times 3 T den over its own count unit, the units brought to one wall) left with the law's sentence The charge written is the Wronskian over T div 2 for every reader: the write reads no family's sine and no count unit, one wall 2 E_s T Gamma (`derived.held_write_of`); kept by name as the defect, the electron's factor 1,822 times the proton's on the one universe file."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ def pythagorean_readers(families: tuple[FamilyRule, ...], index: int) -> None:
             raise ValueError(
                 f"{families[other].name!r} reads the holder of the sign {holder.name!r} with the pair "
                 f"[{num}, {den}], whose sine is irrational (den^2 - num^2 = {gap}, no square): a reader of "
-                "the sign writes the Wronskian per quantum by its count unit, exact for a Pythagorean pair "
+                "the sign writes its charge per quantum by its count unit, exact for a Pythagorean pair "
                 "alone; a reader with an irrational sine is refused, as the conversion refuses it from every "
                 "exact list (ALGEBRA.md, The conversion, 180; The constants, the owner's word of 2026-10-24; "
                 "the rounded count unit and the lcm of 236e74ed0 the former behaviour, kept by name as its defect)"

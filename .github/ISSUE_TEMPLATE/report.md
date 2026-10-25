@@ -6,7 +6,7 @@ title: "Report: "
 
 **The version read.** The tag, the Zenodo DOI or the commit (for example v2.1.0, 10.5281/zenodo.23421502, or a commit sha).
 
-**The claim.** Its name: a bold line of docs/ALGEBRA.md, or a section or an equation of a paper.
+**The claim.** Its name: a bold line of docs/ALGEBRA.md, a row of docs/CLAIMS.md by its id, or a section or an equation of a paper.
 
 **The command and the environment.** What was run, from which directory, with which Python and operating system.
 

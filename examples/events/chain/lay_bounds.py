@@ -30,7 +30,7 @@ def body_bound(board: Lattice, books) -> tuple[list[int], list[int]]:  # type: i
             for step in (-1, 1):
                 there = list(here)
                 there[axis] += step
-                if board.world.periodic[axis]:
+                if board.wrap[axis]:
                     there[axis] %= board.shape[axis]
                 elif not 0 <= there[axis] < board.shape[axis]:
                     continue

@@ -13,19 +13,23 @@ import hashlib
 import importlib.util
 import json
 import re
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 
-from event_universe import board_readings, flux, meeting_board, node, registry, swap
+from event_universe import board_readings, flux, front, node, swap
 from event_universe.bookings import Bookings, booked_of
-from event_universe.core.ports import AXES, arrival
+from event_universe.core.ports import AXES, Wrap, arrival
 from event_universe.core.rule3 import Rule
+from event_universe.features.click import presented
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import PLANE
+from event_universe.plane import NO_FACE, Faces
 from event_universe.readings import ports
 from event_universe.records import Booking, Record, level_at, record_slice
+from event_universe.take import faces_presented, faces_reported
 from event_universe.world_files import load_world
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,11 +49,15 @@ def arrivals_rule3(reads, arrivals, self_coefficient, wall, now, other, carry, d
     return direction * quotient, total - wall * quotient
 
 
-def oracle_step(record: Record, rule: Rule, direction: int = 1) -> Record:
-    """The first form's step on one line: the six arrivals of the level the step starts from, the first form."""
+def oracle_step(
+    record: Record, rule: Rule, wrap: Wrap, direction: int = 1, faces: Faces = NO_FACE
+) -> Record:
+    """The first form's step on one line: the six arrivals of the level the step starts from, the faces presented, the first form."""
     reads, self_coefficient, wall, _mass = rule
     level, other = (record.now, record.before) if direction == 1 else (record.before, record.now)
-    arrived = ports(level)
+    arrived = ports(level, wrap)
+    if faces:
+        arrived = presented(arrived, rule, level, other, record.remainder, faces, direction)
     found, remainder = arrivals_rule3(
         reads, arrived, self_coefficient, wall, level, other, record.remainder, direction
     )
@@ -58,14 +66,23 @@ def oracle_step(record: Record, rule: Rule, direction: int = 1) -> Record:
     return Record(record.before, np.asarray(found), np.asarray(remainder))
 
 
-def oracle_step_plane(re, im, rule, direction, pairs):  # type: ignore[no-untyped-def]
+def oracle_step_plane(re, im, rule, wrap, direction, faces, pairs):  # type: ignore[no-untyped-def]
     """The first form's step on a plane's two lines as one, every Link's pair on the two arrivals, the plain reads where no pair."""
     reads, self_coefficient, wall, _mass = rule
     now = (level_at(re, direction), level_at(im, direction))
     other = (re.before, im.before) if direction == 1 else (re.now, im.now)
     arrived = tuple(
-        tuple(arrival(level, axis, side) for axis in range(AXES) for side in (1, -1)) for level in now
+        tuple(arrival(level, axis, side, wrap) for axis in range(AXES) for side in (1, -1))
+        for level in now
     )
+    if faces[0] or faces[1]:
+        faced = [
+            presented(at, rule, now[k], other[k], (re, im)[k].remainder, faces[k], direction)
+            if faces[k]
+            else at
+            for k, at in enumerate(arrived)
+        ]
+        arrived = (faced[0], faced[1])
     folded = (
         ((reads, arrived[0]), (reads, arrived[1]))
         if pairs is None
@@ -93,17 +110,24 @@ def oracle_step_plane(re, im, rule, direction, pairs):  # type: ignore[no-untype
     return lines, (first, second)
 
 
-def oracle_step_family(index, families, states, rule, direction, record, pairs):  # type: ignore[no-untyped-def]
+def oracle_step_family(index, families, states, rule, wrap, direction, record, faces, pairs):  # type: ignore[no-untyped-def]
     """The first form's step on one record: line by line; a plane family plane by plane, the two lines as one under the Links' pairs where the record is turned or folded, two plain lines where it is not."""
     family, state = families[index], states[index]
     span = record_slice(family, record)
     own = state.lines[span]
+    faced: Mapping[int, Faces] = dict(faces or {})
     if not family.plane:
         traced = (
             family.axes and not family.wronskian
         )  # a holder of the content's tension lines: the shear's momentum, the lattice's step
         found = [
-            oracle_step(line, rule, direction)
+            oracle_step(
+                line,
+                rule,
+                wrap,
+                direction,
+                faced.get(number, NO_FACE),
+            )
             if not (traced and 1 <= number - span.start <= AXES)
             else line
             for number, line in enumerate(own, span.start)
@@ -114,7 +138,8 @@ def oracle_step_family(index, families, states, rule, direction, record, pairs):
     second: list[Record] = []
     for start in range(0, len(own), PLANE):
         pair = own[start], own[start + 1]
-        found, (begun, left) = oracle_step_plane(*pair, rule, direction, pairs)
+        at = faced.get(span.start + start, NO_FACE), faced.get(span.start + start + 1, NO_FACE)
+        found, (begun, left) = oracle_step_plane(*pair, rule, wrap, direction, at, pairs)
         lines, first, second = lines + found, first + begun, second + left
     return lines, (first, second)
 
@@ -123,17 +148,20 @@ def oracle_step_records(
     board: Lattice, index: int, direction: int
 ) -> tuple[list[Record], list[Booking]]:
     """The first form's step on every record of a family, with the engine's own read, rule and pairs (`flux.pairs_of` shares them) and the faces as `meeting.stepped` takes them."""
-    families, states = board.families, board.states
+    families, states, wrap = board.families, board.states, board.wrap
     gamma, unit = board.world.node_clock, board.unit
+    faces = faces_presented(board, index)
     lines: list[Record] = []
     bookings: list[Booking] = []
-    for record in range(registry.records_of(families[index], states[index].lines)):
-        content, factors = node.read(index, families, states, direction, gamma, unit, record)
+    for record in range(families[index].records):
+        content, factors = node.read(index, families, states, direction, wrap, gamma, unit, record)
         rule = node.rule_of(families[index], gamma, content, factors, unit)
         pairs = flux.pairs_of(
-            index, families, states, direction, gamma, content, factors, record, board.amplitude
+            index, families, states, direction, wrap, gamma, content, factors, record, board.amplitude
         )
-        found, booking = oracle_step_family(index, families, states, rule, direction, record, pairs)
+        found, booking = oracle_step_family(
+            index, families, states, rule, wrap, direction, record, faces, pairs
+        )
         lines, bookings = lines + found, bookings + [booking]
     return lines, bookings
 
@@ -142,7 +170,7 @@ def oracle_interval(board: Lattice) -> None:
     """The one Node's `Lattice.step` with the oracle's step in the place of the engine's; every other act the engine's own, in the engine's order: the fifth act (swap.kept before the phase act, swap.stepped after the held writes) and the densities' reading after it, the state at the interval's end (2026-10-23, The floor)."""
     board.interval, forms, turns = board.interval + 1, Bookings(), Bookings()
     kept_state = swap.kept(board)
-    node.phase_act(board.held, board.families, board.states, 1, board.world.node_clock)
+    node.phase_act(board.held, board.families, board.states, 1, board.wrap, board.world.node_clock)
     senses, stresses = board_readings.sense_currents(board), board_readings.stresses(board)
     rulers, begun = board.rulers(1), [s.lines for s in board.states]
     found = {index: oracle_step_records(board, index, 1) for index in range(len(board.families))}
@@ -155,13 +183,11 @@ def oracle_interval(board: Lattice) -> None:
             for held, gained in zip((forms, turns), booked, strict=True):
                 held.update(gained)
         state.lines = lines
+    faces_reported(board)
     for index in board.held:
         board.held_write(index, forms, turns, 1, stresses, senses, rulers, begun)
     swap.stepped(board, kept_state)
-    board.tick += 1
-    meeting_board.closed(
-        board, kept_state
-    )  # the board's own close, the engine's act as the engine takes it (2026-10-24: the law's twin logs the close's lines, the refusals by name among them, the same way)
+    front.advanced_fronts(board)
 
 
 def arrays(board: Lattice) -> list[tuple[str, np.ndarray]]:
@@ -241,6 +267,7 @@ def verdict(board: Lattice, intervals: int | None) -> dict[str, Any]:
     realised_from = max(
         clicks, default=0
     )  # below the last click's close the inverse returns the realised past
+    BACK.faces_from(engine, lines_engine)
     for _ in range(run):
         BACK.crossed(engine, lines_engine)
         engine.step_inverse()

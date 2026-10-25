@@ -108,10 +108,10 @@ async function inflate(b64) { const bytes = Uint8Array.from(atob(b64), c => c.ch
   function mix(a, b, t) { return [Math.round(a[0] + (b[0] - a[0]) * t), Math.round(a[1] + (b[1] - a[1]) * t), Math.round(a[2] + (b[2] - a[2]) * t)]; }
   let maxAbs = 1; for (const sl of S.now) for (const col of sl) for (const v of col) maxAbs = Math.max(maxAbs, Math.abs(v));
   let cMax = 61; for (const sl of S.content) for (const col of sl) for (const v of col) cMax = Math.max(cMax, v);
-  document.getElementById('lvl-scale').textContent = '+-' + maxAbs;
+  document.getElementById('lvl-scale').textContent = '±' + maxAbs;
   const cVac = S.content[0][0][0];
   document.getElementById('vac').textContent = cVac;
-  document.getElementById('well-scale').textContent = cVac + ' ... ' + cMax;
+  document.getElementById('well-scale').textContent = cVac + ' … ' + cMax;
   const cvL = document.getElementById('board-level'), cvW = document.getElementById('board-well'), bars = document.getElementById('bars');
   const A = rows.map(r => r.bodies[0].cx), B = rows.map(r => r.bodies[1].cx), SEP = rows.map((r, i) => B[i] - A[i]);
   const rA = rows.map(r => r.bodies[0].rms), rB = rows.map(r => r.bodies[1].rms), nA = rows.map(r => r.bodies[0].count), nB = rows.map(r => r.bodies[1].count);
@@ -187,7 +187,7 @@ async function inflate(b64) { const bytes = Uint8Array.from(atob(b64), c => c.ch
     if (S.count_x[s][x] !== S.count_x[s][m]) { mirrorFail = s; break; }
     for (let y = 0; y < YZ; y++) if (S.now[s][x][y] !== S.now[s][m][y] || S.content[s][x][y] !== S.content[s][m][y]) { mirrorFail = s; break; }
   }
-  const mirror = mirrorFail === null ? 'The slices on this page are mirror-exact under x -> ' + (X - 1) + ' - x at every frame (' + S.now.length + ' frames of the level, the content and the share along x)' : 'The mirror symmetry under x -> ' + (X - 1) + ' - x first breaks at frame ' + mirrorFail + ' (interval ' + (mirrorFail * STRIDE) + ')';
+  const mirror = mirrorFail === null ? 'The slices on this page are mirror-exact under x → ' + (X - 1) + ' − x at every frame (' + S.now.length + ' frames of the level, the content and the share along x)' : 'The mirror symmetry under x → ' + (X - 1) + ' − x first breaks at frame ' + mirrorFail + ' (interval ' + (mirrorFail * STRIDE) + ')';
   document.getElementById('summary').innerHTML = '<b>The result</b>: the distance between the two centroids fell from ' + SEP[0].toFixed(2) + ' to ' + SEP[N].toFixed(2) + ' Links in ' + N + ' intervals. A moved ' + (A[N] - A[0]).toFixed(2) + ' Links toward B and B ' + (B[0] - B[N]).toFixed(2) + ' toward A' + (ctrlEnd != null ? '; the body alone (the control, ' + ctrlN + ' intervals) ' + ctrlEnd.toFixed(2) + ' from the wall\'s push alone' : '') + '. The meeting: the distance falls under a third of its start at interval ' + iMeet + ' and is smallest, ' + Math.min(...SEP).toFixed(2) + ', at interval ' + iMin + '. From the meeting on A and B are the two halves of one record cut at x = ' + Math.floor(X / 2) + ': their centroids ' + Math.min(...fromMeet).toFixed(1) + ' to ' + Math.max(...fromMeet).toFixed(1) + ' Links apart from the meeting at ' + iMeet + ', ' + Math.min(...settled).toFixed(1) + ' to ' + Math.max(...settled).toFixed(1) + ' from ' + SETTLED + '; the rms radius of A\'s half ' + Math.min(...rSettled).toFixed(1) + ' to ' + Math.max(...rSettled).toFixed(1) + ' from ' + SETTLED + ', breathing in one written well, its deepest content on the mid-plane ' + cMax + ' against ' + c0 + ' at the start. ' + mirror + '; the shares read at the paces move with the paces: ' + Math.round(nA[N]) + ' and ' + Math.round(nB[N]) + ' at the end.';
   let t = 0, playing = false, timer = null;
   const play = document.getElementById('play'), speed = document.getElementById('speed');

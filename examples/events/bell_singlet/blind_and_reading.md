@@ -94,7 +94,7 @@ emission and read locally gives half the correlation (B2), and the deterministic
 the sawtooth with S = 2 exactly (B3). A draw at the click adds noise to a local picture and never
 correlation: B2's draw lowers B3's 2 to 1.41. The counting rule is declared, in the law's own word, and
 under the family's sign the antisymmetric pair is the family's declaration and no detector's pattern;
-the correlations follow from it on the board. A gate of the engine, not a trial of nature.
+the correlations follow from it on the board. A gate of the engine, not an experiment of nature.
 
 ## The click's reading, the one meeting (2026-10-20; the fifth world of 2026-10-19 folded into the (a, b) world)
 

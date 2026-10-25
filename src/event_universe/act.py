@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 
-from functools import cache
 from typing import TYPE_CHECKING
 
-from event_universe import conversion, credit
+from event_universe import conversion, credit, front
 from event_universe.core.rule3 import division_forward
 from event_universe.emission import laid_by_count
 from event_universe.loader.derived import FamilyRule, count_wall
@@ -13,7 +12,10 @@ from event_universe.loader.keys import Node
 from event_universe.reports import (
     birth_line,
 )
-from event_universe.take import Item, below_quantum
+from event_universe.take import (
+    Item,
+    faced,
+)
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -25,78 +27,71 @@ def click(board: Lattice, items: list[Item]) -> None:
 
 
 def written(board: Lattice, items: list[Item]) -> None:
-    """The write step of the act, the one swappable step, item by item (ALGEBRA.md, The click writes on the lattice, the undepleted beam; the two hands' line at the owner's word for the simple solution): a spread record's quantum is taken or given at the Nodes named through one comparison, `take.below_quantum`, the record's booked share at the Node against its own quantum W_rec; where the record is local and whole there the absorption is the hole to 0 by the face (every line of the record whatever their number) and the emission the lay of one whole quantum (`emitted_quantum`), and where the record is a beam, many quanta per Node, nothing is written on the board: the quantum passes in the books alone, the count moved by the item's change as for every item and the family's deficit, the board's share over the books' count in quanta, moved against it (`credit.Books.deficits`, up by one for an absorption written at no Node named, down by one for an emission not laid, the deficit's condition the complement of the lay's: an emission naming several Nodes with a beam among them lays nothing and moves the deficit, though no shipped list names several Nodes for an emission; printed in the books' line), and a quantum passing into or out of a spread record ends its windows' account, its unabsorbed share and its denominator dropped from the credit's books to begin again at the count left (`credit.Books.account_ended`, `lists.absorption`); a record declared a NodeDetector at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node faced, with the Ports faced there (`front.started`), and a record whose count stays at one or more has no front; every lay of the step is the one lay act's, which writes every line a lay changed at a Node, levels or remainder, as one `lay` line with the levels before and after (`lay.written`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's hand: the face's part crossed by Rule3's inverse, the lay's part from its line). Part G (both hands' lines of 2026-10-10, the emission's write): the recoil is booked at the act whose draw fixes the direction; a directed packet laid here (`emission.laid_packet`, the direction the emission's own draw) carries its lattice momentum at birth, and the emitting body's books take its negative as the recoil owed, in T's unit (`scaled`), with the two readings for the emission's own credit line, the recoil booked at the emission and lost to the source: booked on this line and written nowhere, the body's part standing as laid (ALGEBRA.md, The click's algebra beyond the law; the recoil of a body held at declared Nodes is the declaration's); the source in time books none here, the whole recoil the click's. The standing origin (C6, 2026-10-19): where the hole's Node is booked and not faced (no side, a two-sided arrival or a Port set whose read coefficients sum above the wall), its one-Node share stands and spreads behind the front at the count 0, carried by the deficit book and within B1's one half of a quantum, the consequence named."""
-    standing = [
-        below_quantum(board, item) for item in items
-    ]  # every item's Nodes read before any item's write (the owner's rule of 2026-10-24: any Nodes in any order; the branch digit-order)
+    """The write step of the act, the one swappable step, item by item (ALGEBRA.md, The click writes on the lattice, the undepleted beam; the two hands' line at the owner's word for the simple solution): a spread record's quantum is taken or given at the Nodes named through one comparison, `faced`, the record's booked share at the Node against its own quantum W_rec; where the record is local and whole there the absorption is the hole to 0 by the face (every line of the record whatever their number) and the emission the lay of one whole quantum (`emitted_quantum`), and where the record is a beam, many quanta per Node, nothing is written on the board: the quantum passes in the books alone, the count moved by the item's change as for every item and the family's deficit, the board's share over the books' count in quanta, moved against it (`credit.Books.deficits`, up by one for an absorption written at no Node named, down by one for an emission not laid, the deficit's condition the complement of the lay's: an emission naming several Nodes with a beam among them lays nothing and moves the deficit, though no shipped list names several Nodes for an emission; printed in the books' line), and a quantum passing into or out of a spread record ends its windows' account, its unabsorbed share and its denominator dropped from the credit's books to begin again at the count left (`credit.Books.account_ended`, `lists.absorption`); a record declared a NodeDetector at one Node laid part by part at its new count (`parted`), the direction and sense of the part its quantum leaves read first and passed to the part it enters (the phase passes with the quantum), its books' part the one carrying the count and its labels' coherence ended; where a spread record's count reaches 0 its erasing front begins from every Node faced, with the Ports faced there (`front.started`), and a record whose count stays at one or more has no front; every lay of the step is the one lay act's, which writes every line a lay changed at a Node, levels or remainder, as one `lay` line with the levels before and after (`lay.written`, `reports.lay`), the diagnostic the host's tool crosses the lay from (the mathematician's hand: the face's part crossed by Rule3's inverse, the lay's part from its line). Part G (both hands' lines of 2026-10-10, the emission's write): the recoil is booked at the act whose draw fixes the direction; a directed packet laid here (`emission.laid_packet`, the direction the emission's own draw) carries its lattice momentum at birth, and the emitting body's books take its negative as the recoil owed, in T's unit (`scaled`), with the two readings for the emission's own credit line, `BOOKED_AT_EMISSION` and `LOST_TO_SOURCE`: booked on this line and written nowhere, the body's part standing as laid (ALGEBRA.md, The click's algebra beyond the law; the recoil of a body held at declared Nodes is the declaration's); the source in time books none here, the whole recoil the click's. The standing origin (C6, 2026-10-19): where the hole's Node is booked and not faced (`NO_SIDE`, a two-sided arrival or a Port set whose read coefficients sum above the wall), its one-Node share stands and spreads behind the front at the count 0, carried by the deficit book and within B1's one half of a quantum, the consequence named."""
+    holes: dict[int, list[tuple[Node, tuple[int, ...]]]] = {}
+    faces = [
+        faced(board, item) for item in items
+    ]  # every item's faces read before any item's write (the owner's rule of 2026-10-24: any Nodes in any order; the branch digit-order)
     for number, item in enumerate(items):
-        if number == len(standing):  # an item the births appended: its Nodes read as it comes
-            standing.append(below_quantum(board, item))
-        whole, was = standing[number], board.credit.counts[item.family]
-        unwritten = len(whole) < len(item.nodes)
-        born = born_list(board, item, whole) if unwritten else []
-        if not unwritten:
+        if number == len(faces):  # an item the births appended: its faces read as it comes
+            faces.append(faced(board, item))
+        whole, was = faces[number], board.credit.counts[item.family]
+        drawn = list(zip(item.nodes, item.ports or ((),) * len(item.nodes), strict=True))
+        unwritten = not whole if item.delta < 0 else len(whole) < len(item.nodes)
+        pair = born_pair(board, item, whole) if unwritten and item.delta > 0 else []
+        if item.delta > 0 and not unwritten:
             laid_by_count(board, item)
-        elif not born:  # a quantum born into a list is counted in its children, not in its own family
+        elif not pair:  # a quantum born into the pair is counted in its children, not in its own family
             board.credit.counts[item.family] += item.delta
-        if not unwritten:  # a lay that raised the count: the births' book
+        if item.delta > 0 and not unwritten:  # a lay that raised the count: the births' book
             credit.born(board, item.family, was)
-        if born:  # Matter's birth from light: the second quantum of a gapless family meeting the first at a Node lays the list's children there, N records, the items walking this same step
-            items.extend(born)
+        if item.delta < 0:  # the front from every drawn Node, faced or not (C6, the re-fix)
+            holes.setdefault(item.family, []).extend(drawn)
+        if pair:  # Matter's birth from light: the second quantum of a gapless family meeting the first at a Node lays the conjugate pair there, the two items walking this same step
+            items.extend(pair)
             if board.output is not None:
                 board.output(
                     birth_line(
                         board.interval,
                         board.families[item.family].name,
-                        [board.families[child.family].name for child in born],
-                        [child.sense for child in born],
-                        born[0].nodes,
+                        [board.families[born.family].name for born in pair],
+                        [born.sense for born in pair],
+                        pair[0].nodes,
                     )
                 )
-        elif unwritten:  # the undepleted beam: the quantum in the books alone
+        elif unwritten:  # the undepleted beam, or no Node with a side: the quantum in the books alone
             board.credit.deficits[item.family] = board.credit.deficits.get(item.family, 0) - item.delta
-
-
-def affordable(
-    families: tuple[FamilyRule, ...], parent: int, action: int, energy: int, over: int
-) -> tuple[conversion.Table, ...]:
-    """The lists a meeting of two quanta of the gapless family `parent` can afford at one Node (ALGEBRA.md, Matter's birth from light, the birth's selector, 2026-10-24, 13:xx UTC; The board reads itself): among `conversion.birth_of`'s lists, the lifts' conjugate pairs lightest first, every one whose children's walls summed, SUM over the children of count_wall(child) (`list_walls`; the pair's two walls, 2 x 3 T sqrt(den^2 - num^2), `loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over` (the fraction the caller reads at the Node, `meeting_board.child_of`: twice the share over the whole quanta standing, two at the least), the comparison cross-multiplied, exact in the integers with no division and no rounding; empty where none fits, the Node then no meeting. The pick among them is the Node's own draw (`meeting_board.drawn_among`), not this function's."""
-    return tuple(
-        table for walls, table in list_walls(families, parent, action) if walls * over <= energy
-    )
+    for family, absorbed in sorted(holes.items()):
+        if board.credit.counts[family] <= 0 and absorbed:  # the count at 0: its front from every Node
+            front.started(board, family, absorbed)
 
 
 def born_table(
     families: tuple[FamilyRule, ...], parent: int, action: int, energy: int, over: int
 ) -> conversion.Table | None:
-    """The former clause, kept by name and dated (the law from the owner's word of 2026-10-24, 05:2x UTC, to the selector's build of the same day, 13:xx UTC; ALGEBRA.md, Matter's birth from light: "the heaviest conjugate pair whose two walls fit within the two meeting quanta's own energy"; before it, to 2026-10-23, the lightest within the threshold 2 x 3 den T): the heaviest of the affordable lists (`affordable`), None where none fits. A sentence that births a thing, which the owner's word forbids (ALGEBRA.md, No family is declared, (b)): the board's own close draws among the affordable lists instead (`meeting_board.drawn_among`); this clause stands for the write step's birth at an emission into standing light (`born_list`), the path of the declared worlds, which no bare world reaches."""
-    fitting = affordable(families, parent, action, energy, over)
+    """The pair two quanta of a gapless family make at one Node under the law's sentence of 2026-10-24 (ALGEBRA.md, Matter's birth from light, the owner's word, 05:2x UTC: the heaviest conjugate pair of a plane family the universe declares whose two walls fit within the two meeting quanta's own energy as read from the Node's own levels; the former clause, the lightest within the threshold 2 x 3 den T, two quanta at the top of the band, from 2026-10-23 to 2026-10-24, kept by name): among `conversion.birth_of`'s tables, the lightest first, the heaviest whose two walls, 2 x count_wall(child) = 2 x 3 T sqrt(den^2 - num^2) (`loader/derived.count_wall`), are at or below the two quanta's energy `energy` / `over`, the fraction the caller reads at the Node (the board's two n-ths of the Node's share where n whole quanta stand, `meeting_board.child_of`; the act's standing n-th with the arriving quantum's own unit, `born_pair`), the comparison cross-multiplied, 2 x count_wall(child) x over <= energy, exact in the integers with no division and no rounding; None where no pair fits, nothing then born."""
+    fitting = [
+        table
+        for table in conversion.birth_of(families, parent)
+        if 2 * count_wall(families[table[0][0]], action) * over <= energy
+    ]
     return fitting[-1] if fitting else None
 
 
-@cache
-def list_walls(
-    families: tuple[FamilyRule, ...], parent: int, action: int
-) -> tuple[tuple[int, conversion.Table], ...]:
-    """Every exact list two quanta of the gapless family `parent` make (`conversion.birth_of`) with the sum of its children's walls at the quantum action, SUM over the children of count_wall(child) (`loader/derived.count_wall`), lightest first: a function of the families and the action alone, made once per universe (`cache`; the board's close asks it at every meeting Node)."""
-    return tuple(
-        (sum(count_wall(families[out], action) for out, _sense in table), table)
-        for table in conversion.birth_of(families, parent)
-    )
-
-
-def born_list(board: Lattice, item: Item, whole: list[Node]) -> list[Item]:
-    """Matter's birth from light, the gapless meeting's own clause (ALGEBRA.md, the law's sentence on the owner's word of 2026-10-23, the heaviest within the two quanta's own energy on his word of 2026-10-24, N children one record each on his word of the same day, several can be born; `conversion.birth_of`, `born_table`): a quantum of a gapless family [den, den] given at a Node where its family's quantum already stands is not written there, and in place of the books' deficit the two quanta make the heaviest exact list of children whose summed walls fit within their own energy, laid at that Node as the list's items of this write step, one record per child at the child's own sense (`born_items`, N records of the write step, 2026-10-24; the senses summing to 0, the charge kept, and each record's Wronskian its own, sourcing its own row of the sign); the energy read at the Node by the law's own acts: the standing light's share there (`Lattice.share_of`, the count is the record's share, the Node's two levels and its six Links, the read `take.faced` took), n W_c sin omega(k) for the n whole quanta standing at the wave number k, n the floor of the share over the record's unit (one division act, the floor `meeting_board.meetings` takes), the standing quantum's n-th of it, and the arriving quantum's own W_c sin Omega at its resonance (`emission.born_unit`, the act that gives a record its unit at its first lay; W_c for a lay by the count, a one-Node lay carrying no wave number), the two together (share + n x arriving) / n; [] where the family has a gap, where the universe declares no such pair, or where no pair's walls fit, the deficit then booked as before (the former clause's lightest pair within 2 x 3 den T was born at every meeting whatever the light's frequency, the threshold a tautology). The items walk the same write step as a conversion's records out (`laid_by_count` at the pair [den, den] of the child, the births' book by `credit.born`), so the lay is logged at its interval and undone by the run back as every lay is (The lay's inverse)."""
+def born_pair(board: Lattice, item: Item, whole: list[tuple[Node, tuple[int, ...]]]) -> list[Item]:
+    """Matter's birth from light, the gapless meeting's own clause (ALGEBRA.md, the law's sentence on the owner's word of 2026-10-23, the heaviest within the two quanta's own energy on his word of 2026-10-24; `conversion.birth_of`, `born_table`): a quantum of a gapless family [den, den] given at a Node where its family's quantum already stands is not written there, and in place of the books' deficit the two quanta make the heaviest conjugate pair of a plane family the universe declares whose two walls fit within their own energy, laid at that Node as two items of this write step at the senses -1 and 1 (the senses summing to 0, the charge kept); the energy read at the Node by the law's own acts: the standing light's share there (`Lattice.share_of`, the count is the record's share, the Node's two levels and its six Links, the read `take.faced` took), n W_c sin omega(k) for the n whole quanta standing at the wave number k, n the floor of the share over the record's unit (one division act, the floor `meeting_board.meetings` takes), the standing quantum's n-th of it, and the arriving quantum's own W_c sin Omega at its resonance (`emission.born_unit`, the act that gives a record its unit at its first lay; W_c for a lay by the count, a one-Node lay carrying no wave number), the two together (share + n x arriving) / n; [] where the family has a gap, where the universe declares no such pair, or where no pair's walls fit, the deficit then booked as before (the former clause's lightest pair within 2 x 3 den T was born at every meeting whatever the light's frequency, the threshold a tautology). The items walk the same write step as a conversion's records out (`laid_by_count` at the pair [den, den] of the child, the births' book by `credit.born`), so the lay is logged at its interval and undone by the run back as every lay is (The lay's inverse)."""
     family = board.families[item.family]
     if family.pair[0] != family.pair[1] or family.held:
         return []
     action = board.world.quantum_action
-    nodes = tuple(node for node in item.nodes if node not in set(whole)) or item.nodes[:1]
+    nodes = (
+        tuple(node for node in item.nodes if node not in {at for at, _ports in whole}) or item.nodes[:1]
+    )
     at = nodes[0]
     shares, frozen = board.share_of(item.family, 1, board.mask(nodes[:1]))
     if bool(frozen[at]):
         return []  # a frozen Node births nothing: its share is not read there
-    share = int(shares[at])  # the standing massless record's energy
+    share = int(shares[at])  # the standing light's energy
     standing = max(
         int(division_forward(share, board.credit.units[item.family], 0)[0]), 1
     )  # the whole quanta standing there
@@ -105,16 +100,5 @@ def born_list(board: Lattice, item: Item, whole: list[Node]) -> list[Item]:
     table = born_table(board.families, item.family, action, share + standing * arriving, standing)
     if table is None:
         return []
-    return born_items(board.families, table, nodes)
-
-
-def born_items(
-    families: tuple[FamilyRule, ...], table: conversion.Table, nodes: tuple[Node, ...]
-) -> list[Item]:
-    """The items of a list a meeting selects, one per child (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24 on the owner's word, several can be born: N records of the write step, one per child of the list, each at its own sense): each child one whole quantum at its family's massless pair [den, den] at the list's sense, laid on its own record of the family, its position among the list's children of that family (`Item.record`; `emission.laid_by_count`, `derived.children_of`), so that each born record carries its Wronskian and writes its own row of the sign; nothing here counts two."""
-    found: list[Item] = []
-    for number, (out, sense) in enumerate(table):
-        den = families[out].pair[1]
-        record = sum(1 for other, _sense in table[:number] if other == out)
-        found.append(Item(out, 1, nodes, (den, den), sense=sense, record=record))
-    return found
+    den = board.families[table[0][0]].pair[1]
+    return [Item(out, 1, nodes, (den, den), sense=sense) for out, sense in table]

@@ -7,9 +7,10 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import flux, node, records
+from event_universe import flux, node, records, take
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import wall_of
+from event_universe.plane import NO_FACE
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -66,9 +67,12 @@ def stepped(board: Lattice, index: int, direction: int, begun: list[list[records
     """(ALGEBRA.md, The shear's momentum is carried at the volume's wall; features/held_write) The three tension lines of one held row stepped as the shear's momentum (flux.step_momentum): the rule of the row's own read at the interval's start (`begun`, the lines the direction starts from), the Node's own three volumes in the direction, forward (X_before, X_now, X_next) with X_next the time line after its step and its write, backward (X_next, X_now, X_before) with X_before the time line's inverse's output (the reversibility hand's Theorem 1: every numerator a function of the post-state in that order) and the faces the click act presents."""
     family, gamma, unit = board.families[index], board.world.node_clock, board.unit
     started = [replace(s, lines=lines) for s, lines in zip(board.states, begun, strict=True)]
+    faces = take.faces_presented(board, index)
     lines = list(board.states[index].lines)
     for record in range(family.records):
-        content, factors = node.read(index, board.families, started, direction, gamma, unit, record)
+        content, factors = node.read(
+            index, board.families, started, direction, board.wrap, gamma, unit, record
+        )
         rule = node.rule_of(family, gamma, content, factors, unit)
         first = records.record_slice(family, record).start
         time_begun, time_now = begun[index][first], lines[first]
@@ -77,8 +81,9 @@ def stepped(board: Lattice, index: int, direction: int, begun: list[list[records
             if direction == 1
             else (time_begun.now, time_begun.before, time_now.before)
         )
+        faces_of = [faces.get(first + 1 + a, NO_FACE) for a in range(AXES)]
         lines[first + 1 : first + 1 + AXES] = flux.step_momentum(
-            lines[first + 1 : first + 1 + AXES], rule, direction, volumes
+            lines[first + 1 : first + 1 + AXES], rule, board.wrap, direction, faces_of, volumes
         )
     board.states[index].lines = lines
 

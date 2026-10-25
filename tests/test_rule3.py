@@ -104,6 +104,53 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
 
 
+RULE_LINES = (r"mass \* now\b", r"wall \* \(now \+ now - other\)", r"direction \* total \+ remainder")
+RULE_LINES += (
+    r"direction \* quotient",
+    r"now \* now \+ before \* before",
+)  # the flux line, the carried division, the form
+RULE_ARITHMETIC = RULE_LINES + (
+    r"self_coefficient \* now\b",
+    r"wall \* other\b",
+    r"direction \* total \+ carry",
+)
+RULE_ARITHMETIC += (
+    r"self_coefficient \* before\b",
+    r"wall \* before\b",
+    r"wall \* now \+ remainder",
+    r"direction \* carry\b",
+)
+
+
+def test_no_other_file_of_src_writes_the_rules_arithmetic():
+    """(d) of the model owner's target: the rule is written once, in core/rule3.py; every other file of src/ calls it (RULE_LINES, the rule's own lines: the Node's term, the far level's, the carry's and the form's; RULE_ARITHMETIC adds the two-function form, refused anywhere in src/ as well). Every shift of an array across Nodes in src/ is core/ports.py's `shifted` (no np.roll, no take, no shift elsewhere: a Node's level goes to its six neighbours only through the Ports, read through `arrival` under the board's face rule, and every reading of a neighbour's level, Rule3's arrival sums, the currents at a Port, a body's shell and region, takes it from there), and no function of src/ is a split of its own. The Node, the lattice, core and the folders hold no split of their own."""
+    offenders = []
+    for path in sorted(p for p in SOURCE.rglob("*.py") if p.name != "rule3.py"):
+        text = path.read_text(encoding="utf-8")
+        for match in (m for pattern in RULE_ARITHMETIC for m in re.finditer(pattern, text)):
+            line = text.count("\n", 0, match.start()) + 1
+            offenders.append(f"{path.relative_to(ROOT)}:{line} {match.group(0)}")
+    assert not offenders, offenders
+    assert all(re.search(p, (SOURCE / "core" / "rule3.py").read_text()) for p in RULE_LINES)
+    SHIFT_HOME = {"src/event_universe/core/ports.py": {"shifted"}}
+    SHIFT_TOKENS, found = re.compile(r"np\.roll\(|\._shift\(|\.take\("), {}
+    for path in sorted(SOURCE.rglob("*.py")):
+        text = path.read_text(encoding="utf-8")
+        if not SHIFT_TOKENS.search(text):
+            continue
+        functions = [n for n in ast.walk(ast.parse(text)) if isinstance(n, ast.FunctionDef)]
+        spans = [(n.lineno, n.end_lineno or n.lineno, n.name) for n in functions]
+        for match in SHIFT_TOKENS.finditer(text):
+            line = text.count("\n", 0, match.start()) + 1
+            inner = max((span for span in spans if span[0] <= line <= span[1]), key=lambda span: span[0])
+            found.setdefault(path.relative_to(ROOT).as_posix(), set()).add(inner[2])
+    assert {home: found.pop(home) for home in SHIFT_HOME} == SHIFT_HOME and found == {}, found
+    stepping = [SOURCE / "node.py", SOURCE / "flux.py", SOURCE / "lattice.py", *SOURCE.glob("core/*.py")]
+    for path in stepping + list(SOURCE.glob("features/*/*.py")):
+        for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            assert not (isinstance(item, ast.FunctionDef) and "split" in item.name.lower()), path.name
+
+
 LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 6}), frozenset({4, 12})
 
 
@@ -144,6 +191,18 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
             if isinstance(item, ast.Constant) and isinstance(item.value, str) and id(item) not in spoken:
                 found.append(f"{path.relative_to(ROOT)}:{item.lineno} {item.value!r}")
     assert not found, found
+
+
+STEP_CALLS = ("rule3", "carried_division")  # the step's line and the one division under it
+NODE_STATE = {
+    "lines": "list[Record]",
+    "write_remainders": "list[np.ndarray]",
+    "phases": "list[list[Record]]",
+}  # the phase lines, the holder of the sign under the rotation's (features/phase, Part C)
+TABLE_ROW = re.compile(r"^\| `([a-z_]+)`")  # a row of ENGINE.md's NodeState table, its first column
+
+
+INTEGER_KINDS = re.compile(r"np\.u?int(?:8|16|32|64|p)?\b|np\.iinfo|\"int64\"|dtype=np\.")
 
 
 def test_the_composed_paces_are_the_laws_two_functions_of_the_content_and_their_factors():

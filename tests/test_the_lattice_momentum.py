@@ -1,19 +1,20 @@
 """The lattice momentum (ALGEBRA.md, The lattice momentum, a theorem of Rule3; readings.momentum_of, features/currents `momentum_terms`): P_a = SUM_i (F_(i,i-a) - F_(i,i+a)) in the current's own unit, F_ij = num (now_i before_j - before_i now_j), conserved exactly by the rational step at uniform paces on a periodic board and to the floors on the integers, every step's move below the hands' bound 2 num SUM_i |now_(i+a) - now_(i-a)|, a walk of mean 0; a wave along +x has P_x above 0 and P_y = P_z = 0. On a 3-cube torus of the one universe file's light family stepped by the engine's own `flux.step_line`."""
 
+import json
 import math
 from fractions import Fraction
 
 import numpy as np
 
 from event_universe import flux, node, readings, records
-from event_universe.core.ports import LINK_UNIT, PORT_SIDES
-from event_universe.loader.universe import MASSLESS, universe_of
-from tests.laws_universe import CUBE, SMALL
+from event_universe.core.ports import PORT_SIDES, Wrap
+from event_universe.loader.universe import universe_of
+from tests.laws_universe import CUBE, UNIVERSE
 
-INTEGERS, FAMILIES = universe_of(SMALL)
-LIGHT = [family.name for family in FAMILIES].index(MASSLESS)
-GAMMA, UNIT = INTEGERS["node_clock"], LINK_UNIT
-SHAPE = (CUBE,) * 3
+INTEGERS, FAMILIES = universe_of(json.loads(UNIVERSE.read_text(encoding="utf-8")))
+LIGHT = [family.name for family in FAMILIES].index("light")
+GAMMA, UNIT = INTEGERS["node_clock"], INTEGERS["link_unit"]
+SHAPE, TORUS = (CUBE,) * 3, Wrap(True, True, True)
 INTERVALS, AMPLITUDE = 50, 5000
 
 
@@ -43,7 +44,7 @@ def test_the_momentum_is_conserved_exactly_in_the_mirror_and_to_the_floor_on_the
         )
 
     kept = [mirror(now, before, axis) for axis in range(3)]
-    first = readings.momentum_of(num, [line])
+    first = readings.momentum_of(num, [line], TORUS)
     assert [Fraction(p) for p in first] == kept
     last, steps = first, []
     for _ in range(INTERVALS):
@@ -64,8 +65,8 @@ def test_the_momentum_is_conserved_exactly_in_the_mirror_and_to_the_floor_on_the
         assert [
             mirror(now, before, axis) for axis in range(3)
         ] == kept  # the theorem: exact at uniform paces
-        line = flux.step_line(line, rule)
-        found = readings.momentum_of(num, [line])
+        line = flux.step_line(line, rule, TORUS)
+        found = readings.momentum_of(num, [line], TORUS)
         steps.append(max(abs(found[axis] - last[axis]) for axis in range(3)))
         assert all(abs(found[axis] - last[axis]) < bounds[axis] for axis in range(3))
         last = found
@@ -81,5 +82,5 @@ def test_the_momentum_is_conserved_exactly_in_the_mirror_and_to_the_floor_on_the
         np.rint(AMPLITUDE * np.cos(k * x + omega)).astype(object),
         np.zeros(SHAPE, dtype=object),
     )
-    along = readings.momentum_of(num, [wave])
+    along = readings.momentum_of(num, [wave], TORUS)
     assert along[0] > 0 and along[1:] == (0, 0)

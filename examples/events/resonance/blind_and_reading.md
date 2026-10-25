@@ -290,7 +290,7 @@ Lattice reading is a diagnostic and labelled so.
 
 ### The reading at 480 seeds on the branch, a diagnostic by name (branch detuned-reread on main at 7033a6aa, 2026-10-03, 09:11 UTC)
 
-A reading on a branch is a diagnostic by name; the trial's reading is the run on main at the merged
+A reading on a branch is a diagnostic by name; the experiment's reading is the run on main at the merged
 sha after the squash, which re-reads these numbers and replaces this section's verdicts with its own.
 `PYTHONPATH=src python examples/events/resonance/read_world.py --seeds 480`, both worlds, the seeds 1 to
 480, on the branch's tree (main at 7033a6aa with the reader's one change): 273 seconds for the two worlds
@@ -328,7 +328,7 @@ Lattice readings and labelled so.
 
 ### The reading on main at the merged sha e62b6651 (2026-10-03, 10:19Z)
 
-The trial's reading, the owner's word of 12:40 Israel: the run on `main` at the merged sha after the
+The experiment's reading, the owner's word of 12:40 Israel: the run on `main` at the merged sha after the
 squash of the round (#1726), its reading appended here beside the blind, which stands as written.
 `PYTHONPATH=src python examples/events/resonance/read_world.py --seeds 480`, both worlds, the seeds 1 to
 480, on the tree of `main` at e62b6651 and nothing else: 854 seconds for the two worlds on one core at a

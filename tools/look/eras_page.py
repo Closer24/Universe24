@@ -1,4 +1,4 @@
-"""The eras' page, a page tool in the look's dark tokens (tools/look/tokens.css, the one block the two pages share; tools/look/page.py, which held the block, and tools/look/record.py, the look of the record worlds, struck 2026-10-24, dead code: the owner's word, the code lean: record.py imported the faces' `loader/world.AXES`, gone, and no run reached either) (docs/ENGINE.md section 6; DESIGN section 4 (g)): one self-contained HTML page from the log tools/eras.py writes (`<world>.eras.jsonl`, one JSON line per interval after the header) and, where the folder holds them, the blind (`--blind <world>.blind.json`, its rows in a table and, under its optional key `course` as rows of `interval`, `U` and `velocity`, the model's course dashed beside the board's) and the notes (`--notes notes.md`, a Markdown text rendered as one prose section, the page's leading panel), and the clicks log the same run kept (`--clicks <world>.clicks.jsonl`, tools/eras.py's second file: the detector's clicks drawn as their magnitude on a log axis, the quanta at the detector's Nodes with its time line, and the fifth act's fires where the eras log carries them; history kept one way, nothing run back). The page draws, against the interval, U = level / Gamma and H = v / Gamma of the first held row of the content with the eras shaded as the board reads them (the family whose write's sum is largest at the interval sources the era, the crossing of two writes the transition); q_p from the slope of 1 / v over spans and nothing else (the estimator on the integers' staircase, d(1 / v) / dt = n_eff / (2 Gamma), q_board = n_eff / 2 - 1, q_p = q_board - 1, the span picked on the page) with the blind's bands where the blind names them; the families' writes on a log axis; the constraint's residual R beside the tracker's 2 (n_eff - c) / (2 c - n_eff) at the Node-mean weight; the hill's weight's least, largest and Node-mean; the seed Node's share within one Link per family, the well's depth, the seed's contrast U_seed - U_void and the clock ratio e^(-(U_seed - U_void)) (the wall observer's clock against the void's, a reading); the rulers at the far Node. The legend names what is an input (the pairs, the four integers, the seed's counts, light's amplitude) and what the board reads by itself (every curve), the hypotheses under which the course is nature's by name, the crawl once as the integers' end where the velocity falls below one level per interval (the floor, the crawl and the pulses one phenomenon), the coast as the reals' mean, the stop as the other booking's end under the rounded factor (named, not shown) and nature's late acceleration as MISSING. Every number on the page is the log's or the blind's; the page computes the floats named above and nothing of the law; the board's own frames are the look page's (`<world>.look.html` by tools/look/record.py and page.py), linked where it stands beside the page.
+"""The eras' page, a page tool beside tools/look/page.py in its dark tokens (docs/ENGINE.md section 6; DESIGN section 4 (g)): one self-contained HTML page from the log tools/eras.py writes (`<world>.eras.jsonl`, one JSON line per interval after the header) and, where the folder holds them, the blind (`--blind <world>.blind.json`, its rows in a table and, under its optional key `course` as rows of `interval`, `U` and `velocity`, the model's course dashed beside the board's) and the notes (`--notes notes.md`, a Markdown text rendered as one prose section, the page's leading panel), and the clicks log the same run kept (`--clicks <world>.clicks.jsonl`, tools/eras.py's second file: the detector's clicks drawn as their magnitude on a log axis, the quanta at the detector's Nodes with its time line, and the fifth act's fires where the eras log carries them; history kept one way, nothing run back). The page draws, against the interval, U = level / Gamma and H = v / Gamma of the first held row of the content with the eras shaded as the board reads them (the family whose write's sum is largest at the interval sources the era, the crossing of two writes the transition); q_p from the slope of 1 / v over spans and nothing else (the estimator on the integers' staircase, d(1 / v) / dt = n_eff / (2 Gamma), q_board = n_eff / 2 - 1, q_p = q_board - 1, the span picked on the page) with the blind's bands where the blind names them; the families' writes on a log axis; the constraint's residual R beside the tracker's 2 (n_eff - c) / (2 c - n_eff) at the Node-mean weight; the hill's weight's least, largest and Node-mean; the seed Node's share within one Link per family, the well's depth, the seed's contrast U_seed - U_void and the clock ratio e^(-(U_seed - U_void)) (the wall observer's clock against the void's, a reading); the rulers at the far Node. The legend names what is an input (the pairs, the four integers, the seed's counts, light's amplitude) and what the board reads by itself (every curve), the hypotheses under which the course is nature's by name, the crawl once as the integers' end where the velocity falls below one level per interval (the floor, the crawl and the pulses one phenomenon), the coast as the reals' mean, the stop as the other booking's end under the rounded factor (named, not shown) and nature's late acceleration as MISSING. Every number on the page is the log's or the blind's; the page computes the floats named above and nothing of the law; the board's own frames are the look page's (`<world>.look.html` by tools/look/record.py and page.py), linked where it stands beside the page.
 
 The bangs (the owner's word of 2026-10-23): every bang is marked and numbered, the seed at the first interval bang 1 and each later bang the interval the board's volume velocity turns from falling to rising after the fifth act fired since the last bang (the return), the tops numbered beside, the horizon's spans shaded with the count of Links held at the wall (the black hole, in the owner's words), and with `--nodes <world>.nodes.jsonl` (tools/eras.py's Nodes' log, X at every Node) the least X over the board per interval drawn on a log axis against the floor X_f = volume_of(Gamma, -Gamma) by the engine's own `swap.floor_of`, so the distance to X = 0 is seen; readings of the logs, nothing computed of the law.
 
@@ -23,17 +23,17 @@ from captions import (  # noqa: E402  (the look's own module, beside this tool)
     parse_log,
 )
 
-TOKENS_FILE = Path(__file__).with_name("tokens.css")
-TOKENS = re.search(r":root \{.*?\n\}\n", TOKENS_FILE.read_text(encoding="utf-8"), re.S)
+PAGE = Path(__file__).with_name("page.py")
+TOKENS = re.search(r":root \{.*?\n\}\n", PAGE.read_text(encoding="utf-8"), re.S)
 assert TOKENS is not None, (
-    "tools/look/tokens.css holds the page's tokens, the one block the eras page shares"
+    "tools/look/page.py holds the page's tokens, the one block the eras page shares"
 )
 
 TEMPLATE = """<meta charset="utf-8">
 <title>{{TITLE}}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* The page's tokens are tools/look/tokens.css's one block, shared bit for bit; the layout below is this page's own. */
+/* The page's tokens are tools/look/page.py's one block, shared bit for bit; the layout below is this page's own. */
 {{TOKENS}}
 * { box-sizing: border-box; }
 body { margin: 0; padding-inline: var(--gutter); padding-block: var(--pad); background: var(--bg); color: var(--fg); font: var(--text)/1.45 var(--font-body); }
@@ -121,8 +121,7 @@ const format = v => v === null || v === undefined || Number.isNaN(v) ? 'none' : 
 const intervals = LINES.map(l => l.interval);
 const rows = LINES.map(l => l.rows[ROW]);
 const families = Object.keys(rows[0].writes);
-const SEED = HEAD.seed || 'light';  // the seed row's name from the header (the massless point; 'light' the former files' row)
-const colour = name => name === SEED || name === 'light' || name === 'photon' ? token('--light') : name === 'dust' ? token('--matter') : TONES[(families.indexOf(name) + 2) % TONES.length];
+const colour = name => name === 'light' || name === 'photon' ? token('--light') : name === 'dust' ? token('--matter') : TONES[(families.indexOf(name) + 2) % TONES.length];
 function era(i) {  // the family whose write is largest at the interval sources the era
   const writes = rows[i].writes; let best = null;
   for (const name of families) if (best === null || writes[name] > writes[best]) best = name;
@@ -254,7 +253,7 @@ function draw() {
   graph(document.getElementById('quanta'), 'the quanta over the board per family (the share read in the free unit; a wave pumped as the paces fall under it grows here)', quanta.map(f => ({name: f, values: LINES.map(l => l.quanta[f].quanta), colour: colour(f)})), {log: true, marks: marks()});
   const rulers = quanta.length && LINES[0].quanta[quanta[0]].rulers_far ? ['x', 'y', 'z'].map((axis, a) => ({name: `h_${axis} at the far Node`, values: LINES.map(l => l.quanta[quanta[0]].rulers_far ? l.quanta[quanta[0]].rulers_far[0] / l.quanta[quanta[0]].rulers_far[1][a] : null), colour: TONES[a]})) : [];
   graph(document.getElementById('rulers'), `the three rulers h_a = p_0 / p_a at the far Node (${quanta[0] || ''}'s read)`, rulers, {marks: marks()});
-  const legend = [`<b>The inputs</b> (as in nature): the pairs of the universe file (the masses), the integers Gamma ${GAMMA} and T ${HEAD.quantum_action} (the width ${HEAD.width} derived from them and the families since 2026-10-24, and the Link's unit the engine's 16), the seed's content (the whole packets' counts at one Node at the interval 1) and light's amplitude (the one number of the mix, the radiation-to-matter ratio at the seed).`,
+  const legend = [`<b>The inputs</b> (as in nature): the pairs of the universe file (the masses), the four integers Gamma ${GAMMA}, T ${HEAD.quantum_action}, the width ${HEAD.width} and the Link's unit, the seed's content (the whole packets' counts at one Node at the interval 1) and light's amplitude (the one number of the mix, the radiation-to-matter ratio at the seed).`,
     `<b>What the board reads by itself</b>: every curve on this page, from the engine's own integers (the mean level and its remainders, the writes, the mix's exponent, the two residuals' fractions, the shares, the seed Node's level); this page computes U, H, the slope of 1 / v over spans and the ratios named and nothing else.`,
     `<b>The hypotheses under their own names</b> (ALGEBRA.md): The board's interval is no observable; The mean's velocity is the content's; the carried momentum of the volume form (the massless row carrying X = Gamma (Gamma / p_0)^(d + 1), its write ((d + 1) X c + r) div (Gamma E_s T) at a wall that never moves, the level a reading of the record; the exponent ${HEAD.keys && HEAD.keys[ROW] && HEAD.keys[ROW].pressure === 'trace' ? 'the trace\\'s d + 1 = 4 under The stress\\'s trace is the time line\\'s' : 'd + 1 = 4'}); The form's own clock (the held row's key booking: form); The factor carried (the key factor: carried at the wall fixed per Node, the coast) against the law's rounding (the stop). The course is nature's sequence of q (radiation 1, dust 1 / 2) under them, with the toy's integers.`];
   document.getElementById('legend-words').innerHTML = legend.map(p => `<p>${p}</p>`).join('');
@@ -316,26 +315,6 @@ draw();
 """
 
 
-CLICK_KEYS = (
-    "event",
-    "interval",
-    "family",
-    "node_detector",
-    "inflow",
-    "X",
-    "quanta",
-    "before",
-    "realised",
-)
-
-
-def lean(clicks: list[dict[str, Any]] | None) -> list[dict[str, Any]] | None:
-    """The clicks log's lines with the keys the page's script reads and no other (the take's walls, the readings and the points stay in the log beside the page): a record of many bodies' clicks writes tens of thousands of credit lines, and the page embeds what it draws."""
-    if clicks is None:
-        return None
-    return [{k: line[k] for k in CLICK_KEYS if k in line} for line in clicks]
-
-
 def page(
     log: list[dict[str, Any]],
     blind: dict[str, Any] | None,
@@ -362,7 +341,7 @@ def page(
         .replace("{{LOG}}", embed(log))
         .replace("{{BLIND}}", embed(blind))
         .replace("{{NOTES}}", embed(notes))
-        .replace("{{CLICKS}}", embed(lean(clicks)))
+        .replace("{{CLICKS}}", embed(clicks))
         .replace("{{SPAN}}", embed(span))
         .replace("{{LEAST}}", embed(least))
         .replace("{{CAPTIONS}}", embed(captions or []))

@@ -13,6 +13,9 @@ from event_universe.features.currents import PRODUCTS
 from event_universe.features.read import edge_of
 
 PLANE = 2  # the lines of a plane, re and im: the one shape with a Wronskian and a turn (charged matter)
+REAL_LINE, PLANE_LINE = "real", "plane"
+KINDS = (REAL_LINE, PLANE_LINE)  # the kinds of a record's lines, the shape by name (the two hands)
+FOLD_REACH = 2  # a folded arrival's part within twice the level: |X^c re_j - X^s im_j| <= X (|re_j| + |im_j|) at the fold's tangent at most 1 (the guard at load, plane.fold_guard; the sign's pair, whose magnitude is X to the rounding, read at its own extreme, `turned_room`), the integer total per part and no modulus
 
 
 @dataclass(frozen=True)
@@ -83,6 +86,11 @@ class FamilyRule(Row):
         return self.planes if self.plane else self.width
 
     @property
+    def several(self) -> bool:
+        """Whether the record's lines are reported line by line in the parts line (`reports.parts`, `Lattice.report`): a record of several parts (the pair family, the GHZ family, the nuclide's two planes) or of several real lines (a record of dimension 3), each line's signed level sums over a region; a plane's two lines, re and im, are one line and its sense, and one real line is one line, neither reported; a held row's record is its time line alone (`record`), its axis lines held parts and no lines of the record, so the holder of the sign under the rotation, 1 + 3 lines per row, reports no parts line (the one Node, 2026-10-23: every sign holder rotates, and the two slits' output carries the clicks it carried)."""
+        return self.parts > 1 or (self.width > 1 and not self.plane and not self.held)
+
+    @property
     def power(self) -> int:
         """The proper-interval powers of the held row's one write on its sources' booking (ALGEBRA.md, The write per proper volume and per proper interval): two on a count's form, N^2 / (h_x h_y h_z) = p_x p_y p_z / (p_0 Gamma^2), the law's booking, and one on the Wronskian, which carries one N of its own, N / (h_x h_y h_z) = p_x p_y p_z / (p_0^2 Gamma), and on a count's form under the row's key the form's own clock, the form carrying one N of its own as the Wronskian does (The form's own clock, a hypothesis under its own name, 2026-10-22; `form_clock`) (`paces.COUNT_POWER`, `paces.WRONSKIAN_POWER`); the one place the booking's power is chosen, read by the write (records.write_sources), the start's rest (features/start/rests.py) and the width's gate (loader/rooms.py)."""
         return WRONSKIAN_POWER  # one power on every booking: the Wronskian's one N, the form's own clock
@@ -118,6 +126,11 @@ def turns(families: tuple[FamilyRule, ...], index: int) -> bool:
     return family.plane and any(families[read.family].rotation for read in family.reads)
 
 
+def folds(families: tuple[FamilyRule, ...], index: int) -> bool:
+    """Whether a family's record is folded: a plane that reads a holder carrying the flux's odd lines, each Link's read then a pair (X^c, X^s) in the Link unit (ALGEBRA.md, The clock family on the Ports; plane.py); a record of real lines, light among them, reads the odd lines into no pace and is untouched."""
+    return families[index].plane and any(families[r.family].flux for r in families[index].reads)
+
+
 def charged(families: tuple[FamilyRule, ...], index: int) -> bool:
     """Whether a family reads a holder of the sign, plainly or by the turn: every record of such a family, a plane (`with_reads` gives no family of real lines one), owns one row of the sign at every Node (ALGEBRA.md, No record reads its own write of the sign)."""
     return families[index].quanta and any(
@@ -125,42 +138,45 @@ def charged(families: tuple[FamilyRule, ...], index: int) -> bool:
     )
 
 
-def children_of(families: tuple[FamilyRule, ...], index: int) -> int:
-    """The records a charged family needs for its births: the largest count of its children in any list a meeting selects (`conversion.birth_of` over every gapless parent, the exact lists; 2 at every list of the one universe, (k, -1), (k, 1)), 0 where no list births it (ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24: N records of the write step, one per child of the list, each at its own sense; the owner's word, several can be born). Nothing here counts two: the list's own length."""
-    from event_universe.conversion import (
-        birth_of,  # conversion reads this module: imported here
-    )
-
-    return max(
-        (
-            sum(1 for out, _sense in table if out == index)
-            for parent in range(len(families))
-            if families[parent].quanta and families[parent].pair[0] == families[parent].pair[1]
-            for table in birth_of(families, parent)
-        ),
-        default=0,
+def row_of(families: tuple[FamilyRule, ...], index: int, record: int) -> int | None:
+    """The row of every holder of the sign that the record `record` of the family `index` owns, the one its Wronskian is written into and the one its read leaves out: the row 0 is owned by no record (the free row, the laid light's), and the charged families' records take the rows after it in the file's order; None where the family reads no holder of the sign."""
+    if not charged(families, index):
+        return None
+    return (
+        1 + sum(families[other].records for other in range(index) if charged(families, other)) + record
     )
 
 
 def with_records(families: tuple[FamilyRule, ...], laid: Sequence[int]) -> tuple[FamilyRule, ...]:
-    """The families with the world's records: a charged family's records are its bodies (`laid`, per family its bodies in the world's order, 0 since no file declares one) or the children a meeting's list births of it (`children_of`; ALGEBRA.md, Matter's birth from light, the clause of 2026-10-24: N records of the write step, one per child of the list, each at its own sense, so that each born child carries its Wronskian and sources its own row, where one record carrying both children of a pair read W = 0 and sourced nothing, the defect found on 1b670aaf2), one at least, each its own lines and its own row of the sign; every holder of the sign carries one row per charged record beside the row no record owns, its lines that many times its row's lines (the time line, with its three odd lines under the rotation); every other family as the universe declares it."""
-    rows = 1 + sum(
-        max(1, laid[index], children_of(families, index))
-        for index in range(len(families))
-        if charged(families, index)
-    )
+    """The families with the world's records: a charged family's records are its bodies (`laid`, per family its bodies in the world's order; a packet of such a family, a packet and no standing record, adds into its first record), one at least, each its own lines and its own row of the sign; every holder of the sign carries one row per charged record beside the row no record owns, its lines that many times its row's lines (the time line, with its three odd lines under the rotation); every other family as the universe declares it."""
+    rows = 1 + sum(max(1, laid[index]) for index in range(len(families)) if charged(families, index))
     found = []
     for index, family in enumerate(families):
         if charged(families, index):
-            records = max(
-                1, laid[index], children_of(families, index)
-            )  # one per child of the list (2026-10-24)
+            records = max(1, laid[index])
             found.append(replace(family, lines=family.width * family.parts * records, records=records))
         elif family.wronskian:
             found.append(replace(family, lines=family.width * rows, records=rows))
         else:
             found.append(family)
     return tuple(found)
+
+
+def quanta_records(families: tuple[FamilyRule, ...], index: int) -> range:
+    """The records of quanta of a family, each read, stepped and booked at its own paces: every record of a family that reads a holder of the sign (each its own lines and its own row of the sign), the one record of every other family of quanta, a holder of the sign's one record, light, among them (its rows are rows of the sign and no records of light)."""
+    return range(1 if families[index].wronskian else families[index].records)
+
+
+def row_sources(families: tuple[FamilyRule, ...], held: int, row: int) -> list[tuple[int, int]]:
+    """The records that source one row of a held family, (reader, record) pairs (ALGEBRA.md #the-primitives, the held write's reciprocity; No record reads its own write of the sign): every record of every reader for a holder of the content, whose one row is the sum of its readers' forms; for a holder of the sign the one record that owns the row, and none for the row 0, which no record writes."""
+    sources = [
+        (reader, record)
+        for reader in readers_of(families, held)
+        for record in quanta_records(families, reader)
+    ]
+    if not families[held].wronskian:
+        return sources
+    return [(reader, record) for reader, record in sources if row_of(families, reader, record) == row]
 
 
 @dataclass(frozen=True)
@@ -215,7 +231,7 @@ def alpha_of(families: tuple[FamilyRule, ...], index: int, gamma: int, action: i
 
 
 def shared_clock(families: tuple[FamilyRule, ...]) -> None:
-    """The loader's gate of the carried factor, the carried factor (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the sources of a row carrying its factor share the row's one wall per Node, E_s T times the factor's wall at the Node's clock, where they read the content alike, the same holders at the same weights (`FamilyRule.reads`; the clock from the content a family reads, node.rulers), so that the one remainder per held line carries every source's fraction and no second carried integer stands (the reader's form; the two-stage form, one remainder per source, named and not built); a row whose sources read the content at differing weights is refused by name with the readers and their reads, the rounded factor standing on every row; the reads compared are the reads of holders of the content alone, since the holder of the sign acts by the rotation, a phase on the Links, and enters no pace and no clock (the law of one Node, 2026-10-22: the bound pair's universes' two charged plane families read the sign holder at 1 and 3 and no content, one clock, the vacuum's)."""
+    """The loader's gate of the carried factor, the carried factor (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of): the sources of a row carrying its factor share the row's one wall per Node, E_s T times the factor's wall at the Node's clock, where they read the content alike, the same holders at the same weights (`FamilyRule.reads`; the clock from the content a family reads, node.rulers), so that the one remainder per held line carries every source's fraction and no second carried integer stands (the reader's form; the two-stage form, one remainder per source, named and not built); a row whose sources read the content at differing weights is refused by name with the readers and their reads, the rounded factor standing on every row; the reads compared are the reads of holders of the content alone, since the holder of the sign acts by the rotation, a phase on the Links, and enters no pace and no clock (the law of one Node, 2026-10-22: the hydrogen universes' proton and electron read the sign holder at 1 and 3 and no content, one clock, the vacuum's)."""
     for index, family in enumerate(families):
         readers = readers_of(families, index)
         reads = {
@@ -259,7 +275,7 @@ def count_wall(family: FamilyRule, action: int) -> int:
     return sine_den(num, den, 3 * action)
 
 
-def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int) -> HeldWrite:
+def held_write_of(families: tuple[FamilyRule, ...], index: int, action: int, unit: int = 1) -> HeldWrite:
     """The one write per line of the held family `index` (`HeldWrite`): its walls from the row's level weight, the quantum action and, for the tension lines, the den of the families that source them (its readers, whose tension it takes), the multiple of their den by the division act on the greatest common divisor, the measure of a current on each axis line (W_c's 3 den T for the tensions; the time line's T for the odd lines, the same wall as the time level's), and each source's factor, the multiple over its den for a tension line and 1 for the sign's odd line; the odd lines of either holder at twice their measure's wall, the two Links' currents summed unhalved over the doubled wall (the two hands' lines of 2026-10-09, the mathematician's (L2) and the advisor's (c)): the sign holder's time line at 2 E_s T as well, the Wronskian centred on the triple, W(now, before) + W(next, now) summed unhalved (bookings.booked_of; the owner's decision of 2026-10-23, the centred count), and its three odd lines at 2 E_s T, the Node's two a-Links' Wronskian currents summed (`readings.sense_current_of`, unhalved), and a flux holder's three odd lines at 2 E_s W_c, the count's flux through the axis's two Links summed unhalved over twice the count's wall (the joint line, the T of their "2 E_s T W_c" read as W_c's own: the flux F is in the share's units, one quantum W_c, as the form D over E_s T is one quantum T, so that a rigidly moving source's static solution is V = U v, ALGEBRA.md, The clock family on the Ports), the same factor per source as the tensions'; and a holder's three shear lines, where it declares the shear, at the same doubled wall 2 E_s W_c, the Node's product of its two axis differences D_a D_b being the two ends' halves of the Link's off-diagonal booking -num G_ab (ALGEBRA.md, The tension: G_ab(i) the stress booking on the b-Link, -2 b^2 sin k_a sin k_b on a plane record, met in the mean by -(D_a D_b) / 2 at each end as G_aa is met by h_a at each end exactly), the same factor per source as the tensions'. Under the Lorentz form (`Row.lorentz`, the key `form`: `lorentz`) the sign holder's odd line a is sourced by the +a Link's own flux of the record's step in the Link unit, Phi_a(i) = Im(conj(z_i) (X^c + i X^s) z_(i+a)) with (X^c, X^s) the Link's pair the step reads, X = 2 num_s Q_ij (`covector.link_fluxes`), over the wall 2 den_s G^2 E_s T, `unit` the run's Link unit G and den_s the source's den (the multiple of the sources' den where they differ, each source's factor the multiple over its own den, as the tensions'), so that the odd level over the time level is Phi / (2 den_s G^2 W) = (num_s / den_s) (g / W) = v / c^2 at light's c^2 = 1 / 3, the pairing at the holder's own light speed under which the massless line propagates the lattice Lorenz constraint exactly (covector.py; the pairing at c_s of ALGEBRA.md, The odd line's source is the sign's own current, is this times den_s / num_s, 1 - 2 x 10^-28 in nature)."""
     family = families[index]
     assert family.level_weight is not None
@@ -315,12 +331,16 @@ def bound_under_rooms(
             reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, None, unit)
             plain = sum(abs(read) for read in reads)  # the six plain reaches, R_ij = p_i^2 X_ij
             arrivals = plain  # the six arrivals' reads, under the pair's two parts where the plane turns or folds
-            if turns(families, index):  # the sign's pair with the phase: the pair's extreme, X 2^(1/2)
+            if folds(families, index):  # the six arrivals each under a pair's two parts, within 2 X
+                arrivals *= FOLD_REACH
+            elif turns(families, index):  # the sign's pair with the phase: the pair's extreme, X 2^(1/2)
                 from event_universe.plane import turned_room  # plane reads this module: imported here
 
                 arrivals = PORTS * pace * pace * turned_room(family.pair, gamma, unit)
             own = mass(num, den, clock, unit)  # the flux line's five partial sums (rule3.partial_rooms)
-            *partials, total = partial_rooms(self_coefficient, wall, own, arrivals + plain, arrivals)
+            *partials, total = partial_rooms(
+                reads, self_coefficient, wall, own, arrivals + plain, arrivals
+            )
             for room, head in (*((room, largest) for room in partials), (total, largest - wall)):
                 if room:
                     found = min(found, int(division_forward(head, room, 0)[0]))
@@ -330,8 +350,8 @@ def bound_under_rooms(
         if family.held:
             from event_universe.loader.rooms import write_rooms  # rooms reads this module: imported here
 
-            write = held_write_of(families, index, action)
-            rooms = write_rooms(families, index, write, gamma, hill)
+            write = held_write_of(families, index, action, unit)
+            rooms = write_rooms(families, index, write, gamma, hill, unit)
             from event_universe.loader.rooms import held_room  # rooms reads this module: imported here
 
             found = held_room(family, write, rooms, found, largest, gamma, action, width)

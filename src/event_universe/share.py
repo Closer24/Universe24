@@ -7,13 +7,13 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import registry
 from event_universe.core import paces
+from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, division_forward, form_term
 from event_universe.features.read import READS, read_again
-from event_universe.loader.derived import FamilyRule
+from event_universe.loader.derived import FamilyRule, quanta_records
 from event_universe.readings import ports
-from event_universe.records import Record, wronskian, zeros
+from event_universe.records import Record, wronskian
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
@@ -35,6 +35,7 @@ def over_pace(numerator: Any, gamma: int, content: Any, unit: int, halves: int =
 def share(
     pair: tuple[int, int],
     record: Record,
+    wrap: Wrap,
     gamma: int,
     content: Any = 0,
     factors: tuple[Any, ...] | None = None,
@@ -48,14 +49,14 @@ def share(
     if (
         nodes is None and as_read is None
     ):  # the frame's term stands at a Node at 0 beside a Node that is not
-        beside = ports(np.asarray(at, dtype=np.int64))
+        beside = ports(np.asarray(at, dtype=np.int64), wrap)
         at = at | np.logical_or.reduce([np.asarray(value) != 0 for value in beside])
     read = record if as_read is None else as_read
     now, before = record.now[at].astype(object), record.before[at].astype(object)
     clock, pace = paces.node_paces(gamma, paces.at_nodes(content, at))
     links = None if factors is None else tuple(paces.at_nodes(factor, at) for factor in factors)
     reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, links, unit)
-    arrived = tuple(value[at].astype(object) for value in ports(read.before))
+    arrived = tuple(value[at].astype(object) for value in ports(read.before, wrap))
     link = sum(read * arrival for read, arrival in zip(reads, arrived, strict=True))  # the Links' sum
     turn = self_coefficient * (read.before[at].astype(object) - before)  # the cross product's turn
     found = form_term(self_coefficient, wall, now, before) - now * (link + turn)
@@ -63,8 +64,8 @@ def share(
     if (
         as_read is None
     ):  # the frame's term: the Links' products shared half and half between a Link's two ends
-        arrived_now = tuple(value[at].astype(object) for value in ports(record.now))
-        present = tuple(value[at] for value in ports(np.ones(record.now.shape, dtype=object)))
+        arrived_now = tuple(value[at].astype(object) for value in ports(record.now, wrap))
+        present = tuple(value[at] for value in ports(np.ones(record.now.shape, dtype=object), wrap))
         shared = sum(  # a Link to a Node beyond the board gives its whole term to its one Node on it
             read * (before - b_j) * (now + n_j) * on
             for read, b_j, n_j, on in zip(reads, arrived, arrived_now, present, strict=True)
@@ -78,6 +79,7 @@ def share(
 def family_share(
     family: FamilyRule,
     records: Iterable[Record],
+    wrap: Wrap,
     gamma: int,
     content: Any = 0,
     factors: tuple[Any, ...] | None = None,
@@ -90,7 +92,7 @@ def family_share(
     lines = list(records)
     reads = [None] * len(lines) if as_read is None else list(as_read)
     for record, read in zip(lines, reads, strict=True):
-        total = total + share(family.pair, record, gamma, content, factors, unit, nodes, read)
+        total = total + share(family.pair, record, wrap, gamma, content, factors, unit, nodes, read)
     return np.asarray(total)
 
 
@@ -110,15 +112,11 @@ def board_share(
         return kept[0], kept[1][0]
     found: Any = 0
     cold = np.zeros(board.shape, dtype=bool)
-    for record in registry.quanta_records(board.families, board.states, index):
+    for record in quanta_records(board.families, index):
         content, factors = board.read(index, direction, record)
         lines = board.lines_of(index, record)
-        found = found + family_share(family, lines, gamma, content, factors, board.unit, at)
+        found = found + family_share(family, lines, board.wrap, gamma, content, factors, board.unit, at)
         cold |= np.broadcast_to(frozen(gamma, content), board.shape)
-    if not isinstance(
-        found, np.ndarray
-    ):  # no record standing (a point before its first birth, 2026-10-24): 0 at every Node
-        found = zeros(board.shape, board.kind)
     if at is None:
         READS[key] = (taken, (np.asarray(found), [cold]))
     return np.asarray(found), cold
@@ -136,12 +134,17 @@ def half_action(action: int) -> int:
     return int(division_forward(action, 2, 0)[0])
 
 
+def charge_at(board: Lattice, index: int) -> np.ndarray:
+    """A plane family's charge density at every Node, the Wronskian re_now im_before - im_now re_before summed over its records' planes (`records.wronskian`, the sign holder's own read, no new reading), signed, in the units of the levels' product."""
+    total: Any = 0
+    for record in quanta_records(board.families, index):
+        total = total + wronskian(board.lines_of(index, record), True)
+    return np.asarray(np.broadcast_to(np.asarray(total, dtype=object), board.shape), dtype=object)
+
+
 def charge_of(board: Lattice, index: int) -> int:
-    """A plane family's charge over the board, SUM over its records of |SUM over the Nodes of W_i| (`records.wronskian` per record; every record one quantum of its own sense, ALGEBRA.md, No record reads its own write of the sign; the born pair's two records of opposite sense each counted, the clause of 2026-10-24 under Matter's birth from light, where the family's one total read the pair as 0): its count of quanta in the unit T / 2 (`half_action`), the one number the count on the board reads for a plane record, free or standing in a well (the ruling of 2026-10-22; measured on the standing charged plane record of examples/events/conserve: constant to four digits over 17 intervals while the share in the free unit beat 1.43 to 1.87)."""
-    return sum(
-        abs(int(np.asarray(wronskian(board.lines_of(index, record), True), dtype=object).sum()))
-        for record in registry.quanta_records(board.families, board.states, index)
-    )
+    """A plane family's charge over the board, |SUM over the Nodes of W_i| (`charge_at`): its count of quanta in the unit T / 2 (`half_action`), the one number the count on the board reads for a plane record, free or standing in a well (the ruling of 2026-10-22; measured on the standing electron of examples/events/conserve: constant to four digits over 17 intervals while the share in the free unit beat 1.43 to 1.87)."""
+    return abs(int(charge_at(board, index).sum(dtype=object)))
 
 
 def charged(family: FamilyRule) -> bool:
@@ -150,7 +153,7 @@ def charged(family: FamilyRule) -> bool:
 
 
 def by_charge(board: Lattice, index: int) -> bool:
-    """Whether a family's count on the board is read as its charge: a plane family at a pair with a rotation (`charged`) whose record carries a sense, its Wronskian other than 0 over the board (`charge_of`); a plane record laid without its quadrature, its Wronskian 0 at every Node (a packet with no `sense` declared, the clicks world's charged plane record), is neutral, two real lines, and is counted as they are, by its share."""
+    """Whether a family's count on the board is read as its charge: a plane family at a pair with a rotation (`charged`) whose record carries a sense, its Wronskian other than 0 over the board (`charge_of`); a plane record laid without its quadrature, its Wronskian 0 at every Node (a packet with no `sense` declared, the clicks world's electron), is neutral, two real lines, and is counted as they are, by its share."""
     return charged(board.families[index]) and charge_of(board, index) > 0
 
 

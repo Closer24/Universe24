@@ -1,4 +1,4 @@
-"""The two slits mid-run: three lattice readings of the one trial, a diagnostic and no measurement.
+"""The two slits mid-run: three lattice readings of the one experiment, a diagnostic and no measurement.
 
 The engine's own look tool (`PYTHONPATH=src python tools/look/record.py examples/events/two_slits/two_slits.json
 --intervals 130`, docs/ENGINE.md section 6, item 10) steps the shipped two-slits file by the engine's own step, Rule3 at

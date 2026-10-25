@@ -5,6 +5,8 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
+from event_universe.core.integer import MAX_WORK_INT
+
 Node = tuple[int, int, int]
 AXES = ("x", "y", "z")
 
@@ -24,11 +26,10 @@ def keyed(
     return value
 
 
-def integer(value: object, label: str, least: int, most: int | None = None) -> int:
-    """An integer of the files from `least`, and through `most` where the caller names one (a Node's coordinate inside the shape), refused by name otherwise: Python's integers need no bound of the tool's, and the width the loader derives bounds every level (the bound 2^512 of 2026-10-24 and the host's 63 bits before it, both the tool's choices, gone 2026-10-24)."""
-    if type(value) is not int or value < least or (most is not None and value > most):
-        through = "" if most is None else f" through {most}"
-        raise ValueError(f"{label} must be an integer from {least}{through}, got {value!r}")
+def integer(value: object, label: str, least: int, most: int = MAX_WORK_INT) -> int:
+    """An integer of the files within [least, most], refused by name otherwise."""
+    if type(value) is not int or not least <= value <= most:
+        raise ValueError(f"{label} must be an integer from {least} through {most}, got {value!r}")
     return value
 
 

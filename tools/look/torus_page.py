@@ -1,4 +1,4 @@
-"""The torus view, a page tool beside tools/look/eras_page.py in the look's dark tokens (tools/look/tokens.css, the one block the two pages share; tools/look/page.py, which held the block, struck 2026-10-24, dead code: the owner's word, the code lean) (the owner's word of 2026-10-23: let every Node be shown in three dimensions and the Link's length between them, so one sees how the bang starts, reaches the top and contracts, the time's direction at the Nodes by colour, and the Nodes' content): one self-contained HTML page from the Nodes' log tools/eras.py writes with `--nodes` (`<world>.nodes.jsonl`, one JSON line per interval: X at every Node of the first held row, the Link's length e^U = (X / Gamma)^(1 / (d + 1)) at every Node, the Nodes the fifth act turned this interval, every Node's direction of time and every family's quanta per Node) with the eras log beside it (the header's shape, the volume's course), the clicks log where the run kept one (the instrument bodies' credits, the clicks written) and the world file (the bodies' Nodes and families, the markers). The page places the Nodes of any three-dimensional torus on their lattice with every Link drawn at its own length, the mean of its two Nodes' e^U, the lattice stretching toward the top and shrinking back, each Node coloured by its time's direction (forward or turned, the log's own reading), each Node's marker sized by its content (the quanta of every family at the Node, the numbers on hover), played from the seed by itself on load (a play/pause control, the slider beside it), a stage strip under the view with the bang, the first turns, every top, the contraction, every return and the cut marked at their intervals as the tool read them from the logs, the births and the written clicks ticked on it, and, for every instrument body, one chart of the click rate (the clicks written at its Node per 100 intervals in a running window, counted here from the credits), 1 / e^U at its Node (the clock p_0 / Gamma, the Link's length's inverse) and the light's quanta read at its Node, interval by interval, the ratio the one number the page forms. Plain HTML and inline JS, no library; every number the log's.
+"""The torus view, a page tool beside tools/look/eras_page.py in its dark tokens (the owner's word of 2026-10-23: let every Node be shown in three dimensions and the Link's length between them, so one sees how the bang starts, reaches the top and contracts, the time's direction at the Nodes by colour, and the Nodes' content): one self-contained HTML page from the Nodes' log tools/eras.py writes with `--nodes` (`<world>.nodes.jsonl`, one JSON line per interval: X at every Node of the first held row, the Link's length e^U = (X / Gamma)^(1 / (d + 1)) at every Node, the Nodes the fifth act turned this interval, every Node's direction of time and every family's quanta per Node) with the eras log beside it (the header's shape, the volume's course), the clicks log where the run kept one (the instrument bodies' credits, the clicks written) and the world file (the bodies' Nodes and families, the markers). The page places the Nodes of any three-dimensional torus on their lattice with every Link drawn at its own length, the mean of its two Nodes' e^U, the lattice stretching toward the top and shrinking back, each Node coloured by its time's direction (forward or turned, the log's own reading), each Node's marker sized by its content (the quanta of every family at the Node, the numbers on hover), played from the seed by itself on load (a play/pause control, the slider beside it), a stage strip under the view with the bang, the first turns, every top, the contraction, every return and the cut marked at their intervals as the tool read them from the logs, the births and the written clicks ticked on it, and, for every instrument body, one chart of the click rate (the clicks written at its Node per 100 intervals in a running window, counted here from the credits), 1 / e^U at its Node (the clock p_0 / Gamma, the Link's length's inverse) and the light's quanta read at its Node, interval by interval, the ratio the one number the page forms. Plain HTML and inline JS, no library; every number the log's.
 
 The horizon (the owner's word of 2026-10-23, the black hole): every Link held at the wall is drawn as a thick line in the hole's colour between its two Nodes, the count in the caption; the stage strip numbers the bangs as tools/look/eras_page.py does (the seed bang 1, each later bang the return of the volume's velocity after the fifth act fired since the last bang) and the tops, the turned Nodes kept as drawn.
 
@@ -25,10 +25,10 @@ from captions import (  # noqa: E402  (the look's own module, beside this tool)
 
 from event_universe.swap import floor_of  # noqa: E402
 
-TOKENS_FILE = Path(__file__).with_name("tokens.css")
-TOKENS = re.search(r":root \{.*?\n\}\n", TOKENS_FILE.read_text(encoding="utf-8"), re.S)
+PAGE = Path(__file__).with_name("page.py")
+TOKENS = re.search(r":root \{.*?\n\}\n", PAGE.read_text(encoding="utf-8"), re.S)
 assert TOKENS is not None, (
-    "tools/look/tokens.css holds the page's tokens, the one block the torus page shares"
+    "tools/look/page.py holds the page's tokens, the one block the torus page shares"
 )
 
 TEMPLATE = """<meta charset="utf-8">
@@ -187,7 +187,7 @@ function strip() {  // the stage strip: every mark read from the logs by the too
   body += `<line id="cursor" x1="${px(now).toFixed(1)}" x2="${px(now).toFixed(1)}" y1="4" y2="114" stroke="${token('--fg')}" stroke-width="1" stroke-dasharray="3 2"/>`;
   document.getElementById('strip').innerHTML = body;
   if ((STAGES.captions || []).length) document.getElementById('captions-list').innerHTML = `<ol>${STAGES.captions.map(c => `<li><b>${c.at}</b>: ${esc(c.words)}${c.nodes.length ? ` <span class="verdict">(${c.nodes.length} Node${c.nodes.length > 1 ? 's' : ''})</span>` : ''}</li>`).join('')}</ol>`;
-  document.getElementById('strip-words').innerHTML = `<b>The stages, read from the log</b>: ${STAGES.marks.map(m => `${esc(m.word)} at ${m.at}`).join(', ')}; ${STAGES.births.length} births (the ticks below the line, at ${STAGES.births.length <= 60 ? STAGES.births.join(', ') || 'none' : STAGES.births[0] + ' to ' + STAGES.births[STAGES.births.length - 1] + ' over ' + STAGES.births.length + ' lines'}) and ${STAGES.clicks_written} clicks written at ${STAGES.clicks.length} intervals (the ticks above, ${STAGES.clicks.length <= 60 ? 'at ' + (STAGES.clicks.join(', ') || 'none') : 'from ' + STAGES.clicks[0] + ' to ' + STAGES.clicks[STAGES.clicks.length - 1]}); the dashed cursor the frame shown. Click the strip to go to an interval.`;
+  document.getElementById('strip-words').innerHTML = `<b>The stages, read from the log</b>: ${STAGES.marks.map(m => `${esc(m.word)} at ${m.at}`).join(', ')}; ${STAGES.births.length} births (the ticks below the line, at ${STAGES.births.join(', ') || 'none'}) and ${STAGES.clicks.length} clicks written (the ticks above, at ${STAGES.clicks.join(', ') || 'none'}); the dashed cursor the frame shown. Click the strip to go to an interval.`;
 }
 document.getElementById('strip').addEventListener('click', e => {
   const box = e.currentTarget.getBoundingClientRect(), f = (e.clientX - box.left) / box.width * 1000, first = NODES[0].interval, last = NODES[NODES.length - 1].interval;
@@ -400,7 +400,7 @@ def stages_of(
     """The stage strip's marks, each read from the logs and none typed: the bangs numbered (`returns_of`: the seed, the first logged interval, bang 1, each return of the volume's velocity after the fifth act fired a later bang), the first turns (the first interval the fifth act turned a Node), every top of the board's volume numbered and the returns that are no bang (`bangs_of`), the contraction (the first interval after a top with the volume below the top's), the cut (the last logged interval, or the refusal's), with the births' and the written clicks' intervals ticked."""
     marks: list[dict[str, Any]] = []
     if not nodes:
-        return {"marks": marks, "births": [], "clicks": [], "clicks_written": 0, "captions": []}
+        return {"marks": marks, "births": [], "clicks": [], "captions": []}
     rows = course["rows"]
     bangs = returns_of(rows) or [nodes[0]["interval"]]
     for n, at in enumerate(bangs, start=1):
@@ -434,19 +434,13 @@ def stages_of(
     marks.append({"word": "cut", "at": cut})
     marks.sort(key=lambda m: m["at"])
     births = sorted(int(c["interval"]) for c in clicks if c.get("event") == "birth")
-    written = [
+    written = sorted(
         int(c["interval"])
         for c in clicks
         if c.get("event") == "credit" and c.get("before") != c.get("realised")
-    ]  # one entry per credit written; the strip ticks the intervals once each (a record of many bodies' clicks writes thousands of credits, one tick per interval keeps the strip readable)
+    )
     captions = captions_of(eras or [], nodes, clicks, world, floor_of(course["gamma"])) if eras else []
-    return {
-        "marks": marks,
-        "births": births,
-        "clicks": sorted(set(written)),
-        "clicks_written": len(written),
-        "captions": captions,
-    }
+    return {"marks": marks, "births": births, "clicks": written, "captions": captions}
 
 
 def page(

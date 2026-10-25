@@ -123,9 +123,9 @@ a finding).
 The advisor's verdict on the reading above (2026-10-02, 19:30): lines 1 to 5 were read on
 another body than the blind's, the world's 10,000 quanta being 0.53 Gamma in his unit, above the
 compact window's edge Gamma div 2, so the generator laid the wide top mode on the 25-cube; the
-defined trial is the pixel world on the open 11-cube from the one-Node seed at a count inside
+defined experiment is the pixel world on the open 11-cube from the one-Node seed at a count inside
 the window, 8,000 quanta (0.43 Gamma in his unit), where lines 2, 3 and 5 are testable: not a new
-trial, the one declared. The world is `pixel_compact.json`, the design's entry
+experiment, the one declared. The world is `pixel_compact.json`, the design's entry
 `pixel_compact` (`design.json`: the open 11-cube, the centre [5, 5, 5], 8,000 quanta, 400
 intervals), the builder writing the one-Node declaration and `expectation.json` anew with the
 blind entry `blind.pixel_compact`, and the generator (`tools/pixel_mode.py --input`) laying the
@@ -227,8 +227,8 @@ withdrawn. The numbers read above stand as read.
 
 ## The third reading, above the threshold (the law's line; the advisor's correction, #1563 comment 5958925235)
 
-The defined trial under the law's line (the advisor, 2026-10-02, 18:39, on the second
-reading above; the owner's words of 2026-10-02: only the defined trials, run well by the
+The defined experiment under the law's line (the advisor, 2026-10-02, 18:39, on the second
+reading above; the owner's words of 2026-10-02: only the defined experiments, run well by the
 morning, whatever takes a lot of time cut, a reading that misses its blind a finding by name and
 never adjusted): the pixel world on the open 11-cube from the one-Node seed above the compact
 branch's threshold, 14,000 quanta in the engine's count (the line's about 13,000 with the
@@ -432,8 +432,8 @@ Agreement with the blind: the lay refused by name, the compact pixel's lines 2, 
 
 ## The fifth reading, the direct lay at the compact fixed point
 
-The trial the advisor defined and seconded (#1563 comments 5958624379 (1)(c) and
-5958925235; the owner's words of 2026-10-03, 00:47 and 00:52 Israel, every defined trial
+The experiment the advisor defined and seconded (#1563 comments 5958624379 (1)(c) and
+5958925235; the owner's words of 2026-10-03, 00:47 and 00:52 Israel, every defined experiment
 run well by the morning): the law's line puts the compact branch of the bound body above about
 13,000 quanta in the engine's count (ALGEBRA.md, **The compact pixel under the composed paces**:
 the write's factor at the body's own paces e^(-4 U) = 0.72 moving the quadratic forms' about
@@ -511,7 +511,7 @@ its blind written before its lay in the same way.
    acosh((9 / 2) cos omega_b - 2) by 0.5 to 0.7 (the formula 1.06 at 0.636, 1.23 at 0.539),
    flattening outward (the line's level ratios 0.237, 0.241, 0.259, 0.345 and 0.40 per Link along
    an axis at 10,000 on the 15-cube; the face at 5 Links reads 0 beyond).
-4. **The drift**, the trial's question: the compact body stands over the 400 intervals, the
+4. **The drift**, the experiment's question: the compact body stands over the 400 intervals, the
    count's drift 0 to the rounding, the centre's share kept within the rounding walk, the rms
    radius under one Link at the window's end, the centroid where it was laid; a spread (the
    centre's share falling, the rms radius growing toward the wide branch's 2.5 Links) is the
@@ -541,7 +541,7 @@ and read as laid; nothing is tuned.
 
 ### The blind in the law's words (the mathematician's 175 item 4, #1572 comment 5962582859, with the Boss's second hand; written after the three lays were refused by name and before any run)
 
-The direct lay is the law's trial of the compact branch: the branch is a fixed point of the
+The direct lay is the law's experiment of the compact branch: the branch is a fixed point of the
 body's own lines (ALGEBRA.md, **The bound body is one Node**, its window [0.2255 Gamma, Gamma div 2)
 under the level weight 1) and not the generator's basin from a seed, so the generator's reaching the
 wide branch at every count from the one-Node seed is a reading of its own map's basin and not of the

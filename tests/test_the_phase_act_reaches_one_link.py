@@ -7,7 +7,6 @@ import pytest
 
 from event_universe import node, records, world_files
 from event_universe.lattice import Lattice
-from event_universe.loader.universe import SIGN
 from event_universe.world_files import load_world
 from tests.laws_universe import CUBE, bare_torus
 
@@ -18,16 +17,13 @@ def test_the_phase_act_reaches_one_link(tmp_path: Path, monkeypatch: pytest.Monk
     monkeypatch.setattr(world_files, "REPOSITORY_ROOT", tmp_path)
     path = bare_torus(tmp_path, CUBE)
     boards = [Lattice(load_world(path)), Lattice(load_world(path))]
-    for board in boards:  # every point standing, its rows of the sign born (2026-10-24, the point rows born at the first birth)
-        for index in range(len(board.families)):
-            board.born_point(index)
-    charge = [family.name for family in boards[0].families].index(SIGN)
+    charge = [family.name for family in boards[0].families].index("charge")
     gamma = boards[0].world.node_clock
     free = boards[1].states[charge].lines[0]
     level = np.asarray(free.now, dtype=object).copy()
     level[AT] += KICK
     boards[1].states[charge].lines[0] = records.Record(level, level.copy(), free.remainder)
-    plain, kicked = (node.phased(charge, b.families, b.states, 1, gamma) for b in boards)
+    plain, kicked = (node.phased(charge, b.families, b.states, 1, b.wrap, gamma) for b in boards)
     touched = 0
     for row, (lines, others) in enumerate(zip(plain, kicked, strict=True)):
         for number, (a, c) in enumerate(zip(lines, others, strict=True)):

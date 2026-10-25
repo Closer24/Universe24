@@ -8,17 +8,20 @@ import numpy as np
 
 import event_universe.readings as readings
 import event_universe.records as records
-from event_universe import registry
 from event_universe.bookings import Bookings, sources_of
 from event_universe.core import paces
 from event_universe.core.rule3 import division_forward
 from event_universe.features import volume
 from event_universe.frames import frames_of
-from event_universe.loader.derived import readers_of, weight_of
+from event_universe.loader.derived import row_sources, weight_of
 
 if TYPE_CHECKING:
     from event_universe.lattice import Lattice
 
+Currents = dict[int, tuple[np.ndarray, ...]]  # per family of quanta its current through each Port
+Horizons = dict[
+    int, tuple[Any, ...] | None
+]  # per family of quanta its Links at the wall per Port, or None
 Stresses = dict[
     records.Sourcing, tuple[Any, ...]
 ]  # per record of quanta its tension, its flux per axis, its shear per axis pair where declared
@@ -50,26 +53,29 @@ def stresses(board: Lattice) -> Stresses:
         s: readings.axis_sources_of(
             board.families[s[0]].pair[0],
             board.lines_of(*s),
-            frames_of(s[0], board.families, board.states, s[1]),
+            board.wrap,
+            frames_of(s[0], board.families, board.states, board.wrap, s[1]),
         )
-        for s in sources_of(board.families, board.states, board.order)
+        for s in sources_of(board.families, board.order)
     }
 
 
 def sense_currents(board: Lattice) -> Stresses:
     """Every turned record's sign current on each axis at every Node, the Node's two a-Links' Wronskian currents summed unhalved, J_a = Im(conj(z_i) (z_(+a) - z_(-a))), read from its lines as they stand at the interval's start (`readings.sense_current_of`): the source the odd lines of the record's own row take in their one write under the rotation at the doubled wall 2 E_s T (`loader.derived.held_write_of`; the two hands' lines of 2026-10-09); where the record's holder of the sign declares the Lorentz form, the record's step's own flux through each of the Node's three +a Links instead (`sense_fluxes`, covector.link_fluxes), read after the interval's phase act with the Link pairs the step reads."""
     return {
-        s: sense_fluxes(board, s, board.lines_of(*s))
-        for s in sources_of(board.families, board.states, board.order)
+        s: sense_fluxes(board, s, board.lines_of(*s), 1)
+        for s in sources_of(board.families, board.order)
         if s[0] in board.turning
     }
 
 
-def sense_fluxes(board: Lattice, source: records.Sourcing, lines: list[records.Record]) -> Any:
+def sense_fluxes(
+    board: Lattice, source: records.Sourcing, lines: list[records.Record], direction: int
+) -> Any:
     """One turned record's source of its own row's odd lines at the interval's start in `direction`: the plain sign current (`readings.sense_current_of`) where its holder books each line its own, and under the holder's Lorentz form the flux of its step through each +a Link in the Link unit (covector.link_fluxes), from the Link pairs its step reads (`flux.pairs_of` at its own read, `read`, the same integers the step takes, divided by the pace squared they carry) and the levels the step starts from, the same numbers forward and back."""
     index, record = source
-    frames = frames_of(index, board.families, board.states, record)
-    return readings.sense_current_of(lines, frames)
+    frames = frames_of(index, board.families, board.states, board.wrap, record)
+    return readings.sense_current_of(lines, board.wrap, frames)
 
 
 def uniform_mode(board: Lattice, index: int) -> UniformMode:
@@ -118,7 +124,7 @@ def eras(
     terms: list[Any] = []
     exponents: list[int] = []
     writes: list[tuple[str, int]] = []
-    for source in registry.sourcing(board.families, board.states, index)[0]:
+    for source in row_sources(board.families, index, 0):
         other = board.families[source[0]]
         scaled = records.rulers_write_factor(forms.get(source, 0), rulers[source], gamma, family.power)
         weighed = weight_of(index, other) * np.asarray(scaled, dtype=object) + np.zeros(
@@ -127,11 +133,6 @@ def eras(
         terms.append(weighed)
         exponents.append(other.exponent(family.power))
         writes.append((other.name, int(family.write * weighed.sum())))
-    for reader in readers_of(
-        board.families, index
-    ):  # a reader with no record standing writes 0 (2026-10-24)
-        if board.families[reader].name not in dict(writes):
-            writes.append((board.families[reader].name, 0))
     product, others = paces.exponent_products(exponents)
     sums = [int(term.sum()) for term in terms]
     potential = sum(s * o for s, o in zip(sums, others, strict=True))  # P x SUM_f S_f / n_f

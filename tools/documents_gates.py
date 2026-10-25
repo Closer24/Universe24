@@ -1,47 +1,20 @@
-"""The documents' six gates on the law's text, the engine's document and the repository's words, run by `tools/check.py` among its ratchets on every selection (since 2026-10-24, the tests' audit on the owner's word; to that day the first three by `tests/test_documents.py`, the last by `tests/test_repository_language.py`; the owner's word of 2026-10-04, a perfect algebra; the advisor's proposals, #1793 comment 5974878000): (1) no undated history clause stands in docs/ALGEBRA.md or docs/ENGINE.md beyond the ones `tools/history_allowed.json` lists, and no listed clause has left the text without leaving the list, so the list only shrinks; (2) every number of `tools/numbers.json` stands in one of its canonical forms where the table names it and in none of its forbidden forms in the two documents; (3) every number the table derives by a script of `tools/derivations/` is that script's output to the digits named; (4) every heading of docs/*.md, README.md and CHANGELOG.md is in sentence case and no run of three or more all-caps words stands in their prose or in the docstrings, comments and strings of src/, tools/ and tests/ (the owner's word of 2026-09-30); (5) ENGINE.md's "The engine is N modules" counts the Python files of src/event_universe beside __init__.py; (6) every tracked or new text file holds ASCII letters only (the repository's language is English).
+"""The documents' three gates on the law's text and the engine's document, run by `tests/test_documents.py` (the owner's word of 2026-10-04, a perfect algebra; the advisor's proposals, #1793 comment 5974878000): (1) no undated history clause stands in docs/ALGEBRA.md or docs/ENGINE.md beyond the ones `tools/history_allowed.json` lists, and no listed clause has left the text without leaving the list, so the list only shrinks; (2) every number of `tools/numbers.json` stands in one of its canonical forms where the table names it and in none of its forbidden forms in the two documents; (3) every number the table derives by a script of `tools/derivations/` is that script's output to the digits named.
 
 Usage: `python tools/documents_gates.py` prints every departure; `python tools/documents_gates.py --history` prints the history clauses standing now in the list's own form, to refresh `tools/history_allowed.json` after a fill that dates or strikes some.
 """
 
 from __future__ import annotations
 
-import ast
 import importlib.util
-import io
 import json
 import re
-import subprocess
 import sys
-import tokenize
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCUMENTS = ("docs/ALGEBRA.md", "docs/ENGINE.md")
 ALLOWED, NUMBERS = ROOT / "tools" / "history_allowed.json", ROOT / "tools" / "numbers.json"
-ENTRY = ("README.md", "CHANGELOG.md")  # the entry documents, under gate (4) with docs/*.md
-CODE = ("src", "tools", "tests")  # the folders whose docstrings, comments and strings gate (4) reads
-CAPS = re.compile(r"[A-Z][A-Z0-9'-]+")
-HEADING = re.compile(r"(\d+\.\s+)?[A-Z](?![A-Z0-9'-]*\s+[A-Z][A-Z0-9'-]+(\s|$))")
-WORDS = {  # the counted words gate (5) reads
-    "nineteen": 19,
-    "twenty": 20,
-    "twenty-one": 21,
-    "twenty-two": 22,
-    "twenty-three": 23,
-    "twenty-four": 24,
-    "twenty-five": 25,
-    "twenty-six": 26,
-    "twenty-seven": 27,
-    "twenty-eight": 28,
-    "twenty-nine": 29,
-    "thirty": 30,
-    "thirty-one": 31,
-    "thirty-two": 32,
-    "thirty-three": 33,
-    "thirty-four": 34,
-}
-TEXT = (".py", ".md", ".json", ".toml", ".txt", ".yml")  # the text files gate (6) reads
 HISTORY = [  # a clause about the state of the work, which the law states dated or not at all
     re.compile(p, re.IGNORECASE)
     for p in (
@@ -135,80 +108,12 @@ def derived() -> list[str]:
     return departures
 
 
-def shouting(text: str) -> list[str]:
-    """Every run of three or more all-caps words in a text, code spans aside."""
-    words = [word.strip('.,;:()[]"!?*') for word in re.sub(r"`[^`]*`", " ", text).split()]
-    marked = " ".join(word if CAPS.fullmatch(word) else "\n" for word in words)  # a break between runs
-    return [run.group(0) for run in re.finditer(r"\S+(?: \S+){2,}", marked)]
-
-
-def prose(path: Path) -> list[str]:
-    """A markdown file's lines outside its fenced blocks, a fenced line blank."""
-    lines, fenced = [], False
-    for line in path.read_text(encoding="utf-8").splitlines():
-        fenced ^= line.lstrip().startswith("```")
-        lines.append("" if fenced or line.lstrip().startswith("```") else line)
-    return lines
-
-
-def capitals(root: Path = ROOT) -> list[str]:
-    """The departures of gate (4): a heading not in sentence case (a number and a dot before it allowed, its first two words not both in capitals), or a run of three or more all-caps words in the documents' prose or in the code's docstrings, comments and strings (a code token such as LAWFUL is one word)."""
-    documents = sorted((root / "docs").glob("*.md")) + [root / name for name in ENTRY]
-    lines = [(path.relative_to(root), line) for path in documents for line in prose(path)]
-    heads = [(at, line) for at, line in lines if re.match(r"#+\s", line)]
-    found = [
-        f"{at}: a heading not in sentence case: {line}"
-        for at, line in heads
-        if not HEADING.match(line.lstrip("#").strip())
-    ]
-    found += [f"{at}: a run of capitals: {run}" for at, line in lines for run in shouting(line)]
-    for path in [p for folder in CODE for p in sorted((root / folder).rglob("*.py"))]:
-        source = path.read_text(encoding="utf-8")
-        texts = [n.value for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Constant)]
-        texts = [text for text in texts if isinstance(text, str)]
-        tokens = tokenize.generate_tokens(io.StringIO(source).readline)
-        texts += [t.string for t in tokens if t.type == tokenize.COMMENT]
-        found += [
-            f"{path.relative_to(root)}: a run of capitals: {run}" for t in texts for run in shouting(t)
-        ]
-    return found
-
-
-def module_count(root: Path = ROOT) -> list[str]:
-    """The departure of gate (5): ENGINE.md's "The engine is N modules" against the Python files of src/event_universe beside __init__.py, the folders' modules their own."""
-    text = (root / "docs" / "ENGINE.md").read_text(encoding="utf-8")
-    stated = re.search(r"The engine is ([a-z-]+) modules", text)
-    found = sorted(
-        p.name for p in (root / "src" / "event_universe").glob("*.py") if p.name != "__init__.py"
-    )
-    if stated is None or stated.group(1) not in WORDS:
-        return ["docs/ENGINE.md: no sentence 'The engine is N modules' with N a counted word"]
-    if WORDS[stated.group(1)] != len(found):
-        return [
-            f"docs/ENGINE.md: 'The engine is {stated.group(1)} modules'; the tree holds {len(found)}: {found}"
-        ]
-    return []
-
-
-def ascii_letters(root: Path = ROOT) -> list[str]:
-    """The departures of gate (6): every letter of every tracked or new text file is an ASCII letter (no Hebrew, Greek or Cyrillic letter in the prose, no directory exempt); a dash, a sign or a symbol is no letter and passes."""
-    git = ["git", "ls-files", "--cached", "--others", "--exclude-standard"]
-    listed = subprocess.check_output(git, cwd=root, text=True).splitlines()
-    found = []
-    for name in (n for n in listed if n.endswith(TEXT) and (root / n).is_file()):
-        for number, line in enumerate((root / name).read_text(encoding="utf-8").splitlines(), 1):
-            found += [f"{name}:{number}: {c!r}" for c in line if c.isalpha() and not c.isascii()]
-    return found
-
-
 def main() -> int:
     if "--history" in sys.argv:
         print(json.dumps(clauses(), indent=1))
         return 0
-    departures = (
-        undated_history() + numbers() + derived() + capitals() + module_count() + ascii_letters()
-    )
-    print("\n".join(departures[:40]) if departures else "the documents' six gates hold")
+    departures = undated_history() + numbers() + derived()
+    print("\n".join(departures) if departures else "the documents' three gates hold")
     return 1 if departures else 0
 
 

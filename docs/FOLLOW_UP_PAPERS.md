@@ -1,6 +1,6 @@
 # Follow-up papers
 
-This file stands beside the project's four documents (the keeper's division of 2026-10-25) as the papers' proposals, nothing of it a decision or a law. The papers the project's own findings point to next, from the careful to the bold: each names its one question, what the project has for it in the law's status words, and the run or derivation it needs. Nothing here is claimed; each is a proposal, and the bold ones say what would be groundbreaking if their blind held and what their honest status is.
+The papers the project's own findings point to next, from the careful to the bold: each names its one question, what the project has for it in the law's status words, and the run or derivation it needs. Nothing here is claimed; each is a proposal, and the bold ones say what would be groundbreaking if their blind held and what their honest status is.
 
 ## 1. Rule3 in flux form: the step, the Gauss law and the walk
 

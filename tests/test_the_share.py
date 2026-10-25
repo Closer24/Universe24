@@ -8,11 +8,11 @@ import pytest
 
 from event_universe import flux, node, readings, records, share, world_files
 from event_universe.core import paces
+from event_universe.core.ports import Wrap
 from event_universe.core.rule3 import coefficients, form_term, rule_integers
 from event_universe.features.read import edge_squared, paces_guard
 from event_universe.lattice import Lattice
 from event_universe.loader.derived import family_rules
-from event_universe.loader.universe import SIGN
 from event_universe.loader.world import kind_of
 from event_universe.world_files import load_world
 from tests.laws import arrivals_rule3, real_rows
@@ -24,7 +24,7 @@ def law(num, den, gamma, clock, pace, factors=None, unit=1):  # type: ignore[no-
     return rule_integers(num, den, gamma, clock, pace, factors, unit)
 
 
-HERE, GAMMA = (1, 1, 1), 6000  # the witnesses at the rule's Gamma
+RING, HERE, GAMMA = Wrap(True, True, True), (1, 1, 1), 6000  # the witnesses at the rule's Gamma
 
 
 def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floor():
@@ -33,11 +33,11 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
     rule = law(1, 1, 5, *paces.node_paces(5, 1))  # the clock 4, the pace 3: R 18, S 192, w 150
     now, before = zero.copy(), zero.copy()
     now[1, 1, 1] = now[2, 1, 1] = now[1, 2, 1] = now[1, 1, 2] = before[1, 1, 1] = -3
-    after = flux.step_line(record := records.Record(now, before, zero), rule)
+    after = flux.step_line(record := records.Record(now, before, zero), rule, RING)
     weight = 2 * paces.link_pace(5, 1) ** 2  # the share's wall 2 p_i^2 G^2 = 18 at the Node's pace 3
-    shares = [int(share.share((1, 1), r, 5, 1)[HERE]) for r in (record, after)]
-    plain = [int(share.share((1, 1), r, 5, 1, as_read=r)[HERE]) for r in (record, after)]
-    currents = sum(int(f[HERE]) for f in readings.currents_of(1, [record]))
+    shares = [int(share.share((1, 1), r, RING, 5, 1)[HERE]) for r in (record, after)]
+    plain = [int(share.share((1, 1), r, RING, 5, 1, as_read=r)[HERE]) for r in (record, after)]
+    currents = sum(int(f[HERE]) for f in readings.currents_of(1, [record], RING))
     nxt, carried = int(after.now[HERE]), int(after.remainder[HERE])
 
     def unfloored(
@@ -60,35 +60,37 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
     assert residual == Fraction(
         -1, 3
     )  # the level terms' clause left with readings.gauge_terms, 2026-10-24
-    assert sum(int(f[HERE]) for f in readings.currents_of(1, [after])) != currents  # not the pair left
+    assert (
+        sum(int(f[HERE]) for f in readings.currents_of(1, [after], RING)) != currents
+    )  # not the pair left
     plain_residual = unfloored(record)[1] % 1 - unfloored(after)[1] % 1
     assert plain[1] - plain[0] == currents + Fraction(-(nxt + 3) * carried, weight) + plain_residual
     record, rule = records.Record(ones, zero, zero), law(2, 3, GAMMA, GAMMA, GAMMA)
-    after = flux.step_line(record, rule)
+    after = flux.step_line(record, rule, RING)
     nxt, carried = int(after.now[HERE]), int(after.remainder[HERE])
-    shares = [int(share.share((2, 3), r, GAMMA)[HERE]) for r in (record, after)]
+    shares = [int(share.share((2, 3), r, RING, GAMMA)[HERE]) for r in (record, after)]
     assert (nxt, carried, rule[2], shares) == (1, 216_000_000, 648_000_000, [9, 6])
-    assert not any(f[HERE] for f in readings.currents_of(2, [record]))
+    assert not any(f[HERE] for f in readings.currents_of(2, [record], RING))
     assert Fraction(-carried, 2 * GAMMA**2) == shares[1] - shares[0] == -3
     assert rule[2] * (nxt + 0) == 2 * 2 * GAMMA**2 * 6 + 0 - carried
     for pair, levels, turned in (((2, 3), [1, 4], -1), ((1, 2), [1, 3], 0)):
         rule = law(*pair, GAMMA, GAMMA, GAMMA)
         lines = [records.Record(ones, zero, zero), records.Record(3 * ones, zero, zero)]
-        after = [flux.step_line(line, rule) for line in lines]
+        after = [flux.step_line(line, rule, RING) for line in lines]
         eps = [Fraction(-int(a.remainder[HERE]), rule[2]) for a in after]  # (r - r') / w from r = 0
         found = int(records.wronskian(after, True)[HERE])
         assert ([int(a.now[HERE]) for a in after], found) == (levels, turned)
         assert found == eps[0] * 3 - eps[1] * 1 and abs(found) < 1 + 3
-        back = [flux.step_line(a, rule, -1) for a in after]
+        back = [flux.step_line(a, rule, RING, -1) for a in after]
         assert [int(b.now[HERE]) for b in back] == [1, 3] and not any(b.remainder.any() for b in back)
     rule = law(1, 1, GAMMA, GAMMA, GAMMA)
     assert Fraction(rule[1] - 6 * rule[0][0], rule[2]) == -2 and edge_squared((1, 1), GAMMA) == GAMMA**2
     paces_guard((1, 1), GAMMA, 1, 0, (1,) * 6, "light")  # the edge admitted at the paces Gamma
     record = records.Record(parity := (-1) ** np.indices((2, 2, 2)).sum(0), 0 * parity, 0 * parity)
     for t in range(1, 7):
-        record = flux.step_line(record, rule)
+        record = flux.step_line(record, rule, RING)
         assert np.array_equal(record.now, (-1) ** t * (t + 1) * parity) and not record.remainder.any()
-    assert not share.share((1, 1), records.Record(parity, -parity, 0 * parity), GAMMA).any()
+    assert not share.share((1, 1), records.Record(parity, -parity, 0 * parity), RING, GAMMA).any()
     at = (2, 1)  # Gamma 2: the Node's pace 2 at A and 1 at B on a chain of two, the clock 2
     rules = [law(1, 1, 2, 2, p) for p in at]
     wall, reads, selfs = rules[0][2], [r[0][0] for r in rules], [r[1] for r in rules]
@@ -121,10 +123,10 @@ def test_the_integer_identities_carry_their_remainder_terms_and_the_readers_floo
 def test_the_engine_reads_the_currents_from_the_record_through_the_six_ports():
     """The currents the engine reads (`readings.currents_of`) are F_ij = num (now_i before_j - before_i now_j) through each Port, both level pairs added, on the record as it is and nothing kept beside it."""
     (quanta,) = family_rules(real_rows(("quanta", (5, 7), 1, None)))
-    draw, shape = np.random.default_rng(2), (3, 3, 3)
+    draw, shape, wrap = np.random.default_rng(2), (3, 3, 3), Wrap(True, True, True)
     zero = records.zeros(shape, kind_of(63))
     real, second = (records.Record(*draw.integers(-50, 50, (2, *shape)), zero) for _ in range(2))
-    through = readings.currents_of(quanta.pair[0], [real, second])
+    through = readings.currents_of(quanta.pair[0], [real, second], wrap)
     for port, (axis, side) in enumerate((a, s) for a in range(3) for s in (1, -1)):
         rolled = [(r, *(np.roll(a, -side, axis) for a in (r.now, r.before))) for r in (real, second)]
         expected = sum(5 * (r.now * before - r.before * now) for r, now, before in rolled)
@@ -141,17 +143,8 @@ def test_under_the_rotation_the_share_reads_the_level_pair_as_the_step_reads_it(
     def ring(level: int) -> tuple[Lattice, int]:
         board = Lattice(load_world(path), output=lambda line: None)
         names = [family.name for family in board.families]
-        electron, sign = (
-            min(
-                (i for i, f in enumerate(board.families) if f.plane),
-                key=lambda i: board.families[i].pair[1] ** 2 - board.families[i].pair[0] ** 2,
-            ),
-            names.index(SIGN),
-        )
+        electron, sign = names.index("electron"), names.index("charge")
         half = np.full(board.shape, board.half_wall(electron), dtype=object)
-        board.born_point(
-            electron
-        )  # the point's records stand before its levels are written by hand (2026-10-24)
         for line in range(2):
             now, before = draw.integers(-6000, 6000, (2, *board.shape)).astype(object)
             board.states[electron].lines[line] = records.Record(now, before, half)
@@ -169,15 +162,17 @@ def test_under_the_rotation_the_share_reads_the_level_pair_as_the_step_reads_it(
         wall = 2 * paces.link_pace_of(gamma, read[0]) ** 2 * unit * unit
 
         def shares(lines, turned=None):  # type: ignore[no-untyped-def]
-            found = share.family_share(family, lines, gamma, *read, unit, None, turned)
+            found = share.family_share(family, lines, board.wrap, gamma, *read, unit, None, turned)
             return found.astype(object)
 
         start, drifts = board.total_share(electron)[0], []
         assert start is not None
         for _ in range(40):
-            node.phase_act(board.held, board.families, board.states, 1, gamma)
+            node.phase_act(board.held, board.families, board.states, 1, board.wrap, gamma)
             lines = board.lines_of(electron, 0)
-            flows = sum(c.astype(object) for c in readings.currents_of(family.pair[0], lines))
+            flows = sum(
+                c.astype(object) for c in readings.currents_of(family.pair[0], lines, board.wrap)
+            )
             stepped, bookings = board.stepped(electron, 1)
             first, second = bookings[0]
             assert all(  # (a) the plain pair read: no turn of the level before and none after

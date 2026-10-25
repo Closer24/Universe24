@@ -8,7 +8,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import paces
-from event_universe.core.ports import arrival
+from event_universe.core.ports import Wrap, arrival
 from event_universe.core.rule3 import division_forward, largest_below, link_factor
 
 READS: dict[
@@ -45,12 +45,14 @@ def link_tension(reads: Sequence[tuple[int, Any, Any]]) -> Any:
     return tension
 
 
-def link_tensions(axes: Sequence[tuple[int, Sequence[Any]]], gamma: int) -> tuple[Any, ...]:
+def link_tensions(axes: Sequence[tuple[int, Sequence[Any]]], wrap: Wrap, gamma: int) -> tuple[Any, ...]:
     """The tension of each of a Node's six Links in Port order (ALGEBRA.md #the-primitives, The tension; #the-interval, the dependency radius): from the read rows' axis lines at the Link's two ends, the neighbour's read through the Port the arrival is read through (`link_tension`, `arrival`; 0 beyond a face, a Node with no level), `axes` per read its weight and its three axis lines; the integer 0 on every Link where no row carries axis lines. The guard's lower side: a tension above Gamma on any Link makes the Link's factor Gamma - t and its pace negative, beyond the law's domain (the paces' text: in the rationals a pace below 0 is never met; the tension lines' k = 0 mode on the wrapped board meets it, the smokes of 2026-10-22), and the read refuses it by name at the one place the six tensions are formed, as the write refuses a wall below 1 (features/held_write), so that no negative pace enters Rule3's factors or the write's rulers and no write goes silently negative."""
     found = []
     for axis in range(3):
         for side in (1, -1):
-            ends = [(weight, lines[axis], arrival(lines[axis], axis, side)) for weight, lines in axes]
+            ends = [
+                (weight, lines[axis], arrival(lines[axis], axis, side, wrap)) for weight, lines in axes
+            ]
             found.append(link_tension(ends))
     return tuple(
         np.minimum(np.asarray(tension, dtype=object), gamma) for tension in found
