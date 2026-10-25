@@ -1,0 +1,40 @@
+world worlds/world_single_d3.json intervals 120 cube 15 seconds 52
+counts {'births': 24, 'taken': 3879980703378486, 'booked': 2080880694720000, 'body_clicks': 54, 'refused_stop': 7, 'refused_origin': 0, 'refused_lay': 654, 'refused_orientation': 12, 'refused_twist': 666, 'turns': 12460, 'laid': 41, 'laid_nodes': 34}
+run back {'intervals': 5, 'exact': 5} census [89, 92] end_hash 7203a5e79b5335df
+swap at the turned Nodes: sites (Node x plane with a gap) 24920 kept 24920 negated 0 changed 0 | of the kept, W = 0 at 22239 so W != 0 kept 2681 | turned Nodes 12460 with the Node's W sum kept 12460
+at the turned sites: W_pre (held) summed 6531336 W_post (the step's output, discarded) summed 5773107 W_after (exchanged) summed 6531336 | sites where the step left W unchanged 22521
+the board's W of the planes with a gap: at the seed 2167467 at the end 19771 the change -2147696
+  decomposed: the step SUM (W1 - W0) = -2905925 | the swap SUM (W2 - W1) = 758229 | the click SUM (W3 - W2) = 0 | sum -2147696
+  identity: SUM (W2 - W1) against sum_pre - sum_post at the turned sites: 758229 against 758229 equal
+  intervals where the swap's part is not 0: 103 of 120 | intervals with turns: 117 | turns 12460 births 24 credits 54 frozen Node-intervals 0
+  the step's part on intervals with no turn and no birth: -172891 over 3 intervals
+W at the marks [i, W of the planes with a gap over the board, W of every plane over the board, W per half mask...]:
+   [0, 2167467, 2167467, 2167467, 0]
+   [30, 125735, 125735, 125115, 630]
+   [60, 68166, 68166, 67188, 981]
+   [90, 23915, 23915, 23850, 60]
+   [120, 19771, 19771, 19628, 144]
+  mask sums against the board: intervals where mask A + mask B != board: 84 of 121 (the tie plane's W where the cube is odd)
+the five largest step parts [i, W0, W1, W2, W3, turned, births, credits, frozen]:
+   [9, 1767345, 1387085, 1446689, 1446689, 90, 0, 1, 0] step -380260 swap 59604 click 0
+   [16, 1273213, 931055, 935651, 935651, 432, 0, 0, 0] step -342158 swap 4596 click 0
+   [17, 935651, 706846, 706630, 706630, 294, 0, 0, 0] step -228805 swap -216 click 0
+   [5, 1934912, 1710286, 1842622, 1842622, 12, 0, 0, 0] step -224626 swap 132336 click 0
+   [10, 1446689, 1232629, 1278169, 1278169, 118, 0, 12, 0] step -214060 swap 45540 click 0
+the five largest swap parts:
+   [7, 1802924, 1676893, 1837405, 1837405, 38, 0, 12, 0] step -126031 swap 160512 click 0
+   [5, 1934912, 1710286, 1842622, 1842622, 12, 0, 0, 0] step -224626 swap 132336 click 0
+   [4, 1954396, 1813202, 1934912, 1934912, 6, 0, 0, 0] step -141194 swap 121710 click 0
+   [11, 1278169, 1097537, 1177445, 1177445, 132, 0, 6, 0] step -180632 swap 79908 click 0
+   [6, 1842622, 1734684, 1802924, 1802924, 7, 0, 1, 0] step -107938 swap 68240 click 0
+the first ten intervals:
+   [1, 2167467, 2104126, 2104126, 2104126, 0, 0, 0, 0] step -63341 swap 0 click 0
+   [2, 2104126, 1992080, 1992080, 1992080, 0, 0, 0, 0] step -112046 swap 0 click 0
+   [3, 1992080, 1919706, 1954396, 1954396, 1, 0, 0, 0] step -72374 swap 34690 click 0
+   [4, 1954396, 1813202, 1934912, 1934912, 6, 0, 0, 0] step -141194 swap 121710 click 0
+   [5, 1934912, 1710286, 1842622, 1842622, 12, 0, 0, 0] step -224626 swap 132336 click 0
+   [6, 1842622, 1734684, 1802924, 1802924, 7, 0, 1, 0] step -107938 swap 68240 click 0
+   [7, 1802924, 1676893, 1837405, 1837405, 38, 0, 12, 0] step -126031 swap 160512 click 0
+   [8, 1837405, 1712697, 1767345, 1767345, 37, 0, 0, 0] step -124708 swap 54648 click 0
+   [9, 1767345, 1387085, 1446689, 1446689, 90, 0, 1, 0] step -380260 swap 59604 click 0
+   [10, 1446689, 1232629, 1278169, 1278169, 118, 0, 12, 0] step -214060 swap 45540 click 0
