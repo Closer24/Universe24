@@ -226,7 +226,8 @@ class Lean:
         factors = self.link_factors(); self.start_factors = factors
         frames = self.frames(self.phi.rem); self.start_frames = frames
         cphi = paces.rounded(self.sign.now * p0, self.gamma)  # the clocked potential at the level now
-        phases = self.link_phases(frames, self.centred_count(cphi)); odd = [l.now for l in self.sign_axes]
+        K = self.centred_count(cphi); self.count_max = max(int(abs(int(x))) for port, (axis, side) in enumerate(AXES) for x in (K - frames[port] * roll(K, axis, side)).reshape(-1))  # the Links' count's size this interval (a reading)
+        phases = self.link_phases(frames, K); odd = [l.now for l in self.sign_axes]
         if os.environ.get('LEAN_NO_PHASE'):  # a diagnostic switch of the toy: the fold off (the pair (X, 0), the odd lines 0)
             phases = [(Z(self.shape) + self.X, Z(self.shape)) for _ in AXES]; odd = [Z(self.shape) for _ in range(3)]
         if os.environ.get('LEAN_NO_PHI'): phases = [(Z(self.shape) + self.X, Z(self.shape)) for _ in AXES]  # the phase pair off, the odd tangent on
@@ -381,11 +382,12 @@ class Lean:
             for sense in (0, 1):
                 rules += [(start['planes'][2 * s_ + sense][0], r), (start['planes'][2 * s_ + sense][1], r)]
         pace = paces.link_pace_of(self.gamma, c)
-        sh = self.share(start['light'], r_light, pace)
+        vac = not os.environ.get('LEAN_FRAME_WEIGHT')  # V-D, the owner's sentence 7 (2026-10-25): the birth's threshold and the lay's refusal read the share at the vacuum's weight, so a count rises only with a quantum gained; the frame's weight kept by name under the switch
+        sh = self.share(start['light'], r_light, pace, vacuum=vac)
         owns = []  # each record's standing share at the interval's start (the lay's one comparison, take.below_quantum)
         for rec in range(2 * self.nl):
             r = self.rule(self.pairs[rec // 2], c, factors); re0, im0 = start['planes'][rec]
-            owns.append(self.share(re0, r, pace) + self.share(im0, r, pace))
+            owns.append(self.share(re0, r, pace, vacuum=vac) + self.share(im0, r, pace, vacuum=vac))
         born = []  # (the take's Node, the lift, the - child's Node, the + child's Node)
         frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(self.shape, dtype=bool)
         if self.link_birth == 'current':
@@ -421,9 +423,19 @@ class Lean:
         kept = []
         for at, s_, minus, plus in born:
             # the lay refused by name where a child's family already stands above one quantum at its Node (ALGEBRA.md, The click writes on the lattice (b) and (d), the undepleted beam; engine take.below_quantum, meeting_board.refused_by)
-            if int(owns[2 * s_][minus]) > self.units[s_] or int(owns[2 * s_ + 1][plus]) > self.units[s_]:
+            empty = not os.environ.get('LEAN_LAY_BELOW_QUANTUM')  # the lay's Wronskian is exact only at an empty Node (ALGEBRA.md, The click writes on the lattice, line 186): a child laid onto standing levels of its family adds the cross terms A x (standing levels) to W and the board's charge drifts (measured: W total 5.7e6 of 1.96e7 gross by interval 50 under the former rule); the lay is refused where the child's family stands at all; the former rule (take.below_quantum, at or below one quantum) kept by name under the switch
+            bound_minus = 0 if empty else self.units[s_]; bound_plus = 0 if empty else self.units[s_]
+            if int(owns[2 * s_][minus]) > bound_minus or int(owns[2 * s_ + 1][plus]) > bound_plus:
                 self.counts['refused_lay'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'lay', 'standing': int(owns[2 * s_][minus]), 'unit': self.units[s_]}); continue
             kept.append((at, s_, minus, plus))
+        # one child per Node per record (the owner's sentence 1 as approved, S3): where two children of one record would land at one Node in one close, W would grow as the square (n children n^2 A^2 against n A^2: the charge made at the lay, measured 1.4e6 at one close of 31 births); every such child is refused by name, none chosen by the Links' order
+        landing = {}
+        for at, s_, minus, plus in kept:
+            landing[(2 * s_, minus)] = landing.get((2 * s_, minus), 0) + 1; landing[(2 * s_ + 1, plus)] = landing.get((2 * s_ + 1, plus), 0) + 1
+        crowded = [(at, s_, minus, plus) for at, s_, minus, plus in kept if landing[(2 * s_, minus)] > 1 or landing[(2 * s_ + 1, plus)] > 1]
+        for at, s_, minus, plus in crowded:
+            self.counts['refused_lay'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'lay', 'children_at_one_node': max(landing[(2 * s_, minus)], landing[(2 * s_ + 1, plus)])})
+        kept = [k for k in kept if k not in crowded]
         by_node = {}
         for at, s_, minus, plus in kept: by_node.setdefault(at, []).append((s_, minus, plus))
         taken_births = []
@@ -654,7 +666,7 @@ if __name__ == '__main__':
             c = b.content()
             cs = [int(x) for x in c.reshape(-1)]; vs = [int(x) for x in b.vol.now.reshape(-1)]
             energy = sum(int(x) * int(x) for rec in b.planes for l in rec for x in l.now.reshape(-1)); odd_max = max(abs(int(x)) for l in b.sign_axes for x in l.now.reshape(-1)); light_v = max(abs(int(a) - int(bb)) for a, bb in zip(b.light.now.reshape(-1), b.light.before.reshape(-1)))
-            rows.append({'i': b.interval, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'], 'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'], 'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(), 'tension min/max': [min(int(x) for l in b.vol_axes for x in l.now.reshape(-1)), max(int(x) for l in b.vol_axes for x in l.now.reshape(-1))], 'odd max bits': odd_max.bit_length(), 'light velocity max': light_v, 'milliseconds': (time.monotonic_ns() - t0) // 1000000})
+            rows.append({'i': b.interval, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'], 'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'], 'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(), 'tension min/max': [min(int(x) for l in b.vol_axes for x in l.now.reshape(-1)), max(int(x) for l in b.vol_axes for x in l.now.reshape(-1))], 'odd max bits': odd_max.bit_length(), 'link count max': getattr(b, 'count_max', 0), 'orbit table': len(b.orbit), 'W total': sum(int(x) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'W abs sum': sum(abs(int(x)) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'light velocity max': light_v, 'milliseconds': (time.monotonic_ns() - t0) // 1000000})
             print(json.dumps(rows[-1]), flush=True)
     run_back = None; kept_log = list(b.log)  # the record's log as the run left it; the run back below removes its lines as it undoes them
     if back:
