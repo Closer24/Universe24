@@ -47,6 +47,106 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "never the shipped file; the rows' 35 derived and read at every Node before the first birth, every array of the board's shape, the growth at the first birth by 52 per record born, "
         "the three lifts' growth at the top tier's den by the interval 8, the largest bit length within 128 at both dens and the shipped den's half wall above it, the two deviations kept by name",
     ),
+    "tests/test_the_generic_node_toy.py::test_the_node_fed_the_boards_own_shells_is_the_boards_centre_bit_for_bit_and_runs_back_exact": (
+        52,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the calibration, the centre fed the board's own shells is the board's centre bit for bit through the first birth and runs back exact",
+    ),
+    "tests/test_the_generic_node_toy.py::test_rule3_at_the_node_is_the_six_fed_arrivals_division_on_each_line_and_its_inverse": (
+        52,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): Rule3 on each line from six fed arrivals by hand and its inverse",
+    ),
+    "tests/test_the_generic_node_toy.py::test_the_clock_is_the_nodes_and_the_tension_is_the_links_read_the_same_from_both_ends": (
+        40,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the clock the Node's and the tension the Link's, the same from both ends",
+    ),
+    "tests/test_the_generic_node_toy.py::test_the_node_sees_one_link_a_change_at_the_edge_and_corner_nodes_leaves_its_interval": (
+        23,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the one-Link reach at the Node, the edge and corner Nodes' change leaving the centre, a face neighbour's the positive control",
+    ),
+    "tests/test_the_generic_node_toy.py::test_the_held_write_at_the_node_is_the_form_and_the_stresses_over_the_fixed_wall_once_and_its_inverse": (
+        51,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the volume's write from the by-hand form and the stresses, the remainder within its wall, the inverse",
+    ),
+    "tests/test_the_generic_node_toy.py::test_the_signs_row_is_the_wronskian_and_no_record_reads_its_own_row": (
+        76,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the sign's row from the Wronskian and the record's read excluding its own row",
+    ),
+    "tests/test_the_generic_node_toy.py::test_the_phase_act_at_the_node_is_the_clocked_potential_and_the_counts_along_the_orbit": (
+        68,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the phase act, Phi_next = 2 Phi_now - Phi_before + the turn factor, the counts with the frame sign across a Link, the pair on the orbit",
+    ),
+    "tests/test_the_generic_node_toy.py::test_the_swap_at_a_fed_weak_maximum_and_at_the_floor_turns_the_node_alone_on_the_trigger": (
+        86,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the swap at a fed weak maximum and at the floor, the complements at every wall, nothing off the trigger, the inverse",
+    ),
+    "tests/test_the_generic_node_toy.py::test_the_frozen_clock_has_no_share_and_is_read_by_no_meeting": (
+        29,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the frozen clock",
+    ),
+    "tests/test_the_generic_node_toys_close_and_constants.py::test_the_clicks_read_at_the_node_is_one_number_of_the_fed_remainders_with_its_three_refusals_and_the_48": (
+        99,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the click's read as one number by hand, its invariance under the 48 on the fed neighbours, the three refusals by name",
+    ),
+    "tests/test_the_generic_node_toys_close_and_constants.py::test_the_take_at_two_fed_quanta_pays_the_walls_lays_the_pair_and_refuses_stop_and_lay_by_name": (
+        84,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the take and the lay at two fed quanta, the refusals stop and lay",
+    ),
+    "tests/test_the_generic_node_toys_close_and_constants.py::test_the_bodys_closing_at_the_node_reads_the_beat_and_writes_the_credit_or_refuses_stop": (
+        90,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the body's closing, the beat by hand, the click at the period's close, the credit's readings",
+    ),
+    "tests/test_the_generic_node_toys_close_and_constants.py::test_constant_1_the_count_of_integers_at_the_node_is_the_rows_35_and_grows_by_52_per_record_born": (
+        29,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): constant 1, the 35 derived from the rows and the 52 per record born named as the deviation",
+    ),
+    "tests/test_the_generic_node_toys_close_and_constants.py::test_constant_2_the_list_of_acts_is_the_same_for_a_feed_that_births_and_one_that_does_not": (
+        51,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): constant 2, the trace of the acts the same for a feed that births and one that does not, the close's branches named",
+    ),
+    "tests/test_the_generic_node_toys_close_and_constants.py::test_constant_3_the_state_stands_within_128_bits_at_the_fed_extremes_and_the_transients_beyond_are_named": (
+        100,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): constant 3, the state within 128 bits at the fed extremes, the transients beyond measured and named",
+    ),
+    "tests/test_the_generic_node_toys_close_and_constants.py::test_the_fold_on_the_one_node_torus_sums_the_links_to_zero_and_turns_at_the_pinned_rest": (
+        45,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the fold on the 1x1x1, the Links' sum 0, a swap every interval",
+    ),
+    "tests/test_the_generic_node_toys_close_and_constants.py::test_the_48_at_the_node_carry_the_fed_shell_and_the_centres_outputs_alike": (
+        29,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the 48 at the Node, the centre's outputs alike under the signed permutations of the fed shell",
+    ),
+    "tests/laws_universe.py::node_toy": (
+        11,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the helper, the toy's board with the meetings restricted to the centre",
+    ),
+    "tests/laws_universe.py::node_arrays": (
+        16,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the helper, every array of the state keyed",
+    ),
+    "tests/laws_universe.py::impose": (
+        28,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the helper, the fed shell written at the 26 Nodes through new Records",
+    ),
+    "tests/laws_universe.py::fed_interval": (
+        7,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the helper, the two-call interval with the shell imposed before the acts and before the close",
+    ),
+    "tests/laws_universe.py::at_centre": (
+        3,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the helper, the arrays read at the centre",
+    ),
+    "tests/laws_universe.py::course": (
+        18,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the helper, the plain board's own shells recorded per interval under a translation",
+    ),
+    "tests/laws_universe.py::shaken": (
+        14,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the helper, a random fed shell on the light line and the volume",
+    ),
+    "tests/laws_universe.py::carried": (
+        20,
+        "the generic Node's toy (2026-10-25, the owner's word through the adviser: every property tested on one Node fed through its six Links): the helper, a fed shell under one of the cube's 48",
+    ),
     "tests/test_the_point_rows_are_born_at_the_first_birth.py::test_the_lean_board_equals_the_board_with_every_point_standing_through_the_births": (
         70,
         "the point rows born at the first birth (2026-10-24, the field view (c)): the lean board against its twin with every point standing from the start, "
