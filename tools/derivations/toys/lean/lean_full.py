@@ -36,8 +36,9 @@ class Line:
 
 
 class Lean:
-    def __init__(self, den, cube, gamma=1000, action=36000, unit=16, seed_hole=(0, 0, 0), swap_on=True, link_birth=False):
-        self.link_birth = link_birth
+    def __init__(self, den, cube, gamma=1000, action=36000, unit=16, seed_hole=(0, 0, 0), swap_on=True, link_birth=False, seed_extra=None):
+        self.link_birth = link_birth  # False: both children at the Node; True: the + child at the +x end (the label, the negative control of the 48); 'current': the Link close oriented by the light's current F_ij
+        self.seed_extra = seed_extra
         self.den, self.cube, self.gamma, self.T, self.G = den, cube, gamma, action, unit
         self.shape = (cube,) * 3; S = self.shape
         self.lifts = [(p[0], p[1], sine_den(p[1], den)) for p in circle.lift_points(den)]
@@ -55,6 +56,7 @@ class Lean:
         self.interval = 0; self.log = []; self.swap_on = swap_on; self.turns = []; self.stack = []
         drift = math.isqrt(action)
         self.light.now[:] = drift; self.light.now[seed_hole] = 0
+        if seed_extra is not None: self.light.now[tuple(seed_extra)] = math.isqrt(2 * drift * drift)  # one quantum more off the origin: the share doubled (the first pair needs a current)
         self.vol.now[:] = gamma; self.vol.before[:] = gamma
         self.unit_light = 3 * den * action  # W_c
         self.units = [3 * action * s for _v, _n, s in self.lifts]  # one quantum of a record, 3 T s
@@ -64,7 +66,7 @@ class Lean:
         seed_pair = phase.seed(self.X, gamma)
         self.orbit_lines = [seed_pair]  # the last pair as lines, for the next act
         self.orbit = [(int(seed_pair[0][0]), int(seed_pair[1][0]))]  # the table of (cos, sin) as plain integers
-        self.counts = {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'turns': 0}
+        self.counts = {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 0, 'turns': 0}
         self.max_transient = 0
 
     # ---- readings at the interval's start
@@ -126,8 +128,8 @@ class Lean:
             re_j, im_j = roll(re.now, axis, side), roll(im.now, axis, side)
             if frames is not None: im_j = frames[port] * im_j
             c, s = phases[port]  # arrays of (cos, sin) over X per Node
-            n = odd[axis]  # the odd line on the Link: the two ends' mean floored once, signed by the Port's side (antisymmetric: one number read from both ends)
-            n = side * ((n + roll(n, axis, side)) // 2)
+            n = odd[axis]  # the odd line on the Link: the two ends' SUM signed by the Port's side (the engine's V_ij = V_a(i) + V_a(j) read with the direction's sign; no division, so the mirror is exact: a floored mean broke the 48 at every odd sum)
+            n = side * (n + roll(n, axis, side))
             tc, ts, tw = Wl * Wl - n * n, 2 * Wl * n, Wl * Wl + n * n
             # the turned arrival z' = z e^{i theta} e^{i phi}: first the phase pair over X, then the tangent triple over tw
             a_re = (c * re_j - s * im_j); a_im = (s * re_j + c * im_j)
@@ -331,38 +333,64 @@ class Lean:
         for rec in range(6):
             r = self.rule(self.pairs[rec // 2], c, factors); re0, im0 = start['planes'][rec]
             owns.append(self.share(re0, r, pace) + self.share(im0, r, pace))
-        born = []
+        born = []  # (the take's Node, the lift, the - child's Node, the + child's Node)
         frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(self.shape, dtype=bool)
-        for at in np.ndindex(*self.shape):
-            if frozen[at]: continue  # a frozen Node's share is not read (ALGEBRA.md, The horizon; engine share.frozen)
-            whole, rest = divmod(int(sh[at]), self.unit_light)
-            if whole >= 2:
-                number = self.read_number(at, rules)
-                if number is None: continue
-                born.append((at, (number // self.unit_light) % 3))
-            elif whole == 1 and rest > 0:
-                number = self.read_number(at, rules)
-                if number is None: continue
-                if number % self.unit_light < rest: born.append((at, (number // self.unit_light) % 3))
-        for at, s_ in born:
-            walls = 2 * self.units[s_]
-            nb = ((at[0] + 1) % self.cube, at[1], at[2]) if self.link_birth else at
+        if self.link_birth == 'current':
+            # the Link close (Q1/Q2, the owner's sentence 1): every Link once from its +a end; a meeting where both ends hold a whole quantum; the + child at the end the light's own current F_ij = num (now_i before_j - before_i now_j) flows into, read at the interval's start; F = 0 refused by name; the lift by the one-Link read at the +a end
+            lnow, lbefore = start['light'].now, start['light'].before
+            for at in np.ndindex(*self.shape):
+                if frozen[at]: continue
+                for axis in range(3):
+                    j = tuple((at[a] + (1 if a == axis else 0)) % self.cube for a in range(3))
+                    if frozen[j] or int(sh[at]) < self.unit_light or int(sh[j]) < self.unit_light: continue
+                    F = self.den * (int(lnow[at]) * int(lbefore[j]) - int(lbefore[at]) * int(lnow[j]))
+                    if F == 0:
+                        self.counts['refused_orientation'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'orientation', 'link': list(j)}); continue
+                    plus, minus = (j, at) if F > 0 else (at, j)
+                    number = self.read_number(plus, rules)  # the Link's one number read at the end the current flows into (no label: the end is the current's)
+                    if number is None: continue
+                    s_ = (number // self.unit_light) % 3
+                    born.append((plus, s_, minus, plus))  # the take at the same end
+        else:
+            for at in np.ndindex(*self.shape):
+                if frozen[at]: continue  # a frozen Node's share is not read (ALGEBRA.md, The horizon; engine share.frozen)
+                whole, rest = divmod(int(sh[at]), self.unit_light)
+                nb = ((at[0] + 1) % self.cube, at[1], at[2]) if self.link_birth else at
+                if whole >= 2:
+                    number = self.read_number(at, rules)
+                    if number is None: continue
+                    born.append((at, (number // self.unit_light) % 3, at, nb))
+                elif whole == 1 and rest > 0:
+                    number = self.read_number(at, rules)
+                    if number is None: continue
+                    if number % self.unit_light < rest: born.append((at, (number // self.unit_light) % 3, at, nb))
+        # every face read before any write (meeting_board.closed): the lays refused first, then one exact take per Node of the children's walls summed, the start's light paying; the order of the Links enters no number
+        kept = []
+        for at, s_, minus, plus in born:
             # the lay refused by name where a child's family already stands above one quantum at its Node (ALGEBRA.md, The click writes on the lattice (b) and (d), the undepleted beam; engine take.below_quantum, meeting_board.refused_by)
-            if int(owns[2 * s_][at]) > self.units[s_] or int(owns[2 * s_ + 1][nb]) > self.units[s_]:
-                self.counts['refused_lay'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'lay', 'standing': int(owns[2 * s_][at]), 'unit': self.units[s_]}); continue
+            if int(owns[2 * s_][minus]) > self.units[s_] or int(owns[2 * s_ + 1][plus]) > self.units[s_]:
+                self.counts['refused_lay'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'lay', 'standing': int(owns[2 * s_][minus]), 'unit': self.units[s_]}); continue
+            kept.append((at, s_, minus, plus))
+        by_node = {}
+        for at, s_, minus, plus in kept: by_node.setdefault(at, []).append((s_, minus, plus))
+        taken_births = []
+        for at in sorted(by_node):
+            children = by_node[at]; walls = sum(2 * self.units[s_] for s_, _m, _p in children)
             levels, fall = self.take(at, walls, r_light, self.light)
             if levels is None:
-                self.counts['refused_stop'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'stop', 'fall': fall, 'walls': walls}); continue
+                self.counts['refused_stop'] += len(children); self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'stop', 'fall': fall, 'walls': walls}); continue
+            taken_births.append((at, children, levels, fall, walls))
+        for at, children, levels, fall, walls in taken_births:
             now = int(self.light.now[at]); before = int(self.light.before[at]); toward = 1 if before > now else -1
             self.light.now[at] = now + toward * levels
-            A = self.lay_amplitude(s_, at, c, factors, pace)
-            for sense, rec, where in ((-1, 2 * s_, at), (1, 2 * s_ + 1, nb)):
-                re, im = self.planes[rec]; re.now[where] = re.now[where] + A; im.before[where] = im.before[where] + sense * A
-            self.counts['births'] += 1; self.counts['taken'] += fall; self.counts['booked'] += walls; self.closes[at] += 1
-            self.log.append({'event': 'birth', 'i': self.interval, 'node': list(at), 'line_pair': s_, 'senses': [-1, 1], 'taken': fall, 'booked': walls, 'levels': levels, 'light_now_was': now, 'proper': int(self.proper[at]), 'content': int(c[at]), 'amplitude': A})
-        born_nodes = {at for at, _ in born}
-        if self.link_birth:  # both ends of a Link birth are the birth's Nodes
-            born_nodes |= {((at[0] + 1) % self.cube, at[1], at[2]) for at, _ in born}
+            for s_, minus, plus in children:
+                A = self.lay_amplitude(s_, at, c, factors, pace)
+                for sense, rec, where in ((-1, 2 * s_, minus), (1, 2 * s_ + 1, plus)):
+                    re, im = self.planes[rec]; re.now[where] = re.now[where] + A; im.before[where] = im.before[where] + sense * A
+                self.counts['births'] += 1; self.closes[at] += 1
+                self.log.append({'event': 'birth', 'i': self.interval, 'node': list(at), 'line_pair': s_, 'senses': [-1, 1], 'minus': list(minus), 'plus': list(plus), 'taken': fall, 'booked': walls, 'levels': levels, 'light_now_was': now, 'proper': int(self.proper[at]), 'content': int(c[at]), 'amplitude': A, 'children_at_node': len(children)})
+            self.counts['taken'] += fall; self.counts['booked'] += walls
+        born_nodes = {at for at, _s, _m, _p in born} | {m for _a, _s, m, _p in born} | {p_ for _a, _s, _m, p_ in born}  # every Node of a birth, the take's and the two children's
         # the bodies' closing: a record at a whole quantum of its own unit through one period of its re line's upward crossings
         for rec in range(6):
             s_ = rec // 2; r = self.rule(self.pairs[s_], c, factors)
@@ -407,7 +435,7 @@ class Lean:
                  're_neighbours_start': [int(re0.now[n]) for n in nodes], 'im_neighbours_start': [int(im0.now[n]) for n in nodes]}
         frame['phases'] = [[int(c[at]), int(sn[at])] for c, sn in self.start_phases]
         frame['frames'] = [int(f[at]) for f in self.start_frames]
-        frame['odd'] = [int(side * ((self.start_odd[axis][at] + self.start_odd[axis][n]) // 2)) for (axis, side), n in zip(AXES, nodes)]
+        frame['odd'] = [int(side * (self.start_odd[axis][at] + self.start_odd[axis][n])) for (axis, side), n in zip(AXES, nodes)]
         frame['X'] = self.X
         frame['factors'] = [int(f[at]) for f in self.start_factors]
         return {'event': 'credit', 'i': self.interval, 'node': list(at), 'proper': int(self.proper[at]), 'closes': int(self.closes[at]), 'content': int(self.start_content[at]), 'line': rec, 'sense': 1 if W > 0 else -1 if W < 0 else 0,
@@ -428,7 +456,7 @@ class Lean:
         for port, ((axis, side), reach) in enumerate(zip(AXES, r.reaches)):
             re_j, im_j = roll(re.before, axis, side), roll(im.before, axis, side)
             if frames is not None: im_j = frames[port] * im_j
-            c, s_ = phases[port]; n = odd[axis]; n = side * ((n + roll(n, axis, side)) // 2)
+            c, s_ = phases[port]; n = odd[axis]; n = side * (n + roll(n, axis, side))
             tc, ts, tw = Wl * Wl - n * n, 2 * Wl * n, Wl * Wl + n * n
             a_re = (c * re_j - s_ * im_j); a_im = (s_ * re_j + c * im_j)
             a_re, a_im = (2 * a_re + self.X) // (2 * self.X), (2 * a_im + self.X) // (2 * self.X)
@@ -445,8 +473,8 @@ class Lean:
         for entry in reversed(self.log[frame['log_from']:]):
             at = tuple(entry['node'])
             if entry['event'] == 'birth':
-                s_ = entry['line_pair']; nb = ((at[0] + 1) % self.cube, at[1], at[2]) if self.link_birth else at
-                for sense, rec, where in ((-1, 2 * s_, at), (1, 2 * s_ + 1, nb)):
+                s_ = entry['line_pair']; minus, plus = tuple(entry['minus']), tuple(entry['plus'])
+                for sense, rec, where in ((-1, 2 * s_, minus), (1, 2 * s_ + 1, plus)):
                     A = entry.get('amplitude', self.A)
                     re, im = self.planes[rec]; re.now[where] = re.now[where] - A; im.before[where] = im.before[where] - sense * A
                 self.light.now[at] = entry['light_now_was']; self.closes[at] -= 1
@@ -538,8 +566,10 @@ class Lean:
 if __name__ == '__main__':
     sys.set_int_max_str_digits(0)
     den, cube, intervals, out = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
-    link = len(sys.argv) > 5 and sys.argv[5] == 'link'
-    b = Lean(den, cube, link_birth=link)
+    link = (sys.argv[5] if sys.argv[5] in ('link', 'current') else False) if len(sys.argv) > 5 else False
+    link = True if link == 'link' else link
+    extra = tuple(int(x) for x in sys.argv[6].split(',')) if len(sys.argv) > 6 else None
+    b = Lean(den, cube, link_birth=link, seed_extra=extra)
     rows = []; maxbits = 0
     import time; t0 = time.monotonic_ns()
     for t in range(intervals):

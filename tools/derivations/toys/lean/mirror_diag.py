@@ -1,0 +1,49 @@
+"""Where a mirror of the toy's run breaks: the run from a seed and from its image under one signed permutation, compared interval by interval through the image (the even rows by value, the odd lines along a negated axis by sign, the planes by |z|^2 and by W), the first interval and the first quantity apart named.
+Usage: python mirror_diag.py <den> <cube> <intervals> <mode> <extra x,y,z> <sx,sy,sz> [perm as pi0,pi1,pi2]"""
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import numpy as np
+from lean_full import Lean
+
+den, cube, n, mode = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
+extra = tuple(int(x) for x in sys.argv[5].split(','))
+signs = [int(x) for x in sys.argv[6].split(',')]
+perm = [int(x) for x in sys.argv[7].split(',')] if len(sys.argv) > 7 else [0, 1, 2]
+m = np.zeros((3, 3), dtype=int)
+for a in range(3): m[perm[a], a] = signs[a]  # e_a -> s_a e_pi(a)
+def image(node): return tuple(int(x) % cube for x in (m @ np.array(node, dtype=int)))
+link = True if mode == 'link' else ('current' if mode == 'current' else False)
+a = Lean(den, cube, link_birth=link, seed_extra=extra); b = Lean(den, cube, link_birth=link, seed_extra=image(extra))
+nodes = list(np.ndindex(cube, cube, cube))
+
+def compare(t):
+    apart = []
+    for name, la, lb in (('vol', a.vol, b.vol), ('light', a.light, b.light), ('sign', a.sign, b.sign), ('phi', a.phi, b.phi)):
+        for at in nodes:
+            if int(la.now[at]) != int(lb.now[image(at)]) or int(la.before[at]) != int(lb.before[image(at)]): apart.append((name, at, 'level')); break
+            if int(la.rem[at]) != int(lb.rem[image(at)]): apart.append((name, at, 'rem', int(la.rem[at]), int(lb.rem[image(at)]))); break
+    for ax in range(3):  # the vector rows: axis ax of a maps to axis perm[ax] of b; the odd lines negated where the sign is -1
+        for name, rows, odd in (('vol_axes', (a.vol_axes, b.vol_axes), False), ('sign_axes', (a.sign_axes, b.sign_axes), True)):
+            la, lb = rows[0][ax], rows[1][perm[ax]]; sg = signs[ax] if odd else 1
+            for at in nodes:
+                if int(la.now[at]) != sg * int(lb.now[image(at)]): apart.append((name, ax, at, 'level', int(la.now[at]), int(lb.now[image(at)]))); break
+    det = int(round(np.linalg.det(m)))
+    for rec in range(6):
+        ra, ia = a.planes[rec]; rb, ib = b.planes[rec]
+        for at in nodes:
+            za = int(ra.now[at]) ** 2 + int(ia.now[at]) ** 2; zb = int(rb.now[image(at)]) ** 2 + int(ib.now[image(at)]) ** 2
+            if za != zb: apart.append(('plane |z|^2', rec, at, za, zb)); break
+            wa = int(ra.now[at]) * int(ia.before[at]) - int(ia.now[at]) * int(ra.before[at]); wb = int(rb.now[image(at)]) * int(ib.before[image(at)]) - int(ib.now[image(at)]) * int(rb.before[image(at)])
+            if wa != det * wb and wa != wb: apart.append(('plane W', rec, at, wa, wb)); break
+    return apart
+
+for t in range(1, n + 1):
+    a.step(); b.step()
+    apart = compare(t)
+    births_a = [(e['i'], tuple(e['node']), e['line_pair']) for e in a.log if e['event'] == 'birth' and e['i'] == t]
+    births_b = [(e['i'], tuple(e['node']), e['line_pair']) for e in b.log if e['event'] == 'birth' and e['i'] == t]
+    same_births = sorted((i, image(at), s_) for i, at, s_ in births_a) == sorted(births_b)
+    if apart or not same_births:
+        print({'first apart at interval': t, 'apart': apart[:4], 'births a': births_a[:4], 'births b': births_b[:4], 'turned a': int(a.turned.sum()), 'turned b': int(b.turned.sum())}); break
+else:
+    print({'intervals': n, 'apart': 'none', 'births': a.counts['births']})
