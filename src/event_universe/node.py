@@ -1,4 +1,4 @@
-"""The generic Node (the owner's word of 2026-10-25: the Node knows nothing, there is no if): its state is the rows the universe file names on the board the world file names, 95 integers at every Node; its readings at an interval's start (the content, the paces, the Link factors, the frames, the Links' counts and phases, the conserved form's share); its acts on a row, each one act on every row alike in either direction (Rule3's rotate with the arrivals turned as the row's shape turns them, the write by one carried division, the exchange at the turned Nodes); the interval's program is interval.run and the close is close.click, each a function of the Node."""
+"""The generic Node (the owner's word of 2026-10-25: the Node knows nothing, there is no if): its state is the rows the universe file names on the board the world file names, 98 integers at every Node with the toy universe's seven rows, 116 with a shape-8 row beside them; its readings at an interval's start (the content, the paces, the Link factors, the frames, the Links' counts and phases, the conserved form's share); its acts on a row, each one act on every row alike in either direction (Rule3's rotate with the arrivals turned as the row's shape turns them, the write by one carried division, the exchange at the turned Nodes); the interval's program is interval.run and the close is close.click, each a function of the Node."""
 
 from __future__ import annotations
 
@@ -38,6 +38,7 @@ COUNTS = {  # the run's counts, every one 0 at the start
     "refused_orientation": 0,
     "refused_twist": 0,
     "turns": 0,
+    "met": 0,
     "laid": 0,
     "laid_nodes": 0,
 }
@@ -46,11 +47,6 @@ COUNTS = {  # the run's counts, every one 0 at the start
 def bits_of(a: Any) -> int:
     """The largest bit length of an integer array's values."""
     return int(np.max(np.vectorize(lambda v: abs(int(v)).bit_length(), otypes=[object])(a)))
-
-
-def scalar(a: Any) -> int:
-    """The one integer of a one-element array (a lookup at one level)."""
-    return int(np.asarray(a, dtype=object).reshape(-1)[0])
 
 
 class Node:
@@ -99,6 +95,7 @@ class Node:
         self.start_phases: list[tuple[Any, Any]] = []
         self.start_odd: list[Any] = []
         self.stepped: list[list[Line]] = []
+        self.lattices: dict[tuple[int, int, tuple[int, ...]], int] = {}
 
         gamma, action = self.gamma, self.T
         for line in self.row(CARRIER).lines[:1]:
@@ -139,7 +136,7 @@ class Node:
         return walled_of(self.rows_)
 
     def records(self) -> list[Row]:
-        """The shape-2 rows in the acts' order."""
+        """The record rows in the acts' order, the planes and the quartets (rows.records_of)."""
         return records_of(self.rows_)
 
     def rule(self, pair: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
@@ -329,11 +326,8 @@ class Node:
         self, held: list[list[Line]], plane_starts: list[list[Line]], c: Any, factors: tuple[Any, ...]
     ) -> list[tuple[Line, rule3.Rule]]:
         """The lines the one-Link read takes with their rules: every line of every row at the interval's start, alike."""
-        return [
-            (line, self.rule_of(r, c, factors))
-            for r, lines in zip(self.rows_, held, strict=True)
-            for line in lines
-        ]
+        rules = [self.rule_of(r, c, factors) for r in self.rows_]
+        return [(line, rule) for rule, lines in zip(rules, held, strict=True) for line in lines]
 
     def digit_of(self, rem: int, values: int) -> tuple[int, int]:
         """One line's digit at a Node: its remainder on the lattice and the count of values the lattice holds."""

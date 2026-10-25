@@ -107,6 +107,19 @@ def link_current(line: Line, port: int) -> Any:
     return cross(line.now, line.before, across(line.now, port), across(line.before, port))
 
 
+def row_current(lines: list[Line], port: int) -> Any:
+    """A record's own current on the Link at the Port, the sum of its lines' (a plane's re and im; the gap-0 row's im at 0 leaves its re line's)."""
+    return sum((link_current(line, port) for line in lines), start=0)
+
+
+def row_twist(lines: list[Line], axis: int) -> Any:
+    """The twist of a record's transverse currents along the +axis Link (the lines' net currents summed per axis, then the cross of the two ends')."""
+    a, b, c = axis, wrap(axis + 1, AXES), wrap(axis + 2, AXES)
+    ub = sum((net_current(line, b) for line in lines), start=0)
+    uc = sum((net_current(line, c) for line in lines), start=0)
+    return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+
+
 def net_current(line: Line, axis: int) -> Any:
     """A line's net transverse current at every Node along an axis, u_b(k) = F(k, k - b) - F(k, k + b): the current into the Node from the -b Link less the current out along the +b Link, read from the Node's own two Links of that axis."""
     return link_current(line, 2 * axis + 1) - link_current(line, 2 * axis)

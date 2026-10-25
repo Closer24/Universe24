@@ -301,3 +301,28 @@ def test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1() -> None:
     assert sum((w > 0) - (w < 0) for b in births for w in b["W_children"]) == 0
     assert sum(1 for b in births for w in b["W_children"] if abs(w) == node.T // 2) >= len(births)
     assert run_back_exact(kept, 12) == 12
+
+
+def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1() -> (
+    None
+):
+    """SL-S1 (the Boss's 6399718139, SL_COMPARISON.md section 4: the generic close, every record's meeting by its own list): the chiral seed on the 3-cube at 30 intervals: every born pair's Link meets at the next close (the two ends holding a whole quantum of the children's record) and reads no current, F = 0 exactly, so the orientation refuses the undoing with no name (5 of 5 born Links); the meetings counted as `met`; the run back exact."""
+    universe, world = world_of("world_chiral.json")
+    lays = [lay for lay in world["seed"] if lay.get("lay") != "at" or all(x < 3 for x in lay["centre"])]
+    node = Node(universe, dict(world, shape=[3, 3, 3], intervals=30, seed=lays))
+    kept = copy.deepcopy(node)
+    for _ in range(30):
+        node.step()
+    births = [e for e in node.log if e["event"] == "birth"]
+    assert len(births) == 5 and node.counts["met"] > len(births)
+    for b in births:
+        link = {tuple(b["minus"]), tuple(b["plus"])}
+        assert any(
+            e["event"] == "refused"
+            and e["i"] == b["i"] + 1
+            and e["cause"] == "orientation"
+            and e.get("row") == b["line_pair"]
+            and {tuple(e["node"]), tuple(e["link"])} == link
+            for e in node.log
+        ), b
+    assert run_back_exact(kept, 30) == 30

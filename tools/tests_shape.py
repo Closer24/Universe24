@@ -41,6 +41,11 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1": (
+        23,
+        "SL-S1 (2026-10-25, the Boss's 6399718139, SL_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "
+        "every born pair's Link meeting at the next close with no current and refused by the orientation (5 of 5), the meetings counted, the run back exact",
+    ),
     "tests/test_the_node.py::test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1": (
         17,
         "MS-S1 (2026-10-25, the owner's word through the Boss, 6399410929, MS_COMPARISON.md section 5: the test under 15 s beside the sentence): the lay's pair (A, B) with A B = T div 2 from T alone, "
