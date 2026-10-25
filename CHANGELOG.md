@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's word of 2026-10-25, 12:2x UTC, through the Boss (the Scribe approves none of these in the new code): the five refusals on every push of the new code in docs/ENGINE.md's head and docs/HIGHLIGHTS.md. No engine change.
 - The Boss's line of 2026-10-25, 12:0x UTC, on the owner's question whether the paces' law is missing: K-S4 (the clock's memo one carried division per content) approved and not built on toys-5's head, David building it in the fold, the line to enter as built when his numbers are posted; under The constants of the universe in docs/ALGEBRA.md, docs/HIGHLIGHTS.md the decision. No engine change.
 - The owner's word of 2026-10-25, 11:5x UTC, through the Boss ("circle is not related any more"): the rows are the universe file's and nothing is derived from den's circle in the engine; the lines of docs/ALGEBRA.md and docs/ENGINE.md that derive the rows from den at the load kept by name as 4.0's form, docs/HIGHLIGHTS.md the decision. No engine change.
 - The owner's words of 2026-10-25, 11:4x to 11:5x UTC, through the Boss, on the page (always dark, fully generic, the animation the page, every gate a label from the reading's event lines, no prose, where it gets the Nodes and the Links): the line under The two files in docs/ENGINE.md, docs/HIGHLIGHTS.md the decision. No engine change.
