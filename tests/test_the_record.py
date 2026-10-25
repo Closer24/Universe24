@@ -21,9 +21,12 @@ BASE = {
     "the entropy of the clicks": "SHOWN",
     "14 the horizon": "NOT REACHED",
 }
+CHARGE = (
+    "SHOWN: the senses sum to 0; the magnitude SHOWN"  # MS-S1: one |W| where the plane stood at nothing
+)
 SHOWN = {
-    "hole": {**BASE, "4 an era of matter": "SHOWN"},
-    "chiral": BASE,
+    "hole": {**BASE, "4 an era of matter": "SHOWN", "17 charge conservation": CHARGE},
+    "chiral": {**BASE, "17 charge conservation": CHARGE},
     "bodies": {
         "18 the arrow of time": "SHOWN",
         "the three constants": "SHOWN",

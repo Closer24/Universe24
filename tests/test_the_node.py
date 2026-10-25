@@ -47,7 +47,7 @@ def fed_horizon(node: Node, at: tuple[int, ...]) -> Node:
 
 
 def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -> None:
-    """The horizon: the fed Node's two x Links at the wall (the factor 0), its other four above; no Link close reads the Node (no birth at it, none with it as an end); under PM-S1 the near-massless plane's shared half from a child laid at a neighbour stands at the Node at its own unit, so one credit with W = 0 is read there (named: the bodies' closing is not the Link close); the run back exact."""
+    """The horizon: the fed Node's two x Links at the wall (the factor 0), its other four above; no Link close reads the Node (no birth at it, none with it as an end); under PM-S1 the near-massless plane's shared half from a child laid at a neighbour stands at the Node at its own unit, so the near-massless plane's credits are read there (five in 20 intervals under MS-S1's lay at T div 2, four at W = 0; named: the bodies' closing is not the Link close); the run back exact."""
     node = fed_horizon(node_of("world_node.json"), CENTRE)
     factors = node.link_factors()
     assert [int(f[CENTRE]) for f in factors[:2]] == [0, 0]
@@ -56,7 +56,8 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
     for _ in range(INTERVALS):
         node.step()
     assert [e for e in clicks_at(node, CENTRE) if e["event"] == "birth"] == []
-    assert [(e["sense"], e["line"]) for e in clicks_at(node, CENTRE)] == [(0, 0)]
+    credits = [(e["sense"], e["line"]) for e in clicks_at(node, CENTRE)]
+    assert credits == [(0, 0), (0, 0), (0, 0), (0, 0), (-1, 0)]
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
@@ -249,7 +250,7 @@ def shares_of(node: Node) -> tuple[Any, Any, Any]:
 
 
 def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
-    """PM-S1 (the owner's word of 2026-10-25, 15:18 UTC, through the Boss, 6399410929; PM_COMPARISON.md section 5): the identity Gamma^2 div p_i^2 = X(c) div Gamma at c = 0 to 1,000 by 100 (pm1); on the 3-cube hole the carrier's share within one unit of the frame's at 27 of 27 Nodes at the interval 1 (X / Gamma below 2) and equal to the vacuum's there (X = Gamma); at 20 the vacuum's below the carrier's by X / Gamma (390 thousandths at X / Gamma between 2.36 and 2.94) and the frame's within four per mille; the chiral 5-cube at 60: births 15, body clicks 24, the run back 10 of 10, 98 integers, 115 bits (pm2's numbers)."""
+    """PM-S1 (the owner's word of 2026-10-25, 15:18 UTC, through the Boss, 6399410929; PM_COMPARISON.md section 5): the identity Gamma^2 div p_i^2 = X(c) div Gamma at c = 0 to 1,000 by 100 (pm1); on the 3-cube hole the carrier's share within one unit of the frame's at 27 of 27 Nodes at the interval 1 (X / Gamma below 2) and equal to the vacuum's there (X = Gamma); at 20 the vacuum's below the carrier's by X / Gamma (390 thousandths at X / Gamma between 2.36 and 2.94) and the frame's within four per mille; the chiral 5-cube at 60: births 16, body clicks 533, the run back 10 of 10, 98 integers, 115 bits (pm2's 15 and 24 under the lay by the unit; the births and the credits re-cut by MS-S1's lay at T div 2)."""
     node = node_of("world_node.json")
     for c in range(0, 1_001, 100):
         pace = paces.link_pace(node.gamma, c)
@@ -276,8 +277,27 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     for _ in range(60):
         chiral.step()
     assert (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census()) == (
-        15,
-        24,
+        16,
+        533,
         (98, 115),
     )
     assert run_back_exact(kept, 10) == 10
+
+
+def test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1() -> None:
+    """MS-S1 (the owner's word of 2026-10-25, 15:18 UTC, through the Boss, 6399410929; MS_COMPARISON.md section 5, ms2's exact form): the lay's two levels (A, B) with A B = T div 2 from T alone (125 and 144 at T 36,000), the same for every row; the chiral 5-cube at 12 intervals: every child's Wronskian is +-(T div 2) where its plane stood at nothing at its Node (the residue logged), every birth's children at opposite signs with the senses' sum 0, taken at or above booked on every birth, the run back exact."""
+    node = node_of("world_chiral.json")
+    assert (node.A, node.B, node.A * node.B) == (125, 144, node.T // 2)
+    kept = copy.deepcopy(node)
+    for _ in range(12):
+        node.step()
+    births = [e for e in node.log if e["event"] == "birth"]
+    assert len(births) >= 8 and all(b["amplitude"] == [125, 144] for b in births)
+    for b in births:
+        for w, stood in zip(b["W_children"], b["stood"], strict=True):
+            assert abs(w) == node.T // 2 or any(stood), (w, stood)
+        assert (b["W_children"][0] > 0) != (b["W_children"][1] > 0) and 0 not in b["W_children"]
+        assert b["taken"] >= b["booked"] > 0
+    assert sum((w > 0) - (w < 0) for b in births for w in b["W_children"]) == 0
+    assert sum(1 for b in births for w in b["W_children"] if abs(w) == node.T // 2) >= len(births)
+    assert run_back_exact(kept, 12) == 12

@@ -12,6 +12,8 @@ from event_universe.rows import CARRIER, PLANE
 from tests.laws import node_of, run_back_exact, world_of
 
 CUBE, INTERVALS, GROUPS = 5, 20, 4
+# the rotations alike per part under A2's digits at 20 intervals on the hole seed (MS-S1, 2026-10-25): the six negating neither y nor z
+ALIKE = (6, 0, 0, 0)
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
     for pi in itertools.permutations(range(3))
@@ -69,19 +71,18 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first): every rotation runs alike the seed through the image (the rows and the births), every reflection apart under the default (PM-S1's prediction 24 / 0 / 24: the 24 reflections apart in the clicks, A2's standing item and not the sentence's; held by name so that a reflection coming alike is read)."""
+    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis parts under A2's digits (a negated line's remainder mirrors, its digit with it: the standing item, 6 of 24 alike at 20 intervals on the hole seed under MS-S1 against 24 before it), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
     births = births_of(base)
     assert len(births) > 0
-    alike = 0
+    alike = {True: 0, False: 0}
     for m in IMAGES[group::GROUPS]:
         other = run(universe, world_image(world, m, CUBE))
         reflection = int(round(np.linalg.det(m))) == -1
         same = same_rows(base, other, m) and births_of(other) == mapped(births, m, CUBE, reflection)
-        assert same or reflection, m.tolist()
-        alike += same and reflection
-    assert alike == 0
+        alike[reflection] += same
+    assert alike[True] == 0 and alike[False] == ALIKE[group]
 
 
 def test_the_run_back_is_exact_through_births_and_turns() -> None:

@@ -172,6 +172,14 @@ def least_root(a: int, b: int, target: int, dist: int) -> list[int]:
     return sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
 
 
+def balanced_pair(product: int) -> tuple[int, int]:
+    """The pair (a, b) with a b = product exactly and a the largest divisor at most largest_below(product), found by a search by comparisons down from the root's floor (MS-S1: the lay's two levels with A B = T div 2 for every row, the same two integers from T alone; 125 and 144 at T 36,000)."""
+    a = largest_below(product)
+    while remainder(product, a):
+        a -= 1
+    return a, quotient(product, a)
+
+
 def largest_below(square: int) -> int:
     """The largest x with x^2 <= square, found by a bisection on the share reading x * x against square: products and comparisons of integers, no division on the count and no root (the hands' prescription for the rotation unit, `paces.rotation_unit`, applied to a count: a search by comparisons, issue #1793 comment 6077053307, "no root anywhere"). The upper end is the smallest power of two whose square exceeds square, found by doubling; the halving of the span of candidates is the division act on a count, `division_forward(low + high, 2, 0)`, kind D in the acts table (tests/test_the_acts_table.py), its remainder discarded; 0 at 0; a negative square is refused by name (ALGEBRA.md #the-four-acts, #the-guard)."""
     if square < 0:

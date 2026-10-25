@@ -12,15 +12,7 @@ from event_universe.core.ports import AXES, PORT_SIDES
 from event_universe.core.rule3 import quotient, remainder
 from event_universe.links import cross, link_current, twist
 from event_universe.rows import PLANE, POTENTIAL, Line
-from event_universe.take import (
-    frame_nodes,
-    lay,
-    lay_amplitude,
-    momentum_of,
-    neighbour,
-    read_number,
-    take_at,
-)
+from event_universe.take import frame_nodes, lay, momentum_of, neighbour, read_number, take_at
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -98,13 +90,13 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
 def births(
     node: Node, kept: list[Birth], r_gap0: rule3.Rule, c: Any, factors: tuple[Any, ...]
 ) -> set[tuple[int, ...]]:
-    """The births kept, every face read before any write: one exact take per Node of its children's walls summed, the start's gap-0 line paying; then each child laid as one quantum of its record at the quarter turn (`children`). Returns every Node a taken birth touched."""
+    """The births kept, every face read before any write: one exact take per Node of its children's walls summed, the walls the share the two lays add to their plane on the board (`lay_cost`, MS-S1: what is taken is what the lay books and nothing made), the start's gap-0 line paying; then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
     by_node: dict[tuple[int, ...], list[tuple[int, tuple[int, ...], tuple[int, ...], int]]] = {}
     for at, s, minus, plus, room in kept:
         by_node.setdefault(at, []).append((s, minus, plus, room))
     taken = []
     for at in sorted(by_node):
-        walls = sum(2 * node.units[s] for s, _m, _p, _r in by_node[at])
+        walls = sum(lay_cost(node, s, minus, plus, c, factors) for s, minus, plus, _r in by_node[at])
         got = take_at(node, at, walls, r_gap0, len(by_node[at]))
         if got is not None:
             taken.append((at, by_node[at], walls, got))
@@ -117,27 +109,41 @@ def births(
     return touched
 
 
+def lay_cost(
+    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], c: Any, factors: tuple[Any, ...]
+) -> int:
+    """The walls a birth books (MS-S1): the share the two children's lays add to their plane on the board in the carrier's unit, read by laying them, reading and taking them back."""
+    row = node.records()[s]
+    assert row.pair is not None
+    rule = node.rule(row.pair, c, factors)
+    before = int(sum(int(x) for x in node.share(row.lines, rule).reshape(-1)))
+    child_laid(node, s, minus, plus)
+    after = int(sum(int(x) for x in node.share(row.lines, rule).reshape(-1)))
+    child_laid(node, s, minus, plus, -1)
+    return after - before
+
+
 def child_laid(
-    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], amplitude: int
-) -> tuple[list[int], list[int]]:
-    """One child laid as one quantum of its record at the quarter turn (re_now A at the - end, im_before -A; re_now A at the + end, im_before +A), each lay's momentum booked; returns the lay's momentum and each child's Wronskian at its Node (its sense, the owner's word 3)."""
+    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], sign: int = 1
+) -> tuple[list[int], list[int], list[list[int]]]:
+    """One child laid at the charge T div 2 at the quarter turn (MS-S1: re_now A at the - end, im_before -B; re_now A at the + end, im_before +B; A B = T div 2, the same two integers for every row), each lay's momentum booked; taken back with the sign -1; returns the lay's momentum, each child's Wronskian at its Node (its sense, the owner's word 3; T div 2 where the plane stood at nothing) and the plane's four levels at each Node before the lay (the residue)."""
     row = node.records()[s]
     re, im = row.lines
     assert row.pair is not None
     dp_lay = [0, 0, 0]
+    stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
     for where, sense in ((minus, -1), (plus, 1)):
         for a, d in enumerate(
-            momentum_of(node, re.now, re.before, where, d_now=amplitude, num=row.pair[0])
+            momentum_of(node, re.now, re.before, where, d_now=sign * node.A, num=row.pair[0])
         ):
             dp_lay[a] += d
         for a, d in enumerate(
-            momentum_of(node, im.now, im.before, where, d_before=sense * amplitude, num=row.pair[0])
+            momentum_of(node, im.now, im.before, where, d_before=sign * sense * node.B, num=row.pair[0])
         ):
             dp_lay[a] += d
-        lay(node, s, where, (amplitude, 0, 0, sense * amplitude))
-    return dp_lay, [
-        int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)
-    ]
+        lay(node, s, where, (node.A, 0, 0, sense * node.B), sign)
+    senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
+    return dp_lay, senses, stood
 
 
 def children(
@@ -153,8 +159,7 @@ def children(
     dp_take = node.last_dp
     touched = {at}
     for s, minus, plus, room in kids:
-        amplitude = lay_amplitude(node, s, at, c, factors)
-        dp_lay, w_children = child_laid(node, s, minus, plus, amplitude)
+        dp_lay, w_children, stood = child_laid(node, s, minus, plus)
         touched |= {minus, plus}
         node.counts["births"] += 1
         node.closes[at] += 1
@@ -175,7 +180,8 @@ def children(
                 "taker": [now, before, levels],
                 "proper": int(node.proper[at]),
                 "content": int(c[at]),
-                "amplitude": amplitude,
+                "amplitude": [node.A, node.B],
+                "stood": stood,
                 "children_at_node": len(kids),
                 "room": room,
                 "dP_take": dp_take,
@@ -352,9 +358,9 @@ def unclick(node: Node, frame: dict[str, Any]) -> None:
     for entry in reversed(node.log[frame["log_from"] :]):
         at = tuple(entry["node"])
         if entry["event"] == "birth":
-            s, amplitude = entry["line_pair"], entry["amplitude"]
-            lay(node, s, tuple(entry["minus"]), (amplitude, 0, 0, -amplitude), -1)
-            lay(node, s, tuple(entry["plus"]), (amplitude, 0, 0, amplitude), -1)
+            s, (a, b) = entry["line_pair"], entry["amplitude"]
+            lay(node, s, tuple(entry["minus"]), (a, 0, 0, -b), -1)
+            lay(node, s, tuple(entry["plus"]), (a, 0, 0, b), -1)
         if entry["event"] in ("birth", "credit"):
             lay(node, rec0, at, (entry["taken_now_was"] - int(gap0.lines[0].now[at]), 0, 0, 0))
             node.closes[at] -= 1

@@ -1,4 +1,4 @@
-"""The close's reads and writes at one Node: the one-Link read of a number on the frame's digit lattices (`read_number`), the exact take of the gap-0 line's levels by the share's fall (`fall_of`, `take_at`), the one lay act (`lay`), the lay of one quantum's amplitude (`lay_amplitude`) and the lattice momentum a move books (`momentum_of`)."""
+"""The close's reads and writes at one Node: the one-Link read of a number on the frame's digit lattices (`read_number`), the exact take of the gap-0 line's levels by the share's fall (`fall_of`, `take_at`), the one lay act (`lay`) and the lattice momentum a move books (`momentum_of`)."""
 
 from __future__ import annotations
 
@@ -147,18 +147,3 @@ def take_at(
     assert gap0.pair is not None
     node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=gap0.pair[0])
     return levels, fall, now, before
-
-
-def lay_amplitude(node: Node, s: int, at: tuple[int, ...], c: Any, factors: tuple[Any, ...]) -> int:
-    """The lay of one quantum in the carrier's unit (PM-S1): the child's record laid at the Node with the least amplitude A at which its own share reads one quantum of its unit, (2 D + SUM_j R_j) A^2 X >= unit x 4 Gamma^3 G^2 (the share's term of a lone record with now = before = A)."""
-    r = node.rule_of(node.records()[s], c, factors)
-    reaches = sum(int(np.asarray(x)[at]) for x in r.reaches)
-    mass = 2 * int(np.asarray(r.wall)) - int(np.asarray(r.self_coefficient)[at]) - reaches
-    weight = (2 * mass + reaches) * int(node.start_x[at])
-    target = node.units[s] * 4 * node.gamma**3 * node.G * node.G
-    if weight <= 0:
-        return node.A
-    amplitude = rule3.largest_below(quotient(target, weight))
-    while weight * amplitude * amplitude < target:
-        amplitude += 1
-    return amplitude

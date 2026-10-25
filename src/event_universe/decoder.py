@@ -195,20 +195,64 @@ def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], 
         "births by species (decoder)": dict(born),
         "verdict": verdict,
     }
-    return out | ratios(record, floor_mil, within, len(decoded)), decoded
+    return out | ratios(record, floor_mil, within, decoded, tracks), decoded
 
 
-def ratios(record: Record, floor_mil: list[int | None], within: int, decoded: int) -> dict[str, Any]:
-    """Gates 19 and 16: the mass ratios from den's legs (the planes with a gap against the lightest) and the one-click floor on x per credit."""
-    names = record.NAMES
+def leg_of(record: Record, x: Rational) -> int:
+    """The leg of a decoded rational x = num / den on den's circle, sine_den at the nearest integer num, 0 off the circle (|num| at or past den)."""
+    num = abs(quot(x[0] * record.den, x[1]) or 0)
+    return sine_den(num, record.den) if num < record.den else 0
+
+
+def ratios(
+    record: Record,
+    floor_mil: list[int | None],
+    within: int,
+    decoded: list[tuple[dict[str, Any], str, Rational]],
+    tracks: dict[tuple[Any, int], list[Rational]],
+) -> dict[str, Any]:
+    """Gates 19 and 16: the mass ratios in the clicks (MS-S1's predicate: per credited plane the middle solve of its tracks' middles, its leg against the header's, the ratio of the two heaviest credited planes' legs read right within the one-click floor; NOT SHOWN where one plane alone is credited) beside den's typed legs (the planes with a gap against the lightest), and the one-click floor on x per credit."""
+    names, line_num = record.NAMES, record.line_num
     legs = sorted(((name, leg) for name, leg in names.values() if leg), key=lambda kv: kv[1])
     num_of = {v[0]: k for k, v in names.items()}
     found: dict[str, Any] = {f"{nm}/{legs[0][0]}": quot(leg, legs[0][1], MIL) for nm, leg in legs[1:]}
-    read = (
-        "SHOWN as a fit of den (the legs), read from the decoded points"
-        if decoded
-        else "NOT READ: no credit decoded"
+    by_plane: dict[int, list[Rational]] = defaultdict(list)
+    for (_node, line), xs in tracks.items():
+        by_plane[line_num[line]].append(middle(xs))
+    credited = sorted(
+        (num for num in by_plane if num != record.den), key=lambda num: sine_den(num, record.den)
     )
+    for num in credited:
+        xs = sorted(by_plane[num], key=cmp_to_key(cmp_rat))
+        found[f"{names[num][0]} leg in the clicks / header (parts per million)"] = quot(
+            leg_of(record, middle(xs)), sine_den(num, record.den) or 1, MIL
+        )
+    if len(credited) < 2:
+        read = (
+            f"NOT SHOWN: {len(credited)} plane credited, a ratio needs two"
+            if decoded
+            else "NOT READ: no credit decoded"
+        )
+    else:
+        heavy, light = credited[-1], credited[-2]
+        legs_read = [
+            leg_of(record, middle(sorted(by_plane[num], key=cmp_to_key(cmp_rat))))
+            for num in (heavy, light)
+        ]
+        clicks = quot(legs_read[0], legs_read[1], MIL) if legs_read[1] else None
+        header = quot(sine_den(heavy, record.den), sine_den(light, record.den), MIL)
+        floors = [f for f in floor_mil if f is not None]
+        found["the two heaviest credited planes' legs: clicks / header (parts per million)"] = [
+            clicks,
+            header,
+        ]
+        read = (
+            "SHOWN: the mass ratio in the clicks reads the header's within the one-click floor"
+            if clicks is not None and header is not None and abs(clicks - header) <= max(floors or [0])
+            else "NOT SHOWN: the lighter plane's leg in the clicks is 0 (below the floor)"
+            if clicks is None
+            else "NOT SHOWN: the ratio in the clicks is off the header's beyond the floor"
+        )
     out = {"19 mass ratios (parts per million)": found | {"verdict": read}}
     fl = sorted(f for f in floor_mil if f is not None)
     if fl:
@@ -217,6 +261,7 @@ def ratios(record: Record, floor_mil: list[int | None], within: int, decoded: in
             if record.NL >= 2
             else None
         )
+        count = len(decoded)
         out["16 uncertainty floor (one click)"] = {
             "floor on x per credit, parts per million: min / middle / max": [
                 fl[0],
@@ -224,19 +269,25 @@ def ratios(record: Record, floor_mil: list[int | None], within: int, decoded: in
                 fl[-1],
             ],
             "species spacing of the two heaviest, parts per million": spacing,
-            "credits beyond the floor": decoded - within,
+            "credits beyond the floor": count - within,
             "verdict": "SHOWN as the law's floor: no credit reads beyond it"
-            if within == decoded
+            if within == count
             else "NOT SHOWN",
         }
     return out
 
 
 def charge_and_take(record: Record) -> tuple[dict[str, Any], int, int, int]:
-    """Gates 17 and 15: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births) and the conservation at the click (taken against booked)."""
+    """Gates 17 and 15: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name) and the conservation at the click (taken against booked)."""
     births = record.births
     signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
-    sizes = sorted(abs(w) for b in births for w in b["W_children"])
+    sizes = sorted(
+        abs(w)
+        for b in births
+        for w, stood in zip(b["W_children"], b.get("stood", [[0], [0]]), strict=True)
+        if not any(stood)
+    )
+    residue = sum(1 for b in births for stood in b.get("stood", [[0], [0]]) if any(stood))
     sense_sum = sum(signs)
     opposite = sum(
         1
@@ -248,21 +299,22 @@ def charge_and_take(record: Record) -> tuple[dict[str, Any], int, int, int]:
             "senses sum over births (from the children's Wronskian signs)": sense_sum,
             "children with W = 0": signs.count(0),
             "births with the two children at opposite signs": opposite,
-            "the children's |W| least / largest (the charge's magnitude, one e for every row in nature: MS)": [
+            "the children's |W| least / largest where the plane stood at nothing (the charge's magnitude, one e for every row: MS-S1)": [
                 sizes[0],
                 sizes[-1],
             ]
             if sizes
             else None,
+            "children laid on a residue of their plane (W the Node's, not the lay's)": residue,
             "verdict": (
                 "SHOWN: the senses sum to 0"
                 if sense_sum == 0 and 0 not in signs
                 else "NOT SHOWN: the senses"
             )
             + (
-                "; the magnitude SHOWN: one |W| on every child"
+                "; the magnitude SHOWN: one |W| on every child laid where its plane stood at nothing"
                 if sizes and sizes[0] == sizes[-1]
-                else "; the magnitude NOT SHOWN: |W| differs between the children (the pair's unit in the lay, MS-S1 owed)"
+                else "; the magnitude NOT SHOWN: |W| differs between the children laid where their plane stood at nothing"
                 if sizes
                 else "; the magnitude NOT READ"
             ),

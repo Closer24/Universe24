@@ -41,6 +41,11 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_node.py::test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1": (
+        17,
+        "MS-S1 (2026-10-25, the owner's word through the Boss, 6399410929, MS_COMPARISON.md section 5: the test under 15 s beside the sentence): the lay's pair (A, B) with A B = T div 2 from T alone, "
+        "the chiral 5-cube at 12 intervals with every child's Wronskian +-(T div 2) where its plane stood at nothing, the senses opposite and summing to 0, taken at or above booked, the run back exact",
+    ),
     "tests/test_the_node.py::shares_of": (
         11,
         "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, PM_COMPARISON.md section 5: the tests under 15 s beside the sentence): the helper, the gap-0 line's share in the carrier's unit and by hand at the frame's and the vacuum's weights",

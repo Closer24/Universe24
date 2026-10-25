@@ -79,7 +79,7 @@ class Node:
         self.ride_walls()
 
     def start_state(self) -> None:
-        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's amplitude where the rule has no positive term, the phase pair's amplitude from half the width less one and the orbit's seed."""
+        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
         shape, nr = self.shape, len(self.records())
         self.standing = [zeros(shape) for _ in range(nr)]
         self.crossed = [zeros(shape) for _ in range(nr)]
@@ -105,7 +105,7 @@ class Node:
             line.now[:] = gamma
             line.before[:] = gamma
         self.drift = rule3.largest_below(action)
-        self.A = rule3.largest_below(half(action))
+        self.A, self.B = rule3.balanced_pair(half(action))
         self.X = phase.amplitude(phase.unit(gamma), HALF_WIDTH - 1)
         seed_pair = phase.seed(self.X, gamma)
         self.orbit_lines = [seed_pair]
