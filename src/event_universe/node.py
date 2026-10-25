@@ -84,15 +84,13 @@ class Node:
         self.standing = [zeros(shape) for _ in range(nr)]
         self.crossed = [zeros(shape) for _ in range(nr)]
         self.beats = [zeros(shape) for _ in range(nr)]
-        self.proper, self.closes = zeros(shape), zeros(shape)
-        self.interval = 0
+        self.proper, self.closes, self.interval = zeros(shape), zeros(shape), 0
         self.log: list[dict[str, Any]] = []
         self.turns: list[tuple[int, int]] = []
         self.stack: list[dict[str, Any]] = []
         self.turned = np.zeros(shape, dtype=bool)
         self.counts: dict[str, int] = dict(COUNTS)
-        self.max_transient = 0
-        self.count_max = 0
+        self.max_transient = self.count_max = 0
         self.last_dp = [0, 0, 0]
         self.start_factors: tuple[Any, ...] = ()
         self.start_frames: list[Any] = []

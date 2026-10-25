@@ -286,7 +286,7 @@ def lengthening(record: Record) -> dict[str, Any]:
     for c in record.credits:
         by_node[tuple(c["node"])].append(c)
     spans = []
-    longest: tuple[int, Any] = (0, None)
+    longest: tuple[int, Any] = (0, [])
     for at, cs in by_node.items():
         cs.sort(key=lambda c: int(c["i"]))
         spans += [
@@ -294,10 +294,8 @@ def lengthening(record: Record) -> dict[str, Any]:
             for a, b in zip(cs, cs[1:], strict=False)
             if b["i"] > a["i"]
         ]
-        longest = max(
-            longest,
-            (max((b["i"] - a["i"] for a, b in zip(cs, cs[1:], strict=False)), default=0), list(at)),
-        )
+        span = max((b["i"] - a["i"] for a, b in zip(cs, cs[1:], strict=False)), default=0)
+        longest = max(longest, (span, list(at)), key=lambda p: p[0])
     key = "2 the Links lengthening in the clicks"
     if len(spans) <= SPANS:
         return {key: {"verdict": "NOT READ: too few spans between a Node's credits"}}
