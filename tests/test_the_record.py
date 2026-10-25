@@ -37,7 +37,8 @@ SHOWN = {
         "2 the Links lengthening in the clicks": "SHOWN in the reader's view",
         "1 recurring bangs / 3 shortening then lengthening / 6 contraction (board, the reader's view)": "contraction SHOWN",
         "9 collisions / 13 free fall": "read: 26 lines credited at a new Node",
-        "8 families forming (whole view)": "NOT SHOWN",
+        "8 families forming (whole view)": "SHOWN in part: every credit within the floor, tracks right 27 of 27",
+        "16 uncertainty floor (one click)": "SHOWN as the law's floor",
         "the entropy of the clicks": "NOT READ",
     },
 }

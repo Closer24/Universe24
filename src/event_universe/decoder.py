@@ -70,13 +70,24 @@ def turned(a: Rational, m: Rational, over: int) -> Rational:
     )
 
 
+def carrier_levels(record: Record, credit: dict[str, Any]) -> tuple[int, int, int]:
+    """The carrier's three levels at the credit's Node from the record's Node lines: before the interval, at its start and after it (Gamma before the first interval)."""
+    cube = int(record.run["cube"])
+    x, y, z = credit["node"]
+    index, i = x * cube * cube + y * cube + z, int(credit["i"])
+    lines = record.run["nodes"]
+    found = [lines[k]["X"][index] if k >= 0 else record.gamma for k in (i - 3, i - 2, i - 1)]
+    return int(found[0]), int(found[1]), int(found[2])
+
+
 def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
-    """The species from the frame in exact integers: the same turned arrivals the Node formed (the phase pair over X and the odd tangent, half-up divisions), Rule3's line solved for x = num / den; the rational (N, D) with D > 0."""
+    """The species from the frame in exact integers under the symmetric ride (interval.py's form): a riding line's momentum P_in = W_in (a_now - a_before) + r - W_in div 2 at the mean wall W_in = (w div 2)(X_before + X_now), the kick P_out = P_in + X_now F with F = SUM_j R_j (m_j - z) - D z, the one division a_next = a_now + (P_out + W_out div 2) div W_out at W_out = (w div 2)(X_now + X_next); from the record's levels v = a_next - a_now gives X_now F to the remainders' width, E = v W_out - W_in (a_now - a_before), and F is linear in num: num = (E + 12 den p_0^2 G^2 z X_now) / ((A + 12 p_0^2 G^2 z) X_now) with A = SUM_j 2 p_i^2 Q_j G^2 (m_j - z) over the turned arrivals; x = num / den as the rational (N, D), D > 0."""
     f, content = credit["frame"], credit["content"]
     gamma, den, unit = record.gamma, record.den, record.G
     p0, pi = paces.clock(gamma, content), paces.link_pace(gamma, content)
     w = rule3.wall_of(den, gamma, unit)
-    mass = 12 * den * p0 * p0 * unit * unit
+    x_b, x_n, x_x = carrier_levels(record, credit)
+    w_in, w_out = (w // 2) * (x_b + x_n), (w // 2) * (x_n + x_x)
     zb = (f["re_start_before"], f["im_start_before"])
     zn = (f["re_start_now"], f["im_start_now"])
     zx = (f["re_stepped"], f["im_stepped"])
@@ -84,22 +95,22 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
         return None
     scale, phases, odd, frames = f["X"], f["phases"], f["odd"], f["frames"]
     wl = 4 * gamma
-    numer = (
-        w * (zx[0] + zb[0] - 2 * zn[0]) + mass * zn[0],
-        w * (zx[1] + zb[1] - 2 * zn[1]) + mass * zn[1],
-    )
-    denom = (mass * zn[0], mass * zn[1])
+    e = tuple((zx[k] - zn[k]) * w_out - w_in * (zn[k] - zb[k]) for k in range(2))
+    weight = 12 * p0 * p0 * unit * unit
+    a_re = a_im = 0
     for port, (a, b) in enumerate(zip(f["re_neighbours_start"], f["im_neighbours_start"], strict=True)):
         m: Rational = (a, frames[port] * b)
         m = turned(tuple(phases[port]), m, scale)
         n = odd[port]
         m = turned((wl * wl - n * n, 2 * wl * n), m, wl * wl + n * n)
-        reach = 2 * den * pi * pi * f["factors"][port]
-        denom = (denom[0] - reach * (zn[0] - m[0]), denom[1] - reach * (zn[1] - m[1]))
-    dd = denom[0] * denom[0] + denom[1] * denom[1]
-    if dd == 0:
+        reach = 2 * pi * pi * f["factors"][port]
+        a_re, a_im = a_re + reach * (m[0] - zn[0]), a_im + reach * (m[1] - zn[1])
+    p = (e[0] + weight * den * zn[0] * x_n, e[1] + weight * den * zn[1] * x_n)
+    q = ((a_re + weight * zn[0]) * x_n, (a_im + weight * zn[1]) * x_n)
+    qq = q[0] * q[0] + q[1] * q[1]
+    if qq == 0:
         return None
-    return (numer[0] * denom[0] + numer[1] * denom[1], dd)
+    return (p[0] * q[0] + p[1] * q[1], qq * den)
 
 
 def nearest(record: Record, x: Rational) -> str:
