@@ -1,0 +1,31 @@
+A level     0 X         1000 p_0 1000 p_a 1000 e^U x1e6   1000000 weight x1e6       1000000 drift 189..189 share 109413423..109413423 predicted 109413423 (diff 0) quanta 1..1 predicted quanta 0 rem 109413423000000
+A level   100 X         1491 p_0  905 p_a  819 e^U x1e6   1104972 weight x1e6       1490843 drift 189..189 share 163118343..163118343 predicted 163118343 (diff 0) quanta 1..1 predicted quanta 1 rem 35449949052000
+A level   200 X         2223 p_0  819 p_a  671 e^U x1e6   1221001 weight x1e6       2221032 drift 189..189 share 243010794..243010794 predicted 243010794 (diff 0) quanta 2..2 predicted quanta 2 rem 10119073824000
+A level   400 X         4963 p_0  670 p_a  449 e^U x1e6   1492537 weight x1e6       4960292 drift 189..189 share 542722620..542722620 predicted 542722620 (diff 0) quanta 5..5 predicted quanta 4 rem 20492866728000
+A level   600 X        11009 p_0  549 p_a  301 e^U x1e6   1821493 weight x1e6      11037405 drift 189..189 share 1207640346..1207640346 predicted 1207640346 (diff 0) quanta 11..11 predicted quanta 10 rem 9509512320000
+A level   800 X        24605 p_0  449 p_a  202 e^U x1e6   2227171 weight x1e6      24507401 drift 189..189 share 2681438657..2681438657 predicted 2681438657 (diff 0) quanta 24..24 predicted quanta 24 rem 1428411672000
+A level  1000 X        54527 p_0  368 p_a  135 e^U x1e6   2717391 weight x1e6      54869684 drift 189..189 share 6003480000..6003480000 predicted 6003480000 (diff 0) quanta 54..54 predicted quanta 54 rem 893170800000
+A level  1200 X       121825 p_0  301 p_a   91 e^U x1e6   3322259 weight x1e6     120758362 drift 189..189 share 13212585798..13212585798 predicted 13212585798 (diff 0) quanta 120..120 predicted quanta 119 rem 751035348000
+A level  1500 X       404372 p_0  223 p_a   50 e^U x1e6   4484304 weight x1e6     400000000 drift 189..189 share 43765369200..43765369200 predicted 43765369200 (diff 0) quanta 397..397 predicted quanta 396 rem 248103000000
+A level  1800 X      1349163 p_0  165 p_a   27 e^U x1e6   6060606 weight x1e6    1371742112 drift 189..189 share 150087000000..150087000000 predicted 150087000000 (diff 0) quanta 1361..1361 predicted quanta 1361 rem 8931708000
+A level  2000 X      3010683 p_0  135 p_a   18 e^U x1e6   7407407 weight x1e6    3086419753 drift 189..189 share 337695750000..337695750000 predicted 337695750000 (diff 0) quanta 3063..3063 predicted quanta 3062 rem 17863416000
+B interval    0 X      1000 level     0 e^U x1e6  1000000 drift 189..189 quanta 1..1 predicted 0 X'' - write x1e6 3969000 mass x1e6 1958863 turned 0
+B interval   20 X      1414 level    86 e^U x1e6  1089324 drift 189..189 quanta 1..1 predicted 1 X'' 1 write x1e6 3969000 mass x1e6 2334205 turned 0
+B interval   40 X      2466 level   226 e^U x1e6  1253132 drift 189..189 quanta 2..2 predicted 2 X'' 1 write x1e6 3969000 mass x1e6 3076118 turned 0
+B interval   60 X      3883 level   338 e^U x1e6  1402524 drift 189..189 quanta 4..4 predicted 3 X'' 0 write x1e6 3969000 mass x1e6 3866791 turned 0
+B interval   80 X      5346 level   419 e^U x1e6  1519756 drift 189..189 quanta 5..5 predicted 5 X'' 0 write x1e6 3969000 mass x1e6 4534036 turned 0
+B interval  100 X      6592 level   470 e^U x1e6  1600000 drift 189..189 quanta 6..6 predicted 6 X'' -1 write x1e6 3969000 mass x1e6 5044074 turned 0
+B interval  120 X      7429 level   501 e^U x1e6  1650165 drift 189..189 quanta 7..7 predicted 7 X'' -1 write x1e6 3969000 mass x1e6 5344165 turned 0
+B interval  140 X      7715 level   509 e^U x1e6  1663893 drift 189..189 quanta 8..8 predicted 7 X'' -1 write x1e6 3969000 mass x1e6 5458698 turned 0
+B interval  141 X      7714 level   509 e^U x1e6  1663893 drift -189..-189 quanta 8..8 predicted 7 X'' -2 write x1e6 3969000 mass x1e6 5457991 turned 27
+B interval  160 X      7429 level   501 e^U x1e6  1650165 drift -189..-189 quanta 7..7 predicted 7 X'' -2 write x1e6 3969000 mass x1e6 5344165 turned 0
+B interval  180 X      6592 level   470 e^U x1e6  1600000 drift -189..-189 quanta 6..6 predicted 6 X'' -1 write x1e6 3969000 mass x1e6 5044074 turned 0
+B interval  200 X      5346 level   419 e^U x1e6  1519756 drift -189..-189 quanta 5..5 predicted 5 X'' 0 write x1e6 3969000 mass x1e6 4534036 turned 0
+B interval  220 X      3883 level   338 e^U x1e6  1402524 drift -189..-189 quanta 4..4 predicted 3 X'' 0 write x1e6 3969000 mass x1e6 3866791 turned 0
+B interval  240 X      2466 level   226 e^U x1e6  1253132 drift -189..-189 quanta 2..2 predicted 2 X'' 1 write x1e6 3969000 mass x1e6 3076118 turned 0
+B interval  260 X      1414 level    86 e^U x1e6  1089324 drift -189..-189 quanta 1..1 predicted 1 X'' 2 write x1e6 3969000 mass x1e6 2334205 turned 0
+B interval  280 X      1000 level     0 e^U x1e6  1000000 drift -189..-189 quanta 1..1 predicted 0 X'' 2 write x1e6 3969000 mass x1e6 1958863 turned 0
+B interval  300 X      1376 level    79 e^U x1e6  1082251 drift -189..-189 quanta 1..1 predicted 1 X'' 2 write x1e6 3969000 mass x1e6 2301264 turned 0
+B first interval at two whole quanta per Node by the count alone (interval, level, X): (23, 108, 1538)
+B turns at: [141] ... (1 intervals with a turn); X max 7715 at 140
+/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/v2/tools/derivations/v2/pump_unit.json

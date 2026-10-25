@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/q1/tools/derivations/q1/link_birth.py", line 419, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/q1/tools/derivations/q1/link_birth.py", line 413, in main
+    found[f"B_{rule}"] = run_b(rule, intervals)
+                         ~~~~~^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/q1/tools/derivations/q1/link_birth.py", line 361, in run_b
+    board, _ = board_of(TMP / f"b_{rule}_base", hole_plus_one(at), intervals)
+               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/q1/tools/derivations/q1/link_birth.py", line 203, in board_of
+    board = Lattice(load_world(bare_torus(folder, 3, intervals)), output=lines.append)
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/q1/src/event_universe/lattice.py", line 87, in __init__
+    seed.uniform_seed(self, world.seed)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/q1/tools/derivations/q1/link_birth.py", line 185, in laid_seed
+    seed.uniform_seed(board, index)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/q1/tools/derivations/q1/link_birth.py", line 185, in laid_seed
+    seed.uniform_seed(board, index)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/q1/tools/derivations/q1/link_birth.py", line 185, in laid_seed
+    seed.uniform_seed(board, index)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  [Previous line repeated 992 more times]
+RecursionError: maximum recursion depth exceeded
+done

@@ -1,0 +1,327 @@
+====================================================================================================
+config empty  den 15162856759112389 (54 bits)  cube 7  intervals 300  family point 0 2 0  pair [2458210083751875, 15162856759112389]  g 0.8379  period0 4.463
+bodies [] well None None unit_k 1615924816158049488000
+ content c at probes (A, mid, mid2, B, far) and the sea's mean (empty run) at marks:
+  t   0: A     0 mid     0 mid2     0 B     0 far     0 | mean 0.0 min 0 max 0 | empty mean 0.0  excess over empty mean: A +0.0 mid +0.0 mid2 +0.0 B +0.0 far +0.0
+  t   1: A     0 mid     0 mid2     0 B     0 far     0 | mean 0.0 min 0 max 0 | empty mean 0.0  excess over empty mean: A +0.0 mid +0.0 mid2 +0.0 B +0.0 far +0.0
+  t   2: A     1 mid     1 mid2     1 B     1 far     0 | mean 1.0 min 0 max 1 | empty mean 1.0  excess over empty mean: A +0.0 mid +0.0 mid2 +0.0 B +0.0 far -1.0
+  t   5: A     7 mid     7 mid2     7 B     7 far    -4 | mean 6.9 min -4 max 26 | empty mean 6.9  excess over empty mean: A +0.1 mid +0.1 mid2 +0.1 B +0.1 far -10.9
+  t  10: A    40 mid    40 mid2    48 B    38 far   171 | mean 32.7 min -19 max 201 | empty mean 32.7  excess over empty mean: A +7.3 mid +7.3 mid2 +15.3 B +5.3 far +138.3
+  t  20: A   282 mid   282 mid2   345 B   338 far   486 | mean 348.3 min 282 max 564 | empty mean 348.3  excess over empty mean: A -66.3 mid -66.3 mid2 -3.3 B -10.3 far +137.7
+  t  50: A   823 mid   823 mid2   803 B   783 far   785 | mean 804.3 min 783 max 842 | empty mean 804.3  excess over empty mean: A +18.7 mid +18.7 mid2 -1.3 B -21.3 far -19.3
+  t 100: A  1030 mid  1030 mid2  1022 B  1019 far   992 | mean 1011.7 min 981 max 1036 | empty mean 1011.7  excess over empty mean: A +18.3 mid +18.3 mid2 +10.3 B +7.3 far -19.7
+  t 150: A  1059 mid  1059 mid2  1045 B  1065 far  1191 | mean 1091.5 min 1045 max 1191 | empty mean 1091.5  excess over empty mean: A -32.5 mid -32.5 mid2 -46.5 B -26.5 far +99.5
+  t 200: A  1181 mid  1181 mid2  1153 B  1149 far  1245 | mean 1180.8 min 1137 max 1284 | empty mean 1180.8  excess over empty mean: A +0.2 mid +0.2 mid2 -27.8 B -31.8 far +64.2
+  t 250: A  1310 mid  1310 mid2  1259 B  1274 far  1245 | mean 1293.6 min 1245 max 1333 | empty mean 1293.6  excess over empty mean: A +16.4 mid +16.4 mid2 -34.6 B -19.6 far -48.6
+  t 300: A  1379 mid  1379 mid2  1371 B  1387 far  1462 | mean 1391.1 min 1352 max 1466 | empty mean 1391.1  excess over empty mean: A -12.1 mid -12.1 mid2 -20.1 B -4.1 far +70.9
+ free row of the sign at probes at marks: t0: 0,0,0,0,0; t1: 0,0,0,0,0; t2: 0,0,0,0,0; t5: 0,0,0,0,0; t10: 0,0,0,0,0; t20: 0,0,0,0,0; t50: 0,0,0,0,0; t100: 0,0,0,0,0; t150: 0,0,0,0,0; t200: 0,0,0,0,0; t250: 0,0,0,0,0; t300: 0,0,0,0,0
+ light share/unit_light at probes at marks: t0: 0.992,0.992,0.992,0.992,0.992; t1: 0.992,0.992,0.992,0.992,0.717; t2: 0.996,0.996,0.996,0.996,0.294; t5: 1.021,1.021,1.021,1.021,-2.100; t10: 0.612,0.612,0.728,0.319,4.343; t20: 11.702,11.702,11.991,1.765,12.465; t50: 2.558,2.558,0.403,18.362,53.712; t100: 15.733,15.733,26.183,6.074,6.796; t150: 3.501,3.501,68.673,52.801,92.971; t200: 29.982,29.982,117.018,207.976,22.643; t250: 26.112,26.112,185.088,184.620,408.278; t300: 150.109,150.109,103.900,111.997,1382.748
+ light quanta total at marks: 339.35 339.35 340.66 351.44 423.00 1547.75 6900.41 14935.77 23476.49 36372.51 61345.43 96502.85
+ credits 0 refused 0 births 0
+ summary {"event": "summary", "seconds": 18.11, "interval": 300, "credits": 0, "refused": 0, "births": 0, "swaps": 110, "counts": {"massless": 96503}, "deficits": {}}
+====================================================================================================
+config pair2  den 15162856759112389 (54 bits)  cube 7  intervals 300  family point 0 2 0  pair [2458210083751875, 15162856759112389]  g 0.8379  period0 4.463
+bodies [[[3, 3, 3], 1, 0, 1], [[3, 3, 5], 1, 1, 1]] well None None unit_k 1615924816158049488000
+ body 0 frac_lay at [0, 1, 2, 5, 10, 20, 50, 100, 150, 200, 250]: 1.000 0.996 0.983 0.899 0.658 0.469 0.475 0.520 0.543 0.555 0.492
+ body 0 share_total/unit_k at marks: 1.011 1.015 1.021 1.052 1.204 3.128 14.399 28.492 33.156 46.587 59.410
+ body 0 centroid radius about lay at marks: 0.0000 0.0000 0.0000 0.0007 0.0027 0.2349 0.2741 0.2678 0.2625 0.2523 0.2922
+ body 0 peak offsets (count of intervals): {(0, 0, 0): 285}
+ body 0 centroid z at marks: +0.00000 +0.00000 +0.00001 -0.00074 +0.00074 -0.13451 -0.16186 -0.15677 -0.13865 -0.13372 -0.15688
+ body 0 centroid z slope (Links/interval) over all: -9.845e-05; over the last half: +7.031e-05
+ body 1 frac_lay at [0, 1, 2, 5, 10, 20, 50, 100, 150, 200, 250]: 1.000 0.996 0.983 0.899 0.677 0.604 0.595 0.585 0.539 0.563 0.601
+ body 1 share_total/unit_k at marks: 1.011 1.015 1.021 1.052 1.207 3.471 14.176 29.534 33.136 49.219 69.434
+ body 1 centroid radius about lay at marks: 0.0000 0.0000 0.0000 0.0007 0.0175 0.1129 0.2116 0.2286 0.2366 0.2340 0.2053
+ body 1 peak offsets (count of intervals): {(0, 0, 0): 285}
+ body 1 centroid z at marks: +0.00000 +0.00000 -0.00001 +0.00074 -0.00046 -0.09592 -0.18366 -0.18543 -0.17703 -0.20075 -0.18105
+ body 1 centroid z slope (Links/interval) over all: -3.704e-04; over the last half: -1.998e-04
+ peak distance: first 2 last 2 min 2 max 2 slope +4.809e-18 Links/interval
+ centroid distance: first 2.00000 last 1.91086 min 1.90467 max 2.09421 slope -2.729e-04 Links/interval; last half slope -2.641e-04
+ centroid distance at marks: 2.00000 2.00000 1.99998 2.00149 1.99886 2.04293 1.98161 1.97310 1.96272 1.93524 1.98149
+ content c at probes (A, mid, mid2, B, far) and the sea's mean (empty run) at marks:
+  t   0: A     0 mid     0 mid2     0 B     0 far     0 | mean 0.0 min 0 max 0 | empty mean 0.0  excess over empty mean: A +0.0 mid +0.0 mid2 +0.0 B +0.0 far +0.0
+  t   1: A     1 mid     0 mid2     1 B     0 far     0 | mean 0.0 min 0 max 1 | empty mean 0.0  excess over empty mean: A +1.0 mid +0.0 mid2 +1.0 B +0.0 far +0.0
+  t   2: A     2 mid     2 mid2     2 B     1 far     0 | mean 1.0 min 0 max 2 | empty mean 1.0  excess over empty mean: A +1.0 mid +1.0 mid2 +1.0 B +0.0 far -1.0
+  t   5: A     7 mid     8 mid2     7 B     7 far    -4 | mean 6.9 min -4 max 26 | empty mean 6.9  excess over empty mean: A +0.1 mid +1.1 mid2 +0.1 B +0.1 far -10.9
+  t  10: A    41 mid    41 mid2    49 B    38 far   171 | mean 32.9 min -19 max 201 | empty mean 32.7  excess over empty mean: A +8.3 mid +8.3 mid2 +16.3 B +5.3 far +138.3
+  t  20: A   300 mid   305 mid2   345 B   340 far   488 | mean 347.5 min 300 max 562 | empty mean 348.3  excess over empty mean: A -48.3 mid -43.3 mid2 -3.3 B -8.3 far +139.7
+  t  50: A   821 mid   817 mid2   796 B   781 far   796 | mean 803.6 min 768 max 842 | empty mean 804.3  excess over empty mean: A +16.7 mid +12.7 mid2 -8.3 B -23.3 far -8.3
+  t 100: A  1033 mid  1047 mid2  1053 B  1039 far  1008 | mean 1020.9 min 987 max 1056 | empty mean 1011.7  excess over empty mean: A +21.3 mid +35.3 mid2 +41.3 B +27.3 far -3.7
+  t 150: A  1076 mid  1076 mid2  1068 B  1097 far  1211 | mean 1117.1 min 1059 max 1221 | empty mean 1091.5  excess over empty mean: A -15.5 mid -15.5 mid2 -23.5 B +5.5 far +119.5
+  t 200: A  1198 mid  1205 mid2  1208 B  1175 far  1266 | mean 1200.4 min 1149 max 1284 | empty mean 1180.8  excess over empty mean: A +17.2 mid +24.2 mid2 +27.2 B -5.8 far +85.2
+  t 250: A  1238 mid  1281 mid2  1336 B  1288 far  1245 | mean 1289.5 min 1211 max 1367 | empty mean 1293.6  excess over empty mean: A -55.6 mid -12.6 mid2 +42.4 B -5.6 far -48.6
+ free row of the sign at probes at marks: t0: 0,0,0,0,0; t1: 0,0,0,0,0; t2: 0,0,0,0,0; t5: 0,0,0,0,0; t10: 0,0,0,0,0; t20: 0,0,0,0,0; t50: 0,0,0,0,0; t100: 0,0,0,0,0; t150: 0,0,0,0,0; t200: 0,0,0,0,0; t250: 0,0,0,0,0
+ light share/unit_light at probes at marks: t0: 0.992,0.992,0.992,0.992,0.992; t1: 0.996,0.992,0.996,0.992,0.717; t2: 1.000,1.000,1.000,0.996,0.294; t5: 1.021,1.025,1.021,1.021,-2.100; t10: 0.613,0.613,0.728,0.316,4.343; t20: 26.295,17.554,13.309,1.742,12.698; t50: 0.730,4.753,1.242,20.364,65.772; t100: 29.075,10.013,5.774,4.530,47.521; t150: 10.209,33.772,87.655,107.936,27.728; t200: 228.377,668.351,101.220,108.359,61.334; t250: 615.213,263.615,298.551,55.027,246.252
+ light quanta total at marks: 339.35 339.36 340.68 351.47 423.43 1561.92 7193.57 16120.85 25491.32 37309.26 55117.32
+ credits 169 refused 11 births 0
+  identity (18, 0) at (2, 2, 3): 6 clicks at intervals [174, 188, 211, 226, 267, 285]
+    gaps in intervals [14, 23, 15, 41, 18] mean 22.2
+    beats [None, 561184, None, None, None, None] ; proper at clicks [79, 84, 91, 95, 107, 112]... gaps in proper [5, 7, 4, 12, 5] mean 6.6
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6] point [[29, 32], [13, 14]] momentum [[-1, [-37, 32], [43, 14]], [-1, [-37, 32], [43, 14]], [-1, [15, 32], [-2, 7]]]
+  identity (18, 0) at (2, 3, 2): 3 clicks at intervals [228, 245, 263]
+    gaps in intervals [17, 18] mean 17.5
+    beats [None, None, None] ; proper at clicks [96, 101, 106]... gaps in proper [5, 5] mean 5.0
+    kind {2} sense {1} windows [1, 2, 3] point [[71, 76], [41, 44]] momentum [[-1, [-27, 38], [17, 22]], [-1, [-2, 19], [3, 44]], [1, [89, 76], [-7, 11]]]
+  identity (18, 0) at (2, 3, 3): 18 clicks at intervals [37, 46, 56, 67, 78, 90, 103, 130, 138, 152, 166, 181]...
+    gaps in intervals [9, 10, 11, 11, 12, 13, 27, 8, 14, 14, 15, 15, 15, 21, 17, 14, 18] mean 14.352941176470589
+    beats [None, None, None, None, None, None, None, None, 470761, None, None, None, None, None, None, None, None, None] ; proper at clicks [28, 33, 37, 42, 46, 51, 56, 65]... gaps in proper [5, 4, 5, 4, 5, 5, 9, 3, 4, 5, 5, 5] mean 4.882352941176471
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[53, 68], [19, 24]] momentum [[-1, [-31, 136], [37, 16]], [-1, [7, 136], [0, 1]], [-1, [5, 68], [-1, 48]]]
+  identity (18, 0) at (3, 2, 2): 3 clicks at intervals [228, 245, 263]
+    gaps in intervals [17, 18] mean 17.5
+    beats [None, None, None] ; proper at clicks [96, 101, 106]... gaps in proper [5, 5] mean 5.0
+    kind {2} sense {1} windows [1, 2, 3] point [[71, 76], [41, 44]] momentum [[-1, [-2, 19], [3, 44]], [-1, [-27, 38], [17, 22]], [1, [89, 76], [-7, 11]]]
+  identity (18, 0) at (3, 2, 3): 18 clicks at intervals [37, 46, 56, 67, 78, 90, 103, 130, 138, 152, 166, 181]...
+    gaps in intervals [9, 10, 11, 11, 12, 13, 27, 8, 14, 14, 15, 15, 15, 21, 17, 14, 18] mean 14.352941176470589
+    beats [None, None, None, None, None, None, None, None, 470761, None, None, None, None, None, None, None, None, None] ; proper at clicks [28, 33, 37, 42, 46, 51, 56, 65]... gaps in proper [5, 4, 5, 4, 5, 5, 9, 3, 4, 5, 5, 5] mean 4.882352941176471
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[53, 68], [19, 24]] momentum [[-1, [7, 136], [0, 1]], [-1, [-31, 136], [37, 16]], [-1, [5, 68], [-1, 48]]]
+  identity (18, 0) at (3, 3, 2): 18 clicks at intervals [37, 46, 56, 67, 78, 90, 103, 116, 132, 146, 154, 168]...
+    gaps in intervals [9, 10, 11, 11, 12, 13, 13, 16, 14, 8, 14, 30, 15, 13, 16, 17, 18] mean 14.117647058823529
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [28, 33, 37, 42, 46, 51, 56, 60]... gaps in proper [5, 4, 5, 4, 5, 5, 4, 6, 4, 3, 5, 9] mean 4.823529411764706
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[103, 132], [39, 50]] momentum [[-1, [5, 66], [0, 1]], [-1, [5, 66], [0, 1]], [-1, [-3, 11], [111, 50]]]
+  identity (18, 0) at (3, 3, 3): 19 clicks at intervals [24, 31, 40, 49, 72, 83, 95, 108, 122, 142, 156, 167]...
+    gaps in intervals [7, 9, 9, 23, 11, 12, 13, 14, 20, 14, 11, 8, 14, 19, 16, 17, 12, 17] mean 13.666666666666666
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [21, 25, 30, 34, 44, 48, 53, 57]... gaps in proper [4, 5, 4, 10, 4, 5, 4, 5, 7, 5, 4, 2] mean 4.833333333333333
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[2, 3], [77, 114]] momentum [[-1, [-47, 42], [0, 1]], [-1, [-47, 42], [0, 1]], [-1, [-43, 42], [-1, 228]]]
+  identity (18, 1) at (2, 3, 4): 6 clicks at intervals [205, 221, 234, 244, 261, 278]
+    gaps in intervals [16, 13, 10, 17, 17] mean 14.6
+    beats [None, None, None, None, None, None] ; proper at clicks [90, 94, 98, 101, 106, 110]... gaps in proper [4, 4, 3, 5, 4] mean 4.0
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6] point [[61, 66], [9, 10]] momentum [[1, [14, 11], [-9, 4]], [-1, [1, 22], [-11, 20]], [-1, [-2, 33], [29, 20]]]
+  identity (18, 1) at (2, 3, 5): 16 clicks at intervals [65, 76, 88, 100, 114, 126, 134, 147, 162, 177, 191, 213]...
+    gaps in intervals [11, 12, 12, 14, 12, 8, 13, 15, 15, 14, 22, 17, 9, 17, 17] mean 13.866666666666667
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [41, 45, 50, 54, 59, 63, 66, 70]... gaps in proper [4, 5, 4, 5, 4, 3, 4, 5, 5, 5, 7, 4] mean 4.466666666666667
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[11, 13], [63, 74]] momentum [[-1, [-9, 8], [-41, 74]], [-1, [-1, 104], [9, 74]], [-1, [1, 4], [-1, 37]]]
+  identity (18, 1) at (3, 2, 4): 6 clicks at intervals [205, 221, 234, 244, 261, 278]
+    gaps in intervals [16, 13, 10, 17, 17] mean 14.6
+    beats [None, None, None, None, None, None] ; proper at clicks [90, 94, 98, 101, 106, 110]... gaps in proper [4, 4, 3, 5, 4] mean 4.0
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6] point [[61, 66], [9, 10]] momentum [[-1, [1, 22], [-11, 20]], [1, [14, 11], [-9, 4]], [-1, [-2, 33], [29, 20]]]
+  identity (18, 1) at (3, 2, 5): 16 clicks at intervals [65, 76, 88, 100, 114, 126, 134, 147, 162, 177, 191, 213]...
+    gaps in intervals [11, 12, 12, 14, 12, 8, 13, 15, 15, 14, 22, 17, 9, 17, 17] mean 13.866666666666667
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [41, 45, 50, 54, 59, 63, 66, 70]... gaps in proper [4, 5, 4, 5, 4, 3, 4, 5, 5, 5, 7, 4] mean 4.466666666666667
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[11, 13], [63, 74]] momentum [[-1, [-1, 104], [9, 74]], [-1, [-9, 8], [-41, 74]], [-1, [1, 4], [-1, 37]]]
+  identity (18, 1) at (3, 3, 4): 17 clicks at intervals [32, 48, 58, 69, 80, 92, 105, 127, 151, 165, 179, 193]...
+    gaps in intervals [16, 10, 11, 11, 12, 13, 22, 24, 14, 14, 14, 17, 16, 22, 16, 18] mean 15.625
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [26, 34, 38, 43, 47, 52, 56, 64]... gaps in proper [8, 4, 5, 4, 5, 4, 8, 8, 5, 5, 4, 5] mean 5.3125
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[11, 14], [99, 130]] momentum [[1, [4, 7], [-8, 65]], [1, [4, 7], [-8, 65]], [-1, [-17, 14], [137, 130]]]
+  identity (18, 1) at (3, 3, 5): 19 clicks at intervals [22, 28, 36, 46, 55, 66, 78, 89, 102, 114, 127, 151]...
+    gaps in intervals [6, 8, 10, 9, 11, 12, 11, 13, 12, 13, 24, 13, 13, 17, 27, 11, 34, 12] mean 14.222222222222221
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [20, 23, 28, 33, 37, 41, 46, 51]... gaps in proper [3, 5, 5, 4, 4, 5, 5, 4, 4, 5, 8, 4] mean 5.0
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[61, 102], [8, 13]] momentum [[-1, [-37, 204], [-7, 13]], [-1, [-37, 204], [-7, 13]], [-1, [1, 6], [49, 52]]]
+  identity (18, 1) at (3, 3, 6): 4 clicks at intervals [234, 251, 269, 283]
+    gaps in intervals [17, 18, 14] mean 16.333333333333332
+    beats [None, None, None, None] ; proper at clicks [98, 103, 107, 111]... gaps in proper [5, 4, 4] mean 4.333333333333333
+    kind {2} sense {1} windows [1, 2, 3, 4] point [[47, 50], [1, 1]] momentum [[1, [13, 50], [0, 1]], [1, [13, 50], [0, 1]], [1, [27, 10], [37, 4]]]
+  refusals: [(39, 'stop', None), (58, 'stop', None), (116, 'stop', None), (116, 'stop', None), (118, 'stop', None), (141, 'stop', None), (141, 'stop', None), (182, 'stop', None), (209, 'stop', None), (243, 'stop', None)]
+ at the end: c_A 1407 c_B 1325; e^(U_A - U_B) = 1.085500; omega(c_A)/omega(c_B) = 0.920534; proper A 111969 proper B 111957 ratio 1.000107
+ summary null
+====================================================================================================
+config heavy  den 15162856759112389 (54 bits)  cube 7  intervals 300  family point 0 2 0  pair [2458210083751875, 15162856759112389]  g 0.8379  period0 4.463
+bodies [[[3, 3, 3], 1, 0, 3], [[3, 3, 6], 1, 1, 1]] well None None unit_k 1615924816158049488000
+ body 0 frac_lay at [0, 1, 2, 5, 10, 20, 50, 100, 150, 200, 250]: 1.000 0.995 0.980 0.893 0.630 0.477 0.511 0.460 0.438 0.415 0.440
+ body 0 share_total/unit_k at marks: 3.030 3.068 3.084 3.153 3.500 8.233 42.383 88.526 94.357 144.548 194.330
+ body 0 centroid radius about lay at marks: 0.0000 0.0000 0.0000 0.0001 0.0022 0.0271 0.0737 0.0746 0.0468 0.0735 0.0562
+ body 0 peak offsets (count of intervals): {(0, 0, 0): 258, (-1, 1, -1): 24}
+ body 0 centroid z at marks: +0.00000 +0.00000 +0.00000 +0.00007 -0.00050 +0.01159 +0.03835 +0.04124 +0.03063 +0.02927 +0.01785
+ body 0 centroid z slope (Links/interval) over all: -1.060e-03; over the last half: -3.866e-03
+ body 1 frac_lay at [0, 1, 2, 5, 10, 20, 50, 100, 150, 200, 250]: 1.000 0.996 0.983 0.898 0.676 0.687 0.612 0.613 0.574 0.575 0.568
+ body 1 share_total/unit_k at marks: 1.011 1.015 1.021 1.057 1.220 3.337 13.527 26.863 35.336 44.152 65.730
+ body 1 centroid radius about lay at marks: 0.0000 0.0000 0.0000 0.0001 0.0182 0.0656 0.1443 0.1473 0.1777 0.1635 0.1462
+ body 1 peak offsets (count of intervals): {(0, 0, 0): 282}
+ body 1 centroid z at marks: +0.00000 +0.00000 +0.00000 -0.00006 -0.00208 +0.05764 +0.11913 +0.12380 +0.16382 +0.15449 +0.12301
+ body 1 centroid z slope (Links/interval) over all: +1.966e-04; over the last half: -3.593e-04
+ peak distance: first 3 last 5 min 3 max 5 slope +3.313e-03 Links/interval
+ centroid distance: first 3.00000 last 3.26643 min 2.96595 max 3.31494 slope +5.552e-04 Links/interval; last half slope +9.486e-04
+ centroid distance at marks: 3.00000 3.00000 3.00000 2.99986 2.99846 3.04656 3.08417 3.08583 3.13493 3.12756 3.10798
+ content c at probes (A, mid, mid2, B, far) and the sea's mean (empty run) at marks:
+  t   0: A     0 mid     0 mid2     0 B     0 far     0 | mean 0.0 min 0 max 0 | empty mean 0.0  excess over empty mean: A +0.0 mid +0.0 mid2 +0.0 B +0.0 far +0.0
+  t   1: A     3 mid     0 mid2     0 B     1 far     0 | mean 0.0 min 0 max 3 | empty mean 0.0  excess over empty mean: A +3.0 mid +0.0 mid2 +0.0 B +1.0 far +0.0
+  t   2: A     4 mid     2 mid2     1 B     2 far     0 | mean 1.0 min 0 max 4 | empty mean 1.0  excess over empty mean: A +3.0 mid +1.0 mid2 +0.0 B +1.0 far -1.0
+  t   5: A     9 mid     8 mid2     8 B     8 far    -4 | mean 7.0 min -4 max 26 | empty mean 6.9  excess over empty mean: A +2.1 mid +1.1 mid2 +1.1 B +1.1 far -10.9
+  t  10: A    29 mid    43 mid2    49 B    39 far   171 | mean 33.1 min -19 max 201 | empty mean 32.7  excess over empty mean: A -3.7 mid +10.3 mid2 +16.3 B +6.3 far +138.3
+  t  20: A   250 mid   265 mid2   333 B   347 far   483 | mean 345.7 min 250 max 552 | empty mean 348.3  excess over empty mean: A -98.3 mid -83.3 mid2 -15.3 B -1.3 far +134.7
+  t  50: A   796 mid   810 mid2   794 B   777 far   785 | mean 798.1 min 768 max 837 | empty mean 804.3  excess over empty mean: A -8.3 mid +5.7 mid2 -10.3 B -27.3 far -19.3
+  t 100: A  1039 mid  1036 mid2  1022 B  1016 far   989 | mean 1011.2 min 984 max 1045 | empty mean 1011.7  excess over empty mean: A +27.3 mid +24.3 mid2 +10.3 B +4.3 far -22.7
+  t 150: A  1053 mid  1030 mid2  1070 B  1082 far  1201 | mean 1106.6 min 1030 max 1208 | empty mean 1091.5  excess over empty mean: A -38.5 mid -61.5 mid2 -21.5 B -9.5 far +109.5
+  t 200: A  1172 mid  1205 mid2  1191 B  1159 far  1232 | mean 1199.2 min 1149 max 1292 | empty mean 1180.8  excess over empty mean: A -8.8 mid +24.2 mid2 +10.2 B -21.8 far +51.2
+  t 250: A  1281 mid  1256 mid2  1329 B  1277 far  1295 | mean 1296.6 min 1249 max 1363 | empty mean 1293.6  excess over empty mean: A -12.6 mid -37.6 mid2 +35.4 B -16.6 far +1.4
+ free row of the sign at probes at marks: t0: 0,0,0,0,0; t1: 0,0,0,0,0; t2: 0,0,0,0,0; t5: 0,0,0,0,0; t10: 0,0,0,0,0; t20: 0,0,0,0,0; t50: 0,0,0,0,0; t100: 0,0,0,0,0; t150: 0,0,0,0,0; t200: 0,0,0,0,0; t250: 0,0,0,0,0
+ light share/unit_light at probes at marks: t0: 0.992,0.992,0.992,0.992,0.992; t1: 1.004,0.992,0.992,0.996,0.717; t2: 1.008,1.000,0.996,1.000,0.294; t5: 1.029,1.025,1.025,1.025,-2.100; t10: 1.206,0.330,0.707,0.326,4.343; t20: 24.412,25.351,10.376,0.527,10.679; t50: 41.326,1.436,0.618,21.723,49.851; t100: 3.791,13.796,24.244,15.145,31.444; t150: 27.515,99.100,64.588,156.092,13.538; t200: 227.769,350.279,147.223,271.847,36.971; t250: 275.692,650.633,116.114,649.142,183.779
+ light quanta total at marks: 339.35 339.37 340.70 351.58 422.64 1489.60 7014.70 15260.16 23742.42 35922.71 54079.23
+ credits 349 refused 30 births 0
+  identity (18, 0) at (2, 2, 3): 4 clicks at intervals [210, 226, 250, 267]
+    gaps in intervals [16, 24, 17] mean 19.0
+    beats [None, None, None, None] ; proper at clicks [91, 96, 102, 107]... gaps in proper [5, 6, 5] mean 5.333333333333333
+    kind {2} sense {-1} windows [1, 2, 3, 4] point [[63, 68], [1, 1]] momentum [[-1, [-71, 68], [-6, 1]], [-1, [-71, 68], [-6, 1]], [-1, [1, 17], [17, 5]]]
+  identity (18, 0) at (2, 2, 4): 3 clicks at intervals [238, 250, 268]
+    gaps in intervals [12, 18] mean 15.0
+    beats [None, None, None] ; proper at clicks [99, 102, 107]... gaps in proper [3, 5] mean 4.0
+    kind {2} sense {1} windows [1, 2, 3] point [[7, 8], [17, 18]] momentum [[1, [-3, 4], [47, 54]], [1, [-3, 4], [47, 54]], [1, [15, 4], [2, 27]]]
+  identity (18, 0) at (2, 3, 3): 18 clicks at intervals [42, 52, 62, 73, 85, 97, 110, 124, 134, 147, 161, 175]...
+    gaps in intervals [10, 10, 11, 12, 12, 13, 14, 10, 13, 14, 14, 10, 15, 13, 16, 17, 20] mean 13.176470588235293
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [31, 35, 40, 44, 49, 54, 58, 63]... gaps in proper [4, 5, 4, 5, 5, 4, 5, 3, 5, 5, 4, 4] mean 4.470588235294118
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[23, 29], [49, 62]] momentum [[-1, [149, 116], [-131, 62]], [1, [1, 4], [21, 31]], [1, [31, 116], [41, 62]]]
+  identity (18, 0) at (2, 3, 4): 13 clicks at intervals [82, 95, 108, 132, 142, 156, 170, 184, 199, 214, 230, 253]...
+    gaps in intervals [13, 13, 24, 10, 14, 14, 14, 15, 15, 16, 23, 17] mean 15.666666666666666
+    beats [None, None, None, 470761, None, None, None, None, None, None, None, None, None] ; proper at clicks [48, 53, 57, 66, 69, 74, 79, 83]... gaps in proper [5, 4, 9, 3, 5, 5, 4, 5, 5, 4, 7, 4] mean 5.0
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[59, 68], [25, 28]] momentum [[1, [7, 17], [19, 28]], [-1, [-15, 68], [-1, 28]], [1, [15, 34], [-3, 4]]]
+  identity (18, 0) at (2, 4, 2): 3 clicks at intervals [245, 258, 271]
+    gaps in intervals [13, 13] mean 13.0
+    beats [None, None, None] ; proper at clicks [101, 105, 108]... gaps in proper [4, 3] mean 3.5
+    kind {2} sense {1} windows [1, 2, 3] point [[1, 1], [25, 27]] momentum [[-1, [-36, 1], [-1, 18]], [-1, [15, 1], [1, 27]], [-1, [-17, 2], [1, 3]]]
+  identity (18, 0) at (2, 4, 3): 12 clicks at intervals [83, 96, 109, 135, 148, 162, 176, 190, 206, 221, 239, 272]
+    gaps in intervals [13, 13, 26, 13, 14, 14, 14, 16, 15, 18, 33] mean 17.181818181818183
+    beats [None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [48, 53, 58, 67, 71, 76, 81, 85]... gaps in proper [5, 5, 9, 4, 5, 5, 4, 5, 4, 6, 9] mean 5.545454545454546
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[7, 8], [5, 6]] momentum [[1, [25, 24], [-10, 9]], [1, [11, 72], [53, 18]], [-1, [1, 9], [2, 9]]]
+  identity (18, 0) at (2, 4, 4): 4 clicks at intervals [219, 240, 257, 275]
+    gaps in intervals [21, 17, 18] mean 18.666666666666668
+    beats [None, None, None, None] ; proper at clicks [94, 100, 105, 110]... gaps in proper [6, 5, 5] mean 5.333333333333333
+    kind {2} sense {-1} windows [1, 2, 3, 4] point [[12, 13], [15, 16]] momentum [[-1, [17, 26], [-11, 12]], [1, [27, 52], [29, 24]], [1, [-25, 52], [3, 4]]]
+  identity (18, 0) at (3, 2, 3): 18 clicks at intervals [42, 52, 62, 73, 85, 97, 110, 124, 134, 147, 161, 175]...
+    gaps in intervals [10, 10, 11, 12, 12, 13, 14, 10, 13, 14, 14, 10, 15, 13, 16, 17, 20] mean 13.176470588235293
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [31, 35, 40, 44, 49, 54, 58, 63]... gaps in proper [4, 5, 4, 5, 5, 4, 5, 3, 5, 5, 4, 4] mean 4.470588235294118
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[23, 29], [49, 62]] momentum [[1, [1, 4], [21, 31]], [-1, [149, 116], [-131, 62]], [1, [31, 116], [41, 62]]]
+  identity (18, 0) at (3, 2, 4): 13 clicks at intervals [82, 95, 108, 132, 142, 156, 170, 184, 199, 214, 230, 253]...
+    gaps in intervals [13, 13, 24, 10, 14, 14, 14, 15, 15, 16, 23, 17] mean 15.666666666666666
+    beats [None, None, None, 470761, None, None, None, None, None, None, None, None, None] ; proper at clicks [48, 53, 57, 66, 69, 74, 79, 83]... gaps in proper [5, 4, 9, 3, 5, 5, 4, 5, 5, 4, 7, 4] mean 5.0
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[59, 68], [25, 28]] momentum [[-1, [-15, 68], [-1, 28]], [1, [7, 17], [19, 28]], [1, [15, 34], [-3, 4]]]
+  identity (18, 0) at (3, 3, 2): 16 clicks at intervals [42, 52, 62, 73, 85, 97, 110, 124, 138, 158, 188, 203]...
+    gaps in intervals [10, 10, 11, 12, 12, 13, 14, 14, 20, 30, 15, 15, 19, 16, 21] mean 15.466666666666667
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, 1842341] ; proper at clicks [31, 35, 40, 44, 49, 54, 58, 63]... gaps in proper [4, 5, 4, 5, 5, 4, 5, 5, 7, 10, 4, 5] mean 5.2
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[97, 122], [49, 62]] momentum [[1, [15, 61], [20, 31]], [1, [15, 61], [20, 31]], [-1, [74, 61], [-131, 62]]]
+  identity (18, 0) at (3, 3, 3): 22 clicks at intervals [9, 13, 23, 28, 33, 44, 53, 64, 74, 85, 98, 111]...
+    gaps in intervals [4, 10, 5, 5, 11, 9, 11, 10, 11, 13, 13, 13, 18, 14, 12, 14, 22, 15, 18, 17]... mean 12.476190476190476
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, 13750821, None, None, None, None, None, None, None] ; proper at clicks [8, 12, 21, 23, 26, 32, 36, 40]... gaps in proper [4, 9, 2, 3, 6, 4, 4, 5, 4, 5, 4, 5] mean 4.761904761904762
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[15, 386], [4, 15]] momentum [[0, [-6, 193], [3, 2]], [0, [-6, 193], [3, 2]], [-1, [-13, 386], [3, 2]]]
+  identity (18, 0) at (3, 3, 4): 16 clicks at intervals [30, 36, 59, 69, 80, 92, 104, 118, 136, 154, 167, 201]...
+    gaps in intervals [6, 23, 10, 11, 12, 12, 14, 18, 18, 13, 34, 29, 17, 16, 18] mean 16.733333333333334
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [25, 28, 38, 43, 47, 52, 56, 61]... gaps in proper [3, 10, 5, 4, 5, 4, 5, 6, 6, 5, 11, 8] mean 5.733333333333333
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[6, 1], [0, 1]] momentum [[-1, [71, 20], [-15, 76]], [-1, [71, 20], [-15, 76]], [1, [-32, 5], [-37, 76]]]
+  identity (18, 0) at (3, 4, 2): 14 clicks at intervals [83, 95, 108, 122, 138, 152, 166, 180, 194, 209, 226, 236]...
+    gaps in intervals [12, 13, 14, 16, 14, 14, 14, 14, 15, 17, 10, 34, 12] mean 15.307692307692308
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [48, 53, 57, 62, 68, 73, 77, 82]... gaps in proper [5, 4, 5, 6, 5, 4, 5, 4, 5, 5, 3, 9] mean 4.846153846153846
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[33, 38], [7, 8]] momentum [[-1, [3, 38], [3, 8]], [1, [9, 76], [53, 16]], [1, [37, 38], [-5, 4]]]
+  identity (18, 0) at (3, 4, 3): 16 clicks at intervals [29, 35, 58, 68, 79, 91, 103, 130, 160, 174, 188, 212]...
+    gaps in intervals [6, 23, 10, 11, 12, 12, 27, 30, 14, 14, 24, 16, 16, 13, 17] mean 16.333333333333332
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [24, 27, 38, 42, 47, 51, 56, 65]... gaps in proper [3, 11, 4, 5, 4, 5, 9, 11, 4, 5, 7, 5] mean 5.733333333333333
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[95, 126], [23, 32]] momentum [[-1, [1, 3], [-13, 8]], [1, [-61, 63], [31, 8]], [-1, [13, 42], [-55, 32]]]
+  identity (18, 0) at (3, 4, 4): 15 clicks at intervals [78, 90, 102, 110, 123, 139, 152, 170, 184, 199, 218, 234]...
+    gaps in intervals [12, 12, 8, 13, 16, 13, 18, 14, 15, 19, 16, 16, 18, 12] mean 14.428571428571429
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [46, 51, 55, 58, 63, 68, 73, 79]... gaps in proper [5, 4, 3, 5, 5, 5, 6, 5, 4, 6, 5, 4] mean 4.642857142857143
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [None, [33, 38]] momentum [[1, None, [-13, 76]], [1, None, [1, 4]], [1, None, [11, 38]]]
+  identity (18, 0) at (4, 2, 2): 3 clicks at intervals [245, 258, 271]
+    gaps in intervals [13, 13] mean 13.0
+    beats [None, None, None] ; proper at clicks [101, 105, 108]... gaps in proper [4, 3] mean 3.5
+    kind {2} sense {1} windows [1, 2, 3] point [[1, 1], [25, 27]] momentum [[-1, [15, 1], [1, 27]], [-1, [-36, 1], [-1, 18]], [-1, [-17, 2], [1, 3]]]
+  identity (18, 0) at (4, 2, 3): 12 clicks at intervals [83, 96, 109, 135, 148, 162, 176, 190, 206, 221, 239, 272]
+    gaps in intervals [13, 13, 26, 13, 14, 14, 14, 16, 15, 18, 33] mean 17.181818181818183
+    beats [None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [48, 53, 58, 67, 71, 76, 81, 85]... gaps in proper [5, 5, 9, 4, 5, 5, 4, 5, 4, 6, 9] mean 5.545454545454546
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[7, 8], [5, 6]] momentum [[1, [11, 72], [53, 18]], [1, [25, 24], [-10, 9]], [-1, [1, 9], [2, 9]]]
+  identity (18, 0) at (4, 2, 4): 4 clicks at intervals [219, 240, 257, 275]
+    gaps in intervals [21, 17, 18] mean 18.666666666666668
+    beats [None, None, None, None] ; proper at clicks [94, 100, 105, 110]... gaps in proper [6, 5, 5] mean 5.333333333333333
+    kind {2} sense {-1} windows [1, 2, 3, 4] point [[12, 13], [15, 16]] momentum [[1, [27, 52], [29, 24]], [-1, [17, 26], [-11, 12]], [1, [-25, 52], [3, 4]]]
+  identity (18, 0) at (4, 3, 2): 14 clicks at intervals [83, 95, 108, 122, 138, 152, 166, 180, 194, 209, 226, 236]...
+    gaps in intervals [12, 13, 14, 16, 14, 14, 14, 14, 15, 17, 10, 34, 12] mean 15.307692307692308
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [48, 53, 57, 62, 68, 73, 77, 82]... gaps in proper [5, 4, 5, 6, 5, 4, 5, 4, 5, 5, 3, 9] mean 4.846153846153846
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[33, 38], [7, 8]] momentum [[1, [9, 76], [53, 16]], [-1, [3, 38], [3, 8]], [1, [37, 38], [-5, 4]]]
+  identity (18, 0) at (4, 3, 3): 16 clicks at intervals [29, 35, 58, 68, 79, 91, 103, 130, 160, 174, 188, 212]...
+    gaps in intervals [6, 23, 10, 11, 12, 12, 27, 30, 14, 14, 24, 16, 16, 13, 17] mean 16.333333333333332
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [24, 27, 38, 42, 47, 51, 56, 65]... gaps in proper [3, 11, 4, 5, 4, 5, 9, 11, 4, 5, 7, 5] mean 5.733333333333333
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[95, 126], [23, 32]] momentum [[1, [-61, 63], [31, 8]], [-1, [1, 3], [-13, 8]], [-1, [13, 42], [-55, 32]]]
+  identity (18, 0) at (4, 3, 4): 15 clicks at intervals [78, 90, 102, 110, 123, 139, 152, 170, 184, 199, 218, 234]...
+    gaps in intervals [12, 12, 8, 13, 16, 13, 18, 14, 15, 19, 16, 16, 18, 12] mean 14.428571428571429
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [46, 51, 55, 58, 63, 68, 73, 79]... gaps in proper [5, 4, 3, 5, 5, 5, 6, 5, 4, 6, 5, 4] mean 4.642857142857143
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [None, [33, 38]] momentum [[1, None, [1, 4]], [1, None, [-13, 76]], [1, None, [11, 38]]]
+  identity (18, 0) at (4, 4, 2): 4 clicks at intervals [221, 238, 251, 268]
+    gaps in intervals [17, 13, 17] mean 15.666666666666666
+    beats [None, None, None, None] ; proper at clicks [95, 99, 103, 108]... gaps in proper [4, 4, 5] mean 4.333333333333333
+    kind {2} sense {-1} windows [1, 2, 3, 4] point [[13, 14], [69, 74]] momentum [[-1, [53, 14], [17, 74]], [-1, [53, 14], [17, 74]], [-1, [38, 7], [1, 74]]]
+  identity (18, 0) at (4, 4, 3): 12 clicks at intervals [77, 89, 101, 113, 132, 164, 195, 206, 222, 237, 251, 268]
+    gaps in intervals [12, 12, 12, 19, 32, 31, 11, 16, 15, 14, 17] mean 17.363636363636363
+    beats [None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [46, 51, 55, 59, 66, 77, 87, 90]... gaps in proper [5, 4, 4, 7, 11, 10, 3, 5, 4, 4, 5] mean 5.636363636363637
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[59, 68], [53, 62]] momentum [[1, [-1, 1], [11, 31]], [1, [-1, 1], [11, 31]], [1, [1, 34], [-13, 31]]]
+  identity (18, 1) at (2, 3, 6): 17 clicks at intervals [56, 67, 79, 91, 104, 127, 137, 146, 154, 169, 183, 201]...
+    gaps in intervals [11, 12, 12, 13, 23, 10, 9, 8, 15, 14, 18, 15, 17, 17, 11, 17] mean 13.875
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [37, 42, 47, 51, 56, 64, 68, 71]... gaps in proper [5, 5, 4, 5, 8, 4, 3, 2, 5, 4, 6, 5] mean 4.5625
+    kind {2} sense {-1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[5, 6], [81, 98]] momentum [[1, [29, 18], [59, 49]], [-1, [23, 54], [9, 49]], [1, [-1, 27], [3, 98]]]
+  identity (18, 1) at (3, 2, 6): 17 clicks at intervals [56, 67, 79, 91, 104, 127, 137, 146, 154, 169, 183, 201]...
+    gaps in intervals [11, 12, 12, 13, 23, 10, 9, 8, 15, 14, 18, 15, 17, 17, 11, 17] mean 13.875
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [37, 42, 47, 51, 56, 64, 68, 71]... gaps in proper [5, 5, 4, 5, 8, 4, 3, 2, 5, 4, 6, 5] mean 4.5625
+    kind {2} sense {-1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[5, 6], [81, 98]] momentum [[-1, [23, 54], [9, 49]], [1, [29, 18], [59, 49]], [1, [-1, 27], [3, 98]]]
+  identity (18, 1) at (3, 3, 0): 16 clicks at intervals [54, 63, 71, 83, 96, 109, 122, 134, 164, 179, 193, 208]...
+    gaps in intervals [9, 8, 12, 13, 13, 13, 12, 30, 15, 14, 15, 14, 17, 16, 16] mean 14.466666666666667
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [36, 40, 44, 48, 53, 58, 62, 67]... gaps in proper [4, 4, 4, 5, 5, 4, 5, 10, 5, 4, 5, 4] mean 4.8
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[5, 6], [17, 20]] momentum [[1, [23, 48], [-1, 10]], [1, [23, 48], [-1, 10]], [1, [-131, 48], [3, 10]]]
+  identity (18, 1) at (3, 3, 5): 5 clicks at intervals [216, 229, 245, 261, 273]
+    gaps in intervals [13, 16, 16, 12] mean 14.25
+    beats [None, None, None, None, None] ; proper at clicks [93, 97, 102, 106, 109]... gaps in proper [4, 5, 4, 3] mean 4.0
+    kind {2} sense {1} windows [1, 2, 3, 4, 5] point [[17, 18], [37, 40]] momentum [[1, [-25, 18], [-9, 40]], [1, [-25, 18], [-9, 40]], [-1, [49, 6], [27, 10]]]
+  identity (18, 1) at (3, 3, 6): 21 clicks at intervals [20, 26, 32, 40, 49, 59, 70, 81, 94, 106, 119, 133]...
+    gaps in intervals [6, 6, 8, 9, 10, 11, 11, 13, 12, 13, 14, 14, 14, 15, 14, 15, 16, 23, 17, 18] mean 12.95
+    beats [None, 1641457, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [18, 22, 26, 30, 34, 39, 43, 48]... gaps in proper [4, 4, 4, 4, 5, 4, 5, 4, 5, 4, 5, 5] mean 4.6
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[121, 248], [11, 23]] momentum [[1, [3, 62], [30, 23]], [1, [3, 62], [30, 23]], [1, [-37, 248], [-8, 23]]]
+  identity (18, 1) at (3, 4, 0): 3 clicks at intervals [244, 261, 279]
+    gaps in intervals [17, 18] mean 17.5
+    beats [None, None, None] ; proper at clicks [101, 106, 111]... gaps in proper [5, 5] mean 5.0
+    kind {2} sense {1} windows [1, 2, 3] point [[15, 16], [19, 20]] momentum [[1, [17, 64], [11, 20]], [-1, [-5, 4], [39, 20]], [-1, [-1, 16], [11, 20]]]
+  identity (18, 1) at (4, 3, 0): 3 clicks at intervals [244, 261, 279]
+    gaps in intervals [17, 18] mean 17.5
+    beats [None, None, None] ; proper at clicks [101, 106, 111]... gaps in proper [5, 5] mean 5.0
+    kind {2} sense {1} windows [1, 2, 3] point [[15, 16], [19, 20]] momentum [[-1, [-5, 4], [39, 20]], [1, [17, 64], [11, 20]], [-1, [-1, 16], [11, 20]]]
+  refusals: [(17, 'stop', None), (48, 'stop', None), (48, 'stop', None), (49, 'stop', None), (117, 'stop', None), (117, 'stop', None), (117, 'stop', None), (117, 'stop', None), (122, 'stop', None), (122, 'stop', None)]
+ at the end: c_A 1344 c_B 1379; e^(U_A - U_B) = 0.965589; omega(c_A)/omega(c_B) = 1.035977; proper A 111426 proper B 111343 ratio 1.000745
+ summary null
+====================================================================================================
+config fall  den 15162856759112389 (54 bits)  cube 7  intervals 300  family point 0 2 0  pair [2458210083751875, 15162856759112389]  g 0.8379  period0 4.463
+bodies [[[3, 3, 3], 1, 0, 1]] well [3, 3, 6] 300 unit_k 1615924816158049488000
+ body 0 frac_lay at [0, 1, 2, 5, 10, 20, 50, 100, 150, 200, 250, 300]: 1.000 0.998 0.996 0.979 0.949 0.944 0.836 0.789 0.780 0.809 0.818 0.808
+ body 0 share_total/unit_k at marks: 1.364 1.364 1.364 1.394 1.656 3.105 6.936 17.589 30.993 45.637 62.404 80.787
+ body 0 centroid radius about lay at marks: 0.0000 0.0000 0.0000 0.0001 0.0008 0.0009 0.0222 0.0201 0.0226 0.0134 0.0122 0.0122
+ body 0 peak offsets (count of intervals): {(0, 0, 0): 301}
+ body 0 centroid z at marks: +0.00000 +0.00000 +0.00000 +0.00007 -0.00076 +0.00080 +0.02077 -0.00828 +0.00208 -0.00984 -0.01022 -0.00841
+ body 0 centroid z slope (Links/interval) over all: -4.327e-05; over the last half: -1.005e-05
+ content c at probes (A, mid, mid2, B, far) and the sea's mean (empty run) at marks:
+  t   0: A    75 mid   100 mid2   150 B   300 far    42 | mean 54.6 min 30 max 300 | empty mean 0.0  excess over empty mean: A +75.0 mid +100.0 mid2 +150.0 B +300.0 far +42.0
+  t   1: A    75 mid   100 mid2   150 B   300 far    44 | mean 56.8 min 33 max 300 | empty mean 0.0  excess over empty mean: A +75.0 mid +100.0 mid2 +150.0 B +300.0 far +44.0
+  t   2: A    75 mid   100 mid2   150 B   300 far    47 | mean 61.8 min 38 max 300 | empty mean 1.0  excess over empty mean: A +74.0 mid +99.0 mid2 +149.0 B +299.0 far +46.0
+  t   5: A    81 mid   103 mid2   161 B   300 far    76 | mean 86.3 min 69 max 300 | empty mean 6.9  excess over empty mean: A +74.1 mid +96.1 mid2 +154.1 B +293.1 far +69.1
+  t  10: A   128 mid   128 mid2   180 B   300 far   127 | mean 141.5 min 95 max 300 | empty mean 32.7  excess over empty mean: A +95.3 mid +95.3 mid2 +147.3 B +267.3 far +94.3
+  t  20: A   317 mid   250 mid2   281 B   300 far   263 | mean 262.4 min 219 max 326 | empty mean 348.3  excess over empty mean: A -31.3 mid -98.3 mid2 -67.3 B -48.3 far -85.3
+  t  50: A   562 mid   635 mid2   576 B   687 far   613 | mean 572.7 min 513 max 687 | empty mean 804.3  excess over empty mean: A -242.3 mid -169.3 mid2 -228.3 B -117.3 far -191.3
+  t 100: A   877 mid   835 mid2   917 B   856 far   897 | mean 875.0 min 821 max 942 | empty mean 1011.7  excess over empty mean: A -134.7 mid -176.7 mid2 -94.7 B -155.7 far -114.7
+  t 150: A  1059 mid  1073 mid2  1050 B  1045 far  1059 | mean 1050.0 min 1000 max 1124 | empty mean 1091.5  excess over empty mean: A -32.5 mid -18.5 mid2 -41.5 B -46.5 far -32.5
+  t 200: A  1198 mid  1156 mid2  1175 B  1137 far  1137 | mean 1166.7 min 1106 max 1249 | empty mean 1180.8  excess over empty mean: A +17.2 mid -24.8 mid2 -5.8 B -43.8 far -43.8
+  t 250: A  1303 mid  1235 mid2  1274 B  1292 far  1185 | mean 1254.9 min 1185 max 1321 | empty mean 1293.6  excess over empty mean: A +9.4 mid -58.6 mid2 -19.6 B -1.6 far -108.6
+  t 300: A  1391 mid  1281 mid2  1317 B  1325 far  1266 | mean 1328.7 min 1259 max 1411 | empty mean 1391.1  excess over empty mean: A -0.1 mid -110.1 mid2 -74.1 B -66.1 far -125.1
+ free row of the sign at probes at marks: t0: 0,0,0,0,0; t1: 0,0,0,0,0; t2: 0,0,0,0,0; t5: 0,0,0,0,0; t10: 0,0,0,0,0; t20: 0,0,0,0,0; t50: 0,0,0,0,0; t100: 0,0,0,0,0; t150: 0,0,0,0,0; t200: 0,0,0,0,0; t250: 0,0,0,0,0; t300: 0,0,0,0,0
+ light share/unit_light at probes at marks: t0: 1.338,1.479,1.807,3.292,1.172; t1: 1.338,1.479,1.807,3.292,0.611; t2: 1.912,1.479,2.115,3.292,0.450; t5: 7.737,10.122,0.646,4.357,3.753; t10: 1.217,9.388,7.037,22.931,1.873; t20: 3.049,3.479,12.379,55.034,2.337; t50: 10.938,2.645,10.799,12.873,5.271; t100: 68.733,124.769,11.856,14.100,8.539; t150: 46.550,166.207,80.829,5.388,88.815; t200: 110.526,65.039,208.205,193.570,148.595; t250: 49.452,462.374,79.575,237.097,205.159; t300: 189.601,107.862,222.701,44.165,456.158
+ light quanta total at marks: 424.56 428.37 433.40 464.03 553.19 834.84 2511.96 8388.08 17163.92 28227.55 41479.13 58754.18
+ credits 65 refused 10 births 0
+  identity (18, 0) at (2, 3, 3): 12 clicks at intervals [126, 138, 151, 167, 181, 193, 201, 216, 243, 259, 277, 287]
+    gaps in intervals [12, 13, 16, 14, 12, 8, 15, 27, 16, 18, 10] mean 14.636363636363637
+    beats [None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [71, 76, 80, 86, 90, 94, 97, 101]... gaps in proper [5, 4, 6, 4, 4, 3, 4, 8, 5, 5, 2] mean 4.545454545454546
+    kind {2} sense {-1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[29, 33], [19, 22]] momentum [[1, [23, 11], [-93, 44]], [1, [-1, 33], [-7, 22]], [-1, [1, 33], [2, 11]]]
+  identity (18, 0) at (3, 2, 3): 12 clicks at intervals [126, 138, 151, 167, 181, 193, 201, 216, 243, 259, 277, 287]
+    gaps in intervals [12, 13, 16, 14, 12, 8, 15, 27, 16, 18, 10] mean 14.636363636363637
+    beats [None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [71, 76, 80, 86, 90, 94, 97, 101]... gaps in proper [5, 4, 6, 4, 4, 3, 4, 8, 5, 5, 2] mean 4.545454545454546
+    kind {2} sense {-1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[29, 33], [19, 22]] momentum [[1, [-1, 33], [-7, 22]], [1, [23, 11], [-93, 44]], [-1, [1, 33], [2, 11]]]
+  identity (18, 0) at (3, 3, 2): 7 clicks at intervals [203, 214, 229, 245, 259, 276, 293]
+    gaps in intervals [11, 15, 16, 14, 17, 17] mean 15.0
+    beats [None, None, None, 601318, None, None, None] ; proper at clicks [97, 100, 105, 110, 113, 118, 123]... gaps in proper [3, 5, 5, 3, 5, 5] mean 4.333333333333333
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7] point [[3, 17], [0, 1]] momentum [[-1, [-5, 34], [5, 46]], [-1, [-5, 34], [5, 46]], [1, [-26, 17], [94, 23]]]
+  identity (18, 0) at (3, 3, 3): 19 clicks at intervals [30, 35, 40, 47, 63, 86, 97, 108, 130, 144, 157, 175]...
+    gaps in intervals [5, 5, 7, 16, 23, 11, 11, 22, 14, 13, 18, 20, 14, 17, 15, 17, 18, 16] mean 14.555555555555555
+    beats [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None] ; proper at clicks [24, 27, 31, 35, 43, 55, 59, 64]... gaps in proper [3, 4, 4, 8, 12, 4, 5, 8, 5, 5, 6, 7] mean 5.444444444444445
+    kind {2} sense {1} windows [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] point [[15, 28], [77, 141]] momentum [[-1, [-1, 3], [-9, 94]], [-1, [-1, 3], [-9, 94]], [1, [-2, 21], [2, 47]]]
+  identity (18, 0) at (3, 3, 4): 3 clicks at intervals [269, 285, 299]
+    gaps in intervals [16, 14] mean 15.0
+    beats [None, None, None] ; proper at clicks [116, 120, 124]... gaps in proper [4, 4] mean 4.0
+    kind {2} sense {1} windows [1, 2, 3] point [[19, 20], [18, 19]] momentum [[1, [-7, 40], [-5, 38]], [1, [-7, 40], [-5, 38]], [1, [-19, 8], [-177, 38]]]
+  identity (18, 0) at (3, 4, 3): 6 clicks at intervals [190, 202, 214, 229, 249, 265]
+    gaps in intervals [12, 12, 15, 20, 16] mean 15.0
+    beats [None, None, 517949, None, None, None] ; proper at clicks [93, 97, 101, 105, 111, 115]... gaps in proper [4, 4, 4, 6, 4] mean 4.4
+    kind {2} sense {-1} windows [1, 2, 3, 4, 5, 6] point [[29, 32], [11, 12]] momentum [[-1, [-3, 16], [2, 9]], [1, [-55, 16], [67, 36]], [1, [-3, 32], [-5, 72]]]
+  identity (18, 0) at (4, 3, 3): 6 clicks at intervals [190, 202, 214, 229, 249, 265]
+    gaps in intervals [12, 12, 15, 20, 16] mean 15.0
+    beats [None, None, 517949, None, None, None] ; proper at clicks [93, 97, 101, 105, 111, 115]... gaps in proper [4, 4, 4, 6, 4] mean 4.4
+    kind {2} sense {-1} windows [1, 2, 3, 4, 5, 6] point [[29, 32], [11, 12]] momentum [[1, [-55, 16], [67, 36]], [-1, [-3, 16], [2, 9]], [1, [-3, 32], [-5, 72]]]
+  refusals: [(12, 'stop', None), (19, 'stop', None), (23, 'stop', None), (58, 'stop', None), (72, 'stop', None), (119, 'stop', None), (232, 'stop', None), (232, 'stop', None), (283, 'stop', None), (283, 'stop', None)]
+ summary {"event": "summary", "seconds": 92.97, "interval": 300, "credits": 65, "refused": 10, "births": 0, "swaps": 298, "counts": {"massless": 58754, "point 0 2 0": 66}, "deficits": {"point 0 2 0": -65}, "run_back": {"interval": 0, "arrays_differing": 0, "arrays": 57, "seconds": 71.95, "verdict": "MATCH"}}

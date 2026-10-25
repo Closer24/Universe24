@@ -1,0 +1,7468 @@
+{
+ "cube": 3,
+ "rows": [
+  {
+   "interval": 1,
+   "births": 0,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 0,
+    "remainder": 0,
+    "wall": 27,
+    "bits": 0
+   },
+   "content_max": 0,
+   "families": {},
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 25,
+     "remainder": 88048995,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 25,
+     "remainder": 88048995,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 2,
+   "births": 0,
+   "refusals": {
+    "origin": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 0,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 5
+   },
+   "content_max": 1,
+   "families": {},
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 25,
+     "remainder": 94747343,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 25,
+     "remainder": 87012607,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 3,
+   "births": 0,
+   "refusals": {
+    "stop": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 1,
+    "remainder": 19,
+    "wall": 27,
+    "bits": 6
+   },
+   "content_max": 10,
+   "families": {},
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 25,
+     "remainder": 43234185,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 25,
+     "remainder": 94616431,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "nodes_at_two_engine": 6,
+    "nodes_at_two_corrected": 6
+   }
+  },
+  {
+   "interval": 4,
+   "births": 6,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 6,
+    "remainder": 0,
+    "wall": 27,
+    "bits": 8
+   },
+   "content_max": 13,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 19,
+      "remainder": 37073328,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 18,
+      "remainder": 36941454,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 6,
+     "nodes_above_unit_corrected": 6,
+     "nodes_with_level": 6,
+     "max_engine_over_unit": {
+      "quotient": 3,
+      "remainder": 18058888,
+      "wall": 71280000,
+      "bits": 28
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 6156909,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 17,
+     "remainder": 81240837,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 17,
+     "remainder": 37222943,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 5,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 9,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 9
+   },
+   "content_max": 17,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 20,
+      "remainder": 16418472,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 18,
+      "remainder": 70667102,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 7,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 19,
+     "max_engine_over_unit": {
+      "quotient": 2,
+      "remainder": 31446252,
+      "wall": 71280000,
+      "bits": 28
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 19814978,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 91498795,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 17,
+     "remainder": 109269396,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 6,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 15,
+    "remainder": 0,
+    "wall": 27,
+    "bits": 9
+   },
+   "content_max": 51,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 36,
+      "remainder": 50156160,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 33,
+      "remainder": 47159648,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 7,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 7,
+      "remainder": 14863856,
+      "wall": 71280000,
+      "bits": 29
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 62576596,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 24453633,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 18,
+     "remainder": 22989163,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 7,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 19,
+    "remainder": 4,
+    "wall": 27,
+    "bits": 10
+   },
+   "content_max": 34,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 20,
+      "remainder": 40207310,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 18,
+      "remainder": 69494067,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 1,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 5,
+      "remainder": 18919378,
+      "wall": 71280000,
+      "bits": 29
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 65111529,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 79660012,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 17,
+     "remainder": 92456916,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 8,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 21,
+    "remainder": 5,
+    "wall": 27,
+    "bits": 10
+   },
+   "content_max": 33,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 23,
+      "remainder": 37036672,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 21,
+      "remainder": 39516125,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 1,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 7,
+      "remainder": 17051676,
+      "wall": 71280000,
+      "bits": 29
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 37040631,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 49164800,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 18,
+     "remainder": 3181752,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 9,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 21,
+    "remainder": 15,
+    "wall": 27,
+    "bits": 10
+   },
+   "content_max": 52,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 25,
+      "remainder": 57463782,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 24,
+      "remainder": 23617397,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 7,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 6,
+      "remainder": 22189470,
+      "wall": 71280000,
+      "bits": 29
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 8804485,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 67227965,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 17,
+     "remainder": 42001410,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 10,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 28,
+    "remainder": 22,
+    "wall": 27,
+    "bits": 10
+   },
+   "content_max": 58,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 21,
+      "remainder": 8050124,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 18,
+      "remainder": 31496122,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 7,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 3,
+      "remainder": 8800468,
+      "wall": 71280000,
+      "bits": 28
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 57950228,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 17,
+     "remainder": 87302929,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 16,
+     "remainder": 60788825,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 11,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 37,
+    "remainder": 5,
+    "wall": 27,
+    "bits": 10
+   },
+   "content_max": 84,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 20,
+      "remainder": 23420262,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 17,
+      "remainder": 4842001,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 1,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 5,
+      "remainder": 47663726,
+      "wall": 71280000,
+      "bits": 29
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 3391601,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 11738544,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 13,
+     "remainder": 107422524,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 12,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 51,
+    "remainder": 26,
+    "wall": 27,
+    "bits": 11
+   },
+   "content_max": 135,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 25,
+      "remainder": 67667214,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 20,
+      "remainder": 7497595,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 9,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 6,
+      "remainder": 25510930,
+      "wall": 71280000,
+      "bits": 29
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 50685733,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 35384548,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 13,
+     "remainder": 67689541,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 13,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 69,
+    "remainder": 3,
+    "wall": 27,
+    "bits": 11
+   },
+   "content_max": 84,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 27,
+      "remainder": 52978440,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 21,
+      "remainder": 15698518,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 3,
+      "remainder": 69484156,
+      "wall": 71280000,
+      "bits": 29
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 59740530,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 17727301,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 14,
+     "remainder": 16818951,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 14,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 83,
+    "remainder": 22,
+    "wall": 27,
+    "bits": 12
+   },
+   "content_max": 101,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 38,
+      "remainder": 44616392,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 27,
+      "remainder": 59542856,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 2,
+      "remainder": 52713908,
+      "wall": 71280000,
+      "bits": 28
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 32563398,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 71428973,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 14,
+     "remainder": 65437866,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 15,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 97,
+    "remainder": 8,
+    "wall": 27,
+    "bits": 12
+   },
+   "content_max": 127,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 36,
+      "remainder": 57494740,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 24,
+      "remainder": 71018911,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 11,
+      "remainder": 6040960,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 7,
+      "remainder": 45354329,
+      "wall": 71280000,
+      "bits": 30
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 23,
+     "remainder": 21974819,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 16,
+     "remainder": 11897626,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 16,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 111,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 12
+   },
+   "content_max": 131,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 37,
+      "remainder": 53580046,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 24,
+      "remainder": 41711075,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 10,
+      "remainder": 18262654,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 22819083,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 65151636,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 14,
+     "remainder": 104018456,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 17,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 129,
+    "remainder": 8,
+    "wall": 27,
+    "bits": 12
+   },
+   "content_max": 135,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 31,
+      "remainder": 65151594,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 19,
+      "remainder": 65977018,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 7,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 9,
+      "remainder": 37384018,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 40016978,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 23,
+     "remainder": 49101610,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 14,
+     "remainder": 55099060,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 18,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 143,
+    "remainder": 21,
+    "wall": 27,
+    "bits": 12
+   },
+   "content_max": 167,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 34,
+      "remainder": 47430772,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 20,
+      "remainder": 51331138,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 7,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 16,
+      "remainder": 33121984,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 10,
+      "remainder": 36428680,
+      "wall": 71280000,
+      "bits": 30
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 24,
+     "remainder": 78740626,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 14,
+     "remainder": 96488850,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 19,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 159,
+    "remainder": 18,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 203,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 37,
+      "remainder": 19494744,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 18,
+      "remainder": 43623230,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 10,
+      "remainder": 63986440,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 59428286,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 27,
+     "remainder": 30689731,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 13,
+     "remainder": 25260430,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 20,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 174,
+    "remainder": 23,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 265,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 41,
+      "remainder": 58420662,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 18,
+      "remainder": 32031359,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 15,
+      "remainder": 56707254,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 32875677,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 28,
+     "remainder": 32403740,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 12,
+     "remainder": 105803958,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 21,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 190,
+    "remainder": 21,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 281,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 43,
+      "remainder": 26269836,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 17,
+      "remainder": 63589316,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 17,
+      "remainder": 6111544,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 39286464,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 29,
+     "remainder": 62003680,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 11,
+     "remainder": 101052084,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 22,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 207,
+    "remainder": 6,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 265,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 42,
+      "remainder": 64451920,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 17,
+      "remainder": 18945413,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 16,
+      "remainder": 52961412,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 56225207,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 27,
+     "remainder": 79991201,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 11,
+     "remainder": 7657339,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 23,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 223,
+    "remainder": 21,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 228,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 43,
+      "remainder": 29592876,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 17,
+      "remainder": 61785589,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 15,
+      "remainder": 67271628,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 46587793,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 28,
+     "remainder": 101411332,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 11,
+     "remainder": 97660990,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 24,
+   "births": 0,
+   "refusals": {
+    "lay": 9,
+    "stop": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 238,
+    "remainder": 6,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 242,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 41,
+      "remainder": 35236136,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 17,
+      "remainder": 654451,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 10,
+      "remainder": 59310636,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 18698295,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 29,
+     "remainder": 31851653,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 11,
+     "remainder": 86084028,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 25,
+   "births": 0,
+   "refusals": {
+    "lay": 9
+   },
+   "content_sum_over_nodes": {
+    "quotient": 253,
+    "remainder": 0,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 256,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 49,
+      "remainder": 45287522,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 19,
+      "remainder": 19983115,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 19,
+      "remainder": 41834938,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 8,
+      "remainder": 30575731,
+      "wall": 71280000,
+      "bits": 30
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 30,
+     "remainder": 92928767,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 11,
+     "remainder": 66682349,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 26,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 267,
+    "remainder": 3,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 274,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 45,
+      "remainder": 39620866,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 15,
+      "remainder": 46213035,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 15,
+     "nodes_above_unit_corrected": 1,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 17,
+      "remainder": 38534794,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 202135,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 31,
+     "remainder": 5351785,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 10,
+     "remainder": 75322912,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 27,
+   "births": 12,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 279,
+    "remainder": 25,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 308,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 125,
+      "remainder": 4991302,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 40,
+      "remainder": 56650030,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 19,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 15,
+      "remainder": 24033314,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 33666834,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 16,
+     "remainder": 27399289,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 5,
+     "remainder": 42388801,
+     "wall": 110268000,
+     "bits": 30
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 28,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 293,
+    "remainder": 8,
+    "wall": 27,
+    "bits": 13
+   },
+   "content_max": 323,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 135,
+      "remainder": 32843658,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 41,
+      "remainder": 40156262,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 19,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 19,
+      "remainder": 57804522,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 31335502,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 16,
+     "remainder": 51178793,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 5,
+     "remainder": 11061169,
+     "wall": 110268000,
+     "bits": 30
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 29,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 305,
+    "remainder": 1,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 308,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 133,
+      "remainder": 31168804,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 39,
+      "remainder": 22419272,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 27,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 15,
+      "remainder": 24349528,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 33759042,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 17,
+     "remainder": 37181278,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 5,
+     "remainder": 8207370,
+     "wall": 110268000,
+     "bits": 30
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 30,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 316,
+    "remainder": 14,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 326,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 135,
+      "remainder": 71122220,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 38,
+      "remainder": 34408555,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 27,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 9,
+      "remainder": 41863200,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 468971,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 184162,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 5,
+     "remainder": 7651823,
+     "wall": 110268000,
+     "bits": 30
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 31,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 327,
+    "remainder": 10,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 337,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 135,
+      "remainder": 52968638,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 37,
+      "remainder": 4434289,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 27,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 10,
+      "remainder": 6374862,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 9283281,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 4991278,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 5,
+     "remainder": 20347864,
+     "wall": 110268000,
+     "bits": 30
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 32,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 6
+   },
+   "content_sum_over_nodes": {
+    "quotient": 338,
+    "remainder": 18,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 344,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 145,
+      "remainder": 12731392,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 38,
+      "remainder": 274837,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 19,
+      "remainder": 66001616,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 32099151,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 102356103,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 5,
+     "remainder": 37196456,
+     "wall": 110268000,
+     "bits": 30
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 33,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 348,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 364,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 151,
+      "remainder": 65256572,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 37,
+      "remainder": 49426939,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 20,
+      "remainder": 30755284,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 54631667,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 10390682,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 5,
+     "remainder": 8628784,
+     "wall": 110268000,
+     "bits": 30
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 34,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 358,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 396,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 150,
+      "remainder": 49706450,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 35,
+      "remainder": 46459900,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 13,
+      "remainder": 60480198,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 60005948,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 18472355,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 88604958,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 35,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 368,
+    "remainder": 19,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 413,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 155,
+      "remainder": 60724420,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 35,
+      "remainder": 2634491,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 18,
+      "remainder": 4449864,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 33157205,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 52468637,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 37555149,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 36,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 8
+   },
+   "content_sum_over_nodes": {
+    "quotient": 377,
+    "remainder": 19,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 414,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 168,
+      "remainder": 57542090,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 36,
+      "remainder": 28253427,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 9,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 28,
+      "remainder": 7335350,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 26144393,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 2241322,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 27165849,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 37,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 388,
+    "remainder": 3,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 413,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 173,
+      "remainder": 65264782,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 36,
+      "remainder": 11405783,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 31,
+      "remainder": 36301846,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 3198141,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 11239439,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 21617679,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 38,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 397,
+    "remainder": 10,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 405,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 173,
+      "remainder": 41182676,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 35,
+      "remainder": 19625636,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 26,
+      "remainder": 44669532,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 19441456,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 108117210,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 23272385,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 39,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 407,
+    "remainder": 4,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 413,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 171,
+      "remainder": 50810668,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 33,
+      "remainder": 63004731,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 21,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 19,
+      "remainder": 1993072,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 60813397,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 6551465,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 17188707,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 40,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 415,
+    "remainder": 19,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 419,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 179,
+      "remainder": 3032790,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 34,
+      "remainder": 9366932,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 21,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 20,
+      "remainder": 15420518,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 4098582,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 53268626,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 14024003,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 41,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 423,
+    "remainder": 15,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 429,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 190,
+      "remainder": 12209908,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 34,
+      "remainder": 58324951,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 24,
+      "remainder": 64821716,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 53953425,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 48471619,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 18202203,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 42,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 12
+   },
+   "content_sum_over_nodes": {
+    "quotient": 431,
+    "remainder": 12,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 437,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 192,
+      "remainder": 48227690,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 34,
+      "remainder": 2320430,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 22,
+      "remainder": 19788474,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 355024,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 23,
+     "remainder": 77374845,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 22761170,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 43,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 440,
+    "remainder": 1,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 443,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 190,
+      "remainder": 68632090,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 32,
+      "remainder": 49986600,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 17,
+      "remainder": 18716794,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 66306052,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 24,
+     "remainder": 46711375,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 19824271,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 44,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 447,
+    "remainder": 22,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 453,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 197,
+      "remainder": 18205410,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 32,
+      "remainder": 58229693,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 19,
+      "remainder": 42439114,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 14133435,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 24,
+     "remainder": 63817918,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 4,
+     "remainder": 9388968,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 45,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 454,
+    "remainder": 25,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 461,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 209,
+      "remainder": 19578258,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 34,
+      "remainder": 8270842,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 25,
+      "remainder": 328294,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 69908446,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 24,
+     "remainder": 91441899,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 3,
+     "remainder": 108763733,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 46,
+   "births": 0,
+   "refusals": {
+    "lay": 7,
+    "stop": 8
+   },
+   "content_sum_over_nodes": {
+    "quotient": 462,
+    "remainder": 2,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 468,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 216,
+      "remainder": 548116,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 34,
+      "remainder": 23156252,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 23,
+      "remainder": 14388948,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 45506840,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 25,
+     "remainder": 16769258,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 3,
+     "remainder": 102619840,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 47,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 468,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 475,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 214,
+      "remainder": 47818646,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 33,
+      "remainder": 12501083,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 19,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 16,
+      "remainder": 38009078,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 38531345,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 24,
+     "remainder": 23342183,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 3,
+     "remainder": 77450851,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 48,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 475,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 480,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 216,
+      "remainder": 68269270,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 32,
+      "remainder": 26947075,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 19,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 14,
+      "remainder": 36889314,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 13224333,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 24,
+     "remainder": 79229344,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 3,
+     "remainder": 77081394,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 1
+   }
+  },
+  {
+   "interval": 49,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 482,
+    "remainder": 23,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 485,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 225,
+      "remainder": 63021252,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 32,
+      "remainder": 59712506,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 16,
+      "remainder": 36191144,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 29144560,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 25,
+     "remainder": 2606987,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 3,
+     "remainder": 71604570,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 50,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 488,
+    "remainder": 19,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 491,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 232,
+      "remainder": 66694590,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 33,
+      "remainder": 6907466,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 15,
+      "remainder": 42219806,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 14568086,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 25,
+     "remainder": 34414696,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 3,
+     "remainder": 66969967,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 7,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 51,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 494,
+    "remainder": 10,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 498,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 231,
+      "remainder": 41403802,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 32,
+      "remainder": 15957215,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 13,
+      "remainder": 59115414,
+      "wall": 71280000,
+      "bits": 30
+     },
+     "max_corrected_over_unit": {
+      "quotient": 1,
+      "remainder": 67341855,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 8603045,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 54893747,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 52,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 500,
+    "remainder": 8,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 504,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 229,
+      "remainder": 54941726,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 31,
+      "remainder": 16477898,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 15,
+      "remainder": 19195446,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 6441336,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 53831084,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 52363972,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 53,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 506,
+    "remainder": 15,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 509,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 233,
+      "remainder": 36036606,
+      "wall": 71280000,
+      "bits": 34
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 30,
+      "remainder": 57630150,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 17,
+      "remainder": 58366050,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 23882398,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 91957595,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 51293036,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 54,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 511,
+    "remainder": 17,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 516,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 245,
+      "remainder": 12368652,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 31,
+      "remainder": 32835004,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 21,
+      "remainder": 68454576,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 58059540,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 98126896,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 47995034,
+     "wall": 110268000,
+     "bits": 29
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 55,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 517,
+    "remainder": 17,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 523,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 269,
+      "remainder": 22036510,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 33,
+      "remainder": 53740444,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 33,
+      "remainder": 40993886,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 16487300,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 11429055,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 44869892,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 56,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 521,
+    "remainder": 26,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 529,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 284,
+      "remainder": 37367826,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 34,
+      "remainder": 66121147,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 40,
+      "remainder": 14513922,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 69953417,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 12102804,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 39821883,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 57,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 527,
+    "remainder": 6,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 535,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 277,
+      "remainder": 23463280,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 33,
+      "remainder": 18594720,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 32,
+      "remainder": 56018748,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 67553274,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 30562272,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 36008108,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 58,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 531,
+    "remainder": 11,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 536,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 261,
+      "remainder": 30876662,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 30,
+      "remainder": 66750327,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 20,
+      "remainder": 51959710,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 30261293,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 33742404,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 18692495,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 59,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 536,
+    "remainder": 17,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 541,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 261,
+      "remainder": 55182924,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 30,
+      "remainder": 35326085,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 20,
+      "remainder": 65063200,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 30775807,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 18,
+     "remainder": 77430877,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 18820874,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 60,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 540,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 548,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 273,
+      "remainder": 56777524,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 31,
+      "remainder": 37647383,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 22,
+      "remainder": 48021072,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 37734695,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 15319181,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 19746739,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 61,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 545,
+    "remainder": 7,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 552,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 281,
+      "remainder": 56210298,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 31,
+      "remainder": 65150165,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 26,
+      "remainder": 25544586,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 64531561,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 39212272,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 18936173,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 62,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 8
+   },
+   "content_sum_over_nodes": {
+    "quotient": 549,
+    "remainder": 24,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 553,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 283,
+      "remainder": 49409778,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 31,
+      "remainder": 38546379,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 7,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 26,
+      "remainder": 54781382,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 66489113,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 32033914,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 15339565,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 63,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 553,
+    "remainder": 24,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 555,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 275,
+      "remainder": 57460242,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 30,
+      "remainder": 4057277,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 19,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 23,
+      "remainder": 14950730,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 36512907,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 41340639,
+     "wall": 110268000,
+     "bits": 31
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 12166008,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 64,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 558,
+    "remainder": 7,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 560,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 266,
+      "remainder": 3104084,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 28,
+      "remainder": 37784924,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 19,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 19,
+      "remainder": 13027292,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 5443038,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 61336984,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 10942664,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 65,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 561,
+    "remainder": 0,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 564,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 268,
+      "remainder": 8930490,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 28,
+      "remainder": 33166318,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 19,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 18,
+      "remainder": 66400994,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 3504842,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 65590952,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 9618564,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 66,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 565,
+    "remainder": 18,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 569,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 276,
+      "remainder": 69690790,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 28,
+      "remainder": 67562420,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 19,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 20,
+      "remainder": 51443526,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 16346250,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 92752735,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 9439750,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 67,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 6
+   },
+   "content_sum_over_nodes": {
+    "quotient": 568,
+    "remainder": 14,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 573,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 287,
+      "remainder": 18632380,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 29,
+      "remainder": 52837249,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 23,
+      "remainder": 6732016,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 32388577,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 9243641,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 9515351,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 68,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 13
+   },
+   "content_sum_over_nodes": {
+    "quotient": 572,
+    "remainder": 12,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 575,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 299,
+      "remainder": 59207790,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 30,
+      "remainder": 34988588,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 25,
+      "remainder": 67899842,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 50438200,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 33465407,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 7348153,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 69,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 575,
+    "remainder": 10,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 576,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 300,
+      "remainder": 36074680,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 30,
+      "remainder": 12836377,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 24,
+      "remainder": 22915688,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 33856501,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 24282033,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 3425998,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 70,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 578,
+    "remainder": 24,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 580,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 296,
+      "remainder": 6131610,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 29,
+      "remainder": 17962204,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 21,
+      "remainder": 12293018,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 7187692,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 33501089,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 1241849,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 71,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 581,
+    "remainder": 21,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 584,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 299,
+      "remainder": 4889180,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 29,
+      "remainder": 4540962,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 22,
+      "remainder": 66143432,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 15511462,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 53201112,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 312359,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 72,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 584,
+    "remainder": 9,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 589,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 301,
+      "remainder": 60776282,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 29,
+      "remainder": 2112073,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 24,
+      "remainder": 50439826,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 24510665,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 81736145,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 723235,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 73,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 587,
+    "remainder": 15,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 594,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 312,
+      "remainder": 10508832,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 29,
+      "remainder": 44946513,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 29,
+      "remainder": 15306784,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 51157751,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 10539339,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 1508646,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 74,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 590,
+    "remainder": 10,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 598,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 334,
+      "remainder": 56206058,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 31,
+      "remainder": 33285776,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 39,
+      "remainder": 24684302,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 43647916,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 22305071,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 292405,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 75,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 592,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 600,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 347,
+      "remainder": 3454066,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 32,
+      "remainder": 21895328,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 41,
+      "remainder": 13398346,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 52153514,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 60163601,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 2,
+     "remainder": 1341061,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 76,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 595,
+    "remainder": 21,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 602,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 344,
+      "remainder": 15205112,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 31,
+      "remainder": 55005530,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 13,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 37,
+      "remainder": 32193824,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 26419844,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 59563726,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 109021040,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 77,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 597,
+    "remainder": 16,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 603,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 341,
+      "remainder": 55996738,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 31,
+      "remainder": 21625880,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 19,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 38,
+      "remainder": 55120166,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 33242922,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 59925226,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 106924689,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 78,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 8
+   },
+   "content_sum_over_nodes": {
+    "quotient": 599,
+    "remainder": 14,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 605,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 334,
+      "remainder": 23175076,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 30,
+      "remainder": 23102855,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 37,
+      "remainder": 41342464,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 24039493,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 67129442,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 106513433,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 79,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 602,
+    "remainder": 13,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 609,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 338,
+      "remainder": 69919622,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 30,
+      "remainder": 24468286,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 40,
+      "remainder": 14799346,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 37267398,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 78827431,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 106086143,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 80,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 604,
+    "remainder": 25,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 611,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 366,
+      "remainder": 48344170,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 32,
+      "remainder": 34130680,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 49,
+      "remainder": 9034582,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 19620192,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 27639841,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 108381838,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 81,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 6
+   },
+   "content_sum_over_nodes": {
+    "quotient": 606,
+    "remainder": 11,
+    "wall": 27,
+    "bits": 14
+   },
+   "content_max": 611,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 379,
+      "remainder": 52414098,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 33,
+      "remainder": 31024810,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 49,
+      "remainder": 67555694,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 24712992,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 16253964,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 106223179,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 82,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 608,
+    "remainder": 11,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 613,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 437,
+      "remainder": 57354758,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 38,
+      "remainder": 28902523,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 27,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 35,
+      "remainder": 55030754,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 6557171,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 45647990,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 106869197,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 83,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 610,
+    "remainder": 19,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 613,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 439,
+      "remainder": 2525510,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 38,
+      "remainder": 20879923,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 45,
+      "remainder": 5924838,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 65816999,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 54749918,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 106296355,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 84,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 12
+   },
+   "content_sum_over_nodes": {
+    "quotient": 612,
+    "remainder": 7,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 614,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 426,
+      "remainder": 11011574,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 36,
+      "remainder": 70622820,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 34,
+      "remainder": 43994686,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 2353766,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 46205174,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 104562600,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 85,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 614,
+    "remainder": 11,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 618,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 403,
+      "remainder": 19960348,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 34,
+      "remainder": 57848921,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 32,
+      "remainder": 64684864,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 64346987,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 40539780,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 103537686,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 86,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 616,
+    "remainder": 9,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 620,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 434,
+      "remainder": 65677286,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 37,
+      "remainder": 17171200,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 46,
+      "remainder": 18174974,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 5709922,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 37773938,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 102431282,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 87,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 617,
+    "remainder": 16,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 622,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 487,
+      "remainder": 46219132,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 41,
+      "remainder": 42026454,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 47,
+      "remainder": 7306856,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 13036486,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 55570718,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 103952841,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 88,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 618,
+    "remainder": 25,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 622,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 503,
+      "remainder": 21666426,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 42,
+      "remainder": 43677043,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 38,
+      "remainder": 23084466,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 27122683,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 60007722,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 92446142,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 89,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 621,
+    "remainder": 10,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 624,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 513,
+      "remainder": 16993334,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 42,
+      "remainder": 63147896,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 37,
+      "remainder": 15526170,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 18595274,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 82506319,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 90836952,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 90,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 622,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 624,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 503,
+      "remainder": 41601674,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 41,
+      "remainder": 45575196,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 28,
+      "remainder": 25453858,
+      "wall": 71280000,
+      "bits": 31
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 30966056,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 77271337,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 88062892,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 91,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 624,
+    "remainder": 8,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 627,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 557,
+      "remainder": 25038950,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 45,
+      "remainder": 47154166,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 31,
+      "remainder": 39288716,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 41396645,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 73452324,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 86384063,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 92,
+   "births": 0,
+   "refusals": {
+    "stop": 6
+   },
+   "content_sum_over_nodes": {
+    "quotient": 625,
+    "remainder": 8,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 629,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 602,
+      "remainder": 9495646,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 49,
+      "remainder": 4102156,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 27,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 34,
+      "remainder": 11199818,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 55200117,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 97813353,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 88524910,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 93,
+   "births": 0,
+   "refusals": {
+    "lay": 12,
+    "stop": 8
+   },
+   "content_sum_over_nodes": {
+    "quotient": 627,
+    "remainder": 14,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 637,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 598,
+      "remainder": 22532764,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 48,
+      "remainder": 27513983,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 27,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 38,
+      "remainder": 52661748,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 2646057,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 1820785,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 88806709,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 94,
+   "births": 0,
+   "refusals": {
+    "lay": 12
+   },
+   "content_sum_over_nodes": {
+    "quotient": 628,
+    "remainder": 22,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 644,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 588,
+      "remainder": 13812892,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 47,
+      "remainder": 12858004,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 27,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 60,
+      "remainder": 37570048,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 43531452,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 75147753,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 85586814,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 95,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 629,
+    "remainder": 25,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 650,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 545,
+      "remainder": 8315580,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 43,
+      "remainder": 32803038,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 56,
+      "remainder": 18369748,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 11559520,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 108651316,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 86294864,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 96,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 631,
+    "remainder": 9,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 652,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 513,
+      "remainder": 62629134,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 40,
+      "remainder": 59799187,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 42,
+      "remainder": 42840338,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 9170965,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 20862513,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 85361167,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 97,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 632,
+    "remainder": 8,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 654,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 493,
+      "remainder": 56592622,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 39,
+      "remainder": 13441739,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 37,
+      "remainder": 6435134,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 50172665,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 4495433,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 83001476,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 98,
+   "births": 0,
+   "refusals": {
+    "stop": 12
+   },
+   "content_sum_over_nodes": {
+    "quotient": 634,
+    "remainder": 0,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 652,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 555,
+      "remainder": 39208086,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 44,
+      "remainder": 563108,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 38,
+      "remainder": 35418234,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 58966380,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 18181982,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 82731637,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 99,
+   "births": 0,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 635,
+    "remainder": 7,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 650,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 595,
+      "remainder": 9959058,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 47,
+      "remainder": 2472017,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 27,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 33,
+      "remainder": 64154162,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 2,
+      "remainder": 49519059,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 26275651,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 82601568,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 100,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 637,
+    "remainder": 7,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 644,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 590,
+      "remainder": 32740656,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 46,
+      "remainder": 34279296,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 27,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 41,
+      "remainder": 31237764,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 3,
+      "remainder": 11162404,
+      "wall": 71280000,
+      "bits": 28
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 22,
+     "remainder": 12293992,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 81210555,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 101,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 637,
+    "remainder": 12,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 641,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 544,
+      "remainder": 20375906,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 42,
+      "remainder": 64973988,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 58,
+      "remainder": 4667402,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 39370340,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 76533996,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 69658594,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 102,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 639,
+    "remainder": 4,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 643,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 491,
+      "remainder": 48297720,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 38,
+      "remainder": 48274007,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 71,
+      "remainder": 13223128,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 49979845,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 75386745,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 68913726,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 103,
+   "births": 0,
+   "refusals": {
+    "lay": 8
+   },
+   "content_sum_over_nodes": {
+    "quotient": 640,
+    "remainder": 16,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 643,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 471,
+      "remainder": 15910710,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 36,
+      "remainder": 63557012,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 70,
+      "remainder": 44494246,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 55368772,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 95813164,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 69198336,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 104,
+   "births": 0,
+   "refusals": {
+    "lay": 9
+   },
+   "content_sum_over_nodes": {
+    "quotient": 641,
+    "remainder": 9,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 644,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 475,
+      "remainder": 53939616,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 37,
+      "remainder": 4155440,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 60,
+      "remainder": 64829160,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 1215652,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 100626184,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 68494657,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 105,
+   "births": 0,
+   "refusals": {
+    "stop": 6
+   },
+   "content_sum_over_nodes": {
+    "quotient": 642,
+    "remainder": 16,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 644,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 466,
+      "remainder": 9741704,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 36,
+      "remainder": 1043576,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 9,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 57,
+      "remainder": 32232776,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 49850388,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 7852206,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 68428803,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 106,
+   "births": 0,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 642,
+    "remainder": 17,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 646,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 477,
+      "remainder": 48002996,
+      "wall": 71280000,
+      "bits": 35
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 36,
+      "remainder": 54187487,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 9,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 69,
+      "remainder": 62019440,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 42470405,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 11287719,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 68857091,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 107,
+   "births": 0,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 643,
+    "remainder": 18,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 648,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 490,
+      "remainder": 54516334,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 37,
+      "remainder": 27136454,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 9,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 91,
+      "remainder": 34372566,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 7,
+      "remainder": 8629684,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 20,
+     "remainder": 109152582,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 67759186,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 108,
+   "births": 0,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 645,
+    "remainder": 13,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 650,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 496,
+      "remainder": 13023484,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 37,
+      "remainder": 13295281,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 9,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 91,
+      "remainder": 53110360,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 63286285,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 26989302,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 68781223,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 109,
+   "births": 0,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 646,
+    "remainder": 4,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 656,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 504,
+      "remainder": 67140122,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 37,
+      "remainder": 42855051,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 9,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 81,
+      "remainder": 40524530,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 64321653,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 31596033,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 69015007,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 110,
+   "births": 0,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 647,
+    "remainder": 13,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 664,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 501,
+      "remainder": 33258252,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 37,
+      "remainder": 3953938,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 70,
+      "remainder": 35906912,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 67796222,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 35970476,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 67921116,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 111,
+   "births": 0,
+   "refusals": {
+    "lay": 12
+   },
+   "content_sum_over_nodes": {
+    "quotient": 647,
+    "remainder": 5,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 668,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 498,
+      "remainder": 34804640,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 36,
+      "remainder": 54838039,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 70,
+      "remainder": 16970044,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 61179443,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 41480490,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 68408902,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 112,
+   "births": 0,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 648,
+    "remainder": 14,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 668,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 520,
+      "remainder": 48113096,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 38,
+      "remainder": 22872003,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 73,
+      "remainder": 7737576,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 4051941,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 36559553,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 66985991,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 113,
+   "births": 0,
+   "refusals": {},
+   "content_sum_over_nodes": {
+    "quotient": 648,
+    "remainder": 22,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 668,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 550,
+      "remainder": 43880006,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 40,
+      "remainder": 43794030,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 70,
+      "remainder": 23308138,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 61617842,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 25514996,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 65548435,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 0,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 114,
+   "births": 0,
+   "refusals": {
+    "lay": 6
+   },
+   "content_sum_over_nodes": {
+    "quotient": 650,
+    "remainder": 6,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 664,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 573,
+      "remainder": 36328204,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 42,
+      "remainder": 10326946,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 9,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 67,
+      "remainder": 48322600,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 4,
+      "remainder": 53651200,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 43392295,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 64591970,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 115,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 12
+   },
+   "content_sum_over_nodes": {
+    "quotient": 650,
+    "remainder": 20,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 658,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 565,
+      "remainder": 32288072,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 41,
+      "remainder": 49577366,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 9,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 73,
+      "remainder": 18228700,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 5,
+      "remainder": 18641132,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 47793242,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 64384186,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 116,
+   "births": 0,
+   "refusals": {
+    "lay": 7
+   },
+   "content_sum_over_nodes": {
+    "quotient": 651,
+    "remainder": 17,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 654,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 538,
+      "remainder": 16957734,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 39,
+      "remainder": 69593308,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 82,
+      "remainder": 49628214,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 8425214,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 21,
+     "remainder": 26877619,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 62839290,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 117,
+   "births": 0,
+   "refusals": {
+    "lay": 1,
+    "stop": 6
+   },
+   "content_sum_over_nodes": {
+    "quotient": 652,
+    "remainder": 7,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 656,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 512,
+      "remainder": 51307670,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 38,
+      "remainder": 15292991,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 87,
+      "remainder": 27446438,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 50250089,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 96808472,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 52902812,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 118,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 652,
+    "remainder": 9,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 660,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 503,
+      "remainder": 2642164,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 37,
+      "remainder": 45011955,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 85,
+      "remainder": 9889504,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 48105257,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 72773396,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 52376113,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 119,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 652,
+    "remainder": 21,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 662,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 511,
+      "remainder": 904840,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 38,
+      "remainder": 10143329,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 80,
+      "remainder": 21867088,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 21102539,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 61586588,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 51159416,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  },
+  {
+   "interval": 120,
+   "births": 0,
+   "refusals": {
+    "lay": 1
+   },
+   "content_sum_over_nodes": {
+    "quotient": 654,
+    "remainder": 9,
+    "wall": 27,
+    "bits": 15
+   },
+   "content_max": 662,
+   "families": {
+    "point 2": {
+     "unit": 71280000,
+     "share_engine_total_over_unit": {
+      "quotient": 532,
+      "remainder": 9102386,
+      "wall": 71280000,
+      "bits": 36
+     },
+     "share_corrected_total_over_unit": {
+      "quotient": 39,
+      "remainder": 35140773,
+      "wall": 71280000,
+      "bits": 32
+     },
+     "nodes_above_unit_engine": 27,
+     "nodes_above_unit_corrected": 15,
+     "nodes_with_level": 27,
+     "max_engine_over_unit": {
+      "quotient": 81,
+      "remainder": 60520686,
+      "wall": 71280000,
+      "bits": 33
+     },
+     "max_corrected_over_unit": {
+      "quotient": 6,
+      "remainder": 26460015,
+      "wall": 71280000,
+      "bits": 29
+     }
+    }
+   },
+   "light": {
+    "unit": 110268000,
+    "quanta_engine_total": {
+     "quotient": 19,
+     "remainder": 90550239,
+     "wall": 110268000,
+     "bits": 32
+    },
+    "quanta_corrected_total": {
+     "quotient": 1,
+     "remainder": 51691621,
+     "wall": 110268000,
+     "bits": 28
+    },
+    "nodes_at_two_engine": 1,
+    "nodes_at_two_corrected": 0
+   }
+  }
+ ]
+}

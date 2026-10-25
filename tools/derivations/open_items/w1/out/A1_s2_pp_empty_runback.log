@@ -1,0 +1,15 @@
+family 24 'point 2 0 0' num 2580388913625285 den 15162856759112389 g 0.8298; bodies at (3, 3, 2) and (3, 3, 4), senses 1 1; unit W_rec 1613701501183721088000
+laid quanta per record: [1.0123220029239766, 1.0123220029239766] at the lay Nodes: [1.0123220029239766, 1.0123220029239766]
+t    1 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 341 (0 s)
+t    2 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 343 (0 s)
+t    5 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 343 (1 s)
+t   10 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 341 (1 s)
+t   20 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 343 (2 s)
+t   50 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 343 (5 s)
+t  100 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 341 (11 s)
+t  150 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 341 (17 s)
+t  200 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 343 (22 s)
+t  250 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 341 (28 s)
+t  300 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.012 1.012 quanta 1.012 1.012 U_a 0.0000 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 341 (34 s)
+SUMMARY {"den": 15162856759112389, "cube": 7, "light": "empty", "family": [24, "point 2 0 0", 2580388913625285, 15162856759112389, 0.8298217179902755], "sep": 2, "senses": [1, 1], "intervals": 300, "distance_first": 2.0, "distance_last": 2.0, "slope_all": -1.4321245858702163e-18, "slope_first_half": -5.422293593071653e-18, "slope_second_half": 4.1918772938953687e-19, "peak_distance_first": 2, "peak_distance_last": 2, "quanta_last": [1.0123220029239766, 1.0123220029239766], "U_a_last": 0.0, "U_mid_last": 0.0, "U_far_last": 0.0, "credits": 0, "births": 0, "refused": 0, "seconds": 33.670574426651}
+RUNBACK MATCH over 300 intervals back to the laid state, interval now 0 (30 s)

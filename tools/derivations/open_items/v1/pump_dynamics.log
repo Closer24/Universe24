@@ -1,0 +1,57 @@
+close True U0 0.0: t 0 X 1000 U 0.0000 drift [189, 189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {}
+close True U0 0.0: t 20 X 1432 U 0.0898 drift [189, 189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {'refused/origin': 81}
+close True U0 0.0: t 40 X 2608 U 0.2396 drift [117, 117] light/Node 1 total 27 formula(v) 3 formula(drift) 1 turned 0 others {'point 2': 216} events {'refused/origin': 432, 'lay': 135, 'credit': 27, 'birth': 27}
+close True U0 0.0: t 60 X 5603 U 0.4308 drift [71, 71] light/Node 1 total 27 formula(v) 6 formula(drift) 1 turned 0 others {'point 2': 378} events {'refused/origin': 432, 'lay': 162, 'credit': 81, 'birth': 27, 'refused/lay': 216}
+close True U0 0.0: t 80 X 9701 U 0.5681 drift [71, 71] light/Node 1 total 27 formula(v) 10 formula(drift) 1 turned 0 others {'point 2': 567} events {'refused/origin': 432, 'lay': 162, 'credit': 81, 'birth': 27, 'refused/lay': 216, 'refused/stop': 27}
+close True U0 0.0: t 100 X 13797 U 0.6561 drift [27, 27] light/Node 0 total 0 formula(v) 14 formula(drift) 0 turned 0 others {'point 2': 756} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 27}
+close True U0 0.0: t 120 X 17119 U 0.7100 drift [27, 27] light/Node 0 total 0 formula(v) 17 formula(drift) 0 turned 0 others {'point 2': 891} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 54}
+close True U0 0.0: t 140 X 19227 U 0.7391 drift [27, 27] light/Node 0 total 0 formula(v) 19 formula(drift) 0 turned 0 others {'point 2': 972} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 54}
+close True U0 0.0: t 160 X 19862 U 0.7472 drift [-27, -27] light/Node 0 total 0 formula(v) 20 formula(drift) 0 turned 0 others {'point 2': 972} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 54}
+close True U0 0.0: t 180 X 18917 U 0.7350 drift [-27, -27] light/Node 0 total 0 formula(v) 19 formula(drift) 0 turned 0 others {'point 2': 945} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 54}
+close True U0 0.0: t 200 X 16541 U 0.7015 drift [-27, -27] light/Node 0 total 0 formula(v) 16 formula(drift) 0 turned 0 others {'point 2': 864} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 81}
+close True U0 0.0: t 220 X 13022 U 0.6417 drift [-27, -27] light/Node 0 total 0 formula(v) 13 formula(drift) 0 turned 0 others {'point 2': 702} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 108}
+close True U0 0.0: t 240 X 8832 U 0.5446 drift [-27, -27] light/Node 0 total 0 formula(v) 9 formula(drift) 0 turned 0 others {'point 2': 513} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 135}
+close True U0 0.0: t 260 X 4668 U 0.3852 drift [-27, -27] light/Node 0 total 0 formula(v) 5 formula(drift) 0 turned 0 others {'point 2': 324} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 135}
+close True U0 0.0: t 280 X 1561 U 0.1113 drift [-27, -27] light/Node 0 total 0 formula(v) 2 formula(drift) 0 turned 0 others {'point 2': 135} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 162}
+close True U0 0.0: t 300 X 948 U -0.0134 drift [-27, -27] light/Node 0 total 0 formula(v) 1 formula(drift) 0 turned 0 others {'point 2': 108} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 162}
+close True U0 0.0: t 320 X 3245 U 0.2943 drift [-27, -27] light/Node 0 total 0 formula(v) 3 formula(drift) 0 turned 0 others {'point 2': 243} events {'refused/origin': 432, 'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 270, 'refused/stop': 162}
+close False U0 0.0: t 0 X 1000 U 0.0000 drift [189, 189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {}
+close False U0 0.0: t 20 X 1432 U 0.0898 drift [189, 189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {}
+close False U0 0.0: t 40 X 2493 U 0.2284 drift [189, 189] light/Node 2 total 54 formula(v) 2 formula(drift) 2 turned 0 others {} events {}
+close False U0 0.0: t 60 X 3917 U 0.3413 drift [189, 189] light/Node 4 total 108 formula(v) 4 formula(drift) 4 turned 0 others {} events {}
+close False U0 0.0: t 80 X 5378 U 0.4206 drift [189, 189] light/Node 5 total 135 formula(v) 5 formula(drift) 5 turned 0 others {} events {}
+close False U0 0.0: t 100 X 6621 U 0.4726 drift [189, 189] light/Node 7 total 189 formula(v) 7 formula(drift) 7 turned 0 others {} events {}
+close False U0 0.0: t 120 X 7444 U 0.5019 drift [189, 189] light/Node 7 total 189 formula(v) 7 formula(drift) 7 turned 0 others {} events {}
+close False U0 0.0: t 140 X 7717 U 0.5109 drift [-189, -189] light/Node 8 total 216 formula(v) 8 formula(drift) 8 turned 27 others {} events {}
+close False U0 0.0: t 160 X 7386 U 0.4999 drift [-189, -189] light/Node 7 total 189 formula(v) 7 formula(drift) 7 turned 0 others {} events {}
+close False U0 0.0: t 180 X 6512 U 0.4684 drift [-189, -189] light/Node 6 total 162 formula(v) 6 formula(drift) 6 turned 0 others {} events {}
+close False U0 0.0: t 200 X 5238 U 0.4140 drift [-189, -189] light/Node 5 total 135 formula(v) 5 formula(drift) 5 turned 0 others {} events {}
+close False U0 0.0: t 220 X 3767 U 0.3316 drift [-189, -189] light/Node 4 total 108 formula(v) 4 formula(drift) 4 turned 0 others {} events {}
+close False U0 0.0: t 240 X 2366 U 0.2153 drift [-189, -189] light/Node 2 total 54 formula(v) 2 formula(drift) 2 turned 0 others {} events {}
+close False U0 0.0: t 260 X 1356 U 0.0761 drift [-189, -189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {}
+close False U0 0.0: t 280 X 1000 U 0.0000 drift [-189, -189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {}
+close False U0 0.0: t 300 X 1433 U 0.0899 drift [-189, -189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {}
+close False U0 0.0: t 320 X 2494 U 0.2285 drift [-189, -189] light/Node 2 total 54 formula(v) 2 formula(drift) 2 turned 0 others {} events {}
+close True U0 0.5: t 0 X 7389 U 0.5000 drift [189, 189] light/Node 7 total 189 formula(v) 7 formula(drift) 7 turned 0 others {} events {}
+close True U0 0.5: t 20 X 8473 U 0.5342 drift [-171, -171] light/Node 7 total 189 formula(v) 8 formula(drift) 7 turned 0 others {'point 2': 675} events {'lay': 135, 'credit': 27, 'birth': 27, 'refused/lay': 513}
+close True U0 0.5: t 40 X 11623 U 0.6132 drift [-156, -156] light/Node 8 total 216 formula(v) 11 formula(drift) 8 turned 0 others {'point 2': 864} events {'lay': 162, 'credit': 81, 'birth': 27, 'refused/lay': 1053}
+close True U0 0.5: t 60 X 16058 U 0.6941 drift [-144, -144] light/Node 9 total 243 formula(v) 16 formula(drift) 9 turned 0 others {'point 2': 1107} events {'lay': 189, 'credit': 135, 'birth': 27, 'refused/lay': 1593}
+close True U0 0.5: t 80 X 20922 U 0.7602 drift [-134, -134] light/Node 10 total 270 formula(v) 21 formula(drift) 10 turned 0 others {'point 2': 1350} events {'lay': 216, 'credit': 189, 'birth': 27, 'refused/lay': 2133}
+close True U0 0.5: t 100 X 25470 U 0.8094 drift [-125, -125] light/Node 11 total 297 formula(v) 25 formula(drift) 11 turned 0 others {'point 2': 1566} events {'lay': 243, 'credit': 243, 'birth': 27, 'refused/lay': 2673}
+close True U0 0.5: t 120 X 29120 U 0.8429 drift [-117, -117] light/Node 11 total 297 formula(v) 29 formula(drift) 11 turned 0 others {'point 2': 1755} events {'lay': 270, 'credit': 297, 'birth': 27, 'refused/lay': 3213}
+close True U0 0.5: t 140 X 31436 U 0.8620 drift [-109, -109] light/Node 10 total 270 formula(v) 31 formula(drift) 10 turned 0 others {'point 2': 1863} events {'lay': 297, 'credit': 351, 'birth': 27, 'refused/lay': 3753}
+close True U0 0.5: t 160 X 32145 U 0.8676 drift [94, 94] light/Node 8 total 216 formula(v) 32 formula(drift) 8 turned 0 others {'point 2': 1917} events {'lay': 351, 'credit': 459, 'birth': 27, 'refused/lay': 4293}
+close True U0 0.5: t 180 X 31049 U 0.8589 drift [85, 85] light/Node 6 total 162 formula(v) 31 formula(drift) 6 turned 0 others {'point 2': 1836} events {'lay': 378, 'credit': 513, 'birth': 27, 'refused/lay': 4833}
+close True U0 0.5: t 200 X 28208 U 0.8349 drift [74, 74] light/Node 4 total 108 formula(v) 28 formula(drift) 4 turned 0 others {'point 2': 1701} events {'lay': 405, 'credit': 567, 'birth': 27, 'refused/lay': 5373}
+close False U0 0.5: t 0 X 7389 U 0.5000 drift [189, 189] light/Node 7 total 189 formula(v) 7 formula(drift) 7 turned 0 others {} events {}
+close False U0 0.5: t 20 X 7119 U 0.4907 drift [-189, -189] light/Node 7 total 189 formula(v) 7 formula(drift) 7 turned 0 others {} events {}
+close False U0 0.5: t 40 X 6349 U 0.4621 drift [-189, -189] light/Node 6 total 162 formula(v) 6 formula(drift) 6 turned 0 others {} events {}
+close False U0 0.5: t 60 X 5184 U 0.4114 drift [-189, -189] light/Node 5 total 135 formula(v) 5 formula(drift) 5 turned 0 others {} events {}
+close False U0 0.5: t 80 X 3782 U 0.3326 drift [-189, -189] light/Node 4 total 108 formula(v) 4 formula(drift) 4 turned 0 others {} events {}
+close False U0 0.5: t 100 X 2397 U 0.2186 drift [-189, -189] light/Node 2 total 54 formula(v) 2 formula(drift) 2 turned 0 others {} events {}
+close False U0 0.5: t 120 X 1339 U 0.0730 drift [-189, -189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {}
+close False U0 0.5: t 140 X 899 U -0.0266 drift [-189, -189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {}
+close False U0 0.5: t 160 X 1234 U 0.0526 drift [-189, -189] light/Node 1 total 27 formula(v) 1 formula(drift) 1 turned 0 others {} events {}
+close False U0 0.5: t 180 X 2253 U 0.2031 drift [-189, -189] light/Node 2 total 54 formula(v) 2 formula(drift) 2 turned 0 others {} events {}
+close False U0 0.5: t 200 X 3681 U 0.3258 drift [-189, -189] light/Node 4 total 108 formula(v) 4 formula(drift) 4 turned 0 others {} events {}
+written /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/v1/tools/derivations/v1/pump_dynamics.json

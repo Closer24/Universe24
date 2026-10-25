@@ -1,0 +1,21 @@
+====================================================================================================
+config fall den 15162856759112389 cube 7 intervals 300 family point 0 2 0 pair [2458210083751875, 15162856759112389] unit_k 1615924816158049488000
+ body 0 lay [3, 3, 3] share at lay Node in thousandths of the total (quotient rem) at [0, 10, 20, 50, 100, 150, 200, 250, 300]: 1000 rem 0 | 949 rem 1079723944143463180975 | 943 rem 4894034102024587656681 | 835 rem 8125230649432903597740 | 788 rem 26819136393599611311732 | 780 rem 10737776049963325478580 | 808 rem 39906761792193420209832 | 818 rem 7276486914550694625556 | 808 rem 45273864556360436796368
+ body 0 total share in units of unit_k (quotient rem) at marks: 1 rem 587689455931547786734 | 1 rem 1059894361593963569725 | 3 rem 169462794316157799433 | 6 rem 1513160901307430091756 | 17 rem 951119859646852166461 | 30 rem 1604502359483698939889 | 45 rem 1029511384575717829046 | 62 rem 652158917239942939058 | 80 rem 1271574766385557142929
+ body 0 centroid z in thousandths of a Link about the lay Node (quotient rem) at marks: 0 rem 0 | -1 rem 635972028695997442725 | 0 rem 4016331893892046120000 | 20 rem 8637916522150537492880 | -9 rem 20337565591484844269149 | 2 rem 4117049108950247611222 | -10 rem 11890114729646841129460 | -11 rem 78954392355067939680638 | -9 rem 76957462347886213939361
+ body 0 peak offsets from the lay Node, counts of intervals: {(0, 0, 0): 301}
+ body 0 centroid z change from 150 to 300: -11 thousandths over 150 intervals = per 1000 intervals -74 rem 100 thousandths
+ content c at the probes (A, mid, mid2, B, far), the board's min, max and the sum div the Nodes:
+  t   0: 75 100 150 300 42 | min 30 max 300
+  t  10: 128 128 180 300 127 | min 95 max 300
+  t  20: 317 250 281 300 263 | min 219 max 326
+  t  50: 562 635 576 687 613 | min 513 max 687
+  t 100: 877 835 917 856 897 | min 821 max 942
+  t 150: 1059 1073 1050 1045 1059 | min 1000 max 1124
+  t 200: 1198 1156 1175 1137 1137 | min 1106 max 1249
+  t 250: 1303 1235 1274 1292 1185 | min 1185 max 1321
+  t 300: 1391 1281 1317 1325 1266 | min 1259 max 1411
+ credits 65 (light credits 0) refused 10 births 0
+  identity (18, 0) at (3, 3, 3): 19 clicks; gaps in intervals [5, 5, 7, 16, 23, 11, 11, 22, 14, 13, 18, 20, 14, 17, 15, 17, 18, 16]; sum 262 over 18 gaps = 14 rem 10
+    gaps in proper [3, 4, 4, 8, 12, 4, 5, 8, 5, 5, 6, 7, 4, 5, 4, 5, 5, 4]; sum 98 over 18 = 5 rem 8; beat key None on 19 of 19
+ summary {"event": "summary", "seconds": 152.14, "interval": 300, "credits": 65, "refused": 10, "births": 0, "swaps": 298, "counts": {"massless": 58754, "point 0 2 0": 66}, "deficits": {"point 0 2 0": -65}}

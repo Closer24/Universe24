@@ -38,8 +38,8 @@ markers = [
 [tool.ruff]
 target-version = "py314"
 line-length = 105
-# the time paper's scripts are the paper's own, checked by its build.sh and not linted here
-extend-exclude = ["papers/spacetime_events"]
+# the time paper's scripts are the paper's own, checked by its build.sh and not linted here; the hands' derivation scripts under tools/derivations/open_items are the record of a derivation, kept as the hands wrote them
+extend-exclude = ["papers/spacetime_events", "tools/derivations/open_items"]
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "I", "B", "UP"]

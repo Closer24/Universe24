@@ -1,0 +1,33 @@
+====================================================================================================
+config pair3 den 15162856759112389 cube 7 intervals 300 family point 0 2 0 pair [2458210083751875, 15162856759112389] unit_k 1615924816158049488000
+ body 0 lay [3, 3, 3] share at lay Node in thousandths of the total (quotient rem) at [0, 10, 20, 50, 100, 150, 200, 250, 300]: 1000 rem 0 | 653 rem 1230464509199760534981 | 471 rem 1600456993493558541536 | 433 rem 6687172743006970668933 | 401 rem 24290319876152882872891 | 365 rem 39938751004465622401465 | 368 rem 73765892691814102735488 | 337 rem 34144992962048801198573 | 338 rem 24845939321334176919428
+ body 0 total share in units of unit_k (quotient rem) at marks: 1 rem 17660719641682853304 | 1 rem 308591492233599996023 | 3 rem 221507835466367087984 | 14 rem 776708963463443507499 | 30 rem 373170750163908000509 | 33 rem 140418279013835890459 | 47 rem 133614700288143604534 | 62 rem 1536135075402850981571 | 80 rem 1138303126892629470694
+ body 0 centroid z in thousandths of a Link about the lay Node (quotient rem) at marks: 0 rem 0 | 1 rem 1724072032916358664977 | -132 rem 5017436115731424705888 | -153 rem 10255223326340132789347 | -153 rem 15693480336756072701877 | -154 rem 12002188622252661054686 | -138 rem 62583244936723520868692 | -139 rem 100533553731528323847369 | -139 rem 78965485710572291566466
+ body 0 peak offsets from the lay Node, counts of intervals: {(0, 0, 0): 301}
+ body 0 centroid z change from 150 to 300: 15 thousandths over 150 intervals = per 1000 intervals 100 rem 0 thousandths
+ body 1 lay [3, 3, 6] share at lay Node in thousandths of the total (quotient rem) at [0, 10, 20, 50, 100, 150, 200, 250, 300]: 1000 rem 0 | 673 rem 917907145545345784290 | 683 rem 1194241110492330631028 | 599 rem 12700765757729127085135 | 561 rem 24474019240645141629144 | 530 rem 26076943675848473176950 | 552 rem 11817473771151777568200 | 550 rem 49633955122883078529600 | 539 rem 28288997207263631158118
+ body 1 total share in units of unit_k (quotient rem) at marks: 1 rem 17660719641682853304 | 1 rem 340037761482795807270 | 3 rem 304203388312237401284 | 13 rem 1034670536754417894135 | 28 rem 880076220534538987096 | 35 rem 755952100370282645885 | 45 rem 1035243545027109044400 | 65 rem 143120290055069137708 | 80 rem 1432418296571191721638
+ body 1 centroid z in thousandths of a Link about the lay Node (quotient rem) at marks: 0 rem 0 | -2 rem 267116468945164645540 | 52 rem 3808870290630365579232 | 116 rem 6225804047943082895340 | 113 rem 40336666242296269139152 | 142 rem 30764367343819944604330 | 134 rem 26151552388940280235400 | 142 rem 94134629131053415378464 | 153 rem 17034754476139095482386
+ body 1 peak offsets from the lay Node, counts of intervals: {(0, 0, 0): 301}
+ body 1 centroid z change from 150 to 300: 11 thousandths over 150 intervals = per 1000 intervals 73 rem 50 thousandths
+ peak distance (Manhattan Links on the torus): first 3 last 3 min 3 max 3; intervals at each distance {3: 301}
+ centroid separation along z in thousandths of a Link at marks: 3000 2997 3184 3269 3266 3296 3272 3281 3292
+ separation change from 150 to 300: -4 thousandths over 150 intervals = per 1000 intervals -27 rem 50 thousandths; from 0: 292 thousandths over 300 intervals = per 1000 intervals 973 rem 100
+ proper counts at the two lay Nodes after 300 intervals: A 116116 B 116005; (10^6 x A) div B = 1000956 rem 99220
+ contents at the end c_A 1387 c_B 1356; integer clocks p_0(c): A 250 B 258; (10^6 x p_0(c_A)) div p_0(c_B) = 968992 rem 64
+ content c at the probes (A, mid, mid2, B, far), the board's min, max and the sum div the Nodes:
+  t   0: 0 0 0 0 0 | min 0 max 0
+  t  10: 41 41 49 39 171 | min -19 max 201
+  t  20: 308 301 345 336 483 | min 293 max 555
+  t  50: 808 814 799 779 810 | min 770 max 844
+  t 100: 1056 1045 1030 1030 1003 | min 987 max 1056
+  t 150: 1068 1073 1073 1082 1228 | min 1056 max 1228
+  t 200: 1191 1205 1201 1165 1299 | min 1143 max 1299
+  t 250: 1277 1288 1277 1284 1249 | min 1235 max 1379
+  t 300: 1387 1356 1432 1356 1395 | min 1321 max 1497
+ credits 187 (light credits 0) refused 16 births 0
+  identity (18, 0) at (3, 3, 3): 19 clicks; gaps in intervals [7, 7, 11, 10, 11, 11, 11, 33, 12, 8, 14, 14, 14, 15, 10, 33, 12, 17]; sum 250 over 18 gaps = 13 rem 16
+    gaps in proper [4, 4, 5, 4, 5, 5, 4, 11, 4, 3, 5, 5, 4, 5, 3, 9, 3, 5]; sum 88 over 18 = 4 rem 16; beat key None on 19 of 19
+  identity (18, 1) at (3, 3, 6): 20 clicks; gaps in intervals [6, 6, 17, 10, 11, 12, 12, 29, 14, 18, 15, 14, 15, 10, 16, 17, 18, 17, 19]; sum 276 over 19 gaps = 14 rem 10
+    gaps in proper [4, 4, 8, 5, 4, 5, 4, 11, 4, 6, 5, 5, 4, 4, 4, 5, 5, 5, 4]; sum 96 over 19 = 5 rem 1; beat key None on 20 of 20
+ summary {"event": "summary", "seconds": 205.8, "interval": 300, "credits": 187, "refused": 16, "births": 0, "swaps": 253, "counts": {"massless": 83739, "point 0 2 0": 189}, "deficits": {"point 0 2 0": -187}}

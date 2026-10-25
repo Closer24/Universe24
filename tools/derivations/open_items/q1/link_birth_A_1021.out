@@ -1,0 +1,11 @@
+label A: held of 48 per interval [48, 48, 48, 48, 48, 48, 6, 6, 6, 6]
+label A: with sense exchange [48, 48, 48, 48, 48, 48, 6, 0, 0, 0]
+label A: births per interval [0, 0, 0, 0, 0, 0, 3, 0, 0, 0] run back 10 of 10
+label A: charge [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+label A: F at births [[0, 0, 0]]
+current A: held of 48 per interval [48, 48, 48, 48, 48, 48, 48, 48, 48, 48]
+current A: with sense exchange [48, 48, 48, 48, 48, 48, 48, 48, 48, 48]
+current A: births per interval [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] run back 10 of 10
+current A: charge [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+current A: F at births []
+done

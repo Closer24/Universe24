@@ -1,0 +1,1883 @@
+{
+ "den": 1105,
+ "lifts": {
+  "point 0 2 0": [
+   425,
+   1105
+  ],
+  "point 2 0 0": [
+   663,
+   1105
+  ],
+  "point 0 0 2": [
+   975,
+   1105
+  ]
+ },
+ "species_laid": {
+  "A": "point 2 0 0",
+  "B": "point 0 0 2"
+ },
+ "pairs": {
+  "A": [
+   663,
+   1105
+  ],
+  "B": [
+   975,
+   1105
+  ]
+ },
+ "sign_rows_count": 5,
+ "own_rows": {
+  "point 2 0 0 record 0": 3,
+  "point 2 0 0 record 1": 4,
+  "point 0 0 2 record 0": 1,
+  "point 0 0 2 record 1": 2
+ },
+ "course": [
+  {
+   "interval": 2,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 18,
+      "remainder_less_origin": -3168000000000,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 18,
+      "remainder_less_origin": -3168000000000,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -18,
+      "remainder_less_origin": 3168000000000,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -18,
+      "remainder_less_origin": 3168000000000,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    2585664000000000,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     2585664000000000,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     1292832000000000,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     2585664000000000,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     1292832000000000,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": 0,
+    "point 2 0 0 record 1": 17956,
+    "point 0 0 2 record 0": 0,
+    "point 0 0 2 record 1": 17956
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 3,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -7,
+      "remainder_less_origin": 17899590626741,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 13,
+      "remainder_less_origin": 14080501777348,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -6,
+      "remainder_less_origin": -25929782007302,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 16,
+      "remainder_less_origin": -30334767902729,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 7,
+      "remainder_less_origin": -17681390051028,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -16,
+      "remainder_less_origin": 25798032198361,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 6,
+      "remainder_less_origin": 26034363348324,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -13,
+      "remainder_less_origin": -17925193052237,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 7,
+      "remainder_less_origin": -17681390051028,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 6,
+      "remainder_less_origin": 26034363348324,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    1127715542494058,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     1585645324501360,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     6050310396787,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     1613815951867317,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     177635040716710,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -729,
+    "point 2 0 0 record 1": 13668,
+    "point 0 0 2 record 0": -1521,
+    "point 0 0 2 record 1": 8844
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 4,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -8,
+      "remainder_less_origin": -8221623164830,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 3,
+      "remainder_less_origin": -23270388691075,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -8,
+      "remainder_less_origin": -15956784468856,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 5,
+      "remainder_less_origin": 26778907432742,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -5,
+      "remainder_less_origin": -17853050765385,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 8,
+      "remainder_less_origin": 8016431232273,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -5,
+      "remainder_less_origin": -34914479457405,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 8,
+      "remainder_less_origin": 16061365809878,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -3,
+      "remainder_less_origin": 19355131998141,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 8,
+      "remainder_less_origin": 8016431232273,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -4,
+      "remainder_less_origin": -3881097992475,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 8,
+      "remainder_less_origin": 16061365809878,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    -596669888892019,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     -4713104423163,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     -983448796324761,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     -12448265727189,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     -789399500200944,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -1029,
+    "point 2 0 0 record 1": 10398,
+    "point 0 0 2 record 0": -1260,
+    "point 0 0 2 record 1": 4382
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 5,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -4,
+      "remainder_less_origin": -7756138668120,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 5,
+      "remainder_less_origin": 17445449286600,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -5,
+      "remainder_less_origin": -31275089841023,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 8,
+      "remainder_less_origin": 18260399059872,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -9,
+      "remainder_less_origin": 5837989904750,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 4,
+      "remainder_less_origin": 6841687623532,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -8,
+      "remainder_less_origin": -29524849723794,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 5,
+      "remainder_less_origin": 29734830480013,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -5,
+      "remainder_less_origin": -20135799892148,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 4,
+      "remainder_less_origin": 6676013816003,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -8,
+      "remainder_less_origin": -17040089102669,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 5,
+      "remainder_less_origin": 30084770461095,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    284674619837329,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     675949709678352,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     -309585779222543,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     580430758505449,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     -92770829449271,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -1466,
+    "point 2 0 0 record 1": 5817,
+    "point 0 0 2 record 0": -784,
+    "point 0 0 2 record 1": 896
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 6,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -8,
+      "remainder_less_origin": 7756138668119,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 3,
+      "remainder_less_origin": -17445449286601,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -8,
+      "remainder_less_origin": 31275089841022,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 5,
+      "remainder_less_origin": -18260399059873,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -5,
+      "remainder_less_origin": -5837989904751,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 8,
+      "remainder_less_origin": -6841687623533,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -5,
+      "remainder_less_origin": 29524849723793,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 8,
+      "remainder_less_origin": -29734830480014,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -3,
+      "remainder_less_origin": 20135799892147,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 8,
+      "remainder_less_origin": -6676013816004,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -4,
+      "remainder_less_origin": 17040089102668,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 8,
+      "remainder_less_origin": -30084770461096,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    -572674619837334,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     -27949709678356,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     -914414220777461,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     -4430758505453,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     -771229170550733,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -1466,
+    "point 2 0 0 record 1": 5817,
+    "point 0 0 2 record 0": -784,
+    "point 0 0 2 record 1": 896
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 7,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -6,
+      "remainder_less_origin": 19490759168772,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 5,
+      "remainder_less_origin": -5826340114834,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -5,
+      "remainder_less_origin": 26385984870020,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 7,
+      "remainder_less_origin": 970525594557,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -4,
+      "remainder_less_origin": 25521139547902,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 6,
+      "remainder_less_origin": -20145953488257,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -7,
+      "remainder_less_origin": 8246562487581,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 5,
+      "remainder_less_origin": -25158507501866,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -5,
+      "remainder_less_origin": 10896508261585,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 6,
+      "remainder_less_origin": -20195497472561,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -4,
+      "remainder_less_origin": 4616041644905,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 5,
+      "remainder_less_origin": -26490566211044,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    113020929518514,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     446634944648494,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     -391949596076043,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     525530170349742,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     -241152730366652,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -731,
+    "point 2 0 0 record 1": 5019,
+    "point 0 0 2 record 0": -938,
+    "point 0 0 2 record 1": -564
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 8,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": 0,
+      "remainder_less_origin": 13397916726888,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 9,
+      "remainder_less_origin": -5533803660071,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": 1,
+      "remainder_less_origin": -21214112359533,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 11,
+      "remainder_less_origin": 21737157019766,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -1,
+      "remainder_less_origin": 15140630539449,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 0,
+      "remainder_less_origin": -18492144503935,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -11,
+      "remainder_less_origin": -16105442114889,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": -1,
+      "remainder_less_origin": 25514766736768,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -9,
+      "remainder_less_origin": 11662510554395,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 0,
+      "remainder_less_origin": -17824613852787,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -1,
+      "remainder_less_origin": 1747743103096,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": -1,
+      "remainder_less_origin": 21109531018509,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    1520387157727049,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     1469601270086582,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     706650000707283,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     1506989241000161,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     877920961387120,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -663,
+    "point 2 0 0 record 1": 6132,
+    "point 0 0 2 record 0": -1349,
+    "point 0 0 2 record 1": -1536
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 9,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -6,
+      "remainder_less_origin": -13397916726889,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 5,
+      "remainder_less_origin": 5533803660070,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -5,
+      "remainder_less_origin": 21214112359532,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 7,
+      "remainder_less_origin": -21737157019767,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -4,
+      "remainder_less_origin": -15140630539450,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 6,
+      "remainder_less_origin": 18492144503934,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -7,
+      "remainder_less_origin": 16105442114888,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 5,
+      "remainder_less_origin": -25514766736769,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -5,
+      "remainder_less_origin": -11662510554396,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 6,
+      "remainder_less_origin": 17824613852786,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -4,
+      "remainder_less_origin": -1747743103097,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 5,
+      "remainder_less_origin": -21109531018510,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    63612842272946,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     402398729913414,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     -418650000707287,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     509010758999835,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     -301920961387124,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -663,
+    "point 2 0 0 record 1": 6132,
+    "point 0 0 2 record 0": -1349,
+    "point 0 0 2 record 1": -1536
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 10,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -8,
+      "remainder_less_origin": -16690753449388,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": -4,
+      "remainder_less_origin": -1549284706963,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -10,
+      "remainder_less_origin": -26385984870021,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 2,
+      "remainder_less_origin": 23649036889306,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -8,
+      "remainder_less_origin": -22311376893974,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 8,
+      "remainder_less_origin": 16355701843722,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -2,
+      "remainder_less_origin": -32866124971447,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 10,
+      "remainder_less_origin": 25978021370954,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": 4,
+      "remainder_less_origin": -3520883439791,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 8,
+      "remainder_less_origin": 16405245828026,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -8,
+      "remainder_less_origin": -3045306729154,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 10,
+      "remainder_less_origin": 25910077220438,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    -1460976986137066,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     -714591001267045,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     -1628626023026372,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     -868286232687678,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     -1171427701430103,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -731,
+    "point 2 0 0 record 1": 5740,
+    "point 0 0 2 record 0": -856,
+    "point 0 0 2 record 1": -780
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 11,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -3,
+      "remainder_less_origin": -34648951525606,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 4,
+      "remainder_less_origin": -7783855647697,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -9,
+      "remainder_less_origin": 32972729641967,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 13,
+      "remainder_less_origin": -30949242253494,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -10,
+      "remainder_less_origin": 28665198485087,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 3,
+      "remainder_less_origin": 29894760770166,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -13,
+      "remainder_less_origin": 21007873760388,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 9,
+      "remainder_less_origin": -31300352067674,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -4,
+      "remainder_less_origin": 4422666023719,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 3,
+      "remainder_less_origin": 31386195367715,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -11,
+      "remainder_less_origin": -11430993735816,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 9,
+      "remainder_less_origin": -35778649925936,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    319590680215170,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     934617950573203,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     -585460077531336,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     570239631740776,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     39374535862867,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -1832,
+    "point 2 0 0 record 1": 5688,
+    "point 0 0 2 record 0": -1868,
+    "point 0 0 2 record 1": -1589
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 12,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -4,
+      "remainder_less_origin": 10691463814580,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 6,
+      "remainder_less_origin": -13976355084491,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -6,
+      "remainder_less_origin": -3185229338299,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 14,
+      "remainder_less_origin": -14354315902869,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -1,
+      "remainder_less_origin": -11445583474968,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 4,
+      "remainder_less_origin": -20297765290995,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -14,
+      "remainder_less_origin": 1648714635389,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 6,
+      "remainder_less_origin": 4975233839162,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": 0,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -6,
+      "remainder_less_origin": 12978747960411,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 4,
+      "remainder_less_origin": -16667286799364,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -5,
+      "remainder_less_origin": -33497511230025,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 6,
+      "remainder_less_origin": -1256746198869,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    699175563488921,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     1134360792827220,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     -294470120608210,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     976484099674341,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     281151918573412,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -1846,
+    "point 2 0 0 record 1": 4670,
+    "point 0 0 2 record 0": -1487,
+    "point 0 0 2 record 1": -1070
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  },
+  {
+   "interval": 13,
+   "at_i": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -3,
+      "remainder_less_origin": -10691463814581,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 4,
+      "remainder_less_origin": 13976355084490,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -9,
+      "remainder_less_origin": 3185229338298,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 13,
+      "remainder_less_origin": 14354315902868,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_j": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -10,
+      "remainder_less_origin": 11445583474967,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 3,
+      "remainder_less_origin": 20297765290994,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -13,
+      "remainder_less_origin": -1648714635390,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 9,
+      "remainder_less_origin": -4975233839163,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "at_k": {
+    "rows": [
+     {
+      "row": 0,
+      "level": 0,
+      "remainder_less_origin": -1,
+      "wall": 72000
+     },
+     {
+      "row": 1,
+      "level": -4,
+      "remainder_less_origin": -12978747960412,
+      "wall": 72000000000000
+     },
+     {
+      "row": 2,
+      "level": 3,
+      "remainder_less_origin": 16667286799363,
+      "wall": 72000000000000
+     },
+     {
+      "row": 3,
+      "level": -11,
+      "remainder_less_origin": 33497511230024,
+      "wall": 72000000000000
+     },
+     {
+      "row": 4,
+      "level": 9,
+      "remainder_less_origin": 1256746198868,
+      "wall": 72000000000000
+     }
+    ],
+    "wall_bits": 47
+   },
+   "one_row_at_i_over_wall": [
+    380824436511074,
+    72000
+   ],
+   "rows_but_own_at_i_over_wall": {
+    "point 2 0 0 record 0 (row 3)": [
+     1025639207172776,
+     72000
+    ],
+    "point 2 0 0 record 1 (row 4)": [
+     -569529879391794,
+     72000
+    ],
+    "point 0 0 2 record 0 (row 1)": [
+     607515900325655,
+     72000
+    ],
+    "point 0 0 2 record 1 (row 2)": [
+     78848081426584,
+     72000
+    ]
+   },
+   "wronskian_at_i": {
+    "point 2 0 0 record 0": -1846,
+    "point 2 0 0 record 1": 4670,
+    "point 0 0 2 record 0": -1487,
+    "point 0 0 2 record 1": -1070
+   },
+   "points_at_i": {
+    "point 2 0 0 record 0": [
+     null
+    ],
+    "point 2 0 0 record 1": [
+     null
+    ],
+    "point 0 0 2 record 0": [
+     null
+    ],
+    "point 0 0 2 record 1": [
+     null
+    ]
+   }
+  }
+ ],
+ "decoder_points_at_i_after_the_run": {
+  "point 2 0 0 record 0": [
+   [
+    1,
+    8
+   ],
+   [
+    1,
+    7
+   ]
+  ],
+  "point 2 0 0 record 1": [
+   [
+    -1,
+    50
+   ],
+   [
+    19,
+    28
+   ]
+  ],
+  "point 0 0 2 record 0": [
+   [
+    17,
+    18
+   ],
+   [
+    11,
+    46
+   ]
+  ],
+  "point 0 0 2 record 1": [
+   [
+    17,
+    13
+   ],
+   [
+    18,
+    11
+   ]
+  ]
+ },
+ "largest_bits_state": 54
+}

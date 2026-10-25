@@ -1,0 +1,234 @@
+{
+ "shape": [
+  12,
+  3,
+  3
+ ],
+ "waves": 3,
+ "amplitude": 400,
+ "plateaus": [
+  {
+   "level": 0,
+   "p_0": 1000,
+   "p_a": 1000,
+   "e_U_scaled": 1000000,
+   "weight_scaled": 1000000,
+   "check_U_float": 0.0,
+   "w": 1568256000000,
+   "R": 522752000000,
+   "span": 239,
+   "crossings": 32,
+   "first_crossing": 5,
+   "last_crossing": 236,
+   "proper_count": 240000,
+   "amplitude": 401,
+   "cosine_sums": [
+    25509282,
+    38263764
+   ],
+   "cosine_derived": [
+    2000000,
+    3000000
+   ],
+   "cosine_residual_scaled": 2,
+   "J2": {
+    "quotient": 14364978667,
+    "remainder": 2000000000000,
+    "wall": 9000000000000,
+    "bits": 77
+   },
+   "J": 119853,
+   "share_total": 2370556292670,
+   "share_total_over_W_c_scaled": 21498134478,
+   "share_corrected_over_W_c_scaled": 21498134478,
+   "period_board": {
+    "quotient": 7,
+    "remainder": 14,
+    "wall": 31,
+    "bits": 8
+   },
+   "K_board": 134199,
+   "check_omega_float": 0.8431980282362215,
+   "check_cos_derived_float": 0.6666666666666667,
+   "check_omega_derived_float": 0.8410686705679301,
+   "proper_between": 231000,
+   "period_proper_scaled": 7451612,
+   "K_proper": 134199
+  },
+  {
+   "level": 500,
+   "p_0": 606,
+   "p_a": 367,
+   "e_U_scaled": 1650165,
+   "weight_scaled": 7424511,
+   "check_U_float": 0.5008752929128226,
+   "w": 1568256000000,
+   "R": 70408944128,
+   "span": 239,
+   "crossings": 11,
+   "first_crossing": 11,
+   "last_crossing": 219,
+   "proper_count": 145440,
+   "amplitude": 823,
+   "cosine_sums": [
+    154721077,
+    161993474
+   ],
+   "cosine_derived": [
+    2865311,
+    3000000
+   ],
+   "cosine_residual_scaled": 3,
+   "J2": {
+    "quotient": 40269849343,
+    "remainder": 4997490606239,
+    "wall": 9000000000000,
+    "bits": 79
+   },
+   "J": 200673,
+   "share_total": 2370556292670,
+   "share_total_over_W_c_scaled": 21498134478,
+   "share_corrected_over_W_c_scaled": 2895562234,
+   "period_board": {
+    "quotient": 20,
+    "remainder": 8,
+    "wall": 10,
+    "bits": 8
+   },
+   "K_board": 130915,
+   "check_omega_float": 0.3020762166913263,
+   "check_cos_derived_float": 0.9551036666666667,
+   "check_omega_derived_float": 0.30078683875425055,
+   "proper_between": 126048,
+   "period_proper_scaled": 12604800,
+   "K_proper": 130915
+  },
+  {
+   "level": 1000,
+   "p_0": 368,
+   "p_a": 135,
+   "e_U_scaled": 2717391,
+   "weight_scaled": 54869684,
+   "check_U_float": 0.9996723408132061,
+   "w": 1568256000000,
+   "R": 9527155200,
+   "span": 239,
+   "crossings": 4,
+   "first_crossing": 57,
+   "last_crossing": 228,
+   "proper_count": 88320,
+   "amplitude": 2093,
+   "cosine_sums": [
+    1024066064,
+    1030324782
+   ],
+   "cosine_derived": [
+    2981775,
+    3000000
+   ],
+   "cosine_residual_scaled": 0,
+   "J2": {
+    "quotient": 232451318678,
+    "remainder": 4157899599375,
+    "wall": 9000000000000,
+    "bits": 81
+   },
+   "J": 482132,
+   "share_total": 2370556292670,
+   "share_total_over_W_c_scaled": 21498134478,
+   "share_corrected_over_W_c_scaled": 391803500,
+   "period_board": {
+    "quotient": 57,
+    "remainder": 0,
+    "wall": 3,
+    "bits": 8
+   },
+   "K_board": 129547,
+   "check_omega_float": 0.11023132117858923,
+   "check_cos_derived_float": 0.993925,
+   "check_omega_derived_float": 0.11028291727659756,
+   "proper_between": 62928,
+   "period_proper_scaled": 20976000,
+   "K_proper": 129547
+  },
+  {
+   "level": 1500,
+   "p_0": 223,
+   "p_a": 50,
+   "e_U_scaled": 4484304,
+   "weight_scaled": 400000000,
+   "check_U_float": 1.5005835075220182,
+   "w": 1568256000000,
+   "R": 1306880000,
+   "span": 239,
+   "crossings": 1,
+   "first_crossing": 135,
+   "last_crossing": 135,
+   "proper_count": 53520,
+   "amplitude": 2876,
+   "cosine_sums": [
+    1986788057,
+    1988444904
+   ],
+   "cosine_derived": [
+    2997500,
+    3000000
+   ],
+   "cosine_residual_scaled": 0,
+   "J2": {
+    "quotient": 113978590679,
+    "remainder": 8806400000000,
+    "wall": 9000000000000,
+    "bits": 80
+   },
+   "J": 337607,
+   "share_total": 2370556292670,
+   "share_total_over_W_c_scaled": 21498134478,
+   "share_corrected_over_W_c_scaled": 53745336,
+   "check_omega_float": null,
+   "check_cos_derived_float": 0.9991666666666666,
+   "check_omega_derived_float": 0.04082766463566461
+  },
+  {
+   "level": 2000,
+   "p_0": 135,
+   "p_a": 18,
+   "e_U_scaled": 7407407,
+   "weight_scaled": 3086419753,
+   "check_U_float": 2.0024805005437076,
+   "w": 1568256000000,
+   "R": 169371648,
+   "span": 239,
+   "crossings": 1,
+   "first_crossing": 170,
+   "last_crossing": 170,
+   "proper_count": 32400,
+   "amplitude": 4386,
+   "cosine_sums": [
+    4620846622,
+    4621345796
+   ],
+   "cosine_derived": [
+    2999676,
+    3000000
+   ],
+   "cosine_residual_scaled": -1,
+   "J2": {
+    "quotient": 79929078859,
+    "remainder": 1109544816384,
+    "wall": 9000000000000,
+    "bits": 80
+   },
+   "J": 282717,
+   "share_total": 2370556292670,
+   "share_total_over_W_c_scaled": 21498134478,
+   "share_corrected_over_W_c_scaled": 6965395,
+   "check_omega_float": null,
+   "check_cos_derived_float": 0.999892,
+   "check_omega_derived_float": 0.014697070732359298
+  }
+ ],
+ "den": 1021,
+ "gamma": 1000,
+ "T": 36000
+}
