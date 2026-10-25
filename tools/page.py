@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, the board drawn larger or smaller with the mean length e^U between the record's least and largest, so the Links' lengthening and shortening are both seen, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and Node and as ticks with their labels on the bar; one header line from the two files as they are. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, the board drawn larger or smaller with the mean length e^U between the record's least and largest, so the Links' lengthening and shortening are both seen, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and Node and as ticks with their labels on the bar; one header line from the two files as they are. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -74,15 +74,16 @@ function draw() {
   const line = lines[t - 1], before = lines[Math.max(t - 2, 0)], step = Math.max(1, line.i - before.i);
   const held = new Set(line.held.map(h => h[0] + ":" + h[1]));
   const frozen = new Set(line.frozen), turned = new Set(line.turned);
+  const lens = line.X.map(length), lenMin = Math.min(...lens), lenSpan = Math.max(Math.max(...lens) - lenMin, 1e-9);
   lay(line);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.lineCap = "round";
   for (let i = 0; i < spots.length; i++) for (let a = 0; a < 3; a++) {
     const j = neighbour(i, a);
     if (j < 0) continue;
-    const isHeld = held.has(i + ":" + a), mean = (length(line.X[i]) + length(line.X[j])) / 2;
-    ctx.strokeStyle = isHeld ? wall : "rgba(154,158,168," + (0.25 + 0.5 * Math.min(mean, 1.6) / 1.6) + ")";
-    ctx.lineWidth = isHeld ? 4 : 1 + mean;
+    const isHeld = held.has(i + ":" + a), rel = ((lens[i] + lens[j]) / 2 - lenMin) / lenSpan;
+    ctx.strokeStyle = isHeld ? wall : "rgba(154,158,168," + (0.2 + 0.7 * rel) + ")";
+    ctx.lineWidth = isHeld ? 5 : 1 + 5 * rel;
     ctx.beginPath(); ctx.moveTo(spots[i][0], spots[i][1]); ctx.lineTo(spots[j][0], spots[j][1]); ctx.stroke();
     const flow = line.current[a][i];
     if (flow !== 0) {
