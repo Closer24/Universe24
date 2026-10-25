@@ -23,18 +23,18 @@ nodes = list(np.ndindex(cube, cube, cube))
 
 def compare():
     apart = []
-    for name, la, lb in (('vol', a.vol, b.vol), ('light', a.light, b.light), ('sign', a.sign, b.sign), ('phi', a.phi, b.phi)):
+    for name, la, lb in (('metric', a.row(10).lines[0], b.row(10).lines[0]), ('massless', a.row(1, gap=0).lines[0], b.row(1, gap=0).lines[0]), ('potential', a.row(4).lines[0], b.row(4).lines[0]), ('phase', a.walled().lines[0], b.walled().lines[0])):
         for at in nodes:
             if int(la.now[at]) != int(lb.now[image(at)]) or int(la.before[at]) != int(lb.before[image(at)]): apart.append((name, at, 'level')); break
             if int(la.rem[at]) != int(lb.rem[image(at)]): apart.append((name, at, 'rem', int(la.rem[at]), int(lb.rem[image(at)]))); break
     for ax in range(3):
-        for name, rows, odd in (('vol_axes', (a.vol_axes, b.vol_axes), False), ('sign_axes', (a.sign_axes, b.sign_axes), True)):
+        for name, rows, odd in (('metric axes', (a.row(10).lines[1:4], b.row(10).lines[1:4]), False), ('potential odd lines', (a.row(4).lines[1:4], b.row(4).lines[1:4]), True)):
             la, lb = rows[0][ax], rows[1][perm[ax]]; sg = signs[ax] if odd else 1
             for at in nodes:
                 if int(la.now[at]) != sg * int(lb.now[image(at)]): apart.append((name, ax, at, 'level', int(la.now[at]), int(lb.now[image(at)]))); break
     det = int(round(np.linalg.det(m)))
     for rec in range(2 * a.nl):
-        ra, ia = a.planes[rec]; rb, ib = b.planes[rec]
+        ra, ia = a.records()[rec].lines; rb, ib = b.records()[rec].lines
         for at in nodes:
             za = int(ra.now[at]) ** 2 + int(ia.now[at]) ** 2; zb = int(rb.now[image(at)]) ** 2 + int(ib.now[image(at)]) ** 2
             if za != zb: apart.append(('plane |z|^2', rec, at, za, zb)); break

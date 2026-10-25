@@ -38,13 +38,13 @@ def report(label, found, boards):
                    'turns a/b': [int(x.turned.sum()) for x in boards], 'births a/b': [x.counts['births'] for x in boards], 'log lines this interval a/b': [len(x.log) - x.stack[-1]['log_from'] for x in boards]}})
 
 
-b.light.now[p] = b.light.now[p] + added
+z = b.row(1, gap=0).lines[0]; z.now[p] = z.now[p] + added
 assert len(differences(a, b)) == 1
 a.step(); b.step()
 report('forward one interval', differences(a, b), (a, b))
 # backward: from one post-state, the same change at the Node, both run back one interval
 a2 = copy.deepcopy(a); b2 = copy.deepcopy(a)
-b2.light.now[p] = b2.light.now[p] + added
+z2 = b2.row(1, gap=0).lines[0]; z2.now[p] = z2.now[p] + added
 a2.step_back(); b2.step_back()
 found = differences(a2, b2)
 by = {}

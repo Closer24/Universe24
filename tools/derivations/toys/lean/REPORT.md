@@ -8,6 +8,9 @@ Run: `PYTHONPATH=src python tools/derivations/toys/lean/lean_full.py <world.json
 
 ## The state at every Node (119 integers, fixed; 95 before the metric's six zero lines of 2026-10-25)
 
+Since 2026-10-25 (the owner's word: the engine is generic, it does not know what it runs) the Node holds its rows with no name: every row is a shape (its count of lines) and a pair, or a wall of its own, as the universe file lists them (the file's rows: shape 1 at the gap 0, the shape-2 rows, shape 10 at (den - den div Gamma, den), shape 4 at (den, den), shape 1 at the wall 2), and every choice of the acts is by those numbers: the clock from the shape-10 row's time line, the factors from its axis lines, the frames from the row with its own wall, the clocked potential and the odd tangent from the shape-4 row, the meeting, the take and W-S1 on the shape-1 row of gap 0, the writes to their shapes; the two records of a pair are the pair's two rows in the file's order. The names below are the reader's.
+
+
 - the volume row, the metric's ten lines: the time line (now, before, remainder) carrying X, three axis lines (the tensions), six lines standing at zero (the three flux g_0a and the three shears g_ab, rotated with the row, written and read by nothing until their derivation lands), ten write remainders: 40
 - the light row: 3, and its lay remainder at the wall T (W-S1): 1
 - the sign row: the time line, three odd lines, four write remainders: 16; its phase row (wall 2): 3
