@@ -405,6 +405,104 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         6,
         "the helper: one nodes line by hand, the Link's length 1 everywhere but at three Nodes",
     ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_links_lengthen_on_the_running_board": (
+        20,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the Links lengthen on the running board: the hole seed's summed X never falls and ends above the seed's, every Node's X above Gamma at the end, the clock at or below Gamma where X is at or above it and below where X reads the first level, the clock non-increasing in X across the Nodes, the eras tool's length non-decreasing in X",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_lengthening_is_read_in_the_clicks": (
+        13,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the lengthening in the clicks: at the Node credited most often the proper never outruns the interval and the last pair's pace delta proper over delta interval is at or below the first pair's and below 1",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_clock_reverses_at_a_nodes_own_top_on_the_course": (
+        40,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the reversed clock on the course: at the first turned Node whose light moves, the fifth act's triple read by a spy fires where the board reads turned, the light's and the volume's levels the kept pair exchanged, the velocity negated, an unturned neighbour's level now not the kept before, one step back exact",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_uniform_sea_turns_at_every_node_at_once_and_runs_its_rise_back": (
+        27,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the returns of the volume on the uniform sea: every Node turned in one interval, the state at t* + k the state at t* - 1 - k under the act's image until the mirror meets an act, the summed X largest at the top and falling after it; about 7 s",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_gravitys_sign_on_two_boards": (
+        17,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "gravity's sign on two boards: the lone pair laid at the hole by the birth's own path, X there above the bare board's after the first interval and at the end, the proper count at or below the bare board's at every interval and below at the end, the run back exact",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_dilations_sign_by_hand": (
+        15,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the dilation's sign by hand: the light emptied and the volume line at the cube's centre at the volume of the level Gamma div 10, the clock there below Gamma and Gamma elsewhere at the start, the proper count there below every other Node's after the cube's side of intervals",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_horizon_is_forced_at_the_wall": (
+        51,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the horizon forced at the wall: the x axis line along the hole's ring at Gamma, Gamma and -Gamma puts one Link's tension at Gamma, its factor 0 and G^2 on every other Port by hand and by the engine, horizon_links names it alone, the +x neighbour steps as Rule3 by hand with that Port's reach 0 and not as the plain rule, the run back exact, half the wall re-couples",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_frozen_clock_holds_and_births_nothing": (
+        26,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the frozen clock: the volume line at one Node at volume_of(Gamma, frozen_content(Gamma)), that Node alone frozen under the seed's read with its axis paces 0 and its X unchanged, no credit and no birth there at the first crediting close while its six neighbours are credited, the run back exact",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_whole_interval_reaches_one_link": (
+        17,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the one-Link reach of the whole interval on the 3-cube and the 5-cube: the light raised by one level at one Node, after one interval the boards differ at the Node and its six neighbours alone, after the step back at the Node alone",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_uniform_sea_is_a_fixed_point_of_the_remainders": (
+        32,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the uniform sea a fixed point of the remainders: to its first births the light's remainder at the half wall at every Node, every line alike at every Node, digits.at_origin at every frame, no credit; at the birth interval a birth at every Node alike",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_only_a_bound_body_clicks": (
+        20,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "only a bound body clicks: every credit of the light at a birth at its Node, every other credit a charged plane record's with the kind its width, the massless pair no body",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::test_the_signs_write_travels_one_link_per_interval": (
+        20,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the sign's write travels one Link per interval: the lone pair laid at the cube's centre, the holder's rows 0 before the first interval, non-zero at the Node alone after one and at the Node and its six neighbours alone after two",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::hole_run": (
+        14,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the fixture: the hole seed stepped once for the module, the clocks and the volumes per interval and the output lines",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::hole_board": (
+        8,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the helper: the hole seed on the bare torus in a folder with every output line kept",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::levels": (
+        4,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the helper: a family's first line's two levels as Python's integers",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::pair_laid": (
+        6,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the helper: the lone pair laid at one Node by the birth's own path",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::apart": (
+        10,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the helper: the Nodes at which two states differ",
+    ),
+    "tests/test_the_properties_hold_on_a_run.py::mirrored": (
+        17,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): "
+        "the helper: the fifth act's image between two states, the levels exchanged and the plain remainders complemented",
+    ),
+    "tests/laws_universe.py::light_emptied": (
+        7,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): the shared setup by hand, the light emptied so that nothing sources the held rows (the turn at the top and at the floor, the dilation's sign)",
+    ),
+    "tests/laws_universe.py::time_line_set": (
+        10,
+        "the properties hold on a run (2026-10-25, the owner's word: every property with a small test): the shared setup by hand, the first held row's time line set at every Node (the turn at the top and at the floor, the dilation's sign, the frozen clock)",
+    ),
 }
 CALLERS = ("src/", "tools/", "examples/")
 FEATURES = "src/event_universe/features/"

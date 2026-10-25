@@ -5,12 +5,12 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from event_universe import records, swap, world_files
+from event_universe import swap, world_files
 from event_universe.core.rule3 import wall_of
 from event_universe.lattice import Lattice
 from event_universe.world_files import load_world
 from tests.laws import board_state, same_state
-from tests.laws_universe import CUBE, GAMMA, bare_torus
+from tests.laws_universe import CUBE, GAMMA, bare_torus, light_emptied, time_line_set
 
 
 def turning(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, now: int, before: int) -> None:
@@ -23,10 +23,9 @@ def turning(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, now: int, before: i
         den - den // GAMMA,
         den,
     )  # the clock's level
-    full, states = lambda level: records.full(board.shape, level, board.kind), board.states  # noqa: E731
-    states[light].lines[0] = records.Record(full(0), full(0), states[light].lines[0].remainder)
-    remainder = np.asarray(states[held].lines[0].remainder, dtype=object).copy()
-    states[held].lines[0] = records.Record(full(now), full(before), states[held].lines[0].remainder)
+    light_emptied(board)
+    remainder = np.asarray(board.states[held].lines[0].remainder, dtype=object).copy()
+    time_line_set(board, now, before)
     kept = board_state(board)
     board.step()
     time, wall = board.states[held].lines[0], wall_of(den, GAMMA, board.unit)

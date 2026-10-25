@@ -1,4 +1,4 @@
-"""The one world's helpers shared by the Universe24 tests: the shipped files' paths (the folded world of 2026-10-24, the universe at nature's den, the board and the run's length alone; `FOLDER`, `WORLD`, `UNIVERSE`), the one universe's clock and the small torus's side (`GAMMA`, `CUBE`), the tests' small universe and the bare torus of it (`SMALL`, `small_universe`, `bare_torus`), the former uniform sea laid by name (`uniform_sea`), the seed hand's sea plus one (`sea_plus_one`) and `flat`; the generic Node's toy of 2026-10-25, one Node of the bare 3-cube fed through its six Links (`CENTRE`, `NEIGHBOURS`, `node_toy`, `node_arrays`, `impose`, `fed_interval`, `at_centre`, `course`, `shaken`, `carried`), shared by its two test files. The declared seed's universe and its small structured board (`DECLARED`, `small_world`) left 2026-10-24 with the tests of the cancelled worlds, the eras tool loaded here (`ERAS`) and the log's path (`LOG`) with the tests' audit of the same day."""
+"""The one world's helpers shared by the Universe24 tests: the shipped files' paths (the folded world of 2026-10-24, the universe at nature's den, the board and the run's length alone; `FOLDER`, `WORLD`, `UNIVERSE`), the one universe's clock and the small torus's side (`GAMMA`, `CUBE`), the tests' small universe and the bare torus of it (`SMALL`, `small_universe`, `bare_torus`), the former uniform sea laid by name (`uniform_sea`), the seed hand's sea plus one (`sea_plus_one`), `flat`, and the board set by hand for the law's sentences on the held rows (`light_emptied`, `time_line_set`; the turn at the top and at the floor, the dilation's sign, the frozen clock); the generic Node's toy of 2026-10-25, one Node of the bare 3-cube fed through its six Links (`CENTRE`, `NEIGHBOURS`, `node_toy`, `node_arrays`, `impose`, `fed_interval`, `at_centre`, `course`, `shaken`, `carried`), shared by its two test files. The declared seed's universe and its small structured board (`DECLARED`, `small_world`) left 2026-10-24 with the tests of the cancelled worlds, the eras tool loaded here (`ERAS`) and the log's path (`LOG`) with the tests' audit of the same day."""
 
 import json
 from pathlib import Path
@@ -213,3 +213,24 @@ def carried(shell, element):  # type: ignore[no-untyped-def]
             image = permutation.index(axis)
             found[(family, kind, 1 + image)] = tuple(moved(a) for a in shell[key])
     return found
+
+
+def light_emptied(board: Lattice) -> None:
+    """The light's record emptied at every Node of `board`, its two levels 0 and its remainder as laid, so that nothing sources the held rows: the board a test then sets by hand."""
+    light = board.world.seed
+    assert light is not None
+    state = board.states[light]
+    zeros = records.zeros(board.shape, board.kind)
+    state.lines[0] = records.Record(zeros, zeros.copy(), state.lines[0].remainder)
+
+
+def time_line_set(board: Lattice, now: Any, before: Any) -> None:
+    """The first held row's time line set by hand at every Node, each level one integer alike everywhere or an array over the board, the remainder as laid (the volume holder's X, the line the fifth act and the clocks read)."""
+    state = board.states[board.held[0]]
+    levels = [
+        records.full(board.shape, level, board.kind)
+        if np.ndim(level) == 0
+        else np.asarray(level, dtype=board.kind)
+        for level in (now, before)
+    ]
+    state.lines[0] = records.Record(levels[0], levels[1], state.lines[0].remainder)
