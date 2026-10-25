@@ -24,7 +24,7 @@ board = Lattice(world)
 names = [f.name for f in board.families]
 print('held rows', [(i, names[i], board.families[i].pair[0] == board.families[i].pair[1]) for i in board.held])
 for i in board.held:
-    print(names[i], 'write walls bits', [int(w).bit_length() if np.ndim(w) == 0 else 'array' for w in board.write_walls[i]])
+    ww = board.write_walls; ww = ww.get(i) if hasattr(ww, 'get') else (ww[i] if i < len(ww) else None); print(names[i], 'write walls', type(board.write_walls).__name__, [int(np.asarray(w, dtype=object).reshape(-1)[0]).bit_length() if np.size(w) else 0 for w in (ww or [])])
 for t in range(40):
     board.step()
     if board.interval in (1, 5, 13, 20, 30, 40):

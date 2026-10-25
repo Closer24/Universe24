@@ -70,9 +70,11 @@ class Lean:
         self.w = wall_of(den, gamma, unit)
         half = self.w // 2
         mk = lambda: Line(Z(S), Z(S), Z(S) + half)
-        self.vol = mk(); self.vol_axes = [mk() for _ in range(3)]; self.vol_wr = [Z(S) + action // 2] + [Z(S) + (3 * den * action) // 2 for _ in range(3)]  # the lay's gauge, the half of the wall's lowest factor
+        self.vol = mk(); self.vol_axes = [mk() for _ in range(3)]
         self.light = mk()
-        self.sign = mk(); self.sign_axes = [mk() for _ in range(3)]; self.sign_wr = [Z(S) + action // 2 for _ in range(4)]
+        self.sign = mk(); self.sign_axes = [mk() for _ in range(3)]
+        walls = self.write_walls()  # the write remainders at the lay's gauge, half of each line's wall (the engine rounds half up: a remainder at the half wall carries the same)
+        self.vol_wr = [Z(S) + walls[k] // 2 for k in range(4)]; self.sign_wr = [Z(S) + walls[4 + k] // 2 for k in range(4)]
         self.phi = Line(Z(S), Z(S), Z(S) + 1)  # the phase potential row: the wall 2, the write 2c
         self.planes = [[mk(), mk()] for _ in range(2 * self.nl)]  # record 2s + (0: sense -1, 1: sense +1): [re, im]
         self.standing = [Z(S) for _ in range(2 * self.nl)]; self.crossed = [Z(S) for _ in range(2 * self.nl)]; self.beats = [Z(S) for _ in range(2 * self.nl)]
@@ -240,10 +242,10 @@ class Lean:
         self.stepped = [[l.copy() for l in r] for r in new_planes]  # the step's output as stepped, kept for the credits' frame (the swap discards it at a turned Node)
         # the held writes, one carried division per line
         trace = (parts[0] + parts[1] + parts[2])  # the stress's trace into the time line's write (the pressure term), the axis lines traceless
-        p04 = p0 * p0 * p0 * p0
-        q, self.vol_wr[0] = carried_division(4 * start['vol_now'] * (forms * 3 * self.den - trace) * p04, 3 * self.den * self.gamma ** 5 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now + q
+        p02 = p0 * p0  # the write's factor (p0 / Gamma)^2 at the power 2 on a count (engine paces.write_factor, intervals 2), Gamma^2 inside the fixed wall
+        q, self.vol_wr[0] = carried_division(4 * start['vol_now'] * (forms * 54 * self.den * self.gamma ** 2 - trace * p0 * p0) * p0, 54 * self.den * self.gamma ** 4 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now + q  # (d + 1) X c over Gamma E_s T, E_s 1, c the forms at the write's factor (p0 / Gamma)^1 (the holder's booking power one, engine WRONSKIAN_POWER) less the pressure, the trace times (p0 / Gamma)^2 at its wall 54 den (engine records.pressure_term: the stress parts times the pace squared over SIDES x AXES x AXES x den x Gamma^(2 + power) x clock^(3 - power)); the former toy weighed the trace 18 times more and its write vanished at every gradient
         for a in range(3):
-            q, self.vol_wr[1 + a] = carried_division((3 * parts[a] - trace) * p04, 2 * self.gamma ** 4 * 3 * self.den * self.T, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now + q  # the traceless part at the doubled wall 2 E_s W_c, per proper volume and interval
+            q, self.vol_wr[1 + a] = carried_division((3 * parts[a] - trace) * p02, 54 * self.den * self.T * self.gamma ** 2, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now + q  # the traceless part over 6 W_c x 3 (the doubled wall 2 E_s W_c with the parts 3 and SIDES: engine held_write_of and scaled_sum; measured on the record's world, probes/write_probe.py)
         q, self.sign_wr[0] = carried_division(2 * W, self.T, self.sign_wr[0]); self.sign.now = self.sign.now + q
         for a in range(3):
             q, self.sign_wr[1 + a] = carried_division(J[a], self.T, self.sign_wr[1 + a]); self.sign_axes[a].now = self.sign_axes[a].now + q
@@ -273,7 +275,7 @@ class Lean:
         return int(np.asarray(volform.volume_of(self.gamma, np.array([-self.gamma], dtype=object)), dtype=object).reshape(-1)[0])
 
     def write_walls(self):
-        return [3 * self.den * self.gamma ** 5 * self.T] + [2 * self.gamma ** 4 * 3 * self.den * self.T] * 3 + [self.T] * 4
+        return [54 * self.den * self.gamma ** 4 * self.T] + [54 * self.den * self.T * self.gamma ** 2] * 3 + [self.T] * 4
 
     def all_lines(self):
         return [self.vol, *self.vol_axes, self.light, self.sign, *self.sign_axes, self.phi, *[l for r in self.planes for l in r]]
@@ -521,7 +523,7 @@ class Lean:
         frames = self.frames(start_bits)
         # the start's readings from the before slots
         X_start = self.vol.before; c = np.asarray(volform.level_of(self.gamma, X_start), dtype=object); self.start_content = c
-        p0 = paces.clock_of(self.gamma, c); p04 = p0 * p0 * p0 * p0
+        p0 = paces.clock_of(self.gamma, c); p02 = p0 * p0
         self.proper = self.proper - p0
         # the phase row back: cphi from the sign's start level and p0; phi_before = 2 phi_now - phi_next + wq
         cphi = paces.rounded(self.sign.before * p0, self.gamma)
@@ -542,7 +544,7 @@ class Lean:
         trace = parts[0] + parts[1] + parts[2]
         # the axis writes undone (their numerators from the start levels), then the factors at the start
         for a in range(3):
-            q, self.vol_wr[1 + a] = division_back((3 * parts[a] - trace) * p04, 2 * self.gamma ** 4 * 3 * self.den * self.T, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now - q
+            q, self.vol_wr[1 + a] = division_back((3 * parts[a] - trace) * p02, 54 * self.den * self.T * self.gamma ** 2, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now - q
         factors = self.link_factors()  # from the axis lines at the start (their now the start's now after the write undone? the factors read the axis lines' START now: the before slot)
         factors = []
         for axis, side in AXES:
@@ -577,7 +579,7 @@ class Lean:
         self.light = light_b
         self.sign, _ = self.back_line(self.sign, r_l); self.sign_axes = [self.back_line(l, r_l)[0] for l in self.sign_axes]
         # the volume's write undone, then its lines inverted
-        q, self.vol_wr[0] = division_back(4 * X_start * (forms * 3 * self.den - trace) * p04, 3 * self.den * self.gamma ** 5 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now - q
+        q, self.vol_wr[0] = division_back(4 * X_start * (forms * 54 * self.den * self.gamma ** 2 - trace * p0 * p0) * p0, 54 * self.den * self.gamma ** 4 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now - q
         r_v = self.rule(self.vol_pair, c, factors)
         self.vol, _ = self.back_line(self.vol, r_v); self.vol_axes = [self.back_line(l, r_v)[0] for l in self.vol_axes]
         # the swap's inverse, part two: at the turned Nodes the same act on the post-state gives the pre-state (the exchange and the complement again, the im lines' conjugation again)
