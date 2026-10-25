@@ -14,7 +14,7 @@ def image(node): return tuple(int(x) % cube for x in (m @ np.array(node, dtype=i
 def world_image(mm):
     w = copy.deepcopy(world0); w['shape'] = [cube, cube, cube]
     for lay in w.get('seed', []):
-        for key in ('at', 'hole'):
+        for key in ('at', 'centre'):
             if key in lay: lay[key] = [int(x) % cube for x in (mm @ np.array(lay[key], dtype=int))]
     return w
 

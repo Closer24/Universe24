@@ -121,29 +121,33 @@ class Lean:
         self.unit_light = 3 * den * action  # W_c
         self.units = [3 * action * s for _v, _n, s in self.lifts]  # one quantum of a record, 3 T s
         self.detectors = []  # the Nodes whose light the record credits (the world names them; a reading, no state)
-        # the seed as the world lays it: a sea of the light row at one level with a hole; one quantum more of the light at a Node (the level v with v^2 = (1 + n) sea^2); a record of a plane row laid at a Node (one quantum of its unit at the vacuum's paces, the sense's im line); a detector Node
-        plane_lays = []
-        self.hold_volume = False
+        # the seed as the world lays it: a list of lays in the three forms of the law and no fourth (the owner's word of 2026-10-25, "2, 3, 4 approved"; the Z hands' form): `sea` lays the massless row's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet: on the massless row N drifts at the centre, on a plane row the conjugate pair, N quanta each record, over the raised cosine's envelope of the half-width 2 or 3 (exact in integers there and at no other width below 6). Refused by name: a fourth form, a row no pair of the universe carries, a sea of a plane row, a Node off the board, a plane packet of another width (a body is laid over its packet, never one Node)
+        self.drift = rule3.largest_below(action)
+        packets = []
         for lay in world.get('seed', []):
-            if 'detector' in lay: self.detectors.append(tuple(int(x) for x in lay['detector'])); continue
-            if 'well' in lay:  # a hand-held well of the volume (the G hands' control): the content laid as a parabola, levels x (R^2 - r^2) div R^2 within the radius R, the volume's line at that level; held fixed where the world says so
-                wl = lay['well']; at = tuple(int(x) for x in wl['at']); levels, R = int(wl['levels']), int(wl['radius']); self.hold_volume = bool(wl.get('held', False))
-                for node in np.ndindex(*self.shape):
-                    r2 = sum(min(abs(node[a] - at[a]), self.cube - abs(node[a] - at[a])) ** 2 for a in range(3))
-                    if r2 < R * R:
-                        c = levels * (R * R - r2) // (R * R)
-                        self.vol.now[node] = int(np.asarray(volform.volume_of(gamma, np.array([c], dtype=object)), dtype=object).reshape(-1)[0]); self.vol.before[node] = self.vol.now[node]
-                continue
-            row = int(lay['row'])
-            if row == 0:
-                if 'sea' in lay:
-                    self.light.now[:] = int(lay['sea'])
-                    if 'hole' in lay: self.light.now[tuple(int(x) for x in lay['hole'])] = 0
-                elif 'at' in lay:
-                    at = tuple(int(x) for x in lay['at']); sea = int(self.light.now[at]); n = int(lay.get('quanta', 1))
-                    self.light.now[at] = rule3.largest_below((1 + n) * sea * sea)
-            else:
-                plane_lays.append((row - 1, tuple(int(x) for x in lay['at']), int(lay.get('sense', 1)), int(lay.get('quanta', 1))))
+            form = lay.get('lay'); row = tuple(int(x) for x in lay['row']) if 'row' in lay else None
+            if form == 'sea':
+                if row != (den, den): raise ValueError('a sea is the massless row\'s alone: the drift is its double root')
+                self.light.now[:] = self.light.now + self.drift
+            elif form == 'hole':
+                at = self.node_of(lay['at']); self.light.now[at] = self.light.now[at] - self.drift
+            elif form == 'at':
+                n = int(lay['quanta']); at = self.node_of(lay['centre'])
+                if row == (den, den): self.light.now[at] = self.light.now[at] + n * self.drift
+                elif row in self.pairs: packets.append((self.pairs.index(row), at, int(lay.get('width', 0)), n))
+                else: raise ValueError('the world lays a row the universe has not')
+            else: raise ValueError('a lay of no form of the law: %r' % (form,))
+        # the toy's controls and readings, no lay of the law (named open for the owner's word): `control.well` a hand-held well of the volume (the content laid as a parabola within the radius, held fixed where the file says so), `detectors` the Nodes whose light credits the record reads
+        self.hold_volume = False
+        well = world.get('control', {}).get('well')
+        if well:
+            at = self.node_of(well['at']); levels, R = int(well['levels']), int(well['radius']); self.hold_volume = bool(well.get('held', False))
+            for node in np.ndindex(*self.shape):
+                r2 = sum(min(abs(node[a] - at[a]), self.cube - abs(node[a] - at[a])) ** 2 for a in range(3))
+                if r2 < R * R:
+                    c = levels * (R * R - r2) // (R * R)
+                    self.vol.now[node] = int(np.asarray(volform.volume_of(gamma, np.array([c], dtype=object)), dtype=object).reshape(-1)[0]); self.vol.before[node] = self.vol.now[node]
+        self.detectors = [self.node_of(d) for d in world.get('detectors', [])]
         self.A = rule3.largest_below(action // 2)  # the lay's amplitude where the rule's form has no positive term (a lone record's share cannot be read there)
         self.vol_pair = (den - den // gamma, den)
         self.X = phase.amplitude(phase.unit(gamma), WIDTH // 2 - 1)  # the phase pair's amplitude from half the law's width less one, so that a pair's product with a level stays within the width
@@ -152,13 +156,42 @@ class Lean:
         self.orbit = [(int(seed_pair[0][0]), int(seed_pair[1][0]))]  # the table of (cos, sin) as plain integers
         self.counts = {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 0, 'turns': 0, 'light_credits': 0, 'light_laid': 0, 'light_laid_nodes': 0}
         self.max_transient = 0
-        if plane_lays:
-            c = self.content(); factors = self.link_factors(); pace = paces.link_pace_of(self.gamma, c)
-            for s_, at, sense, n in plane_lays:
-                if not 0 <= s_ < self.nl: raise ValueError('the world lays a row the universe has not')
-                A = self.lay_amplitude(s_, at, c, factors, pace); rec = 2 * s_ + (1 if sense > 0 else 0)
-                re, im = self.planes[rec]; re.now[at] = re.now[at] + n * A; im.before[at] = im.before[at] + (1 if sense > 0 else -1) * n * A
+        for s_, at, h, n in packets: self.lay_packet(s_, at, h, n)
 
+    def node_of(self, xyz):
+        """A Node named by the world file: three integers on the board; a Node off the board is refused by name."""
+        at = tuple(int(x) for x in xyz)
+        if len(at) != 3 or any(not 0 <= x < self.cube for x in at): raise ValueError('a Node off the board: %r' % (at,))
+        return at
+
+    def lay_packet(self, s_, at, h, n):
+        """The `at` lay of a plane row: the conjugate pair (the two records at the senses -1 and 1) laid at rest over the raised cosine's envelope of the half-width h (the weights 2, 1 at h = 2; 4, 3, 1 at h = 3; the product over the three axes), each record at the largest amplitude A at which its share at the vacuum's weight, summed over the packet, is at most n quanta of its unit (a search by comparisons); each Node's lines at the band's rest rotation: re_now = A w_i div w_0, re_before = re_now num div den, im_now = 0, im_before = sense re_now s div den with s the pair's sine (Z1's form)."""
+        weights = {2: (2, 1), 3: (4, 3, 1)}.get(h)
+        if weights is None: raise ValueError('a plane packet has the half-width 2 or 3: a body is laid over its packet')
+        num = self.pairs[s_][0]; sn = self.lifts[s_][2]; w0 = weights[0] ** 3
+        envelope = Z(self.shape)
+        for j in np.ndindex(*(2 * h - 1,) * 3):
+            off = [x - (h - 1) for x in j]
+            envelope[tuple((at[a] + off[a]) % self.cube for a in range(3))] += weights[abs(off[0])] * weights[abs(off[1])] * weights[abs(off[2])]
+        c = self.content(); factors = self.link_factors(); r = self.rule(self.pairs[s_], c, factors); self.start_content = c
+        def record(A, sense):
+            re_now = (A * envelope) // w0
+            return Line(re_now, (re_now * num) // self.den, None, self.w), Line(Z(self.shape), sense * ((re_now * sn) // self.den), None, self.w)
+        def share_of(A):
+            re, im = record(A, 1)
+            return int(sum(int(x) for x in (self.share(re, r, vacuum=True) + self.share(im, r, vacuum=True)).reshape(-1)))
+        target = n * self.units[s_]
+        high = 1
+        while share_of(high) <= target: high = high + high
+        low = 0
+        while high - low > 1:
+            middle = (low + high) // 2
+            if share_of(middle) <= target: low = middle
+            else: high = middle
+        for sense in (-1, 1):
+            re, im = record(low, sense); pr, pi = self.planes[2 * s_ + (1 if sense > 0 else 0)]
+            pr.now = pr.now + re.now; pr.before = pr.before + re.before; pi.before = pi.before + im.before
+        self.log.append({'event': 'lay', 'i': 0, 'node': list(at), 'line_pair': s_, 'width': h, 'quanta': n, 'amplitude': low, 'share': share_of(low), 'unit': self.units[s_], 'nodes': int(sum(1 for x in envelope.reshape(-1) if int(x) > 0))})
 
     # ---- the readings at the interval's start
     def content(self): return np.asarray(volform.level_of(self.gamma, self.vol.now), dtype=object)

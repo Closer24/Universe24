@@ -195,6 +195,8 @@ for key, cs in beats_by_line.items():
 cons['energy: the beat (intervals per period) of a body unchanged from one click to the next'] = {'click pairs': total_pairs, 'unchanged': same, 'changed by one': sum(1 for d in changes if d == 1), 'changed by more': sum(1 for d in changes if d > 1)}
 cons['momentum: the credits running cosine'] = 'NOT READ in this toy'
 out['the conservations in the clicks'] = cons
-out['the three constants'] = {'integers per Node': rows[-1]['integers'], 'max state bits': rows[-1]['max bits'], 'max transient bits': rows[-1]['max transient bits'], 'verdict': 'SHOWN: the count constant, every integer and transient within 128'}
+counts_seen = sorted({r['integers'] for r in rows}); state_bits = max(r['max bits'] for r in rows); transient_bits = max(r['max transient bits'] for r in rows)
+out['the three constants'] = {'integers per Node': counts_seen, 'max state bits': state_bits, 'max transient bits': transient_bits, 'first interval past the width': next((r['i'] for r in rows if r['max transient bits'] > 128 or r['max bits'] > 128), None),
+                              'verdict': ('SHOWN: the count constant, every integer and transient within 128' if len(counts_seen) == 1 and state_bits <= 128 and transient_bits <= 128 else 'NOT SHOWN: ' + ('the count changes; ' if len(counts_seen) != 1 else '') + ('the state past 128 bits; ' if state_bits > 128 else '') + ('a transient past 128 bits' if transient_bits > 128 else ''))}
 out['the decoder'] = {'floats used': 0, 'readings': 'quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication'}
 for k, v in out.items(): print(json.dumps({k: v}))

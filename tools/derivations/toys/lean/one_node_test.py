@@ -67,7 +67,7 @@ for k in range(n):
 out['horizon: the interval at which the +x Link re-coupled of itself (the axis line relaxing by Rule3)'] = recoupled
 out['horizon: light credits and births on the board, the Node apart'] = [b.counts['births'], b.counts['body_clicks'], b.counts['refused_orientation'], b.counts['refused_lay'], b.counts['refused_stop']]
 # (ii) the turn, on the plain sea (the world's seed with the hole and the plus-one struck), so that no other Node turns
-sea_world = dict(world, seed=[lay for lay in world['seed'] if 'sea' in lay]); sea_world['seed'] = [{'row': lay['row'], 'sea': lay['sea']} for lay in sea_world['seed']]
+sea_world = dict(world, seed=[lay for lay in world['seed'] if lay.get('lay') == 'sea'])
 t = Lean(universe, sea_world)
 bump = volume_at(t, 40)  # the volume at the content 40 above the sea's Gamma
 t.vol.now[p] = bump; t.vol.before[p] = bump

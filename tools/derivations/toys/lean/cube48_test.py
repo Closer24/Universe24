@@ -27,8 +27,10 @@ def mapped(evs, m, cube):
 def world_image(world, m, cube):
     w = copy.deepcopy(world); w['shape'] = [cube, cube, cube]
     for lay in w.get('seed', []):
-        if 'at' in lay: lay['at'] = list(image(m, tuple(lay['at']), cube))
-        if 'hole' in lay: lay['hole'] = list(image(m, tuple(lay['hole']), cube))
+        for key in ('at', 'centre'):
+            if key in lay: lay[key] = list(image(m, tuple(lay[key]), cube))
+    if 'well' in w.get('control', {}): w['control']['well']['at'] = list(image(m, tuple(w['control']['well']['at']), cube))
+    w['detectors'] = [list(image(m, tuple(d), cube)) for d in w.get('detectors', [])]
     return w
 
 
