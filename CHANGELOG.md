@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- EQ-S1, the hand eq1's sentence for the owner's word (a body's click where nothing arrives laid back on the taken line in the same close, the uniform board returning to Gamma with its clicks), in the open table of docs/UNIVERSE24.md's section 4 with eq1's numbers (the Boss's 6402594332).
 - CS6-S1, the retrace theorem, as a finding of the letter beside CS-S1 in docs/ALGEBRA.md (the hand cs6, the Boss's 6402497841) and the owner's one question for his return, the return to Gamma or to the born board's own bottom, in the open table of docs/UNIVERSE24.md's section 4.
 - CK-S1 and the emission's odd rounding marked built in docs/ALGEBRA.md (toys-5 3177921fb, the hand's confirmation at the merge owed) with David's finding of the standing light credited at the beat 1; the ledger of docs/UNIVERSE24.md's section 4 current with the push read whole and run, A48-S1's next tie, cs5 landed and cs6 running.
 - The hand cs5's sentences for the owner's return, CS5-S2 (one pair in several rows of the universe file) and the crowd's word, with CS4-S2's line per take and cs5's finding of the recurring bang with matter born at every Node, in the open table of docs/UNIVERSE24.md's section 4 (the Boss's 6402183716).
