@@ -390,14 +390,16 @@ def test_the_back_in_time_window_runs_forward_to_k_with_no_snapshot_then_the_win
     assert plain == {"verdict": "MATCH", "intervals": 2, "interval": 1}
 
 
-def test_the_seven_tables_read_the_committed_record_through_the_command_line(tmp_path):  # type: ignore[no-untyped-def]
-    """The smoke check: the CLI with the eras and nodes logs beside the committed record (main b7c648829, 2026-10-24) writes the thirteen tables; 10 epochs over 3 cycles with every line of the clicks log in the first rise (the densest clicks at 13, 39 credits), the ledger's 3 rows with nothing erased across the 2 returns, 7 proton, 14 electron and 33 neutron lists in the births, five tracks (light's and the two born pairs' four records, no identity with two closes), no distance (fewer than two bodies' tracks), 14 dilation rows within one interval of the content's clock, 21 spacing spans at 7 Nodes with the sign -1 and no span after a return."""
+def test_the_seven_tables_read_the_committed_record_through_the_command_line(
+    tmp_path,
+):  # type: ignore[no-untyped-def]
+    """The smoke check: the CLI with the eras and nodes logs beside the committed record (main c60804dc7, 2026-10-24, the bodies clicking every period) writes the thirteen tables; 10 epochs over 3 cycles with clicks in every epoch but the tops' own intervals (the densest at 113, 132 credits), the ledger's 3 rows with nothing erased across the 2 returns and the six records' tracks crossing both, 7 proton, 14 electron and 33 neutron lists in the births, seven tracks (light's and the three born pairs' six records, every one credited at several Nodes in one close), no distance (fewer than two bodies' tracks), 9,644 dilation rows with 32 off by more than one interval, 11,850 spacing spans at 125 Nodes with the sign +1 on both sides of both returns."""
     out = tmp_path / "readings_clicks.json"
     logs = [str(RECORD / f"universe24.{kind}.jsonl") for kind in ("clicks", "eras", "nodes")]
     READER.main([logs[0], "--eras", logs[1], "--nodes", logs[2], "--out", str(out)])
     tables = json.loads(out.read_text("utf-8"))
     assert tables["shape"] == [5, 5, 5] and len(tables["density"]["epochs"]) == 10
-    assert tables["density"]["densest"] == {"interval": 13, "credits": 39}
+    assert tables["density"]["densest"] == {"interval": 113, "credits": 132}
     assert [e["name"] for e in tables["density"]["epochs"]][:6] == [
         "bang",
         "rise",
@@ -409,25 +411,38 @@ def test_the_seven_tables_read_the_committed_record_through_the_command_line(tmp
     assert len(tables["ledger"]["rows"]) == 3 and tables["ledger"]["finding"].startswith(
         "Nothing erased across the 2 returns"
     )
+    assert [len(row["tracks_across"]) for row in tables["ledger"]["rows"]] == [6, 6, 0]
     assert tables["births"]["total"] == {
         "point 0 0 2": {"shown": "point 0 0 2 (electron)", "lists": 14, "records": 28},
         "point 0 2 0": {"shown": "point 0 2 0 (neutron)", "lists": 33, "records": 66},
         "point 2 0 0": {"shown": "point 2 0 0 (proton)", "lists": 7, "records": 14},
     }
-    assert [r["identity"] for r in tables["tracks"]["rows"]] == [
+    tracks = tables["tracks"]["rows"]
+    assert [r["identity"] for r in tracks] == [
         [2, 0],
-        [18, 0],
-        [18, 1],
         [24, 0],
         [24, 1],
+        [18, 0],
+        [18, 1],
+        [16, 0],
+        [16, 1],
     ]
+    assert [r["credits"] for r in tracks] == [54, 3211, 3335, 1326, 1297, 1394, 1358]
+    assert not any(r["one_body"] for r in tracks)
     assert tables["distance"]["note"] == "fewer than two bodies' tracks"
     dilation = tables["dilation_vs_clock"]
-    assert len(dilation["rows"]) == 14 and dilation["verdict"].endswith("at every where judged (14)")
+    assert len(dilation["rows"]) == 9644 and dilation["verdict"].startswith(
+        "off by more than one interval at 32 of 9644 wheres"
+    )
     spacing = tables["spacing_vs_length"]
     assert (spacing["relation"]["spans"], spacing["relation"]["sign"], len(spacing["rows"])) == (
-        21,
-        -1,
-        7,
+        11850,
+        1,
+        125,
     )
-    assert [side["after"]["spans"] for side in spacing["sides"]] == [0, 0]
+    assert [
+        (side["before"]["sign"], side["after"]["spans"], side["same_sign"]) for side in spacing["sides"]
+    ] == [
+        (1, 4933, True),
+        (1, 1613, True),
+    ]
