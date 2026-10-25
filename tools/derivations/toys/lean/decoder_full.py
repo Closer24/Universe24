@@ -250,6 +250,15 @@ def conservations(R, sense_sum, taken_b, booked, beats_by_line):
     return out
 
 
+def entropy(R):
+    """The entropy of the clicks as the law's integer (N1/N2): each birth's draw has its room (the count of numbers the one-Link read could give); H(t) = SUM over the births to t of bit_length(room - 1), read from the record alone, never falling."""
+    H = 0; course = []; last = 0
+    for b in sorted(R.births, key=lambda b: b['i']):
+        H += (int(b['room']) - 1).bit_length() if 'room' in b else 0
+        if b['i'] != last: course.append((b['i'], H)); last = b['i']
+    return {'the entropy of the clicks': {'births with a room': sum(1 for b in R.births if 'room' in b), 'H at the end (bits)': H, 'course (interval, H) at every eighth': course[:: max(1, len(course) // 8)], 'verdict': ('SHOWN: H never falls (a sum of bit lengths), %d bits over %d births' % (H, len(R.births))) if R.births else 'NOT READ: no birth'}}
+
+
 def gates(run):
     """Every gate's verdict with its numbers from the record alone."""
     R = Record(run); out = {}
@@ -258,7 +267,7 @@ def gates(run):
     out |= dilation(R, decoded) | lengthening(R) | course(R) | era(R) | horizon(R)
     out |= tracks(R, decoded)
     found, beats_by_line = light_and_arrow(R); out |= found
-    out |= conservations(R, sense_sum, taken_b, booked, beats_by_line)
+    out |= conservations(R, sense_sum, taken_b, booked, beats_by_line) | entropy(R)
     out['the decoder'] = {'floats used': 0, 'readings': 'quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication'}
     return out
 

@@ -421,9 +421,9 @@ class Lean:
                 digits.append((rem // F, values + 1))
         if origin: self.counts['refused_origin'] += 1; return None
         if coarse: return None
-        digits.sort(); carry = 0
-        for d, b in digits: carry = (carry * b + d) % M
-        return carry
+        digits.sort(); carry = 0; room = 1
+        for d, b in digits: carry = (carry * b + d) % M; room = min(room * b, M)
+        return carry, room  # the number drawn and the draw's room: the count of numbers the read could give (the digits' bases' product, at most M), the click's entropy its bit length
 
     def take(self, at, walls, r_light, line):
         """The exact take at the Node: the light's now moved toward its before by the least count of levels at which the Node's share falls by the walls. The share's term at the Node is w (now^2 + before^2) - S now before - now L, L = SUM_j R_j before_j, over W_i = 2 p_i^2 G^2; moving now by t s (t the direction) its fall is f(s) = [w (now^2 - (now + t s)^2) - t s (S before + L)] div W_i, an exact quadratic in s: the least s with f(s) >= walls by one integer root (largest_below), checked exactly at s - 1, s, s + 1; refused by name where the full move cannot pay."""
@@ -482,44 +482,45 @@ class Lean:
                 if F == 0:
                     self.counts['refused_orientation'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'orientation', 'link': list(j)}); continue
                 plus, minus = (j, at) if F > 0 else (at, j)
-                number = self.read_number(plus, rules)
-                if number is None: continue
-                born.append((plus, (number // self.unit_light) % self.nl, minus, plus))
+                drawn = self.read_number(plus, rules)
+                if drawn is None: continue
+                number, room = drawn
+                born.append((plus, (number // self.unit_light) % self.nl, minus, plus, room))
         return born
 
     def refuse(self, born, owns):
         """The lay refused by name (ALGEBRA.md, The click writes on the lattice, line 186: the lay's Wronskian is exact only at an empty Node): where any of the child's family already stands at its Node, and where two children of one record would land at one Node in one close (the charge made at a crowded lay, W = n^2 A^2; a rule that reaches two Links, named open under the locality law). Returns the births kept."""
         kept = []
-        for at, s_, minus, plus in born:
+        for at, s_, minus, plus, room in born:
             if int(owns[2 * s_][minus]) > 0 or int(owns[2 * s_ + 1][plus]) > 0:
                 self.counts['refused_lay'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'lay', 'standing': int(owns[2 * s_][minus]), 'unit': self.units[s_]}); continue
-            kept.append((at, s_, minus, plus))
+            kept.append((at, s_, minus, plus, room))
         landing = {}
-        for at, s_, minus, plus in kept:
+        for at, s_, minus, plus, room in kept:
             landing[(2 * s_, minus)] = landing.get((2 * s_, minus), 0) + 1; landing[(2 * s_ + 1, plus)] = landing.get((2 * s_ + 1, plus), 0) + 1
-        crowded = [(at, s_, minus, plus) for at, s_, minus, plus in kept if landing[(2 * s_, minus)] > 1 or landing[(2 * s_ + 1, plus)] > 1]
-        for at, s_, minus, plus in crowded:
+        crowded = [k for k in kept if landing[(2 * k[1], k[2])] > 1 or landing[(2 * k[1] + 1, k[3])] > 1]
+        for at, s_, minus, plus, room in crowded:
             self.counts['refused_lay'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'lay', 'children_at_one_node': max(landing[(2 * s_, minus)], landing[(2 * s_ + 1, plus)])})
         return [k for k in kept if k not in crowded]
 
     def births(self, kept, r_light, c, factors, pace):
         """The births kept, every face read before any write: one exact take per Node of its children's walls summed, the start's light paying; then each child laid as one quantum of its record at the quarter turn (re_now A at the - end, im_before -A; re_now A at the + end, im_before +A), the birth logged with its numbers. Returns every Node a taken birth touched."""
         by_node = {}
-        for at, s_, minus, plus in kept: by_node.setdefault(at, []).append((s_, minus, plus))
+        for at, s_, minus, plus, room in kept: by_node.setdefault(at, []).append((s_, minus, plus, room))
         taken = []
         for at in sorted(by_node):
-            children = by_node[at]; walls = sum(2 * self.units[s_] for s_, _m, _p in children)
+            children = by_node[at]; walls = sum(2 * self.units[s_] for s_, _m, _p, _r in children)
             got = self.take_at(at, walls, r_light, len(children))
             if got is not None: taken.append((at, children, walls, got))
         for at, children, walls, (levels, fall, now) in taken:
             self.closes[at] -= 1  # the take counted once per child below
-            for s_, minus, plus in children:
+            for s_, minus, plus, room in children:
                 A = self.lay_amplitude(s_, at, c, factors, pace)
                 self.lay(2 * s_, minus, (A, 0, 0, -A)); self.lay(2 * s_ + 1, plus, (A, 0, 0, A))
                 self.counts['births'] += 1; self.closes[at] += 1
-                self.log.append({'event': 'birth', 'i': self.interval, 'node': list(at), 'line_pair': s_, 'senses': [-1, 1], 'minus': list(minus), 'plus': list(plus), 'taken': fall, 'booked': walls, 'levels': levels, 'light_now_was': now, 'proper': int(self.proper[at]), 'content': int(c[at]), 'amplitude': A, 'children_at_node': len(children)})
+                self.log.append({'event': 'birth', 'i': self.interval, 'node': list(at), 'line_pair': s_, 'senses': [-1, 1], 'minus': list(minus), 'plus': list(plus), 'taken': fall, 'booked': walls, 'levels': levels, 'light_now_was': now, 'proper': int(self.proper[at]), 'content': int(c[at]), 'amplitude': A, 'children_at_node': len(children), 'room': room})
             self.counts['taken'] += fall; self.counts['booked'] += walls
-        return {at for at, _c, _w, _g in taken} | {m for _a, ch, _w, _g in taken for _s, m, _p in ch} | {p_ for _a, ch, _w, _g in taken for _s, _m, p_ in ch}
+        return {at for at, _c, _w, _g in taken} | {m for _a, ch, _w, _g in taken for _s, m, _p, _r in ch} | {p_ for _a, ch, _w, _g in taken for _s, _m, p_, _r in ch}
 
     def bodies(self, start, owns, born_nodes, frozen, r_light):
         """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its re line's upward crossings clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart."""
