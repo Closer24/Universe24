@@ -1,0 +1,44 @@
+counts: {'births': '8', 'taken': '26778443656756367583872', 'booked': '25854797058528791808000', 'body_clicks': '0', 'refused_stop': '8', 'refused_origin': '0', 'refused_lay': '56', 'refused_orientation': '126', 'refused_twist': '105', 'turns': '3506', 'laid': '0', 'laid_nodes': '0'}
+run back: {'intervals': 10, 'exact': 10}
+intervals: 900 cube: 5 den: 15162856759112389
+reader rows (i, max bits, max transient bits, links at the wall, turns, births, body_clicks, volume mean, content min/mean/max):
+   1 114 95 0 1 0 0 1002 [0, 0, 3]
+   15 115 96 0 392 8 0 1668 [31, 124, 267]
+   37 115 98 0 529 8 0 9741 [540, 567, 609]
+   75 115 100 0 606 8 0 26285 [779, 815, 837]
+   150 115 100 0 991 8 0 38057 [880, 908, 971]
+   225 115 100 0 1417 8 0 32756 [823, 870, 950]
+   300 115 101 0 1786 8 0 48948 [924, 970, 1030]
+   375 115 102 0 2042 8 0 89693 [1082, 1121, 1211]
+   450 115 102 0 2273 8 0 109022 [1140, 1170, 1225]
+   525 115 102 0 2536 8 0 94509 [1097, 1135, 1181]
+   600 115 102 0 2790 8 0 91964 [1082, 1127, 1198]
+   675 115 103 0 2992 8 0 157764 [1225, 1262, 1333]
+   750 115 103 0 3145 8 0 229914 [1303, 1356, 1411]
+   825 115 103 0 3324 8 0 255863 [1314, 1383, 1453]
+   900 115 103 0 3506 8 0 232467 [1303, 1359, 1445]
+course (i, cmax, node index, X at it, X bits, frozen count, held Links, turned count):
+   (1, 3, 25, 1014, 10, 0, 0, 1)
+   (100, 912, 100, 38552, 16, 0, 0, 6)
+   (200, 942, 100, 43310, 16, 0, 0, 4)
+   (300, 1030, 0, 62161, 16, 0, 0, 0)
+   (400, 1245, 0, 146035, 18, 0, 0, 0)
+   (500, 1232, 0, 139223, 18, 0, 0, 8)
+   (600, 1198, 106, 121567, 17, 0, 0, 4)
+   (700, 1403, 50, 273135, 19, 0, 0, 0)
+   (800, 1484, 50, 383295, 19, 0, 0, 4)
+   (900, 1445, 0, 323462, 19, 0, 0, 4)
+content at the doublings (t, cmax, cmax(2t) - cmax(t)):
+   25 453 50 738 285
+   50 738 100 912 174
+   100 912 200 942 30
+   200 942 400 1245 303
+   400 1245 800 1484 239
+first interval at which the max content passes each hundred:
+   [(100, 9), (200, 14), (300, 19), (400, 21), (500, 27), (600, 37), (700, 46), (800, 57), (900, 96), (1000, 287), (1100, 321), (1200, 374), (1300, 625), (1400, 700)]
+first interval with a Link held at the wall: None ; first frozen Node: None
+max held Links over the run: 0 max frozen: 0
+the deepest Node at the end (index 0): content at every 100 intervals: [0, 887, 902, 1033, 1242, 1235, 1124, 1306, 1436, 1445]
+its X at the end 323462 bits 19 ; v at the end 573 ; v at the middle 3681
+the deepest Node (0, 0, 0) : credits 0 births 0
+credits in the record: 0 ; the deepest content at a credit: None

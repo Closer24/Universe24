@@ -1,0 +1,279 @@
+{
+ "record": "bh2_bodies300.json",
+ "den bits": 31,
+ "cube": 7,
+ "intervals": 300,
+ "frozen content": 3793,
+ "largest content on the board over the run (interval, content)": [
+  299,
+  1042
+ ],
+ "first interval with a frozen Node": null,
+ "first interval with a Link at the wall": null,
+ "Node-intervals frozen": 0,
+ "Link-intervals at the wall": 0,
+ "course every twelfth (interval, max content, frozen Nodes, Links at the wall, max X bits)": [
+  [
+   1,
+   66,
+   0,
+   0,
+   11
+  ],
+  [
+   26,
+   437,
+   0,
+   0,
+   13
+  ],
+  [
+   51,
+   709,
+   0,
+   0,
+   15
+  ],
+  [
+   76,
+   887,
+   0,
+   0,
+   16
+  ],
+  [
+   101,
+   924,
+   0,
+   0,
+   16
+  ],
+  [
+   126,
+   973,
+   0,
+   0,
+   16
+  ],
+  [
+   151,
+   984,
+   0,
+   0,
+   16
+  ],
+  [
+   176,
+   957,
+   0,
+   0,
+   16
+  ],
+  [
+   201,
+   894,
+   0,
+   0,
+   16
+  ],
+  [
+   226,
+   894,
+   0,
+   0,
+   16
+  ],
+  [
+   251,
+   944,
+   0,
+   0,
+   16
+  ],
+  [
+   276,
+   981,
+   0,
+   0,
+   16
+  ],
+  [
+   300,
+   1042,
+   0,
+   0,
+   16
+  ]
+ ],
+ "marks (interval, max state bits, max transient bits, births, body clicks, turns, links at the wall, content max)": [
+  [
+   1,
+   92,
+   72,
+   0,
+   0,
+   0,
+   0,
+   66
+  ],
+  [
+   5,
+   92,
+   72,
+   0,
+   0,
+   2,
+   0,
+   103
+  ],
+  [
+   12,
+   92,
+   72,
+   0,
+   19,
+   136,
+   0,
+   176
+  ],
+  [
+   25,
+   92,
+   74,
+   0,
+   68,
+   705,
+   0,
+   398
+  ],
+  [
+   50,
+   92,
+   76,
+   0,
+   83,
+   883,
+   0,
+   716
+  ],
+  [
+   75,
+   92,
+   77,
+   0,
+   83,
+   1049,
+   0,
+   892
+  ],
+  [
+   100,
+   92,
+   77,
+   0,
+   83,
+   1262,
+   0,
+   919
+  ],
+  [
+   125,
+   92,
+   77,
+   0,
+   83,
+   1643,
+   0,
+   968
+  ],
+  [
+   150,
+   92,
+   77,
+   0,
+   83,
+   2046,
+   0,
+   981
+  ],
+  [
+   175,
+   92,
+   77,
+   0,
+   83,
+   2390,
+   0,
+   965
+  ],
+  [
+   200,
+   92,
+   77,
+   0,
+   83,
+   2735,
+   0,
+   899
+  ],
+  [
+   225,
+   92,
+   77,
+   0,
+   83,
+   3114,
+   0,
+   917
+  ],
+  [
+   250,
+   92,
+   77,
+   0,
+   83,
+   3535,
+   0,
+   947
+  ],
+  [
+   275,
+   92,
+   77,
+   0,
+   83,
+   3890,
+   0,
+   971
+  ],
+  [
+   300,
+   92,
+   78,
+   0,
+   83,
+   4206,
+   0,
+   1042
+  ]
+ ],
+ "counts": {
+  "births": "0",
+  "taken": "0",
+  "booked": "0",
+  "body_clicks": "83",
+  "refused_stop": "76",
+  "refused_origin": "0",
+  "refused_lay": "48",
+  "refused_orientation": "49",
+  "refused_twist": "110",
+  "turns": "4206",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "run back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "horizon reached (content at or past the frozen content)": false
+}

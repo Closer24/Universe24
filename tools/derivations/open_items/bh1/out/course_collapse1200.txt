@@ -1,0 +1,44 @@
+counts: {'births': '0', 'taken': '0', 'booked': '0', 'body_clicks': '185', 'refused_stop': '19', 'refused_origin': '0', 'refused_lay': '0', 'refused_orientation': '0', 'refused_twist': '0', 'turns': '14415', 'laid': '0', 'laid_nodes': '0'}
+run back: {'intervals': 10, 'exact': 10}
+intervals: 600 cube: 9 den: 1655909141
+reader rows (i, max bits, max transient bits, links at the wall, turns, births, body_clicks, volume mean, content min/mean/max):
+   1 92 72 0 0 0 0 1008 [0, 1, 87]
+   10 92 73 0 0 0 50 1550 [28, 105, 315]
+   25 92 75 0 0 0 117 3769 [312, 330, 557]
+   50 92 76 0 1 0 149 8376 [518, 530, 683]
+   100 92 77 0 862 0 165 14434 [639, 666, 790]
+   150 92 77 0 2854 0 168 19958 [699, 746, 894]
+   200 92 78 0 4387 0 172 35767 [821, 892, 1047]
+   250 92 78 0 5579 0 173 50650 [952, 979, 1143]
+   300 92 78 0 6834 0 175 53685 [944, 994, 1165]
+   350 92 78 0 8343 0 176 46858 [899, 959, 1091]
+   400 92 78 0 9753 0 178 41474 [851, 928, 1112]
+   450 92 78 0 11053 0 180 49928 [922, 975, 1128]
+   500 92 79 0 12153 0 182 68102 [1008, 1053, 1205]
+   550 92 79 0 13402 0 183 83391 [1053, 1103, 1195]
+   600 92 79 0 14415 0 185 87066 [1062, 1114, 1228]
+course (i, cmax, node index, X at it, X bits, frozen count, held Links, turned count):
+   (1, 87, 364, 1417, 11, 0, 0, 0)
+   (100, 790, 364, 23707, 15, 0, 0, 48)
+   (200, 1047, 364, 66367, 17, 0, 0, 12)
+   (300, 1165, 364, 106046, 17, 0, 0, 0)
+   (400, 1112, 364, 85821, 17, 0, 0, 0)
+   (500, 1205, 364, 124638, 17, 0, 0, 0)
+   (600, 1228, 364, 135711, 18, 0, 0, 0)
+content at the doublings (t, cmax, cmax(2t) - cmax(t)):
+   25 557 50 683 126
+   50 683 100 790 107
+   100 790 200 1047 257
+   200 1047 400 1112 65
+first interval at which the max content passes each hundred:
+   [(100, 2), (200, 3), (300, 9), (400, 18), (500, 22), (600, 29), (700, 40), (800, 67), (900, 113), (1000, 195), (1100, 233), (1200, 488)]
+first interval with a Link held at the wall: None ; first frozen Node: None
+max held Links over the run: 0 max frozen: 0
+the deepest Node at the end (index 364): content at every 100 intervals: [87, 790, 1056, 1172, 1106, 1201, 1228]
+its X at the end 135711 bits 18 ; v at the end 2033 ; v at the middle 2943
+the deepest Node (4, 4, 4) : credits 29 births 0
+  credit intervals (first 8, last 8): [11, 17, 24, 32, 42, 55, 65, 85] [376, 405, 432, 462, 500, 536, 559, 594]
+  spacings in board intervals (first 8, last 8): [6, 7, 8, 10, 13, 10, 20, 12] [22, 29, 27, 30, 38, 36, 23, 35]
+  the contents at the credits (first 4, last 4): [315, 383, 526, 633] [1208, 1191, 1218, 1191]
+  proper at the credits (last 4): [193348, 204491, 211438, 221822] beats (last 4): [16, 17, 23, 18]
+credits in the record: 185 ; the deepest content at a credit: 1218

@@ -1,0 +1,279 @@
+{
+ "record": "bh2_collapse1200.json",
+ "den bits": 31,
+ "cube": 9,
+ "intervals": 600,
+ "frozen content": 3793,
+ "largest content on the board over the run (interval, content)": [
+  566,
+  1245
+ ],
+ "first interval with a frozen Node": null,
+ "first interval with a Link at the wall": null,
+ "Node-intervals frozen": 0,
+ "Link-intervals at the wall": 0,
+ "course every twelfth (interval, max content, frozen Nodes, Links at the wall, max X bits)": [
+  [
+   1,
+   87,
+   0,
+   0,
+   11
+  ],
+  [
+   51,
+   675,
+   0,
+   0,
+   14
+  ],
+  [
+   101,
+   790,
+   0,
+   0,
+   15
+  ],
+  [
+   151,
+   892,
+   0,
+   0,
+   16
+  ],
+  [
+   201,
+   1056,
+   0,
+   0,
+   17
+  ],
+  [
+   251,
+   1137,
+   0,
+   0,
+   17
+  ],
+  [
+   301,
+   1172,
+   0,
+   0,
+   17
+  ],
+  [
+   351,
+   1094,
+   0,
+   0,
+   17
+  ],
+  [
+   401,
+   1106,
+   0,
+   0,
+   17
+  ],
+  [
+   451,
+   1134,
+   0,
+   0,
+   17
+  ],
+  [
+   501,
+   1201,
+   0,
+   0,
+   17
+  ],
+  [
+   551,
+   1195,
+   0,
+   0,
+   17
+  ],
+  [
+   600,
+   1228,
+   0,
+   0,
+   18
+  ]
+ ],
+ "marks (interval, max state bits, max transient bits, births, body clicks, turns, links at the wall, content max)": [
+  [
+   1,
+   92,
+   72,
+   0,
+   0,
+   0,
+   0,
+   87
+  ],
+  [
+   10,
+   92,
+   73,
+   0,
+   50,
+   0,
+   0,
+   315
+  ],
+  [
+   25,
+   92,
+   75,
+   0,
+   117,
+   0,
+   0,
+   557
+  ],
+  [
+   50,
+   92,
+   76,
+   0,
+   149,
+   1,
+   0,
+   683
+  ],
+  [
+   100,
+   92,
+   77,
+   0,
+   165,
+   862,
+   0,
+   790
+  ],
+  [
+   150,
+   92,
+   77,
+   0,
+   168,
+   2854,
+   0,
+   894
+  ],
+  [
+   200,
+   92,
+   78,
+   0,
+   172,
+   4387,
+   0,
+   1047
+  ],
+  [
+   250,
+   92,
+   78,
+   0,
+   173,
+   5579,
+   0,
+   1143
+  ],
+  [
+   300,
+   92,
+   78,
+   0,
+   175,
+   6834,
+   0,
+   1165
+  ],
+  [
+   350,
+   92,
+   78,
+   0,
+   176,
+   8343,
+   0,
+   1091
+  ],
+  [
+   400,
+   92,
+   78,
+   0,
+   178,
+   9753,
+   0,
+   1112
+  ],
+  [
+   450,
+   92,
+   78,
+   0,
+   180,
+   11053,
+   0,
+   1128
+  ],
+  [
+   500,
+   92,
+   79,
+   0,
+   182,
+   12153,
+   0,
+   1205
+  ],
+  [
+   550,
+   92,
+   79,
+   0,
+   183,
+   13402,
+   0,
+   1195
+  ],
+  [
+   600,
+   92,
+   79,
+   0,
+   185,
+   14415,
+   0,
+   1228
+  ]
+ ],
+ "counts": {
+  "births": "0",
+  "taken": "0",
+  "booked": "0",
+  "body_clicks": "185",
+  "refused_stop": "19",
+  "refused_origin": "0",
+  "refused_lay": "0",
+  "refused_orientation": "0",
+  "refused_twist": "0",
+  "turns": "14415",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "run back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "horizon reached (content at or past the frozen content)": false
+}

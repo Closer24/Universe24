@@ -1,0 +1,23 @@
+world worlds5/world_chiral_60.json cube 5 den 15162856759112389 Gamma 1000 G 16 form none
+centre (2, 2, 2) fed to the content 3793 X 4268834097 bits 32 ; the frozen content 3793 ; clock there 22 ; w bits 85
+i | X bits | content | p0 | pace | v | q (write quotient) | rim max content | rim X bits | frozen | held | transient bits | state bits | turned at centre
+1 32 3837 22 0 0 5963937 3556 31 1 0 117 117 False
+2 32 3837 22 0 5959805 5956474 3707 32 1 0 117 116 False
+3 33 3837 22 0 11912141 5941469 3792 32 1 0 117 116 False
+4 33 3837 22 0 17849460 5918764 3885 33 7 0 117 116 False
+5 33 3837 22 0 23764057 5888126 3935 33 7 0 117 116 False
+6 33 3837 22 0 29647994 5849256 3987 33 19 0 118 117 False
+7 33 3837 22 0 35493031 5801784 4043 34 27 0 118 117 False
+8 33 3837 22 0 41290562 5745293 4043 34 27 0 118 117 False
+9 33 3837 22 0 47031562 5679315 4102 34 27 0 118 117 False
+10 33 3837 22 0 52706539 5619123 4102 34 47 0 118 117 False
+11 33 3837 22 0 58321273 5548420 4164 34 57 0 119 118 False
+12 33 3837 22 0 63865247 5466668 4164 34 81 0 119 118 False
+20 33 3885 21 0 104700795 4544492 4302 35 125 0 119 118 False
+30 33 3935 20 0 145636503 3483782 4379 36 125 0 120 119 False
+40 33 3987 19 0 176768975 2656201 4462 36 125 0 120 119 False
+50 34 4043 18 0 200581375 2045196 4553 37 125 0 121 120 False
+60 34 4102 17 0 219202959 1605440 4553 37 125 0 121 120 False
+clicks at the centre: 0 ; births with a child at the centre: 0 ; counts: {'births': 1, 'taken': 3245741516136020660403, 'booked': 3231849632316098976000, 'body_clicks': 0, 'refused_stop': 1, 'refused_origin': 0, 'refused_lay': 29, 'refused_orientation': 5, 'refused_twist': 0, 'turns': 31, 'laid': 0, 'laid_nodes': 0}
+X at the centre at the end: 12508663091 bits 34 ; content 4102 ; max transient bits 121 ; state bits 120
+run back: 60 of 60

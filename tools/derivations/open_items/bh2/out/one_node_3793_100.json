@@ -1,0 +1,1058 @@
+{
+ "law": {
+  "fed content, X at the start (value, bits)": [
+   3793,
+   4268834097,
+   32
+  ],
+  "course at intervals 1, 2, 3, 5, 10, 20, 50, N": [
+   {
+    "i": 1,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     0,
+     0
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      11,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      23
+     ]
+    ],
+    "proper increment at the centre (the clock)": 22,
+    "frozen Nodes": 1,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     83,
+     83,
+     83,
+     83,
+     83,
+     83
+    ],
+    "largest neighbour content": 0,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     1
+    ],
+    "max transient bits": 117,
+    "max state bits": 117
+   },
+   {
+    "i": 2,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     23,
+     1
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      12,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      24
+     ]
+    ],
+    "proper increment at the centre (the clock)": 22,
+    "frozen Nodes": 1,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     63,
+     63,
+     63,
+     63,
+     63,
+     63
+    ],
+    "largest neighbour content": 3556,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 3,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     24,
+     1
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      12,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      33,
+      25
+     ]
+    ],
+    "proper increment at the centre (the clock)": 22,
+    "frozen Nodes": 1,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     63,
+     63,
+     63,
+     63,
+     63,
+     63
+    ],
+    "largest neighbour content": 3707,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 5,
+    "content": 3837,
+    "X bits": 33,
+    "X velocity (now - before) bits, sign": [
+     25,
+     1
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      13,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      33,
+      25
+     ]
+    ],
+    "proper increment at the centre (the clock)": 22,
+    "frozen Nodes": 7,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 3885,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 10,
+    "content": 3837,
+    "X bits": 33,
+    "X velocity (now - before) bits, sign": [
+     26,
+     1
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      13,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      33,
+      26
+     ]
+    ],
+    "proper increment at the centre (the clock)": 22,
+    "frozen Nodes": 27,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 4102,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 118,
+    "max state bits": 117
+   },
+   {
+    "i": 20,
+    "content": 3885,
+    "X bits": 33,
+    "X velocity (now - before) bits, sign": [
+     27,
+     1
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      14,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      33,
+      27
+     ]
+    ],
+    "proper increment at the centre (the clock)": 21,
+    "frozen Nodes": 27,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 4302,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 119,
+    "max state bits": 118
+   },
+   {
+    "i": 50,
+    "content": 4043,
+    "X bits": 34,
+    "X velocity (now - before) bits, sign": [
+     28,
+     1
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      15,
+      9
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      34,
+      28
+     ]
+    ],
+    "proper increment at the centre (the clock)": 18,
+    "frozen Nodes": 27,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 4553,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 121,
+    "max state bits": 120
+   },
+   {
+    "i": 100,
+    "content": 4231,
+    "X bits": 35,
+    "X velocity (now - before) bits, sign": [
+     28,
+     1
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      16,
+      8
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      35,
+      28
+     ]
+    ],
+    "proper increment at the centre (the clock)": 15,
+    "frozen Nodes": 27,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 4653,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 122,
+    "max state bits": 121
+   }
+  ],
+  "X at the end (bits), content at the end": [
+   35,
+   4231
+  ],
+  "X second difference bits per interval (first 5, last 3)": [
+   [
+    23,
+    1
+   ],
+   [
+    23,
+    1
+   ],
+   [
+    23,
+    1
+   ],
+   [
+    23,
+    1
+   ],
+   [
+    23,
+    1
+   ],
+   [
+    20,
+    1
+   ],
+   [
+    20,
+    1
+   ],
+   [
+    20,
+    1
+   ]
+  ],
+  "X velocity at the end (bits, sign)": [
+   28,
+   1
+  ],
+  "proper count at the centre: start, end": [
+   0,
+   1847
+  ],
+  "clicks at the centre": 0,
+  "clicks on the board (births, body clicks)": [
+   0,
+   0
+  ],
+  "max transient bits over the run": 122,
+  "max state bits over the run": 121,
+  "run back exact of N": 100,
+  "frozen Node-intervals": 2548
+ },
+ "hold": {
+  "fed content, X at the start (value, bits)": [
+   3793,
+   4268834097,
+   32
+  ],
+  "course at intervals 1, 2, 3, 5, 10, 20, 50, N": [
+   {
+    "i": 1,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     0,
+     0
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      0
+     ]
+    ],
+    "proper increment at the centre (the clock)": 0,
+    "frozen Nodes": 1,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     83,
+     83,
+     83,
+     83,
+     83,
+     83
+    ],
+    "largest neighbour content": 0,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     1
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 2,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     0,
+     0
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      0
+     ]
+    ],
+    "proper increment at the centre (the clock)": 0,
+    "frozen Nodes": 1,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     63,
+     63,
+     63,
+     63,
+     63,
+     63
+    ],
+    "largest neighbour content": 3556,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 3,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     0,
+     0
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      0
+     ]
+    ],
+    "proper increment at the centre (the clock)": 0,
+    "frozen Nodes": 1,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     63,
+     63,
+     63,
+     63,
+     63,
+     63
+    ],
+    "largest neighbour content": 3707,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 5,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     0,
+     0
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      0
+     ]
+    ],
+    "proper increment at the centre (the clock)": 0,
+    "frozen Nodes": 7,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 3885,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 10,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     0,
+     0
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      0
+     ]
+    ],
+    "proper increment at the centre (the clock)": 0,
+    "frozen Nodes": 27,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 3885,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 20,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     0,
+     0
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      0
+     ]
+    ],
+    "proper increment at the centre (the clock)": 0,
+    "frozen Nodes": 27,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 3885,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 50,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     0,
+     0
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      0
+     ]
+    ],
+    "proper increment at the centre (the clock)": 0,
+    "frozen Nodes": 27,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 3885,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   },
+   {
+    "i": 100,
+    "content": 3837,
+    "X bits": 32,
+    "X velocity (now - before) bits, sign": [
+     0,
+     0
+    ],
+    "lines at the centre (level bits, velocity bits) per row first line": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      10,
+      10
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      0
+     ]
+    ],
+    "proper increment at the centre (the clock)": 0,
+    "frozen Nodes": 27,
+    "neighbour reach toward the centre bits (gap-0 row)": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "largest neighbour content": 3885,
+    "clicks at the centre so far": 0,
+    "births, body clicks, turns": [
+     0,
+     0,
+     3
+    ],
+    "max transient bits": 117,
+    "max state bits": 116
+   }
+  ],
+  "X at the end (bits), content at the end": [
+   32,
+   3837
+  ],
+  "X second difference bits per interval (first 5, last 3)": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ]
+  ],
+  "X velocity at the end (bits, sign)": [
+   0,
+   0
+  ],
+  "proper count at the centre: start, end": [
+   0,
+   0
+  ],
+  "clicks at the centre": 0,
+  "clicks on the board (births, body clicks)": [
+   0,
+   0
+  ],
+  "max transient bits over the run": 117,
+  "max state bits over the run": 116,
+  "run back exact of N": 100,
+  "frozen Node-intervals": 2548
+ }
+}
