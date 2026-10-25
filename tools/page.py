@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, the board drawn larger or smaller with the mean length e^U between the record's least and largest, so the Links' lengthening and shortening are both seen, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and Node and as ticks with their labels on the bar; one header line from the two files as they are. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, the board drawn larger or smaller with the mean length e^U between the record's least and largest, so the Links' lengthening and shortening are both seen, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and Node and as ticks with their labels on the bar; one header line from the two files as they are. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -48,8 +48,7 @@ const lines = D.nodes.map(l => ({i: l.i, X: words(l.X), content: words(l.content
 const n = lines.length;
 let t = 1, playing = true, speed = 6;
 const yaw = 0.62, pitch = 0.42;
-function place(i, grow) {
-  const x = Math.floor(i / (c * c)) - (c - 1) / 2, y = (Math.floor(i / c) % c) - (c - 1) / 2, z = (i % c) - (c - 1) / 2;
+function place(x, y, z, grow) {
   const x1 = x * Math.cos(yaw) - y * Math.sin(yaw), y1 = x * Math.sin(yaw) + y * Math.cos(yaw);
   const y2 = y1 * Math.cos(pitch) - z * Math.sin(pitch), z2 = y1 * Math.sin(pitch) + z * Math.cos(pitch);
   const s = grow * canvas.width / (c + 1.5);
@@ -59,7 +58,19 @@ function length(X) { return Math.pow(Math.max(X, 1) / G, 0.25); }
 function meanLength(line) { let sum = 0; for (const X of line.X) sum += length(X); return sum / line.X.length; }
 const means = lines.map(meanLength), least = Math.min(...means), most = Math.max(...means);
 let spots = [];
-function lay(line) { const grow = 0.55 + 0.45 * (meanLength(line) - least) / Math.max(most - least, 1e-9); spots = Array.from({length: c * c * c}, (_, i) => place(i, grow)); }
+function lay(line) {
+  const mean = meanLength(line), grow = 0.55 + 0.45 * (mean - least) / Math.max(most - least, 1e-9), lens = line.X.map(length);
+  const at = (x, y, z) => x * c * c + y * c + z, pos = [[], [], []];
+  for (let p = 0; p < c; p++) for (let q = 0; q < c; q++) {
+    const linesOf = [k => at(k, p, q), k => at(p, k, q), k => at(p, q, k)];
+    for (let a = 0; a < 3; a++) {
+      let total = 0; for (let k = 0; k < c; k++) total += lens[linesOf[a](k)];
+      let cum = 0;
+      for (let k = 0; k < c; k++) { pos[a][linesOf[a](k)] = (cum + lens[linesOf[a](k)] / 2 - total / 2) / mean; cum += lens[linesOf[a](k)]; }
+    }
+  }
+  spots = Array.from({length: c * c * c}, (_, i) => place(pos[0][i], pos[1][i], pos[2][i], grow));
+}
 const tones = getComputedStyle(document.documentElement).getPropertyValue("--tones").split(",").map(s => s.trim());
 const wall = getComputedStyle(document.documentElement).getPropertyValue("--wall").trim();
 function tone(line) { return tones[line % tones.length]; }

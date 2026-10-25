@@ -43,8 +43,7 @@ const lines = D.nodes.map(l => ({i: l.i, X: words(l.X), content: words(l.content
 const n = lines.length;
 let t = 1, playing = true, speed = 6;
 const yaw = 0.62, pitch = 0.42;
-function place(i, grow) {
-  const x = Math.floor(i / (c * c)) - (c - 1) / 2, y = (Math.floor(i / c) % c) - (c - 1) / 2, z = (i % c) - (c - 1) / 2;
+function place(x, y, z, grow) {
   const x1 = x * Math.cos(yaw) - y * Math.sin(yaw), y1 = x * Math.sin(yaw) + y * Math.cos(yaw);
   const y2 = y1 * Math.cos(pitch) - z * Math.sin(pitch), z2 = y1 * Math.sin(pitch) + z * Math.cos(pitch);
   const s = grow * canvas.width / (c + 1.5);
@@ -54,7 +53,19 @@ function length(X) { return Math.pow(Math.max(X, 1) / G, 0.25); }
 function meanLength(line) { let sum = 0; for (const X of line.X) sum += length(X); return sum / line.X.length; }
 const means = lines.map(meanLength), least = Math.min(...means), most = Math.max(...means);
 let spots = [];
-function lay(line) { const grow = 0.55 + 0.45 * (meanLength(line) - least) / Math.max(most - least, 1e-9); spots = Array.from({length: c * c * c}, (_, i) => place(i, grow)); }
+function lay(line) {
+  const mean = meanLength(line), grow = 0.55 + 0.45 * (mean - least) / Math.max(most - least, 1e-9), lens = line.X.map(length);
+  const at = (x, y, z) => x * c * c + y * c + z, pos = [[], [], []];
+  for (let p = 0; p < c; p++) for (let q = 0; q < c; q++) {
+    const linesOf = [k => at(k, p, q), k => at(p, k, q), k => at(p, q, k)];
+    for (let a = 0; a < 3; a++) {
+      let total = 0; for (let k = 0; k < c; k++) total += lens[linesOf[a](k)];
+      let cum = 0;
+      for (let k = 0; k < c; k++) { pos[a][linesOf[a](k)] = (cum + lens[linesOf[a](k)] / 2 - total / 2) / mean; cum += lens[linesOf[a](k)]; }
+    }
+  }
+  spots = Array.from({length: c * c * c}, (_, i) => place(pos[0][i], pos[1][i], pos[2][i], grow));
+}
 const tones = getComputedStyle(document.documentElement).getPropertyValue("--tones").split(",").map(s => s.trim());
 const wall = getComputedStyle(document.documentElement).getPropertyValue("--wall").trim();
 function tone(line) { return tones[line % tones.length]; }
