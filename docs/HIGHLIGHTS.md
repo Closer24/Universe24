@@ -13,6 +13,17 @@ everything is read. The project's four documents are [docs/ALGEBRA.md](ALGEBRA.m
 further research, and this one, the decisions. Where a line
 points at the law, the law's line governs and no formula is restated here.
 
+## The generic Node: the owner's words of 2026-10-25
+
+- The Node's sentence is the head of the law (03:4x to 05:1x UTC, "closed"; ALGEBRA.md, **The Node**): a place on the torus with six Links, holding the same integers as every other place, stepping every interval by Rule3 and a fixed list of acts from what it reads over one Link, writing a line when it reads a whole quantum; it knows no body, mass, well, family, birth or click; those are the decoder's readings, as nature's observers read nature; the mass appears at the click and nowhere on the board.
+- Three constants (00:2x UTC through the adviser, 01:4x UTC confirmed): a Node always holds the same count of integers, no birth adds a row; it always does the same acts, no loop grows with the records or the board; every integer stands within 128 bits, in the state and in every act's transient.
+- 128 bits and no den of nature (04:1x UTC): den is bounded by the width (the wall 6 den Gamma^2 G^2 within 128 bits, den near 2^101 at Gamma 1,000 and G 16) and chosen by its structure, the primes 1 mod 4, no larger than what shows the phenomenon; two worlds on one engine, a den within the width for the record and a small den for the fast demonstration.
+- The birth is the Link's (04:3x UTC, under derivation by two hands): two quanta of light meeting on a Link lay a child at each end at opposite senses; a Node takes up to six children in one close, one per Link; the sign's one shared row stands or falls with it (the one-Node pair cancels bit for bit, measured 2026-10-25).
+- The click moves one whole quantum within the fixed lines of the Node and its six Links and knows no family; the decoder names the families from the beat before and after; the click satisfies the uncertainty principle, read in the decoder's uncertainty table on every record.
+- Everything that showed once must show again: the record's six checks, the run back exact, the lay guard, the cube's 48 and the bijection of every act but the line stand as gates on every stage of the generic Node.
+- Only the Boss writes code, with his hands; the adviser (David) derives, measures on his own toys and advises on #2187 and writes nothing into the repository (01:3x UTC).
+- Two hands derive, blind to each other, before any code or document; a cold read compares them number by number; code is written from the agreed derivation alone (01:1x UTC).
+
 ## Universe24 at 4.0.0: the owner's words of 2026-10-24
 
 - Only the new Universe24; everything unrelated out (05:4x UTC: "Make sure you work only on things related to the new Universe24... everything unrelated, throw out, and move on. A clean main that is only Universe24.. no parameters."): one world, one universe, one Node, everything local; the former worlds stand as frozen records and run nothing.
@@ -84,7 +95,7 @@ Each line names the clause of [docs/ALGEBRA.md](ALGEBRA.md) that governs it by i
 
 - The method's standard is that the paper's reviewers can find no problem, no bug, none in the derivations, nothing; every gate and every whole read serves that standard.
 - Two hands, the first hand and the confirm, before anything enters the law, the engine or the paper.
-- The Boss writes no code: workers, decision lines, briefs and the cold read of every landing alone; a landing is one push to main after the full check at exit 0 under the lock and the Boss's cold read, with no pull request, on the owner's word of 2026-10-23.
+- The Boss alone writes code, through his hands with a written brief each, and reads every landing cold; a landing is one push to main after the full check at exit 0 under the lock, with no pull request (the owner's words of 2026-10-23 and 2026-10-25).
 - A fix enters as the code, its one unit test and the check at exit 0; a physics change keeps the law's line first, on the owner's word.
 - The team works by one method (one source per fact; one gate set on every landing, nothing lands red; whole reads until silence; one pace, no restructuring while a fill is open); this document points at it and does not restate it.
 - A definition is named in one clause on every sign, factor and normalization.

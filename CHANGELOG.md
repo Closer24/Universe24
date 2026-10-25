@@ -4,7 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
-Nothing stands here: every landing to 2026-10-25 is in the 4.0.0 entry below.
+- The Node's sentence at the head of the law (docs/ALGEBRA.md, **The Node**, the owner's word of 2026-10-25, closed at 05:1x UTC): the generic Node, its fixed state, its one Link, its fixed acts with the birth on the Link, its lines, what it knows nothing of, the 128 bits and the den bounded by them; the engine's departures from it named in the clause and in FURTHER_RESEARCH.md; docs/HIGHLIGHTS.md gains the day's decisions (the three constants, the 128 bits, the Link's birth under derivation, the adviser and the two hands) and the method's line on who writes code. No engine change.
 
 ## Version 4.0.0 (2026-10-25; Universe24: one Node, one universe; the landings of 2026-10-19 to 2026-10-25, the pushes to main of 2026-10-23 and 2026-10-24, PUSH 1 to PUSH 39, by sha below; no release is tagged for 4.0.0 by the owner's word of 2026-10-24, 23:5x UTC; the version number stands in the files, the concept DOI resolves to the latest Zenodo deposit (3.0.0), the concept DOI 10.5281/zenodo.23466436)
 
