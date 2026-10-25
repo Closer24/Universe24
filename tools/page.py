@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch), the board's size the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead (its clock reversed at the top) and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding two seconds on every new label, a legend line under the controls, the reading's event lines as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch), the board's size the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading names (each bang, the era of matter, the acceleration) and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding two seconds on every new label, a legend line under the controls, the reading's event lines as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -21,6 +21,7 @@ html, body { margin: 0; background: var(--bg); color: var(--fg); font: 14px var(
 #stage { position: relative; }
 #board { display: block; margin: 0 auto; background: var(--board); border: 1px solid var(--line); }
 #bar { position: relative; height: 70px; margin: 8px 16px 4px; background: var(--panel); border: 1px solid var(--line); cursor: pointer; overflow: visible; }
+#bar .era { position: absolute; top: 0; bottom: 0; pointer-events: none; }
 #bar .tick { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--label); }
 #bar .name { position: absolute; font-size: 10px; color: var(--label); font-family: var(--mono); white-space: nowrap; padding-left: 4px; pointer-events: none; }
 #bar .bang { position: absolute; bottom: 1px; font-size: 10px; color: var(--muted); font-family: var(--mono); }
@@ -118,7 +119,9 @@ function seek(i) { let k = 0; while (k + 1 < n && lines[k].i < i) k++; return k 
 function draw() {
   const line = lines[t - 1], before = lines[Math.max(t - 2, 0)], step = Math.max(1, line.i - before.i);
   const held = new Set(line.held.map(h => h[0] + ":" + h[1]));
-  const frozen = new Set(line.frozen), turned = new Set(line.turned);
+  const frozen = new Set(line.frozen), turned = new Map();
+  for (let back = 0; back < 8 && t - 1 - back >= 0; back++) for (const i of lines[t - 1 - back].turned) if (!turned.has(i)) turned.set(i, back);
+  let wholeTurn = null; for (let back = 0; back < 12 && t - 1 - back >= 0; back++) if (2 * lines[t - 1 - back].turned.length >= line.X.length) { wholeTurn = back; break; }
   const lens = line.X.map(length), lenMin = Math.min(...lens), lenSpan = Math.max(Math.max(...lens) - lenMin, 1e-9);
   lay(line);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -144,10 +147,10 @@ function draw() {
   const cmin = Math.min(...line.content), cmax = Math.max(...line.content);
   for (const i of order) {
     const r = 3 + 9 * (line.content[i] - cmin) / Math.max(cmax - cmin, 1);
-    ctx.fillStyle = turned.has(i) ? "#f59e0b" : "#4ade80";
+    ctx.fillStyle = turned.has(i) && turned.get(i) === 0 ? "#f59e0b" : "#4ade80";
     ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r, 0, 2 * Math.PI); ctx.fill();
     if (frozen.has(i)) { ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 3, 0, 2 * Math.PI); ctx.stroke(); }
-    if (turned.has(i)) { ctx.strokeStyle = "#f59e0b"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 5, 0.2 * Math.PI, 1.7 * Math.PI); ctx.stroke(); ctx.fillStyle = "#f59e0b"; ctx.beginPath(); const ax = spots[i][0] + (r + 5) * Math.cos(0.2 * Math.PI), ay = spots[i][1] + (r + 5) * Math.sin(0.2 * Math.PI); ctx.moveTo(ax, ay); ctx.lineTo(ax - 5, ay - 5); ctx.lineTo(ax + 3, ay - 6); ctx.closePath(); ctx.fill(); }
+    if (turned.has(i)) { ctx.globalAlpha = 1 - turned.get(i) / 8; ctx.strokeStyle = "#f59e0b"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 5, 0.2 * Math.PI, 1.7 * Math.PI); ctx.stroke(); ctx.fillStyle = "#f59e0b"; ctx.beginPath(); const ax = spots[i][0] + (r + 5) * Math.cos(0.2 * Math.PI), ay = spots[i][1] + (r + 5) * Math.sin(0.2 * Math.PI); ctx.moveTo(ax, ay); ctx.lineTo(ax - 5, ay - 5); ctx.lineTo(ax + 3, ay - 6); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1; }
   }
   const recent = new Map(), span = new Map();
   for (const k of D.clicks) {
@@ -186,8 +189,18 @@ function draw() {
     for (let r = 0; r < 24; r++) { const ang = r * Math.PI / 12 + age * 0.1, inner = reach * (0.35 + 0.15 * (r % 2)); ctx.beginPath(); ctx.moveTo(cx + Math.cos(ang) * inner, cy + Math.sin(ang) * inner); ctx.lineTo(cx + Math.cos(ang) * reach, cy + Math.sin(ang) * reach); ctx.stroke(); }
     ctx.globalAlpha = 1;
   }
+  if (wholeTurn !== null) {
+    const reach = (0.22 + 0.02 * wholeTurn) * canvas.width; ctx.strokeStyle = "#f59e0b"; ctx.globalAlpha = 1 - wholeTurn / 12; ctx.lineWidth = 6; ctx.setLineDash([14, 10]);
+    ctx.beginPath(); ctx.arc(canvas.width / 2, canvas.height / 2, reach, 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+  }
   labels.innerHTML = "";
   let free = 0;
+  if (wholeTurn !== null) {
+    const div = document.createElement("div"); div.className = "label"; div.style.fontSize = "18px"; div.style.borderLeftColor = "#f59e0b"; div.style.color = "#f59e0b";
+    div.innerHTML = "every Node turns at once<small>the clocks reversed at the top, interval " + lines[t - 1 - wholeTurn].i + "</small>";
+    div.style.left = (canvas.offsetLeft + canvas.width / 2 + 0.24 * canvas.width) + "px"; div.style.top = (canvas.offsetTop + canvas.height / 2 + 0.1 * canvas.width) + "px";
+    labels.appendChild(div);
+  }
   const placed = [];
   function settle(x, y) {
     for (let moved = true; moved;) { moved = false; for (const q of placed) if (Math.abs(q[0] - x) < 220 && Math.abs(q[1] - y) < 42 && q[1] + 42 > y) { y = q[1] + 42; moved = true; } }
@@ -199,7 +212,7 @@ function draw() {
     div.style.left = (canvas.offsetLeft + canvas.width / 2 + 0.14 * canvas.width) + "px"; div.style.top = (canvas.offsetTop + canvas.height / 2 - 0.16 * canvas.width) + "px";
     labels.appendChild(div);
   }
-  for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 30 * step) {
+  for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 60 * step) {
     const div = document.createElement("div"); div.className = "label";
     div.innerHTML = e.label + "<small>" + e.numbers + "</small>";
     const click = e.node ? null : D.clicks.find(k => k.i === e.i), node = e.node || (click ? click.node : null);
@@ -222,8 +235,14 @@ function draw() {
 let hold = 0;
 function tick() {
   if (playing && hold > 0) hold--;
-  else if (playing) { t = t % n + 1; draw(); const now = lines[t - 1].i, before = t > 1 ? lines[t - 2].i : 0; if (D.events.some(e => e.i !== null && e.i > before && e.i <= now) || bangs.some(b => b > before && b <= now)) hold = 2 * speed; }
+  else if (playing) { t = t % n + 1; draw(); const now = lines[t - 1].i, before = t > 1 ? lines[t - 2].i : 0; if (D.events.some(e => e.i !== null && e.i > before && e.i <= now) || bangs.some(b => b > before && b <= now)) hold = 3 * speed; }
   setTimeout(tick, 1000 / speed);
+}
+const eras = D.events.filter(e => e.i !== null && /^(1|4|5|46) /.test(e.gate)).map(e => [e.i, e.gate]).concat(bangs.map(b => [b, "1 bang"])).sort((p, q) => p[0] - q[0]);
+for (let k = 0; k < eras.length; k++) {
+  const from = eras[k][0], to = k + 1 < eras.length ? eras[k + 1][0] : N + 1, g = parseInt(eras[k][1]);
+  const d = document.createElement("div"); d.className = "era"; d.style.left = (100 * (from - 1) / Math.max(N - 1, 1)) + "%"; d.style.width = (100 * (to - from) / Math.max(N - 1, 1)) + "%";
+  d.style.background = g === 4 ? "rgba(244,114,182,0.18)" : g === 5 ? "rgba(253,230,138,0.14)" : "rgba(95,151,234,0.16)"; d.title = eras[k][1]; bar.appendChild(d);
 }
 const rowEnds = [-100, -100, -100, -100, -100, -100];
 for (const e of D.events) if (e.i !== null) {
@@ -368,7 +387,7 @@ def page_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> str:
         '<div id="bar"><div id="cursor"></div></div>\n'
         '<div id="row"><button id="play">play / pause</button><button id="slower">slower</button><button id="faster">faster</button><span id="where"></span>'
         "<span>the reading: the verdicts in the reading file beside the record</span></div>\n"
-        '<div id="legend">green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate as it first shows</div>\n'
+        '<div id="legend">green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate as it first shows; the bands of the bar: the spans from each bang, from the era of matter and from the acceleration, as the reading names them</div>\n'
         '<script id="data" type="application/json">'
         + json.dumps(data_of(record, reading))
         + "</script>\n"
