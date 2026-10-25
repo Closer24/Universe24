@@ -15,7 +15,7 @@ from event_universe.core.ports import PORTS
 from event_universe.links import row_current
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE
-from tests.laws import node_of, refused, run_back_exact, world_of
+from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
 CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 6, 6, 6)  # rotations alike per part (CK-S1 even)
 COUNTED = ("births", "laid_back", "refused_stop")  # the counts the EQ-S1 test reads per world
@@ -76,7 +76,7 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 12 births; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
     births = births_of(base)
@@ -151,8 +151,45 @@ def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_
     assert run_back_exact(kept, 10) == 10
 
 
+def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() -> None:
+    """PL-S1 (the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423; pl1's test_pl1.py and pl2's test_pl2.py brought to the engine's own path): nature's plasma on the 3-cube (tests/worlds/world_plasma_3.json, the heavy row at +1 and the light row at -1 at every Node) to 170 tops at 84 with 27 turning, the fall's state at top + k the exchange of the rise's at top - 1 - k in every level and remainder at 83 of 83 k (before PL-S1 the sign row's time line's write remainder parted at k = 1 by 2 (W(83) - W(82)) = 32, its level at k = 8 and X at k = 9), X = Gamma at every Node at 166 and 167 and nowhere else (the bottom 1,000 at 167; 939 before), 162 credits with 135 in the rise, every one laid back (135 before), births 0, the emission laid 0, the run back exact 10 of 10 through the top (170 back to 80), 98 integers, the bits within 128."""
+    node = node_of("world_plasma_3.json")
+    states, kept, exact, tops = [], [], [], []
+    for _ in range(170):
+        states.append([[line.copy() for line in row] for row in node.rows()])
+        if 80 <= node.interval < 90:
+            kept.append(state_of(node))
+        node.step()
+        x = node.row(CARRIER).lines[0].now
+        exact.append(int(x.min()) == int(x.max()) == node.gamma)
+        if node.turned.any():
+            tops.append((node.interval, int(node.turned.sum())))
+    states.append([[line.copy() for line in row] for row in node.rows()])
+    credits = [e for e in node.log if e["event"] == "credit"]
+    top = tops[0][0]
+    assert tops[0] == (84, 27) and [i + 1 for i, e in enumerate(exact) if e] == [166, 167]
+    laid_back = sum(1 for c in credits if "laid_back" in c)
+    assert (len(credits), laid_back, sum(1 for c in credits if c["i"] < top)) == (162, 162, 135)
+    assert node.counts["births"] == node.counts["laid"] == 0
+    assert node.census()[0] == 98 and node.census()[1] <= 128
+    for _ in range(80):
+        node.step_back()
+    assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step_back()) == 10
+    everywhere = np.ones(node.shape, dtype=bool)
+
+    def text(rows: list[list[Any]], exchanged: bool) -> bytes:
+        node.set_rows([[line.copy() for line in row] for row in rows])
+        if exchanged:
+            node.exchange(everywhere, rows)
+        return node.state_bytes()
+
+    assert (
+        sum(text(states[top + k], False) == text(states[top - 1 - k], True) for k in range(1, top)) == 83
+    )
+
+
 def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1() -> None:
-    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 56 credits and 12 births as before EQ-S1 (the records where light flows bit for bit), the run back exact."""
+    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 56 credits and 16 births under PL-S1 (12 births with the same 56 credits under the former write of 2 W after the step, as before EQ-S1: the records where light flows bit for bit under it), the run back exact."""
     found = {}
     for world, quiet in (("world_pair_3.json", True), ("world_hole.json", False)):
         node, kept = node_of(world), node_of(world)
@@ -174,11 +211,11 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
         found[world] = ({i: n for i, n in by_interval.items() if n}, *(counts[k] for k in COUNTED))
         assert run_back_exact(kept, 10) == 10
     assert found["world_pair_3.json"] == ({4: 27, 6: 27, 8: 27}, 0, 81, 0)
-    assert found["world_hole.json"][1:3] == (12, 0) and sum(found["world_hole.json"][0].values()) == 56
+    assert found["world_hole.json"][1:3] == (16, 0) and sum(found["world_hole.json"][0].values()) == 56
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
-    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); BB_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to X = Gamma at every Node exactly at 115 and 230 (the bottoms), the bangs numbered 1, 116 and 231 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
+    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); The-Uniform-Board-Returns_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to X = Gamma at every Node exactly at 115 and 230 (the bottoms), the bangs numbered 1, 116 and 231 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
     universe, world = world_of("world_sea_3.json")
     found = json.loads(json.dumps(writer.record(universe, world, 10, lambda line: None)))
     out = table.gates(found)
@@ -201,7 +238,7 @@ def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() 
 
 
 def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
-    """MV-S1 to MV-S3 (the Boss's ledger item 7, MV_COMPARISON.md's section for David): the heavy row's pair of 3 quanta laid under the sea at the centre of the 9-cube with the wave number h = den div 2 along x (k = pi / 3 exactly): W 0 at every Node of every lay, the share centroid's step at each of the first four closes (the paces still the vacuum's, before the sea deepens the board) within 40 milli-Links per interval of (1000 P) div (2 E) by cross multiplication (P_x = 2 num SUM_i (now_(i+x) before_i - now_i before_(i+x)) over the two lines, E the share summed), a top of 3 Nodes above the width-2 value, wave 0 hash-equal to no wave, the refusals by name, the run back exact through 10."""
+    """MV-S1 to MV-S3 (the Boss's ledger item 7, The-Moving-Lay-With-A-Wave-Number_COMPARISON.md's section for David): the heavy row's pair of 3 quanta laid under the sea at the centre of the 9-cube with the wave number h = den div 2 along x (k = pi / 3 exactly): W 0 at every Node of every lay, the share centroid's step at each of the first four closes (the paces still the vacuum's, before the sea deepens the board) within 40 milli-Links per interval of (1000 P) div (2 E) by cross multiplication (P_x = 2 num SUM_i (now_(i+x) before_i - now_i before_(i+x)) over the two lines, E the share summed), a top of 3 Nodes above the width-2 value, wave 0 hash-equal to no wave, the refusals by name, the run back exact through 10."""
     universe, world = world_of("world_packet.json")
     den, milli = int(universe["integers"]["den"]), 1000
     packet = {"lay": "at", "row": 2, "centre": [4, 4, 4], "width": 2, "quanta": 3}
@@ -261,7 +298,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
 
 
 def test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv() -> None:
-    """MV-S1's 48 (vf5's item (a), the Boss's 6401916517; MV_COMPARISON.md's spec: the 48 with the centre and the wave transformed): the heavy row's pair of 3 quanta laid under the sea on the 5-cube at the wave [den div 2, den div 3, 0] and run two intervals, against the 48 worlds whose centre and wave are the image's: carried back by the image's inverse, the carrier's X and the row's re lines equal bit for bit, the im lines equal under a rotation and negated under a reflection (the senses exchanged), 24 and 24, 0 apart."""
+    """MV-S1's 48 (vf5's item (a), the Boss's 6401916517; The-Moving-Lay-With-A-Wave-Number_COMPARISON.md's spec: the 48 with the centre and the wave transformed): the heavy row's pair of 3 quanta laid under the sea on the 5-cube at the wave [den div 2, den div 3, 0] and run two intervals, against the 48 worlds whose centre and wave are the image's: carried back by the image's inverse, the carrier's X and the row's re lines equal bit for bit, the im lines equal under a rotation and negated under a reflection (the senses exchanged), 24 and 24, 0 apart."""
     universe, world = world_of("world_packet.json")
     den, cube, centre = int(universe["integers"]["den"]), 5, [2, 2, 1]
     wave = [den // 2, den // 3, 0]

@@ -1,0 +1,1 @@
+{"universe": "../universe_middle.json", "shape": [9, 9, 9], "intervals": 16, "seed": [{"lay": "at", "row": 0, "centre": [4, 4, 4], "quanta": 500, "width": 3, "sense": 1, "wave": [1170904582, 1170904582, 0], "top": 3}, {"lay": "at", "row": 0, "centre": [4, 4, 4], "quanta": 500, "width": 3, "sense": 1, "wave": [1170904582, -1170904582, 0], "top": 3}]}

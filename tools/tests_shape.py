@@ -41,6 +41,11 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_board.py::test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1": (
+        37,
+        "PL-S1 (2026-10-25, the owner's word of 22:50 UTC, The-Plasma-Charge-At-The-Kick_COMPARISON.md; the Boss's room named in 6404974647 at the merge of toys-5 99a9ee860): nature's plasma on the 3-cube returning to Gamma exactly "
+        "at 166 and 167 with every credit laid back, the retrace the engine's own exchange at every k, the run back exact through the top",
+    ),
     "tests/test_rule3.py::test_the_composed_paces_are_the_laws_carried_division_at_gamma_squared_bit_for_bit_the_power": (
         29,
         "the composed paces (2026-10-25, PC-S1 in pc1's form, the owner's word K-S4 through the Boss; the room given at the merge of toys-5 84009e333): the clock the exact power rounded half up once by the carried division "
@@ -61,12 +66,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1": (
         23,
-        "SL-S1 (2026-10-25, the Boss's 6399718139, SL_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "
+        "SL-S1 (2026-10-25, the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "
         "every born pair's Link meeting at the next close with no current and refused by the orientation (5 of 5), the meetings counted, the run back exact",
     ),
     "tests/test_the_node.py::test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the_light_sl_s2": (
         40,
-        "SL-S2 (2026-10-25, the Boss's ledger item 10, SL_COMPARISON.md: the test under 15 s): the heaviest record's conjugate pair fed at two adjacent Nodes of the bare 5-cube at 20 intervals, "
+        "SL-S2 (2026-10-25, the Boss's ledger item 10, The-Merger-As-The-Birth-Reversed_COMPARISON.md: the test under 15 s): the heaviest record's conjugate pair fed at two adjacent Nodes of the bare 5-cube at 20 intervals, "
         "one merger (the taken row the heaviest record, the children the gap-0 row), each child's wall one light quantum to the rounding paid by one exact take at its own end, the gap-0 row whole at each end, the charge 0, the stop by name, the run back exact",
     ),
     "tests/test_the_node.py::test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1": (
@@ -76,65 +81,65 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_the_node.py::test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1": (
         17,
-        "MS-S1 (2026-10-25, the owner's word through the Boss, 6399410929, MS_COMPARISON.md section 5: the test under 15 s beside the sentence): the lay's pair (A, B) with A B = T div 2 from T alone, "
+        "MS-S1 (2026-10-25, the owner's word through the Boss, 6399410929, The-Masses-From-The-Clicks_COMPARISON.md section 5: the test under 15 s beside the sentence): the lay's pair (A, B) with A B = T div 2 from T alone, "
         "the chiral 5-cube at 12 intervals with every child's Wronskian +-(T div 2) where its plane stood at nothing, the senses opposite and summing to 0, taken at or above booked, the run back exact",
     ),
     "tests/test_the_node.py::test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws": (
         34,
-        "WS (2026-10-25, the Boss's 6400357538, WS_VERDICT.md section 4: the test under 15 s): the reading Node within the test (its click reads W of the held pre-state against W after the swap at every turned Node and every plane before it lays), the Boss's 3-cube to 60 and the chiral 5-cube at 20, kept = sites, negated 0, changed 0, the nonzero sites counted",
+        "WS (2026-10-25, the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4: the test under 15 s): the reading Node within the test (its click reads W of the held pre-state against W after the swap at every turned Node and every plane before it lays), the Boss's 3-cube to 60 and the chiral 5-cube at 20, kept = sites, negated 0, changed 0, the nonzero sites counted",
     ),
     "tests/test_the_board.py::test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma": (
         27,
-        "MA-S1 (2026-10-25, the Boss's 6400767119 (4), MA_COMPARISON.md section 4: the test under 15 s): the pair at every Node of the 3-cube by the file's `at` lays to 400, every Node alike, the whole board turning at once at the top, births 0, the bottom named against Gamma, the run back exact",
+        "MA-S1 (2026-10-25, the Boss's 6400767119 (4), Matter-And-Antimatter-At-Every-Node_COMPARISON.md section 4: the test under 15 s): the pair at every Node of the 3-cube by the file's `at` lays to 400, every Node alike, the whole board turning at once at the top, births 0, the bottom named against Gamma, the run back exact",
     ),
     "tests/test_the_board.py::test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb": (
         22,
-        "BB-S1 and MA-S1 (2026-10-25, the Boss's 6400540638 and 6400767119 (2), BB_COMPARISON.md section 4: gate 1 from the Node lines, the test under 15 s): the sea on the 3-cube to 240, the exact returns at 115 and 230, the whole board turning at 58 and 173, the bangs numbered, no birth between",
+        "BB-S1 and MA-S1 (2026-10-25, the Boss's 6400540638 and 6400767119 (2), The-Uniform-Board-Returns_COMPARISON.md section 4: gate 1 from the Node lines, the test under 15 s): the sea on the 3-cube to 240, the exact returns at 115 and 230, the whole board turning at 58 and 173, the bangs numbered, no birth between",
     ),
     "tests/test_the_board.py::test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv": (
         58,
-        "MV-S1 to MV-S3 (2026-10-25, the Boss's ledger item 7, MV_COMPARISON.md section for David: the test under 15 s): the heavy row's pair of 3 quanta laid with a wave number under the sea on the 9-cube, "
+        "MV-S1 to MV-S3 (2026-10-25, the Boss's ledger item 7, The-Moving-Lay-With-A-Wave-Number_COMPARISON.md section for David: the test under 15 s): the heavy row's pair of 3 quanta laid with a wave number under the sea on the 9-cube, "
         "W 0 at every Node, the share centroid's step at each of the first four closes against (1000 P) div (2 E) within 40 milli by cross multiplication, the top's value above, wave 0 hash-equal to no wave, the four refusals by name, the run back exact through 10",
     ),
     "tests/test_the_board.py::test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv": (
         57,
-        "MV-S1 (2026-10-25, vf5's item (a) through the Boss, 6401916517; MV_COMPARISON.md's spec: the 48 with the centre and the wave transformed, under 15 s): the moving lay on the 5-cube at two intervals against its 48 images carried back, 24 and 24, 0 apart",
+        "MV-S1 (2026-10-25, vf5's item (a) through the Boss, 6401916517; The-Moving-Lay-With-A-Wave-Number_COMPARISON.md's spec: the 48 with the centre and the wave transformed, under 15 s): the moving lay on the 5-cube at two intervals against its 48 images carried back, 24 and 24, 0 apart",
     ),
     "tests/test_the_node.py::shares_of": (
         11,
-        "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, PM_COMPARISON.md section 5: the tests under 15 s beside the sentence): the helper, the gap-0 line's share in the carrier's unit and by hand at the frame's and the vacuum's weights",
+        "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, The-Count-In-The-Carriers-Unit_COMPARISON.md section 5: the tests under 15 s beside the sentence): the helper, the gap-0 line's share in the carrier's unit and by hand at the frame's and the vacuum's weights",
     ),
     "tests/test_the_node.py::test_every_count_is_read_in_the_carriers_unit_pm_s1": (
         33,
-        "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, PM_COMPARISON.md section 5: the tests under 15 s beside the sentence): the identity Gamma^2 div p_i^2 = X div Gamma, the 3-cube hole's shares at 1 and at 20 against the frame's and the vacuum's, the chiral 5-cube at 60 by pm2's numbers",
+        "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, The-Count-In-The-Carriers-Unit_COMPARISON.md section 5: the tests under 15 s beside the sentence): the identity Gamma^2 div p_i^2 = X div Gamma, the 3-cube hole's shares at 1 and at 20 against the frame's and the vacuum's, the chiral 5-cube at 60 by pm2's numbers",
     ),
     "tests/test_the_quartet.py::toy_of": (
         9,
-        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the helper, the toy on the middle universe with the shape-8 row, one packet along a vector with the controls",
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and The-Spinor-Row_COMPARISON.md's spec: the five tests under 15 s beside the row): the helper, the toy on the middle universe with the shape-8 row, one packet along a vector with the controls",
     ),
     "tests/test_the_quartet.py::lines_of": (
         3,
-        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the helper, the row's lines",
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and The-Spinor-Row_COMPARISON.md's spec: the five tests under 15 s beside the row): the helper, the row's lines",
     ),
     "tests/test_the_quartet.py::test_the_zeeman_doublet_is_the_derived_shift_with_the_two_spins_opposite_sr_s3": (
         19,
-        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the Zeeman doublet, the one-interval shifts of the two spins opposite and within one level of the derived num B0 x_now div (3 den Gamma)",
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and The-Spinor-Row_COMPARISON.md's spec: the five tests under 15 s beside the row): the Zeeman doublet, the one-interval shifts of the two spins opposite and within one level of the derived num B0 x_now div (3 den Gamma)",
     ),
     "tests/test_the_quartet.py::test_the_negated_vector_lays_the_lay_negated_with_the_charge_the_share_and_the_credits_equal_sr_s2": (
         23,
-        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the double cover's -I, the negated vector's lay the lay negated with the share, the charge and the credits equal line for line, the run back exact",
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and The-Spinor-Row_COMPARISON.md's spec: the five tests under 15 s beside the row): the double cover's -I, the negated vector's lay the lay negated with the share, the charge and the credits equal line for line, the run back exact",
     ),
     "tests/test_the_quartet.py::test_the_quartet_sees_one_link_sr": (
         11,
-        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the reach, an odd line changed two Links away leaves the row's eight lines bit for bit",
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and The-Spinor-Row_COMPARISON.md's spec: the five tests under 15 s beside the row): the reach, an odd line changed two Links away leaves the row's eight lines bit for bit",
     ),
     "tests/test_the_quartet.py::test_the_exclusion_at_the_lay_reads_the_full_state_and_the_pile_is_gone_sr_s4": (
         24,
-        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the exclusion at the lay per full state, the pile 1x refused like, 2x opposite spins, 4x by hand, the neutral pair, the refusals by name",
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and The-Spinor-Row_COMPARISON.md's spec: the five tests under 15 s beside the row): the exclusion at the lay per full state, the pile 1x refused like, 2x opposite spins, 4x by hand, the neutral pair, the refusals by name",
     ),
     "tests/test_the_quartet.py::test_stern_gerlach_reads_the_credits_centroids_per_spin_sign_along_the_gradient_sr": (
         21,
-        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the Stern-Gerlach gate read from the toy's committed records of the 9-cube at 60 intervals, the verdict asserted by name",
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and The-Spinor-Row_COMPARISON.md's spec: the five tests under 15 s beside the row): the Stern-Gerlach gate read from the toy's committed records of the 9-cube at 60 intervals, the verdict asserted by name",
     ),
     "tests/test_the_node.py::test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1": (
         24,

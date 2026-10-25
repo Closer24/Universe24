@@ -8,7 +8,7 @@ import numpy as np
 
 from event_universe import gram
 from event_universe.core import rule3
-from event_universe.core.ports import PORT_SIDES, PORTS
+from event_universe.core.ports import AXES, PORT_SIDES, PORTS
 from event_universe.links import row_current
 from event_universe.rows import PLANE, POTENTIAL, Line
 from event_universe.take import frame_nodes, lay, take_at
@@ -65,9 +65,9 @@ def bodies(
             node.counts["body_clicks"] += 1
             entry = credit(node, rec, at, plane_starts, fall, levels, now, before)
             if int(net[at]) == 0:
-                line = node.records()[rec0].lines[0]
-                lay(node, rec0, at, (now - int(line.now[at]),) + (0,) * (2 * PLANE - 1))
-                entry["laid_back"], entry["dP_take"] = levels, [0, 0, 0]
+                taken = node.records()[rec0]
+                lay(node, rec0, at, (now - int(taken.lines[0].now[at]),) + (0,) * (2 * taken.shape - 1))
+                entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
                 node.counts["laid_back"] += 1
             node.log.append(entry)
 
