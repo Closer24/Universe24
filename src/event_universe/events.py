@@ -1,147 +1,113 @@
-"""The reading's event lines (the owner's word of 2026-10-25: the record tells what it sees as it sees it): one line per gate at the interval it first shows, with its Node where it has one, in the gate's own words of three to six, for the page's labels and the bar's ticks; every line read from the record alone."""
+"""The reading's event lines (the owner's words of 2026-10-25: the record tells what it sees as it sees it; every gate has a label when it happens): one line per row of the table at the interval it first shows, found by reading the row on the record cut to each interval (a search on the cuts, the verdict read as standing from its first interval on), with its Node where the row names one (`at`) and its label in the gate's own words of three to six (LABELS), for the page's labels and the bar's ticks; every line read from the record alone."""
 
 from __future__ import annotations
 
-from collections import defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe.decoder import Rational, Record
-from event_universe.gates import dilation, lengthening
+from event_universe.decoder import Record
+
+LABELS = {
+    "1": "a bang recurs",
+    "2": "the Links lengthen",
+    "3": "the board shortens then lengthens",
+    "4": "the era of matter",
+    "5": "the lengthening quickens",
+    "6": "the board contracts",
+    "7": "light absorbed at a take",
+    "8": "a body clicks",
+    "8b": "a track read right",
+    "9": "two bodies meet",
+    "10": "the clocks run slow",
+    "11": "light redder where deeper",
+    "12": "light delayed or bent",
+    "13": "the fall quickens",
+    "14": "the horizon",
+    "15": "the take pays the walls",
+    "16": "the floor holds",
+    "17": "a pair born",
+    "18": "the run back exact",
+    "19": "the mass ratio read",
+    "20": "the twist's 24 and 24",
+    "21": "births of both hands",
+    "22": "unlike attract, like repel",
+    "23": "the recoil passed",
+    "24": "a pair into light",
+    "25": "the entropy rises",
+    "26": "three lifts, the beats ordered",
+    "27": "no third alone",
+    "28": "a conversion",
+    "29": "light's period longer where deeper",
+    "30": "the deeper clock slower",
+    "31": "light's track bent or late",
+    "32": "the perihelion advances",
+    "33": "the body falls by its tail",
+    "34": "the clock stops at the horizon",
+    "35": "matter dragged, light not",
+    "36": "a shear wave travels",
+    "37": "one Link per interval",
+    "38": "the phase shifted by the flux",
+    "39": "the beat shifted in the field",
+    "40": "one quantum one click",
+    "41": "the spinor's two beats",
+    "42": "the split along the gradient",
+    "43": "the exclusion holds",
+    "44": "the packet at its velocity",
+    "45": "a body stands in its well",
+    "46": "the bang recurs with its gates",
+    "47": "the take exact",
+    "48": "a black body spectrum",
+    "49": "the clicks decay geometrically",
+    "50": "light couples to light",
+    "51": "the Casimir force",
+    "52": "a third child",
+    "53": "a fast packet binds",
+    "54": "two packets scatter",
+    "the conservations in the clicks": "the clicks conserve",
+    "the three constants": "the three constants hold",
+}
 
 
-def event(gate: str, label: str, i: int | None, node: Any, numbers: str) -> dict[str, Any]:
-    """One event line of the reading: the gate, its label in the gate's own words (three to six), the interval and the Node of its first SHOWN where it has one, its numbers in one line."""
-    return {
-        "gate": gate,
-        "label": label,
-        "i": i,
-        "node": None if node is None else list(node),
-        "numbers": numbers,
-    }
+def label_of(key: str) -> str:
+    """The label of a row from its key: by the row's number (the key's first word) or by the key itself."""
+    return LABELS.get(key.split()[0], LABELS.get(key, key))
 
 
-def unravel(record: Record, index: int) -> list[int]:
-    """A Node's three coordinates from its index in the board's order."""
-    cube = int(record.run["cube"])
-    return [index // (cube * cube), (index // cube) % cube, index % cube]
+def shown(verdict: str) -> bool:
+    """A verdict that shows (whole or in part)."""
+    return verdict.startswith("SHOWN")
 
 
-def first_click(record: Record) -> list[dict[str, Any]]:
-    """The first birth (a pair born), the first body credit (a body clicks) and the first credit of a line at a new Node (a body at a new Node)."""
-    found = []
-    births = sorted(record.births, key=lambda b: int(b["i"]))
-    credits = sorted(record.credits, key=lambda c: int(c["i"]))
-    if births:
-        b = births[0]
-        numbers = f"plane {b['line_pair']}, the children at {b['minus']} and {b['plus']}, taken {b['taken']} of {b['booked']} booked"
-        found.append(event("17 charge conservation", "a pair born", b["i"], b["node"], numbers))
-    if credits:
-        c = credits[0]
-        numbers = f"plane {c['line']}, the beat {c['beat']}, the proper count {c['proper']}"
-        found.append(
-            event("8 families forming (whole view)", "a body clicks", c["i"], c["node"], numbers)
-        )
-    seen: dict[int, set[tuple[int, ...]]] = defaultdict(set)
-    for c in credits:
-        if seen[c["line"]] and tuple(c["node"]) not in seen[c["line"]]:
-            found.append(
-                event(
-                    "9 collisions",
-                    "a body at a new Node",
-                    c["i"],
-                    c["node"],
-                    f"plane {c['line']} credited at a new Node",
-                )
-            )
-            break
-        seen[c["line"]].add(tuple(c["node"]))
-    return found
-
-
-def first_horizon(record: Record) -> list[dict[str, Any]]:
-    """The horizon's first held Link or frozen Node from the record's Node lines."""
-    lines = record.run.get("nodes", [])
-    held = next((line for line in lines if line["held"] or line["frozen"]), None)
-    if held is None:
-        return []
-    at = held["held"][0][0] if held["held"] else held["frozen"][0]
-    numbers = f"{len(held['held'])} Links held at the wall, {len(held['frozen'])} Nodes frozen"
-    return [event("14 the horizon", "the horizon", held["i"], unravel(record, at), numbers)]
-
-
-def first_course(record: Record) -> list[dict[str, Any]]:
-    """The first interval the mean volume falls (the board contracts) and the era's first credit past the last birth at its Node (the era of matter)."""
-    found = []
-    rows = [(r["i"], int(r["volume mean"])) for r in record.rows]
-    fall = next((b[0] for a, b in zip(rows, rows[1:], strict=False) if b[1] < a[1]), None)
-    if fall is not None:
-        gate = "6 contraction (the board, the reader's view)"
-        found.append(event(gate, "the board contracts", fall, None, "the mean volume falls"))
-    last_birth = {tuple(b["node"]): b["proper"] for b in record.births}
-    credits = sorted(record.credits, key=lambda c: int(c["i"]))
-    era = next(
-        (
-            c
-            for c in credits
-            if tuple(c["node"]) in last_birth and c["proper"] > last_birth[tuple(c["node"])]
-        ),
-        None,
-    )
-    if era is not None:
-        found.append(
-            event(
-                "4 an era of matter",
-                "the era of matter",
-                era["i"],
-                era["node"],
-                "a body credited past the last birth at its Node",
-            )
-        )
-    return found
-
-
-def first_reader(
-    record: Record, decoded: list[tuple[dict[str, Any], str, Rational]]
-) -> list[dict[str, Any]]:
-    """The dilation's and the lengthening's first SHOWN over the credits to that interval (the reader's view), and the arrow at the end."""
-    found = []
-    readers: list[tuple[str, str, Callable[[int], dict[str, Any]]]] = [
-        ("10 gravitational time dilation", "the clocks run slow", lambda k: dilation(decoded[:k])),
-        (
-            "2 the Links lengthening in the clicks",
-            "the Links lengthen",
-            lambda k: lengthening(record.through(k)),
-        ),
-    ]
-    for gate, label, reader in readers:
-        for k in range(1, len(decoded) + 1):
-            out = reader(k)
-            if out and next(iter(out.values()))["verdict"].startswith("SHOWN"):
-                found.append(event(gate, label, decoded[k - 1][0]["i"], None, "in the reader's view"))
-                break
-    rb = record.run.get("run_back")
-    if rb and rb["exact"] == rb["intervals"]:
-        found.append(
-            event(
-                "18 the arrow of time",
-                "the run back exact",
-                int(record.run["intervals"]),
-                None,
-                f"{rb['exact']} of {rb['intervals']} intervals",
-            )
-        )
-    return found
+def first_interval(record: Record, row: Callable[[Record], dict[str, Any]], key: str) -> int:
+    """The least interval at which the row shows on the record cut to it, by a search on the cuts (the verdict read as standing from its first interval on)."""
+    low, high = 1, record.intervals
+    while low < high:
+        mid = (low + high) // 2
+        if shown(row(record.to(mid))[key]["verdict"]):
+            high = mid
+        else:
+            low = mid + 1
+    return low
 
 
 def first_shown(
-    record: Record, decoded: list[tuple[dict[str, Any], str, Rational]]
+    record: Record, table: tuple[Callable[[Record], dict[str, Any]], ...]
 ) -> list[dict[str, Any]]:
-    """Every event line in the order of its interval: the first click, the horizon, the course, the reader's view and the arrow."""
-    found = (
-        first_click(record)
-        + first_horizon(record)
-        + first_course(record)
-        + first_reader(record, decoded)
-    )
-    return sorted(found, key=lambda e: (e["i"] is None, e["i"] or 0))
+    """Every event line in the order of its interval: for every row of the table that shows on the whole record, the interval it first shows, its Node where the row names one, its label and its verdict's first clause as its numbers."""
+    found = []
+    for row in table:
+        for key, out in row(record).items():
+            if not shown(out["verdict"]):
+                continue
+            i = first_interval(record, row, key)
+            at = row(record.to(i))[key].get("at")
+            found.append(
+                {
+                    "gate": key,
+                    "label": label_of(key),
+                    "i": i,
+                    "node": None if at is None else list(at),
+                    "numbers": out["verdict"].split(";")[0].split(" (")[0],
+                }
+            )
+    return sorted(found, key=lambda e: (int(e["i"]), e["gate"]))

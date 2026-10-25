@@ -106,7 +106,7 @@ LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 4, 6}), frozenset({12}
 # rows.py: the quartet's and the carrier's shapes, the trace's weight 2 x 27, the width's half
 ROW_INTEGERS = frozenset({8, 10, 54, 64})
 # the record's writer and readers, no act of the Node: their scales are their own
-READERS = ("run.py", "decoder.py", "gates.py", "events.py", "circle.py", "board.py")
+READERS = tuple(f"{n}.py" for n in "run decoder gates events circle board clicks predicates".split())
 NAMED_CALLS = {
     "refused",
     "get",

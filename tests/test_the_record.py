@@ -8,33 +8,24 @@ from typing import Any
 
 import pytest
 
-from event_universe.gates import gates
+from event_universe.gates import gates, kind_of
 from event_universe.run import record
 from tests.laws import ROOT, load_file, world_of
 
 RECORDS = ROOT / "examples" / "records"
 WIDTH = 128
-BASE = dict.fromkeys(("17 charge conservation", "18 the arrow of time", "the three constants"), "SHOWN")
-BASE |= {"the entropy of the clicks": "SHOWN", "14 the horizon": "NOT REACHED"}
-# MS-S1: one |W| where the plane stood at nothing
-CHARGE = "SHOWN: the senses sum to 0; the magnitude SHOWN"
-SHOWN = {
-    "hole": {**BASE, "4 an era of matter": "SHOWN", "17 charge conservation": CHARGE},
-    "chiral": {**BASE, "17 charge conservation": CHARGE},
-    "bodies": {
-        "18 the arrow of time": "SHOWN",
-        "the three constants": "SHOWN",
-        "10 gravitational time dilation": "SHOWN in the reader's view",
-        "2 the Links lengthening in the clicks": "SHOWN in the reader's view",
-        "6 contraction (the board, the reader's view)": "SHOWN at the board",
-        "9 collisions": "NOT SHOWN: the credited Nodes receding",
-        "17 charge conservation": "NOT READ: no birth",
-        "15 conservation at the click": "NOT READ: no birth",
-        "8 families forming (whole view)": "SHOWN in part: every credit within the floor, tracks right 63 of 63",
-        "16 uncertainty floor (one click)": "SHOWN as the law's floor",
-        "the entropy of the clicks": "NOT READ",
-    },
+SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
+    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43},
+    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45},
+    "bodies": {2, 3, 5, 6, 7, 8, 10, 16, 18, 30, 37, 43, 45},
 }
+UNREACHED = {14, 34}  # the horizon on the three records: NOT REACHED
+VERDICTS = {  # the verdicts' words by name
+    "hole": {"22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part"},
+    "chiral": {"9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart"},
+    "bodies": {"37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link"},
+}
+SHOWN = dict.fromkeys(SHOWN_ROWS)
 
 
 def loaded(name: str) -> dict[str, Any]:
@@ -44,8 +35,15 @@ def loaded(name: str) -> dict[str, Any]:
 @pytest.mark.parametrize("name", sorted(SHOWN))
 def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
-    for gate, verdict in SHOWN[name].items():
+    kinds = {
+        int(k.split()[0]): kind_of(v["verdict"]) for k, v in found.items() if k.split()[0].isdigit()
+    }
+    assert len(kinds) == 54
+    assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
+    assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == UNREACHED
+    for gate, verdict in VERDICTS[name].items():
         assert found[gate]["verdict"].startswith(verdict), (name, gate, found[gate]["verdict"])
+    assert found["the three constants"]["verdict"].startswith("SHOWN")
     circle = next(
         v for k, v in found["19 mass ratios (parts per million)"].items() if k.startswith("den's circle")
     )
