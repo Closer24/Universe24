@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch) up to the record's largest, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch) up to the record's largest, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding two seconds on every new label, a legend line under the controls, the reading's event lines as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ html, body { margin: 0; background: var(--bg); color: var(--fg); font: 14px var(
 #bar .name { position: absolute; font-size: 10px; color: var(--label); font-family: var(--mono); white-space: nowrap; padding-left: 4px; pointer-events: none; }
 #bar .bang { position: absolute; bottom: 1px; font-size: 10px; color: var(--muted); font-family: var(--mono); }
 #bar #cursor { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--focus); }
+#legend { margin: 0 16px 10px; color: var(--muted); font-family: var(--mono); font-size: 11px; }
 #row { display: flex; gap: 12px; align-items: center; margin: 0 16px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
 button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 3px 10px; font: inherit; cursor: pointer; }
 #labels { position: absolute; left: 0; top: 0; pointer-events: none; }
@@ -146,6 +147,21 @@ function draw() {
     if (frozen.has(i)) { ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 3, 0, 2 * Math.PI); ctx.stroke(); }
     if (turned.has(i)) { ctx.strokeStyle = "#f59e0b"; ctx.lineWidth = 1.5; ctx.strokeRect(spots[i][0] - r - 2, spots[i][1] - r - 2, 2 * r + 4, 2 * r + 4); }
   }
+  const recent = new Map(), span = new Map();
+  for (const k of D.clicks) {
+    if (k.i > line.i) break;
+    const id = k.node[0] * c * c + k.node[1] * c + k.node[2], key = id + ":" + k.line;
+    if (k.i > line.i - 24 * step) { const m = recent.get(id) || new Map(); m.set(k.line, (m.get(k.line) || 0) + 1); recent.set(id, m); }
+    const sp = span.get(key); if (!sp) span.set(key, [k.i, k.i, 1]); else { sp[1] = k.i; sp[2]++; }
+  }
+  for (const [id, m] of recent) {
+    let best = -1, count = 0, total = 0; for (const [l, n] of m) { total += n; if (n > count) { count = n; best = l; } }
+    const sp = spots[id], r = 8 + Math.min(10, total);
+    ctx.fillStyle = tone(best); ctx.globalAlpha = 0.18 + 0.03 * Math.min(10, total); ctx.beginPath(); ctx.arc(sp[0], sp[1], r, 0, 2 * Math.PI); ctx.fill(); ctx.globalAlpha = 1;
+  }
+  for (const [key, sp] of span) if (sp[1] > line.i - 24 * step && sp[1] - sp[0] >= 60 * step && sp[2] >= 4) {
+    const id = parseInt(key), s = spots[id]; ctx.strokeStyle = tone(parseInt(key.split(":")[1])); ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(s[0], s[1], 14, 0, 2 * Math.PI); ctx.stroke();
+  }
   for (const k of D.clicks) if (k.i <= line.i && k.i > line.i - 4 * step) {
     const i = k.node[0] * c * c + k.node[1] * c + k.node[2], s = spots[i], age = (line.i - k.i) / step, fade = 1 - age / 4;
     ctx.strokeStyle = tone(k.line); ctx.globalAlpha = fade; ctx.lineWidth = 3;
@@ -170,7 +186,7 @@ function draw() {
     div.style.left = (canvas.offsetLeft + canvas.width / 2 + 0.14 * canvas.width) + "px"; div.style.top = (canvas.offsetTop + canvas.height / 2 - 0.16 * canvas.width) + "px";
     labels.appendChild(div);
   }
-  for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 6 * step) {
+  for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 30 * step) {
     const div = document.createElement("div"); div.className = "label";
     div.innerHTML = e.label + "<small>" + e.numbers + "</small>";
     const click = e.node ? null : D.clicks.find(k => k.i === e.i), node = e.node || (click ? click.node : null);
@@ -188,7 +204,12 @@ function draw() {
   cursor.style.left = (100 * (line.i - 1) / Math.max(N - 1, 1)) + "%";
   where.textContent = "interval " + line.i + " of " + N + (D.stride > 1 ? " (1 of every " + D.stride + " intervals kept)" : "");
 }
-function tick() { if (playing) { t = t % n + 1; draw(); } setTimeout(tick, 1000 / speed); }
+let hold = 0;
+function tick() {
+  if (playing && hold > 0) hold--;
+  else if (playing) { t = t % n + 1; draw(); const now = lines[t - 1].i, before = t > 1 ? lines[t - 2].i : 0; if (D.events.some(e => e.i !== null && e.i > before && e.i <= now) || bangs.some(b => b > before && b <= now)) hold = 2 * speed; }
+  setTimeout(tick, 1000 / speed);
+}
 const rowEnds = [-100, -100, -100, -100, -100, -100];
 for (const e of D.events) if (e.i !== null) {
   const pct = 100 * (e.i - 1) / Math.max(N - 1, 1), at = pct + "%";
@@ -320,6 +341,7 @@ def page_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> str:
         '<div id="bar"><div id="cursor"></div></div>\n'
         '<div id="row"><button id="play">play / pause</button><button id="slower">slower</button><button id="faster">faster</button><span id="where"></span>'
         "<span>the reading: the verdicts in the reading file beside the record</span></div>\n"
+        '<div id="legend">green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; orange: the Node turned; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate as it first shows</div>\n'
         '<script id="data" type="application/json">'
         + json.dumps(data_of(record, reading))
         + "</script>\n"
