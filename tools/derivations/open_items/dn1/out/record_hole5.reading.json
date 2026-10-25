@@ -1,0 +1,310 @@
+{
+ "den_bits": 154,
+ "intervals": 120,
+ "cube": 5,
+ "counts": {
+  "births": "22",
+  "taken": "9665387767072311395484191883891503520826744934149316",
+  "booked": "49611829225935841966662294282914570571948672000",
+  "body_clicks": "539",
+  "refused_stop": "64",
+  "refused_origin": "0",
+  "refused_lay": "4276",
+  "refused_orientation": "1842",
+  "turns": "635",
+  "light_credits": "0",
+  "light_laid": "0",
+  "light_laid_nodes": "0"
+ },
+ "run_back": {
+  "intervals": 60,
+  "exact": 60,
+  "first_mismatch_at_interval": null,
+  "ms": 1010
+ },
+ "births_per_lift": {
+  "lightest lift": 6,
+  "heaviest lift": 12,
+  "middle lift": 4
+ },
+ "births_intervals_first_last": [
+  6,
+  16
+ ],
+ "charge_senses_sum_over_births": 0,
+ "count_taken_over_booked": {
+  "taken": 9665387767072311395484191883891503520826744934149316,
+  "booked": 49611829225935841966662294282914570571948672000,
+  "excess": 9665338155243085459642225221597220606256172985477316,
+  "taken_per_booked_hundredths": [
+   19482022,
+   28267306095765381104598934464079417882640147600
+  ],
+  "births_at_excess_0": 0,
+  "identity_taken_at_least_booked_on_every_birth": true
+ },
+ "births_rooms_bits": [
+  [
+   173,
+   22
+  ]
+ ],
+ "body_credits_per_lift": {
+  "lightest lift": 536,
+  "heaviest lift": 3
+ },
+ "beats_from_the_clicks_per_lift": {
+  "lightest lift": {
+   "credits_with_a_beat": 536,
+   "beat_min_median_max": [
+    2,
+    4,
+    35
+   ],
+   "beat_histogram": {
+    "2": 191,
+    "4": 196,
+    "5": 17,
+    "6": 30,
+    "7": 56,
+    "10": 40,
+    "23": 4,
+    "35": 2
+   }
+  },
+  "heaviest lift": {
+   "credits_with_a_beat": 3,
+   "beat_min_median_max": [
+    51,
+    51,
+    52
+   ],
+   "beat_histogram": {
+    "51": 2,
+    "52": 1
+   }
+  },
+  "middle lift": {
+   "credits_with_a_beat": 0,
+   "beat_min_median_max": null,
+   "beat_histogram": {}
+  }
+ },
+ "mass_ratios_header_against_clicks": {
+  "middle lift over lightest lift legs per 1e6": [
+   1836152655,
+   6381783224005193170107894528122934160
+  ],
+  "lightest lift beat over middle lift beat": "no beat read for one of the two (no body credit within the run)",
+  "heaviest lift over middle lift legs per 1e6": [
+   1001378,
+   6088372892729065608816564829443602185384
+  ],
+  "middle lift beat over heaviest lift beat": "no beat read for one of the two (no body credit within the run)",
+  "expected beat per period at the vacuum (intervals), per lift: 2 pi den div s as 6283185 x (den div s) div 1000000": {
+   "lightest lift": 17217684507,
+   "middle lift": 9377044,
+   "heaviest lift": 9364132
+  }
+ },
+ "decoder_gates": {
+  "8b species over the track (one-place view: the middle solve of the body's track)": {
+   "tracks": 27,
+   "decoded right": 2,
+   "confusion (truth->decoded) per credit": {
+    "electron->massless": 359,
+    "electron->neutron": 173
+   }
+  },
+  "8 families forming (whole view)": {
+   "credits": 539,
+   "species readable": 535,
+   "decoded right per credit": 3,
+   "credits within the one-click floor": 535,
+   "tracks right": [
+    2,
+    27
+   ],
+   "births by species (decoder)": {
+    "electron": 6,
+    "neutron": 12,
+    "proton": 4
+   },
+   "verdict": "SHOWN in part: every credit within the floor, tracks right 2 of 27"
+  },
+  "19 mass ratios (parts per million)": {
+   "electron/massless": null,
+   "proton/massless": null,
+   "neutron/massless": null,
+   "verdict": "SHOWN as a fit of den (the legs), read from the decoded points"
+  },
+  "16 uncertainty floor (one click)": {
+   "floor on x per credit, parts per million: min / middle / max": [
+    380337,
+    1085485,
+    7773260
+   ],
+   "species spacing of the two heaviest, parts per million": 0,
+   "credits beyond the floor": 0,
+   "verdict": "SHOWN as the law's floor: no credit reads beyond it; one click cannot split p from n where the floor exceeds their spacing, the track can (not calibrated to h-bar / 2)"
+  },
+  "17 charge conservation": {
+   "senses sum over births": 0,
+   "verdict": "SHOWN"
+  },
+  "15 conservation at the click": {
+   "births": 22,
+   "taken per booked at the births (hundredths)": 19482022,
+   "verdict": "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light, the known item)"
+  },
+  "10 gravitational time dilation": {
+   "reader's view (the board's interval, which no Node has): proper per thousand intervals, shallow / deep": [
+    694645,
+    493544
+   ],
+   "verdict": "SHOWN in the reader's view; NOT READ in the one-place view: two bodies' clocks compare only through the light between them (gate 7)"
+  },
+  "2 the Links lengthening in the clicks": {
+   "reader's view: spans": 513,
+   "spacing in hundredths of a board interval, shallow / deep": [
+    449,
+    488
+   ],
+   "verdict": "SHOWN in the reader's view; NOT READ in the one-place view (the light between two bodies, gate 7)"
+  },
+  "1 recurring bangs / 3 shortening then lengthening / 6 contraction (board, the reader's view)": {
+   "volume mean course (interval, mean)": [
+    [
+     1,
+     1002
+    ],
+    [
+     2,
+     1006
+    ],
+    [
+     5,
+     1031
+    ],
+    [
+     10,
+     1178
+    ],
+    [
+     20,
+     3599
+    ],
+    [
+     30,
+     10282
+    ],
+    [
+     40,
+     22656
+    ],
+    [
+     60,
+     73900
+    ],
+    [
+     80,
+     197971
+    ],
+    [
+     100,
+     489037
+    ],
+    [
+     120,
+     1090261
+    ]
+   ],
+   "intervals with the mean volume falling": [],
+   "turns (Node swaps) total": 635,
+   "verdict": "NOT SHOWN: the mean volume rises throughout (the pump); the turns are local"
+  },
+  "4 an era of matter": {
+   "Nodes with a birth and a body credit": 6,
+   "of them with credits past the last birth in the Node's own clock": 6,
+   "births": 22,
+   "body credits": 539,
+   "verdict": "SHOWN"
+  },
+  "14 the horizon": {
+   "frozen content": 3793,
+   "max content in the rows": 2066,
+   "credits at frozen Nodes": 0,
+   "verdict": "NOT REACHED"
+  },
+  "9 collisions / 13 free fall": {
+   "tracks (node, species)": 50,
+   "longest track credits": 37,
+   "lines credited at a new Node after their first": 25,
+   "verdict": "read: 25 lines credited at a new Node; the predicate (the tail falls, adjacent peaks collide) is the sentence W-S4/W-S5 of the owner, not read here"
+  },
+  "7 light with its redshift / 11 / 12": {
+   "light credits in the record": 0,
+   "verdict": "NOT SHOWN: the record holds no light credit"
+  },
+  "18 the arrow of time": {
+   "run back on the record": {
+    "intervals": 60,
+    "exact": 60,
+    "first_mismatch_at_interval": null,
+    "ms": 1010
+   },
+   "verdict": "SHOWN: the run back exact bit for bit, 60 of 60 intervals"
+  },
+  "the conservations in the clicks": {
+   "charge: the senses summed over the births": 0,
+   "count: taken against booked over the births (hundredths)": 19482022,
+   "energy: the beat (intervals per period) of a body unchanged from one click to the next": {
+    "click pairs": 512,
+    "unchanged": 509,
+    "changed by one": 1,
+    "changed by more": 2
+   },
+   "momentum: the credits running cosine": "NOT READ in this toy"
+  },
+  "the three constants": {
+   "integers per Node": [
+    98
+   ],
+   "max state bits": 215,
+   "max transient bits": 207,
+   "first interval past the width": 1,
+   "verdict": "NOT SHOWN: the state past 128 bits; a transient past 128 bits"
+  },
+  "the entropy of the clicks": {
+   "births with a room": 22,
+   "H at the end (bits)": 3806,
+   "course (interval, H) at every eighth": [
+    [
+     6,
+     173
+    ],
+    [
+     8,
+     1038
+    ],
+    [
+     10,
+     1903
+    ],
+    [
+     12,
+     2595
+    ],
+    [
+     16,
+     3287
+    ]
+   ],
+   "verdict": "SHOWN: H never falls (a sum of bit lengths), 3806 bits over 22 births"
+  },
+  "the decoder": {
+   "floats used": 0,
+   "readings": "quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication"
+  }
+ }
+}
