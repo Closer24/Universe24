@@ -286,7 +286,7 @@ def lengthening(record: Record) -> dict[str, Any]:
     for c in record.credits:
         by_node[tuple(c["node"])].append(c)
     spans = []
-    longest: tuple[int, Any] = (0, None)
+    longest: tuple[int, Any] = (0, [])
     for at, cs in by_node.items():
         cs.sort(key=lambda c: int(c["i"]))
         spans += [

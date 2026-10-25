@@ -1,4 +1,4 @@
-"""The one board test: the 48 (the board run from a seed and from each of its 48 images, the signed permutations of the axes about the origin; the births and the carrier's and the gap-0 line's levels compared through the image, the 24 rotations alike, the 24 reflections apart under the default: A2's standing item, named), the run back exact through births and turns, the chiral seed's births with both hands and the charge summed to 0."""
+"""The one board test: the 48 (the board run from a seed and from each of its 48 images, the signed permutations of the axes about the origin; the births and the carrier's and the gap-0 line's levels compared through the image, the 24 rotations alike under the bodies' closing with its crossing read even, the 24 reflections apart under the default: A2's standing item, named), the run back exact through births and turns, the chiral seed's births with both hands and the charge summed to 0."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE
 from tests.laws import node_of, refused, run_back_exact, world_of
 
-CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 0, 0, 0)  # rotations alike per part (MS-S1)
+CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 6, 6, 6)  # rotations alike per part (CK-S1 even)
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
     for pi in itertools.permutations(range(3))
@@ -73,7 +73,7 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis parts under A2's digits (a negated line's remainder mirrors, its digit with it: the standing item, 6 of 24 alike at 20 intervals on the hole seed under MS-S1 against 24 before it), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 12 births; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
     births = births_of(base)
