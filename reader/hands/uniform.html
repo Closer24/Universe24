@@ -137,8 +137,9 @@ function draw() {
   for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 6 * step) {
     const div = document.createElement("div"); div.className = "label";
     div.innerHTML = e.label + "<small>" + e.numbers + "</small>";
-    if (e.node) {
-      const s = spots[e.node[0] * c * c + e.node[1] * c + e.node[2]];
+    const click = e.node ? null : D.clicks.find(k => k.i === e.i), node = e.node || (click ? click.node : null);
+    if (node) {
+      const s = spots[node[0] * c * c + node[1] * c + node[2]];
       ctx.strokeStyle = "#fde68a"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(s[0] + 26, s[1] - 26); ctx.stroke();
       ctx.fillStyle = "#fde68a"; ctx.beginPath(); ctx.arc(s[0], s[1], 4, 0, 2 * Math.PI); ctx.fill();
       const y = settle(s[0] + 28, s[1] - 40);
