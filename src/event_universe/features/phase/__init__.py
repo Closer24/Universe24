@@ -8,7 +8,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.integer import MAX_WORK_INT
-from event_universe.core.paces import rounded
+from event_universe.core.paces import odd_rounded, rounded
 from event_universe.core.rule3 import division_forward, rule3
 
 # a line of the phase, (now, before, remainder), each an integer or an integer array over the Links
@@ -183,12 +183,8 @@ def signed_read(pair: Pair, count: Any) -> tuple[Any, Any]:
 
 
 def signed_rounded(numerator: Any, wall: Any) -> Any:
-    """The numerator over the wall rounded half up on the magnitude (`core/paces.rounded` on |numerator|) with the sign attached after, the engine's one signed rounding, so that the rounding is odd: signed_rounded(-v, X) = -signed_rounded(v, X) exactly, the fold's pair exact by direction (ALGEBRA.md, The clock family on the Ports and The sign holder rotates the two-part record: one rounding on the magnitude with the direction's sign attached after, the mathematician's item (g)); a scalar in its own integers, Python's exact beyond the width, as the piece's momentum, the reader's projected level and the momentum reading in T's unit take it (`node_detector.piece_momentum`, `node_detector.arriving`, `take.scaled`), a whole-board array in the array's kind (`fold`; the Link pairs, plane.py)."""
-    if np.ndim(numerator) == 0:
-        size = rounded(abs(numerator), wall)
-        return -size if numerator < 0 else size
-    sign = np.where(np.asarray(numerator) < 0, -1, 1)
-    return sign * rounded(np.abs(numerator), wall)
+    """The numerator over the wall rounded half away from zero, the law's odd rounding (`core/paces.odd_rounded`, bit for bit the magnitude rounded half up with the sign attached after), the engine's one signed rounding, so that the rounding is odd: signed_rounded(-v, X) = -signed_rounded(v, X) exactly, the fold's pair exact by direction (ALGEBRA.md, The clock family on the Ports and The sign holder rotates the two-part record: one rounding on the magnitude with the direction's sign attached after, the mathematician's item (g)); a scalar in its own integers, Python's exact beyond the width, as the piece's momentum, the reader's projected level and the momentum reading in T's unit take it (`node_detector.piece_momentum`, `node_detector.arriving`, `take.scaled`), a whole-board array in the array's kind (`fold`; the Link pairs, plane.py)."""
+    return odd_rounded(numerator, wall)
 
 
 def fold(fold_cosine: Any, fold_sine: Any, cosine: Any, sine: Any, amplitude: Any) -> tuple[Any, Any]:

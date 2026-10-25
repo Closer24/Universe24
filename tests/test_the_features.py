@@ -9,6 +9,7 @@ from event_universe import flux, node, records
 from event_universe.core import paces
 from event_universe.core.rule3 import coefficients
 from event_universe.features.held_write import held_write
+from event_universe.features.phase import signed_rounded
 from event_universe.features.read import (
     content_of,
     edge_squared,
@@ -213,3 +214,51 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
                 name,
                 f.name,
             )  # E_h T / Gamma, no pair in it
+
+
+def test_the_two_signed_roundings_are_odd_half_away_from_zero_at_a_tie():
+    """The law's odd rounding (`paces.odd_rounded`, the carry wall on a numerator at or above 0 and its complement at the doubled wall, wall - 1, below it; 2026-10-25): equal bit for bit to sign(x) rounded(|x|, wall) and to `phase.signed_rounded` over a sweep of walls on int64 arrays, scalars and Python's integers, odd at every integer; the turn's factor odd at the tie 2 L p_0 = Gamma mod 2 Gamma, the least L at p_0 900 and Gamma 1,000 derived (5), where the half-up rounding is not, and across a sweep of L and the clocks; the write's fixed-wall ratio odd at a tie: two holders of the volume read by two real lines at the vacuum's paces, the fixed wall at half the row's wall, the ratio b / 2 on a booking b, every odd booking at a tie."""
+    gamma, p_0 = 1_000, 900
+    for wall in (gamma, 7, 2, 1, 1_021):
+        sweep = np.arange(-6 * wall, 6 * wall + 1)
+        found = paces.odd_rounded(sweep, wall)
+        by_hand = [
+            -paces.rounded(-int(x), wall) if x < 0 else paces.rounded(int(x), wall) for x in sweep
+        ]
+        assert found.tolist() == by_hand and np.array_equal(found[::-1], -found)
+        assert np.array_equal(found, signed_rounded(sweep, wall))
+        assert [paces.odd_rounded(int(x), wall) for x in sweep[::7]] == by_hand[::7]
+        assert paces.odd_rounded(sweep.astype(object), wall).tolist() == by_hand
+    tie = next(level for level in range(1, gamma) if (2 * level * p_0 - gamma) % (2 * gamma) == 0)
+    assert tie == 5 and paces.turn_factor(-tie, p_0, gamma) == -paces.turn_factor(tie, p_0, gamma)
+    assert paces.rounded(-tie * p_0, gamma) != -paces.rounded(
+        tie * p_0, gamma
+    )  # half up is not odd there
+    levels = np.arange(-60, 61).reshape(-1, 1)
+    clocks = np.array([paces.clock(gamma, c) for c in range(0, 400, 3)])
+    turns = paces.turn_factor(levels, clocks, gamma)
+    assert np.array_equal(turns[::-1], -turns) and np.any(
+        (2 * levels * clocks - gamma) % (2 * gamma) == 0
+    )
+    integers, families = universe(HOLLOW, CORE, STUFF, OTHER)
+    hollow, stuff, other = 0, 2, 3
+    writes = {
+        i: held_write_of(families, i, integers["quantum_action"])
+        for i, f in enumerate(families)
+        if f.held
+    }
+    states = [
+        records.empty_state(f, SHAPE, writes[i].walls if f.held else (), np.int64)
+        for i, f in enumerate(families)
+    ]
+    rulers = {(i, 0): node.rulers(i, families, states, 1, GAMMA) for i in (stuff, other)}
+    book = np.random.default_rng(7).integers(-40, 40, SHAPE)
+    forms = {(stuff, 0): book, (other, 0): 0 * book}
+    half = [
+        w // 2 for w in writes[hollow].walls
+    ]  # the fixed wall at half the row's wall: the ratio b / 2
+    at = (hollow, families, forms, {}, writes[hollow], rulers, GAMMA, [list(forms)])
+    plus = records.write_sources(*at, fixed=half)[0][0]
+    minus = records.write_sources(*at[:2], {k: -v for k, v in forms.items()}, *at[3:], fixed=half)[0][0]
+    away = np.where(book % 2, (book + np.sign(book)) // 2, book // 2)
+    assert np.any(book % 2) and plus.tolist() == away.tolist() == (-minus).tolist()

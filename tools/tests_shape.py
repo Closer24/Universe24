@@ -56,6 +56,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         86,
         "the helper of the gates' hand test: the volume's top and return, two births at the Node A, a body's credits at A and B with their propers, every take exact, one Node turned",
     ),
+    "tests/test_the_features.py::test_the_two_signed_roundings_are_odd_half_away_from_zero_at_a_tie": (
+        46,
+        "the odd rounding of the two signed coefficients (2026-10-25, the owner's word on two blind hands' derivation): paces.odd_rounded equal bit for bit to sign(x) rounded(|x|, wall) and to "
+        "phase.signed_rounded over a sweep of walls and kinds, odd at every integer; the turn's factor odd at the tie 2 L p_0 = Gamma mod 2 Gamma derived in the test and across a sweep "
+        "where the half-up rounding is not; the write's fixed-wall ratio odd at a tie through records.write_sources at the vacuum's paces",
+    ),
     "tests/test_the_node_holds_the_same_count_of_integers.py::test_every_node_holds_the_same_count_of_integers_and_the_count_grows_by_a_point_at_a_birth": (
         41,
         "the generic Node's gate (2026-10-25, the plan's stage 0): the integers one Node holds read by tools/node_integers.py loaded by its path on the bare 3-cube at den 1,021 and at the top tier's den, "
