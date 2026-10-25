@@ -187,7 +187,7 @@ function strip() {  // the stage strip: every mark read from the logs by the too
   body += `<line id="cursor" x1="${px(now).toFixed(1)}" x2="${px(now).toFixed(1)}" y1="4" y2="114" stroke="${token('--fg')}" stroke-width="1" stroke-dasharray="3 2"/>`;
   document.getElementById('strip').innerHTML = body;
   if ((STAGES.captions || []).length) document.getElementById('captions-list').innerHTML = `<ol>${STAGES.captions.map(c => `<li><b>${c.at}</b>: ${esc(c.words)}${c.nodes.length ? ` <span class="verdict">(${c.nodes.length} Node${c.nodes.length > 1 ? 's' : ''})</span>` : ''}</li>`).join('')}</ol>`;
-  document.getElementById('strip-words').innerHTML = `<b>The stages, read from the log</b>: ${STAGES.marks.map(m => `${esc(m.word)} at ${m.at}`).join(', ')}; ${STAGES.births.length} births (the ticks below the line, at ${STAGES.births.join(', ') || 'none'}) and ${STAGES.clicks.length} clicks written (the ticks above, at ${STAGES.clicks.join(', ') || 'none'}); the dashed cursor the frame shown. Click the strip to go to an interval.`;
+  document.getElementById('strip-words').innerHTML = `<b>The stages, read from the log</b>: ${STAGES.marks.map(m => `${esc(m.word)} at ${m.at}`).join(', ')}; ${STAGES.births.length} births (the ticks below the line, at ${STAGES.births.length <= 60 ? STAGES.births.join(', ') || 'none' : STAGES.births[0] + ' to ' + STAGES.births[STAGES.births.length - 1] + ' over ' + STAGES.births.length + ' lines'}) and ${STAGES.clicks_written} clicks written at ${STAGES.clicks.length} intervals (the ticks above, ${STAGES.clicks.length <= 60 ? 'at ' + (STAGES.clicks.join(', ') || 'none') : 'from ' + STAGES.clicks[0] + ' to ' + STAGES.clicks[STAGES.clicks.length - 1]}); the dashed cursor the frame shown. Click the strip to go to an interval.`;
 }
 document.getElementById('strip').addEventListener('click', e => {
   const box = e.currentTarget.getBoundingClientRect(), f = (e.clientX - box.left) / box.width * 1000, first = NODES[0].interval, last = NODES[NODES.length - 1].interval;
@@ -400,7 +400,7 @@ def stages_of(
     """The stage strip's marks, each read from the logs and none typed: the bangs numbered (`returns_of`: the seed, the first logged interval, bang 1, each return of the volume's velocity after the fifth act fired a later bang), the first turns (the first interval the fifth act turned a Node), every top of the board's volume numbered and the returns that are no bang (`bangs_of`), the contraction (the first interval after a top with the volume below the top's), the cut (the last logged interval, or the refusal's), with the births' and the written clicks' intervals ticked."""
     marks: list[dict[str, Any]] = []
     if not nodes:
-        return {"marks": marks, "births": [], "clicks": [], "captions": []}
+        return {"marks": marks, "births": [], "clicks": [], "clicks_written": 0, "captions": []}
     rows = course["rows"]
     bangs = returns_of(rows) or [nodes[0]["interval"]]
     for n, at in enumerate(bangs, start=1):
@@ -434,13 +434,19 @@ def stages_of(
     marks.append({"word": "cut", "at": cut})
     marks.sort(key=lambda m: m["at"])
     births = sorted(int(c["interval"]) for c in clicks if c.get("event") == "birth")
-    written = sorted(
+    written = [
         int(c["interval"])
         for c in clicks
         if c.get("event") == "credit" and c.get("before") != c.get("realised")
-    )
+    ]  # one entry per credit written; the strip ticks the intervals once each (a record of many bodies' clicks writes thousands of credits, one tick per interval keeps the strip readable)
     captions = captions_of(eras or [], nodes, clicks, world, floor_of(course["gamma"])) if eras else []
-    return {"marks": marks, "births": births, "clicks": written, "captions": captions}
+    return {
+        "marks": marks,
+        "births": births,
+        "clicks": sorted(set(written)),
+        "clicks_written": len(written),
+        "captions": captions,
+    }
 
 
 def page(

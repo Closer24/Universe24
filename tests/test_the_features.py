@@ -182,7 +182,7 @@ def test_every_family_reads_the_holders_the_rule_derives_and_the_write_carries_t
         1,
     )  # alpha carried inside the write, no pair in it, no gate
     refused(
-        "a reader of the sign writes its charge per quantum by its count unit",
+        "a reader of the sign writes the Wronskian per quantum by its count unit",
         universe,
         {"name": "charge", "pair": [6000, 6000]},
         {"name": "nuclide", "pair": [4004, 6000], "dimension": [2, 2]},
