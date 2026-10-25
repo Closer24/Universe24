@@ -35,11 +35,11 @@ def at_node(x: Any, at: tuple[int, ...]) -> int:
 def read_number(
     node: Node, at: tuple[int, ...], rules: list[tuple[Line, rule3.Rule]], unit: int
 ) -> tuple[int, int] | None:
-    """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the taken row's unit times the planes' count, the shape-2 records the draw names (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse."""
+    """The one-Link read in the laid frame (A48-S1, the owner's word of 2026-10-25, 17:16 UTC, through the Boss, in a48b's form; the former read of the remainder as it stands kept by name): every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), returned to its laid frame by the exchange's count of reversals (the walled row's remainder bit the turn's parity, once more for a line the conjugation negates) and folded by the two's complement (the lesser of the remainder and the wall less it), the digit the folded remainder div F, the base half the lattice's values plus one, sorted by value, composed modulo M = the taken row's unit times the planes' count, the shape-2 records the draw names (the carry); refused by name at the origin (every folded remainder at the lay's half) and where every lattice is coarse."""
     modulus = unit * sum(1 for r in node.records() if r.shape == PLANE)
     nodes, digits = frame_nodes(node, at), []
-    origin, coarse, w_half = True, True, half(node.w)
-    for line, r in rules:
+    origin, coarse, is_im = True, True, node.is_im()
+    for li, (line, r) in enumerate(rules):
         for k, n in enumerate(nodes):
             key = (id(r), k, n)
             if key not in node.lattices:
@@ -50,10 +50,14 @@ def read_number(
                     else lattice(wl, at_node(r.reaches[k - 1], n))
                 )
             f = node.lattices[key]
-            rem, values = node.digit_of(int(line.rem[n]), quotient(at_node(line.wall, n), f))
-            origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
+            wl = at_node(line.wall, n)
+            rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f))
+            bit = int(rules[0][0].rem[n])
+            rho = mirrored(rem, wl, (1 - bit) * (1 + is_im[li]))
+            folded = min(rho, remainder(wl - rho, wl))
+            origin = origin and folded in (half(wl), mirrored(half(wl), wl, 1))
             coarse = coarse and values <= AXES
-            digits.append((quotient(rem, f), values + 1))
+            digits.append((quotient(folded, f), quotient(values, 2) + 1))
     if origin or coarse:
         node.counts["refused_origin"] += origin
         return None
@@ -132,17 +136,8 @@ def take_at(
     z = row.lines[k]
     if levels is None:
         node.counts["refused_stop"] += cause
-        node.log.append(
-            {
-                "event": "refused",
-                "i": node.interval,
-                "node": list(at),
-                "cause": "stop",
-                "fall": fall,
-                "walls": walls,
-                "row": taken,
-            }
-        )
+        entry = {"event": "refused", "i": node.interval, "node": list(at), "cause": "stop"}
+        node.log.append(entry | {"fall": fall, "walls": walls, "row": taken})
         return None
     now, before = int(z.now[at]), int(z.before[at])
     toward = 1 if before > now else -1

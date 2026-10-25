@@ -76,7 +76,7 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 209 credits and 20 births under A48-S1, 56 credits and 16 births under PL-S1 with the former read of the remainder, 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
     births = births_of(base)
@@ -88,6 +88,30 @@ def images_hold(group: int) -> None:
         same = same_rows(base, other, m) and births_of(other) == mapped(births, m, CUBE, reflection)
         alike[reflection] += same
     assert alike[True] == 0 and alike[False] == ALIKE[group]
+
+
+def test_the_48_on_the_clicks_rotations_equal_and_reflections_exchanged_a48_s1() -> None:
+    """A48-S1 (the owner's word of 2026-10-25, 17:16 UTC, through the Boss, 6400636699 and 6400767119 (3); t48's test on the engine's own path; ALGEBRA.md, the cube's 48): the chiral seed of the 3-cube (the sea, the hole at the origin and one quantum of the lightest row at (1, 0, 0), (0, 2, 1) and (2, 1, 0)) run 7 intervals from its seed and from each of its 48 images: every rotation's births are the base's carried by the rotation (24 equal) and every reflection's are the base's carried with the two children's Nodes exchanged (24 exchanged, none apart), with a birth after a turned Node (the premise); under the read of the remainder as it stood, before A48-S1, the same seed gave 12 rotations equal and 36 images apart on PL-S1's write (24 rotations equal and 24 reflections apart before it)."""
+    universe, world = world_of("world_node.json")
+    centres = ([1, 0, 0], [0, 2, 1], [2, 1, 0])
+    lays = [{"lay": "sea", "row": 0}, {"lay": "hole", "at": [0, 0, 0]}]
+    lays += [{"lay": "at", "row": 0, "centre": c, "quanta": 1} for c in centres]
+    world = dict(world, shape=[3, 3, 3], intervals=7, seed=lays)
+
+    def births(w: dict[str, Any]) -> tuple[list[tuple[Any, ...]], int]:
+        node, first = Node(universe, w), 0
+        for _ in range(7):
+            node.step()
+            first = first or (node.interval if node.counts["turns"] else 0)
+        return births_of(node), first
+
+    base, first_turn = births(world)
+    assert first_turn and any(b[0] > first_turn for b in base)
+    alike = {True: 0, False: 0}
+    for m in IMAGES:
+        reflection = int(round(np.linalg.det(m))) == -1
+        alike[reflection] += births(world_image(world, m, 3))[0] == mapped(base, m, 3, reflection)
+    assert alike == {False: 24, True: 24}
 
 
 def test_the_run_back_is_exact_through_births_and_turns() -> None:
@@ -189,7 +213,7 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
 
 
 def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1() -> None:
-    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 56 credits and 16 births under PL-S1 (12 births with the same 56 credits under the former write of 2 W after the step, as before EQ-S1: the records where light flows bit for bit under it), the run back exact."""
+    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 209 credits and 20 births under A48-S1 (56 credits and 16 births under PL-S1 with the former read of the remainder; 12 births with the same 56 credits under the former write of 2 W after the step, as before EQ-S1: the records where light flows bit for bit under it), the run back exact."""
     found = {}
     for world, quiet in (("world_pair_3.json", True), ("world_hole.json", False)):
         node, kept = node_of(world), node_of(world)
@@ -211,7 +235,7 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
         found[world] = ({i: n for i, n in by_interval.items() if n}, *(counts[k] for k in COUNTED))
         assert run_back_exact(kept, 10) == 10
     assert found["world_pair_3.json"] == ({4: 27, 6: 27, 8: 27}, 0, 81, 0)
-    assert found["world_hole.json"][1:3] == (16, 0) and sum(found["world_hole.json"][0].values()) == 56
+    assert found["world_hole.json"][1:3] == (20, 0) and sum(found["world_hole.json"][0].values()) == 209
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
