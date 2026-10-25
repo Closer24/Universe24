@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- CK-S1 and the emission's odd rounding marked built in docs/ALGEBRA.md (toys-5 3177921fb, the hand's confirmation at the merge owed) with David's finding of the standing light credited at the beat 1; the ledger of docs/UNIVERSE24.md's section 4 current with the push read whole and run, A48-S1's next tie, cs5 landed and cs6 running.
 - The hand cs5's sentences for the owner's return, CS5-S2 (one pair in several rows of the universe file) and the crowd's word, with CS4-S2's line per take and cs5's finding of the recurring bang with matter born at every Node, in the open table of docs/UNIVERSE24.md's section 4 (the Boss's 6402183716).
 - SL-S2 and MV-S1 to MV-S3 marked built in docs/ALGEBRA.md (toys-5 e5f22fb53 and 608d06ad3, merged 0e1caf464, the hand vf5 confirming; the sentences' standing unchanged, the owner's word owed) and the fourth form built on toys-5 e3cfce303; the `at` lay's `wave` and `top` fields and the merger's row in docs/ENGINE.md; the ledger of docs/UNIVERSE24.md's section 4 current with the two pushes read whole and run, cs4's finding, the Boss's line on the odd write and his merge.
 - The hand cs4's two sentences for the owner's return, CS4-S2 (the take moving the line farther from zero) and The light no body (the gap-0 plane never credited as a body), in the open table of docs/UNIVERSE24.md's section 4 beside CK-S1 (the Boss's 6401793115).
