@@ -1,0 +1,15 @@
+adiabatic: interval 0 of 2200 at the level 0
+adiabatic: interval 300 of 2200 at the level 122
+adiabatic: interval 600 of 2200 at the level 500
+adiabatic: interval 900 of 2200 at the level 842
+adiabatic: interval 1200 of 2200 at the level 1000
+adiabatic: interval 1500 of 2200 at the level 1500
+adiabatic: interval 1800 of 2200 at the level 1682
+adiabatic: interval 2100 of 2200 at the level 2000
+adiabatic plateau     0 X     1000 e^U x1e6  1000000 mean      1 crossings  32 period [7, 14] A   401 A e^U x1e3   401000 J_rule3   119853 J_ride   119853 K_board 134199 K_proper 134199 E_proper x1e6 134199 cos residual x1e6 3
+adiabatic plateau   500 X     7415 e^U x1e6  1650165 mean      2 crossings  11 period [20, 8] A   230 A e^U x1e3   379537 J_rule3    15672 J_ride   116213 K_board 130915 K_proper 130915 E_proper x1e6 79334 cos residual x1e6 12
+adiabatic plateau  1000 X    54527 e^U x1e6  2717391 mean      5 crossings   4 period [57, 0] A   141 A e^U x1e3   383152 J_rule3     2188 J_ride   119310 K_board 129547 K_proper 129547 E_proper x1e6 47673 cos residual x1e6 32
+adiabatic plateau  1500 X   404372 e^U x1e6  4484304 mean     -3 crossings   1 period None A    87 A e^U x1e3   390134 J_rule3      308 J_ride   124926 K_board None K_proper None E_proper x1e6 None cos residual x1e6 -6
+adiabatic plateau  2000 X  3010683 e^U x1e6  7407407 mean     21 crossings   1 period None A    53 A e^U x1e3   392592 J_rule3       41 J_ride   124288 K_board None K_proper None E_proper x1e6 None cos residual x1e6 -80
+
+written /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/r3/tools/derivations/r3/ride_lines_adiabatic.json

@@ -1,0 +1,101 @@
+{
+ "U": "2.5",
+ "content": 2500,
+ "p_0": 82,
+ "X_e4U": 22117936,
+ "X_e3U": 1813671,
+ "bits_X_e4U": 25,
+ "bits_X_e3U": 21,
+ "dens": {
+  "1021, G 16": {
+   "den_bits": 10,
+   "w": 1568256000000,
+   "w_bits": 41,
+   "wall_bits_e4U": 65,
+   "wall_within_128_e4U": true,
+   "numerator_bits_e4U_v_189": 73,
+   "numerator_bits_e4U_level_2^31": 96,
+   "wall_bits_e3U": 62,
+   "wall_within_128_e3U": true,
+   "numerator_bits_e3U_v_189": 69,
+   "numerator_bits_e3U_level_2^31": 93
+  },
+  "1021, G 1": {
+   "den_bits": 10,
+   "w": 6126000000,
+   "w_bits": 33,
+   "wall_bits_e4U": 57,
+   "wall_within_128_e4U": true,
+   "numerator_bits_e4U_v_189": 65,
+   "numerator_bits_e4U_level_2^31": 88,
+   "wall_bits_e3U": 54,
+   "wall_within_128_e3U": true,
+   "numerator_bits_e3U_v_189": 61,
+   "numerator_bits_e3U_level_2^31": 85
+  },
+  "54-bit candidate, G 16": {
+   "den_bits": 54,
+   "w": 23290147981996629504000000,
+   "w_bits": 85,
+   "wall_bits_e4U": 109,
+   "wall_within_128_e4U": true,
+   "numerator_bits_e4U_v_189": 117,
+   "numerator_bits_e4U_level_2^31": 140,
+   "wall_bits_e3U": 106,
+   "wall_within_128_e3U": true,
+   "numerator_bits_e3U_v_189": 113,
+   "numerator_bits_e3U_level_2^31": 137
+  },
+  "54-bit candidate, G 1": {
+   "den_bits": 54,
+   "w": 90977140554674334000000,
+   "w_bits": 77,
+   "wall_bits_e4U": 101,
+   "wall_within_128_e4U": true,
+   "numerator_bits_e4U_v_189": 109,
+   "numerator_bits_e4U_level_2^31": 132,
+   "wall_bits_e3U": 98,
+   "wall_within_128_e3U": true,
+   "numerator_bits_e3U_v_189": 105,
+   "numerator_bits_e3U_level_2^31": 129
+  },
+  "40-bit (2^40 + 1), G 16": {
+   "den_bits": 41,
+   "w": 1688849860265472000000,
+   "w_bits": 71,
+   "wall_bits_e4U": 95,
+   "wall_within_128_e4U": true,
+   "numerator_bits_e4U_v_189": 103,
+   "numerator_bits_e4U_level_2^31": 126,
+   "wall_bits_e3U": 92,
+   "wall_within_128_e3U": true,
+   "numerator_bits_e3U_v_189": 99,
+   "numerator_bits_e3U_level_2^31": 123
+  },
+  "40-bit (2^40 + 1), G 1": {
+   "den_bits": 41,
+   "w": 6597069766662000000,
+   "w_bits": 63,
+   "wall_bits_e4U": 87,
+   "wall_within_128_e4U": true,
+   "numerator_bits_e4U_v_189": 95,
+   "numerator_bits_e4U_level_2^31": 118,
+   "wall_bits_e3U": 84,
+   "wall_within_128_e3U": true,
+   "numerator_bits_e3U_v_189": 91,
+   "numerator_bits_e3U_level_2^31": 115
+  }
+ },
+ "largest_den_bits_wall_within_2^127, G 16": 73,
+ "largest_den_bits_numerator_2^31_within_2^127, G 16": 42,
+ "largest_den_bits_wall_within_2^127, G 1": 81,
+ "largest_den_bits_numerator_2^31_within_2^127, G 1": 50,
+ "54-bit candidate: last content with w X within 128 bits, G 16": {
+  "content": 5988,
+  "U_thousandths": 5988
+ },
+ "54-bit candidate: last content with w X within 128 bits, G 1": {
+  "content": 7596,
+  "U_thousandths": 7596
+ }
+}

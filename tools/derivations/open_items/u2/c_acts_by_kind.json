@@ -1,0 +1,1261 @@
+{
+ "branches_on_a_rows_kind_total": 127,
+ "branches_by_attribute": {
+  "axes": 11,
+  "carried()": 4,
+  "charged()": 10,
+  "flux": 3,
+  "held": 22,
+  "motion_volume": 9,
+  "plane": 15,
+  "quanta": 8,
+  "reads_content()": 1,
+  "rotation": 21,
+  "turns()": 8,
+  "world.seed": 3,
+  "wronskian": 31
+ },
+ "branches_per_file": {
+  "act.py": 1,
+  "board_readings.py": 2,
+  "bookings.py": 5,
+  "bound_body.py": 1,
+  "conversion.py": 4,
+  "digits.py": 1,
+  "emission.py": 7,
+  "features/volume/__init__.py": 2,
+  "flux.py": 4,
+  "frames.py": 1,
+  "lattice.py": 16,
+  "loader/charge.py": 1,
+  "loader/derived.py": 28,
+  "loader/interval.py": 1,
+  "loader/rooms.py": 6,
+  "loader/seed.py": 1,
+  "loader/universe.py": 2,
+  "meeting_board.py": 1,
+  "node.py": 12,
+  "records.py": 9,
+  "registry.py": 7,
+  "share.py": 2,
+  "shear.py": 5,
+  "slabs.py": 3,
+  "swap.py": 5
+ },
+ "branches_listed": {
+  "act.py": [
+   {
+    "line": 91,
+    "shape": "if",
+    "names": [
+     "held"
+    ]
+   }
+  ],
+  "board_readings.py": [
+   {
+    "line": 142,
+    "shape": "ternary",
+    "names": [
+     "axes"
+    ]
+   },
+   {
+    "line": 145,
+    "shape": "ternary",
+    "names": [
+     "axes"
+    ]
+   }
+  ],
+  "bookings.py": [
+   {
+    "line": 36,
+    "shape": "ternary",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 47,
+    "shape": "if",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 78,
+    "shape": "comprehension",
+    "names": [
+     "held",
+     "rotation"
+    ]
+   },
+   {
+    "line": 82,
+    "shape": "if",
+    "names": [
+     "quanta"
+    ]
+   },
+   {
+    "line": 97,
+    "shape": "ternary",
+    "names": [
+     "wronskian"
+    ]
+   }
+  ],
+  "bound_body.py": [
+   {
+    "line": 35,
+    "shape": "if",
+    "names": [
+     "charged()"
+    ]
+   }
+  ],
+  "conversion.py": [
+   {
+    "line": 42,
+    "shape": "comprehension",
+    "names": [
+     "held"
+    ]
+   },
+   {
+    "line": 53,
+    "shape": "comprehension",
+    "names": [
+     "plane"
+    ]
+   },
+   {
+    "line": 83,
+    "shape": "comprehension",
+    "names": [
+     "plane"
+    ]
+   },
+   {
+    "line": 134,
+    "shape": "comprehension",
+    "names": [
+     "plane"
+    ]
+   }
+  ],
+  "digits.py": [
+   {
+    "line": 118,
+    "shape": "boolop",
+    "names": [
+     "plane"
+    ]
+   }
+  ],
+  "emission.py": [
+   {
+    "line": 23,
+    "shape": "if",
+    "names": [
+     "held"
+    ]
+   },
+   {
+    "line": 37,
+    "shape": "ternary",
+    "names": [
+     "held"
+    ]
+   },
+   {
+    "line": 38,
+    "shape": "ternary",
+    "names": [
+     "held"
+    ]
+   },
+   {
+    "line": 40,
+    "shape": "if",
+    "names": [
+     "plane"
+    ]
+   },
+   {
+    "line": 59,
+    "shape": "if",
+    "names": [
+     "charged()"
+    ]
+   },
+   {
+    "line": 61,
+    "shape": "comprehension",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 91,
+    "shape": "comprehension",
+    "names": [
+     "wronskian"
+    ]
+   }
+  ],
+  "features/volume/__init__.py": [
+   {
+    "line": 132,
+    "shape": "comprehension",
+    "names": [
+     "motion_volume",
+     "wronskian"
+    ]
+   },
+   {
+    "line": 137,
+    "shape": "if",
+    "names": [
+     "motion_volume"
+    ]
+   }
+  ],
+  "flux.py": [
+   {
+    "line": 182,
+    "shape": "if",
+    "names": [
+     "plane"
+    ]
+   },
+   {
+    "line": 184,
+    "shape": "boolop",
+    "names": [
+     "axes",
+     "wronskian"
+    ]
+   },
+   {
+    "line": 226,
+    "shape": "comprehension",
+    "names": [
+     "held"
+    ]
+   },
+   {
+    "line": 230,
+    "shape": "comprehension",
+    "names": [
+     "held"
+    ]
+   }
+  ],
+  "frames.py": [
+   {
+    "line": 16,
+    "shape": "if",
+    "names": [
+     "turns()"
+    ]
+   }
+  ],
+  "lattice.py": [
+   {
+    "line": 61,
+    "shape": "comprehension",
+    "names": [
+     "quanta"
+    ]
+   },
+   {
+    "line": 62,
+    "shape": "comprehension",
+    "names": [
+     "held"
+    ]
+   },
+   {
+    "line": 63,
+    "shape": "comprehension",
+    "names": [
+     "turns()"
+    ]
+   },
+   {
+    "line": 129,
+    "shape": "comprehension",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 162,
+    "shape": "ternary",
+    "names": [
+     "held"
+    ]
+   },
+   {
+    "line": 173,
+    "shape": "if",
+    "names": [
+     "charged()"
+    ]
+   },
+   {
+    "line": 175,
+    "shape": "comprehension",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 239,
+    "shape": "ternary",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 248,
+    "shape": "if",
+    "names": [
+     "world.seed"
+    ]
+   },
+   {
+    "line": 258,
+    "shape": "boolop",
+    "names": [
+     "motion_volume"
+    ]
+   },
+   {
+    "line": 259,
+    "shape": "if",
+    "names": [
+     "quanta"
+    ]
+   },
+   {
+    "line": 302,
+    "shape": "ternary",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 302,
+    "shape": "ternary",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 304,
+    "shape": "ternary",
+    "names": [
+     "motion_volume"
+    ]
+   },
+   {
+    "line": 325,
+    "shape": "boolop",
+    "names": [
+     "motion_volume"
+    ]
+   },
+   {
+    "line": 379,
+    "shape": "if",
+    "names": [
+     "held"
+    ]
+   }
+  ],
+  "loader/charge.py": [
+   {
+    "line": 16,
+    "shape": "if",
+    "names": [
+     "plane"
+    ]
+   }
+  ],
+  "loader/derived.py": [
+   {
+    "line": 68,
+    "shape": "boolop",
+    "names": [
+     "held",
+     "wronskian"
+    ]
+   },
+   {
+    "line": 78,
+    "shape": "ternary",
+    "names": [
+     "plane"
+    ]
+   },
+   {
+    "line": 83,
+    "shape": "ternary",
+    "names": [
+     "plane"
+    ]
+   },
+   {
+    "line": 97,
+    "shape": "boolop",
+    "names": [
+     "held"
+    ]
+   },
+   {
+    "line": 102,
+    "shape": "ternary",
+    "names": [
+     "held"
+    ]
+   },
+   {
+    "line": 118,
+    "shape": "boolop",
+    "names": [
+     "plane",
+     "rotation"
+    ]
+   },
+   {
+    "line": 123,
+    "shape": "boolop",
+    "names": [
+     "quanta",
+     "wronskian"
+    ]
+   },
+   {
+    "line": 138,
+    "shape": "comprehension",
+    "names": [
+     "quanta"
+    ]
+   },
+   {
+    "line": 150,
+    "shape": "comprehension",
+    "names": [
+     "charged()"
+    ]
+   },
+   {
+    "line": 154,
+    "shape": "if",
+    "names": [
+     "charged()"
+    ]
+   },
+   {
+    "line": 159,
+    "shape": "if",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 176,
+    "shape": "comprehension",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 177,
+    "shape": "comprehension",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 182,
+    "shape": "ternary",
+    "names": [
+     "plane"
+    ]
+   },
+   {
+    "line": 183,
+    "shape": "if",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 205,
+    "shape": "if",
+    "names": [
+     "plane"
+    ]
+   },
+   {
+    "line": 226,
+    "shape": "comprehension",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 231,
+    "shape": "if",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 250,
+    "shape": "comprehension",
+    "names": [
+     "quanta"
+    ]
+   },
+   {
+    "line": 270,
+    "shape": "ternary",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 271,
+    "shape": "ternary",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 273,
+    "shape": "if",
+    "names": [
+     "axes"
+    ]
+   },
+   {
+    "line": 275,
+    "shape": "if",
+    "names": [
+     "flux"
+    ]
+   },
+   {
+    "line": 277,
+    "shape": "if",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 286,
+    "shape": "ternary",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 318,
+    "shape": "if",
+    "names": [
+     "turns()"
+    ]
+   },
+   {
+    "line": 327,
+    "shape": "if",
+    "names": [
+     "quanta"
+    ]
+   },
+   {
+    "line": 330,
+    "shape": "if",
+    "names": [
+     "held"
+    ]
+   }
+  ],
+  "loader/interval.py": [
+   {
+    "line": 15,
+    "shape": "boolop",
+    "names": [
+     "axes",
+     "held",
+     "wronskian"
+    ]
+   }
+  ],
+  "loader/rooms.py": [
+   {
+    "line": 35,
+    "shape": "comprehension",
+    "names": [
+     "axes",
+     "rotation"
+    ]
+   },
+   {
+    "line": 72,
+    "shape": "ternary",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 83,
+    "shape": "ternary",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 88,
+    "shape": "if",
+    "names": [
+     "axes",
+     "rotation"
+    ]
+   },
+   {
+    "line": 92,
+    "shape": "if",
+    "names": [
+     "flux"
+    ]
+   },
+   {
+    "line": 115,
+    "shape": "if",
+    "names": [
+     "wronskian"
+    ]
+   }
+  ],
+  "loader/seed.py": [
+   {
+    "line": 13,
+    "shape": "comprehension",
+    "names": [
+     "held",
+     "quanta"
+    ]
+   }
+  ],
+  "loader/universe.py": [
+   {
+    "line": 98,
+    "shape": "ternary",
+    "names": [
+     "held",
+     "wronskian"
+    ]
+   },
+   {
+    "line": 105,
+    "shape": "ternary",
+    "names": [
+     "held",
+     "wronskian"
+    ]
+   }
+  ],
+  "meeting_board.py": [
+   {
+    "line": 350,
+    "shape": "ternary",
+    "names": [
+     "plane"
+    ]
+   }
+  ],
+  "node.py": [
+   {
+    "line": 54,
+    "shape": "comprehension",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 63,
+    "shape": "comprehension",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 80,
+    "shape": "comprehension",
+    "names": [
+     "axes"
+    ]
+   },
+   {
+    "line": 102,
+    "shape": "if",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 120,
+    "shape": "if",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 148,
+    "shape": "if",
+    "names": [
+     "turns()"
+    ]
+   },
+   {
+    "line": 150,
+    "shape": "comprehension",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 166,
+    "shape": "comprehension",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 188,
+    "shape": "comprehension",
+    "names": [
+     "turns()"
+    ]
+   },
+   {
+    "line": 347,
+    "shape": "if",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 350,
+    "shape": "if",
+    "names": [
+     "rotation",
+     "turns()"
+    ]
+   },
+   {
+    "line": 361,
+    "shape": "if",
+    "names": [
+     "rotation"
+    ]
+   }
+  ],
+  "records.py": [
+   {
+    "line": 119,
+    "shape": "ternary",
+    "names": [
+     "reads_content()"
+    ]
+   },
+   {
+    "line": 185,
+    "shape": "ternary",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 218,
+    "shape": "if",
+    "names": [
+     "motion_volume"
+    ]
+   },
+   {
+    "line": 228,
+    "shape": "if",
+    "names": [
+     "motion_volume"
+    ]
+   },
+   {
+    "line": 287,
+    "shape": "ternary",
+    "names": [
+     "axes"
+    ]
+   },
+   {
+    "line": 288,
+    "shape": "if",
+    "names": [
+     "flux"
+    ]
+   },
+   {
+    "line": 335,
+    "shape": "if",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 367,
+    "shape": "if",
+    "names": [
+     "axes",
+     "wronskian"
+    ]
+   },
+   {
+    "line": 369,
+    "shape": "ternary",
+    "names": [
+     "held"
+    ]
+   }
+  ],
+  "registry.py": [
+   {
+    "line": 24,
+    "shape": "ternary",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 29,
+    "shape": "comprehension",
+    "names": [
+     "held",
+     "wronskian"
+    ]
+   },
+   {
+    "line": 31,
+    "shape": "if",
+    "names": [
+     "charged()"
+    ]
+   },
+   {
+    "line": 38,
+    "shape": "if",
+    "names": [
+     "charged()"
+    ]
+   },
+   {
+    "line": 47,
+    "shape": "if",
+    "names": [
+     "wronskian"
+    ]
+   },
+   {
+    "line": 61,
+    "shape": "if",
+    "names": [
+     "charged()"
+    ]
+   },
+   {
+    "line": 63,
+    "shape": "ternary",
+    "names": [
+     "held",
+     "wronskian"
+    ]
+   }
+  ],
+  "share.py": [
+   {
+    "line": 149,
+    "shape": "boolop",
+    "names": [
+     "plane"
+    ]
+   },
+   {
+    "line": 154,
+    "shape": "boolop",
+    "names": [
+     "charged()"
+    ]
+   }
+  ],
+  "shear.py": [
+   {
+    "line": 20,
+    "shape": "boolop",
+    "names": [
+     "axes",
+     "wronskian"
+    ]
+   },
+   {
+    "line": 42,
+    "shape": "if",
+    "names": [
+     "carried()"
+    ]
+   },
+   {
+    "line": 89,
+    "shape": "if",
+    "names": [
+     "carried()"
+    ]
+   },
+   {
+    "line": 93,
+    "shape": "boolop",
+    "names": [
+     "motion_volume"
+    ]
+   },
+   {
+    "line": 98,
+    "shape": "if",
+    "names": [
+     "carried()"
+    ]
+   }
+  ],
+  "slabs.py": [
+   {
+    "line": 121,
+    "shape": "comprehension",
+    "names": [
+     "charged()"
+    ]
+   },
+   {
+    "line": 206,
+    "shape": "ternary",
+    "names": [
+     "world.seed"
+    ]
+   },
+   {
+    "line": 327,
+    "shape": "if",
+    "names": [
+     "world.seed"
+    ]
+   }
+  ],
+  "swap.py": [
+   {
+    "line": 62,
+    "shape": "if",
+    "names": [
+     "carried()"
+    ]
+   },
+   {
+    "line": 90,
+    "shape": "if",
+    "names": [
+     "plane",
+     "turns()"
+    ]
+   },
+   {
+    "line": 127,
+    "shape": "if",
+    "names": [
+     "rotation"
+    ]
+   },
+   {
+    "line": 171,
+    "shape": "comprehension",
+    "names": [
+     "motion_volume"
+    ]
+   },
+   {
+    "line": 188,
+    "shape": "if",
+    "names": [
+     "turns()"
+    ]
+   }
+  ]
+ },
+ "acts_functions": {
+  "the held write (act(rows): the metric from every row's form and stresses, the potential from every plane's Wronskian and currents)": [
+   {
+    "file": "records.py",
+    "function": "write_sources",
+    "present": true
+   },
+   {
+    "file": "records.py",
+    "function": "scaled_sum",
+    "present": true
+   },
+   {
+    "file": "records.py",
+    "function": "pressure_term",
+    "present": true
+   },
+   {
+    "file": "records.py",
+    "function": "form",
+    "present": true
+   },
+   {
+    "file": "records.py",
+    "function": "wronskian",
+    "present": true
+   },
+   {
+    "file": "features/held_write/__init__.py",
+    "function": "held_write",
+    "present": true
+   },
+   {
+    "file": "node.py",
+    "function": "held_write_at",
+    "present": true
+   },
+   {
+    "file": "lattice.py",
+    "function": "Lattice.held_write",
+    "present": true
+   },
+   {
+    "file": "bookings.py",
+    "function": "booked_of",
+    "present": true
+   },
+   {
+    "file": "readings.py",
+    "function": "axis_sources_of",
+    "present": true
+   },
+   {
+    "file": "readings.py",
+    "function": "stresses_of",
+    "present": true
+   },
+   {
+    "file": "readings.py",
+    "function": "sense_current_of",
+    "present": true
+   },
+   {
+    "file": "features/currents/__init__.py",
+    "function": "tension",
+    "present": true
+   },
+   {
+    "file": "features/currents/__init__.py",
+    "function": "current",
+    "present": true
+   }
+  ],
+  "the rotation, Rule3 on every line (act(row))": [
+   {
+    "file": "core/rule3.py",
+    "function": "rule3",
+    "present": true
+   },
+   {
+    "file": "core/rule3.py",
+    "function": "carried_division",
+    "present": true
+   },
+   {
+    "file": "flux.py",
+    "function": "step_line",
+    "present": true
+   },
+   {
+    "file": "flux.py",
+    "function": "step_plane",
+    "present": true
+   },
+   {
+    "file": "flux.py",
+    "function": "step_momentum",
+    "present": true
+   },
+   {
+    "file": "flux.py",
+    "function": "step_family",
+    "present": true
+   },
+   {
+    "file": "flux.py",
+    "function": "step_records",
+    "present": true
+   },
+   {
+    "file": "flux.py",
+    "function": "link_fluxes",
+    "present": true
+   },
+   {
+    "file": "flux.py",
+    "function": "turned_link_fluxes",
+    "present": true
+   }
+  ],
+  "the planes' phase read from the potential (the Link's pair)": [
+   {
+    "file": "node.py",
+    "function": "turning",
+    "present": true
+   },
+   {
+    "file": "node.py",
+    "function": "clocked_potentials",
+    "present": true
+   },
+   {
+    "file": "node.py",
+    "function": "phase_counts",
+    "present": true
+   },
+   {
+    "file": "node.py",
+    "function": "phase_carried",
+    "present": true
+   },
+   {
+    "file": "node.py",
+    "function": "phased",
+    "present": true
+   },
+   {
+    "file": "plane.py",
+    "function": "link_levels",
+    "present": true
+   },
+   {
+    "file": "plane.py",
+    "function": "sign_pairs",
+    "present": true
+   },
+   {
+    "file": "plane.py",
+    "function": "phase_links",
+    "present": true
+   },
+   {
+    "file": "plane.py",
+    "function": "link_pairs",
+    "present": true
+   },
+   {
+    "file": "features/phase/__init__.py",
+    "function": "iterate",
+    "present": true
+   },
+   {
+    "file": "features/phase/__init__.py",
+    "function": "fold",
+    "present": true
+   },
+   {
+    "file": "core/paces.py",
+    "function": "turn_factor",
+    "present": true
+   }
+  ],
+  "the planes' arrivals turned by the metric's lines (the paces, the Link factor)": [
+   {
+    "file": "node.py",
+    "function": "read",
+    "present": true
+   },
+   {
+    "file": "node.py",
+    "function": "read_lines",
+    "present": true
+   },
+   {
+    "file": "node.py",
+    "function": "rulers",
+    "present": true
+   },
+   {
+    "file": "node.py",
+    "function": "rule_of",
+    "present": true
+   },
+   {
+    "file": "features/read/__init__.py",
+    "function": "content_of",
+    "present": true
+   },
+   {
+    "file": "features/read/__init__.py",
+    "function": "link_tensions",
+    "present": true
+   },
+   {
+    "file": "features/read/__init__.py",
+    "function": "link_factors",
+    "present": true
+   },
+   {
+    "file": "features/read/__init__.py",
+    "function": "axis_paces",
+    "present": true
+   },
+   {
+    "file": "core/paces.py",
+    "function": "node_paces",
+    "present": true
+   },
+   {
+    "file": "core/paces.py",
+    "function": "clock_of",
+    "present": true
+   },
+   {
+    "file": "core/paces.py",
+    "function": "link_pace_of",
+    "present": true
+   },
+   {
+    "file": "core/rule3.py",
+    "function": "rule_integers",
+    "present": true
+   },
+   {
+    "file": "core/rule3.py",
+    "function": "link_factor",
+    "present": true
+   },
+   {
+    "file": "features/volume/__init__.py",
+    "function": "level_of",
+    "present": true
+   }
+  ]
+ },
+ "acts_functions_missing": 0
+}

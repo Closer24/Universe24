@@ -1,0 +1,11 @@
+sudden: interval 0 of 1200 at the level 0
+sudden: interval 300 of 1200 at the level 500
+sudden: interval 600 of 1200 at the level 1000
+sudden: interval 900 of 1200 at the level 1500
+sudden plateau     0 X     1000 e^U x1e6  1000000 mean      1 crossings  32 period [7, 14] A   401 A e^U x1e3   401000 J_rule3   119853 J_ride   119853 K_board 134199 K_proper 134199 E_proper x1e6 134199 cos residual x1e6 3
+sudden plateau   500 X     7415 e^U x1e6  1650165 mean     -3 crossings  11 period [20, 9] A   189 A e^U x1e3   311881 J_rule3    10583 J_ride    78473 K_board 130289 K_proper 130289 E_proper x1e6 78955 cos residual x1e6 3
+sudden plateau  1000 X    54527 e^U x1e6  2717391 mean     -5 crossings   4 period [57, 0] A   156 A e^U x1e3   423913 J_rule3     2678 J_ride   146045 K_board 129547 K_proper 129547 E_proper x1e6 47673 cos residual x1e6 16
+sudden plateau  1500 X   404372 e^U x1e6  4484304 mean     11 crossings   1 period None A    56 A e^U x1e3   251121 J_rule3      127 J_ride    51759 K_board None K_proper None E_proper x1e6 None cos residual x1e6 21
+sudden plateau  2000 X  3010683 e^U x1e6  7407407 mean    -10 crossings   0 period None A    10 A e^U x1e3    74074 J_rule3        1 J_ride     4424 K_board None K_proper None E_proper x1e6 None cos residual x1e6 108
+
+written /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/r3/tools/derivations/r3/ride_lines_sudden.json

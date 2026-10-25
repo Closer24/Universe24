@@ -1,0 +1,4915 @@
+{
+ "flag": "on",
+ "rows": [
+  {
+   "interval": 1,
+   "light_share_total": 2844748995,
+   "light_quanta_total": 28,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0
+   },
+   "charges": {},
+   "X_min": 1000,
+   "X_max": 1002
+  },
+  {
+   "interval": 2,
+   "light_share_total": 2851447343,
+   "light_quanta_total": 27,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0
+   },
+   "charges": {},
+   "X_min": 1000,
+   "X_max": 1007
+  },
+  {
+   "interval": 3,
+   "light_share_total": 2786951754,
+   "light_quanta_total": 30,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0
+   },
+   "charges": {},
+   "X_min": 986,
+   "X_max": 1042
+  },
+  {
+   "interval": 4,
+   "light_share_total": 2019111257,
+   "light_quanta_total": 28,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 215472
+   },
+   "X_min": 1002,
+   "X_max": 1058
+  },
+  {
+   "interval": 5,
+   "light_share_total": 2188895663,
+   "light_quanta_total": 16,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 201000
+   },
+   "X_min": 1015,
+   "X_max": 1072
+  },
+  {
+   "interval": 6,
+   "light_share_total": 2333003591,
+   "light_quanta_total": 15,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 372768
+   },
+   "X_min": 1015,
+   "X_max": 1240
+  },
+  {
+   "interval": 7,
+   "light_share_total": 2251204649,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 176040
+   },
+   "X_min": 1042,
+   "X_max": 1153
+  },
+  {
+   "interval": 8,
+   "light_share_total": 2619498031,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 227464
+   },
+   "X_min": 1058,
+   "X_max": 1146
+  },
+  {
+   "interval": 9,
+   "light_share_total": 2886750339,
+   "light_quanta_total": 26,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 178690
+   },
+   "X_min": 949,
+   "X_max": 1280
+  },
+  {
+   "interval": 10,
+   "light_share_total": 2604913673,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 186666
+   },
+   "X_min": 1077,
+   "X_max": 1295
+  },
+  {
+   "interval": 11,
+   "light_share_total": 3413453795,
+   "light_quanta_total": 38,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 158030
+   },
+   "X_min": 1100,
+   "X_max": 1446
+  },
+  {
+   "interval": 12,
+   "light_share_total": 4391081004,
+   "light_quanta_total": 34,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 74414
+   },
+   "X_min": 1105,
+   "X_max": 1871
+  },
+  {
+   "interval": 13,
+   "light_share_total": 3695362081,
+   "light_quanta_total": 34,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 17948
+   },
+   "X_min": 1294,
+   "X_max": 1446
+  },
+  {
+   "interval": 14,
+   "light_share_total": 4455510680,
+   "light_quanta_total": 36,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 153682
+   },
+   "X_min": 1116,
+   "X_max": 1576
+  },
+  {
+   "interval": 15,
+   "light_share_total": 6304893638,
+   "light_quanta_total": 57,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 174572
+   },
+   "X_min": 1392,
+   "X_max": 1767
+  },
+  {
+   "interval": 16,
+   "light_share_total": 3888407052,
+   "light_quanta_total": 36,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 78400
+   },
+   "X_min": 1474,
+   "X_max": 1882
+  },
+  {
+   "interval": 17,
+   "light_share_total": 3960330684,
+   "light_quanta_total": 35,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 7564
+   },
+   "X_min": 1662,
+   "X_max": 1857
+  },
+  {
+   "interval": 18,
+   "light_share_total": 3920597957,
+   "light_quanta_total": 33,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 4048
+   },
+   "X_min": 1648,
+   "X_max": 2165
+  },
+  {
+   "interval": 19,
+   "light_share_total": 3915717414,
+   "light_quanta_total": 43,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 7588
+   },
+   "X_min": 1912,
+   "X_max": 2368
+  },
+  {
+   "interval": 20,
+   "light_share_total": 4225830058,
+   "light_quanta_total": 45,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 9390
+   },
+   "X_min": 2142,
+   "X_max": 3163
+  },
+  {
+   "interval": 21,
+   "light_share_total": 3725810508,
+   "light_quanta_total": 36,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 1917
+   },
+   "X_min": 2324,
+   "X_max": 3480
+  },
+  {
+   "interval": 22,
+   "light_share_total": 3351421276,
+   "light_quanta_total": 33,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 1705
+   },
+   "X_min": 2511,
+   "X_max": 3163
+  },
+  {
+   "interval": 23,
+   "light_share_total": 3596298761,
+   "light_quanta_total": 42,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 19503
+   },
+   "X_min": 2515,
+   "X_max": 2762
+  },
+  {
+   "interval": 24,
+   "light_share_total": 3421183697,
+   "light_quanta_total": 28,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 48418
+   },
+   "X_min": 2139,
+   "X_max": 2976
+  },
+  {
+   "interval": 25,
+   "light_share_total": 3735733945,
+   "light_quanta_total": 35,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 55888
+   },
+   "X_min": 2545,
+   "X_max": 3166
+  },
+  {
+   "interval": 26,
+   "light_share_total": 3302680762,
+   "light_quanta_total": 24,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 41745
+   },
+   "X_min": 3129,
+   "X_max": 3314
+  },
+  {
+   "interval": 27,
+   "light_share_total": 3208731471,
+   "light_quanta_total": 26,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 37248
+   },
+   "X_min": 3347,
+   "X_max": 3933
+  },
+  {
+   "interval": 28,
+   "light_share_total": 3069850815,
+   "light_quanta_total": 26,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 24960
+   },
+   "X_min": 3505,
+   "X_max": 4263
+  },
+  {
+   "interval": 29,
+   "light_share_total": 3086574799,
+   "light_quanta_total": 26,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 7227
+   },
+   "X_min": 3693,
+   "X_max": 4299
+  },
+  {
+   "interval": 30,
+   "light_share_total": 3126524869,
+   "light_quanta_total": 32,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 4379
+   },
+   "X_min": 3881,
+   "X_max": 4263
+  },
+  {
+   "interval": 31,
+   "light_share_total": 2923162798,
+   "light_quanta_total": 33,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 4609
+   },
+   "X_min": 3966,
+   "X_max": 4314
+  },
+  {
+   "interval": 32,
+   "light_share_total": 2798165131,
+   "light_quanta_total": 30,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 5456
+   },
+   "X_min": 4098,
+   "X_max": 4466
+  },
+  {
+   "interval": 33,
+   "light_share_total": 2881052890,
+   "light_quanta_total": 27,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 7053
+   },
+   "X_min": 4217,
+   "X_max": 4618
+  },
+  {
+   "interval": 34,
+   "light_share_total": 2855003664,
+   "light_quanta_total": 32,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 7079
+   },
+   "X_min": 4536,
+   "X_max": 4743
+  },
+  {
+   "interval": 35,
+   "light_share_total": 2738625945,
+   "light_quanta_total": 31,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 6621
+   },
+   "X_min": 4803,
+   "X_max": 4972
+  },
+  {
+   "interval": 36,
+   "light_share_total": 2782307552,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 4626
+   },
+   "X_min": 4909,
+   "X_max": 5379
+  },
+  {
+   "interval": 37,
+   "light_share_total": 2738019903,
+   "light_quanta_total": 19,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 3628
+   },
+   "X_min": 5049,
+   "X_max": 5633
+  },
+  {
+   "interval": 38,
+   "light_share_total": 2610795971,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 3458
+   },
+   "X_min": 5237,
+   "X_max": 5681
+  },
+  {
+   "interval": 39,
+   "light_share_total": 2525965195,
+   "light_quanta_total": 18,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 1910
+   },
+   "X_min": 5467,
+   "X_max": 5682
+  },
+  {
+   "interval": 40,
+   "light_share_total": 2499309520,
+   "light_quanta_total": 16,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 7104
+   },
+   "X_min": 5524,
+   "X_max": 5736
+  },
+  {
+   "interval": 41,
+   "light_share_total": 2569373681,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 13456
+   },
+   "X_min": 5501,
+   "X_max": 5948
+  },
+  {
+   "interval": 42,
+   "light_share_total": 2588073069,
+   "light_quanta_total": 16,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 15624
+   },
+   "X_min": 5677,
+   "X_max": 6142
+  },
+  {
+   "interval": 43,
+   "light_share_total": 2585724303,
+   "light_quanta_total": 16,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 12972
+   },
+   "X_min": 5965,
+   "X_max": 6296
+  },
+  {
+   "interval": 44,
+   "light_share_total": 2630437347,
+   "light_quanta_total": 21,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 10085
+   },
+   "X_min": 6127,
+   "X_max": 6554
+  },
+  {
+   "interval": 45,
+   "light_share_total": 2375097645,
+   "light_quanta_total": 21,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 10652
+   },
+   "X_min": 6329,
+   "X_max": 7023
+  },
+  {
+   "interval": 46,
+   "light_share_total": 2202161653,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 13322
+   },
+   "X_min": 6553,
+   "X_max": 7352
+  },
+  {
+   "interval": 47,
+   "light_share_total": 2132284453,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14775
+   },
+   "X_min": 6673,
+   "X_max": 7486
+  },
+  {
+   "interval": 48,
+   "light_share_total": 2124195996,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14811
+   },
+   "X_min": 6778,
+   "X_max": 7352
+  },
+  {
+   "interval": 49,
+   "light_share_total": 2099744330,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 15204
+   },
+   "X_min": 6919,
+   "X_max": 7145
+  },
+  {
+   "interval": 50,
+   "light_share_total": 2109402209,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 15769
+   },
+   "X_min": 6859,
+   "X_max": 7275
+  },
+  {
+   "interval": 51,
+   "light_share_total": 2163141886,
+   "light_quanta_total": 13,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 16277
+   },
+   "X_min": 6722,
+   "X_max": 7377
+  },
+  {
+   "interval": 52,
+   "light_share_total": 2215610735,
+   "light_quanta_total": 16,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 17355
+   },
+   "X_min": 6764,
+   "X_max": 7496
+  },
+  {
+   "interval": 53,
+   "light_share_total": 2210089583,
+   "light_quanta_total": 19,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 16757
+   },
+   "X_min": 6985,
+   "X_max": 7664
+  },
+  {
+   "interval": 54,
+   "light_share_total": 2221902946,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 16771
+   },
+   "X_min": 7317,
+   "X_max": 7782
+  },
+  {
+   "interval": 55,
+   "light_share_total": 2233749696,
+   "light_quanta_total": 15,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 15284
+   },
+   "X_min": 7497,
+   "X_max": 7845
+  },
+  {
+   "interval": 56,
+   "light_share_total": 2150230905,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14958
+   },
+   "X_min": 7709,
+   "X_max": 7976
+  },
+  {
+   "interval": 57,
+   "light_share_total": 2085450571,
+   "light_quanta_total": 24,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14554
+   },
+   "X_min": 7865,
+   "X_max": 8200
+  },
+  {
+   "interval": 58,
+   "light_share_total": 2107038674,
+   "light_quanta_total": 23,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14117
+   },
+   "X_min": 7879,
+   "X_max": 8346
+  },
+  {
+   "interval": 59,
+   "light_share_total": 2111753542,
+   "light_quanta_total": 23,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14017
+   },
+   "X_min": 7936,
+   "X_max": 8440
+  },
+  {
+   "interval": 60,
+   "light_share_total": 2085606622,
+   "light_quanta_total": 13,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 13932
+   },
+   "X_min": 8048,
+   "X_max": 8523
+  },
+  {
+   "interval": 61,
+   "light_share_total": 2080905324,
+   "light_quanta_total": 16,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 13542
+   },
+   "X_min": 8148,
+   "X_max": 8584
+  },
+  {
+   "interval": 62,
+   "light_share_total": 2083988126,
+   "light_quanta_total": 18,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 13665
+   },
+   "X_min": 8126,
+   "X_max": 8652
+  },
+  {
+   "interval": 63,
+   "light_share_total": 2057137375,
+   "light_quanta_total": 22,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 15224
+   },
+   "X_min": 8128,
+   "X_max": 8698
+  },
+  {
+   "interval": 64,
+   "light_share_total": 2067539879,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 15556
+   },
+   "X_min": 8178,
+   "X_max": 8700
+  },
+  {
+   "interval": 65,
+   "light_share_total": 2039257163,
+   "light_quanta_total": 19,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14912
+   },
+   "X_min": 8286,
+   "X_max": 8748
+  },
+  {
+   "interval": 66,
+   "light_share_total": 2040236915,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14244
+   },
+   "X_min": 8446,
+   "X_max": 8691
+  },
+  {
+   "interval": 67,
+   "light_share_total": 2029122159,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14329
+   },
+   "X_min": 8547,
+   "X_max": 8632
+  },
+  {
+   "interval": 68,
+   "light_share_total": 2057502582,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 14662
+   },
+   "X_min": 8466,
+   "X_max": 8808
+  },
+  {
+   "interval": 69,
+   "light_share_total": 2068001860,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 15017
+   },
+   "X_min": 8423,
+   "X_max": 8941
+  },
+  {
+   "interval": 70,
+   "light_share_total": 2104578630,
+   "light_quanta_total": 13,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 16211
+   },
+   "X_min": 8423,
+   "X_max": 9009
+  },
+  {
+   "interval": 71,
+   "light_share_total": 2088916656,
+   "light_quanta_total": 27,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 16465
+   },
+   "X_min": 8491,
+   "X_max": 8941
+  },
+  {
+   "interval": 72,
+   "light_share_total": 2096543648,
+   "light_quanta_total": 28,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 17202
+   },
+   "X_min": 8457,
+   "X_max": 8813
+  },
+  {
+   "interval": 73,
+   "light_share_total": 2101594727,
+   "light_quanta_total": 18,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 18236
+   },
+   "X_min": 8344,
+   "X_max": 8716
+  },
+  {
+   "interval": 74,
+   "light_share_total": 1959236029,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 74494
+   },
+   "X_min": 8299,
+   "X_max": 8795
+  },
+  {
+   "interval": 75,
+   "light_share_total": 1966537575,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 75584
+   },
+   "X_min": 8346,
+   "X_max": 8809
+  },
+  {
+   "interval": 76,
+   "light_share_total": 1974953176,
+   "light_quanta_total": 18,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 76152
+   },
+   "X_min": 8260,
+   "X_max": 8795
+  },
+  {
+   "interval": 77,
+   "light_share_total": 1996332684,
+   "light_quanta_total": 13,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 77280
+   },
+   "X_min": 8228,
+   "X_max": 8710
+  },
+  {
+   "interval": 78,
+   "light_share_total": 2027507546,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 78426
+   },
+   "X_min": 8196,
+   "X_max": 8816
+  },
+  {
+   "interval": 79,
+   "light_share_total": 2032464131,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 78481
+   },
+   "X_min": 8319,
+   "X_max": 8913
+  },
+  {
+   "interval": 80,
+   "light_share_total": 1947469012,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 71111
+   },
+   "X_min": 8312,
+   "X_max": 8816
+  },
+  {
+   "interval": 81,
+   "light_share_total": 1936225392,
+   "light_quanta_total": 8,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 57496
+   },
+   "X_min": 8234,
+   "X_max": 8977
+  },
+  {
+   "interval": 82,
+   "light_share_total": 1950907644,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 52183
+   },
+   "X_min": 8200,
+   "X_max": 9272
+  },
+  {
+   "interval": 83,
+   "light_share_total": 1971633814,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 48956
+   },
+   "X_min": 8123,
+   "X_max": 9378
+  },
+  {
+   "interval": 84,
+   "light_share_total": 2015625480,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 34494
+   },
+   "X_min": 7932,
+   "X_max": 9272
+  },
+  {
+   "interval": 85,
+   "light_share_total": 2046397365,
+   "light_quanta_total": 15,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 27512
+   },
+   "X_min": 7842,
+   "X_max": 8874
+  },
+  {
+   "interval": 86,
+   "light_share_total": 1992946846,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 29361
+   },
+   "X_min": 7860,
+   "X_max": 8239
+  },
+  {
+   "interval": 87,
+   "light_share_total": 2013026627,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 31028
+   },
+   "X_min": 7511,
+   "X_max": 8092
+  },
+  {
+   "interval": 88,
+   "light_share_total": 2046297082,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 31310
+   },
+   "X_min": 6907,
+   "X_max": 8058
+  },
+  {
+   "interval": 89,
+   "light_share_total": 2056007868,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 31909
+   },
+   "X_min": 6654,
+   "X_max": 8108
+  },
+  {
+   "interval": 90,
+   "light_share_total": 2058093780,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 29185
+   },
+   "X_min": 6868,
+   "X_max": 8058
+  },
+  {
+   "interval": 91,
+   "light_share_total": 2085731821,
+   "light_quanta_total": 21,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 27702
+   },
+   "X_min": 7447,
+   "X_max": 7917
+  },
+  {
+   "interval": 92,
+   "light_share_total": 1996595342,
+   "light_quanta_total": 22,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 27633
+   },
+   "X_min": 7476,
+   "X_max": 8155
+  },
+  {
+   "interval": 93,
+   "light_share_total": 1972599891,
+   "light_quanta_total": 22,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 17619
+   },
+   "X_min": 7380,
+   "X_max": 8753
+  },
+  {
+   "interval": 94,
+   "light_share_total": 1962102502,
+   "light_quanta_total": 9,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 1460
+   },
+   "X_min": 7296,
+   "X_max": 9063
+  },
+  {
+   "interval": 95,
+   "light_share_total": 1974366362,
+   "light_quanta_total": 9,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 6610
+   },
+   "X_min": 7220,
+   "X_max": 8753
+  },
+  {
+   "interval": 96,
+   "light_share_total": 2000894084,
+   "light_quanta_total": 17,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 6810
+   },
+   "X_min": 7144,
+   "X_max": 8117
+  },
+  {
+   "interval": 97,
+   "light_share_total": 2032731840,
+   "light_quanta_total": 9,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 10136
+   },
+   "X_min": 7025,
+   "X_max": 7297
+  },
+  {
+   "interval": 98,
+   "light_share_total": 2051457342,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 26701
+   },
+   "X_min": 6469,
+   "X_max": 7210
+  },
+  {
+   "interval": 99,
+   "light_share_total": 2061636851,
+   "light_quanta_total": 26,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 48915
+   },
+   "X_min": 5891,
+   "X_max": 7025
+  },
+  {
+   "interval": 100,
+   "light_share_total": 1618336480,
+   "light_quanta_total": 26,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 62589
+   },
+   "X_min": 5705,
+   "X_max": 6811
+  },
+  {
+   "interval": 101,
+   "light_share_total": 1625382165,
+   "light_quanta_total": 18,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 58201
+   },
+   "X_min": 5888,
+   "X_max": 6742
+  },
+  {
+   "interval": 102,
+   "light_share_total": 1651387226,
+   "light_quanta_total": 7,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 47606
+   },
+   "X_min": 6126,
+   "X_max": 6639
+  },
+  {
+   "interval": 103,
+   "light_share_total": 1715051717,
+   "light_quanta_total": 8,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 49127
+   },
+   "X_min": 5948,
+   "X_max": 6556
+  },
+  {
+   "interval": 104,
+   "light_share_total": 1750848375,
+   "light_quanta_total": 9,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 65284
+   },
+   "X_min": 5920,
+   "X_max": 6670
+  },
+  {
+   "interval": 105,
+   "light_share_total": 1689290182,
+   "light_quanta_total": 9,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 59234
+   },
+   "X_min": 6008,
+   "X_max": 6556
+  },
+  {
+   "interval": 106,
+   "light_share_total": 1709950306,
+   "light_quanta_total": 8,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 3294
+   },
+   "X_min": 5814,
+   "X_max": 6252
+  },
+  {
+   "interval": 107,
+   "light_share_total": 1695517716,
+   "light_quanta_total": 11,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 60859
+   },
+   "X_min": 5684,
+   "X_max": 6201
+  },
+  {
+   "interval": 108,
+   "light_share_total": 1620560033,
+   "light_quanta_total": 12,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 73975
+   },
+   "X_min": 5529,
+   "X_max": 6133
+  },
+  {
+   "interval": 109,
+   "light_share_total": 1669369824,
+   "light_quanta_total": 13,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 76008
+   },
+   "X_min": 5233,
+   "X_max": 5930
+  },
+  {
+   "interval": 110,
+   "light_share_total": 1757723687,
+   "light_quanta_total": 12,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 76743
+   },
+   "X_min": 5009,
+   "X_max": 5633
+  },
+  {
+   "interval": 111,
+   "light_share_total": 1832155336,
+   "light_quanta_total": 11,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 79928
+   },
+   "X_min": 4907,
+   "X_max": 5722
+  },
+  {
+   "interval": 112,
+   "light_share_total": 1844625060,
+   "light_quanta_total": 11,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 83608
+   },
+   "X_min": 4934,
+   "X_max": 5757
+  },
+  {
+   "interval": 113,
+   "light_share_total": 1824552387,
+   "light_quanta_total": 15,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 88064
+   },
+   "X_min": 4919,
+   "X_max": 5722
+  },
+  {
+   "interval": 114,
+   "light_share_total": 1857634391,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 71918
+   },
+   "X_min": 4699,
+   "X_max": 5445
+  },
+  {
+   "interval": 115,
+   "light_share_total": 1909074658,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 46332
+   },
+   "X_min": 4471,
+   "X_max": 5170
+  },
+  {
+   "interval": 116,
+   "light_share_total": 1996337415,
+   "light_quanta_total": 20,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 24084
+   },
+   "X_min": 4387,
+   "X_max": 5151
+  },
+  {
+   "interval": 117,
+   "light_share_total": 1636658525,
+   "light_quanta_total": 8,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 20356
+   },
+   "X_min": 3928,
+   "X_max": 4974
+  },
+  {
+   "interval": 118,
+   "light_share_total": 1620909956,
+   "light_quanta_total": 11,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 65704
+   },
+   "X_min": 3613,
+   "X_max": 4682
+  },
+  {
+   "interval": 119,
+   "light_share_total": 1660751776,
+   "light_quanta_total": 14,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 73584
+   },
+   "X_min": 3557,
+   "X_max": 4658
+  },
+  {
+   "interval": 120,
+   "light_share_total": 1782099998,
+   "light_quanta_total": 15,
+   "frozen": 0,
+   "currents_sum_over_torus": {
+    "sign": 0,
+    "massless": 0,
+    "point 2": 0
+   },
+   "charges": {
+    "point 2": 40613
+   },
+   "X_min": 3777,
+   "X_max": 4579
+  }
+ ],
+ "summary": {
+  "births": 7,
+  "birth_intervals": [
+   4,
+   74
+  ],
+  "senses_sum_per_birth": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "charge_conserved_at_every_birth": true,
+  "take_identity_holds_on_every_birth": true,
+  "take_rows": [
+   {
+    "interval": 4,
+    "taken": 143023662,
+    "walls_plus_excess": 143023662
+   },
+   {
+    "interval": 4,
+    "taken": 143023662,
+    "walls_plus_excess": 143023662
+   },
+   {
+    "interval": 4,
+    "taken": 143023662,
+    "walls_plus_excess": 143023662
+   },
+   {
+    "interval": 4,
+    "taken": 143023662,
+    "walls_plus_excess": 143023662
+   },
+   {
+    "interval": 4,
+    "taken": 143023662,
+    "walls_plus_excess": 143023662
+   },
+   {
+    "interval": 4,
+    "taken": 143023662,
+    "walls_plus_excess": 143023662
+   }
+  ],
+  "credits": 32,
+  "credits_by_kind": {
+   "1": 7,
+   "2": 25
+  },
+  "credits_with_beat": 7,
+  "beat_rows": [
+   {
+    "interval": 4,
+    "family": "massless",
+    "kind": 1,
+    "count": 1,
+    "beat": 94738533,
+    "proper": 4,
+    "beat_gamma_over_proper": 23684633250,
+    "momentum": [
+     [
+      0,
+      34,
+      47
+     ],
+     [
+      0,
+      34,
+      47
+     ],
+     [
+      1,
+      1035,
+      1316
+     ]
+    ],
+    "sense": 0
+   },
+   {
+    "interval": 4,
+    "family": "massless",
+    "kind": 1,
+    "count": 1,
+    "beat": 94738533,
+    "proper": 4,
+    "beat_gamma_over_proper": 23684633250,
+    "momentum": [
+     [
+      0,
+      34,
+      47
+     ],
+     [
+      0,
+      34,
+      47
+     ],
+     [
+      -1,
+      1035,
+      1316
+     ]
+    ],
+    "sense": 0
+   },
+   {
+    "interval": 4,
+    "family": "massless",
+    "kind": 1,
+    "count": 1,
+    "beat": 94738533,
+    "proper": 4,
+    "beat_gamma_over_proper": 23684633250,
+    "momentum": [
+     [
+      0,
+      34,
+      47
+     ],
+     [
+      1,
+      1035,
+      1316
+     ],
+     [
+      0,
+      34,
+      47
+     ]
+    ],
+    "sense": 0
+   },
+   {
+    "interval": 4,
+    "family": "massless",
+    "kind": 1,
+    "count": 1,
+    "beat": 94738533,
+    "proper": 4,
+    "beat_gamma_over_proper": 23684633250,
+    "momentum": [
+     [
+      0,
+      34,
+      47
+     ],
+     [
+      -1,
+      1035,
+      1316
+     ],
+     [
+      0,
+      34,
+      47
+     ]
+    ],
+    "sense": 0
+   },
+   {
+    "interval": 4,
+    "family": "massless",
+    "kind": 1,
+    "count": 1,
+    "beat": 94738533,
+    "proper": 4,
+    "beat_gamma_over_proper": 23684633250,
+    "momentum": [
+     [
+      1,
+      1035,
+      1316
+     ],
+     [
+      0,
+      34,
+      47
+     ],
+     [
+      0,
+      34,
+      47
+     ]
+    ],
+    "sense": 0
+   },
+   {
+    "interval": 4,
+    "family": "massless",
+    "kind": 1,
+    "count": 1,
+    "beat": 94738533,
+    "proper": 4,
+    "beat_gamma_over_proper": 23684633250,
+    "momentum": [
+     [
+      -1,
+      1035,
+      1316
+     ],
+     [
+      0,
+      34,
+      47
+     ],
+     [
+      0,
+      34,
+      47
+     ]
+    ],
+    "sense": 0
+   },
+   {
+    "interval": 74,
+    "family": "massless",
+    "kind": 1,
+    "count": 1,
+    "beat": 10414582,
+    "proper": 53,
+    "beat_gamma_over_proper": 196501547,
+    "momentum": [
+     [
+      0,
+      469,
+      423
+     ],
+     [
+      0,
+      469,
+      423
+     ],
+     [
+      0,
+      469,
+      423
+     ]
+    ],
+    "sense": 0
+   }
+  ],
+  "currents_sum_nonzero_intervals": 0,
+  "charges_first_last": [
+   {},
+   {
+    "point 2": 40613
+   }
+  ],
+  "light_share_first_last": [
+   2844748995,
+   1782099998
+  ],
+  "light_quanta_first_last": [
+   28,
+   15
+  ]
+ },
+ "births": [
+  {
+   "event": "birth",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "points": [
+    [
+     779,
+     1021
+    ],
+    [
+     779,
+     1021
+    ]
+   ],
+   "taken": 143023662,
+   "walls": 142560000,
+   "excess": 463662,
+   "step": 1322881
+  },
+  {
+   "event": "birth",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     0,
+     0,
+     2
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "points": [
+    [
+     779,
+     1021
+    ],
+    [
+     779,
+     1021
+    ]
+   ],
+   "taken": 143023662,
+   "walls": 142560000,
+   "excess": 463662,
+   "step": 1322881
+  },
+  {
+   "event": "birth",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     0,
+     1,
+     0
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "points": [
+    [
+     779,
+     1021
+    ],
+    [
+     779,
+     1021
+    ]
+   ],
+   "taken": 143023662,
+   "walls": 142560000,
+   "excess": 463662,
+   "step": 1322881
+  },
+  {
+   "event": "birth",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     0,
+     2,
+     0
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "points": [
+    [
+     779,
+     1021
+    ],
+    [
+     779,
+     1021
+    ]
+   ],
+   "taken": 143023662,
+   "walls": 142560000,
+   "excess": 463662,
+   "step": 1322881
+  },
+  {
+   "event": "birth",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "points": [
+    [
+     779,
+     1021
+    ],
+    [
+     779,
+     1021
+    ]
+   ],
+   "taken": 143023662,
+   "walls": 142560000,
+   "excess": 463662,
+   "step": 1322881
+  },
+  {
+   "event": "birth",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     2,
+     0,
+     0
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "points": [
+    [
+     779,
+     1021
+    ],
+    [
+     779,
+     1021
+    ]
+   ],
+   "taken": 143023662,
+   "walls": 142560000,
+   "excess": 463662,
+   "step": 1322881
+  },
+  {
+   "event": "birth",
+   "label": "NODEDETECTOR",
+   "interval": 74,
+   "family": "massless",
+   "children": [
+    "point 2",
+    "point 2"
+   ],
+   "senses": [
+    -1,
+    1
+   ],
+   "nodes": [
+    [
+     0,
+     0,
+     0
+    ]
+   ],
+   "records": [
+    0,
+    1
+   ],
+   "points": [
+    [
+     779,
+     1021
+    ],
+    [
+     779,
+     1021
+    ]
+   ],
+   "taken": 146057198,
+   "walls": 142560000,
+   "excess": 3497198,
+   "step": 5210095
+  }
+ ],
+ "credits": [
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "node_detector": 1,
+   "window": [
+    4,
+    4
+   ],
+   "proper": 4,
+   "windows": 1,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     34,
+     47
+    ],
+    [
+     0,
+     34,
+     47
+    ],
+    [
+     1,
+     1035,
+     1316
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    981,
+    1316
+   ],
+   "kind": 1,
+   "sense": 0,
+   "support": [
+    0,
+    0,
+    1
+   ],
+   "beat": 94738533,
+   "identity": [
+    2,
+    0
+   ]
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "node_detector": 2,
+   "window": [
+    4,
+    4
+   ],
+   "proper": 4,
+   "windows": 1,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     34,
+     47
+    ],
+    [
+     0,
+     34,
+     47
+    ],
+    [
+     -1,
+     1035,
+     1316
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    981,
+    1316
+   ],
+   "kind": 1,
+   "sense": 0,
+   "support": [
+    0,
+    0,
+    2
+   ],
+   "beat": 94738533,
+   "identity": [
+    2,
+    0
+   ]
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "node_detector": 3,
+   "window": [
+    4,
+    4
+   ],
+   "proper": 4,
+   "windows": 1,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     34,
+     47
+    ],
+    [
+     1,
+     1035,
+     1316
+    ],
+    [
+     0,
+     34,
+     47
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    981,
+    1316
+   ],
+   "kind": 1,
+   "sense": 0,
+   "support": [
+    0,
+    1,
+    0
+   ],
+   "beat": 94738533,
+   "identity": [
+    2,
+    0
+   ]
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "node_detector": 6,
+   "window": [
+    4,
+    4
+   ],
+   "proper": 4,
+   "windows": 1,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     34,
+     47
+    ],
+    [
+     -1,
+     1035,
+     1316
+    ],
+    [
+     0,
+     34,
+     47
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    981,
+    1316
+   ],
+   "kind": 1,
+   "sense": 0,
+   "support": [
+    0,
+    2,
+    0
+   ],
+   "beat": 94738533,
+   "identity": [
+    2,
+    0
+   ]
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "node_detector": 9,
+   "window": [
+    4,
+    4
+   ],
+   "proper": 4,
+   "windows": 1,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     1,
+     1035,
+     1316
+    ],
+    [
+     0,
+     34,
+     47
+    ],
+    [
+     0,
+     34,
+     47
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    981,
+    1316
+   ],
+   "kind": 1,
+   "sense": 0,
+   "support": [
+    1,
+    0,
+    0
+   ],
+   "beat": 94738533,
+   "identity": [
+    2,
+    0
+   ]
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 4,
+   "family": "massless",
+   "node_detector": 18,
+   "window": [
+    4,
+    4
+   ],
+   "proper": 4,
+   "windows": 1,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     -1,
+     1035,
+     1316
+    ],
+    [
+     0,
+     34,
+     47
+    ],
+    [
+     0,
+     34,
+     47
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    981,
+    1316
+   ],
+   "kind": 1,
+   "sense": 0,
+   "support": [
+    2,
+    0,
+    0
+   ],
+   "beat": 94738533,
+   "identity": [
+    2,
+    0
+   ]
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 18,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    18,
+    18
+   ],
+   "proper": 17,
+   "windows": 1,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -12,
+      7
+     ],
+     [
+      -16,
+      171
+     ]
+    ],
+    [
+     0,
+     [
+      -12,
+      7
+     ],
+     [
+      -16,
+      171
+     ]
+    ],
+    [
+     0,
+     [
+      -12,
+      7
+     ],
+     [
+      -16,
+      171
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     -3,
+     28
+    ],
+    [
+     101,
+     342
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 144448743,
+   "walls": 142560000,
+   "excess": 1888743,
+   "step": 5657121
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 18,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    18,
+    18
+   ],
+   "proper": 17,
+   "windows": 2,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -12,
+      7
+     ],
+     [
+      -16,
+      173
+     ]
+    ],
+    [
+     0,
+     [
+      -12,
+      7
+     ],
+     [
+      -16,
+      173
+     ]
+    ],
+    [
+     0,
+     [
+      -12,
+      7
+     ],
+     [
+      -16,
+      173
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     -3,
+     28
+    ],
+    [
+     103,
+     346
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 144448743,
+   "walls": 142560000,
+   "excess": 1888743,
+   "step": 5657121
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 22,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    22,
+    22
+   ],
+   "proper": 20,
+   "windows": 3,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      5,
+      27
+     ],
+     [
+      -66,
+      89
+     ]
+    ],
+    [
+     0,
+     [
+      5,
+      27
+     ],
+     [
+      -66,
+      89
+     ]
+    ],
+    [
+     0,
+     [
+      5,
+      27
+     ],
+     [
+      -66,
+      89
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     79,
+     54
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 147820994,
+   "walls": 142560000,
+   "excess": 5260994,
+   "step": 7207445
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 22,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    22,
+    22
+   ],
+   "proper": 20,
+   "windows": 4,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      5,
+      27
+     ],
+     [
+      -67,
+      90
+     ]
+    ],
+    [
+     0,
+     [
+      5,
+      27
+     ],
+     [
+      -67,
+      90
+     ]
+    ],
+    [
+     0,
+     [
+      5,
+      27
+     ],
+     [
+      -67,
+      90
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     79,
+     54
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 147820994,
+   "walls": 142560000,
+   "excess": 5260994,
+   "step": 7207445
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 26,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    26,
+    26
+   ],
+   "proper": 23,
+   "windows": 5,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -34,
+      129
+     ],
+     [
+      14,
+      23
+     ]
+    ],
+    [
+     0,
+     [
+      -34,
+      129
+     ],
+     [
+      14,
+      23
+     ]
+    ],
+    [
+     0,
+     [
+      -34,
+      129
+     ],
+     [
+      14,
+      23
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     59,
+     129
+    ],
+    [
+     -12,
+     23
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 144843989,
+   "walls": 142560000,
+   "excess": 2283989,
+   "step": 5318701
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 26,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    26,
+    26
+   ],
+   "proper": 23,
+   "windows": 6,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -35,
+      129
+     ],
+     [
+      13,
+      22
+     ]
+    ],
+    [
+     0,
+     [
+      -35,
+      129
+     ],
+     [
+      13,
+      22
+     ]
+    ],
+    [
+     0,
+     [
+      -35,
+      129
+     ],
+     [
+      13,
+      22
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     59,
+     129
+    ],
+    [
+     -25,
+     44
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 144843989,
+   "walls": 142560000,
+   "excess": 2283989,
+   "step": 5318701
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 45,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    45,
+    45
+   ],
+   "proper": 36,
+   "windows": 7,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -38,
+      47
+     ],
+     [
+      -7,
+      103
+     ]
+    ],
+    [
+     0,
+     [
+      -38,
+      47
+     ],
+     [
+      -7,
+      103
+     ]
+    ],
+    [
+     0,
+     [
+      -38,
+      47
+     ],
+     [
+      -7,
+      103
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     71,
+     94
+    ],
+    [
+     74,
+     103
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 146543508,
+   "walls": 142560000,
+   "excess": 3983508,
+   "step": 11015334
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 45,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    45,
+    45
+   ],
+   "proper": 36,
+   "windows": 8,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -39,
+      44
+     ],
+     [
+      -9,
+      107
+     ]
+    ],
+    [
+     0,
+     [
+      -39,
+      44
+     ],
+     [
+      -9,
+      107
+     ]
+    ],
+    [
+     0,
+     [
+      -39,
+      44
+     ],
+     [
+      -9,
+      107
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     3,
+     4
+    ],
+    [
+     77,
+     107
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 146543508,
+   "walls": 142560000,
+   "excess": 3983508,
+   "step": 11015334
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 74,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    74,
+    74
+   ],
+   "proper": 53,
+   "windows": 9,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     469,
+     423
+    ],
+    [
+     0,
+     469,
+     423
+    ],
+    [
+     0,
+     469,
+     423
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    265,
+    282
+   ],
+   "kind": 1,
+   "sense": 0,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": 10414582,
+   "identity": [
+    2,
+    0
+   ]
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 80,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    80,
+    80
+   ],
+   "proper": 57,
+   "windows": 10,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      87,
+      112
+     ],
+     [
+      54,
+      113
+     ]
+    ],
+    [
+     0,
+     [
+      87,
+      112
+     ],
+     [
+      54,
+      113
+     ]
+    ],
+    [
+     0,
+     [
+      87,
+      112
+     ],
+     [
+      54,
+      113
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     177,
+     224
+    ],
+    [
+     103,
+     113
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 73544811,
+   "walls": 71280000,
+   "excess": 2264811,
+   "step": 5341196
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 86,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    86,
+    86
+   ],
+   "proper": 60,
+   "windows": 11,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -113,
+      224
+     ],
+     [
+      40,
+      63
+     ]
+    ],
+    [
+     0,
+     [
+      -113,
+      224
+     ],
+     [
+      40,
+      63
+     ]
+    ],
+    [
+     0,
+     [
+      -113,
+      224
+     ],
+     [
+      40,
+      63
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     187,
+     224
+    ],
+    [
+     233,
+     252
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 72615712,
+   "walls": 71280000,
+   "excess": 1335712,
+   "step": 4859918
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 92,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    92,
+    92
+   ],
+   "proper": 64,
+   "windows": 12,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      2,
+      11
+     ],
+     [
+      44,
+      111
+     ]
+    ],
+    [
+     0,
+     [
+      2,
+      11
+     ],
+     [
+      44,
+      111
+     ]
+    ],
+    [
+     0,
+     [
+      2,
+      11
+     ],
+     [
+      44,
+      111
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     373,
+     462
+    ],
+    [
+     169,
+     222
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 74210097,
+   "walls": 71280000,
+   "excess": 2930097,
+   "step": 4975668
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 100,
+   "family": "massless",
+   "node_detector": 1,
+   "window": [
+    100,
+    100
+   ],
+   "proper": 69,
+   "windows": 2,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ],
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ],
+    [
+     1,
+     [
+      -30,
+      23
+     ],
+     [
+      319,
+      202
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     20,
+     23
+    ],
+    [
+     91,
+     101
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    0,
+    1
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 71397490,
+   "walls": 71280000,
+   "excess": 117490,
+   "step": 1421525
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 100,
+   "family": "massless",
+   "node_detector": 2,
+   "window": [
+    100,
+    100
+   ],
+   "proper": 69,
+   "windows": 2,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ],
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ],
+    [
+     -1,
+     [
+      -30,
+      23
+     ],
+     [
+      319,
+      202
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     20,
+     23
+    ],
+    [
+     91,
+     101
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    0,
+    2
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 71397490,
+   "walls": 71280000,
+   "excess": 117490,
+   "step": 1421525
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 100,
+   "family": "massless",
+   "node_detector": 3,
+   "window": [
+    100,
+    100
+   ],
+   "proper": 69,
+   "windows": 2,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ],
+    [
+     1,
+     [
+      -30,
+      23
+     ],
+     [
+      319,
+      202
+     ]
+    ],
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     20,
+     23
+    ],
+    [
+     91,
+     101
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    1,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 71397490,
+   "walls": 71280000,
+   "excess": 117490,
+   "step": 1421525
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 100,
+   "family": "massless",
+   "node_detector": 6,
+   "window": [
+    100,
+    100
+   ],
+   "proper": 69,
+   "windows": 2,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ],
+    [
+     -1,
+     [
+      -30,
+      23
+     ],
+     [
+      319,
+      202
+     ]
+    ],
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     20,
+     23
+    ],
+    [
+     91,
+     101
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    2,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 71397490,
+   "walls": 71280000,
+   "excess": 117490,
+   "step": 1421525
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 100,
+   "family": "massless",
+   "node_detector": 9,
+   "window": [
+    100,
+    100
+   ],
+   "proper": 69,
+   "windows": 2,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     1,
+     [
+      -30,
+      23
+     ],
+     [
+      319,
+      202
+     ]
+    ],
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ],
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     20,
+     23
+    ],
+    [
+     91,
+     101
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    1,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 71397490,
+   "walls": 71280000,
+   "excess": 117490,
+   "step": 1421525
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 100,
+   "family": "massless",
+   "node_detector": 18,
+   "window": [
+    100,
+    100
+   ],
+   "proper": 69,
+   "windows": 2,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     -1,
+     [
+      -30,
+      23
+     ],
+     [
+      319,
+      202
+     ]
+    ],
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ],
+    [
+     0,
+     [
+      -49,
+      69
+     ],
+     [
+      -17,
+      101
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     20,
+     23
+    ],
+    [
+     91,
+     101
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    2,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 71397490,
+   "walls": 71280000,
+   "excess": 117490,
+   "step": 1421525
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 105,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    105,
+    105
+   ],
+   "proper": 72,
+   "windows": 13,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -53,
+      165
+     ],
+     [
+      131,
+      212
+     ]
+    ],
+    [
+     0,
+     [
+      -53,
+      165
+     ],
+     [
+      131,
+      212
+     ]
+    ],
+    [
+     0,
+     [
+      -53,
+      165
+     ],
+     [
+      131,
+      212
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     193,
+     165
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    1
+   ],
+   "taken": 75401413,
+   "walls": 71280000,
+   "excess": 4121413,
+   "step": 4746268
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 108,
+   "family": "massless",
+   "node_detector": 0,
+   "window": [
+    108,
+    108
+   ],
+   "proper": 74,
+   "windows": 14,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -13,
+      69
+     ],
+     [
+      67,
+      14
+     ]
+    ],
+    [
+     0,
+     [
+      -13,
+      69
+     ],
+     [
+      67,
+      14
+     ]
+    ],
+    [
+     0,
+     [
+      -13,
+      69
+     ],
+     [
+      67,
+      14
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     19,
+     23
+    ],
+    [
+     5,
+     4
+    ]
+   ],
+   "kind": 2,
+   "sense": -1,
+   "support": [
+    0,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 72429859,
+   "walls": 71280000,
+   "excess": 1149859,
+   "step": 3732867
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 117,
+   "family": "massless",
+   "node_detector": 1,
+   "window": [
+    117,
+    117
+   ],
+   "proper": 80,
+   "windows": 3,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ],
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ],
+    [
+     1,
+     [
+      -7,
+      4
+     ],
+     [
+      -15,
+      2
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     9,
+     10
+    ],
+    [
+     11,
+     5
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    0,
+    1
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 72442332,
+   "walls": 71280000,
+   "excess": 1162332,
+   "step": 1691946
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 117,
+   "family": "massless",
+   "node_detector": 2,
+   "window": [
+    117,
+    117
+   ],
+   "proper": 80,
+   "windows": 3,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ],
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ],
+    [
+     -1,
+     [
+      -7,
+      4
+     ],
+     [
+      -15,
+      2
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     9,
+     10
+    ],
+    [
+     11,
+     5
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    0,
+    2
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 72442332,
+   "walls": 71280000,
+   "excess": 1162332,
+   "step": 1691946
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 117,
+   "family": "massless",
+   "node_detector": 3,
+   "window": [
+    117,
+    117
+   ],
+   "proper": 80,
+   "windows": 3,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ],
+    [
+     1,
+     [
+      -7,
+      4
+     ],
+     [
+      -15,
+      2
+     ]
+    ],
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     9,
+     10
+    ],
+    [
+     11,
+     5
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    1,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 72442332,
+   "walls": 71280000,
+   "excess": 1162332,
+   "step": 1691946
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 117,
+   "family": "massless",
+   "node_detector": 6,
+   "window": [
+    117,
+    117
+   ],
+   "proper": 80,
+   "windows": 3,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ],
+    [
+     -1,
+     [
+      -7,
+      4
+     ],
+     [
+      -15,
+      2
+     ]
+    ],
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     9,
+     10
+    ],
+    [
+     11,
+     5
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    0,
+    2,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 72442332,
+   "walls": 71280000,
+   "excess": 1162332,
+   "step": 1691946
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 117,
+   "family": "massless",
+   "node_detector": 9,
+   "window": [
+    117,
+    117
+   ],
+   "proper": 80,
+   "windows": 3,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     1,
+     [
+      -7,
+      4
+     ],
+     [
+      -15,
+      2
+     ]
+    ],
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ],
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     9,
+     10
+    ],
+    [
+     11,
+     5
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    1,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 72442332,
+   "walls": 71280000,
+   "excess": 1162332,
+   "step": 1691946
+  },
+  {
+   "event": "credit",
+   "label": "NODEDETECTOR",
+   "interval": 117,
+   "family": "massless",
+   "node_detector": 18,
+   "window": [
+    117,
+    117
+   ],
+   "proper": 80,
+   "windows": 3,
+   "before": null,
+   "realised": "point 2",
+   "kept": null,
+   "count": 1,
+   "left": null,
+   "absorbed": "massless",
+   "emitted": "point 2",
+   "momentum": [
+    [
+     -1,
+     [
+      -7,
+      4
+     ],
+     [
+      -15,
+      2
+     ]
+    ],
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ],
+    [
+     0,
+     [
+      -17,
+      10
+     ],
+     [
+      -59,
+      10
+     ]
+    ]
+   ],
+   "lost": null,
+   "source": null,
+   "point": [
+    [
+     9,
+     10
+    ],
+    [
+     11,
+     5
+    ]
+   ],
+   "kind": 2,
+   "sense": 1,
+   "support": [
+    2,
+    0,
+    0
+   ],
+   "beat": null,
+   "identity": [
+    4,
+    0
+   ],
+   "taken": 72442332,
+   "walls": 71280000,
+   "excess": 1162332,
+   "step": 1691946
+  }
+ ]
+}

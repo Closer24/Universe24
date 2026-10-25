@@ -1,0 +1,2201 @@
+{
+ "flag": "off",
+ "rows": [
+  {
+   "interval": 1,
+   "X_min": 1000,
+   "X_max": 1002,
+   "level_min": 0,
+   "level_max": 0,
+   "drift_min": 0,
+   "drift_max": 189,
+   "mean_level": 350,
+   "quanta_min": 1,
+   "quanta_max": 2,
+   "quanta_total": 28,
+   "turned": 1,
+   "births": 0,
+   "refused": {}
+  },
+  {
+   "interval": 2,
+   "X_min": 1000,
+   "X_max": 1007,
+   "level_min": 0,
+   "level_max": 1,
+   "drift_min": -126,
+   "drift_max": 630,
+   "mean_level": 466,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 27,
+   "turned": 6,
+   "births": 0,
+   "refused": {
+    "origin": 1
+   }
+  },
+  {
+   "interval": 3,
+   "X_min": 986,
+   "X_max": 1042,
+   "level_min": -4,
+   "level_max": 10,
+   "drift_min": -252,
+   "drift_max": 469,
+   "mean_level": 583,
+   "quanta_min": -2,
+   "quanta_max": 4,
+   "quanta_total": 30,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "stop": 1
+   }
+  },
+  {
+   "interval": 4,
+   "X_min": 1002,
+   "X_max": 1058,
+   "level_min": 0,
+   "level_max": 13,
+   "drift_min": -87,
+   "drift_max": 252,
+   "mean_level": 596,
+   "quanta_min": 1,
+   "quanta_max": 2,
+   "quanta_total": 28,
+   "turned": 13,
+   "births": 6,
+   "refused": {}
+  },
+  {
+   "interval": 5,
+   "X_min": 1015,
+   "X_max": 1072,
+   "level_min": 3,
+   "level_max": 17,
+   "drift_min": -199,
+   "drift_max": 381,
+   "mean_level": 694,
+   "quanta_min": 0,
+   "quanta_max": 3,
+   "quanta_total": 15,
+   "turned": 8,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 6,
+   "X_min": 1016,
+   "X_max": 1232,
+   "level_min": 3,
+   "level_max": 51,
+   "drift_min": -576,
+   "drift_max": 199,
+   "mean_level": 772,
+   "quanta_min": 0,
+   "quanta_max": 8,
+   "quanta_total": 14,
+   "turned": 6,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 7,
+   "X_min": 1042,
+   "X_max": 1147,
+   "level_min": 10,
+   "level_max": 34,
+   "drift_min": -39,
+   "drift_max": 576,
+   "mean_level": 853,
+   "quanta_min": 0,
+   "quanta_max": 9,
+   "quanta_total": 15,
+   "turned": 13,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 8,
+   "X_min": 1058,
+   "X_max": 1141,
+   "level_min": 13,
+   "level_max": 33,
+   "drift_min": -241,
+   "drift_max": 436,
+   "mean_level": 875,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 13,
+   "turned": 6,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 9,
+   "X_min": 951,
+   "X_max": 1237,
+   "level_min": -13,
+   "level_max": 52,
+   "drift_min": -913,
+   "drift_max": 304,
+   "mean_level": 920,
+   "quanta_min": 0,
+   "quanta_max": 19,
+   "quanta_total": 19,
+   "turned": 8,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 10,
+   "X_min": 1072,
+   "X_max": 1262,
+   "level_min": 17,
+   "level_max": 58,
+   "drift_min": 22,
+   "drift_max": 913,
+   "mean_level": 989,
+   "quanta_min": -1,
+   "quanta_max": 20,
+   "quanta_total": 14,
+   "turned": 13,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 11,
+   "X_min": 1097,
+   "X_max": 1403,
+   "level_min": 22,
+   "level_max": 84,
+   "drift_min": -67,
+   "drift_max": 148,
+   "mean_level": 1032,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 13,
+   "turned": 8,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 12,
+   "X_min": 1095,
+   "X_max": 1718,
+   "level_min": 22,
+   "level_max": 135,
+   "drift_min": -603,
+   "drift_max": 46,
+   "mean_level": 1033,
+   "quanta_min": 0,
+   "quanta_max": 17,
+   "quanta_total": 17,
+   "turned": 6,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 13,
+   "X_min": 1254,
+   "X_max": 1403,
+   "level_min": 57,
+   "level_max": 84,
+   "drift_min": -54,
+   "drift_max": 603,
+   "mean_level": 1083,
+   "quanta_min": 0,
+   "quanta_max": 14,
+   "quanta_total": 22,
+   "turned": 1,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 14,
+   "X_min": 1118,
+   "X_max": 1501,
+   "level_min": 27,
+   "level_max": 101,
+   "drift_min": -188,
+   "drift_max": 153,
+   "mean_level": 1132,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 15,
+   "X_min": 1332,
+   "X_max": 1664,
+   "level_min": 71,
+   "level_max": 127,
+   "drift_min": -572,
+   "drift_max": 165,
+   "mean_level": 1139,
+   "quanta_min": 0,
+   "quanta_max": 12,
+   "quanta_total": 24,
+   "turned": 6,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 16,
+   "X_min": 1370,
+   "X_max": 1691,
+   "level_min": 78,
+   "level_max": 131,
+   "drift_min": -256,
+   "drift_max": 86,
+   "mean_level": 1149,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 23,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 17,
+   "X_min": 1452,
+   "X_max": 1714,
+   "level_min": 93,
+   "level_max": 135,
+   "drift_min": -89,
+   "drift_max": 256,
+   "mean_level": 1156,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 30,
+   "turned": 9,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 18,
+   "X_min": 1568,
+   "X_max": 1955,
+   "level_min": 112,
+   "level_max": 167,
+   "drift_min": -121,
+   "drift_max": 615,
+   "mean_level": 1164,
+   "quanta_min": 0,
+   "quanta_max": 15,
+   "quanta_total": 27,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 19,
+   "X_min": 1758,
+   "X_max": 2262,
+   "level_min": 140,
+   "level_max": 203,
+   "drift_min": -50,
+   "drift_max": 359,
+   "mean_level": 1170,
+   "quanta_min": 0,
+   "quanta_max": 11,
+   "quanta_total": 17,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 20,
+   "X_min": 1925,
+   "X_max": 2904,
+   "level_min": 164,
+   "level_max": 265,
+   "drift_min": -104,
+   "drift_max": 111,
+   "mean_level": 1181,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 25,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 1
+   }
+  },
+  {
+   "interval": 21,
+   "X_min": 2098,
+   "X_max": 3080,
+   "level_min": 185,
+   "level_max": 281,
+   "drift_min": -402,
+   "drift_max": 101,
+   "mean_level": 1197,
+   "quanta_min": 0,
+   "quanta_max": 14,
+   "quanta_total": 34,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 22,
+   "X_min": 2265,
+   "X_max": 2904,
+   "level_min": 203,
+   "level_max": 265,
+   "drift_min": 9,
+   "drift_max": 382,
+   "mean_level": 1244,
+   "quanta_min": 0,
+   "quanta_max": 12,
+   "quanta_total": 20,
+   "turned": 1,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 23,
+   "X_min": 2396,
+   "X_max": 2502,
+   "level_min": 218,
+   "level_max": 228,
+   "drift_min": -50,
+   "drift_max": 169,
+   "mean_level": 1293,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 28,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 24,
+   "X_min": 2059,
+   "X_max": 2643,
+   "level_min": 180,
+   "level_max": 242,
+   "drift_min": -265,
+   "drift_max": 157,
+   "mean_level": 1342,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 27,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 9,
+    "stop": 1
+   }
+  },
+  {
+   "interval": 25,
+   "X_min": 2328,
+   "X_max": 2798,
+   "level_min": 211,
+   "level_max": 256,
+   "drift_min": -350,
+   "drift_max": 89,
+   "mean_level": 1389,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 27,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 9
+   }
+  },
+  {
+   "interval": 26,
+   "X_min": 2799,
+   "X_max": 3004,
+   "level_min": 256,
+   "level_max": 274,
+   "drift_min": -96,
+   "drift_max": 158,
+   "mean_level": 1439,
+   "quanta_min": 0,
+   "quanta_max": 3,
+   "quanta_total": 33,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 27,
+   "X_min": 2944,
+   "X_max": 3431,
+   "level_min": 269,
+   "level_max": 308,
+   "drift_min": -51,
+   "drift_max": 78,
+   "mean_level": 1458,
+   "quanta_min": 0,
+   "quanta_max": 1,
+   "quanta_total": 19,
+   "turned": 0,
+   "births": 12,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 28,
+   "X_min": 3171,
+   "X_max": 3654,
+   "level_min": 288,
+   "level_max": 323,
+   "drift_min": 0,
+   "drift_max": 152,
+   "mean_level": 1478,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 20,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 29,
+   "X_min": 3362,
+   "X_max": 3441,
+   "level_min": 302,
+   "level_max": 308,
+   "drift_min": -152,
+   "drift_max": 140,
+   "mean_level": 1485,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 14,
+   "turned": 1,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 30,
+   "X_min": 3198,
+   "X_max": 3684,
+   "level_min": 290,
+   "level_max": 326,
+   "drift_min": -44,
+   "drift_max": 117,
+   "mean_level": 1493,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 31,
+   "X_min": 3244,
+   "X_max": 3857,
+   "level_min": 293,
+   "level_max": 337,
+   "drift_min": -24,
+   "drift_max": 287,
+   "mean_level": 1502,
+   "quanta_min": 0,
+   "quanta_max": 9,
+   "quanta_total": 15,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 32,
+   "X_min": 3673,
+   "X_max": 3961,
+   "level_min": 324,
+   "level_max": 344,
+   "drift_min": -41,
+   "drift_max": 377,
+   "mean_level": 1512,
+   "quanta_min": 0,
+   "quanta_max": 13,
+   "quanta_total": 13,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 6
+   }
+  },
+  {
+   "interval": 33,
+   "X_min": 3963,
+   "X_max": 4308,
+   "level_min": 344,
+   "level_max": 364,
+   "drift_min": -49,
+   "drift_max": 229,
+   "mean_level": 1522,
+   "quanta_min": 0,
+   "quanta_max": 10,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 34,
+   "X_min": 4148,
+   "X_max": 4885,
+   "level_min": 355,
+   "level_max": 396,
+   "drift_min": -27,
+   "drift_max": 32,
+   "mean_level": 1532,
+   "quanta_min": 0,
+   "quanta_max": 8,
+   "quanta_total": 14,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 35,
+   "X_min": 4310,
+   "X_max": 5219,
+   "level_min": 364,
+   "level_max": 413,
+   "drift_min": -204,
+   "drift_max": 54,
+   "mean_level": 1545,
+   "quanta_min": 0,
+   "quanta_max": 10,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 36,
+   "X_min": 4437,
+   "X_max": 5247,
+   "level_min": 371,
+   "level_max": 414,
+   "drift_min": -306,
+   "drift_max": 72,
+   "mean_level": 1559,
+   "quanta_min": 0,
+   "quanta_max": 13,
+   "quanta_total": 19,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 8
+   }
+  },
+  {
+   "interval": 37,
+   "X_min": 4612,
+   "X_max": 5219,
+   "level_min": 381,
+   "level_max": 413,
+   "drift_min": -9,
+   "drift_max": 306,
+   "mean_level": 1593,
+   "quanta_min": 0,
+   "quanta_max": 13,
+   "quanta_total": 21,
+   "turned": 1,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 38,
+   "X_min": 4838,
+   "X_max": 5068,
+   "level_min": 393,
+   "level_max": 405,
+   "drift_min": 6,
+   "drift_max": 245,
+   "mean_level": 1629,
+   "quanta_min": 0,
+   "quanta_max": 10,
+   "quanta_total": 24,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 39,
+   "X_min": 4958,
+   "X_max": 5225,
+   "level_min": 399,
+   "level_max": 413,
+   "drift_min": -3,
+   "drift_max": 87,
+   "mean_level": 1664,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 12,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 40,
+   "X_min": 5011,
+   "X_max": 5363,
+   "level_min": 402,
+   "level_max": 419,
+   "drift_min": -110,
+   "drift_max": 64,
+   "mean_level": 1699,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 25,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 41,
+   "X_min": 5243,
+   "X_max": 5596,
+   "level_min": 414,
+   "level_max": 429,
+   "drift_min": -259,
+   "drift_max": 73,
+   "mean_level": 1734,
+   "quanta_min": 0,
+   "quanta_max": 11,
+   "quanta_total": 23,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 42,
+   "X_min": 5522,
+   "X_max": 5777,
+   "level_min": 426,
+   "level_max": 437,
+   "drift_min": -294,
+   "drift_max": 70,
+   "mean_level": 1769,
+   "quanta_min": 0,
+   "quanta_max": 13,
+   "quanta_total": 25,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 12
+   }
+  },
+  {
+   "interval": 43,
+   "X_min": 5724,
+   "X_max": 5906,
+   "level_min": 435,
+   "level_max": 443,
+   "drift_min": -210,
+   "drift_max": 57,
+   "mean_level": 1804,
+   "quanta_min": 0,
+   "quanta_max": 10,
+   "quanta_total": 28,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 44,
+   "X_min": 5941,
+   "X_max": 6140,
+   "level_min": 445,
+   "level_max": 453,
+   "drift_min": -47,
+   "drift_max": 48,
+   "mean_level": 1839,
+   "quanta_min": 0,
+   "quanta_max": 8,
+   "quanta_total": 14,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 45,
+   "X_min": 6105,
+   "X_max": 6310,
+   "level_min": 451,
+   "level_max": 461,
+   "drift_min": 16,
+   "drift_max": 132,
+   "mean_level": 1874,
+   "quanta_min": 0,
+   "quanta_max": 10,
+   "quanta_total": 24,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 46,
+   "X_min": 6239,
+   "X_max": 6533,
+   "level_min": 457,
+   "level_max": 468,
+   "drift_min": 6,
+   "drift_max": 270,
+   "mean_level": 1908,
+   "quanta_min": 0,
+   "quanta_max": 15,
+   "quanta_total": 29,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7,
+    "stop": 8
+   }
+  },
+  {
+   "interval": 47,
+   "X_min": 6424,
+   "X_max": 6709,
+   "level_min": 464,
+   "level_max": 475,
+   "drift_min": -1,
+   "drift_max": 312,
+   "mean_level": 1942,
+   "quanta_min": 0,
+   "quanta_max": 17,
+   "quanta_total": 25,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 48,
+   "X_min": 6654,
+   "X_max": 6842,
+   "level_min": 473,
+   "level_max": 480,
+   "drift_min": 1,
+   "drift_max": 279,
+   "mean_level": 1976,
+   "quanta_min": 0,
+   "quanta_max": 15,
+   "quanta_total": 29,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 49,
+   "X_min": 6849,
+   "X_max": 6948,
+   "level_min": 480,
+   "level_max": 485,
+   "drift_min": 12,
+   "drift_max": 175,
+   "mean_level": 2010,
+   "quanta_min": 0,
+   "quanta_max": 10,
+   "quanta_total": 22,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 50,
+   "X_min": 6974,
+   "X_max": 7152,
+   "level_min": 485,
+   "level_max": 491,
+   "drift_min": 4,
+   "drift_max": 83,
+   "mean_level": 2045,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 51,
+   "X_min": 7140,
+   "X_max": 7363,
+   "level_min": 491,
+   "level_max": 498,
+   "drift_min": -74,
+   "drift_max": 49,
+   "mean_level": 2066,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 23,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 52,
+   "X_min": 7316,
+   "X_max": 7530,
+   "level_min": 496,
+   "level_max": 504,
+   "drift_min": -159,
+   "drift_max": 60,
+   "mean_level": 2087,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 53,
+   "X_min": 7489,
+   "X_max": 7689,
+   "level_min": 503,
+   "level_max": 509,
+   "drift_min": -191,
+   "drift_max": 61,
+   "mean_level": 2108,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 19,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 54,
+   "X_min": 7680,
+   "X_max": 7885,
+   "level_min": 509,
+   "level_max": 516,
+   "drift_min": -165,
+   "drift_max": 52,
+   "mean_level": 2129,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 19,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 55,
+   "X_min": 7874,
+   "X_max": 8135,
+   "level_min": 516,
+   "level_max": 523,
+   "drift_min": -92,
+   "drift_max": 36,
+   "mean_level": 2151,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 23,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 56,
+   "X_min": 8005,
+   "X_max": 8337,
+   "level_min": 519,
+   "level_max": 529,
+   "drift_min": 8,
+   "drift_max": 39,
+   "mean_level": 2172,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 57,
+   "X_min": 8167,
+   "X_max": 8481,
+   "level_min": 524,
+   "level_max": 535,
+   "drift_min": 0,
+   "drift_max": 107,
+   "mean_level": 2193,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 20,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 58,
+   "X_min": 8357,
+   "X_max": 8571,
+   "level_min": 529,
+   "level_max": 536,
+   "drift_min": -12,
+   "drift_max": 156,
+   "mean_level": 2214,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 15,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 59,
+   "X_min": 8552,
+   "X_max": 8770,
+   "level_min": 536,
+   "level_max": 541,
+   "drift_min": -17,
+   "drift_max": 187,
+   "mean_level": 2234,
+   "quanta_min": 0,
+   "quanta_max": 8,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 60,
+   "X_min": 8679,
+   "X_max": 8963,
+   "level_min": 540,
+   "level_max": 548,
+   "drift_min": -13,
+   "drift_max": 175,
+   "mean_level": 2255,
+   "quanta_min": 0,
+   "quanta_max": 8,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 61,
+   "X_min": 8753,
+   "X_max": 9109,
+   "level_min": 541,
+   "level_max": 552,
+   "drift_min": -3,
+   "drift_max": 125,
+   "mean_level": 2275,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 14,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 62,
+   "X_min": 8868,
+   "X_max": 9198,
+   "level_min": 545,
+   "level_max": 553,
+   "drift_min": 13,
+   "drift_max": 51,
+   "mean_level": 2296,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 8
+   }
+  },
+  {
+   "interval": 63,
+   "X_min": 9027,
+   "X_max": 9241,
+   "level_min": 550,
+   "level_max": 555,
+   "drift_min": -27,
+   "drift_max": 36,
+   "mean_level": 2316,
+   "quanta_min": 1,
+   "quanta_max": 3,
+   "quanta_total": 29,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 64,
+   "X_min": 9221,
+   "X_max": 9423,
+   "level_min": 555,
+   "level_max": 560,
+   "drift_min": -91,
+   "drift_max": 45,
+   "mean_level": 2337,
+   "quanta_min": 0,
+   "quanta_max": 3,
+   "quanta_total": 21,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 65,
+   "X_min": 9270,
+   "X_max": 9603,
+   "level_min": 555,
+   "level_max": 564,
+   "drift_min": -126,
+   "drift_max": 55,
+   "mean_level": 2358,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 22,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 66,
+   "X_min": 9324,
+   "X_max": 9762,
+   "level_min": 557,
+   "level_max": 569,
+   "drift_min": -125,
+   "drift_max": 58,
+   "mean_level": 2378,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 67,
+   "X_min": 9435,
+   "X_max": 9893,
+   "level_min": 560,
+   "level_max": 573,
+   "drift_min": -87,
+   "drift_max": 54,
+   "mean_level": 2399,
+   "quanta_min": 0,
+   "quanta_max": 3,
+   "quanta_total": 21,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 6
+   }
+  },
+  {
+   "interval": 68,
+   "X_min": 9610,
+   "X_max": 9992,
+   "level_min": 566,
+   "level_max": 575,
+   "drift_min": -24,
+   "drift_max": 43,
+   "mean_level": 2419,
+   "quanta_min": 0,
+   "quanta_max": 3,
+   "quanta_total": 21,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 13
+   }
+  },
+  {
+   "interval": 69,
+   "X_min": 9839,
+   "X_max": 10064,
+   "level_min": 571,
+   "level_max": 576,
+   "drift_min": 7,
+   "drift_max": 49,
+   "mean_level": 2440,
+   "quanta_min": 1,
+   "quanta_max": 4,
+   "quanta_total": 30,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 70,
+   "X_min": 10098,
+   "X_max": 10178,
+   "level_min": 578,
+   "level_max": 580,
+   "drift_min": 10,
+   "drift_max": 115,
+   "mean_level": 2460,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 14,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 71,
+   "X_min": 10167,
+   "X_max": 10360,
+   "level_min": 578,
+   "level_max": 584,
+   "drift_min": -5,
+   "drift_max": 159,
+   "mean_level": 2481,
+   "quanta_min": 0,
+   "quanta_max": 8,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 72,
+   "X_min": 10227,
+   "X_max": 10600,
+   "level_min": 580,
+   "level_max": 589,
+   "drift_min": -15,
+   "drift_max": 174,
+   "mean_level": 2502,
+   "quanta_min": 0,
+   "quanta_max": 9,
+   "quanta_total": 17,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 73,
+   "X_min": 10310,
+   "X_max": 10799,
+   "level_min": 582,
+   "level_max": 594,
+   "drift_min": -19,
+   "drift_max": 158,
+   "mean_level": 2523,
+   "quanta_min": 0,
+   "quanta_max": 8,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 74,
+   "X_min": 10423,
+   "X_max": 10953,
+   "level_min": 585,
+   "level_max": 598,
+   "drift_min": -15,
+   "drift_max": 115,
+   "mean_level": 2543,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 14,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 75,
+   "X_min": 10565,
+   "X_max": 11069,
+   "level_min": 589,
+   "level_max": 600,
+   "drift_min": -5,
+   "drift_max": 59,
+   "mean_level": 2564,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 76,
+   "X_min": 10731,
+   "X_max": 11163,
+   "level_min": 593,
+   "level_max": 602,
+   "drift_min": -14,
+   "drift_max": 43,
+   "mean_level": 2585,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 1
+   }
+  },
+  {
+   "interval": 77,
+   "X_min": 10885,
+   "X_max": 11248,
+   "level_min": 596,
+   "level_max": 603,
+   "drift_min": -75,
+   "drift_max": 29,
+   "mean_level": 2605,
+   "quanta_min": 1,
+   "quanta_max": 4,
+   "quanta_total": 30,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 78,
+   "X_min": 10926,
+   "X_max": 11333,
+   "level_min": 596,
+   "level_max": 605,
+   "drift_min": -120,
+   "drift_max": 46,
+   "mean_level": 2626,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 17,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 8
+   }
+  },
+  {
+   "interval": 79,
+   "X_min": 10991,
+   "X_max": 11421,
+   "level_min": 598,
+   "level_max": 609,
+   "drift_min": -142,
+   "drift_max": 58,
+   "mean_level": 2647,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 80,
+   "X_min": 11090,
+   "X_max": 11503,
+   "level_min": 602,
+   "level_max": 611,
+   "drift_min": -136,
+   "drift_max": 64,
+   "mean_level": 2668,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 81,
+   "X_min": 11222,
+   "X_max": 11567,
+   "level_min": 603,
+   "level_max": 611,
+   "drift_min": -105,
+   "drift_max": 61,
+   "mean_level": 2689,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 17,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 6
+   }
+  },
+  {
+   "interval": 82,
+   "X_min": 11381,
+   "X_max": 11599,
+   "level_min": 607,
+   "level_max": 613,
+   "drift_min": -55,
+   "drift_max": 51,
+   "mean_level": 2704,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 22,
+   "turned": 6,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 83,
+   "X_min": 11408,
+   "X_max": 11638,
+   "level_min": 607,
+   "level_max": 613,
+   "drift_min": -1,
+   "drift_max": 55,
+   "mean_level": 2722,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 22,
+   "turned": 1,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 84,
+   "X_min": 11416,
+   "X_max": 11725,
+   "level_min": 607,
+   "level_max": 614,
+   "drift_min": 13,
+   "drift_max": 104,
+   "mean_level": 2739,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 23,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 12
+   }
+  },
+  {
+   "interval": 85,
+   "X_min": 11412,
+   "X_max": 11877,
+   "level_min": 607,
+   "level_max": 618,
+   "drift_min": -7,
+   "drift_max": 137,
+   "mean_level": 2756,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 20,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 86,
+   "X_min": 11335,
+   "X_max": 11997,
+   "level_min": 607,
+   "level_max": 620,
+   "drift_min": -23,
+   "drift_max": 152,
+   "mean_level": 2774,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 21,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 87,
+   "X_min": 11299,
+   "X_max": 12076,
+   "level_min": 605,
+   "level_max": 622,
+   "drift_min": -31,
+   "drift_max": 149,
+   "mean_level": 2791,
+   "quanta_min": 0,
+   "quanta_max": 7,
+   "quanta_total": 21,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 88,
+   "X_min": 11338,
+   "X_max": 12113,
+   "level_min": 607,
+   "level_max": 622,
+   "drift_min": -31,
+   "drift_max": 114,
+   "mean_level": 2808,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 19,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 89,
+   "X_min": 11470,
+   "X_max": 12116,
+   "level_min": 609,
+   "level_max": 624,
+   "drift_min": -21,
+   "drift_max": 86,
+   "mean_level": 2825,
+   "quanta_min": 0,
+   "quanta_max": 3,
+   "quanta_total": 23,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 90,
+   "X_min": 11704,
+   "X_max": 12170,
+   "level_min": 614,
+   "level_max": 624,
+   "drift_min": 21,
+   "drift_max": 53,
+   "mean_level": 2853,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 20,
+   "turned": 12,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 91,
+   "X_min": 12030,
+   "X_max": 12335,
+   "level_min": 622,
+   "level_max": 627,
+   "drift_min": 11,
+   "drift_max": 39,
+   "mean_level": 2880,
+   "quanta_min": 0,
+   "quanta_max": 1,
+   "quanta_total": 19,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 92,
+   "X_min": 12105,
+   "X_max": 12470,
+   "level_min": 622,
+   "level_max": 629,
+   "drift_min": -12,
+   "drift_max": 56,
+   "mean_level": 2908,
+   "quanta_min": 0,
+   "quanta_max": 1,
+   "quanta_total": 19,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "stop": 6
+   }
+  },
+  {
+   "interval": 93,
+   "X_min": 12131,
+   "X_max": 12821,
+   "level_min": 624,
+   "level_max": 637,
+   "drift_min": -38,
+   "drift_max": 67,
+   "mean_level": 2936,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 25,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 12,
+    "stop": 8
+   }
+  },
+  {
+   "interval": 94,
+   "X_min": 12192,
+   "X_max": 13192,
+   "level_min": 624,
+   "level_max": 644,
+   "drift_min": -57,
+   "drift_max": 70,
+   "mean_level": 2964,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 25,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 12
+   }
+  },
+  {
+   "interval": 95,
+   "X_min": 12290,
+   "X_max": 13483,
+   "level_min": 626,
+   "level_max": 650,
+   "drift_min": -68,
+   "drift_max": 66,
+   "mean_level": 2992,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 26,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 96,
+   "X_min": 12419,
+   "X_max": 13655,
+   "level_min": 629,
+   "level_max": 652,
+   "drift_min": -68,
+   "drift_max": 55,
+   "mean_level": 3020,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 14,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 97,
+   "X_min": 12531,
+   "X_max": 13679,
+   "level_min": 631,
+   "level_max": 654,
+   "drift_min": -57,
+   "drift_max": 39,
+   "mean_level": 3034,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 22,
+   "turned": 8,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 98,
+   "X_min": 12514,
+   "X_max": 13655,
+   "level_min": 631,
+   "level_max": 652,
+   "drift_min": 4,
+   "drift_max": 57,
+   "mean_level": 3052,
+   "quanta_min": 1,
+   "quanta_max": 2,
+   "quanta_total": 28,
+   "turned": 1,
+   "births": 0,
+   "refused": {
+    "stop": 12
+   }
+  },
+  {
+   "interval": 99,
+   "X_min": 12506,
+   "X_max": 13484,
+   "level_min": 631,
+   "level_max": 650,
+   "drift_min": 0,
+   "drift_max": 74,
+   "mean_level": 3070,
+   "quanta_min": 1,
+   "quanta_max": 2,
+   "quanta_total": 28,
+   "turned": 0,
+   "births": 0,
+   "refused": {}
+  },
+  {
+   "interval": 100,
+   "X_min": 12521,
+   "X_max": 13198,
+   "level_min": 631,
+   "level_max": 644,
+   "drift_min": -16,
+   "drift_max": 86,
+   "mean_level": 3089,
+   "quanta_min": 0,
+   "quanta_max": 3,
+   "quanta_total": 17,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 101,
+   "X_min": 12568,
+   "X_max": 13060,
+   "level_min": 631,
+   "level_max": 641,
+   "drift_min": -27,
+   "drift_max": 67,
+   "mean_level": 3106,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 102,
+   "X_min": 12517,
+   "X_max": 13102,
+   "level_min": 631,
+   "level_max": 643,
+   "drift_min": -29,
+   "drift_max": 70,
+   "mean_level": 3123,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 103,
+   "X_min": 12266,
+   "X_max": 13108,
+   "level_min": 626,
+   "level_max": 643,
+   "drift_min": -23,
+   "drift_max": 68,
+   "mean_level": 3140,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 16,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 8
+   }
+  },
+  {
+   "interval": 104,
+   "X_min": 12164,
+   "X_max": 13202,
+   "level_min": 624,
+   "level_max": 644,
+   "drift_min": 15,
+   "drift_max": 60,
+   "mean_level": 3172,
+   "quanta_min": 1,
+   "quanta_max": 1,
+   "quanta_total": 27,
+   "turned": 12,
+   "births": 0,
+   "refused": {
+    "lay": 9
+   }
+  },
+  {
+   "interval": 105,
+   "X_min": 12249,
+   "X_max": 13259,
+   "level_min": 626,
+   "level_max": 644,
+   "drift_min": 2,
+   "drift_max": 46,
+   "mean_level": 3204,
+   "quanta_min": 0,
+   "quanta_max": 1,
+   "quanta_total": 21,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "stop": 6
+   }
+  },
+  {
+   "interval": 106,
+   "X_min": 12518,
+   "X_max": 13270,
+   "level_min": 631,
+   "level_max": 646,
+   "drift_min": -7,
+   "drift_max": 50,
+   "mean_level": 3237,
+   "quanta_min": 0,
+   "quanta_max": 1,
+   "quanta_total": 21,
+   "turned": 0,
+   "births": 0,
+   "refused": {}
+  },
+  {
+   "interval": 107,
+   "X_min": 12930,
+   "X_max": 13410,
+   "level_min": 639,
+   "level_max": 648,
+   "drift_min": -5,
+   "drift_max": 59,
+   "mean_level": 3272,
+   "quanta_min": 0,
+   "quanta_max": 1,
+   "quanta_total": 13,
+   "turned": 6,
+   "births": 0,
+   "refused": {}
+  },
+  {
+   "interval": 108,
+   "X_min": 13064,
+   "X_max": 13541,
+   "level_min": 643,
+   "level_max": 650,
+   "drift_min": -29,
+   "drift_max": 64,
+   "mean_level": 3308,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 25,
+   "turned": 0,
+   "births": 0,
+   "refused": {}
+  },
+  {
+   "interval": 109,
+   "X_min": 13102,
+   "X_max": 13884,
+   "level_min": 643,
+   "level_max": 656,
+   "drift_min": -46,
+   "drift_max": 64,
+   "mean_level": 3344,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 25,
+   "turned": 0,
+   "births": 0,
+   "refused": {}
+  },
+  {
+   "interval": 110,
+   "X_min": 13091,
+   "X_max": 14261,
+   "level_min": 643,
+   "level_max": 664,
+   "drift_min": -53,
+   "drift_max": 59,
+   "mean_level": 3380,
+   "quanta_min": 0,
+   "quanta_max": 1,
+   "quanta_total": 13,
+   "turned": 0,
+   "births": 0,
+   "refused": {}
+  },
+  {
+   "interval": 111,
+   "X_min": 13060,
+   "X_max": 14483,
+   "level_min": 641,
+   "level_max": 668,
+   "drift_min": -49,
+   "drift_max": 51,
+   "mean_level": 3416,
+   "quanta_min": 0,
+   "quanta_max": 1,
+   "quanta_total": 19,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 12
+   }
+  },
+  {
+   "interval": 112,
+   "X_min": 13076,
+   "X_max": 14509,
+   "level_min": 643,
+   "level_max": 668,
+   "drift_min": -34,
+   "drift_max": 49,
+   "mean_level": 3436,
+   "quanta_min": 0,
+   "quanta_max": 1,
+   "quanta_total": 19,
+   "turned": 8,
+   "births": 0,
+   "refused": {}
+  },
+  {
+   "interval": 113,
+   "X_min": 13148,
+   "X_max": 14483,
+   "level_min": 643,
+   "level_max": 668,
+   "drift_min": -12,
+   "drift_max": 56,
+   "mean_level": 3459,
+   "quanta_min": 0,
+   "quanta_max": 2,
+   "quanta_total": 26,
+   "turned": 1,
+   "births": 0,
+   "refused": {}
+  },
+  {
+   "interval": 114,
+   "X_min": 13278,
+   "X_max": 14270,
+   "level_min": 646,
+   "level_max": 664,
+   "drift_min": 1,
+   "drift_max": 64,
+   "mean_level": 3481,
+   "quanta_min": 0,
+   "quanta_max": 3,
+   "quanta_total": 15,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 6
+   }
+  },
+  {
+   "interval": 115,
+   "X_min": 13455,
+   "X_max": 13917,
+   "level_min": 648,
+   "level_max": 658,
+   "drift_min": 2,
+   "drift_max": 94,
+   "mean_level": 3503,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 25,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 12
+   }
+  },
+  {
+   "interval": 116,
+   "X_min": 13443,
+   "X_max": 13690,
+   "level_min": 648,
+   "level_max": 654,
+   "drift_min": -6,
+   "drift_max": 120,
+   "mean_level": 3524,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 20,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 7
+   }
+  },
+  {
+   "interval": 117,
+   "X_min": 13112,
+   "X_max": 13859,
+   "level_min": 643,
+   "level_max": 656,
+   "drift_min": -9,
+   "drift_max": 122,
+   "mean_level": 3546,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 20,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1,
+    "stop": 6
+   }
+  },
+  {
+   "interval": 118,
+   "X_min": 12849,
+   "X_max": 14031,
+   "level_min": 637,
+   "level_max": 660,
+   "drift_min": -8,
+   "drift_max": 128,
+   "mean_level": 3568,
+   "quanta_min": 0,
+   "quanta_max": 6,
+   "quanta_total": 20,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 119,
+   "X_min": 12786,
+   "X_max": 14151,
+   "level_min": 637,
+   "level_max": 662,
+   "drift_min": -2,
+   "drift_max": 119,
+   "mean_level": 3590,
+   "quanta_min": 0,
+   "quanta_max": 5,
+   "quanta_total": 19,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  },
+  {
+   "interval": 120,
+   "X_min": 12961,
+   "X_max": 14206,
+   "level_min": 639,
+   "level_max": 662,
+   "drift_min": 5,
+   "drift_max": 95,
+   "mean_level": 3612,
+   "quanta_min": 0,
+   "quanta_max": 4,
+   "quanta_total": 18,
+   "turned": 0,
+   "births": 0,
+   "refused": {
+    "lay": 1
+   }
+  }
+ ],
+ "summary": {
+  "births_total": 18,
+  "birth_intervals": [
+   4,
+   27
+  ],
+  "first_bang": 4,
+  "births_after_the_first_bang_plus_10": [
+   27
+  ],
+  "turn_intervals": [
+   1,
+   2,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   15,
+   17,
+   22,
+   29,
+   37,
+   82,
+   83,
+   90,
+   97,
+   98,
+   104,
+   107,
+   112,
+   113
+  ],
+  "credits": 50
+ }
+}
