@@ -172,7 +172,7 @@ class Lean:
         seed_pair = phase.seed(self.X, gamma)
         self.orbit_lines = [seed_pair]  # the last pair as lines, for the next act
         self.orbit = [(int(seed_pair[0][0]), int(seed_pair[1][0]))]  # the table of (cos, sin) as plain integers
-        self.counts = {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 0, 'turns': 0, 'light_credits': 0, 'light_laid': 0, 'light_laid_nodes': 0}
+        self.counts = {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 0, 'refused_twist': 0, 'turns': 0, 'light_credits': 0, 'light_laid': 0, 'light_laid_nodes': 0}
         self.max_transient = 0
         for s_, at, h, n in packets: self.lay_packet(s_, at, h, n)
 
@@ -314,6 +314,16 @@ class Lean:
     def link_current(self, line, port):
         """The light's own current on the Link at the Port, F_ij = now_i before_j - before_i now_j: odd under the exchange of the ends (the other end reads -F), read at the interval's start; the + child of a Link birth goes to the end the current flows into."""
         return line.now * across(line.before, port) - line.before * across(line.now, port)
+
+    def net_current(self, line, axis):
+        """A line's net transverse current at every Node along an axis, u_b(k) = F(k, k - b) - F(k, k + b): the current into the Node from the -b Link less the current out along the +b Link, read from the Node's own two Links of that axis."""
+        return self.link_current(line, 2 * axis + 1) - self.link_current(line, 2 * axis)
+
+    def twist(self, line, axis):
+        """The twist of a line's transverse current along the +axis Link of every Node (PA2's form, the owner's sentence 4): h(k, k + e_a) = u_b(k) u_c(k + e_a) - u_c(k) u_b(k + e_a) with (a, b, c) cyclic, e_a . (u(k) x u(k + e_a)), the cross product of the two ends' transverse currents read at each end from its own Links; a pseudoscalar of the unoriented Link, the handedness of the born pair."""
+        a, b, c = axis, (axis + 1) % 3, (axis + 2) % 3
+        ub, uc = self.net_current(line, b), self.net_current(line, c)
+        return ub * across(uc, 2 * a) - uc * across(ub, 2 * a)
 
     def write(self, line, numerator, direction):
         """The one write act on a line: the numerator's carried division at the line's write wall, the quotient added to the level now (forward) or taken back (backward), the remainder carried in the line."""
@@ -514,7 +524,9 @@ class Lean:
     def meet(self, gap0_start, sh, rules, frozen):
         """The Link close (Q1/Q2, the owner's sentence 1): every Link once from its +a end; a meeting where both ends hold a whole quantum of light at the vacuum's weight and neither end is frozen; the + child at the end the light's own current F_ij = num (now_i before_j - before_i now_j) flows into, read at the interval's start (F = 0 refused by name: no orientation); the Link's one number read at that end gives the lift. Returns the births as (the take's Node, the lift, the - child's Node, the + child's Node)."""
         born = []
-        currents = [self.den * self.link_current(gap0_start[0], 2 * axis) for axis in range(3)]  # the massless plane's first line's current orients the Link
+        taken = gap0_start[0]  # the row the click takes: the massless plane's first line; its current orients the Link, its twist gives the handedness
+        currents = [self.den * self.link_current(taken, 2 * axis) for axis in range(3)]
+        twists = [self.twist(taken, axis) for axis in range(3)]
         for at in np.ndindex(*self.shape):
             if frozen[at]: continue
             for axis in range(3):
@@ -523,11 +535,15 @@ class Lean:
                 F = int(currents[axis][at])
                 if F == 0:
                     self.counts['refused_orientation'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'orientation', 'link': list(j)}); continue
-                plus, minus = (j, at) if F > 0 else (at, j)
-                drawn = self.read_number(plus, rules)
+                into, outof = (j, at) if F > 0 else (at, j)  # the end the current flows into: the draw and the take stay there
+                h = int(twists[axis][at])
+                if h == 0:
+                    self.counts['refused_twist'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'twist', 'link': list(j)}); continue
+                plus, minus = (into, outof) if h > 0 else (outof, into)  # the + child at the end the current flows into where the twist is right-handed, at the other end where left-handed (the owner's sentence 4, PA2's form)
+                drawn = self.read_number(into, rules)
                 if drawn is None: continue
                 number, room = drawn
-                born.append((plus, (number // self.unit_gap0) % len(self.records()), minus, plus, room))  # the plane drawn, over every plane alike (the massless plane among them)
+                born.append((into, (number // self.unit_gap0) % len(self.records()), minus, plus, room))  # the plane drawn, over every plane alike (the massless plane among them); the take at the current's end
         return born
 
     def refuse(self, born, owns):
@@ -696,7 +712,7 @@ def reading(b, maxbits):
     for re, im in planes: W = W + wronskian(re, im)
     n, _bits = b.census(); tens = [int(x) for l in metric.lines[1:4] for x in l.now.reshape(-1)]
     return {'i': b.interval, 'packets (reader)': packets, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'],
-            'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'],
+            'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'] + b.counts['refused_twist'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'],
             'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in potential.lines[0].now.reshape(-1)), 'planes energy bits': energy.bit_length(),
             'links at the wall': int(sum(1 for f in b.link_factors()[0::2] for x in f.reshape(-1) if int(x) == 0)), 'tension min/max': [min(tens), max(tens)], 'odd max bits': odd_max.bit_length(), 'link count max': b.count_max, 'orbit table': len(b.orbit),
             'massless W abs max': int(max(abs(int(x)) for x in wronskian(*b.row(2, gap=0).lines).reshape(-1))), 'W total': int(sum(int(x) for x in W.reshape(-1))), 'W abs sum': int(sum(abs(int(x)) for re, im in planes for x in wronskian(re, im).reshape(-1))), 'light velocity max': light_v}

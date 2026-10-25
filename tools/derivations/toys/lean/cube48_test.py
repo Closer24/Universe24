@@ -46,7 +46,7 @@ identity = np.eye(3, dtype=int)
 base = run(universe, world_image(world0, identity, cube), n)
 evs = events(base)
 print({'seed': world0.get('seed'), 'cube': cube, 'intervals': n, 'births': len(evs), 'refused orientation': base.counts['refused_orientation'], 'refused lay': base.counts['refused_lay'], 'refused stop': base.counts['refused_stop'], 'turns': base.counts['turns']})
-held = 0; apart = []
+held = 0; apart = []; swapped = []
 for m in signed_permutations():
     other = run(universe, world_image(world0, m, cube), n)
     same_events = events(other) == mapped(evs, m, cube)
@@ -55,6 +55,8 @@ for m in signed_permutations():
         for at in np.ndindex(cube, cube, cube):
             if int(line_b.now[at]) != int(line_o.now[image(m, at, cube)]) or int(line_b.before[at]) != int(line_o.before[image(m, at, cube)]): same_rows = False; break
         if not same_rows: break
+    exchanged = (not same_events) and same_rows and events(other) == sorted((i, at, s_, pl, mi) for i, at, s_, mi, pl in mapped(evs, m, cube))  # the births equal with the two children's ends exchanged: the image's senses are the conjugates (the twist's parity: a reflection flips the handedness)
     if same_events and same_rows: held += 1
+    elif exchanged: swapped.append(int(round(np.linalg.det(m))))
     else: apart.append((m.tolist(), 'events' if not same_events else 'rows'))
-print({'images holding': held, 'of': 48, 'apart': apart[:6]})
+print({'images holding': held, 'of': 48, 'senses exchanged (det +1 rotations / -1 reflections)': [swapped.count(1), swapped.count(-1)], 'apart': apart[:6]})
