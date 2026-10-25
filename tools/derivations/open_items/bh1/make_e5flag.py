@@ -71,8 +71,8 @@ REPLACEMENTS = {
     "interval.py": [
         # 1. the flag's import
         (
-            "from event_universe.rows import CARRIER, PLANE, " "POTENTIAL, TRACE, Line, Row, zeros\n",
-            "from event_universe.rows import CARRIER, PLANE, " "POTENTIAL, TRACE, Line, Row, zeros\nfrom event_universe import bh1_flag  # bh1: the frozen Node's form under test\n",
+            "from event_universe.rows import CARRIER, PLANE, " + "POTENTIAL, TRACE, Line, Row, zeros\n",
+            "from event_universe.rows import CARRIER, PLANE, " + "POTENTIAL, TRACE, Line, Row, zeros\nfrom event_universe import bh1_flag  # bh1: the frozen Node's form under test\n",
         ),
         # 2. the frozen mask and the still mask at the interval's start (backward from the frame under the identity form, as `turned` is)
         (
@@ -147,8 +147,8 @@ REPLACEMENTS = {
     ],
     "run.py": [
         (
-            "from event_universe.rows import CARRIER, PLANE, " "POTENTIAL, zeros\n",
-            "from event_universe.rows import CARRIER, PLANE, " "POTENTIAL, zeros\nfrom event_universe import bh1_flag  # bh1\n",
+            "from event_universe.rows import CARRIER, PLANE, " + "POTENTIAL, zeros\n",
+            "from event_universe.rows import CARRIER, PLANE, " + "POTENTIAL, zeros\nfrom event_universe import bh1_flag  # bh1\n",
         ),
         (
             "    pace = paces.link_pace_of(node.gamma, content)\n    factors = node.link_factors()\n",
