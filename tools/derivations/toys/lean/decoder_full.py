@@ -157,16 +157,31 @@ for line, cs in by_line.items():
     for (_i, at) in cs[1:]:
         if at not in nodes_seen: moves += 1; nodes_seen.add(at)
 out['9 collisions / 13 free fall'] = {'tracks (node, species)': len(tracks), 'longest track credits': longest, 'lines credited at a new Node after their first': moves, 'verdict': 'NOT SHOWN: no line is credited at a second Node (the bodies stand)' if moves == 0 else 'read: %d lines credited at a new Node; the predicate (the tail falls, adjacent peaks collide) is the sentence W-S4/W-S5 of the owner, not read here' % moves}
-light_credits = [c for c in credits if c.get('light')]
-out['7 light with its redshift / 11 / 12'] = {'light credits in the record': len(light_credits), 'verdict': 'NOT SHOWN: the record holds no light click with a beat' if not light_credits else 'read: %d light credits (the redshift reading to be derived)' % len(light_credits)}
+beats_by_line = defaultdict(list)
+for c in credits: beats_by_line[(tuple(c['node']), c['line'])].append((c['i'], c['beat'], c['proper']))
+light_credits = [l for l in log if l['event'] == 'light']
+if light_credits:
+    # the detector's clock: the spacing of its light credits in its own proper count (the middle spacing); the bodies' clocks: the spacing of a record's clicks in its proper count at its Node; the ratio against the two Nodes' contents (the volume's level)
+    by_det = defaultdict(list)
+    for l in light_credits: by_det[tuple(l['node'])].append(l['proper'])
+    det_rows = {}
+    for det, ps in by_det.items():
+        ps.sort(); gaps = sorted(b - a for a, b in zip(ps, ps[1:]) if b > a)
+        det_rows[str(det)] = {'light credits': len(ps), 'middle spacing in the detector\'s proper count': gaps[len(gaps) // 2] if gaps else None, 'content at the credits (min/max)': [min(l['content'] for l in light_credits if tuple(l['node']) == det), max(l['content'] for l in light_credits if tuple(l['node']) == det)]}
+    body_gaps = []
+    for key, cs in beats_by_line.items():
+        cs.sort()
+        body_gaps += [(p2 - p1, c2) for (i1, b1, p1), (i2, b2, p2) in zip(cs, cs[1:]) if p2 > p1 for c2 in [key]]
+    bg = sorted(g for g, _k in body_gaps)
+    out['7 light with its redshift / 11 / 12'] = {'detectors': det_rows, 'bodies: middle click spacing in proper count': bg[len(bg) // 2] if bg else None, 'bodies: click pairs': len(bg), 'verdict': 'read: the light credited at the detector (W-S1 on); the redshift ratio is the detector spacing against the body spacing at their two contents, read above, the predicate to the owner'}
+else:
+    out['7 light with its redshift / 11 / 12'] = {'light credits in the record': 0, 'verdict': 'NOT SHOWN: the record holds no light credit'}
 rb = run.get('run_back')
 out['18 the arrow of time'] = {'run back on the record': rb, 'verdict': ('SHOWN: the run back exact bit for bit, %d of %d intervals' % (rb['exact'], rb['intervals']) if rb['exact'] == rb['intervals'] else 'NOT SHOWN: %d of %d' % (rb['exact'], rb['intervals'])) if rb else 'NOT READ: the record carries no run back (run lean_full.py with back N)'}
 # the conservations in the clicks (the owner's word of 06:2x: what the lattice conserves is shown conserved in the clicks)
 cons = {}
 cons['charge: the senses summed over the births'] = sense_sum
 cons['count: taken against booked over the births (hundredths)'] = quot(taken_b, booked, 100)
-beats_by_line = defaultdict(list)
-for c in credits: beats_by_line[(tuple(c['node']), c['line'])].append((c['i'], c['beat'], c['proper']))
 changes = []; same = 0; total_pairs = 0
 for key, cs in beats_by_line.items():
     cs.sort()
