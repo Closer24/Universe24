@@ -152,38 +152,41 @@ class Lean:
         return rule3.rule_integers(pair[0], pair[1], self.gamma, clock, pace, factors, self.G)
 
     # ---- the step of one line and of one plane
-    def step_line(self, line, r, direction=1):
-        total = r.self_coefficient * line.now - r.wall * line.before
-        for (axis, side), reach in zip(AXES, r.reaches):
-            total = total + reach * roll(line.now, axis, side)
-        self.max_transient = max(self.max_transient, int(np.max(np.vectorize(lambda v: abs(int(v)).bit_length(), otypes=[object])(total))))
-        nxt, rem = carried_division(total, r.wall, line.rem, direction)
-        return Line(nxt, line.now, rem), total
+    # ---- the one act of a row: Rule3 on the row's lines at the Node's paces, the arrivals turned (the owner's word of 2026-10-25: one function steps a line, inside the Node, called in one loop over the rows)
+    def turned_arrival(self, arrivals, port, turn):
+        """The arrivals of a row's lines at one Port, read in the Node's frame and turned by the Link's pair over X and by the odd line's tangent triple (W^2 - n^2, 2 W n, W^2 + n^2), W = 4 Gamma, one rounding per Link per part; a row of one line (a scalar) is turned by the identity; `turn` None is the identity for every shape."""
+        if turn is None or len(arrivals) == 1: return arrivals
+        phases, odd, frames = turn; axis, side = AXES[port]
+        re_j, im_j = arrivals
+        if frames is not None: im_j = frames[port] * im_j
+        c, s = phases[port]
+        n = odd[axis]; n = side * (n + roll(n, axis, side))  # the odd line on the Link: the two ends' SUM signed by the Port's side (the engine's V_ij = V_a(i) + V_a(j); no division, the mirror exact)
+        Wl = 4 * self.gamma; tc, ts, tw = Wl * Wl - n * n, 2 * Wl * n, Wl * Wl + n * n
+        a_re = (c * re_j - s * im_j); a_im = (s * re_j + c * im_j)
+        a_re, a_im = (2 * a_re + self.X) // (2 * self.X), (2 * a_im + self.X) // (2 * self.X)
+        b_re = (tc * a_re - ts * a_im); b_im = (ts * a_re + tc * a_im)
+        return [(2 * b_re + tw) // (2 * tw), (2 * b_im + tw) // (2 * tw)]
+
+    def rotate(self, lines, r, turn=None, direction=1):
+        """Rule3's step of one row at every Node: for each of the row's lines the total S now - w before + SUM_j R_j m_j with m_j the row's arrivals at the Port turned as the row's shape turns them (`turned_arrival`), one carried division at the wall w per line; the rule's integers r at the Node's paces. Backward (direction -1) the same act on the before slots with the division back (`division_back`): the known part S now + SUM R m from the start levels (the before slots), the quotient next + before, before = quotient - next."""
+        at = [l.now if direction == 1 else l.before for l in lines]
+        totals = [r.self_coefficient * a - (r.wall * l.before if direction == 1 else 0) for l, a in zip(lines, at)]
+        for port, ((axis, side), reach) in enumerate(zip(AXES, r.reaches)):
+            arrivals = self.turned_arrival([roll(a, axis, side) for a in at], port, turn)
+            totals = [t + reach * m for t, m in zip(totals, arrivals)]
+        found = []
+        if direction == 1:
+            for l, t in zip(lines, totals):
+                self.max_transient = max(self.max_transient, int(np.max(np.vectorize(lambda v: abs(int(v)).bit_length(), otypes=[object])(t))))
+                nxt, rem = carried_division(t, r.wall, l.rem); found.append(Line(nxt, l.now, rem))
+            return found
+        for l, t in zip(lines, totals):
+            quotient, rem = division_back(t, r.wall, l.rem); found.append(Line(l.before, quotient - l.now, rem))
+        return found
 
     def frames(self, phi_rem):
         """The frame signs per Port: +1 where the two ends' frame bits (the phase row's remainder at the wall 2, complemented at every swap) agree, -1 where they differ; there the neighbour's plane is read conjugated and its count negated (ALGEBRA.md, The swap at the top, the frame clause)."""
         return [1 - 2 * (phi_rem ^ roll(phi_rem, axis, side)) for axis, side in AXES]
-
-    def step_plane(self, re, im, r, phases, odd, frames=None):
-        """The fold: each Port's arrival (read in the Node's frame) turned by the Link's phase (cos, sin) over X and by the odd line's tangent triple (W^2 - n^2, 2 W n) over (W^2 + n^2), W = 4 Gamma, one rounding per Link per part."""
-        Wl = 4 * self.gamma
-        tot_re = r.self_coefficient * re.now - r.wall * re.before
-        tot_im = r.self_coefficient * im.now - r.wall * im.before
-        for port, ((axis, side), reach) in enumerate(zip(AXES, r.reaches)):
-            re_j, im_j = roll(re.now, axis, side), roll(im.now, axis, side)
-            if frames is not None: im_j = frames[port] * im_j
-            c, s = phases[port]  # arrays of (cos, sin) over X per Node
-            n = odd[axis]  # the odd line on the Link: the two ends' SUM signed by the Port's side (the engine's V_ij = V_a(i) + V_a(j) read with the direction's sign; no division, so the mirror is exact: a floored mean broke the 48 at every odd sum)
-            n = side * (n + roll(n, axis, side))
-            tc, ts, tw = Wl * Wl - n * n, 2 * Wl * n, Wl * Wl + n * n
-            # the turned arrival z' = z e^{i theta} e^{i phi}: first the phase pair over X, then the tangent triple over tw
-            a_re = (c * re_j - s * im_j); a_im = (s * re_j + c * im_j)
-            a_re, a_im = (2 * a_re + self.X) // (2 * self.X), (2 * a_im + self.X) // (2 * self.X)
-            b_re = (tc * a_re - ts * a_im); b_im = (ts * a_re + tc * a_im)
-            b_re, b_im = (2 * b_re + tw) // (2 * tw), (2 * b_im + tw) // (2 * tw)
-            tot_re = tot_re + reach * b_re; tot_im = tot_im + reach * b_im
-        nre, rre = carried_division(tot_re, r.wall, re.rem); nim, rim = carried_division(tot_im, r.wall, im.rem)
-        return Line(nre, re.now, rre), Line(nim, im.now, rim)
 
     def centred_count(self, cphi):
         """The Node's centred count K = Phi_next - Phi_before = 2 (Phi_now - Phi_before) + c, twice the trapezoid sum of the clocked potential to the triple's centre (ALGEBRA.md, The swap at the top, the phase hand's M23; the former toy read Phi_i - Phi_j, one integration too many, and pumped)."""
@@ -243,7 +246,7 @@ class Lean:
             r = self.rule(pair, c, factors)
             for sense in (0, 1):
                 re, im = self.planes[2 * s_ + sense]
-                nre, nim = self.step_plane(re, im, r, phases, odd, frames)
+                nre, nim = self.rotate([re, im], r, (phases, odd, frames))
                 forms = forms + (re.now * re.now - nre.now * re.before) + (im.now * im.now - nim.now * im.before)
                 W = W + (nre.now * nim.before - nim.now * nre.before)
                 for a in range(3):  # the sign current J_a = Im(conj z (z_{+a} - z_{-a})) from the start's levels, the neighbours read in the Node's frame
@@ -252,10 +255,10 @@ class Lean:
                     J[a] = J[a] + (re.now * dz_im - im.now * dz_re)
                 new_planes.append([nre, nim])
         r_l = self.rule((self.den, self.den), c, factors)
-        light, _ = self.step_line(self.light, r_l); forms = forms + (self.light.now * self.light.now - light.now * self.light.before)
-        sign, _ = self.step_line(self.sign, r_l); sign_axes = [self.step_line(l, r_l)[0] for l in self.sign_axes]
+        light = self.rotate([self.light], r_l)[0]; forms = forms + (self.light.now * self.light.now - light.now * self.light.before)
+        sign = self.rotate([self.sign], r_l)[0]; sign_axes = [self.rotate([l], r_l)[0] for l in self.sign_axes]
         r_v = self.rule(self.vol_pair, c, factors)
-        vol, _ = self.step_line(self.vol, r_v); vol_axes = [self.step_line(l, r_v)[0] for l in self.vol_axes]
+        vol = self.rotate([self.vol], r_v)[0]; vol_axes = [self.rotate([l], r_v)[0] for l in self.vol_axes]
         self.planes, self.light, self.sign, self.sign_axes, self.vol, self.vol_axes = new_planes, light, sign, sign_axes, vol, vol_axes
         self.stepped = [[l.copy() for l in r] for r in new_planes]  # the step's output as stepped, kept for the credits' frame (the swap discards it at a turned Node)
         # the held writes, one carried division per line
@@ -514,31 +517,6 @@ class Lean:
         return {'event': 'credit', 'i': self.interval, 'node': list(at), 'proper': int(self.proper[at]), 'closes': int(self.closes[at]), 'content': int(self.start_content[at]), 'line': rec, 'sense': 1 if W > 0 else -1 if W < 0 else 0,
                 'beat': int(self.beats[rec][at]), 'frame': frame, 'taken': fall, 'levels': levels, 'light_now_was': light_was, 'sign_level': int(self.sign.now[at]), 'turned': bool(self.turned[at])}
 
-    def back_line(self, st, r):
-        """Rule3's inverse by the division back (core.rule3.division_back): the known part S now + SUM R m, with the remainder after, gives the quotient next + before and the remainder before (the -w before term an exact multiple of the wall); before = quotient - next."""
-        known = r.self_coefficient * st.before
-        for (axis, side), reach in zip(AXES, r.reaches):
-            known = known + reach * roll(st.before, axis, side)
-        quotient, rem = division_back(known, r.wall, st.rem)
-        return Line(st.before, quotient - st.now, rem), known
-
-    def back_plane(self, re, im, r, phases, odd, frames=None):
-        """The fold's inverse by the same division back: the known part with the turned arrivals from the start's levels (the before slots), the neighbours read in the Node's frame."""
-        Wl = 4 * self.gamma
-        k_re = r.self_coefficient * re.before; k_im = r.self_coefficient * im.before
-        for port, ((axis, side), reach) in enumerate(zip(AXES, r.reaches)):
-            re_j, im_j = roll(re.before, axis, side), roll(im.before, axis, side)
-            if frames is not None: im_j = frames[port] * im_j
-            c, s_ = phases[port]; n = odd[axis]; n = side * (n + roll(n, axis, side))
-            tc, ts, tw = Wl * Wl - n * n, 2 * Wl * n, Wl * Wl + n * n
-            a_re = (c * re_j - s_ * im_j); a_im = (s_ * re_j + c * im_j)
-            a_re, a_im = (2 * a_re + self.X) // (2 * self.X), (2 * a_im + self.X) // (2 * self.X)
-            b_re = (tc * a_re - ts * a_im); b_im = (ts * a_re + tc * a_im)
-            b_re, b_im = (2 * b_re + tw) // (2 * tw), (2 * b_im + tw) // (2 * tw)
-            k_re = k_re + reach * b_re; k_im = k_im + reach * b_im
-        q_re, r_re = division_back(k_re, r.wall, re.rem); q_im, r_im = division_back(k_im, r.wall, im.rem)
-        return Line(re.before, q_re - re.now, r_re), Line(im.before, q_im - im.now, r_im)
-
     def step_back(self):
         """One interval back: the close undone from the log (the lays removed, the light restored), the swap undone at the turned Nodes (an involution), the phase row back, the writes undone by the division back from the start's levels (every start level is a before slot), Rule3 inverted on every line."""
         frame = self.stack.pop()
@@ -615,7 +593,7 @@ class Lean:
             r = self.rule(pair, c, factors)
             for sense in (0, 1):
                 re, im = self.planes[2 * s_ + sense]
-                bre, bim = self.back_plane(re, im, r, phases, odd, frames)
+                bre, bim = self.rotate([re, im], r, (phases, odd, frames), direction=-1)
                 forms = forms + (bre.now * bre.now - re.now * bre.before) + (bim.now * bim.now - im.now * bim.before)
                 self.planes[2 * s_ + sense] = [bre, bim]
         W_prev = Z(self.shape)
@@ -624,13 +602,13 @@ class Lean:
         if not os.environ.get('LEAN_NO_WS1'):
             lq, self.light_wr = division_back(W_this - W_prev, self.T, self.light_wr); self.light.now = self.light.now - lq
         r_l = self.rule((self.den, self.den), c, factors)
-        light_b, _ = self.back_line(self.light, r_l); forms = forms + (light_b.now * light_b.now - self.light.now * light_b.before)
+        light_b = self.rotate([self.light], r_l, direction=-1)[0]; forms = forms + (light_b.now * light_b.now - self.light.now * light_b.before)
         self.light = light_b
-        self.sign, _ = self.back_line(self.sign, r_l); self.sign_axes = [self.back_line(l, r_l)[0] for l in self.sign_axes]
+        self.sign = self.rotate([self.sign], r_l, direction=-1)[0]; self.sign_axes = [self.rotate([l], r_l, direction=-1)[0] for l in self.sign_axes]
         # the volume's write undone, then its lines inverted
         q, self.vol_wr[0] = division_back(4 * X_start * (forms * 54 * self.den * self.gamma ** 2 - trace * p0 * p0) * p0, 54 * self.den * self.gamma ** 4 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now - q
         r_v = self.rule(self.vol_pair, c, factors)
-        self.vol, _ = self.back_line(self.vol, r_v); self.vol_axes = [self.back_line(l, r_v)[0] for l in self.vol_axes]
+        self.vol = self.rotate([self.vol], r_v, direction=-1)[0]; self.vol_axes = [self.rotate([l], r_v, direction=-1)[0] for l in self.vol_axes]
         # the swap's inverse, part two: at the turned Nodes the same act on the post-state gives the pre-state (the exchange and the complement again, the im lines' conjugation again)
         if self.swap_on and top.any(): self.exchange(top, post, post_wr)
         self.interval -= 1
