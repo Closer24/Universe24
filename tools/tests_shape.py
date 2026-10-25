@@ -46,6 +46,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "SL-S1 (2026-10-25, the Boss's 6399718139, SL_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "
         "every born pair's Link meeting at the next close with no current and refused by the orientation (5 of 5), the meetings counted, the run back exact",
     ),
+    "tests/test_the_node.py::test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the_light_sl_s2": (
+        35,
+        "SL-S2 (2026-10-25, the Boss's ledger item 10, SL_COMPARISON.md: the test under 15 s): the heaviest record's conjugate pair fed at two adjacent Nodes of the bare 5-cube at 20 intervals, "
+        "one merger (the taken row the heaviest record, the children the gap-0 row), each child's wall one light quantum to the rounding paid by one exact take at its own end, the gap-0 row whole at each end, the charge 0, the stop by name, the run back exact",
+    ),
     "tests/test_the_node.py::test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1": (
         17,
         "MS-S1 (2026-10-25, the owner's word through the Boss, 6399410929, MS_COMPARISON.md section 5: the test under 15 s beside the sentence): the lay's pair (A, B) with A B = T div 2 from T alone, "
