@@ -122,7 +122,7 @@ def test_the_exclusion_at_the_lay_reads_the_full_state_and_the_pile_is_gone_sr_s
 
 
 def test_stern_gerlach_reads_the_credits_centroids_per_spin_sign_along_the_gradient_sr() -> None:
-    """The gate the Boss read from sr2 (SR_COMPARISON.md): on the toy's committed records of the 9-cube at 60 intervals on the former loop (an eigenvector of Gamma_x laid at the centre, 400 quanta, the held A_x = -(y - c)(B0 + b (z - c)), B0 = 200, b = 100), the credits with the spin sign + and - along z have their centroids on opposite sides of the centre along the gradient's axis, SHOWN where by 150 milli each with the control's within 150 of the centre; the verdict asserted by name (NOT SHOWN at these parameters: 119 / -118 milli, the control 112 / -51 on 62 / 59 credits), the run back exact on both records."""
+    """The gate the Boss read from sr2 (The-Spinor-Row_COMPARISON.md): on the toy's committed records of the 9-cube at 60 intervals on the former loop (an eigenvector of Gamma_x laid at the centre, 400 quanta, the held A_x = -(y - c)(B0 + b (z - c)), B0 = 200, b = 100), the credits with the spin sign + and - along z have their centroids on opposite sides of the centre along the gradient's axis, SHOWN where by 150 milli each with the control's within 150 of the centre; the verdict asserted by name (NOT SHOWN at these parameters: 119 / -118 milli, the control 112 / -51 on 62 / 59 credits), the run back exact on both records."""
     found = {}
     for name in ("on", "off"):
         record = json.loads((RECORDS / f"stern_gerlach_{name}.json").read_text(encoding="utf-8"))
