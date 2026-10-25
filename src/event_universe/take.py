@@ -1,31 +1,183 @@
-"""The take, the act's readings and items (the law's word for the act its contents serve, the module so named on 2026-10-21, twist.py until then; the engine V2, Parts F and G; ALGEBRA.md, The click's algebra beyond the law, The lattice momentum, The click's momentum on the board; the owner's rule, at the Nodes Rule3 only): the taker's part re-laid at each Node's own direction (`relaid`, `levels_at`), the click's items (`Item`, `Phase`, `books_named`), the hole's faces (`faced`, `faces_presented`, `faces_reported`), the piece's momentum readings (`fan_momentum`, `scaled`) and the piece's source drawn among the emitters by the quanta each holds and named with the recoil it owes, -p_a as integers on the credit line and written nowhere (`recoiled`, `drawn_emitter`), the loss booked by name (`unpaid`); the write moves the count by one and writes nothing for the piece's momentum, the recoil of a body held at declared Nodes being the declaration's; meeting.py writes the click with them."""
+"""The close's reads and writes at one Node: the one-Link read of a number on the frame's digit lattices (`read_number`), the exact take of the light's levels by the share's fall (`fall_of`, `take_at`), the one lay act (`lay`), the lay of one quantum's amplitude (`lay_amplitude`) and the lattice momentum a move books (`momentum_of`)."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
-from event_universe.loader.keys import Node
+import numpy as np
+
+from event_universe.core import paces, rule3
+from event_universe.core.ports import AXES, PORT_SIDES, wrap
+from event_universe.core.rule3 import half, lattice, quotient, remainder
+from event_universe.rows import PLANE, Line
 
 if TYPE_CHECKING:
-    from event_universe.lattice import Lattice
+    from event_universe.node import Node
 
 
-@dataclass(frozen=True)
-class Item:
-    """One entry of a click's list (the mathematician's hand with the advisor's second, two hands; the owner's word, one generic implementation the node_detector operates): the record by its family and, for a record declared a NodeDetector at one Node, its number among `bodies` (None for a record spread over the board), the part (None for every line of a spread record, no line alone), the change of its count, +1, -1 or 0 (the null window moves no count), the Nodes written at, the file's coordinates, and for a spread record given whole quanta the form of its lay (`emission.emitted_quantum`): the pair its lay stands at where the list names one (a record laid whole at its declared interval at its family's massless pair [den, den], the lay by the count at one Node, `meeting.laid_whole`; the conversion's records out until 2026-10-20; the two hands) with, for a plane, the sense of its lay (0 for real lines; the conversion's table declared it until 2026-10-20; `emission.laid_by_count`), else the resonance and the span of a source in time (the emission's, the transition's declared resonance and the lifetime, the mathematician's hand with the advisor's second); the absorption's items carry the arriving record's phase at the close, (X, Y'), `arrival`, by which the entered part's direction is turned (`parted`), and the light's item the two parts' (re, im) at the Node, `levels`, the excited and the ground part's, the born source's phase phi_e - phi_g (`emission.start_of`); Part G: the light's item names the body whose click gives it (`emitter`, the emitters' book, `emission.registered`) and the entering item of an absorption names the piece's family (`drive`, the source's draw, `recoiled`); the click's plan, C6: a spread record taken names per Node the Ports the quantum entered it by, the face's set (`ports`, from the window's inflow booked per Port, `node_detector.arrival_ports`)."""
-
-    family: int
-    delta: int
-    nodes: tuple[Node, ...]
-    pair: tuple[int, int] | None = None
-    sense: int = 0
-    record: int = 0  # the record of the family the item is laid on: a born child's position among its family's children in the list the meeting selected (`act.born_items`; ALGEBRA.md, Matter's birth from light, N records of the write step, 2026-10-24), 0 otherwise
+def neighbour(node: Node, at: tuple[int, ...], axis: int, side: int) -> tuple[int, ...]:
+    """The Node one Link along the axis toward the side, on the torus."""
+    return tuple(wrap(at[a] + (side if a == axis else 0), node.cube) for a in range(AXES))
 
 
-def below_quantum(board: Lattice, item: Item) -> list[Node]:
-    """The one comparison of the lay at a spread record's Nodes (ALGEBRA.md, The click writes on the lattice (b) and (d), the undepleted beam; the board's own click, 2026-10-24, the one click since the declared taker was struck): at each Node named the record's booked share, the share the credit reads there (`Lattice.share_of`, the conserved form's density at the Node in the current's units, read before any item's write), against its own quantum W_rec (`credit.record_unit`, the books' unit): the Nodes where the share is at most one quantum, where the lay writes; a Node whose share stands above one quantum takes the quantum in the books alone (`act.written`, the deficit path)."""
-    unit = board.credit.units[item.family]
-    shares = board.share_of(item.family, 1, board.mask(item.nodes))[0]
-    nodes = [(int(n[0]), int(n[1]), int(n[2])) for n in item.nodes]
-    return [n for n in nodes if int(shares[n]) <= unit]
+def frame_nodes(node: Node, at: tuple[int, ...]) -> list[tuple[int, ...]]:
+    """The Node and its six neighbours in Port order."""
+    return [at] + [neighbour(node, at, axis, side) for axis, side in PORT_SIDES]
+
+
+def at_node(x: Any, at: tuple[int, ...]) -> int:
+    """A rule's integer at a Node (a walled row's reaches are the one integer 0)."""
+    return int(np.asarray(x)[at]) if np.ndim(x) else int(x)
+
+
+def read_number(
+    node: Node, at: tuple[int, ...], rules: list[tuple[Line, rule3.Rule]]
+) -> tuple[int, int] | None:
+    """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the massless unit times the planes' count (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse."""
+    modulus = node.unit_gap0 * len(node.records())
+    nodes = frame_nodes(node, at)
+    digits = []
+    origin = coarse = True
+    w_half = half(node.w)
+    for line, r in rules:
+        f0 = lattice(at_node(line.wall, at), at_node(r.mass, at), *[at_node(x, at) for x in r.reaches])
+        for k, n in enumerate(nodes):
+            wl = at_node(line.wall, n)
+            f = f0 if k == 0 else lattice(wl, at_node(r.reaches[k - 1], n))
+            rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f))
+            origin = origin and rem in (w_half - 1, w_half)
+            coarse = coarse and values <= AXES
+            digits.append((quotient(rem, f), values + 1))
+    if origin:
+        node.counts["refused_origin"] += 1
+        return None
+    if coarse:
+        return None
+    digits.sort()
+    carry, room = 0, 1
+    for d, b in digits:
+        carry = remainder(carry * b + d, modulus)
+        room = min(room * b, modulus)
+    return carry, room
+
+
+def fall_of(
+    node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, line: Line
+) -> tuple[int | None, int]:
+    """The exact take at the Node: the light's now moved toward its before by the least count of levels at which the Node's share falls by the walls; the fall f(s) an exact quadratic in s, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
+    now, before = int(line.now[at]), int(line.before[at])
+    if now == before:
+        return None, 0
+    t = 1 if before > now else -1
+    own, w = int(np.asarray(r.self_coefficient)[at]), int(r.wall)
+    reached = 0
+    for (axis, side), reach in zip(PORT_SIDES, r.reaches, strict=True):
+        reached += int(np.asarray(reach)[at]) * int(line.before[neighbour(node, at, axis, side)])
+    pace = int(np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)[at])
+    weight = 2 * pace * pace * node.G * node.G + (1 if pace == 0 else 0)
+
+    def fall(s: int) -> int:
+        return int(
+            quotient(w * (now * now - (now + t * s) ** 2) - t * s * (own * before + reached), weight)
+        )
+
+    dist = abs(now - before)
+    full = fall(dist)
+    if full < walls:
+        return None, full
+    a = -w
+    b = -(2 * w * now + own * before + reached) * t
+    target = walls * weight
+    disc = b * b + 4 * a * target
+    if disc < 0:
+        cands = [dist]
+    else:
+        root = rule3.largest_below(disc)
+        s1 = quotient(b - root, -2 * a) if a < 0 else quotient(-b + root, 2 * a)
+        cands = sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
+    for s in cands:
+        if s <= dist and fall(s) >= walls:
+            return s, fall(s)
+    for s in range(1, dist + 1):
+        if fall(s) >= walls:
+            return s, fall(s)
+    return dist, full
+
+
+def lay(node: Node, rec: int, where: Any, levels: tuple[Any, Any, Any, Any], sign: int = 1) -> None:
+    """The one lay act: a record's four levels (re_now, re_before, im_now, im_before) added at the Node `where` (or over the board), taken back with sign -1."""
+    re, im = node.records()[rec].lines
+    for line, now, before in ((re, levels[0], levels[1]), (im, levels[2], levels[3])):
+        line.now[where] = line.now[where] + sign * now
+        line.before[where] = line.before[where] + sign * before
+
+
+def momentum_of(
+    node: Node,
+    line_now: Any,
+    line_before: Any,
+    at: tuple[int, ...],
+    d_now: int = 0,
+    d_before: int = 0,
+    num: int = 1,
+) -> list[int]:
+    """The change of the lattice momentum P_a = 2 num SUM_i (now_(i+a) before_i - now_i before_(i+a)) when a line's level now at the Node moves by d_now and its level before by d_before: 2 num [d_now (before_(i-a) - before_(i+a)) + d_before (now_(i+a) - now_(i-a))] per axis."""
+    found = []
+    for a in range(AXES):
+        up, down = neighbour(node, at, a, 1), neighbour(node, at, a, -1)
+        found.append(
+            2
+            * num
+            * (
+                d_now * (int(line_before[down]) - int(line_before[up]))
+                + d_before * (int(line_now[up]) - int(line_now[down]))
+            )
+        )
+    return found
+
+
+def take_at(
+    node: Node, at: tuple[int, ...], walls: int, r_gap0: rule3.Rule, cause: int
+) -> tuple[int, int, int] | None:
+    """One exact take at a Node of the walls booked: the light's level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the light's now before the take) or None."""
+    massless = node.row(PLANE, gap=0)
+    z = massless.lines[0]
+    levels, fall = fall_of(node, at, walls, r_gap0, z)
+    if levels is None:
+        node.counts["refused_stop"] += cause
+        node.log.append(
+            {
+                "event": "refused",
+                "i": node.interval,
+                "node": list(at),
+                "cause": "stop",
+                "fall": fall,
+                "walls": walls,
+            }
+        )
+        return None
+    now, before = int(z.now[at]), int(z.before[at])
+    toward = 1 if before > now else -1
+    z.now[at] = now + toward * levels
+    node.closes[at] += 1
+    assert massless.pair is not None
+    node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=massless.pair[0])
+    return levels, fall, now
+
+
+def lay_amplitude(
+    node: Node, s: int, at: tuple[int, ...], c: Any, factors: tuple[Any, ...], pace: Any
+) -> int:
+    """The lay of one quantum: the child's record laid at the Node with the least amplitude A at which its own share reads one quantum of its unit at the Node's paces, (2 D + SUM_j R_j) A^2 >= unit x 4 p^2 G^2 (the frame share's term of a lone record with now = before = A)."""
+    r = node.rule_of(node.records()[s], c, factors)
+    reaches = sum(int(np.asarray(x)[at]) for x in r.reaches)
+    mass = 2 * int(np.asarray(r.wall)) - int(np.asarray(r.self_coefficient)[at]) - reaches
+    weight = 2 * mass + reaches
+    pc = int(np.asarray(pace, dtype=object)[at])
+    target = node.units[s] * 4 * pc * pc * node.G * node.G
+    if weight <= 0:
+        return node.A
+    amplitude = rule3.largest_below(quotient(target, weight))
+    while weight * amplitude * amplitude < target:
+        amplitude += 1
+    return amplitude

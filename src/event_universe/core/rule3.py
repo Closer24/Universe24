@@ -94,9 +94,30 @@ def division_forward(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
     return carried_division(numerator, wall, carry, 1)
 
 
-def division_back(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
-    """The division act one interval back by the carried division's direction -1: from the remainder after, the quotient the forward act wrote and the remainder before it, exact (ALGEBRA.md #the-direction)."""
-    return carried_division(numerator, wall, carry, -1)
+def half(wall: Any) -> Any:
+    """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor."""
+    return division_forward(wall, 2, 0)[0]
+
+
+def quotient(numerator: Any, wall: Any) -> Any:
+    """The division act's quotient alone, numerator div wall with no carry (the digit on a lattice, the amplitude's share, the root's candidate)."""
+    return division_forward(numerator, wall, 0)[0]
+
+
+def remainder(numerator: Any, wall: Any) -> Any:
+    """The division act's remainder alone, numerator mod wall in [0, wall) (the draw composed modulo the planes' count times the unit)."""
+    return division_forward(numerator, wall, 0)[1]
+
+
+def lattice(*values: Any) -> Any:
+    """The greatest common divisor of integers by Euclid's division act (the remainder alone), the lattice of a line's remainders at a Node: gcd(w, D, R_1..R_6) on the Node's own lattice, gcd(w, R_ji) on a Link's."""
+    found = 0
+    for value in values:
+        a, b = abs(found), abs(value)
+        while b:
+            a, b = b, remainder(a, b)
+        found = a
+    return found
 
 
 def largest_below(square: int) -> int:
@@ -119,16 +140,3 @@ def largest_below(square: int) -> int:
 def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:
     """The conserved form's term at one Node from the rule's integers, w (now^2 + before^2) - S now before (ALGEBRA.md #the-conserved-form)."""
     return wall * (now * now + before * before) - self_coefficient * now * before
-
-
-def partial_rooms(
-    self_coefficient: Any, wall: Any, mass: Any, links: Any, arrivals: Any
-) -> tuple[Any, ...]:
-    """The rooms of the flux line's five partial sums at a level A, each the factor of A (ENGINE.md, The amplitude bound): the free term 3 w, the mass D, the Node's own terms |2 w - D| + w, the Links' sum `links` (2 SUM_j |R_ij| on a plain line, a Node at +A among six neighbours at -A; more on a turned or folded plane, whose Links reach further), and the whole total `arrivals` + w + |S| with the remainder, w - 1 more than A times it, `arrivals` the six arrivals' reads (SUM_j |R_ij| on a plain line; under the pair's two parts on a turned or folded plane, the loader's `bound_under_rooms`)."""
-    return (
-        3 * wall,
-        mass,
-        abs(wall + wall - mass) + wall,
-        links,
-        arrivals + wall + abs(self_coefficient),
-    )

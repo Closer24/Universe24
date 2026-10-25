@@ -2,18 +2,14 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Sequence
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import cache
 from typing import Any
 
 import numpy as np
 
-from event_universe.core.integer import MAX_WORK_INT
 from event_universe.core.rule3 import division_forward, largest_below
-
-COUNT_POWER = 2  # the proper-interval powers of a count's write, p_x p_y p_z / (p_0 Gamma^2)
-WRONSKIAN_POWER = 1  # the proper-interval power of a Wronskian's write, p_x p_y p_z / (p_0^2 Gamma)
 
 
 def rounded(numerator: Any, wall: Any) -> Any:
@@ -126,93 +122,3 @@ def clock_of(gamma: int, contents: Any) -> Any:
 def link_pace_of(gamma: int, contents: Any) -> Any:
     """The Link's pace at every Node from the content read on the Link, `link_pace` through the memo (the read's p_a per Port, whose square enters R_ij; the share's weights and the least pace read the same)."""
     return looked_up(lambda side: side.links, gamma, contents)
-
-
-def node_paces(gamma: int, contents: Any) -> tuple[Any, Any]:
-    """The two paces of a Node at every Node from its content, (p_0, p_i): the clock and the Node's pace, the clock twice (`clock_of`, `link_pace_of`), the integers Rule3's coefficients are read from (core/rule3.coefficients); (Gamma, Gamma) at the vacuum."""
-    return clock_of(gamma, contents), link_pace_of(gamma, contents)
-
-
-def axis_pace(pace: Any, gamma: int, ahead: Any, behind: Any) -> Any:
-    """A Node's pace along one axis, p_a(i) = p_i (q_(i, i+a) + q_(i, i-a)) / (2 Gamma) rounded once: the Node's pace p_i times the mean of its two a-Links' factors q = Gamma - t from the Links' tensions `ahead` (through the +a Port) and `behind` (through the -a Port), one reading per axis through its two Ports, as the tension is the mean of its two ends' parts; the ruler of the axis is h_a = p_0 / p_a (ALGEBRA.md #the-paces, The write per proper volume and per proper interval, the vector form); p_i with no tension."""
-    return rounded(pace * (gamma + gamma - ahead - behind), gamma + gamma)
-
-
-def write_factor(
-    count: Any,
-    p_x: Any,
-    p_y: Any,
-    p_z: Any,
-    p_0: Any,
-    gamma: int,
-    intervals: int,
-    carried: bool = False,
-    parts: int = 1,
-) -> Any:
-    """A held row's write per proper volume and per proper interval (the advisor's rule: the source per proper volume, 1 / (h_x h_y h_z) = p_x p_y p_z / p_0^3, and the act per proper interval, N = p_0 / Gamma, booked once on each): the source scaled by N^intervals p_x p_y p_z / p_0^3, the product of the three axes' rulers over the clock (the vector form; a count source, the form D of the pace-act holders, takes two proper-interval powers, N^2 / h^3 = p_x p_y p_z / (p_0 Gamma^2), a Wronskian source, the sign's row, carrying one N of its own, takes one, N / h^3 = p_x p_y p_z / (p_0^2 Gamma), the caller choosing by the holder's declared act), booked as one rounding half up of the count times p_x p_y p_z over the one wall Gamma^intervals p_0^(3 - intervals), no remainder, a symmetric function of the three paces to the bit, so that a lay with the cube's symmetry keeps its 48 images under the write (ALGEBRA.md, The write per proper volume and per proper interval and The cube's symmetry; the body round's reading departed at the interval 516 under the three roundings in the order x, y, z); the product in Python's integers, exact beyond the width (at the amplitude bound the numerator 2 A^2 P^3 passes 63 bits on every shipped universe, 3.7 x 10^19 at Gamma 6,000: the loader's width gate holds the factor's value, the booking times at most (P / Gamma)^3, inside the width, `derived.write_rooms`), and the value back in the count's own kind; the count itself at the vacuum's paces (every factor 1); at a frozen clock, p_0 at 0, the clock's wall is 1 as the share's is, the numerator 0 with the Link's pace. Under `carried`, the carried factor (ALGEBRA.md, The write per proper volume and per proper interval, the clause of 2026-10-22; loader/universe.factor_of), the two terms themselves unrounded, the product and the wall (`write_factor_terms`), the factor then a coefficient of the numerator inside the held write's one carried division at the wall E_s T times this wall per Node, the write's one remainder carrying it (records.write_sources): one function, the switch at its caller. `parts` multiplies the wall inside the same rounding: the trace's three on the traceless stress of the stress's trace, (3 T_aa - SUM_b T_bb) over 3 (records.write_sources), so that the traceless part takes no rounding of its own."""
-    if carried:
-        return write_factor_terms(count, p_x, p_y, p_z, p_0, gamma, intervals, parts)
-    clock = p_0 + (p_0 == 0)
-    wall = gamma**intervals * clock ** (3 - intervals) * parts
-    kind = np.asarray(count).dtype  # the count's own kind, the run's
-    if within_width(kind, wall, count, p_x, p_y, p_z):
-        product = np.asarray(count, dtype=kind)
-        for pace in (p_x, p_y, p_z):
-            product = product * np.asarray(pace, dtype=kind)
-        return np.asarray(rounded(product, wall)).astype(kind)
-    at = np.asarray(count) != 0  # the factor is 0 where the count is: Python's integers where it is not
-    if at.ndim == 0:
-        return np.asarray(rounded(np.asarray(count, dtype=object) * p_x * p_y * p_z, wall)).astype(kind)
-    product = np.asarray(count)[at].astype(object)
-    for pace in (p_x, p_y, p_z):
-        product = product * at_nodes(pace, at)
-    found = np.zeros(at.shape, dtype=kind)
-    found[at] = rounded(product, at_nodes(wall, at))
-    return found
-
-
-def write_factor_terms(
-    count: Any, p_x: Any, p_y: Any, p_z: Any, p_0: Any, gamma: int, intervals: int, parts: int = 1
-) -> tuple[Any, Any]:
-    """The write's factor as its two terms, the numerator count p_x p_y p_z and the wall Gamma^intervals p_0^(3 - intervals), unrounded, whose quotient rounded half up is `write_factor`'s value bit for bit at every Node (the clock's wall 1 at a frozen clock as there): the terms of the carried factor, the product a coefficient of the numerator inside the held write's one carried division at the wall E_s T times this wall per Node (records.write_sources; the end's booking, the reader's form of 2026-10-22), in Python's integers, exact beyond the width at every Node (the sum over a row's sources and the remainder join it before the division), the array's shape the count's or the paces'; `parts` multiplies the wall as in `write_factor`."""
-    clock = np.asarray(p_0 + (p_0 == 0), dtype=object)
-    wall = gamma**intervals * clock ** (3 - intervals) * parts
-    product = np.asarray(count, dtype=object)
-    for pace in (p_x, p_y, p_z):
-        product = product * np.asarray(pace, dtype=object)
-    return product, wall
-
-
-def at_nodes(value: Any, nodes: np.ndarray) -> Any:
-    """A read integer at the Nodes a mask names, one per Node named, in the mask's order; a scalar as it is."""
-    return value[nodes] if np.ndim(value) else value
-
-
-def within_width(kind: Any, wall: Any, *factors: Any) -> bool:
-    """Whether one rounding of the factors' product over the wall (`rounded`, twice the product plus the wall over twice the wall) is computed in the hardware's integers of `kind`, the count's own: where the rounding's total at its largest, twice the product of the factors' largest sizes plus the largest wall, lies inside the host's width (core/integer.py, `MAX_WORK_INT`, the working bound), every intermediate product below it, so that the hardware's floor is Python's; False where it does not or where the kind is Python's already, and the product is taken in Python's integers, exact beyond the width; the same integers either way, the width's room read as the loader reads it and no number of the law."""
-    if kind == np.dtype(object):  # Python's integers already, exact beyond the width
-        return False
-    bound = 2
-    for factor in factors:
-        bound *= int(np.abs(np.asarray(factor)).max())
-    return bool(bound + int(np.asarray(wall).max()) <= MAX_WORK_INT)
-
-
-def exponent_products(exponents: Sequence[int]) -> tuple[int, list[int]]:
-    """The exponents' product P and, per exponent, the product of the others, P / n_f with no division (the eras' reading of the mix's exponent forms its fraction over these, board_readings.eras): (1, []) for no exponent."""
-    others = [1] * len(exponents)
-    for f, _exponent in enumerate(exponents):
-        for g, other in enumerate(exponents):
-            if g != f:
-                others[f] = others[f] * other
-    return (others[0] * exponents[0] if exponents else 1), others
-
-
-def turn_factor(angle: Any, p_0: Any, gamma: int) -> Any:
-    """The turn per proper interval: the sign's level read into a plane's phase scaled by p_0 / Gamma, one division rounded half away from zero at the read (`odd_rounded`: the rounding derived on positive quantities, the law's mirror of a carry, the complement at the wall, deciding the negative side of the signed level as half away from zero, odd under the level's negation, 2026-10-25); the angle itself at the vacuum's clock."""
-    return odd_rounded(angle * p_0, gamma)
-
-
-def clear_memo() -> None:
-    """The memo cleared at a run's start, so that the paces are computed again once per (Gamma, content) within the run and nothing is kept between runs."""
-    sides.cache_clear()

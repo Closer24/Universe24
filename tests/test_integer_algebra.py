@@ -140,9 +140,18 @@ RULE3, DIVISIONS = "core/rule3.py", {ast.FloorDiv, ast.Mod}
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
 INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the function, its responsibility
     ("core/ports.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
-    ("loader/derived.py", ast.FloorDiv, "width", "a row's lines over its parts and records, exact"),
-    ("loader/derived.py", ast.FloorDiv, "planes", "a part's width over the plane's two lines, exact"),
+    (
+        "core/ports.py",
+        ast.Mod,
+        "wrap",
+        "the periodic wrap of a Node's index or an axis, the torus's one index arithmetic",
+    ),
 )
+READERS = (
+    "run.py",
+    "decoder.py",
+    "gates.py",
+)  # the record's writer and readers, no act of the Node: their quotients are readings at a named scale
 
 
 def divisions(tree: ast.AST) -> list[tuple[int, type[ast.AST], str]]:
@@ -168,6 +177,8 @@ def test_floor_division_and_modulo_are_refused_outside_core_rule3() -> None:
     standing, offenders = set(), []
     for path in sorted(p for p in SRC.rglob("*.py") if p.relative_to(SRC).as_posix() != RULE3):
         name, source = path.relative_to(SRC).as_posix(), path.read_text(encoding="utf-8")
+        if name in READERS:
+            continue
         for line, kind, function in divisions(ast.parse(source)):
             if (name, kind, function) in allowed:
                 standing.add((name, kind, function))

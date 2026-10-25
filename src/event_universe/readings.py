@@ -1,125 +1,95 @@
-"""The readings of a record's lines at every Node, one Link's reach each (ALGEBRA.md #the-count-is-the-records-share, #readings-and-measurements; features/currents): the six arrivals in Port order (`ports`), the currents through the Ports (`currents_of`; a turned record's the flux line's own with the Link's pair, `turned_currents_of`, `Turned`), the tension's part, the shear's part and the axis sources (`stresses_of`, `off_diagonals_of`, `axis_sources_of`), the sign's current (`sense_current_of`), the lattice momentum per axis (`momentum_of`); readings alone, no level written."""
+"""The Node's readings at an interval's start, each a function of the Node's state at every Node alike: the content (the carrier's level), the (cos, sin) pair at a count along the one orbit, the Link factors from the two ends' axis parts, the frame signs, the centred count and the Links' phases, the conserved form's share at the frame's or the vacuum's weight, the swap's floor."""
 
 from __future__ import annotations
 
-from collections.abc import Callable, Sequence
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core.ports import AXES, arrival
-from event_universe.features import currents
-from event_universe.records import Record
+from event_universe.core import paces, rule3
+from event_universe.core.ports import PORT_SIDES, PORTS, across
+from event_universe.core.rule3 import division_forward, form_term, link_factor
+from event_universe.features import phase, volume
+from event_universe.links import link
+from event_universe.rows import CARRIER, Line, zeros
 
-Part = Callable[
-    [int, tuple[currents.Neighbours, currents.Neighbours, currents.Neighbours]], currents.Vector
-]  # a reading of one level's neighbours per axis or axis pair, the tension's or the shear's
-
-
-def framed(arrived: tuple[np.ndarray, ...], frames: Sequence[Any] | None) -> tuple[np.ndarray, ...]:
-    """The six arrivals of a plane's im line read in the Node's frame: each multiplied by its Port's frame sign (plane.frame_signs, -1 across a Link whose two ends stand in different frames under the swap at the top, the neighbour's value read conjugated so that the Link reads its two ends in one frame, ALGEBRA.md, The swap at the top, the frame clause); as they are where `frames` is None."""
-    if frames is None:
-        return arrived
-    return tuple(sign * level for sign, level in zip(frames, arrived, strict=True))
+if TYPE_CHECKING:
+    from event_universe.node import Node
 
 
-def at(value: Any, where: tuple[Any, ...]) -> Any:
-    """A coefficient at a slice or a Node of the board: the slice where it is an array over the Nodes, itself where it is one integer (a family reading nothing has one reach per Port for every Node)."""
-    return value[where] if np.ndim(value) else value
+def content(node: Node) -> Any:
+    """The content at every Node, the level of the carrier's time line."""
+    return np.asarray(volume.level_of(node.gamma, node.row(CARRIER).lines[0].now), dtype=object)
 
 
-def slices(
-    axis: int,
-) -> tuple[tuple[slice, ...], tuple[slice, ...], tuple[slice, ...], tuple[slice, ...]]:
-    """The four slices of an axis: every Node but the last (the near end of every Link toward +a), every Node but the first (the far end), the first layer and the last layer (the two faces)."""
-    lo = [slice(None)] * AXES
-    hi, first, last = list(lo), list(lo), list(lo)
-    lo[axis], hi[axis] = slice(None, -1), slice(1, None)
-    first[axis], last[axis] = slice(0, 1), slice(-1, None)
-    return tuple(lo), tuple(hi), tuple(first), tuple(last)
+def pair_angle(node: Node, n: Any) -> tuple[int, int]:
+    """The integer (cos, sin) pair at the count n along the one orbit from the seed (features/phase), the orbit a table built as far as the counts reach."""
+    n = int(n)
+    s = 1 if n >= 0 else -1
+    n = abs(n)
+    while len(node.orbit) <= n:
+        c, sn = node.orbit_lines[-1]
+        c, sn = phase.act(c, node.gamma, 1), phase.act(sn, node.gamma, 1)
+        node.orbit_lines = [(c, sn)]
+        node.orbit.append((int(c[0]), int(sn[0])))
+    c_, sn_ = node.orbit[n]
+    return c_, s * sn_
 
 
-def ports(a: np.ndarray) -> tuple[np.ndarray, ...]:
-    """The six arrivals of an array in Port order [+X, -X, +Y, -Y, +Z, -Z]: the neighbour's level through each Port of the torus, the Node itself on a folded axis."""
-    return tuple(arrival(a, axis, side) for axis in range(3) for side in (1, -1))
-
-
-def sense_current_of(lines: Sequence[Record], frames: Sequence[Any] | None = None) -> currents.Vector:
-    """The sign's current of a two-part record at every Node on each axis, the Node's two a-Links' Wronskian currents summed, a reading of its planes' lines at the interval's start: J_a(i) = Im(conj(z_i) (z_(i+a) - z_(i-a))) = re_i (im_(+a) - im_(-a)) - im_i (re_(+a) - re_(-a)) = (G_(i, i-a) - G_(i, i+a)) / num, the net of the conserved current G_ij = num (im_i re_j - re_i im_j) through the Node's two a-Ports from the levels now, every plane's added, one Link's reach, unhalved (the mathematician's (L2) and the advisor's (c) of 2026-10-09: the mean of the two Links taken by the doubled wall of the odd lines' write, `loader.derived.held_write_of`, 2 E_s T, as Part A takes the flux's), odd under the sense exactly (a record and its conjugate give opposite currents, where the momentum density P_a = (F_(+a) - F_(-a)) / num, quadratic in each real line, gave the same), even under the time reversal; the source of the holder of the sign's odd lines under the rotation, J_a = (6 den / num) W v on a plane record, so that the odd level over the time level is 3 (den / num) v = v / c_s^2 and the magnetic over the electric force on a co-moving reader is 1 / gamma (ALGEBRA.md #the-hypotheses-under-their-own-names, The sign holder rotates the two-part record; the owner's word on the two hands); `frames`, per Port the sign the Node reads its neighbour's im part with (plane.frame_signs, -1 across a Link whose two ends stand in different frames under the swap at the top, the neighbour read conjugated: the Link reads its two ends in one frame), None every Port at +1."""
-    found: list[Any] = [0, 0, 0]
-    for re_line, im_line in zip(lines[0::2], lines[1::2], strict=True):
-        re_at, im_at = ports(re_line.now), framed(ports(im_line.now), frames)
-        for axis in range(3):
-            plus, minus = 2 * axis, 2 * axis + 1
-            found[axis] = (
-                found[axis]
-                + re_line.now * (im_at[plus] - im_at[minus])
-                - im_line.now * (re_at[plus] - re_at[minus])
-            )
-    return np.asarray(found[0]), np.asarray(found[1]), np.asarray(found[2])
-
-
-def currents_of(
-    weight: int,
-    lines: Sequence[Record],
-    frames: Sequence[Any] | None = None,
-    horizon: Sequence[Any] | None = None,
-) -> tuple[np.ndarray, ...]:
-    """The currents of a record at every Node, a reading of its lines (ALGEBRA.md #the-count-is-the-records-share; features/currents): through each of the six Ports F_ij = num (now_i before_j - before_i now_j) into the Node from its neighbour, every line's currents added, at the lines as they stand (the pair the step started from, read before Rule3 acts, so that the share's change over the step is exactly their sum); what a node_detector reads at its boundary; `weights`, one integer per line multiplying that line's currents (None: every line at 1), the covector's form of a holder under the Lorentz form, (-3, 1, 1, 1) over its time line and its three odd lines in thirds of the time line's unit (covector.weights); `turned`, the pairs a turned record's step reads with the unit of its booking (`Turned`, None for a plain record, whose currents are bit for bit the plain bilinear's): the record's currents are then the flux line's own with the Link's pair (`turned_currents_of`; ALGEBRA.md, The share's change is the currents, the clause of 2026-10-21), since the plain bilinear of a turned pair turns at the difference of the two Nodes' angles, the gauge's oscillation of zero mean, and books nothing; `frames`, the Port signs a turned plane's im lines (every second line) read their neighbours with (`framed`), None every Port at +1; `horizon`, per Port the mask of the Links at the wall (board_readings.horizon_ports), through which the current reads 0 as the step moves nothing across them (ALGEBRA.md, The horizon, 2026-10-23), None no such Link."""
-    found: list[Any] = [0] * 6
-    for number, record in enumerate(lines):
-        here = currents.Levels(record.now, record.before)
-        signs = frames if number & 1 else None
-        now, before = framed(ports(record.now), signs), framed(ports(record.before), signs)
-        for port in range(6):
-            there = currents.Levels(now[port], before[port])
-            found[port] = found[port] + currents.current(weight, here, there)
-    if horizon is not None:  # a Link at the wall reads nothing: its current 0 (ALGEBRA.md, The horizon)
-        found = [np.where(at, 0, value) for at, value in zip(horizon, found, strict=True)]
-    return tuple(np.asarray(value) for value in found)
-
-
-def momentum_of(
-    weight: int, lines: Sequence[Record], at: np.ndarray | None = None
-) -> tuple[int, int, int]:
-    """A record's lattice momentum per axis, a reading of its lines (Part F, features/currents `momentum`; the two hands' lines of 2026-10-09): every line's antisymmetric sum of its two Link currents along the axis, added, in the current's unit at the weight num, over the board (`at` None) or over the Nodes a mask names (Part F2: the per-Node terms before their sum at a region's Nodes, `currents.momentum_terms`, the piece's P_a at the region the credit books at a window's close, `node_detector.piece_momentum`); what the write must give the taker."""
+def link_factors(node: Node, axis_levels: list[Any] | None = None) -> tuple[Any, ...]:
+    """The Link factor at each Port from the two ends' axis parts of the carrier: the tension the mean of the two ends' levels rounded at the half, a tension at or past Gamma read at the wall, the factor 0 (the horizon)."""
+    levels = [line.now for line in node.row(CARRIER).lines[1:4]] if axis_levels is None else axis_levels
     found = []
-    for axis in range(AXES):
-        total = 0
-        for r in lines:
-            terms = currents.momentum_terms(r.now, r.before, axis, weight)
-            total += int((terms if at is None else terms[at]).sum(dtype=object))
-        found.append(total)
-    return int(found[0]), int(found[1]), int(found[2])
+    for port, (axis, _side) in enumerate(PORT_SIDES):
+        (summed,), _odd, _f = link(port, even=(levels[axis],))
+        t = paces.rounded(summed, 2)
+        factor = np.vectorize(
+            lambda tt: int(link_factor(node.gamma, node.G, min(int(tt), node.gamma))),
+            otypes=[object],
+        )
+        found.append(factor(t))
+    return tuple(found)
 
 
-def stresses_of(
-    weight: int,
-    lines: Sequence[Record],
-    part: Part = currents.stress,
-    frames: Sequence[Any] | None = None,
-) -> currents.Vector:
-    """The tension's part at every Node on each axis from a record's levels now as they stand at the interval's start, weight x h_a(i) with h_a(i) = now_(i-a) now_(i+a) - now_i^2, every line's parts added, a reading of the lines into the held rows' axis lines, one Link's reach (features/currents; ALGEBRA.md #the-primitives, the row "the held write", The tension); `part` the reading of one line's neighbours summed over the lines, the tension's (features/currents `stress`) or, through `off_diagonals_of`, the shear's, one body for the two; `frames`, the Port signs a turned plane's im lines (every second line) read their neighbours with (`framed`)."""
-    tensions: currents.Vector = (0, 0, 0)
-    for number, record in enumerate(lines):
-        found = part(weight, axis_neighbours(record.now, frames if number & 1 else None))
-        tensions = (tensions[0] + found[0], tensions[1] + found[1], tensions[2] + found[2])
-    return tuple(np.asarray(value) for value in tensions)  # type: ignore[return-value]
+def frames(node: Node, phi_rem: Any) -> list[Any]:
+    """The frame signs per Port: +1 where the two ends' frame bits (the phase row's remainder at the wall 2, complemented at every swap) agree, -1 where they differ; there the neighbour's plane is read conjugated and its count negated."""
+    return [link(port, frame_bits=phi_rem)[2] for port in range(PORTS)]
 
 
-def axis_sources_of(
-    weight: int, lines: Sequence[Record], frames: Sequence[Any] | None = None
-) -> tuple[Any, ...]:
-    """The axis sources of a record at every Node, six readings of its lines at the interval's start, nine where a held row of the world declares the shear, one Link's reach: the tension's part on each axis (`stresses_of`, into the held rows' tension lines), then the count's flux along each axis, the current through the -a Port less the current through the +a Port, F_(i, i-a) - F_(i, i+a) (`currents_of`, the pair the step starts from), the axis's two Links' flux summed unhalved into the flux holder's odd lines (ALGEBRA.md, The clock family on the Ports), then, with `off_diagonal`, the shear's part on each axis pair xy, yz, zx (`off_diagonals_of`, into the shear lines); a holder takes the readings its lines name, by position (`records.write_sources`)."""
-    through = currents_of(weight, lines, frames=frames)
-    fluxes = [through[2 * axis + 1] - through[2 * axis] for axis in range(AXES)]
-    return (*stresses_of(weight, lines, currents.stress, frames), *fluxes)
+def centred_count(node: Node, cphi: Any, phi: Line) -> Any:
+    """The Node's centred count K = 2 (Phi_now - Phi_before) + c from the phase row at the start, twice the trapezoid sum of the clocked potential to the triple's centre."""
+    return 2 * (phi.now - phi.before) + cphi
 
 
-def axis_neighbours(
-    now: np.ndarray, frames: Sequence[Any] | None = None
-) -> tuple[currents.Neighbours, currents.Neighbours, currents.Neighbours]:
-    """The level now at every Node and at its two neighbours along each axis, through the +a and the -a Port, the tension's reads (ALGEBRA.md #the-primitives, the row "the held write", The tension); `frames` the Port signs a plane's im line reads with (`framed`)."""
-    arrived = framed(ports(now), frames)
-    found = [currents.Neighbours(now, arrived[2 * axis], arrived[2 * axis + 1]) for axis in range(3)]
-    return found[0], found[1], found[2]
+def link_phases(node: Node, frames: list[Any], count: Any) -> list[tuple[Any, Any]]:
+    """The Link's count n_ij = K_i - f_ij K_j (the two ends' centred counts; f_ij the frame sign, the neighbour's count negated where the frames differ) and its (cos, sin) pair over X."""
+    found = []
+    for port in range(PORTS):
+        n = count - frames[port] * across(count, port)
+        pairs = np.vectorize(lambda m: pair_angle(node, m), otypes=[object, object])(n)
+        found.append((pairs[0], pairs[1]))
+    return found
+
+
+def share(node: Node, line: Line, r: rule3.Rule, pace: Any = None, vacuum: bool = False) -> Any:
+    """The conserved form's term at the Node in the current's units over the weight: [w (now^2 + before^2) - S now before - now SUM_j R_j before_j], doubled, less the Links' products shared half and half between a Link's two ends; over 4 p^2 G^2 at the frame's weight, over 4 Gamma^2 G^2 at the vacuum's (V-D)."""
+    reached, shared = zeros(node.shape), zeros(node.shape)
+    for port, reach in enumerate(r.reaches):
+        b_j, n_j = across(line.before, port), across(line.now, port)
+        reached = reached + reach * b_j
+        shared = shared + reach * (line.before - b_j) * (line.now + n_j)
+    found = form_term(r.self_coefficient, r.wall, line.now, line.before) - line.now * reached
+    found = found + found - shared
+    pace = paces.link_pace_of(node.gamma, node.start_content) if pace is None else pace
+    sq = (node.gamma * node.gamma) if vacuum else pace * pace
+    wall = 4 * sq * node.G * node.G + (sq == 0)
+    return np.asarray(division_forward(found, wall, 0)[0])
+
+
+def floor(node: Node) -> int:
+    """The carrier's level at the content -Gamma, the swap's floor."""
+    return int(
+        np.asarray(
+            volume.volume_of(node.gamma, np.array([-node.gamma], dtype=object)), dtype=object
+        ).reshape(-1)[0]
+    )

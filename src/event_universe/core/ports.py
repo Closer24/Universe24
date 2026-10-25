@@ -24,3 +24,14 @@ def shifted(a: Any, axis: int, sigma: int) -> Any:
 def arrival(a: Any, axis: int, sigma: int) -> Any:
     """The level arriving through the Port toward `sigma` on `axis`, out[i] = a[i + sigma] (`shifted`), on the torus; the dtype the array's."""
     return shifted(a, axis, sigma)
+
+
+def wrap(index: int, extent: int) -> int:
+    """The periodic wrap of a Node's index or an axis along its extent, the torus's one index arithmetic."""
+    return index % extent
+
+
+def across(a: Any, port: int) -> Any:
+    """The one read across a Link: the array's value at the Node beyond the Port (`arrival` through the Port's axis and side), the torus wrapped; every Link read of the Node passes here (the owner's word of 2026-10-25: the Link's act in one place)."""
+    axis, side = PORT_SIDES[port]
+    return arrival(a, axis, side)

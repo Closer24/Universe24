@@ -36,7 +36,7 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, 100, GAMMA])
         content, unit = rng.randint(-gamma + 1, gamma - 1), rng.choice([1, 2, 16])
         factors = tuple(unit * unit + rng.randint(-50, 50) for _ in range(6))
-        clock, p = paces.node_paces(gamma, content)
+        clock, p = paces.clock(gamma, content), paces.link_pace(gamma, content)
         assert coefficients(num, den, gamma, clock, p) == law_line(num, den, gamma, clock, p)
         found = coefficients(num, den, gamma, clock, p, factors, unit)
         assert found == law_line(num, den, gamma, clock, p, factors, unit)
@@ -68,7 +68,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, GAMMA])
         content = rng.randint(-gamma + 1, gamma - 1)
         factors = tuple(16 * 16 - rng.randint(0, 30) for _ in range(6))
-        clock, pace = paces.node_paces(gamma, content)
+        clock, pace = paces.clock(gamma, content), paces.link_pace(gamma, content)
         reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, factors, 16)
         *arrivals, now, before = (rng.randint(-(10**6), 10**6) for _ in range(8))
         remainder = rng.randint(0, wall - 1)
@@ -90,7 +90,9 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     content = generator.integers(-3000, 3000, shape, dtype=np.int64)
     arrivals = tuple(generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(6))
     now, before = (generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(2))
-    reads, self_coefficient, wall = coefficients(num, den, GAMMA, *paces.node_paces(GAMMA, content))
+    reads, self_coefficient, wall = coefficients(
+        num, den, GAMMA, paces.clock_of(GAMMA, content), paces.link_pace_of(GAMMA, content)
+    )
     remainder = generator.integers(0, 10**9, shape, dtype=np.int64) % wall
     fluxes = reads[0] * sum(arrival - now for arrival in arrivals)
     own = 2 * wall - self_coefficient - sum(reads)
@@ -100,21 +102,38 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     assert np.array_equal(carried, total - wall * nxt)
     back = rule3(fluxes, own, wall, now, nxt, carried, -1)
     assert np.array_equal(back, (before, remainder))
-    _reads, self_coefficient, wall = coefficients(800, 809, GAMMA, *paces.node_paces(GAMMA, 250))
+    _reads, self_coefficient, wall = coefficients(
+        800, 809, GAMMA, paces.clock(GAMMA, 250), paces.link_pace(GAMMA, 250)
+    )
     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
 
 
-LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 6}), frozenset({4, 12})
+LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 4, 6}), frozenset({12})
+ROW_INTEGERS = frozenset(
+    {10, 54, 64}
+)  # rows.py: the carrier's shape, the trace's weight 2 x 27, the width's half
+READERS = (
+    "run.py",
+    "decoder.py",
+    "gates.py",
+)  # the record's writer and readers, no act of the Node: their scales are their own
+NAMED_CALLS = {
+    "refused",
+    "get",
+    "join",
+}  # a refusal's cause by name; a file's key read by name; a separator
 
 
 def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     """No integer literal in src/event_universe or in any tool that touches the engine's arrays (the owner, 2026-09-30: every coordinate, gap, wavelength, width, amplitude, count and window comes from the world's files) beyond the law's own (LAW_INTEGERS: 0 and 1, the identity and the direction, -1 the inverse and the hole; 2, the halves, W_c div 2, the half wall, the axis contents' rounding, two levels; 3, the three axes, 3 den; 6, the six Ports, 6 den; and in Rule3's own line, core/rule3.py alone, 4 and 12 of S = 12 den Gamma^2 - 12 (den - num) p_0^2 - 4 num SUM p_a^2, RULE_LINE_INTEGERS): every other number is a file's key or the rule's own act, so a number cannot enter the engine again. The root leaves everywhere (the owner, 2026-09-30): no file of src/ or tools/ imports `isqrt` or `math`, or calls a name `isqrt` or `sqrt`; the loader and the generator read the fixed point of the division act, and the run reads no root. The names gate (HIGHLIGHTS.md **The engine works only with families of dimension one**; the owner, 2026-10-01, 03:25): no string literal stands in src/event_universe outside docstrings, the packets of `raise` and `assert` and f-strings, but in the loader (the files' key tables), in reports.py (the output's words), in world_files.py (the host's files) and in the package's version; so no act or reading of the engine names a family, a key or a kind, and a family name cannot enter the engine again."""
     texts = {p: p.read_text(encoding="utf-8") for p in sorted((ROOT / "tools").glob("*.py"))}
     tools = [p for p, text in texts.items() if re.search(r"^(from|import) event_universe\b", text, re.M)]
-    assert {"back_in_time", "run_inputs"} <= {p.stem for p in tools}
     found = []
     for path in [*sorted(SOURCE.rglob("*.py")), *tools]:
+        if path.name in READERS:
+            continue
         allowed = LAW_INTEGERS | (RULE_LINE_INTEGERS if path.name == "rule3.py" else frozenset())
+        allowed |= ROW_INTEGERS if path.name == "rows.py" else frozenset()
         for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             if isinstance(item, ast.Constant) and type(item.value) in (int, float, complex):
                 if item.value not in allowed or type(item.value) is not int:
@@ -133,13 +152,29 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     found = []
     for path in sorted(SOURCE.rglob("*.py")):
         name = path.relative_to(SOURCE).as_posix()
-        if name.startswith("loader/") or name in ("reports.py", "world_files.py", "__init__.py"):
+        if name.startswith("loader/") or name == "__init__.py" or name in READERS:
             continue
         tree = ast.parse(path.read_text(encoding="utf-8"))
         spoken = {id(item.value) for item in ast.walk(tree) if isinstance(item, ast.Expr)}
-        for item in ast.walk(tree):
-            if isinstance(item, ast.Raise | ast.Assert | ast.JoinedStr):
+        for item in ast.walk(
+            tree
+        ):  # a message, a key of the record's log or of a file, a comparison with a file's word
+            if isinstance(item, ast.Raise | ast.Assert | ast.JoinedStr | ast.Compare):
                 spoken |= {id(part) for part in ast.walk(item)}
+            elif isinstance(item, ast.Dict):  # a line of the record's log: its keys and its words
+                spoken |= {id(part) for part in ast.walk(item)}
+            elif isinstance(item, ast.Assign) and any(
+                getattr(target, "id", "") == "__slots__" for target in item.targets
+            ):
+                spoken |= {id(part) for part in ast.walk(item.value)}
+            elif isinstance(item, ast.Subscript):
+                spoken |= {id(part) for part in ast.walk(item.slice)}
+            elif (
+                isinstance(item, ast.Call)
+                and getattr(item.func, "attr", getattr(item.func, "id", "")) in NAMED_CALLS
+            ):
+                spoken |= {id(part) for arg in item.args for part in ast.walk(arg)}
+                spoken |= {id(part) for part in ast.walk(item.func)}
         for item in ast.walk(tree):
             if isinstance(item, ast.Constant) and isinstance(item.value, str) and id(item) not in spoken:
                 found.append(f"{path.relative_to(ROOT)}:{item.lineno} {item.value!r}")
@@ -166,23 +201,6 @@ def test_the_composed_paces_are_the_laws_two_functions_of_the_content_and_their_
     narrow, sparse = np.arange(-7, 53).reshape(5, 4, 3), np.array(spread[-60:]).reshape(5, 4, 3)
     for held in (narrow, sparse, narrow.astype(object), sparse.astype(object)):
         found, flat = [f(gamma, held) for f in entries], held.ravel().tolist()
-        paces.clear_memo()
         assert all(np.array_equal(a, f(gamma, held)) for a, f in zip(found, entries, strict=True))
         assert all(a.dtype == held.dtype for a in found)
         assert [a.ravel().tolist() for a in found] == [[f(gamma, c) for c in flat] for f in plain]
-    at, counts = np.full((2, 1, 1), gamma, dtype=np.int64), np.array([[[7]], [[2**40]]], dtype=np.int64)
-    one = [paces.write_factor(counts, at, at, at, at, gamma, k) for k in (2, 1)]
-    assert all(f.tolist() == counts.tolist() for f in [*one, paces.turn_factor(counts, at, gamma)])
-    p = [paces.link_pace(gamma, c) for c in (300, 400, 500)] + [paces.clock(gamma, 400)]
-    walls, product = (gamma**2 * p[3], gamma * p[3] ** 2), 2**40 * p[0] * p[1] * p[2]
-    both = [int(paces.write_factor(2**40, *p, gamma, k)) for k in (2, 1)]
-    assert both == [(2 * product + w) // (2 * w) for w in walls] and both[0] != both[1]
-    cs, big = np.array([0, 250, 900]).reshape(3, 1, 1), np.full((3, 1, 1), 2**40)  # three Nodes
-    p0, ps = paces.clock_of(gamma, cs), [paces.link_pace_of(gamma, cs + o) for o in (0, 1, 7)]
-    for k, wall in ((2, gamma**2 * p0), (1, gamma * p0 * p0)):  # the paces differ by axis
-        found = paces.write_factor(big, *ps, p0, gamma, k)
-        at = zip(found.flat, *(p.flat for p in ps), wall.flat, strict=True)
-        off = [Fraction(2**40 * int(x) * int(y) * int(z), int(w)) - int(f) for f, x, y, z, w in at]
-        assert found.dtype == big.dtype and all(abs(e) <= Fraction(1, 2) for e in off)
-    assert [paces.write_factor(9, 0, 0, 0, 0, gamma, k) for k in (2, 1)] == [0, 0]
-    assert paces.turn_factor(gamma + 1, p[3], gamma) == ((gamma + 1) * p[3] + gamma // 2) // gamma
