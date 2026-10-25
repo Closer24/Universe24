@@ -16,8 +16,57 @@ AXES = ((0, 1), (0, -1), (1, 1), (1, -1), (2, 1), (2, -1))
 Z = lambda shape: np.zeros(shape, dtype=object)
 
 
-def roll(a, axis, side):
-    return np.roll(a, -side, axis=axis)  # a[i + side]
+def across(a, port):
+    """The one read across a Link: the array's value at the Node beyond the Port (the Node i + e_a side), the torus wrapped; every Link read of the toy passes here (the owner's word of 2026-10-25: the Link's act in one place)."""
+    axis, side = AXES[port]
+    return np.roll(a, -side, axis=axis)
+
+
+def link(port, even=(), odd=(), frame_bits=None):
+    """The Link's numbers at one Port, read the same from both ends (the owner's word: one generic atomic act of the Link, in the Node): for each `even` array the two ends' sum (symmetric), for each `odd` array the two ends' sum signed by the Port's side (antisymmetric: the other end reads the negative), and the frame sign f_ij = 1 where the two ends' frame bits agree and -1 where they differ (from `frame_bits`)."""
+    axis, side = AXES[port]
+    evens = [a + across(a, port) for a in even]
+    odds = [side * (a + across(a, port)) for a in odd]
+    f = None if frame_bits is None else 1 - 2 * (frame_bits ^ across(frame_bits, port))
+    return evens, odds, f
+
+
+def gradient(a, axis):
+    """The centred difference of a row's line along an axis, a(i + a) - a(i - a), read through the Link's one read at the two Ports of the axis."""
+    return across(a, 2 * axis) - across(a, 2 * axis + 1)
+
+
+def wronskian(re, im):
+    """The plane's bilinear W = re_now im_before - im_now re_before at every Node (the charge density, the sign's source)."""
+    return re.now * im.before - im.now * re.before
+
+
+def plane_current(re, im, frames):
+    """The plane's sign current on each axis, J_a = Im(conj z (z(i + a) - z(i - a))) from the levels now, the neighbours' im read in the Node's frame; the three odd lines' source."""
+    found = []
+    for a in range(3):
+        fp, fm = frames[2 * a], frames[2 * a + 1]
+        dz_re = gradient(re.now, a); dz_im = fp * across(im.now, 2 * a) - fm * across(im.now, 2 * a + 1)
+        found.append(re.now * dz_im - im.now * dz_re)
+    return found
+
+
+def stress_parts(lines, shape):
+    """The stress tensor's three diagonal parts from the rows' levels, one act on every line alike: SUM over lines of weight x (gradient along the axis)^2 (the stress is the Links', decided 2026-10-23); `lines` holds (levels, weight) pairs. LEAN_FORMER_TENSION keeps the former reading by name: -weight h_a, h_a = a(i-a) a(i+a) - a(i)^2."""
+    parts = [Z(shape) for _ in range(3)]
+    for levels, num in lines:
+        for a in range(3):
+            if os.environ.get('LEAN_FORMER_TENSION'):
+                h = across(levels, 2 * a + 1) * across(levels, 2 * a) - levels * levels; parts[a] = parts[a] - num * h
+            else:
+                d = gradient(levels, a); parts[a] = parts[a] + num * d * d
+    return parts
+
+
+def tensor_parts(parts):
+    """A tensor's trace and its traceless diagonal parts: trace = SUM_a parts_a; traceless_a = 3 parts_a - trace (the stress's trace is the time line's, the axis lines traceless)."""
+    trace = parts[0] + parts[1] + parts[2]
+    return trace, [3 * part - trace for part in parts]
 
 
 def gcd_arr(*arrays):
@@ -136,23 +185,16 @@ class Lean:
 
     def tensions(self):
         """The axis parts: -num h_a(i) summed over every line of quanta, h_a = now(i-a) now(i+a) - now(i)^2; the axis lines of the volume row carry them (written below); the Link factor from the two ends' axis levels."""
-        parts = [Z(self.shape) for _ in range(3)]
-        lines = [(self.light, self.den)] + [(l, self.pairs[r // 2][0]) for r in range(2 * self.nl) for l in self.planes[r]]
-        for line, num in lines:
-            for a in range(3):
-                if os.environ.get('LEAN_FORMER_TENSION'):  # the former reading, kept by name: -weight h_a, h_a = now(i-a) now(i+a) - now(i)^2
-                    h = roll(line.now, a, -1) * roll(line.now, a, 1) - line.now * line.now; parts[a] = parts[a] - num * h
-                else:  # The stress is the Links' (decided 2026-10-23): weight x (now(i+a) - now(i-a))^2, read at the doubled wall
-                    d = roll(line.now, a, 1) - roll(line.now, a, -1); parts[a] = parts[a] + num * d * d
-        return parts
+        lines = [(self.light.now, self.den)] + [(l.now, self.pairs[r // 2][0]) for r in range(2 * self.nl) for l in self.planes[r]]
+        return stress_parts(lines, self.shape)
 
     def link_factors(self):
         if os.environ.get('LEAN_FLAT_FACTORS'):  # a diagnostic switch of the toy: every Link factor G^2 (the vacuum's)
             return tuple(Z(self.shape) + self.G * self.G for _ in AXES)
         found = []
-        for axis, side in AXES:
-            aa_i = self.vol_axes[axis].now; aa_j = roll(aa_i, axis, side)
-            t = (aa_i + aa_j + 1) // 2
+        for port, (axis, side) in enumerate(AXES):
+            (summed,), _odd, _f = link(port, even=[self.vol_axes[axis].now])
+            t = (summed + 1) // 2  # the Link's tension: the mean of the two ends' parts, rounded at the half (engine features/read.link_tension)
             found.append(np.vectorize(lambda tt: int(link_factor(self.gamma, self.G, min(int(tt), self.gamma))), otypes=[object])(t))  # the horizon: a tension at or past Gamma read at the wall, the factor 0 (engine features/read.link_tensions)
         return tuple(found)
 
@@ -169,7 +211,7 @@ class Lean:
         re_j, im_j = arrivals
         if frames is not None: im_j = frames[port] * im_j
         c, s = phases[port]
-        n = odd[axis]; n = side * (n + roll(n, axis, side))  # the odd line on the Link: the two ends' SUM signed by the Port's side (the engine's V_ij = V_a(i) + V_a(j); no division, the mirror exact)
+        _e, (n,), _f = link(port, odd=[odd[axis]])  # the odd line on the Link: the two ends' sum signed by the Port's side (the engine's V_ij = V_a(i) + V_a(j); no division, the mirror exact)
         Wl = 4 * self.gamma; tc, ts, tw = Wl * Wl - n * n, 2 * Wl * n, Wl * Wl + n * n
         a_re = (c * re_j - s * im_j); a_im = (s * re_j + c * im_j)
         a_re, a_im = (2 * a_re + self.X) // (2 * self.X), (2 * a_im + self.X) // (2 * self.X)
@@ -181,7 +223,7 @@ class Lean:
         at = [l.now if direction == 1 else l.before for l in lines]
         totals = [r.self_coefficient * a - (r.wall * l.before if direction == 1 else 0) for l, a in zip(lines, at)]
         for port, ((axis, side), reach) in enumerate(zip(AXES, r.reaches)):
-            arrivals = self.turned_arrival([roll(a, axis, side) for a in at], port, turn)
+            arrivals = self.turned_arrival([across(a, port) for a in at], port, turn)
             totals = [t + reach * m for t, m in zip(totals, arrivals)]
         found = []
         if direction == 1:
@@ -193,9 +235,13 @@ class Lean:
             quotient, rem = division_back(t, r.wall, l.rem); found.append(Line(l.before, quotient - l.now, rem))
         return found
 
+    def link_current(self, line, port):
+        """The light's own current on the Link at the Port, F_ij = now_i before_j - before_i now_j: odd under the exchange of the ends (the other end reads -F), read at the interval's start; the + child of a Link birth goes to the end the current flows into."""
+        return line.now * across(line.before, port) - line.before * across(line.now, port)
+
     def frames(self, phi_rem):
         """The frame signs per Port: +1 where the two ends' frame bits (the phase row's remainder at the wall 2, complemented at every swap) agree, -1 where they differ; there the neighbour's plane is read conjugated and its count negated (ALGEBRA.md, The swap at the top, the frame clause)."""
-        return [1 - 2 * (phi_rem ^ roll(phi_rem, axis, side)) for axis, side in AXES]
+        return [link(port, frame_bits=phi_rem)[2] for port in range(6)]
 
     def centred_count(self, cphi):
         """The Node's centred count K = Phi_next - Phi_before = 2 (Phi_now - Phi_before) + c, twice the trapezoid sum of the clocked potential to the triple's centre (ALGEBRA.md, The swap at the top, the phase hand's M23; the former toy read Phi_i - Phi_j, one integration too many, and pumped)."""
@@ -206,19 +252,19 @@ class Lean:
         found = []
         if K is None: K = self.phi.now
         for port, (axis, side) in enumerate(AXES):
-            n = K - (1 if frames is None else frames[port]) * roll(K, axis, side)
+            n = K - (1 if frames is None else frames[port]) * across(K, port)
             pairs = np.vectorize(self.pair_angle, otypes=[object, object])(n)
             found.append((pairs[0], pairs[1]))
         return found
 
     def share(self, line, r, pace=None, vacuum=False):
         """The conserved form's term at the Node in the current's units over 2 p_i^2 G^2 (share.share without the frame's halves): [w (now^2 + before^2) - S now before - now SUM_j R_j before_j] div (2 p_i^2 G^2)."""
-        link = Z(self.shape); shared = Z(self.shape)
-        for (axis, side), reach in zip(AXES, r.reaches):
-            b_j, n_j = roll(line.before, axis, side), roll(line.now, axis, side)
-            link = link + reach * b_j
+        reached = Z(self.shape); shared = Z(self.shape)
+        for port, reach in enumerate(r.reaches):
+            b_j, n_j = across(line.before, port), across(line.now, port)
+            reached = reached + reach * b_j
             shared = shared + reach * (line.before - b_j) * (line.now + n_j)
-        found = form_term(r.self_coefficient, r.wall, line.now, line.before) - line.now * link
+        found = form_term(r.self_coefficient, r.wall, line.now, line.before) - line.now * reached
         if os.environ.get('LEAN_NODE_SHARE'):  # the former toy's reading: the Node's own term alone over 2 p^2 G^2
             pace = paces.link_pace_of(self.gamma, self.start_content) if pace is None else pace; sq = pace * pace
             return np.asarray(division_forward(found, 2 * sq * self.G * self.G + (sq == 0), 0)[0])
@@ -238,7 +284,7 @@ class Lean:
         factors = self.link_factors(); self.start_factors = factors
         frames = self.frames(self.phi.rem); self.start_frames = frames
         cphi = paces.rounded(self.sign.now * p0, self.gamma)  # the clocked potential at the level now
-        K = self.centred_count(cphi); self.count_max = max(int(abs(int(x))) for port, (axis, side) in enumerate(AXES) for x in (K - frames[port] * roll(K, axis, side)).reshape(-1))  # the Links' count's size this interval (a reading)
+        K = self.centred_count(cphi); self.count_max = max(int(abs(int(x))) for port in range(6) for x in (K - frames[port] * across(K, port)).reshape(-1))  # the Links' count's size this interval (a reading)
         phases = self.link_phases(frames, K); odd = [l.now for l in self.sign_axes]
         if os.environ.get('LEAN_NO_PHASE'):  # a diagnostic switch of the toy: the fold off (the pair (X, 0), the odd lines 0)
             phases = [(Z(self.shape) + self.X, Z(self.shape)) for _ in AXES]; odd = [Z(self.shape) for _ in range(3)]
@@ -249,7 +295,7 @@ class Lean:
         start = self.snapshot()
         forms = Z(self.shape); W = Z(self.shape); J = [Z(self.shape) for _ in range(3)]
         W_start = Z(self.shape)  # the planes' Wronskian at the interval's start, summed over the rows
-        for re, im in self.planes: W_start = W_start + (re.now * im.before - im.now * re.before)
+        for re, im in self.planes: W_start = W_start + wronskian(re, im)
         new_planes = []
         for s_, pair in enumerate(self.pairs):
             r = self.rule(pair, c, factors)
@@ -257,11 +303,8 @@ class Lean:
                 re, im = self.planes[2 * s_ + sense]
                 nre, nim = self.rotate([re, im], r, (phases, odd, frames))
                 forms = forms + (re.now * re.now - nre.now * re.before) + (im.now * im.now - nim.now * im.before)
-                W = W + (nre.now * nim.before - nim.now * nre.before)
-                for a in range(3):  # the sign current J_a = Im(conj z (z_{+a} - z_{-a})) from the start's levels, the neighbours read in the Node's frame
-                    fp, fm = frames[2 * a], frames[2 * a + 1]
-                    dz_re = roll(re.now, a, 1) - roll(re.now, a, -1); dz_im = fp * roll(im.now, a, 1) - fm * roll(im.now, a, -1)
-                    J[a] = J[a] + (re.now * dz_im - im.now * dz_re)
+                W = W + wronskian(nre, nim)
+                for a, j_a in enumerate(plane_current(re, im, frames)): J[a] = J[a] + j_a  # the sign current from the start's levels, the neighbours read in the Node's frame
                 new_planes.append([nre, nim])
         r_l = self.rule((self.den, self.den), c, factors)
         light = self.rotate([self.light], r_l)[0]; forms = forms + (self.light.now * self.light.now - light.now * self.light.before)
@@ -272,12 +315,12 @@ class Lean:
         self.planes, self.light, self.sign, self.sign_axes, self.vol, self.vol_axes = new_planes, light, sign, sign_axes, vol, vol_axes
         self.stepped = [[l.copy() for l in r] for r in new_planes]  # the step's output as stepped, kept for the credits' frame (the swap discards it at a turned Node)
         # the held writes, one carried division per line
-        trace = (parts[0] + parts[1] + parts[2])  # the stress's trace into the time line's write (the pressure term), the axis lines traceless
+        trace, traceless = tensor_parts(parts)  # the stress's trace into the time line's write (the pressure term), the axis lines traceless
         p02 = p0 * p0  # the write's factor (p0 / Gamma)^2 at the power 2 on a count (engine paces.write_factor, intervals 2), Gamma^2 inside the fixed wall
         if not self.hold_volume: q, self.vol_wr[0] = carried_division(4 * start['vol_now'] * (forms * 54 * self.den * self.gamma ** 2 - trace * p0 * p0) * p0, 54 * self.den * self.gamma ** 4 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now + (q if not self.hold_volume else 0)  # (d + 1) X c over Gamma E_s T, E_s 1, c the forms at the write's factor (p0 / Gamma)^1 (the holder's booking power one, engine WRONSKIAN_POWER) less the pressure, the trace times (p0 / Gamma)^2 at its wall 54 den (engine records.pressure_term: the stress parts times the pace squared over SIDES x AXES x AXES x den x Gamma^(2 + power) x clock^(3 - power)); the former toy weighed the trace 18 times more and its write vanished at every gradient
         for a in range(3):
             if self.hold_volume: break
-            q, self.vol_wr[1 + a] = carried_division((3 * parts[a] - trace) * p02, 54 * self.den * self.T * self.gamma ** 2, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now + q  # the traceless part over 6 W_c x 3 (the doubled wall 2 E_s W_c with the parts 3 and SIDES: engine held_write_of and scaled_sum; measured on the record's world, probes/write_probe.py)
+            q, self.vol_wr[1 + a] = carried_division(traceless[a] * p02, 54 * self.den * self.T * self.gamma ** 2, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now + q  # the traceless part over 6 W_c x 3 (the doubled wall 2 E_s W_c with the parts 3 and SIDES: engine held_write_of and scaled_sum; measured on the record's world, probes/write_probe.py)
         q, self.sign_wr[0] = carried_division(2 * W, self.T, self.sign_wr[0]); self.sign.now = self.sign.now + q
         for a in range(3):
             q, self.sign_wr[1 + a] = carried_division(J[a], self.T, self.sign_wr[1 + a]); self.sign_axes[a].now = self.sign_axes[a].now + q
@@ -406,13 +449,13 @@ class Lean:
         frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(self.shape, dtype=bool)
         if self.link_birth == 'current':
             # the Link close (Q1/Q2, the owner's sentence 1): every Link once from its +a end; a meeting where both ends hold a whole quantum; the + child at the end the light's own current F_ij = num (now_i before_j - before_i now_j) flows into, read at the interval's start; F = 0 refused by name; the lift by the one-Link read at the +a end
-            lnow, lbefore = start['light'].now, start['light'].before
+            currents = [self.den * self.link_current(start['light'], 2 * axis) for axis in range(3)]  # the light's own current on the +a Link of every Node, read once through the Link's function
             for at in np.ndindex(*self.shape):
                 if frozen[at]: continue
                 for axis in range(3):
                     j = tuple((at[a] + (1 if a == axis else 0)) % self.cube for a in range(3))
                     if frozen[j] or int(sh[at]) < self.unit_light or int(sh[j]) < self.unit_light: continue
-                    F = self.den * (int(lnow[at]) * int(lbefore[j]) - int(lbefore[at]) * int(lnow[j]))
+                    F = int(currents[axis][at])
                     if F == 0:
                         self.counts['refused_orientation'] += 1; self.log.append({'event': 'refused', 'i': self.interval, 'node': list(at), 'cause': 'orientation', 'link': list(j)}); continue
                     plus, minus = (j, at) if F > 0 else (at, j)
@@ -548,8 +591,7 @@ class Lean:
         top = frame['turned']
         post = [l.copy() for l in self.all_lines()]; post_wr = [w.copy() for w in self.vol_wr + self.sign_wr + [self.light_wr]]
         W_this = Z(self.shape)  # the planes' Wronskian as the step left it (the post state at an unturned Node)
-        for rec in range(2 * self.nl):
-            re, im = self.planes[rec]; W_this = W_this + (re.now * im.before - im.now * re.before)
+        for rec in range(2 * self.nl): W_this = W_this + wronskian(*self.planes[rec])
         for line, im in zip(self.all_lines(), self.is_im()):
             if im: line.before = np.where(top, -line.before, line.before)
         start_bits = np.where(top, 1 - self.phi.rem, self.phi.rem)  # the frame bits at the start: complemented at the turned Nodes
@@ -566,33 +608,24 @@ class Lean:
         phi_before = np.where(top, self.phi.now, phi_before); rem = np.where(top, 1 - self.phi.rem, rem)
         self.phi = Line(phi_now, phi_before, rem)
         # the tensions and factors at the start from the before slots
-        start_lines = [(Line(self.light.before, None, None), self.den)] + [(Line(l.before, None, None), self.pairs[r // 2][0]) for r in range(2 * self.nl) for l in self.planes[r]]
-        parts = [Z(self.shape) for _ in range(3)]
-        for line, num in start_lines:
-            for a in range(3):
-                if os.environ.get('LEAN_FORMER_TENSION'):
-                    h = roll(line.now, a, -1) * roll(line.now, a, 1) - line.now * line.now; parts[a] = parts[a] - num * h
-                else:
-                    d = roll(line.now, a, 1) - roll(line.now, a, -1); parts[a] = parts[a] + num * d * d
-        trace = parts[0] + parts[1] + parts[2]
+        start_lines = [(self.light.before, self.den)] + [(l.before, self.pairs[r // 2][0]) for r in range(2 * self.nl) for l in self.planes[r]]
+        trace, traceless = tensor_parts(stress_parts(start_lines, self.shape))
         # the axis writes undone (their numerators from the start levels), then the factors at the start
         for a in range(3):
-            q, self.vol_wr[1 + a] = division_back((3 * parts[a] - trace) * p02, 54 * self.den * self.T * self.gamma ** 2, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now - q
+            q, self.vol_wr[1 + a] = division_back(traceless[a] * p02, 54 * self.den * self.T * self.gamma ** 2, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now - q
         factors = self.link_factors()  # from the axis lines at the start (their now the start's now after the write undone? the factors read the axis lines' START now: the before slot)
         factors = []
-        for axis, side in AXES:
-            aa_i = self.vol_axes[axis].before; aa_j = roll(aa_i, axis, side); t = (aa_i + aa_j + 1) // 2
+        for port, (axis, side) in enumerate(AXES):
+            (summed,), _odd, _f = link(port, even=[self.vol_axes[axis].before]); t = (summed + 1) // 2
             factors.append(np.vectorize(lambda tt: int(link_factor(self.gamma, self.G, min(int(tt), self.gamma))), otypes=[object])(t))
         factors = tuple(factors)
         # the sign's writes undone: W from the stepped planes at the Node (now and before slots), J from the start's levels (the before slots) in the Node's frame
         J = [Z(self.shape) for _ in range(3)]; W = Z(self.shape)
         for rec in range(2 * self.nl):
             re, im = self.planes[rec]
-            W = W + (re.now * im.before - im.now * re.before)
-            for a in range(3):
-                fp, fm = frames[2 * a], frames[2 * a + 1]
-                dz_re = roll(re.before, a, 1) - roll(re.before, a, -1); dz_im = fp * roll(im.before, a, 1) - fm * roll(im.before, a, -1)
-                J[a] = J[a] + (re.before * dz_im - im.before * dz_re)
+            W = W + wronskian(re, im)
+            start_re, start_im = Line(re.before, None, None), Line(im.before, None, None)  # the start's levels in the before slots
+            for a, j_a in enumerate(plane_current(start_re, start_im, frames)): J[a] = J[a] + j_a
         for a in range(3):
             q, self.sign_wr[1 + a] = division_back(J[a], self.T, self.sign_wr[1 + a]); self.sign_axes[a].now = self.sign_axes[a].now - q
         q, self.sign_wr[0] = division_back(2 * W, self.T, self.sign_wr[0]); self.sign.now = self.sign.now - q
@@ -608,8 +641,7 @@ class Lean:
                 forms = forms + (bre.now * bre.now - re.now * bre.before) + (bim.now * bim.now - im.now * bim.before)
                 self.planes[2 * s_ + sense] = [bre, bim]
         W_prev = Z(self.shape)
-        for rec in range(2 * self.nl):
-            re, im = self.planes[rec]; W_prev = W_prev + (re.now * im.before - im.now * re.before)
+        for rec in range(2 * self.nl): W_prev = W_prev + wronskian(*self.planes[rec])
         if not os.environ.get('LEAN_NO_WS1'):
             lq, self.light_wr = division_back(W_this - W_prev, self.T, self.light_wr); self.light.now = self.light.now - lq
         r_l = self.rule((self.den, self.den), c, factors)
@@ -639,10 +671,10 @@ if __name__ == '__main__':
     world_path, out = sys.argv[1], sys.argv[2]
     mode = sys.argv[3] if len(sys.argv) > 3 else 'current'
     back = int(sys.argv[sys.argv.index('back') + 1]) if 'back' in sys.argv else 0
-    link = {'current': 'current', 'link': True, 'node': False}[mode]
+    birth = {'current': 'current', 'link': True, 'node': False}[mode]
     universe, world = load_world(world_path)
     intervals = int(world['intervals'])
-    b = Lean(universe, world, link_birth=link)
+    b = Lean(universe, world, link_birth=birth)
     rows = []; maxbits = 0
     import time, hashlib; t0 = time.monotonic_ns()
     marks = sorted({1, intervals} | {(k * intervals) // 12 for k in range(1, 12)} | {intervals // 60, intervals // 24})  # the rows' cadence: twelfths of the run and two early marks
