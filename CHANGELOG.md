@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's word of 2026-10-25, 23:00 UTC (#2187 6404497762): the two hands of the algebra of the whole in the ledger of docs/UNIVERSE24.md's section 4; docs/HIGHLIGHTS.md the decision.
 - The owner's word of 2026-10-25, 22:56 UTC (#2187 6404445529): the builds and the cleaning first, heading the open table of docs/UNIVERSE24.md's section 4 with the Boss's order of the cleaning; docs/HIGHLIGHTS.md the decision.
 - The owner's word of 2026-10-25, 22:50 UTC (#2187 6404425423, "all of them"): PL-S1 and MG-S1 and CS4-S2 and CS5-S2 and the crowd's rule as written entered under The five sentences of the owner's return in docs/ALGEBRA.md as approved, entering as built, with their measures and OL-S1 as a one-hand finding; the paragraph For the owner's return in docs/UNIVERSE24.md re-pointed; docs/HIGHLIGHTS.md the decision.
 - The paragraph For the owner's return at the head of docs/UNIVERSE24.md's section 4 ledger (the Boss's 6403988658): the one word asked, PL-S1 the charge at the kick, verbatim; the sentences entered and built under his word of 17:57; the engine of his first priority at bb9deff70; the findings of the day; his second question. EQ-S1, CK-S1's even crossing, The light no body and the fourth form marked confirmed at their merges in docs/ALGEBRA.md and docs/ENGINE.md, EQ-S1's row in the list; the ledger current.
