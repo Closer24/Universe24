@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- EQ-S1, the equilibrium at the body's click (two blind hands, one letter), and The light no body written beside EM-S1 in docs/ALGEBRA.md under the owner's word of 17:57 through the Boss's recommendation, entering as built, the two alternatives kept by name with their cost and the plasma's shortfall as the charge's finding; the open table of docs/UNIVERSE24.md's section 4 and docs/HIGHLIGHTS.md with them (the Boss's 6402908585).
 - The CK-S1 built note of docs/ALGEBRA.md corrected by the hand vf7 (the massive rows' credits at a beat held at 1, the former reading kept by name) and the Boss's hold of toys-5 3177921fb named (the even crossing where one level is 0); the ledger of docs/UNIVERSE24.md's section 4 current with David's c0888cf99 read whole and run, cs6 and eq1 landed, eq2 running, and the Boss's lines of 20:0x UTC.
 - EQ-S1, the hand eq1's sentence for the owner's word (a body's click where nothing arrives laid back on the taken line in the same close, the uniform board returning to Gamma with its clicks), in the open table of docs/UNIVERSE24.md's section 4 with eq1's numbers (the Boss's 6402594332).
 - CS6-S1, the retrace theorem, as a finding of the letter beside CS-S1 in docs/ALGEBRA.md (the hand cs6, the Boss's 6402497841) and the owner's one question for his return, the return to Gamma or to the born board's own bottom, in the open table of docs/UNIVERSE24.md's section 4.
