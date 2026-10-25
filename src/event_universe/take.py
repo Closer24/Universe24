@@ -8,7 +8,7 @@ import numpy as np
 
 from event_universe.core import paces, rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, wrap
-from event_universe.core.rule3 import half, lattice, quotient, remainder
+from event_universe.core.rule3 import half, lattice, mirrored, quotient, remainder
 from event_universe.links import cross
 from event_universe.rows import PLANE, Line
 
@@ -47,7 +47,7 @@ def read_number(
             wl = at_node(line.wall, n)
             f = f0 if k == 0 else lattice(wl, at_node(r.reaches[k - 1], n))
             rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f))
-            origin = origin and rem in (w_half - 1, w_half)
+            origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
             coarse = coarse and values <= AXES
             digits.append((quotient(rem, f), values + 1))
     if origin:

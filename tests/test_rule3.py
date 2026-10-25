@@ -14,6 +14,7 @@ from event_universe.core.rule3 import (
     form_term,
     link_factor,
     mass,
+    mirrored,
     rule3,
 )
 from tests.laws import arrivals_rule3
@@ -211,3 +212,21 @@ def test_the_composed_paces_are_the_laws_carried_division_at_gamma_squared_bit_f
         found, flat = [f(gamma, held) for f in entries], held.ravel().tolist()
         assert all(a.dtype == held.dtype for a in found)
         assert [a.ravel().tolist() for a in found] == [[f(gamma, c) for c in flat] for f in plain]
+
+
+def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd():
+    """The one rule of the remainder (fd1's form, the owner's word of 2026-10-25): the mirror r -> w - 1 - r once per reversal and the identity for an even count (rule3.mirrored), the coefficient's rounding the carried division from the half wall with the carry mirrored for a negative numerator, so odd_rounded(x, w) = sign(x) rounded(|x|, w) and odd at every integer; the turn's pair and the ride's kicks odd with no tie (a fold), the origin pair the half wall and its mirror."""
+    rng = random.Random(11)
+    for _ in range(2_000):
+        wall, r = rng.randint(2, 10**6), rng.randint(0, 10**6)
+        r = r % wall
+        assert mirrored(r, wall, 1) == wall - 1 - r and mirrored(mirrored(r, wall, 1), wall, 1) == r
+        assert mirrored(r, wall, 2) == r and mirrored(r, wall, 0) == r
+        x = rng.randint(-(10**9), 10**9)
+        sign = (x > 0) - (x < 0)
+        assert paces.odd_rounded(x, wall) == sign * paces.rounded(abs(x), wall)
+        assert paces.odd_rounded(-x, wall) == -paces.odd_rounded(x, wall)
+        q, wx = 2 * rng.randint(-(10**6), 10**6) + 1, 2 * rng.randint(1, 10**6)
+        assert paces.odd_rounded(q, wx) == paces.rounded(q, wx)
+    half = 1_000 // 2
+    assert (half, mirrored(half, 1_000, 1)) == (500, 499)

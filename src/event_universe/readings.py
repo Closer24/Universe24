@@ -42,7 +42,7 @@ def pair_angle(node: Node, n: Any) -> tuple[int, int]:
 
 
 def link_factors(node: Node, axis_levels: list[Any] | None = None) -> tuple[Any, ...]:
-    """The Link factor at each Port from the two ends' axis parts of the carrier: the tension the mean of the two ends' levels rounded at the half, a tension at or past Gamma read at the wall, the factor 0 (the horizon)."""
+    """The Link factor at each Port from the two ends' axis parts of the carrier: the tension the mean of the two ends' levels rounded half up (the one rounding not reached by the remainder's rule: fd1 measured the odd rounding here parts the 48's reflections), a tension at or past Gamma read at the wall, the factor 0 (the horizon)."""
     levels = [line.now for line in node.row(CARRIER).lines[1:4]] if axis_levels is None else axis_levels
     found = []
     for port, (axis, _side) in enumerate(PORT_SIDES):

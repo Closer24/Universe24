@@ -14,29 +14,23 @@ from tests.laws import ROOT, load_file, world_of
 
 RECORDS = ROOT / "examples" / "records"
 WIDTH = 128
+BASE = {
+    "17 charge conservation": "SHOWN",
+    "18 the arrow of time": "SHOWN",
+    "the three constants": "SHOWN",
+    "the entropy of the clicks": "SHOWN",
+    "14 the horizon": "NOT REACHED",
+}
 SHOWN = {
-    "hole": {
-        "17 charge conservation": "SHOWN",
-        "18 the arrow of time": "SHOWN",
-        "the three constants": "SHOWN",
-        "the entropy of the clicks": "SHOWN",
-        "14 the horizon": "NOT REACHED",
-        "4 an era of matter": "NOT SHOWN",
-    },
-    "chiral": {
-        "17 charge conservation": "SHOWN",
-        "18 the arrow of time": "SHOWN",
-        "the three constants": "SHOWN",
-        "the entropy of the clicks": "SHOWN",
-        "14 the horizon": "NOT REACHED",
-    },
+    "hole": {**BASE, "4 an era of matter": "NOT SHOWN"},
+    "chiral": BASE,
     "bodies": {
         "18 the arrow of time": "SHOWN",
         "the three constants": "SHOWN",
         "10 gravitational time dilation": "SHOWN in the reader's view",
         "2 the Links lengthening in the clicks": "SHOWN in the reader's view",
         "1 recurring bangs / 3 shortening then lengthening / 6 contraction (board, the reader's view)": "contraction SHOWN",
-        "9 collisions / 13 free fall": "read: 26 lines credited at a new Node",
+        "9 collisions / 13 free fall": "SHOWN: two bodies' credited Nodes approached",
         "8 families forming (whole view)": "SHOWN in part: every credit within the floor, tracks right 27 of 27",
         "16 uncertainty floor (one click)": "SHOWN as the law's floor",
         "the entropy of the clicks": "NOT READ",

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from event_universe.core.paces import rounded
+from event_universe.core.paces import odd_rounded
 from event_universe.core.ports import AXES, PORT_SIDES, across, wrap
 from event_universe.core.rule3 import remainder
 from event_universe.rows import Line, zeros
@@ -16,8 +16,8 @@ def cross(x_i: Any, y_i: Any, x_j: Any, y_j: Any) -> Any:
 
 
 def turn_pair(re: Any, im: Any, c: Any, s: Any, scale: Any) -> tuple[Any, Any]:
-    """The pair (re, im) turned by the pair (c, s) over the scale, one rounding half up per part (fd2, U2): the phase pair over the amplitude X, the odd tangent triple over its wall, the decoder's solve."""
-    return rounded(c * re - s * im, scale), rounded(s * re + c * im, scale)
+    """The pair (re, im) turned by the pair (c, s) over the scale, one odd rounding per part (fd2, U2; fd1: the turn's rounding is odd by the one rule of the remainder, a fold with no tie): the phase pair over the amplitude X, the odd tangent triple over its wall, the decoder's solve."""
+    return odd_rounded(c * re - s * im, scale), odd_rounded(s * re + c * im, scale)
 
 
 class Link:

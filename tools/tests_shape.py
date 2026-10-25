@@ -41,6 +41,11 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_rule3.py::test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd": (
+        19,
+        "the one rule of the remainder (2026-10-25, the owner's word through the Boss, 6398455072: the identities as a test under 15 s): the mirror once per reversal and the identity for an even count, "
+        "the coefficient's rounding the carried division from the half wall with the carry mirrored, odd at every integer, the turn's and the kicks' roundings a fold, the origin pair",
+    ),
     "tests/test_the_record_gates.py::test_the_committed_record_shows_the_agreed_gates_by_name": (
         27,
         "the record's gates (2026-10-25, the two blind hands' table agreed cold on PR #2187): the nineteen gates of tools/record_gates.py loaded by its path on the committed logs of examples/events/universe24, "

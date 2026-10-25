@@ -11,7 +11,7 @@ from event_universe import close, interval, readings, seed, take
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, across
-from event_universe.core.rule3 import carried_division, half, link_unit_of, unit_of, wall_of
+from event_universe.core.rule3 import carried_division, half, link_unit_of, mirrored, unit_of, wall_of
 from event_universe.features import phase
 from event_universe.links import Link, turn_pair
 from event_universe.rows import (
@@ -290,18 +290,18 @@ class Node:
         return [len(row) == PLANE and k == 1 for row in self.rows() for k in range(len(row))]
 
     def exchange(self, top: Any, held: list[list[Line]]) -> None:
-        """The swap's act at the Nodes `top`: every line set to the held line exchanged and complemented (the two levels exchanged, an im line conjugated, every remainder complemented at its wall, an im line's rotation remainder kept); an involution with the state it leaves."""
+        """The swap's act at the Nodes `top`: every line set to the held line exchanged and mirrored (the two levels exchanged, an im line conjugated, every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line, so an im line's rotation remainder is left; the write remainders and the frame bit once); an involution with the state it leaves."""
         for line, h, im in zip(
             self.all_lines(), [line for row in held for line in row], self.is_im(), strict=True
         ):
             sgn = -1 if im else 1
             line.now = np.where(top, sgn * h.before, line.now)
             line.before = np.where(top, sgn * h.now, line.before)
-            line.rem = np.where(top, h.rem if im else h.wall - 1 - h.rem, line.rem)
+            line.rem = np.where(top, mirrored(h.rem, h.wall, 1 + (sgn < 0)), line.rem)
             if np.ndim(h.wall):
                 line.wall = np.where(top, h.wall, line.wall)
             if line.wr is not None:
-                line.wr = np.where(top, line.wwall - 1 - h.wr, line.wr)
+                line.wr = np.where(top, mirrored(h.wr, line.wwall, 1), line.wr)
 
     def swap(self, held: list[list[Line]]) -> Any:
         """The swap at the top: the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f); the turned Node ends the interval at the state it started from, exchanged and complemented."""

@@ -169,7 +169,9 @@ def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], 
             f"{a}->{b}": n for (a, b), n in confusion.items() if a != b
         },
     }
-    if within == len(decoded) and track_right == len(tracks) and len(born) >= 3:
+    if not decoded:
+        verdict = "NOT READ: no credit in the record"
+    elif within == len(decoded) and track_right == len(tracks) and len(born) >= 3:
         verdict = "SHOWN (every credit within the one-click floor, every track read right)"
     elif within == len(decoded):
         verdict = (
@@ -195,10 +197,12 @@ def ratios(record: Record, floor_mil: list[int | None], within: int, decoded: in
     legs = sorted(((name, leg) for name, leg in names.values() if leg), key=lambda kv: kv[1])
     num_of = {v[0]: k for k, v in names.items()}
     found: dict[str, Any] = {f"{nm}/{legs[0][0]}": quot(leg, legs[0][1], MIL) for nm, leg in legs[1:]}
-    out = {
-        "19 mass ratios (parts per million)": found
-        | {"verdict": "SHOWN as a fit of den (the legs), read from the decoded points"}
-    }
+    read = (
+        "SHOWN as a fit of den (the legs), read from the decoded points"
+        if decoded
+        else "NOT READ: no credit decoded"
+    )
+    out = {"19 mass ratios (parts per million)": found | {"verdict": read}}
     fl = sorted(f for f in floor_mil if f is not None)
     if fl:
         spacing = (

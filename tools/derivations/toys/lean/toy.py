@@ -171,7 +171,7 @@ class Toy(Node):
         self.start_factors = factors
         frames = readings.frames(self, walled.lines[0].rem)
         self.start_frames = frames
-        cphi = paces.rounded(at(potential.lines[0]) * p0, self.gamma)
+        cphi = paces.odd_rounded(at(potential.lines[0]) * p0, self.gamma)
         out: list[list[Line]] = [[] for _ in rows]
         riding = self.records() + (
             [potential] if self.control.get("metric_sources") == "every riding row" else []

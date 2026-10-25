@@ -78,7 +78,7 @@ class Interval:
         node.start_factors = self.factors
         self.frames = readings.frames(node, self.walled.lines[0].rem)
         node.start_frames = self.frames
-        self.cphi = paces.rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
+        self.cphi = paces.odd_rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
         self.x_now = self.at(self.carrier.lines[0])
         stress = stress_parts(
             [(self.at(line), r.pair[0]) for r in node.records() if r.pair for line in r.lines],
@@ -161,7 +161,7 @@ class Interval:
             for a, f, p1, p2 in zip(self.starts[k], self.force[k], p_side, p_other, strict=True):
                 self.forms = (
                     self.forms
-                    + paces.rounded(2 * p1 + 1, d) * paces.rounded(2 * p2 + 1, d)
+                    + paces.odd_rounded(2 * p1 + 1, d) * paces.odd_rounded(2 * p2 + 1, d)
                     + quotient(-a * f, node.w)
                 )
             self.kicked[k] = p_other

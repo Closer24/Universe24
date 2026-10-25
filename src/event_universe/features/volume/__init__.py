@@ -47,7 +47,7 @@ def volume_of(gamma: int, levels: Any) -> Any:
 
 LEVELS: dict[
     int, dict[int, int]
-] = {}  # the level reading's memo per Gamma, the level a found at each volume X so far (`level_of`), cleared at a run's start with the paces' (Lattice.__init__)
+] = {}  # the level reading's memo per Gamma, the level a found at each volume X so far (`level_of`), a pure function of (Gamma, X), kept for the run
 
 
 def level_of(gamma: int, volume: Any) -> Any:
