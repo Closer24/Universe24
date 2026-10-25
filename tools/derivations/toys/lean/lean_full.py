@@ -618,45 +618,63 @@ class Lean:
         bits = max(int(np.max(np.vectorize(lambda v: abs(int(v)).bit_length(), otypes=[object])(a))) for a in arrays)
         return len(arrays), bits
 
+    def state_hash(self):
+        """The state's hash with the interval, the run back's bit-for-bit comparison."""
+        import hashlib
+        return hashlib.sha256(self.state_bytes() + str(self.interval).encode()).hexdigest()
+
     def state_bytes(self):
         return b''.join(np.asarray(a, dtype=object).astype(str).tobytes() for l in self.all_lines() for a in (l.now, l.before, l.rem)) + b''.join(np.asarray(l.wr).astype(str).tobytes() for l in self.all_lines() if l.wr is not None)
 
 
-if __name__ == '__main__':
-    sys.set_int_max_str_digits(0)
-    # usage: lean_full.py <world.json> <out.json> [back N]: the run of the world's intervals, the record dumped, then N intervals run back and compared (the arrow's reading on the record)
-    world_path, out = sys.argv[1], sys.argv[2]
-    back = int(sys.argv[sys.argv.index('back') + 1]) if 'back' in sys.argv else 0
-    universe, world = load_world(world_path)
-    intervals = int(world['intervals'])
-    b = Lean(universe, world)
-    rows = []; maxbits = 0
-    import time, hashlib; t0 = time.monotonic_ns()
-    marks = sorted({1, intervals} | {(k * intervals) // 12 for k in range(1, 12)} | {intervals // 60, intervals // 24})  # the rows' cadence: twelfths of the run and two early marks
-    hashes = []
-    def state_hash(): return hashlib.sha256(b.state_bytes() + str(b.interval).encode()).hexdigest()
+def reading(b, maxbits):
+    """The reader's row of the record at an interval: the readings a reader takes of the whole board (no act): the packets' centroids and spreads, the content's and the volume's ranges, the counts, the integers and bits, the sign's level, the planes' energy, the tensions' range, the Links at the wall, the Links' count, the orbit table's size, the board's Wronskian, the light's velocity."""
+    c = b.content(); cs = [int(x) for x in c.reshape(-1)]; vs = [int(x) for x in b.vol.now.reshape(-1)]
+    energy = sum(int(x) * int(x) for rec in b.planes for l in rec for x in l.now.reshape(-1)); odd_max = max(abs(int(x)) for l in b.sign_axes for x in l.now.reshape(-1))
+    light_v = max(abs(int(a) - int(bb)) for a, bb in zip(b.light.now.reshape(-1), b.light.before.reshape(-1)))
+    packets = {}
+    for s_ in range(b.nl):
+        for sense in (0, 1):
+            re, im = b.planes[2 * s_ + sense]; wgt = re.now * re.now + im.now * im.now; total = int(sum(int(x) for x in wgt.reshape(-1)))
+            if total == 0: continue
+            idx = np.indices(b.shape); cen = [int(sum(int(w) * int(x) for w, x in zip(wgt.reshape(-1), idx[a].reshape(-1)))) * 1000 // total for a in range(3)]
+            packets['row %d sense %d' % (s_ + 1, 1 if sense else -1)] = {'centroid (thousandths of a Link)': cen, 'nodes with levels': int(sum(1 for x in wgt.reshape(-1) if int(x) > 0)), 'energy bits': total.bit_length()}
+    W = Z(b.shape)
+    for re, im in b.planes: W = W + wronskian(re, im)
+    n, _bits = b.census(); tens = [int(x) for l in b.vol_axes for x in l.now.reshape(-1)]
+    return {'i': b.interval, 'packets (reader)': packets, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'],
+            'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'],
+            'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(),
+            'links at the wall': int(sum(1 for f in b.link_factors()[0::2] for x in f.reshape(-1) if int(x) == 0)), 'tension min/max': [min(tens), max(tens)], 'odd max bits': odd_max.bit_length(), 'link count max': b.count_max, 'orbit table': len(b.orbit),
+            'W total': int(sum(int(x) for x in W.reshape(-1))), 'W abs sum': int(sum(abs(int(x)) for re, im in b.planes for x in wronskian(re, im).reshape(-1))), 'light velocity max': light_v}
+
+
+def record(universe, world, back=0, out=print):
+    """The writer: the world's intervals run, a reader's row at every twelfth and two early marks, then N intervals run back and compared bit for bit by the state's hash (the arrow's reading on the record); returns the record (the two files, the constants, the counts, the turns, the rows, the run back and the log as the run left it)."""
+    import time
+    b = Lean(universe, world); intervals = int(world['intervals']); t0 = time.monotonic_ns()
+    marks = sorted({1, intervals} | {(k * intervals) // 12 for k in range(1, 12)} | {intervals // 60, intervals // 24})
+    rows = []; hashes = []; maxbits = 0
     for t in range(intervals):
-        if back and t >= intervals - back: hashes.append(state_hash())
-        b.step(); n, bits = b.census(); maxbits = max(maxbits, bits)
+        if back and t >= intervals - back: hashes.append(b.state_hash())
+        b.step(); maxbits = max(maxbits, b.census()[1])  # the largest integer of the state over the whole run
         if b.interval in marks:
-            c = b.content()
-            cs = [int(x) for x in c.reshape(-1)]; vs = [int(x) for x in b.vol.now.reshape(-1)]
-            energy = sum(int(x) * int(x) for rec in b.planes for l in rec for x in l.now.reshape(-1)); odd_max = max(abs(int(x)) for l in b.sign_axes for x in l.now.reshape(-1)); light_v = max(abs(int(a) - int(bb)) for a, bb in zip(b.light.now.reshape(-1), b.light.before.reshape(-1)))
-            packets = {}
-            for s_ in range(b.nl):
-                for sense in (0, 1):
-                    re, im = b.planes[2 * s_ + sense]; wgt = re.now * re.now + im.now * im.now; total = int(sum(int(x) for x in wgt.reshape(-1)))
-                    if total == 0: continue
-                    idx = np.indices(b.shape); cen = [int(sum(int(w) * int(x) for w, x in zip(wgt.reshape(-1), idx[a].reshape(-1)))) * 1000 // total for a in range(3)]
-                    packets['row %d sense %d' % (s_ + 1, 1 if sense else -1)] = {'centroid (thousandths of a Link)': cen, 'nodes with levels': int(sum(1 for x in wgt.reshape(-1) if int(x) > 0)), 'energy bits': total.bit_length()}
-            rows.append({'i': b.interval, 'packets (reader)': packets, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'], 'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'], 'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(), 'links at the wall': int(sum(1 for f in b.link_factors()[0::2] for x in f.reshape(-1) if int(x) == 0)), 'tension min/max': [min(int(x) for l in b.vol_axes for x in l.now.reshape(-1)), max(int(x) for l in b.vol_axes for x in l.now.reshape(-1))], 'odd max bits': odd_max.bit_length(), 'link count max': getattr(b, 'count_max', 0), 'orbit table': len(b.orbit), 'W total': sum(int(x) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'W abs sum': sum(abs(int(x)) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'light velocity max': light_v, 'milliseconds': (time.monotonic_ns() - t0) // 1000000})
-            print(json.dumps(rows[-1]), flush=True)
-    run_back = None; kept_log = list(b.log)  # the record's log as the run left it; the run back below removes its lines as it undoes them
+            rows.append(dict(reading(b, maxbits), milliseconds=(time.monotonic_ns() - t0) // 1000000)); out(json.dumps(rows[-1]))
+    kept_log = list(b.log)  # the record's log as the run left it; the run back below removes its lines as it undoes them
+    run_back = None
     if back:
         exact = 0
         for k in range(back):
-            b.step_back(); exact += (state_hash() == hashes[back - 1 - k])
-        run_back = {'intervals': back, 'exact': exact}
-        print(json.dumps({'run back': run_back}), flush=True)
-    json.dump({'world': world, 'universe': universe, 'den': den_ if (den_ := b.den) else 0, 'cube': b.cube, 'intervals': intervals, 'lifts': [(None, str(num), str(s)) for _v, num, s in b.lifts], 'T': b.T, 'gamma': b.gamma, 'G': b.G, 'counts': {k: str(v) for k, v in b.counts.items()}, 'turns': b.turns, 'rows': rows, 'run_back': run_back, 'log': kept_log}, open(out, 'w'))
-    print(json.dumps({'counts': {k: str(v) for k, v in b.counts.items()}}))
+            b.step_back(); exact += (b.state_hash() == hashes[back - 1 - k])
+        run_back = {'intervals': back, 'exact': exact}; out(json.dumps({'run back': run_back}))
+    out(json.dumps({'counts': {k: str(v) for k, v in b.counts.items()}}))
+    return {'world': world, 'universe': universe, 'den': b.den, 'cube': b.cube, 'intervals': intervals, 'lifts': [(None, str(num), str(s)) for _v, num, s in b.lifts], 'T': b.T, 'gamma': b.gamma, 'G': b.G,
+            'counts': {k: str(v) for k, v in b.counts.items()}, 'turns': b.turns, 'rows': rows, 'run_back': run_back, 'log': kept_log}
+
+
+if __name__ == '__main__':
+    sys.set_int_max_str_digits(0)
+    # usage: lean_full.py <world.json> <out.json> [back N]
+    universe, world = load_world(sys.argv[1])
+    found = record(universe, world, int(sys.argv[sys.argv.index('back') + 1]) if 'back' in sys.argv else 0, lambda line: print(line, flush=True))
+    json.dump(found, open(sys.argv[2], 'w'))
