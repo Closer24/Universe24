@@ -1,0 +1,6 @@
+record tools/derivations/ms2/out/chiral_circle.json den 15162856759112389 T 36000 Gamma 1000 G 16
+births 41 credits 0
+  senses' sum over all children 0 children with W = 0 0
+the law's W per quantum T div 2 = 18000
+credits decoded 0 right 0 within floor 0
+run back {'intervals': 10, 'exact': 10} counts {'births': '41', 'taken': '76907331588302571774374', 'booked': '72108889840101633840000', 'body_clicks': '0', 'refused_stop': '14', 'refused_origin': '0', 'refused_lay': '303', 'refused_orientation': '27', 'refused_twist': '0', 'turns': '634', 'laid': '0', 'laid_nodes': '0'}

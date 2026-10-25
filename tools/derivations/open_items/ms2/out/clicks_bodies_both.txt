@@ -1,0 +1,6 @@
+record tools/derivations/ms2/out/bodies_both.json den 1655909141 T 36000 Gamma 1000 G 16
+births 0 credits 83
+  senses' sum over all children 0 children with W = 0 0
+the law's W per quantum T div 2 = 18000
+credits decoded 83 right 25 within floor 83
+  plane 5 num 506298091: credits 83, senses sum 0 (+0 / -0), middle solve x per 10^9 = 305632586, typed num/den per 10^9 = 305752337

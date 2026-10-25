@@ -1,0 +1,2 @@
+{"world": "worlds/world_chiral_lay.json", "changed at": [2, 2, 2], "interval": 2, "distances differing before the step": [0], "after one step forward": [0, 1], "after one step back": [0], "births a / b": [1, 2], "reach forward within one Link": true, "reach backward within the Node": true}
+{"world": "worlds/world_chiral_lay.json", "changed at": [2, 2, 2], "interval": 4, "distances differing before the step": [0], "after one step forward": [0, 1], "after one step back": [0], "births a / b": [7, 7], "reach forward within one Link": true, "reach backward within the Node": true}

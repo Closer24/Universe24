@@ -22,3 +22,9 @@ Whoever derives: (1) derives the ALGEBRA (the sentence and its derivation under 
 The owner's word of 2026-10-25, 14:2x UTC: everything enters the engine through the two files alone (a row of the universe, an integer of its three, a key of the world's four), and after David's build a hand that did not derive the item confirms it against the spec, its one-Node test and the predicted numbers; the Boss merges on WORKS alone.
 
 The owner's word of 2026-10-25, 14:3x UTC: every gate is seen happening in Universe24, from the seed alone; after every merge the Boss runs the record and reads every gate; a gate NOT SHOWN is a problem named with the item that owes it.
+
+The owner's word of 2026-10-25, 14:5x UTC: the Reader takes the gates' list from the Scribe (docs/UNIVERSE24.md, the 50 rows); a gate is marked SHOWN in Universe24 only when it is seen on the record from the seed; a gate shown on a one-Node test or a flagged copy is marked so, never as shown in Universe24.
+
+The owner's word of 2026-10-25, 15:0x UTC: the goal is to bring Universe24 as close as possible to 50: every one of the ledger's 50 gates SHOWN in Universe24 on the record from the seed. The count of gates SHOWN in Universe24 on the current head is the one number of progress; every round names which gates it moves.
+
+The owner's word of 2026-10-25, 15:1x UTC: every run that needs it is shown as an animation: the Reader writes the page (the third tool) for every record it reads, takes frames at the intervals the gates name, keeps them on the branch reader-5 under reader/<sha>/, and the Boss shows the owner the frames; a page that fails on a record is a problem of the reader.
