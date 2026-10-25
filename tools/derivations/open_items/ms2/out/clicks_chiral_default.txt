@@ -1,0 +1,11 @@
+record tools/derivations/ms2/out/chiral_default.json den 15162856759112389 T 36000 Gamma 1000 G 16
+planes (num) by file order: [15162854575528411, 2458210083751875, 2580388913625285, 15162856759112389]
+decoder names: {15162854575528411: ('gapped 0', 8137489624680), 2580388913625285: ('gapped 1', 14941680566515936), 2458210083751875: ('gapped 2', 14962266816278236), 15162856759112389: ('gap 0', 0)}
+births 14 credits 0
+  plane 0 num 15162854575528411: births 5, amplitudes [5], W_children values [-30, -25, 25], births with opposite signs 5, W div (T div 2) per 10^9: [1666666, 1388888, 1388888]
+  plane 1 num 2458210083751875: births 5, amplitudes [132, 139, 140], W_children values [-19600, -19321, -17424, 17424, 19321, 19600], births with opposite signs 5, W div (T div 2) per 10^9: [1088888888, 1073388888, 968000000, 968000000, 1073388888, 1088888888]
+  plane 2 num 2580388913625285: births 4, amplitudes [133, 139], W_children values [-19321, -17689, 17822, 19321], births with opposite signs 4, W div (T div 2) per 10^9: [1073388888, 982722222, 990111111, 1073388888]
+  senses' sum over all children 0 children with W = 0 0
+the law's W per quantum T div 2 = 18000
+credits decoded 0 right 0 within floor 0
+run back {'intervals': 10, 'exact': 10} counts {'births': '14', 'taken': '30646883765807872612599', 'booked': '29077648659844917984000', 'body_clicks': '0', 'refused_stop': '2', 'refused_origin': '0', 'refused_lay': '361', 'refused_orientation': '28', 'refused_twist': '0', 'turns': '621', 'laid': '0', 'laid_nodes': '0'}

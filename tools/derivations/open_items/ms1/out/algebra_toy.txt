@@ -1,0 +1,75 @@
+den 15162856759112389 bits 54 primes [617, 196613, 124992409]
+exact points of den's circle (num < den, s > 0): 13
+points sorted by leg (num, s, gap per 1e9 = (den-num) 1e9 div den):
+  num 15162854575528411 s 8137489624680 gap_1e9 144 s/den_1e9 536672
+  num 15162414850065661 s 115762739551980 gap_1e9 29144 s/den_1e9 7634625
+  num 15162350539855939 s 123899975345340 gap_1e9 33385 s/den_1e9 8171281
+  num 15162281862624061 s 132037175453340 gap_1e9 37914 s/den_1e9 8707935
+  num 14328347053609411 s 4960916831461980 gap_1e9 55036443 s/den_1e9 327175604
+  num 14325682602112189 s 4968605748185340 gap_1e9 55212165 s/den_1e9 327682693
+  num 14323014024567811 s 4976293233863340 gap_1e9 55388159 s/den_1e9 328189688
+  num 2588407332451035 s 14940293590779064 gap_1e9 829292898 s/den_1e9 985321818
+  num 2580388913625285 s 14941680566515936 gap_1e9 829821717 s/den_1e9 985413290
+  num 2572369751602395 s 14943063238787464 gap_1e9 830350586 s/den_1e9 985504478
+  num 2466239568248445 s 14960945407605964 gap_1e9 837349939 s/den_1e9 986683818
+  num 2458210083751875 s 14962266816278236 gap_1e9 837879489 s/den_1e9 986770966
+  num 2450179891247805 s 14963583915555964 gap_1e9 838409085 s/den_1e9 986857829
+leg ratios of consecutive-by-leg points per 1e9 (s_k / s_0 for all k):
+  14225854027
+  15225822834
+  16225787256
+  609637254272
+  610582130036
+  611526829941
+  1835983120084
+  1836153562789
+  1836323476648
+  1838520980995
+  1838683366292
+  1838845222017
+all pairwise leg ratios per 1e9 nearest to 1836152673 (p/e) and 1001378419 (n/p) and 206768283 (mu/e):
+  p/e: nearest ratio 1140584405 (legs 115762739551980, 132037175453340); off by 695568268 per 1e9
+  n/p: nearest ratio 1001377773 (legs 14941680566515936, 14962266816278236); off by 646 per 1e9
+  mu/e: nearest ratio 1000088028 (legs 14962266816278236, 14963583915555964); off by 793319745 per 1e9
+
+the file's plane rows against the circle:
+T 36000 T div 2 18000 A_law = largest_below(T div 2) = 134, W_law = A_law^2 = 17956 for every row
+  num 15162856759112389 gap 0 s 0 exact_point True unit 3Ts 0 bits 0
+     engine lay at the vacuum: A 0 W_child = A^2 = 0; W_eng per T div 2, per 1e9: 0
+     law's lay: A 134 W 17956; lone share 6 den A^2 per massless unit 3 den T, per 1e9: 997555555
+     law's child counted in its own unit (6 den A^2 / 3 T s), per 1e9: None
+  num 15162854575528411 gap 2183583978 s 8137489624680 exact_point True unit 3Ts 878848879465440000 bits 60
+     engine lay at the vacuum: A 5 W_child = A^2 = 25; W_eng per T div 2, per 1e9: 1388888
+     law's lay: A 134 W 17956; lone share 6 den A^2 per massless unit 3 den T, per 1e9: 997555555
+     law's child counted in its own unit (6 den A^2 / 3 T s), per 1e9: 1858778652358
+  num 2458210083751875 gap 12704646675360514 s 14962266816278236 exact_point True unit 3Ts 1615924816158049488000 bits 71
+     engine lay at the vacuum: A 140 W_child = A^2 = 19600; W_eng per T div 2, per 1e9: 1088888888
+     law's lay: A 134 W 17956; lone share 6 den A^2 per massless unit 3 den T, per 1e9: 997555555
+     law's child counted in its own unit (6 den A^2 / 3 T s), per 1e9: 1010929171
+  num 2580388913625285 gap 12582467845487104 s 14941680566515936 exact_point True unit 3Ts 1613701501183721088000 bits 71
+     engine lay at the vacuum: A 140 W_child = A^2 = 19600; W_eng per T div 2, per 1e9: 1088888888
+     law's lay: A 134 W 17956; lone share 6 den A^2 per massless unit 3 den T, per 1e9: 997555555
+     law's child counted in its own unit (6 den A^2 / 3 T s), per 1e9: 1012322002
+  the engine's W per child: least 25 largest 19600 ratio per 1e9 784000000000; the law's: one value 17956 for every row
+
+K-S2's integral lay 4 a b | T per prime of den, and the exact rest lay T / (4 a b p) a square:
+  p 617 = 19^2 + 16^2, 4ab 1216, T mod 4ab 736, sin omega_p = 2ab/p per 1e9 985413290, T mod (4ab p) 36000
+  p 196613 = 338^2 + 287^2, 4ab 388024, T mod 4ab 36000, sin omega_p = 2ab/p per 1e9 986770966, T mod (4ab p) 36000
+  p 124992409 = 11180^2 + 3^2, 4ab 134160, T mod 4ab 36000, sin omega_p = 2ab/p per 1e9 536672, T mod (4ab p) 36000
+
+candidate (b): s | den for the file's lifts? (the unit 3 T s dividing the massless unit 3 T den)
+  num 2450179891247805: den mod s = 199272843556425  (divides: False)
+  num 2458210083751875: den mod s = 200589942834153  (divides: False)
+  num 2466239568248445: den mod s = 201911351506425  (divides: False)
+  num 2572369751602395: den mod s = 219793520324925  (divides: False)
+  num 2580388913625285: den mod s = 221176192596453  (divides: False)
+  num 2588407332451035: den mod s = 222563168333325  (divides: False)
+  num 14323014024567811: den mod s = 233977057522369  (divides: False)
+  num 14325682602112189: den mod s = 257039514556369  (divides: False)
+  num 14328347053609411: den mod s = 280106264726449  (divides: False)
+  num 15162281862624061: den mod s = 110618757431629  (divides: False)
+  num 15162350539855939: den mod s = 47059766980909  (divides: False)
+  num 15162414850065661: den mod s = 113700617354989  (divides: False)
+  num 15162854575528411: den mod s = 2713588333549  (divides: False)
+
+candidate (d): the rest rotation at content c, 2 cos omega_c = 2 - D/w with D/w = 2 (den - num) p0^2 / (den Gamma^2): the step is one carried division at the wall w, the remainder in [0, w): no tie at any content for any pair (a theorem of the carried division; nothing to select).
