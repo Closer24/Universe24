@@ -6,12 +6,12 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import readings
+from event_universe import gram, readings
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import division_forward, half, held_numerator, quotient
 from event_universe.features import volume
-from event_universe.links import links_of, plane_current, stress_parts, tensor_parts, wronskian
+from event_universe.links import links_of, stress_parts, tensor_parts
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, Row, zeros
 
 if TYPE_CHECKING:
@@ -51,7 +51,10 @@ class Interval:
         self.carrier, self.walled = node.row(CARRIER), node.walled()
         self.potential, self.gap0 = node.row(POTENTIAL), node.row(PLANE, gap=0)
         self.riders = [r for r in node.rows_ if r.wall is None and r is not self.carrier]
-        self.gap_planes = [r for r in self.riders if r.shape == PLANE and r.gap]
+        self.records = node.records()
+        self.gapped = [r for r in self.riders if r.gap]
+        self.scales = {self.where[id(r)]: gram.scale(r.shape, node.gamma) for r in self.riders}
+        self.common = max(self.scales.values())
         self.out: list[list[Line]] = [[] for _ in self.rows]
         self.plane_starts: list[list[Line]] = []
         self.stepped: list[list[Line]] = []
@@ -88,8 +91,13 @@ class Interval:
         node.start_frames = self.frames
         self.cphi = paces.odd_rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
         self.x_now = self.at(self.carrier.lines[0])
+        node.start_x = self.x_now
         stress = stress_parts(
-            [(self.at(line), r.pair[0]) for r in node.records() if r.pair for line in r.lines],
+            [
+                ([self.at(line) for line in r.lines], r.pair[0], gram.gram(r.shape))
+                for r in self.records
+                if r.pair
+            ],
             node.shape,
         )
         self.trace, self.traceless = tensor_parts(stress)
@@ -112,47 +120,54 @@ class Interval:
         self.odd = [self.at(line) for line in self.potential.lines[1 : 1 + AXES]]
         node.start_phases, node.start_odd = self.phases, [o.copy() for o in self.odd]
         self.links = links_of(self.factors, self.frames, self.phases, self.odd)
+        self.curl = gram.curl(self.odd)
 
     def forces(self) -> None:
-        """Every riding line's force at the start, SUM_j R_j (m_j - a) - D a, the planes' Wronskian and current at this end, and the emission read from the kick, X_now SUM over the planes with a gap of (re F_im - im F_re)."""
+        """Every riding line's force at the start, SUM_j R_j (m_j - a) - D a plus the row's Node term by shape (gram.term, the coefficient the unscaled reaches' sum), a riding row with a gap turned by the Links; the records' charge and current at this end; and the emission read from the kick, X_now SUM over the records with a gap of F.GJ.N (the plane's re F_im - im F_re), each over its scale against the common one."""
         node = self.node
         self.w_end = zeros(node.shape)
         self.current = [zeros(node.shape) for _ in range(AXES)]
-        for r in self.gap_planes:
-            self.w_end = self.w_end + wronskian(*self.lines(r))
-            re_s, im_s = [Line(self.at(line), None, None, line.wall) for line in self.lines(r)]
-            for a, j_a in enumerate(plane_current(re_s, im_s, self.frames)):
+        for r in self.gapped:
+            self.w_end = self.w_end + gram.charge(r.shape, self.lines(r))
+            nows = [self.at(line) for line in self.lines(r)]
+            for a, j_a in enumerate(gram.current(r.shape, nows, self.frames)):
                 self.current[a] = self.current[a] + j_a
         self.starts: dict[int, list[Any]] = {}
         self.force: dict[int, list[Any]] = {}
+        self.walls: dict[int, Any] = {}
         for r in self.riders:
             rule = node.rule_of(r, self.c, self.factors)
-            turn = self.links if r.shape == PLANE and r.gap else None
+            turn = self.links if r.gap else None
             k = self.where[id(r)]
+            self.walls[k] = rule.wall
             self.starts[k] = [self.at(line) for line in self.lines(r)]
             arrivals = node.arrivals(self.starts[k], rule, turn)
+            coefficient = quotient(sum(rule.reaches), self.scales[k])
+            added = gram.term(r.shape, coefficient, self.curl, self.starts[k])
             self.force[k] = [
-                m - (2 * rule.wall - rule.self_coefficient) * a
-                for a, m in zip(self.starts[k], arrivals, strict=True)
+                m + t - (2 * rule.wall - rule.self_coefficient) * a
+                for a, m, t in zip(self.starts[k], arrivals, added, strict=True)
             ]
         self.emission = zeros(node.shape)
-        for r in self.gap_planes:
-            (re_s, im_s), (f_re, f_im) = self.starts[self.where[id(r)]], self.force[self.where[id(r)]]
-            self.emission = self.emission + self.x_now * (re_s * f_im - im_s * f_re)
+        for r in self.gapped:
+            k = self.where[id(r)]
+            gj = gram.matmul(gram.gram(r.shape), gram.rotation(r.shape))
+            flow = gram.form(gj, self.force[k], self.starts[k])
+            self.emission = self.emission + self.x_now * flow * quotient(self.common, self.scales[k])
 
     def mean_wall(self) -> Any:
         """The mean wall (w div 2)(X_before + X_now) of the carrier's two levels as the rows hold them: forward W_in from the pre carrier, backward W_out from the post carrier."""
         return self.w_half * (self.carrier.lines[0].before + self.carrier.lines[0].now)
 
     def unwrite(self) -> None:
-        """Backward: the riding rows' writes come off first, from the post state (the gap-0 line's W-S1 lay at the post mean wall, the shape-4 row's 2 W and the current)."""
+        """Backward: the riding rows' writes come off first, from the post state (the gap-0 line's W-S1 lay at the post mean wall at the common scale, the shape-4 row's 2 W and the current)."""
         node = self.node
-        node.write(self.lines(self.gap0)[0], quotient(self.emission, self.mean_wall()), -1)
+        node.write(self.lines(self.gap0)[0], quotient(self.emission, self.common * self.mean_wall()), -1)
         for line, n in zip(self.lines(self.potential), [2 * self.w_end, *self.current], strict=True):
             node.write(line, n, -1)
 
     def kicks(self) -> None:
-        """Every riding line's momentum in and out at the mean wall, P_in = W (a_now - a_before) + r - W div 2 and P_out = P_in + X_now F, and the carrier's source from every riding line alike, u_in u_out + (-a F) div w with u the odd rounding of 2 P + 1 over 2 w X_now."""
+        """Every riding line's momentum in and out at the mean wall times the row's scale, P_in = W (a_now - a_before) + r - W div 2 and P_out = P_in + X_now F, and the carrier's source from every riding row alike with its G, line by line u_in (G u_out) + (-a (G F)) div w with u the odd rounding of 2 P + 1 over 2 w X_now at the scale, w the row's wall."""
         node = self.node
         self.forms = zeros(node.shape)
         self.kicked: dict[int, list[Any]] = {}
@@ -160,18 +175,16 @@ class Interval:
         w_side = self.mean_wall()
         for r in self.riders:
             k = self.where[id(r)]
-            p_side = [
-                w_side * (line.now - line.before) + line.rem - half(w_side) for line in self.rows[k]
-            ]
+            ws, ds, g = self.scales[k] * w_side, self.scales[k] * d, gram.gram(r.shape)
+            p_side = [ws * (line.now - line.before) + line.rem - half(ws) for line in self.rows[k]]
             p_other = [
                 p + self.direction * self.x_now * f for p, f in zip(p_side, self.force[k], strict=True)
             ]
-            for a, f, p1, p2 in zip(self.starts[k], self.force[k], p_side, p_other, strict=True):
-                self.forms = (
-                    self.forms
-                    + paces.odd_rounded(2 * p1 + 1, d) * paces.odd_rounded(2 * p2 + 1, d)
-                    + quotient(-a * f, node.w)
-                )
+            u_in = [paces.odd_rounded(2 * p + 1, ds) for p in p_side]
+            u_out = [paces.odd_rounded(2 * p + 1, ds) for p in p_other]
+            pulls = gram.weighted(g, self.starts[k], self.force[k])
+            for product, pull in zip(gram.weighted(g, u_in, u_out), pulls, strict=True):
+                self.forms = self.forms + product + quotient(-pull, self.walls[k])
             self.kicked[k] = p_other
 
     def carrier_act(self) -> None:
@@ -196,37 +209,38 @@ class Interval:
         self.w_div = self.w_half * (xc.before + xc.now)
 
     def divisions(self) -> None:
-        """Every riding line divides once at the mean wall of the carrier's two levels at its end, its remainder kept in [0, W) there; the planes' lines at the start and after the step kept for the close, the Wronskian after summed for the shape-4 row's write."""
+        """Every riding line divides once at the mean wall of the carrier's two levels at its end times its row's scale, its remainder kept in [0, W) there; the records' lines at the start and after the step kept for the close, the charge after summed for the shape-4 row's write."""
         node = self.node
         self.w_after = zeros(node.shape)
         for r in self.riders:
             k = self.where[id(r)]
+            ws = self.scales[k] * self.w_div
             new = []
             for a, p, line in zip(self.starts[k], self.kicked[k], self.rows[k], strict=True):
-                v, rem = division_forward(p, self.w_div, half(self.w_div))
+                v, rem = division_forward(p, ws, half(ws))
                 new.append(
-                    Line(a + v, a, rem, self.w_div, line.wr, line.wwall)
+                    Line(a + v, a, rem, ws, line.wr, line.wwall)
                     if self.direction == 1
-                    else Line(a, a - v, rem, self.w_div, line.wr, line.wwall)
+                    else Line(a, a - v, rem, ws, line.wr, line.wwall)
                 )
             if self.direction == -1 and self.kept is not None:
                 node.restore(new, self.kept[k], self.top)
             self.out[k] = new
-            if r.shape == PLANE:
+            if r in self.records:
                 start = self.rows[k] if self.direction == 1 else new
                 after = new if self.direction == 1 else self.held[k]
                 self.plane_starts.append(list(start))
                 self.stepped.append([line.copy() for line in after])
                 if r.gap:
-                    self.w_after = self.w_after + wronskian(*after)
+                    self.w_after = self.w_after + gram.charge(r.shape, after)
         node.stepped = self.stepped
 
     def writes(self) -> None:
-        """Forward: the riding rows' writes after the divisions, from numbers known before them: the gap-0 line's W-S1 lay, the emission over the mean wall after; the shape-4 row's 2 W of the planes after the step and the current at the start."""
+        """Forward: the riding rows' writes after the divisions, from numbers known before them: the gap-0 line's W-S1 lay, the emission over the mean wall after at the common scale; the shape-4 row's 2 W of the records after the step and the current at the start."""
         node = self.node
         laid_line = self.out[self.where[id(self.gap0)]][0]
         before_write = laid_line.now
-        node.write(laid_line, quotient(self.emission, self.w_div), 1)
+        node.write(laid_line, quotient(self.emission, self.common * self.w_div), 1)
         laid_on(node, laid_line, before_write)
         for line, n in zip(
             self.out[self.where[id(self.potential)]], [2 * self.w_after, *self.current], strict=True

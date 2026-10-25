@@ -1,4 +1,4 @@
-"""The close's reads and writes at one Node: the one-Link read of a number on the frame's digit lattices (`read_number`), the exact take of the gap-0 line's levels by the share's fall (`fall_of`, `take_at`), the one lay act (`lay`), the lay of one quantum's amplitude (`lay_amplitude`) and the lattice momentum a move books (`momentum_of`)."""
+"""The close's reads and writes at one Node: the one-Link read of a number on the frame's digit lattices (`read_number`), the exact take of the taken row's levels by the share's fall (`fall_of`, `take_at`), the one lay act (`lay`) and the lattice momentum a move books (`momentum_of`)."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core import paces, rule3
+from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, wrap
 from event_universe.core.rule3 import half, lattice, mirrored, quotient, remainder
 from event_universe.links import cross
@@ -33,20 +33,26 @@ def at_node(x: Any, at: tuple[int, ...]) -> int:
 
 
 def read_number(
-    node: Node, at: tuple[int, ...], rules: list[tuple[Line, rule3.Rule]]
+    node: Node, at: tuple[int, ...], rules: list[tuple[Line, rule3.Rule]], unit: int
 ) -> tuple[int, int] | None:
-    """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the gap-0 unit times the planes' count (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse."""
-    modulus = node.unit_gap0 * len(node.records())
+    """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the taken row's unit times the planes' count, the shape-2 records the draw names (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse."""
+    modulus = unit * sum(1 for r in node.records() if r.shape == PLANE)
     nodes = frame_nodes(node, at)
     digits = []
     origin = coarse = True
     w_half = half(node.w)
     for line, r in rules:
-        f0 = lattice(at_node(line.wall, at), at_node(r.mass, at), *[at_node(x, at) for x in r.reaches])
         for k, n in enumerate(nodes):
-            wl = at_node(line.wall, n)
-            f = f0 if k == 0 else lattice(wl, at_node(r.reaches[k - 1], n))
-            rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f))
+            key = (id(r), k, n)
+            if key not in node.lattices:
+                wl = at_node(line.wall, n)
+                node.lattices[key] = (
+                    lattice(wl, at_node(r.mass, n), *[at_node(x, n) for x in r.reaches])
+                    if k == 0
+                    else lattice(wl, at_node(r.reaches[k - 1], n))
+                )
+            f = node.lattices[key]
+            rem, values = node.digit_of(int(line.rem[n]), quotient(at_node(line.wall, n), f))
             origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
             coarse = coarse and values <= AXES
             digits.append((quotient(rem, f), values + 1))
@@ -66,7 +72,7 @@ def read_number(
 def fall_of(
     node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, line: Line
 ) -> tuple[int | None, int]:
-    """The exact take at the Node: the gap-0 line's now moved toward its before by the least count of levels at which the Node's share falls by the walls; the fall f(s) an exact quadratic in s, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
+    """The exact take at the Node in the carrier's unit (PM-S1): the gap-0 line's now moved toward its before by the least count of levels at which the Node's share falls by the walls; the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
     now, before = int(line.now[at]), int(line.before[at])
     if now == before:
         return None, 0
@@ -75,19 +81,17 @@ def fall_of(
     reached = 0
     for port, reach in enumerate(r.reaches):
         reached += int(np.asarray(reach)[at]) * int(line.before[neighbour(node, at, port)])
-    pace = int(np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)[at])
-    weight = 2 * pace * pace * node.G * node.G + (1 if pace == 0 else 0)
+    pull = own * before + reached
+    x, weight = int(node.start_x[at]), 2 * node.gamma**3 * node.G * node.G
 
     def fall(s: int) -> int:
-        return int(
-            quotient(w * (now * now - (now + t * s) ** 2) - t * s * (own * before + reached), weight)
-        )
+        return int(quotient(x * (w * (now * now - (now + t * s) ** 2) - t * s * pull), weight))
 
     dist = abs(now - before)
     full = fall(dist)
     if full < walls:
         return None, full
-    for s in rule3.least_root(-w, -(2 * w * now + own * before + reached) * t, walls * weight, dist):
+    for s in rule3.least_root(-w * x, -(2 * w * now + pull) * t * x, walls * weight, dist):
         if s <= dist and fall(s) >= walls:
             return s, fall(s)
     for s in range(1, dist + 1):
@@ -96,10 +100,10 @@ def fall_of(
     return dist, full
 
 
-def lay(node: Node, rec: int, where: Any, levels: tuple[Any, Any, Any, Any], sign: int = 1) -> None:
-    """The one lay act: a record's four levels (re_now, re_before, im_now, im_before) added at the Node `where` (or over the board), taken back with sign -1."""
-    re, im = node.records()[rec].lines
-    for line, now, before in ((re, levels[0], levels[1]), (im, levels[2], levels[3])):
+def lay(node: Node, rec: int, where: Any, levels: tuple[Any, ...], sign: int = 1) -> None:
+    """The one lay act: a record's levels (now, before per line: re_now, re_before, im_now, im_before for a plane) added at the Node `where` (or over the board), taken back with sign -1."""
+    lines = node.records()[rec].lines
+    for line, now, before in zip(lines, levels[0::2], levels[1::2], strict=True):
         line.now[where] = line.now[where] + sign * now
         line.before[where] = line.before[where] + sign * before
 
@@ -123,12 +127,13 @@ def momentum_of(
 
 
 def take_at(
-    node: Node, at: tuple[int, ...], walls: int, r_gap0: rule3.Rule, cause: int
+    node: Node, at: tuple[int, ...], walls: int, rule: rule3.Rule, cause: int, rec: int | None = None
 ) -> tuple[int, int, int, int] | None:
-    """One exact take at a Node of the walls booked: the gap-0 line's level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the gap-0 line's now before the take, its before) or None."""
-    gap0 = node.row(PLANE, gap=0)
-    z = gap0.lines[0]
-    levels, fall = fall_of(node, at, walls, r_gap0, z)
+    """One exact take at a Node of the walls booked from the taken row's first line at its rule (the gap-0 row's where none is named: a body's take): its level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the line's now before the take, its before) or None."""
+    taken = node.records().index(node.row(PLANE, gap=0)) if rec is None else rec
+    row = node.records()[taken]
+    z = row.lines[0]
+    levels, fall = fall_of(node, at, walls, rule, z)
     if levels is None:
         node.counts["refused_stop"] += cause
         node.log.append(
@@ -144,26 +149,8 @@ def take_at(
         return None
     now, before = int(z.now[at]), int(z.before[at])
     toward = 1 if before > now else -1
-    lay(node, node.records().index(gap0), at, (toward * levels, 0, 0, 0))
+    lay(node, taken, at, (toward * levels,) + (0,) * (2 * row.shape - 1))
     node.closes[at] += 1
-    assert gap0.pair is not None
-    node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=gap0.pair[0])
+    assert row.pair is not None
+    node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=row.pair[0])
     return levels, fall, now, before
-
-
-def lay_amplitude(
-    node: Node, s: int, at: tuple[int, ...], c: Any, factors: tuple[Any, ...], pace: Any
-) -> int:
-    """The lay of one quantum: the child's record laid at the Node with the least amplitude A at which its own share reads one quantum of its unit at the Node's paces, (2 D + SUM_j R_j) A^2 >= unit x 4 p^2 G^2 (the frame share's term of a lone record with now = before = A)."""
-    r = node.rule_of(node.records()[s], c, factors)
-    reaches = sum(int(np.asarray(x)[at]) for x in r.reaches)
-    mass = 2 * int(np.asarray(r.wall)) - int(np.asarray(r.self_coefficient)[at]) - reaches
-    weight = 2 * mass + reaches
-    pc = int(np.asarray(pace, dtype=object)[at])
-    target = node.units[s] * 4 * pc * pc * node.G * node.G
-    if weight <= 0:
-        return node.A
-    amplitude = rule3.largest_below(quotient(target, weight))
-    while weight * amplitude * amplitude < target:
-        amplitude += 1
-    return amplitude

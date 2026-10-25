@@ -9,14 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe.core import paces
-from event_universe.core.rule3 import (
-    coefficients,
-    form_term,
-    link_factor,
-    mass,
-    mirrored,
-    rule3,
-)
+from event_universe.core.rule3 import coefficients, form_term, link_factor, mass, mirrored, rule3
 from tests.laws import arrivals_rule3
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -110,15 +103,10 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
 
 
 LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 4, 6}), frozenset({12})
-ROW_INTEGERS = frozenset(
-    {10, 54, 64}
-)  # rows.py: the carrier's shape, the trace's weight 2 x 27, the width's half
-READERS = (
-    "run.py",
-    "decoder.py",
-    "gates.py",
-    "events.py",
-)  # the record's writer and readers, no act of the Node: their scales are their own
+# rows.py: the quartet's and the carrier's shapes, the trace's weight 2 x 27, the width's half
+ROW_INTEGERS = frozenset({8, 10, 54, 64})
+# the record's writer and readers, no act of the Node: their scales are their own
+READERS = tuple(f"{n}.py" for n in "run decoder gates events circle board clicks predicates".split())
 NAMED_CALLS = {
     "refused",
     "get",

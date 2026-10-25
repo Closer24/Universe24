@@ -1,15 +1,14 @@
-"""The decoder of the record, integers only (the owner's word: no float anywhere, every reading a quotient with its remainder or a count over a span): it reads the run's log alone (credits, births, refusals; the rows of the board's course), holds den's circle and its own names for the planes (never the Node's), and gives every gate of UNIVERSE24 a verdict with its numbers; two views, the whole view (every click on the board) and the one-place view (a body found from its clicks alone at one Node); the gates themselves are gates.py."""
+"""The decoder's reads of the record, integers only (the owner's word: no float anywhere, every reading a quotient with its remainder or a count over a span): the record as read from the run's log alone (credits, births, refusals; the rows of the board's course; the Node lines), cut to an interval for a gate read as it first shows (`Record.to`), its own names for the planes (never the Node's), the species solved from a credit's frame and the nearest name; the gates themselves are the table of gates.py, the rows read from the clicks clicks.py, the board's board.py and the widened rows predicates.py."""
 
 from __future__ import annotations
 
-from collections import Counter, defaultdict
-from functools import cmp_to_key
+from bisect import bisect_right
 from typing import Any
 
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.links import cross, turn_pair
-from event_universe.rows import PLANE
+from event_universe.rows import PLANE, QUARTET
 
 MIL = 1000000  # readings in parts per million
 HUNDRED = 100  # readings in hundredths
@@ -28,9 +27,11 @@ class Record:
         self.den = int(run["den"])
         self.gamma, self.G, self.T = int(run["gamma"]), int(run["G"]), int(run["T"])
         rows = run["universe"]["rows"]
-        planes = [
-            tuple(int(x) for x in r["pair"]) for r in rows if int(r["shape"]) == PLANE and r.get("pair")
-        ]
+        planes = {
+            tuple(int(x) for x in r["pair"])
+            for r in rows
+            if int(r["shape"]) in (PLANE, QUARTET) and r.get("pair")
+        }
         gapped = sorted((sine_den(num, self.den), num) for num, den in planes if num != den)
         self.NL = len(gapped)
         self.NAMES: dict[int, tuple[str, int]] = {
@@ -38,17 +39,35 @@ class Record:
         }
         self.NAMES[self.den] = ("gap 0", 0)
         self.line_num = [int(num) for num in run["planes"]]
+        records = sorted(
+            (r for r in rows if r.get("pair") and int(r["shape"]) in (PLANE, QUARTET)),
+            key=lambda r: int(r["pair"][0]) == int(r["pair"][1]),
+        )
+        shapes = [int(r["shape"]) for r in records]
+        assert [int(r["pair"][0]) for r in records] == self.line_num
+        self.line_name = [
+            self.NAMES[num][0] if shape == PLANE else f"shape-{shape} at {self.NAMES[num][0]}"
+            for num, shape in zip(self.line_num, shapes, strict=True)
+        ]
         self.log = run["log"]
         self.credits = [entry for entry in self.log if entry["event"] == "credit"]
         self.births = [entry for entry in self.log if entry["event"] == "birth"]
         self.rows = run["rows"]
+        self.nodes = run.get("nodes", [])
+        self.intervals = int(run["intervals"])
         self.w = rule3.wall_of(self.den, self.gamma, self.G)
+        self.memo: dict[str, Any] = {}
 
-    def through(self, k: int) -> Record:
-        """The record with its credits cut to the first k, for a gate read as it first shows."""
+    def to(self, i: int) -> Record:
+        """The record cut to the intervals 1 to i (its log, its rows and its Node lines, each in the run's order, cut by a search on the interval), for a gate read as it first shows; the solves and the run back stay the whole record's."""
         found = Record.__new__(Record)
         found.__dict__.update(self.__dict__)
-        found.credits = sorted(self.credits, key=lambda c: int(c["i"]))[:k]
+        found.intervals = i
+        for name in ("log", "credits", "births"):
+            whole = getattr(self, name)
+            setattr(found, name, whole[: bisect_right(whole, i, key=lambda e: int(e["i"]))])
+        found.rows = self.rows[: bisect_right(self.rows, i, key=lambda r: int(r["i"]))]
+        found.nodes = self.nodes[: bisect_right(self.nodes, i, key=lambda n: int(n["i"]))]
         return found
 
 
@@ -74,8 +93,10 @@ def carrier_levels(record: Record, credit: dict[str, Any]) -> tuple[int, int, in
 
 
 def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
-    """The species from the frame in exact integers under the symmetric ride (interval.py's form): a riding line's momentum P_in = W_in (a_now - a_before) + r - W_in div 2 at the mean wall W_in = (w div 2)(X_before + X_now), the kick P_out = P_in + X_now F with F = SUM_j R_j (m_j - z) - D z, the one division a_next = a_now + (P_out + W_out div 2) div W_out at W_out = (w div 2)(X_now + X_next); from the record's levels v = a_next - a_now gives X_now F to the remainders' width, E = v W_out - W_in (a_now - a_before), and F is linear in num: num = (E + 12 den p_0^2 G^2 z X_now) / ((A + 12 p_0^2 G^2 z) X_now) with A = SUM_j 2 p_i^2 Q_j G^2 (m_j - z) over the turned arrivals; x = num / den as the rational (N, D), D > 0."""
+    """The species from the frame in exact integers under the symmetric ride (interval.py's form), a plane's frame alone (a quartet's credit carries its bilinears, its species owed by name): a riding line's momentum P_in = W_in (a_now - a_before) + r - W_in div 2 at the mean wall W_in = (w div 2)(X_before + X_now), the kick P_out = P_in + X_now F with F = SUM_j R_j (m_j - z) - D z, the one division a_next = a_now + (P_out + W_out div 2) div W_out at W_out = (w div 2)(X_now + X_next); from the record's levels v = a_next - a_now gives X_now F to the remainders' width, E = v W_out - W_in (a_now - a_before), and F is linear in num: num = (E + 12 den p_0^2 G^2 z X_now) / ((A + 12 p_0^2 G^2 z) X_now) with A = SUM_j 2 p_i^2 Q_j G^2 (m_j - z) over the turned arrivals; x = num / den as the rational (N, D), D > 0."""
     f, content = credit["frame"], credit["content"]
+    if "re_now" not in f:
+        return None
     gamma, den, unit = record.gamma, record.den, record.G
     p0, pi = paces.clock(gamma, content), paces.link_pace(gamma, content)
     w = rule3.wall_of(den, gamma, unit)
@@ -128,16 +149,19 @@ def decoded_credits(
     record: Record,
 ) -> tuple[list[tuple[dict[str, Any], str, Rational]], int, int, list[int | None]]:
     """Every credit's species solved from its frame: the decoded (credit, name, x), the count read right, the count within the one-click floor, and each credit's floor on x in parts per million."""
-    den, names, line_num = record.den, record.NAMES, record.line_num
+    den, line_num = record.den, record.line_num
     decoded = []
     right = within = 0
     floors: list[int | None] = []
+    solved = record.memo.setdefault("solve", {})
     for c in sorted(record.credits, key=lambda c: int(c["i"])):
-        x = solve(record, c)
+        if id(c) not in solved:
+            solved[id(c)] = solve(record, c)
+        x = solved[id(c)]
         if x is None:
             continue
         name = nearest(record, x, int(c["beat"]))
-        right += name == names[line_num[c["line"]]][0]
+        right += name == record.line_name[c["line"]]
         decoded.append((c, name, x))
         n, d = x
         num = line_num[c["line"]]
@@ -148,129 +172,3 @@ def decoded_credits(
             else None
         )
     return decoded, right, within, floors
-
-
-def species(record: Record) -> tuple[dict[str, Any], list[tuple[dict[str, Any], str, Rational]]]:
-    """Gates 8, 8b, 19 and 16: the species from the frame of every credit (the whole view) and over a body's track (the one-place view: the middle solve), the mass ratios from den's legs, the one-click floor."""
-    out: dict[str, Any] = {}
-    names, line_num = record.NAMES, record.line_num
-    decoded, right, within, floor_mil = decoded_credits(record)
-    tracks: dict[tuple[Any, int], list[Rational]] = defaultdict(list)
-    confusion: Counter[tuple[str, str]] = Counter()
-    for c, name, x in decoded:
-        tracks[(tuple(c["node"]), c["line"])].append(x)
-        confusion[(names[line_num[c["line"]]][0], name)] += 1
-    track_right = 0
-    for (_node, line), xs in tracks.items():
-        xs.sort(key=cmp_to_key(cmp_rat))
-        track_right += nearest(record, middle(xs), 1) == names[line_num[line]][0]
-    born = Counter(names[line_num[b["line_pair"]]][0] for b in record.births)
-    out["8b species over the track (one-place view: the middle solve of the body's track)"] = {
-        "tracks": len(tracks),
-        "decoded right": track_right,
-        "confusion (truth->decoded) per credit": {
-            f"{a}->{b}": n for (a, b), n in confusion.items() if a != b
-        },
-    }
-    if not decoded:
-        verdict = "NOT READ: no credit in the record"
-    elif within == len(decoded) and track_right == len(tracks) and len(born) >= 3:
-        verdict = "SHOWN (every credit within the one-click floor, every track read right)"
-    elif within == len(decoded):
-        verdict = (
-            f"SHOWN in part: every credit within the floor, tracks right {track_right} of {len(tracks)}"
-        )
-    else:
-        verdict = f"NOT SHOWN: {len(decoded) - within} credits beyond the floor"
-    out["8 families forming (whole view)"] = {
-        "credits": len(record.credits),
-        "species readable": len(decoded),
-        "decoded right per credit": right,
-        "credits within the one-click floor": within,
-        "tracks right": [track_right, len(tracks)],
-        "births by species (decoder)": dict(born),
-        "verdict": verdict,
-    }
-    return out | ratios(record, floor_mil, within, len(decoded)), decoded
-
-
-def ratios(record: Record, floor_mil: list[int | None], within: int, decoded: int) -> dict[str, Any]:
-    """Gates 19 and 16: the mass ratios from den's legs (the planes with a gap against the lightest) and the one-click floor on x per credit."""
-    names = record.NAMES
-    legs = sorted(((name, leg) for name, leg in names.values() if leg), key=lambda kv: kv[1])
-    num_of = {v[0]: k for k, v in names.items()}
-    found: dict[str, Any] = {f"{nm}/{legs[0][0]}": quot(leg, legs[0][1], MIL) for nm, leg in legs[1:]}
-    read = (
-        "SHOWN as a fit of den (the legs), read from the decoded points"
-        if decoded
-        else "NOT READ: no credit decoded"
-    )
-    out = {"19 mass ratios (parts per million)": found | {"verdict": read}}
-    fl = sorted(f for f in floor_mil if f is not None)
-    if fl:
-        spacing = (
-            quot(abs(num_of[legs[-1][0]] - num_of[legs[-2][0]]), num_of[legs[-1][0]], MIL)
-            if record.NL >= 2
-            else None
-        )
-        out["16 uncertainty floor (one click)"] = {
-            "floor on x per credit, parts per million: min / middle / max": [
-                fl[0],
-                fl[len(fl) // 2],
-                fl[-1],
-            ],
-            "species spacing of the two heaviest, parts per million": spacing,
-            "credits beyond the floor": decoded - within,
-            "verdict": "SHOWN as the law's floor: no credit reads beyond it"
-            if within == decoded
-            else "NOT SHOWN",
-        }
-    return out
-
-
-def charge_and_take(record: Record) -> tuple[dict[str, Any], int, int, int]:
-    """Gates 17 and 15: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births) and the conservation at the click (taken against booked)."""
-    births = record.births
-    signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
-    sizes = sorted(abs(w) for b in births for w in b["W_children"])
-    sense_sum = sum(signs)
-    opposite = sum(
-        1
-        for b in births
-        if (b["W_children"][0] > 0) != (b["W_children"][1] > 0) and 0 not in b["W_children"]
-    )
-    out = {
-        "17 charge conservation": {
-            "senses sum over births (from the children's Wronskian signs)": sense_sum,
-            "children with W = 0": signs.count(0),
-            "births with the two children at opposite signs": opposite,
-            "the children's |W| least / largest (the charge's magnitude, one e for every row in nature: MS)": [
-                sizes[0],
-                sizes[-1],
-            ]
-            if sizes
-            else None,
-            "verdict": (
-                "SHOWN: the senses sum to 0"
-                if sense_sum == 0 and 0 not in signs
-                else "NOT SHOWN: the senses"
-            )
-            + (
-                "; the magnitude SHOWN: one |W| on every child"
-                if sizes and sizes[0] == sizes[-1]
-                else "; the magnitude NOT SHOWN: |W| differs between the children (the pair's unit in the lay, MS-S1 owed)"
-                if sizes
-                else "; the magnitude NOT READ"
-            ),
-        }
-    }
-    booked, taken = sum(b["booked"] for b in births), sum(b["taken"] for b in births)
-    exact = all(b["taken"] >= b["booked"] for b in births)
-    out["15 conservation at the click"] = {
-        "births": len(births),
-        "taken per booked at the births (hundredths)": quot(taken, booked, HUNDRED),
-        "verdict": "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light)"
-        if exact
-        else "NOT SHOWN",
-    }
-    return out, sense_sum, taken, booked

@@ -1,4 +1,4 @@
-"""The seed as the world file lays it: a list of lays in the three forms of the law and no fourth (the owner's word of 2026-10-25): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a plane with a gap the conjugate pair at rest over the raised cosine's envelope of the half-width 2 or 3. Refused by name: a fourth form, a lay onto a row of another shape, a sea of a plane with a gap, a Node off the board, a packet of another width."""
+"""The seed as the world file lays it: a list of lays in the three forms of the law and no fourth (the owner's word of 2026-10-25): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair at rest over the raised cosine's envelope of the half-width 2 or 3 (a quartet's lay names its `vector`, the eight integers of the lattice, and may name one `sense`; the lay refused by state where the standing row's spin density agrees with the child's at the centre, SR-S4). Refused by name: a fourth form, a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a quartet's lay with no vector."""
 
 from __future__ import annotations
 
@@ -6,10 +6,11 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
+from event_universe import gram
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import quotient
-from event_universe.rows import PLANE, Line, Row, zeros
+from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -21,8 +22,8 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
     for lay in lays:
         form = lay.get("lay")
         row = node.by_index[int(lay["row"])] if "row" in lay else None
-        if row is not None and row.shape != PLANE:
-            raise ValueError("a lay is onto a plane (shape 2)")
+        if row is not None and row not in node.records():
+            raise ValueError("a lay is onto a record (a plane or a quartet)")
         if form == "sea":
             if row is None or row.gap != 0:
                 raise ValueError("a sea is the plane at the gap 0 alone: the drift is its double root")
@@ -38,11 +39,17 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
             if row.gap == 0:
                 node.lay(node.records().index(row), at, (n * node.drift, 0, 0, 0))
             else:
-                packets.append((node.records().index(row), at, int(lay.get("width", 0)), n))
+                vector = lay.get("vector")
+                if (vector is None) != (row.shape == PLANE):
+                    raise ValueError("a quartet's lay names its vector, a plane's names none")
+                sense = lay.get("sense")
+                packets.append(
+                    (node.records().index(row), at, int(lay.get("width", 0)), n, vector, sense)
+                )
         else:
             raise ValueError(f"a lay of no form of the law: {form!r}")
-    for rec, at, h, n in packets:
-        lay_packet(node, rec, at, h, n)
+    for rec, at, h, n, vector, sense in packets:
+        lay_packet(node, rec, at, h, n, vector, sense)
 
 
 def raised_cosine(h: int) -> tuple[int, ...]:
@@ -67,32 +74,27 @@ def envelope_of(node: Node, at: tuple[int, ...], h: int) -> tuple[Any, int]:
 
 
 def rest_record(
-    node: Node, row: Row, envelope: Any, w0: int, amplitude: int, sense: int
-) -> tuple[Line, Line]:
-    """A record at rest over the envelope at an amplitude: re_now = A w_i div w_0, re_before = re_now num div den, im_now = 0, im_before = sense re_now s div den with s the pair's sine."""
+    node: Node, row: Row, envelope: Any, w0: int, amplitude: int, sense: int, vector: list[int]
+) -> list[Line]:
+    """A record at rest over the envelope at an amplitude (gram.rest): re_now = A w_i div w_0 along the lay's vector, before = num now div den + sense s (J now) div den with s the pair's sine, the plane's re_before = re_now num div den, im_now = 0, im_before = sense re_now s div den as the case v = (1, 0)."""
     assert row.pair is not None
     num = row.pair[0]
     re_now = quotient(amplitude * envelope, w0)
-    before = sense * quotient(re_now * sine_den(num, node.den), node.den)
-    return Line(re_now, quotient(re_now * num, node.den), None, node.w), Line(
-        zeros(node.shape), before, None, node.w
-    )
+    return gram.rest(row.shape, re_now, vector, num, node.den, sine_den(num, node.den), sense)
 
 
-def fitted(node: Node, row: Row, envelope: Any, w0: int, target: int) -> int:
+def packet_share(node: Node, row: Row, lines: list[Line], rule: Any) -> int:
+    """A record's share at the vacuum's weight summed over the board."""
+    return int(sum(int(x) for x in node.share(lines, rule).reshape(-1)))
+
+
+def fitted(node: Node, row: Row, envelope: Any, w0: int, target: int, vector: list[int]) -> int:
     """The largest amplitude at which the record's share at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
-    rule = node.rule_of(row, node.content(), node.link_factors())
+    assert row.pair is not None
+    rule = node.rule(row.pair, node.content(), node.link_factors())
 
     def share_of(amplitude: int) -> int:
-        re, im = rest_record(node, row, envelope, w0, amplitude, 1)
-        return int(
-            sum(
-                int(x)
-                for x in (node.share(re, rule, vacuum=True) + node.share(im, rule, vacuum=True)).reshape(
-                    -1
-                )
-            )
-        )
+        return packet_share(node, row, rest_record(node, row, envelope, w0, amplitude, 1, vector), rule)
 
     high = 1
     while share_of(high) <= target:
@@ -107,23 +109,38 @@ def fitted(node: Node, row: Row, envelope: Any, w0: int, target: int) -> int:
     return low
 
 
-def lay_packet(node: Node, rec: int, at: tuple[int, ...], h: int, n: int) -> None:
-    """The `at` lay of a plane with a gap: the conjugate pair (the two records at the senses -1 and 1) laid at rest over the envelope (`rest_record`), each record at the largest amplitude whose share, summed over the packet, is at most n quanta of its unit (`fitted`); the lay logged."""
+def lay_packet(
+    node: Node,
+    rec: int,
+    at: tuple[int, ...],
+    h: int,
+    n: int,
+    vector: list[int] | None = None,
+    one_sense: int | None = None,
+) -> None:
+    """The `at` lay of a record with a gap: the conjugate pair (the two records at the senses -1 and 1 where the lay names no sense or the sense 0, EM-S2; the one record at the sense -1 or 1 named) laid at rest over the envelope (`rest_record`) along the vector (a plane's (1, 0)), each record at the largest amplitude whose share, summed over the packet, is at most n quanta of its unit (`fitted`); a record refused by state where the standing row and the child agree at the centre in their full state, the sense (the charges' product above 0) and the spin (the spin densities' dot above 0; SR-S4: the exclusion the lay's rule per full state), laid whole where either opposes or nothing stands; the lay logged."""
     row = node.records()[rec]
-    envelope, w0 = envelope_of(node, at, h)
-    node.start_content = node.content()
-    amplitude = fitted(node, row, envelope, w0, n * node.units[rec])
-    for sense in (-1, 1):
-        re, im = rest_record(node, row, envelope, w0, amplitude, sense)
-        node.lay(rec, Ellipsis, (re.now, re.before, im.now, im.before))
-    re, im = rest_record(node, row, envelope, w0, amplitude, 1)
-    rule = node.rule_of(row, node.start_content, node.link_factors())
-    share = int(
-        sum(
-            int(x)
-            for x in (node.share(re, rule, vacuum=True) + node.share(im, rule, vacuum=True)).reshape(-1)
-        )
+    assert row.pair is not None
+    named = {"sense": int(one_sense or 0)} | (
+        {} if vector is None else {"vector": [int(v) for v in vector]}
     )
+    vector = [1, 0] if vector is None else [int(v) for v in vector]
+    envelope, w0 = envelope_of(node, at, h)
+    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
+    amplitude = fitted(node, row, envelope, w0, n * node.units[rec], vector)
+    for sense in (-1, 1) if not one_sense else (int(one_sense),):
+        lines = rest_record(node, row, envelope, w0, amplitude, sense, vector)
+        standing = gram.density(row.shape, [line.now for line in row.lines])
+        child = gram.density(row.shape, [line.now for line in lines])
+        dot = sum(int(s[at]) * int(c[at]) for s, c in zip(standing, child, strict=True))
+        charges = int(gram.charge(row.shape, row.lines)[at]) * int(gram.charge(row.shape, lines)[at])
+        if dot > 0 and charges > 0:
+            node.counts["refused_lay"] += 1
+            node.log.append({"event": "refused", "i": 0, "node": list(at), "cause": "state", "dot": dot})
+            continue
+        node.lay(rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
+    lines = rest_record(node, row, envelope, w0, amplitude, 1, vector)
+    rule = node.rule(row.pair, node.start_content, node.link_factors())
     node.log.append(
         {
             "event": "lay",
@@ -133,8 +150,9 @@ def lay_packet(node: Node, rec: int, at: tuple[int, ...], h: int, n: int) -> Non
             "width": h,
             "quanta": n,
             "amplitude": amplitude,
-            "share": share,
+            "share": packet_share(node, row, lines, rule),
             "unit": node.units[rec],
             "nodes": int(sum(1 for x in envelope.reshape(-1) if int(x) > 0)),
+            **named,
         }
     )

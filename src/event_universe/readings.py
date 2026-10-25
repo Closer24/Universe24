@@ -1,4 +1,4 @@
-"""The Node's readings at an interval's start, each a function of the Node's state at every Node alike: the content (the carrier's level), the (cos, sin) pair at a count along the one orbit, the Link factors from the two ends' axis parts, the frame signs, the centred count and the Links' phases, the conserved form's share at the frame's or the vacuum's weight, the swap's floor."""
+"""The Node's readings at an interval's start, each a function of the Node's state at every Node alike: the content (the carrier's level), the (cos, sin) pair at a count along the one orbit, the Link factors from the two ends' axis parts, the frame signs, the centred count and the Links' phases, the swap's floor; the records' share is gram.share."""
 
 from __future__ import annotations
 
@@ -6,12 +6,12 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core import paces, rule3
+from event_universe.core import paces
 from event_universe.core.ports import PORT_SIDES, PORTS, across
-from event_universe.core.rule3 import division_forward, form_term, link_factor
+from event_universe.core.rule3 import link_factor
 from event_universe.features import phase, volume
 from event_universe.links import link
-from event_universe.rows import CARRIER, Line, zeros
+from event_universe.rows import CARRIER, Line
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -83,21 +83,6 @@ def link_phases(node: Node, frames: list[Any], count: Any) -> list[tuple[Any, An
         pairs = np.vectorize(lambda m: pair_angle(node, m), otypes=[object, object])(n)
         found.append((pairs[0], pairs[1]))
     return found
-
-
-def share(node: Node, line: Line, r: rule3.Rule, pace: Any = None, vacuum: bool = False) -> Any:
-    """The conserved form's term at the Node in the current's units over the weight: [w (now^2 + before^2) - S now before - now SUM_j R_j before_j], doubled, less the Links' products shared half and half between a Link's two ends; over 4 p^2 G^2 at the frame's weight, over 4 Gamma^2 G^2 at the vacuum's (V-D)."""
-    reached, shared = zeros(node.shape), zeros(node.shape)
-    for port, reach in enumerate(r.reaches):
-        b_j, n_j = across(line.before, port), across(line.now, port)
-        reached = reached + reach * b_j
-        shared = shared + reach * (line.before - b_j) * (line.now + n_j)
-    found = form_term(r.self_coefficient, r.wall, line.now, line.before) - line.now * reached
-    found = found + found - shared
-    pace = paces.link_pace_of(node.gamma, node.start_content) if pace is None else pace
-    sq = (node.gamma * node.gamma) if vacuum else pace * pace
-    wall = 4 * sq * node.G * node.G + (sq == 0)
-    return np.asarray(division_forward(found, wall, 0)[0])
 
 
 def floor(node: Node) -> int:
