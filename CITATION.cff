@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite the paper below and the software's Zenodo record."
 title: "Universe24: the implementation of one integer rule on a cubic lattice, read through clicks"
 type: software
-version: 3.0.0
-date-released: 2026-10-19
+version: 4.0.0
+date-released: 2026-10-25
 license: MIT
 doi: 10.5281/zenodo.23466436
 repository-code: "https://github.com/Closer24/Universe24"
