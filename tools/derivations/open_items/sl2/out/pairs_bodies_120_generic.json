@@ -1,0 +1,47 @@
+{
+ "record": "out/bodies_120_generic.json",
+ "counts": {
+  "births": "0",
+  "taken": "0",
+  "booked": "0",
+  "body_clicks": "83",
+  "refused_stop": "76",
+  "refused_origin": "0",
+  "refused_lay": "448",
+  "refused_orientation": "251",
+  "refused_twist": "1274",
+  "turns": "1573",
+  "laid": "0",
+  "laid_nodes": "0",
+  "met_gapped": "1766"
+ },
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "max bits": 92,
+ "max transient bits": 77,
+ "integers": 89,
+ "births": 0,
+ "mergers": 0,
+ "mergers on a Link a birth laid earlier (the same row)": 0,
+ "charge 0 at births / of": [
+  0,
+  0
+ ],
+ "charge 0 at mergers / of": [
+  0,
+  0
+ ],
+ "gapped meetings": 1766,
+ "gapped meetings with flow 0": 202,
+ "gapped meetings with twist 0": 1366,
+ "gapped meetings by cause": {
+  "twist": 1164,
+  "orientation": 202,
+  "lay": 400
+ },
+ "born pair's Link at i+1 by cause": {},
+ "born pair's Link at i+2 and later by cause": {},
+ "per birth": []
+}

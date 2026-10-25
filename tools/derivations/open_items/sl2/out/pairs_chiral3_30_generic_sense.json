@@ -1,0 +1,245 @@
+{
+ "record": "out/chiral3_30_generic_sense.json",
+ "counts": {
+  "births": "5",
+  "taken": "13351524013266589277670",
+  "booked": "12920262967126013184000",
+  "body_clicks": "1",
+  "refused_stop": "5",
+  "refused_origin": "0",
+  "refused_lay": "124",
+  "refused_orientation": "27",
+  "refused_twist": "3",
+  "turns": "122",
+  "laid": "0",
+  "laid_nodes": "0",
+  "met_gapped": "21",
+  "merger_stop": "1"
+ },
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "max bits": 115,
+ "max transient bits": 98,
+ "integers": 98,
+ "births": 5,
+ "mergers": 0,
+ "mergers on a Link a birth laid earlier (the same row)": 0,
+ "charge 0 at births / of": [
+  4,
+  5
+ ],
+ "charge 0 at mergers / of": [
+  0,
+  0
+ ],
+ "gapped meetings": 21,
+ "gapped meetings with flow 0": 7,
+ "gapped meetings with twist 0": 8,
+ "gapped meetings by cause": {
+  "orientation": 7,
+  "twist": 2,
+  "taken?": 12
+ },
+ "born pair's Link at i+1 by cause": {
+  "orientation": 5
+ },
+ "born pair's Link at i+2 and later by cause": {
+  "twist": 1,
+  "taken?": 11,
+  "orientation": 2
+ },
+ "per birth": [
+  {
+   "i": 2,
+   "row": 2,
+   "link": [
+    [
+     1,
+     1,
+     0
+    ],
+    [
+     1,
+     2,
+     0
+    ]
+   ],
+   "W_children": [
+    -19600,
+    19600
+   ],
+   "next": "orientation",
+   "meeting": {
+    "flow": 0,
+    "twist": 0,
+    "shares": [
+     1783151954871616946400,
+     1783151954871616946400
+    ],
+    "unit": 1613701501183721088000,
+    "W_ends": [
+     -19600,
+     19600
+    ],
+    "light_shares": [
+     463457929589818244478,
+     1256723139200781929671
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "row": 2,
+   "link": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     1,
+     1,
+     2
+    ]
+   ],
+   "W_children": [
+    -19600,
+    20720
+   ],
+   "next": "orientation",
+   "meeting": {
+    "flow": 0,
+    "twist": 0,
+    "shares": [
+     1783151954871616946400,
+     1837383362180341492038
+    ],
+    "unit": 1613701501183721088000,
+    "W_ends": [
+     -19600,
+     20720
+    ],
+    "light_shares": [
+     -688125780829842935685,
+     2318999391540974959275
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "row": 0,
+   "link": [
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     2
+    ]
+   ],
+   "W_children": [
+    -25,
+    25
+   ],
+   "next": "orientation",
+   "meeting": {
+    "flow": 0,
+    "twist": 0,
+    "shares": [
+     2274428513866858350,
+     2274428513866858350
+    ],
+    "unit": 878848879465440000,
+    "W_ends": [
+     -25,
+     25
+    ],
+    "light_shares": [
+     1591758671094295391525,
+     2318999391540974959275
+    ]
+   }
+  },
+  {
+   "i": 7,
+   "row": 1,
+   "link": [
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     2,
+     0
+    ]
+   ],
+   "W_children": [
+    -19600,
+    19600
+   ],
+   "next": "orientation",
+   "meeting": {
+    "flow": 0,
+    "twist": 0,
+    "shares": [
+     1783151954871616946400,
+     1783151954871616946400
+    ],
+    "unit": 1615924816158049488000,
+    "W_ends": [
+     19600,
+     -19600
+    ],
+    "light_shares": [
+     4236221950222453562424,
+     2640892248114424571543
+    ]
+   }
+  },
+  {
+   "i": 7,
+   "row": 1,
+   "link": [
+    [
+     1,
+     1,
+     1
+    ],
+    [
+     1,
+     1,
+     2
+    ]
+   ],
+   "W_children": [
+    -19044,
+    19044
+   ],
+   "next": "orientation",
+   "meeting": {
+    "flow": 0,
+    "twist": 0,
+    "shares": [
+     1732568664723218016696,
+     1732568664723218016696
+    ],
+    "unit": 1615924816158049488000,
+    "W_ends": [
+     19044,
+     -19044
+    ],
+    "light_shares": [
+     1411093344825075584533,
+     646098434083272684526
+    ]
+   }
+  }
+ ]
+}
