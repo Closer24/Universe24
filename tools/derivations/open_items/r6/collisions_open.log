@@ -1,0 +1,115 @@
+open t 1: {'interval': 1, 'turned': 20, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 2: {'interval': 2, 'turned': 20, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 3: {'interval': 3, 'turned': 15, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 4: {'interval': 4, 'turned': 12, 'cand_false': 1, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 1, 'neither': 0, 'cand_false_at': [(1, 1, 1)], 'base_missed_at': []}
+open t 5: {'interval': 5, 'turned': 6, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 6: {'interval': 6, 'turned': 8, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 7: {'interval': 7, 'turned': 1, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 8: {'interval': 8, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 9: {'interval': 9, 'turned': 12, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 10: {'interval': 10, 'turned': 7, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 11: {'interval': 11, 'turned': 8, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 12: {'interval': 12, 'turned': 12, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 13: {'interval': 13, 'turned': 6, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 14: {'interval': 14, 'turned': 8, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 15: {'interval': 15, 'turned': 1, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 16: {'interval': 16, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 17: {'interval': 17, 'turned': 18, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 18: {'interval': 18, 'turned': 1, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 1, 'base_false': 0, 'ambiguous': 1, 'neither': 0, 'cand_false_at': [], 'base_missed_at': [(1, 1, 1)]}
+open t 19: {'interval': 19, 'turned': 8, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 20: {'interval': 20, 'turned': 13, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 21: {'interval': 21, 'turned': 8, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 22: {'interval': 22, 'turned': 6, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 23: {'interval': 23, 'turned': 1, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 24: {'interval': 24, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 25: {'interval': 25, 'turned': 6, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 26: {'interval': 26, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 27: {'interval': 27, 'turned': 1, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 28: {'interval': 28, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 29: {'interval': 29, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 30: {'interval': 30, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 31: {'interval': 31, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 32: {'interval': 32, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 33: {'interval': 33, 'turned': 1, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 34: {'interval': 34, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 35: {'interval': 35, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 36: {'interval': 36, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 37: {'interval': 37, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 38: {'interval': 38, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 39: {'interval': 39, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 40: {'interval': 40, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 41: {'interval': 41, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 42: {'interval': 42, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 43: {'interval': 43, 'turned': 1, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 44: {'interval': 44, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 45: {'interval': 45, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 46: {'interval': 46, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 47: {'interval': 47, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 48: {'interval': 48, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 49: {'interval': 49, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 50: {'interval': 50, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 51: {'interval': 51, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 52: {'interval': 52, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 53: {'interval': 53, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 54: {'interval': 54, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 55: {'interval': 55, 'turned': 1, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 56: {'interval': 56, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 57: {'interval': 57, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 58: {'interval': 58, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 59: {'interval': 59, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 60: {'interval': 60, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 61: {'interval': 61, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 62: {'interval': 62, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 63: {'interval': 63, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 64: {'interval': 64, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 65: {'interval': 65, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 66: {'interval': 66, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 67: {'interval': 67, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 68: {'interval': 68, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 69: {'interval': 69, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 70: {'interval': 70, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 71: {'interval': 71, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 72: {'interval': 72, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 73: {'interval': 73, 'turned': 6, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 74: {'interval': 74, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 75: {'interval': 75, 'turned': 1, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 76: {'interval': 76, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 77: {'interval': 77, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 78: {'interval': 78, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 79: {'interval': 79, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+open t 80: {'interval': 80, 'turned': 0, 'cand_false': 0, 'cand_missed': 0, 'base_missed': 0, 'base_false': 0, 'ambiguous': 0, 'neither': 0}
+{
+ "totals": {
+  "turned": 208,
+  "cand_false": 1,
+  "cand_missed": 0,
+  "base_missed": 1,
+  "base_false": 0,
+  "ambiguous": 2,
+  "neither": 0
+ },
+ "checks": {
+  "false_top_collision": {
+   "node": [
+    1,
+    1,
+    1
+   ],
+   "pre_images_differ_in_entries": 19,
+   "post_states_unequal_entries": 0,
+   "collision": true,
+   "interval": 4
+  },
+  "missed_top_collision": {
+   "node": [
+    1,
+    1,
+    1
+   ],
+   "pre_images_differ_in_entries": 19,
+   "post_states_unequal_entries": 0,
+   "collision": true,
+   "interval": 18
+  }
+ }
+}

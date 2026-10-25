@@ -1,0 +1,40 @@
+den 3311818282 (32 bits) = {'2': 1, '3529': 1, '469229': 1}; points 8; w bits 63; W_c bits 49
+  lift [0, 2]: num 3311761818 s 19338920 g 0/1000 r56464000 s/den 5839/10^6; Compton 98872 milli-Links; wall 3Ts 2088603360000; pair walls / 2 W_c 5/1000
+  lift [2, 0]: num 1012596182 s 3153218880 g 694/1000 r820212292 s/den 952111/10^6; Compton 606 milli-Links; wall 3Ts 340547639040000; pair walls / 2 W_c 952/1000
+  heaviest lift / lightest lift [163050, 7974000] /1000 (nature p/e 1836153)
+  lift step [0, 2] -> [2, 0]: [163050412, 6364960] /10^6
+  neutron-like step nearest nature: legs 3153218880 -> 3159078040 ratio 1001858/10^6 (nature 1001378, miss 480); heavy is a lift: False, light is a lift: True
+  lightest point num 3311761818 s 19338920 gap 56464 g 17/10^6 den/s 171251/1000 lift: True
+den 697786 (20 bits) = {'2': 1, '269': 1, '1297': 1}; points 8; w bits 50; W_c bits 37
+  lift [0, 2]: num 696710 s 38736 g 1/1000 r378214 s/den 55512/10^6; Compton 10400 milli-Links; wall 3Ts 4183488000; pair walls / 2 W_c 55/1000
+  lift [2, 0]: num 178986 s 674440 g 743/1000 r345002 s/den 966542/10^6; Compton 597 milli-Links; wall 3Ts 72839520000; pair walls / 2 W_c 966/1000
+  heaviest lift / lightest lift [17411, 7504] /1000 (nature p/e 1836153)
+  lift step [0, 2] -> [2, 0]: [17411193, 27952] /10^6
+  neutron-like step nearest nature: legs 674440 -> 683336 ratio 1013190/10^6 (nature 1001378, miss 11812); heavy is a lift: False, light is a lift: True
+  lightest point num 696710 s 38736 gap 1076 g 1542/10^6 den/s 18013/1000 lift: True
+den 1655909141 (31 bits) = {'3529': 1, '469229': 1}; points 8; w bits 62; W_c bits 48
+  lift [0, 2]: num 1655880909 s 9669460 g 0/1000 r28232000 s/den 5839/10^6; Compton 98872 milli-Links; wall 3Ts 1044301680000; pair walls / 2 W_c 5/1000
+  lift [2, 0]: num 506298091 s 1576609440 g 694/1000 r410106146 s/den 952111/10^6; Compton 606 milli-Links; wall 3Ts 170273819520000; pair walls / 2 W_c 952/1000
+  heaviest lift / lightest lift [163050, 3987000] /1000 (nature p/e 1836153)
+  lift step [0, 2] -> [2, 0]: [163050412, 3182480] /10^6
+  neutron-like step nearest nature: legs 1576609440 -> 1579539020 ratio 1001858/10^6 (nature 1001378, miss 480); heavy is a lift: False, light is a lift: True
+  lightest point num 1655880909 s 9669460 gap 28232 g 17/10^6 den/s 171251/1000 lift: True
+den 348893 (19 bits) = {'269': 1, '1297': 1}; points 8; w bits 49; W_c bits 36
+  lift [0, 2]: num 348355 s 19368 g 1/1000 r189107 s/den 55512/10^6; Compton 10400 milli-Links; wall 3Ts 2091744000; pair walls / 2 W_c 55/1000
+  lift [2, 0]: num 89493 s 337220 g 743/1000 r172501 s/den 966542/10^6; Compton 597 milli-Links; wall 3Ts 36419760000; pair walls / 2 W_c 966/1000
+  heaviest lift / lightest lift [17411, 3752] /1000 (nature p/e 1836153)
+  lift step [0, 2] -> [2, 0]: [17411193, 13976] /10^6
+  neutron-like step nearest nature: legs 337220 -> 341668 ratio 1013190/10^6 (nature 1001378, miss 11812); heavy is a lift: False, light is a lift: True
+  lightest point num 348355 s 19368 gap 538 g 1542/10^6 den/s 18013/1000 lift: True
+den 1021 (10 bits) = {'1021': 1}; points 2; w bits 41; W_c bits 27
+  lift [2]: num 779 s 660 g 237/1000 r23 s/den 646425/10^6; Compton 893 milli-Links; wall 3Ts 71280000; pair walls / 2 W_c 646/1000
+  lightest point num 779 s 660 gap 242 g 237022/10^6 den/s 1546/1000 lift: True
+den 21397363965165989151899244775347635252768274397 (154 bits) = {'8909066857637': 1, '79961009336473': 1, '30036532038439967297': 1}; points 26; w bits 185; W_c bits 171
+  lift [0, 0, 2]: num 21397363965165989150474488818982086595722885795 s 7808459740549578735922594780248829328 g 0/1000 r1424755956365548657045388602000 s/den 0/10^6; Compton 1582101240925 milli-Links; wall 3Ts 843313651979354503479640236266873567424000; pair walls / 2 W_c 0/1000
+  lift [2, 0, 0]: num 21397363965161185649061722838116504985189627435 s 14337524090452503379101009450350924059372 g 0/1000 r4803502837521937231130267578646962000 s/den 0/10^6; Compton 861639273 milli-Links; wall 3Ts 1548452601768870364942909020637899798412176000; pair walls / 2 W_c 0/1000
+  lift [0, 2, 0]: num 21397363965161172397401408461543944901743724995 s 14357287287022039657823019457938337076328 g 0/1000 r4816754497836313803690351024549402000 s/den 0/10^6; Compton 860453203 milli-Links; wall 3Ts 1550587026998380283044886101457340404243424000; pair walls / 2 W_c 0/1000
+  heaviest lift / lightest lift [1838683, 5105889118578920655119606078821032976] /1000 (nature p/e 1836153)
+  lift step [0, 0, 2] -> [2, 0, 0]: [1836152655, 6381783224005193170107894528122934160] /10^6
+  lift step [2, 0, 0] -> [0, 2, 0]: [1001378, 6088372892729065608816564829443602185384] /10^6
+  neutron-like step nearest nature: legs 14337524090452503379101009450350924059372 -> 14357287287022039657823019457938337076328 ratio 1001378/10^6 (nature 1001378, miss 0); heavy is a lift: True, light is a lift: True
+  lightest point num 21397363965165989150474488818982086595722885795 s 7808459740549578735922594780248829328 gap 1424755956365548657045388602 g 0/10^6 den/s 2740279732000/1000 lift: True

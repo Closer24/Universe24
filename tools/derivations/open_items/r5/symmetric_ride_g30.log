@@ -1,0 +1,128 @@
+{
+ "gain": 30,
+ "w": 24504,
+ "R": 8168,
+ "E": 65536,
+ "kappa": 1638,
+ "ring": 12,
+ "random_R": {
+  "boards": 1666,
+  "nodes_per_board": 12,
+  "step_bijection_boards": 1666,
+  "M_involution_boards": 0
+ },
+ "random_S": {
+  "boards": 1666,
+  "nodes_per_board": 12,
+  "step_bijection_boards": 1666,
+  "M_involution_boards": 1666
+ },
+ "run_R_300": {
+  "form": "R",
+  "amplitude": 300,
+  "intervals": 300,
+  "turned_nodes": 206,
+  "single_node_turn_intervals": 23,
+  "single_node_turns_with_light_velocity_50_or_more": 22,
+  "X_range": [
+   -4585507982472,
+   385901313559435
+  ],
+  "widest_bits": 63,
+  "rule_B": {
+   "per_step_matched": 299,
+   "misses": 2,
+   "false_tops": 0,
+   "chained_matched_with_resets": 299,
+   "first_unmatched": 288
+  },
+  "rule_A": {
+   "per_step_matched": 297,
+   "misses": 0,
+   "false_tops": 5,
+   "chained_matched_with_resets": 208,
+   "first_unmatched": 126
+  }
+ },
+ "run_R_1200": {
+  "form": "R",
+  "amplitude": 1200,
+  "intervals": 300,
+  "turned_nodes": 219,
+  "single_node_turn_intervals": 27,
+  "single_node_turns_with_light_velocity_50_or_more": 27,
+  "X_range": [
+   -380901776618141803,
+   1751586182403702432
+  ],
+  "widest_bits": 75,
+  "rule_B": {
+   "per_step_matched": 298,
+   "misses": 2,
+   "false_tops": 0,
+   "chained_matched_with_resets": 127,
+   "first_unmatched": 216
+  },
+  "rule_A": {
+   "per_step_matched": 293,
+   "misses": 0,
+   "false_tops": 9,
+   "chained_matched_with_resets": 83,
+   "first_unmatched": 232
+  }
+ },
+ "run_S_300": {
+  "form": "S",
+  "amplitude": 300,
+  "intervals": 300,
+  "turned_nodes": 228,
+  "single_node_turn_intervals": 23,
+  "single_node_turns_with_light_velocity_50_or_more": 23,
+  "X_range": [
+   -1208995007182767265616,
+   5159460271668078423798684
+  ],
+  "widest_bits": 96,
+  "rule_B": {
+   "per_step_matched": 300,
+   "misses": 0,
+   "false_tops": 0,
+   "chained_matched_with_resets": 300,
+   "first_unmatched": null
+  },
+  "rule_A": {
+   "per_step_matched": 300,
+   "misses": 0,
+   "false_tops": 0,
+   "chained_matched_with_resets": 300,
+   "first_unmatched": null
+  }
+ },
+ "run_S_1200": {
+  "form": "S",
+  "amplitude": 1200,
+  "intervals": 300,
+  "turned_nodes": 201,
+  "single_node_turn_intervals": 15,
+  "single_node_turns_with_light_velocity_50_or_more": 15,
+  "X_range": [
+   -1300955091956491,
+   1616942415005458
+  ],
+  "widest_bits": 66,
+  "rule_B": {
+   "per_step_matched": 300,
+   "misses": 0,
+   "false_tops": 0,
+   "chained_matched_with_resets": 300,
+   "first_unmatched": null
+  },
+  "rule_A": {
+   "per_step_matched": 300,
+   "misses": 0,
+   "false_tops": 0,
+   "chained_matched_with_resets": 300,
+   "first_unmatched": null
+  }
+ }
+}
