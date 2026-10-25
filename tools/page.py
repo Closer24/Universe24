@@ -336,7 +336,7 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
         if e["event"] in ("birth", "credit")
     ]
     bangs = sorted({e["i"] for e in record["log"] if e["event"] == "birth"})
-    named = {int(e["i"]) for e in events if e["i"] is not None} | {int(k["i"]) for k in clicks}
+    named = {int(e["i"]) for e in events if e["i"] is not None} | {int(k[0]) for k in clicks}
     held = next((int(line["i"]) for line in record["nodes"] if line["held"] or line["frozen"]), None)
     if held is not None:
         named.add(held)
