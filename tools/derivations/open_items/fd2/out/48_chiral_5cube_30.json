@@ -1,0 +1,24 @@
+{
+ "world": "world_chiral.json",
+ "cube": 5,
+ "intervals": 30,
+ "base: births, credits": [
+  16,
+  13
+ ],
+ "base record and state equal (David against fd2)": true,
+ "images with David and fd2 equal (records and state hash)": [
+  48,
+  48
+ ],
+ "the 48 on the clicks (David)": {
+  "equal": 15,
+  "equal rotations": 15,
+  "equal reflections": 0,
+  "senses exchanged": 0,
+  "exchanged rotations": 0,
+  "exchanged reflections": 0,
+  "apart": 33
+ },
+ "seconds": 153
+}

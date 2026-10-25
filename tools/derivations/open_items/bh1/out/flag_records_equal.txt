@@ -1,0 +1,5 @@
+hole seed 60, form horizon : the record equal to the engine's after the JSON round trip: True ; run back {'intervals': 10, 'exact': 10}
+hole seed 60, form write : the record equal to the engine's after the JSON round trip: True ; run back {'intervals': 10, 'exact': 10}
+hole seed 60, form identity : the record equal to the engine's after the JSON round trip: True ; run back {'intervals': 10, 'exact': 10}
+hole seed 60, form horizon+identity : the record equal to the engine's after the JSON round trip: True ; run back {'intervals': 10, 'exact': 10}
+hole seed 60, form horizon+write : the record equal to the engine's after the JSON round trip: True ; run back {'intervals': 10, 'exact': 10}

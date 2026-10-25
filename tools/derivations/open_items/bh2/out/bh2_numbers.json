@@ -1,0 +1,252 @@
+{
+ "frozen content (the Link pace 0)": 3793,
+ "clock p_0 at the frozen content, one above, one below": [
+  22,
+  22,
+  23
+ ],
+ "Link pace at fc - 1, fc": [
+  1,
+  0
+ ],
+ "clock zero (first content with p_0 = 0), the clock at cz - 1": [
+  7482,
+  1,
+  0
+ ],
+ "first content with the clock 1 (the last pace), and its span": [
+  6482,
+  7481
+ ],
+ "X at the vacuum, at fc, at the first clock 1, at cz - 1 (value, bits)": [
+  [
+   1000,
+   10
+  ],
+  [
+   4268834097,
+   32
+  ],
+  [
+   1000000000000000,
+   50
+  ],
+  [
+   1000000000000000,
+   50
+  ]
+ ],
+ "the level read back from X(fc), X(cz-1)": [
+  3837,
+  7481
+ ],
+ "the level read at X = 2^60, 2^80 (the reading rests at the last pace)": [
+  7481,
+  7481
+ ],
+ "G derived": 16,
+ "the width budget": {
+  "54-bit (universe_toy)": {
+   "den bits": 54,
+   "w bits": 85,
+   "largest X with w X within 128 bits (bits)": 44,
+   "first content whose X breaks 128 bits on w X (None: never, the last pace within)": 5983,
+   "X(fc) bits + w bits": 117,
+   "X(cz-1) bits + w bits": 135
+  },
+  "middle (universe_middle)": {
+   "den bits": 31,
+   "w bits": 62,
+   "largest X with w X within 128 bits (bits)": 67,
+   "first content whose X breaks 128 bits on w X (None: never, the last pace within)": null,
+   "X(fc) bits + w bits": 94,
+   "X(cz-1) bits + w bits": 112
+  },
+  "record (owner, HIGHLIGHTS)": {
+   "den bits": 32,
+   "w bits": 63,
+   "largest X with w X within 128 bits (bits)": 66,
+   "first content whose X breaks 128 bits on w X (None: never, the last pace within)": null,
+   "X(fc) bits + w bits": 95,
+   "X(cz-1) bits + w bits": 113
+  },
+  "cheap (owner)": {
+   "den bits": 20,
+   "w bits": 50,
+   "largest X with w X within 128 bits (bits)": 79,
+   "first content whose X breaks 128 bits on w X (None: never, the last pace within)": null,
+   "X(fc) bits + w bits": 82,
+   "X(cz-1) bits + w bits": 100
+  }
+ },
+ "Rule3 at the frozen Node per row (R = 0 everywhere; D the clock twice)": {
+  "content 3793, row shape 2 gap 0": {
+   "p_0": 22,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 0,
+   "D over w in parts per 10^9": 0,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": null
+  },
+  "content 3793, row shape 2 gap 2183583978": {
+   "p_0": 22,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 52,
+   "D over w in parts per 10^9": 0,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 532177
+  },
+  "content 3793, row shape 2 gap 12704646675360514": {
+   "p_0": 22,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 75,
+   "D over w in parts per 10^9": 811067,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 220
+  },
+  "content 3793, row shape 2 gap 12582467845487104": {
+   "p_0": 22,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 74,
+   "D over w in parts per 10^9": 803267,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 221
+  },
+  "content 3793, row shape 10 gap 15162856759112": {
+   "p_0": 22,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 65,
+   "D over w in parts per 10^9": 967,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 6386
+  },
+  "content 3793, row shape 4 gap 0": {
+   "p_0": 22,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 0,
+   "D over w in parts per 10^9": 0,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": null
+  },
+  "content 6482, row shape 2 gap 0": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 0,
+   "D over w in parts per 10^9": 0,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": null
+  },
+  "content 6482, row shape 2 gap 2183583978": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 43,
+   "D over w in parts per 10^9": 0,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 11707903
+  },
+  "content 6482, row shape 2 gap 12704646675360514": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 66,
+   "D over w in parts per 10^9": 1675,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 4853
+  },
+  "content 6482, row shape 2 gap 12582467845487104": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 66,
+   "D over w in parts per 10^9": 1659,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 4877
+  },
+  "content 6482, row shape 10 gap 15162856759112": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 56,
+   "D over w in parts per 10^9": 1,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 140499
+  },
+  "content 6482, row shape 4 gap 0": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 0,
+   "D over w in parts per 10^9": 0,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": null
+  },
+  "content 7481, row shape 2 gap 0": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 0,
+   "D over w in parts per 10^9": 0,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": null
+  },
+  "content 7481, row shape 2 gap 2183583978": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 43,
+   "D over w in parts per 10^9": 0,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 11707903
+  },
+  "content 7481, row shape 2 gap 12704646675360514": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 66,
+   "D over w in parts per 10^9": 1675,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 4853
+  },
+  "content 7481, row shape 2 gap 12582467845487104": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 66,
+   "D over w in parts per 10^9": 1659,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 4877
+  },
+  "content 7481, row shape 10 gap 15162856759112": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 56,
+   "D over w in parts per 10^9": 1,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": 140499
+  },
+  "content 7481, row shape 4 gap 0": {
+   "p_0": 1,
+   "p_i": 0,
+   "R per Port": 0,
+   "D bits": 0,
+   "D over w in parts per 10^9": 0,
+   "S equals 2 w - D": true,
+   "period of the one-Node rotation (intervals, integer root)": null
+  }
+ },
+ "write factor X p_0: vacuum, fc, last pace (bits)": [
+  20,
+  37,
+  50
+ ],
+ "write numerator at p_0 = 0 with X = 2^60 and forms = 10^6": 0
+}

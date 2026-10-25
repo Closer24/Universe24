@@ -1,0 +1,33 @@
+{
+ "toy": "toy_fd1_folded",
+ "world": "worlds/bodies120.json",
+ "intervals": 120,
+ "flag": null,
+ "state hash at the end": "3be587e26375f0c7312add87e53e12031a0a8501e32e8e24c3f0a75814a9eeef",
+ "log sha256": "6e1169a75122dbff6c86845acedddbe30eca8294fed5d655a393df29b0149157",
+ "log lines": null,
+ "counts": {
+  "births": 0,
+  "taken": 0,
+  "booked": 0,
+  "body_clicks": 303,
+  "refused_stop": 0,
+  "refused_origin": 0,
+  "refused_lay": 0,
+  "refused_orientation": 125,
+  "refused_twist": 10,
+  "turns": 0,
+  "light_credits": 0,
+  "light_laid": 0,
+  "light_laid_nodes": 0
+ },
+ "integers per Node": 89,
+ "max state bits": 92,
+ "max transient bits": 89,
+ "run back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "remainders at 0 at the end (where w - r would fail the mirror)": 0,
+ "seconds": 4
+}
