@@ -1,4 +1,4 @@
-"""The interval, the Node's one program in both directions (ALGEBRA.md, The direction: every act but the click a bijection; the run back the same acts in the reverse order, each inverted), in the symmetric ride's form (R5; the owner's approved sentence 1 of 2026-10-25, the held carrier of the wall and every riding row step as one pair at the mean wall): the readings at the start, the walled row's act, every riding line's force and kick, the carrier's one division sourced by the riding momenta, every riding line's one division at the mean wall of the carrier's two levels, the riding rows' writes from numbers known before them, the swap at the top and the close; one class holds the interval's readings so that each act is one short function."""
+"""The interval, the Node's one program in both directions (ALGEBRA.md, The direction: every act but the click a bijection; the run back the same acts in the reverse order, each inverted), in the symmetric ride's form (R5; the owner's approved sentence 1 of 2026-10-25, the held carrier of the wall and every riding row step as one pair at the mean wall): the readings at the start (the frozen mask among them, BH-S1), the walled row's act, every riding line's force and kick, the carrier's one division sourced by the riding momenta, every riding line's one division at the mean wall of the carrier's two levels, the riding rows' writes from numbers known before them, the swap at the top and the close; one class holds the interval's readings so that each act is one short function."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import division_forward, half, held_numerator, quotient
 from event_universe.features import volume
-from event_universe.links import plane_current, stress_parts, tensor_parts, wronskian
+from event_universe.links import links_of, plane_current, stress_parts, tensor_parts, wronskian
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, Row, zeros
 
 if TYPE_CHECKING:
@@ -34,10 +34,13 @@ class Interval:
             node.interval += 1
             self.top: Any = np.zeros(node.shape, dtype=bool)
             self.kept: list[list[Line]] | None = None
+            self.frozen: Any = None
         else:
             frame = node.stack.pop()
-            node.unclick(frame)
+            node.click([], [], -1, frame)
             self.top = frame["turned"]
+            self.frozen = frame["frozen"]
+        self.still: Any = self.top if self.frozen is None else self.top | self.frozen
         self.held = [[line.copy() for line in row] for row in node.rows()]
         if direction == -1:
             if self.top.any():
@@ -56,8 +59,8 @@ class Interval:
         self.readings()
 
     def at(self, line: Line) -> Any:
-        """A line's start level: forward the now slot; backward the before slot, and the now slot at a turned Node."""
-        return line.now if self.direction == 1 else np.where(self.top, line.now, line.before)
+        """A line's start level: forward the now slot; backward the before slot, and the now slot at a still Node, turned or frozen (BH-S1), which ended the interval at its pre-state."""
+        return line.now if self.direction == 1 else np.where(self.still, line.now, line.before)
 
     def lines(self, row: Row) -> list[Line]:
         """A row's lines as the interval holds them."""
@@ -72,13 +75,18 @@ class Interval:
         node = self.node
         self.c = np.asarray(volume.level_of(node.gamma, self.at(self.carrier.lines[0])), dtype=object)
         node.start_content = self.c
-        self.p0 = paces.clock_of(node.gamma, self.c)
-        node.proper = node.proper + self.direction * self.p0
-        self.factors = node.link_factors([self.at(line) for line in self.carrier.lines[1 : 1 + AXES]])
+        self.p0, self.pi = readings.paces_of(node, self.c)
+        if self.frozen is None:
+            self.frozen = readings.frozen_of(node, self.c)
+            self.still = self.top | self.frozen
+        node.proper = node.proper + self.direction * np.where(self.frozen, 0, self.p0)
+        self.factors = node.link_factors(
+            [self.at(line) for line in self.carrier.lines[1 : 1 + AXES]], self.frozen
+        )
         node.start_factors = self.factors
         self.frames = readings.frames(node, self.walled.lines[0].rem)
         node.start_frames = self.frames
-        self.cphi = paces.rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
+        self.cphi = paces.odd_rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
         self.x_now = self.at(self.carrier.lines[0])
         stress = stress_parts(
             [(self.at(line), r.pair[0]) for r in node.records() if r.pair for line in r.lines],
@@ -87,7 +95,7 @@ class Interval:
         self.trace, self.traceless = tensor_parts(stress)
 
     def walled_act(self) -> None:
-        """The walled row first: its act carries its own write; the Links' count, phases and the odd lines come from it for the planes' turn."""
+        """The walled row first: its act carries its own write; the Links' count and phases come from it, and the six Links' records (the factor, the frame, the pair, the odd part) are read once for the planes' turn."""
         node, walled = self.node, self.walled
         k = self.where[id(walled)]
         rule = node.rule_of(walled, self.c, self.factors)
@@ -103,6 +111,7 @@ class Interval:
         self.phases = readings.link_phases(node, self.frames, count)
         self.odd = [self.at(line) for line in self.potential.lines[1 : 1 + AXES]]
         node.start_phases, node.start_odd = self.phases, [o.copy() for o in self.odd]
+        self.links = links_of(self.factors, self.frames, self.phases, self.odd)
 
     def forces(self) -> None:
         """Every riding line's force at the start, SUM_j R_j (m_j - a) - D a, the planes' Wronskian and current at this end, and the emission read from the kick, X_now SUM over the planes with a gap of (re F_im - im F_re)."""
@@ -118,7 +127,7 @@ class Interval:
         self.force: dict[int, list[Any]] = {}
         for r in self.riders:
             rule = node.rule_of(r, self.c, self.factors)
-            turn = (self.phases, self.odd, self.frames) if r.shape == PLANE and r.gap else None
+            turn = self.links if r.shape == PLANE and r.gap else None
             k = self.where[id(r)]
             self.starts[k] = [self.at(line) for line in self.lines(r)]
             arrivals = node.arrivals(self.starts[k], rule, turn)
@@ -160,7 +169,7 @@ class Interval:
             for a, f, p1, p2 in zip(self.starts[k], self.force[k], p_side, p_other, strict=True):
                 self.forms = (
                     self.forms
-                    + paces.rounded(2 * p1 + 1, d) * paces.rounded(2 * p2 + 1, d)
+                    + paces.odd_rounded(2 * p1 + 1, d) * paces.odd_rounded(2 * p2 + 1, d)
                     + quotient(-a * f, node.w)
                 )
             self.kicked[k] = p_other
@@ -224,6 +233,12 @@ class Interval:
         ):
             node.write(line, n, 1)
 
+    def rest(self) -> None:
+        """BH-S1: every line at a frozen Node restored to the held line after the acts (its levels, its remainders and its wall, by the Node's one restore), so no act changes any integer of a frozen Node's state in either direction."""
+        self.node.restore(
+            self.node.all_lines(), [line for row in self.held for line in row], self.frozen
+        )
+
     def close(self) -> None:
         """Forward after the acts: the swap at the top, the close, the frame pushed for the run back."""
         node = self.node
@@ -232,10 +247,12 @@ class Interval:
             [a.copy() for a in node.crossed],
             [a.copy() for a in node.beats],
         )
-        top = node.swap(self.held)
+        top = node.swap(self.held, self.frozen)
         log_from = len(node.log)
         node.click(self.plane_starts, self.held)
-        node.stack.append({"turned": top, "counters": counters, "log_from": log_from})
+        node.stack.append(
+            {"turned": top, "counters": counters, "log_from": log_from, "frozen": self.frozen}
+        )
 
 
 def run(node: Node, direction: int) -> None:
@@ -251,6 +268,7 @@ def run(node: Node, direction: int) -> None:
     if direction == 1:
         interval.writes()
     node.set_rows(interval.out)
+    interval.rest()
     if direction == -1:
         node.interval -= 1
         return

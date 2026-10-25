@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from event_universe.core.paces import rounded
+from event_universe.core.paces import odd_rounded
 from event_universe.core.ports import AXES, PORT_SIDES, across, wrap
 from event_universe.core.rule3 import remainder
 from event_universe.rows import Line, zeros
@@ -16,8 +16,28 @@ def cross(x_i: Any, y_i: Any, x_j: Any, y_j: Any) -> Any:
 
 
 def turn_pair(re: Any, im: Any, c: Any, s: Any, scale: Any) -> tuple[Any, Any]:
-    """The pair (re, im) turned by the pair (c, s) over the scale, one rounding half up per part (fd2, U2): the phase pair over the amplitude X, the odd tangent triple over its wall, the decoder's solve."""
-    return rounded(c * re - s * im, scale), rounded(s * re + c * im, scale)
+    """The pair (re, im) turned by the pair (c, s) over the scale, one odd rounding per part (fd2, U2; fd1: the turn's rounding is odd by the one rule of the remainder, a fold with no tie): the phase pair over the amplitude X, the odd tangent triple over its wall, the decoder's solve."""
+    return odd_rounded(c * re - s * im, scale), odd_rounded(s * re + c * im, scale)
+
+
+class Link:
+    """The Link's record at one Port for the interval, read once from its two ends and the same from both (X2's link(i, j)): the factor Q_ij from the two ends' tensions, the frame sign f_ij, the Link's phase pair (cos, sin) over X from the two ends' centred counts, and the odd part n_ij of the shape-4 row's odd line on the Link's axis for the tangent triple; every act reads these and recomputes none."""
+
+    __slots__ = ("factor", "frame", "cosine", "sine", "odd")
+
+    def __init__(self, factor: Any, frame: Any, cosine: Any, sine: Any, odd: Any) -> None:
+        self.factor, self.frame, self.cosine, self.sine, self.odd = factor, frame, cosine, sine, odd
+
+
+def links_of(
+    factors: tuple[Any, ...], frames: list[Any], phases: list[tuple[Any, Any]], odd_lines: list[Any]
+) -> list[Link]:
+    """The six Links' records from the interval's readings: the factors, the frame signs, the phase pairs and, per Port, the odd line of its axis summed over the two ends with the Port's sign (the one Link read of an odd part)."""
+    found = []
+    for port, (axis, _side) in enumerate(PORT_SIDES):
+        _even, (n,), _f = link(port, odd=(odd_lines[axis],))
+        found.append(Link(factors[port], frames[port], phases[port][0], phases[port][1], n))
+    return found
 
 
 def link(

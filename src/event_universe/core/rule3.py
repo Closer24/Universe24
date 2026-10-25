@@ -119,6 +119,11 @@ def unit_of(sine: Any, action: Any) -> Any:
     return 3 * action * sine
 
 
+def mirrored(remainder: Any, wall: Any, reversals: int) -> Any:
+    """The one rule of the remainder's mirror (fd1's form, the owner's word of 2026-10-25): a remainder born at the half wall of its division is mirrored to wall - 1 - r once for every reversal of its line (time's exchange, the sign's negation), two reversals leaving it; the identity for an even count."""
+    return remainder if reversals % 2 == 0 else wall - 1 - remainder
+
+
 def half(wall: Any) -> Any:
     """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor."""
     return division_forward(wall, 2, 0)[0]

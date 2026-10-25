@@ -6,7 +6,8 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core import paces, rule3
+from event_universe import readings
+from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES
 from event_universe.core.rule3 import quotient, remainder
 from event_universe.links import cross, link_current, twist
@@ -287,22 +288,32 @@ def credit(
     }
 
 
-def click(node: Node, plane_starts: list[list[Line]], held: list[list[Line]]) -> None:
-    """The click: the readings at the start, the Link close, the lays refused by name, the births taken and laid, the bodies' closing; `plane_starts` the planes' lines at the interval's start, `held` every row's."""
+def click(
+    node: Node,
+    plane_starts: list[list[Line]],
+    held: list[list[Line]],
+    direction: int = 1,
+    frame: dict[str, Any] | None = None,
+) -> None:
+    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start, the Link close, the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame (`unclick`). `plane_starts` the planes' lines at the interval's start, `held` every row's."""
+    if direction == -1:
+        assert frame is not None
+        unclick(node, frame)
+        return
     c = node.start_content
-    factors = node.link_factors()
+    pace = readings.paces_of(node, c)[1]
+    frozen = readings.frozen_of(node, c)
+    factors = node.link_factors(None, frozen)
     gap0 = node.row(PLANE, gap=0)
     r_gap0 = node.rule_of(gap0, c, factors)
     gap0_start = plane_starts[node.records().index(gap0)]
     rules = node.read_lines(held, plane_starts, c, factors)
-    pace = paces.link_pace_of(node.gamma, c)
     owns = []
     for rec, r in enumerate(node.records()):
         rr = node.rule_of(r, c, factors)
         re0, im0 = plane_starts[rec]
         owns.append(node.share(re0, rr, pace, vacuum=True) + node.share(im0, rr, pace, vacuum=True))
     sh = owns[node.records().index(gap0)]
-    frozen = np.asarray(pace, dtype=object) == 0 if np.ndim(pace) else np.zeros(node.shape, dtype=bool)
     born_nodes = births(
         node, refuse(node, meet(node, gap0_start[0], sh, rules, frozen), owns), r_gap0, c, factors, pace
     )

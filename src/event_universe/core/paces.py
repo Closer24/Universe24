@@ -9,7 +9,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.rule3 import division_forward, half, largest_below
+from event_universe.core.rule3 import division_forward, half, largest_below, mirrored
 
 
 def rounded(numerator: Any, wall: Any) -> Any:
@@ -18,11 +18,12 @@ def rounded(numerator: Any, wall: Any) -> Any:
 
 
 def odd_rounded(numerator: Any, wall: Any) -> Any:
-    """The numerator over the wall rounded half away from zero, the law's rounding of a signed coefficient in one division of the division act: `rounded`'s carry, the wall, on a numerator at or above 0 and the carry's ones' complement at the doubled wall, wall - 1, on a numerator below 0, bit for bit sign(x) rounded(|x|, wall), odd at every integer; integers or whole-board arrays alike, the complement in the numerator's own kind."""
+    """The one rounding of a signed coefficient of the Node (the one rule of the remainder): the carried division from the half wall at the doubled wall, the carry mirrored (rule3.mirrored) where the numerator is negative, bit for bit sign(x) rounded(|x|, wall), odd at every integer; integers or whole-board arrays alike, the mirror in the numerator's own kind."""
     signed = np.asarray(numerator)
     kind, below = signed.dtype, signed < 0
-    complemented = below.astype(kind) if below.ndim else int(below)
-    return division_forward(numerator + numerator, wall + wall, wall - complemented)[0]
+    negative = below.astype(kind) if below.ndim else int(below)
+    carry = wall + negative * (mirrored(wall, wall + wall, 1) - wall)
+    return division_forward(numerator + numerator, wall + wall, carry)[0]
 
 
 def sine_den(num: int, den: int, scale: int = 1) -> int:
