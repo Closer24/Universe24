@@ -7,7 +7,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
-BOUND = 4 * 1024 * 1024  # the Node lines' bytes on the page, under the branch's bound per file
+MEBIBYTE = 1024 * 1024  # a mebibyte, the unit of the branch's bound per file
+BOUND = 4 * MEBIBYTE  # the Node lines' bytes on the page, under the branch's bound of 5 per file
 LEVELS = 25  # the current's levels on a Link above zero, one letter each
 DIGITS = "0123456789abcdefghijklmnopqrstuvwxyz"
 
@@ -26,7 +27,7 @@ html, body { margin: 0; background: radial-gradient(1200px 700px at 50% -10%, #1
 #bar .era { position: absolute; top: 0; bottom: 0; pointer-events: none; border-radius: 12px; }
 #bar .tick { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--label); opacity: 0.9; }
 #bar .name { position: absolute; font-size: 10px; color: var(--label); font-family: var(--mono); white-space: nowrap; padding-left: 4px; pointer-events: none; }
-#bar .bang { position: absolute; bottom: 1px; font-size: 10px; color: var(--muted); font-family: var(--mono); }
+#bar .birth { position: absolute; bottom: 1px; font-size: 10px; color: var(--muted); font-family: var(--mono); }
 #bar #cursor { position: absolute; top: -4px; bottom: -4px; width: 3px; background: var(--focus); border-radius: 2px; box-shadow: 0 0 12px var(--focus), 0 0 24px rgba(95, 151, 234, 0.6); }
 #row { display: flex; gap: 14px; align-items: center; margin: 4px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
 button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 8px 16px; font: inherit; cursor: pointer; border-radius: 999px; transition: background 0.15s, transform 0.1s; }
@@ -45,6 +46,7 @@ a { color: var(--focus); }
 
 SCRIPT = """
 const D = JSON.parse(document.getElementById("data").textContent);
+const MS = 1000, BASE = 36;  // a second in milliseconds (the ticks' pace); the base of the Node lines' words
 const c = D.cube, G = D.gamma, N = D.intervals;
 const canvas = document.getElementById("board"), ctx = canvas.getContext("2d");
 const stage = document.getElementById("stage"), labels = document.getElementById("labels"), cursor = document.getElementById("cursor");
@@ -53,7 +55,7 @@ const head = document.getElementById("head"), row = document.getElementById("row
 const titleBox = document.getElementById("title"), legendBox = document.getElementById("legend");
 const size = Math.max(320, Math.min(window.innerWidth - 40, window.innerHeight - titleBox.offsetHeight - head.offsetHeight - bar.offsetHeight - row.offsetHeight - legendBox.offsetHeight - 64));
 canvas.width = size; canvas.height = size;
-function words(s) { return s.split(" ").map(w => parseInt(w, 36)); }
+function words(s) { return s.split(" ").map(w => parseInt(w, BASE)); }
 function levels(s) { return Array.from(s, ch => ch === "." ? 0 : (ch >= "a" ? ch.charCodeAt(0) - 96 : 64 - ch.charCodeAt(0))); }
 const unravel = i => [Math.floor(i / (c * c)), Math.floor(i / c) % c, i % c];
 D.clicks = D.clicks.map(k => ({i: k[0], at: k[1], node: unravel(k[1]), line: k[2], levels: k[3], from: k[4] < 0 ? null : k[4], children: k[5] ? k[5] : null}));
@@ -247,7 +249,7 @@ function tick() {
   if (playing && hold > 0) hold--;
   else if (playing && slow > 0 && (++beat % 4) !== 0) slow--;
   else if (playing) { if (slow > 0) slow--; t = t % n + 1; draw(); const now = lines[t - 1].i, before = t > 1 ? lines[t - 2].i : 0; if (D.events.some(e => e.i !== null && e.i > before && e.i <= now) || bangs.some(b => b > before && b <= now)) { hold = speed; slow = 4 * speed; } }
-  setTimeout(tick, 1000 / speed);
+  setTimeout(tick, MS / speed);
 }
 const eras = D.events.filter(e => e.i !== null && /^(1|4|5|46) /.test(e.gate)).map(e => [e.i, e.gate]).concat(bangs.map(b => [b, "1 bang"])).sort((p, q) => p[0] - q[0]);
 for (let k = 0; k < eras.length; k++) {
@@ -265,7 +267,7 @@ for (const e of D.events) if (e.i !== null) {
   bar.appendChild(m);
 }
 for (const b of bangs) { const d = document.createElement("div"); d.className = "tick"; d.style.left = (100 * (b - 1) / Math.max(N - 1, 1)) + "%"; d.style.background = "#f59e0b"; d.title = "Big Bang at " + b; bar.appendChild(d); }
-D.bangs.forEach((i, k) => { const d = document.createElement("div"); d.className = "bang"; d.style.left = (100 * (i - 1) / Math.max(N - 1, 1)) + "%"; d.textContent = (k + 1); bar.appendChild(d); });
+D.births.forEach((i, k) => { const d = document.createElement("div"); d.className = "birth"; d.style.left = (100 * (i - 1) / Math.max(N - 1, 1)) + "%"; d.textContent = (k + 1); bar.appendChild(d); });
 bar.addEventListener("click", ev => { const r = bar.getBoundingClientRect(); t = seek(1 + Math.round((N - 1) * (ev.clientX - r.left) / r.width)); playing = false; draw(); });
 document.getElementById("play").addEventListener("click", () => { playing = !playing; });
 document.getElementById("faster").addEventListener("click", () => { speed = Math.min(speed * 2, 48); });
@@ -288,12 +290,12 @@ def header_of(record: dict[str, Any]) -> str:
 
 
 def lays_of(seed: list[dict[str, Any]]) -> list[str]:
-    """The seed's lays as they are, the lays alike in everything but their centre folded into one with their count, so a seed laid at every Node reads as one line."""
-    found: dict[str, int] = {}
+    """The seed's lays as they are: a lone lay whole with its centre; lays alike in everything but their centre folded into one line with their count, so a seed laid at every Node reads as one line."""
+    found: dict[str, list[Any]] = {}
     for lay in seed:
         key = json.dumps({k: v for k, v in lay.items() if k != "centre"})
-        found[key] = found.get(key, 0) + 1
-    return [key if n == 1 else f"{key} at {n} centres" for key, n in found.items()]
+        found.setdefault(key, [lay, 0])[1] += 1
+    return [json.dumps(lay) if n == 1 else f"{key} at {n} centres" for key, (lay, n) in found.items()]
 
 
 def word(n: int) -> str:
@@ -346,7 +348,7 @@ def kept(lines: list[dict[str, Any]], named: set[int]) -> tuple[list[dict[str, A
 
 
 def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, Any]:
-    """The page's data from the record and the reading: the Node lines, the clicks (every birth and credit as one short list: the interval, the Node's index, the row, the levels taken, the taken row or -1, a birth's two children's indices or 0), the bangs (the births' intervals), the reading's event lines."""
+    """The page's data from the record and the reading: the Node lines, the clicks (every birth and credit as one short list: the interval, the Node's index, the row, the levels taken, the taken row or -1, a birth's two children's indices or 0), the births' intervals (numbered on the bar), the reading's event lines."""
     events = next((line["events"] for line in reading if "events" in line), [])
     cube = int(record["cube"])
 
@@ -365,7 +367,7 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
         for e in record["log"]
         if e["event"] in ("birth", "credit")
     ]
-    bangs = sorted({e["i"] for e in record["log"] if e["event"] == "birth"})
+    births = sorted({e["i"] for e in record["log"] if e["event"] == "birth"})
     named = {int(e["i"]) for e in events if e["i"] is not None} | {int(k[0]) for k in clicks}
     held = next((int(line["i"]) for line in record["nodes"] if line["held"] or line["frozen"]), None)
     if held is not None:
@@ -379,7 +381,7 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
         "stride": stride,
         "nodes": lines,
         "clicks": clicks,
-        "bangs": bangs,
+        "births": births,
         "events": events,
     }
 
