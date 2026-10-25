@@ -612,6 +612,7 @@ class Lean:
         trace, traceless = tensor_parts(stress_parts(start_lines, self.shape))
         # the axis writes undone (their numerators from the start levels), then the factors at the start
         for a in range(3):
+            if self.hold_volume: break  # the control's inverse skips what its forward skips (the Scribe's breach of 2026-10-25: the run back exact under the held well)
             q, self.vol_wr[1 + a] = division_back(traceless[a] * p02, 54 * self.den * self.T * self.gamma ** 2, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now - q
         factors = self.link_factors()  # from the axis lines at the start (their now the start's now after the write undone? the factors read the axis lines' START now: the before slot)
         factors = []
@@ -649,9 +650,10 @@ class Lean:
         self.light = light_b
         self.sign = self.rotate([self.sign], r_l, direction=-1)[0]; self.sign_axes = [self.rotate([l], r_l, direction=-1)[0] for l in self.sign_axes]
         # the volume's write undone, then its lines inverted
-        q, self.vol_wr[0] = division_back(4 * X_start * (forms * 54 * self.den * self.gamma ** 2 - trace * p0 * p0) * p0, 54 * self.den * self.gamma ** 4 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now - q
-        r_v = self.rule(self.vol_pair, c, factors)
-        self.vol = self.rotate([self.vol], r_v, direction=-1)[0]; self.vol_axes = [self.rotate([l], r_v, direction=-1)[0] for l in self.vol_axes]
+        if not self.hold_volume:
+            q, self.vol_wr[0] = division_back(4 * X_start * (forms * 54 * self.den * self.gamma ** 2 - trace * p0 * p0) * p0, 54 * self.den * self.gamma ** 4 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now - q
+            r_v = self.rule(self.vol_pair, c, factors)
+            self.vol = self.rotate([self.vol], r_v, direction=-1)[0]; self.vol_axes = [self.rotate([l], r_v, direction=-1)[0] for l in self.vol_axes]
         # the swap's inverse, part two: at the turned Nodes the same act on the post-state gives the pre-state (the exchange and the complement again, the im lines' conjugation again)
         if self.swap_on and top.any(): self.exchange(top, post, post_wr)
         self.interval -= 1
