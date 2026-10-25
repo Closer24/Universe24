@@ -236,8 +236,8 @@ replace(
 
 replace(
     "interval.py",
-    "from event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, Row, zeros\n",
-    "from event_universe.rows import CARRIER, GENERIC, " + "PLANE, POTENTIAL, TRACE, Line, Row, coupling_of, zeros\n",
+    "from event_universe.rows import CARRIER, PLANE, " + "POTENTIAL, TRACE, Line, Row, zeros\n",
+    "from event_universe.rows import CARRIER, GENERIC, " + "PLANE, POTENTIAL, " + "TRACE, Line, Row, coupling_of, zeros\n",
 )
 replace(
     "interval.py",

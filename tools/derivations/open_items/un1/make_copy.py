@@ -73,8 +73,8 @@ REPLACEMENTS = {
     ],
     "interval.py": [
         (
-            "from event_universe.links import links_of, plane_current, stress_parts, tensor_parts, wronskian\nfrom event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, Row, zeros\n",
-            "from event_universe.links import Link, links_of, plane_current, stress_parts, tensor_parts, wronskian\nfrom event_universe.rows import CARRIER, FREE, PLANE, POTENTIAL, TRACE, Line, Row, zeros\n",
+            "from event_universe.links import links_of, plane_current, stress_parts, tensor_parts, wronskian\nfrom event_universe.rows import CARRIER, PLANE, " + "POTENTIAL, TRACE, Line, Row, zeros\n",
+            "from event_universe.links import Link, links_of, plane_current, stress_parts, tensor_parts, wronskian\nfrom event_universe.rows import CARRIER, FREE, " + "PLANE, POTENTIAL, " + "TRACE, Line, Row, zeros\n",
         ),
         (
             "        self.potential, self.gap0 = node.row(POTENTIAL), node.row(PLANE, gap=0)\n        self.riders = [r for r in node.rows_ if r.wall is None and r is not self.carrier]\n        self.gap_planes = [r for r in self.riders if r.shape == PLANE and r.gap]\n",
@@ -111,8 +111,8 @@ REPLACEMENTS = {
     ],
     "run.py": [
         (
-            "from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros\n",
-            "from event_universe.rows import CARRIER, FREE, PLANE, POTENTIAL, zeros\n",
+            "from event_universe.rows import CARRIER, PLANE, " + "POTENTIAL, zeros\n",
+            "from event_universe.rows import CARRIER, FREE, " + "PLANE, POTENTIAL, zeros\n",
         ),
         (
             "        if row.gap == 0:\n            continue\n",
