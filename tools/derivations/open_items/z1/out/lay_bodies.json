@@ -1,0 +1,199 @@
+{
+ "world": "bodies.json",
+ "engine_keys": {
+  "universe": "universe_348893.json",
+  "shape": [
+   5,
+   5,
+   7
+  ],
+  "intervals": 300
+ },
+ "seed": [
+  {
+   "lay": "sea",
+   "row": [
+    348893,
+    348893
+   ]
+  },
+  {
+   "lay": "at",
+   "row": [
+    89493,
+    348893
+   ],
+   "centre": [
+    2,
+    2,
+    2
+   ],
+   "width": 2,
+   "quanta": 125
+  },
+  {
+   "lay": "at",
+   "row": [
+    89493,
+    348893
+   ],
+   "centre": [
+    2,
+    2,
+    5
+   ],
+   "width": 2,
+   "quanta": 125
+  }
+ ],
+ "lays": [
+  {
+   "form": "sea",
+   "row": [
+    348893,
+    348893
+   ],
+   "drift": 189,
+   "nodes": 175
+  },
+  {
+   "form": "at",
+   "row": [
+    89493,
+    348893
+   ],
+   "centre": [
+    2,
+    2,
+    2
+   ],
+   "width": 2,
+   "quanta": 125,
+   "cos_num": 89493,
+   "sin_num": 337220,
+   "den": 348893,
+   "g_milli": 743,
+   "records": [
+    {
+     "record": 0,
+     "sense": -1,
+     "amplitude": 821,
+     "share": 4539622999695,
+     "unit": 36419760000,
+     "quanta_milli": 124647,
+     "peak_level": 821
+    },
+    {
+     "record": 1,
+     "sense": 1,
+     "amplitude": 821,
+     "share": 4539622999695,
+     "unit": 36419760000,
+     "quanta_milli": 124647,
+     "peak_level": 821
+    }
+   ],
+   "nodes_laid": 27
+  },
+  {
+   "form": "at",
+   "row": [
+    89493,
+    348893
+   ],
+   "centre": [
+    2,
+    2,
+    5
+   ],
+   "width": 2,
+   "quanta": 125,
+   "cos_num": 89493,
+   "sin_num": 337220,
+   "den": 348893,
+   "g_milli": 743,
+   "records": [
+    {
+     "record": 0,
+     "sense": -1,
+     "amplitude": 821,
+     "share": 9062010005562,
+     "unit": 36419760000,
+     "quanta_milli": 248821,
+     "peak_level": 821
+    },
+    {
+     "record": 1,
+     "sense": 1,
+     "amplitude": 821,
+     "share": 9062010005562,
+     "unit": 36419760000,
+     "quanta_milli": 248821,
+     "peak_level": 821
+    }
+   ],
+   "nodes_laid": 27
+  }
+ ],
+ "drift": {
+  "v": 189,
+  "v_squared": 35721,
+  "T": 36000,
+  "v_squared_milli_over_T": 992,
+  "law": "v the largest integer with v^2 <= T (seed.drift_of); the share 3 den v^2 per Node against W_c = 3 den T"
+ },
+ "massless_sums_after_lay": {
+  "sum_now": 33075,
+  "sum_before": 0,
+  "nodes": 175
+ },
+ "count_at_vacuum_weight": {
+  "share_total": 6542973597825,
+  "W_c": 37680444000,
+  "share_div_Wc": 173,
+  "per_node_rounded_sum": 175
+ },
+ "integers_per_node": {
+  "count": 139,
+  "same_at_every_node": true,
+  "largest_bits": 71,
+  "largest_at": "sign row 1 phase 0 now"
+ },
+ "width_bits": 95,
+ "kind": "object",
+ "amplitude_bound": 3913542520,
+ "refusals": {
+  "a form not among the three": [
+   "lay 0: the form 'wave' is none of ['sea', 'hole', 'at']"
+  ],
+  "a lay named by a family": [
+   "lay 0: a lay named by a family is refused; a row is its pair [num, den]"
+  ],
+  "a one-Node body (width 0)": [
+   "lay 0: a gapped packet of width 0 is refused: a body is laid over its packet, the half-width 2 or 3 (the exact raised cosines)"
+  ],
+  "a sea of a gapped row": [
+   "lay 0: a sea of a gapped row has no drift (the double root is the massless row's)"
+  ],
+  "a Node off the board": [
+   "lay 0: the Node [9, 0, 0] is off the board [5, 5, 7]"
+  ],
+  "a pair of no row": [
+   "lay 0: the row [7, 348893] is no pair of the universe's rows"
+  ]
+ },
+ "guard_on_a_weighted_massless_one_node_lay": {
+  "sum_now_as_laid": 189,
+  "sum_now_after_division_act": 0,
+  "reading": "the division act takes the uniform part out: a weighted massless one-Node lay lays nothing; so the seed's massless lays are laid with no weights, as built, by name"
+ },
+ "guard_refuses_a_moved_sum": "the lay on the massless family 'massless' wakes the zero mode: the act changes SUM now by 189 and SUM before by 0, and b",
+ "cube_48_on_the_lay": {
+  "kept": 0,
+  "of": 0,
+  "mirrors_kept": 0,
+  "mirrors": 0,
+  "broken": []
+ },
+ "seconds": 0.2
+}

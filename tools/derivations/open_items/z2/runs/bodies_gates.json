@@ -1,0 +1,472 @@
+{
+ "verdicts": {
+  "recurring_bangs": "NOT SHOWN",
+  "links_lengthening": "SHOWN",
+  "links_cycle": "NOT SHOWN",
+  "era_of_matter": "SHOWN",
+  "acceleration": "SHOWN",
+  "contraction": "NOT SHOWN",
+  "light.present_absorbed": "SHOWN",
+  "light.redshift": "NOT SHOWN",
+  "families_forming": "SHOWN",
+  "collisions": "NOT SHOWN",
+  "gravitational_time_dilation": "NOT SHOWN",
+  "gravitational_redshift": "NOT SHOWN",
+  "light_path": "NOT SHOWN",
+  "free_fall": "NOT SHOWN",
+  "horizon.links_and_silence": "NOT SHOWN",
+  "horizon.stopped_clock": "NOT SHOWN",
+  "conservation.identity": "SHOWN",
+  "conservation.exact": "NOT SHOWN",
+  "uncertainty": "NOT SHOWN",
+  "charge_conservation": "SHOWN",
+  "arrow_of_time": "SHOWN",
+  "mass_ratios.fit": "NOT SHOWN",
+  "mass_ratios.from_clicks": "NOT SHOWN"
+ },
+ "gates": [
+  {
+   "gate": "recurring_bangs",
+   "verdict": "NOT SHOWN",
+   "view": "board",
+   "reads": "the volume's returns and tops (the board's) and the births per cycle (the clicks); pass: more than one return and births in a later cycle",
+   "numbers": {
+    "returns": [
+     1
+    ],
+    "tops": [],
+    "births_per_cycle": [
+     202
+    ]
+   },
+   "missing": "a birth after a return (the lay lock)"
+  },
+  {
+   "gate": "links_lengthening",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the Node's pace, delta proper over delta interval between its successive credits (the clicks), the mean length beside; pass: the pace falls at more Nodes than it rises, first span to last, and its slope over the run is negative",
+   "numbers": {
+    "nodes_pace_fell": 327,
+    "nodes_pace_rose": 0,
+    "nodes_pace_equal": 16,
+    "pace_slope_per_interval": -0.0016066508709464426,
+    "mean_length_first_last": [
+     1.0022329096209912,
+     3.716402533527697
+    ]
+   },
+   "missing": null
+  },
+  {
+   "gate": "links_cycle",
+   "verdict": "NOT SHOWN",
+   "view": "board",
+   "reads": "the mean length's monotone runs (the board's), the Nodes' pooled pace over the rise before, the fall and the rise after each top beside, which falls through the fall too (the contraction is the sum's); pass: a falling run between two rising runs",
+   "numbers": {
+    "mean_length_runs": [
+     [
+      1,
+      1,
+      1.0022329096209912,
+      300,
+      3.716402533527697
+     ]
+    ],
+    "nodes_pooled_pace_around": {}
+   },
+   "missing": "a falling run between rising runs"
+  },
+  {
+   "gate": "era_of_matter",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the credits by identity against light's (the clicks), the writes per family (the board's); pass: light's credits precede the bodies', the bodies' outnumber light's, and intervals exist where the points' write exceeds the massless write",
+   "numbers": {
+    "light_credits": 202,
+    "light_span": [
+     3,
+     25
+    ],
+    "body_credits": 4448,
+    "body_span": [
+     11,
+     300
+    ],
+    "matter_above_light": 284,
+    "runs": [
+     [
+      16,
+      20
+     ],
+     [
+      22,
+      300
+     ]
+    ]
+   },
+   "missing": null
+  },
+  {
+   "gate": "acceleration",
+   "verdict": "SHOWN",
+   "view": "board",
+   "reads": "the velocity's differences per interval (the board's), the Nodes' pooled pace over thirds of a rise beside; pass: an interval with the velocity rising in every rise from a return",
+   "numbers": {
+    "rises": [
+     [
+      1,
+      300
+     ]
+    ],
+    "accelerating_per_rise": [
+     19
+    ],
+    "nodes_pace_over_thirds": {},
+    "intervals_accelerating": 19
+   },
+   "missing": null
+  },
+  {
+   "gate": "contraction",
+   "verdict": "NOT SHOWN",
+   "view": "board",
+   "reads": "the velocity below 0 (the board's), the Nodes' pooled pace within the run against the span before beside, not above it (the contraction is the sum's); pass: a run of velocity below 0",
+   "numbers": {
+    "intervals_below_zero": 0,
+    "runs": [],
+    "nodes_pace_before_within": {}
+   },
+   "missing": "a run of velocity below 0"
+  },
+  {
+   "gate": "light",
+   "verdict": {
+    "present_absorbed": "SHOWN",
+    "redshift": "NOT SHOWN"
+   },
+   "view": "clicks",
+   "reads": "light's quanta per interval (the board's), the massless lays, every credit's absorbed family, light's beat against the length at its Node (the clicks); pass: quanta above 0 at every interval, lays at the births and at the bodies' closes, every credit absorbing light (present_absorbed), the beat's slope over the length negative (redshift)",
+   "numbers": {
+    "intervals_with_light": [
+     300,
+     300
+    ],
+    "light_lays": 2417,
+    "quanta_least_most": [
+     76,
+     692
+    ],
+    "lays_at_births": 285,
+    "lays_at_body_closes": 2132,
+    "beat_slope": 293655111.16994596,
+    "credits_absorbing_light": [
+     4650,
+     4650
+    ],
+    "light_credits": 202,
+    "light_credits_with_beat": 60,
+    "light_last_interval": 25
+   },
+   "missing": "a light click with a beat after the births, the beat lower where the Link is longer"
+  },
+  {
+   "gate": "families_forming",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the births' children, points and senses, the credits' identity recurring (the clicks), the rest from the credits' point unread (the decoder's pair of pairs); pass: two or more points recur, every birth's senses sum to 0, every born identity is credited more than once",
+   "numbers": {
+    "births_per_point": {
+     "point 0 2 (electron)": 34,
+     "point 2 0 (proton)": 168
+    },
+    "births": 202,
+    "births_summing_to_zero": 202,
+    "closes_per_identity": {
+     "[9, 0]": 97,
+     "[9, 1]": 97,
+     "[7, 0]": 117,
+     "[7, 1]": 117
+    }
+   },
+   "missing": null
+  },
+  {
+   "gate": "collisions",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "the credits' rims per close, the least torus distance between two rims at their shared closes, the conversion lines (the clicks); pass: a conversion line, or two bodies each at one Node per close whose distance falls then rises",
+   "numbers": {
+    "conversion_lines": 0,
+    "rim_nodes_per_close_min_max": {
+     "[9, 0]": [
+      1,
+      36
+     ],
+     "[9, 1]": [
+      1,
+      36
+     ],
+     "[7, 0]": [
+      1,
+      40
+     ],
+     "[7, 1]": [
+      1,
+      40
+     ]
+    },
+    "pairs": {
+     "[7, 0] x [7, 1]": {
+      "shared_closes": 117,
+      "one_node_closes": 9,
+      "least_distance": [
+       0,
+       0
+      ]
+     },
+     "[7, 0] x [9, 0]": {
+      "shared_closes": 30,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       7
+      ]
+     },
+     "[7, 0] x [9, 1]": {
+      "shared_closes": 30,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       7
+      ]
+     },
+     "[7, 1] x [9, 0]": {
+      "shared_closes": 30,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       7
+      ]
+     },
+     "[7, 1] x [9, 1]": {
+      "shared_closes": 30,
+      "one_node_closes": 0,
+      "least_distance": [
+       0,
+       7
+      ]
+     },
+     "[9, 0] x [9, 1]": {
+      "shared_closes": 97,
+      "one_node_closes": 2,
+      "least_distance": [
+       0,
+       0
+      ]
+     }
+    }
+   },
+   "missing": "a position per close (the decoder); a body at one place (the physics)"
+  },
+  {
+   "gate": "gravitational_time_dilation",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "two Nodes' proper increments between shared closes, the deeper by births as matter (the clicks); pass: among pairs with one birthed Node, the birthed one counts fewer proper intervals more often than not",
+   "numbers": {
+    "node_pairs_unequal_proper": 344,
+    "pairs_one_birthed": 260,
+    "birthed_slower": 36,
+    "other_slower": 224
+   },
+   "missing": "the birthed Node slower more often than not"
+  },
+  {
+   "gate": "gravitational_redshift",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "light's beat at two Nodes at one interval (the clicks), the length at each beside; pass: a pair of beats at two lengths with the beat lower where longer",
+   "numbers": {
+    "beats_per_interval": {
+     "14": 3,
+     "15": 2,
+     "16": 1
+    },
+    "pairs_at_two_lengths_two_beats": 448,
+    "beat_lower_where_longer": 0
+   },
+   "missing": "two beats of light at two lengths at one interval, lower where longer"
+  },
+  {
+   "gate": "light_path",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "light's identity across Nodes (the clicks); pass: more than one light identity, one credited at two Nodes",
+   "numbers": {
+    "light_credits": 202,
+    "distinct_light_identities": 1,
+    "nodes_credited": 186
+   },
+   "missing": "light's identity per quantum: every light credit carries the family's identity at its birth Node"
+  },
+  {
+   "gate": "free_fall",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "a body's one-Node closes against matter's seat (the Node with most body credits), the distance's second differences (the clicks); pass: a track with negative second differences and no positive one",
+   "numbers": {
+    "seat_of_matter": [
+     [
+      3,
+      3,
+      0
+     ],
+     36
+    ],
+    "tracks": {
+     "[9, 0]": {
+      "closes": 97,
+      "one_node_closes": 2,
+      "second_signs": [
+       0,
+       0
+      ]
+     },
+     "[9, 1]": {
+      "closes": 97,
+      "one_node_closes": 2,
+      "second_signs": [
+       0,
+       0
+      ]
+     },
+     "[7, 0]": {
+      "closes": 117,
+      "one_node_closes": 9,
+      "second_signs": [
+       0,
+       0
+      ]
+     },
+     "[7, 1]": {
+      "closes": 117,
+      "one_node_closes": 9,
+      "second_signs": [
+       0,
+       0
+      ]
+     }
+    }
+   },
+   "missing": "a position per close; a body at one place"
+  },
+  {
+   "gate": "horizon",
+   "verdict": {
+    "links_and_silence": "NOT SHOWN",
+    "stopped_clock": "NOT SHOWN"
+   },
+   "view": "board",
+   "reads": "the Links at the wall (the board's), the wall Nodes' credits, silences and pooled pace (the clicks); pass: Links at the wall and a wall Node with no credit through a wall run while other Nodes are credited (links_and_silence), the wall Nodes' pooled pace below the others' within a hole (stopped_clock)",
+   "numbers": {
+    "holes": {},
+    "wall_nodes": 0,
+    "silent_wall_runs": []
+   },
+   "missing": "a wall Node's clock slower than the others' (a credit behind the wall)"
+  },
+  {
+   "gate": "conservation",
+   "verdict": {
+    "identity": "SHOWN",
+    "exact": "NOT SHOWN"
+   },
+   "view": "clicks",
+   "reads": "every line's taken, walls and excess (the clicks); pass: taken equals walls plus excess on every line (identity), the excess 0 on every line (exact)",
+   "numbers": {
+    "lines": 4650,
+    "identity_holds": 4650,
+    "excess_zero": 0,
+    "excess_over_taken": [
+     3.250694476790879e-05,
+     0.9530738439118085
+    ]
+   },
+   "missing": "the exact take: the excess above 0 (the take in w-ths)"
+  },
+  {
+   "gate": "uncertainty",
+   "verdict": "NOT SHOWN",
+   "view": "clicks",
+   "reads": "the proper spacing of one record at one Node and the point's sine with the count (the clicks); pass: every row readable and (count sin omega Delta t)^2 at or above 1/4 in T's unit",
+   "numbers": {
+    "rows": 3124,
+    "proper_spacing_zero": 0,
+    "point_readable": 112,
+    "point_pair_of_pairs": 2996,
+    "floor_squared": 0.25,
+    "point_outside_circle": 16,
+    "least_squared_product_in_t_units": 0.0
+   },
+   "missing": "the body credit's point decoded (a pair of pairs) and the proper's fraction"
+  },
+  {
+   "gate": "charge_conservation",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the births' senses, the credits' sense per close, the Wronskian's sign at the credited Node and not the record's charge (the clicks), the sign holder's quanta (the board's); pass: every birth's senses sum to 0",
+   "numbers": {
+    "births": 202,
+    "births_summing_to_zero": 202,
+    "closes": 189,
+    "closes_senses_zero": 189,
+    "sign_holder_quanta": [
+     0,
+     0,
+     0
+    ]
+   },
+   "missing": null
+  },
+  {
+   "gate": "arrow_of_time",
+   "verdict": "SHOWN",
+   "view": "clicks",
+   "reads": "the proper's monotonicity at every Node (the clicks), the turns (the board's), the run back across a return being the engine's test (tools/back_in_time.py --from K); pass: no proper runs back while turns exist",
+   "numbers": {
+    "nodes": 343,
+    "proper_back": 0,
+    "turns": 159,
+    "turn_intervals": 26,
+    "turned_at_end": 137
+   },
+   "missing": null
+  },
+  {
+   "gate": "mass_ratios",
+   "verdict": {
+    "fit": "NOT SHOWN",
+    "from_clicks": "NOT SHOWN"
+   },
+   "view": "clicks",
+   "reads": "the births' points' legs with the legend's names, a fit by den's choice, the body credits' point per track (the clicks); pass: the legs distinct and ordered electron, proton, neutron (fit), one readable pair per track (from_clicks)",
+   "numbers": {
+    "legs": {
+     "electron": "9669460",
+     "proton": "1576609440"
+    },
+    "ratios_from_the_legs": null,
+    "point_pair_of_pairs": 4336,
+    "point_single_pair": 112,
+    "distinct_pairs_per_identity": {
+     "[9, 0]": 6,
+     "[9, 1]": 6,
+     "[7, 1]": 1,
+     "[7, 0]": 1
+    }
+   },
+   "missing": "the rest from the clicks: the body credit's point decoded"
+  }
+ ]
+}

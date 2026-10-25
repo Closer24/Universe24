@@ -1,0 +1,2199 @@
+{
+ "marks": [
+  {
+   "t": 0,
+   "light_quanta": 173,
+   "light_max_level": 189,
+   "c_origin": 0,
+   "c_least": 0,
+   "c_largest": 0,
+   "X_origin": 1000,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {},
+   "records": 2,
+   "largest_record_milli": 248821,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 1,
+   "proper_origin_far": [
+    0,
+    0
+   ],
+   "proper_least_largest": [
+    0,
+    0
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 248821,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      911
+     ],
+     "within_one_of_centre_milli": 367,
+     "within_one_of_peak_milli": 367,
+     "c_centre": 0,
+     "c_peak": 0,
+     "c_far": 0,
+     "proper_centre": 0,
+     "proper_far": 0
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 248821,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      911
+     ],
+     "within_one_of_centre_milli": 367,
+     "within_one_of_peak_milli": 367,
+     "c_centre": 0,
+     "c_peak": 0,
+     "c_far": 0,
+     "proper_centre": 0,
+     "proper_far": 0
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 248821,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -912
+     ],
+     "within_one_of_centre_milli": 367,
+     "within_one_of_peak_milli": 367,
+     "c_centre": 0,
+     "c_peak": 0,
+     "c_far": 0,
+     "proper_centre": 0,
+     "proper_far": 0
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 248821,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -912
+     ],
+     "within_one_of_centre_milli": 367,
+     "within_one_of_peak_milli": 367,
+     "c_centre": 0,
+     "c_peak": 0,
+     "c_far": 0,
+     "proper_centre": 0,
+     "proper_far": 0
+    }
+   ],
+   "separation_milli": 1177,
+   "peak_distance": 0
+  },
+  {
+   "t": 1,
+   "light_quanta": 175,
+   "light_max_level": 378,
+   "c_origin": 0,
+   "c_least": 0,
+   "c_largest": 64,
+   "X_origin": 1002,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {},
+   "records": 2,
+   "largest_record_milli": 279043,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 1,
+   "proper_origin_far": [
+    1000,
+    1000
+   ],
+   "proper_least_largest": [
+    1000,
+    1000
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 279043,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      961
+     ],
+     "within_one_of_centre_milli": 382,
+     "within_one_of_peak_milli": 382,
+     "c_centre": 64,
+     "c_peak": 64,
+     "c_far": 0,
+     "proper_centre": 1000,
+     "proper_far": 1000
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 279043,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      961
+     ],
+     "within_one_of_centre_milli": 382,
+     "within_one_of_peak_milli": 382,
+     "c_centre": 64,
+     "c_peak": 64,
+     "c_far": 0,
+     "proper_centre": 1000,
+     "proper_far": 1000
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 279043,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -962
+     ],
+     "within_one_of_centre_milli": 382,
+     "within_one_of_peak_milli": 382,
+     "c_centre": 64,
+     "c_peak": 64,
+     "c_far": 0,
+     "proper_centre": 1000,
+     "proper_far": 1000
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 279043,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -962
+     ],
+     "within_one_of_centre_milli": 382,
+     "within_one_of_peak_milli": 382,
+     "c_centre": 64,
+     "c_peak": 64,
+     "c_far": 0,
+     "proper_centre": 1000,
+     "proper_far": 1000
+    }
+   ],
+   "separation_milli": 1077,
+   "peak_distance": 0
+  },
+  {
+   "t": 2,
+   "light_quanta": 179,
+   "light_max_level": 567,
+   "c_origin": 1,
+   "c_least": 1,
+   "c_largest": 106,
+   "X_origin": 1006,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {},
+   "records": 2,
+   "largest_record_milli": 308042,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 1,
+   "proper_origin_far": [
+    2000,
+    2000
+   ],
+   "proper_least_largest": [
+    1938,
+    2000
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 308042,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      975
+     ],
+     "within_one_of_centre_milli": 383,
+     "within_one_of_peak_milli": 383,
+     "c_centre": 106,
+     "c_peak": 106,
+     "c_far": 1,
+     "proper_centre": 1938,
+     "proper_far": 2000
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 308042,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      975
+     ],
+     "within_one_of_centre_milli": 383,
+     "within_one_of_peak_milli": 383,
+     "c_centre": 106,
+     "c_peak": 106,
+     "c_far": 1,
+     "proper_centre": 1938,
+     "proper_far": 2000
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 308042,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -976
+     ],
+     "within_one_of_centre_milli": 383,
+     "within_one_of_peak_milli": 383,
+     "c_centre": 106,
+     "c_peak": 106,
+     "c_far": 1,
+     "proper_centre": 1938,
+     "proper_far": 2000
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 308042,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -976
+     ],
+     "within_one_of_centre_milli": 383,
+     "within_one_of_peak_milli": 383,
+     "c_centre": 106,
+     "c_peak": 106,
+     "c_far": 1,
+     "proper_centre": 1938,
+     "proper_far": 2000
+    }
+   ],
+   "separation_milli": 1049,
+   "peak_distance": 0
+  },
+  {
+   "t": 3,
+   "light_quanta": 187,
+   "light_max_level": 756,
+   "c_origin": 2,
+   "c_least": 2,
+   "c_largest": 124,
+   "X_origin": 1012,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {},
+   "records": 2,
+   "largest_record_milli": 329681,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 1,
+   "proper_origin_far": [
+    2999,
+    2999
+   ],
+   "proper_least_largest": [
+    2837,
+    2999
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 329681,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      1008
+     ],
+     "within_one_of_centre_milli": 389,
+     "within_one_of_peak_milli": 389,
+     "c_centre": 124,
+     "c_peak": 124,
+     "c_far": 2,
+     "proper_centre": 2837,
+     "proper_far": 2999
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 329681,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      1008
+     ],
+     "within_one_of_centre_milli": 389,
+     "within_one_of_peak_milli": 389,
+     "c_centre": 124,
+     "c_peak": 124,
+     "c_far": 2,
+     "proper_centre": 2837,
+     "proper_far": 2999
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 329681,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -1009
+     ],
+     "within_one_of_centre_milli": 389,
+     "within_one_of_peak_milli": 389,
+     "c_centre": 124,
+     "c_peak": 124,
+     "c_far": 2,
+     "proper_centre": 2837,
+     "proper_far": 2999
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 329681,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -1009
+     ],
+     "within_one_of_centre_milli": 389,
+     "within_one_of_peak_milli": 389,
+     "c_centre": 124,
+     "c_peak": 124,
+     "c_far": 2,
+     "proper_centre": 2837,
+     "proper_far": 2999
+    }
+   ],
+   "separation_milli": 983,
+   "peak_distance": 0
+  },
+  {
+   "t": 5,
+   "light_quanta": 209,
+   "light_max_level": 1134,
+   "c_origin": 11,
+   "c_least": 11,
+   "c_largest": 136,
+   "X_origin": 1048,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {
+    "lay": 10
+   },
+   "records": 4,
+   "largest_record_milli": 351779,
+   "peak_pairs_adjacent": 4,
+   "peak_pairs_same_node": 2,
+   "proper_origin_far": [
+    4992,
+    4992
+   ],
+   "proper_least_largest": [
+    4599,
+    4992
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 351779,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      1070
+     ],
+     "within_one_of_centre_milli": 396,
+     "within_one_of_peak_milli": 396,
+     "c_centre": 136,
+     "c_peak": 136,
+     "c_far": 11,
+     "proper_centre": 4599,
+     "proper_far": 4992
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 351779,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      1070
+     ],
+     "within_one_of_centre_milli": 396,
+     "within_one_of_peak_milli": 396,
+     "c_centre": 136,
+     "c_peak": 136,
+     "c_far": 11,
+     "proper_centre": 4599,
+     "proper_far": 4992
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 351779,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -1071
+     ],
+     "within_one_of_centre_milli": 396,
+     "within_one_of_peak_milli": 396,
+     "c_centre": 136,
+     "c_peak": 136,
+     "c_far": 11,
+     "proper_centre": 4599,
+     "proper_far": 4992
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 351779,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -1071
+     ],
+     "within_one_of_centre_milli": 396,
+     "within_one_of_peak_milli": 396,
+     "c_centre": 136,
+     "c_peak": 136,
+     "c_far": 11,
+     "proper_centre": 4599,
+     "proper_far": 4992
+    }
+   ],
+   "separation_milli": 859,
+   "peak_distance": 0
+  },
+  {
+   "t": 10,
+   "light_quanta": 288,
+   "light_max_level": 2077,
+   "c_origin": 155,
+   "c_least": 137,
+   "c_largest": 243,
+   "X_origin": 1864,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {
+    "lay": 111,
+    "stop": 26
+   },
+   "records": 4,
+   "largest_record_milli": 1239337,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 6,
+   "proper_origin_far": [
+    9671,
+    9671
+   ],
+   "proper_least_largest": [
+    8796,
+    9671
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 490672,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      1224
+     ],
+     "within_one_of_centre_milli": 419,
+     "within_one_of_peak_milli": 419,
+     "c_centre": 243,
+     "c_peak": 243,
+     "c_far": 155,
+     "proper_centre": 8796,
+     "proper_far": 9671
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 490672,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      1224
+     ],
+     "within_one_of_centre_milli": 419,
+     "within_one_of_peak_milli": 419,
+     "c_centre": 243,
+     "c_peak": 243,
+     "c_far": 155,
+     "proper_centre": 8796,
+     "proper_far": 9671
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 490672,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -1225
+     ],
+     "within_one_of_centre_milli": 419,
+     "within_one_of_peak_milli": 419,
+     "c_centre": 243,
+     "c_peak": 243,
+     "c_far": 155,
+     "proper_centre": 8796,
+     "proper_far": 9671
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 490672,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -1225
+     ],
+     "within_one_of_centre_milli": 419,
+     "within_one_of_peak_milli": 419,
+     "c_centre": 243,
+     "c_peak": 243,
+     "c_far": 155,
+     "proper_centre": 8796,
+     "proper_far": 9671
+    }
+   ],
+   "separation_milli": 551,
+   "peak_distance": 0
+  },
+  {
+   "t": 15,
+   "light_quanta": 259,
+   "light_max_level": 3029,
+   "c_origin": 247,
+   "c_least": 237,
+   "c_largest": 345,
+   "X_origin": 2693,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {
+    "lay": 83
+   },
+   "records": 4,
+   "largest_record_milli": 1707650,
+   "peak_pairs_adjacent": 4,
+   "peak_pairs_same_node": 2,
+   "proper_origin_far": [
+    13807,
+    13807
+   ],
+   "proper_least_largest": [
+    12560,
+    13807
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 801971,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      1009
+     ],
+     "within_one_of_centre_milli": 358,
+     "within_one_of_peak_milli": 358,
+     "c_centre": 345,
+     "c_peak": 345,
+     "c_far": 247,
+     "proper_centre": 12560,
+     "proper_far": 13807
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 801971,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      1009
+     ],
+     "within_one_of_centre_milli": 358,
+     "within_one_of_peak_milli": 358,
+     "c_centre": 345,
+     "c_peak": 345,
+     "c_far": 247,
+     "proper_centre": 12560,
+     "proper_far": 13807
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 801971,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -1010
+     ],
+     "within_one_of_centre_milli": 358,
+     "within_one_of_peak_milli": 358,
+     "c_centre": 345,
+     "c_peak": 345,
+     "c_far": 247,
+     "proper_centre": 12560,
+     "proper_far": 13807
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 801971,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -1010
+     ],
+     "within_one_of_centre_milli": 358,
+     "within_one_of_peak_milli": 358,
+     "c_centre": 345,
+     "c_peak": 345,
+     "c_far": 247,
+     "proper_centre": 12560,
+     "proper_far": 13807
+    }
+   ],
+   "separation_milli": 981,
+   "peak_distance": 0
+  },
+  {
+   "t": 20,
+   "light_quanta": 331,
+   "light_max_level": 3532,
+   "c_origin": 345,
+   "c_least": 340,
+   "c_largest": 448,
+   "X_origin": 3985,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {
+    "lay": 99,
+    "stop": 26
+   },
+   "records": 4,
+   "largest_record_milli": 2273996,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 2,
+   "proper_origin_far": [
+    17582,
+    17582
+   ],
+   "proper_least_largest": [
+    15936,
+    17582
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 1190414,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      939
+     ],
+     "within_one_of_centre_milli": 330,
+     "within_one_of_peak_milli": 330,
+     "c_centre": 448,
+     "c_peak": 448,
+     "c_far": 345,
+     "proper_centre": 15936,
+     "proper_far": 17582
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 1190414,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      939
+     ],
+     "within_one_of_centre_milli": 330,
+     "within_one_of_peak_milli": 330,
+     "c_centre": 448,
+     "c_peak": 448,
+     "c_far": 345,
+     "proper_centre": 15936,
+     "proper_far": 17582
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 1190414,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -940
+     ],
+     "within_one_of_centre_milli": 330,
+     "within_one_of_peak_milli": 330,
+     "c_centre": 448,
+     "c_peak": 448,
+     "c_far": 345,
+     "proper_centre": 15936,
+     "proper_far": 17582
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 1190414,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -940
+     ],
+     "within_one_of_centre_milli": 330,
+     "within_one_of_peak_milli": 330,
+     "c_centre": 448,
+     "c_peak": 448,
+     "c_far": 345,
+     "proper_centre": 15936,
+     "proper_far": 17582
+    }
+   ],
+   "separation_milli": 1121,
+   "peak_distance": 0
+  },
+  {
+   "t": 25,
+   "light_quanta": 313,
+   "light_max_level": 4092,
+   "c_origin": 440,
+   "c_least": 426,
+   "c_largest": 491,
+   "X_origin": 5849,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {
+    "lay": 75,
+    "stop": 4
+   },
+   "records": 4,
+   "largest_record_milli": 2823128,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 2,
+   "proper_origin_far": [
+    20967,
+    20967
+   ],
+   "proper_least_largest": [
+    19074,
+    20974
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 1504381,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      745
+     ],
+     "within_one_of_centre_milli": 289,
+     "within_one_of_peak_milli": 289,
+     "c_centre": 491,
+     "c_peak": 491,
+     "c_far": 440,
+     "proper_centre": 19074,
+     "proper_far": 20967
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 1504381,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      745
+     ],
+     "within_one_of_centre_milli": 289,
+     "within_one_of_peak_milli": 289,
+     "c_centre": 491,
+     "c_peak": 491,
+     "c_far": 440,
+     "proper_centre": 19074,
+     "proper_far": 20967
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 1504381,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -746
+     ],
+     "within_one_of_centre_milli": 289,
+     "within_one_of_peak_milli": 289,
+     "c_centre": 491,
+     "c_peak": 491,
+     "c_far": 440,
+     "proper_centre": 19074,
+     "proper_far": 20967
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 1504381,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -746
+     ],
+     "within_one_of_centre_milli": 289,
+     "within_one_of_peak_milli": 289,
+     "c_centre": 491,
+     "c_peak": 491,
+     "c_far": 440,
+     "proper_centre": 19074,
+     "proper_far": 20967
+    }
+   ],
+   "separation_milli": 1509,
+   "peak_distance": 0
+  },
+  {
+   "t": 50,
+   "light_quanta": 264,
+   "light_max_level": 5793,
+   "c_origin": 699,
+   "c_least": 691,
+   "c_largest": 757,
+   "X_origin": 16442,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {
+    "lay": 97,
+    "stop": 8
+   },
+   "records": 4,
+   "largest_record_milli": 8010881,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 6,
+   "proper_origin_far": [
+    35074,
+    35074
+   ],
+   "proper_least_largest": [
+    32357,
+    35082
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 3642648,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      508
+     ],
+     "within_one_of_centre_milli": 235,
+     "within_one_of_peak_milli": 235,
+     "c_centre": 757,
+     "c_peak": 757,
+     "c_far": 699,
+     "proper_centre": 32357,
+     "proper_far": 35074
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 3642648,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      508
+     ],
+     "within_one_of_centre_milli": 235,
+     "within_one_of_peak_milli": 235,
+     "c_centre": 757,
+     "c_peak": 757,
+     "c_far": 699,
+     "proper_centre": 32357,
+     "proper_far": 35074
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 3642648,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -509
+     ],
+     "within_one_of_centre_milli": 235,
+     "within_one_of_peak_milli": 235,
+     "c_centre": 757,
+     "c_peak": 757,
+     "c_far": 699,
+     "proper_centre": 32357,
+     "proper_far": 35074
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 3642648,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -509
+     ],
+     "within_one_of_centre_milli": 235,
+     "within_one_of_peak_milli": 235,
+     "c_centre": 757,
+     "c_peak": 757,
+     "c_far": 699,
+     "proper_centre": 32357,
+     "proper_far": 35074
+    }
+   ],
+   "separation_milli": 1983,
+   "peak_distance": 0
+  },
+  {
+   "t": 75,
+   "light_quanta": 201,
+   "light_max_level": 6782,
+   "c_origin": 847,
+   "c_least": 842,
+   "c_largest": 894,
+   "X_origin": 29640,
+   "turned": 0,
+   "swaps": 0,
+   "refusals": {
+    "lay": 37
+   },
+   "records": 4,
+   "largest_record_milli": 21928073,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 6,
+   "proper_origin_far": [
+    46556,
+    46556
+   ],
+   "proper_least_largest": [
+    43318,
+    46588
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 5592218,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      497
+     ],
+     "within_one_of_centre_milli": 236,
+     "within_one_of_peak_milli": 236,
+     "c_centre": 894,
+     "c_peak": 894,
+     "c_far": 847,
+     "proper_centre": 43318,
+     "proper_far": 46556
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 5592218,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      497
+     ],
+     "within_one_of_centre_milli": 236,
+     "within_one_of_peak_milli": 236,
+     "c_centre": 894,
+     "c_peak": 894,
+     "c_far": 847,
+     "proper_centre": 43318,
+     "proper_far": 46556
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 5592218,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -498
+     ],
+     "within_one_of_centre_milli": 236,
+     "within_one_of_peak_milli": 236,
+     "c_centre": 894,
+     "c_peak": 894,
+     "c_far": 847,
+     "proper_centre": 43318,
+     "proper_far": 46556
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 5592218,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -498
+     ],
+     "within_one_of_centre_milli": 236,
+     "within_one_of_peak_milli": 236,
+     "c_centre": 894,
+     "c_peak": 894,
+     "c_far": 847,
+     "proper_centre": 43318,
+     "proper_far": 46556
+    }
+   ],
+   "separation_milli": 2005,
+   "peak_distance": 0
+  },
+  {
+   "t": 100,
+   "light_quanta": 173,
+   "light_max_level": 7448,
+   "c_origin": 939,
+   "c_least": 929,
+   "c_largest": 979,
+   "X_origin": 42875,
+   "turned": 0,
+   "swaps": 4,
+   "refusals": {
+    "lay": 33
+   },
+   "records": 4,
+   "largest_record_milli": 48291159,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 2,
+   "proper_origin_far": [
+    56798,
+    56798
+   ],
+   "proper_least_largest": [
+    53159,
+    56849
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 7235802,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      505
+     ],
+     "within_one_of_centre_milli": 243,
+     "within_one_of_peak_milli": 243,
+     "c_centre": 979,
+     "c_peak": 979,
+     "c_far": 939,
+     "proper_centre": 53159,
+     "proper_far": 56798
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 7235802,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      505
+     ],
+     "within_one_of_centre_milli": 243,
+     "within_one_of_peak_milli": 243,
+     "c_centre": 979,
+     "c_peak": 979,
+     "c_far": 939,
+     "proper_centre": 53159,
+     "proper_far": 56798
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 7235802,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -506
+     ],
+     "within_one_of_centre_milli": 243,
+     "within_one_of_peak_milli": 243,
+     "c_centre": 979,
+     "c_peak": 979,
+     "c_far": 939,
+     "proper_centre": 53159,
+     "proper_far": 56798
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 7235802,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -506
+     ],
+     "within_one_of_centre_milli": 243,
+     "within_one_of_peak_milli": 243,
+     "c_centre": 979,
+     "c_peak": 979,
+     "c_far": 939,
+     "proper_centre": 53159,
+     "proper_far": 56798
+    }
+   ],
+   "separation_milli": 1989,
+   "peak_distance": 0
+  },
+  {
+   "t": 150,
+   "light_quanta": 106,
+   "light_max_level": 8077,
+   "c_origin": 1025,
+   "c_least": 1019,
+   "c_largest": 1068,
+   "X_origin": 60528,
+   "turned": 0,
+   "swaps": 48,
+   "refusals": {
+    "lay": 1,
+    "stop": 16
+   },
+   "records": 4,
+   "largest_record_milli": 99387365,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 2,
+   "proper_origin_far": [
+    75462,
+    75462
+   ],
+   "proper_least_largest": [
+    71149,
+    75549
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 9427015,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      485
+     ],
+     "within_one_of_centre_milli": 242,
+     "within_one_of_peak_milli": 242,
+     "c_centre": 1068,
+     "c_peak": 1068,
+     "c_far": 1025,
+     "proper_centre": 71149,
+     "proper_far": 75462
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 9427015,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      485
+     ],
+     "within_one_of_centre_milli": 242,
+     "within_one_of_peak_milli": 242,
+     "c_centre": 1068,
+     "c_peak": 1068,
+     "c_far": 1025,
+     "proper_centre": 71149,
+     "proper_far": 75462
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 9427015,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -486
+     ],
+     "within_one_of_centre_milli": 242,
+     "within_one_of_peak_milli": 242,
+     "c_centre": 1068,
+     "c_peak": 1068,
+     "c_far": 1025,
+     "proper_centre": 71149,
+     "proper_far": 75462
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 9427015,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -486
+     ],
+     "within_one_of_centre_milli": 242,
+     "within_one_of_peak_milli": 242,
+     "c_centre": 1068,
+     "c_peak": 1068,
+     "c_far": 1025,
+     "proper_centre": 71149,
+     "proper_far": 75462
+    }
+   ],
+   "separation_milli": 2029,
+   "peak_distance": 0
+  },
+  {
+   "t": 200,
+   "light_quanta": 101,
+   "light_max_level": 8654,
+   "c_origin": 1047,
+   "c_least": 1045,
+   "c_largest": 1094,
+   "X_origin": 66506,
+   "turned": 2,
+   "swaps": 243,
+   "refusals": {
+    "lay": 3,
+    "stop": 20
+   },
+   "records": 4,
+   "largest_record_milli": 598292979,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 6,
+   "proper_origin_far": [
+    93151,
+    93151
+   ],
+   "proper_least_largest": [
+    88191,
+    93277
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 10338192,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      453
+     ],
+     "within_one_of_centre_milli": 239,
+     "within_one_of_peak_milli": 239,
+     "c_centre": 1094,
+     "c_peak": 1094,
+     "c_far": 1047,
+     "proper_centre": 88191,
+     "proper_far": 93151
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 10338192,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      453
+     ],
+     "within_one_of_centre_milli": 239,
+     "within_one_of_peak_milli": 239,
+     "c_centre": 1094,
+     "c_peak": 1094,
+     "c_far": 1047,
+     "proper_centre": 88191,
+     "proper_far": 93151
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 10338192,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -454
+     ],
+     "within_one_of_centre_milli": 239,
+     "within_one_of_peak_milli": 239,
+     "c_centre": 1094,
+     "c_peak": 1094,
+     "c_far": 1047,
+     "proper_centre": 88191,
+     "proper_far": 93151
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 10338192,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -454
+     ],
+     "within_one_of_centre_milli": 239,
+     "within_one_of_peak_milli": 239,
+     "c_centre": 1094,
+     "c_peak": 1094,
+     "c_far": 1047,
+     "proper_centre": 88191,
+     "proper_far": 93151
+    }
+   ],
+   "separation_milli": 2093,
+   "peak_distance": 0
+  },
+  {
+   "t": 250,
+   "light_quanta": 94,
+   "light_max_level": 8902,
+   "c_origin": 1082,
+   "c_least": 1082,
+   "c_largest": 1168,
+   "X_origin": 75975,
+   "turned": 0,
+   "swaps": 307,
+   "refusals": {
+    "lay": 20
+   },
+   "records": 4,
+   "largest_record_milli": 1057275143,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 6,
+   "proper_origin_far": [
+    110547,
+    110547
+   ],
+   "proper_least_largest": [
+    104627,
+    110700
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 12371736,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      500
+     ],
+     "within_one_of_centre_milli": 243,
+     "within_one_of_peak_milli": 243,
+     "c_centre": 1168,
+     "c_peak": 1168,
+     "c_far": 1082,
+     "proper_centre": 104627,
+     "proper_far": 110547
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 12371736,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      500
+     ],
+     "within_one_of_centre_milli": 243,
+     "within_one_of_peak_milli": 243,
+     "c_centre": 1168,
+     "c_peak": 1168,
+     "c_far": 1082,
+     "proper_centre": 104627,
+     "proper_far": 110547
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 12371736,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -501
+     ],
+     "within_one_of_centre_milli": 243,
+     "within_one_of_peak_milli": 243,
+     "c_centre": 1168,
+     "c_peak": 1168,
+     "c_far": 1082,
+     "proper_centre": 104627,
+     "proper_far": 110547
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 12371736,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -501
+     ],
+     "within_one_of_centre_milli": 243,
+     "within_one_of_peak_milli": 243,
+     "c_centre": 1168,
+     "c_peak": 1168,
+     "c_far": 1082,
+     "proper_centre": 104627,
+     "proper_far": 110547
+    }
+   ],
+   "separation_milli": 1999,
+   "peak_distance": 0
+  },
+  {
+   "t": 300,
+   "light_quanta": 86,
+   "light_max_level": 9331,
+   "c_origin": 1232,
+   "c_least": 1228,
+   "c_largest": 1270,
+   "X_origin": 138360,
+   "turned": 0,
+   "swaps": 310,
+   "refusals": {
+    "lay": 1,
+    "stop": 20
+   },
+   "records": 4,
+   "largest_record_milli": 1799003310,
+   "peak_pairs_adjacent": 0,
+   "peak_pairs_same_node": 6,
+   "proper_origin_far": [
+    126217,
+    126217
+   ],
+   "proper_least_largest": [
+    119539,
+    126259
+   ],
+   "bodies": [
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 0,
+     "quanta_milli": 17860945,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      460
+     ],
+     "within_one_of_centre_milli": 231,
+     "within_one_of_peak_milli": 231,
+     "c_centre": 1270,
+     "c_peak": 1270,
+     "c_far": 1232,
+     "proper_centre": 119539,
+     "proper_far": 126217
+    },
+    {
+     "centre": [
+      2,
+      2,
+      2
+     ],
+     "record": 1,
+     "quanta_milli": 17860945,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      460
+     ],
+     "within_one_of_centre_milli": 231,
+     "within_one_of_peak_milli": 231,
+     "c_centre": 1270,
+     "c_peak": 1270,
+     "c_far": 1232,
+     "proper_centre": 119539,
+     "proper_far": 126217
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 0,
+     "quanta_milli": 17860945,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -461
+     ],
+     "within_one_of_centre_milli": 231,
+     "within_one_of_peak_milli": 231,
+     "c_centre": 1270,
+     "c_peak": 1270,
+     "c_far": 1232,
+     "proper_centre": 119539,
+     "proper_far": 126217
+    },
+    {
+     "centre": [
+      2,
+      2,
+      5
+     ],
+     "record": 1,
+     "quanta_milli": 17860945,
+     "peak": [
+      2,
+      2,
+      2
+     ],
+     "centroid_milli": [
+      0,
+      0,
+      -461
+     ],
+     "within_one_of_centre_milli": 231,
+     "within_one_of_peak_milli": 231,
+     "c_centre": 1270,
+     "c_peak": 1270,
+     "c_far": 1232,
+     "proper_centre": 119539,
+     "proper_far": 126217
+    }
+   ],
+   "separation_milli": 2079,
+   "peak_distance": 0
+  }
+ ],
+ "extremes": {
+  "light_quanta_least_largest": [
+   80,
+   331
+  ],
+  "largest_record_milli_over_run": 1799003310,
+  "records_most": 4,
+  "intervals_with_adjacent_peaks": 38,
+  "intervals_with_same_node_peaks": 301,
+  "intervals_with_turns": 42,
+  "c_largest_over_run": 1270,
+  "refusals_total": {
+   "lay": 8810,
+   "stop": 2254
+  },
+  "separation_milli_first_last": [
+   [
+    0,
+    1177
+   ],
+   [
+    300,
+    2079
+   ]
+  ],
+  "separation_milli_least_largest": [
+   539,
+   2107
+  ],
+  "peak_distance_least": 0,
+  "intervals_peaks_adjacent_bodies": 0,
+  "intervals_peaks_same_node_bodies": 301
+ },
+ "summary": [
+  {
+   "event": "summary",
+   "world": "bodies.json",
+   "intervals": 300,
+   "seconds": 332.6,
+   "refusals_by_cause": {
+    "lay": 8810,
+    "stop": 2254
+   },
+   "swaps_total": 310,
+   "integers_per_node": {
+    "count": 243,
+    "same_at_every_node": true,
+    "largest_bits": 71,
+    "largest_at": "sign row 1 phase 0 now"
+   }
+  }
+ ]
+}

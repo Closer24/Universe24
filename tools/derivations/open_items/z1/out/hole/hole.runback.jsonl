@@ -1,0 +1,2 @@
+{"verdict": "MATCH", "intervals": 40, "interval": 1, "window": [0, 40], "seconds": 31.5, "world": "emergence_hole.json"}
+{"verdict": "MATCH", "intervals": 40, "interval": 260, "from": 260, "window": [260, 300], "seconds": 226.2, "world": "emergence_hole.json"}
