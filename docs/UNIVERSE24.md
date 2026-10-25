@@ -64,25 +64,62 @@ The first long record on the merged engine, tests/worlds/world_chiral.json at 2,
 
 The owner's word, verbatim in translation: "all the time make sure the things are seen in Universe24; every gate must be seen happening; if they do not happen there is a problem; everything from the seed." The Boss's standing duty from it (THE_WAY widened, BRIEF_COMMON's Addition 9): after every merge the Boss runs the record from the seed alone and reads every gate; a gate NOT SHOWN is a problem named with the item that owes it. The count is read against every row of this section, the nineteen and the widened 20 to 54 (the owner's "there are more than 19" of 14:1x UTC and his goal of 15:2x, "to bring Universe24 as close as possible to 50"): SHOWN in Universe24, N of 54, the Boss's count (6399612901); Animate, the Reader, counts N of 50, the rows 29, 30, 31 and 33 read once with 11, 10, 12 and 13 whose predicates they restate. Universe24 is the chiral seed to 2,400 from the seed alone, nothing fed; the side worlds (collapse_800 to 600, bodies to 300, hole to 900) are the reader's view beside it. A verdict over an empty set (0 births or 0 credits) is NOT READ; a gate the decoder prints no line for is NOT READ by the decoder, its predicate standing in the widened table below. The former table on bcee6b39e (14:3x UTC: the same five SHOWN) is kept by name in this line.
 
-**The head 88ed48d24** (the Boss's hand rd1, 6399612901; Animate's first read 6399758163, the frames and pages under reader/88ed48d24/ on the branch reader-5): **SHOWN in Universe24: 5 of 54** (Animate: 10 of 50, the side worlds' reader's view counted). The chiral seed to 2,400 (93 seconds): 14 births at the intervals 3 to 11, 0 body credits, 5,359 turns, the mean volume 1,002 at 1, 39,099 at 100, 25,838 at 200 and 6,551,770 at 2,400 with no second bang, the run back 10 of 10; the side worlds: collapse 600 (216 credits, the largest content 1,270, 0 frozen), bodies 300 (83 credits), hole 900 (8 births, 0 credits), every run back 10 of 10.
+**The head f4a210a2a** (Animate, the Reader, 6401745386, 18:5x UTC; six records from the seed alone, nothing fed: the chiral seed to 2,400 (C), world_collapse_800 to 600 (K), world_bodies to 300 (B), world_hole to 900 (H), world_universe (U) and world_plasma (P) at their 400, every run and run back at exit 0; the pages and frames under reader/f4a210a/ on reader-5; the Boss's count of 54 on this head owed): **SHOWN in Universe24: 22 of 50** (Animate's count: a gate counted where the decoder's verdict reads SHOWN on at least one of the six, in part not counted; 19 on the chiral seed alone; 12 gates new since 8ea6a46, 3, 4, 5, 7, 14, 21, 22, 27, 37, 43, 45 and 49, nothing regressed). The states per gate are the Reader's table, the records named by their letters; the Boss's and Animate's tables the states' source, no gate read by the Scribe. The former table of the head 88ed48d24 (the Boss's hand rd1, 6399612901; Animate's first read 6399758163: 5 of 54, Animate 10 of 50; the chiral seed 14 births, 0 body credits, no second bang; the problems by owner from the two reads) kept by name in this line.
 
-| gate | state on 88ed48d24 (Universe24, the chiral seed) | the problem's owner |
-| --- | --- | --- |
-| 6 contraction | SHOWN at the board (the mean volume falls at 200) | at a Node, the one-place view owed |
-| 15 conservation at the click | SHOWN as the identity (taken 105 hundredths of booked over 14 births); the exact form NOT SHOWN | the exact take's remainder (a derivation) |
-| 17 charge conservation | SHOWN by the senses (14 births at opposite signs, the sum 0); the magnitude NOT SHOWN (the children's abs W 25 against 19,600) | MS-S1, David's fourth push |
-| 18 the arrow of time | SHOWN (the run back exact 10 of 10) | |
-| 25 the entropy of the clicks | SHOWN (1,022 bits over 14 births, never falling) | |
-| the three constants | SHOWN on all four records: 98 or 89 integers per Node, 115 state bits and 108 transient on the chiral seed (92 and 79 on collapse, 92 and 78 on bodies, 115 and 103 on hole), nothing past the width | |
-| 4 an era of matter | NOT SHOWN (0 body credits in 2,400) | PM-S1 (built on toys-5 7a634fec3, for the merge; predicted 1,017 credits at 84 Nodes, the run read 365 credits with 16 births), W-S1 |
-| 7 light with its redshift | NOT SHOWN (0 gap-0 credits; the decoder's line reads the takes and no verdict, 14 takes and 169 levels absorbed) | W-S1 the emission, PC-S2; David's decoder for the verdict |
-| 14 the horizon | NOT REACHED (the largest content 2,276 against 3,793); reached at 7,129 by 8,000 (bh2); under BH-S1 the fed Node's count 1 (bh2's prediction) against 77 of 125 by 8,000 on the chiral seed, each at its own content 3,837 (the sea's own collapse, vf2 confirming David's three claims Node by Node) | BH-S1 built and confirmed (vf2); PM-S1 reaches no horizon by 2,400 either |
-| 23 the momentum across the click | NOT SHOWN (the recoil passed to the laid pair on 0 of 14 births: the lays' dP nonzero and never the take's negative) | David, the sentence (3) as built; the decoder's verdict |
-| 34 the horizon and the stopped clock | NOT SHOWN (the horizon not reached, as 14) | BH-S1, vf2 |
-| 47 the exact take | NOT SHOWN (the excess 5 hundredths) | the exact take's remainder |
-| 1, 2, 3, 5, 8, 9, 10, 11, 12, 13, 16, 19, 20 to 22, 24, 26 to 33, 35 to 46, 48 to 54 | NOT READ by the decoder on the chiral seed (no line of their own, or a line over 0 credits); in the reader's view on the side worlds Animate reads 2 and 10 SHOWN (collapse, bodies), 9 SHOWN (the credited Nodes approaching to adjacency, the verdict of 5a7338de6), 16 SHOWN on bodies, 8 in part on bodies | the reader to 50 (David, in order: one line and one verdict per gate, 43 rows of the count); PM-S1 for the credits that turn 2, 8, 9, 10, 13, 16, 19, 22, 26, 30, 33, 44 and 49 on the chiral seed |
+| gate | state on f4a210a2a (the Reader's letters: C the chiral, K the collapse, B the bodies, H the hole, U the universe, P the plasma) | since 8ea6a46 | owed by |
+| --- | --- | --- | --- |
+| 1 recurring bangs | not shown (C, K, B, H, U, P) | unchanged in kind | the return with births: BG-S1, the bounded well (G-S4), the births on a return; MA-S1 |
+| 2 the Links lengthening in the clicks | not shown (C); shown (K, B, H, U, P) | unchanged in kind | the one-place view (gate 7) |
+| 3 shortening then lengthening | shown in part (U); not shown (K); shown (C, B, H, P) | new: shown | the gate's own letter |
+| 4 an era of matter | not shown (K, B, U, P); shown (C, H) | new: shown | W-S1 where NOT SHOWN |
+| 5 acceleration (the lengthening quickens) | not read (H, U, P); shown (C, K, B) | new: shown | LC-S1 (the lift) |
+| 6 contraction (the board, the reader's view) | not shown (K); shown (C, B, H, U, P) | unchanged in kind | the gate's own letter |
+| 7 light present and absorbed | shown (C, K, B, H, U, P) | new: shown | a light credit of its own: EM-S1 to EM-S3 |
+| 8 families forming (whole view) | shown in part (C, B, H, U, P); not shown (K) | unchanged in kind | the births' three species on every seed |
+| 9 collisions | not shown (B, H); shown (C, K, U, P) | unchanged in kind | W-S5 |
+| 10 gravitational time dilation | not shown (P); shown (C, K, B, H, U) | unchanged in kind | the one-place view (gate 7) |
+| 11 gravitational redshift | not read (C, K, B, H, U, P) | unchanged in kind | EM-S1 to EM-S3 (light with a period) |
+| 12 light's delay or deflection | not read (C, K, B, H, U, P) | unchanged in kind | EM-S1 to EM-S3 |
+| 13 free fall | not shown (C, K, B, H, U, P) | unchanged in kind | W-S4, G-S4 |
+| 14 the horizon | not reached (K, B, H, U, P); shown (C) | new: shown | BH-S1, the collapse to 3,793 from the seed |
+| 15 conservation at the click | not read (K, B, U, P); shown (C, H) | unchanged in kind | EX-S1 (the exact take) |
+| 16 uncertainty floor (one click) | not shown (K); shown (C, B, H, U, P) | unchanged in kind | the gate's own letter |
+| 17 charge conservation | not read (K, B, U, P); shown (C, H) | unchanged in kind | MS-S1 |
+| 18 the arrow of time | shown (C, K, B, H, U, P) | unchanged in kind | the gate's own letter |
+| 19 mass ratios (parts per million) | not shown (K, B, P); shown (C, H, U) | unchanged in kind | MS-S2 (ii) |
+| 20 the twist's 24 and 24 | not read (C, K, B, H, U, P) | a verdict now (no line before) | A48-S1 (the board test; a run of the 48 images) |
+| 21 the C of the birth | not read (K, B, U, P); shown (C, H) | new: shown | the gate's own letter |
+| 22 Coulomb's sign | not shown (H, U, P); not read (K, B); shown (C) | new: shown | OB (cl1's 15-cube) |
+| 23 the momentum across the click | not shown (C, H); not read (K, B, U, P) | unchanged in kind | the lay's form (the sentence (3)) |
+| 24 the merger (a pair into light) | not shown (C, K, B, H, U, P) | a verdict now (no line before) | OB-S3 (the merger as a forward act) |
+| 25 the entropy of the clicks rising | not read (K, B, U, P); shown (C, H) | unchanged in kind | the gate's own letter |
+| 26 the three lifts born and their beats' ratios | shown in part (C, H); not shown (U); not read (K, B, P) | a verdict now (no line before) | the beats' ratios at the record's den |
+| 27 confinement (no third alone) | not read (K, B, U, P); shown (C, H) | new: shown | the gate's own letter |
+| 28 the conversion list | not read (C, K, B, H, U, P) | a verdict now (no line before) | N-S6, the conversion act |
+| 32 the perihelion | not read (C, K, B, H, U, P) | a verdict now (no line before) | MV-S1 (the wave lay) |
+| 34 the horizon and the stopped clock | not shown (C); not reached (K, B, H, U, P) | a verdict now (no line before) | BH-S1 |
+| 35 frame dragging for matter, light not dragged | not read (C, K, B, H, U, P) | a verdict now (no line before) | Y-S1 |
+| 36 the shears as waves | not read (C, K, B, H, U, P) | a verdict now (no line before) | Y (the shear lines) |
+| 37 Maxwell's one Link per interval | not shown (C, K); not read (U, P); shown (B, H) | new: shown | the gate's own letter |
+| 38 the Aharonov-Bohm phase | not read (C, K, B, H, U, P) | a verdict now (no line before) | OB (a held flux) |
+| 39 the Zeeman and Stark shifts | not read (C, K, B, H, U, P) | a verdict now (no line before) | the spinor row in a world |
+| 40 the photoelectric click | not shown (C, K, B, H, U, P) | a verdict now (no line before) | EX-S1 (the take in whole quanta) |
+| 41 the spinor's two beats | not read (C, K, B, H, U, P) | a verdict now (no line before) | a shape-8 row in the record's universe |
+| 42 the split along the gradient (Stern-Gerlach) | not read (C, K, B, H, U, P) | a verdict now (no line before) | SP-S1 |
+| 43 the exclusion | not read (U, P); shown (C, K, B, H) | new: shown | the gate's own letter |
+| 44 the moving lay's velocity against k | not read (C, K, B, H, U, P) | a verdict now (no line before) | MV-S1 to MV-S3 |
+| 45 the bodies' well, binding and collapse | not shown (U); shown (C, K, B, H, P) | new: shown | G-S4 |
+| 46 the bangs recurring with the same gates | not read (C, K, B, H, U, P) | a verdict now (no line before) | gate 1 |
+| 47 the exact take | not shown (C, H); not read (K, B, U, P) | a verdict now (no line before) | EX-S1 |
+| 48 the black body | not read (C, K, B, H, U, P) | a verdict now (no line before) | OB (the sea one mode) |
+| 49 the exponential decay | not shown (C, K, B, H); shown (U, P) | new: shown | OB-S5 |
+| 50 light on light | not read (C, K, B, H, U, P) | a verdict now (no line before) | OB |
+| 51 the Casimir force and the running alpha | not read (C, K, B, H, U, P) | a verdict now (no line before) | OB |
+| 52 the neutrino | not read (C, K, B, H, U, P) | a verdict now (no line before) | N-S6 |
+| 53 a fast packet binds at its lay | not read (C, K, B, H, U, P) | a verdict now (no line before) | MV |
+| 54 scattering, two packets through each other | not read (C, K, B, H, U, P) | a verdict now (no line before) | gate 23 |
 
-**Problems by owner, from the two reads.** David: the decoder prints one key for 1, 3 and 6 with one verdict, one for 7, 11 and 12 with "read:" and no verdict, one for 9 and 13: every gate needs its own line and verdict (the table of predicates, before the reader to 50); the lines of 15 and 17 say SHOWN over 0 births on the bodies and the collapse records (NOT READ, the rule of 8 and 19); gate 23's recoil 0 of 14; the one credit beyond the floor on the collapse record (gate 16). The pump's gates wait on PM-S1. Animate: the page's labels (a label stays on the bar as a tick, readable on hover or pause), the bang numbers crowding, the 9-cube page past 14 MB (mended on reader-5 1049876: the Node lines as words of base 36, one letter per Link for the current, the board sized to the window). The Scribe: this count and the row of the three constants (done here).
+**Problems by name, the Reader's (6401745386).** Gates 1 and 46 not shown on all six (world_universe nearest: the whole board turning at once at 193, the bottom 907 at 385 against Gamma 1,000; the plasma 178 and 697 at 354; the chiral's bottoms 14,755 to 30,106 with no whole-board turn; the page drawing a Big Bang at 385 and 354 from the mean stretch where the decoder reads no exact return: the two readings differ by the rest's letter); owed BG-S1's road and MA-S1, since met to the level by the fourth form (toys-5 e3cfce303, the bottoms 992 and 966 on the 3-cube against the exact 1,000, the bodies' early clicks under PM-S1's unit the shortfall, for the Boss's line). Gate 2 not shown on the chiral alone (the spacing 2,550 shallow against 2,168 deep), 10 not shown on the plasma, both not read in the one-place view on every record (gate 7). Gates 11, 12, 48, 29 and 31 not read on all six (no credit of the gap-0 row, light with no period on the sea): EM-S1 to EM-S3. Gate 13 not shown on all six (the approach does not quicken): W-S4, G-S4. Gates 14 and 34: the horizon shown on the chiral as silence from the seed alone for the first time (the max content 3,837 against 3,793, 0 credits at frozen Nodes), 34 not shown on it (429 frozen Node lines, the content standing on 24), not reached on the five others. Gates 15 exact, 47 and 40 not shown (the excess 2 hundredths on the chiral and 5 on the hole; 6,436 clicks taking fewer levels than one quantum): EX-S1. Gate 23 not shown on C and H (the recoil passed at 0 of 16 and 0 of 17): the lay's form (3). Gate 24 not shown on all six (894,876 gapped meetings on the chiral at the premise, every one refused by name): SL-S2 built since (toys-5 e5f22fb53, merged 0e1caf464), SL-S3 for the owner's word. Gate 37 not shown on C and K (116 Nodes lit beyond one Link); 49 not shown on C, K, B and H and shown on U and P; 8 shown in part on five (the births' three species on one seed alone), 26 in part on C and H; 22 shown on the chiral alone. Fifteen gates not read by the world (20, 28, 32, 35, 36, 38, 39, 41, 42, 44, 50, 51, 52, 53 and 54: a lay or a field the worlds carry none of), their worlds the Boss's to order. The three constants on the chiral: 117 state bits and 117 transient bits of the width 128, up from 115 and 108. Animate's own: the header of a seed laid at every Node folding into one line (reader-5 3b16f37, held for one mend).
 
 ### The gates widened to everything derived, read on any bang of the same seed and at one Node where one Node can show it (2026-10-25, 11:0x UTC)
 
