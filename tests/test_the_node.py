@@ -381,7 +381,7 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
 
 
 def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> None:
-    """WS (the Boss's 6400357538, WS_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the swap at the top is the conjugation composed with the exchange of the two levels, and W = re_now im_before - im_now re_before, odd under each, is even under the two: at every turned Node and every plane (the gap-0 plane with the gapped), W after the swap equals W of the held pre-state exactly (read by a Node whose click reads before it lays; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one quantum of row 1 at the centre, the first turn at 35 under CK-S1's credits with the crossing read even, 37 under the crossing odd at a touch of zero, 42 before them) 324 of 324 sites by 60 (81 turned Nodes), every W 0 there; on the chiral 5-cube at 20 intervals 2,160 of 2,160 sites (540 turned Nodes by the four planes), 695 of them with W not 0 (2,124 and 672 under the odd crossing; 2,120 and 668 under the upward crossing alone; at 60 the probe read 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head)."""
+    """WS (the Boss's 6400357538, WS_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the swap at the top is the conjugation composed with the exchange of the two levels, and W = re_now im_before - im_now re_before, odd under each, is even under the two: at every turned Node and every plane (the gap-0 plane with the gapped), W after the swap equals W of the held pre-state exactly (read by a Node whose click reads before it lays; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one quantum of row 1 at the centre, the first turn at 42 under EQ-S1, the centre's body laying back 12 of its 39 credits where nothing arrives; 35 with the take standing under CK-S1's crossing read even, 37 under the crossing odd at a touch of zero, 42 before CK-S1's credits) 296 of 296 sites by 60 (74 turned Nodes; 324 and 81 with the take standing), every W 0 there; on the chiral 5-cube at 20 intervals 2,160 of 2,160 sites (540 turned Nodes by the four planes), 695 of them with W not 0 (2,124 and 672 under the odd crossing; 2,120 and 668 under the upward crossing alone; at 60 the probe read 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head)."""
     from event_universe.links import wronskian
 
     class Reading(Node):
@@ -412,7 +412,7 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert node.wronskians["kept"] == node.wronskians["sites"] > 0
         assert not {"negated", "changed"} & node.wronskians.keys()
         found.append(node.wronskians)
-    assert [f["sites"] for f in found] == [324, 2160] and found[1]["nonzero"] == 695
+    assert [f["sites"] for f in found] == [296, 2160] and found[1]["nonzero"] == 695
     assert "nonzero" not in found[0]
 
 
@@ -434,7 +434,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
             levels = [sign * v for v in period * 3]
             for before, now in zip(levels, levels[1:], strict=False):
                 re.before[CENTRE], re.now[CENTRE] = before, now
-                bodies(node, [], nothing, set(), still, rule)
+                bodies(node, [r.lines for r in node.records()], nothing, set(), still, rule)
                 counters.append((sign, int(node.crossed[rec][CENTRE]), int(node.beats[rec][CENTRE])))
         assert [c[1:] for c in counters if c[0] == 1] == [c[1:] for c in counters if c[0] == -1]
     assert counters[-1][2] == 3 and node.counts["body_clicks"] == 0
