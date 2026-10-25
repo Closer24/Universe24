@@ -1,4 +1,4 @@
-"""The gates read from the clicks (the credit and the birth lines), one function per row of UNIVERSE24's table: 2 the Links lengthening in the clicks, 8 families forming and 8b the species over a body's track, 10 the dilation in the reader's view, 15 the conservation at the click, 16 the one-click floor, 17 the charge and 19 the mass ratios in the clicks; the species solved by decoder.py, memoized per record."""
+"""The gates read from the clicks (the credit and the birth lines), one function per row of UNIVERSE24's table: 2 the Links lengthening in the clicks, 8 families forming and 8b the species over a body's track, 10 the dilation in the reader's view, 15 the conservation at the click, 16 the one-click floor, 17 the charge, 19 the mass ratios in the clicks and 24 the merger from the births' taken row and the gapped meetings' refusals; the species solved by decoder.py, memoized per record."""
 
 from __future__ import annotations
 
@@ -258,6 +258,7 @@ def dilation(record: Record) -> dict[str, Any]:
     decoded = solved(record)[0]
     if len(decoded) <= FEW:
         return {"10 gravitational time dilation": {"verdict": "NOT READ: too few credits decoded"}}
+    deepest = max(decoded, key=lambda d: int(d[0]["content"]))[0]["node"]
     lo, hi = halves([(c["content"], (c["proper"], c["i"])) for c, _n, _x in decoded])
     rate_lo = (sum(p for p, _i in lo), sum(i for _p, i in lo))
     rate_hi = (sum(p for p, _i in hi), sum(i for _p, i in hi))
@@ -272,6 +273,7 @@ def dilation(record: Record) -> dict[str, Any]:
                 quot(*rate_lo, THOUSAND),
                 quot(*rate_hi, THOUSAND),
             ],
+            "at": deepest,
             "verdict": shown
             + "; NOT READ in the one-place view: two bodies' clocks compare only through the gap-0 plane between them (gate 7)",
         }
@@ -284,13 +286,18 @@ def lengthening(record: Record) -> dict[str, Any]:
     for c in record.credits:
         by_node[tuple(c["node"])].append(c)
     spans = []
-    for cs in by_node.values():
+    longest: tuple[int, Any] = (0, None)
+    for at, cs in by_node.items():
         cs.sort(key=lambda c: int(c["i"]))
         spans += [
             ((a["content"] + b["content"]) // 2, b["i"] - a["i"])
             for a, b in zip(cs, cs[1:], strict=False)
             if b["i"] > a["i"]
         ]
+        longest = max(
+            longest,
+            (max((b["i"] - a["i"] for a, b in zip(cs, cs[1:], strict=False)), default=0), list(at)),
+        )
     key = "2 the Links lengthening in the clicks"
     if len(spans) <= SPANS:
         return {key: {"verdict": "NOT READ: too few spans between a Node's credits"}}
@@ -305,7 +312,29 @@ def lengthening(record: Record) -> dict[str, Any]:
         key: {
             "reader's view: spans": len(spans),
             "spacing in hundredths of a board interval, shallow / deep": [shallow, deep],
+            "at": longest[1],
             "verdict": shown
             + "; NOT READ in the one-place view (the gap-0 plane between two bodies, gate 7)",
+        }
+    }
+
+
+def merger(record: Record) -> dict[str, Any]:
+    """Row 24 (the Boss's 6400767119, the premise reader): the merger, a pair into light, from the log: a gapped record's meeting (SL-S1: both ends whole, the current's end, the twist) births the gap-0 record's children from the gapped record's take, so a birth whose taken row is a gapped record is a merger; the gapped meetings refused by name counted per cause (the orientation F = 0, the twist h = 0, the lay where the gap-0 record stands, the stop)."""
+    gap0 = record.line_num.index(record.den)
+    mergers = [b for b in record.births if int(b.get("taken_row", gap0)) != gap0]
+    refusals: Counter[str] = Counter(
+        e["cause"] for e in record.log if e["event"] == "refused" and int(e.get("row", gap0)) != gap0
+    )
+    reached = len(mergers) + sum(refusals.values())
+    return {
+        "24 the merger (a pair into light)": {
+            "births taken from a gapped record (a pair into light)": len(mergers),
+            "gapped meetings refused by cause": dict(refusals),
+            "verdict": "NOT READ: no gapped record's meeting in the record; the predicate: two conjugate records' credits ending at one Node with the gap-0 line rising there by their quanta, the charge kept"
+            if not reached
+            else f"SHOWN: {len(mergers)} pairs into light (the gap-0 children born from a gapped record's take)"
+            if mergers
+            else f"NOT SHOWN: {reached} gapped meetings reached the premise and every one was refused by name",
         }
     }

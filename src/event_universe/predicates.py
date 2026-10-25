@@ -102,15 +102,6 @@ def coulomb(record: Record) -> dict[str, Any]:
     }
 
 
-def merger(record: Record) -> dict[str, Any]:
-    """Row 24: the merger, a pair into light (the click backward on one Node)."""
-    return unread(
-        "24 the merger (a pair into light)",
-        "no conjugate pair's records end at one Node and no gap-0 credit stands (the act the owner's word)",
-        "two conjugate records' credits ending at one Node with the gap-0 line rising there by their quanta, the charge kept",
-    )
-
-
 def lifts(record: Record) -> dict[str, Any]:
     """Row 26: the three lifts born and their beats' ratios: three or more distinct planes born, and the credited planes' mean beats (intervals per period) ordered against their legs, the heavier the faster."""
     born = Counter(record.line_name[b["line_pair"]] for b in record.births)

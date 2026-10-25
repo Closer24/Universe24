@@ -296,7 +296,7 @@ TABLE: tuple[Row, ...] = (
     predicates.hand_of_birth,
     predicates.coulomb,
     recoil,
-    predicates.merger,
+    clicks.merger,
     entropy,
     predicates.lifts,
     predicates.confinement,

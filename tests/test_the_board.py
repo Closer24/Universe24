@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import itertools
 from typing import Any
 
@@ -120,3 +121,32 @@ def test_the_third_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_
 
 def test_the_fourth_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged() -> None:
     images_hold(3)
+
+
+def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma() -> None:
+    """MA-S1 (the Boss's 6400767119 (4), MA_COMPARISON.md section 4 (3)): the pair of the heavy row laid by an `at` of one quantum at every Node of the 3-cube (tests/worlds/world_pair_3.json, the Boss's spelling of the uniform world) keeps every Node alike to the integer (e 0 at 400 of 400), turns every Node at once at its one top (27 at 196, the mean 255,444 at 195), births nothing, credits a body at every Node, and falls to its bottom at 391; the bottom 949 against Gamma, the Boss's 1,000 at 168 / 169 and 27 turned at 85 (ma1's pair at the amplitude 96) NOT MET under the `at` lays: the packets' weights sum to 64 over the 27 Nodes against the centre's 8, so the board holds the eightfold matter (re_now 1,170 against 96 per Node, W 0) and the period lengthens with the write; the run back exact 10 of 10."""
+    node = node_of("world_pair_3.json")
+    assert int(node.by_index[2].lines[0].now.min()) == int(node.by_index[2].lines[0].now.max()) == 1170
+    kept = copy.deepcopy(node)
+    alike = tops = 0
+    means = []
+    for _ in range(400):
+        node.step()
+        x = [int(v) for v in node.row(CARRIER).lines[0].now.reshape(-1)]
+        alike += min(x) == max(x)
+        means.append(sum(x) // len(x))
+        if node.turned.any():
+            tops += 1
+            assert (node.interval, int(node.turned.sum())) == (196, 27)
+    bottoms = [
+        (k + 1, means[k]) for k in range(1, 399) if means[k] <= means[k - 1] and means[k] < means[k + 1]
+    ]
+    assert (alike, tops, node.counts["births"], max(means), means.index(max(means)) + 1) == (
+        400,
+        1,
+        0,
+        255444,
+        195,
+    )
+    assert bottoms == [(391, 949)] and node.counts["body_clicks"] == 135
+    assert run_back_exact(kept, 10) == 10

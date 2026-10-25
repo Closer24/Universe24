@@ -118,15 +118,17 @@ def lay_packet(
     vector: list[int] | None = None,
     one_sense: int | None = None,
 ) -> None:
-    """The `at` lay of a record with a gap: the conjugate pair (the two records at the senses -1 and 1, or the one sense named) laid at rest over the envelope (`rest_record`) along the vector (a plane's (1, 0)), each record at the largest amplitude whose share, summed over the packet, is at most n quanta of its unit (`fitted`); a record refused by state where the standing row and the child agree at the centre in their full state, the sense (the charges' product above 0) and the spin (the spin densities' dot above 0; SR-S4: the exclusion the lay's rule per full state), laid whole where either opposes or nothing stands; the lay logged."""
+    """The `at` lay of a record with a gap: the conjugate pair (the two records at the senses -1 and 1 where the lay names no sense or the sense 0, EM-S2; the one record at the sense -1 or 1 named) laid at rest over the envelope (`rest_record`) along the vector (a plane's (1, 0)), each record at the largest amplitude whose share, summed over the packet, is at most n quanta of its unit (`fitted`); a record refused by state where the standing row and the child agree at the centre in their full state, the sense (the charges' product above 0) and the spin (the spin densities' dot above 0; SR-S4: the exclusion the lay's rule per full state), laid whole where either opposes or nothing stands; the lay logged."""
     row = node.records()[rec]
     assert row.pair is not None
-    named = None if vector is None else {"vector": [int(v) for v in vector], "sense": one_sense}
+    named = {"sense": int(one_sense or 0)} | (
+        {} if vector is None else {"vector": [int(v) for v in vector]}
+    )
     vector = [1, 0] if vector is None else [int(v) for v in vector]
     envelope, w0 = envelope_of(node, at, h)
     node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
     amplitude = fitted(node, row, envelope, w0, n * node.units[rec], vector)
-    for sense in (-1, 1) if one_sense is None else (int(one_sense),):
+    for sense in (-1, 1) if not one_sense else (int(one_sense),):
         lines = rest_record(node, row, envelope, w0, amplitude, sense, vector)
         standing = gram.density(row.shape, [line.now for line in row.lines])
         child = gram.density(row.shape, [line.now for line in lines])
@@ -151,6 +153,6 @@ def lay_packet(
             "share": packet_share(node, row, lines, rule),
             "unit": node.units[rec],
             "nodes": int(sum(1 for x in envelope.reshape(-1) if int(x) > 0)),
-            **(named or {}),
+            **named,
         }
     )

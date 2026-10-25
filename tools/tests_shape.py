@@ -55,6 +55,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         34,
         "WS (2026-10-25, the Boss's 6400357538, WS_VERDICT.md section 4: the test under 15 s): the reading Node within the test (its click reads W of the held pre-state against W after the swap at every turned Node and every plane before it lays), the Boss's 3-cube to 60 and the chiral 5-cube at 20, kept = sites, negated 0, changed 0, the nonzero sites counted",
     ),
+    "tests/test_the_board.py::test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma": (
+        27,
+        "MA-S1 (2026-10-25, the Boss's 6400767119 (4), MA_COMPARISON.md section 4: the test under 15 s): the pair at every Node of the 3-cube by the file's `at` lays to 400, every Node alike, the whole board turning at once at the top, births 0, the bottom named against Gamma, the run back exact",
+    ),
     "tests/test_the_node.py::shares_of": (
         11,
         "PM-S1 (2026-10-25, the owner's word through the Boss, 6399410929, PM_COMPARISON.md section 5: the tests under 15 s beside the sentence): the helper, the gap-0 line's share in the carrier's unit and by hand at the frame's and the vacuum's weights",

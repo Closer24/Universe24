@@ -1,4 +1,4 @@
-"""The board's gates, read from the record's rows and Node lines alone (the reader's view), one function per row of UNIVERSE24's table: 1 the recurring bang, 3 shortening then lengthening, 5 the acceleration, 6 the contraction (the mean volume's course), 4 the era of matter in the Nodes' clocks, 14 the horizon, 34 the horizon with the stopped clock, 37 Maxwell's one Link per interval from the Node lines' currents, 45 the bodies' well and 46 the bangs recurring with the same gates; the gates of the clicks are clicks.py and gates.py."""
+"""The board's gates, read from the record's rows and Node lines alone (the reader's view), one function per row of UNIVERSE24's table: 1 the recurring bang (MA-S1: the exact return to Gamma at every Node with the whole board turning at once, the bangs numbered), 3 shortening then lengthening, 5 the acceleration with LC-S1's lift line, 6 the contraction (the mean volume's course), 4 the era of matter in the Nodes' clocks, 14 the horizon, 34 the horizon with the stopped clock, 37 Maxwell's one Link per interval from the Node lines' currents, 45 the bodies' well and 46 the bangs recurring with the same gates; the gates of the clicks are clicks.py and gates.py."""
 
 from __future__ import annotations
 
@@ -6,6 +6,7 @@ from collections import defaultdict
 from typing import Any
 
 from event_universe.core import paces
+from event_universe.core.rule3 import largest_below, quotient
 from event_universe.decoder import Record
 
 
@@ -19,8 +20,16 @@ def contraction(record: Record) -> dict[str, Any]:
     """Gate 6: the contraction, a fall of the mean volume at some mark."""
     rows, steps = marks(record)
     falls = [i for i, d in steps if d < 0]
+    lines = volumes(record)
+    at = None
+    if falls and len(lines) >= falls[0]:
+        before, after = lines[falls[0] - 2][1], lines[falls[0] - 1][1]
+        cube = int(record.run["cube"])
+        k = min(range(len(after)), key=lambda n: after[n] - before[n])
+        at = [k // (cube * cube), (k // cube) % cube, k % cube]
     return {
         "6 contraction (the board, the reader's view)": {
+            "at": at,
             "volume mean course (interval, mean)": [
                 (i, v) for i, v, _b in rows[:: max(1, len(rows) // 8)]
             ],
@@ -49,28 +58,87 @@ def shortening(record: Record) -> dict[str, Any]:
 
 
 def returns_of(record: Record) -> list[tuple[int, int, int]]:
-    """The marks at which the mean volume is back at or below the first mark's with a birth after the first mark."""
+    """The marks at which the mean volume is back at or below the first mark's with a birth after the first mark (the rows' reading, kept beside the Node lines')."""
     rows, _steps = marks(record)
     return [(i, v, b) for i, v, b in rows[1:] if v <= rows[0][1] and b > rows[0][2]] if rows else []
 
 
+def volumes(record: Record) -> list[tuple[int, list[int], int]]:
+    """The Node lines' volumes: per interval (the interval, every Node's X, the count of Nodes turned)."""
+    return [(int(line["i"]), [int(x) for x in line["X"]], len(line["turned"])) for line in record.nodes]
+
+
+def bottoms_of(record: Record) -> list[tuple[int, int, bool]]:
+    """The bottoms of the mean volume in the Node lines (a local least, at or below the mark before and below the one after): the interval, the mean, and whether every Node stands at Gamma exactly."""
+    lines = volumes(record)
+    means = [sum(xs) // len(xs) for _i, xs, _t in lines]
+    return [
+        (lines[k][0], means[k], all(x == record.gamma for x in lines[k][1]))
+        for k in range(1, len(means) - 1)
+        if means[k] <= means[k - 1] and means[k] < means[k + 1]
+    ]
+
+
 def recurring_bang(record: Record) -> dict[str, Any]:
-    """Gate 1: the recurring bang, the mean volume back at or below its first mark's with a birth after the return."""
-    returns = returns_of(record)
+    """Gate 1 (MA-S1's predicate, the Boss's 6400767119): the recurring bang from the Node lines: the board tops with every Node turning at once, falls to a bottom at Gamma at every Node exactly (the exact return) and rises again; the bangs numbered from the seed's, the births and the body credits counted between the returns."""
+    lines = volumes(record)
+    count = len(lines[0][1]) if lines else 0
+    whole = [i for i, _xs, turned in lines if turned == count and count]
+    bottoms = bottoms_of(record)
+    exact = [i for i, _m, at_gamma in bottoms if at_gamma]
+    bangs = [1] + [i + 1 for i in exact]
+    between = [
+        [
+            sum(1 for b in record.births if lo <= int(b["i"]) < hi),
+            sum(1 for c in record.credits if lo <= int(c["i"]) < hi),
+        ]
+        for lo, hi in zip(bangs, bangs[1:] + [record.intervals + 1], strict=False)
+    ]
+    verdict = (
+        "NOT READ: no Node line in the record; the predicate: the exact return to Gamma at every Node with the whole board turning at the top"
+        if not lines
+        else f"SHOWN: {len(exact)} exact returns to Gamma at every Node, the whole board turning at once at {len(whole)} tops, {len(bangs)} bangs"
+        if exact and whole
+        else f"NOT SHOWN: the bottom at {bottoms[0][1]} against Gamma {record.gamma}"
+        + (", the whole board turning at once at the top" if whole else ", no whole-board turn")
+        if bottoms
+        else "NOT SHOWN: no bottom of the mean volume"
+        + (", the whole board turning at once" if whole else "")
+    )
     return {
         "1 recurring bangs": {
-            "marks with the mean volume back at or below the first mark's and a birth after it": returns[
-                :4
-            ],
-            "verdict": "SHOWN: the mean volume returns and births follow"
-            if returns
-            else "NOT SHOWN: no return of the mean volume to the first mark's with births after it",
+            "tops with every Node turning at once (interval)": whole[:8],
+            "bottoms (interval, mean X, at Gamma at every Node)": bottoms[:8],
+            "bangs numbered (the interval each begins)": bangs[:8],
+            "births and body credits between the bangs": between[:8],
+            "rows' reading: marks back at or below the first mark's with a birth after it": returns_of(
+                record
+            )[:4],
+            "verdict": verdict,
         }
     }
 
 
+def lift_of(record: Record) -> tuple[list[int], list[int]]:
+    """LC-S1's lift per interval from the Node lines (lc1's quotient form): L = SUM_i quotient(Gamma SUM_j (X_j - X_i), 3 X_i) over the Nodes and their six neighbours, and the mass pull SUM_i 2 largest_below(X_i div Gamma); each Node line's read once per record."""
+    cube = int(record.run["cube"])
+    memo = record.memo.setdefault("lift", {})
+    lifts, pulls = [], []
+    for line in record.nodes:
+        if id(line) not in memo:
+            xs = [int(x) for x in line["X"]]
+            lift = pull = 0
+            for at, x in enumerate(xs):
+                lift += int(quotient(record.gamma * sum(xs[n] - x for n in neighbours(at, cube)), 3 * x))
+                pull += 2 * largest_below(int(quotient(x, record.gamma)))
+            memo[id(line)] = (lift, pull)
+        lifts.append(memo[id(line)][0])
+        pulls.append(memo[id(line)][1])
+    return lifts, pulls
+
+
 def acceleration(record: Record) -> dict[str, Any]:
-    """Gate 5: the acceleration, the rises of the mean volume growing from mark to mark within the last rising run."""
+    """Gate 5: the acceleration, the rises of the mean volume growing from mark to mark within the last rising run; beside it LC-S1's lift line (the Boss's 6400767119): the Links' lift L against the mass pull over the run's last third, the lift SHOWN where L exceeds the pull."""
     _rows, steps = marks(record)
     last_run = []
     for _i, d in reversed(steps):
@@ -79,15 +147,31 @@ def acceleration(record: Record) -> dict[str, Any]:
         last_run.append(d)
     last_run.reverse()
     quickening = sum(1 for a, b in zip(last_run, last_run[1:], strict=False) if b > a)
+    lifts, pulls = lift_of(record)
+    third = max(1, len(lifts) // 3)
+    lift, pull = sum(lifts[-third:]), sum(pulls[-third:])
     return {
         "5 acceleration (the lengthening quickens)": {
             "the last rising run's steps (per mark)": last_run[-6:],
             "steps larger than the one before": [quickening, max(len(last_run) - 1, 0)],
-            "verdict": "SHOWN at the board: the rises grow from mark to mark"
-            if len(last_run) > 1 and quickening * 2 > len(last_run) - 1
-            else "NOT SHOWN: the rises do not grow"
-            if len(last_run) > 1
-            else "NOT READ: no rising run of two marks",
+            "the Links' lift L and the mass pull at the last interval (LC-S1)": [lifts[-1], pulls[-1]]
+            if lifts
+            else None,
+            "L and the pull summed over the last third": [lift, pull],
+            "verdict": (
+                "SHOWN at the board: the rises grow from mark to mark"
+                if len(last_run) > 1 and quickening * 2 > len(last_run) - 1
+                else "NOT SHOWN: the rises do not grow"
+                if len(last_run) > 1
+                else "NOT READ: no rising run of two marks"
+            )
+            + (
+                "; the lift SHOWN: L exceeds the mass pull over the last third"
+                if lifts and lift > pull
+                else "; the lift NOT SHOWN: L within the mass pull"
+                if lifts
+                else ""
+            ),
         }
     }
 
@@ -166,24 +250,25 @@ def stopped_clock(record: Record) -> dict[str, Any]:
 
 
 def same_gates(record: Record) -> dict[str, Any]:
-    """Row 46: the bangs recurring with the same gates: after a return of the mean volume (gate 1) the later cycle shows births and body credits as the first did."""
-    returns = returns_of(record)
-    if not returns:
+    """Row 46 (the Boss's 6400767119): the repeating bang with credits: after the first exact return of gate 1 (every Node at Gamma), the later cycle births and credits bodies as the first did."""
+    exact = [i for i, _m, at_gamma in bottoms_of(record) if at_gamma]
+    if not exact:
         return {
             "46 the bangs recurring with the same gates": {
-                "verdict": "NOT READ: one cycle, no return of the mean volume (gate 1); the predicate: a later bang shows the gates the first showed"
+                "verdict": "NOT READ: no exact return of the board (gate 1); the predicate: a later bang shows the gates the first showed, its credits counted"
             }
         }
-    since = returns[0][0]
+    since = exact[0]
     births = sum(1 for b in record.births if int(b["i"]) > since)
     credits = sum(1 for c in record.credits if int(c["i"]) > since)
     return {
         "46 the bangs recurring with the same gates": {
-            "the first return's interval": since,
+            "the first exact return's interval": since,
             "births and body credits after it": [births, credits],
-            "verdict": "SHOWN: births and body credits in the later cycle"
-            if births and credits
-            else "NOT SHOWN: the later cycle lacks births or body credits",
+            "verdict": "SHOWN: body credits in the later cycle"
+            + (" with births" if births else ", no birth (a birth needs the twist)")
+            if credits
+            else "NOT SHOWN: the later cycle credits no body",
         }
     }
 
