@@ -41,6 +41,21 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_record_gates.py::test_the_committed_record_shows_the_agreed_gates_by_name": (
+        27,
+        "the record's gates (2026-10-25, the two blind hands' table agreed cold on PR #2187): the nineteen gates of tools/record_gates.py loaded by its path on the committed logs of examples/events/universe24, "
+        "the thirteen verdicts shown and the ten not shown asserted by name so that a lost or a gained verdict fails by name, the board's view at five gates, the lack named where a verdict is not shown, "
+        "the existence counts: returns above one, black holes above zero, the bodies' credits above light's",
+    ),
+    "tests/test_the_record_gates.py::test_three_predicates_on_a_record_by_hand": (
+        36,
+        "three predicates of the record's gates on a record of a few lines by hand: the recurring bangs shown with a birth after the return and not shown without it, "
+        "the dilation with the births as matter, the conservation exact",
+    ),
+    "tests/test_the_record_gates.py::hand_record": (
+        86,
+        "the helper of the gates' hand test: the volume's top and return, two births at the Node A, a body's credits at A and B with their propers, every take exact, one Node turned",
+    ),
     "tests/test_the_node_holds_the_same_count_of_integers.py::test_every_node_holds_the_same_count_of_integers_and_the_count_grows_by_a_point_at_a_birth": (
         41,
         "the generic Node's gate (2026-10-25, the plan's stage 0): the integers one Node holds read by tools/node_integers.py loaded by its path on the bare 3-cube at den 1,021 and at the top tier's den, "
