@@ -51,6 +51,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "SL-S2 (2026-10-25, the Boss's ledger item 10, SL_COMPARISON.md: the test under 15 s): the heaviest record's conjugate pair fed at two adjacent Nodes of the bare 5-cube at 20 intervals, "
         "one merger (the taken row the heaviest record, the children the gap-0 row), each child's wall one light quantum to the rounding paid by one exact take at its own end, the gap-0 row whole at each end, the charge 0, the stop by name, the run back exact",
     ),
+    "tests/test_the_node.py::test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1": (
+        43,
+        "CK-S1 (2026-10-25, the owner's word of 17:57 through the Boss, 6401141446; ck1's REPORT.md section 4: the test under 15 s): the crossing read in either direction, even under the negation of the line, "
+        "at one Node fed a plane's re line at rest over the period 6 and its negation (the counters equal step for step, the beat 3, the half period), and the chiral 5-cube at 20 intervals with every plane credit's beat the count between the two latest zero crossings of its re line read by hand, credits on a downward crossing among them, the run back exact",
+    ),
     "tests/test_the_node.py::test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1": (
         17,
         "MS-S1 (2026-10-25, the owner's word through the Boss, 6399410929, MS_COMPARISON.md section 5: the test under 15 s beside the sentence): the lay's pair (A, B) with A B = T div 2 from T alone, "

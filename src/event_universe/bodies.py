@@ -24,7 +24,7 @@ def bodies(
     frozen: Any,
     r_gap0: rule3.Rule,
 ) -> None:
-    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; the beat a plane's by its re line's upward crossings counted, a quartet's from the invariant ratio N.G.B / N.G.N along the law's orbit (gram.period)."""
+    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; the beat a plane's by its re line's zero crossings counted in either direction (CK-S1: the crossing read even under the negation of the line, so the closing is covariant under the conjugation and the colour exchange alike; the beat the half period; the former upward crossing kept by name), a quartet's from the invariant ratio N.G.B / N.G.N along the law's orbit (gram.period)."""
     for rec, row in enumerate(node.records()):
         standing_now = np.vectorize(
             lambda v, unit=node.units[rec]: 1 if int(v) >= unit else 0, otypes=[object]
@@ -32,15 +32,16 @@ def bodies(
         node.standing[rec] = np.where(standing_now == 1, node.standing[rec] + 1, 0)
         if row.shape == PLANE:
             re = row.lines[0]
-            upward = np.vectorize(lambda b, n: 1 if (int(b) < 0 <= int(n)) else 0, otypes=[object])(
-                re.before, re.now
-            )
+            crossing = np.vectorize(
+                lambda b, n: 1 if (int(b) < 0 <= int(n) or int(n) < 0 <= int(b)) else 0,
+                otypes=[object],
+            )(re.before, re.now)
             counting = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(node.crossed[rec])
             node.beats[rec] = np.where(
-                (upward == 1) & (counting == 1), node.crossed[rec], node.beats[rec]
+                (crossing == 1) & (counting == 1), node.crossed[rec], node.beats[rec]
             )
             node.crossed[rec] = np.where(
-                upward == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0)
+                crossing == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0)
             )
         else:
             node.beats[rec] = gram.period(node, row.lines, standing_now)

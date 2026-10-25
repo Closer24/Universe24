@@ -75,8 +75,7 @@ def fall_of(
     if now == before:
         return None, 0
     t = 1 if before > now else -1
-    own, w = int(np.asarray(r.self_coefficient)[at]), int(r.wall)
-    reached = 0
+    own, w, reached = int(np.asarray(r.self_coefficient)[at]), int(r.wall), 0
     for port, reach in enumerate(r.reaches):
         reached += int(np.asarray(reach)[at]) * int(line.before[neighbour(node, at, port)])
     pull = own * before + reached

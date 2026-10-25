@@ -1,4 +1,4 @@
-"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube, regenerated under PM-S1 on 2026-10-25: the era of matter SHOWN on the hole seed, the bodies' credited Nodes receding) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, den's circle under gate 19 by its count (MS-S2: 26 points at the toy's den, 8 at the middle's, the typed pairs among them); the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
+"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube, regenerated under PM-S1 on 2026-10-25 and again under CK-S1 and the emission's odd rounding the same day: the era of matter SHOWN on the hole seed, Coulomb's sign NOT SHOWN there under the beat of the half period and the bodies' well SHOWN, the bodies' credited Nodes receding, the bodies' gate 8 NOT SHOWN by two credits at turned Nodes decoding beyond the floor, so the take's event stands for the click) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, den's circle under gate 19 by its count (MS-S2: 26 points at the toy's den, 8 at the middle's, the typed pairs among them); the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
 
 from __future__ import annotations
 
@@ -14,12 +14,15 @@ from tests.laws import ROOT, load_file, world_of
 
 RECORDS, WIDTH = ROOT / "examples" / "records", 128
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
-    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43},
+    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45},
     "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45},
-    "bodies": {2, 3, 5, 6, 7, 8, 10, 16, 18, 30, 37, 43, 45},
+    "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45},
 }
 VERDICTS = {  # the verdicts' words by name
-    "hole": {"22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part"},
+    "hole": {
+        "22 Coulomb's sign": "NOT SHOWN: unlike senses do not approach, like senses do not part",
+        "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+    },
     "chiral": {"9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart"},
     "bodies": {"37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link"},
 }
@@ -100,7 +103,12 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
     assert events == gates(run)["events"]
     labels = [e["label"] for e in events]
     assert "the run back exact" in labels
-    first = next((e for e in events if e["label"] in ("a pair born", "a body clicks")), None)
+    clicks = (
+        "a pair born",
+        "a body clicks",
+        "light absorbed at a take",
+    )  # gate 7's take is every click's
+    first = next((e for e in events if e["label"] in clicks), None)
     assert first is not None and first["i"] == min(
         e["i"] for e in run["log"] if e["event"] in ("birth", "credit")
     )
