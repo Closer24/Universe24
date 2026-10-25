@@ -54,12 +54,12 @@ function place(x, y, z, grow) {
 function length(X) { return Math.pow(Math.max(X, 1) / G, 0.25); }
 function stretch(X) { return Math.max(length(X) - 1, 0); }
 function meanStretch(line) { let sum = 0; for (const X of line.X) sum += stretch(X); return sum / line.X.length; }
-const stretches = lines.map(meanStretch), most = Math.max(...stretches, 1e-9), full = canvas.width / (c + 1.5), touch = 5 / full, unit = (1 - touch) / most;
+const stretches = lines.map(meanStretch), most = Math.max(...stretches, 1e-9), full = canvas.width / (c + 1.5), touch = 5 / full;
 const bangs = [lines[0].i];
 for (let k = 1; k + 1 < n; k++) if (stretches[k] <= stretches[k - 1] && stretches[k] < stretches[k + 1] && 10 * stretches[k] < most) bangs.push(lines[k].i);
 let spots = [];
 function lay(line) {
-  const gaps = line.X.map(X => touch + unit * stretch(X));
+  const mean = meanStretch(line), grow = Math.sqrt(mean / most), gaps = line.X.map(X => touch + (1 - touch) * grow * (mean > 0 ? stretch(X) / mean : 0));
   const at = (x, y, z) => x * c * c + y * c + z, pos = [[], [], []];
   for (let p = 0; p < c; p++) for (let q = 0; q < c; q++) {
     const linesOf = [k => at(k, p, q), k => at(p, k, q), k => at(p, q, k)];
