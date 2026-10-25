@@ -428,7 +428,7 @@ class Lean:
         counters = ([a.copy() for a in self.standing], [a.copy() for a in self.crossed], [a.copy() for a in self.beats])
         top = self.swap(held)
         log_from = len(self.log)
-        self.click(plane_starts)
+        self.click(plane_starts, held)
         self.stack.append({'turned': top, 'counters': counters, 'log_from': log_from})
 
     def step(self): return self.run(1)
@@ -444,10 +444,11 @@ class Lean:
         nodes = self.frame_nodes(at); digits = []; origin = True; coarse = True
         half = self.w // 2
         for line, r in rules:
-            F0 = math.gcd(self.w, int(r.mass[at]) if np.ndim(r.mass) else int(r.mass), *[int(np.asarray(x)[at]) for x in r.reaches])
+            at_node = lambda x, node: int(np.asarray(x)[node]) if np.ndim(x) else int(x)  # a rule's integer at a Node (a walled row's reaches are the one integer 0)
+            F0 = math.gcd(int(r.wall), at_node(r.mass, at), *[at_node(x, at) for x in r.reaches])
             for k, n in enumerate(nodes):
-                F = F0 if k == 0 else math.gcd(self.w, int(np.asarray(r.reaches[k - 1])[n]))
-                rem = int(line.rem[n]); values = self.w // F
+                F = F0 if k == 0 else math.gcd(int(r.wall), at_node(r.reaches[k - 1], n))
+                rem = int(line.rem[n]); values = int(r.wall) // F
                 origin = origin and rem in (half - 1, half); coarse = coarse and values <= 3
                 digits.append((rem // F, values + 1))
         if origin: self.counts['refused_origin'] += 1; return None
@@ -601,13 +602,16 @@ class Lean:
                 self.counts['light_credits'] += rise
                 self.log.append({'event': 'detector', 'i': self.interval, 'node': list(det), 'line': self.records().index(self.row(2, gap=0)), 'quanta': rise, 'proper': int(self.proper[det]), 'content': int(c[det]), 'light_now': int(z.now[det]), 'light_before': int(z.before[det])})
 
-    def click(self, plane_starts):
+    def click(self, plane_starts, held):
         """The click (ALGEBRA.md, The click writes on the lattice), the Node's fourth act: the readings at the start (the rules of every row, the massless row's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`), the lays refused by name (`refuse`), the births taken and laid (`births`), the bodies' closing (`bodies`), the detectors' credits (`detect`); `gap0_start` and `plane_starts` the massless row's line and the planes' lines at the interval's start. The one-Link read of a number takes every row's first line and a plane's both (the former toy's digit set, kept until the Boss's word on reading every line)."""
         c = self.start_content; factors = self.link_factors()
         massless = self.row(2, gap=0); r_gap0 = self.rule_of(massless, c, factors); gap0_start = plane_starts[self.records().index(massless)]
-        rules = [(r.lines[0], self.rule_of(r, c, factors)) for r in (self.row(4), self.row(10))]
-        for rec, r in enumerate(self.records()):
-            rules += [(l, self.rule_of(r, c, factors)) for l in plane_starts[rec]]
+        if self.control.get('digits') == 'every line at the start':  # A2 (the owner's word of 2026-10-25, "go with A if it is generic and solves"): the one-Link read takes every line of every row at the interval's start, alike
+            rules = [(l, self.rule_of(r, c, factors)) for r, lines in zip(self.rows_, held) for l in lines]
+        else:  # the former digit set, kept by name: the shape-4 and shape-10 rows' first lines after the step, the planes' lines at the start
+            rules = [(r.lines[0], self.rule_of(r, c, factors)) for r in (self.row(4), self.row(10))]
+            for rec, r in enumerate(self.records()):
+                rules += [(l, self.rule_of(r, c, factors)) for l in plane_starts[rec]]
         pace = paces.link_pace_of(self.gamma, c)
         owns = []  # every plane's standing share at the interval's start at the vacuum's weight (V-D, the owner's sentence 7): the meeting's threshold on the massless plane, the lay's refusal on the lift's
         for rec, r in enumerate(self.records()):
