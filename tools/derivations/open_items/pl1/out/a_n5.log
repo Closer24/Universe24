@@ -1,0 +1,24 @@
+{"laid": [{"event": "plasma", "row": 2, "sense": 1, "how": "fitted", "amplitude": 136, "unit": 1615924816158049488000, "share at the Node": 1636036044340211940312, "levels (re_now, re_before, im_now, im_before)": [136, 22, 0, 134], "W of the lay": 18224, "W standing before": 0, "W of the Node after": 18224}, {"event": "plasma", "row": 1, "sense": -1, "how": "neutral", "amplitude": 6075, "unit": 878848879465440000, "share at the Node": 938325299825831070, "levels (re_now, re_before, im_now, im_before)": [6075, 6074, 0, -3], "W of the lay": -18225, "W standing before": 18224, "W of the Node after": -1}]}
+{"i": 20, "X": [2040, 2040, 2040], "turned": 0, "W": -3189, "W rows": [-12188, 8999, 0, 0], "clicks": 0, "laid": 0}
+{"i": 40, "X": [3891, 3891, 3891], "turned": 0, "W": -1614, "W rows": [-6094, 4480, 0, 0], "clicks": 0, "laid": 0}
+{"i": 60, "X": [5405, 5405, 5405], "turned": 0, "W": -2900, "W rows": [-6094, 3194, 0, 0], "clicks": 0, "laid": 0}
+{"i": 80, "X": [6055, 6055, 6055], "turned": 0, "W": 2996, "W rows": [0, 2996, 0, 0], "clicks": 0, "laid": 0}
+{"i": 84, "X": [6064, 6064, 6064], "turned": 125, "W": 3042, "W rows": [0, 3042, 0, 0], "clicks": 0, "laid": 0}
+{"i": 100, "X": [5704, 5704, 5704], "turned": 0, "W": -3036, "W rows": [-6094, 3058, 0, 0], "clicks": 0, "laid": 0}
+{"i": 120, "X": [4414, 4414, 4414], "turned": 0, "W": -2214, "W rows": [-6094, 3880, 0, 0], "clicks": 0, "laid": 0}
+{"i": 140, "X": [2580, 2580, 2580], "turned": 0, "W": 650, "W rows": [-6094, 6744, 0, 0], "clicks": 0, "laid": 0}
+{"i": 160, "X": [1124, 1124, 1124], "turned": 0, "W": -2313, "W rows": [-18225, 15912, 0, 0], "clicks": 0, "laid": 0}
+{"i": 180, "X": [1498, 1498, 1498], "turned": 0, "W": 427, "W rows": [-12159, 12586, 0, 0], "clicks": 0, "laid": 0}
+{"i": 200, "X": [3256, 3256, 3256], "turned": 0, "W": -453, "W rows": [-6053, 5600, 0, 0], "clicks": 0, "laid": 0}
+{"i": 220, "X": [5008, 5008, 5008], "turned": 0, "W": -2446, "W rows": [-6053, 3607, 0, 0], "clicks": 0, "laid": 0}
+{"i": 240, "X": [6055, 6055, 6055], "turned": 0, "W": 3009, "W rows": [0, 3009, 0, 0], "clicks": 0, "laid": 0}
+{"i": 251, "X": [6202, 6202, 6202], "turned": 125, "W": 2910, "W rows": [0, 2910, 0, 0], "clicks": 0, "laid": 0}
+{"i": 260, "X": [6055, 6055, 6055], "turned": 0, "W": 2970, "W rows": [0, 2970, 0, 0], "clicks": 0, "laid": 0}
+{"i": 280, "X": [5008, 5008, 5008], "turned": 0, "W": -2483, "W rows": [-6053, 3570, 0, 0], "clicks": 0, "laid": 0}
+{"i": 300, "X": [3256, 3256, 3256], "turned": 0, "W": -524, "W rows": [-6053, 5529, 0, 0], "clicks": 0, "laid": 0}
+{"i": 320, "X": [1504, 1504, 1504], "turned": 0, "W": -195, "W rows": [-12158, 11963, 0, 0], "clicks": 0, "laid": 0}
+{"i": 340, "X": [1130, 1130, 1130], "turned": 0, "W": -1752, "W rows": [-18223, 16471, 0, 0], "clicks": 0, "laid": 0}
+{"i": 360, "X": [2577, 2577, 2577], "turned": 0, "W": 1175, "W rows": [-6093, 7268, 0, 0], "clicks": 0, "laid": 0}
+{"i": 380, "X": [4444, 4444, 4444], "turned": 0, "W": -2011, "W rows": [-6093, 4082, 0, 0], "clicks": 0, "laid": 0}
+{"i": 400, "X": [5784, 5784, 5784], "turned": 0, "W": -3023, "W rows": [-6093, 3070, 0, 0], "clicks": 0, "laid": 0}
+{"run back": {"intervals": 10, "exact": 10}, "counts": {"births": 0, "taken": 0, "booked": 0, "body_clicks": 0, "refused_stop": 0, "refused_origin": 0, "refused_lay": 0, "refused_orientation": 154125, "refused_twist": 0, "refused_sense": 0, "turns": 250, "met": 154125, "laid": 0, "laid_nodes": 0, "refused_arrival": 1250}, "integers": 98, "max bits": 115, "max transient bits": 97, "48": {"levels equal": 48, "apart": 0}, "invariance at the end": {"arrays constant over the board": 84, "of": 84}, "turns": [[84, 125], [251, 125]]}
