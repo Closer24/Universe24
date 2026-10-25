@@ -45,6 +45,8 @@ const size = Math.max(320, Math.min(window.innerWidth - 32, window.innerHeight -
 canvas.width = size; canvas.height = size;
 function words(s) { return s.split(" ").map(w => parseInt(w, 36)); }
 function levels(s) { return Array.from(s, ch => ch === "." ? 0 : (ch >= "a" ? ch.charCodeAt(0) - 96 : 64 - ch.charCodeAt(0))); }
+const unravel = i => [Math.floor(i / (c * c)), Math.floor(i / c) % c, i % c];
+D.clicks = D.clicks.map(k => ({i: k[0], at: k[1], node: unravel(k[1]), line: k[2], levels: k[3], from: k[4] < 0 ? null : k[4], children: k[5] ? k[5] : null}));
 const lines = D.nodes.map(l => ({i: l.i, X: words(l.X), content: words(l.content), turned: l.turned, frozen: l.frozen, held: l.held, current: l.current.map(levels)}));
 const n = lines.length;
 let t = 1, playing = true, speed = 6;
@@ -150,7 +152,7 @@ function draw() {
   const recent = new Map(), span = new Map();
   for (const k of D.clicks) {
     if (k.i > line.i) break;
-    const id = k.node[0] * c * c + k.node[1] * c + k.node[2], key = id + ":" + k.line;
+    const id = k.at, key = id + ":" + k.line;
     if (k.i > line.i - 24 * step) { const m = recent.get(id) || new Map(); m.set(k.line, (m.get(k.line) || 0) + 1); recent.set(id, m); }
     const sp = span.get(key); if (!sp) span.set(key, [k.i, k.i, 1]); else { sp[1] = k.i; sp[2]++; }
   }
@@ -163,14 +165,14 @@ function draw() {
     const id = parseInt(key), s = spots[id]; ctx.strokeStyle = tone(parseInt(key.split(":")[1])); ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(s[0], s[1], 14, 0, 2 * Math.PI); ctx.stroke();
   }
   for (const k of D.clicks) if (k.i <= line.i && k.i > line.i - 4 * step) {
-    const i = k.node[0] * c * c + k.node[1] * c + k.node[2], s = spots[i], age = (line.i - k.i) / step, fade = 1 - age / 4;
+    const s = spots[k.at], age = (line.i - k.i) / step, fade = 1 - age / 4;
     ctx.globalAlpha = fade;
-    ctx.fillStyle = k.from === null || k.from === undefined ? "#5f97ea" : tone(k.from);
+    ctx.fillStyle = k.from === null ? "#5f97ea" : tone(k.from);
     ctx.beginPath(); ctx.arc(s[0], s[1], 3 + Math.min(9, k.levels / 2), 0, 2 * Math.PI); ctx.fill();
     ctx.strokeStyle = tone(k.line); ctx.lineWidth = 3;
     ctx.beginPath(); ctx.arc(s[0], s[1], 10 + 4 * age, 0, 2 * Math.PI); ctx.stroke();
     if (k.children) for (let h = 0; h < 2; h++) {
-      const q = k.children[h], j = q[0] * c * c + q[1] * c + q[2], sq = spots[j];
+      const sq = spots[k.children[h]];
       ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(sq[0], sq[1]); ctx.stroke();
       ctx.fillStyle = "#07080a"; ctx.beginPath(); ctx.arc(sq[0], sq[1], 7, 0, 2 * Math.PI); ctx.fill();
       ctx.beginPath(); ctx.arc(sq[0], sq[1], 7, 0, 2 * Math.PI); ctx.stroke();
@@ -314,18 +316,22 @@ def kept(lines: list[dict[str, Any]], named: set[int]) -> tuple[list[dict[str, A
 
 
 def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, Any]:
-    """The page's data from the record and the reading: the Node lines, the clicks (every birth and credit with its Node and row), the bangs (the births' intervals), the reading's event lines."""
+    """The page's data from the record and the reading: the Node lines, the clicks (every birth and credit as one short list: the interval, the Node's index, the row, the levels taken, the taken row or -1, a birth's two children's indices or 0), the bangs (the births' intervals), the reading's event lines."""
     events = next((line["events"] for line in reading if "events" in line), [])
+    cube = int(record["cube"])
+
+    def index(node: list[int]) -> int:
+        return int(node[0]) * cube * cube + int(node[1]) * cube + int(node[2])
+
     clicks = [
-        {
-            "i": e["i"],
-            "node": e["node"],
-            "line": e.get("line", e.get("line_pair", 0)),
-            "kind": e["event"],
-            "levels": int(e.get("levels", 0)),
-            "from": e.get("taken_row"),
-            "children": [e["minus"], e["plus"]] if e["event"] == "birth" else None,
-        }
+        [
+            e["i"],
+            index(e["node"]),
+            e.get("line", e.get("line_pair", 0)),
+            int(e.get("levels", 0)),
+            e.get("taken_row", -1),
+            [index(e["minus"]), index(e["plus"])] if e["event"] == "birth" else 0,
+        ]
         for e in record["log"]
         if e["event"] in ("birth", "credit")
     ]
