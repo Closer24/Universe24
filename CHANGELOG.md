@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The Boss's request of 2026-10-25, 17:4x UTC by his clock (#2187 6399612901): the gates' ledger on the current head re-cut to 88ed48d24 in docs/UNIVERSE24.md's section 2, the count read against all 54 rows (SHOWN in Universe24: 5 of 54; Animate's 10 of 50 beside it), the row of the three constants added, the former table kept by name.
 - The Boss's request of 2026-10-25, 18:1x UTC by his clock (#2187 6399718139): SL-S1 the born pair's meeting as the law's theorem under The click is the meeting in docs/ALGEBRA.md, SL-S2 and SL-S3 beside it by the owner's criterion with the Boss's recommendation, the owner's direct word owed; one decision in docs/HIGHLIGHTS.md.
 - The owner's word of 2026-10-25, 15:4x UTC in the session ("whatever seems right to you, establish a working method"): The Scribe's method, seven lines at the head of docs/UNIVERSE24.md's ledger; The row's name under The Node in docs/ALGEBRA.md (the former name massless reads the row at the gap 0, the former wording kept as written); the live ledger named at the head of ALGEBRA.md's What is open; one decision in docs/HIGHLIGHTS.md.
 - The Boss's slip of 2026-10-25, 16:2x UTC by his clock (#2187 6399449926: three commits merged beyond the two confirmed) and its mend, the hand vf2, in the ledger of docs/UNIVERSE24.md's section 4; gate 14's row carries both frozen counts.
