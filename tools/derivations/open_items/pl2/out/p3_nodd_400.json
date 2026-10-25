@@ -1,0 +1,429 @@
+{
+ "world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/pl2/tests/worlds/world_plasma_3.json",
+ "engine": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/pl2/tools/derivations/pl2/src_pl2",
+ "flags": {
+  "CS7_EQ": "n",
+  "PL2_SIGN_ODD": "1"
+ },
+ "intervals": 400,
+ "forward ms": 4745,
+ "cube": 3,
+ "gamma": 1000,
+ "T": 36000,
+ "uniform (spread 0) of intervals": [
+  400,
+  400
+ ],
+ "turns (interval, count)": [
+  [
+   84,
+   27
+  ],
+  [
+   252,
+   27
+  ]
+ ],
+ "tops": [
+  84,
+  252
+ ],
+ "bottoms (interval, mean X)": [
+  [
+   167,
+   1016
+  ],
+  [
+   336,
+   1058
+  ]
+ ],
+ "exact at Gamma at every Node": [],
+ "X at marks": {
+  "1": 1006,
+  "2": 1018,
+  "3": 1036,
+  "25": 2487,
+  "50": 4734,
+  "75": 5984,
+  "100": 5702,
+  "125": 3983,
+  "150": 1733,
+  "175": 1212,
+  "200": 3213,
+  "225": 5285,
+  "250": 6143,
+  "275": 5406,
+  "300": 3411,
+  "325": 1355,
+  "350": 1586,
+  "375": 3732,
+  "400": 5517
+ },
+ "credits": 135,
+ "laid back": 135,
+ "credits in the first rise": 135,
+ "counts": {
+  "births": 0,
+  "taken": 0,
+  "booked": 0,
+  "body_clicks": 135,
+  "refused_stop": 0,
+  "refused_origin": 0,
+  "refused_lay": 0,
+  "refused_orientation": 26487,
+  "refused_twist": 0,
+  "refused_sense": 0,
+  "turns": 54,
+  "met": 26487,
+  "laid": 0,
+  "laid_nodes": 0,
+  "laid_back": 135
+ },
+ "sign level at the origin at marks": {
+  "25": 10,
+  "50": 14,
+  "75": -37,
+  "100": 23,
+  "125": -122,
+  "150": -451,
+  "175": -1174,
+  "200": -1603,
+  "225": -1811,
+  "250": -2016,
+  "275": 1868,
+  "300": 1586,
+  "325": 986,
+  "350": -85,
+  "375": -609,
+  "400": -916
+ },
+ "W per gapped record at the origin at marks": {
+  "1": [
+   -17070,
+   18224,
+   0
+  ],
+  "25": [
+   -5709,
+   7286,
+   0
+  ],
+  "50": [
+   -5709,
+   3684,
+   0
+  ],
+  "75": [
+   -5709,
+   2992,
+   0
+  ],
+  "100": [
+   -5709,
+   3058,
+   0
+  ],
+  "125": [
+   -5709,
+   4312,
+   0
+  ],
+  "150": [
+   -11373,
+   10002,
+   0
+  ],
+  "175": [
+   -17071,
+   15022,
+   0
+  ],
+  "200": [
+   -5669,
+   5560,
+   0
+  ],
+  "225": [
+   -5669,
+   3412,
+   0
+  ],
+  "250": [
+   0,
+   2856,
+   0
+  ],
+  "275": [
+   -5669,
+   3291,
+   0
+  ],
+  "300": [
+   -5669,
+   5158,
+   0
+  ],
+  "325": [
+   -11388,
+   12679,
+   0
+  ],
+  "350": [
+   -11373,
+   11188,
+   0
+  ],
+  "375": [
+   -5709,
+   4682,
+   0
+  ],
+  "400": [
+   -5709,
+   3092,
+   0
+  ]
+ },
+ "retrace": [
+  {
+   "top": 84,
+   "equal k before the parting": 0,
+   "first parting (state)": {
+    "k": 1,
+    "fall interval": 85,
+    "mirrored rise interval": 82,
+    "X fall": 6059,
+    "X rise mirror": 6059,
+    "lines parted": 2,
+    "parted": [
+     {
+      "line": "shape 1 (walled) line 0",
+      "fall [now, before, rem, wall, wr, wwall]": [
+       17171,
+       17190,
+       0,
+       2,
+       null,
+       null
+      ],
+      "mirror of the rise": [
+       17095,
+       17190,
+       0,
+       2,
+       null,
+       null
+      ]
+     },
+     {
+      "line": "shape 4 gap 0 line 0",
+      "fall [now, before, rem, wall, wr, wwall]": [
+       58,
+       60,
+       63052253124260375224704000000,
+       141149941844890573108992000000,
+       348,
+       36000
+      ],
+      "mirror of the rise": [
+       57,
+       60,
+       63052253124260375224704000000,
+       141149941844890573108992000000,
+       24212,
+       36000
+      ]
+     }
+    ]
+   },
+   "first parting (levels)": {
+    "k": 1,
+    "fall interval": 85,
+    "lines": [
+     {
+      "line": "shape 1 (walled) line 0",
+      "fall [now, before]": [
+       17171,
+       17190
+      ],
+      "mirror": [
+       17095,
+       17190
+      ]
+     },
+     {
+      "line": "shape 4 gap 0 line 0",
+      "fall [now, before]": [
+       58,
+       60
+      ],
+      "mirror": [
+       57,
+       60
+      ]
+     }
+    ]
+   },
+   "first parting (X)": {
+    "k": 9,
+    "X fall": 5939,
+    "X rise": 5940
+   },
+   "W per gapped record at the origin around the mirrored rise interval": {
+    "79": [
+     0,
+     3002,
+     0
+    ],
+    "80": [
+     0,
+     2996,
+     0
+    ],
+    "81": [
+     0,
+     2996,
+     0
+    ],
+    "82": [
+     0,
+     3026,
+     0
+    ],
+    "83": [
+     0,
+     3042,
+     0
+    ],
+    "84": [
+     0,
+     3042,
+     0
+    ],
+    "85": [
+     0,
+     3026,
+     0
+    ]
+   }
+  },
+  {
+   "top": 252,
+   "equal k before the parting": 0,
+   "first parting (state)": {
+    "k": 1,
+    "fall interval": 253,
+    "mirrored rise interval": 250,
+    "X fall": 6139,
+    "X rise mirror": 6139,
+    "lines parted": 2,
+    "parted": [
+     {
+      "line": "shape 1 (walled) line 0",
+      "fall [now, before, rem, wall, wr, wwall]": [
+       -5443357,
+       -5560186,
+       1,
+       2,
+       null,
+       null
+      ],
+      "mirror of the rise": [
+       -5445921,
+       -5560186,
+       1,
+       2,
+       null,
+       null
+      ]
+     },
+     {
+      "line": "shape 4 gap 0 line 0",
+      "fall [now, before, rem, wall, wr, wwall]": [
+       2009,
+       2016,
+       96758919791204997274368000000,
+       143024798757441301784064000000,
+       21578,
+       36000
+      ],
+      "mirror of the rise": [
+       2009,
+       2016,
+       96758919791204997274368000000,
+       143024798757441301784064000000,
+       10154,
+       36000
+      ]
+     }
+    ]
+   },
+   "first parting (levels)": {
+    "k": 1,
+    "fall interval": 253,
+    "lines": [
+     {
+      "line": "shape 1 (walled) line 0",
+      "fall [now, before]": [
+       -5443357,
+       -5560186
+      ],
+      "mirror": [
+       -5445921,
+       -5560186
+      ]
+     }
+    ]
+   },
+   "first parting (X)": {
+    "k": 15,
+    "X fall": 5811,
+    "X rise": 5812
+   },
+   "W per gapped record at the origin around the mirrored rise interval": {
+    "247": [
+     0,
+     2912,
+     0
+    ],
+    "248": [
+     0,
+     2880,
+     0
+    ],
+    "249": [
+     0,
+     2870,
+     0
+    ],
+    "250": [
+     0,
+     2856,
+     0
+    ],
+    "251": [
+     0,
+     2856,
+     0
+    ],
+    "252": [
+     0,
+     2856,
+     0
+    ],
+    "253": [
+     0,
+     2856,
+     0
+    ]
+   }
+  }
+ ],
+ "run back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "integers": 98,
+ "bits": 114
+}
