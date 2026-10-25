@@ -1,4 +1,4 @@
-"""The one board test: the 48 (the board run from a seed and from each of its 48 images, the signed permutations of the axes about the origin; the births and the carrier's and the gap-0 line's levels compared through the image, the 24 rotations alike, the 24 reflections apart under the default: A2's standing item, named), the run back exact through births and turns, the chiral seed's births with both hands and the charge summed to 0."""
+"""The one board test: the 48 (the board run from a seed and from each of its 48 images, the signed permutations of the axes about the origin; the births and the carrier's and the gap-0 line's levels compared through the image, the 24 rotations alike under the bodies' closing with its crossing read even, the 24 reflections apart under the default: A2's standing item, named), the run back exact through births and turns, the chiral seed's births with both hands and the charge summed to 0."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE
 from tests.laws import node_of, refused, run_back_exact, world_of
 
-CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 0, 0, 0)  # rotations alike per part (MS-S1)
+CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 6, 6, 6)  # rotations alike per part (CK-S1 even)
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
     for pi in itertools.permutations(range(3))
@@ -73,7 +73,7 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis parts under A2's digits (a negated line's remainder mirrors, its digit with it: the standing item, 6 of 24 alike at 20 intervals on the hole seed under MS-S1 against 24 before it), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 12 births; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
     births = births_of(base)
@@ -125,9 +125,9 @@ def test_the_fourth_part_of_the_48_images_runs_alike_a_reflection_with_the_hands
 
 
 def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma() -> None:
-    """MA-S1 (the Boss's 6400767119 (4), MA_COMPARISON.md section 4 (3)): the pair of the heavy row laid by an `at` of one quantum at every Node of the 3-cube (tests/worlds/world_pair_3.json, the Boss's spelling of the uniform world) keeps every Node alike to the integer (e 0 at 400 of 400), turns every Node at once at its one top (27 at 196, the mean 255,444 at 195), births nothing, credits a body at every Node, and falls to its bottom at 391; the bottom 949 against Gamma, the Boss's 1,000 at 168 / 169 and 27 turned at 85 (ma1's pair at the amplitude 96) NOT MET under the `at` lays: the packets' weights sum to 64 over the 27 Nodes against the centre's 8, so the board holds the eightfold matter (re_now 1,170 against 96 per Node, W 0) and the period lengthens with the write; the run back exact 10 of 10."""
+    """MA-S1 by the fourth form of the file (the owner's word of 17:57 through the Boss, 6401141446; ma2's spelling, the Boss's 6401095909): the pair of the heavy row laid at every Node of the 3-cube at one quantum (tests/worlds/world_pair_3.json, {"lay": "sea", "row": 2, "quanta": 1, "sense": 0}: the amplitude 96, ma1's, re_now 192 the two senses summed, W 0) keeps every Node alike to the integer (400 of 400), turns every Node at once at both tops (27 at 85, ma1's, and at 255), births nothing, and bottoms at 171 and 342; the bottoms 953 and 888 against ma1's exact 1,000 at 168 / 169 and 333 / 334, NOT MET on this head and named: the body at every Node clicks from interval 4 on at every second interval (PM-S1's unit: the pair stands at a whole quantum from the lay; CK-S1: the beat the half period, 2), 351 credits in all against ma1's 27 at 336, and the light taken is the return's shortfall (under the upward crossing alone the bottoms read 992 and 966 with 162 credits); the run back exact 10 of 10."""
     node = node_of("world_pair_3.json")
-    assert int(node.by_index[2].lines[0].now.min()) == int(node.by_index[2].lines[0].now.max()) == 1170
+    assert int(node.by_index[2].lines[0].now.min()) == int(node.by_index[2].lines[0].now.max()) == 192
     kept = copy.deepcopy(node)
     alike, tops, means = 0, 0, []
     for _ in range(400):
@@ -137,18 +137,13 @@ def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_
         means.append(sum(x) // len(x))
         if node.turned.any():
             tops += 1
-            assert (node.interval, int(node.turned.sum())) == (196, 27)
+            assert (node.interval, int(node.turned.sum())) in ((85, 27), (255, 27))
     bottoms = [
         (k + 1, means[k]) for k in range(1, 399) if means[k] <= means[k - 1] and means[k] < means[k + 1]
     ]
-    assert (alike, tops, node.counts["births"], max(means), means.index(max(means)) + 1) == (
-        400,
-        1,
-        0,
-        255444,
-        195,
-    )
-    assert bottoms == [(391, 949)] and node.counts["body_clicks"] == 135
+    credits = [e for e in node.log if e["event"] == "credit"]
+    assert (alike, tops, node.counts["births"], len(credits)) == (400, 2, 0, 351)
+    assert bottoms == [(171, 953), (342, 888)] and sum(1 for c in credits if c["i"] == 4) == 27
     assert run_back_exact(kept, 10) == 10
 
 
@@ -168,6 +163,11 @@ def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() 
     assert bang["verdict"].startswith("SHOWN: 2 exact returns")
     assert out["46 the bangs recurring with the same gates"]["verdict"].startswith("NOT SHOWN")
     assert found["run_back"] == {"intervals": 10, "exact": 10} and found["counts"]["births"] == "0"
+    universe, world = world_of("world_pair_3.json")
+    tied = table.gates(
+        json.loads(json.dumps(writer.record(universe, dict(world, intervals=12), 0, lambda line: None)))
+    )
+    assert len(tied["2 the Links lengthening in the clicks"]["at"]) == 3  # every Node's spacing ties
 
 
 def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
@@ -223,8 +223,67 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
         zero.step()
     for bad, match in (
         (dict(moving, wave=[den + 1, 0, 0]), "beyond the band's edge"),
-        (dict(moving, row=0, wave=[0, 0, 0]), "a massless packet at the wave 0"),
+        (dict(moving, row=0, wave=[0, 0, 0]), "the gap-0 row at the wave 0"),
         (dict(moving, top=9), "a top is an odd count"),
         (dict(moving, interval=3), "a field of no form"),
     ):
         refused(match, Node, universe, dict(world, seed=[bad]))
+
+
+def test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv() -> None:
+    """MV-S1's 48 (vf5's item (a), the Boss's 6401916517; MV_COMPARISON.md's spec: the 48 with the centre and the wave transformed): the heavy row's pair of 3 quanta laid under the sea on the 5-cube at the wave [den div 2, den div 3, 0] and run two intervals, against the 48 worlds whose centre and wave are the image's: carried back by the image's inverse, the carrier's X and the row's re lines equal bit for bit, the im lines equal under a rotation and negated under a reflection (the senses exchanged), 24 and 24, 0 apart."""
+    universe, world = world_of("world_packet.json")
+    den, cube, centre = int(universe["integers"]["den"]), 5, [2, 2, 1]
+    wave = [den // 2, den // 3, 0]
+
+    def moved(g: tuple[tuple[int, ...], tuple[int, ...]], x: list[int], wrap: int) -> list[int]:
+        pi, s = g
+        y = [0, 0, 0]
+        for a in range(3):
+            y[pi[a]] = (s[a] * x[a]) % wrap if wrap else s[a] * x[a]
+        return y
+
+    def run(g: tuple[tuple[int, ...], tuple[int, ...]]) -> Node:
+        lay = {
+            "lay": "at",
+            "row": 2,
+            "centre": moved(g, centre, cube),
+            "width": 2,
+            "quanta": 3,
+            "wave": moved(g, wave, 0),
+        }
+        node = Node(
+            universe, dict(world, shape=[cube] * 3, intervals=2, seed=[{"lay": "sea", "row": 0}, lay])
+        )
+        node.step()
+        node.step()
+        return node
+
+    def back(a: Any, g: tuple[tuple[int, ...], tuple[int, ...]]) -> Any:
+        out = np.empty_like(a)
+        for idx in np.ndindex(*a.shape):
+            out[idx] = a[tuple(moved(g, list(idx), cube))]
+        return out
+
+    base = run(((0, 1, 2), (1, 1, 1)))
+    alike = {1: 0, -1: 0}
+    for pi in itertools.permutations(range(3)):
+        for s in itertools.product((1, -1), repeat=3):
+            g = (pi, s)
+            det = (
+                (-1) ** sum(1 for a in range(3) for b in range(a + 1, 3) if pi[a] > pi[b])
+                * s[0]
+                * s[1]
+                * s[2]
+            )
+            img = run(g)
+            same = bool((back(img.row(CARRIER).lines[0].now, g) == base.row(CARRIER).lines[0].now).all())
+            for (lb, li), sign in zip(
+                zip(base.by_index[2].lines, img.by_index[2].lines, strict=True), (1, det), strict=True
+            ):
+                same = same and bool(
+                    (back(li.now, g) == sign * lb.now).all()
+                    and (back(li.before, g) == sign * lb.before).all()
+                )
+            alike[det] += same
+    assert alike == {1: 24, -1: 24}
