@@ -175,6 +175,11 @@ class Lean:
         self.counts = {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 0, 'refused_twist': 0, 'turns': 0, 'light_credits': 0, 'light_laid': 0, 'light_laid_nodes': 0}
         self.max_transient = 0
         for s_, at, h, n in packets: self.lay_packet(s_, at, h, n)
+        if self.control.get('ride') == 'symmetric':  # the symmetric ride: a riding line's remainder lives at the mean wall (w div 2)(X_before + X_now) of the carrier's two levels at its Node, half of it at the seed
+            W0 = (self.w // 2) * (self.row(10).lines[0].before + self.row(10).lines[0].now)
+            for r in self.rows_:
+                if r.wall is None and r.shape != 10:
+                    for l in r.lines: l.wall = W0; l.rem = W0 // 2
 
     def node_of(self, xyz):
         """A Node named by the world file: three integers on the board; a Node off the board is refused by name."""
@@ -300,16 +305,25 @@ class Lean:
     def rotate(self, lines, r, turn=None, direction=1, flux=None, starts=None):
         """Rule3's step of one row at every Node, the one function of a line: for each line the total S now - w before + SUM_j R_j m_j (+ the line's flux where the row carries its write inside the division, the phase row) with m_j the row's arrivals at the Port turned as the row's shape turns them (`turned_arrival`), one carried division at the wall w per line; the rule's integers r at the Node's paces. Backward (direction -1) the same act on the before slots with the division's direction -1: the known part S now + SUM R m from the start levels, the quotient next + before, before = quotient - next."""
         at = [l.now if direction == 1 else l.before for l in lines] if starts is None else starts  # the start level: forward the now slot; backward the before slot (or the start levels given: at a turned Node the pre-state's now)
-        totals = [r.self_coefficient * a - (r.wall * l.before if direction == 1 else 0) + (0 if flux is None else f) for l, a, f in zip(lines, at, flux or [0] * len(lines))]
-        for port, reach in enumerate(r.reaches):
-            arrivals = self.turned_arrival([across(a, port) for a in at], port, turn)
-            totals = [t + reach * m for t, m in zip(totals, arrivals)]
+        totals = [r.self_coefficient * a - (r.wall * l.before if direction == 1 else 0) + (0 if flux is None else f) + m for l, a, f, m in zip(lines, at, flux or [0] * len(lines), self.arrivals(at, r, turn))]
         found = []
         for l, a, t in zip(lines, at, totals):
             if direction == 1: self.max_transient = max(self.max_transient, int(np.max(np.vectorize(lambda v: abs(int(v)).bit_length(), otypes=[object])(t))))
             quotient, rem = carried_division(t, r.wall, l.rem, direction)
             found.append(Line(quotient, l.now, rem, l.wall, l.wr, l.wwall) if direction == 1 else Line(a, quotient - l.now, rem, l.wall, l.wr, l.wwall))
         return found
+
+    def arrivals(self, at, r, turn):
+        """The Links' part of Rule3's total for a row's lines at every Node, SUM_j R_j m_j, the arrivals at each Port turned as the row's shape turns them."""
+        totals = [0] * len(at)
+        for port, reach in enumerate(r.reaches):
+            found = self.turned_arrival([across(a, port) for a in at], port, turn)
+            totals = [t + reach * m for t, m in zip(totals, found)]
+        return totals
+
+    def odd_round(self, q, d):
+        """round(q / d) to the nearest for q odd and d even (never a half): (2 q + d) div (2 d); the odd rounding of the ride's momenta (R5)."""
+        return (2 * q + d) // (2 * d)
 
     def link_current(self, line, port):
         """The light's own current on the Link at the Port, F_ij = now_i before_j - before_i now_j: odd under the exchange of the ends (the other end reads -F), read at the interval's start; the + child of a Link birth goes to the end the current flows into."""
@@ -341,10 +355,15 @@ class Lean:
             if n is not None: self.write(line, n, -1)
         levels = [l.now for l in lines]; start = self.rotate(lines, r, turn, -1, flux, starts)
         if kept is not None:
-            for l, k in zip(start, kept):
-                l.now, l.before, l.rem = np.where(top, k.now, l.now), np.where(top, k.before, l.before), np.where(top, k.rem, l.rem)
-                if l.wr is not None: l.wr = np.where(top, k.wr, l.wr)
+            self.restore(start, kept, top)
         return start, levels, start
+
+    def restore(self, lines, kept, top):
+        """Backward at the turned Nodes `top`: the row set to `kept`, the pre-state the exchange returned (the inverse at a turned Node is no act)."""
+        for l, k in zip(lines, kept):
+            l.now, l.before, l.rem = np.where(top, k.now, l.now), np.where(top, k.before, l.before), np.where(top, k.rem, l.rem)
+            if np.ndim(k.wall): l.wall = np.where(top, k.wall, l.wall)
+            if l.wr is not None: l.wr = np.where(top, k.wr, l.wr)
 
     def rows(self):
         """The Node's rows' lines in the acts' order (the row with its own wall, the planes, the massless row, the potential's row, the metric's row: a row whose write reads other rows comes after them)."""
@@ -366,7 +385,8 @@ class Lean:
         """The swap's act at the Nodes `top`: every line set to the held line exchanged and complemented (the two levels exchanged, an im line conjugated, every remainder complemented at its wall, an im line's rotation remainder kept); an involution with the state it leaves, so the same act on the post-state gives the pre-state (ALGEBRA.md, the fifth act)."""
         for line, h, im in zip(self.all_lines(), [l for row in held for l in row], self.is_im()):
             sgn = -1 if im else 1
-            line.now, line.before, line.rem = np.where(top, sgn * h.before, line.now), np.where(top, sgn * h.now, line.before), np.where(top, h.rem if im else line.wall - 1 - h.rem, line.rem)
+            line.now, line.before, line.rem = np.where(top, sgn * h.before, line.now), np.where(top, sgn * h.now, line.before), np.where(top, h.rem if im else h.wall - 1 - h.rem, line.rem)
+            if np.ndim(h.wall): line.wall = np.where(top, h.wall, line.wall)  # the riding remainder's own wall, the Node's (symmetric in the two levels, so the exchange keeps it)
             if line.wr is not None: line.wr = np.where(top, line.wwall - 1 - h.wr, line.wr)
 
     def swap(self, held):
@@ -401,6 +421,7 @@ class Lean:
         frames = self.frames(walled.lines[0].rem); self.start_frames = frames
         cphi = paces.rounded(at(potential.lines[0]) * p0, self.gamma)  # the clocked potential at the potential's start level
         out = [None] * len(rows); ends = lambda k: (top, None if kept is None else kept[k])
+        if self.control.get('ride') == 'symmetric': return self.ride(direction, top, held, kept, at, c, p0, factors, frames, cphi, rows, where, out, ends)
         riding = records + ([potential] if self.control.get('metric_sources') == 'every riding row' else [])  # the rows whose form and tensions source the metric's write: the planes alone, or every row that divides at the carrier's wall (the shape-4 row too; the Boss's 2(a), measured against the planes alone)
         trace, traceless = tensor_parts(stress_parts([(at(l), r.pair[0]) for r in riding for l in r.lines], self.shape))
         forms = Z(self.shape); W_start = Z(self.shape); W = Z(self.shape); J = [Z(self.shape) for _ in range(3)]; plane_starts = []; stepped = []; phases = odd = None
@@ -441,6 +462,86 @@ class Lean:
         self.click(plane_starts, held)
         self.stack.append({'turned': top, 'counters': counters, 'log_from': log_from})
 
+    def ride(self, direction, top, held, kept, at, c, p0, factors, frames, cphi, rows, where, out, ends):
+        """The symmetric ride (R5's form; the owner's approved sentence 1 of 2026-10-25, "the held carrier of the wall and EVERY riding row step as one pair at the mean wall"), behind the world file's key `ride`: the one row that does not ride is the carrier of the wall (the shape-10 row, whose first line is X); every other row with a pair rides. A riding line's momentum lives at the mean wall W_in = (w div 2)(X_before + X_now): P_in = W_in (a_now - a_before) + r - W_in div 2; the kick P_out = P_in + X_now F with F = SUM_j R_j (m_j - a_now) - D a_now (no division); the carrier's write is sourced by every riding line alike, u_in u_out + (a (D a + SUM R (a - m))) div w with u = round(Q / (2 w X_now)), Q = 2 P + 1 (the odd rounding), in place of the form now^2 - next x before; the carrier steps by its one division; then every riding line divides once at W_out = (w div 2)(X_now + X_next), its remainder kept in [0, W_out) at that wall. The riding rows' writes come after the divisions, sourced by numbers known before them: the shape-4 row's time line 2 W of the planes after the step and its odd lines the current at the start, the plane at the gap 0 the Wronskian's change read from the kick, X_now SUM (re F_im - im F_re) over the planes with a gap, div W_out. Backward the same acts in the reverse order (the writes undone from the post state, the kick back, the carrier back, the division back at W_in): no cycle, every line one carried division."""
+        carrier, potential, walled, massless = self.row(10), self.row(4), self.walled(), self.row(2, gap=0)
+        riders = [r for r in self.rows_ if r.wall is None and r is not carrier]
+        gap_planes = [r for r in riders if r.shape == 2 and r.gap > 0]
+        X_now = at(carrier.lines[0]); W_div_post = (self.w // 2) * (carrier.lines[0].before + carrier.lines[0].now) if direction == -1 else None
+        stress = stress_parts([(at(l), r.pair[0]) for r in self.records() for l in r.lines], self.shape)
+        trace, traceless = tensor_parts(stress)
+        # the walled row first (its act carries its own write; the Links' count from it)
+        k = where(walled); (phi_start,), _l, out[k] = self.act(rows[k], self.rule_of(walled, c, factors), None, [None], direction, [2 * cphi], *ends(k))
+        K = self.centred_count(cphi, phi_start)
+        self.count_max = max(int(abs(int(x))) for port in range(6) for x in (K - frames[port] * across(K, port)).reshape(-1))
+        phases = self.link_phases(frames, K); odd = [at(l) for l in potential.lines[1:4]]
+        self.start_phases, self.start_odd = phases, [o.copy() for o in odd]
+        # backward: the riding rows' writes come off first, from the post state (the planes after the step unwritten, the start levels in the before slots)
+        W_post = Z(self.shape)
+        for r in gap_planes: W_post = W_post + wronskian(*rows[where(r)])
+        J = [Z(self.shape) for _ in range(3)]
+        for r in gap_planes:
+            re_s, im_s = [Line(at(l), None, None, l.wall) for l in rows[where(r)]]
+            for a_, j_a in enumerate(plane_current(re_s, im_s, frames)): J[a_] = J[a_] + j_a
+        forces = {}
+        for r in riders:  # every riding line's force at the start, SUM_j R_j (m_j - a) - D a
+            rule = self.rule_of(r, c, factors); turn = None if r.shape != 2 or r.gap == 0 else (phases, odd, frames)
+            starts = [at(l) for l in rows[where(r)]]
+            forces[where(r)] = (starts, [m - (2 * rule.wall - rule.self_coefficient) * a for a, m in zip(starts, self.arrivals(starts, rule, turn))], rule)
+        emission = Z(self.shape)  # the Wronskian's change over the interval read from the kick: X_now SUM over the planes with a gap of (re F_im - im F_re)
+        for r in gap_planes:
+            (re_s, im_s), (f_re, f_im), _rule = forces[where(r)]
+            emission = emission + X_now * (re_s * f_im - im_s * f_re)
+        if direction == -1:
+            self.write(rows[where(massless)][0], emission // W_div_post, -1)
+            for l, n in zip(rows[where(potential)], [2 * W_post, *J]): self.write(l, n, -1)
+        # the kicks: every riding line's momentum in and out, and the carrier's source
+        forms = Z(self.shape); kicks = {}
+        for r in riders:
+            k = where(r); lines = rows[k]; starts, force, rule = forces[k]
+            W_side = (self.w // 2) * (carrier.lines[0].before + carrier.lines[0].now)  # forward W_in from the pre carrier; backward W_out from the post carrier (the same expression at the other end)
+            P_side = [W_side * (l.now - l.before) + l.rem - W_side // 2 for l in lines]
+            P_other = [p + direction * X_now * f for p, f in zip(P_side, force)]
+            d = 2 * self.w * X_now
+            for a, f, p1, p2 in zip(starts, force, P_side, P_other):
+                forms = forms + self.odd_round(2 * p1 + 1, d) * self.odd_round(2 * p2 + 1, d) + (-a * f) // self.w
+            kicks[k] = (starts, P_other)
+        # the carrier: its one division with the write sourced by the riding rows' momenta
+        k = where(carrier)
+        if self.hold_volume: out[k] = rows[k]
+        else:
+            p02 = p0 * p0
+            numerators = [4 * X_now * (forms * 54 * self.den * self.gamma ** 2 - trace * p02) * p0] + [traceless[a] * p02 for a in range(3)] + [None] * (carrier.shape - 4)
+            _s, _l, out[k] = self.act(rows[k], self.rule_of(carrier, c, factors), None, numerators, direction, None, *ends(k))
+        Xc = out[k][0]; W_div = (self.w // 2) * (Xc.before + Xc.now)  # forward (w div 2)(X_now + X_next); backward (w div 2)(X_before + X_now)
+        # every riding line divides once at the mean wall of the carrier's two levels at its end
+        plane_starts = []; stepped = []; W = Z(self.shape); W_start = Z(self.shape)
+        for r in riders:
+            k = where(r); lines = rows[k]; starts, P = kicks[k]; new = []
+            for a, p, l in zip(starts, P, lines):
+                u = p + W_div // 2; v = u // W_div; rem = u - v * W_div  # the one division of the riding line at the mean wall
+                new.append(Line(a + v, a, rem, W_div, l.wr, l.wwall) if direction == 1 else Line(a, a - v, rem, W_div, l.wr, l.wwall))
+            if direction == -1 and kept is not None: self.restore(new, kept[k], top)
+            out[k] = new
+            if r.shape == 2:
+                start = lines if direction == 1 else new; after = new if direction == 1 else held[k]
+                plane_starts.append(list(start)); stepped.append([l.copy() for l in after])
+                if r.gap > 0: W_start = W_start + wronskian(*start); W = W + wronskian(*after)
+        self.stepped = stepped
+        if direction == 1:  # the riding rows' writes after the divisions: the shape-4 row 2 W and the current; the plane at the gap 0 the Wronskian's change from the kick (W-S1)
+            laid_line = out[where(massless)][0]; before_write = laid_line.now
+            self.write(laid_line, emission // W_div, 1)
+            laid = laid_line.now - before_write
+            self.counts['light_laid'] += int(sum(abs(int(x)) for x in laid.reshape(-1))); self.counts['light_laid_nodes'] += int(sum(1 for x in laid.reshape(-1) if int(x) != 0))
+            for l, n in zip(out[where(potential)], [2 * W, *J]): self.write(l, n, 1)
+        self.set_rows(out)
+        if direction == -1: self.interval -= 1; return
+        counters = ([a.copy() for a in self.standing], [a.copy() for a in self.crossed], [a.copy() for a in self.beats])
+        top = self.swap(held)
+        log_from = len(self.log)
+        self.click(plane_starts, held)
+        self.stack.append({'turned': top, 'counters': counters, 'log_from': log_from})
+
     def step(self): return self.run(1)
     def step_back(self): return self.run(-1)
 
@@ -455,11 +556,12 @@ class Lean:
         half = self.w // 2
         for line, r in rules:
             at_node = lambda x, node: int(np.asarray(x)[node]) if np.ndim(x) else int(x)  # a rule's integer at a Node (a walled row's reaches are the one integer 0)
-            F0 = math.gcd(int(r.wall), at_node(r.mass, at), *[at_node(x, at) for x in r.reaches])
+            F0 = math.gcd(at_node(line.wall, at), at_node(r.mass, at), *[at_node(x, at) for x in r.reaches])
             for k, n in enumerate(nodes):
-                F = F0 if k == 0 else math.gcd(int(r.wall), at_node(r.reaches[k - 1], n))
-                rem = int(line.rem[n]); values = int(r.wall) // F
-                if self.control.get('digits') == 'folded': rem = min(rem, int(r.wall) - rem); values = values // 2 + 1  # the Boss's mend of 10:1x for the twist's CP: every line's remainder folded to its wall, min(r, w - r), the distance to the nearer edge, conjugation-even on every line alike
+                wl = at_node(line.wall, n)  # the line's own wall at that Node (the rule's w, or the ride's mean wall)
+                F = F0 if k == 0 else math.gcd(wl, at_node(r.reaches[k - 1], n))
+                rem = int(line.rem[n]); values = wl // F
+                if self.control.get('digits') == 'folded': rem = min(rem, wl - rem); values = values // 2 + 1  # the Boss's mend of 10:1x for the twist's CP: every line's remainder folded to its wall, min(r, w - r), the distance to the nearer edge, conjugation-even on every line alike
                 origin = origin and rem in (half - 1, half); coarse = coarse and values <= 3
                 digits.append((rem // F, values + 1))
         if origin: self.counts['refused_origin'] += 1; return None
