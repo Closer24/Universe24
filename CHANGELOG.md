@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's word of 2026-10-25, 12:2x UTC, through the Boss (Universe24's results seen on the page, the passage through the Links): the page's line in docs/ENGINE.md gains the record's Link line and the drawn flow; docs/HIGHLIGHTS.md the decision. No engine change.
 - The owner's word of 2026-10-25, 12:2x UTC, through the Boss (the walls are algebra, not code): the walls' and units' derivations named under The constants of the universe in docs/ALGEBRA.md, and docs/ENGINE.md's list gains the row of the walls as named primitives with no literal in the Node; docs/HIGHLIGHTS.md the decision. No engine change.
 - The owner's word of 2026-10-25, 12:2x UTC, through the Boss (the Scribe approves none of these in the new code): the five refusals on every push of the new code in docs/ENGINE.md's head and docs/HIGHLIGHTS.md. No engine change.
 - The Boss's line of 2026-10-25, 12:0x UTC, on the owner's question whether the paces' law is missing: K-S4 (the clock's memo one carried division per content) approved and not built on toys-5's head, David building it in the fold, the line to enter as built when his numbers are posted; under The constants of the universe in docs/ALGEBRA.md, docs/HIGHLIGHTS.md the decision. No engine change.
