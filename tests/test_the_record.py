@@ -62,7 +62,9 @@ def test_the_conservations_hold_on_the_record(name: str) -> None:
     assert max(row["max bits"] for row in run["rows"]) <= WIDTH
     assert max(row["max transient bits"] for row in run["rows"]) <= WIDTH
     assert run["run_back"]["exact"] == run["run_back"]["intervals"] == 20
-    assert int(run["counts"]["births"]) == len(births)
+    assert int(run["counts"]["births"]) == len(births) and all(
+        "sense" in e for e in run["log"] if e["event"] == "lay"
+    )
 
 
 def test_the_hole_record_is_the_engines_own_bit_for_bit() -> None:

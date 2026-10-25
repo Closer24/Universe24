@@ -125,9 +125,9 @@ def test_the_fourth_part_of_the_48_images_runs_alike_a_reflection_with_the_hands
 
 
 def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma() -> None:
-    """MA-S1 (the Boss's 6400767119 (4), MA_COMPARISON.md section 4 (3)): the pair of the heavy row laid by an `at` of one quantum at every Node of the 3-cube (tests/worlds/world_pair_3.json, the Boss's spelling of the uniform world) keeps every Node alike to the integer (e 0 at 400 of 400), turns every Node at once at its one top (27 at 196, the mean 255,444 at 195), births nothing, credits a body at every Node, and falls to its bottom at 391; the bottom 949 against Gamma, the Boss's 1,000 at 168 / 169 and 27 turned at 85 (ma1's pair at the amplitude 96) NOT MET under the `at` lays: the packets' weights sum to 64 over the 27 Nodes against the centre's 8, so the board holds the eightfold matter (re_now 1,170 against 96 per Node, W 0) and the period lengthens with the write; the run back exact 10 of 10."""
+    """MA-S1 by the fourth form of the file (the owner's word of 17:57 through the Boss, 6401141446; ma2's spelling, the Boss's 6401095909): the pair of the heavy row laid at every Node of the 3-cube at one quantum (tests/worlds/world_pair_3.json, {"lay": "sea", "row": 2, "quanta": 1, "sense": 0}: the amplitude 96, ma1's, re_now 192 the two senses summed, W 0) keeps every Node alike to the integer (400 of 400), turns every Node at once at both tops (27 at 85 and at 252, ma1's), births nothing, and bottoms at 169 and 335; the bottoms 992 and 966 against ma1's exact 1,000 at 168 / 169 and 333 / 334, NOT MET on this head and named: the body at every Node clicks at interval 8 already (PM-S1's unit: the pair stands at a whole quantum from the lay; 27 credits of 6 levels of light each, 162 credits in all against ma1's 27 at 336), and the light taken is the return's shortfall; the run back exact 10 of 10."""
     node = node_of("world_pair_3.json")
-    assert int(node.by_index[2].lines[0].now.min()) == int(node.by_index[2].lines[0].now.max()) == 1170
+    assert int(node.by_index[2].lines[0].now.min()) == int(node.by_index[2].lines[0].now.max()) == 192
     kept = copy.deepcopy(node)
     alike, tops, means = 0, 0, []
     for _ in range(400):
@@ -137,18 +137,13 @@ def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_
         means.append(sum(x) // len(x))
         if node.turned.any():
             tops += 1
-            assert (node.interval, int(node.turned.sum())) == (196, 27)
+            assert (node.interval, int(node.turned.sum())) in ((85, 27), (252, 27))
     bottoms = [
         (k + 1, means[k]) for k in range(1, 399) if means[k] <= means[k - 1] and means[k] < means[k + 1]
     ]
-    assert (alike, tops, node.counts["births"], max(means), means.index(max(means)) + 1) == (
-        400,
-        1,
-        0,
-        255444,
-        195,
-    )
-    assert bottoms == [(391, 949)] and node.counts["body_clicks"] == 135
+    credits = [e for e in node.log if e["event"] == "credit"]
+    assert (alike, tops, node.counts["births"], len(credits)) == (400, 2, 0, 162)
+    assert bottoms == [(169, 992), (335, 966)] and sum(1 for c in credits if c["i"] == 8) == 27
     assert run_back_exact(kept, 10) == 10
 
 

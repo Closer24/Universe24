@@ -91,8 +91,7 @@ class Node:
         self.stack: list[dict[str, Any]] = []
         self.turned = np.zeros(shape, dtype=bool)
         self.counts: dict[str, int] = dict(COUNTS)
-        self.max_transient = 0
-        self.count_max = 0
+        self.max_transient = self.count_max = 0
         self.last_dp = [0, 0, 0]
         self.start_factors: tuple[Any, ...] = ()
         self.start_frames: list[Any] = []

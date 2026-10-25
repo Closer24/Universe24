@@ -1,4 +1,4 @@
-"""The seed as the world file lays it: a list of lays in the three forms of the law and no fourth (the owner's word of 2026-10-25): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in den's unit (h_a = den sin(k_a / 2)), moving at the band's rotation at that wave number with the optional flat `top` along the wave's axis (MV-S1 to MV-S3, 2026-10-25; one path for every record row, the massless plane with a wave among them, with none the drift by name; a quartet's lay names its `vector`, the eight integers of the lattice, and may name one `sense`; the lay refused by state where the standing row's spin density agrees with the child's at the centre, SR-S4). Refused by name: a fourth form, a field of no form (an interval key among them), a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a quartet's lay with no vector, a wave number beyond the band's edge (|h| above den), a massless packet at the wave 0, a top not fitting the board."""
+"""The seed as the world file lays it: a list of lays in the four forms of the law (the owner's word of 2026-10-25; the fourth, the uniform lay, by his word of 17:57 UTC): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in den's unit (h_a = den sin(k_a / 2)), moving at the band's rotation at that wave number with the optional flat `top` along the wave's axis (MV-S1 to MV-S3, 2026-10-25; one path for every record row, the massless plane with a wave among them, with none the drift by name; a quartet's lay names its `vector`, the eight integers of the lattice, and may name one `sense`; the lay refused by state where the standing row's spin density agrees with the child's at the centre, SR-S4). Refused by name: a fourth form, a field of no form (an interval key among them), a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a quartet's lay with no vector, a wave number beyond the band's edge (|h| above den), a massless packet at the wave 0, a top not fitting the board."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from event_universe.node import Node
 
 FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
-    "sea": frozenset({"lay", "row"}),
+    "sea": frozenset({"lay", "row", "quanta", "sense"}),
     "hole": frozenset({"lay", "at"}),
     "at": frozenset({"lay", "row", "centre", "quanta", "width", "vector", "sense", "wave", "top"}),
 }
@@ -37,10 +37,18 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
         row = node.by_index[int(lay["row"])] if "row" in lay else None
         if row is not None and row not in node.records():
             raise ValueError("a lay is onto a record (a plane or a quartet)")
-        if form == "sea":
-            if row is None or row.gap != 0:
-                raise ValueError("a sea is the plane at the gap 0 alone: the drift is its double root")
+        if form == "sea" and "quanta" not in lay:
+            if row is None or row.gap != 0 or "sense" in lay:
+                raise ValueError(
+                    "a sea without a count is the plane at the gap 0 alone (the drift, no sense); a plane with a gap names its quanta (the fourth form)"
+                )
             node.lay(node.records().index(row), Ellipsis, (node.drift, 0, 0, 0))
+        elif form == "sea":
+            if row is None or row.gap == 0:
+                raise ValueError(
+                    "the fourth form lays a plane with a gap at a count: the plane at the gap 0 alone is the drift"
+                )
+            lay_uniform(node, node.records().index(row), int(lay["quanta"]), int(lay.get("sense", 0)))
         elif form == "hole":
             at = node.node_of(lay["at"])
             node.lay(node.records().index(node.row(PLANE, gap=0)), at, (-node.drift, 0, 0, 0))
@@ -172,6 +180,56 @@ def rest_record(
     if pairs is None:
         return gram.rest(row.shape, base, vector, num, node.den, sine_den(num, node.den), sense)
     return gram.moving(row.shape, base, vector, pairs[0], pairs[1], node.den, sense)
+
+
+def uniform_levels(node: Node, row: Row, amplitude: int, sense: int) -> list[Line]:
+    """The fourth form's levels at an amplitude (MA-S1, ma2's spelling): one record at rest at every Node (rest_record with the envelope 1 and the centre's weight 1) at the sense -1 or 1, or the conjugate pair at 0 (both senses summed, the im lines cancelling)."""
+    if sense == 0:
+        a = uniform_levels(node, row, amplitude, 1)
+        b = uniform_levels(node, row, amplitude, -1)
+        return [Line(x.now + y.now, x.before + y.before, None, None) for x, y in zip(a, b, strict=True)]
+    return rest_record(node, row, zeros(node.shape) + 1, 1, amplitude, sense, [1, 0])
+
+
+def share_at_node(node: Node, row: Row, lines: list[Line], rule: Any) -> int:
+    """A record's share at the vacuum's weight at the Node of the board's first index, the uniform lay's share at every Node alike."""
+    return int(node.share(lines, rule).reshape(-1)[0])
+
+
+def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
+    """The fourth form laid: the plane with a gap at every Node alike at the least amplitude whose share at the vacuum's weight is at or above n quanta of its unit at every Node (ma2's fitted_uniform: the search by comparisons, doubling then halving, its answer plus one), at the sense -1 or 1 or the conjugate pair at 0; the lay logged."""
+    row = node.records()[rec]
+    assert row.pair is not None
+    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
+    rule = node.rule(row.pair, node.start_content, node.link_factors())
+    target = n * node.units[rec]
+    high = 1
+    while share_at_node(node, row, uniform_levels(node, row, high, sense), rule) <= target:
+        high = high + high
+    low = 0
+    while high - low > 1:
+        middle = int(quotient(low + high, 2))
+        if share_at_node(node, row, uniform_levels(node, row, middle, sense), rule) <= target:
+            low = middle
+        else:
+            high = middle
+    amplitude = low + 1
+    lines = uniform_levels(node, row, amplitude, sense)
+    node.lay(rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
+    node.log.append(
+        {
+            "event": "lay",
+            "i": 0,
+            "node": None,
+            "line_pair": rec,
+            "quanta": n,
+            "amplitude": amplitude,
+            "share": share_at_node(node, row, lines, rule),
+            "unit": node.units[rec],
+            "nodes": int(node.cube) ** AXES,
+            "sense": sense,
+        }
+    )
 
 
 def packet_share(node: Node, row: Row, lines: list[Line], rule: Any) -> int:

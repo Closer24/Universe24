@@ -56,10 +56,8 @@ def read_number(
             origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
             coarse = coarse and values <= AXES
             digits.append((quotient(rem, f), values + 1))
-    if origin:
-        node.counts["refused_origin"] += 1
-        return None
-    if coarse:
+    if origin or coarse:
+        node.counts["refused_origin"] += origin
         return None
     digits.sort()
     carry, room = 0, 1
