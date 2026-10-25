@@ -9,7 +9,7 @@ from typing import Any
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.links import cross, turn_pair
-from event_universe.rows import PLANE
+from event_universe.rows import PLANE, QUARTET
 
 MIL = 1000000  # readings in parts per million
 HUNDRED = 100  # readings in hundredths
@@ -28,9 +28,11 @@ class Record:
         self.den = int(run["den"])
         self.gamma, self.G, self.T = int(run["gamma"]), int(run["G"]), int(run["T"])
         rows = run["universe"]["rows"]
-        planes = [
-            tuple(int(x) for x in r["pair"]) for r in rows if int(r["shape"]) == PLANE and r.get("pair")
-        ]
+        planes = {
+            tuple(int(x) for x in r["pair"])
+            for r in rows
+            if int(r["shape"]) in (PLANE, QUARTET) and r.get("pair")
+        }
         gapped = sorted((sine_den(num, self.den), num) for num, den in planes if num != den)
         self.NL = len(gapped)
         self.NAMES: dict[int, tuple[str, int]] = {
@@ -74,8 +76,10 @@ def carrier_levels(record: Record, credit: dict[str, Any]) -> tuple[int, int, in
 
 
 def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
-    """The species from the frame in exact integers under the symmetric ride (interval.py's form): a riding line's momentum P_in = W_in (a_now - a_before) + r - W_in div 2 at the mean wall W_in = (w div 2)(X_before + X_now), the kick P_out = P_in + X_now F with F = SUM_j R_j (m_j - z) - D z, the one division a_next = a_now + (P_out + W_out div 2) div W_out at W_out = (w div 2)(X_now + X_next); from the record's levels v = a_next - a_now gives X_now F to the remainders' width, E = v W_out - W_in (a_now - a_before), and F is linear in num: num = (E + 12 den p_0^2 G^2 z X_now) / ((A + 12 p_0^2 G^2 z) X_now) with A = SUM_j 2 p_i^2 Q_j G^2 (m_j - z) over the turned arrivals; x = num / den as the rational (N, D), D > 0."""
+    """The species from the frame in exact integers under the symmetric ride (interval.py's form), a plane's frame alone (a quartet's credit carries its bilinears, its species owed by name): a riding line's momentum P_in = W_in (a_now - a_before) + r - W_in div 2 at the mean wall W_in = (w div 2)(X_before + X_now), the kick P_out = P_in + X_now F with F = SUM_j R_j (m_j - z) - D z, the one division a_next = a_now + (P_out + W_out div 2) div W_out at W_out = (w div 2)(X_now + X_next); from the record's levels v = a_next - a_now gives X_now F to the remainders' width, E = v W_out - W_in (a_now - a_before), and F is linear in num: num = (E + 12 den p_0^2 G^2 z X_now) / ((A + 12 p_0^2 G^2 z) X_now) with A = SUM_j 2 p_i^2 Q_j G^2 (m_j - z) over the turned arrivals; x = num / den as the rational (N, D), D > 0."""
     f, content = credit["frame"], credit["content"]
+    if "re_now" not in f:
+        return None
     gamma, den, unit = record.gamma, record.den, record.G
     p0, pi = paces.clock(gamma, content), paces.link_pace(gamma, content)
     w = rule3.wall_of(den, gamma, unit)

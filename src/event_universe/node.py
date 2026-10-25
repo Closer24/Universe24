@@ -7,13 +7,13 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, interval, readings, seed, take
+from event_universe import close, gram, interval, readings, seed, take
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import carried_division, half, link_unit_of, mirrored, unit_of, wall_of
 from event_universe.features import phase
-from event_universe.links import Link, turn_pair
+from event_universe.links import Link, turned
 from event_universe.rows import (
     CARRIER,
     HALF_WIDTH,
@@ -118,8 +118,9 @@ class Node:
         wall = half(self.w) * (carrier.before + carrier.now)
         for r in self.rows_:
             if r.wall is None and r.shape != CARRIER:
+                scaled = wall * gram.scale(r.shape, self.gamma)
                 for line in r.lines:
-                    line.wall, line.rem = wall, half(wall)
+                    line.wall, line.rem = scaled, half(scaled)
 
     def node_of(self, xyz: Any) -> tuple[int, ...]:
         """A Node named by the world file: three integers on the board; a Node off the board is refused by name."""
@@ -146,11 +147,11 @@ class Node:
         return rule3.rule_integers(pair[0], pair[1], self.gamma, clock, pace, factors, self.G)
 
     def rule_of(self, r: Row, c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
-        """A row's rule: Rule3's integers at its pair and the Node's paces, or, for the row with its own wall, no Links and the own weight 2 w (next = 2 now - before + the write inside the division)."""
+        """A row's rule: Rule3's integers at its pair and the Node's paces scaled by the row's scale (gram.scale: 1 but for the quartet), or, for the row with its own wall, no Links and the own weight 2 w (next = 2 now - before + the write inside the division)."""
         if r.wall is not None:
             return rule3.Rule(tuple(0 for _ in range(PORTS)), 2 * r.wall, r.wall, 0)
         assert r.pair is not None
-        return self.rule(r.pair, c, factors)
+        return rule3.scaled(self.rule(r.pair, c, factors), gram.scale(r.shape, self.gamma))
 
     def content(self) -> Any:
         """The content at every Node (readings.content)."""
@@ -160,21 +161,16 @@ class Node:
         """The Link factor at each Port (readings.link_factors), 0 where either end is frozen."""
         return readings.link_factors(self, axis_levels, frozen)
 
-    def share(self, line: Line, r: rule3.Rule, pace: Any = None, vacuum: bool = False) -> Any:
-        """The conserved form's share at every Node (readings.share)."""
-        return readings.share(self, line, r, pace, vacuum)
+    def share(self, lines: list[Line], r: rule3.Rule, pace: Any = None, vacuum: bool = False) -> Any:
+        """A record's conserved form's share at every Node (gram.share)."""
+        return gram.share(self, lines, r, pace, vacuum)
 
     def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
-        """The arrivals of a row's lines at one Port, read in the Node's frame and turned by the Link's pair over X and by the odd line's tangent triple (W^2 - n^2, 2 W n, W^2 + n^2), W = 4 Gamma, one rounding per Link per part, every number the Link's record; a row of one line is turned by the identity; `turn` None is the identity for every shape."""
+        """The arrivals of a row's lines at one Port, read in the Node's frame (the row's conjugation where the frame sign is -1, gram.conjugated) and turned plane by plane by the Link's record (links.turned); a row of one line is turned by the identity; `turn` None is the identity for every shape."""
         if turn is None or len(arrivals) == 1:
             return arrivals
         at = turn[port]
-        re_j, im_j = arrivals[0], at.frame * arrivals[1]
-        wl = 4 * self.gamma
-        a_re, a_im = turn_pair(re_j, im_j, at.cosine, at.sine, self.X)
-        return list(
-            turn_pair(a_re, a_im, wl * wl - at.odd * at.odd, 2 * wl * at.odd, wl * wl + at.odd * at.odd)
-        )
+        return turned(gram.conjugated(len(arrivals), arrivals, at.frame), at, self.X, self.gamma)
 
     def arrivals(self, at: list[Any], r: rule3.Rule, turn: list[Link] | None) -> list[Any]:
         """The Links' part of Rule3's total for a row's lines at every Node, SUM_j R_j m_j, the arrivals at each Port turned as the row's shape turns them."""
@@ -286,22 +282,25 @@ class Node:
         return [line for row in self.rows() for line in row]
 
     def is_im(self) -> list[bool]:
-        """Which lines are a plane's im line (the second line of a shape-2 row), conjugated at a turned Node."""
-        return [len(row) == PLANE and k == 1 for row in self.rows() for k in range(len(row))]
+        """Which lines the row's conjugation negates (a plane's im line), its own entry of K below 0."""
+        return [gram.conjugation(r.shape)[k][k] < 0 for r in self.rows_ for k in range(r.shape)]
 
     def exchange(self, top: Any, held: list[list[Line]]) -> None:
-        """The swap's act at the Nodes `top`: every line set to the held line exchanged and mirrored (the two levels exchanged, an im line conjugated, every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line, so an im line's rotation remainder is left; the write remainders and the frame bit once); an involution with the state it leaves."""
-        for line, h, im in zip(
-            self.all_lines(), [line for row in held for line in row], self.is_im(), strict=True
-        ):
-            sgn = -1 if im else 1
-            line.now = np.where(top, sgn * h.before, line.now)
-            line.before = np.where(top, sgn * h.now, line.before)
-            line.rem = np.where(top, mirrored(h.rem, h.wall, 1 + (sgn < 0)), line.rem)
-            if np.ndim(h.wall):
-                line.wall = np.where(top, h.wall, line.wall)
-            if line.wr is not None:
-                line.wr = np.where(top, mirrored(h.wr, line.wwall, 1), line.wr)
+        """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the quartet's K0, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves."""
+        for r, row, hrow in zip(self.rows_, self.rows(), held, strict=True):
+            k = gram.conjugation(r.shape)
+            nows, befores = (
+                gram.matvec(k, [h.before for h in hrow]),
+                gram.matvec(k, [h.now for h in hrow]),
+            )
+            for i, (line, h) in enumerate(zip(row, hrow, strict=True)):
+                line.now = np.where(top, nows[i], line.now)
+                line.before = np.where(top, befores[i], line.before)
+                line.rem = np.where(top, mirrored(h.rem, h.wall, 1 + (k[i][i] < 0)), line.rem)
+                if np.ndim(h.wall):
+                    line.wall = np.where(top, h.wall, line.wall)
+                if line.wr is not None:
+                    line.wr = np.where(top, mirrored(h.wr, line.wwall, 1), line.wr)
 
     def swap(self, held: list[list[Line]], frozen: Any = None) -> Any:
         """The swap at the top: the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), a frozen Node never (BH-S1); the turned Node ends the interval at the state it started from, exchanged and complemented."""
@@ -353,7 +352,7 @@ class Node:
         """The close (close.click), the Node's fourth act, in the direction: backward the close undone from the log's frame."""
         close.click(self, plane_starts, held, direction, frame)
 
-    def lay(self, rec: int, where: Any, levels: tuple[Any, Any, Any, Any], sign: int = 1) -> None:
+    def lay(self, rec: int, where: Any, levels: tuple[Any, ...], sign: int = 1) -> None:
         """The one lay act (take.lay)."""
         take.lay(self, rec, where, levels, sign)
 

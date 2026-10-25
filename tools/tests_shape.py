@@ -41,6 +41,34 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_quartet.py::toy_of": (
+        9,
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the helper, the toy on the middle universe with the shape-8 row, one packet along a vector with the controls",
+    ),
+    "tests/test_the_quartet.py::lines_of": (
+        3,
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the helper, the row's lines",
+    ),
+    "tests/test_the_quartet.py::test_the_zeeman_doublet_is_the_derived_shift_with_the_two_spins_opposite_sr_s3": (
+        19,
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the Zeeman doublet, the one-interval shifts of the two spins opposite and within one level of the derived num B0 x_now div (3 den Gamma)",
+    ),
+    "tests/test_the_quartet.py::test_the_negated_vector_lays_the_lay_negated_with_the_charge_the_share_and_the_credits_equal_sr_s2": (
+        23,
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the double cover's -I, the negated vector's lay the lay negated with the share, the charge and the credits equal line for line, the run back exact",
+    ),
+    "tests/test_the_quartet.py::test_the_quartet_sees_one_link_sr": (
+        11,
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the reach, an odd line changed two Links away leaves the row's eight lines bit for bit",
+    ),
+    "tests/test_the_quartet.py::test_the_exclusion_at_the_lay_reads_the_full_state_and_the_pile_is_gone_sr_s4": (
+        24,
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the exclusion at the lay per full state, the pile 1x refused like, 2x opposite spins, 4x by hand, the neutral pair, the refusals by name",
+    ),
+    "tests/test_the_quartet.py::test_stern_gerlach_reads_the_credits_centroids_per_spin_sign_along_the_gradient_sr": (
+        21,
+        "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and SR_COMPARISON.md's spec: the five tests under 15 s beside the row): the Stern-Gerlach gate read from the toy's committed records of the 9-cube at 60 intervals, the verdict asserted by name",
+    ),
     "tests/test_the_node.py::test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1": (
         24,
         "BH-S1 (2026-10-25, the owner's word through the Boss, 6398593790: the test under 15 s beside the frozen Node's): the 3-cube centre fed to the frozen content for 100 intervals, "

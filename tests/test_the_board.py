@@ -11,13 +11,12 @@ from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE
 from tests.laws import node_of, run_back_exact, world_of
 
-CUBE, INTERVALS = 5, 20
+CUBE, INTERVALS, GROUPS = 5, 20, 4
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
     for pi in itertools.permutations(range(3))
     for s in itertools.product((1, -1), repeat=3)
 ]
-GROUPS = 4
 
 
 def image(m: Any, node: tuple[int, ...], cube: int) -> tuple[int, ...]:

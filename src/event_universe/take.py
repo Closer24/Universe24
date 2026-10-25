@@ -35,8 +35,8 @@ def at_node(x: Any, at: tuple[int, ...]) -> int:
 def read_number(
     node: Node, at: tuple[int, ...], rules: list[tuple[Line, rule3.Rule]]
 ) -> tuple[int, int] | None:
-    """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the gap-0 unit times the planes' count (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse."""
-    modulus = node.unit_gap0 * len(node.records())
+    """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the gap-0 unit times the planes' count, the shape-2 records the draw names (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse."""
+    modulus = node.unit_gap0 * sum(1 for r in node.records() if r.shape == PLANE)
     nodes = frame_nodes(node, at)
     digits = []
     origin = coarse = True
@@ -96,10 +96,10 @@ def fall_of(
     return dist, full
 
 
-def lay(node: Node, rec: int, where: Any, levels: tuple[Any, Any, Any, Any], sign: int = 1) -> None:
-    """The one lay act: a record's four levels (re_now, re_before, im_now, im_before) added at the Node `where` (or over the board), taken back with sign -1."""
-    re, im = node.records()[rec].lines
-    for line, now, before in ((re, levels[0], levels[1]), (im, levels[2], levels[3])):
+def lay(node: Node, rec: int, where: Any, levels: tuple[Any, ...], sign: int = 1) -> None:
+    """The one lay act: a record's levels (now, before per line: re_now, re_before, im_now, im_before for a plane) added at the Node `where` (or over the board), taken back with sign -1."""
+    lines = node.records()[rec].lines
+    for line, now, before in zip(lines, levels[0::2], levels[1::2], strict=True):
         line.now[where] = line.now[where] + sign * now
         line.before[where] = line.before[where] + sign * before
 

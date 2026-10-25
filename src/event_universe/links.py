@@ -51,6 +51,17 @@ def link(
     return evens, odds, f
 
 
+def turned(xs: list[Any], at: Link, scale: Any, gamma: Any) -> list[Any]:
+    """A row's lines at a Port, read in the Node's frame, turned plane by plane ((0, 1), (2, 3), ...) by the Link's pair over X and by the odd line's tangent triple (W^2 - n^2, 2 W n, W^2 + n^2), W = 4 Gamma, one rounding per Link per part, every number the Link's record."""
+    wl = 4 * gamma
+    tc, ts, tw = wl * wl - at.odd * at.odd, 2 * wl * at.odd, wl * wl + at.odd * at.odd
+    found: list[Any] = []
+    for re_j, im_j in zip(xs[0::2], xs[1::2], strict=True):
+        a_re, a_im = turn_pair(re_j, im_j, at.cosine, at.sine, scale)
+        found += turn_pair(a_re, a_im, tc, ts, tw)
+    return found
+
+
 def gradient(a: Any, axis: int) -> Any:
     """The centred difference of a row's line along an axis, a(i + a) - a(i - a), read through the Link's one read at the two Ports of the axis."""
     return across(a, 2 * axis) - across(a, 2 * axis + 1)
@@ -72,13 +83,16 @@ def plane_current(re: Line, im: Line, frames: list[Any]) -> list[Any]:
     return found
 
 
-def stress_parts(lines: list[tuple[Any, int]], shape: tuple[int, ...]) -> list[Any]:
-    """The stress tensor's three diagonal parts from the rows' levels, one act on every line alike: SUM over lines of weight x (gradient along the axis)^2; `lines` holds (levels, weight) pairs."""
+def stress_parts(
+    rows: list[tuple[list[Any], int, list[list[int]]]], shape: tuple[int, ...]
+) -> list[Any]:
+    """The stress tensor's three diagonal parts from the records' levels, one act on every record alike: SUM over records of num x d.G.d with d the gradient of the lines along the axis and G the row's Gram matrix (the sum of the lines' squared gradients at G = I); `rows` holds (levels, num, G) triples."""
     parts = [zeros(shape) for _ in range(AXES)]
-    for levels, num in lines:
+    for levels, num, g in rows:
         for a in range(AXES):
-            d = gradient(levels, a)
-            parts[a] = parts[a] + num * d * d
+            d = [gradient(x, a) for x in levels]
+            pairs = ((k, m) for k in range(len(d)) for m in range(len(d)) if g[k][m])
+            parts[a] = parts[a] + num * sum((g[k][m] * d[k] * d[m] for k, m in pairs), start=0)
     return parts
 
 

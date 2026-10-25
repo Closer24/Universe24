@@ -6,4 +6,5 @@ tests/test_rule3.py
 tests/test_the_board.py
 tests/test_the_node.py
 tests/test_the_phase_line.py
+tests/test_the_quartet.py
 tests/test_the_record.py

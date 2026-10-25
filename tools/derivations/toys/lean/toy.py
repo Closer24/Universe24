@@ -1,4 +1,4 @@
-"""The toy's measurement controls over the engine's Node, kept by name (the fold of 2026-10-25: the engine refuses the `control` and `detectors` keys; this subclass reads them): `ride` absent runs the former interval (one loop over the rows at the fixed wall, the metric's write from the forms) in place of the symmetric ride; `digits` former or folded changes the one-Link read's digit set; `metric_sources` names the rows whose form sources the metric's write in the former loop; `well` holds the volume by hand; `detectors` names the Nodes whose gap-0 quanta the record credits. Usage: `python toy.py <world.json> <out.json> [back N]`."""
+"""The toy's measurement controls over the engine's Node, kept by name (the fold of 2026-10-25: the engine refuses the `control` and `detectors` keys; this subclass reads them): `ride` absent runs the former interval (one loop over the rows at the fixed wall, the metric's write from the forms) in place of the symmetric ride; `digits` former or folded changes the one-Link read's digit set; `metric_sources` names the rows whose form sources the metric's write in the former loop; `well` holds the volume by hand; `detectors` names the Nodes whose gap-0 quanta the record credits; `held_potential` holds lines of the shape-4 row by hand (sr1's magnet: the field `sg`, A = -(d_across)(B0 + b d_along) about a Node, restored after every act in both directions); `pauli` false drops the quartet's Node term in the former loop (sr1's control). Usage: `python toy.py <world.json> <out.json> [back N]`."""
 
 from __future__ import annotations
 
@@ -9,12 +9,12 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import readings, run
+from event_universe import gram, readings, run
 from event_universe.core import paces, rule3
 from event_universe.core.ports import PORTS, across
-from event_universe.core.rule3 import half
+from event_universe.core.rule3 import half, quotient
 from event_universe.features import volume
-from event_universe.links import links_of, plane_current, stress_parts, tensor_parts, wronskian
+from event_universe.links import links_of, stress_parts, tensor_parts
 from event_universe.loader.world import read_world
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, zeros
@@ -59,11 +59,27 @@ class Toy(Node):
         self.detectors = [self.node_of(d) for d in world.get("detectors", [])]
         if (
             self.control.get("ride") != "symmetric"
-        ):  # the former loop: every line's remainder at the fixed wall w
+        ):  # the former loop: every line's remainder at the fixed wall w times the row's scale
             for r in self.rows_:
                 if r.wall is None and r.shape != CARRIER:
+                    wall = self.w * gram.scale(r.shape, self.gamma)
                     for line in r.lines:
-                        line.wall, line.rem = self.w, zeros(self.shape) + half(self.w)
+                        line.wall, line.rem = wall, zeros(self.shape) + half(wall)
+        self.held_lines: list[int] = []
+        for h in self.control.get("held_potential", []):
+            k, at = int(h["line"]), self.node_of(h["at"])
+            field = zeros(self.shape)
+            for node in np.ndindex(*self.shape):
+                across_, along = (self.centred(node, at, int(h[key])) for key in ("across", "along"))
+                field[node] = -across_ * (int(h["B0"]) + int(h["b"]) * along)
+            line = self.row(POTENTIAL).lines[k]
+            line.now, line.before = field.copy(), field.copy()
+            self.held_lines.append(k)
+
+    def centred(self, node: tuple[int, ...], at: tuple[int, ...], axis: int) -> int:
+        """The torus-centred offset of a Node from `at` along the axis."""
+        d = (node[axis] - at[axis]) % self.cube
+        return d - self.cube if d > self.cube // 2 else d
 
     def carried(
         self,
@@ -115,8 +131,8 @@ class Toy(Node):
         z = gap0.lines[0]
         gap0_start = plane_starts[self.records().index(gap0)]
         sh_end, sh_vac = (
-            self.share(z, r_gap0, pace, vacuum=True),
-            self.share(gap0_start[0], r_gap0, pace, vacuum=True),
+            self.share([z], r_gap0, pace, vacuum=True),
+            self.share([gap0_start[0]], r_gap0, pace, vacuum=True),
         )
         for det in self.detectors:
             rise = int(sh_end[det]) // self.unit_gap0 - int(sh_vac[det]) // self.unit_gap0
@@ -137,13 +153,15 @@ class Toy(Node):
                 )
 
     def run(self, direction: int = 1) -> None:
-        """The symmetric ride under the key, else the former loop."""
-        if self.control.get("ride") == "symmetric":
-            return super().run(direction)
-        self.former(direction)
+        """The symmetric ride under the key, else the former loop; the held field runs on the former loop alone (on the ride every riding row's momenta source the carrier, and a held row's are no bijection), refused by name on the ride."""
+        if self.control.get("ride") != "symmetric":
+            return self.former(direction)
+        if self.held_lines:
+            raise ValueError("the held field runs on the former loop alone")
+        super().run(direction)
 
     def former(self, direction: int) -> None:
-        """The former interval: the readings at the start, one act on every row in the rows' order at the fixed wall (the walled row with its write inside the division, a plane with a gap turned by the Link's pair and the odd tangent, the plane at the gap 0 taking W-S1, the shape-4 row 2 W and the current, the metric's row the riding rows' forms less the pressure and the traceless stress), the swap and the close."""
+        """The former interval: the readings at the start, one act on every row in the rows' order at the fixed wall times the row's scale (the walled row with its write inside the division, a record with a gap turned by the Link's pair and the odd tangent with the quartet's Node term inside its division (sr1's form), the plane at the gap 0 taking W-S1, the shape-4 row 2 W and the current with its held lines restored, the metric's row the riding rows' G-weighted forms less the pressure and the traceless stress), the swap and the close."""
         if direction == 1:
             self.interval += 1
             top: Any = np.zeros(self.shape, dtype=bool)
@@ -178,7 +196,12 @@ class Toy(Node):
         )
         trace, traceless = tensor_parts(
             stress_parts(
-                [(at(line), r.pair[0]) for r in riding if r.pair for line in r.lines], self.shape
+                [
+                    ([at(line) for line in r.lines], r.pair[0], gram.gram(r.shape))
+                    for r in riding
+                    if r.pair
+                ],
+                self.shape,
             )
         )
         forms, w_start, w_after = zeros(self.shape), zeros(self.shape), zeros(self.shape)
@@ -186,6 +209,7 @@ class Toy(Node):
         plane_starts: list[list[Line]] = []
         stepped: list[list[Line]] = []
         links: Any = None
+        curl: list[Any] = []
         for k, r in enumerate(self.rows_):
             rule = self.rule_of(r, c, factors)
             turn = None
@@ -193,10 +217,14 @@ class Toy(Node):
             numerators: list[Any] = [None] * r.shape
             if r.wall is not None:
                 flux = [2 * cphi]
-            elif r.shape == PLANE:
+            elif r in self.records():
                 turn = None if r.gap == 0 else links
                 if r.gap == 0:
                     numerators = [w_after - w_start, None]
+                elif self.control.get("pauli", True):
+                    starts = [at(line) for line in r.lines]
+                    coefficient = quotient(sum(rule.reaches), gram.scale(r.shape, self.gamma))
+                    flux = gram.term(r.shape, coefficient, curl, starts)
             elif r.shape == POTENTIAL:
                 numerators = [2 * w_after, *current]
             elif r.shape == CARRIER:
@@ -208,9 +236,13 @@ class Toy(Node):
                 numerators += [traceless[a] * p02 for a in range(AXES)] + [None] * (r.shape - 1 - AXES)
             ends = (top, None if kept is None else kept[k])
             start, levels, out[k] = self.act(rows[k], rule, turn, numerators, direction, flux, *ends)
+            if r.shape == POTENTIAL:
+                for kk in self.held_lines:  # the held line a constant: forward the pre-state's, backward the exchanged post-state's (the pre-state at a turned Node)
+                    out[k][kk] = (held if kept is None else kept)[k][kk].copy()
             if r in riding:
-                for l0, lv in zip(start, levels, strict=True):
-                    forms = forms + (l0.now * l0.now - lv * l0.before)
+                g = gram.gram(r.shape)
+                nows, befores = [l0.now for l0 in start], [l0.before for l0 in start]
+                forms = forms + gram.form(g, nows, nows) - gram.form(g, levels, befores)
             if r.wall is not None:
                 count = readings.centred_count(self, cphi, start[0])
                 self.count_max = max(
@@ -222,14 +254,15 @@ class Toy(Node):
                 odd = [at(line) for line in potential.lines[1 : 1 + AXES]]
                 self.start_phases, self.start_odd = phases, [o.copy() for o in odd]
                 links = links_of(factors, frames, phases, odd)
-            elif r.shape == PLANE:
-                re, im = start
-                w_start = w_start + wronskian(re, im)
+                curl = gram.curl(odd)
+            elif r in self.records():
+                w_start = w_start + gram.charge(r.shape, start)
                 after = out[k] if direction == 1 else held[k]
-                w_after = w_after + wronskian(*after)
+                w_after = w_after + gram.charge(r.shape, after)
                 stepped.append([line.copy() for line in after])
                 plane_starts.append(start)
-                for a, j_a in enumerate(plane_current(re, im, frames)):
+                nows = [line.now for line in start]
+                for a, j_a in enumerate(gram.current(r.shape, nows, frames)):
                     current[a] = current[a] + j_a
                 if r.gap == 0 and direction == 1:
                     laid = out[k][0].now - levels[0]

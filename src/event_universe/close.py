@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import readings
+from event_universe import gram, readings
 from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES
 from event_universe.core.rule3 import quotient, remainder
@@ -39,8 +39,9 @@ def refused(node: Node, at: tuple[int, ...], cause: str, **numbers: Any) -> None
 def meet(
     node: Node, taken: Line, sh: Any, rules: list[tuple[Line, rule3.Rule]], frozen: Any
 ) -> list[Birth]:
-    """The Link close: every Link once from its +a end; a meeting where both ends hold a whole quantum of the plane at the gap 0 at the vacuum's weight and neither end is frozen; the + child at the end the gap-0 line's own current flows into where the twist of the taken line's transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); the Link's one number read at the current's end gives the plane. Returns the births as (the take's Node, the plane, the - child's Node, the + child's Node, the draw's room)."""
+    """The Link close: every Link once from its +a end; a meeting where both ends hold a whole quantum of the plane at the gap 0 at the vacuum's weight and neither end is frozen; the + child at the end the gap-0 line's own current flows into where the twist of the taken line's transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); the Link's one number read at the current's end gives the plane, the draw naming the planes alone (a quartet's birth is owed by name, SR). Returns the births as (the take's Node, the plane's record index, the - child's Node, the + child's Node, the draw's room)."""
     born: list[Birth] = []
+    planes = [k for k, r in enumerate(node.records()) if r.shape == PLANE]
     currents = [node.den * link_current(taken, 2 * axis) for axis in range(AXES)]
     twists = [twist(taken, axis) for axis in range(AXES)]
     for at in np.ndindex(*node.shape):
@@ -67,7 +68,7 @@ def meet(
             born.append(
                 (
                     into,
-                    remainder(quotient(number, node.unit_gap0), len(node.records())),
+                    planes[remainder(quotient(number, node.unit_gap0), len(planes))],
                     minus,
                     plus,
                     room,
@@ -193,19 +194,26 @@ def bodies(
     frozen: Any,
     r_gap0: rule3.Rule,
 ) -> None:
-    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its re line's upward crossings clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart."""
-    for rec in range(len(node.records())):
+    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; the beat a plane's by its re line's upward crossings counted, a quartet's from the invariant ratio N.G.B / N.G.N along the law's orbit (gram.period)."""
+    for rec, row in enumerate(node.records()):
         standing_now = np.vectorize(
             lambda v, unit=node.units[rec]: 1 if int(v) >= unit else 0, otypes=[object]
         )(owns[rec])
         node.standing[rec] = np.where(standing_now == 1, node.standing[rec] + 1, 0)
-        re = node.records()[rec].lines[0]
-        upward = np.vectorize(lambda b, n: 1 if (int(b) < 0 <= int(n)) else 0, otypes=[object])(
-            re.before, re.now
-        )
-        counting = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(node.crossed[rec])
-        node.beats[rec] = np.where((upward == 1) & (counting == 1), node.crossed[rec], node.beats[rec])
-        node.crossed[rec] = np.where(upward == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0))
+        if row.shape == PLANE:
+            re = row.lines[0]
+            upward = np.vectorize(lambda b, n: 1 if (int(b) < 0 <= int(n)) else 0, otypes=[object])(
+                re.before, re.now
+            )
+            counting = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(node.crossed[rec])
+            node.beats[rec] = np.where(
+                (upward == 1) & (counting == 1), node.crossed[rec], node.beats[rec]
+            )
+            node.crossed[rec] = np.where(
+                upward == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0)
+            )
+        else:
+            node.beats[rec] = gram.period(node, row.lines, standing_now)
         closing = np.vectorize(
             lambda st, bt: 1 if (int(bt) > 0 and int(st) >= int(bt)) else 0, otypes=[object]
         )(node.standing[rec], node.beats[rec])
@@ -254,6 +262,24 @@ def frame_of(
     }
 
 
+def bilinears_of(node: Node, rec: int, at: tuple[int, ...]) -> dict[str, Any]:
+    """A quartet's credit frame: its levels at the Node, its charge W, its spin density (the record's axial vector, signed per axis) and its axial Wronskians B.GJ Gamma_a.N (SR-S2; the decoder's species solve is a plane's, owed for the quartet by name)."""
+    row = node.records()[rec]
+    nows, befores = [line.now for line in row.lines], [line.before for line in row.lines]
+    gj = gram.matmul(gram.gram(row.shape), gram.rotation(row.shape))
+    axial = [int(s[at]) for s in gram.density(row.shape, nows)]
+    return {
+        "levels_now": [int(n[at]) for n in nows],
+        "levels_before": [int(b[at]) for b in befores],
+        "W": int(gram.charge(row.shape, row.lines)[at]),
+        "axial": axial,
+        "axial_sign": [(s > 0) - (s < 0) for s in axial],
+        "axial_wronskian": [
+            int(gram.form(gj, befores, gram.matvec(ga, nows))[at]) for ga in gram.axes(row.shape)
+        ],
+    }
+
+
 def credit(
     node: Node,
     rec: int,
@@ -264,9 +290,9 @@ def credit(
     taken_was: int,
     taken_before: int,
 ) -> dict[str, Any]:
-    """A body's credit with its frame (`frame_of`), its sense the sign of its Wronskian at the Node, its beat, the take's numbers and momentum, the taker's three levels (the gap-0 line's now before the take, its before, the levels taken: PC-S2), the sign level and whether the Node turned."""
-    re, im = node.records()[rec].lines
-    w = int(cross(re.now[at], im.now[at], re.before[at], im.before[at]))
+    """A body's credit with its frame (a plane's `frame_of`, a quartet's `bilinears_of`), its sense the sign of its charge at the Node, its beat, the take's numbers and momentum, the taker's three levels (the gap-0 line's now before the take, its before, the levels taken: PC-S2), the sign level and whether the Node turned."""
+    row = node.records()[rec]
+    w = int(gram.charge(row.shape, row.lines)[at])
     return {
         "event": "credit",
         "i": node.interval,
@@ -277,7 +303,9 @@ def credit(
         "line": rec,
         "sense": 1 if w > 0 else -1 if w < 0 else 0,
         "beat": int(node.beats[rec][at]),
-        "frame": frame_of(node, rec, at, plane_starts),
+        "frame": frame_of(node, rec, at, plane_starts)
+        if row.shape == PLANE
+        else bilinears_of(node, rec, at),
         "taken": fall,
         "levels": levels,
         "taken_now_was": taken_was,
@@ -295,7 +323,7 @@ def click(
     direction: int = 1,
     frame: dict[str, Any] | None = None,
 ) -> None:
-    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start, the Link close, the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame (`unclick`). `plane_starts` the planes' lines at the interval's start, `held` every row's."""
+    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule), the Link close, the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame (`unclick`). `plane_starts` the records' lines at the interval's start, `held` every row's."""
     if direction == -1:
         assert frame is not None
         unclick(node, frame)
@@ -310,9 +338,8 @@ def click(
     rules = node.read_lines(held, plane_starts, c, factors)
     owns = []
     for rec, r in enumerate(node.records()):
-        rr = node.rule_of(r, c, factors)
-        re0, im0 = plane_starts[rec]
-        owns.append(node.share(re0, rr, pace, vacuum=True) + node.share(im0, rr, pace, vacuum=True))
+        assert r.pair is not None
+        owns.append(node.share(plane_starts[rec], node.rule(r.pair, c, factors), pace, vacuum=True))
     sh = owns[node.records().index(gap0)]
     born_nodes = births(
         node, refuse(node, meet(node, gap0_start[0], sh, rules, frozen), owns), r_gap0, c, factors, pace

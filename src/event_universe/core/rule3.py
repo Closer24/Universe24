@@ -70,6 +70,18 @@ def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
     return division_forward(unit * unit * pace * pace, wall, half)[0]
 
 
+def scaled(rule: Rule, scale: Any) -> Rule:
+    """A rule's four names scaled alike (the reaches, the own weight, the wall, the mass): the line's units a multiple, its quotients unchanged, a term the scale carries exact inside the division (SR-S3); the identity at 1."""
+    if scale == 1:
+        return rule
+    return Rule(
+        tuple(scale * x for x in rule.reaches),
+        scale * rule.self_coefficient,
+        scale * rule.wall,
+        scale * rule.mass,
+    )
+
+
 def carried_division(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[Any, Any]:
     """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = sigma total + r, the quotient sigma (u div w) and the remainder u mod w kept in [0, w) for a total of either sign; +1 forward, -1 the same act back, exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
     total = direction * total + remainder

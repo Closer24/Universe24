@@ -68,16 +68,10 @@ def test_the_hole_record_is_the_engines_own_bit_for_bit() -> None:
     committed = loaded("hole")
     assert committed["world"] == world and committed["universe"] == universe
     found = json.loads(json.dumps(record(universe, world, 20, lambda line: None)))
-    assert (
-        found["log"] == committed["log"]
-        and found["counts"] == committed["counts"]
-        and found["turns"] == committed["turns"]
-    )
+    assert found["log"] == committed["log"] and found["counts"] == committed["counts"]
+    assert found["turns"] == committed["turns"] and found["run_back"] == {"intervals": 20, "exact": 20}
     timeless = [{k: v for k, v in row.items() if k != "milliseconds"} for row in found["rows"]]
-    assert timeless == [
-        {k: v for k, v in row.items() if k != "milliseconds"} for row in committed["rows"]
-    ]
-    assert found["run_back"] == {"intervals": 20, "exact": 20}
+    assert timeless == [{k: v for k, v in r.items() if k != "milliseconds"} for r in committed["rows"]]
 
 
 def reading_of(name: str) -> list[dict[str, Any]]:
@@ -119,9 +113,7 @@ def test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed
     assert (
         f"den {run['universe']['integers']['den']}" in text and f"shape {run['world']['shape']}" in text
     )
-    assert all(
-        e["label"] in text
-        for e in next(line["events"] for line in reading_of("hole") if "events" in line)
-    )
+    events = next(line["events"] for line in reading_of("hole") if "events" in line)
+    assert all(e["label"] in text for e in events)
     source = (ROOT / "tools" / "page.py").read_text(encoding="utf-8")
     assert str(run["den"]) not in source and "electron" not in source and "light" not in source

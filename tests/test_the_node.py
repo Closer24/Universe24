@@ -177,19 +177,12 @@ def test_the_files_are_refused_by_name() -> None:
     refused(
         "a pair or a wall", read_world, world, dict(universe, rows=universe["rows"] + [{"shape": 1}])
     )
-    refused(
-        "keys of no law: link_unit",
-        read_world,
-        world,
-        dict(universe, integers={**universe["integers"], "link_unit": 16}),
-    )
+    ints = {**universe["integers"], "link_unit": 16}
+    refused("keys of no law: link_unit", read_world, world, dict(universe, integers=ints))
     assert node_of("world_node.json").G == 16  # derived from Gamma 1,000 (K-S1), no key of the file
     rows = universe["rows"]
     for match, change in (
-        (
-            "the row at the gap 0 is the plane",
-            dict(universe, rows=rows + [{"shape": 1, "pair": [1, 2]}]),
-        ),
+        ("the gap-0 row is the plane", dict(universe, rows=rows + [{"shape": 1, "pair": [1, 2]}])),
         ("one shape-10 row", dict(universe, rows=[r for r in rows if r["shape"] != 10])),
         (
             "the shape-4 row stands at",
