@@ -36,9 +36,9 @@ sys.path.insert(0, str(ROOT / "tools"))
 from merge_base import base_ref, carried, tree_at  # noqa: E402
 
 PACKAGE = Path("src/event_universe")
-LOOP = PACKAGE / "lattice.py"
-LOOP_MODULE = "event_universe.lattice"
-LOOP_PUBLIC = frozenset({"Lattice"})
+LOOP = PACKAGE / "node.py"
+LOOP_MODULE = "event_universe.node"
+LOOP_PUBLIC = frozenset({"Node"})
 NEW_FILE_LINES = 400
 DUPLICATE_MIN_STATEMENTS = 2
 RECORD_REFERENCE = re.compile(r"\b(?:record|records|decision|decisions)\s+\d+", re.IGNORECASE)

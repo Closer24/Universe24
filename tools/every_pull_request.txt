@@ -3,7 +3,7 @@
 # The documents' gates and the ASCII rule run as tools/documents_gates.py among tools/check.py's ratchets (2026-10-24).
 tests/test_integer_algebra.py
 tests/test_rule3.py
-tests/test_the_features.py
-tests/test_the_lay.py
+tests/test_the_board.py
 tests/test_the_node.py
-tests/test_the_share.py
+tests/test_the_phase_line.py
+tests/test_the_record.py

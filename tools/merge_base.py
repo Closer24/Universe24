@@ -12,9 +12,34 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
+REBASED = Path(__file__).with_name(
+    "check_base.txt"
+)  # the commit the gates are re-based on, where one is named
+
+
+def ancestor(root: Path, commit: str, ref: str) -> bool:
+    """Whether `commit` is in the history of `ref` (git merge-base --is-ancestor); False where either cannot be resolved."""
+    found = subprocess.run(
+        ["git", "-C", str(root), "merge-base", "--is-ancestor", commit, ref],
+        capture_output=True,
+        text=True,
+    )
+    return found.returncode == 0
+
 
 def base_ref() -> str:
-    return os.environ.get("CHECK_BASE") or "origin/main"
+    """The ref the gates compare with: CHECK_BASE, else origin/main; where tools/check_base.txt names a commit in this history that the ref does not hold, that commit (the fold of 2026-10-25: the lean Node's tree is its own base, and every later change holds against it)."""
+    ref = os.environ.get("CHECK_BASE") or "origin/main"
+    if REBASED.is_file():
+        named = [
+            line.strip()
+            for line in REBASED.read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.lstrip().startswith("#")
+        ]
+        root = Path(__file__).resolve().parents[1]
+        if named and ancestor(root, named[0], "HEAD") and not ancestor(root, named[0], ref):
+            return named[0]
+    return ref
 
 
 def on_pull_request(environment: dict[str, str]) -> bool:

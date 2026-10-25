@@ -1,0 +1,2 @@
+# The commit the gates (tools/engine_gates.py, tools/record_code_shape.py, tools/tests_shape.py) are re-based on: the fold of the lean Node into the engine, 2026-10-25 (tools/merge_base.base_ref reads it where the merge base does not hold it).
+6703dd95c6a105013faa2f3227d4bcb3e2132b79

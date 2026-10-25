@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
-from dataclasses import replace
 from functools import cache
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import numpy as np
 
@@ -20,19 +18,16 @@ LOW = (
     -1
 )  # the level reading's search begins at -Gamma, a hill one Gamma deep; its top the clock's last pace
 
-if TYPE_CHECKING:
-    from _typeshed import DataclassInstance
-
 
 @cache
 def clock_zero(gamma: int) -> int:
-    """The least content at which the clock's pace rounds to 0 at Gamma, about Gamma ln(2 Gamma) (56,352 at 6,000; paces.frozen_content finds the Link's zero before it): the top of the level reading's search, the clock's last pace, found by doubling and halving on the clock's own power (`paces.clock_alone`), the memo untouched, and kept per Gamma (the one search per run, as the loader's constants are)."""
+    """The least content at which the clock's pace rounds to 0 at Gamma, about Gamma ln(2 Gamma) (56,352 at 6,000; paces.frozen_content finds the Link's zero before it): the top of the level reading's search, the clock's last pace, found by doubling and halving on the carried clock (`paces.clock`), and kept per Gamma (the one search per run, as the loader's constants are)."""
     low, high = 0, 1
-    while paces.clock_alone(gamma, high) > 0:
+    while paces.clock(gamma, high) > 0:
         high += high
     while high - low > 1:
         middle = int(division_forward(low + high, 2, 0)[0])
-        if paces.clock_alone(gamma, middle) > 0:
+        if paces.clock(gamma, middle) > 0:
             low = middle
         else:
             high = middle
@@ -48,20 +43,6 @@ def volume_of(gamma: int, levels: Any) -> Any:
         division_forward(target + int(p) ** EXPONENT - 1, int(p) ** EXPONENT, 0)[0] for p in clocks
     ]
     return np.array([int(x) for x in volumes], dtype=object).reshape(found.shape)
-
-
-@cache
-def bounds_of(gamma: int, amplitude: int) -> tuple[int, int]:
-    """The volume's two walls at the amplitude bound A, X(-A) and X(A), the volumes of the deepest and the highest level (the guard `Lattice.bounded` reads the upper alone: downward the carried line ends at the crunch, X at most 0, refused by `level_of`): a row carrying its volume is inside the bound where its X lies between them, the level reading being monotone in X; the lower wall at -Gamma where A passes the hill's depth, the upper at the clock's last pace where A passes it (the level reading's own top, `clock_zero`)."""
-    low = int(volume_of(gamma, np.array([max(-amplitude, -gamma)], dtype=object)).reshape(-1)[0])
-    top = min(amplitude, clock_zero(gamma) - 1)
-    return low, int(volume_of(gamma, np.array([top], dtype=object)).reshape(-1)[0])
-
-
-@cache
-def fill_of(gamma: int, rest: int) -> int:
-    """The time line's value beyond a face under the volume form, the rest's volume X(rest) (`volume_of` at the one level): on a board with a sink the rest beyond the face fixes the clock's unit (ALGEBRA.md, The board's interval is no observable), so the Link to the fill reads the vacuum's volume at the declared rest, Gamma at the rest 0; the one Node's fill on every faced board and every grown layer (flux.step_family, growth.resized)."""
-    return int(volume_of(gamma, np.array([rest], dtype=object)).reshape(-1)[0])
 
 
 LEVELS: dict[
@@ -117,28 +98,3 @@ def searched_levels(gamma: int, volumes: Any) -> Any:
         good = reached(middle)
         low, high = np.where(good, middle, low), np.where(good, high, middle)
     return np.array([int(a) for a in low], dtype=object)
-
-
-def at_start[Row: DataclassInstance](families: tuple[Row, ...]) -> tuple[Row, ...]:
-    """The families as the start reads them, every row at its level: the volume's flag off until the start's rests are solved in the level and converted once (`started`; Lattice.start restores the loader's families after)."""
-    return tuple(replace(family, motion_volume=False) for family in families)
-
-
-def resting(held: Sequence[int], families: Any, loaded: Any) -> list[tuple[int, int]]:
-    """The held rows whose rests the start solves, the holders of the content as (index, 0) (`Lattice.start`): every held row that is not the sign's holder and not the gapped row carrying its volume, which the start lays at the vacuum instead, its two levels the empty state's 0 converted once to the volume Gamma with the remainder at the half wall, the seed at rest the design's initial condition (ALGEBRA.md, The carried momentum, the clause of 2026-10-23 on the return hand's derivation read cold by the reader; The closed lattice has no rest: the vacuum is no rest state of a gapped uniform mode, so no rest of its line is solved); `families` the start's rows with the volume's flag off (`at_start`), `loaded` the loader's with it set."""
-    # the massless volume holder (2026-10-24, the gravity hand's trial read into the family-less file): every row
-    # carrying its volume, massless or gapped, is laid at the vacuum's volume Gamma and no rest of its line is
-    # solved (the uniform seed's source is uniform, its zero-mean part 0, so the rest it would solve is the vacuum)
-    return [(i, 0) for i in held if not families[i].wronskian and not loaded[i].motion_volume]
-
-
-def started(gamma: int, family: Any, line: Any) -> Any:
-    """A held row's time line at the end of the start, the record in its own variable: the levels now and before converted once to the volume's levels where the row carries its volume (Rule3's remainder kept), the line itself otherwise."""
-    if not family.motion_volume:
-        return line
-    return line.__class__(volume_of(gamma, line.now), volume_of(gamma, line.before), line.remainder)
-
-
-def levels_read(gamma: int, lines: Any, carried: bool) -> Any:
-    """The level of a held row's time line array as the readings and the paces take it: the array itself where the row carries its level, the level reading where it carries its volume (`carried`, the row's flag `motion_volume`)."""
-    return level_of(gamma, lines) if carried else lines
