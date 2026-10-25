@@ -87,8 +87,17 @@ class Lean:
         self.detectors = []  # the Nodes whose light the record credits (the world names them; a reading, no state)
         # the seed as the world lays it: a sea of the light row at one level with a hole; one quantum more of the light at a Node (the level v with v^2 = (1 + n) sea^2); a record of a plane row laid at a Node (one quantum of its unit at the vacuum's paces, the sense's im line); a detector Node
         plane_lays = []
+        self.hold_volume = False
         for lay in world.get('seed', []):
             if 'detector' in lay: self.detectors.append(tuple(int(x) for x in lay['detector'])); continue
+            if 'well' in lay:  # a hand-held well of the volume (the G hands' control): the content laid as a parabola, levels x (R^2 - r^2) div R^2 within the radius R, the volume's line at that level; held fixed where the world says so
+                wl = lay['well']; at = tuple(int(x) for x in wl['at']); levels, R = int(wl['levels']), int(wl['radius']); self.hold_volume = bool(wl.get('held', False))
+                for node in np.ndindex(*self.shape):
+                    r2 = sum(min(abs(node[a] - at[a]), self.cube - abs(node[a] - at[a])) ** 2 for a in range(3))
+                    if r2 < R * R:
+                        c = levels * (R * R - r2) // (R * R)
+                        self.vol.now[node] = int(np.asarray(volform.volume_of(gamma, np.array([c], dtype=object)), dtype=object).reshape(-1)[0]); self.vol.before[node] = self.vol.now[node]
+                continue
             row = int(lay['row'])
             if row == 0:
                 if 'sea' in lay:
@@ -258,14 +267,16 @@ class Lean:
         light = self.rotate([self.light], r_l)[0]; forms = forms + (self.light.now * self.light.now - light.now * self.light.before)
         sign = self.rotate([self.sign], r_l)[0]; sign_axes = [self.rotate([l], r_l)[0] for l in self.sign_axes]
         r_v = self.rule(self.vol_pair, c, factors)
-        vol = self.rotate([self.vol], r_v)[0]; vol_axes = [self.rotate([l], r_v)[0] for l in self.vol_axes]
+        if self.hold_volume: vol, vol_axes = self.vol, self.vol_axes  # the control: the volume held by hand, no act on it
+        else: vol = self.rotate([self.vol], r_v)[0]; vol_axes = [self.rotate([l], r_v)[0] for l in self.vol_axes]
         self.planes, self.light, self.sign, self.sign_axes, self.vol, self.vol_axes = new_planes, light, sign, sign_axes, vol, vol_axes
         self.stepped = [[l.copy() for l in r] for r in new_planes]  # the step's output as stepped, kept for the credits' frame (the swap discards it at a turned Node)
         # the held writes, one carried division per line
         trace = (parts[0] + parts[1] + parts[2])  # the stress's trace into the time line's write (the pressure term), the axis lines traceless
         p02 = p0 * p0  # the write's factor (p0 / Gamma)^2 at the power 2 on a count (engine paces.write_factor, intervals 2), Gamma^2 inside the fixed wall
-        q, self.vol_wr[0] = carried_division(4 * start['vol_now'] * (forms * 54 * self.den * self.gamma ** 2 - trace * p0 * p0) * p0, 54 * self.den * self.gamma ** 4 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now + q  # (d + 1) X c over Gamma E_s T, E_s 1, c the forms at the write's factor (p0 / Gamma)^1 (the holder's booking power one, engine WRONSKIAN_POWER) less the pressure, the trace times (p0 / Gamma)^2 at its wall 54 den (engine records.pressure_term: the stress parts times the pace squared over SIDES x AXES x AXES x den x Gamma^(2 + power) x clock^(3 - power)); the former toy weighed the trace 18 times more and its write vanished at every gradient
+        if not self.hold_volume: q, self.vol_wr[0] = carried_division(4 * start['vol_now'] * (forms * 54 * self.den * self.gamma ** 2 - trace * p0 * p0) * p0, 54 * self.den * self.gamma ** 4 * self.T, self.vol_wr[0]); self.vol.now = self.vol.now + (q if not self.hold_volume else 0)  # (d + 1) X c over Gamma E_s T, E_s 1, c the forms at the write's factor (p0 / Gamma)^1 (the holder's booking power one, engine WRONSKIAN_POWER) less the pressure, the trace times (p0 / Gamma)^2 at its wall 54 den (engine records.pressure_term: the stress parts times the pace squared over SIDES x AXES x AXES x den x Gamma^(2 + power) x clock^(3 - power)); the former toy weighed the trace 18 times more and its write vanished at every gradient
         for a in range(3):
+            if self.hold_volume: break
             q, self.vol_wr[1 + a] = carried_division((3 * parts[a] - trace) * p02, 54 * self.den * self.T * self.gamma ** 2, self.vol_wr[1 + a]); self.vol_axes[a].now = self.vol_axes[a].now + q  # the traceless part over 6 W_c x 3 (the doubled wall 2 E_s W_c with the parts 3 and SIDES: engine held_write_of and scaled_sum; measured on the record's world, probes/write_probe.py)
         q, self.sign_wr[0] = carried_division(2 * W, self.T, self.sign_wr[0]); self.sign.now = self.sign.now + q
         for a in range(3):
@@ -644,7 +655,14 @@ if __name__ == '__main__':
             c = b.content()
             cs = [int(x) for x in c.reshape(-1)]; vs = [int(x) for x in b.vol.now.reshape(-1)]
             energy = sum(int(x) * int(x) for rec in b.planes for l in rec for x in l.now.reshape(-1)); odd_max = max(abs(int(x)) for l in b.sign_axes for x in l.now.reshape(-1)); light_v = max(abs(int(a) - int(bb)) for a, bb in zip(b.light.now.reshape(-1), b.light.before.reshape(-1)))
-            rows.append({'i': b.interval, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'], 'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'], 'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(), 'tension min/max': [min(int(x) for l in b.vol_axes for x in l.now.reshape(-1)), max(int(x) for l in b.vol_axes for x in l.now.reshape(-1))], 'odd max bits': odd_max.bit_length(), 'link count max': getattr(b, 'count_max', 0), 'orbit table': len(b.orbit), 'W total': sum(int(x) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'W abs sum': sum(abs(int(x)) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'light velocity max': light_v, 'milliseconds': (time.monotonic_ns() - t0) // 1000000})
+            packets = {}
+            for s_ in range(b.nl):
+                for sense in (0, 1):
+                    re, im = b.planes[2 * s_ + sense]; wgt = re.now * re.now + im.now * im.now; total = int(sum(int(x) for x in wgt.reshape(-1)))
+                    if total == 0: continue
+                    idx = np.indices(b.shape); cen = [int(sum(int(w) * int(x) for w, x in zip(wgt.reshape(-1), idx[a].reshape(-1)))) * 1000 // total for a in range(3)]
+                    packets['row %d sense %d' % (s_ + 1, 1 if sense else -1)] = {'centroid (thousandths of a Link)': cen, 'nodes with levels': int(sum(1 for x in wgt.reshape(-1) if int(x) > 0)), 'energy bits': total.bit_length()}
+            rows.append({'i': b.interval, 'packets (reader)': packets, 'content min/mean/max': [min(cs), sum(cs) // len(cs), max(cs)], 'volume mean': sum(vs) // len(vs), 'births': b.counts['births'], 'body_clicks': b.counts['body_clicks'], 'refused': b.counts['refused_stop'] + b.counts['refused_origin'] + b.counts['refused_lay'] + b.counts['refused_orientation'], 'refused_lay': b.counts['refused_lay'], 'refused_orientation': b.counts['refused_orientation'], 'turns': b.counts['turns'], 'integers': n, 'max bits': maxbits, 'max transient bits': b.max_transient, 'sign level max': max(abs(int(x)) for x in b.sign.now.reshape(-1)), 'planes energy bits': energy.bit_length(), 'tension min/max': [min(int(x) for l in b.vol_axes for x in l.now.reshape(-1)), max(int(x) for l in b.vol_axes for x in l.now.reshape(-1))], 'odd max bits': odd_max.bit_length(), 'link count max': getattr(b, 'count_max', 0), 'orbit table': len(b.orbit), 'W total': sum(int(x) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'W abs sum': sum(abs(int(x)) for re, im in b.planes for x in (re.now * im.before - im.now * re.before).reshape(-1)), 'light velocity max': light_v, 'milliseconds': (time.monotonic_ns() - t0) // 1000000})
             print(json.dumps(rows[-1]), flush=True)
     run_back = None; kept_log = list(b.log)  # the record's log as the run left it; the run back below removes its lines as it undoes them
     if back:
