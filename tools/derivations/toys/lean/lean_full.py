@@ -459,6 +459,7 @@ class Lean:
             for k, n in enumerate(nodes):
                 F = F0 if k == 0 else math.gcd(int(r.wall), at_node(r.reaches[k - 1], n))
                 rem = int(line.rem[n]); values = int(r.wall) // F
+                if self.control.get('digits') == 'folded': rem = min(rem, int(r.wall) - rem); values = values // 2 + 1  # the Boss's mend of 10:1x for the twist's CP: every line's remainder folded to its wall, min(r, w - r), the distance to the nearer edge, conjugation-even on every line alike
                 origin = origin and rem in (half - 1, half); coarse = coarse and values <= 3
                 digits.append((rem // F, values + 1))
         if origin: self.counts['refused_origin'] += 1; return None
@@ -622,12 +623,12 @@ class Lean:
         """The click (ALGEBRA.md, The click writes on the lattice), the Node's fourth act: the readings at the start (the rules of every row, the massless row's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`), the lays refused by name (`refuse`), the births taken and laid (`births`), the bodies' closing (`bodies`), the detectors' credits (`detect`); `gap0_start` and `plane_starts` the massless row's line and the planes' lines at the interval's start. The one-Link read of a number takes every row's first line and a plane's both (the former toy's digit set, kept until the Boss's word on reading every line)."""
         c = self.start_content; factors = self.link_factors()
         massless = self.row(2, gap=0); r_gap0 = self.rule_of(massless, c, factors); gap0_start = plane_starts[self.records().index(massless)]
-        if self.control.get('digits') == 'every line at the start':  # A2 (the owner's word of 2026-10-25, "go with A if it is generic and solves"): the one-Link read takes every line of every row at the interval's start, alike
-            rules = [(l, self.rule_of(r, c, factors)) for r, lines in zip(self.rows_, held) for l in lines]
-        else:  # the former digit set, kept by name: the shape-4 and shape-10 rows' first lines after the step, the planes' lines at the start
+        if self.control.get('digits') == 'former':  # the former digit set, kept by name under the key: the shape-4 and shape-10 rows' first lines after the step, the planes' lines at the start
             rules = [(r.lines[0], self.rule_of(r, c, factors)) for r in (self.row(4), self.row(10))]
             for rec, r in enumerate(self.records()):
                 rules += [(l, self.rule_of(r, c, factors)) for l in plane_starts[rec]]
+        else:  # A2, the default (the owner's word of 2026-10-25, "go with A if it is generic and solves"; the Boss's ruling of 10:1x): the one-Link read takes every line of every row at the interval's start, alike
+            rules = [(l, self.rule_of(r, c, factors)) for r, lines in zip(self.rows_, held) for l in lines]
         pace = paces.link_pace_of(self.gamma, c)
         owns = []  # every plane's standing share at the interval's start at the vacuum's weight (V-D, the owner's sentence 7): the meeting's threshold on the massless plane, the lay's refusal on the lift's
         for rec, r in enumerate(self.records()):
