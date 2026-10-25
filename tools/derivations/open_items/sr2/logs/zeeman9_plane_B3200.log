@@ -1,0 +1,1 @@
+{"world": "zeeman9_plane_B3200.json", "ms": 8273, "credits": {"0": 0, "1": 228, "2": 0, "3": 0}, "crossings": {"2,0": 1, "2,4": 0, "0,0": 1, "1,0": 5}, "births": 26, "spinor births": 16, "run back": {"intervals": 10, "exact": 10}, "integers": 116, "bits": 92, "transient": 85, "taken>=booked": true}

@@ -1,0 +1,1 @@
+{"world": "zeeman_spinor_B1600.json", "ms": 22831, "credits": {"0": 0, "1": 0, "2": 57, "3": 0}, "crossings": {"2,0": 8, "2,4": 8, "0,0": 3, "1,0": 7}, "births": 19, "spinor births": 0, "run back": {"intervals": 5, "exact": 5}, "integers": 116, "bits": 92, "transient": 86, "taken>=booked": true}

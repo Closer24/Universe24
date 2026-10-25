@@ -1,0 +1,328 @@
+{
+ "48 elements integer in the Z[i]-basis": 48,
+ "Gamma_a integer": {
+  "x": true,
+  "y": true,
+  "z": true
+ },
+ "J integer, J^2 = -I, J the standard block form": [
+  true,
+  true,
+  true
+ ],
+ "T = zeta + zeta^-1 integer, T^2 = 2 I": [
+  true,
+  true
+ ],
+ "-I among the 48": true,
+ "u_z^4 = -I": true,
+ "traces of the 48": [
+  -8,
+  -4,
+  0,
+  4,
+  8
+ ],
+ "Gamma_a^2 = I": {
+  "x": true,
+  "y": true,
+  "z": true
+ },
+ "Gamma_a Gamma_b + Gamma_b Gamma_a = 0 (a != b)": true,
+ "[J, Gamma_a] = 0": true,
+ "Gamma_x Gamma_y = J Gamma_z (the Pauli product)": true,
+ "Gram matrix G integer": true,
+ "G": [
+  [
+   4,
+   0,
+   0,
+   0,
+   -2,
+   -2,
+   0,
+   0
+  ],
+  [
+   0,
+   4,
+   0,
+   0,
+   2,
+   -2,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   4,
+   0,
+   0,
+   0,
+   -2,
+   2
+  ],
+  [
+   0,
+   0,
+   0,
+   4,
+   0,
+   0,
+   -2,
+   -2
+  ],
+  [
+   -2,
+   2,
+   0,
+   0,
+   4,
+   0,
+   0,
+   0
+  ],
+  [
+   -2,
+   -2,
+   0,
+   0,
+   0,
+   4,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   -2,
+   -2,
+   0,
+   0,
+   4,
+   0
+  ],
+  [
+   0,
+   0,
+   2,
+   -2,
+   0,
+   0,
+   0,
+   4
+  ]
+ ],
+ "G symmetric": true,
+ "M^T G M = G, 48 of 48": 48,
+ "(G Gamma_a)^T = G Gamma_a (Gamma_a G-symmetric)": {
+  "x": true,
+  "y": true,
+  "z": true
+ },
+ "(G J)^T = -G J (J G-skew)": true,
+ "G scalar?": false,
+ "det G": "4096",
+ "norms of the vectors with coordinates in {-1,0,1} (norm: count)": {
+  "4": 48,
+  "8": 608,
+  "12": 816,
+  "16": 1408
+ },
+ "vector law M Gamma_a M^-1 = s_a Gamma_a', 48 of 48": 48,
+ "distinct signed permutations (24 rotations)": 24,
+ "every realised permutation has det +1 (rotations)": true,
+ "axial law under the 24 reflections with M(P) = I": true,
+ "half-turn lift J Gamma_a: integer, (J Gamma_a)^2 = -I, inverse = -J Gamma_a": true,
+ "half-turn lift: SUM_a (S_a + S_a^-1) at rest = 0 (the pair lost at rest)": true,
+ "quarter-turn lift u_a: SUM_a (u_a + u_a^-1) = 3 T (T^2 = 2: the two Galois halves at +-3 sqrt 2)": true,
+ "u_a + u_a^-1 = T for each a": true,
+ "covariance M S_a M^-1 = S_a'^(s_a): half-turn lift 48 of 48": 48,
+ "covariance: quarter-turn lift 48 of 48": 48,
+ "the identity turn S_a = I is covariant too (the lines scalars under the turn, the row a sum of 4 planes)": true,
+ "Pauli term covariant M N(Phi) M^-1 = N(g Phi), 48 of 48": 48,
+ "G N(Phi) symmetric": true,
+ "N(Phi)^2 = |Phi|^2 I (the two eigen-senses +-|Phi|)": true,
+ "W = x^T G J y a scalar under the 48 (48 of 48)": 48,
+ "spin density s_a = x^T G Gamma_a x carried as a vector (48 of 48)": 48,
+ "spin Wronskians x^T G J Gamma_a y carried as a vector (48 of 48)": 48,
+ "K (im -> -im on the 4 planes): W odd": false,
+ "K: spin density (s_x, s_y, s_z) -> ": [
+  "-112",
+  "64",
+  "-192",
+  "against",
+  "80",
+  "112",
+  "-240"
+ ],
+ "K: K G K = G (an isometry)": false,
+ "levels exchanged (x <-> y): W odd, spin Wronskians odd": [
+  true,
+  true
+ ],
+ "W over the planes when G = I would read SUM_k (re_k im'_k - im_k re'_k): here G-weighted": "4",
+ "Gamma_z = +1 integer vectors: rank": 4,
+ "Gamma_z = -1 integer vectors: rank": 4,
+ "spin up vector (an integer lay), its spin density": [
+  [
+   1,
+   -1,
+   0,
+   0,
+   1,
+   0,
+   0,
+   0
+  ],
+  [
+   "0",
+   "0",
+   "4"
+  ]
+ ],
+ "spin down vector, its spin density": [
+  [
+   0,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0,
+   0
+  ],
+  [
+   "0",
+   "0",
+   "-4"
+  ]
+ ],
+ "G-norms of the two": [
+  "4",
+  "4"
+ ],
+ "T - sqrt2 has no rational kernel: the Galois halves are not integer sub-rows (rank of the integer kernel of T^2 - 2 I is 8, of T +- anything rational 0)": 8,
+ "K0 integer (conj(L) = L)": true,
+ "K0^2 = I": true,
+ "K0 J = -J K0": true,
+ "K0 G K0 = G": true,
+ "K0 a signed permutation": false,
+ "K0 (rows)": [
+  [
+   0,
+   -1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   -1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   0,
+   -1,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   1,
+   -1,
+   0,
+   0,
+   -1,
+   0,
+   0,
+   0
+  ],
+  [
+   -1,
+   -1,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0
+  ],
+  [
+   0,
+   0,
+   1,
+   -1,
+   0,
+   0,
+   0,
+   1
+  ],
+  [
+   0,
+   0,
+   -1,
+   -1,
+   0,
+   0,
+   1,
+   0
+  ]
+ ],
+ "K0: W -> ": "-4 against 4",
+ "K0: spin density -> ": [
+  "80",
+  "-112",
+  "-240",
+  "against",
+  "80",
+  "112",
+  "-240"
+ ],
+ "K0 Gamma_a K0 = ": {
+  "x": "+",
+  "y": "-",
+  "z": "+"
+ },
+ "C = J Gamma_y K0: C^2 = -I, C J = -J C, C commutes with the 48 (count)": [
+  true,
+  true,
+  48
+ ],
+ "C Gamma_a = -Gamma_a C": true,
+ "C: W -> ": "-4 against 4",
+ "C: spin density -> ": [
+  "-80",
+  "-112",
+  "240",
+  "against",
+  "80",
+  "112",
+  "-240"
+ ],
+ "S_half inverse = -S_half": true,
+ "S_quarter^-1 = G^-1 S_quarter^T G (G-orthogonal)": true,
+ "K0 G K0 = G (checked again)": true
+}

@@ -1,0 +1,367 @@
+{
+ "world": "pile_one_80.json",
+ "cube": 7,
+ "intervals": 30,
+ "milliseconds": 2163,
+ "records (index: shape, gap)": {
+  "0": [
+   2,
+   28232
+  ],
+  "1": [
+   2,
+   1149611050
+  ],
+  "2": [
+   8,
+   1149611050
+  ],
+  "3": [
+   2,
+   0
+  ]
+ },
+ "centre": [
+  3,
+  3,
+  3
+ ],
+ "crossings at the centre (record, line): count": {
+  "2,0": 4,
+  "2,4": 0,
+  "0,0": 0,
+  "1,0": 0
+ },
+ "traces (record, line): line 0 values early and every 20th": {
+  "2,0": [
+   0,
+   -637,
+   -276,
+   -637,
+   280,
+   753,
+   13,
+   753,
+   2,
+   -730,
+   -599,
+   -730,
+   138,
+   751,
+   209,
+   -566,
+   -749,
+   -348,
+   -749,
+   -610,
+   57,
+   716,
+   820,
+   382,
+   -273,
+   -783,
+   -914,
+   -635,
+   -94,
+   477
+  ],
+  "2,4": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "0,0": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "1,0": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ]
+ },
+ "start share per record": {
+  "0": {
+   "share at centre": 0,
+   "units at centre (thousandths)": 0,
+   "board units (thousandths)": 0,
+   "unit": 1044301680000
+  },
+  "1": {
+   "share at centre": 0,
+   "units at centre (thousandths)": 0,
+   "board units (thousandths)": 0,
+   "unit": 170273819520000
+  },
+  "2": {
+   "share at centre": 3959290815785529,
+   "units at centre (thousandths)": 23252,
+   "board units (thousandths)": 79827,
+   "unit": 170273819520000
+  },
+  "3": {
+   "share at centre": 177452191276983,
+   "units at centre (thousandths)": 992,
+   "board units (thousandths)": 340341,
+   "unit": 178838187228000
+  }
+ },
+ "credits per record": {
+  "0": {
+   "credits": 0,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+   },
+   "beats": {}
+  },
+  "1": {
+   "credits": 0,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+   },
+   "beats": {}
+  },
+  "2": {
+   "credits": 57,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 57
+   },
+   "beats": {
+    "5": 12,
+    "8": 3,
+    "3": 24,
+    "6": 18
+   },
+   "component +": {
+    "credits": 45,
+    "per position along axis 2": {
+     "2": 11,
+     "3": 23,
+     "4": 11
+    },
+    "centroid (thousandths)": [
+     3000,
+     3000,
+     3000
+    ],
+    "beats": {
+     "5": 12,
+     "8": 3,
+     "3": 12,
+     "6": 18
+    },
+    "senses": {
+     "-1": 0,
+     "0": 0,
+     "1": 45
+    }
+   },
+   "component -": {
+    "credits": 12,
+    "per position along axis 2": {
+     "2": 4,
+     "3": 4,
+     "4": 4
+    },
+    "centroid (thousandths)": [
+     3000,
+     3000,
+     3000
+    ],
+    "beats": {
+     "3": 12
+    },
+    "senses": {
+     "-1": 0,
+     "0": 0,
+     "1": 12
+    }
+   },
+   "component 0": {
+    "credits": 0,
+    "per position along axis 2": {},
+    "centroid (thousandths)": null,
+    "beats": {},
+    "senses": {
+     "-1": 0,
+     "0": 0,
+     "1": 0
+    }
+   },
+   "s_D sums over credits": [
+    0,
+    0,
+    1206099
+   ],
+   "s_W sums over credits": [
+    0,
+    0,
+    -2918785
+   ]
+  },
+  "3": {
+   "credits": 0,
+   "senses": {
+    "-1": 0,
+    "0": 0,
+    "1": 0
+   },
+   "beats": {}
+  }
+ },
+ "counts": {
+  "births": "31",
+  "taken": "9622708920771135",
+  "booked": "4803173203680000",
+  "body_clicks": "57",
+  "refused_stop": "30",
+  "refused_origin": "0",
+  "refused_lay": "645",
+  "refused_orientation": "532",
+  "refused_twist": "655",
+  "turns": "787",
+  "light_credits": "0",
+  "light_laid": "66",
+  "light_laid_nodes": "64"
+ },
+ "taken >= booked": true,
+ "births": 31,
+ "spinor births": 0,
+ "W of the children at every birth (sum)": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  30,
+  30,
+  0,
+  15,
+  30,
+  464,
+  0,
+  0,
+  0
+ ],
+ "W of the children sum 0 at every birth": false,
+ "spinor births: chi and axis": [],
+ "W total per record at the end": {
+  "0": -1364,
+  "1": -2488,
+  "2": 1043931,
+  "3": 0
+ },
+ "integers per Node": 116,
+ "max bits": 92,
+ "max transient bits": 76,
+ "turns": 787,
+ "run back": {
+  "intervals": 5,
+  "exact": 5
+ }
+}

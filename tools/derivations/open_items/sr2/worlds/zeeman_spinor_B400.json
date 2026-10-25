@@ -1,0 +1,1 @@
+{"universe": "universe_sr2.json", "shape": [5, 5, 5], "intervals": 300, "seed": [{"lay": "sea", "row": 0}, {"lay": "at", "row": 6, "centre": [2, 2, 2], "width": 2, "quanta": 8, "spin": [1, 0, 0, 0, 1, 0, 0, 0]}], "control": {"held_potential": [{"line": 1, "at": [2, 2, 2], "field": "sg", "across": 1, "along": 2, "B0": 400, "b": 0}]}}
