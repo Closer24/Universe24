@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- SL-S2 and MV-S1 to MV-S3 marked built in docs/ALGEBRA.md (toys-5 e5f22fb53 and 608d06ad3, merged 0e1caf464, the hand vf5 confirming; the sentences' standing unchanged, the owner's word owed) and the fourth form built on toys-5 e3cfce303; the `at` lay's `wave` and `top` fields and the merger's row in docs/ENGINE.md; the ledger of docs/UNIVERSE24.md's section 4 current with the two pushes read whole and run, cs4's finding, the Boss's line on the odd write and his merge.
 - The hand cs4's two sentences for the owner's return, CS4-S2 (the take moving the line farther from zero) and The light no body (the gap-0 plane never credited as a body), in the open table of docs/UNIVERSE24.md's section 4 beside CK-S1 (the Boss's 6401793115).
 - The tests' room given by name at the merge of toys-5 84009e333 (the Boss's 6401380660): the four rooms with their lines and reasons recorded in docs/ENGINE.md's The gates beside tools/tests_shape.py's ROOM, the docstring's "section 9" read as that paragraph.
 - CS-S1, the handed uniform light, as a finding of the letter beside MA-S1 in docs/ALGEBRA.md (the hands cs1 and cs2, #2187 6401054581); the open table of docs/UNIVERSE24.md's section 4 current in its first priority: the fourth form standing, EM-S2's sense and gates 1, 46, 24 and 5 built, CK-S1 and the odd rounding approved, A48-S1 held for the sign row's write tie; docs/HIGHLIGHTS.md the finding.
