@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch) up to the record's largest, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and Node and as ticks with their labels on the bar; one header line from the two files as they are. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch) up to the record's largest, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and at their Node with a leader from the Node, a line with no Node at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -131,6 +131,8 @@ function draw() {
   }
   labels.innerHTML = "";
   let free = 0;
+  const placed = [];
+  function settle(x, y) { for (const q of placed) if (Math.abs(q[0] - x) < 220 && Math.abs(q[1] - y) < 36) return settle(x, q[1] + 36); placed.push([x, y]); return y; }
   for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) {
     const div = document.createElement("div"); div.className = "label"; div.style.fontSize = "20px";
     div.innerHTML = "Big Bang<small>the board at its zero and rising, interval " + b + "</small>";
@@ -140,8 +142,14 @@ function draw() {
   for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 6 * step) {
     const div = document.createElement("div"); div.className = "label";
     div.innerHTML = e.label + "<small>" + e.numbers + "</small>";
-    if (e.node) { const s = spots[e.node[0] * c * c + e.node[1] * c + e.node[2]]; div.style.left = (canvas.offsetLeft + s[0] + 12) + "px"; div.style.top = (canvas.offsetTop + s[1] - 10) + "px"; }
-    else { div.style.left = (canvas.offsetLeft + 12) + "px"; div.style.top = (canvas.offsetTop + 12 + 34 * free++) + "px"; }
+    if (e.node) {
+      const s = spots[e.node[0] * c * c + e.node[1] * c + e.node[2]];
+      ctx.strokeStyle = "#fde68a"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(s[0] + 26, s[1] - 26); ctx.stroke();
+      ctx.fillStyle = "#fde68a"; ctx.beginPath(); ctx.arc(s[0], s[1], 4, 0, 2 * Math.PI); ctx.fill();
+      const y = settle(s[0] + 28, s[1] - 40);
+      ctx.beginPath(); ctx.moveTo(s[0] + 26, s[1] - 26); ctx.lineTo(s[0] + 28, y + 14); ctx.stroke();
+      div.style.left = (canvas.offsetLeft + s[0] + 28) + "px"; div.style.top = (canvas.offsetTop + y) + "px";
+    } else { div.style.left = (canvas.offsetLeft + canvas.width / 2 - 80) + "px"; div.style.top = (canvas.offsetTop + canvas.height - 44 - 34 * free++) + "px"; }
     labels.appendChild(div);
   }
   cursor.style.left = (100 * (line.i - 1) / Math.max(N - 1, 1)) + "%";
