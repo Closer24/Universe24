@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The Boss's request of 2026-10-25, 20:1x UTC by his clock (#2187 6400149052): EX-S1 the exact take as one carried division of the Node with its three words under The Node in docs/ALGEBRA.md by the owner's criterion, the credits' leak as the finding under gate 47 and Coulomb's sign shown on the copy with its predicate under gate 22 in docs/UNIVERSE24.md; one decision in docs/HIGHLIGHTS.md.
 - The Boss's request of 2026-10-25, 19:5x UTC by his clock (#2187 6400108051): EM-S1 the emission as the law's continuity written as the theorem under W-S1 in docs/ALGEBRA.md, EM-S2 and EM-S3 beside it by the owner's criterion; the light gates' predicates from EM-S4 in docs/UNIVERSE24.md's rows 7, 11, 12, 29, 31 and 40; one decision in docs/HIGHLIGHTS.md.
 - The Boss's request of 2026-10-25, 19:4x UTC by his clock (#2187 6400087245): BG-S1 the bang's return and the generic well as the finding under The sign side of the exponent in docs/ALGEBRA.md, BG-S2 beside it by the owner's criterion; gates 1 and 46 the owner's word asked and gate 5's predicate the board's three sums in docs/UNIVERSE24.md; one decision in docs/HIGHLIGHTS.md.
 - The Scribe's full read of toys-5 7a634fec3 on the owner's word of 2026-10-25, 16:1x UTC (every module of src whole): the findings in the ledger of docs/UNIVERSE24.md's section 4; no contradiction of the law's sentences beyond them.
