@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The Node re-cut to the head in docs/ALGEBRA.md by the owner's word of 23:1x UTC: the owner's head sentence as he closed it, then the laws not to be crossed, the two files, the interval's acts, the click, the findings of the letter and the way to a solution, every formula once in its final form with the hands by name; the former clauses and the day's measures moved as written and dated to the closing section The former clauses, kept by name; no law sentence changed.
 - The owner's word of 2026-10-25, 23:1x UTC ("go for it"): docs/ALGEBRA.md to be re-cut to the head, every formula once in its final form, the former clauses in the new closing section The former clauses, kept by name; the head's sentence on lines that no longer hold amended by that word; the Scribe's method's fourth line in docs/UNIVERSE24.md and the decision in docs/HIGHLIGHTS.md.
 - The owner's words of 2026-10-25, 23:08 UTC (#2187 6404507484): the hands' H-names and the not-forgotten list in four groups at the head of the open table of docs/UNIVERSE24.md's section 4, the Boss's reading with the Scribe's items added by name; docs/HIGHLIGHTS.md the decision.
 - The owner's word of 2026-10-25, 23:00 UTC (#2187 6404497762): the two hands of the algebra of the whole in the ledger of docs/UNIVERSE24.md's section 4; docs/HIGHLIGHTS.md the decision.
