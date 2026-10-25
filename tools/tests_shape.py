@@ -41,6 +41,12 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_node_holds_the_same_count_of_integers.py::test_every_node_holds_the_same_count_of_integers_and_the_count_grows_by_a_point_at_a_birth": (
+        41,
+        "the generic Node's gate (2026-10-25, the plan's stage 0): the integers one Node holds read by tools/node_integers.py loaded by its path on the bare 3-cube at den 1,021 and at the top tier's den, "
+        "never the shipped file; the rows' 35 derived and read at every Node before the first birth, every array of the board's shape, the growth at the first birth by 52 per record born, "
+        "the three lifts' growth at the top tier's den by the interval 8, the largest bit length within 128 at both dens and the shipped den's half wall above it, the two deviations kept by name",
+    ),
     "tests/test_the_point_rows_are_born_at_the_first_birth.py::test_the_lean_board_equals_the_board_with_every_point_standing_through_the_births": (
         70,
         "the point rows born at the first birth (2026-10-24, the field view (c)): the lean board against its twin with every point standing from the start, "
