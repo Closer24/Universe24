@@ -13,7 +13,6 @@ from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import half, link_unit_of, unit_of, wall_of
 from event_universe.features import phase
 from event_universe.links import Link, turned
-from event_universe.record import bits_of
 from event_universe.rows import (
     CARRIER,
     HALF_WIDTH,
@@ -26,6 +25,7 @@ from event_universe.rows import (
     rows_of,
     zeros,
 )
+from event_universe.run import bits_of
 
 COUNTS = {  # the run's counts, every one 0 at the start
     "births": 0,

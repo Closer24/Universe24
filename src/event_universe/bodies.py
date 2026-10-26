@@ -11,8 +11,8 @@ from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS
 from event_universe.links import row_current
 from event_universe.merger import takes
-from event_universe.record import credit
 from event_universe.rows import PLANE, Line
+from event_universe.run import credit
 from event_universe.take import frame_nodes, move, recoil
 
 if TYPE_CHECKING:

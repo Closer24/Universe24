@@ -9,7 +9,8 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, gram, readings, record
+from event_universe import close, gram, readings
+from event_universe import run as record
 from event_universe.core import acts, paces, rule3
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import half, lattice, quotient, remainder

@@ -12,8 +12,9 @@ import numpy as np
 import pytest
 
 from event_universe import gates as table
-from event_universe import gram, record, take
-from event_universe import record as writer
+from event_universe import gram, take
+from event_universe import run as record
+from event_universe import run as writer
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS
 from event_universe.links import row_current

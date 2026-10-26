@@ -23,8 +23,8 @@ from event_universe.merger import (
     takes,
     walls_of,
 )
-from event_universe.record import birth, refused
 from event_universe.rows import PLANE, Line
+from event_universe.run import birth, refused
 from event_universe.take import lay, move, neighbour, recoil
 
 if TYPE_CHECKING:

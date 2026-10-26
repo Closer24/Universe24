@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram, readings, record
+from event_universe import gram, readings
 from event_universe.core import paces
 from event_universe.core.acts import divide
 from event_universe.core.ports import AXES, PORTS, across
@@ -22,6 +22,7 @@ from event_universe.metric import (
     tensor_parts,
 )
 from event_universe.rows import CARRIER, POTENTIAL, Line, Row, walled_of, zeros
+from event_universe.run import frame
 from event_universe.take import momentum_of, recoil
 
 if TYPE_CHECKING:
@@ -279,7 +280,7 @@ class Interval:
         """(5) The close (close.click) after the swap, the frame pushed for the run back: the turned Nodes, the counters as they stood before the click (the swap changes none), the log's length and the frozen mask."""
         node = self.node
         log_from = len(node.log)
-        kept = record.frame(node, self.top, log_from, self.frozen, self.bookings)
+        kept = frame(node, self.top, log_from, self.frozen, self.bookings)
         node.click(self.plane_starts, self.held)
         node.stack.append(kept)
 

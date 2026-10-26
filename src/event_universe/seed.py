@@ -11,8 +11,8 @@ from event_universe.core.paces import odd_rounded, sine_den
 from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import half, largest_below, least_at, odd, quotient
 from event_universe.links import turn_pair
-from event_universe.record import logged
 from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
+from event_universe.run import logged
 from event_universe.wave import lay_cycle
 
 if TYPE_CHECKING:

@@ -9,7 +9,8 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import merger, record, take
+from event_universe import merger, take
+from event_universe import run as record
 from event_universe.core import paces
 from event_universe.core import rule3 as core
 from event_universe.core.acts import mirror as mirrored
@@ -115,13 +116,13 @@ FILE_INTEGERS = {
     "links.py": frozenset({4}),
     "seed.py": frozenset({2, 3}),
     "wave.py": frozenset({4}),
-    "record.py": frozenset({12, 24, 60}),
+    "run.py": frozenset({12, 24, 60}),
     "quartet.py": frozenset({2, 3, 4}),
 }
 # the record's readers, Animate's since 00:42 UTC (their constants named at the module's top on reader-5), no act of the Node;
-# the writer record.py (run.py its command line) reads the inventory and not the names gate (its record keys are the files' words)
+# the writer run.py reads the inventory and not the names gate (its record keys are the files' words)
 READERS = tuple(f"{n}.py" for n in "decoder gates events circle board clicks predicates".split())
-WRITER = ("record.py", "run.py")
+WRITER = ("run.py",)
 NAMED_CALLS = {
     "refused",
     "logged",

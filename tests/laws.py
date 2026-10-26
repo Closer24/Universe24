@@ -11,7 +11,7 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe import record
+from event_universe import run as record
 from event_universe.core.acts import divide
 from event_universe.features import volume
 from event_universe.links import cross

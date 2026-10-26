@@ -10,8 +10,8 @@ from event_universe import gram
 from event_universe.core import acts
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import least_at, remainder
-from event_universe.record import logged
 from event_universe.rows import CARRIER, PLANE, Line, zeros
+from event_universe.run import logged
 from event_universe.take import lay
 
 if TYPE_CHECKING:

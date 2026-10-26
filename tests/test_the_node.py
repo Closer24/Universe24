@@ -7,7 +7,8 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import gram, record
+from event_universe import gram
+from event_universe import run as record
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import quotient
@@ -332,8 +333,7 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
     assert len(births) == 5 and len(pairs) == 5 and node.counts["met"] > len(births)
     for b in pairs:
         link = {tuple(b["minus"]), tuple(b["plus"])}
-        # every pair refused by the stop (the fall under the walls) before the merger's children read the birth's
-        # bounds (6413888338); now by name on its link: the orientation, the lay's standing light or the stop
+        # by the stop alone before 6413888338's bound; now by name: the orientation, the lay or the stop
         assert any(
             e["event"] == "refused"
             and e["i"] == b["i"] + 1
