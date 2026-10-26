@@ -17,7 +17,6 @@ from event_universe.merger import (
     light_children,
     merger_falls,
     merger_take,
-    share_total,
     walls_of,
 )
 from event_universe.rows import PLANE, Line
@@ -134,7 +133,7 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
 def births(
     node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...], reads: list[tuple[Line, rule3.Rule]]
 ) -> set[tuple[int, ...]]:
-    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made; the rules once per record), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid at its own end by the record's levels taken whole (`merger_falls` then `merger_take`, MG-S1: the birth read at -1; the record's share over the board read once per close until a merger writes; the Link's number read at the take's Node after the stop, the draw's refusal counted there); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
+    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made; the rules once per record), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid at its own end by the record's levels taken whole (`merger_falls` then `merger_take`, MG-S1: the birth read at -1, the share's fall read at the end's Node and its six neighbours, where alone the lay changes it, the standing shares kept per close until a merger writes; the Link's number read at the take's Node after the stop, the draw's refusal counted there); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
     by_node: dict[tuple[tuple[int, ...], int], list[Kid]] = {}
     for at, s, minus, plus, room, rec in kept:
         by_node.setdefault((at, rec), []).append(Kid(s, minus, plus, room))
@@ -147,15 +146,14 @@ def births(
     own: dict[tuple[int, int, tuple[int, ...]], int] = {}
     walls = {k: walls_of(node, k.line_pair, k.minus, k.plus, rules[k.line_pair], own) for k in kept}
     taken: list[tuple[tuple[int, ...], int, list[Kid], dict[str, Any]]] = []
-    standing: dict[int, int] = {}
+    shares: dict[tuple[int, tuple[int, ...]], int] = {}
     for at, rec in sorted(by_node):
         kids = by_node[(at, rec)]
         row, rule = records[rec], rules[rec]
         if row is not node.emitter():
             for kid in kids:
-                total = standing.setdefault(rec, share_total(node, rec, rule))
                 kid_walls = walls[Birth(at, *kid, rec)]
-                ends = merger_falls(node, kid.minus, kid.plus, kid_walls, rule, rec, refused, total)
+                ends = merger_falls(node, kid.minus, kid.plus, kid_walls, rule, rec, refused, shares)
                 drawn = None if ends is None else read_number(node, at, reads, node.units[rec])
                 if ends is None or drawn is None:
                     continue
@@ -167,7 +165,7 @@ def births(
                         merger_take(node, ends, rule, rec),
                     )
                 )
-                del standing[rec]
+                shares.clear()
             continue
         booked = sum(sum(walls[Birth(at, *kid, rec)]) for kid in kids)
         one = take_at(node, at, booked, rule, len(kids), rec)

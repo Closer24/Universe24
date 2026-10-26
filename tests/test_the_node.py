@@ -309,7 +309,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
         <= int(node.start_x.max()) * 1000 // node.gamma
         <= 2_938
     )
-    chiral = node_of("world_chiral.json")
+    chiral = node_of("world_nature.json")
     kept = copy.deepcopy(chiral)
     for _ in range(40):
         chiral.step()
@@ -323,7 +323,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
 
 def test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1() -> None:
     """MS-S1 (the owner's word of 2026-10-25, 15:18 UTC, through the Boss, 6399410929; The-Masses-From-The-Clicks_COMPARISON.md section 5, ms2's exact form): the lay's two levels (A, B) with A B = T div 2 from T alone (125 and 144 at T 36,000), the same for every row; the chiral 5-cube at 12 intervals: every child's Wronskian is +-(T div 2) where its plane stood at nothing at its Node (the residue logged), every birth's children at opposite signs with the senses' sum 0, taken at or above booked on every birth, the run back exact."""
-    node = node_of("world_chiral.json")
+    node = node_of("world_nature.json")
     assert (node.A, node.B, node.A * node.B) == (125, 144, node.T // 2)
     kept = copy.deepcopy(node)
     for _ in range(12):
@@ -344,7 +344,7 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
     None
 ):
     """SL-S1 (the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic close, every record's meeting by its own list): the chiral seed on the 3-cube at 30 intervals: every born pair's Link meets at the next close (the two ends holding a whole quantum of the children's record) and reads no current, F = 0 exactly: under MG-S1 the pair at rest reaches the merger's premise by its charges and the stop refuses the undoing at an end by name, the pair's fall below the light child's own quantum (4 of 4 born pairs; before MG-S1 the orientation refused the same Links with no name, 4 of 4 under PL-S1; 8 of 8 pairs of matter with a ninth birth, a merger of the lightest pair at rest whose light children the lay refuses, under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed); 5 of 5 under the former write of 2 W after the step); the meetings counted as `met`; the run back exact."""
-    universe, world = world_of("world_chiral.json")
+    universe, world = world_of("world_nature.json")
     lays = [lay for lay in world["seed"] if lay.get("lay") != "at" or all(x < 3 for x in lay["centre"])]
     node = Node(universe, dict(world, shape=[3, 3, 3], intervals=30, seed=lays))
     kept = copy.deepcopy(node)
@@ -435,7 +435,7 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
     found = []
     for node, n in (
         (Reading(universe, dict(world, seed=[world["seed"][0], one])), 60),
-        (Reading(*world_of("world_chiral.json")), 20),
+        (Reading(*world_of("world_nature.json")), 20),
     ):
         node.wronskians = {}
         for _ in range(n):
@@ -469,7 +469,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
                 counters.append((sign, int(node.crossed[rec][CENTRE]), int(node.beats[rec][CENTRE])))
         assert [c[1:] for c in counters if c[0] == 1] == [c[1:] for c in counters if c[0] == -1]
     assert counters[-1][2] == 3 and node.counts["body_clicks"] == 0
-    node = node_of("world_chiral.json")
+    node = node_of("world_nature.json")
     kept = copy.deepcopy(node)
     crossings: dict[tuple[int, tuple[int, ...]], list[tuple[int, bool]]] = {}
     for t in range(1, INTERVALS + 1):

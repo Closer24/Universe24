@@ -37,20 +37,17 @@ def read_number(
 ) -> tuple[int, int] | None:
     """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the taken row's unit times the planes' count, the shape-2 records the draw names (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse (A48-S1's read in the laid frame, a48b's form, built at 05cca50 and reverted: the 48 on the clicks held to the interval 10 and parted at 11 on every reflection at the tie of the sign row's time line's write remainder, and the cycle seed's draws fell on the origin; it returns with its mend)."""
     modulus = unit * sum(1 for r in node.records() if r.shape == PLANE)
-    nodes, digits = frame_nodes(node, at), []
-    origin, coarse, w_half = True, True, half(node.w)
+    nodes, digits, origin, coarse, w_half = frame_nodes(node, at), [], True, True, half(node.w)
     for line, r in rules:
         for k, n in enumerate(nodes):
-            key = (id(r), k, n)
+            wl, key = at_node(line.wall, n), (id(r), k, n)
             if key not in node.lattices:
-                wl = at_node(line.wall, n)
                 node.lattices[key] = (
                     lattice(wl, at_node(r.mass, n), *[at_node(x, n) for x in r.reaches])
                     if k == 0
                     else lattice(wl, at_node(r.reaches[k - 1], n))
                 )
-            f = node.lattices[key]
-            rem, values = node.digit_of(int(line.rem[n]), quotient(at_node(line.wall, n), f))
+            rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f := node.lattices[key]))
             origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
             coarse = coarse and values <= AXES
             digits.append((quotient(rem, f), values + 1))
@@ -126,8 +123,7 @@ def take_at(
     node: Node, at: tuple[int, ...], walls: int, rule: rule3.Rule, cause: int, rec: int | None = None
 ) -> tuple[int, int, int, int, int] | None:
     """One exact take at a Node of the walls booked from the taken row (the gap-0 row's where none is named: a body's take) at its rule, on the line the fall's sign chooses (`fall_of`, CS4-S2): its level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop; its log entry built in two lines since A48-S1's fold, kept as code). Returns (levels, fall, the line's now before the take, its before, the line taken) or None."""
-    taken = node.records().index(node.emitter()) if rec is None else rec
-    row = node.records()[taken]
+    row = node.records()[taken := node.records().index(node.emitter()) if rec is None else rec]
     levels, fall, k = fall_of(node, at, walls, rule, row)
     z = row.lines[k]
     if levels is None:

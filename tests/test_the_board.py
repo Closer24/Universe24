@@ -99,7 +99,7 @@ def test_the_run_back_is_exact_through_births_and_turns() -> None:
 
 
 def test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero() -> None:
-    node = node_of("world_chiral.json")
+    node = node_of("world_nature.json")
     for _ in range(60):
         node.step()
     births = [e for e in node.log if e["event"] == "birth" and "exact_lay" not in e]

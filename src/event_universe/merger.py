@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from functools import partial
 from typing import TYPE_CHECKING, Any
 
 from event_universe import gram
@@ -11,7 +12,7 @@ from event_universe.core.ports import AXES
 from event_universe.core.rule3 import half, quotient, share_weight
 from event_universe.links import cross
 from event_universe.rows import Line, zeros
-from event_universe.take import at_node, fall_of, lay, momentum_of, neighbour
+from event_universe.take import at_node, fall_of, frame_nodes, lay, momentum_of, neighbour
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -37,7 +38,7 @@ def walls_of(
     rule: rule3.Rule,
     cache: dict[tuple[int, int, tuple[int, ...]], int],
 ) -> tuple[int, int]:
-    """Each child's wall, its own quantum (MG-S1, CS8-S2): the child laid by the one lay act at its end on zero lines of the row's shape (the row's lines held and put back), the share summed over the board under the row's rule at the board's content, the lines discarded; the same two integers for every row and every Node of one content, read once per end and row in a close (`cache`: no line of the board enters it); the former reading, the board's increment where the plane already stands, kept by name."""
+    """Each child's wall, its own quantum (MG-S1, CS8-S2): the child laid by the one lay act at its end on zero lines of the row's shape (the row's lines held and put back), the share summed under the row's rule at the board's content over the end and its six neighbours (`share_at`: the zero lines' share is 0 everywhere else), the lines discarded; the same two integers for every row and every Node of one content, read once per end and row in a close (`cache`: no line of the board enters it); the former reading, the board's increment where the plane already stands, kept by name."""
     row = node.records()[s]
     held, found = row.lines, []
     for where, sense in ((minus, -1), (plus, 1)):
@@ -46,17 +47,69 @@ def walls_of(
                 Line(zeros(node.shape), zeros(node.shape), line.rem, line.wall) for line in held
             ]
             child_at(node, s, where, sense)
-            cache[(s, sense, where)] = int(
-                sum(int(x) for x in gram.share(node, row.lines, rule).reshape(-1))
+            cache[(s, sense, where)] = sum(
+                share_at(node, row.lines, rule, at) for at in set(frame_nodes(node, where))
             )
         found.append(cache[(s, sense, where)])
     row.lines = held
     return found[0], found[1]
 
 
-def share_total(node: Node, rec: int, rule: rule3.Rule) -> int:
-    """A record's share summed over the board under its rule, as the close reads it (one reading per record per close while nothing is written)."""
-    return int(sum(int(x) for x in node.share(node.records()[rec].lines, rule).reshape(-1)))
+def products(xs: list[int], ys: list[int]) -> list[int]:
+    """The bilinear x.G.y line by line at the identity G (gram.weighted's form for every shape but the quartet's), x_k y_k."""
+    return [x * y for x, y in zip(xs, ys, strict=True)]
+
+
+def share_at(node: Node, lines: list[Line], r: rule3.Rule, at: tuple[int, ...]) -> int:
+    """A record's share at one Node (gram.share's form, the same integers read at the Node and its six neighbours alone)."""
+    g = gram.gram(len(lines))
+    weighted = products if g == gram.identity(len(lines)) else partial(gram.weighted, g)
+    nows, befores = [int(line.now[at]) for line in lines], [int(line.before[at]) for line in lines]
+    reached, shared = [0] * len(lines), [0] * len(lines)
+    for port, reach in enumerate(r.reaches):
+        q, reach_at = neighbour(node, at, port), at_node(reach, at)
+        b_j, n_j = [int(line.before[q]) for line in lines], [int(line.now[q]) for line in lines]
+        reached = [x + reach_at * bj for x, bj in zip(reached, b_j, strict=True)]
+        parts = weighted(
+            [b - bj for b, bj in zip(befores, b_j, strict=True)],
+            [n + nj for n, nj in zip(nows, n_j, strict=True)],
+        )
+        shared = [x + reach_at * part for x, part in zip(shared, parts, strict=True)]
+    own = [
+        at_node(r.wall, at) * (nn + bb) - at_node(r.self_coefficient, at) * nb - nr
+        for nn, bb, nb, nr in zip(
+            weighted(nows, nows),
+            weighted(befores, befores),
+            weighted(nows, befores),
+            weighted(nows, reached),
+            strict=True,
+        )
+    ]
+    wall, x = share_weight(node.gamma, node.G) + share_weight(node.gamma, node.G), int(node.start_x[at])
+    return sum(
+        int(rule3.division_forward((o + o - s) * x, wall, 0)[0])
+        for o, s in zip(own, shared, strict=True)
+    )
+
+
+def share_fall(
+    node: Node,
+    rec: int,
+    rule: rule3.Rule,
+    where: tuple[int, ...],
+    levels: tuple[int, ...],
+    cache: dict[tuple[int, tuple[int, ...]], int],
+) -> int:
+    """The share the board loses by a lay at -1 of the levels at the Node (laid and laid back): the lay changes the share at the Node and its six neighbours alone, so the fall is their shares' difference, bit for bit the board's (the former read of the whole board's share, kept by name); the shares as they stand kept in `cache` per record and Node for the close until a take writes."""
+    row, window, before = node.records()[rec], set(frame_nodes(node, where)), 0
+    for at in window:
+        if (rec, at) not in cache:
+            cache[(rec, at)] = share_at(node, row.lines, rule, at)
+        before += cache[(rec, at)]
+    lay(node, rec, where, levels, -1)
+    after = sum(share_at(node, row.lines, rule, at) for at in window)
+    lay(node, rec, where, levels, 1)
+    return before - after
 
 
 def levels_at(row: Any, where: tuple[int, ...]) -> tuple[int, ...]:
@@ -72,16 +125,14 @@ def merger_falls(
     rule: rule3.Rule,
     rec: int,
     refused: Callable[..., None],
-    standing: int,
+    cache: dict[tuple[int, tuple[int, ...]], int],
 ) -> list[tuple[tuple[int, ...], int, tuple[int, ...], int]] | None:
-    """The merger's reads (MG-S1, the birth's lay read at -1): at each end the taken record's levels at the Node and the share the board loses by their lay at -1 (laid and laid back, against the record's share `standing` over the board as the close holds it), both ends read before either is written, the first end's refusal sparing the second's read; refused by name `stop` where an end's fall is below its child's wall. Returns per end (the Node, the wall, the levels, the fall), or None."""
+    """The merger's reads (MG-S1, the birth's lay read at -1): at each end the taken record's levels at the Node and the share the board loses by their lay at -1 (`share_fall`, laid and laid back), both ends read before either is written, the first end's refusal sparing the second's read; refused by name `stop` where an end's fall is below its child's wall. Returns per end (the Node, the wall, the levels, the fall), or None."""
     row = node.records()[rec]
     ends = []
     for where, wall in zip((minus, plus), walls, strict=True):
         levels = levels_at(row, where)
-        lay(node, rec, where, levels, -1)
-        fall = standing - share_total(node, rec, rule)
-        lay(node, rec, where, levels, 1)
+        fall = share_fall(node, rec, rule, where, levels, cache)
         if fall < wall:
             refused(node, where, "stop", fall=fall, walls=wall, row=rec)
             return None
