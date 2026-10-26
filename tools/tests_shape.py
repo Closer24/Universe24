@@ -41,10 +41,22 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_node.py::test_the_files_are_refused_by_name": (
+        46,
+        "The loader's refusals by name (2026-10-26, the Boss's room at the merge of toys-5 50c73c972: the fifth form wave admitted by CS5-S2 and the former refusal of the word wave struck, so the test names one more refusal, "
+        "the cycle form at its quanta; with it the six module-level lines the finders' rename and CS5-S2's imports added to tests/test_the_board.py and tests/test_the_node.py)",
+    ),
+    "tests/test_the_board.py::test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2": (
+        51,
+        "CS5-S2 with the fifth form wave (2026-10-25, the owner's word of 22:50 UTC, The-Handed-Seed-And-Births_COMPARISON.md; the Boss's room named in 6404974647 and 6405218245): one pair in several rows admitted, the file's cycle form laid, the loader's refusals by name, the board's course on the head",
+    ),
+    "tests/test_the_node.py::test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un": (
+        30,
+        "The gap-0 finders (2026-10-26, the owner's word of 23:40 UTC, The-Unit-And-The-Coupling_COMPARISON.md section 4; the Boss's room named in 6405000794 and 6405218245): the twelve branches on the gap folded to the pair's values (the unit, the emitter, the coupling and its identity turn) shown on the three records bit for bit and the loader's refusals by name",
+    ),
     "tests/test_the_node.py::test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2": (
         56,
-        "CS4-S2 (2026-10-25, the owner's word of 22:50 UTC, The-Handed-Seed-And-Births_COMPARISON.md; the Boss's room at the merge of toys-5 e1209f752, the test's own 56 lines in place of the 40 named): the take by the fall's sign on the pair beside its quarter-turned image "
-        "(X equal at every Node, the 81 credits take for take, the image's takes on the second line) and on SL-S2's merger board (the merger's taken lines [1, 1], 87 takes with 66 on a line other than the first), the run back exact",
+        "CS4-S2 (2026-10-25, the owner's word of 22:50 UTC, The-Handed-Seed-And-Births_COMPARISON.md; the Boss's room of 40 named in 6404974647 for the cycle board at 6 intervals; this test's 56 asked in David's line: the pair beside its quarter-turned image, the 81 credits equal take for take, and SL-S2's merger board with every take's line re-derived by hand), the one take rule",
     ),
     "tests/test_the_board.py::test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1": (
         37,
@@ -70,7 +82,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the page (2026-10-25, the third tool of the standard, the owner's word through the Boss; the Boss's room at the merge of toys-5 84009e333): one HTML from the record and the reading with nothing of a universe typed",
     ),
     "tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1": (
-        23,
+        24,
         "SL-S1 (2026-10-25, the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "
         "every born pair's Link meeting at the next close with no current and refused by the orientation (5 of 5), the meetings counted, the run back exact",
     ),

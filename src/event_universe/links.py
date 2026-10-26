@@ -7,7 +7,13 @@ from typing import Any
 from event_universe.core.paces import odd_rounded
 from event_universe.core.ports import AXES, PORT_SIDES, across, wrap
 from event_universe.core.rule3 import remainder
-from event_universe.rows import Line, zeros
+from event_universe.rows import Line, Row, zeros
+
+
+def coupling_of(row: Row) -> int:
+    """A record's coupling to the Links' phase as one value of its pair, min(den - num, 1): 0 at the pair with no gap (the emitter: its turn the identity, its sources weighted 0), 1 at every other pair; the law's general form K / Gamma (Y-S1) is the owner's word (UN-S2)."""
+    assert row.gap is not None
+    return min(row.gap, 1)
 
 
 def cross(x_i: Any, y_i: Any, x_j: Any, y_j: Any) -> Any:
