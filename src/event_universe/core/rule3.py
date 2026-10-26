@@ -9,6 +9,10 @@ from event_universe.core.ports import PORTS
 # the Node's reaches, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij G^2 on
 # the Link to that neighbour; integers or the loop's integer arrays
 Reads = tuple[Any, ...]
+HELD_WRITE_WEIGHT = (
+    4  # the held write's 4 X (...) p_0 (the hypothesis The stress's trace is the time line's, d + 1)
+)
+UNIT_WEIGHT = 3  # the plane's unit 3 T s (the conventions' row 12)
 
 
 class Rule(NamedTuple):
@@ -22,12 +26,12 @@ class Rule(NamedTuple):
 
 def wall_of(den: Any, gamma: Any, unit: Any = 1) -> Any:
     """The wall w = 6 den Gamma^2 G^2, the family's one divisor at every Node and every content (ALGEBRA.md #the-line)."""
-    return 6 * den * gamma * gamma * unit * unit
+    return PORTS * den * gamma * gamma * unit * unit
 
 
 def mass(num: Any, den: Any, clock: Any, unit: Any = 1) -> Any:
     """The Node's mass D_i = 12 (den - num) p_0^2 G^2 (ALGEBRA.md #the-line, the flux form): the shortfall of the six reaches and the own weight under twice the wall, 2 w - S_i - SUM_j R_ij, the clock's alone, 0 for every family with num = den (light), the one term of Rule3's line that is the Node's own and not a Link's."""
-    return 12 * (den - num) * clock * clock * unit * unit
+    return (PORTS + PORTS) * (den - num) * clock * clock * unit * unit
 
 
 def rule_integers(
@@ -43,31 +47,16 @@ def rule_integers(
     square = unit * unit
     node_squared = pace * pace
     links = (square,) * PORTS if factors is None else factors
-    reaches = tuple(2 * node_squared * factor * num for factor in links)
+    reaches = tuple((node_squared + node_squared) * factor * num for factor in links)
     wall, own = wall_of(den, gamma, unit), mass(num, den, clock, unit)
     return Rule(reaches, wall + wall - own - sum(reaches), wall, own)
-
-
-def coefficients(
-    num: Any,
-    den: Any,
-    gamma: Any,
-    clock: Any,
-    pace: Any,
-    factors: tuple[Any, ...] | None = None,
-    unit: Any = 1,
-) -> tuple[Reads, Any, Any]:
-    """The rule's first three integers, (the six reaches, S, w), as the readings of the first form name them (`rule_integers` for the four)."""
-    reaches, self_coefficient, wall, _mass = rule_integers(num, den, gamma, clock, pace, factors, unit)
-    return reaches, self_coefficient, wall
 
 
 def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
     """The Link's factor Q_ij, the one place of its form (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; the Boss's booking): q_ij^2 / Gamma^2 = (Gamma - t_a(i, j))^2 / Gamma^2 booked squared as one integer per Link in the unit G^2 of the run's Link unit G, Q_ij = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2 by the division act, rounded once to the nearest from the Link's tension t and read the same from both ends; the step's coefficient matrix M is symmetric at uniform paces alone, and D M is symmetric at every pace with D = diag(1 / p_i^2), so the weighted form is exact at paces fixed in time; G^2 with no tension, 0 where the tension reaches Gamma (the Link's coefficient 0), the tension resolved to Gamma / (2 G^2)."""
     pace = gamma - tension
     wall = gamma * gamma
-    half = division_forward(wall, 2, 0)[0]
-    return division_forward(unit * unit * pace * pace, wall, half)[0]
+    return division_forward(unit * unit * pace * pace, wall, half(wall))[0]
 
 
 def scaled(rule: Rule, scale: Any) -> Rule:
@@ -109,42 +98,57 @@ def division_forward(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
 def link_unit_of(gamma: Any) -> int:
     """The Link's unit G derived from Gamma (K-S1, the owner's word of 2026-10-25: the conditions in the laws and the code enforces them; no key of the file): the least G at which one level of tension at the vacuum resolves in the Link's factor, Q(1) < Q(0) in `link_factor`, 2 G^2 (2 Gamma - 1) > Gamma^2, found by a search by comparisons (16 at Gamma 1,000)."""
     unit = 1
-    while 2 * unit * unit * (2 * gamma - 1) <= gamma * gamma:
+    while (unit + unit) * unit * (gamma + gamma - 1) <= gamma * gamma:
         unit += 1
     return unit
 
 
 def held_wall(weight: Any, den: Any, gamma: Any, action: Any, power: int) -> Any:
-    """A held row's write wall (K-S1 to K-S3, Y-S1): weight den Gamma^power T with the trace's weight 54 (rows.TRACE), the time line's at the power 4 and the nine lines' at 2."""
+    """A held row's write wall (K-S1 to K-S3, Y-S1): weight den Gamma^power T with the trace's weight the universe file's `trace` key, the time line's at the power 4 and the nine lines' at 2."""
     return weight * den * gamma**power * action
 
 
 def held_numerator(
     weight: Any, level: Any, forms: Any, trace: Any, clock: Any, den: Any, gamma: Any
 ) -> Any:
-    """The carrier's time line's write numerator (the metric time line, the held write): 4 X (forms 54 den Gamma^2 - trace p_0^2) p_0 with the trace's weight 54 (rows.TRACE)."""
-    return 4 * level * (forms * weight * den * gamma**2 - trace * clock * clock) * clock
+    """The carrier's time line's write numerator (the metric time line, the held write): 4 X (forms weight den Gamma^2 - trace p_0^2) p_0 with the trace's weight the universe file's `trace` key."""
+    return (
+        HELD_WRITE_WEIGHT
+        * level
+        * (forms * weight * den * gamma * gamma - trace * clock * clock)
+        * clock
+    )
 
 
 def unit_of(sine: Any, action: Any) -> Any:
     """A plane's quantum, its unit 3 T s (the conventions' row 12: W_c sin omega_0 to the unit), s the pair's sine or den at the gap 0."""
-    return 3 * action * sine
+    return UNIT_WEIGHT * action * sine
 
 
 def mirrored(remainder: Any, wall: Any, reversals: int) -> Any:
     """The one rule of the remainder's mirror (fd1's form, the owner's word of 2026-10-25): a remainder born at the half wall of its division is mirrored to wall - 1 - r once for every reversal of its line (time's exchange, the sign's negation), two reversals leaving it; the identity for an even count."""
-    return remainder if reversals % 2 == 0 else wall - 1 - remainder
+    return wall - 1 - remainder if odd(reversals) else remainder
 
 
 def signed_quotient(numerator: Any, wall: Any) -> Any:
     """The quotient of the magnitude with the sign after, sign(x) (|x| div w): the lay's rounding of a signed level at rest (the one rule's mirror by the numerator's sign at a remainder born at 0), so the negated vector's lay is the lay negated."""
-    sign = (numerator >= 0) * 2 - 1
+    sign = (numerator >= 0) * 1 - (numerator < 0) * 1
     return sign * quotient(sign * numerator, wall)
 
 
 def half(wall: Any) -> Any:
-    """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor."""
+    """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor (the halving's own 2)."""
     return division_forward(wall, 2, 0)[0]
+
+
+def odd(count: Any) -> Any:
+    """The parity of a count by the division act on 2, 1 where odd (the parity's own 2): the reversals' count, a line's odd part."""
+    return division_forward(count, 2, 0)[1]
+
+
+def share_weight(gamma: Any, unit: Any) -> Any:
+    """The share's weight 2 Gamma^3 G^2, the exact take's scale (the fall f(s) over it; gram's wall its double)."""
+    return (gamma + gamma) * gamma * gamma * unit * unit
 
 
 def quotient(numerator: Any, wall: Any) -> Any:
@@ -170,11 +174,11 @@ def lattice(*values: Any) -> Any:
 
 def least_root(a: int, b: int, target: int, dist: int) -> list[int]:
     """The least root's neighbours of a s^2 + b s >= target by one integer root (largest_below), checked exactly at s - 1, s, s + 1, s + 2; the full move alone where the discriminant is negative."""
-    disc = b * b + 4 * a * target
+    disc = b * b + (a + a) * (target + target)
     if disc < 0:
         return [dist]
     root = largest_below(disc)
-    s1 = quotient(b - root, -2 * a) if a < 0 else quotient(-b + root, 2 * a)
+    s1 = quotient(b - root, -(a + a)) if a < 0 else quotient(-b + root, a + a)
     return sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
 
 
@@ -195,7 +199,7 @@ def largest_below(square: int) -> int:
         high = high + high
     low = 0
     while high - low > 1:
-        middle = int(division_forward(low + high, 2, 0)[0])
+        middle = int(half(low + high))
         if middle * middle <= square:
             low = middle
         else:

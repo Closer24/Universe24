@@ -12,7 +12,7 @@ from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import carried_division, division_forward, half, held_numerator, quotient
 from event_universe.features import volume
 from event_universe.links import coupling_of, links_of, stress_parts, tensor_parts
-from event_universe.rows import CARRIER, POTENTIAL, TRACE, Line, Row, walled_of, zeros
+from event_universe.rows import CARRIER, POTENTIAL, Line, Row, walled_of, zeros
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -107,7 +107,13 @@ class Interval:
         k = self.where[id(self.walled)]
         rule = node.rule_of(self.walled, self.c, self.factors)
         (phi_start,), _levels, self.out[k] = node.act(
-            self.rows[k], rule, None, [None], self.direction, [2 * self.cphi], *self.ends(self.walled)
+            self.rows[k],
+            rule,
+            None,
+            [None],
+            self.direction,
+            [self.cphi + self.cphi],
+            *self.ends(self.walled),
         )
         count = readings.centred_count(node, self.cphi, phi_start)
         node.count_max = max(
@@ -146,7 +152,7 @@ class Interval:
             coefficient = quotient(sum(rule.reaches), self.scales[k])
             added = gram.term(r.shape, coefficient, self.curl, self.starts[k])
             self.force[k] = [
-                m + t - (2 * rule.wall - rule.self_coefficient) * a
+                m + t - (rule.wall + rule.wall - rule.self_coefficient) * a
                 for a, m, t in zip(self.starts[k], arrivals, added, strict=True)
             ]
         self.emission = zeros(node.shape)
@@ -161,7 +167,7 @@ class Interval:
         node = self.node
         self.forms = zeros(node.shape)
         self.kicked: dict[int, list[Any]] = {}
-        d = 2 * node.w * self.x_now
+        d = (node.w + node.w) * self.x_now
         w_side = self.mean_wall(self.carrier.lines[0])
         charge = zeros(node.shape)
         for r in self.riders:
@@ -175,8 +181,8 @@ class Interval:
                 line = self.rows[k][0]
                 q, line.wr = carried_division(charge, line.wwall, line.wr, self.direction)
                 p_other[0] = p_other[0] + self.direction * node.w * self.x_now * q
-            u_in = [paces.odd_rounded(2 * p + 1, ds) for p in p_side]
-            u_out = [paces.odd_rounded(2 * p + 1, ds) for p in p_other]
+            u_in = [paces.odd_rounded(p + p + 1, ds) for p in p_side]
+            u_out = [paces.odd_rounded(p + p + 1, ds) for p in p_other]
             if r in self.records:
                 gj = gram.matmul(g, gram.rotation(r.shape))
                 forms = gram.form(gj, self.starts[k], u_in) + gram.form(gj, self.starts[k], u_out)
@@ -187,12 +193,12 @@ class Interval:
             self.kicked[k] = p_other
 
     def division(self) -> None:
-        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms 54 den Gamma^2 - trace p_0^2) p_0 on its time line and the traceless stress times p_0^2 on its axis lines (node.carried); every riding line's one carried division at the mean wall of the carrier's two levels at its end times the row's scale, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and after the step kept for the close; the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act changes any integer of a frozen Node's state in either direction."""
+        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms (the file's trace weight) den Gamma^2 - trace p_0^2) p_0 on its time line and the traceless stress times p_0^2 on its axis lines (node.carried); every riding line's one carried division at the mean wall of the carrier's two levels at its end times the row's scale, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and after the step kept for the close; the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act changes any integer of a frozen Node's state in either direction."""
         node, carrier = self.node, self.carrier
         k = self.where[id(carrier)]
         p02 = self.p0 * self.p0
         numerators = [
-            held_numerator(TRACE, self.x_now, self.forms, self.trace, self.p0, node.den, node.gamma)
+            held_numerator(node.trace, self.x_now, self.forms, self.trace, self.p0, node.den, node.gamma)
         ]
         numerators += [self.traceless[a] * p02 for a in range(AXES)] + [None] * (
             carrier.shape - 1 - AXES

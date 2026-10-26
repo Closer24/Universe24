@@ -1,0 +1,220 @@
+diff --git a/tests/test_rule3.py b/tests/test_rule3.py
+index 8152859d0..20dbf1593 100644
+--- a/tests/test_rule3.py
++++ b/tests/test_rule3.py
+@@ -9,7 +9,7 @@ from pathlib import Path
+ import numpy as np
+ 
+ from event_universe.core import paces
+-from event_universe.core.rule3 import coefficients, form_term, link_factor, mass, mirrored, rule3
++from event_universe.core.rule3 import form_term, link_factor, mass, mirrored, rule3, rule_integers
+ from tests.laws import arrivals_rule3
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+@@ -31,23 +31,23 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
+         content, unit = rng.randint(-gamma + 1, gamma - 1), rng.choice([1, 2, 16])
+         factors = tuple(unit * unit + rng.randint(-50, 50) for _ in range(6))
+         clock, p = paces.clock(gamma, content), paces.link_pace(gamma, content)
+-        assert coefficients(num, den, gamma, clock, p) == law_line(num, den, gamma, clock, p)
+-        found = coefficients(num, den, gamma, clock, p, factors, unit)
++        assert rule_integers(num, den, gamma, clock, p)[:3] == law_line(num, den, gamma, clock, p)
++        found = rule_integers(num, den, gamma, clock, p, factors, unit)[:3]
+         assert found == law_line(num, den, gamma, clock, p, factors, unit)
+-        plain = coefficients(num, den, gamma, clock, p, None, unit)
+-        assert coefficients(num, den, gamma, clock, p, (unit * unit,) * 6, unit) == plain
+-        (read, *_), self_iso, wall = coefficients(num, den, gamma, clock, p)
++        plain = rule_integers(num, den, gamma, clock, p, None, unit)[:3]
++        assert rule_integers(num, den, gamma, clock, p, (unit * unit,) * 6, unit)[:3] == plain
++        (read, *_), self_iso, wall = rule_integers(num, den, gamma, clock, p)[:3]
+         assert plain == ((read * unit * unit,) * 6, self_iso * unit * unit, wall * unit * unit)
+         vacuum = ((2 * gamma**2 * num,) * 6, 0, 6 * den * gamma**2)
+-        assert coefficients(num, den, gamma, gamma, gamma) == vacuum
++        assert rule_integers(num, den, gamma, gamma, gamma)[:3] == vacuum
+         q = factors[0]
+         along = (2 * q * p**2 * num,) + (read,) * 5, self_iso - 2 * num * p**2 * (q - 1), wall
+-        assert coefficients(num, den, gamma, clock, p, (q,) + (1,) * 5) == along
++        assert rule_integers(num, den, gamma, clock, p, (q,) + (1,) * 5)[:3] == along
+     assert (link_factor(GAMMA, 16, 0), link_factor(GAMMA, 16, GAMMA)) == (256, 0)
+     assert link_factor(GAMMA, 16, -153) == 264 and link_factor(GAMMA, 16, GAMMA // 512) == 255
+     for num, den, c in ((800, 809, 500), (3200, 3227, 2000), (1, 1, 0), (1, 1, 2000)):
+         p_0, p_i = paces.clock(GAMMA, c), paces.link_pace(GAMMA, c)
+-        (read, *_), self_coefficient, wall = coefficients(num, den, GAMMA, p_0, p_i)
++        (read, *_), self_coefficient, wall = rule_integers(num, den, GAMMA, p_0, p_i)[:3]
+         clock, link = Fraction(p_0 * p_0, GAMMA**2), Fraction(p_i * p_i, GAMMA**2)
+         assert Fraction(6 * read + self_coefficient, wall) == 2 - 2 * clock * (1 - Fraction(num, den))
+         for cosine in (1, 0, -1):
+@@ -63,7 +63,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
+         content = rng.randint(-gamma + 1, gamma - 1)
+         factors = tuple(16 * 16 - rng.randint(0, 30) for _ in range(6))
+         clock, pace = paces.clock(gamma, content), paces.link_pace(gamma, content)
+-        reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, factors, 16)
++        reads, self_coefficient, wall = rule_integers(num, den, gamma, clock, pace, factors, 16)[:3]
+         *arrivals, now, before = (rng.randint(-(10**6), 10**6) for _ in range(8))
+         remainder = rng.randint(0, wall - 1)
+         total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
+@@ -84,9 +84,9 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
+     content = generator.integers(-3000, 3000, shape, dtype=np.int64)
+     arrivals = tuple(generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(6))
+     now, before = (generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(2))
+-    reads, self_coefficient, wall = coefficients(
++    reads, self_coefficient, wall = rule_integers(
+         num, den, GAMMA, paces.clock_of(GAMMA, content), paces.link_pace_of(GAMMA, content)
+-    )
++    )[:3]
+     remainder = generator.integers(0, 10**9, shape, dtype=np.int64) % wall
+     fluxes = reads[0] * sum(arrival - now for arrival in arrivals)
+     own = 2 * wall - self_coefficient - sum(reads)
+@@ -96,17 +96,30 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
+     assert np.array_equal(carried, total - wall * nxt)
+     back = rule3(fluxes, own, wall, now, nxt, carried, -1)
+     assert np.array_equal(back, (before, remainder))
+-    _reads, self_coefficient, wall = coefficients(
++    _reads, self_coefficient, wall = rule_integers(
+         800, 809, GAMMA, paces.clock(GAMMA, 250), paces.link_pace(GAMMA, 250)
+-    )
++    )[:3]
+     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
+ 
+ 
+-LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 4, 6}), frozenset({12})
+-# rows.py: the quartet's and the carrier's shapes, the trace's weight 2 x 27, the width's half
+-ROW_INTEGERS = frozenset({8, 10, 54, 128})
+-# the record's writer and readers, no act of the Node: their scales are their own
+-READERS = tuple(f"{n}.py" for n in "run decoder gates events circle board clicks predicates".split())
++LAW_INTEGERS, TOOL_INTEGERS = frozenset({0, 1}), frozenset({0, 1, 2, 3, 4, 6})
++# the fold's remainder by file (H-No-Numbers-In-Code-1 item 17, 2026-10-26): the Ports and the axes; Rule3's own line;
++# the shapes, the powers and the width (the trace's 54 the file's key); the Link wall's 4; the half widths; the turns;
++# the writer's marks; quartet.py's item 7 (the NamedTuples) deferred, its three as they stand
++FILE_INTEGERS = {
++    "ports.py": frozenset({2, 3}),
++    "rule3.py": frozenset({2, 3, 4}),
++    "rows.py": frozenset({2, 4, 8, 10, 128}),
++    "links.py": frozenset({4}),
++    "seed.py": frozenset({2, 3}),
++    "wave.py": frozenset({4}),
++    "run.py": frozenset({12, 24, 60}),
++    "quartet.py": frozenset({2, 3, 4}),
++}
++# the record's readers, Animate's since 00:42 UTC (their constants named at the module's top on reader-5), no act of the Node;
++# the writer run.py reads the inventory and not the names gate (its record keys are the files' words)
++READERS = tuple(f"{n}.py" for n in "decoder gates events circle board clicks predicates".split())
++WRITER = ("run.py",)
+ NAMED_CALLS = {
+     "refused",
+     "get",
+@@ -122,8 +135,9 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
+     for path in [*sorted(SOURCE.rglob("*.py")), *tools]:
+         if path.name in READERS:
+             continue
+-        allowed = LAW_INTEGERS | (RULE_LINE_INTEGERS if path.name == "rule3.py" else frozenset())
+-        allowed |= ROW_INTEGERS if path.name == "rows.py" else frozenset()
++        allowed = (
++            TOOL_INTEGERS if path in tools else LAW_INTEGERS | FILE_INTEGERS.get(path.name, frozenset())
++        )
+         for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+             if isinstance(item, ast.Constant) and type(item.value) in (int, float, complex):
+                 if item.value not in allowed or type(item.value) is not int:
+@@ -142,7 +156,7 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
+     found = []
+     for path in sorted(SOURCE.rglob("*.py")):
+         name = path.relative_to(SOURCE).as_posix()
+-        if name.startswith("loader/") or name == "__init__.py" or name in READERS:
++        if name.startswith("loader/") or name == "__init__.py" or name in READERS + WRITER:
+             continue
+         tree = ast.parse(path.read_text(encoding="utf-8"))
+         spoken = {id(item.value) for item in ast.walk(tree) if isinstance(item, ast.Expr)}
+diff --git a/tests/test_the_node.py b/tests/test_the_node.py
+index 290f0ea36..91a68b53f 100644
+--- a/tests/test_the_node.py
++++ b/tests/test_the_node.py
+@@ -523,7 +523,7 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
+ 
+ 
+ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() -> None:
+-    """UN (UN_COMPARISON.md section 4, un2's table): every record's unit of universe_toy.json is 3 T (sine_den(num, den) + den (num div den)), the one formula giving 3 T den at the emitter and 3 T s at a gapped pair; the emitter is the plane of the potential's pair (den, den), the last record; the 3-cube hole at 20 intervals gives the state hash of the former finders bit for bit; then, with frame signs of -1 standing after the turns, the Links' record at the coupling 0 turns an arbitrary pair of arrays into itself at every Port; the run back exact."""
++    """UN (The-Unit-And-The-Coupling_COMPARISON.md section 4, un2's table): every record's unit of universe_toy.json is 3 T (sine_den(num, den) + den (num div den)), the one formula giving 3 T den at the emitter and 3 T s at a gapped pair; the emitter is the plane of the potential's pair (den, den), the last record; the 3-cube hole at 20 intervals gives the state hash of the former finders bit for bit; then, with frame signs of -1 standing after the turns, the Links' record at the coupling 0 turns an arbitrary pair of arrays into itself at every Port; the run back exact."""
+     node = node_of("world_node.json")
+     den, t, records = node.den, node.T, node.records()
+     assert node.units == [
+diff --git a/tests/worlds/universe_ga2.json b/tests/worlds/universe_ga2.json
+index b13e4aa1d..b95ff6318 100644
+--- a/tests/worlds/universe_ga2.json
++++ b/tests/worlds/universe_ga2.json
+@@ -1 +1 @@
+-{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389]}, {"shape": 2, "pair": [115762739551980, 15162856759112389]}, {"shape": 2, "pair": [115762739551980, 15162856759112389]}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
+\ No newline at end of file
++{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000, "trace": 54}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389]}, {"shape": 2, "pair": [115762739551980, 15162856759112389]}, {"shape": 2, "pair": [115762739551980, 15162856759112389]}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
+\ No newline at end of file
+diff --git a/tests/worlds/universe_middle.json b/tests/worlds/universe_middle.json
+index f14cbb35e..db911b589 100644
+--- a/tests/worlds/universe_middle.json
++++ b/tests/worlds/universe_middle.json
+@@ -1 +1 @@
+-{"integers": {"den": 1655909141, "node_clock": 1000, "quantum_action": 36000}, "rows": [{"shape": 2, "pair": [1655909141, 1655909141]}, {"shape": 2, "pair": [1655880909, 1655909141]}, {"shape": 2, "pair": [506298091, 1655909141]}, {"shape": 10, "pair": [1654253232, 1655909141]}, {"shape": 4, "pair": [1655909141, 1655909141]}, {"shape": 1, "wall": 2}]}
++{"integers": {"den": 1655909141, "node_clock": 1000, "quantum_action": 36000, "trace": 54}, "rows": [{"shape": 2, "pair": [1655909141, 1655909141]}, {"shape": 2, "pair": [1655880909, 1655909141]}, {"shape": 2, "pair": [506298091, 1655909141]}, {"shape": 10, "pair": [1654253232, 1655909141]}, {"shape": 4, "pair": [1655909141, 1655909141]}, {"shape": 1, "wall": 2}]}
+diff --git a/tests/worlds/universe_quartet.json b/tests/worlds/universe_quartet.json
+index 46cdc177b..efdd4b679 100644
+--- a/tests/worlds/universe_quartet.json
++++ b/tests/worlds/universe_quartet.json
+@@ -1 +1 @@
+-{"integers": {"den": 1655909141, "node_clock": 1000, "quantum_action": 36000}, "rows": [{"shape": 2, "pair": [1655909141, 1655909141]}, {"shape": 2, "pair": [1655880909, 1655909141]}, {"shape": 2, "pair": [506298091, 1655909141]}, {"shape": 10, "pair": [1654253232, 1655909141]}, {"shape": 4, "pair": [1655909141, 1655909141]}, {"shape": 1, "wall": 2}, {"shape": 8, "pair": [506298091, 1655909141]}]}
+\ No newline at end of file
++{"integers": {"den": 1655909141, "node_clock": 1000, "quantum_action": 36000, "trace": 54}, "rows": [{"shape": 2, "pair": [1655909141, 1655909141]}, {"shape": 2, "pair": [1655880909, 1655909141]}, {"shape": 2, "pair": [506298091, 1655909141]}, {"shape": 10, "pair": [1654253232, 1655909141]}, {"shape": 4, "pair": [1655909141, 1655909141]}, {"shape": 1, "wall": 2}, {"shape": 8, "pair": [506298091, 1655909141]}]}
+\ No newline at end of file
+diff --git a/tests/worlds/universe_toy.json b/tests/worlds/universe_toy.json
+index b63008769..0f6934ab1 100644
+--- a/tests/worlds/universe_toy.json
++++ b/tests/worlds/universe_toy.json
+@@ -1 +1 @@
+-{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389]}, {"shape": 2, "pair": [15162854575528411, 15162856759112389]}, {"shape": 2, "pair": [2458210083751875, 15162856759112389]}, {"shape": 2, "pair": [2580388913625285, 15162856759112389]}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
++{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000, "trace": 54}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389]}, {"shape": 2, "pair": [15162854575528411, 15162856759112389]}, {"shape": 2, "pair": [2458210083751875, 15162856759112389]}, {"shape": 2, "pair": [2580388913625285, 15162856759112389]}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
+diff --git a/tools/derivations/toys/lean/toy.py b/tools/derivations/toys/lean/toy.py
+index 4ad75969f..10fe404e0 100644
+--- a/tools/derivations/toys/lean/toy.py
++++ b/tools/derivations/toys/lean/toy.py
+@@ -17,7 +17,7 @@ from event_universe.features import volume
+ from event_universe.links import links_of, stress_parts, tensor_parts
+ from event_universe.loader.world import read_world
+ from event_universe.node import Node
+-from event_universe.rows import CARRIER, POTENTIAL, TRACE, Line, walled_of, zeros
++from event_universe.rows import CARRIER, POTENTIAL, Line, walled_of, zeros
+ 
+ AXES = 3
+ CONTROLS = ("control", "detectors")
+@@ -231,7 +231,7 @@ class Toy(Node):
+                     out[k] = rows[k]
+                     continue
+                 x, p02 = at(r.lines[0]), p0 * p0
+-                numerators = [4 * x * (forms * TRACE * self.den * self.gamma**2 - trace * p02) * p0]
++                numerators = [4 * x * (forms * self.trace * self.den * self.gamma**2 - trace * p02) * p0]
+                 numerators += [traceless[a] * p02 for a in range(AXES)] + [None] * (r.shape - 1 - AXES)
+             ends = (top, None if kept is None else kept[k])
+             start, levels, out[k] = self.act(rows[k], rule, turn, numerators, direction, flux, *ends)
+diff --git a/tools/tests_shape.py b/tools/tests_shape.py
+index 62ab954d3..d2ed3cc5d 100644
+--- a/tools/tests_shape.py
++++ b/tools/tests_shape.py
+@@ -41,8 +41,13 @@ DOCSTRING_LINES = 3
+ HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
+ RETIRED = re.compile(r"CANCELLED|[Rr]etired")
+ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
++    "tests/test_the_node.py::test_the_files_are_refused_by_name": (
++        46,
++        "The loader's refusals by name (2026-10-26, the Boss's room at the merge of toys-5 50c73c972: the fifth form wave admitted by CS5-S2 and the former refusal of the word wave struck, so the test names one more refusal, "
++        "the cycle form at its quanta; with it the six module-level lines the finders' rename and CS5-S2's imports added to tests/test_the_board.py and tests/test_the_node.py)",
++    ),
+     "tests/test_the_board.py::test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2": (
+-        45,
++        51,
+         "CS5-S2 with the fifth form wave (2026-10-25, the owner's word of 22:50 UTC, The-Handed-Seed-And-Births_COMPARISON.md; the Boss's room named in 6404974647 and 6405218245): one pair in several rows admitted, the file's cycle form laid, the loader's refusals by name, the board's course on the head",
+     ),
+     "tests/test_the_node.py::test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un": (
+@@ -77,7 +82,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
+         "the page (2026-10-25, the third tool of the standard, the owner's word through the Boss; the Boss's room at the merge of toys-5 84009e333): one HTML from the record and the reading with nothing of a universe typed",
+     ),
+     "tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1": (
+-        23,
++        24,
+         "SL-S1 (2026-10-25, the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "
+         "every born pair's Link meeting at the next close with no current and refused by the orientation (5 of 5), the meetings counted, the run back exact",
+     ),

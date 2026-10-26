@@ -1,0 +1,288 @@
+diff --git a/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/moment_of_clicks.py b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/moment_of_clicks.py
+new file mode 100644
+index 000000000..f97cbcb3c
+--- /dev/null
++++ b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/moment_of_clicks.py
+@@ -0,0 +1,90 @@
++"""H-Angular-Momentum-In-The-Clicks-1: the angular momentum read in the clicks alone (a reader over the record's log, integers only, no act).
++
++For every credit line the moment (r - c) x dP_take of the take's momentum about the centre c at the credited Node; for every
++birth line the moment of its take at the take's Node and the moment of the children's lay (dP_lay, the one vector the line
++carries) booked at the same Node; the spin part the senses (the credit's sense, the two children's senses), summed.
++With no centre the moment is about the board's centre in doubled coordinates R = 2 r - (cube - 1), an integer (am2's L2);
++with a centre c the arm is r - c. Per close (interval) and over the record.
++Usage: python moment_of_clicks.py <record.json> [<out.json>]"""
++from __future__ import annotations
++
++import json
++import sys
++from collections import defaultdict
++from typing import Any
++
++EPS = {0: (1, 2), 1: (2, 0), 2: (0, 1)}  # (c, a, b) with eps_cab = +1
++
++
++def cross(r: list[int], p: list[int]) -> list[int]:
++    return [r[a] * p[b] - r[b] * p[a] for (a, b) in (EPS[0], EPS[1], EPS[2])]
++
++
++def add(x: list[int], y: list[int]) -> list[int]:
++    return [u + v for u, v in zip(x, y, strict=True)]
++
++
++def arm(node: list[int], cube: int, centre: list[int] | None) -> list[int]:
++    if centre is None:
++        return [2 * x - (cube - 1) for x in node]
++    return [x - c for x, c in zip(node, centre, strict=True)]
++
++
++def moment_of_clicks(record: Any, centre: list[int] | None = None) -> dict[str, Any]:
++    """The clicks' J: the orbital part per close and summed (the takes', the lays'), the senses summed, the counts."""
++    log = record.log if hasattr(record, "log") else record["log"]
++    cube = int(record.cube if hasattr(record, "cube") else record["cube"])
++    per: dict[int, dict[str, list[int]]] = defaultdict(lambda: {"take": [0, 0, 0], "lay": [0, 0, 0]})
++    senses_credits, senses_births, counts = 0, 0, defaultdict(int)
++    for e in log:
++        if e["event"] == "credit":
++            r = arm(e["node"], cube, centre)
++            per[int(e["i"])]["take"] = add(per[int(e["i"])]["take"], cross(r, e["dP_take"]))
++            senses_credits += int(e["sense"])
++            counts["credits"] += 1
++            counts["credits laid back"] += "laid_back" in e
++        elif e["event"] == "birth":
++            r = arm(e["node"], cube, centre)
++            per[int(e["i"])]["take"] = add(per[int(e["i"])]["take"], cross(r, e["dP_take"]))
++            per[int(e["i"])]["lay"] = add(per[int(e["i"])]["lay"], cross(r, e["dP_lay"]))
++            senses_births += sum(int(s) for s in e["senses"])
++            counts["births"] += 1
++            counts["births with dP_lay not 0"] += any(e["dP_lay"])
++            counts["births with a child on standing light"] += any(any(s) for s in e.get("stood", []))
++    total_take, total_lay = [0, 0, 0], [0, 0, 0]
++    closes = {}
++    for i in sorted(per):
++        t, l = per[i]["take"], per[i]["lay"]
++        total_take, total_lay = add(total_take, t), add(total_lay, l)
++        closes[i] = {"J_take": t, "J_lay": l, "J": add(t, l)}
++    return {
++        "cube": cube,
++        "centre": centre if centre is not None else "the board's centre, doubled coordinates",
++        "counts": dict(counts),
++        "closes with a click": len(closes),
++        "closes with J not 0": sum(1 for v in closes.values() if any(v["J"])),
++        "J_take summed": total_take,
++        "J_lay summed": total_lay,
++        "J summed": add(total_take, total_lay),
++        "J max abs over the closes": max((max(abs(x) for x in v["J"]) for v in closes.values()), default=0),
++        "senses summed over the credits": senses_credits,
++        "senses summed over the births' children": senses_births,
++        "per close": closes,
++    }
++
++
++def main(argv: list[str]) -> None:
++    sys.set_int_max_str_digits(0)
++    with open(argv[1], encoding="utf-8") as f:
++        record = json.load(f)
++    found = moment_of_clicks(record)
++    found["record"] = argv[1]
++    shown = {k: v for k, v in found.items() if k != "per close"}
++    print(json.dumps(shown))
++    if len(argv) > 2:
++        with open(argv[2], "w", encoding="utf-8") as f:
++            json.dump(found, f)
++
++
++if __name__ == "__main__":
++    main(sys.argv)
+diff --git a/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/board_across_close.py b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/board_across_close.py
+new file mode 100644
+index 000000000..bc403b07e
+--- /dev/null
++++ b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/board_across_close.py
+@@ -0,0 +1,46 @@
++"""The board's L2 (am2's reading of MV-S1's density about the centre, doubled coordinates) before and after every close on the head's interval (interval.run's five acts), so the clicks' J can be set against it. Usage: python board_across_close.py <world.json> <out.json>"""
++import json, sys, time
++import numpy as np
++from event_universe.loader.world import load_world
++from event_universe.node import Node
++from event_universe.interval import Interval
++from event_universe.core.ports import AXES, across
++
++EPS = {0: (1, 2), 1: (2, 0), 2: (0, 1)}
++
++def L2P(recs, X, c):
++    L = [0, 0, 0]; P = [0, 0, 0]
++    for r in recs:
++        num = r.pair[0]; p = []
++        for b in range(AXES):
++            s = 0
++            for line in r.lines:
++                s = s + across(line.now, 2 * b) * line.before - line.now * across(line.before, 2 * b)
++            p.append(2 * num * s)
++        for b in range(AXES):
++            P[b] += int(np.sum(p[b]))
++        for cc in range(AXES):
++            a, b = EPS[cc]
++            L[cc] += int(np.sum((2 * X[a] - (c - 1)) * p[b] - (2 * X[b] - (c - 1)) * p[a]))
++    return L, P
++
++def main(argv):
++    sys.set_int_max_str_digits(0)
++    universe, world = load_world(argv[1]); node = Node(universe, world); c = node.cube
++    idx = np.indices(node.shape); X = [idx[a].astype(object) for a in range(AXES)]
++    recs = node.records(); per = []; t0 = time.monotonic_ns()
++    for t in range(int(world["intervals"])):
++        L0, P0 = L2P(recs, X, c)
++        iv = Interval(node, 1); iv.readings(); iv.kick(); iv.division(); iv.swap()
++        L3, P3 = L2P(node.records(), X, c)
++        n0 = len(node.log); iv.close()
++        L4, P4 = L2P(node.records(), X, c)
++        per.append({"i": node.interval, "L2_start": L0, "dL2_before_close": [x - y for x, y in zip(L3, L0)],
++                    "dL2_click": [x - y for x, y in zip(L4, L3)], "dP_click": [x - y for x, y in zip(P4, P3)], "L2_end": L4, "P_end": P4,
++                    "log lines": len(node.log) - n0})
++    out = {"world": argv[1], "cube": c, "log": node.log, "per_interval": per, "counts": {k: int(v) for k, v in node.counts.items()}, "ms": (time.monotonic_ns() - t0) // 10**6}
++    json.dump(out, open(argv[2], "w"))
++    print(json.dumps({"done": argv[1], "ms": out["ms"], "L2_end": per[-1]["L2_end"], "counts": out["counts"]}))
++
++if __name__ == "__main__":
++    main(sys.argv)
+diff --git a/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/compare_board.py b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/compare_board.py
+new file mode 100644
+index 000000000..345107886
+--- /dev/null
++++ b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/compare_board.py
+@@ -0,0 +1,24 @@
++"""The identity per close: the board's L2 change across the close (am2's reader, dL2_click) against the clicks' J from the record alone."""
++import json, sys
++sys.set_int_max_str_digits(0)
++sys.path.insert(0, sys.argv[0].rsplit('/', 1)[0])
++from moment_of_clicks import moment_of_clicks
++rec = json.load(open(sys.argv[1])); board = json.load(open(sys.argv[2]))
++J = moment_of_clicks(rec)["per close"]
++exact = miss = 0; worst = 0; misses = []
++births_by_i = {}
++for e in rec["log"]:
++    if e["event"] == "birth" and any(any(s) for s in e.get("stood", [])):
++        births_by_i[int(e["i"])] = births_by_i.get(int(e["i"]), 0) + 1
++for p in board["per_interval"]:
++    i = p["i"]; d = p["dL2_click"]; j = J.get(i, {"J": [0, 0, 0]})["J"]
++    if d == j:
++        exact += 1
++    else:
++        miss += 1; gap = [x - y for x, y in zip(d, j)]; worst = max(worst, max(abs(g) for g in gap))
++        misses.append({"i": i, "dL2_click": d, "J_clicks": j, "gap": gap, "births with a child on standing light": births_by_i.get(i, 0)})
++print(json.dumps({"record": sys.argv[1], "closes": len(board["per_interval"]), "exact": exact, "not exact": miss, "worst gap abs": worst,
++                  "closes with a click": len(J), "misses": misses, "counts board": board["counts"], "L2 end board": board["per_interval"][-1]["L2_end"],
++                  "dL2 summed over the run, the interval's acts before the close": [sum(p.get("dL2_before_close", [x + y + z for x, y, z in zip(p.get("dL2_step", [0]*3), p.get("dL2_write", [0]*3), p.get("dL2_swap", [0]*3))])[a] for p in board["per_interval"]) for a in range(3)],
++                  "closes where the board's L2 moved and no click": sum(1 for p in board["per_interval"] if any(p["dL2_click"]) and p["i"] not in J),
++                  "click": [sum(p["dL2_click"][a] for p in board["per_interval"]) for a in range(3)]}))
+diff --git a/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/test_ac1_moment_of_clicks.py b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/test_ac1_moment_of_clicks.py
+new file mode 100644
+index 000000000..b1ae99636
+--- /dev/null
++++ b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/test_ac1_moment_of_clicks.py
+@@ -0,0 +1,50 @@
++"""H-Angular-Momentum-In-The-Clicks-1: the clicks' J read from the log alone equals the board's L2 change across every close (the hole to 12 intervals, exact to the integer), and a Link's current has one moment from either end (the arm along the axis drops out of the cross product). Under 15 s."""
++import sys
++from pathlib import Path
++
++import numpy as np
++
++sys.path.insert(0, str(Path(__file__).parent))
++from moment_of_clicks import cross, moment_of_clicks  # noqa: E402
++from board_across_close import L2P  # noqa: E402
++from event_universe.loader.world import load_world
++from event_universe.node import Node
++from event_universe.interval import Interval
++from event_universe.core.ports import AXES
++
++WORLDS = Path(__file__).parents[4] / "tests" / "worlds"
++
++
++def test_one_link_one_moment():
++    """A current along axis a has the same moment about any centre from either end of its Link (and across the torus's seam)."""
++    for a in range(AXES):
++        p = [0, 0, 0]
++        p[a] = 7
++        for r in ([1, 2, 3], [0, 4, 4], [4, 0, 1]):
++            for k in (1, -1, 4, -4):
++                s = list(r)
++                s[a] += k
++                assert cross(r, p) == cross(s, p)
++
++
++def test_clicks_J_is_the_boards_change_across_the_close():
++    sys.set_int_max_str_digits(0)
++    universe, world = load_world(str(WORLDS / "world_hole.json"))
++    node = Node(universe, world)
++    c = node.cube
++    idx = np.indices(node.shape)
++    X = [idx[a].astype(object) for a in range(AXES)]
++    board = {}
++    for _ in range(12):
++        iv = Interval(node, 1)
++        iv.readings(); iv.kick(); iv.division(); iv.swap()
++        L3, _ = L2P(node.records(), X, c)
++        iv.close()
++        L4, _ = L2P(node.records(), X, c)
++        board[node.interval] = [x - y for x, y in zip(L4, L3)]
++    J = moment_of_clicks({"log": node.log, "cube": c})
++    assert J["counts"]["births"] == 8 and J["closes with a click"] >= 3
++    assert any(any(v) for v in board.values())
++    for i, d in board.items():
++        assert d == J["per close"].get(i, {"J": [0, 0, 0]})["J"], (i, d)
++    assert J["senses summed over the births' children"] == 0
+diff --git a/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/REPORT.md b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/REPORT.md
+new file mode 100644
+index 000000000..e5431241f
+--- /dev/null
++++ b/tools/derivations/open_items/H-Angular-Momentum-In-The-Clicks-1/REPORT.md
+@@ -0,0 +1,48 @@
++# H-Angular-Momentum-In-The-Clicks-1 (ac1): the angular momentum read in the clicks alone (2026-10-26, 02:46 to 03:0x UTC; worktree at 910648f74, the records of 2ab32b518)
++
++Verdict line: **A FINDING.** The clicks conserve no angular momentum of their own and the law names none; what the clicks hold exactly is the identity with the board: the moment of the takes booked on the credit and birth lines, summed over a close, equals the board's change of the moment of the lattice momentum density across that close, to the integer and about any centre (the hole 60: 60 of 60 closes; the bodies 300: 300 of 300; the chiral 60: 56 of 60, the four misses the births whose children landed on standing light, where the record's one dP_lay cannot place a two-Node lay). The clicks' J and the board's L do not sum to a constant: between the closes the board's L walks by Rule3's torque and the swap (AM-S1's terms); the senses summed over a birth's children are 0 and are the charge, a scalar under the 48, not J's spin part.
++
++## 1. The algebra (from the law's letter)
++
++The reading. For every credit line J_credit(c) = (r - c) x dP_take, r the credited Node, dP_take the take's three integers (take.momentum_of: 2 num [d_now Gb_a + d_before Gn_a] per axis at one Node); for every birth line J_birth(c) = (r - c) x dP_take at the take's Node plus (r - c) x dP_lay for the children's lay (dP_lay the one vector the line carries, child_laid's sum over the two ends); the spin part the senses: the credit's `sense` and the two children's `senses`. Summed over a record it is what an observer reads at the detectors. In doubled coordinates about the board's centre, R = 2 r - (cube - 1), every arm is an integer and the reading is am2's L2 convention.
++
++The identity (derivable, no word needed). MV-S1's density p_a(i) lives on the Link i -> i + a and points along its axis a. A take at one Node z moves one line's level now by d levels and changes the currents of the two Links of each axis at z, (z - a, z) and (z, z + a), both along e_a; the moment of a current along e_a about any centre is the same from either end of its Link, (r_z - e_a - c) x e_a q = (r_z - c) x e_a q, and the same across the torus's seam, where the far end differs by (cube - 1) e_a. So the board's L changes across a one-Node take by exactly (r_z - c) x dP_take: the one-Node kick's moment is the moment of the board's momentum change, to the integer, the summation by parts needing no bulk (test_one_link_one_moment). The children's lay onto nothing carries one integer along its Link's axis (mk2's Theorem A) and the children's own form carries 0, so dP_lay = 0 and the lay's moment is 0 at every birth onto nothing (hole 16 of 16, ga2 64 of 64); where a child lands on standing light the lay moves the standing gradients' currents at two Nodes one Link apart and its moment needs the lay's momentum per end, which the birth line does not carry (the chiral: 9 of 17 births with dP_lay not 0, 4 with a child on standing light).
++
++What the law conserves of it. Across one close: the board's L(after the close) - L(before) = SUM over the close's clicks of (r - c) x (dP_take + dP_lay), exact, the remainder 0 (the identity above; MK-S2's along-axis remainder is not on the head, the recoil lay not entered; under it the along-axis part of r x (dP_take + dP_lay) would be cut to the remainder's moment and the transverse parts would stand). Across a birth: the two children's senses are -1 and +1, their sum 0 (W_children opposite), and their dP_lay sums to 0 onto nothing. Across a record: L_board(end) - L_board(start) = J_clicks(summed) + SUM over the intervals of the torque of Rule3's step and the swap (am2's dL2_step and dL2_swap; the writes 0); on the hole 60 the clicks' part is [-979035335222368732952, -851424732737678867128, 851424732737678867128] and the interval's acts' part [549511444423944906536, 875240056689162175248, -875240056689162175248], their sum the board's L2 at the end [-429523890798423826416, 23815323951483308120, -23815323951483308120] (am2's number reproduced on the head). Nothing in the clicks balances the clicks' J: it is the board's recoil read at the detectors, not a conserved quantity, exactly as nature's detectors read the recoil a target takes.
++
++The senses and J's spin part. The sense is the sign of the plane's Wronskian re_now im_before - im_now re_before at one Node, built from the plane's two internal lines; the 48 moves Nodes and Ports and leaves the four levels at a Node as they are, so the sense is a true scalar under the 48 (even under every reflection), odd under the plane's conjugation and under the exchange of now and before: a charge (gate 17 reads it so), one integer. J's spin part is a pseudovector, three integers, even under parity. So the senses' sum at births is the charge's conservation and not J's spin part; nature's unit of J in the clicks has no row on the head (no spinor-row world births; the light lay carries no sense), the shape-8 row's axial part unread by name.
++
++## 2. The measure (moment_of_clicks.py over the record's log, integers only; board_across_close.py the board's L2 before and after every close on the head's interval; compare_board.py the two against each other; out/)
++
++| record | credits (laid back) | births (dP_lay not 0; a child on standing light) | closes with a click | closes with J not 0 | J summed (doubled coordinates about the centre) | J max abs over the closes | senses: credits / births' children | the identity per close against the board |
++|---|---|---|---|---|---|---|---|---|
++| hole 60 | 777 (0) | 16 (0; 0) | 48 | 48 | [-979035335222368732952, -851424732737678867128, 851424732737678867128] | 564422180001199568136 | 85 / 0 | 60 of 60 exact |
++| chiral 60 | 2,943 (3) | 17 (9; 4) | 58 | 58 | [-1913821982958558514872, -375558231108892122432, 1214900248300088545020] (the takes' [-3256557071868086010308, 1334149440520780883332, -606514270364495560000], the lays' [1342735088909527495436, -1709707671629673005764, 1821414518664584105020]) | 1477225957110565734848 | 31 / 0 | 56 of 60 exact; the misses at i 7, 8, 9, 16 (births with dP_lay not 0), the gap at i 9 [-1415929008241080000, 0, 0] = the one-Link arm (2 in doubled coordinates) times the far end's transverse lay |
++| bodies 300 | 1,973 (0; 1,938 with dP_take not 0) | 0 | 197 | 0 | [0, 0, 0] | 0 | 0 / 0 | 300 of 300 exact (am2's world_bodies.L.json, the record's counts equal) |
++| universe 400 | 1,875 (1,875) | 0 | 12 | 0 | [0, 0, 0] | 0 | 375 / 0 | every take laid back, dP_take booked 0: J 0 at every click |
++| pair_3 400 | 297 (297) | 0 | 11 | 0 | [0, 0, 0] | 0 | 0 / 0 | the same |
++| ga2 450 | 1,408 (1,408) | 64 (0; 0) | 12 | 0 | [0, 0, 0] | 0 | 0 / 0 | the 64 births at the 64 Nodes alike with dP_take not 0 (abs sum per axis [103181178097240567860096, 103181178097240567860096, 206362356194481135720192]), their moments 0 at every close by the symmetry |
++| Compton 60 on the head (mk2's world_compton.json with the head's universe_middle.json, 9-cube; board_across_close.py carrying the log) | 176 (0; every one with dP_take not 0) | 0 | 40 | 0 | [0, 0, 0] | 0 | 0 / 0 | 60 of 60 exact, every term 0: the board's L2 0 before and after every close, the body's credited Nodes mirrored about the board's centre |
++| Compton 60 (mk1's record n_world_compton_60.json of that day, the flag absent) | 155 (0; 155 with dP_take not 0 at 50 Nodes) | 0 | 36 | 0 | [0, 0, 0] | 0 | 0 / 0 | the recoil's moment 0 at every close by the same symmetry |
++
++The hole's clicks keep J_x = 0 and J_y = -J_z on the first closes (9 to 14: the transposition's pseudovector of the seed, am1's reading on the board), the x part moving later. The senses summed over the credits (85, 31, 375) are the credited rows' senses, a reading conserved by nothing.
++
++## 3. Every law with a number
++
++The one-Link reach: the reader reads lines, not Nodes (the credit's and birth's Node, dP_take, dP_lay, sense, senses); no act. Integers only: cross products of integers, the centre's halving carried by the doubled coordinates. The fixed count: no integer added. The run back: untouched (a reader). The 48: the reading is a pseudovector by its form; the clicks' images under the 48 against the images' J not measured here (named missing). No name of a family, no typed number (the cross product's index table and the doubling are the arithmetic's own).
++
++## 4. The sentence and the row
++
++**AJ-S1, the angular momentum read in the clicks is the board's recoil, exact** (2026-10-26; beside AM-S1 and MK-S2, both kept): the angular momentum an observer reads in the clicks is the moment of the takes booked on the credit and birth lines about a centre, (r - c) x dP_take at the click's Node, plus the moment of the children's lay, (r - c) x dP_lay; summed over a close it equals the board's change of the moment of the lattice momentum density across that close, to the integer and about any centre, because a Link's current lies along its own axis and the Link's arm along it drops out of the cross product (the one-Node kick's moment is the kick's moment, the torus's seam included); the clicks conserve no angular momentum of their own: the children's lay onto nothing carries no momentum and no moment, and between the closes the board's L walks by Rule3's torque and the swap, so the clicks' J and the board's L sum to no constant; the senses summed over a birth's children are 0 and are the charge, a scalar under the 48 and odd under the plane's conjugation, not J's spin part; a birth whose children land on standing light lays at two Nodes and its one dP_lay cannot place the lay's moment (the lay's momentum per end would). One reading for every row alike.
++
++The row for the gates of the phenomena (the next free after AM-S1's row): "angular momentum in the clicks": SHOWN where the clicks' J summed over a close equals the board's L change across that close to the integer on every close of the record (the hole 60 of 60, the bodies 300 of 300), and J 0 at every close where the seed has the symmetry (the uniform boards, the bodies, ga2, the Compton body on the head, 60 of 60); NOT SHOWN as a conservation in the clicks on any record (none is named); the reader `moment_of_clicks(record, centre)` (moment_of_clicks.py), the test test_ac1_moment_of_clicks.py (2 tests, 0.54 s). The patch ac1.patch adds the reader, the board's reader, the comparison and the test under the hand's folder (a reader, no act; nothing under src/).
++
++## 5. The ledger row and what is missing by name
++
++| item | derived | one-Node test | toy | gates | spec | missing by name |
++|---|---|---|---|---|---|---|
++| angular momentum in the clicks (ac1) | a finding: the clicks' J is the board's recoil's moment, exact per close about any centre; no conservation in the clicks; the senses the charge, not spin | test_ac1_moment_of_clicks.py: one Link one moment on the six arms and across the seam; the hole to 12 intervals, every close exact | hole 60 of 60, chiral 56 of 60 (4 two-Node lays on standing light), bodies 300 of 300, the uniform boards and ga2 J 0 at every close | a new row (the Reader) | moment_of_clicks(record, centre), a reading | see below |
++
++Missing by name: (1) the birth line's dP_lay per end (two vectors, David's log key) so a two-Node lay on standing light can be placed, the chiral's 4 of 60 closes; (2) J's spin part: no spinor-row world births on the head, the light lay carries no sense, the shape-8 row's axial part unread; (3) the clicks' images under the 48 against the images' J, not measured; (4) a Compton world whose body stands off the board's centre, so the recoil's moment is not 0 by symmetry and the identity is read with a non-zero term (both Compton records give 0 at every close); (5) MK-S2's remainder's moment, the act not entered; (6) the bodies' per-close comparison from am2's file of b9c52f5f6 (the record's counts equal, every term 0); (7) am2_angular.py does not run on the head's folded interval (walled_act gone; board_across_close.py is the head's form of its five phases, am2's L2 at the end reproduced to the integer).
++
++Files: moment_of_clicks.py, board_across_close.py, compare_board.py, test_ac1_moment_of_clicks.py, ac1.patch, out/J_*.json (per close), out/board_hole_60.json, out/board_chiral_60.json, out/compare_hole_60.json, out/compare_chiral_60.json, worlds/ (the Compton world and the head's middle universe), out/board_compton_60.json, out/compare_compton_60.json, out/am2_*.log (the failed runs of am2's reader on the head, kept). No run cut short; no commit, no push, nothing under src/ or tests/.

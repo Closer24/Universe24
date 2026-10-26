@@ -1,0 +1,111 @@
+{
+ "credits": 2943,
+ "credits laid back": 3,
+ "laid back with dP_take 0": 3,
+ "laid back with dP_take not 0": 0,
+ "credits standing (dP_take booked)": 2940,
+ "credits with dP_take 0 and not laid back": 0,
+ "births": 17,
+ "births with dP_lay 0": 8,
+ "births with dP_lay along the Link's axis": 8,
+ "births with senses summing to 0": 17,
+ "births with W_children summing to 0": 13,
+ "births with dP_take along the Link's axis only": 0,
+ "mergers (two ends' takes)": 0,
+ "sense sum over credits": 31,
+ "credits by sense": {
+  "-1": 1399,
+  "0": 114,
+  "1": 1430
+ },
+ "J2 of the takes' along-axis part at births": [
+  -516143644080185721560,
+  646604863635588716516,
+  666680485984653519552
+ ],
+ "J2 of the takes' transverse part at births": [
+  821038367792417639572,
+  97345540393501537380,
+  -566363025666365953928
+ ],
+ "J2 of the credits": [
+  -3561451795580317928320,
+  590199036491690629436,
+  -706831730682783125624
+ ],
+ "J2 of the births' takes": [
+  304894723712231918012,
+  743950404029090253896,
+  100317460318287565624
+ ],
+ "J2 of the births' lays": [
+  1382556584370384935336,
+  -1754959247502580427344,
+  1627541950902903259180
+ ],
+ "cube": 5,
+ "centre2": [
+  4,
+  4,
+  4
+ ],
+ "J2 clicks": [
+  -1874000487497701074972,
+  -420809806981799544012,
+  1021027680538407699180
+ ],
+ "P clicks": [
+  -670672041246096573344,
+  1025922931817659611468,
+  -529823313201509331908
+ ],
+ "intervals with a click moment not 0": 58,
+ "max abs J2 per interval": 1478712261124813899008,
+ "centre shift identity (J2(c') = J2(c) - (2c'-2c) x P) at c' = 0": true,
+ "against the board": {
+  "am1": "am_chiral_60.json",
+  "intervals": 60,
+  "board 2L end - start": [
+   -400773654987975486556,
+   -455460228831496804872,
+   1637511179007194988976
+  ],
+  "clicks J2 summed": [
+   -1874000487497701074972,
+   -420809806981799544012,
+   1021027680538407699180
+  ],
+  "board change less clicks (the torque of the step and the swap)": [
+   1473226832509725588416,
+   -34650421849697260860,
+   616483498468787289796
+  ],
+  "sum |board d2L| per interval": [
+   299344148087784185831956,
+   349131747495912022188912,
+   325890670360758936855024
+  ],
+  "sum |clicks J2| per interval": [
+   6544530202653046924860,
+   7852477803280881841436,
+   7033231275905776244532
+  ],
+  "sum |rest| per interval": [
+   299115095577821680377248,
+   347594221844925572648204,
+   328825145206822511799276
+  ],
+  "intervals with a click moment": 58,
+  "at those intervals: sum |clicks J2|": [
+   6544530202653046924860,
+   7852477803280881841436,
+   7033231275905776244532
+  ],
+  "at those intervals: sum |board d2L|": [
+   295660665621006531396964,
+   324084830929804631295372,
+   297160271327873891526492
+  ]
+ },
+ "record": "world_chiral_60.json"
+}

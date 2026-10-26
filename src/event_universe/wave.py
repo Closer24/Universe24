@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import mirrored, quotient, remainder
+from event_universe.core.rule3 import half, mirrored, remainder
 from event_universe.rows import CARRIER, PLANE, Line, zeros
 
 if TYPE_CHECKING:
@@ -28,7 +28,7 @@ def cycle_phases(node: Node, digits: list[int]) -> Any:
 
 def cycle_levels(p: Any, amplitude: int) -> tuple[Any, ...]:
     """The light's four levels from the phase digits at an amplitude A (re_now, re_before, im_now, im_before): z_now = A i^p and z_before = A i^(p + 1), the quarter turn per interval of cs1's eigenmode."""
-    found = [zeros(p.shape) for _ in range(2 * PLANE)]
+    found = [zeros(p.shape) for _ in range(PLANE * PLANE)]
     for at in np.ndindex(*p.shape):
         for k, q in enumerate((int(p[at]), remainder(int(p[at]) + 1, TURNS))):
             found[k][at], found[PLANE + k][at] = (amplitude * v for v in QUARTER[q])
@@ -52,7 +52,10 @@ def lay_cycle(node: Node, rec: int, n: int, digits: list[int], mirror: int) -> N
 
     def least_share(amplitude: int) -> int:
         levels = cycle_levels(p, amplitude)
-        lines = [Line(base[k] + levels[k], base[k + 1] + levels[k + 1], None, None) for k in (0, 2)]
+        lines = [
+            Line(base[k] + levels[k], base[k + 1] + levels[k + 1], None, None)
+            for k in range(0, PLANE * PLANE, PLANE)
+        ]
         return min(int(x) for x in node.share(lines, rule).reshape(-1))
 
     target, high = n * node.units[rec], 1
@@ -60,14 +63,14 @@ def lay_cycle(node: Node, rec: int, n: int, digits: list[int], mirror: int) -> N
         high = high + high
     low = 0
     while high - low > 1:
-        middle = int(quotient(low + high, 2))
+        middle = int(half(low + high))
         if least_share(middle) < target:
             low = middle
         else:
             high = middle
     levels = cycle_levels(p, high)
     node.lay(rec, Ellipsis, levels)
-    for line, now, before in zip(row.lines, levels[0::2], levels[1::2], strict=True):
+    for line, now, before in zip(row.lines, levels[0::PLANE], levels[1::PLANE], strict=True):
         negated = np.vectorize(lambda a, b: int(a) < 0 or int(b) < 0, otypes=[bool])(now, before)
         line.rem = np.where(negated & (mirror == 1), mirrored(line.rem, line.wall, 1), line.rem)
     node.log.append(

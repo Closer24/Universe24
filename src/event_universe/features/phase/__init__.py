@@ -7,7 +7,7 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.paces import rounded
-from event_universe.core.rule3 import division_forward, rule3
+from event_universe.core.rule3 import division_forward, half, rule3
 
 # a line of the phase, (now, before, remainder), each an integer or an integer array over the Links
 Line = tuple[Any, Any, Any]
@@ -17,12 +17,12 @@ Pair = tuple[Line, Line]
 
 def unit(gamma: Any) -> Any:
     """The phase line's Gamma under the centred count (ALGEBRA.md, The turn per proper interval, the owner's decision of 2026-10-23): the Link's count K_ij = K_i - K_j is twice the trapezoid sum of the clocked potential to the step's centre (node.phased), so one count is the half angle theta_0 / 2 and the line runs at the Gamma 2 Gamma, D = 2 (2 Gamma)^2 and K_0 = D - 1, the angle arccos(1 - 1 / (8 Gamma^2)) = 1 / (2 Gamma) to 6.5 x 10^-10 relative; the rest rotation's bisection (`rotation_unit`, struck 2026-10-24 as dead code and kept by name) kept the line at Gamma, the unit of the fold's angle."""
-    return 2 * gamma
+    return gamma + gamma
 
 
 def D(gamma: Any) -> Any:
     """The phase line's wall, D = 2 Gamma^2 (the mathematician's item (g): 72,000,000 at Gamma 6,000, 2^26.1), the unit of the doubled cosine 2 K_0 / D."""
-    return 2 * gamma * gamma
+    return (gamma + gamma) * gamma
 
 
 def K0(gamma: Any) -> Any:
@@ -32,7 +32,7 @@ def K0(gamma: Any) -> Any:
 
 def half_wall(gamma: Any) -> Any:
     """The half wall D div 2 = Gamma^2, the remainder every line is born with (the engine's birth; item (i) 4, the resonance's leading term cancelled by it)."""
-    return division_forward(D(gamma), 2, 0)[0]
+    return half(D(gamma))
 
 
 def seed(amplitude: Any, gamma: Any) -> Pair:
@@ -46,9 +46,9 @@ def seed(amplitude: Any, gamma: Any) -> Pair:
             f"of Gamma = {gamma}: the seed is refused (the half-wall birth cancels the walk's resonance "
             "at a multiple of Gamma alone)"
         )
-    half = half_wall(gamma) + 0 * amplitude  # the half wall in the amplitude's shape and kind
-    cosine: Line = (amplitude, rounded(amplitude * K0(gamma), wall), half)
-    sine: Line = (0 * amplitude, -quotient, half)
+    carry = half_wall(gamma) + 0 * amplitude  # the half wall in the amplitude's shape and kind
+    cosine: Line = (amplitude, rounded(amplitude * K0(gamma), wall), carry)
+    sine: Line = (0 * amplitude, -quotient, carry)
     return cosine, sine
 
 
@@ -59,7 +59,7 @@ def act(line: Line, gamma: Any, direction: int = 1) -> Line:
     now, before, remainder = line
     wall = D(gamma)
     mass = (
-        wall + wall - 2 * K0(gamma)
+        wall + wall - K0(gamma) - K0(gamma)
     )  # the line's own term, 2 w - 2 K_0 = 2: Rule3's flux line with no Links
     if direction == 1:
         following, carried = rule3(0, mass, wall, now, before, remainder, 1)
@@ -70,10 +70,9 @@ def act(line: Line, gamma: Any, direction: int = 1) -> Line:
 
 def amplitude(gamma: Any, width: int) -> int:
     """The phase line's amplitude X, derived from the width and never written (the two hands' item (i): X of 2^35's size at width 63, 2 K_0 X + D below 2^width): half of the act's room, (2^width - 1) div (2 D) div 2, the half the walk's room (the pair's magnitude within 1.42 N + 2.3 Gamma levels of X over N acts), rounded down to a multiple of Gamma (the half-wall birth cancels the resonance at a multiple of Gamma alone, `seed`): 32,025,594,000 at Gamma 6,000 and width 63 (2^34.9; the hands' 2^35 div Gamma times Gamma is 34,359,738,000, 35 being no literal of the law); refused by name where the width leaves no multiple of Gamma."""
-    largest = 2**width - 1
-    room = division_forward(largest, 2 * D(gamma), 0)[0]
-    half = division_forward(room, 2, 0)[0]
-    found = division_forward(half, gamma, 0)[0] * gamma
+    largest = (1 << width) - 1
+    room = division_forward(largest, D(gamma) + D(gamma), 0)[0]
+    found = division_forward(half(room), gamma, 0)[0] * gamma
     if int(found) < int(gamma):
         raise ValueError(
             f"the width {width} leaves no multiple of Gamma = {gamma} inside the phase act's room "

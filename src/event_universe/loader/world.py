@@ -9,8 +9,8 @@ from typing import Any
 WORLD_KEYS = frozenset({"universe", "shape", "intervals", "seed"})
 UNIVERSE_KEYS = frozenset({"integers", "rows"})
 INTEGERS = frozenset(
-    {"den", "node_clock", "quantum_action"}
-)  # the Link unit G is derived from Gamma (K-S1), no key
+    {"den", "node_clock", "quantum_action", "trace"}
+)  # the Link unit G is derived from Gamma (K-S1), no key; the trace the held write's weight (ALGEBRA.md, the held write)
 ROW_KEYS = frozenset({"shape", "pair", "wall"})
 
 
@@ -22,7 +22,7 @@ def refused_keys(found: dict[str, Any], allowed: frozenset[str], name: str) -> N
 
 
 def read_world(world: dict[str, Any], universe: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
-    """The two files' dictionaries with their keys checked: the world's four keys, the universe's two, the universe's four integers, every row's shape with a pair or a wall."""
+    """The two files' dictionaries with their keys checked: the world's four keys, the universe's two, the universe's five integers, every row's shape with a pair or a wall."""
     refused_keys(world, WORLD_KEYS, "world")
     refused_keys(universe, UNIVERSE_KEYS, "universe")
     refused_keys(universe["integers"], INTEGERS, "universe's integers")
