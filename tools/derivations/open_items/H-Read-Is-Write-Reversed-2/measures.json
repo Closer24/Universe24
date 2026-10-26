@@ -1,0 +1,268 @@
+{
+ "worlds": [
+  {
+   "world": "hole_60",
+   "against": "cache",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 16420,
+   "turns_count": 546,
+   "births": 16,
+   "credits": 777,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 20,
+    "exact": 20
+   }
+  },
+  {
+   "world": "chiral_60",
+   "against": "cache",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 25665,
+   "turns_count": 639,
+   "births": 17,
+   "credits": 2943,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 20,
+    "exact": 20
+   }
+  },
+  {
+   "world": "bodies_300",
+   "against": "cache",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 15782,
+   "turns_count": 4229,
+   "births": 0,
+   "credits": 1973,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 20,
+    "exact": 20
+   }
+  },
+  {
+   "world": "universe_400",
+   "against": "cache",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 19752,
+   "turns_count": 250,
+   "births": 0,
+   "credits": 1875,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 10,
+    "exact": 10
+   }
+  },
+  {
+   "world": "pair_3_400",
+   "against": "cache",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 3646,
+   "turns_count": 54,
+   "births": 0,
+   "credits": 297,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 10,
+    "exact": 10
+   }
+  },
+  {
+   "world": "plasma_3_170",
+   "against": "cache",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 13205,
+   "turns_count": 27,
+   "births": 0,
+   "credits": 162,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 10,
+    "exact": 10
+   }
+  },
+  {
+   "world": "ga2_450",
+   "against": "cache",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 70401,
+   "turns_count": 128,
+   "births": 64,
+   "credits": 1408,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 10,
+    "exact": 10
+   }
+  },
+  {
+   "world": "sea_3_240",
+   "against": "head copy",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 0,
+   "turns_count": 54,
+   "births": 0,
+   "credits": 0,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 10,
+    "exact": 10
+   }
+  },
+  {
+   "world": "universe_3_60",
+   "against": "head copy",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 1973,
+   "turns_count": 0,
+   "births": 0,
+   "credits": 189,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 10,
+    "exact": 10
+   }
+  },
+  {
+   "world": "plasma_60",
+   "against": "head copy",
+   "log": true,
+   "nodes": true,
+   "counts": true,
+   "turns": true,
+   "rows": true,
+   "log_entries": 22377,
+   "turns_count": 0,
+   "births": 0,
+   "credits": 625,
+   "run_back_fold": {
+    "intervals": 10,
+    "exact": 10
+   },
+   "run_back_ref": {
+    "intervals": 10,
+    "exact": 10
+   }
+  }
+ ],
+ "back_20": {
+  "hole_60_b20": {
+   "intervals": 20,
+   "exact": 20
+  },
+  "chiral_60_b20": {
+   "intervals": 20,
+   "exact": 20
+  }
+ },
+ "code_shape": {
+  "node.py": [
+   370,
+   373,
+   36,
+   36
+  ],
+  "close.py": [
+   340,
+   336,
+   14,
+   13
+  ],
+  "interval.py": [
+   283,
+   282,
+   13,
+   13
+  ],
+  "total_lines": [
+   993,
+   991
+  ],
+  "functions": [
+   63,
+   62
+  ],
+  "struck": [
+   "close.unclick"
+  ]
+ },
+ "c48_3cube_60": {
+  "images": 48,
+  "verdicts": {
+   "EQUAL": 12,
+   "APART": 36
+  },
+  "fold_vs_head_copy": "equal but the src path"
+ },
+ "suite_fold": {
+  "passed": 78,
+  "failed": 0,
+  "seconds": 506
+ }
+}

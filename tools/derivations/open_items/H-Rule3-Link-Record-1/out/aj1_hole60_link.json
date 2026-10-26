@@ -1,0 +1,116 @@
+{
+ "cube": 5,
+ "centre2": [
+  4,
+  4,
+  4
+ ],
+ "counts": {
+  "credits": 3138,
+  "credits laid back": 0,
+  "births": 21,
+  "mergers": 5,
+  "births: taker's moment about the Link's midpoint 0": 0,
+  "births: lay's moment about the Link's midpoint 0": 14,
+  "births: moment about the Link's own axis 0 (take and lay)": 21,
+  "births: dP_lay along the Link's axis": 14,
+  "births: dP_lay 0": 14,
+  "births: dP_take along the Link's axis only": 0,
+  "births: balance 0 about the centre (J conserved at the event)": 0,
+  "births: W_children summing 0": 20,
+  "births: dP_lay_ends present": 0,
+  "births: dP_lay_ends summing to dP_lay": 0,
+  "births: the taker at one end of the Link": 31
+ },
+ "J2 by class": {
+  "credits": [
+   -2336960135141437842236,
+   -10068258190904699195112,
+   7020827239458291253892
+  ],
+  "births' takes": [
+   -1329964492055265863968,
+   193781309381456331420,
+   -1830763325095229847860
+  ],
+  "births' lays": [
+   -92873357779201257720,
+   -110649327807033604380,
+   -2941643361532824900
+  ],
+  "mergers' takes": [
+   -53858459452276915872,
+   -86003711152397147192,
+   -15890671595153774728
+  ],
+  "mergers' lays": [
+   -1454967083177388398884,
+   9943376902636649559308,
+   -4969292719950385022192
+  ]
+ },
+ "P by class": {
+  "credits": [
+   2310455461526509386264,
+   -1745457092968463547346,
+   73206272432994614092
+  ],
+  "births' takes": [
+   -191051995164816101400,
+   1018762019931243192132,
+   -148444367671710288310
+  ],
+  "births' lays": [
+   -7206788603312240430,
+   3715760035620410400,
+   -21949903041584346930
+  ],
+  "mergers' takes": [
+   38938210549956959448,
+   -2426056732084545760,
+   -64897017583261599080
+  ],
+  "mergers' lays": [
+   4788248210246583097532,
+   -120150476959206570436,
+   2366891614383925698122
+  ]
+ },
+ "J2 clicks": [
+  -5268623527605570278680,
+  -127753017846024055956,
+  201938879455989784212
+ ],
+ "P clicks": [
+  6939383098554921101414,
+  -845555846692891061010,
+  2204806598520364077894
+ ],
+ "J2 remainder = the births' takes (the lays carrying 0)": [
+  -1329964492055265863968,
+  193781309381456331420,
+  -1830763325095229847860
+ ],
+ "worst |2J| balance at a birth": 1463034411076946489908,
+ "dipole sum (r_plus - r_minus, Links)": [
+  -1,
+  -1,
+  2
+ ],
+ "W_children summed over births": 1794,
+ "intervals with a click moment not 0": 51,
+ "births per interval": {
+  "9": 8,
+  "23": 7,
+  "24": 2,
+  "25": 2,
+  "27": 1,
+  "28": 1,
+  "29": 1,
+  "34": 1,
+  "36": 1,
+  "37": 1,
+  "42": 1
+ },
+ "record": "hole60_link.json"
+}

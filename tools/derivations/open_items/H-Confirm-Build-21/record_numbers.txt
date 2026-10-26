@@ -1,0 +1,7 @@
+world_bodies_300.json births 0 credits 2812 body_clicks 2812 turns 239 run_back {'intervals': 20, 'exact': 20} integers {90} bits 92 identity births 0 of 0 credits 2812 of 2812 turns_list [[4, 2], [6, 12], [7, 8], [8, 25]]
+world_chiral_60.json births 16 credits 3119 body_clicks 3119 turns 58 run_back {'intervals': 20, 'exact': 20} integers {99} bits 115 identity births 14 of 14 credits 3119 of 3119 turns_list [[1, 1], [2, 8], [3, 18], [4, 29]]
+world_ga2_450.json births 146 credits 402 body_clicks 402 turns 56 run_back {'intervals': 10, 'exact': 10} integers {90} bits 115 identity births 82 of 82 credits 402 of 402 turns_list [[111, 64], [312, 2], [313, 10], [314, 4]]
+world_hole_60.json births 16 credits 1653 body_clicks 1653 turns 47 run_back {'intervals': 20, 'exact': 20} integers {99} bits 115 identity births 16 of 16 credits 1653 of 1653 turns_list [[1, 1], [2, 6], [3, 5], [4, 22]]
+world_pair_3_400.json births 0 credits 297 body_clicks 297 turns 2 run_back {'intervals': 10, 'exact': 10} integers {99} bits 115 identity births 0 of 0 credits 297 of 297 turns_list [[85, 27], [252, 27]]
+world_plasma_3_170.json births 0 credits 162 body_clicks 162 turns 1 run_back {'intervals': 10, 'exact': 10} integers {99} bits 115 identity births 0 of 0 credits 162 of 162 turns_list [[84, 27]]
+world_universe_400.json births 0 credits 1875 body_clicks 1875 turns 2 run_back {'intervals': 10, 'exact': 10} integers {99} bits 115 identity births 0 of 0 credits 1875 of 1875 turns_list [[101, 125], [301, 125]]

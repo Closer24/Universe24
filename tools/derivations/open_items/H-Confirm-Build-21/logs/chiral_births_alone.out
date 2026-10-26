@@ -1,0 +1,5 @@
+.                                                                        [100%]
+============================= slowest 1 durations ==============================
+27.77s call     tests/test_the_board.py::test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero
+1 passed in 28.15s
+exit 0 wall_ms 29176
