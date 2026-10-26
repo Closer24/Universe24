@@ -58,11 +58,6 @@ def axes(shape: int) -> list[Matrix]:
     return quartet().gamma if shape == QUARTET else []
 
 
-def scale(shape: int, gamma: Any) -> Any:
-    """The row's scale on the rule and the walls: 2 x 6 Gamma for the quartet, so that the term's coefficient R / (2 Gamma) summed over the six Ports enters as the integer SUM_j R_j (SR-S3, sr1's form); 1 for every other shape."""
-    return (PORTS + PORTS) * gamma if shape == QUARTET else 1
-
-
 def matvec(m: Matrix, xs: list[Any]) -> list[Any]:
     """A matrix on a list of arrays, the zero entries skipped."""
     return [sum((m[r][c] * xs[c] for c in range(len(xs)) if m[r][c]), start=0) for r in range(len(m))]

@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import gram
+from event_universe import gram, readings
 from event_universe import run as record
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
@@ -241,7 +241,9 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
         lines = node.all_lines()
         assert [[int(a[CENTRE]) for a in (line.now, line.before, line.rem)] for line in lines] == fed
         assert int(node.proper[CENTRE]) == proper and not node.turned[CENTRE]
-        frozen_now = np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object) == 0
+        frozen_now = (
+            np.asarray(paces.link_pace_of(node.gamma, readings.content(node)), dtype=object) == 0
+        )
         assert int(frozen_now.sum()) == 1 and frozen_now[CENTRE]
         assert all(int(f[CENTRE]) == 0 for f in factors(node, None, frozen_now))
         assert all(
@@ -255,7 +257,7 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
 def shares_of(node: Node) -> tuple[Any, Any, Any]:
     """The gap-0 line's share in the carrier's unit, and by hand at the frame's weight (X set to Gamma^3 div p_i^2) and at the vacuum's (X set to Gamma)."""
     gap0 = node.emitter()
-    rule = node.rule(gap0.pair, node.start_content, factors(node))
+    rule = readings.rule(node, gap0.pair, node.start_content, factors(node))
     pace = np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)
     x, carrier = node.start_x, gram.share(node, gap0.lines, rule)
     node.start_x = np.vectorize(lambda p: quotient(node.gamma**3, p * p), otypes=[object])(pace)
@@ -278,7 +280,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     assert carrier.tolist() == vacuum.tolist()
     for _ in range(20):
         node.step()
-    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
+    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
     carrier, frame, vacuum = shares_of(node)
     totals = [sum(int(v) for v in a.reshape(-1)) for a in (carrier, frame, vacuum)]
     # 390 at 54
@@ -442,7 +444,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
     rec, count = 1, len(node.records())
     re = node.records()[rec].lines[0]
     nothing, still = [zeros(node.shape) for _ in range(count)], np.zeros(node.shape, dtype=bool)
-    rule = node.rule_of(node.emitter(), node.content(), factors(node))
+    rule = readings.rule_of(node, node.emitter(), readings.content(node), factors(node))
     for period in ((2, 1, 0, -1, -2, -1, 0, 1), (2, 1, -1, -2, -1, 1)):
         counters = []
         for sign in (1, -1):
@@ -575,9 +577,9 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
     light = node.emitter()
     rec0, z = node.records().index(light), light.lines[0]
     z.now[at] = int(z.before[at]) + 3_000
-    c = node.content()
+    c = readings.content(node)
     node.start_content, node.start_x = c, node.row(CARRIER).lines[0].now
-    rule = node.rule_of(light, c, factors(node))
+    rule = readings.rule_of(node, light, c, factors(node))
     walls = node.unit_emitter + node.unit_emitter
     hash_before, undo, paid, below = record.state_hash(node), [], 0, 0
     for _ in range(20):

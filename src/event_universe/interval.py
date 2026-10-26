@@ -58,12 +58,11 @@ class Interval:
         self.riders = [r for r in node.rows_ if r.wall is None and r is not self.carrier]
         self.records = node.records()
         self.planes = [(r, coupling_of(r)) for r in self.records]
-        self.scales = {self.where[id(r)]: gram.scale(r.shape, node.gamma) for r in self.riders}
+        self.scales = {self.where[id(r)]: readings.scale(r.shape, node.gamma) for r in self.riders}
         self.common = max(self.scales.values())
         self.out: list[list[Line]] = [[] for _ in self.rows]
         self.plane_starts: list[list[Line]] = []
         self.stepped: list[list[Line]] = []
-        self.w_half = half(node.w)
 
     def at(self, line: Line) -> Any:
         """A line's start level: forward the now slot; backward the before slot, and the now slot at a still Node, turned or frozen (BH-S1), which ended the interval at its pre-state."""
@@ -76,10 +75,6 @@ class Interval:
     def ends(self, row: Row) -> tuple[Any, list[Line] | None]:
         """The turned Nodes and the row's kept pre-state for an act backward."""
         return self.top, None if self.kept is None else self.kept[self.where[id(row)]]
-
-    def mean_wall(self, line: Line) -> Any:
-        """The mean wall (w div 2)(X_before + X_now) of the carrier's time line as given: the rows' own before the carrier's act for the kick and the lays, the act's at its end for the riding lines' divisions."""
-        return self.w_half * (line.before + line.now)
 
     def readings(self) -> None:
         """(1) The readings at the start (the former `readings`, `walled_act` and `forces`): the content and the clock, the frozen mask (BH-S1), the proper count resting at a frozen Node, the Link factors with a frozen end at the wall, the frames, the clocked potential, the carrier's level and the stress of the planes; the walled row's act, one carried division with the flux 2 c Phi inside it (its start the Links' count K = 2 (Phi_now - Phi_before) + c, backward recovered by the inverse division alone), the six Links' records read once per coupling present among the records (links.coupling_of; the frame sign, the count and the odd part at the coupling, so the turn at the coupling 0 is the identity by arithmetic), the curl of the odd lines; the records' current at this end, each at its coupling; every riding line's force, SUM_j R_j (m_j - a) - D a plus the row's Node term by shape (gram.term), every record turned by the Links at its coupling and by the flux lines' fold at its rest rotation (links.folded, Y-S3; the row at the gap 0 by nothing); and the emission, X_now SUM over the records with a gap of F.GJ.N (the plane's re F_im - im F_re), each over its scale against the common one."""
@@ -110,7 +105,7 @@ class Interval:
         self.shear = shear_parts(sources, node.shape)
         self.flux_lines = [self.at(line) for line in self.carrier.lines[1 + AXES : 1 + AXES + AXES]]
         k, flux = self.where[id(self.walled)], [self.cphi + self.cphi]
-        rule, ends = node.rule_of(self.walled, self.c, self.factors), self.ends(self.walled)
+        rule, ends = readings.rule_of(node, self.walled, self.c, self.factors), self.ends(self.walled)
         act = node.act(self.rows[k], rule, None, [None], self.direction, flux, *ends)
         (phi_start,), self.out[k] = act
         count = centred_count(self.cphi, phi_start)
@@ -141,7 +136,7 @@ class Interval:
         self.force: dict[int, list[Any]] = {}
         self.walls: dict[int, Any] = {}
         for r in self.riders:
-            rule = node.rule_of(r, self.c, self.factors)
+            rule = readings.rule_of(node, r, self.c, self.factors)
             turn = None
             if r in self.records:
                 assert r.pair is not None
@@ -170,7 +165,7 @@ class Interval:
         self.forms = zeros(node.shape)
         self.kicked: dict[int, list[Any]] = {}
         d = (node.w + node.w) * self.x_now
-        w_side = self.mean_wall(self.carrier.lines[0])
+        w_side = readings.mean_wall(self.node, self.carrier.lines[0])
         charge = zeros(node.shape)
         self.flux = [zeros(node.shape) for _ in range(AXES)]
         for r in self.riders:
@@ -208,11 +203,11 @@ class Interval:
             held_numerator(node.trace, self.x_now, self.forms, self.trace, self.p0, node.den, node.gamma)
         ]
         numerators += [part * p02 for part in (*self.traceless, *self.flux, *self.shear)]
-        rule = node.rule_of(carrier, self.c, self.factors)
+        rule = readings.rule_of(node, carrier, self.c, self.factors)
         self.out[k] = node.act(
             self.rows[k], rule, None, numerators, self.direction, None, *self.ends(carrier)
         )[-1]
-        w_div = self.mean_wall(self.out[k][0])
+        w_div = readings.mean_wall(self.node, self.out[k][0])
         for r in self.riders:
             k = self.where[id(r)]
             ws = self.scales[k] * w_div
@@ -246,7 +241,7 @@ class Interval:
         node = self.node
         line, carrier = node.emitter().lines[0], node.row(CARRIER).lines[0]
         levels = line.now
-        wall = self.common * self.mean_wall(carrier)
+        wall = self.common * readings.mean_wall(self.node, carrier)
         node.write(line, paces.rounded(self.emission, wall), self.direction)
         if self.direction == 1:
             laid_on(node, line, levels)

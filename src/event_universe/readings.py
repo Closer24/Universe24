@@ -1,4 +1,4 @@
-"""The Node's readings at an interval's start, each a function of the Node's state at every Node alike: the content (the carrier's level), the (cos, sin) pair at a count along the one orbit, the swap's floor; the Link's readings are links.py's (the former link_factors, frames, centred_count and link_phases kept by name) and the records' share is gram.share."""
+"""The file's one reader (R6 of the readings' map, 2026-10-26, under the owner's word of 12:2x UTC): what the Node reads of the two files at its content before it adds, each a function of the Node's state at every Node alike: the content (the carrier's level), the two paces, the frozen mask, the (cos, sin) pair at a count along the one orbit, the swap's floor, Rule3's integers at a pair and at a row (the former node.rule, node.rule_of and node.content kept by name) and the mean wall of the carrier's two levels (the former Interval.mean_wall); the Link's readings are links.py's and the records' share is gram.share."""
 
 from __future__ import annotations
 
@@ -6,10 +6,11 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core import paces
-from event_universe.core.rule3 import remainder
+from event_universe.core import paces, rule3
+from event_universe.core.ports import PORTS
+from event_universe.core.rule3 import half, remainder
 from event_universe.features import phase, volume
-from event_universe.rows import CARRIER
+from event_universe.rows import CARRIER, QUARTET, Line, Row
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -50,6 +51,30 @@ def pair_angle(node: Node, n: Any) -> tuple[int, int]:
             n, s = node.orbit_half + node.orbit_half - n, -s
     c_, sn_ = node.orbit[n]
     return c_, s * sn_
+
+
+def scale(shape: int, gamma: Any) -> Any:
+    """The row's scale on the rule and the walls (the former gram.scale kept by name, a reading of the row's shape alone): 2 x 6 Gamma for the quartet, so that the term's coefficient R / (2 Gamma) summed over the six Ports enters as the integer SUM_j R_j (SR-S3, sr1's form); 1 for every other shape."""
+    return (PORTS + PORTS) * gamma if shape == QUARTET else 1
+
+
+def rule(node: Node, pair: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
+    """Rule3's integers of a pair at the Node's paces from the content, in the carrier's unit (PM-S1)."""
+    clock, pace = paces_of(node, c)
+    return rule3.rule_integers(pair[0], pair[1], node.gamma, clock, pace, factors, node.G)
+
+
+def rule_of(node: Node, r: Row, c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
+    """A row's rule: Rule3's integers at its pair and the Node's paces scaled by the row's scale (gram.scale: 1 but for the quartet), or, for the row with its own wall, no Links and the own weight 2 w (next = 2 now - before + the write inside the division)."""
+    if r.wall is not None:
+        return rule3.Rule(tuple(0 for _ in range(PORTS)), r.wall + r.wall, r.wall, 0)
+    assert r.pair is not None
+    return rule3.scaled(rule(node, r.pair, c, factors), scale(r.shape, node.gamma))
+
+
+def mean_wall(node: Node, line: Line) -> Any:
+    """The mean wall (w div 2)(X_before + X_now) of the carrier's time line as given: the rows' own before the carrier's act for the kick and the lays, the act's at its end for the riding lines' divisions."""
+    return half(node.w) * (line.before + line.now)
 
 
 def floor(node: Node) -> int:

@@ -212,7 +212,7 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
     """The reader's row at an interval: the board's numbers read from outside (no Node reads them)."""
     metric, potential, emitter = node.row(CARRIER), node.row(POTENTIAL), node.emitter().lines[0]
     records = node.records()
-    cs, vs = ints(node.content()), ints(metric.lines[0].now)
+    cs, vs = ints(readings.content(node)), ints(metric.lines[0].now)
     energy = sum(x * x for r in records for line in r.lines for x in ints(line.now))
     odd_max = max(abs(x) for line in potential.lines[1:] for x in ints(line.now))
     emitter_v = max(abs(a - b) for a, b in zip(ints(emitter.now), ints(emitter.before), strict=True))
@@ -254,7 +254,7 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
 def node_lines(node: Node) -> dict[str, Any]:
     """The record's Node and Link line at an interval, every Node by its index in the board's order: the carrier's level X, the content, the turned Nodes, the frozen Nodes (the Link pace 0), the Links held at the wall (the factor 0) as [Node, axis] pairs, and every Link's current of the gap-0 line, F_ij from the Node along each axis (the sign the direction, the size the flow); the page draws the board from these and nothing else."""
     carrier = node.row(CARRIER).lines[0]
-    content = node.content()
+    content = readings.content(node)
     pace = paces.link_pace_of(node.gamma, content)
     read = factors(node, None, readings.frozen_of(node, content))
     held = [

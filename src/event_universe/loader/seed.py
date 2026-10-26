@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram, take
+from event_universe import gram, readings, take
 from event_universe.core.paces import rounded, sine_den
 from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import half, largest_below, least_at, odd, quotient
@@ -218,8 +218,8 @@ def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
     """The fourth form laid: the plane with a gap at every Node alike at the least amplitude whose share at the vacuum's weight is at or above n quanta of its unit at every Node (ma2's fitted_uniform: the search by comparisons, doubling then halving, its answer plus one), at the sense -1 or 1 or the conjugate pair at 0; the lay logged."""
     row = node.records()[rec]
     assert row.pair is not None
-    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
-    rule = node.rule(row.pair, node.start_content, factors(node))
+    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
+    rule = readings.rule(node, row.pair, node.start_content, factors(node))
     target = n * node.units[rec]
     amplitude = least_at(
         lambda a: share_at_node(node, row, uniform_levels(node, row, a, sense), rule) > target
@@ -256,7 +256,7 @@ def fitted(
 ) -> int:
     """The largest amplitude at which the record's share at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
     assert row.pair is not None
-    rule = node.rule(row.pair, node.content(), factors(node))
+    rule = readings.rule(node, row.pair, readings.content(node), factors(node))
 
     def share_of(amplitude: int) -> int:
         lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
@@ -312,7 +312,7 @@ def lay_packet(
     if wave is not None:
         phases = phases_of(node, at, h, half_tops, points)
         pairs = (phases, turn_pair(phases[0], phases[1], rotation[0], rotation[1], node.den))
-    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
+    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
     amplitude = fitted(node, row, envelope, w0, n * node.units[rec], vector, pairs)
     for sense in (-1, 1) if not one_sense else (int(one_sense),):
         lines = rest_record(node, row, envelope, w0, amplitude, sense, vector, pairs)
@@ -326,7 +326,7 @@ def lay_packet(
             continue
         take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
     lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
-    rule = node.rule(row.pair, node.start_content, factors(node))
+    rule = readings.rule(node, row.pair, node.start_content, factors(node))
     logged(
         node,
         "lay",

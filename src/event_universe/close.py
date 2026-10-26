@@ -121,7 +121,7 @@ def births(
     for r in {k.line_pair for k in kept} | {k.rec for k in kept}:
         pair = records[r].pair
         assert pair is not None
-        rules[r] = node.rule(pair, c, factors)
+        rules[r] = readings.rule(node, pair, c, factors)
     own: dict[tuple[int, int, tuple[int, ...]], int] = {}
     walls = {k: walls_of(node, k.line_pair, k.minus, k.plus, rules[k.line_pair], own) for k in kept}
     taken: list[tuple[tuple[int, ...], int, list[Birth], dict[str, Any]]] = []
@@ -176,7 +176,7 @@ def children(
         assert row.pair is not None
         if "takes" in take:
             walls = dict(zip((-1, 1), (t["booked"] for t in take["takes"]), strict=True))
-            levels_of = light_levels(node, s, walls, node.rule(row.pair, c, factors), exact)
+            levels_of = light_levels(node, s, walls, readings.rule(node, row.pair, c, factors), exact)
         else:
 
             def levels_of(_where: tuple[int, ...], sense: int, row: Row = row) -> tuple[int, ...]:
@@ -252,12 +252,12 @@ def click(
     node.lattices, node.drawn = {}, {}
     frozen = readings.frozen_of(node, c)
     read = factors(node, None, frozen)
-    r_emitter = node.rule_of(node.emitter(), c, read)
+    r_emitter = readings.rule_of(node, node.emitter(), c, read)
     rules = node.read_lines(held, c, read)
     owns = []
     for rec, r in enumerate(node.records()):
         assert r.pair is not None
-        owns.append(gram.share(node, plane_starts[rec], node.rule(r.pair, c, read)))
+        owns.append(gram.share(node, plane_starts[rec], readings.rule(node, r.pair, c, read)))
     born = [
         b
         for rec in range(len(node.records()))

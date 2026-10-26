@@ -9,7 +9,7 @@ import numpy as np
 from event_universe import close, gram, interval, readings
 from event_universe.core import acts, paces, rule3
 from event_universe.core.paces import sine_den
-from event_universe.core.ports import AXES, PORTS, across
+from event_universe.core.ports import AXES, across
 from event_universe.core.rule3 import half, link_unit_of, unit_of, wall_of
 from event_universe.features import phase
 from event_universe.links import Link, turned
@@ -109,7 +109,7 @@ class Node:
         seed_pair = phase.seed(self.X, self.gamma)
         self.orbit_lines, self.orbit = [seed_pair], [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
         self.orbit_half: int | None = None
-        self.start_content, self.start_x = self.content(), self.row(CARRIER).lines[0].now
+        self.start_content, self.start_x = readings.content(self), self.row(CARRIER).lines[0].now
         self.start_clock = readings.paces_of(self, self.start_content)[0]
 
     def ride_walls(self) -> None:
@@ -118,7 +118,7 @@ class Node:
         wall = half(self.w) * (carrier.before + carrier.now)
         for r in self.rows_:
             if r.wall is None and r.shape != CARRIER:
-                scaled = wall * gram.scale(r.shape, self.gamma)
+                scaled = wall * readings.scale(r.shape, self.gamma)
                 for line in r.lines:
                     line.wall, line.rem = scaled, half(scaled)
 
@@ -140,22 +140,6 @@ class Node:
     def records(self) -> list[Row]:
         """The record rows in the acts' order, the planes and the quartets (rows.records_of)."""
         return records_of(self.rows_)
-
-    def rule(self, pair: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
-        """Rule3's integers of a pair at the Node's paces from the content."""
-        clock, pace = readings.paces_of(self, c)
-        return rule3.rule_integers(pair[0], pair[1], self.gamma, clock, pace, factors, self.G)
-
-    def rule_of(self, r: Row, c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
-        """A row's rule: Rule3's integers at its pair and the Node's paces scaled by the row's scale (gram.scale: 1 but for the quartet), or, for the row with its own wall, no Links and the own weight 2 w (next = 2 now - before + the write inside the division)."""
-        if r.wall is not None:
-            return rule3.Rule(tuple(0 for _ in range(PORTS)), r.wall + r.wall, r.wall, 0)
-        assert r.pair is not None
-        return rule3.scaled(self.rule(r.pair, c, factors), gram.scale(r.shape, self.gamma))
-
-    def content(self) -> Any:
-        """The content at every Node (readings.content)."""
-        return readings.content(self)
 
     def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
         """The arrivals of a row's lines at one Port, read in the Node's frame (the row's conjugation where the frame sign is -1, gram.conjugated) and turned plane by plane by the Link's record (links.turned); a row of one line is turned by the identity; `turn` None is the identity for every shape."""
@@ -291,7 +275,7 @@ class Node:
         self, held: list[list[Line]], c: Any, factors: tuple[Any, ...]
     ) -> list[tuple[Line, rule3.Rule]]:
         """The lines the one-Link read takes with their rules: every line of every row at the interval's start, alike."""
-        rules = [self.rule_of(r, c, factors) for r in self.rows_]
+        rules = [readings.rule_of(self, r, c, factors) for r in self.rows_]
         return [(line, rule) for rule, lines in zip(rules, held, strict=True) for line in lines]
 
     def click(

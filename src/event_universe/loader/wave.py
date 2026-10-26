@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram
+from event_universe import gram, readings
 from event_universe.core import acts
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import least_at, remainder
@@ -51,8 +51,8 @@ def lay_cycle(node: Node, rec: int, n: int, digits: list[int], mirror: int) -> N
     if remainder(node.cube, TURNS):
         raise ValueError("the cycle pattern is 4 by 4: the cube's extent is a multiple of 4")
     p = cycle_phases(node, digits)
-    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
-    rule = node.rule(row.pair, node.start_content, factors(node))
+    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
+    rule = readings.rule(node, row.pair, node.start_content, factors(node))
     base = [x for line in row.lines for x in (line.now, line.before)]
 
     def least_share(amplitude: int) -> int:

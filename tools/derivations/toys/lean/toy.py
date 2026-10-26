@@ -9,7 +9,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, gram
+from event_universe import close, gram, readings
 from event_universe import run as record
 from event_universe.core import acts, paces, rule3
 from event_universe.core.ports import AXES, PORTS, across
@@ -94,7 +94,7 @@ class Toy(Node):
         ):  # the former loop: every line's remainder at the fixed wall w times the row's scale
             for r in self.rows_:
                 if r.wall is None and r.shape != CARRIER:
-                    wall = self.w * gram.scale(r.shape, self.gamma)
+                    wall = self.w * readings.scale(r.shape, self.gamma)
                     for line in r.lines:
                         line.wall, line.rem = wall, zeros(self.shape) + half(wall)
         self.held_lines: list[int] = []
@@ -120,10 +120,11 @@ class Toy(Node):
         if self.control.get("digits") != "former":
             return super().read_lines(held, c, factors)
         rules = [
-            (r.lines[0], self.rule_of(r, c, factors)) for r in (self.row(POTENTIAL), self.row(CARRIER))
+            (r.lines[0], readings.rule_of(self, r, c, factors))
+            for r in (self.row(POTENTIAL), self.row(CARRIER))
         ]
         for rec, r in enumerate(self.records()):
-            rules += [(line, self.rule_of(r, c, factors)) for line in self.plane_starts_[rec]]
+            rules += [(line, readings.rule_of(self, r, c, factors)) for line in self.plane_starts_[rec]]
         return rules
 
     def act_levels(
@@ -176,7 +177,7 @@ class Toy(Node):
             return
         c = self.start_content
         gap0 = self.emitter()
-        r_gap0 = self.rule_of(gap0, c, factors(self))
+        r_gap0 = readings.rule_of(self, gap0, c, factors(self))
         z = gap0.lines[0]
         gap0_start = plane_starts[self.records().index(gap0)]
         sh_end, sh_vac = (
@@ -259,7 +260,7 @@ class Toy(Node):
         links: Any = None
         curl: list[Any] = []
         for k, r in enumerate(self.rows_):
-            rule = self.rule_of(r, c, read)
+            rule = readings.rule_of(self, r, c, read)
             turn = None
             flux = None
             numerators: list[Any] = [None] * r.shape
@@ -271,7 +272,7 @@ class Toy(Node):
                     numerators = [w_after - w_start, None]
                 elif self.control.get("pauli", True):
                     starts = [at(line) for line in r.lines]
-                    coefficient = quotient(sum(rule.reaches), gram.scale(r.shape, self.gamma))
+                    coefficient = quotient(sum(rule.reaches), readings.scale(r.shape, self.gamma))
                     flux = gram.term(r.shape, coefficient, curl, starts)
             elif r.shape == POTENTIAL:
                 numerators = [2 * w_after, *current]

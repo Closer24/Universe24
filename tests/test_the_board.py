@@ -12,7 +12,7 @@ import numpy as np
 import pytest
 
 from event_universe import gates as table
-from event_universe import gram, take
+from event_universe import gram, readings, take
 from event_universe import run as record
 from event_universe import run as writer
 from event_universe.core import paces
@@ -261,7 +261,11 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
         re, im = row.lines
         assert row.pair is not None and not any(ints(re.now * im.before - im.now * re.before))
         energy = sum(
-            ints(gram.share(node, row.lines, node.rule(row.pair, node.content(), factors(node))))
+            ints(
+                gram.share(
+                    node, row.lines, readings.rule(node, row.pair, readings.content(node), factors(node))
+                )
+            )
         )
         momentum = sum(
             sum(
@@ -277,7 +281,9 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
     def centroid(node: Node) -> tuple[int, int]:
         row = node.by_index[2]
         assert row.pair is not None
-        share = gram.share(node, row.lines, node.rule(row.pair, node.content(), factors(node)))
+        share = gram.share(
+            node, row.lines, readings.rule(node, row.pair, readings.content(node), factors(node))
+        )
         return sum(ints(share * np.indices(node.shape)[0])), sum(ints(share))
 
     node, law = laid(moving)
@@ -532,7 +538,7 @@ def test_the_merger_lays_light_of_no_charge_at_both_ends_cc1() -> None:
     assert row.pair is not None
     take.lay(node, s, minus, (939, 1175, 0, 0))
     take.lay(node, s, plus, (1329, 1112, 0, 0))
-    rule = node.rule(row.pair, node.start_content, factors(node))
+    rule = readings.rule(node, row.pair, node.start_content, factors(node))
     walls, exact = dict(zip((-1, 1), walls_of(node, s, minus, plus, rule, {}), strict=True)), []
     children_laid(node, s, minus, plus, light_levels(node, s, walls, rule, exact))
     assert all(x is not None for x in exact) and [x[1] != 0 for x in exact] == [True, True]
@@ -556,13 +562,15 @@ def test_a_frozen_node_is_released_by_the_turn_of_its_time() -> None:
     light.now[centre] = 4 * int(light.now[centre])
     proper, kept, was = int(node.proper[centre]), copy.deepcopy(node), False
     for _ in range(INTERVALS):
-        now = bool(np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object)[centre] == 0)
+        now = bool(
+            np.asarray(paces.link_pace_of(node.gamma, readings.content(node)), dtype=object)[centre] == 0
+        )
         assert not (was and now)
         was = now
         node.step()
         if node.interval == 1:
             assert now and node.turned[centre] and int(node.proper[centre]) == proper
-            assert int(node.content()[centre]) < frozen
+            assert int(readings.content(node)[centre]) < frozen
         if node.interval == 2:
             assert not now and int(node.proper[centre]) > proper
     assert node.max_transient <= 128 and record.census(node)[1] <= 128
