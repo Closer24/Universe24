@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections import defaultdict
 from typing import Any
 
 from event_universe.core import paces
@@ -38,9 +37,7 @@ def contraction(record: Record) -> dict[str, Any]:
     at = None
     if falls and len(lines) >= falls[0]:
         before, after = lines[falls[0] - 1 - 1][1], lines[falls[0] - 1][1]
-        cube = int(record.run["cube"])
-        k = min(range(len(after)), key=lambda n: after[n] - before[n])
-        at = [k // (cube * cube), (k // cube) % cube, k % cube]
+        at = record.node(min(range(len(after)), key=lambda n: after[n] - before[n]))
     return {
         "6 contraction (the board, the reader's view)": {
             "at": at,
@@ -93,13 +90,22 @@ def bottoms_of(record: Record) -> list[tuple[int, int, bool]]:
     ]
 
 
-def recurring_bang(record: Record) -> dict[str, Any]:
-    """Gate 1 (MA-S1's predicate, the Boss's 6400767119): the recurring bang from the Node lines: the board tops with every Node turning at once, falls to a bottom at Gamma at every Node exactly (the exact return) and rises again; the bangs numbered from the seed's, the births and the body credits counted between the returns."""
+def tops_of(record: Record) -> list[int]:
+    """The intervals at which every Node turned at once, the board's tops, from the Node lines."""
     lines = volumes(record)
     count = len(lines[0][1]) if lines else 0
-    whole = [i for i, _xs, turned in lines if turned == count and count]
-    bottoms = bottoms_of(record)
-    exact = [i for i, _m, at_gamma in bottoms if at_gamma]
+    return [i for i, _xs, turned in lines if turned == count and count]
+
+
+def exact_of(record: Record) -> list[int]:
+    """The intervals of the exact returns, the bottoms of the mean volume at Gamma at every Node."""
+    return [i for i, _m, at_gamma in bottoms_of(record) if at_gamma]
+
+
+def recurring_bang(record: Record) -> dict[str, Any]:
+    """Gate 1 (MA-S1's predicate, the Boss's 6400767119): the recurring bang from the Node lines: the board tops with every Node turning at once, falls to a bottom at Gamma at every Node exactly (the exact return) and rises again; the bangs numbered from the seed's, the births and the body credits counted between the returns."""
+    lines, whole, bottoms = volumes(record), tops_of(record), bottoms_of(record)
+    exact = exact_of(record)
     bangs = [1] + [i + 1 for i in exact]
     between = [
         [
@@ -138,9 +144,7 @@ def recurring_bang(record: Record) -> dict[str, Any]:
 
 def tops(record: Record) -> dict[str, Any]:
     """Row 1b (the owner's word of 2026-10-26, 00:5x UTC: the top in the gate too): the board tops, every Node turning at once at one interval, read from the Node lines as gate 1 reads them; SHOWN from the first such top."""
-    lines = volumes(record)
-    count = len(lines[0][1]) if lines else 0
-    whole = [i for i, _xs, turned in lines if turned == count and count]
+    lines, whole = volumes(record), tops_of(record)
     return {
         "1b the board tops, every Node turning at once": {
             "tops (interval)": whole[:LISTED],
@@ -155,7 +159,7 @@ def tops(record: Record) -> dict[str, Any]:
 
 def returns(record: Record) -> dict[str, Any]:
     """Row 1c (the same word: the return in the gate too): the board returns to Gamma, a bottom of the mean volume with every Node at Gamma exactly, read from the Node lines as gate 1 reads them; SHOWN from the first such return."""
-    exact = [i for i, _m, at_gamma in bottoms_of(record) if at_gamma]
+    exact = exact_of(record)
     return {
         "1c the board returns to Gamma": {
             "exact returns (interval)": exact[:LISTED],
@@ -172,7 +176,6 @@ def returns(record: Record) -> dict[str, Any]:
 
 def lift_of(record: Record) -> tuple[list[int], list[int]]:
     """LC-S1's lift per interval from the Node lines (lc1's quotient form): L = SUM_i quotient(Gamma SUM_j (X_j - X_i), 3 X_i) over the Nodes and their six neighbours, and the mass pull SUM_i 2 largest_below(X_i div Gamma); each Node line's read once per record."""
-    cube = int(record.run["cube"])
     memo = record.memo.setdefault("lift", {})
     lifts, pulls = [], []
     for line in record.nodes:
@@ -181,7 +184,7 @@ def lift_of(record: Record) -> tuple[list[int], list[int]]:
             lift = pull = 0
             for at, x in enumerate(xs):
                 lift += int(
-                    quotient(record.gamma * sum(xs[n] - x for n in neighbours(at, cube)), AXES * x)
+                    quotient(record.gamma * sum(xs[n] - x for n in neighbours(record, at)), AXES * x)
                 )
                 pull += PULL * largest_below(int(quotient(x, record.gamma)))
             memo[id(line)] = (lift, pull)
@@ -280,10 +283,7 @@ def stopped_clock(record: Record) -> dict[str, Any]:
     """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent (no credit at it) and its content standing from the interval it froze."""
     frozen = [(line["i"], at) for line in record.nodes for at in line["frozen"]]
     credited = {tuple(c["node"]) for c in record.credits}
-    cube = int(record.run["cube"])
-    silent = sum(
-        1 for _i, at in frozen if (at // (cube * cube), (at // cube) % cube, at % cube) not in credited
-    )
+    silent = sum(1 for _i, at in frozen if tuple(record.node(at)) not in credited)
     standing = 0
     for (i, at), (j, bt) in zip(frozen, frozen[1:], strict=False):
         if at == bt and j == i + 1:
@@ -304,7 +304,7 @@ def stopped_clock(record: Record) -> dict[str, Any]:
 
 def same_gates(record: Record) -> dict[str, Any]:
     """Row 46 (the Boss's 6400767119): the repeating bang with credits: after the first exact return of gate 1 (every Node at Gamma), the later cycle births and credits bodies as the first did."""
-    exact = [i for i, _m, at_gamma in bottoms_of(record) if at_gamma]
+    exact = exact_of(record)
     if not exact:
         return {
             "46 the bangs recurring with the same gates": {
@@ -329,27 +329,27 @@ def same_gates(record: Record) -> dict[str, Any]:
     }
 
 
-def neighbours(at: int, cube: int) -> list[int]:
+def neighbours(record: Record, at: int) -> list[int]:
     """The six Nodes one Link from a Node's index on the torus."""
-    x, y, z = at // (cube * cube), (at // cube) % cube, at % cube
-    found = []
-    for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)):
-        found.append(((x + dx) % cube) * cube * cube + ((y + dy) % cube) * cube + (z + dz) % cube)
-    return found
+    x, y, z = record.node(at)
+    cube = record.cube
+    return [
+        record.index(((x + dx) % cube, (y + dy) % cube, (z + dz) % cube))
+        for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
+    ]
 
 
 def maxwell(record: Record) -> dict[str, Any]:
     """Row 37: Maxwell's one Link per interval from the Node lines' gap-0 currents: a Node whose current turns on at an interval stood within one Link of a Node with a current the interval before; the violations counted."""
-    cube = int(record.run["cube"])
     lit = []
     for line in record.nodes:
         on = {i for axis in line["current"] for i, c in enumerate(axis) if c}
-        lit.append(on | {n for i in on for n in neighbours(i, cube)})
+        lit.append(on | {n for i in on for n in neighbours(record, i)})
     violations = grown = 0
     for before, after in zip(lit, lit[1:], strict=False):
         new = after - before
         grown += bool(new)
-        violations += sum(1 for n in new if not (set(neighbours(n, cube)) & before))
+        violations += sum(1 for n in new if not (set(neighbours(record, n)) & before))
     return {
         "37 Maxwell's one Link per interval": {
             "Node lines": len(record.nodes),
@@ -368,9 +368,7 @@ def maxwell(record: Record) -> dict[str, Any]:
 
 def well(record: Record) -> dict[str, Any]:
     """Row 45: the bodies' well, binding and collapse: a body (a line at one Node) credited from the first half of the run into its last quarter stands in its own well; a frozen Node ends a collapse."""
-    spans: dict[tuple[tuple[int, ...], int], list[int]] = defaultdict(list)
-    for c in record.credits:
-        spans[(tuple(c["node"]), c["line"])].append(int(c["i"]))
+    spans = {body: [int(c["i"]) for c in cs] for body, cs in record.bodies_of().items()}
     n = record.intervals
     standing = sum(
         1 for xs in spans.values() if min(xs) * HALF <= n and max(xs) * QUARTERS >= (QUARTERS - 1) * n

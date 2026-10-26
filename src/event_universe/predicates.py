@@ -6,7 +6,6 @@ from collections import Counter, defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe.circle import circle_of
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import largest_below
 from event_universe.decoder import (
@@ -46,7 +45,7 @@ def no_field(record: Record) -> str:
 
 def no_conversion(record: Record) -> str:
     """Why the neutrino is not read: no conversion in the record, every prime of den within the width."""
-    points = len(circle_of(record.den))
+    points = len(record.circle())
     return f"no conversion in the record and every prime of den within the width ({points} points on den's circle)"
 
 
@@ -168,11 +167,7 @@ def coulomb(record: Record) -> dict[str, Any]:
     for c in record.credits:
         if c["sense"]:
             by_interval[int(c["i"])].append((c["sense"], tuple(c["node"])))
-    cube = int(record.run["cube"])
-
-    def distance(a: tuple[int, ...], b: tuple[int, ...]) -> int:
-        return sum(min(abs(x - y), cube - abs(x - y)) for x, y in zip(a, b, strict=True))
-
+    distance = record.distance
     means: dict[bool, list[tuple[int, int]]] = {True: [], False: []}
     for i in sorted(by_interval):
         found = by_interval[i]
@@ -223,7 +218,7 @@ def coulomb(record: Record) -> dict[str, Any]:
 
 def lifts(record: Record) -> dict[str, Any]:
     """Row 26: the three lifts born and their beats' ratios: three or more distinct planes born, and the credited planes' mean beats (intervals per period) ordered against their legs, the heavier the faster."""
-    born = Counter(record.line_name[b["line_pair"]] for b in record.births)
+    born = record.born_of()
     beats: dict[int, tuple[int, int]] = {}
     for c in record.credits:
         s, n = beats.get(c["line"], (0, 0))
@@ -265,13 +260,9 @@ def lifts(record: Record) -> dict[str, Any]:
 def confinement(record: Record) -> dict[str, Any]:
     """Row 27: confinement, no third alone: every child laid where its plane stood at nothing carries the whole charge T div 2 and none a third of it; every take whole levels."""
     half, third = record.T // HALF, record.T // (HALF * THIRDS)
-    whole = thirds = 0
-    for b in record.births:
-        for w, stood in zip(b["W_children"], b.get("stood", [[0], [0]]), strict=True):
-            if not any(stood):
-                whole += abs(w) == half
-                thirds += abs(w) == third
-    takes = [int(e["levels"]) for e in record.log if e["event"] in ("birth", "credit")]
+    laid = record.laid_at_nothing()
+    whole, thirds = sum(w == half for w in laid), sum(w == third for w in laid)
+    takes = [int(e["levels"]) for e in record.takes]
     return {
         "27 confinement (no third alone)": {
             "children at the whole charge / at a third": [whole, thirds],
@@ -320,9 +311,8 @@ def exclusion(record: Record) -> dict[str, Any]:
 
 def exact_take(record: Record) -> dict[str, Any]:
     """Row 47: the exact take, taken equal to booked on every birth (the excess 0); the credits' leak unread (a credit carries no booked walls)."""
-    births = record.births
+    births, (taken, booked) = record.births, record.takes_of()
     exact = sum(1 for b in births if b["taken"] == b["booked"])
-    booked, taken = sum(b["booked"] for b in births), sum(b["taken"] for b in births)
     return {
         "47 the exact take": {
             "births taken exactly / in all": [exact, len(births)],
@@ -338,12 +328,9 @@ def exact_take(record: Record) -> dict[str, Any]:
 
 def decay(record: Record) -> dict[str, Any]:
     """Row 49: the exponential decay, a body's credits' spacing in its proper count geometric: the spacings' counts falling from the least spacing; periodic where one spacing holds the majority."""
-    by_body: dict[tuple[tuple[int, ...], int], list[int]] = defaultdict(list)
-    for c in record.credits:
-        by_body[(tuple(c["node"]), c["line"])].append(int(c["proper"]))
     spacings: Counter[int] = Counter()
-    for ps in by_body.values():
-        ps.sort()
+    for body in record.bodies_of().values():
+        ps = sorted(int(c["proper"]) for c in body)
         spacings.update(b - a for a, b in zip(ps, ps[1:], strict=False) if b > a)
     counts = [spacings[s] for s in sorted(spacings)]
     falling = all(a >= b for a, b in zip(counts, counts[1:], strict=False))

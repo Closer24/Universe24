@@ -7,7 +7,6 @@ from collections.abc import Callable
 from functools import cmp_to_key
 from typing import Any
 
-from event_universe.circle import circle_of
 from event_universe.core.paces import sine_den
 from event_universe.decoder import (
     FEW,
@@ -81,7 +80,7 @@ def families(record: Record) -> dict[str, Any]:
     """Gate 8: the species from the frame of every credit (the whole view), every credit within the one-click floor and every track read right, three or more species born."""
     decoded, right, within, _floors = solved(record)
     tracks, track_right, _confusion = tracks_of(record)
-    born = Counter(record.line_name[b["line_pair"]] for b in record.births)
+    born = record.born_of()
     if not decoded:
         verdict = "NOT READ: no credit in the record"
     elif within == len(decoded) and track_right == len(tracks) and len(born) >= LIFTS:
@@ -154,7 +153,7 @@ def mass_ratios(record: Record) -> dict[str, Any]:
             if clicks is None
             else "NOT SHOWN: the ratio in the clicks is off the header's beyond the floor"
         )
-    circle = circle_of(record.den)
+    circle = record.circle()
     least = min((s for _num, s in circle), default=0)
     found[
         "den's circle: the points' legs over the least (parts per million), the typed among them marked"
@@ -190,13 +189,7 @@ def one_click_floor(record: Record) -> dict[str, Any]:
 def charge(record: Record) -> dict[str, Any]:
     """Gate 17: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name)."""
     births = record.births
-    signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
-    sizes = sorted(
-        abs(w)
-        for b in births
-        for w, stood in zip(b["W_children"], b.get("stood", [[0], [0]]), strict=True)
-        if not any(stood)
-    )
+    signs, sizes = record.signs_of(), sorted(record.laid_at_nothing())
     residue = sum(1 for b in births for stood in b.get("stood", [[0], [0]]) if any(stood))
     sense_sum = sum(signs)
     opposite = sum(
@@ -237,8 +230,7 @@ def charge(record: Record) -> dict[str, Any]:
 
 def conservation_at_click(record: Record) -> dict[str, Any]:
     """Gate 15: the conservation at the click, taken against booked over the births (the identity taken >= booked on every birth; the exact form is row 47)."""
-    births = record.births
-    booked, taken = sum(b["booked"] for b in births), sum(b["taken"] for b in births)
+    births, (taken, booked) = record.births, record.takes_of()
     exact = all(b["taken"] >= b["booked"] for b in births)
     return {
         "15 conservation at the click": {
@@ -349,14 +341,10 @@ def merger(record: Record) -> dict[str, Any]:
 
 def eras_of(record: Record) -> tuple[list[int | None], list[list[int]], list[tuple[int, list[int]]]]:
     """The eras in the clicks' view (rows 58 to 60): the spacing of a line's credits at one Node in the Node's own proper count, its mean per eighth of the run (the whole run's eighths, so a cut reads the same eighths; an eighth read once complete), the growth of each eighth over the complete one before it as (the eighth, the growth), and the last credit of each eighth (its interval and Node)."""
-    by_track: dict[tuple[Any, ...], list[dict[str, Any]]] = defaultdict(list)
-    for c in record.credits:
-        by_track[(tuple(c["node"]), c["line"])].append(c)
     eighths: list[list[int]] = [[] for _ in range(LISTED)]
     last: list[tuple[int, list[int]]] = [(0, []) for _ in range(LISTED)]
     whole = int(record.run["intervals"])
-    for cs in by_track.values():
-        cs.sort(key=lambda c: int(c["i"]))
+    for cs in record.bodies_of().values():
         for a, b in zip(cs, cs[1:], strict=False):
             k = int(quot((int(b["i"]) - 1) * LISTED, whole) or 0)
             eighths[k].append(int(b["proper"]) - int(a["proper"]))

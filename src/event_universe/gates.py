@@ -30,11 +30,7 @@ def approach(record: Record) -> tuple[int, int, bool, list[int]]:
     by_interval: dict[int, set[tuple[int, ...]]] = defaultdict(set)
     for c in record.credits:
         by_interval[int(c["i"])].add(tuple(c["node"]))
-    cube = int(record.run["cube"])
-
-    def distance(a: tuple[int, ...], b: tuple[int, ...]) -> int:
-        return sum(min(abs(x - y), cube - abs(x - y)) for x, y in zip(a, b, strict=True))
-
+    distance = record.distance
     spans = []
     adjacent = False
     for i in sorted(by_interval):
@@ -97,7 +93,7 @@ def free_fall(record: Record) -> dict[str, Any]:
 
 def light(record: Record) -> dict[str, Any]:
     """Gate 7: light present and absorbed, the gap-0 line's quanta taken at the births and the credits (PC-S2); the gap-0 plane's own credits none in the engine's record (a detector is the toy's reading)."""
-    takes = [entry for entry in record.log if entry["event"] in ("birth", "credit")]
+    takes = record.takes
     return {
         "7 light present and absorbed": {
             "gap-0 credits in the record": sum(1 for e in record.log if e["event"] == "detector"),
@@ -207,15 +203,10 @@ def constants(record: Record) -> dict[str, Any]:
 
 def conservations(record: Record) -> dict[str, Any]:
     """The conservations in the clicks (the owner's word: what the lattice conserves is shown conserved in the clicks): the charge, the count, the energy as the beat unchanged from one click to the next, the momentum (row 23)."""
-    births = record.births
-    signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
-    booked, taken = sum(b["booked"] for b in births), sum(b["taken"] for b in births)
-    beats: dict[tuple[tuple[int, ...], int], list[tuple[int, int]]] = defaultdict(list)
-    for c in record.credits:
-        beats[(tuple(c["node"]), c["line"])].append((c["proper"], c["beat"]))
+    births, signs, (taken, booked) = record.births, record.signs_of(), record.takes_of()
     pairs = [
         (b1, b2)
-        for cs in beats.values()
+        for cs in ([(c["proper"], c["beat"]) for c in body] for body in record.bodies_of().values())
         for (_p1, b1), (_p2, b2) in zip(sorted(cs), sorted(cs)[1:], strict=False)
         if b1 > 0 and b2 > 0
     ]

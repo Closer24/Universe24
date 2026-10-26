@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from bisect import bisect_right
+from collections import Counter
 from typing import Any
 
+from event_universe.circle import circle_of
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.links import cross, turn_pair
@@ -98,6 +100,8 @@ class Record:
         self.log = run["log"]
         self.credits = [entry for entry in self.log if entry["event"] == "credit"]
         self.births = [entry for entry in self.log if entry["event"] == "birth"]
+        self.takes = [entry for entry in self.log if entry["event"] in ("birth", "credit")]
+        self.cube = int(run["cube"])
         self.rows = run["rows"]
         self.nodes = run.get("nodes", [])
         self.intervals = int(run["intervals"])
@@ -112,12 +116,64 @@ class Record:
         found = Record.__new__(Record)
         found.__dict__.update(self.__dict__)
         found.intervals = i
-        for name in ("log", "credits", "births"):
+        for name in ("log", "credits", "births", "takes"):
             whole = getattr(self, name)
             setattr(found, name, whole[: bisect_right(whole, i, key=lambda e: int(e["i"]))])
         found.rows = self.rows[: bisect_right(self.rows, i, key=lambda r: int(r["i"]))]
         found.nodes = self.nodes[: bisect_right(self.nodes, i, key=lambda n: int(n["i"]))]
         cuts[i] = found
+        return found
+
+    def index(self, node: list[int] | tuple[int, ...]) -> int:
+        """A Node's index in the Node lines from its (x, y, z)."""
+        x, y, z = (int(n) for n in node)
+        return x * self.cube * self.cube + y * self.cube + z
+
+    def node(self, index: int) -> list[int]:
+        """A Node's (x, y, z) from its index in the Node lines."""
+        x = int(rule3.quotient(index, self.cube * self.cube))
+        y = int(rule3.quotient(index - x * self.cube * self.cube, self.cube))
+        return [x, y, index - (x * self.cube + y) * self.cube]
+
+    def distance(self, a: tuple[int, ...], b: tuple[int, ...]) -> int:
+        """The Link distance between two Nodes on the torus, the shorter way on every axis."""
+        return sum(min(abs(x - y), self.cube - abs(x - y)) for x, y in zip(a, b, strict=True))
+
+    def bodies_of(self) -> dict[tuple[tuple[int, ...], int], list[dict[str, Any]]]:
+        """The credits grouped by (Node, line), a body's track, in the log's order; read once per cut."""
+        key = f"bodies to {self.intervals}"
+        if key not in self.memo:
+            found: dict[tuple[tuple[int, ...], int], list[dict[str, Any]]] = {}
+            for c in self.credits:
+                found.setdefault((tuple(c["node"]), c["line"]), []).append(c)
+            self.memo[key] = found
+        bodies: dict[tuple[tuple[int, ...], int], list[dict[str, Any]]] = self.memo[key]
+        return bodies
+
+    def signs_of(self) -> list[int]:
+        """The births' children's senses as signs of their Wronskians, in the births' order."""
+        return [(w > 0) - (w < 0) for b in self.births for w in b["W_children"]]
+
+    def takes_of(self) -> tuple[int, int]:
+        """The sums over the births of what the takes took and what they booked."""
+        return sum(b["taken"] for b in self.births), sum(b["booked"] for b in self.births)
+
+    def born_of(self) -> Counter[str]:
+        """The births by the species born (the plane's name)."""
+        return Counter(self.line_name[b["line_pair"]] for b in self.births)
+
+    def laid_at_nothing(self) -> list[int]:
+        """The magnitude |W| of every child laid where its plane stood at nothing, in the births' order."""
+        return [
+            abs(w)
+            for b in self.births
+            for w, stood in zip(b["W_children"], b.get("stood", [[0], [0]]), strict=True)
+            if not any(stood)
+        ]
+
+    def circle(self) -> list[tuple[int, int]]:
+        """den's circle, read once per record (circle.circle_of)."""
+        found: list[tuple[int, int]] = self.memo.setdefault("circle", circle_of(self.den))
         return found
 
 
@@ -134,9 +190,7 @@ def cmp_rat(p: Rational, q: Rational) -> int:
 
 def carrier_levels(record: Record, credit: dict[str, Any]) -> tuple[int, int, int]:
     """The carrier's three levels at the credit's Node from the record's Node lines: before the interval, at its start and after it (Gamma before the first interval)."""
-    cube = int(record.run["cube"])
-    x, y, z = credit["node"]
-    index, i = x * cube * cube + y * cube + z, int(credit["i"])
+    index, i = record.index(credit["node"]), int(credit["i"])
     lines = record.run["nodes"]
     found = [
         lines[i - 1 - back]["X"][index] if i - 1 - back >= 0 else record.gamma for back in LEVELS_BACK
