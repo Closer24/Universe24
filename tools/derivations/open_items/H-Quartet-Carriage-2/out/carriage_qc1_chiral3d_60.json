@@ -1,0 +1,123 @@
+{
+ "record": "/dev/shm/tmp/qc1/chiral3d_60.json",
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "births": 14,
+ "quartet credits": 50,
+ "lays": [],
+ "quartet pairs born": [
+  {
+   "birth i": 12,
+   "minus": [
+    2,
+    1,
+    1
+   ],
+   "plus": [
+    2,
+    2,
+    1
+   ],
+   "W_children": [
+    -72000,
+    72000
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 4
+  },
+  {
+   "birth i": 13,
+   "minus": [
+    1,
+    1,
+    2
+   ],
+   "plus": [
+    2,
+    1,
+    2
+   ],
+   "W_children": [
+    -72000,
+    63360
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 3
+  },
+  {
+   "birth i": 14,
+   "minus": [
+    0,
+    1,
+    0
+   ],
+   "plus": [
+    0,
+    2,
+    0
+   ],
+   "W_children": [
+    -72000,
+    72000
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 4
+  }
+ ],
+ "pairs taken back at the next close": [
+  3,
+  3
+ ],
+ "mergers taking the quartet row": [
+  {
+   "i": 13,
+   "ends": [
+    [
+     2,
+     1,
+     1
+    ],
+    [
+     2,
+     2,
+     1
+    ]
+   ]
+  },
+  {
+   "i": 14,
+   "ends": [
+    [
+     1,
+     1,
+     2
+    ],
+    [
+     2,
+     1,
+     2
+    ]
+   ]
+  },
+  {
+   "i": 15,
+   "ends": [
+    [
+     0,
+     2,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ]
+  }
+ ]
+}

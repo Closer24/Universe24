@@ -1,0 +1,53 @@
+{
+ "record": "chiral3_60_lift1.json",
+ "run_back": {
+  "intervals": 20,
+  "exact": 20
+ },
+ "births": 9,
+ "quartet credits": 52,
+ "lays": [],
+ "quartet pairs born": [
+  {
+   "birth i": 6,
+   "minus": [
+    2,
+    2,
+    2
+   ],
+   "plus": [
+    2,
+    0,
+    2
+   ],
+   "W_children": [
+    -72000,
+    72000
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 5
+  }
+ ],
+ "pairs taken back at the next close": [
+  1,
+  1
+ ],
+ "mergers taking the quartet row": [
+  {
+   "i": 7,
+   "ends": [
+    [
+     2,
+     2,
+     2
+    ],
+    [
+     2,
+     0,
+     2
+    ]
+   ]
+  }
+ ]
+}

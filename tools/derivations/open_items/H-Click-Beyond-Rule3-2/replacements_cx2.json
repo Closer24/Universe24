@@ -1,0 +1,2 @@
+[{"file": "event_universe/draw.py", "old": "            digits.append((quotient(rem, f), values + 1))", "new": "            digits.append((quotient(min(rem, wl - rem) if os.environ.get(\"CX2_EVEN_DIGIT\") else rem, f), values + 1))"},
+ {"file": "event_universe/draw.py", "old": "from __future__ import annotations\n", "new": "from __future__ import annotations\n\nimport os\n"}]

@@ -1,0 +1,235 @@
+{
+ "lift1 (toy, the first lift)": {
+  "num": 15162854575528411,
+  "den": 15162856759112389,
+  "gap den - num": 2183583978,
+  "num over den, thousandths [q, r]": [
+   999,
+   15160673175134389
+  ],
+  "S = 2 w - D - 6 R at the vacuum": 0,
+  "D >= R (6 (den - num) >= num)": false,
+  "6 (den - num) over num [q]": 0,
+  "hop per neighbour per interval at N = 125, (num N) div (3 den)": 41,
+  "share of the level hopping to six neighbours per interval, thousandths": 1968,
+  "level staying at the Node after one hop round, 125 - 6 hop": -121,
+  "N below which the hop rounds to 0, (3 den) div num": 3
+ },
+ "p3 (toy, the third plane, qc2's)": {
+  "num": 2458210083751875,
+  "den": 15162856759112389,
+  "gap den - num": 12704646675360514,
+  "num over den, thousandths [q, r]": [
+   162,
+   1827288775667982
+  ],
+  "S = 2 w - D - 6 R at the vacuum": 0,
+  "D >= R (6 (den - num) >= num)": true,
+  "6 (den - num) over num [q]": 31,
+  "hop per neighbour per interval at N = 125, (num N) div (3 den)": 6,
+  "share of the level hopping to six neighbours per interval, thousandths": 288,
+  "level staying at the Node after one hop round, 125 - 6 hop": 89,
+  "N below which the hop rounds to 0, (3 den) div num": 18
+ },
+ "lift3 (toy, the third lift)": {
+  "num": 2580388913625285,
+  "den": 15162856759112389,
+  "gap den - num": 12582467845487104,
+  "num over den, thousandths [q, r]": [
+   170,
+   2703264576178870
+  ],
+  "S = 2 w - D - 6 R at the vacuum": 0,
+  "D >= R (6 (den - num) >= num)": true,
+  "6 (den - num) over num [q]": 29,
+  "hop per neighbour per interval at N = 125, (num N) div (3 den)": 7,
+  "share of the level hopping to six neighbours per interval, thousandths": 336,
+  "level staying at the Node after one hop round, 125 - 6 hop": 83,
+  "N below which the hop rounds to 0, (3 den) div num": 17
+ },
+ "mid (middle universe, the head's quartet packet)": {
+  "num": 506298091,
+  "den": 1655909141,
+  "gap den - num": 1149611050,
+  "num over den, thousandths [q, r]": [
+   305,
+   1245802995
+  ],
+  "S = 2 w - D - 6 R at the vacuum": 0,
+  "D >= R (6 (den - num) >= num)": true,
+  "6 (den - num) over num [q]": 13,
+  "hop per neighbour per interval at N = 125, (num N) div (3 den)": 12,
+  "share of the level hopping to six neighbours per interval, thousandths": 576,
+  "level staying at the Node after one hop round, 125 - 6 hop": 53,
+  "N below which the hop rounds to 0, (3 den) div num": 9
+ },
+ "mid light (middle universe, the first lift)": {
+  "num": 1655880909,
+  "den": 1655909141,
+  "gap den - num": 28232,
+  "num over den, thousandths [q, r]": [
+   999,
+   1627677141
+  ],
+  "S = 2 w - D - 6 R at the vacuum": 0,
+  "D >= R (6 (den - num) >= num)": false,
+  "6 (den - num) over num [q]": 0,
+  "hop per neighbour per interval at N = 125, (num N) div (3 den)": 41,
+  "share of the level hopping to six neighbours per interval, thousandths": 1968,
+  "level staying at the Node after one hop round, 125 - 6 hop": -121,
+  "N below which the hop rounds to 0, (3 den) div num": 3
+ },
+ "ga2 (the heavy leg of universe_ga2)": {
+  "num": 115762739551980,
+  "den": 15162856759112389,
+  "gap den - num": 15047094019560409,
+  "num over den, thousandths [q, r]": [
+   7,
+   9622742238193277
+  ],
+  "S = 2 w - D - 6 R at the vacuum": 0,
+  "D >= R (6 (den - num) >= num)": true,
+  "6 (den - num) over num [q]": 779,
+  "hop per neighbour per interval at N = 125, (num N) div (3 den)": 0,
+  "share of the level hopping to six neighbours per interval, thousandths": 0,
+  "level staying at the Node after one hop round, 125 - 6 hop": 125,
+  "N below which the hop rounds to 0, (3 den) div num": 392
+ },
+ "matrices": {
+  "J Gamma_0 - Gamma_0 J = 0": true,
+  "G Gamma_0 symmetric": true,
+  "spin_vector axis 0 sign 1": {
+   "v": [
+    0,
+    -1,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "density": [
+    4,
+    0,
+    0
+   ],
+   "Gamma_a v = s v": true
+  },
+  "spin_vector axis 0 sign -1": {
+   "v": [
+    -1,
+    0,
+    0,
+    0,
+    -1,
+    0,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "density": [
+    -4,
+    0,
+    0
+   ],
+   "Gamma_a v = s v": true
+  },
+  "J Gamma_1 - Gamma_1 J = 0": true,
+  "G Gamma_1 symmetric": true,
+  "spin_vector axis 1 sign 1": {
+   "v": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "density": [
+    0,
+    4,
+    0
+   ],
+   "Gamma_a v = s v": true
+  },
+  "spin_vector axis 1 sign -1": {
+   "v": [
+    1,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "density": [
+    0,
+    -4,
+    0
+   ],
+   "Gamma_a v = s v": true
+  },
+  "J Gamma_2 - Gamma_2 J = 0": true,
+  "G Gamma_2 symmetric": true,
+  "spin_vector axis 2 sign 1": {
+   "v": [
+    1,
+    -1,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "density": [
+    0,
+    0,
+    4
+   ],
+   "Gamma_a v = s v": true
+  },
+  "spin_vector axis 2 sign -1": {
+   "v": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "density": [
+    0,
+    0,
+    -4
+   ],
+   "Gamma_a v = s v": true
+  },
+  "row sum max of |G Gamma_b|": [
+   4,
+   8,
+   8
+  ],
+  "G diagonal": [
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4
+  ]
+ }
+}
