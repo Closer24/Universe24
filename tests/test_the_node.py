@@ -51,11 +51,10 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
         node.step()
     clicks = clicks_at(node, CENTRE)
     # two births of 270 levels at 10 before LT-S1 ((6, 18) at 54): the bookings move the fed board
-    # (11, 1) and (12, 519) under LT-S1 alone, before the merger's children read the birth's bounds
-    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == []
-    # two credits under BH-S1's mask; six with the frozen Node released (FR-S1)
-    # (1, 0) then five (-1, 0) before LT-S1; (-1, 0), (0, 0), (1, 0), (0, 0), (0, 0) under LT-S1 alone
-    assert [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"] == []
+    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [(11, 1), (12, 519)]
+    # two credits under BH-S1's mask, six with the frozen Node released (FR-S1); (1, 0) then five (-1, 0) before LT-S1
+    credits = [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"]
+    assert credits == [(-1, 0), (0, 0), (1, 0), (0, 0), (0, 0)]
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
@@ -294,7 +293,11 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     for _ in range(40):
         chiral.step()
     counts = (chiral.counts["births"], chiral.counts["body_clicks"], record.census(chiral))
-    assert counts == (14, 1924, (99, 112))  # 16 and 1,973 under LT-S1 alone; 17 and 1,910 before LT-S1
+    assert counts == (
+        16,
+        1973,
+        (99, 112),
+    )  # 14 and 1,924 under 4ad484eb9's bound; 17 and 1,910 before LT-S1
     assert run_back_exact(kept, 10) == 10
 
 
@@ -329,20 +332,18 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
         node.step()
     births = [e for e in node.log if e["event"] == "birth"]
     pairs = [b for b in births if b["line_pair"] != node.records().index(node.emitter())]
-    # 6 births and 5 pairs before the merger's children read the birth's bounds; 6 pairs at 54, 4 before GP-S1
-    assert len(births) == 5 and len(pairs) == 5 and node.counts["met"] > len(births)
+    # 6 births and 5 pairs before LT-S1 as at -dP; 6 pairs at 54, 4 before GP-S1
+    assert len(births) == 6 and len(pairs) == 5 and node.counts["met"] > len(births)
     for b in pairs:
         link = {tuple(b["minus"]), tuple(b["plus"])}
-        # by the stop alone before 6413888338's bound; now by name: the orientation, the lay or the stop
+        # the lay's or the orientation's refusal under 4ad484eb9's bound; the stop again, MG-S1's own
         assert any(
             e["event"] == "refused"
             and e["i"] == b["i"] + 1
+            and e["cause"] == "stop"
+            and e.get("row") == b["line_pair"]
             and tuple(e["node"]) in link
-            and (
-                e["cause"] == "orientation"
-                or (e["cause"] == "lay" and e.get("row") == b["line_pair"] and e["standing"] > 0)
-                or (e["cause"] == "stop" and e.get("row") == b["line_pair"] and e["fall"] < e["walls"])
-            )
+            and e["fall"] < e["walls"]
             for e in node.log
         ), b
     assert run_back_exact(kept, 30) == 30
@@ -428,9 +429,7 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert not {"negated", "changed"} & node.wronskians.keys()
         found.append(node.wronskians)
         # 2,152 sites and 708 with W not 0 at the trace 54 (664 before cc1)
-    assert [f["sites"] for f in found] == [296, 2112] and found[1][
-        "nonzero"
-    ] == 496  # 533 under LT-S1 alone, 539 before
+    assert [f["sites"] for f in found] == [296, 2112] and found[1]["nonzero"] == 533  # 539 before LT-S1
     assert "nonzero" not in found[0]
 
 
@@ -476,10 +475,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         seen = [c for c in crossings[(e["line"], tuple(e["node"]))] if c[0] <= e["i"]]
         assert e["beat"] == seen[-1][0] - seen[-2][0], e
         upward.append(seen[-1][1])
-    assert (len(credits), sum(upward)) == (
-        1042,
-        484,
-    )  # 1,037 and 481 under LT-S1 alone; 1,045 and 488 before
+    assert (len(credits), sum(upward)) == (1037, 481)  # 1,045 and 488 before LT-S1; 1,032 and 366 at 54
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 

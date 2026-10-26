@@ -104,9 +104,11 @@ def meet(
 
 
 def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
-    """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) read by the same two bounds as the birth's (the Boss's 6413888338, 2026-10-26; the former pass of every merger whatever stood at its ends, 9,014 of 9,549 meetings on ga2 passing with standing light, kept by name; the birth read at -1, MG-S1). Returns the births kept."""
+    """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) pass both and read their bound on their own quantum at the take, the light's unit at the end as MG-S1's share reads it, the light a sea the merger pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the birth read at -1, MG-S1). Returns the births kept."""
+    records = node.records()
+    inverse = [k for k in born if records[k.line_pair] is node.emitter() is not records[k.rec]]
     kept = []
-    for at, s, minus, plus, room, rec in born:
+    for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
         if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
             refused(node, at, "lay", standing=int(owns[s][minus]), unit=node.units[s], row=rec)
             continue
@@ -122,7 +124,7 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
         refused(
             node, at, "lay", children_at_one_node=max(landing[(s, minus)], landing[(s, plus)]), row=rec
         )
-    return [k for k in kept if k not in crowded]
+    return [k for k in kept if k not in crowded] + inverse
 
 
 def births(
