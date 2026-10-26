@@ -180,3 +180,5 @@ The owner's word (2026-10-25, 23:14 UTC, in translation): "rename all the deriva
 | The-Read-Is-Write-Reversed_COMPARISON.md | A finding with a cleaning: RW-S1 for the owner's word; rw2's fold for David. |
 | H-Kick-And-Lay-One-Act-1, -2 | The kick and the lay one act; the recoil's inverse on the taken row closes P and J to the integer where the far ends' lattice holds the target, but makes share no take booked and reaches a second shell; the children carry nothing; the 48 falls. |
 | The-Kick-And-Lay-One-Act_COMPARISON.md | A finding, not for entry; AJ-S4 the reading; the direction stands: the children as packets. |
+| H-Children-As-Packets-1, -2 | The birth lays each child by the seed's one lay act, a packet over 27 Nodes at one quantum: the recoil's three components and the orbit carried to parts per mille where the packet resolves; nothing above the one-quantum cap (a theorem); the cycle seed's return lost. |
+| The-Children-As-Packets_COMPARISON.md | A finding, not for entry; AJ-S6 the reading; the direction confirmed (a child of extent) and the form refused by the cap and the return; the next form above: the click as Rule3's own act seen from the Link. |
