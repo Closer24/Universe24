@@ -1,0 +1,403 @@
+Binary files a/src/event_universe/__pycache__/__init__.cpython-314.pyc and b/src/event_universe/__pycache__/__init__.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/bodies.cpython-314.pyc and b/src/event_universe/__pycache__/bodies.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/close.cpython-314.pyc and b/src/event_universe/__pycache__/close.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/gram.cpython-314.pyc and b/src/event_universe/__pycache__/gram.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/interval.cpython-314.pyc and b/src/event_universe/__pycache__/interval.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/links.cpython-314.pyc and b/src/event_universe/__pycache__/links.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/node.cpython-314.pyc and b/src/event_universe/__pycache__/node.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/quartet.cpython-314.pyc and b/src/event_universe/__pycache__/quartet.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/readings.cpython-314.pyc and b/src/event_universe/__pycache__/readings.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/rows.cpython-314.pyc and b/src/event_universe/__pycache__/rows.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/seed.cpython-314.pyc and b/src/event_universe/__pycache__/seed.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/take.cpython-314.pyc and b/src/event_universe/__pycache__/take.cpython-314.pyc differ
+Binary files a/src/event_universe/__pycache__/wave.cpython-314.pyc and b/src/event_universe/__pycache__/wave.cpython-314.pyc differ
+Binary files a/src/event_universe/core/__pycache__/__init__.cpython-314.pyc and b/src/event_universe/core/__pycache__/__init__.cpython-314.pyc differ
+Binary files a/src/event_universe/core/__pycache__/paces.cpython-314.pyc and b/src/event_universe/core/__pycache__/paces.cpython-314.pyc differ
+Binary files a/src/event_universe/core/__pycache__/ports.cpython-314.pyc and b/src/event_universe/core/__pycache__/ports.cpython-314.pyc differ
+Binary files a/src/event_universe/core/__pycache__/rule3.cpython-314.pyc and b/src/event_universe/core/__pycache__/rule3.cpython-314.pyc differ
+Binary files a/src/event_universe/features/__pycache__/__init__.cpython-314.pyc and b/src/event_universe/features/__pycache__/__init__.cpython-314.pyc differ
+Binary files a/src/event_universe/features/phase/__pycache__/__init__.cpython-314.pyc and b/src/event_universe/features/phase/__pycache__/__init__.cpython-314.pyc differ
+Binary files a/src/event_universe/features/volume/__pycache__/__init__.cpython-314.pyc and b/src/event_universe/features/volume/__pycache__/__init__.cpython-314.pyc differ
+diff -ruN a/src/event_universe/interval.py b/src/event_universe/interval.py
+--- a/src/event_universe/interval.py	2026-10-26 03:58:16.958886040 +0000
++++ b/src/event_universe/interval.py	2026-10-26 03:58:16.966031049 +0000
+@@ -2,6 +2,8 @@
+ 
+ from __future__ import annotations
+ 
++import os
++
+ from typing import TYPE_CHECKING, Any
+ 
+ import numpy as np
+@@ -17,6 +19,9 @@
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+ 
++# fr2 (H-Frozen-Node-Release-2): the flag from the environment; unset, the head bit for bit
++FR2_RELEASE = bool(os.environ.get("FR2_RELEASE"))
++
+ 
+ def laid_on(node: Node, line: Line, levels: Any) -> None:
+     """The emission's size, a reading of the run: the levels laid on the emitter's line and the Nodes they were laid at."""
+@@ -234,7 +239,12 @@
+         node.set_rows(self.out)
+         if self.direction == 1:
+             self.lays()
+-        node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen)
++        if self.direction == -1 and self.kept is not None and FR2_RELEASE:
++            # fr2: a Node both frozen and turned ended the interval at its held pre-state exchanged; backward it is restored to the pre-state the exchange returned (kept); a frozen Node not turned to the held
++            node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen & ~self.top)
++            node.restore(node.all_lines(), [line for row in self.kept for line in row], self.frozen & self.top)
++        else:
++            node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen)
+ 
+     def lays(self) -> None:
+         """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.odd_rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`); the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
+Binary files a/src/event_universe/loader/__pycache__/__init__.cpython-314.pyc and b/src/event_universe/loader/__pycache__/__init__.cpython-314.pyc differ
+Binary files a/src/event_universe/loader/__pycache__/world.cpython-314.pyc and b/src/event_universe/loader/__pycache__/world.cpython-314.pyc differ
+diff -ruN a/src/event_universe/node.py b/src/event_universe/node.py
+--- a/src/event_universe/node.py	2026-10-26 03:58:16.958967689 +0000
++++ b/src/event_universe/node.py	2026-10-26 03:58:16.965614916 +0000
+@@ -14,6 +14,10 @@
+ from event_universe.core.rule3 import carried_division, half, link_unit_of, mirrored, unit_of, wall_of
+ from event_universe.features import phase
+ from event_universe.links import Link, turned
++import os
++
++# fr2 (H-Frozen-Node-Release-2): the swap's own trigger unmasked at a frozen Node; off (unset) the head bit for bit
++FR2_RELEASE = bool(os.environ.get("FR2_RELEASE"))
+ from event_universe.rows import (
+     CARRIER,
+     HALF_WIDTH,
+@@ -306,7 +310,7 @@
+         xf = readings.floor(self)
+         below = np.vectorize(lambda a, c: int(a) < xf or int(c) < xf, otypes=[bool])
+         top = peak(x0, x1, x2) | below(x0, x2)
+-        if frozen is not None:
++        if frozen is not None and not FR2_RELEASE:
+             top = top & ~frozen
+         self.turned = top
+         if top.any():
+diff -ruN a/tests/test_horizon_radiates.py b/tests/test_horizon_radiates.py
+--- a/tests/test_horizon_radiates.py	1970-01-01 00:00:00.000000000 +0000
++++ b/tests/test_horizon_radiates.py	2026-10-26 03:58:16.969868780 +0000
+@@ -0,0 +1,89 @@
++"""hr2 (H-Horizon-Radiates-2): the test of the row "the horizon radiates" under FR-S1's form (the flag FR2_RELEASE on the flagged copy; on the head the two lines in place): the 3-cube of tests/worlds/world_node.json with its centre fed to the frozen content and its before below it, 40 intervals. What the law does, asserted: (a) no Node is frozen at two intervals in a row (FR-S1); (b) the released centre's content stays between the floor's reflection and the horizon and returns to the horizon (the hover: frozen lines at the centre at least 5 of 40); (c) the content reaches the six neighbours by their own read within two intervals and the neighbours stand at the horizon within ten: the horizon's neighbourhood grows and does not empty; (d) no credit is written at the centre, at its neighbours, or anywhere on the board over the 40 intervals (the law's clicks carry nothing of the horizon); (e) the run back 40 of 40 by the state's hash; (f) every transient within 128 bits. Usage: FR2_RELEASE=1 PYTHONPATH=<src copy> python test_horizon_radiates_hr2.py [world.json]; also collected by pytest."""
++import os
++import sys
++import time
++
++import numpy as np
++
++os.environ.setdefault("FR2_RELEASE", "1")
++sys.set_int_max_str_digits(0)
++from event_universe.core import paces  # noqa: E402
++from event_universe.features import volume  # noqa: E402
++from event_universe.loader.world import load_world  # noqa: E402
++from event_universe.node import Node  # noqa: E402
++from event_universe.rows import CARRIER  # noqa: E402
++
++HERE = os.path.dirname(os.path.abspath(__file__))
++WORLD = os.path.join(HERE, "worlds", "world_node.json")
++
++
++def fed_node(world_path, content, before):
++    universe, world = load_world(world_path)
++    node = Node(universe, world)
++    centre = tuple(int(s) // 2 for s in node.shape)
++
++    def level_at(c):
++        return int(np.asarray(volume.volume_of(node.gamma, np.array([c], dtype=object)), dtype=object).reshape(-1)[0])
++
++    carrier = node.row(CARRIER).lines[0]
++    carrier.now[centre] = level_at(content)
++    carrier.before[centre] = level_at(before)
++    node.ride_walls()
++    light = node.emitter().lines[0]
++    light.now[centre] = 4 * int(light.now[centre])
++    return node, centre
++
++
++def neighbours_of(centre, shape):
++    out = []
++    for ax in range(3):
++        for d in (-1, 1):
++            q = list(centre)
++            q[ax] = (q[ax] + d) % shape[ax]
++            out.append(tuple(q))
++    return out
++
++
++def test_the_horizon_radiates_nothing_and_its_neighbourhood_grows(world_path=WORLD, n=40):
++    frozen_content = paces.frozen_content(1000)
++    node, centre = fed_node(world_path, frozen_content, frozen_content - 93)
++    shape = tuple(int(s) for s in node.shape)
++    nbs = neighbours_of(centre, shape)
++    hashes, prev_frozen, two_in_row = [], set(), 0
++    centre_frozen, centre_contents, first_nb_content, nb_at_horizon = 0, [], None, None
++    max_transient = 0
++    for t in range(n):
++        hashes.append(node.state_hash())
++        node.step()
++        c = node.content()
++        pace = np.asarray(paces.link_pace_of(node.gamma, c), dtype=object)
++        frozen = {tuple(int(v) for v in idx) for idx in zip(*np.nonzero(pace == 0))}
++        two_in_row += len(frozen & prev_frozen)
++        prev_frozen = frozen
++        centre_frozen += centre in frozen
++        centre_contents.append(int(c[centre]))
++        if first_nb_content is None and all(int(c[p]) > 0 for p in nbs):
++            first_nb_content = node.interval
++        if nb_at_horizon is None and all(int(pace[p]) == 0 for p in nbs):
++            nb_at_horizon = node.interval
++        max_transient = max(max_transient, int(node.max_transient))
++    credits = [e for e in node.log if e.get("event") == "credit"]
++    exact = 0
++    for k in range(n):
++        node.step_back()
++        exact += node.state_hash() == hashes[n - 1 - k]
++    found = {"two in a row": two_in_row, "centre frozen lines": centre_frozen, "centre content min/max": [min(centre_contents), max(centre_contents)], "neighbours read the content at": first_nb_content, "neighbours at the horizon at": nb_at_horizon, "credits": len(credits), "run back": [exact, n], "max transient bits": max_transient}
++    assert two_in_row == 0, found  # (a)
++    assert centre_frozen >= 5 and min(centre_contents) > 0 and max(centre_contents) >= frozen_content, found  # (b)
++    assert first_nb_content is not None and first_nb_content <= 2, found  # (c) the content reaches the neighbours by their own read
++    assert nb_at_horizon is not None and nb_at_horizon <= 10, found  # (c) the neighbourhood grows to the horizon
++    assert len(credits) == 0, found  # (d)
++    assert exact == n, found  # (e)
++    assert max_transient <= 128, found  # (f)
++    return found
++
++
++if __name__ == "__main__":
++    t0 = time.monotonic_ns()
++    found = test_the_horizon_radiates_nothing_and_its_neighbourhood_grows(sys.argv[1] if len(sys.argv) > 1 else WORLD)
++    print(found, "ms", (time.monotonic_ns() - t0) // 1000000)
+diff -ruN a/tools/hr2/hr2_stream.py b/tools/hr2/hr2_stream.py
+--- a/tools/hr2/hr2_stream.py	1970-01-01 00:00:00.000000000 +0000
++++ b/tools/hr2/hr2_stream.py	2026-10-26 03:58:16.972734183 +0000
+@@ -0,0 +1,143 @@
++"""hr2 (H-Horizon-Radiates-2): one world run N intervals on a named src (the flag FR2_RELEASE from the environment), a reading per interval streamed as a JSON line as it comes: the frozen set, the turned among the Nodes that ever froze, the content and X at every Node that ever froze, the sum of content over the horizon's neighbourhood (every Node that ever froze and its six neighbours) against the rest of the board, the credits and births of the interval with their Node, their distance in Links from the nearest Node that ever froze (the torus), their levels, beat, proper and content, the max transient and state bits; then the run back of `back` by the state's hash; the final JSON with the counts and the whole click log (births and credits). Integers only. Usage: hr2_stream.py <src> <world.json> <intervals> <back> <out.jsonl> <final.json> [fed content] [fed before content]"""
++import json
++import sys
++import time
++
++import numpy as np
++
++sys.path.insert(0, sys.argv[1])
++sys.set_int_max_str_digits(0)
++from event_universe.core import paces  # noqa: E402
++from event_universe.features import volume  # noqa: E402
++from event_universe.loader.world import load_world  # noqa: E402
++from event_universe.node import Node  # noqa: E402
++from event_universe.rows import CARRIER  # noqa: E402
++
++src, world_path, n, back, out_path, final_path = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), sys.argv[5], sys.argv[6]
++universe, world = load_world(world_path)
++node = Node(universe, world)
++shape = tuple(int(s) for s in node.shape)
++cube = shape[0]
++fed = None
++if len(sys.argv) > 8:
++    content_fed, before_fed = int(sys.argv[7]), int(sys.argv[8])
++    centre = tuple(s // 2 for s in shape)
++
++    def level_at(c):
++        return int(np.asarray(volume.volume_of(node.gamma, np.array([c], dtype=object)), dtype=object).reshape(-1)[0])
++
++    carrier = node.row(CARRIER).lines[0]
++    carrier.now[centre] = level_at(content_fed)
++    carrier.before[centre] = level_at(before_fed)
++    node.ride_walls()
++    light = node.emitter().lines[0]
++    light.now[centre] = 4 * int(light.now[centre])
++    fed = {"centre": list(centre), "content": content_fed, "before": before_fed, "X": level_at(content_fed), "X before": level_at(before_fed)}
++
++
++def at(i):
++    return (i // (cube * cube), (i // cube) % cube, i % cube)
++
++
++def index(p):
++    return p[0] * cube * cube + p[1] * cube + p[2]
++
++
++def dist(a, b):
++    return sum(min((x - y) % cube, (y - x) % cube) for x, y in zip(a, b))
++
++
++def neighbours(i):
++    p = at(i)
++    out = set()
++    for ax in range(3):
++        for d in (-1, 1):
++            q = list(p)
++            q[ax] = (q[ax] + d) % cube
++            out.add(index(tuple(q)))
++    return out
++
++
++ever = []  # the Nodes that ever froze, in order of first freeze
++ever_set = set()
++hood = set()  # ever frozen and their six neighbours
++first_freeze = {}
++hashes = []
++log_seen = 0
++frozen_content = paces.frozen_content(node.gamma)
++t0 = time.monotonic_ns()
++out = open(out_path, "w", encoding="utf-8")
++max_transient = 0
++max_state = 0
++for t in range(n):
++    if back and t >= n - back:
++        hashes.append(node.state_hash())
++    node.step()
++    i = node.interval
++    carrier = node.row(CARRIER).lines[0]
++    c = node.content()
++    cflat = [int(x) for x in np.asarray(c, dtype=object).reshape(-1)]
++    xflat = [int(x) for x in np.asarray(carrier.now, dtype=object).reshape(-1)]
++    pace = [int(p) for p in np.asarray(paces.link_pace_of(node.gamma, c), dtype=object).reshape(-1)]
++    frozen = [k for k, p in enumerate(pace) if p == 0]
++    for k in frozen:
++        if k not in ever_set:
++            ever_set.add(k)
++            ever.append(k)
++            first_freeze[k] = i
++            hood.add(k)
++            hood |= neighbours(k)
++    turned_flat = node.turned.reshape(-1).tolist()
++    new_log = node.log[log_seen:]
++    log_seen = len(node.log)
++    clicks = []
++    for e in new_log:
++        if e.get("event") not in ("birth", "credit"):
++            continue
++        p = tuple(int(v) for v in e["node"])
++        d = min((dist(p, at(k)) for k in ever), default=None)
++        clicks.append({"event": e["event"], "node": list(p), "index": index(p), "dist": d, "levels": int(e.get("levels", 0)), "beat": int(e.get("beat", 0)) if e["event"] == "credit" else None, "proper": int(e.get("proper", 0)), "content": int(e.get("content", 0)), "sense": e.get("sense"), "line": e.get("line", e.get("line_pair")), "turned": e.get("turned")})
++    census = node.census()
++    max_transient = max(max_transient, int(node.max_transient))
++    max_state = max(max_state, int(census[1]))
++    line = {
++        "i": i,
++        "frozen": frozen,
++        "turned_ever": [k for k in ever if turned_flat[k]],
++        "content_ever": {str(k): cflat[k] for k in ever},
++        "X_ever": {str(k): xflat[k] for k in ever},
++        "hood_size": len(hood),
++        "hood_content_sum": sum(cflat[k] for k in hood),
++        "rest_content_sum": sum(cflat[k] for k in range(len(cflat)) if k not in hood),
++        "board_content_sum": sum(cflat),
++        "max_content": max(cflat),
++        "clicks": clicks,
++        "credits": sum(1 for e in clicks if e["event"] == "credit"),
++        "births": sum(1 for e in clicks if e["event"] == "birth"),
++        "max_transient_bits": int(node.max_transient),
++        "state_bits": int(census[1]),
++        "ms": (time.monotonic_ns() - t0) // 1000000,
++    }
++    if fed is not None:
++        ci = index(tuple(fed["centre"]))
++        line["centre"] = {"content": cflat[ci], "X": xflat[ci], "X_before": int(carrier.before.reshape(-1)[ci]), "turned": bool(turned_flat[ci]), "frozen": pace[ci] == 0, "proper": int(node.proper.reshape(-1)[ci])}
++        line["centre_neighbours_content"] = [cflat[k] for k in sorted(neighbours(ci))]
++    out.write(json.dumps(line, default=str) + "\n")
++    if i % 50 == 0 or i == n:
++        out.flush()
++out.close()
++exact = 0
++for k in range(len(hashes)):
++    node.step_back()
++    exact += node.state_hash() == hashes[len(hashes) - 1 - k]
++final = {
++    "src": src, "world": world_path, "intervals": n, "fed": fed, "frozen content": frozen_content, "cube": cube,
++    "ever frozen": [{"index": k, "node": list(at(k)), "first freeze": first_freeze[k]} for k in ever],
++    "hood": sorted(hood), "run back": [exact, len(hashes)],
++    "counts": {k: int(v) for k, v in node.counts.items()}, "turns": len(node.turns) if isinstance(node.turns, list) else int(node.turns),
++    "max transient bits": max_transient, "max state bits": max_state,
++    "ms": (time.monotonic_ns() - t0) // 1000000,
++    "clicks": [e for e in node.log if e.get("event") in ("birth", "credit")],
++}
++json.dump(final, open(final_path, "w"), default=str)
++print(json.dumps({k: v for k, v in final.items() if k != "clicks"}, default=str)[:3000])
+diff -ruN a/tools/hr2/read_stream.py b/tools/hr2/read_stream.py
+--- a/tools/hr2/read_stream.py	1970-01-01 00:00:00.000000000 +0000
++++ b/tools/hr2/read_stream.py	2026-10-26 03:58:16.972697297 +0000
+@@ -0,0 +1,78 @@
++"""hr2: the reading of a streamed record (hr2_stream.py's or read_head.py's JSON lines): per Node that ever froze its first freeze, its frozen lines, its releases (a frozen line followed by an unfrozen one), its content's course after the first freeze (min, max, last, the mean of the velocity of X in X-levels per interval while unfrozen), the hovering bound (the longest run of intervals between two freezes and the longest unfrozen stretch); the horizon's neighbourhood against the rest (the content sums at the first freeze, at the end and the change); the credits per interval before and after the first freeze, by their distance in Links from the nearest Node that ever froze (0 at it, 1 its neighbour, 2 and more outside), their levels (the energy in quanta) and beats; the max transient and state bits. Integers only (every rate as numerator / denominator). Usage: read_stream.py <stream.jsonl> [<out.json>]"""
++import json
++import sys
++
++sys.set_int_max_str_digits(0)
++lines = [json.loads(l) for l in open(sys.argv[1]) if l.strip()]
++n = len(lines)
++ever = []
++for l in lines:
++    for k in l["frozen"]:
++        if k not in ever:
++            ever.append(k)
++first_i = {k: next(l["i"] for l in lines if k in l["frozen"]) for k in ever}
++per_node = {}
++for k in ever:
++    f0 = first_i[k]
++    frozen_at = [l["i"] for l in lines if k in l["frozen"]]
++    fs = set(frozen_at)
++    releases = sum(1 for i in frozen_at if (i + 1) <= lines[-1]["i"] and (i + 1) not in fs)
++    two_in_row = sum(1 for i in frozen_at if (i + 1) in fs)
++    after = [l for l in lines if l["i"] >= f0]
++    contents = [l["content_ever"][str(k)] for l in after]
++    xs = [l["X_ever"][str(k)] for l in after]
++    vel = [xs[j + 1] - xs[j] for j in range(len(xs) - 1)]
++    turned = [l["i"] for l in after if k in l["turned_ever"]]
++    # the longest unfrozen stretch between two freezes and the longest since the last freeze
++    gaps = [b - a - 1 for a, b in zip(frozen_at, frozen_at[1:])]
++    credits_at = [c for l in after for c in l["clicks"] if c["event"] == "credit" and c["index"] == k]
++    per_node[str(k)] = {
++        "first freeze": f0, "frozen lines": len(frozen_at), "releases": releases, "frozen two in a row": two_in_row,
++        "turned lines after": len(turned), "content at first freeze": contents[0], "content min after": min(contents), "content max after": max(contents), "content last": contents[-1],
++        "intervals after": len(after), "longest unfrozen gap between freezes": max(gaps, default=0), "intervals since last freeze at the end": lines[-1]["i"] - frozen_at[-1],
++        "X at first freeze": xs[0], "X last": xs[-1], "X min after": min(xs), "velocity abs max": max((abs(v) for v in vel), default=0), "velocity sum (X last - X first)": xs[-1] - xs[0],
++        "credits at it after": len(credits_at), "credit levels at it after": sum(c["levels"] for c in credits_at),
++        "content course (every 50th)": contents[::50][:40], "frozen intervals (first 20)": frozen_at[:20],
++    }
++f_first = min(first_i.values()) if ever else None
++before = [l for l in lines if f_first is None or l["i"] < f_first]
++after = [l for l in lines if f_first is not None and l["i"] >= f_first]
++def credits_of(ls):
++    return [c for l in ls for c in l["clicks"] if c["event"] == "credit"]
++cb, ca = credits_of(before), credits_of(after)
++by_d = {}
++for c in ca:
++    d = "0" if c["dist"] == 0 else "1" if c["dist"] == 1 else "2+" if c["dist"] is not None else "none"
++    e = by_d.setdefault(d, {"credits": 0, "levels": 0, "beat sum": 0, "beats": {}})
++    e["credits"] += 1; e["levels"] += c["levels"]; e["beat sum"] += (c["beat"] or 0); e["beats"][str(c["beat"])] = e["beats"].get(str(c["beat"]), 0) + 1
++hood_nodes = set()
++out = {
++    "stream": sys.argv[1], "intervals": n, "last i": lines[-1]["i"], "ever frozen": ever, "first freeze": f_first,
++    "hood size at end": lines[-1]["hood_size"], "board Nodes": len(lines[-1]["content_ever"]) and None,
++    "frozen count per interval max": max(len(l["frozen"]) for l in lines), "frozen lines total": sum(len(l["frozen"]) for l in lines),
++    "releases total": sum(v["releases"] for v in per_node.values()), "frozen two in a row total": sum(v["frozen two in a row"] for v in per_node.values()),
++    "hood content sum at first freeze / end": [after[0]["hood_content_sum"], after[-1]["hood_content_sum"]] if after else None,
++    "rest content sum at first freeze / end": [after[0]["rest_content_sum"], after[-1]["rest_content_sum"]] if after else None,
++    "board content sum at first freeze / end": [after[0]["board_content_sum"], after[-1]["board_content_sum"]] if after else None,
++    "max content at first freeze / end": [after[0]["max_content"], after[-1]["max_content"]] if after else None,
++    "credits before first freeze": [len(cb), len(before)], "credits after first freeze": [len(ca), len(after)],
++    "credit levels before / after": [sum(c["levels"] for c in cb), sum(c["levels"] for c in ca)],
++    "credits after by distance from the nearest Node that ever froze": by_d,
++    "credits per 100 intervals after (by distance)": {d: (e["credits"] * 100) // max(1, len(after)) for d, e in by_d.items()},
++    "credits at ever-frozen Nodes after, per Node": {k: v["credits at it after"] for k, v in per_node.items()},
++    "max transient bits": max((l.get("max_transient_bits", 0) for l in lines), default=None), "max state bits": max((l.get("state_bits", 0) for l in lines), default=None),
++    "per node": per_node,
++}
++if "centre" in lines[-1]:
++    cs = [l["centre"] for l in lines]
++    out["centre"] = {"frozen lines": sum(1 for c in cs if c["frozen"]), "turned lines": sum(1 for c in cs if c["turned"]), "content min/max/last": [min(c["content"] for c in cs), max(c["content"] for c in cs), cs[-1]["content"]], "content course (first 40)": [c["content"] for c in cs[:40]], "content every 100th": [c["content"] for c in cs[::100]], "neighbours content at end": lines[-1]["centre_neighbours_content"], "neighbours content at 1": lines[0]["centre_neighbours_content"], "proper at end": cs[-1]["proper"], "credits at centre": sum(1 for l in lines for c in l["clicks"] if c["event"] == "credit" and c["dist"] == 0), "credits at neighbours": sum(1 for l in lines for c in l["clicks"] if c["event"] == "credit" and c["dist"] == 1), "credits farther": sum(1 for l in lines for c in l["clicks"] if c["event"] == "credit" and (c["dist"] or 0) >= 2)}
++    # the hovering cycle: the frozen intervals of the centre and the gaps
++    fz = [l["i"] for l in lines if l["centre"]["frozen"]]
++    out["centre"]["frozen intervals (first 30)"] = fz[:30]
++    out["centre"]["gaps between freezes (first 30)"] = [b - a for a, b in zip(fz, fz[1:])][:30]
++    out["centre"]["gaps between freezes max"] = max([b - a for a, b in zip(fz, fz[1:])], default=0)
++if len(sys.argv) > 2:
++    json.dump(out, open(sys.argv[2], "w"), indent=1, default=str)
++print(json.dumps({k: v for k, v in out.items() if k != "per node"}, default=str))
++for k, v in per_node.items():
++    print(k, json.dumps({kk: vv for kk, vv in v.items() if "course" not in kk and "first 20" not in kk}))

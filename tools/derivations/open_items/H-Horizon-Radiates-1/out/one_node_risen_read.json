@@ -1,0 +1,2197 @@
+{
+ "stream": "out/one_node_risen_4000.jsonl",
+ "fed": {
+  "content": 3793,
+  "before": 3700,
+  "frozen content": 3793,
+  "X fed": 4268834097,
+  "X before fed": 2560000000
+ },
+ "intervals": 4000,
+ "run back": [
+  10,
+  10
+ ],
+ "counts": {
+  "births": "0",
+  "taken": "0",
+  "booked": "0",
+  "body_clicks": "0",
+  "laid_back": "0",
+  "refused_stop": "372",
+  "refused_origin": "0",
+  "refused_lay": "12734",
+  "refused_orientation": "123814",
+  "refused_twist": "11224",
+  "refused_sense": "0",
+  "turns": "12317",
+  "met": "148144",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "max transient": 118,
+ "max state bits": 117,
+ "frozen intervals": 674,
+ "turned intervals": 1350,
+ "frozen and turned": 0,
+ "frozen twice in a row": 0,
+ "centre content min/max": [
+  3424,
+  3885
+ ],
+ "period of the centre's content (late)": 6,
+ "centre content first 40": [
+  3707,
+  3424,
+  3707,
+  3837,
+  3707,
+  3424,
+  3707,
+  3837,
+  3707,
+  3424,
+  3707,
+  3792,
+  3885,
+  3792,
+  3707,
+  3424,
+  3707,
+  3837,
+  3707,
+  3424,
+  3707,
+  3837,
+  3707,
+  3424,
+  3707,
+  3837,
+  3707,
+  3424,
+  3707,
+  3837,
+  3707,
+  3424,
+  3707,
+  3837,
+  3707,
+  3424,
+  3707,
+  3837,
+  3707,
+  3424
+ ],
+ "centre content last 24": [
+  3885,
+  3792,
+  3707,
+  3424,
+  3707,
+  3792,
+  3885,
+  3792,
+  3707,
+  3424,
+  3707,
+  3792,
+  3885,
+  3792,
+  3707,
+  3424,
+  3707,
+  3792,
+  3885,
+  3792,
+  3707,
+  3424,
+  3707,
+  3792
+ ],
+ "q abs max / |v| max": [
+  1712815832,
+  1712815832
+ ],
+ "q at the frozen intervals (first 8)": [
+  [
+   4,
+   7220437
+  ],
+  [
+   8,
+   7222143
+  ],
+  [
+   13,
+   3981719
+  ],
+  [
+   18,
+   7223839
+  ],
+  [
+   22,
+   7223839
+  ],
+  [
+   26,
+   7217028
+  ],
+  [
+   30,
+   7223839
+  ],
+  [
+   34,
+   7223839
+  ]
+ ],
+ "q sum over the run": 9205996682,
+ "neighbours content first/last": [
+  [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   3792,
+   3792,
+   3792,
+   3792,
+   3792,
+   3792
+  ]
+ ],
+ "neighbours content min/max over the run": [
+  0,
+  3837
+ ],
+ "board sum first/last/min/max": [
+  3710,
+  96311,
+  3710,
+  102969
+ ],
+ "clock increments sum at centre": 86161,
+ "clicks at centre": 0,
+ "clicks at neighbours": 0,
+ "clicks on the board": 0,
+ "clicks at centre by interval (first 10)": [],
+ "clicks on the board last interval": null,
+ "clicks per 500 intervals (board)": {
+  "0": 0,
+  "1": 0,
+  "2": 0,
+  "3": 0,
+  "4": 0,
+  "5": 0,
+  "6": 0,
+  "7": 0,
+  "8": 0
+ },
+ "course": [
+  {
+   "i": 1,
+   "content": 3707,
+   "v": -1708834097,
+   "q": null,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "board sum": 3710,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 2,
+   "content": 3424,
+   "v": -1701617069,
+   "q": 7217028,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3424,
+    3424,
+    3424,
+    3424,
+    3424,
+    3424
+   ],
+   "board sum": 23987,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 3,
+   "content": 3707,
+   "v": 1701617069,
+   "q": 1701617069,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 64968,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 4,
+   "content": 3837,
+   "v": 1708837506,
+   "q": 7220437,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3667,
+    3667,
+    3667,
+    3667,
+    3667,
+    3667
+   ],
+   "board sum": 94159,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 5,
+   "content": 3707,
+   "v": -1708837506,
+   "q": -1708837506,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 97191,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 6,
+   "content": 3424,
+   "v": -1701613667,
+   "q": 7223839,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3792,
+    3792,
+    3792,
+    3792,
+    3792,
+    3792
+   ],
+   "board sum": 98908,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 7,
+   "content": 3707,
+   "v": 1701613667,
+   "q": 1701613667,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 6,
+   "nb content": [
+    3837,
+    3837,
+    3837,
+    3837,
+    3837,
+    3837
+   ],
+   "board sum": 100510,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 8,
+   "content": 3837,
+   "v": 1708835810,
+   "q": 7222143,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3792,
+    3792,
+    3792,
+    3792,
+    3792,
+    3792
+   ],
+   "board sum": 101221,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 9,
+   "content": 3707,
+   "v": -1708835810,
+   "q": -1708835810,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 101683,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 10,
+   "content": 3424,
+   "v": -1701611971,
+   "q": 7223839,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 12,
+   "nb content": [
+    3667,
+    3667,
+    3667,
+    3667,
+    3667,
+    3667
+   ],
+   "board sum": 101806,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 11,
+   "content": 3707,
+   "v": 1701611971,
+   "q": 1701611971,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 8,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 101453,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 12,
+   "content": 3792,
+   "v": 1708832408,
+   "q": 7220437,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3424,
+    3424,
+    3424,
+    3424,
+    3424,
+    3424
+   ],
+   "board sum": 99648,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 13,
+   "content": 3885,
+   "v": 1712814127,
+   "q": 3981719,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    957,
+    957,
+    957,
+    957,
+    957,
+    957
+   ],
+   "board sum": 84095,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 14,
+   "content": 3792,
+   "v": -1712814127,
+   "q": -1712814127,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3424,
+    3424,
+    3424,
+    3424,
+    3424,
+    3424
+   ],
+   "board sum": 97996,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 15,
+   "content": 3707,
+   "v": -1708832408,
+   "q": 3981719,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 97642,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 16,
+   "content": 3424,
+   "v": -1701611971,
+   "q": 7220437,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3667,
+    3667,
+    3667,
+    3667,
+    3667,
+    3667
+   ],
+   "board sum": 96010,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 17,
+   "content": 3707,
+   "v": 1701611971,
+   "q": 1701611971,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 93795,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 18,
+   "content": 3837,
+   "v": 1708835810,
+   "q": 7223839,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3792,
+    3792,
+    3792,
+    3792,
+    3792,
+    3792
+   ],
+   "board sum": 94909,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 19,
+   "content": 3707,
+   "v": -1708835810,
+   "q": -1708835810,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 6,
+   "nb content": [
+    3837,
+    3837,
+    3837,
+    3837,
+    3837,
+    3837
+   ],
+   "board sum": 97725,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 20,
+   "content": 3424,
+   "v": -1701613667,
+   "q": 7222143,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3792,
+    3792,
+    3792,
+    3792,
+    3792,
+    3792
+   ],
+   "board sum": 98908,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 21,
+   "content": 3707,
+   "v": 1701613667,
+   "q": 1701613667,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 99976,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 22,
+   "content": 3837,
+   "v": 1708837506,
+   "q": 7223839,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3667,
+    3667,
+    3667,
+    3667,
+    3667,
+    3667
+   ],
+   "board sum": 100471,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 23,
+   "content": 3707,
+   "v": -1708837506,
+   "q": -1708837506,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 100741,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 24,
+   "content": 3424,
+   "v": -1701617069,
+   "q": 7220437,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 12,
+   "nb content": [
+    3424,
+    3424,
+    3424,
+    3424,
+    3424,
+    3424
+   ],
+   "board sum": 100348,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 25,
+   "content": 3707,
+   "v": 1701617069,
+   "q": 1701617069,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 8,
+   "nb content": [
+    1070,
+    1070,
+    1070,
+    1070,
+    1070,
+    1070
+   ],
+   "board sum": 86327,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 26,
+   "content": 3837,
+   "v": 1708834097,
+   "q": 7217028,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3424,
+    3424,
+    3424,
+    3424,
+    3424,
+    3424
+   ],
+   "board sum": 99693,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 27,
+   "content": 3707,
+   "v": -1708834097,
+   "q": -1708834097,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 99721,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 28,
+   "content": 3424,
+   "v": -1701613660,
+   "q": 7220437,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3667,
+    3667,
+    3667,
+    3667,
+    3667,
+    3667
+   ],
+   "board sum": 99086,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 29,
+   "content": 3707,
+   "v": 1701613660,
+   "q": 1701613660,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 98584,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 30,
+   "content": 3837,
+   "v": 1708837499,
+   "q": 7223839,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3792,
+    3792,
+    3792,
+    3792,
+    3792,
+    3792
+   ],
+   "board sum": 97173,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 31,
+   "content": 3707,
+   "v": -1708837499,
+   "q": -1708837499,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 6,
+   "nb content": [
+    3837,
+    3837,
+    3837,
+    3837,
+    3837,
+    3837
+   ],
+   "board sum": 94329,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 32,
+   "content": 3424,
+   "v": -1701615356,
+   "q": 7222143,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3792,
+    3792,
+    3792,
+    3792,
+    3792,
+    3792
+   ],
+   "board sum": 94496,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 33,
+   "content": 3707,
+   "v": 1701615356,
+   "q": 1701615356,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 97191,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 34,
+   "content": 3837,
+   "v": 1708839195,
+   "q": 7223839,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3667,
+    3667,
+    3667,
+    3667,
+    3667,
+    3667
+   ],
+   "board sum": 98571,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 35,
+   "content": 3707,
+   "v": -1708839195,
+   "q": -1708839195,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 99034,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 36,
+   "content": 3424,
+   "v": -1701618758,
+   "q": 7220437,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3424,
+    3424,
+    3424,
+    3424,
+    3424,
+    3424
+   ],
+   "board sum": 98600,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 37,
+   "content": 3707,
+   "v": 1701618758,
+   "q": 1701618758,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    1053,
+    1053,
+    1053,
+    1053,
+    1053,
+    1053
+   ],
+   "board sum": 85513,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 38,
+   "content": 3837,
+   "v": 1708835786,
+   "q": 7217028,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 13,
+   "nb content": [
+    3424,
+    3424,
+    3424,
+    3424,
+    3424,
+    3424
+   ],
+   "board sum": 100761,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 39,
+   "content": 3707,
+   "v": -1708835786,
+   "q": -1708835786,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 8,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 101453,
+   "clock": 0,
+   "clicks": []
+  },
+  {
+   "i": 40,
+   "content": 3424,
+   "v": -1701615349,
+   "q": 7220437,
+   "turned": false,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3667,
+    3667,
+    3667,
+    3667,
+    3667,
+    3667
+   ],
+   "board sum": 100738,
+   "clock": 25,
+   "clicks": []
+  },
+  {
+   "i": 41,
+   "content": 3707,
+   "v": 1701615349,
+   "q": 1701615349,
+   "turned": true,
+   "frozen": false,
+   "frozen count": 0,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 100663,
+   "clock": 33,
+   "clicks": []
+  },
+  {
+   "i": 107,
+   "content": 3885,
+   "v": 1712814127,
+   "q": 3981719,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 68869,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 173,
+   "content": 3885,
+   "v": 1712790286,
+   "q": 3988499,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 101861,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 239,
+   "content": 3885,
+   "v": 1712757925,
+   "q": 3981668,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 93031,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 305,
+   "content": 3885,
+   "v": 1712734088,
+   "q": 3988446,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 101861,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 371,
+   "content": 3885,
+   "v": 1712701683,
+   "q": 3981598,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 96427,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 437,
+   "content": 3885,
+   "v": 1712677811,
+   "q": 3988394,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 98286,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 503,
+   "content": 3885,
+   "v": 1712645405,
+   "q": 3981545,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 99448,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 569,
+   "content": 3885,
+   "v": 1712621533,
+   "q": 3988342,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 10,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 100049,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 635,
+   "content": 3885,
+   "v": 1712589127,
+   "q": 3981494,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 98882,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 701,
+   "content": 3885,
+   "v": 1712565253,
+   "q": 3988289,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 99351,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 767,
+   "content": 3885,
+   "v": 1712532847,
+   "q": 3981441,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 96923,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 833,
+   "content": 3885,
+   "v": 1712508973,
+   "q": 3988237,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 79955,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 899,
+   "content": 3885,
+   "v": 1712476567,
+   "q": 3981389,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 95924,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 965,
+   "content": 3885,
+   "v": 1712452692,
+   "q": 3988185,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 2,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 98868,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1031,
+   "content": 3885,
+   "v": 1712420285,
+   "q": 3981336,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 99762,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1097,
+   "content": 3885,
+   "v": 1712396410,
+   "q": 3988132,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 7,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 101279,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1163,
+   "content": 3885,
+   "v": 1712364002,
+   "q": 3981283,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 97271,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1229,
+   "content": 3885,
+   "v": 1712340127,
+   "q": 3988080,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 98859,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1295,
+   "content": 3885,
+   "v": 1712307719,
+   "q": 3981231,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 93293,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1361,
+   "content": 3885,
+   "v": 1712283843,
+   "q": 3988027,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 2,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 85707,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1427,
+   "content": 3885,
+   "v": 1712251435,
+   "q": 3981179,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 97314,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1493,
+   "content": 3885,
+   "v": 1712227559,
+   "q": 3987976,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 99154,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1559,
+   "content": 3885,
+   "v": 1712195150,
+   "q": 3981127,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 98013,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1625,
+   "content": 3885,
+   "v": 1712171273,
+   "q": 3987923,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 7,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 98472,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1691,
+   "content": 3885,
+   "v": 1712138864,
+   "q": 3981075,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 96981,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1757,
+   "content": 3885,
+   "v": 1712114986,
+   "q": 3987870,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 4,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 99179,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1823,
+   "content": 3885,
+   "v": 1712082576,
+   "q": 3981022,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 94392,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1889,
+   "content": 3885,
+   "v": 1712058699,
+   "q": 3987819,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 85876,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 1955,
+   "content": 3885,
+   "v": 1712026289,
+   "q": 3980970,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 96515,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2021,
+   "content": 3885,
+   "v": 1712002410,
+   "q": 3987766,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 98661,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2087,
+   "content": 3885,
+   "v": 1711970000,
+   "q": 3980918,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 98644,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2153,
+   "content": 3885,
+   "v": 1711946121,
+   "q": 3987714,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 8,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 99579,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2219,
+   "content": 3885,
+   "v": 1711913711,
+   "q": 3980866,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 99935,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2285,
+   "content": 3885,
+   "v": 1711889831,
+   "q": 3987661,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 4,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 100377,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2351,
+   "content": 3885,
+   "v": 1711857420,
+   "q": 3980813,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 93806,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2417,
+   "content": 3885,
+   "v": 1711833540,
+   "q": 3987609,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 85139,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2483,
+   "content": 3885,
+   "v": 1711801128,
+   "q": 3980760,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 96784,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2549,
+   "content": 3885,
+   "v": 1711777248,
+   "q": 3987557,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 2,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 98532,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2615,
+   "content": 3885,
+   "v": 1711744836,
+   "q": 3980709,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 98744,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2681,
+   "content": 3885,
+   "v": 1711720955,
+   "q": 3987504,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 7,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 99795,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2747,
+   "content": 3885,
+   "v": 1711688543,
+   "q": 3980657,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 96262,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2813,
+   "content": 3885,
+   "v": 1711664660,
+   "q": 3987451,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 98308,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2879,
+   "content": 3885,
+   "v": 1711632248,
+   "q": 3980604,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 93615,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 2945,
+   "content": 3885,
+   "v": 1711608365,
+   "q": 3987399,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 2,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 86228,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3011,
+   "content": 3885,
+   "v": 1711575953,
+   "q": 3980552,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 97344,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3077,
+   "content": 3885,
+   "v": 1711552070,
+   "q": 3987347,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 99042,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3143,
+   "content": 3885,
+   "v": 1711519657,
+   "q": 3980500,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 97873,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3209,
+   "content": 3885,
+   "v": 1711495773,
+   "q": 3987294,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 7,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 100354,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3275,
+   "content": 3885,
+   "v": 1711463360,
+   "q": 3980447,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 99948,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3341,
+   "content": 3885,
+   "v": 1711439476,
+   "q": 3987242,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 4,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 100144,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3407,
+   "content": 3885,
+   "v": 1711407062,
+   "q": 3980395,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 93243,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3473,
+   "content": 3885,
+   "v": 1711383178,
+   "q": 3987190,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 86661,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3539,
+   "content": 3885,
+   "v": 1711350764,
+   "q": 3980343,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 96467,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3605,
+   "content": 3885,
+   "v": 1711326879,
+   "q": 3987138,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 97706,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3671,
+   "content": 3885,
+   "v": 1711294465,
+   "q": 3980291,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 98582,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3737,
+   "content": 3885,
+   "v": 1711270579,
+   "q": 3987086,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 8,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 101070,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3803,
+   "content": 3885,
+   "v": 1711238164,
+   "q": 3980238,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 98824,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3869,
+   "content": 3885,
+   "v": 1711214278,
+   "q": 3987033,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 3,
+   "nb content": [
+    3748,
+    3748,
+    3748,
+    3748,
+    3748,
+    3748
+   ],
+   "board sum": 97201,
+   "clock": 23,
+   "clicks": []
+  },
+  {
+   "i": 3935,
+   "content": 3885,
+   "v": 1711181863,
+   "q": 3980186,
+   "turned": false,
+   "frozen": true,
+   "frozen count": 1,
+   "nb content": [
+    3591,
+    3591,
+    3591,
+    3591,
+    3591,
+    3591
+   ],
+   "board sum": 92374,
+   "clock": 23,
+   "clicks": []
+  }
+ ]
+}

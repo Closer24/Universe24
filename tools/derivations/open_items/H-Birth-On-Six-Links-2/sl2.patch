@@ -1,0 +1,87 @@
+diff -ru '--exclude=__pycache__' ../../../../src/event_universe/close.py /dev/shm/tmp/sl2/src_sl2/event_universe/close.py
+--- ../../../../src/event_universe/close.py	2026-10-26 05:08:17.090178270 +0000
++++ /dev/shm/tmp/sl2/src_sl2/event_universe/close.py	2026-10-26 05:20:05.878708163 +0000
+@@ -2,6 +2,7 @@
+ 
+ from __future__ import annotations
+ 
++import os
+ from typing import TYPE_CHECKING, Any, NamedTuple
+ 
+ import numpy as np
+@@ -13,6 +14,7 @@
+ from event_universe.core.rule3 import quotient, remainder
+ from event_universe.links import cross, row_current, row_twist
+ from event_universe.rows import PLANE, Line
++from event_universe.six import six_lay, unlay
+ from event_universe.take import fall_of, lay, momentum_of, neighbour, read_number, take_at
+ 
+ if TYPE_CHECKING:
+@@ -241,8 +243,11 @@
+     re, im = node.records()[s].lines
+     stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
+     dp_lay = [0, 0, 0]
++    node.dp_lay_ends = []
+     for where, sense in ((minus, -1), (plus, 1)):
+-        for a, d in enumerate(child_at(node, s, where, sense)):
++        end = child_at(node, s, where, sense)
++        node.dp_lay_ends.append([int(x) for x in end])
++        for a, d in enumerate(end):
+             dp_lay[a] += d
+     senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
+     return dp_lay, senses, stood
+@@ -253,9 +258,15 @@
+ ) -> set[tuple[int, ...]]:
+     """One take's children laid (`child_laid`), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last), a merger's two ends' takes under `takes`. Returns the Nodes touched."""
+     touched = {at}
++    dp_kids, torque_kids = [0, 0, 0], [0, 0, 0]
+     for s, minus, plus, room in kids:
+         dp_lay, w_children, stood = child_laid(node, s, minus, plus)
+         touched |= {minus, plus}
++        for where, dp_end in zip((minus, plus), node.dp_lay_ends, strict=True):
++            arm = [((w_ - a_ + node.cube // 2) % node.cube) - node.cube // 2 for w_, a_ in zip(where, at, strict=True)]
++            dp_kids = [u + v for u, v in zip(dp_kids, dp_end, strict=True)]
++            c = [arm[1] * dp_end[2] - arm[2] * dp_end[1], arm[2] * dp_end[0] - arm[0] * dp_end[2], arm[0] * dp_end[1] - arm[1] * dp_end[0]]
++            torque_kids = [u + v for u, v in zip(torque_kids, c, strict=True)]
+         node.counts["births"] += 1
+         node.closes[at] += 1
+         node.log.append(
+@@ -284,6 +295,27 @@
+                 "dP_take": take["dP_take"],
+                 "dP_lay": dp_lay,
+                 **({"takes": take["takes"]} if "takes" in take else {}),
++                **({"dP_lay_ends": node.dp_lay_ends} if os.environ.get("SL2_FORM") else {}),
++            }
++        )
++    if os.environ.get("SL2_FORM"):
++        k = take["taken_line"] if isinstance(take["taken_line"], int) else take["taken_line"][0]
++        dp_click = [u + v for u, v in zip(take["dP_take"], dp_kids, strict=True)]
++        six = six_lay(node, at, rec, k, dp_click, torque_kids)
++        touched |= {tuple(j) for j in six["ends"]}
++        node.counts["six_laid"] = node.counts.get("six_laid", 0) + bool(six.get("closed"))
++        node.counts["six_open"] = node.counts.get("six_open", 0) + (not six.get("closed"))
++        node.log.append(
++            {
++                "event": "six",
++                "i": node.interval,
++                "node": list(at),
++                "taken_row": rec,
++                "taken_line": k,
++                "dP_take": take["dP_take"],
++                "dP_children": dp_kids,
++                "torque_children": torque_kids,
++                **six,
+             }
+         )
+     return touched
+@@ -325,6 +357,9 @@
+     rec0 = node.records().index(node.emitter())
+     for entry in reversed(node.log[frame["log_from"] :]):
+         at = tuple(entry["node"])
++        if entry["event"] == "six":
++            unlay(node, entry)
++            continue
+         if entry["event"] == "birth":
+             s, (a, b) = entry["line_pair"], entry["amplitude"]
+             lay(node, s, tuple(entry["minus"]), (a, 0, 0, -b), -1)
+Only in /dev/shm/tmp/sl2/src_sl2/event_universe: six.py

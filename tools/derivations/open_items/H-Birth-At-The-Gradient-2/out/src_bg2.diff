@@ -1,0 +1,132 @@
+diff -ru /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/bg2/src/event_universe/close.py src_bg2/event_universe/close.py
+--- /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/bg2/src/event_universe/close.py	2026-10-26 04:38:40.587842507 +0000
++++ src_bg2/event_universe/close.py	2026-10-26 04:43:32.536652682 +0000
+@@ -2,13 +2,14 @@
+ 
+ from __future__ import annotations
+ 
++import os
+ from typing import TYPE_CHECKING, Any, NamedTuple
+ 
+ import numpy as np
+ 
+ from event_universe import gram, readings
+ from event_universe.bodies import bodies
+-from event_universe.core import rule3
++from event_universe.core import paces, rule3
+ from event_universe.core.ports import AXES, across, port_of
+ from event_universe.core.rule3 import quotient, remainder
+ from event_universe.links import cross, row_current, row_twist
+@@ -18,6 +19,11 @@
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+ 
++# bg2 (H-Birth-At-The-Gradient-2): the flag from the environment; unset, the head bit for bit
++BG2_FORM = bool(os.environ.get("BG2_FORM"))
++# bg2: the form's own counters, beside node.counts so the records' counts stay the head's
++BG2: dict[str, Any] = {"met_gradient": 0, "twist_nonzero": 0, "sense_opposite": 0, "drawn": 0, "clock_apart_only": 0, "born": []}
++
+ 
+ class Birth(NamedTuple):
+     """A birth read at the Link close: the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room and the taken record."""
+@@ -66,15 +72,40 @@
+     currents = [node.den * row_current(start, port_of(axis, 0)) for axis in range(AXES)]
+     twists = [row_twist(start, axis) for axis in range(AXES)]
+     charges = gram.charge(row.shape, start) if row is not node.emitter() else None
++    pace = np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object) if BG2_FORM else None
++    clock = np.asarray(paces.clock_of(node.gamma, node.start_content), dtype=object) if BG2_FORM else None
++    if pace is not None and np.ndim(pace) == 0:
++        pace, clock = None, None
+     for axis in range(AXES):
+         both = standing & across(standing, port_of(axis, 0))
++        # bg2: the Link's pace difference read the same from both ends up to the sign (odd, like the current): the other end's Link pace less this end's
++        grad = across(pace, port_of(axis, 0)) - pace if pace is not None else None
++        cgrad = across(clock, port_of(axis, 0)) - clock if clock is not None else None
+         for where in zip(*np.nonzero(both), strict=True):
+             at = tuple(int(x) for x in where)
+             j = neighbour(node, at, port_of(axis, 0))
+             node.counts["met"] += 1
+             flow = int(currents[axis][at])
+             if flow == 0:
+-                refused(node, at, "orientation", link=list(j), row=rec)
++                g = int(grad[at]) if grad is not None else 0
++                if g == 0:
++                    if cgrad is not None and int(cgrad[at]) != 0:
++                        BG2["clock_apart_only"] += 1
++                    refused(node, at, "orientation", link=list(j), row=rec)
++                    continue
++                # bg2: the gradient as the orientation where the record carries no current: the pair's axis from the slower end to the faster, the + child free at the faster end, the - child at the slower end; the twist and the sense read for the count and not as refusals
++                BG2["met_gradient"] += 1
++                into, outof = (j, at) if g > 0 else (at, j)
++                BG2["twist_nonzero"] += int(int(twists[axis][at]) != 0)
++                if charges is not None:
++                    BG2["sense_opposite"] += int(int(charges[at]) * int(charges[j]) < 0)
++                drawn = read_number(node, into, rules, unit)
++                if drawn is None:
++                    continue
++                BG2["drawn"] += 1
++                number, room = drawn
++                born.append(Birth(into, list_of(node, rec, number), outof, into, room, rec))
++                BG2["born"].append([list(at), list(j), rec, g, list(into)])
+                 continue
+             into, outof = (j, at) if flow > 0 else (at, j)
+             h = int(twists[axis][at])
+diff -ru /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/bg2/src/event_universe/interval.py src_bg2/event_universe/interval.py
+--- /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/bg2/src/event_universe/interval.py	2026-10-26 04:38:40.589874919 +0000
++++ src_bg2/event_universe/interval.py	2026-10-26 04:43:32.509983757 +0000
+@@ -2,6 +2,8 @@
+ 
+ from __future__ import annotations
+ 
++import os
++
+ from typing import TYPE_CHECKING, Any
+ 
+ import numpy as np
+@@ -17,6 +19,9 @@
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+ 
++# fr2 (H-Frozen-Node-Release-2): the flag from the environment; unset, the head bit for bit
++FR2_RELEASE = bool(os.environ.get("FR2_RELEASE"))
++
+ 
+ def laid_on(node: Node, line: Line, levels: Any) -> None:
+     """The emission's size, a reading of the run: the levels laid on the emitter's line and the Nodes they were laid at."""
+@@ -234,7 +239,12 @@
+         node.set_rows(self.out)
+         if self.direction == 1:
+             self.lays()
+-        node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen)
++        if self.direction == -1 and self.kept is not None and FR2_RELEASE:
++            # fr2: a Node both frozen and turned ended the interval at its held pre-state exchanged; backward it is restored to the pre-state the exchange returned (kept); a frozen Node not turned to the held
++            node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen & ~self.top)
++            node.restore(node.all_lines(), [line for row in self.kept for line in row], self.frozen & self.top)
++        else:
++            node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen)
+ 
+     def lays(self) -> None:
+         """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.odd_rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`); the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
+diff -ru /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/bg2/src/event_universe/node.py src_bg2/event_universe/node.py
+--- /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/bg2/src/event_universe/node.py	2026-10-26 04:38:40.591762182 +0000
++++ src_bg2/event_universe/node.py	2026-10-26 04:43:32.510226072 +0000
+@@ -14,6 +14,10 @@
+ from event_universe.core.rule3 import carried_division, half, link_unit_of, mirrored, unit_of, wall_of
+ from event_universe.features import phase
+ from event_universe.links import Link, turned
++import os
++
++# fr2 (H-Frozen-Node-Release-2): the swap's own trigger unmasked at a frozen Node; off (unset) the head bit for bit
++FR2_RELEASE = bool(os.environ.get("FR2_RELEASE"))
+ from event_universe.rows import (
+     CARRIER,
+     HALF_WIDTH,
+@@ -306,7 +310,7 @@
+         xf = readings.floor(self)
+         below = np.vectorize(lambda a, c: int(a) < xf or int(c) < xf, otypes=[bool])
+         top = peak(x0, x1, x2) | below(x0, x2)
+-        if frozen is not None:
++        if frozen is not None and not FR2_RELEASE:
+             top = top & ~frozen
+         self.turned = top
+         if top.any():

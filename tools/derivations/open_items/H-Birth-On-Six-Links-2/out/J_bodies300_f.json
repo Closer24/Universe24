@@ -1,0 +1,103 @@
+{
+ "cube": 7,
+ "centre2": [
+  6,
+  6,
+  6
+ ],
+ "counts": {
+  "credits": 1973,
+  "credits laid back": 0,
+  "births": 0,
+  "takes": 0,
+  "six lines": 0,
+  "six solved": 0,
+  "six closed": 0,
+  "six open (remainder named)": 0,
+  "takes with J balance 0 about the centre": 0,
+  "takes with P balance 0": 0,
+  "births: W_children summing 0": 0,
+  "births: dP_lay 0": 0,
+  "mergers": 0
+ },
+ "J2 by class": {
+  "credits": [
+   0,
+   0,
+   0
+  ],
+  "takes": [
+   0,
+   0,
+   0
+  ],
+  "children": [
+   0,
+   0,
+   0
+  ],
+  "six": [
+   0,
+   0,
+   0
+  ]
+ },
+ "P by class": {
+  "credits": [
+   0,
+   0,
+   0
+  ],
+  "takes": [
+   0,
+   0,
+   0
+  ],
+  "children": [
+   0,
+   0,
+   0
+  ],
+  "six": [
+   0,
+   0,
+   0
+  ]
+ },
+ "J2 clicks": [
+  0,
+  0,
+  0
+ ],
+ "P clicks": [
+  0,
+  0,
+  0
+ ],
+ "worst |2J| balance at a take": 0,
+ "max |laid integer| at the six ends": 0,
+ "intervals with a click moment not 0": 0,
+ "open remainders": [],
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "counts_record": {
+  "births": "0",
+  "taken": "0",
+  "booked": "0",
+  "body_clicks": "1973",
+  "laid_back": "0",
+  "refused_stop": "825",
+  "refused_origin": "0",
+  "refused_lay": "112",
+  "refused_orientation": "1062",
+  "refused_twist": "8656",
+  "refused_sense": "3152",
+  "turns": "4229",
+  "met": "12982",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "record": "bodies300_f.json"
+}

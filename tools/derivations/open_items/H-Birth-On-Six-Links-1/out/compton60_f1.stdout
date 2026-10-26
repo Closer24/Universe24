@@ -1,0 +1,1 @@
+{"world": "worlds/world_compton.json", "intervals": "60", "counts": {"births": "0", "taken": "0", "booked": "0", "body_clicks": "176", "laid_back": "0", "refused_stop": "720", "refused_origin": "0", "refused_lay": "72", "refused_orientation": "6", "refused_twist": "2218", "refused_sense": "1280", "turns": "13797", "met": "3576", "laid": "0", "laid_nodes": "0"}, "run back": null}

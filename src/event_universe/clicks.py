@@ -6,12 +6,15 @@ from collections import Counter, defaultdict
 from functools import cmp_to_key
 from typing import Any
 
-from event_universe.circle import circle_of
+from event_universe.board import neighbours
 from event_universe.core.paces import sine_den
 from event_universe.decoder import (
     FEW,
+    HALF,
     HUNDRED,
+    LIFTS,
     MIL,
+    PAIR,
     SPANS,
     THOUSAND,
     Rational,
@@ -21,6 +24,7 @@ from event_universe.decoder import (
     middle,
     nearest,
     quot,
+    unread_words,
 )
 
 Decoded = list[tuple[dict[str, Any], str, Rational]]
@@ -75,10 +79,10 @@ def families(record: Record) -> dict[str, Any]:
     """Gate 8: the species from the frame of every credit (the whole view), every credit within the one-click floor and every track read right, three or more species born."""
     decoded, right, within, _floors = solved(record)
     tracks, track_right, _confusion = tracks_of(record)
-    born = Counter(record.line_name[b["line_pair"]] for b in record.births)
+    born = record.born_of()
     if not decoded:
         verdict = "NOT READ: no credit in the record"
-    elif within == len(decoded) and track_right == len(tracks) and len(born) >= 3:
+    elif within == len(decoded) and track_right == len(tracks) and len(born) >= LIFTS:
         verdict = "SHOWN (every credit within the one-click floor, every track read right)"
     elif within == len(decoded):
         verdict = (
@@ -126,14 +130,14 @@ def mass_ratios(record: Record) -> dict[str, Any]:
         found[f"{names[num][0]} leg in the clicks / header (parts per million)"] = quot(
             read_legs[num], sine_den(num, record.den) or 1, MIL
         )
-    if len(credited) < 2:
+    if len(credited) < PAIR:
         read = (
             f"NOT SHOWN: {len(credited)} plane credited, a ratio needs two"
             if decoded
             else "NOT READ: no credit decoded"
         )
     else:
-        heavy, light = credited[-1], credited[-2]
+        heavy, light = credited[-1], credited[-PAIR]
         clicks = quot(read_legs[heavy], read_legs[light], MIL) if read_legs[light] else None
         header = quot(sine_den(heavy, record.den), sine_den(light, record.den), MIL)
         floors = [f for f in floor_mil if f is not None]
@@ -148,7 +152,7 @@ def mass_ratios(record: Record) -> dict[str, Any]:
             if clicks is None
             else "NOT SHOWN: the ratio in the clicks is off the header's beyond the floor"
         )
-    circle = circle_of(record.den)
+    circle = record.circle()
     least = min((s for _num, s in circle), default=0)
     found[
         "den's circle: the points' legs over the least (parts per million), the typed among them marked"
@@ -164,12 +168,12 @@ def one_click_floor(record: Record) -> dict[str, Any]:
         return {"16 uncertainty floor (one click)": {"verdict": "NOT READ: no credit decoded"}}
     names = record.NAMES
     legs = sorted(((num, leg) for num, (_name, leg) in names.items() if leg), key=lambda kv: kv[1])
-    spacing = quot(abs(legs[-1][0] - legs[-2][0]), legs[-1][0], MIL) if len(legs) >= 2 else None
+    spacing = quot(abs(legs[-1][0] - legs[-PAIR][0]), legs[-1][0], MIL) if len(legs) >= PAIR else None
     return {
         "16 uncertainty floor (one click)": {
             "floor on x per credit, parts per million: min / middle / max": [
                 fl[0],
-                fl[len(fl) // 2],
+                fl[len(fl) // HALF],
                 fl[-1],
             ],
             "species spacing of the two heaviest, parts per million": spacing,
@@ -184,13 +188,7 @@ def one_click_floor(record: Record) -> dict[str, Any]:
 def charge(record: Record) -> dict[str, Any]:
     """Gate 17: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name)."""
     births = record.births
-    signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
-    sizes = sorted(
-        abs(w)
-        for b in births
-        for w, stood in zip(b["W_children"], b.get("stood", [[0], [0]]), strict=True)
-        if not any(stood)
-    )
+    signs, sizes = record.signs_of(), sorted(record.laid_at_nothing())
     residue = sum(1 for b in births for stood in b.get("stood", [[0], [0]]) if any(stood))
     sense_sum = sum(signs)
     opposite = sum(
@@ -231,8 +229,7 @@ def charge(record: Record) -> dict[str, Any]:
 
 def conservation_at_click(record: Record) -> dict[str, Any]:
     """Gate 15: the conservation at the click, taken against booked over the births (the identity taken >= booked on every birth; the exact form is row 47)."""
-    births = record.births
-    booked, taken = sum(b["booked"] for b in births), sum(b["taken"] for b in births)
+    births, (taken, booked) = record.births, record.takes_of()
     exact = all(b["taken"] >= b["booked"] for b in births)
     return {
         "15 conservation at the click": {
@@ -249,7 +246,7 @@ def conservation_at_click(record: Record) -> dict[str, Any]:
 
 def halves(pairs: list[tuple[int, Any]]) -> tuple[list[Any], list[Any]]:
     """The values split at the middle key, shallow and deep."""
-    med = sorted(p[0] for p in pairs)[len(pairs) // 2]
+    med = sorted(p[0] for p in pairs)[len(pairs) // HALF]
     return [p[1] for p in pairs if p[0] <= med], [p[1] for p in pairs if p[0] > med]
 
 
@@ -290,7 +287,7 @@ def lengthening(record: Record) -> dict[str, Any]:
     for at, cs in by_node.items():
         cs.sort(key=lambda c: int(c["i"]))
         spans += [
-            ((a["content"] + b["content"]) // 2, b["i"] - a["i"])
+            ((a["content"] + b["content"]) // HALF, b["i"] - a["i"])
             for a, b in zip(cs, cs[1:], strict=False)
             if b["i"] > a["i"]
         ]
@@ -329,10 +326,51 @@ def merger(record: Record) -> dict[str, Any]:
         "24 the merger (a pair into light)": {
             "births taken from a gapped record (a pair into light)": len(mergers),
             "gapped meetings refused by cause": dict(refusals),
-            "verdict": "NOT READ: no gapped record's meeting in the record; the predicate: two conjugate records' credits ending at one Node with the gap-0 line rising there by their quanta, the charge kept"
+            "verdict": unread_words(
+                "no gapped record's meeting in the record",
+                "two conjugate records' credits ending at one Node with the gap-0 line rising there by their quanta, the charge kept",
+            )
             if not reached
             else f"SHOWN: {len(mergers)} pairs into light (the gap-0 children born from a gapped record's take)"
             if mergers
             else f"NOT SHOWN: {reached} gapped meetings reached the premise and every one was refused by name",
+        }
+    }
+
+
+def horizon_radiates(record: Record) -> dict[str, Any]:
+    """Row 61: the horizon radiates (hp2's predicate, the Boss's 6408295798, the owner's word of 03:4x UTC: Hawking's radiation as nature looks in the clicks): after a Node's first freeze, a birth at that Node or at one of its six neighbours, and a credit two or more Links from every frozen Node (the radiation leaving the horizon); NOT READ with no frozen Node."""
+    first: dict[int, int] = {}
+    for line in record.nodes:
+        for at in line["frozen"]:
+            first.setdefault(at, int(line["i"]))
+    if not first:
+        return {
+            "61 the horizon radiates": {
+                "verdict": unread_words(
+                    "no frozen Node in the record (as gate 14)",
+                    "a birth at a frozen Node or its neighbour after its freeze, with a credit two or more Links from every frozen Node",
+                )
+            }
+        }
+    near = {at: i for at, i in first.items()} | {
+        n: i for at, i in first.items() for n in neighbours(record, at)
+    }
+    births = [b for b in record.births if int(b["i"]) > near.get(record.index(b["node"]), int(b["i"]))]
+    far = [
+        c
+        for c in record.credits
+        if int(c["i"]) > min(first.values())
+        and all(record.distance(tuple(c["node"]), tuple(record.node(at))) >= PAIR for at in first)
+    ]
+    return {
+        "61 the horizon radiates": {
+            "Nodes frozen": len(first),
+            "births at a frozen Node or its neighbour after the freeze": len(births),
+            "credits two or more Links from every frozen Node after the first freeze": len(far),
+            "at": list(births[0]["node"]) if births else None,
+            "verdict": f"SHOWN: a birth at the horizon and a credit beyond it, {len(births)} births and {len(far)} credits"
+            if births and far
+            else f"NOT SHOWN: {len(births)} births at a frozen Node or its neighbour after the freeze, {len(far)} credits beyond the horizon",
         }
     }

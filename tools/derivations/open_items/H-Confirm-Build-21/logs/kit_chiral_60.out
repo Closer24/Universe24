@@ -1,0 +1,41 @@
+{"world": "world_nature.json", "cube": 5, "intervals": 60, "den": 15162856759112389, "Gamma": 1000, "T": 36000, "G": 16, "records": 4, "units": [878848879465440000, 1615924816158049488000, 1613701501183721088000, 1637588529984138012000]}
+{"the 48": {"births": 7, "credits": 380, "refused": 2252, "images holding births/credits/refusals": [12, 12, 12], "rotations/reflections apart": [12, 24]}}
+ENERGY the take read from the rows equals the credit line: held 3133 of 3133
+ENERGY the take is the least count paying the walls: held 3133 of 3133
+ENERGY taken pays booked (taken >= booked): held 3137 of 3137
+ENERGY the exact take (taken == booked): broken at interval 10, Node (4, 3, 2), taken 2006555397772957539524, booked 1993081934144379358789, excess 13473463628578180735 (held 3133 of 3137)
+  also at interval 10, Node (4, 3, 3): taken 1779984072568628795582, booked 1744980448566240849397, excess 35003624002387946185
+  also at interval 11, Node (3, 4, 0): taken 1977919795580451376618, booked 1645739854334985445640, excess 332179941245465930978
+  also at interval 11, Node (3, 4, 1): taken 1905969382673083973218, booked 1811140844720411118568, excess 94828537952672854650
+ENERGY the taken line stands moved by the levels (or laid back): held 3102 of 3102
+ENERGY the born pair carries two whole quanta (one per child, the book): broken at interval 4, Node [1, 2, 4], the two children laid [1885, 1900] whole quanta of the unit 878848879465440000 where the book is 1 and 1 (amplitude [125, 144]) (held 10 of 14)
+  also at interval 4, Node [2, 3, 0]: the two children laid [1897, 1900] whole quanta of the unit 878848879465440000 where the book is 1 and 1 (amplitude [125, 144])
+  also at interval 5, Node [4, 0, 1]: the two children laid [1895, 2041] whole quanta of the unit 878848879465440000 where the book is 1 and 1 (amplitude [125, 144])
+  also at interval 11, Node [4, 3, 2]: the two children laid [0, 1] whole quanta of the unit 1615924816158049488000 where the book is 1 and 1 (amplitude [125, 144])
+MOMENTUM the close wrote what the credit and birth lines book (dP_a exact per row): held 58 of 58
+CHARGE the board W over the planes unchanged at the close: broken at interval 10, Node None, W after the step 5912, after the close 122946, births 2 (held 42 of 60)
+  also at interval 11, Node None: W after the step 142495, after the close 292024, births 2
+  also at interval 15, Node None: W after the step -295873, after the close -295801, births 0
+  also at interval 16, Node None: W after the step -241900, after the close -241864, births 0
+CHARGE every birth W(-) + W(+) = 0 and the senses [-1, 1]: broken at interval 10, Node [4, 3, 2], the two children W [117216, 0], senses [-1, 1] (held 14 of 16)
+  also at interval 11, Node [3, 4, 1]: the two children W [153072, 0], senses [-1, 1]
+FLUX F_ij = -F_ji on every Link of the gap-0 current: held 60 of 60
+COUNT the close book exact (every change a logged take or lay): held 60 of 60
+COUNT the run back exact (the state bit for bit): held 60 of 60
+THE 48 on the clicks (births, credits, refusals through the image; the 3-cube image of the world, 30 intervals): broken at interval None, Node None, image [[1, 0, 0], [0, 1, 0], [0, 0, -1]] apart in ['births', 'credits', 'refused'] (held 12 of 48)
+{"readings": {"clicks": {"births": 16, "credits": 3119, "refused": 20444, "turns": 630, "laid back": 0}, "excess taken - booked (share units)": 44135842815005789634064, "children laid at 1 / 2 / more quanta of their unit": [21, 0, 7], "momentum P_a per record row start/end": {"0": [[0, 0, 0], [44942700961866210204, -14526014683356217738, 18498682582144661420]], "1": [[0, 0, 0], [-5309733780904050000, 1887905344321440000, -8185839578893743750]], "2": [[0, 0, 0], [-3179039141586351120, 3349344809885619930, -5811035833484141820]], "3": [[0, 0, 0], [-35420433389286540704, 8642828352694061730, -6853611255118799828]]}, "W over the planes start/end": [0, 22880]}}
+{"interval with clicks": {"i": 3, "births": 1, "credits": 0, "laid back": 0, "refused": 24, "turned": 18}}
+{"interval with clicks": {"i": 4, "births": 4, "credits": 0, "laid back": 0, "refused": 42, "turned": 29}}
+{"interval with clicks": {"i": 5, "births": 1, "credits": 3, "laid back": 0, "refused": 49, "turned": 36}}
+{"interval with clicks": {"i": 6, "births": 1, "credits": 17, "laid back": 0, "refused": 47, "turned": 47}}
+{"interval with clicks": {"i": 7, "births": 2, "credits": 28, "laid back": 0, "refused": 99, "turned": 52}}
+{"interval with clicks": {"i": 8, "births": 1, "credits": 47, "laid back": 0, "refused": 246, "turned": 49}}
+{"interval with clicks": {"i": 9, "births": 1, "credits": 75, "laid back": 0, "refused": 346, "turned": 45}}
+{"interval with clicks": {"i": 10, "births": 2, "credits": 79, "laid back": 0, "refused": 396, "turned": 44}}
+{"interval with clicks": {"i": 11, "births": 2, "credits": 92, "laid back": 0, "refused": 373, "turned": 44}}
+{"interval with clicks": {"i": 12, "births": 0, "credits": 90, "laid back": 0, "refused": 395, "turned": 36}}
+{"interval with clicks": {"i": 13, "births": 1, "credits": 84, "laid back": 0, "refused": 428, "turned": 33}}
+{"interval with clicks": {"i": 14, "births": 0, "credits": 82, "laid back": 0, "refused": 412, "turned": 26}}
+{"intervals with clicks": 58, "shown": 12}
+VERDICT: a law is broken (named above)
+exit 1

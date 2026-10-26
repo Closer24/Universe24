@@ -1,0 +1,16 @@
+# cm1: the measure at the box's end (CM1_FORM=1 on /dev/shm/tmp/cm1/src; 12 jobs under nice on 4 CPUs, load 15)
+
+| run | state | births (head) | result |
+|---|---|---|---|
+| hole 60, flag on | done | 16 (16) | P balance 0 on 0 of 16; along the Link within half the quantum 4 num A on 16 of 16; transverse carried 0 of 16; J2 balance 0 on 0 of 16; relative L 0 on 16 of 16; fixed point 16 of 16; W summing 0 on 16 of 16; Q from -84 to 47; the summed P balance [2374598372899495232, 0, 0] (the along-Link remainders; the transverse summing 0 by the hole's symmetry); run back 10 of 10; 73 bits; the course changed: body clicks 1080 against 777, stops 603 against 434; first apart from the cache at log entry 175 (the first birth, interval 9) |
+| hole 60, flag off | done | 16 (16) | the log and the counts equal to the cache (the keys gapped, rows, turns, run_back differ in the record's format at 2ab32b518 for the flag off alike: not the state) |
+| chiral 60, flag on | done | 15 (17) | P balance 0 on 0 of 15; along the Link within half the quantum on 9 of 15 (the other 6 where the plane stands near: c with transverse parts, the projection's remainder beyond the half); relative L 0 on 8 of 15 (0 on every birth onto nothing, not 0 where a standing neighbour feeds a transverse Link); fixed point 13 of 15 (2 births Q not fixed in 8 rounds, the last Q laid, the exact lay kept); W summing 0 on 13 of 15 (the 2 where im_now stands at the child's Node: -im_now sense Q breaks the pair's antisymmetry; a finding by name); Q from -616 to 86; run back 10 of 10; 76 bits; the course changed (15 births against 17) |
+| Compton 60, flag on | done | 0 | no birth; the record the head's by construction; run back 10 of 10 |
+| universe 400, pair_3 400, plasma_3 170, flag on | done | 0 | no birth: the log and counts equal to the cache (the flag's code runs inside births() alone) |
+| the 48 on the chiral 3-cube to 60, flag on and off | cut short | base 7 (off 4) | 5 of 48 images on (1 EQUAL, 4 APART), 6 of 48 off (1 EQUAL, 5 APART) at the box's end; the base births 7 against 4: the course changes on the 3-cube; the head's 12 and 36 not reached |
+| bodies 300, ga2 450 (record and course) | cut short | - | not finished in the box (the load); the 64 births at 2 and the returns at 218 and 442 not read |
+| tests_cm1.py | running at the box's end | - | out/tests_cm1.stdout when done (the first run failed its own onto-nothing clause on the 3-cube where the standing plane feeds a transverse Link; the clause narrowed to the births whose - child's lay reads 0 and nothing stood) |
+
+The per-birth reader: cm1_moment.py; its outputs out/J_hole60_f.json, out/J_chiral60_f.json, out/J_compton60_f.json. The records: /dev/shm/tmp/cm1/out/*.json.
+
+Late in the box: bodies 300 finished (out/bodies_summary.txt, out/J_bodies300_f.json: 0 births as at the head, the log equal to the cache, run back 10 of 10). tests_cm1.py: FAILED on the chiral 3-cube on its along-Link half-quantum clause (the 3-cube's standing plane feeds the children's transverse Links through the wrap, so the projection's along-Link remainder exceeds the half, as on 6 of 15 chiral births); the clause holds onto nothing (the hole: 16 of 16). The test as written stands as a failing test by name; the run back 3 of 3 and the flag-off hash equality passed before the failing clause.

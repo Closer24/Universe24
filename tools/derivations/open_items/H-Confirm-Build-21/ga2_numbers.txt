@@ -1,0 +1,11 @@
+births 146 by interval [(2, 64), (219, 64), (221, 14), (223, 2), (369, 2)]
+births at 2: 64 at 64 Nodes
+credits 402 laid_back 256 turns [[111, 64], [312, 2], [313, 10], [314, 4], [317, 12], [318, 20], [319, 4], [320, 10]] run_back {'intervals': 10, 'exact': 10}
+gamma 1000 intervals with X = Gamma at every Node: []
+X at 217 : min 1100 max 1100 distinct [1100]
+X at 218 : min 1050 max 1050 distinct [1050]
+X at 219 : min 1017 max 1017 distinct [1017]
+X at 220 : min 999 max 999 distinct [999]
+X at 221 : min 999 max 999 distinct [999]
+integers {90} bits 115
+identity on births: 82 of 82 ; mergers (takes): 64

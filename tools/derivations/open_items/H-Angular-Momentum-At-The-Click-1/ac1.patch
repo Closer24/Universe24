@@ -1,0 +1,41 @@
+diff -ru '--exclude=__pycache__' ../../../../src/event_universe/close.py src_aj1/event_universe/close.py
+--- ../../../../src/event_universe/close.py	2026-10-26 04:47:23.037278832 +0000
++++ src_aj1/event_universe/close.py	2026-10-26 04:56:44.168022278 +0000
+@@ -2,6 +2,7 @@
+ 
+ from __future__ import annotations
+ 
++import os
+ from typing import TYPE_CHECKING, Any, NamedTuple
+ 
+ import numpy as np
+@@ -128,7 +129,7 @@
+         row = node.records()[rec]
+         assert row.pair is not None
+         rule = node.rule(row.pair, c, factors)
+-        if row is not node.emitter():
++        if row is not node.emitter() or os.environ.get("AC1_FORM") == "2":
+             for kid in kids:
+                 got = merger_take(node, kid.minus, kid.plus, walls[Birth(at, *kid, rec)], rule, rec)
+                 if got is not None:
+@@ -241,8 +242,11 @@
+     re, im = node.records()[s].lines
+     stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
+     dp_lay = [0, 0, 0]
++    node.dp_lay_ends = []
+     for where, sense in ((minus, -1), (plus, 1)):
+-        for a, d in enumerate(child_at(node, s, where, sense)):
++        end = child_at(node, s, where, sense)
++        node.dp_lay_ends.append([int(x) for x in end])
++        for a, d in enumerate(end):
+             dp_lay[a] += d
+     senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
+     return dp_lay, senses, stood
+@@ -284,6 +288,7 @@
+                 "dP_take": take["dP_take"],
+                 "dP_lay": dp_lay,
+                 **({"takes": take["takes"]} if "takes" in take else {}),
++                **({"dP_lay_ends": node.dp_lay_ends} if os.environ.get("AC1_FORM") else {}),
+             }
+         )
+     return touched

@@ -1,0 +1,7 @@
+{"i": 100, "frozen": 0, "ever_frozen": 0, "content_sum": "110911", "X_distinct": 125, "hover_X_least": null, "hover_X_largest": null, "hover_X_distinct": 0, "births": "17", "credits": "4079", "bits": 100}
+{"i": 200, "frozen": 0, "ever_frozen": 0, "content_sum": "66450", "X_distinct": 123, "hover_X_least": null, "hover_X_largest": null, "hover_X_distinct": 0, "births": "17", "credits": "5427", "bits": 100}
+{"i": 300, "frozen": 0, "ever_frozen": 0, "content_sum": "104981", "X_distinct": 124, "hover_X_least": null, "hover_X_largest": null, "hover_X_distinct": 0, "births": "17", "credits": "7924", "bits": 100}
+{"i": 400, "frozen": 0, "ever_frozen": 0, "content_sum": "46339", "X_distinct": 121, "hover_X_least": null, "hover_X_largest": null, "hover_X_distinct": 0, "births": "17", "credits": "8932", "bits": 100}
+{"i": 500, "frozen": 0, "ever_frozen": 0, "content_sum": "103725", "X_distinct": 122, "hover_X_least": null, "hover_X_largest": null, "hover_X_distinct": 0, "births": "17", "credits": "10432", "bits": 100}
+{"i": 600, "frozen": 0, "ever_frozen": 0, "content_sum": "58933", "X_distinct": 119, "hover_X_least": null, "hover_X_largest": null, "hover_X_distinct": 0, "births": "17", "credits": "12400", "bits": 100}
+{"first_freeze": null, "frozen_histogram": {"0": 600}}

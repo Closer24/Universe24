@@ -8,8 +8,20 @@ from collections import Counter, defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe import board, clicks, predicates
-from event_universe.decoder import HUNDRED, WIDTH, Record, quot
+from event_universe import board, clicks, events, predicates
+from event_universe.core.ports import AXES
+from event_universe.decoder import (
+    HALF,
+    HUNDRED,
+    LISTED,
+    PAIR,
+    WIDTH,
+    Record,
+    cause_of,
+    kind_of,
+    quot,
+    unread_words,
+)
 
 Row = Callable[[Record], dict[str, Any]]
 
@@ -19,16 +31,12 @@ def approach(record: Record) -> tuple[int, int, bool, list[int]]:
     by_interval: dict[int, set[tuple[int, ...]]] = defaultdict(set)
     for c in record.credits:
         by_interval[int(c["i"])].add(tuple(c["node"]))
-    cube = int(record.run["cube"])
-
-    def distance(a: tuple[int, ...], b: tuple[int, ...]) -> int:
-        return sum(min(abs(x - y), cube - abs(x - y)) for x, y in zip(a, b, strict=True))
-
+    distance = record.distance
     spans = []
     adjacent = False
     for i in sorted(by_interval):
         nodes = sorted(by_interval[i])
-        if len(nodes) < 2:
+        if len(nodes) < PAIR:
             continue
         spans.append(max(distance(a, b) for a in nodes for b in nodes if a < b))
         adjacent = adjacent or any(distance(a, b) == 1 for a in nodes for b in nodes if a < b)
@@ -73,12 +81,12 @@ def free_fall(record: Record) -> dict[str, Any]:
     quickening = sum(1 for a, b in zip(closing, closing[1:], strict=False) if b > a > 0)
     return {
         "13 free fall": {
-            "the farthest credited Nodes' distance per interval with two (first eight)": spans[:8],
+            "the farthest credited Nodes' distance per interval with two (first eight)": spans[:LISTED],
             "intervals the closing quickens": [quickening, max(len(closing) - 1, 0)],
             "verdict": "NOT READ: fewer than two bodies credited at one interval"
             if first == 0
             else "SHOWN: the approach quickens from interval to interval (the tail's second difference toward matter)"
-            if quickening * 2 > max(len(closing) - 1, 1)
+            if quickening * HALF > max(len(closing) - 1, 1)
             else "NOT SHOWN: the approach does not quicken",
         }
     }
@@ -86,7 +94,7 @@ def free_fall(record: Record) -> dict[str, Any]:
 
 def light(record: Record) -> dict[str, Any]:
     """Gate 7: light present and absorbed, the gap-0 line's quanta taken at the births and the credits (PC-S2); the gap-0 plane's own credits none in the engine's record (a detector is the toy's reading)."""
-    takes = [entry for entry in record.log if entry["event"] in ("birth", "credit")]
+    takes = record.takes
     return {
         "7 light present and absorbed": {
             "gap-0 credits in the record": sum(1 for e in record.log if e["event"] == "detector"),
@@ -100,15 +108,17 @@ def light(record: Record) -> dict[str, Any]:
     }
 
 
-UNREAD_LIGHT = "NOT READ: the record carries no credit of the gap-0 row (light has no period on the sea); the predicate: "
+UNREAD_LIGHT = "the record carries no credit of the gap-0 row (light has no period on the sea)"
 
 
 def redshift(record: Record) -> dict[str, Any]:
     """Gate 11: the gravitational redshift, the gap-0 credits' period longer where the content is deeper, by the clocks squared (EM-S4's predicate)."""
     return {
         "11 gravitational redshift": {
-            "verdict": UNREAD_LIGHT
-            + "the gap-0 credits' period longer where the content is deeper, by the clocks squared"
+            "verdict": unread_words(
+                UNREAD_LIGHT,
+                "the gap-0 credits' period longer where the content is deeper, by the clocks squared",
+            )
         }
     }
 
@@ -117,8 +127,10 @@ def delay(record: Record) -> dict[str, Any]:
     """Gate 12: light's delay or deflection, the gap-0 credits' first interval against the Link distance from the emitter (EM-S4's predicate)."""
     return {
         "12 light's delay or deflection": {
-            "verdict": UNREAD_LIGHT
-            + "the gap-0 credits' first interval against the Link distance from the emitter, later or off the line where deeper"
+            "verdict": unread_words(
+                UNREAD_LIGHT,
+                "the gap-0 credits' first interval against the Link distance from the emitter, later or off the line where deeper",
+            )
         }
     }
 
@@ -137,32 +149,6 @@ def arrow(record: Record) -> dict[str, Any]:
     return {"18 the arrow of time": {"run back on the record": rb, "verdict": verdict}}
 
 
-def restated(key: str, source: Row, record: Record) -> dict[str, Any]:
-    """A widened row that restates a gate of the nineteen: its verdict is that gate's, named."""
-    gate, out = next(iter(source(record).items()))
-    return {key: {"verdict": f"as gate {gate.split()[0]}: " + out["verdict"]}}
-
-
-def redshift_of_light(record: Record) -> dict[str, Any]:
-    """Row 29: the redshift of light, as gate 11."""
-    return restated("29 the redshift of light", redshift, record)
-
-
-def dilation_of_bodies(record: Record) -> dict[str, Any]:
-    """Row 30: the dilation of two bodies' clocks, as gate 10."""
-    return restated("30 the dilation", clicks.dilation, record)
-
-
-def track_of_light(record: Record) -> dict[str, Any]:
-    """Row 31: the deflection and the Shapiro delay, light's track, as gate 12."""
-    return restated("31 the deflection and the Shapiro delay", delay, record)
-
-
-def fall_by_tail(record: Record) -> dict[str, Any]:
-    """Row 33: free fall by the tail, as gate 13."""
-    return restated("33 free fall by the tail", free_fall, record)
-
-
 def recoil(record: Record) -> dict[str, Any]:
     """Row 23: the momentum across the click (Compton's recoil), the close's dP_a on the click lines: the takes' and the lays' sums per axis and the births where the recoil passed to the laid pair (take + lay = 0)."""
     takes = [c["dP_take"] for c in record.credits + record.births if c.get("dP_take")]
@@ -170,17 +156,17 @@ def recoil(record: Record) -> dict[str, Any]:
     passed = sum(
         1
         for b in record.births
-        if b.get("dP_lay") and all(b["dP_take"][a] + b["dP_lay"][a] == 0 for a in range(3))
+        if b.get("dP_lay") and all(b["dP_take"][a] + b["dP_lay"][a] == 0 for a in range(AXES))
     )
     return {
         "23 the momentum across the click": {
             "clicks booking dP": len(takes),
-            "takes dP_a summed": [sum(t[a] for t in takes) for a in range(3)],
-            "lays dP_a summed": [sum(lay[a] for lay in lays) for a in range(3)],
+            "takes dP_a summed": [sum(t[a] for t in takes) for a in range(AXES)],
+            "lays dP_a summed": [sum(lay[a] for lay in lays) for a in range(AXES)],
             "recoil passed to the laid pair (take + lay = 0 per birth)": [passed, len(lays)],
             "verdict": "NOT READ: no click booked its momentum"
             if not takes
-            else "NOT READ: no birth; the predicate: the take's dP and the lay's sum to 0 at every birth"
+            else unread_words("no birth", "the take's dP and the lay's sum to 0 at every birth")
             if not lays
             else "SHOWN: the recoil passed to the laid pair at every birth"
             if passed == len(lays)
@@ -218,15 +204,10 @@ def constants(record: Record) -> dict[str, Any]:
 
 def conservations(record: Record) -> dict[str, Any]:
     """The conservations in the clicks (the owner's word: what the lattice conserves is shown conserved in the clicks): the charge, the count, the energy as the beat unchanged from one click to the next, the momentum (row 23)."""
-    births = record.births
-    signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
-    booked, taken = sum(b["booked"] for b in births), sum(b["taken"] for b in births)
-    beats: dict[tuple[tuple[int, ...], int], list[tuple[int, int]]] = defaultdict(list)
-    for c in record.credits:
-        beats[(tuple(c["node"]), c["line"])].append((c["proper"], c["beat"]))
+    births, signs, (taken, booked) = record.births, record.signs_of(), record.takes_of()
     pairs = [
         (b1, b2)
-        for cs in beats.values()
+        for cs in ([(c["proper"], c["beat"]) for c in body] for body in record.bodies_of().values())
         for (_p1, b1), (_p2, b2) in zip(sorted(cs), sorted(cs)[1:], strict=False)
         if b1 > 0 and b2 > 0
     ]
@@ -242,7 +223,7 @@ def conservations(record: Record) -> dict[str, Any]:
                 "changed by more": sum(1 for a, b in pairs if abs(a - b) > 1),
             },
             "verdict": "SHOWN: the charge 0 over the births and the beat unchanged on most click pairs"
-            if births and sum(signs) == 0 and pairs and unchanged * 2 > len(pairs)
+            if births and sum(signs) == 0 and pairs and unchanged * HALF > len(pairs)
             else "NOT SHOWN"
             if births and pairs
             else "NOT READ: no birth or no click pair",
@@ -263,7 +244,7 @@ def entropy(record: Record) -> dict[str, Any]:
         "25 the entropy of the clicks rising": {
             "births with a room": len(record.births),
             "H at the end (bits)": total,
-            "course (interval, H) at every eighth": found[:: max(1, len(found) // 8)],
+            "course (interval, H) at every eighth": found[:: max(1, len(found) // LISTED)],
             "verdict": f"SHOWN: H never falls (a sum of bit lengths), {total} bits over {len(record.births)} births"
             if record.births
             else "NOT READ: no birth",
@@ -271,8 +252,28 @@ def entropy(record: Record) -> dict[str, Any]:
     }
 
 
+def restated(key: str, source: Row) -> Row:
+    """A row restating another gate's verdict (29 to 31 and 33 restate 11, 10, 12 and 13): the source's verdict after "as gate N: "."""
+
+    def row(record: Record) -> dict[str, Any]:
+        gate, out = next(iter(source(record).items()))
+        return {key: {"verdict": f"as gate {gate.split()[0]}: " + out["verdict"]}}
+
+    row.__name__ = row.__qualname__ = f"row_{key.split()[0]}"
+    return row
+
+
+RESTATED = (
+    ("29 the redshift of light", redshift),
+    ("30 the dilation", clicks.dilation),
+    ("31 the deflection and the Shapiro delay", delay),
+    ("33 free fall by the tail", free_fall),
+)  # the rows of the widened table that restate a gate of the nineteen, the gate's row beside each
+
 TABLE: tuple[Row, ...] = (
     board.recurring_bang,
+    board.tops,
+    board.returns,
     clicks.lengthening,
     board.shortening,
     board.era,
@@ -292,7 +293,7 @@ TABLE: tuple[Row, ...] = (
     clicks.charge,
     arrow,
     clicks.mass_ratios,
-    predicates.twist,
+    events.stub("20"),
     predicates.hand_of_birth,
     predicates.coulomb,
     recoil,
@@ -300,33 +301,40 @@ TABLE: tuple[Row, ...] = (
     entropy,
     predicates.lifts,
     predicates.confinement,
-    predicates.conversion,
-    redshift_of_light,
-    dilation_of_bodies,
-    track_of_light,
-    predicates.perihelion,
-    fall_by_tail,
+    events.stub("28"),
+    restated(*RESTATED[0]),
+    restated(*RESTATED[1]),
+    restated(*RESTATED[2]),
+    events.stub("32"),
+    restated(*RESTATED[3]),
     board.stopped_clock,
-    predicates.dragging,
-    predicates.shears,
+    events.stub("35"),
+    events.stub("36"),
     board.maxwell,
-    predicates.aharonov_bohm,
-    predicates.zeeman,
+    events.stub("38"),
+    events.stub("39"),
     predicates.photoelectric,
-    predicates.two_beats,
-    predicates.stern_gerlach,
+    events.stub("41"),
+    events.stub("42"),
     predicates.exclusion,
-    predicates.velocity,
+    events.stub("44"),
     board.well,
     board.same_gates,
     predicates.exact_take,
-    predicates.black_body,
+    events.stub("48"),
     predicates.decay,
-    predicates.light_on_light,
-    predicates.casimir,
-    predicates.neutrino,
-    predicates.binds,
-    predicates.scattering,
+    events.stub("50"),
+    events.stub("51"),
+    events.stub("52"),
+    events.stub("53"),
+    events.stub("54"),
+    predicates.two_slits,
+    predicates.bell,
+    predicates.ghz,
+    events.fast_expansion,
+    events.deceleration,
+    events.acceleration_in_clicks,
+    clicks.horizon_radiates,
     conservations,
     constants,
 )
@@ -340,32 +348,29 @@ def verdicts(record: Record) -> dict[str, Any]:
     return out
 
 
-def kind_of(verdict: str) -> str:
-    """A verdict's kind (SHOWN, SHOWN in part, or NOT with SHOWN, READ or REACHED), a restated row's by the gate it restates."""
-    words = (
-        (verdict.split(": ", 1)[1] if verdict.startswith("as gate") else verdict)
-        .replace(":", " ")
-        .split()
-    )
-    whole = words[1:3] != ["in", "part"]
-    return words[0] if words[0] == "SHOWN" and whole else " ".join(words[: 2 if whole else 3])
-
-
 def gates(run: dict[str, Any]) -> dict[str, Any]:
-    """Every gate's verdict with its numbers from the record alone, the decoder's line (the count of rows by their verdict's kind, the Boss's count of SHOWN in Universe24), and the event lines of the gates' first SHOWN (events.first_shown)."""
-    from event_universe import events  # the events read the table, after it
-
+    """Every gate's verdict with its numbers from the record alone, the decoder's line (the rows of the gates of the phenomena and their count by the verdict's kind, the count of SHOWN in Universe24), and the event lines of the gates' first SHOWN (events.first_shown)."""
     record = Record(run)
-    out = verdicts(record)
+    read = [(row, row(record)) for row in TABLE]
+    out = {key: found for _row, rows in read for key, found in rows.items()}
+    for key, found in out.items():
+        found["kind"], found["cause"] = kind_of(found["verdict"]), cause_of(found["verdict"])
+        found["label"], found["phenomenon"] = events.label_of(key), events.phenomenon_of(key)
     out["the decoder"] = {
         "floats used": 0,
-        "rows of the table": len(TABLE),
+        "rows of the gates of the phenomena": len(TABLE),
         "rows by the verdict's kind (the numbered rows)": dict(
             Counter(kind_of(v["verdict"]) for k, v in out.items() if k.split()[0].isdigit())
         ),
         "readings": "quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication",
+        "rows read from the Node lines (the board's view; the rest from the log, the clicks' view)": [
+            key for row in TABLE if row.__module__ == board.__name__ for key in row(record)
+        ],
     }
-    out["events"] = events.first_shown(record, TABLE)
+    out["events"] = events.first_shown(record, read)
+    out["the eras"] = events.eras_of(
+        out, record.intervals, board.tops_of(record), board.exact_of(record)
+    )
     return out
 
 

@@ -4,23 +4,26 @@ from __future__ import annotations
 
 from event_universe.core import rule3
 
+EVEN = 2  # the modulus of parity, the least prime, and the doubling of a search
+GAUSS = 4  # a prime splits over the Gaussian integers at 1 mod 4
+
 
 def witnesses(n: int) -> list[int]:
     """The primes below n's bit length (and two), the strong test's witnesses: the primes to 7 decide below 2^31, to 37 below 2^81."""
-    return [p for p in range(2, n.bit_length() + 2) if all(p % q for q in range(2, p))]
+    return [p for p in range(EVEN, n.bit_length() + EVEN) if all(p % q for q in range(EVEN, p))]
 
 
 def is_prime(n: int) -> bool:
     """A prime by the strong test at the witnesses, enough far beyond the width."""
-    if n < 2:
+    if n < EVEN:
         return False
     small = witnesses(n)
     for p in small:
         if n % p == 0:
             return n == p
     d, s = n - 1, 0
-    while d % 2 == 0:
-        d, s = d // 2, s + 1
+    while d % EVEN == 0:
+        d, s = d // EVEN, s + 1
     for a in small:
         x = pow(a, d, n)
         if x in (1, n - 1):
@@ -36,11 +39,11 @@ def is_prime(n: int) -> bool:
 
 def divisor_of(n: int) -> int:
     """A proper divisor of a composite n by Pollard's rho (Brent's cycle), the gcd rule3's lattice; the constant stepped where the walk closes."""
-    if n % 2 == 0:
-        return 2
+    if n % EVEN == 0:
+        return EVEN
     c = 1
     while True:
-        y, m, g, r, q = 2, n.bit_length(), 1, 1, 1
+        y, m, g, r, q = EVEN, n.bit_length(), 1, 1, 1
         x = ys = y
         while g == 1:
             x = y
@@ -53,7 +56,7 @@ def divisor_of(n: int) -> int:
                     y = (y * y + c) % n
                     q = q * abs(x - y) % n
                 g, k = int(rule3.lattice(q, n)), k + m
-            r *= 2
+            r *= EVEN
         if g == n:
             g = 1
             while g == 1:
@@ -80,7 +83,7 @@ def circle_of(den: int) -> list[tuple[int, int]]:
     scale, gauss = 1, []
     for p in sorted(set(primes)):
         e = primes.count(p)
-        if p % 4 != 1:
+        if p % GAUSS != 1:
             scale *= p**e
             continue
         a = 1
@@ -94,11 +97,11 @@ def circle_of(den: int) -> list[tuple[int, int]]:
     for (a, b), e in gauss:
         grown = set()
         for x, y in points:
-            for j in range(2 * e + 1):
+            for j in range(EVEN * e + 1):
                 zx, zy = 1, 0
                 for _ in range(j):
                     zx, zy = zx * a - zy * b, zx * b + zy * a
-                for _ in range(2 * e - j):
+                for _ in range(EVEN * e - j):
                     zx, zy = zx * a + zy * b, -zx * b + zy * a
                 grown.add((x * zx - y * zy, x * zy + y * zx))
         points = grown
