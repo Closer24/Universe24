@@ -73,13 +73,22 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the horizon (2026-10-25, BH-S1's second test, the Boss's room at the merge of toys-5 84009e333): the frozen Node's Links held at the wall and no birth at it",
     ),
     "tests/test_the_record.py::test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events": (
-        20,
-        "the record's Node lines and the reading's event lines (2026-10-25, the owner's word through the Reader, every gate its event line; the Boss's room at the merge of toys-5 84009e333): "
+        23,
+        "the record's Node lines and the reading's event lines (2026-10-25, the owner's word through the Reader, every gate its event line; the Boss's room at the merge of toys-5 84009e333, 20; widened by 3 at the merge of reader-5 becc47f4d, 2026-10-26, the events read per record of the reader folder): "
         "one Node line per interval and the events the page labels",
     ),
     "tests/test_the_record.py::test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed": (
         14,
         "the page (2026-10-25, the third tool of the standard, the owner's word through the Boss; the Boss's room at the merge of toys-5 84009e333): one HTML from the record and the reading with nothing of a universe typed",
+    ),
+    "tests/test_the_record.py::test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings": (
+        21,
+        "the table of the phenomena (2026-10-26, the fourth tool of the standard, tools/phenomena.py, the owner's word through the Boss; the Boss's room at the merge of reader-5 becc47f4d): "
+        "every row of the gates in one table written from the readings, the SHOWN count on the head and the document's section rewritten from it",
+    ),
+    "tests/test_the_record.py::test_the_committed_reading_is_the_decoders_own_whole": (
+        3,
+        "the whole reading (2026-10-26, the Reader's one check of every key, number, verdict, field and event; the Boss's room at the merge of reader-5 becc47f4d): the committed reading beside the record equal to a fresh read line for line",
     ),
     "tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1": (
         24,
