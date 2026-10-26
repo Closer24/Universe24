@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import copy
+import functools
 import itertools
 import json
 from typing import Any
 
 import numpy as np
+import pytest
 
 from event_universe import gates as table
 from event_universe import gram, take
@@ -21,7 +23,9 @@ from event_universe.rows import CARRIER
 from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
 
 # rotations alike per part: the trace 6 (6, 0, 0, 0 under GP-S1 at the trace 54; 6, 6, 6, 6 under CK-S1 even)
-CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (3, 0, 0, 0)
+CUBE, INTERVALS, GROUPS = 5, 20, 16
+# the 48 in sixteen parts of three (four parts of twelve before, (3, 0, 0, 0)): the rotations 0, 24 and 32 EQUAL at the trace 6
+ALIKE = (2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0)
 COUNTED = ("births", "laid_back", "refused_stop")  # the counts the EQ-S1 test reads per world
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
@@ -79,11 +83,17 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
     return True
 
 
-def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 209 credits and 20 births under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed), 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read. Under GP-S1 (the children laid with the charge's sign, the owner's word of 2026-10-26, 04:3x UTC) the rotations negating an axis part at the interval 19 (18 of 24 apart, 6 alike in the first part, 24 of 24 alike before): the state alike through 18, and at the 19th close the merger candidates' draw reads the negated lines' remainders r against W - 1 - r in its digits, so the image draws another child plane (the row 0 against 2 at four Nodes) and births at the other four of eight symmetric sites: A48-S1's open read of the remainder in the image (the centred pick, held unbuilt), named here and not this lay's."""
+@functools.cache
+def seed_run() -> tuple[Node, list[tuple[Any, ...]]]:
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
-    births = births_of(base)
+    return base, births_of(base)
+
+
+def images_hold(group: int) -> None:
+    """The images of one part of the 48 (every sixteenth from the group's first; the seed's own run once per worker, `seed_run`, so each part is three runs under 15 s alone): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 209 credits and 20 births under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed), 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read. Under GP-S1 (the children laid with the charge's sign, the owner's word of 2026-10-26, 04:3x UTC) the rotations negating an axis part at the interval 19 (18 of 24 apart, 6 alike in the first part, 24 of 24 alike before): the state alike through 18, and at the 19th close the merger candidates' draw reads the negated lines' remainders r against W - 1 - r in its digits, so the image draws another child plane (the row 0 against 2 at four Nodes) and births at the other four of eight symmetric sites: A48-S1's open read of the remainder in the image (the centred pick, held unbuilt), named here and not this lay's."""
+    universe, world = world_of("world_hole.json")
+    base, births = seed_run()
     assert len(births) > 0
     alike = {True: 0, False: 0}
     for m in IMAGES[group::GROUPS]:
@@ -115,20 +125,9 @@ def test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero() -> None
     assert hands == {1, -1}
 
 
-def test_the_first_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged() -> None:
-    images_hold(0)
-
-
-def test_the_second_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged() -> None:
-    images_hold(1)
-
-
-def test_the_third_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged() -> None:
-    images_hold(2)
-
-
-def test_the_fourth_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged() -> None:
-    images_hold(3)
+@pytest.mark.parametrize("group", range(GROUPS))
+def test_each_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged(group: int) -> None:
+    images_hold(group)
 
 
 def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma() -> None:
