@@ -1,0 +1,44 @@
+{
+ "record": "tools/derivations/open_items/H-Quantum-Gates-1/out/hole60.json",
+ "births": 16,
+ "children at opposite senses at the birth (W_minus W_plus < 0)": 16,
+ "pairs with both children credited": 12,
+ "sense product at the two credits (product: count)": {
+  "-1": 12
+ },
+ "E(sense) in thousandths": -1000,
+ "S(sense) = 2 E in thousandths": -2000,
+ "E(a, b) over the four settings in thousandths": {
+  "(1, 0) (12, 5)": 666,
+  "(1, 0) (5, 12)": 666,
+  "(1, 1) (12, 5)": -1000,
+  "(1, 1) (5, 12)": -1000
+ },
+ "S (CHSH) in thousandths": -2000,
+ "S as a rational": [
+  -24,
+  12
+ ],
+ "per-pair identity values (value: count), each in {-2, 2}": {
+  "-2": 12
+ },
+ "bound: |S| <= 2 by the identity": true,
+ "setting by the end's clock parity: E per subsample (thousandths)": {
+  "(1, 0)": -1000,
+  "(0, 1)": 1000,
+  "(0, 0)": 1000
+ },
+ "setting by the end's clock parity: subsample counts": {
+  "(1, 0)": 4,
+  "(0, 1)": 4,
+  "(0, 0)": 4
+ },
+ "setting by the end's clock parity: S (thousandths)": null,
+ "GHZ: ends per take Node and close (ends: count)": {
+  "2": 16
+ },
+ "GHZ: closes with an odd count of ends": 0,
+ "GHZ: closes with three or more ends": 0,
+ "verdict Bell": "NOT SHOWN: |S| at most 2 by the per-pair identity on every record (the four readings on the same two credit lines); nature's 2 sqrt 2 unreachable by any local reading",
+ "verdict GHZ": "NOT SHOWN: no close with three ends; every birth two children (N-S6 the conversion not in the engine)"
+}

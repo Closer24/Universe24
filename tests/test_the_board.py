@@ -239,7 +239,7 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
-    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); BB_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to X = Gamma at every Node exactly at 115 and 230 (the bottoms), the bangs numbered 1, 116 and 231 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
+    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); The-Uniform-Board-Returns_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to X = Gamma at every Node exactly at 115 and 230 (the bottoms), the bangs numbered 1, 116 and 231 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
     universe, world = world_of("world_sea_3.json")
     found = json.loads(json.dumps(writer.record(universe, world, 10, lambda line: None)))
     out = table.gates(found)
@@ -262,7 +262,7 @@ def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() 
 
 
 def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
-    """MV-S1 to MV-S3 (the Boss's ledger item 7, MV_COMPARISON.md's section for David): the heavy row's pair of 3 quanta laid under the sea at the centre of the 9-cube with the wave number h = den div 2 along x (k = pi / 3 exactly): W 0 at every Node of every lay, the share centroid's step at each of the first four closes (the paces still the vacuum's, before the sea deepens the board) within 40 milli-Links per interval of (1000 P) div (2 E) by cross multiplication (P_x = 2 num SUM_i (now_(i+x) before_i - now_i before_(i+x)) over the two lines, E the share summed), a top of 3 Nodes above the width-2 value, wave 0 hash-equal to no wave, the refusals by name, the run back exact through 10."""
+    """MV-S1 to MV-S3 (the Boss's ledger item 7, The-Moving-Lay-With-A-Wave-Number_COMPARISON.md's section for David): the heavy row's pair of 3 quanta laid under the sea at the centre of the 9-cube with the wave number h = den div 2 along x (k = pi / 3 exactly): W 0 at every Node of every lay, the share centroid's step at each of the first four closes (the paces still the vacuum's, before the sea deepens the board) within 40 milli-Links per interval of (1000 P) div (2 E) by cross multiplication (P_x = 2 num SUM_i (now_(i+x) before_i - now_i before_(i+x)) over the two lines, E the share summed), a top of 3 Nodes above the width-2 value, wave 0 hash-equal to no wave, the refusals by name, the run back exact through 10."""
     universe, world = world_of("world_packet.json")
     den, milli = int(universe["integers"]["den"]), 1000
     packet = {"lay": "at", "row": 2, "centre": [4, 4, 4], "width": 2, "quanta": 3}
@@ -322,7 +322,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
 
 
 def test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv() -> None:
-    """MV-S1's 48 (vf5's item (a), the Boss's 6401916517; MV_COMPARISON.md's spec: the 48 with the centre and the wave transformed): the heavy row's pair of 3 quanta laid under the sea on the 5-cube at the wave [den div 2, den div 3, 0] and run two intervals, against the 48 worlds whose centre and wave are the image's: carried back by the image's inverse, the carrier's X and the row's re lines equal bit for bit, the im lines equal under a rotation and negated under a reflection (the senses exchanged), 24 and 24, 0 apart."""
+    """MV-S1's 48 (vf5's item (a), the Boss's 6401916517; The-Moving-Lay-With-A-Wave-Number_COMPARISON.md's spec: the 48 with the centre and the wave transformed): the heavy row's pair of 3 quanta laid under the sea on the 5-cube at the wave [den div 2, den div 3, 0] and run two intervals, against the 48 worlds whose centre and wave are the image's: carried back by the image's inverse, the carrier's X and the row's re lines equal bit for bit, the im lines equal under a rotation and negated under a reflection (the senses exchanged), 24 and 24, 0 apart."""
     universe, world = world_of("world_packet.json")
     den, cube, centre = int(universe["integers"]["den"]), 5, [2, 2, 1]
     wave = [den // 2, den // 3, 0]

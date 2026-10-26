@@ -1,0 +1,4 @@
+the time line's write wall T: 36000 ; every write wall of the shape-4 row and the gap-0 line: [36000]
+intervals 100: wr after the step equal to the kick's 99 of 100; wr returned by one step back 100 of 100
+intervals where the time line was written by node.write: 0 of 100; wr unequal to the kick's at the intervals [84]; divisions at that wall per forward interval: [(1,)]; per backward interval: [(-1,)]
+intervals where the write remainder moved: 100 of 100; turns [(84, 27), (84, 27)]

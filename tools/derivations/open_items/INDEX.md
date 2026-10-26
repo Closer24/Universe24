@@ -1,0 +1,136 @@
+# The derivations by name (the index of tools/derivations/open_items, 2026-10-25)
+
+The owner's word (2026-10-25, 23:14 UTC, in translation): "rename all the derivations so that I understand, and publish to everyone"; and (23:08) "hands with a clear name with a meaning, like H-Uniting-Node". Every derivation under this folder carries a name with its meaning in English, taken from its own first heading and verdict. The form: a comparison of two blind hands `<Topic>-<Item>_COMPARISON.md` (the Boss's cold read of the pair); a hand's folder `H-<Topic>-<Item>-<n>` with n the hand's number in its pair (the older pairs keep their numbers 3 to 6). The old two-letter ids stay in the texts as words (a hand's name in prose, "cs7's finding"); every path resolves to the new name. THE_WAY.md (the clause The way to a solution) and conservations (co1's check) keep their names.
+
+## The comparisons and the verdict
+
+| old id | new name | what it found |
+|---|---|---|
+| A48_COMPARISON.md | The-48-In-The-Clicks_COMPARISON.md | The 24 reflections apart in the clicks are A2's read of the lay's gauge on the conjugation-odd remainders; the reflected world is the base's conjugate (C P); A48-S1 restores 24 / 24 / 0. |
+| BB_COMPARISON.md | The-Uniform-Board-Returns_COMPARISON.md | The bare sea returns exactly, bit for bit, on the 3-cube and the 5-cube with the period 115 and every Node turning at once; a second bang with births is not shown on any seed. |
+| BG_COMPARISON.md | The-Bang-Return-And-The-Lift_COMPARISON.md | Does not work for a return of the structured board under the letter or the five candidates; the carrier's pull is the law's own exponent-2 term; the recurring bang is the uniform board's, the late acceleration every other's (BG-S1). |
+| BH_COMPARISON.md | The-Frozen-Node-Black-Hole_COMPARISON.md | Works with the sentence BH-S1 (the same form from two hands): the horizon stops the reads and the click of the frozen Node and nothing else; reached without the pump on the chiral seed at 7,129, on no record by 2,400. |
+| CS_COMPARISON.md | The-Handed-Seed-And-Births_COMPARISON.md | A light invariant under a transitive group of lattice motions is the same integers at every Node and carries no current; the handed seed turns every Node at once and returns; the births at the second bang need the sentence. |
+| D_COMPARISON.md | The-Decoder-Receives-The-Clicks_COMPARISON.md | Stands with the sentence: the clicks are a record and not a measurement (the course the same bit for bit with the writer on and off); only a bound body clicks, and the births. |
+| EM_COMPARISON.md | The-Emission-As-Continuity_COMPARISON.md | Works with the sentence EM-S1 (the law's own letter in the engine, laying light from a charged moving body for the first time); W-S1 lays 0 by its unit and because every seeded body has W = 0; the light gates need EM-S2 to EM-S4. |
+| EQ_COMPARISON.md | The-Equilibrium-At-The-Click_COMPARISON.md | The shortfall is the clicks' alone and the emission lays back 0 on an alike board; EQ-S1: where nothing arrives, a body's click takes what it lays back in the same close; the uniform boards return to Gamma exactly. |
+| EX_COMPARISON.md | The-Exact-Take-Remainder_COMPARISON.md | Works with the sentence EX-S1: the take is a division of the Node and its remainder is kept, so the take is exact to the unit on every birth and credit line, one integer more per Node within 128 bits. |
+| FD_COMPARISON.md | The-Remainder-One-Rule_COMPARISON.md | Works (U1 to U7 built and bit for bit by two hands) and works with the sentence: the one rule of the remainder folds every convention but two; fd1's count of the reversals recommended. |
+| G_COMPARISON.md | The-Gap-Of-The-Middle-And-The-Den_COMPARISON.md | Works with the sentence: the window of g exists and is derived, g in [617, 723] thousandths for a four-Link body with the beat within 1 / 6 of the clock; the closed forms of the fall, the threshold and the beat's factor agree. |
+| K_COMPARISON.md | The-Constants-Of-The-Universe_COMPARISON.md | Works with the sentence: G is derived (16 at Gamma 1,000), Gamma and T are resolutions bounded by the bits and the lay, den is a structure the owner chooses within the bounds; the integers fix their factors. |
+| LC_COMPARISON.md | The-Link-One-Current_COMPARISON.md | The Link's current is one in the law's letter and conserved to the bit on every board (the pace-weighted Links' sum 0 exactly at every interval); the structured board's lift is not a missing conservation. |
+| MA_COMPARISON.md | Matter-And-Antimatter-At-Every-Node_COMPARISON.md | The recurring bang with matter at every Node is the law's by the letter: every seed laid alike at every Node keeps e = 0 and turns every Node at once at every top; nature's seed returns to 939 / 946. |
+| MS_COMPARISON.md | The-Masses-From-The-Clicks_COMPARISON.md | Works with the sentences: by default the charge in the clicks fails universality 784-fold; under MS-S1 (the law's own letter) one value on every row; the masses read backward from nature's clicks as lifts of den's circle. |
+| MV_COMPARISON.md | The-Moving-Lay-With-A-Wave-Number_COMPARISON.md | Works with the sentence: the wave number is a field of the `at` lay, not a fourth form; the band cos omega(k) = (num / (3 den)) SUM cos k_a; light's group velocity is never one Link per interval. |
+| N_COMPARISON.md | From-The-Clicks-Of-Nature-Back-To-The-Board_COMPARISON.md | Works with the sentence: no row is missing from the universe file (the electron, the proton and the neutron are lifts of den's circle); the three missing things are in the decoder and the world file (the beat on the credit, the entropy key, the lay key). |
+| OB_COMPARISON.md | Everything-The-Clicks-Show-Back-To-The-Board_COMPARISON.md | The engine lacks two things both hands name (the momentum lay, approved; the six metric lines) and one ob1 names anew (the merger forward); the rest nature's clicks show is the decoder's and the seed's. |
+| PA_COMPARISON.md | The-Parity-Of-Wu-In-The-Clicks_COMPARISON.md | Wu's finding against nature stands (parity kept exactly with the Link birth oriented by the current); a new finding: S1 is C-odd; the twist is the one build that gives nature's P, C, CP, T pattern. |
+| PC_COMPARISON.md | The-Paces-Law-Closed-The-Carried-Clock_COMPARISON.md | Works with the sentence: the paces' law is closed as an act (PC-S1, the carried clock bit for bit the letter within 128 bits at the scale Gamma^2) and as readings (PC-S2 light's click, PC-S3 the beat). |
+| PL_COMPARISON.md | The-Plasma-Charge-At-The-Kick_COMPARISON.md | The retrace parts at the first top in one integer, the sign row's time line's write remainder; PL-S1: the charge enters the sign row as a kick in its momentum form, and nature's plasma returns to Gamma exactly. |
+| PM_COMPARISON.md | The-Count-In-The-Carriers-Unit_COMPARISON.md | Works with the sentence PM-S1 (the same from two hands): the carrier's unit for every count returns the era of matter without the pump's growth; the pump's dynamics was the one-sided wall's artifact. |
+| Q_COMPARISON.md | The-Sign-Under-One-Row-The-Birth-On-The-Link_COMPARISON.md | Works with the sentence: the Link birth lays the conjugate pair at the two ends with the dipole written; the 48 holds 48 of 48 only when the + child goes to the end the light's current flows into (F_ij). |
+| R_COMPARISON.md | Every-Line-Rides-The-Volume_COMPARISON.md | Does not work for the local trigger (the run back unmet by twins of the forward step, a theorem of form A's one-sided wall); works with the sentence for the symmetric ride on the toy; the riding line is a bijection per line with one carried division. |
+| SL_COMPARISON.md | The-Merger-As-The-Birth-Reversed_COMPARISON.md | Works with the sentence SL-S1, the letter's own theorem: the born pair never annihilates at once and no selector is needed (the pair even under the Link's mirror, the current odd); SL-S2 and SL-S3 for nature's annihilation and light on light. |
+| SP_COMPARISON.md | Spin-In-The-Clicks_COMPARISON.md | Does not work as nature's spin: the plane's sense is the charge's sign, a scalar under the 48, and a one-sense beam never splits; the spinor row (shape 8) is the one form derived that carries spin 1/2 in integers. |
+| SR_COMPARISON.md | The-Spinor-Row_COMPARISON.md | Works with the sentences SR-S1 to SR-S4: the shape-8 row is four planes (Dirac's count) on the orbit lattice, the Port's turn the identity on the spinor part; spin 1/2, the Zeeman doublet, Stern-Gerlach and the exclusion shown on the toy. |
+| U_COMPARISON.md | The-Three-Shapes-Metric-Potential-Plane_COMPARISON.md | Works with the sentence: the three shapes (the 10 of the metric, the 4 of the potential, the plane) stand under the 48 with no fourth beyond light's reading; the six metric lines are the one build the engine lacks. |
+| UN_COMPARISON.md | The-Unit-And-The-Coupling_COMPARISON.md | Works: every branch on the gap in the acts is the value of one function of the pair (the unit, the coupling min(gap, 1)), the three records bit for bit; UN-S1 for the law's text. |
+| V_COMPARISON.md | The-Pump-And-The-Redshift-Of-Light_COMPARISON.md | Works with the sentence: the redshift is in the law (the massless line's proper frequency falls as 1 / e^U); the pump is the read's unit and not the dynamics. |
+| W_COMPARISON.md | Two-Bodies-The-Free-Fall-And-The-Light-Of-A-Body_COMPARISON.md | Does not work on the engine as it is: two one-quantum bodies stay pinned at their lay Nodes, no free fall in a hand-laid well, no light from a body; three sentences are needed before any toy can show them. |
+| Y_COMPARISON.md | The-Six-Metric-Lines-Write-And-Read_COMPARISON.md | Works with the sentence on the write (the flux lines g_0a by the count's flux through the axis's two Links), the read (the Link's odd part folded into the pair's one rounding) and the 48; the run back with the six lines owed. |
+| Z_COMPARISON.md | The-Minimal-Seed_COMPARISON.md | Works with the sentence: the seed is a list of lays in three forms (sea, at, hole), each one call of the lay act before the first interval; the emergence of bodies from the sea is not shown on this engine. |
+| WS_VERDICT.md | The-Swap-Keeps-The-Charge_VERDICT.md | The swap at the top keeps W at every turned Node (W' = W under C T_0, 59,939 of 59,939 sites); cl1's reading of a flipped W was the step's fall misread as the swap's. |
+| THE_WAY.md | THE_WAY.md (stays) | The clause The way to a solution: the six steps every derivation goes through, and the quantities shown conserved on the board and in the clicks. |
+
+## The hands
+
+| old id | new name | what it found |
+|---|---|---|
+| a48 | H-48-In-The-Clicks-1 | The 24 reflections apart diagnosed: the levels are C P images at every Node, 0 apart on the board; the parting is in the clicks' read; works with the sentence. |
+| a48b | H-48-In-The-Clicks-2 | The parting mended: the draw in the laid frame folded by the two's complement restores 24 / 24 / 0 on the chiral 3-cube and 5-cube (A48-S1). |
+| bb1 | H-Uniform-Board-Returns-1 | The bare sea's exact cycle of 115 intervals on the 3-cube and the 5-cube, every Node turning at once; a second bang with births not shown. |
+| bb2 | H-Uniform-Board-Returns-2 | Three exact returns at 114 / 229 / 344; the lift is second order in the spread e, so a board of any nameable spread does not return. |
+| bg1 | H-Bang-Return-1 | No return of the structured board within 2,400 under the ride by any of four candidates; the law's letter holds the recurring top on the uniform board. |
+| bg2 | H-Bang-Return-2 | The pace-squared reach's lift carries a structured board's mean up for ever once the neighbour spread passes 2 / sqrt(Gamma); the uniform board returns exactly. |
+| bh1 | H-Frozen-Node-1 | BH-S1: the horizon at the frozen Node's Links and the identity on its state, the mask booked in the frame; the run back 10 of 10, 117 / 116 bits. |
+| bh2 | H-Frozen-Node-2 | The letter stops the reads and the click of the frozen Node and nothing else; the hold with the mask keeps every integer within the width; the horizon reached on the chiral seed at 7,129. |
+| ck1 | H-Checkerboard-1 | The checkerboard with the sea under A48-S1 is bit for bit ma2's record, so the split 1,165 / 1,164 is ma1's cross term; the parity sea derived (the k = pi double root). |
+| cl1 | H-Coulomb-Sign-1 | Coulomb's sign shown at d = 3 on the 15-cube by the `sense` field of the `at` lay; W per body read falling by 99 per cent (the reading corrected by ws1). |
+| conservations | conservations (stays) | co1's conservation check over David's lean toy: the form, the flux, the close book, the run back and the 48 on the clicks per interval; a broken law is named with exit 1. |
+| cs1 | H-Handed-Seed-1 | The zigzag light: every Node alike, the top at 77 / 232 / 387 with 64 turning at once, the exact return to Gamma; the twist and the current on every Link. |
+| cs2 | H-Handed-Seed-2 | The chiral cell seed births at the second bang on a board that returns once; the recurring bang after the births does not work. |
+| cs3 | H-Handed-Seed-3 | The cycle board (the light turned by the half along x and y, the quarter along z): 16 births at the exact return 321 with the charge 0 and one child per Node. |
+| cs4 | H-Handed-Seed-4 | The bang alike at every Node: 64 births at one interval with every class paying under the take by the fall's sign (CS4-S2), the board uniform the interval after. |
+| cs5 | H-Handed-Seed-5 | A universe file that lists one heavy pair in several rows (CS5-S2) births a bang of 64 at one close with every Node holding the pair; the return after it. |
+| cs6 | H-Handed-Seed-6 | The born board returns to Gamma exactly at every Node at 222 when no body clicks before the top (CS6-S1); the mergers under SL-S3; the gates per bang. |
+| cs7 | H-Handed-Seed-7 | CS7-S1: EQ-S1's "nothing arrives" read on the Node's net current; the 2-row file of one pair gives 64 births at bang 1 and Gamma exactly at 218, 442 and 660, every child credited. |
+| cs8 | H-Handed-Seed-8 | The merger at rest does not land on the recurring board; the orientation read from the two ends' charges where nothing flows; the stop and the light's wall on standing light. |
+| d3 | H-Decoder-Receives-Clicks-3 | The course equal bit for bit with the writer on and off 40 of 40; 18 light credits at 18 births and 10 body credits; stands with the sentence. |
+| d4 | H-Decoder-Receives-Clicks-4 | 148 arrays equal at 40 of 40 intervals with the writer on and off; only bound bodies and the births click; what the lattice conserves shows in the credit lines alone. |
+| dn1 | H-Den-Beyond-128-Bits-1 | den beyond 128 bits solves one thing (the three ratios to 10^-9) and costs the 128 bits on 18 integer classes, the quantum's resolution, the 48 in the clicks and every body; does not work. |
+| em1 | H-Emission-1 | EM-S1 is the law's own letter in the engine and lays light from a charged moving body; the light gates need EM-S2 to EM-S4. |
+| em2 | H-Emission-2 | W-S1 lays 0 by its unit and because every seeded body has W = 0; under EM-S1 a charged one-Node emitter lights the massless line at its beat, read two Links away. |
+| eq1 | H-Equilibrium-At-The-Click-1 | EQ-S1: where nothing arrives, a body's click takes what it lays back in the same close; the uniform and the heavy pair return to Gamma exactly with a body credited at every Node. |
+| eq2 | H-Equilibrium-At-The-Click-2 | The take laid back by the one lay act in the same close where nothing arrives; the light's state hash equal with and without the click; the run back 10 of 10 on 22 runs. |
+| ex1 | H-Exact-Take-Remainder-1 | The take's remainder makes the take exact to the unit on every birth and credit line of every record (EX-S1 with W1 to W3); one more integer per Node. |
+| ex2 | H-Exact-Take-Remainder-2 | The take exact as a division with a carried remainder, taken + E = booked + E' on every take; the default's loss held and repaid where a Node is retaken. |
+| fd1 | H-Remainder-One-Rule-1 | The unifications U1 to U7 built bit for bit; the one rule of the remainder (the mirror r -> w - 1 - r once per reversal) folds every convention but two. |
+| fd2 | H-Remainder-One-Rule-2 | The same unifications built on a second flagged copy, bit for bit; the conservations in the clicks read from the credit lines alone (the charge 0, 16 of 16 births). |
+| g3 | H-Gap-Of-The-Middle-3 | The gap of the middle derived: g in [617, 723] thousandths for a body four Links wide with its beat within 1 / 6 of the clock; the den 1,655,909,141 sits in it. |
+| g4 | H-Gap-Of-The-Middle-4 | 0.616 <= g <= 0.821 from the localised free packet; the fall, the threshold and the beat's factor in closed form; the run back exact in the three lawful runs. |
+| gn1 | H-Generic-Row-1 | Every branch on a row's kind in David's toy named (seven places A to G); the two that change the record are the digit set and the unit's massless case. |
+| gn2 | H-Generic-Row-2 | The gap-0 row never picked; every pick of a row by its number (row(10), row(4), walled(), records()) counted by place. |
+| k1 | H-Constants-Of-The-Universe-1 | G derived as the least power of two resolving one level of tension at the vacuum (16); Gamma and T bounded by the 128 bits; den the owner's within the window of g. |
+| k2 | H-Constants-Of-The-Universe-2 | The four constants in one line each: den a structure (the points of the circle from den's primes 1 mod 4), G the least unit, Gamma the clock's resolution, T the charge's unit. |
+| lc1 | H-Link-One-Current-1 | LC-S1: the Link's one current is the law's own on every riding row to 2 per mille; no conserved carrier current returns the structured board. |
+| lc2 | H-Link-One-Current-2 | The pace-weighted Links' sum is 0 exactly at every interval of all 16 default records; every symmetric reach runs away through the hill below the vacuum. |
+| ma1 | H-Matter-And-Antimatter-1 | Every seed laid alike at every Node keeps e = 0 at 400 of 400 and turns every Node at once at both tops; the pair returns exactly to X = 1,000. |
+| ma2 | H-Matter-And-Antimatter-2 | The recurring bang with matter at every Node on every translation-uniform seed, four returns in 400; nature's seed to 939 / 946; the checkerboard split named. |
+| mg1 | H-Merger-At-Rest-1 | MG-S1: the wall is the child's own quantum, the take the child's levels whole, the stop defers the merger to the birth's mirror at the bottom; the second bang alike not given. |
+| ms1 | H-Masses-From-The-Clicks-1 | By default the charge in the clicks is not one e for every row (784-fold); under MS-S1 17,956 on every row with every other law holding. |
+| ms2 | H-Masses-From-The-Clicks-2 | The masses backward from nature's clicks as lifts of den's circle; the charge's universality by the lay's two levels (MS-S1 in ms2's exact form). |
+| mv1 | H-Moving-Lay-1 | The `at` lay carries a wave number as one more field (MV-S1); the wave [0, 0, 0] is David's rest lay bit for bit; the 48 holds with the wave carried through the image. |
+| mv2 | H-Moving-Lay-2 | MV-S1 to MV-S3: the plane's quanta conserved to the unit on every held run; the run back exact on nine worlds; the band's velocities in integers. |
+| n1 | H-Clicks-Back-To-The-Board-1 | The hole seed at den 697,786: taken = walls + excess 20 of 20, the senses' sum 0 at 20 of 20 births, the momentum present on 578 of 578 credits. |
+| n2 | H-Clicks-Back-To-The-Board-2 | The record's den factored into three primes 1 mod 4 whose lifts stand in nature's ratios; the entropy, the credit's beat, the click's momentum and the lay key as sentences. |
+| ob1 | H-Everything-The-Clicks-Show-1 | The law's clauses reach the redshift, the dilation, free fall, the horizon, Coulomb's sign (measured), radiation, the Zeeman-like shift; the merger forward named. |
+| ob2 | H-Everything-The-Clicks-Show-2 | Does not work as is for the momentum across the click, frame dragging and gravitational waves; Coulomb's sign with the null measured on the toy. |
+| ol1 | H-Odd-Lines-Reversal-1 | OL-S1: the current J is odd under the conjugation while the shape-4 row's K is the identity, so the odd lines' write has the right index and the wrong sign under the exchange. |
+| pa1 | H-Parity-Of-Wu-1 | Wu's asymmetry 0 exactly; 48 of 48 with the senses kept; the law as written with the Link birth by the current, two findings against nature by name. |
+| pa2 | H-Parity-Of-Wu-2 | The current's placement of the senses is odd under the conjugation (the record never its own conjugate), so the CPT clause is lost; the twist's placement mends it. |
+| pc1 | H-Paces-Law-Closed-1 | The clock's memo as one carried division per content at the scale Gamma^2 reproduces the letter bit for bit at every admitted content (0 mismatches on 135,262). |
+| pc2 | H-Paces-Law-Closed-2 | The carried division at the unit within one unit of the memo everywhere (3,788 of 3,794 equal at Gamma 1,000); PC-S2 and PC-S3 as readings. |
+| pl1 | H-Plasma-Charge-1 | PL-S1: the charge enters the sign row as a kick in its momentum form; nature's plasma returns to Gamma exactly at 166 / 167 with every credit laid back. |
+| pl2 | H-Plasma-Charge-2 | The plasma's shortfall 939 / 946 is the letter's: the sign row's time line written one interval late under the exchange, parting in one integer. |
+| pm1 | H-Carriers-Unit-1 | The pump parted into the fixed wall's dynamics (an artifact of the one-sided wall) and the reading's unit (the carrier's); PM-S1 the unit on every read. |
+| pm2 | H-Carriers-Unit-2 | PM-S1: the era of matter returns with 279 credits at 12 of 12 Nodes on the chiral 300; the 48 on the clicks 24 / 0 / 24 as the default's. |
+| q1 | H-Sign-Under-One-Row-1 | The dipole written +-17 levels at the two ends; the 48 holds 48 of 48 through 18 births only when the orientation is the light's current F_ij. |
+| q2 | H-Sign-Under-One-Row-2 | The Link birth keeps the fixed count and the 48 only with the orientation from the light's Link Wronskian (48 of 48 through 6 births); the axis label 6 of 48. |
+| r3 | H-Every-Line-Rides-3 | The riding line with one carried division; the quanta conserved within 4.2 per cent across e^U 1 to 7.4; the 48 on the levels 42 of 48 under the ride. |
+| r4 | H-Every-Line-Rides-4 | The riding line a bijection (20,000 of 20,000 exact) once the half wall's move is in the numerator; the amplitude as 1 / e^U within 4.6 per cent. |
+| r5 | H-Fifth-Act-Under-The-Ride-5 | The local mend (a) of the fifth act at a single-Node top under the ride does not work. |
+| r6 | H-Fifth-Act-Under-The-Ride-6 | The local trigger is exact at every turned Node but takes the closed standing board to 48 of 60; the run back unmet under the ride. |
+| sl1 | H-Born-Pair-Meeting-1 | The generic close refuses a born pair's undoing at its first close by the orientation exactly (F = 0 at 14 of 14) and for ever by the exact take; every record bit for bit. |
+| sl2 | H-Born-Pair-Meeting-2 | SL-S1: the letter's own selector, 5 of 5 and 11 of 14 at i + 1 with flow 0; the merger itself does not land under the letter (SL-S2 and SL-S3). |
+| sp1 | H-Spin-In-The-Clicks-1 | No spin in the clicks: a one-sense beam never splits (0 of 2,934 credits of the other sense); the sense is the charge; SP-S2 the spinor form derived. |
+| sp2 | H-Spin-In-The-Clicks-2 | No spin 1/2, no Stern-Gerlach, no exclusion, no Zeeman doublet; the centroid 3,967 against 3,966 in a held gradient; SP-S2 to SP-S4. |
+| sr1 | H-Spinor-Row-1 | The shape-8 row as four planes coupled by derived integer matrices (the Z[i]-basis by Hermite reduction), the Pauli term with g = 2; the 48 to the floors. |
+| sr2 | H-Spinor-Row-2 | The spinor's four Gaussian coordinates over Q(zeta_8); the Port's turn the identity of the double cover; SR-S1 to SR-S3 built, SR-S4 derived. |
+| t48 | H-Test-48-On-The-Clicks | The test of the cube's 48 on the clicks by A48-S1's criterion (a rotation's image equal, a reflection's with every sense exchanged), with the scan of the intervals. |
+| u1 | H-Three-Shapes-1 | The three shapes with the tensions as g_aa and the six missing lines the law's (S1); light as the 4's wave (S2); 48 of 48 through the births on two seeds. |
+| u2 | H-Three-Shapes-2 | Every source of the six missing lines a reading of the Node and its six Ports; the run back 8 of 8; the fixed count named. |
+| un1 | H-Unit-And-Coupling-1 | Every one of the 12 branches on the gap read as the value of one function (the coupling min(den - num, 1)); bit for bit on the three records. |
+| un2 | H-Unit-And-Coupling-2 | The unit 3 T (s + den (num div den)), the coupling min(gap, 1) with the identity turn at 0 by arithmetic; 0 branches on the gap in the acts. |
+| v1 | H-Pump-And-Redshift-1 | E_proper e^U constant within one crossing over the ride's twelve windows; the proper period 7.49 to 47.7 intervals at m 1 to 6; the pump two things measured apart. |
+| v2 | H-Pump-And-Redshift-2 | The proper frequency falls as 1 / e^U (the dispersion residual 10^-6); the quanta conserved within 3.3 per cent under the adiabatic raise; the pump is the read's unit. |
+| vf1 | H-Confirm-Build-1 | Works: David's toys-5 b462789b4 confirmed line by line against the spec, the three records bit for bit but the timing key, 48 tests passing. |
+| vf2 | H-Confirm-Build-2 | Works: David's three commits over b462789b4 confirmed, every line of the seven holds; the differences the clocked potential's one line and the readers'. |
+| w1 | H-Two-Bodies-Free-Fall-1 | With the light emptied two bodies neither dig, spread nor move (the distance 2 Links over 300 intervals); with the sea standing every record swallows the light. |
+| w2 | H-Two-Bodies-Free-Fall-2 | At the 54-bit den two one-quantum bodies stay pinned at their lay Nodes on 301 of 301 intervals; no free fall, no light from a body. |
+| ws1 | H-Swap-Keeps-Charge-1 | W' = W under C T_0 derived and kept at 59,939 of 59,939 turned sites; cl1's reading is the step's fall misread as the swap's. |
+| x1 | H-Inventory-Against-The-Laws-1 | Of 41,238 lines of Python on the branch the laws make about 16,900 dead or wrong, file by file with a verdict each. |
+| x2 | H-Inventory-Against-The-Laws-2 | Every engine and toy function mapped to the place it folds into, the branches on a row's kind counted (127 in the engine), the folding plan. |
+| y1 | H-Six-Metric-Lines-1 | The flux lines written by the count's flux through the axis's two Links; the shear read by no one-Link act (0 of 160 arrays moved); the run back owed. |
+| y2 | H-Six-Metric-Lines-2 | The ten lines by one write(rows), 9 of 9 readings equal to the by-hand bilinears; the run back with the six lines unmet on the inverse order, the mend named. |
+| z1 | H-Minimal-Seed-1 | The seed as a list of lays in three forms is the click's own lay act before the first interval; the run back MATCH through the births on the hole, plus-one and bodies' seeds. |
+| z2 | H-Minimal-Seed-2 | Z-S1 and Z-S2: the three forms lay the law's own seed bit for bit; the emergence seed births 121 pairs with the charge 0; 8 of 23 gates shown. |
