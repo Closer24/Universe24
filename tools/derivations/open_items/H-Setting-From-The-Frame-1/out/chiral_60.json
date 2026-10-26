@@ -1,0 +1,1014 @@
+{
+ "record": "chiral_60",
+ "births": 16,
+ "pairs clicked at both ends": 11,
+ "readings": {
+  "setting=slot outcome=sense": {
+   "E": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     -11,
+     11
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 0
+  },
+  "setting=slot outcome=take_sign": {
+   "E": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     9,
+     9
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 2
+  },
+  "setting=slot outcome=level_on_named_line": {
+   "E": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     2,
+     8
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=slot outcome=level_on_phase": {
+   "E": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     8
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=line_named outcome=sense": {
+   "E": {
+    "-1,-1": [
+     -9,
+     9
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     -2,
+     2
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 0
+  },
+  "setting=line_named outcome=take_sign": {
+   "E": {
+    "-1,-1": [
+     9,
+     9
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 2
+  },
+  "setting=line_named outcome=level_on_named_line": {
+   "E": {
+    "-1,-1": [
+     1,
+     7
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     1,
+     1
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=line_named outcome=level_on_phase": {
+   "E": {
+    "-1,-1": [
+     1,
+     7
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     -1,
+     1
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=take_sign outcome=sense": {
+   "E": {
+    "-1,-1": [
+     -9,
+     9
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 2
+  },
+  "setting=take_sign outcome=take_sign": {
+   "E": {
+    "-1,-1": [
+     9,
+     9
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 2
+  },
+  "setting=take_sign outcome=level_on_named_line": {
+   "E": {
+    "-1,-1": [
+     1,
+     7
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 4
+  },
+  "setting=take_sign outcome=level_on_phase": {
+   "E": {
+    "-1,-1": [
+     1,
+     7
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 4
+  },
+  "setting=turned outcome=sense": {
+   "E": {
+    "-1,-1": [
+     -4,
+     4
+    ],
+    "-1,1": [
+     -4,
+     4
+    ],
+    "1,-1": [
+     -2,
+     2
+    ],
+    "1,1": [
+     -1,
+     1
+    ]
+   },
+   "S": [
+    -8,
+    4
+   ],
+   "S quotient, remainder": [
+    -2,
+    0
+   ],
+   "S^2 as [num^2, den^2]": [
+    64,
+    16
+   ],
+   "4 den^2 < num^2": false,
+   "num^2 <= 8 den^2": true,
+   "band": "at 4 exactly",
+   "pairs with a zero datum or outcome (left out)": 0
+  },
+  "setting=turned outcome=take_sign": {
+   "E": {
+    "-1,-1": [
+     3,
+     3
+    ],
+    "-1,1": [
+     3,
+     3
+    ],
+    "1,-1": [
+     2,
+     2
+    ],
+    "1,1": [
+     1,
+     1
+    ]
+   },
+   "S": [
+    12,
+    6
+   ],
+   "S quotient, remainder": [
+    2,
+    0
+   ],
+   "S^2 as [num^2, den^2]": [
+    144,
+    36
+   ],
+   "4 den^2 < num^2": false,
+   "num^2 <= 8 den^2": true,
+   "band": "at 4 exactly",
+   "pairs with a zero datum or outcome (left out)": 2
+  },
+  "setting=turned outcome=level_on_named_line": {
+   "E": {
+    "-1,-1": [
+     0,
+     4
+    ],
+    "-1,1": [
+     0,
+     2
+    ],
+    "1,-1": [
+     2,
+     2
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=turned outcome=level_on_phase": {
+   "E": {
+    "-1,-1": [
+     -2,
+     4
+    ],
+    "-1,1": [
+     0,
+     2
+    ],
+    "1,-1": [
+     2,
+     2
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=frame_parity outcome=sense": {
+   "E": {
+    "-1,-1": [
+     -4,
+     4
+    ],
+    "-1,1": [
+     -2,
+     2
+    ],
+    "1,-1": [
+     -3,
+     3
+    ],
+    "1,1": [
+     -2,
+     2
+    ]
+   },
+   "S": [
+    -24,
+    12
+   ],
+   "S quotient, remainder": [
+    -2,
+    0
+   ],
+   "S^2 as [num^2, den^2]": [
+    576,
+    144
+   ],
+   "4 den^2 < num^2": false,
+   "num^2 <= 8 den^2": true,
+   "band": "at 4 exactly",
+   "pairs with a zero datum or outcome (left out)": 0
+  },
+  "setting=frame_parity outcome=take_sign": {
+   "E": {
+    "-1,-1": [
+     3,
+     3
+    ],
+    "-1,1": [
+     2,
+     2
+    ],
+    "1,-1": [
+     2,
+     2
+    ],
+    "1,1": [
+     2,
+     2
+    ]
+   },
+   "S": [
+    12,
+    6
+   ],
+   "S quotient, remainder": [
+    2,
+    0
+   ],
+   "S^2 as [num^2, den^2]": [
+    144,
+    36
+   ],
+   "4 den^2 < num^2": false,
+   "num^2 <= 8 den^2": true,
+   "band": "at 4 exactly",
+   "pairs with a zero datum or outcome (left out)": 2
+  },
+  "setting=frame_parity outcome=level_on_named_line": {
+   "E": {
+    "-1,-1": [
+     0,
+     2
+    ],
+    "-1,1": [
+     2,
+     2
+    ],
+    "1,-1": [
+     0,
+     2
+    ],
+    "1,1": [
+     0,
+     2
+    ]
+   },
+   "S": [
+    -2,
+    2
+   ],
+   "S quotient, remainder": [
+    -1,
+    0
+   ],
+   "S^2 as [num^2, den^2]": [
+    4,
+    4
+   ],
+   "4 den^2 < num^2": false,
+   "num^2 <= 8 den^2": true,
+   "band": "below 4",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=frame_parity outcome=level_on_phase": {
+   "E": {
+    "-1,-1": [
+     0,
+     2
+    ],
+    "-1,1": [
+     2,
+     2
+    ],
+    "1,-1": [
+     -2,
+     2
+    ],
+    "1,1": [
+     0,
+     2
+    ]
+   },
+   "S": [
+    -4,
+    2
+   ],
+   "S quotient, remainder": [
+    -2,
+    0
+   ],
+   "S^2 as [num^2, den^2]": [
+    16,
+    4
+   ],
+   "4 den^2 < num^2": false,
+   "num^2 <= 8 den^2": true,
+   "band": "at 4 exactly",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=crossing_side outcome=sense": {
+   "E": {
+    "-1,-1": [
+     -3,
+     3
+    ],
+    "-1,1": [
+     -1,
+     1
+    ],
+    "1,-1": [
+     -3,
+     3
+    ],
+    "1,1": [
+     -4,
+     4
+    ]
+   },
+   "S": [
+    -24,
+    12
+   ],
+   "S quotient, remainder": [
+    -2,
+    0
+   ],
+   "S^2 as [num^2, den^2]": [
+    576,
+    144
+   ],
+   "4 den^2 < num^2": false,
+   "num^2 <= 8 den^2": true,
+   "band": "at 4 exactly",
+   "pairs with a zero datum or outcome (left out)": 0
+  },
+  "setting=crossing_side outcome=take_sign": {
+   "E": {
+    "-1,-1": [
+     2,
+     2
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     3,
+     3
+    ],
+    "1,1": [
+     4,
+     4
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 2
+  },
+  "setting=crossing_side outcome=level_on_named_line": {
+   "E": {
+    "-1,-1": [
+     0,
+     2
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     1,
+     3
+    ],
+    "1,1": [
+     1,
+     3
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=crossing_side outcome=level_on_phase": {
+   "E": {
+    "-1,-1": [
+     -2,
+     2
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     1,
+     3
+    ],
+    "1,1": [
+     1,
+     3
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=arrival_side outcome=sense": {
+   "E": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     -11,
+     11
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 0
+  },
+  "setting=arrival_side outcome=take_sign": {
+   "E": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     9,
+     9
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 2
+  },
+  "setting=arrival_side outcome=level_on_named_line": {
+   "E": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     2,
+     8
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=arrival_side outcome=level_on_phase": {
+   "E": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     8
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 3
+  },
+  "setting=phase_half outcome=sense": {
+   "E": {
+    "-1,-1": [
+     -1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     -2,
+     2
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 8
+  },
+  "setting=phase_half outcome=take_sign": {
+   "E": {
+    "-1,-1": [
+     1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     2,
+     2
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 8
+  },
+  "setting=phase_half outcome=level_on_named_line": {
+   "E": {
+    "-1,-1": [
+     1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     2
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 8
+  },
+  "setting=phase_half outcome=level_on_phase": {
+   "E": {
+    "-1,-1": [
+     1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     2
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 8
+  },
+  "setting=phase_quadrant outcome=sense": {
+   "E": {
+    "-1,-1": [
+     -1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     -2,
+     2
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 8
+  },
+  "setting=phase_quadrant outcome=take_sign": {
+   "E": {
+    "-1,-1": [
+     1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     2,
+     2
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 8
+  },
+  "setting=phase_quadrant outcome=level_on_named_line": {
+   "E": {
+    "-1,-1": [
+     1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     2
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 8
+  },
+  "setting=phase_quadrant outcome=level_on_phase": {
+   "E": {
+    "-1,-1": [
+     1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     2
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs with a zero datum or outcome (left out)": 8
+  }
+ },
+ "settings agree through the root (pairs agree, differ)": {
+  "slot": [
+   11,
+   0
+  ],
+  "line_named": [
+   9,
+   2
+  ],
+  "take_sign": [
+   9,
+   2
+  ],
+  "turned": [
+   5,
+   6
+  ],
+  "frame_parity": [
+   6,
+   5
+  ],
+  "crossing_side": [
+   7,
+   4
+  ],
+  "arrival_side": [
+   0,
+   11
+  ],
+  "phase_half": [
+   6,
+   5
+  ],
+  "phase_quadrant": [
+   6,
+   5
+  ]
+ },
+ "setting values per end (minus, plus) counted": {
+  "slot": {
+   "1,1": 11
+  },
+  "line_named": {
+   "-1,-1": 9,
+   "1,-1": 2
+  },
+  "take_sign": {
+   "-1,-1": 9,
+   "0,-1": 2
+  },
+  "turned": {
+   "-1,-1": 4,
+   "-1,1": 4,
+   "1,-1": 2,
+   "1,1": 1
+  },
+  "frame_parity": {
+   "-1,-1": 4,
+   "-1,1": 2,
+   "1,-1": 3,
+   "1,1": 2
+  },
+  "crossing_side": {
+   "-1,-1": 3,
+   "-1,1": 1,
+   "1,-1": 3,
+   "1,1": 4
+  },
+  "arrival_side": {
+   "-1,1": 11
+  },
+  "phase_half": {
+   "-1,-1": 1,
+   "-1,0": 2,
+   "0,0": 3,
+   "0,1": 2,
+   "1,0": 1,
+   "1,1": 2
+  },
+  "phase_quadrant": {
+   "-1,-1": 1,
+   "-1,0": 2,
+   "0,0": 3,
+   "0,1": 2,
+   "1,0": 1,
+   "1,1": 2
+  }
+ }
+}

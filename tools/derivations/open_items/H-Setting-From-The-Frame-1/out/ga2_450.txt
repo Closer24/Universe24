@@ -1,0 +1,37 @@
+{"record": "ga2_450", "births": 146, "pairs clicked at both ends": 82, "settings agree through the root (pairs agree, differ)": {"slot": [82, 0], "line_named": [4, 78], "take_sign": [38, 44], "turned": [82, 0], "frame_parity": [82, 0], "crossing_side": [4, 78], "arrival_side": [0, 82], "phase_half": [66, 16], "phase_quadrant": [66, 16]}, "setting values per end (minus, plus) counted": {"slot": {"1,1": 82}, "line_named": {"-1,-1": 2, "-1,1": 42, "1,-1": 36, "1,1": 2}, "take_sign": {"-1,-1": 22, "-1,1": 24, "1,-1": 20, "1,1": 16}, "turned": {"-1,-1": 82}, "frame_parity": {"-1,-1": 2, "1,1": 80}, "crossing_side": {"-1,1": 68, "1,-1": 10, "1,1": 4}, "arrival_side": {"-1,1": 82}, "phase_half": {"-1,0": 2, "-1,1": 14, "0,0": 64, "1,1": 2}, "phase_quadrant": {"-1,0": 2, "-1,1": 14, "0,0": 64, "1,1": 2}}}
+setting=slot outcome=sense E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [-82, 82]} S None None an empty setting cell zeros 0
+setting=slot outcome=take_sign E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [-6, 82]} S None None an empty setting cell zeros 0
+setting=slot outcome=level_on_named_line E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [-4, 80]} S None None an empty setting cell zeros 2
+setting=slot outcome=level_on_phase E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [-76, 80]} S None None an empty setting cell zeros 2
+setting=line_named outcome=sense E {'-1,-1': [-2, 2], '-1,1': [-42, 42], '1,-1': [-36, 36], '1,1': [-2, 2]} S [-504, 252] [-2, 0] at 4 exactly zeros 0
+setting=line_named outcome=take_sign E {'-1,-1': [2, 2], '-1,1': [-6, 42], '1,-1': [-4, 36], '1,1': [2, 2]} S [512, 252] [2, 8] in nature's band zeros 0
+setting=line_named outcome=level_on_named_line E {'-1,-1': [0, 0], '-1,1': [-42, 42], '1,-1': [36, 36], '1,1': [2, 2]} S None None an empty setting cell zeros 2
+setting=line_named outcome=level_on_phase E {'-1,-1': [2, 2], '-1,1': [-42, 42], '1,-1': [-36, 36], '1,1': [0, 0]} S None None an empty setting cell zeros 2
+setting=take_sign outcome=sense E {'-1,-1': [-22, 22], '-1,1': [-24, 24], '1,-1': [-20, 20], '1,1': [-16, 16]} S [-5280, 2640] [-2, 0] at 4 exactly zeros 0
+setting=take_sign outcome=take_sign E {'-1,-1': [22, 22], '-1,1': [-24, 24], '1,-1': [-20, 20], '1,1': [16, 16]} S [5280, 2640] [2, 0] at 4 exactly zeros 0
+setting=take_sign outcome=level_on_named_line E {'-1,-1': [0, 20], '-1,1': [0, 24], '1,-1': [-4, 20], '1,1': [0, 16]} S [-48, 240] [-1, 192] below 4 zeros 2
+setting=take_sign outcome=level_on_phase E {'-1,-1': [-16, 20], '-1,1': [-24, 24], '1,-1': [-20, 20], '1,1': [-16, 16]} S [-432, 240] [-2, 48] below 4 zeros 2
+setting=turned outcome=sense E {'-1,-1': [-82, 82], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 0
+setting=turned outcome=take_sign E {'-1,-1': [-6, 82], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 0
+setting=turned outcome=level_on_named_line E {'-1,-1': [-4, 80], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 2
+setting=turned outcome=level_on_phase E {'-1,-1': [-76, 80], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 2
+setting=frame_parity outcome=sense E {'-1,-1': [-2, 2], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [-80, 80]} S None None an empty setting cell zeros 0
+setting=frame_parity outcome=take_sign E {'-1,-1': [2, 2], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [-8, 80]} S None None an empty setting cell zeros 0
+setting=frame_parity outcome=level_on_named_line E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [-4, 80]} S None None an empty setting cell zeros 2
+setting=frame_parity outcome=level_on_phase E {'-1,-1': [2, 2], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [-78, 78]} S None None an empty setting cell zeros 2
+setting=crossing_side outcome=sense E {'-1,-1': [0, 0], '-1,1': [-68, 68], '1,-1': [-10, 10], '1,1': [-4, 4]} S None None an empty setting cell zeros 0
+setting=crossing_side outcome=take_sign E {'-1,-1': [0, 0], '-1,1': [0, 68], '1,-1': [-6, 10], '1,1': [0, 4]} S None None an empty setting cell zeros 0
+setting=crossing_side outcome=level_on_named_line E {'-1,-1': [0, 0], '-1,1': [-2, 66], '1,-1': [-6, 10], '1,1': [4, 4]} S None None an empty setting cell zeros 2
+setting=crossing_side outcome=level_on_phase E {'-1,-1': [0, 0], '-1,1': [-64, 68], '1,-1': [-10, 10], '1,1': [-2, 2]} S None None an empty setting cell zeros 2
+setting=arrival_side outcome=sense E {'-1,-1': [0, 0], '-1,1': [-82, 82], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 0
+setting=arrival_side outcome=take_sign E {'-1,-1': [0, 0], '-1,1': [-6, 82], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 0
+setting=arrival_side outcome=level_on_named_line E {'-1,-1': [0, 0], '-1,1': [-4, 80], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 2
+setting=arrival_side outcome=level_on_phase E {'-1,-1': [0, 0], '-1,1': [-76, 80], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 2
+setting=phase_half outcome=sense E {'-1,-1': [0, 0], '-1,1': [-14, 14], '1,-1': [0, 0], '1,1': [-2, 2]} S None None an empty setting cell zeros 66
+setting=phase_half outcome=take_sign E {'-1,-1': [0, 0], '-1,1': [-10, 14], '1,-1': [0, 0], '1,1': [2, 2]} S None None an empty setting cell zeros 66
+setting=phase_half outcome=level_on_named_line E {'-1,-1': [0, 0], '-1,1': [-6, 14], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 68
+setting=phase_half outcome=level_on_phase E {'-1,-1': [0, 0], '-1,1': [-14, 14], '1,-1': [0, 0], '1,1': [2, 2]} S None None an empty setting cell zeros 66
+setting=phase_quadrant outcome=sense E {'-1,-1': [0, 0], '-1,1': [-14, 14], '1,-1': [0, 0], '1,1': [-2, 2]} S None None an empty setting cell zeros 66
+setting=phase_quadrant outcome=take_sign E {'-1,-1': [0, 0], '-1,1': [-10, 14], '1,-1': [0, 0], '1,1': [2, 2]} S None None an empty setting cell zeros 66
+setting=phase_quadrant outcome=level_on_named_line E {'-1,-1': [0, 0], '-1,1': [-6, 14], '1,-1': [0, 0], '1,1': [0, 0]} S None None an empty setting cell zeros 68
+setting=phase_quadrant outcome=level_on_phase E {'-1,-1': [0, 0], '-1,1': [-14, 14], '1,-1': [0, 0], '1,1': [2, 2]} S None None an empty setting cell zeros 66
