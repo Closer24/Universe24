@@ -427,8 +427,15 @@ def test_the_pair_at_rest_merges_into_light_by_its_own_quantum_taken_whole_mg_s1
         {b["i"] for b in births} == {2} and len(births) == 64 and not [b for b in births if "takes" in b]
     )
     assert {b["booked"] for b in births} == {2 * 1_682_128_072_219_779_093_684}
-    assert sum(1 for s in stops if s["i"] == 3) == 384 and all(s["walls"] > 0 for s in stops)
-    assert {s["fall"] * 1000 // s["walls"] for s in stops if s["i"] == 3} == {953}
+    # 384 stops at 3 at the ratio 953 before the merger's children read the birth's bounds (the Boss's 6413888338):
+    # the mergers refused at the lay by the standing light, 448 at 3, the stops at 4 alone
+    lays = [e for e in node.log if e["event"] == "refused" and e["cause"] == "lay" and e["i"] == 3]
+    assert (
+        len(lays) == 448
+        and all(e["standing"] > 0 for e in lays)
+        and not [s for s in stops if s["i"] < 4]
+    )
+    assert sum(1 for s in stops if s["i"] == 4) == 128 and all(s["walls"] > 0 for s in stops)
     assert run_back_exact(kept, 6) == 6
     bare = node_of("world_node.json", shape=[5, 5, 5], seed=[])
     a, b = bare.A, bare.B

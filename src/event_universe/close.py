@@ -108,11 +108,9 @@ def meet(
 
 
 def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
-    """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) pass both, the birth read at -1 (MG-S1). Returns the births kept."""
-    records = node.records()
-    inverse = [k for k in born if records[k.line_pair] is node.emitter() is not records[k.rec]]
+    """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) read by the same two bounds as the birth's (the Boss's 6413888338, 2026-10-26; the former pass of every merger whatever stood at its ends, 9,014 of 9,549 meetings on ga2 passing with standing light, kept by name; the birth read at -1, MG-S1). Returns the births kept."""
     kept = []
-    for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
+    for at, s, minus, plus, room, rec in born:
         if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
             refused(node, at, "lay", standing=int(owns[s][minus]), unit=node.units[s], row=rec)
             continue
@@ -128,7 +126,7 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
         refused(
             node, at, "lay", children_at_one_node=max(landing[(s, minus)], landing[(s, plus)]), row=rec
         )
-    return [k for k in kept if k not in crowded] + inverse
+    return [k for k in kept if k not in crowded]
 
 
 def births(
