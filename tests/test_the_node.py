@@ -556,8 +556,8 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     kept = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
-    # ddfeb210 at 54
-    assert record.state_hash(node) == "ff82a0da34afd75bff667b6478758ab24e95adc6c49be85128a7d193ec15eb17"
+    # ddfeb210 at 54; over the whole state since 2026-10-26, ff82a0da over the lines and the take's remainder alone
+    assert record.state_hash(node) == "16c88d4bd6e4724e96eaf8b3d685c50bcc8b32856e82647b07e747d743c81549"
     interval = Interval(copy.deepcopy(node), 1)
     interval.readings()
     assert sorted(interval.links_at) == [0, 1] and any(
