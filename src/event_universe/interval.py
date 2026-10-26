@@ -107,7 +107,13 @@ class Interval:
         k = self.where[id(self.walled)]
         rule = node.rule_of(self.walled, self.c, self.factors)
         (phi_start,), _levels, self.out[k] = node.act(
-            self.rows[k], rule, None, [None], self.direction, [2 * self.cphi], *self.ends(self.walled)
+            self.rows[k],
+            rule,
+            None,
+            [None],
+            self.direction,
+            [self.cphi + self.cphi],
+            *self.ends(self.walled),
         )
         count = readings.centred_count(node, self.cphi, phi_start)
         node.count_max = max(
@@ -146,7 +152,7 @@ class Interval:
             coefficient = quotient(sum(rule.reaches), self.scales[k])
             added = gram.term(r.shape, coefficient, self.curl, self.starts[k])
             self.force[k] = [
-                m + t - (2 * rule.wall - rule.self_coefficient) * a
+                m + t - (rule.wall + rule.wall - rule.self_coefficient) * a
                 for a, m, t in zip(self.starts[k], arrivals, added, strict=True)
             ]
         self.emission = zeros(node.shape)
@@ -161,7 +167,7 @@ class Interval:
         node = self.node
         self.forms = zeros(node.shape)
         self.kicked: dict[int, list[Any]] = {}
-        d = 2 * node.w * self.x_now
+        d = (node.w + node.w) * self.x_now
         w_side = self.mean_wall(self.carrier.lines[0])
         charge = zeros(node.shape)
         for r in self.riders:
@@ -175,8 +181,8 @@ class Interval:
                 line = self.rows[k][0]
                 q, line.wr = carried_division(charge, line.wwall, line.wr, self.direction)
                 p_other[0] = p_other[0] + self.direction * node.w * self.x_now * q
-            u_in = [paces.odd_rounded(2 * p + 1, ds) for p in p_side]
-            u_out = [paces.odd_rounded(2 * p + 1, ds) for p in p_other]
+            u_in = [paces.odd_rounded(p + p + 1, ds) for p in p_side]
+            u_out = [paces.odd_rounded(p + p + 1, ds) for p in p_other]
             if r in self.records:
                 gj = gram.matmul(g, gram.rotation(r.shape))
                 forms = gram.form(gj, self.starts[k], u_in) + gram.form(gj, self.starts[k], u_out)

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core import paces
-from event_universe.core.ports import PORT_SIDES, PORTS, across
+from event_universe.core.ports import AXES, PORT_SIDES, PORTS, SIDES, across
 from event_universe.core.rule3 import link_factor
 from event_universe.features import phase, volume
 from event_universe.links import link
@@ -51,11 +51,15 @@ def link_factors(
     node: Node, axis_levels: list[Any] | None = None, frozen: Any = None
 ) -> tuple[Any, ...]:
     """The Link factor at each Port from the two ends' axis parts of the carrier: the tension the mean of the two ends' levels rounded half up (the one rounding not reached by the remainder's rule: fd1 measured the odd rounding here parts the 48's reflections), a tension at or past Gamma read at the wall, the factor 0 (the horizon); and 0 where either end is frozen, the Link pace 0 at the interval's start (BH-S1: every Link with a frozen end is at the wall, from both ends)."""
-    levels = [line.now for line in node.row(CARRIER).lines[1:4]] if axis_levels is None else axis_levels
+    levels = (
+        [line.now for line in node.row(CARRIER).lines[1 : 1 + AXES]]
+        if axis_levels is None
+        else axis_levels
+    )
     found = []
     for port, (axis, _side) in enumerate(PORT_SIDES):
         (summed,), _odd, _f = link(port, even=(levels[axis],))
-        t = paces.rounded(summed, 2)
+        t = paces.rounded(summed, SIDES)
         factor = np.vectorize(
             lambda tt: int(link_factor(node.gamma, node.G, min(int(tt), node.gamma))),
             otypes=[object],
@@ -67,12 +71,13 @@ def link_factors(
 
 def frames(node: Node, phi_rem: Any) -> list[Any]:
     """The frame signs per Port: +1 where the two ends' frame bits (the phase row's remainder at the wall 2, complemented at every swap) agree, -1 where they differ; there the neighbour's plane is read conjugated and its count negated."""
-    return [link(port, frame_bits=phi_rem)[2] for port in range(PORTS)]
+    return [link(port, frame_bits=phi_rem)[-1] for port in range(PORTS)]
 
 
 def centred_count(node: Node, cphi: Any, phi: Line) -> Any:
     """The Node's centred count K = 2 (Phi_now - Phi_before) + c from the phase row at the start, twice the trapezoid sum of the clocked potential to the triple's centre."""
-    return 2 * (phi.now - phi.before) + cphi
+    moved = phi.now - phi.before
+    return moved + moved + cphi
 
 
 def link_phases(node: Node, frames: list[Any], count: Any) -> list[tuple[Any, Any]]:

@@ -66,7 +66,8 @@ class Node:
         paces.certified(self.gamma)
         self.rows_, self.by_index = rows_of(universe, shape, self.w)
         for r in self.records():
-            if r.pair and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
+            num, den = (r.pair[0] if r.pair else 0), self.den
+            if r.pair and num * num + sine_den(num, den) * sine_den(num, den) != den * den:
                 raise ValueError("a gapped pair off den's circle: num^2 + s^2 is not den^2 (MS-S2)")
         self.units = [
             unit_of(sine_den(num, self.den) + self.den * rule3.quotient(num, self.den), self.T)
@@ -143,7 +144,7 @@ class Node:
     def rule_of(self, r: Row, c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
         """A row's rule: Rule3's integers at its pair and the Node's paces scaled by the row's scale (gram.scale: 1 but for the quartet), or, for the row with its own wall, no Links and the own weight 2 w (next = 2 now - before + the write inside the division)."""
         if r.wall is not None:
-            return rule3.Rule(tuple(0 for _ in range(PORTS)), 2 * r.wall, r.wall, 0)
+            return rule3.Rule(tuple(0 for _ in range(PORTS)), r.wall + r.wall, r.wall, 0)
         assert r.pair is not None
         return rule3.scaled(self.rule(r.pair, c, factors), gram.scale(r.shape, self.gamma))
 
@@ -247,7 +248,7 @@ class Node:
         kept: list[Line] | None,
     ) -> list[Line]:
         """The carrier's act: its one division with the write sourced by the riding rows (the act of every row, the carrier's by this name so that a hand may hold it)."""
-        return self.act(lines, r, None, numerators, direction, None, top, kept)[2]
+        return self.act(lines, r, None, numerators, direction, None, top, kept)[-1]
 
     def restore(self, lines: list[Line], kept: list[Line], top: Any) -> None:
         """Backward at the turned Nodes `top`: the row set to `kept`, the pre-state the exchange returned (the inverse at a turned Node is no act)."""

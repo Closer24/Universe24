@@ -7,10 +7,10 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core import rule3
-from event_universe.core.ports import AXES, PORT_SIDES, PORTS, wrap
+from event_universe.core.ports import AXES, PORT_SIDES, PORTS, port_of, wrap
 from event_universe.core.rule3 import half, lattice, mirrored, quotient, remainder
 from event_universe.links import cross
-from event_universe.rows import PLANE, Line, Row
+from event_universe.rows import LEVELS, PLANE, Line, Row
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -68,7 +68,8 @@ def fall_of(
     node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, row: Row
 ) -> tuple[int | None, int, int]:
     """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls; the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
-    gaps = [int(line.now[at]) ** 2 - int(line.before[at]) ** 2 for line in row.lines]
+    pairs = [(int(line.now[at]), int(line.before[at])) for line in row.lines]
+    gaps = [n * n - b * b for n, b in pairs]
     k = gaps.index(max(gaps))
     line = row.lines[k]
     now, before = int(line.now[at]), int(line.before[at])
@@ -79,16 +80,17 @@ def fall_of(
     for port, reach in enumerate(r.reaches):
         reached += int(np.asarray(reach)[at]) * int(line.before[neighbour(node, at, port)])
     pull = own * before + reached
-    x, weight = int(node.start_x[at]), 2 * node.gamma**3 * node.G * node.G
+    x, weight = int(node.start_x[at]), rule3.share_weight(node.gamma, node.G)
 
     def fall(s: int) -> int:
-        return int(quotient(x * (w * (now * now - (now + t * s) ** 2) - t * s * pull), weight))
+        moved = now + t * s
+        return int(quotient(x * (w * (now * now - moved * moved) - t * s * pull), weight))
 
     dist = abs(now - before)
     full = fall(dist)
     if full < walls:
         return None, full, k
-    for s in rule3.least_root(-w * x, -(2 * w * now + pull) * t * x, walls * weight, dist):
+    for s in rule3.least_root(-w * x, -((w + w) * now + pull) * t * x, walls * weight, dist):
         if s <= dist and fall(s) >= walls:
             return s, fall(s), k
     return (*next(((s, fall(s)) for s in range(1, dist + 1) if fall(s) >= walls), (dist, full)), k)
@@ -98,8 +100,8 @@ def lay(node: Node, rec: int, where: Any, levels: Any, sign: int = 1, line: int 
     """The one lay act: a record's levels (now, before per line: re_now, re_before, im_now, im_before for a plane) added at the Node `where` (or over the board), taken back with sign -1; with `line` named, `levels` is one count added to that line's now alone (the take's move and its undoing, CS4-S2)."""
     lines = node.records()[rec].lines
     if line is not None:
-        levels = tuple(levels if j == 2 * line else 0 for j in range(2 * len(lines)))
-    for line_, now, before in zip(lines, levels[0::2], levels[1::2], strict=True):
+        levels = tuple(levels if j == LEVELS * line else 0 for j in range(LEVELS * len(lines)))
+    for line_, now, before in zip(lines, levels[0::LEVELS], levels[1::LEVELS], strict=True):
         line_.now[where] = line_.now[where] + sign * now
         line_.before[where] = line_.before[where] + sign * before
 
@@ -116,9 +118,9 @@ def momentum_of(
     """The change of the lattice momentum P_a = 2 num SUM_i (now_(i+a) before_i - now_i before_(i+a)) when a line's level now at the Node moves by d_now and its level before by d_before: 2 num [d_now (before_(i-a) - before_(i+a)) + d_before (now_(i+a) - now_(i-a))] per axis."""
     found = []
     for a in range(AXES):
-        up, down = neighbour(node, at, 2 * a), neighbour(node, at, 2 * a + 1)
+        up, down = neighbour(node, at, port_of(a, 0)), neighbour(node, at, port_of(a, 1))
         dn, db = int(line_now[down]) - int(line_now[up]), int(line_before[down]) - int(line_before[up])
-        found.append(2 * num * cross(d_now, d_before, dn, db))
+        found.append((num + num) * cross(d_now, d_before, dn, db))
     return found
 
 

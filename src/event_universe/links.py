@@ -5,9 +5,9 @@ from __future__ import annotations
 from typing import Any
 
 from event_universe.core.paces import odd_rounded
-from event_universe.core.ports import AXES, PORT_SIDES, across, wrap
-from event_universe.core.rule3 import remainder
-from event_universe.rows import Line, Row, zeros
+from event_universe.core.ports import AXES, PORT_SIDES, across, port_of, wrap
+from event_universe.core.rule3 import odd as parity_of
+from event_universe.rows import LEVELS, Line, Row, zeros
 
 
 def coupling_of(row: Row) -> int:
@@ -53,16 +53,22 @@ def link(
     _axis, side = PORT_SIDES[port]
     evens = [a + across(a, port) for a in even]
     odds = [side * (a + across(a, port)) for a in odd]
-    f = None if frame_bits is None else 1 - 2 * remainder(frame_bits + across(frame_bits, port), 2)
+    parity = None if frame_bits is None else parity_of(frame_bits + across(frame_bits, port))
+    f = None if parity is None else 1 - parity - parity
     return evens, odds, f
+
+
+def link_wall(gamma: Any) -> Any:
+    """The Link's wall 4 Gamma, the turn's unit of the arrival (twice the phase unit 2 Gamma; the law's, typed once here)."""
+    return 4 * gamma
 
 
 def turned(xs: list[Any], at: Link, scale: Any, gamma: Any) -> list[Any]:
     """A row's lines at a Port, read in the Node's frame, turned plane by plane ((0, 1), (2, 3), ...) by the Link's pair over X and by the odd line's tangent triple (W^2 - n^2, 2 W n, W^2 + n^2), W = 4 Gamma, one rounding per Link per part, every number the Link's record."""
-    wl = 4 * gamma
-    tc, ts, tw = wl * wl - at.odd * at.odd, 2 * wl * at.odd, wl * wl + at.odd * at.odd
+    wl = link_wall(gamma)
+    tc, ts, tw = wl * wl - at.odd * at.odd, (wl + wl) * at.odd, wl * wl + at.odd * at.odd
     found: list[Any] = []
-    for re_j, im_j in zip(xs[0::2], xs[1::2], strict=True):
+    for re_j, im_j in zip(xs[0::LEVELS], xs[1::LEVELS], strict=True):
         a_re, a_im = turn_pair(re_j, im_j, at.cosine, at.sine, scale)
         found += turn_pair(a_re, a_im, tc, ts, tw)
     return found
@@ -70,7 +76,7 @@ def turned(xs: list[Any], at: Link, scale: Any, gamma: Any) -> list[Any]:
 
 def gradient(a: Any, axis: int) -> Any:
     """The centred difference of a row's line along an axis, a(i + a) - a(i - a), read through the Link's one read at the two Ports of the axis."""
-    return across(a, 2 * axis) - across(a, 2 * axis + 1)
+    return across(a, port_of(axis, 0)) - across(a, port_of(axis, 1))
 
 
 def wronskian(re: Line, im: Line) -> Any:
@@ -82,9 +88,9 @@ def plane_current(re: Line, im: Line, frames: list[Any]) -> list[Any]:
     """The plane's sign current on each axis, J_a = Im(conj z (z(i + a) - z(i - a))) from the levels now, the neighbours' im read in the Node's frame; the three odd lines' source."""
     found = []
     for a in range(AXES):
-        fp, fm = frames[2 * a], frames[2 * a + 1]
+        fp, fm = frames[port_of(a, 0)], frames[port_of(a, 1)]
         dz_re = gradient(re.now, a)
-        dz_im = fp * across(im.now, 2 * a) - fm * across(im.now, 2 * a + 1)
+        dz_im = fp * across(im.now, port_of(a, 0)) - fm * across(im.now, port_of(a, 1))
         found.append(cross(re.now, im.now, dz_re, dz_im))
     return found
 
@@ -104,7 +110,7 @@ def stress_parts(
 
 def tensor_parts(parts: list[Any]) -> tuple[Any, list[Any]]:
     """A tensor's trace and its traceless diagonal parts: trace = SUM_a parts_a; traceless_a = 3 parts_a - trace (the stress's trace is the time line's, the axis lines traceless)."""
-    trace = parts[0] + parts[1] + parts[2]
+    trace = sum(parts[:AXES])
     return trace, [AXES * part - trace for part in parts]
 
 
@@ -120,19 +126,19 @@ def row_current(lines: list[Line], port: int) -> Any:
 
 def row_twist(lines: list[Line], axis: int) -> Any:
     """The twist of a record's transverse currents along the +axis Link (the lines' net currents summed per axis, then the cross of the two ends')."""
-    a, b, c = axis, wrap(axis + 1, AXES), wrap(axis + 2, AXES)
+    a, b, c = axis, wrap(axis + 1, AXES), wrap(axis - 1, AXES)
     ub = sum((net_current(line, b) for line in lines), start=0)
     uc = sum((net_current(line, c) for line in lines), start=0)
-    return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+    return cross(ub, uc, across(ub, port_of(a, 0)), across(uc, port_of(a, 0)))
 
 
 def net_current(line: Line, axis: int) -> Any:
     """A line's net transverse current at every Node along an axis, u_b(k) = F(k, k - b) - F(k, k + b): the current into the Node from the -b Link less the current out along the +b Link, read from the Node's own two Links of that axis."""
-    return link_current(line, 2 * axis + 1) - link_current(line, 2 * axis)
+    return link_current(line, port_of(axis, 1)) - link_current(line, port_of(axis, 0))
 
 
 def twist(line: Line, axis: int) -> Any:
     """The twist of a line's transverse current along the +axis Link of every Node (PA2's form, the owner's sentence 4): h(k, k + e_a) = u_b(k) u_c(k + e_a) - u_c(k) u_b(k + e_a) with (a, b, c) cyclic, the cross product of the two ends' transverse currents read at each end from its own Links; a pseudoscalar of the unoriented Link, the handedness of the born pair."""
-    a, b, c = axis, wrap(axis + 1, AXES), wrap(axis + 2, AXES)
+    a, b, c = axis, wrap(axis + 1, AXES), wrap(axis - 1, AXES)
     ub, uc = net_current(line, b), net_current(line, c)
-    return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+    return cross(ub, uc, across(ub, port_of(a, 0)), across(uc, port_of(a, 0)))

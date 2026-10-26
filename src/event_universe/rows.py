@@ -13,7 +13,8 @@ POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three o
 PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
 QUARTET = 8
 WIDTH = 128  # the law's width in bits (ALGEBRA.md, The Node): the phase pair's room is its half
-HALF_WIDTH = quotient(WIDTH, 2)
+HALF_WIDTH = half(WIDTH)
+POWER_TIME, POWER_AXIS, LEVELS = 4, 2, 2
 TRACE = 54  # the trace's weight of the held walls and the carrier's write, 2 x 27 (ALGEBRA.md, the held write)
 
 
@@ -39,7 +40,7 @@ class Row:
 
 
 class Line:
-    """One line of a row: its two levels, its rotation remainder at the rule's wall `wall`, and where the row writes it, its write remainder `wr` at the write wall `wwall`."""
+    """One line of a row: its two levels, its rotation remainder at the rule's wall `wall`, and where the row writes it, its write remainder `wr` at the write wall `wwall`. A lay names a line's two levels, now and before, in that order (LEVELS)."""
 
     __slots__ = ("now", "before", "rem", "wall", "wr", "wwall")
 
@@ -64,9 +65,11 @@ class Line:
 def write_walls(
     shape: int, pair: tuple[int, int] | None, den: int, gamma: int, action: int
 ) -> list[Any]:
-    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls (rule3.held_wall at the powers 4 and 2), the shape-4 row's four lines T, the plane at the universe's own pair (den, den), the emitter, its first line T (the lay of W-S1), another plane none."""
+    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls (rule3.held_wall at the powers POWER_TIME 4 of the time line and POWER_AXIS 2 of the nine axis lines, K-S1 to K-S3, Y-S1), the shape-4 row's four lines T, the plane at the universe's own pair (den, den), the emitter, its first line T (the lay of W-S1), another plane none."""
     if shape == CARRIER:
-        return [held_wall(TRACE, den, gamma, action, p) for p in (4, *[2] * (shape - 1))]
+        return [
+            held_wall(TRACE, den, gamma, action, p) for p in (POWER_TIME, *[POWER_AXIS] * (shape - 1))
+        ]
     if shape == POTENTIAL:
         return [action] * shape
     if shape == PLANE and pair == (den, den):
