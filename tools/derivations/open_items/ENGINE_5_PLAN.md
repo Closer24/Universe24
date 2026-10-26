@@ -55,6 +55,10 @@ The bugs ride inside whichever fold touches their file: the merger's orientation
 - **Every hand** is two blind hands on one question, time boxed, each handing back one patch or one measure with its numbers; the Boss compares them and writes the comparison.
 - **The gates** are the plan's guard: the seven gates and the full check, push only on exit 0, main never touched, no float, every integer within 128 bits, only local law, no numbers in the code.
 
+## 4b. The release onto main
+
+RELEASE_5_0_PLAN.md beside this file is the order of that one commit: the branch green and the folds in, main's own two commits merged back, a confirming hand on the release, the ratchets' release baseline (David's one clause, without which the checks on main after the push are noise), the version files, the owner's word on what the release carries, then the merge onto main with its tag and the checks read within the hour. A release names its open questions rather than hiding them.
+
 ## 5. The milestones, by their numbers
 
 1. The bang: three bangs with a horizon on one record, READ by the Reader with its animation (the candidate stands; the reader bugs first).
