@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The engine head bf41e433a merged into scribe-5 (ba450f6fd): reader-5 with toys-5 3dc12e307 whole in the engine, the modules line at twenty-four (draw.py, merger.py, metric.py, symmetries.py), the rooms of the two reader merges kept beside the Scribe's lines; NL-S1's and BS-S1's sentences verbatim and HD-S1, the hand of the universe (approved under the delegation), with the parity table as a finding in docs/ALGEBRA.md; rows 177, 191 (the goal line on the head's own record), 198 and 199; the NatureFirst mirror's A4 answered.
 - LT-S1 law by the owner's word of 10:2x UTC by the Boss's clock ("approve"), in docs/ALGEBRA.md under The click is the meeting with David's build named; A1 closed but for the spin in rows 161 and 196 and the NatureFirst mirror; docs/HIGHLIGHTS.md.
 - FR-S1 built on toys-5 (1fc5b7ff8, 03f03d9cb) and read whole, in its clause of docs/ALGEBRA.md and row 171; reader-5 f1e5d5b68 merged into engine-5.0-test at 47dc583de by H-Confirm-Page-4 with the rooms given by name, in row 177 and the modules line's clause of docs/ENGINE.md (twenty-four at that push's merge).
 - SF-S1 (Bell's setting from the click's own act does not resolve it, the outcome's indifference) and BS-S1 (the child's axial integer per Link, the photon's spin and Bell's outcome and the hand of nature one integer) as candidate clauses under The click is the meeting in docs/ALGEBRA.md, held for the owner's word; row 198, the NatureFirst mirror's A2 and row 161.
