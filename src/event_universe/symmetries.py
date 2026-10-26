@@ -5,12 +5,16 @@ from __future__ import annotations
 from collections import Counter
 from typing import Any
 
+from event_universe.core import rule3
+from event_universe.core.ports import AXES
 from event_universe.decoder import HALF, PAIR, Record, unread_words
+
+REGIONS = PAIR**AXES  # the board's regions, each axis split at the cube's half
 
 
 def region(record: Record, node: list[int] | tuple[int, ...]) -> int:
     """A Node's region of the board, one of eight: each axis split at the cube's half."""
-    half = record.cube // HALF
+    half = int(rule3.quotient(record.cube, HALF))
     return sum((int(x) >= half) << a for a, x in enumerate(node))
 
 
@@ -21,24 +25,24 @@ def uniformity(record: Record) -> dict[str, Any]:
     return {
         "63 the uniformity in the clicks": {
             "credits per region of the board (eight, each axis at its half)": [
-                counts.get(r, 0) for r in range(PAIR**3)
+                counts.get(r, 0) for r in range(REGIONS)
             ],
             "verdict": unread_words(
                 "no credit", "every region credited, the least at least half the largest"
             )
             if not counts
             else "SHOWN: every region of the board credited, the least at least half the largest"
-            if len(counts) == PAIR**3 and least * HALF >= largest
-            else f"NOT SHOWN: {PAIR**3 - len(counts)} regions without a credit, the least {least} against the largest {largest}",
+            if len(counts) == REGIONS and least * HALF >= largest
+            else f"NOT SHOWN: {REGIONS - len(counts)} regions without a credit, the least {least} against the largest {largest}",
         }
     }
 
 
 def dark_matter(record: Record) -> dict[str, Any]:
     """Row 64: dark matter in kind (the law's theorem of the lines): a body credited in its own well whose Nodes lay no light, a credit track at a Node where no birth took and no child was laid through the run."""
-    lit = {record.index(b["node"]) for b in record.births} | {
-        record.index(b[end]) for b in record.births for end in ("minus", "plus")
-    }
+    lit = {record.index(b["node"]) for b in record.births}
+    lit |= {record.index(b["minus"]) for b in record.births}
+    lit |= {record.index(b["plus"]) for b in record.births}
     bodies = record.bodies_of()
     dark = [key for key in bodies if record.index(key[0]) not in lit]
     return {
