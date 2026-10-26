@@ -1,0 +1,40 @@
+c0_ga2_4.json | holes 0 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, False): [8187942649920690060000] = [500] hundredths; (1, False): [8187942649920690060000] = [500] hundredths; (2, False): [8187942649920690060000] = [500] hundredths; (3, False): [8187942649920690060000] = [500] hundredths
+  distinct shares over the board: 1
+  X (i, min, max, distinct, turned): [(1, 1017, 1017, 1, 0), (2, 1050, 1050, 1, 0), (3, 1100, 1100, 1, 0), (4, 1166, 1166, 1, 0), (5, 1249, 1249, 1, 0), (6, 1346, 1346, 1, 0)]
+  births to 6 : 64 | counts: {'births': 64, 'taken': 215649578622176003919808, 'booked': 215312393244131723991552, 'refused_stop': 256, 'refused_lay': 320, 'refused_orientation': 1920, 'refused_twist': 384, 'met': 2688}
+c4_one_hole_4.json | holes 1 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, False): [8187942649920690060000] = [500] hundredths; (0, True): [4654435999347416264607] = [284] hundredths; (1, False): [7758075660799853831850, 8187942649920690060000] = [473, 500] hundredths; (2, False): [8187942649920690060000] = [500] hundredths; (3, False): [8187942649920690060000, 8617809639041526288150] = [500, 526] hundredths
+  distinct shares over the board: 4
+  X (i, min, max, distinct, turned): [(1, 1008, 1019, 4, 0), (2, 1043, 1052, 7, 0), (3, 1092, 1104, 12, 0), (4, 1158, 1173, 15, 0), (5, 1235, 1259, 23, 0), (6, 1323, 1360, 30, 0)]
+  births to 6 : 33 | counts: {'births': 33, 'taken': 111179819314501400113396, 'booked': 111002258657563023359122, 'body_clicks': 32, 'refused_stop': 101, 'refused_lay': 1103, 'refused_orientation': 410, 'refused_twist': 161, 'met': 1708}
+c1_class0_4.json | holes 16 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, True): [4654435999347416264607] = [284] hundredths; (1, False): [7328208671679017603700] = [447] hundredths; (2, False): [8187942649920690060000] = [500] hundredths; (3, False): [9047676628162362516300] = [552] hundredths
+  distinct shares over the board: 4
+  X (i, min, max, distinct, turned): [(1, 1008, 1021, 4, 0), (2, 1038, 1055, 4, 0), (3, 1078, 1097, 4, 0), (4, 1125, 1161, 4, 0), (5, 1195, 1233, 4, 0), (6, 1273, 1348, 4, 0)]
+  births to 6 : 0 | counts: {'refused_lay': 928, 'refused_orientation': 224, 'met': 1152}
+c1b_class2_4.json | holes 16 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, False): [8187942649920690060000] = [500] hundredths; (1, False): [7328208671679017603700] = [447] hundredths; (2, True): [14971243738247485740207] = [914] hundredths; (3, False): [9047676628162362516300] = [552] hundredths
+  distinct shares over the board: 4
+  X (i, min, max, distinct, turned): [(1, 1011, 1033, 4, 0), (2, 1053, 1069, 4, 0), (3, 1101, 1138, 4, 0), (4, 1177, 1212, 4, 0), (5, 1269, 1342, 4, 0), (6, 1392, 1463, 4, 0)]
+  births to 6 : 0 | counts: {'refused_lay': 928, 'refused_orientation': 224, 'met': 1152}
+c2_every_4.json | holes 64 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, True): [4654435999347416264607] = [284] hundredths; (1, True): [4654435999347416264607] = [284] hundredths; (2, True): [14971243738247485740207] = [914] hundredths; (3, True): [14971243738247485740207] = [914] hundredths
+  distinct shares over the board: 2
+  X (i, min, max, distinct, turned): [(1, 1008, 1033, 2, 0), (2, 1036, 1087, 4, 0), (3, 1073, 1171, 5, 0), (4, 1128, 1278, 4, 0), (5, 1203, 1413, 5, 0), (6, 1278, 1569, 4, 16)]
+  births to 6 : 0 | counts: {'refused_lay': 880, 'refused_orientation': 208, 'refused_twist': 64, 'turns': 16, 'met': 1152}
+c3_fixed_column_4.json | holes 8 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, False): [7758075660799853831850, 8187942649920690060000, 8617809639041526288150] = [473, 500, 526] hundredths; (0, True): [4654435999347416264607] = [284] hundredths; (1, False): [7328208671679017603700, 7758075660799853831850, 8187942649920690060000] = [447, 473, 500] hundredths; (1, True): [6373903955830761177207] = [389] hundredths; (2, False): [7758075660799853831850, 8187942649920690060000, 8617809639041526288150] = [473, 500, 526] hundredths; (2, True): [14971243738247485740207] = [914] hundredths; (3, False): [8187942649920690060000, 8617809639041526288150, 9047676628162362516300] = [500, 526, 552] hundredths; (3, True): [13251775781764140827607] = [809] hundredths
+  distinct shares over the board: 9
+  X (i, min, max, distinct, turned): [(1, 1008, 1033, 9, 0), (2, 1043, 1062, 15, 0), (3, 1091, 1112, 17, 0), (4, 1154, 1190, 23, 0), (5, 1234, 1270, 23, 0), (6, 1327, 1376, 21, 0)]
+  births to 6 : 0 | counts: {'refused_lay': 1052, 'refused_orientation': 68, 'refused_twist': 32, 'met': 1152}
+c5_hole_first_class0_4.json | holes 16 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, True): [8228018080335024104127] = [502] hundredths; (1, False): [12048102723655522051620] = [735] hundredths; (2, False): [13137099096094973829600] = [802] hundredths; (3, False): [14226095468534425607580] = [868] hundredths
+  distinct shares over the board: 4
+  X (i, min, max, distinct, turned): [(1, 1016, 1034, 4, 0), (2, 1067, 1088, 3, 0), (3, 1136, 1162, 4, 0), (4, 1224, 1267, 4, 0), (5, 1341, 1391, 4, 0), (6, 1480, 1563, 7, 0)]
+  births to 6 : 0 | counts: {'refused_lay': 928, 'refused_orientation': 224, 'met': 1152}
+c7_classes02_4.json | holes 32 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, True): [4654435999347416264607] = [284] hundredths; (1, False): [6468474693437345147400] = [395] hundredths; (2, True): [14971243738247485740207] = [914] hundredths; (3, False): [9907410606404034972600] = [605] hundredths
+  distinct shares over the board: 4
+  X (i, min, max, distinct, turned): [(1, 1008, 1033, 3, 0), (2, 1045, 1078, 4, 0), (3, 1082, 1136, 4, 0), (4, 1132, 1204, 5, 0), (5, 1220, 1329, 5, 0), (6, 1332, 1490, 6, 0)]
+  births to 6 : 0 | counts: {'refused_lay': 928, 'refused_orientation': 224, 'met': 1152}

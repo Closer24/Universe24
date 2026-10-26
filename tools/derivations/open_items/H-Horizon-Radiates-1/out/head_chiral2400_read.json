@@ -1,0 +1,9523 @@
+{
+ "record": "head",
+ "cube": 5,
+ "intervals": 2400,
+ "counts": {
+  "births": "17",
+  "taken": "63876498010977423440473",
+  "booked": "61960173871363033428109",
+  "body_clicks": "15316",
+  "laid_back": "598",
+  "refused_stop": "107668",
+  "refused_origin": "0",
+  "refused_lay": "346164",
+  "refused_orientation": "140509",
+  "refused_twist": "7478",
+  "refused_sense": "391779",
+  "turns": "8079",
+  "met": "885967",
+  "laid": "1023",
+  "laid_nodes": "1023"
+ },
+ "run back": null,
+ "ever-frozen Nodes": {
+  "11": {
+   "at": [
+    0,
+    2,
+    1
+   ],
+   "first freeze": 2101,
+   "frozen lines": 300
+  },
+  "23": {
+   "at": [
+    0,
+    4,
+    3
+   ],
+   "first freeze": 2329,
+   "frozen lines": 72
+  },
+  "32": {
+   "at": [
+    1,
+    1,
+    2
+   ],
+   "first freeze": 2198,
+   "frozen lines": 203
+  },
+  "33": {
+   "at": [
+    1,
+    1,
+    3
+   ],
+   "first freeze": 2290,
+   "frozen lines": 111
+  },
+  "35": {
+   "at": [
+    1,
+    2,
+    0
+   ],
+   "first freeze": 2313,
+   "frozen lines": 88
+  },
+  "36": {
+   "at": [
+    1,
+    2,
+    1
+   ],
+   "first freeze": 2224,
+   "frozen lines": 177
+  },
+  "37": {
+   "at": [
+    1,
+    2,
+    2
+   ],
+   "first freeze": 2387,
+   "frozen lines": 14
+  },
+  "39": {
+   "at": [
+    1,
+    2,
+    4
+   ],
+   "first freeze": 2369,
+   "frozen lines": 32
+  },
+  "48": {
+   "at": [
+    1,
+    4,
+    3
+   ],
+   "first freeze": 2360,
+   "frozen lines": 41
+  },
+  "52": {
+   "at": [
+    2,
+    0,
+    2
+   ],
+   "first freeze": 2339,
+   "frozen lines": 62
+  },
+  "53": {
+   "at": [
+    2,
+    0,
+    3
+   ],
+   "first freeze": 2400,
+   "frozen lines": 1
+  },
+  "56": {
+   "at": [
+    2,
+    1,
+    1
+   ],
+   "first freeze": 2389,
+   "frozen lines": 12
+  },
+  "57": {
+   "at": [
+    2,
+    1,
+    2
+   ],
+   "first freeze": 2375,
+   "frozen lines": 26
+  },
+  "58": {
+   "at": [
+    2,
+    1,
+    3
+   ],
+   "first freeze": 2362,
+   "frozen lines": 39
+  },
+  "97": {
+   "at": [
+    3,
+    4,
+    2
+   ],
+   "first freeze": 2376,
+   "frozen lines": 25
+  },
+  "102": {
+   "at": [
+    4,
+    0,
+    2
+   ],
+   "first freeze": 2333,
+   "frozen lines": 68
+  },
+  "111": {
+   "at": [
+    4,
+    2,
+    1
+   ],
+   "first freeze": 2194,
+   "frozen lines": 207
+  },
+  "115": {
+   "at": [
+    4,
+    3,
+    0
+   ],
+   "first freeze": 2368,
+   "frozen lines": 33
+  },
+  "116": {
+   "at": [
+    4,
+    3,
+    1
+   ],
+   "first freeze": 2243,
+   "frozen lines": 158
+  },
+  "117": {
+   "at": [
+    4,
+    3,
+    2
+   ],
+   "first freeze": 2235,
+   "frozen lines": 166
+  },
+  "120": {
+   "at": [
+    4,
+    4,
+    0
+   ],
+   "first freeze": 2308,
+   "frozen lines": 93
+  },
+  "121": {
+   "at": [
+    4,
+    4,
+    1
+   ],
+   "first freeze": 2186,
+   "frozen lines": 215
+  },
+  "122": {
+   "at": [
+    4,
+    4,
+    2
+   ],
+   "first freeze": 2219,
+   "frozen lines": 182
+  },
+  "123": {
+   "at": [
+    4,
+    4,
+    3
+   ],
+   "first freeze": 2375,
+   "frozen lines": 26
+  }
+ },
+ "first freeze": 2101,
+ "hood size at the end": 86,
+ "credits total": 15316,
+ "births total": 17,
+ "credits at an ever-frozen Node, ever": 3218,
+ "credits at an ever-frozen Node after its first freeze": 0,
+ "credits at a frozen Node at its frozen interval": 0,
+ "credits by distance from the nearest ever-frozen Node (all intervals, final set)": {
+  "0": 3218,
+  "1": 7624,
+  "2": 4380,
+  "3": 94,
+  "4": 0,
+  "5": 0,
+  "6": 0
+ },
+ "credits by distance after the first freeze (the set at the interval)": {},
+ "rate in the hood before/after the first freeze (final hood)": {
+  "before": {
+   "credits": 10842,
+   "intervals": 2100,
+   "levels sum": 11088
+  },
+  "after": {
+   "credits": 0,
+   "intervals": 300,
+   "levels sum": 0
+  },
+  "rest before": {
+   "credits": 4474,
+   "intervals": 2100,
+   "levels sum": 4591
+  },
+  "rest after": {
+   "credits": 0,
+   "intervals": 300,
+   "levels sum": 0
+  }
+ },
+ "levels of credits min/max": [
+  1,
+  10
+ ],
+ "taken bits of credits min/max": [
+  60,
+  74
+ ],
+ "credits with levels > 1": 92,
+ "board content sum first/last": [
+  9,
+  441454
+ ],
+ "per interval": [
+  {
+   "i": 2099,
+   "frozen": [],
+   "turned at frozen": [],
+   "content at ever-frozen": {},
+   "hood nodes": 0,
+   "hood content sum": 0,
+   "rest content sum": 386595,
+   "board content sum": 386595,
+   "board content max": 3792,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2100,
+   "frozen": [],
+   "turned at frozen": [],
+   "content at ever-frozen": {},
+   "hood nodes": 0,
+   "hood content sum": 0,
+   "rest content sum": 386915,
+   "board content sum": 386915,
+   "board content max": 3792,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2101,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23300,
+   "rest content sum": 363742,
+   "board content sum": 387042,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2102,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23323,
+   "rest content sum": 364036,
+   "board content sum": 387359,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2103,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23358,
+   "rest content sum": 364235,
+   "board content sum": 387593,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2104,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23358,
+   "rest content sum": 364472,
+   "board content sum": 387830,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2105,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23358,
+   "rest content sum": 364610,
+   "board content sum": 387968,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2106,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23380,
+   "rest content sum": 364851,
+   "board content sum": 388231,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2107,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23380,
+   "rest content sum": 365040,
+   "board content sum": 388420,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2108,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23402,
+   "rest content sum": 365116,
+   "board content sum": 388518,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2109,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23402,
+   "rest content sum": 365427,
+   "board content sum": 388829,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2110,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23402,
+   "rest content sum": 365628,
+   "board content sum": 389030,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2111,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23402,
+   "rest content sum": 365944,
+   "board content sum": 389346,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2112,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23402,
+   "rest content sum": 366041,
+   "board content sum": 389443,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2113,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23402,
+   "rest content sum": 366241,
+   "board content sum": 389643,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2114,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23485,
+   "rest content sum": 366412,
+   "board content sum": 389897,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2115,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23520,
+   "rest content sum": 366515,
+   "board content sum": 390035,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2116,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23520,
+   "rest content sum": 366785,
+   "board content sum": 390305,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2117,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23520,
+   "rest content sum": 366998,
+   "board content sum": 390518,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2118,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23520,
+   "rest content sum": 367214,
+   "board content sum": 390734,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2119,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23520,
+   "rest content sum": 367392,
+   "board content sum": 390912,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2120,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23564,
+   "rest content sum": 367525,
+   "board content sum": 391089,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2121,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23564,
+   "rest content sum": 367781,
+   "board content sum": 391345,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2122,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23564,
+   "rest content sum": 367949,
+   "board content sum": 391513,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2123,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23564,
+   "rest content sum": 368151,
+   "board content sum": 391715,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2124,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23564,
+   "rest content sum": 368379,
+   "board content sum": 391943,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2125,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23564,
+   "rest content sum": 368616,
+   "board content sum": 392180,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2126,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23564,
+   "rest content sum": 368801,
+   "board content sum": 392365,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2127,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23625,
+   "rest content sum": 368951,
+   "board content sum": 392576,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2128,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23660,
+   "rest content sum": 369197,
+   "board content sum": 392857,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2129,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23684,
+   "rest content sum": 369418,
+   "board content sum": 393102,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2130,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23684,
+   "rest content sum": 369616,
+   "board content sum": 393300,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2131,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23684,
+   "rest content sum": 369824,
+   "board content sum": 393508,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2132,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23684,
+   "rest content sum": 370017,
+   "board content sum": 393701,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2133,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23707,
+   "rest content sum": 370168,
+   "board content sum": 393875,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2134,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23707,
+   "rest content sum": 370352,
+   "board content sum": 394059,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2135,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23707,
+   "rest content sum": 370490,
+   "board content sum": 394197,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2136,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23730,
+   "rest content sum": 370652,
+   "board content sum": 394382,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2137,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23730,
+   "rest content sum": 370823,
+   "board content sum": 394553,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2138,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23730,
+   "rest content sum": 371005,
+   "board content sum": 394735,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2139,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23769,
+   "rest content sum": 371318,
+   "board content sum": 395087,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2140,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23769,
+   "rest content sum": 371555,
+   "board content sum": 395324,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2141,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23794,
+   "rest content sum": 371828,
+   "board content sum": 395622,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2142,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23831,
+   "rest content sum": 372010,
+   "board content sum": 395841,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2143,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23831,
+   "rest content sum": 372168,
+   "board content sum": 395999,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2144,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23831,
+   "rest content sum": 372368,
+   "board content sum": 396199,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2145,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23856,
+   "rest content sum": 372529,
+   "board content sum": 396385,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2146,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23856,
+   "rest content sum": 372643,
+   "board content sum": 396499,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2147,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23856,
+   "rest content sum": 372864,
+   "board content sum": 396720,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2148,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23879,
+   "rest content sum": 373024,
+   "board content sum": 396903,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2149,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23879,
+   "rest content sum": 373148,
+   "board content sum": 397027,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2150,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23879,
+   "rest content sum": 373408,
+   "board content sum": 397287,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2151,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23879,
+   "rest content sum": 373583,
+   "board content sum": 397462,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2152,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23919,
+   "rest content sum": 373869,
+   "board content sum": 397788,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2153,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23919,
+   "rest content sum": 373925,
+   "board content sum": 397844,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2154,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23942,
+   "rest content sum": 374174,
+   "board content sum": 398116,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2155,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23968,
+   "rest content sum": 374391,
+   "board content sum": 398359,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2156,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 23968,
+   "rest content sum": 374531,
+   "board content sum": 398499,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2157,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24007,
+   "rest content sum": 374831,
+   "board content sum": 398838,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2158,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24007,
+   "rest content sum": 374982,
+   "board content sum": 398989,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2159,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24007,
+   "rest content sum": 375195,
+   "board content sum": 399202,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2160,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24007,
+   "rest content sum": 375357,
+   "board content sum": 399364,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2161,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24007,
+   "rest content sum": 375651,
+   "board content sum": 399658,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2162,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24033,
+   "rest content sum": 375841,
+   "board content sum": 399874,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2163,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24057,
+   "rest content sum": 376117,
+   "board content sum": 400174,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2164,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24057,
+   "rest content sum": 376244,
+   "board content sum": 400301,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2165,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24098,
+   "rest content sum": 376379,
+   "board content sum": 400477,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2166,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24098,
+   "rest content sum": 376564,
+   "board content sum": 400662,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2167,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24098,
+   "rest content sum": 376653,
+   "board content sum": 400751,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2168,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24098,
+   "rest content sum": 376783,
+   "board content sum": 400881,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2169,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24098,
+   "rest content sum": 377085,
+   "board content sum": 401183,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2170,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24124,
+   "rest content sum": 377250,
+   "board content sum": 401374,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2171,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24124,
+   "rest content sum": 377450,
+   "board content sum": 401574,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2172,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24124,
+   "rest content sum": 377624,
+   "board content sum": 401748,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2173,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24188,
+   "rest content sum": 377795,
+   "board content sum": 401983,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2174,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24188,
+   "rest content sum": 377993,
+   "board content sum": 402181,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2175,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24188,
+   "rest content sum": 378258,
+   "board content sum": 402446,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2176,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24188,
+   "rest content sum": 378425,
+   "board content sum": 402613,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2177,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24188,
+   "rest content sum": 378591,
+   "board content sum": 402779,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2178,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24188,
+   "rest content sum": 378915,
+   "board content sum": 403103,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2179,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24258,
+   "rest content sum": 379034,
+   "board content sum": 403292,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2180,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24282,
+   "rest content sum": 379313,
+   "board content sum": 403595,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2181,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24282,
+   "rest content sum": 379463,
+   "board content sum": 403745,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2182,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24282,
+   "rest content sum": 379513,
+   "board content sum": 403795,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2183,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24282,
+   "rest content sum": 379637,
+   "board content sum": 403919,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2184,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24282,
+   "rest content sum": 379824,
+   "board content sum": 404106,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2185,
+   "frozen": [
+    11
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837
+   },
+   "hood nodes": 7,
+   "hood content sum": 24309,
+   "rest content sum": 380001,
+   "board content sum": 404310,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2186,
+   "frozen": [
+    11,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "121": 3837
+   },
+   "hood nodes": 14,
+   "hood content sum": 48897,
+   "rest content sum": 355679,
+   "board content sum": 404576,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2187,
+   "frozen": [
+    11,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "121": 3837
+   },
+   "hood nodes": 14,
+   "hood content sum": 48897,
+   "rest content sum": 356038,
+   "board content sum": 404935,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2188,
+   "frozen": [
+    11,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "121": 3837
+   },
+   "hood nodes": 14,
+   "hood content sum": 48937,
+   "rest content sum": 356187,
+   "board content sum": 405124,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2189,
+   "frozen": [
+    11,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "121": 3837
+   },
+   "hood nodes": 14,
+   "hood content sum": 48978,
+   "rest content sum": 356341,
+   "board content sum": 405319,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2190,
+   "frozen": [
+    11,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "121": 3837
+   },
+   "hood nodes": 14,
+   "hood content sum": 49019,
+   "rest content sum": 356489,
+   "board content sum": 405508,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2191,
+   "frozen": [
+    11,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "121": 3837
+   },
+   "hood nodes": 14,
+   "hood content sum": 49019,
+   "rest content sum": 356664,
+   "board content sum": 405683,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2192,
+   "frozen": [
+    11,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "121": 3837
+   },
+   "hood nodes": 14,
+   "hood content sum": 49019,
+   "rest content sum": 356827,
+   "board content sum": 405846,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2193,
+   "frozen": [
+    11,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "121": 3837
+   },
+   "hood nodes": 14,
+   "hood content sum": 49071,
+   "rest content sum": 356965,
+   "board content sum": 406036,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2194,
+   "frozen": [
+    11,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 18,
+   "hood content sum": 62410,
+   "rest content sum": 343891,
+   "board content sum": 406301,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2195,
+   "frozen": [
+    11,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 18,
+   "hood content sum": 62436,
+   "rest content sum": 344091,
+   "board content sum": 406527,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2196,
+   "frozen": [
+    11,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 18,
+   "hood content sum": 62436,
+   "rest content sum": 344237,
+   "board content sum": 406673,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2197,
+   "frozen": [
+    11,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 18,
+   "hood content sum": 62514,
+   "rest content sum": 344365,
+   "board content sum": 406879,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2198,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 86857,
+   "rest content sum": 320165,
+   "board content sum": 407022,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2199,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 86922,
+   "rest content sum": 320298,
+   "board content sum": 407220,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2200,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 86922,
+   "rest content sum": 320416,
+   "board content sum": 407338,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2201,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 86979,
+   "rest content sum": 320509,
+   "board content sum": 407488,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2202,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87003,
+   "rest content sum": 320686,
+   "board content sum": 407689,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2203,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87003,
+   "rest content sum": 320850,
+   "board content sum": 407853,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2204,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87047,
+   "rest content sum": 321085,
+   "board content sum": 408132,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2205,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87088,
+   "rest content sum": 321281,
+   "board content sum": 408369,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2206,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87193,
+   "rest content sum": 321483,
+   "board content sum": 408676,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2207,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87221,
+   "rest content sum": 321695,
+   "board content sum": 408916,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2208,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87221,
+   "rest content sum": 321771,
+   "board content sum": 408992,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2209,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87221,
+   "rest content sum": 321941,
+   "board content sum": 409162,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2210,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87248,
+   "rest content sum": 322141,
+   "board content sum": 409389,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2211,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87280,
+   "rest content sum": 322290,
+   "board content sum": 409570,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2212,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87319,
+   "rest content sum": 322367,
+   "board content sum": 409686,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2213,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87351,
+   "rest content sum": 322560,
+   "board content sum": 409911,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2214,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87409,
+   "rest content sum": 322707,
+   "board content sum": 410116,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2215,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87409,
+   "rest content sum": 322782,
+   "board content sum": 410191,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2216,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87500,
+   "rest content sum": 322854,
+   "board content sum": 410354,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2217,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87557,
+   "rest content sum": 323026,
+   "board content sum": 410583,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2218,
+   "frozen": [
+    11,
+    32,
+    111,
+    121
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837
+   },
+   "hood nodes": 25,
+   "hood content sum": 87638,
+   "rest content sum": 323129,
+   "board content sum": 410767,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2219,
+   "frozen": [
+    11,
+    32,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 30,
+   "hood content sum": 105502,
+   "rest content sum": 305519,
+   "board content sum": 411021,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2220,
+   "frozen": [
+    11,
+    32,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 30,
+   "hood content sum": 105531,
+   "rest content sum": 305763,
+   "board content sum": 411294,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2221,
+   "frozen": [
+    11,
+    32,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 30,
+   "hood content sum": 105531,
+   "rest content sum": 305913,
+   "board content sum": 411444,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2222,
+   "frozen": [
+    11,
+    32,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 30,
+   "hood content sum": 105593,
+   "rest content sum": 306008,
+   "board content sum": 411601,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2223,
+   "frozen": [
+    11,
+    32,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 30,
+   "hood content sum": 105621,
+   "rest content sum": 306223,
+   "board content sum": 411844,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2224,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 115747,
+   "rest content sum": 296364,
+   "board content sum": 412111,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2225,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 115813,
+   "rest content sum": 296485,
+   "board content sum": 412298,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2226,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 115813,
+   "rest content sum": 296582,
+   "board content sum": 412395,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2227,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 115845,
+   "rest content sum": 296668,
+   "board content sum": 412513,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2228,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 115882,
+   "rest content sum": 296737,
+   "board content sum": 412619,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2229,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 115940,
+   "rest content sum": 296887,
+   "board content sum": 412827,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2230,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 115980,
+   "rest content sum": 297064,
+   "board content sum": 413044,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2231,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 115980,
+   "rest content sum": 297191,
+   "board content sum": 413171,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2232,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 115980,
+   "rest content sum": 297344,
+   "board content sum": 413324,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2233,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 116049,
+   "rest content sum": 297557,
+   "board content sum": 413606,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2234,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 33,
+   "hood content sum": 116110,
+   "rest content sum": 297648,
+   "board content sum": 413758,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2235,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 36,
+   "hood content sum": 126441,
+   "rest content sum": 287446,
+   "board content sum": 413887,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2236,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 36,
+   "hood content sum": 126522,
+   "rest content sum": 287652,
+   "board content sum": 414174,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2237,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 36,
+   "hood content sum": 126575,
+   "rest content sum": 287834,
+   "board content sum": 414409,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2238,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 36,
+   "hood content sum": 126636,
+   "rest content sum": 287904,
+   "board content sum": 414540,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2239,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 36,
+   "hood content sum": 126671,
+   "rest content sum": 288122,
+   "board content sum": 414793,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2240,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 36,
+   "hood content sum": 126697,
+   "rest content sum": 288249,
+   "board content sum": 414946,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2241,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 36,
+   "hood content sum": 126727,
+   "rest content sum": 288359,
+   "board content sum": 415086,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2242,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 36,
+   "hood content sum": 126831,
+   "rest content sum": 288449,
+   "board content sum": 415280,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2243,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 133920,
+   "rest content sum": 281529,
+   "board content sum": 415449,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2244,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 133948,
+   "rest content sum": 281629,
+   "board content sum": 415577,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2245,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 133975,
+   "rest content sum": 281767,
+   "board content sum": 415742,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2246,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134004,
+   "rest content sum": 281902,
+   "board content sum": 415906,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2247,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134105,
+   "rest content sum": 282095,
+   "board content sum": 416200,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2248,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134173,
+   "rest content sum": 282299,
+   "board content sum": 416472,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2249,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134214,
+   "rest content sum": 282400,
+   "board content sum": 416614,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2250,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134322,
+   "rest content sum": 282496,
+   "board content sum": 416818,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2251,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134348,
+   "rest content sum": 282519,
+   "board content sum": 416867,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2252,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134383,
+   "rest content sum": 282644,
+   "board content sum": 417027,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2253,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134413,
+   "rest content sum": 282769,
+   "board content sum": 417182,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2254,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134525,
+   "rest content sum": 282958,
+   "board content sum": 417483,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2255,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134525,
+   "rest content sum": 283074,
+   "board content sum": 417599,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2256,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134589,
+   "rest content sum": 283194,
+   "board content sum": 417783,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2257,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134616,
+   "rest content sum": 283279,
+   "board content sum": 417895,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2258,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134691,
+   "rest content sum": 283398,
+   "board content sum": 418089,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2259,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134691,
+   "rest content sum": 283551,
+   "board content sum": 418242,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2260,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134718,
+   "rest content sum": 283678,
+   "board content sum": 418396,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2261,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134783,
+   "rest content sum": 283727,
+   "board content sum": 418510,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2262,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134843,
+   "rest content sum": 283932,
+   "board content sum": 418775,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2263,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134944,
+   "rest content sum": 284061,
+   "board content sum": 419005,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2264,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134944,
+   "rest content sum": 284280,
+   "board content sum": 419224,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2265,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134970,
+   "rest content sum": 284351,
+   "board content sum": 419321,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2266,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 134970,
+   "rest content sum": 284492,
+   "board content sum": 419462,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2267,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135010,
+   "rest content sum": 284610,
+   "board content sum": 419620,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2268,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135045,
+   "rest content sum": 284729,
+   "board content sum": 419774,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2269,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135157,
+   "rest content sum": 284838,
+   "board content sum": 419995,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2270,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135286,
+   "rest content sum": 284916,
+   "board content sum": 420202,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2271,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135323,
+   "rest content sum": 285069,
+   "board content sum": 420392,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2272,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135385,
+   "rest content sum": 285284,
+   "board content sum": 420669,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2273,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135442,
+   "rest content sum": 285340,
+   "board content sum": 420782,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2274,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135479,
+   "rest content sum": 285425,
+   "board content sum": 420904,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2275,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135551,
+   "rest content sum": 285563,
+   "board content sum": 421114,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2276,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135625,
+   "rest content sum": 285695,
+   "board content sum": 421320,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2277,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135655,
+   "rest content sum": 285760,
+   "board content sum": 421415,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2278,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135692,
+   "rest content sum": 285960,
+   "board content sum": 421652,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2279,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135720,
+   "rest content sum": 286092,
+   "board content sum": 421812,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2280,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135750,
+   "rest content sum": 286307,
+   "board content sum": 422057,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2281,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135779,
+   "rest content sum": 286545,
+   "board content sum": 422324,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2282,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135779,
+   "rest content sum": 286592,
+   "board content sum": 422371,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2283,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135779,
+   "rest content sum": 286747,
+   "board content sum": 422526,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2284,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135818,
+   "rest content sum": 286805,
+   "board content sum": 422623,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2285,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135913,
+   "rest content sum": 286892,
+   "board content sum": 422805,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2286,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135913,
+   "rest content sum": 286918,
+   "board content sum": 422831,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2287,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 135977,
+   "rest content sum": 286983,
+   "board content sum": 422960,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2288,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 136125,
+   "rest content sum": 287140,
+   "board content sum": 423265,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2289,
+   "frozen": [
+    11,
+    32,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 38,
+   "hood content sum": 136125,
+   "rest content sum": 287187,
+   "board content sum": 423312,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2290,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153287,
+   "rest content sum": 270252,
+   "board content sum": 423539,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2291,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153322,
+   "rest content sum": 270448,
+   "board content sum": 423770,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2292,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153453,
+   "rest content sum": 270576,
+   "board content sum": 424029,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2293,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153580,
+   "rest content sum": 270624,
+   "board content sum": 424204,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2294,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153624,
+   "rest content sum": 270750,
+   "board content sum": 424374,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2295,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153695,
+   "rest content sum": 270961,
+   "board content sum": 424656,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2296,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153695,
+   "rest content sum": 271147,
+   "board content sum": 424842,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2297,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153735,
+   "rest content sum": 271294,
+   "board content sum": 425029,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2298,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153767,
+   "rest content sum": 271528,
+   "board content sum": 425295,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2299,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153827,
+   "rest content sum": 271551,
+   "board content sum": 425378,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2300,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153888,
+   "rest content sum": 271641,
+   "board content sum": 425529,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2301,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153927,
+   "rest content sum": 271731,
+   "board content sum": 425658,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2302,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 153956,
+   "rest content sum": 271826,
+   "board content sum": 425782,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2303,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 154020,
+   "rest content sum": 271929,
+   "board content sum": 425949,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2304,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 154052,
+   "rest content sum": 272091,
+   "board content sum": 426143,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2305,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 154125,
+   "rest content sum": 272171,
+   "board content sum": 426296,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2306,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 154125,
+   "rest content sum": 272195,
+   "board content sum": 426320,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2307,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 43,
+   "hood content sum": 154125,
+   "rest content sum": 272235,
+   "board content sum": 426360,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2308,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 47,
+   "hood content sum": 167717,
+   "rest content sum": 258974,
+   "board content sum": 426691,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2309,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 47,
+   "hood content sum": 167793,
+   "rest content sum": 259022,
+   "board content sum": 426815,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2310,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 47,
+   "hood content sum": 167866,
+   "rest content sum": 259184,
+   "board content sum": 427050,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2311,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 47,
+   "hood content sum": 167941,
+   "rest content sum": 259299,
+   "board content sum": 427240,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2312,
+   "frozen": [
+    11,
+    32,
+    33,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 47,
+   "hood content sum": 168058,
+   "rest content sum": 259497,
+   "board content sum": 427555,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2313,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182103,
+   "rest content sum": 245722,
+   "board content sum": 427825,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2314,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182127,
+   "rest content sum": 245823,
+   "board content sum": 427950,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2315,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182190,
+   "rest content sum": 245884,
+   "board content sum": 428074,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2316,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182222,
+   "rest content sum": 246026,
+   "board content sum": 428248,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2317,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182254,
+   "rest content sum": 246168,
+   "board content sum": 428422,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2318,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182322,
+   "rest content sum": 246246,
+   "board content sum": 428568,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2319,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182322,
+   "rest content sum": 246355,
+   "board content sum": 428677,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2320,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182409,
+   "rest content sum": 246431,
+   "board content sum": 428840,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2321,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182474,
+   "rest content sum": 246640,
+   "board content sum": 429114,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2322,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182507,
+   "rest content sum": 246741,
+   "board content sum": 429248,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2323,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182542,
+   "rest content sum": 246789,
+   "board content sum": 429331,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2324,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182611,
+   "rest content sum": 246905,
+   "board content sum": 429516,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2325,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182611,
+   "rest content sum": 247045,
+   "board content sum": 429656,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2326,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182611,
+   "rest content sum": 247154,
+   "board content sum": 429765,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2327,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182692,
+   "rest content sum": 247176,
+   "board content sum": 429868,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2328,
+   "frozen": [
+    11,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 51,
+   "hood content sum": 182802,
+   "rest content sum": 247294,
+   "board content sum": 430096,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2329,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 56,
+   "hood content sum": 200295,
+   "rest content sum": 229927,
+   "board content sum": 430222,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2330,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 56,
+   "hood content sum": 200435,
+   "rest content sum": 229986,
+   "board content sum": 430421,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2331,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 56,
+   "hood content sum": 200506,
+   "rest content sum": 230083,
+   "board content sum": 430589,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2332,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 56,
+   "hood content sum": 200582,
+   "rest content sum": 230083,
+   "board content sum": 430665,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2333,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 60,
+   "hood content sum": 214402,
+   "rest content sum": 216571,
+   "board content sum": 430973,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2334,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 60,
+   "hood content sum": 214462,
+   "rest content sum": 216657,
+   "board content sum": 431119,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2335,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 60,
+   "hood content sum": 214659,
+   "rest content sum": 216736,
+   "board content sum": 431395,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2336,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 60,
+   "hood content sum": 214717,
+   "rest content sum": 216846,
+   "board content sum": 431563,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2337,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 60,
+   "hood content sum": 214812,
+   "rest content sum": 217027,
+   "board content sum": 431839,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2338,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 60,
+   "hood content sum": 214839,
+   "rest content sum": 217027,
+   "board content sum": 431866,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2339,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229102,
+   "rest content sum": 203001,
+   "board content sum": 432103,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2340,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229146,
+   "rest content sum": 203141,
+   "board content sum": 432287,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2341,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229213,
+   "rest content sum": 203176,
+   "board content sum": 432389,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2342,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229316,
+   "rest content sum": 203252,
+   "board content sum": 432568,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2343,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229316,
+   "rest content sum": 203358,
+   "board content sum": 432674,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2344,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229384,
+   "rest content sum": 203413,
+   "board content sum": 432797,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2345,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229384,
+   "rest content sum": 203594,
+   "board content sum": 432978,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2346,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229425,
+   "rest content sum": 203678,
+   "board content sum": 433103,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2347,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229493,
+   "rest content sum": 203808,
+   "board content sum": 433301,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2348,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229645,
+   "rest content sum": 203893,
+   "board content sum": 433538,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2349,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229677,
+   "rest content sum": 203917,
+   "board content sum": 433594,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2350,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229706,
+   "rest content sum": 203917,
+   "board content sum": 433623,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2351,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229873,
+   "rest content sum": 203983,
+   "board content sum": 433856,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2352,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 229913,
+   "rest content sum": 204038,
+   "board content sum": 433951,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2353,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 230076,
+   "rest content sum": 204160,
+   "board content sum": 434236,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2354,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 230208,
+   "rest content sum": 204284,
+   "board content sum": 434492,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2355,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 230264,
+   "rest content sum": 204392,
+   "board content sum": 434656,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2356,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 230340,
+   "rest content sum": 204422,
+   "board content sum": 434762,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2357,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 230375,
+   "rest content sum": 204454,
+   "board content sum": 434829,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2358,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 230472,
+   "rest content sum": 204515,
+   "board content sum": 434987,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2359,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 64,
+   "hood content sum": 230501,
+   "rest content sum": 204569,
+   "board content sum": 435070,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2360,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    48,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "48": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 68,
+   "hood content sum": 244005,
+   "rest content sum": 191320,
+   "board content sum": 435325,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2361,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    48,
+    52,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "48": 3837,
+    "52": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 68,
+   "hood content sum": 244068,
+   "rest content sum": 191428,
+   "board content sum": 435496,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2362,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    48,
+    52,
+    58,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 71,
+   "hood content sum": 254192,
+   "rest content sum": 181476,
+   "board content sum": 435668,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2363,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    48,
+    52,
+    58,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 71,
+   "hood content sum": 254252,
+   "rest content sum": 181508,
+   "board content sum": 435760,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2364,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    48,
+    52,
+    58,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 71,
+   "hood content sum": 254339,
+   "rest content sum": 181575,
+   "board content sum": 435914,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2365,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    48,
+    52,
+    58,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 71,
+   "hood content sum": 254378,
+   "rest content sum": 181691,
+   "board content sum": 436069,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2366,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    48,
+    52,
+    58,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 71,
+   "hood content sum": 254452,
+   "rest content sum": 181721,
+   "board content sum": 436173,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2367,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    48,
+    52,
+    58,
+    102,
+    111,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 71,
+   "hood content sum": 254542,
+   "rest content sum": 181775,
+   "board content sum": 436317,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2368,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    48,
+    52,
+    58,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 74,
+   "hood content sum": 264510,
+   "rest content sum": 171912,
+   "board content sum": 436422,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2369,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    58,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 77,
+   "hood content sum": 274923,
+   "rest content sum": 161756,
+   "board content sum": 436679,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2370,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    58,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 77,
+   "hood content sum": 275010,
+   "rest content sum": 161942,
+   "board content sum": 436952,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2371,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    58,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 77,
+   "hood content sum": 275068,
+   "rest content sum": 162023,
+   "board content sum": 437091,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2372,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    58,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 77,
+   "hood content sum": 275144,
+   "rest content sum": 162133,
+   "board content sum": 437277,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2373,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    58,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 77,
+   "hood content sum": 275294,
+   "rest content sum": 162211,
+   "board content sum": 437505,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2374,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    58,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837
+   },
+   "hood nodes": 77,
+   "hood content sum": 275355,
+   "rest content sum": 162244,
+   "board content sum": 437599,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2375,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 289685,
+   "rest content sum": 148141,
+   "board content sum": 437826,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2376,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 289838,
+   "rest content sum": 148167,
+   "board content sum": 438005,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2377,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 289838,
+   "rest content sum": 148218,
+   "board content sum": 438056,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2378,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 289960,
+   "rest content sum": 148218,
+   "board content sum": 438178,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2379,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 290094,
+   "rest content sum": 148310,
+   "board content sum": 438404,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2380,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 290187,
+   "rest content sum": 148434,
+   "board content sum": 438621,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2381,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 290256,
+   "rest content sum": 148488,
+   "board content sum": 438744,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2382,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 290366,
+   "rest content sum": 148520,
+   "board content sum": 438886,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2383,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 290426,
+   "rest content sum": 148549,
+   "board content sum": 438975,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2384,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 290426,
+   "rest content sum": 148588,
+   "board content sum": 439014,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2385,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 290556,
+   "rest content sum": 148702,
+   "board content sum": 439258,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2386,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 81,
+   "hood content sum": 290589,
+   "rest content sum": 148729,
+   "board content sum": 439318,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2387,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 82,
+   "hood content sum": 293971,
+   "rest content sum": 145448,
+   "board content sum": 439419,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2388,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 82,
+   "hood content sum": 294025,
+   "rest content sum": 145483,
+   "board content sum": 439508,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2389,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 301145,
+   "rest content sum": 138549,
+   "board content sum": 439694,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2390,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 301243,
+   "rest content sum": 138549,
+   "board content sum": 439792,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2391,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 301310,
+   "rest content sum": 138549,
+   "board content sum": 439859,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2392,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 301412,
+   "rest content sum": 138578,
+   "board content sum": 439990,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2393,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 301493,
+   "rest content sum": 138671,
+   "board content sum": 440164,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2394,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 301596,
+   "rest content sum": 138671,
+   "board content sum": 440267,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2395,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 301801,
+   "rest content sum": 138753,
+   "board content sum": 440554,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2396,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 301834,
+   "rest content sum": 138859,
+   "board content sum": 440693,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2397,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 301955,
+   "rest content sum": 138972,
+   "board content sum": 440927,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2398,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 302116,
+   "rest content sum": 138972,
+   "board content sum": 441088,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2399,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 84,
+   "hood content sum": 302155,
+   "rest content sum": 139122,
+   "board content sum": 441277,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  },
+  {
+   "i": 2400,
+   "frozen": [
+    11,
+    23,
+    32,
+    33,
+    35,
+    36,
+    37,
+    39,
+    48,
+    52,
+    53,
+    56,
+    57,
+    58,
+    97,
+    102,
+    111,
+    115,
+    116,
+    117,
+    120,
+    121,
+    122,
+    123
+   ],
+   "turned at frozen": [],
+   "content at ever-frozen": {
+    "11": 3837,
+    "23": 3837,
+    "32": 3837,
+    "33": 3837,
+    "35": 3837,
+    "36": 3837,
+    "37": 3837,
+    "39": 3837,
+    "48": 3837,
+    "52": 3837,
+    "53": 3837,
+    "56": 3837,
+    "57": 3837,
+    "58": 3837,
+    "97": 3837,
+    "102": 3837,
+    "111": 3837,
+    "115": 3837,
+    "116": 3837,
+    "117": 3837,
+    "120": 3837,
+    "121": 3837,
+    "122": 3837,
+    "123": 3837
+   },
+   "hood nodes": 86,
+   "hood content sum": 308952,
+   "rest content sum": 132502,
+   "board content sum": 441454,
+   "board content max": 3837,
+   "credits": [],
+   "gap-0 current out of the frozen Nodes (sum of six Links)": 0
+  }
+ ]
+}

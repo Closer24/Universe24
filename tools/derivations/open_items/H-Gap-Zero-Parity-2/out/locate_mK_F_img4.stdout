@@ -1,0 +1,11 @@
+interval 1 off 0 births []
+interval 2 off 0 births []
+interval 3 off 0 births [(3, [0, 1, 2], 0, [0, 1, 2], [1, 1, 2])]
+interval 4 off 0 births [(4, [0, 2, 0], 1, [0, 2, 0], [0, 2, 1])]
+interval 5 off 6 births []
+   ('shape4 line1', 'wr', (0, 1, 2), 22608, 13392)
+   ('shape4 line2', 'wr', (0, 1, 2), 17711, 18287)
+   ('shape4 line2', 'wr', (0, 2, 2), 11951, 24047)
+   ('shape4 line2', 'wr', (2, 0, 2), 23837, 12161)
+   ('shape4 line3', 'wr', (0, 1, 2), 12239, 23759)
+   ('shape4 line3', 'wr', (2, 1, 0), 12161, 23837)
