@@ -34,7 +34,7 @@ VERDICTS = {  # the verdicts' words by name
         "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -6 / 17",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -2 / 17",
     },
     "bodies": {
         "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link",

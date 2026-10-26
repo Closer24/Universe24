@@ -354,11 +354,11 @@ def eras_of(record: Record) -> tuple[list[int | None], list[list[int]], list[tup
     for cs in by_track.values():
         cs.sort(key=lambda c: int(c["i"]))
         for a, b in zip(cs, cs[1:], strict=False):
-            k = (int(b["i"]) - 1) * LISTED // whole
+            k = int(quot((int(b["i"]) - 1) * LISTED, whole) or 0)
             eighths[k].append(int(b["proper"]) - int(a["proper"]))
             last[k] = max(last[k], (int(b["i"]), list(b["node"])), key=lambda p: p[0])
     means = [
-        quot(sum(s), len(s)) if s and k < (record.intervals * LISTED) // whole else None
+        quot(sum(s), len(s)) if s and k < int(quot(record.intervals * LISTED, whole) or 0) else None
         for k, s in enumerate(eighths)
     ]
     growths: list[list[int]] = []

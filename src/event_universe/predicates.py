@@ -143,7 +143,7 @@ def lifts(record: Record) -> dict[str, Any]:
 
 def confinement(record: Record) -> dict[str, Any]:
     """Row 27: confinement, no third alone: every child laid where its plane stood at nothing carries the whole charge T div 2 and none a third of it; every take whole levels."""
-    half, third = record.T // HALF, record.T // HALF // THIRDS
+    half, third = record.T // HALF, record.T // (HALF * THIRDS)
     whole = thirds = 0
     for b in record.births:
         for w, stood in zip(b["W_children"], b.get("stood", [[0], [0]]), strict=True):
@@ -387,9 +387,9 @@ def scattering(record: Record) -> dict[str, Any]:
 SETTINGS = (
     (1, 0),
     (1, 1),
-    (12, 5),
-    (5, 12),
-)  # Bell's (p, q), two per end: the outcome sign(p re + q im)
+    (4, 3),
+    (3, 4),
+)  # Bell's (p, q), two per end, the outcome sign(p re + q im): the axis and the diagonal for one end, the 3-4-5 triple's two directions for the other (exact cosines 4/5 and 3/5), every integer among the law's free ones
 
 
 def two_slits(record: Record) -> dict[str, Any]:
