@@ -172,3 +172,5 @@ The owner's word (2026-10-25, 23:14 UTC, in translation): "rename all the deriva
 | The-Birth-At-The-Gradient_COMPARISON.md | A finding; D8 closed; what nature's radiation would need by name: a record that turns in time at the horizon. |
 | H-Birth-On-Six-Links-1, -2 | The one-Node theorem: every move at a Node changes the density on its six Links along their axes, the kick and the lay one act; the six-Link lay conserves J and P exactly where the ends' integers hold the target and costs a second recoil; the 48 falls to 6 under the one-sided step. |
 | The-Birth-On-Six-Links_COMPARISON.md | A finding; AJ-S3 the reading; the order above: the Link's record read alike first, then the kick's inverse on the taken row. |
+| H-Rule3-Link-Record-1, -2 | Every reach symmetric in the two ends' paces crosses Rule3's conserved form; the Link's record is held once (the Node's clock with its dual weight); the 48's rotations, the torque and the horizon are three items. |
+| The-Rule3-Link-Record_COMPARISON.md | Does not; the unification is in the locality, not the coefficient; the 48's rotations to the reader's two leads with the 5-cube as the judge. |
