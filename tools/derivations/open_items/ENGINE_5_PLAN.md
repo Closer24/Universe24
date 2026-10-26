@@ -28,7 +28,17 @@ The Boss's two additions, both on the critical path of (1) and neither of them a
 
 With those, "one bang of nature" becomes a sentence that can be said: a seed whose board freezes at once, releases by its own turn, returns to its first state, and does it again at a known period, with births and credits on the same record so the laws of nature can be read in its clicks. That last condition is the band below, and it is the one thing still missing from the picture.
 
-## 1. The bang, first (the owner's word: advance it)
+## 0c. The three bangs, as animations, and what each brings from nature (the owner's word of 19:4x UTC: "show three different bangs as animations and what each one brings from nature, and that is all")
+
+This is the bang's whole remaining work, and it is the Reader's. Three records, three animations, each with its own line of what of nature it carries:
+
+1. **The bang with a black hole, that returns.** The uniform sea of a plane with a gap at the count 50,000 on the side 4, carried to 3,600 intervals (H-The-Bang-That-Births-2/worlds, its table out/b0_long_table.tsv, 3,600 rows). What it brings: the horizon with its stopped clock, four times over; the whole board freezing at once and released by the turn of its own time; the exact return to the seed's own first state, seven times; eight bangs at the period 1,162 exactly; the state flat at 117 bits of the law's 128. What it does not bring: a birth or a credit, so no law of the clicks is read on it.
+2. **The bang that makes matter, with a horizon, and loses the return.** The cycle lay at the same count 50,000 on the side 4 (the same hand's record): 32 births, 240 body credits, 55 frozen Node lines over 33 intervals, 117 bits. What it brings: matter made at a bang, the clicks and their laws, a horizon beside them. What it does not bring: the exact return, lost to the exclusion's own refusals.
+3. **The bang that recurs many times, without a horizon.** The cycle seed's long record (the reader's folder for the engine's own course; 50 bangs with 49 exact returns on the reading of 2026-10-25, and the current course's one bang at 999 against the resolution 1,000). What it brings: the recurrence itself, many times over, with its returns exact; matter at its first bang. What it does not bring: a horizon, so no black hole and no stopped clock.
+
+Read together the three cover what the law gives and name what it withholds: a horizon, matter and recurrence each stand, any two of them stand together, and the three on one record the law as written refuses. That sentence, with those three animations under it, is the cycle's answer on the bang.
+
+## 1. The bang, after the three animations (the owner's word: advance it)
 
 The lead, from the hand of the hour: one seed of the law BOTH returns exactly AND freezes. It is neither nature's chiral seed nor the cycle's wave: it is the uniform sea of a plane with a gap, laid at a high count at every Node, on the side 4. On its record of 1,200 intervals every one of the 64 Nodes freezes AT ONCE at the interval 43 (the content passing the frozen mark, 192 Links held at the wall), the turn of its own time releases every one at 44, and the board returns to the resolution at every Node at 87 and at 1,162: three bangs with a horizon on one record. The frozen mark is derived, not fitted (the swap's own ceiling, the content at four times the resolution cubed), and the count needed is linear in the resolution. The world stands at tools/derivations/open_items/H-Horizon-On-The-Returning-Board-2/worlds/w9_side4_sea_q50000.json.
 
