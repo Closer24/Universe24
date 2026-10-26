@@ -1,0 +1,10 @@
+{"i": 50, "L2": [0, 0, 0], "ms": 8810}
+{"i": 100, "L2": [0, 0, 0], "ms": 14916}
+{"i": 150, "L2": [0, 0, 0], "ms": 19571}
+{"i": 200, "L2": [0, 0, 0], "ms": 26045}
+{"i": 250, "L2": [0, 0, 0], "ms": 32221}
+{"i": 300, "L2": [0, 0, 0], "ms": 37647}
+{"i": 350, "L2": [0, 0, 0], "ms": 41301}
+{"i": 400, "L2": [0, 0, 0], "ms": 46134}
+{"i": 450, "L2": [0, 0, 0], "ms": 52028}
+{"record": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/records/2ab32b518/world_ga2_450.json", "cube": 4, "intervals": 450, "2L_start": [0, 0, 0], "2L_end": [0, 0, 0], "P_end": [0, 0, 88727700428746492867072], "identity_misses": 0, "line_misses": 0, "sum_over_record": {"ride": ["0/1", "0/1", "0/1"], "rounding": ["0/1", "0/1", "0/1"], "mass": ["0/1", "0/1", "0/1"], "link_sym": ["0/1", "0/1", "0/1"], "link_asym": ["0/1", "0/1", "0/1"], "curl": ["0/1", "0/1", "0/1"], "turn": ["0/1", "0/1", "0/1"]}, "sum_abs_over_record": {"ride": ["0/1", "0/1", "0/1"], "rounding": ["0/1", "0/1", "0/1"], "mass": ["0/1", "0/1", "0/1"], "link_sym": ["0/1", "0/1", "0/1"], "link_asym": ["0/1", "0/1", "0/1"], "curl": ["0/1", "0/1", "0/1"], "turn": ["0/1", "0/1", "0/1"]}, "sum_int": {"lays": [0, 0, 0], "swap": [0, 0, 0], "click": [0, 0, 0], "step": [0, 0, 0]}, "sum_abs_int": {"lays": [0, 0, 0], "swap": [0, 0, 0], "click": [0, 0, 0], "step": [0, 0, 0]}, "rounding_bound_2L_total": [947395045282964532974592, 947395045282964532974592, 947395045282964532974592], "rounding_bound_ratio_percent": [0, 0, 0], "counts": {"births": 64, "taken": 215649578622176003919808, "booked": 215312393244131723991552, "body_clicks": 1408, "laid_back": 1408, "refused_stop": 1408, "refused_origin": 0, "refused_lay": 17088, "refused_orientation": 33280, "refused_twist": 17152, "refused_sense": 0, "turns": 128, "met": 67584, "laid": 0, "laid_nodes": 0}, "ms": 52029}

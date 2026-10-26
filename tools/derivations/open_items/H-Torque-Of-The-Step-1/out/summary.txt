@@ -1,0 +1,76 @@
+== hole_60.json cube 5 intervals 60 identity_misses 0 line_misses 0 ms 20688
+  2L_end [-429523890798423826416, 23815323951483308120, -23815323951483308120] P_end [-214670955943308825770, 0, 0]
+  sum|term| per component (integers rounded down):
+    ride       ['2908798148357804174640', '52557899611536022090222', '52557899611536022090222']
+    rounding   ['1298238488845290436636', '2040234736269791695190', '2040234736269791695190']
+    mass       ['142673404160325049640', '496876460709198106447', '496876460709198106447']
+    link_sym   ['6738254500817912394522', '164391255962574166034074', '164391255962574166034074']
+    link_asym  ['1155109088714464873226', '21087205083104215355396', '21087205083104215355396']
+    curl       ['0', '0', '0']
+    turn       ['8364672837112461574712', '3265774769976124408622', '3265774769976124408622']
+    lays       ['0', '0', '0']
+    swap       ['4722383402816370019448', '225979125908048999471508', '225979125908048999471508']
+    click      ['2072216656127335530296', '1798800023047020931848', '1798800023047020931848']
+    step       ['7746521045511312312656', '176224971664507510070588', '176224971664507510070588']
+  rounding bound [4098708499231335810121008, 4096079567853391046527152, 4096079567853391046527152] rounding/bound percent [0, 0, 0]
+  intervals with no click and no swap: 0 of 60 ; with a click or a birth: 48 ; with a swap: 45
+  intervals with the divisions' dL2 = 0: 1 ; with every term 0: 0 ; swap dL2 = 0: 15 ; lays dL2 = 0: 60
+  the largest term of the divisions, by interval: {'ride': 12, 'link_sym': 38, 'turn': 10}
+  intervals where the swap's change exceeds every division term: 27
+== chiral_60.json cube 5 intervals 60 identity_misses 0 line_misses 0 ms 27269
+  2L_end [-400773654987975486556, -455460228831496804872, 1637511179007194988976] P_end [-98319754686126306610, 212541563811305679360, 208847790350964560930]
+  sum|term| per component (integers rounded down):
+    ride       ['66279001498929415744450', '67716873948068953354945', '81172377508824464831321']
+    rounding   ['2445812879703411925572', '2706422382683205382820', '3841338765181349776544']
+    mass       ['554237939399825987439', '790113718700113141757', '749948878282715870515']
+    link_sym   ['165273049074959194258626', '188845410990062584983471', '134067334837731705596997']
+    link_asym  ['39163264556615841824377', '46501287333768856978944', '42767223232084197878207']
+    curl       ['0', '0', '0']
+    turn       ['32599081353400089717593', '46198917651334732335160', '41125059480062011975998']
+    lays       ['82425289342534946604', '163880155852486700312', '143986487784531245944']
+    swap       ['319122502114164034637504', '244449612749742000043164', '224346542536901228855296']
+    click      ['5892503349161053669916', '7229061696404482529164', '7342129602743261996100']
+    step       ['202259128533505995775156', '193655033091048800773784', '186406882495399472431068']
+  rounding bound [3592213979213343303518048, 3590590625699540427525664, 3587731243879935479110336] rounding/bound percent [0, 0, 0]
+  intervals with no click and no swap: 0 of 60 ; with a click or a birth: 58 ; with a swap: 57
+  intervals with the divisions' dL2 = 0: 1 ; with every term 0: 0 ; swap dL2 = 0: 3 ; lays dL2 = 0: 54
+  the largest term of the divisions, by interval: {'ride': 5, 'link_sym': 31, 'turn': 24}
+  intervals where the swap's change exceeds every division term: 35
+== ga2_450.json cube 4 intervals 450 identity_misses 0 line_misses 0 ms 52029
+  2L_end [0, 0, 0] P_end [0, 0, 88727700428746492867072]
+  sum|term| per component (integers rounded down):
+    ride       ['0', '0', '0']
+    rounding   ['0', '0', '0']
+    mass       ['0', '0', '0']
+    link_sym   ['0', '0', '0']
+    link_asym  ['0', '0', '0']
+    curl       ['0', '0', '0']
+    turn       ['0', '0', '0']
+    lays       ['0', '0', '0']
+    swap       ['0', '0', '0']
+    click      ['0', '0', '0']
+    step       ['0', '0', '0']
+  rounding bound [947395045282964532974592, 947395045282964532974592, 947395045282964532974592] rounding/bound percent [0, 0, 0]
+  intervals with no click and no swap: 436 of 450 ; with a click or a birth: 12 ; with a swap: 2
+  intervals with the divisions' dL2 = 0: 450 ; with every term 0: 450 ; swap dL2 = 0: 450 ; lays dL2 = 0: 450
+  the largest term of the divisions, by interval: {}
+  intervals where the swap's change exceeds every division term: 0
+== bodies_300.json cube 7 intervals 300 identity_misses 0 line_misses 0 ms 120728
+  2L_end [0, 0, 0] P_end [0, 0, 0]
+  sum|term| per component (integers rounded down):
+    ride       ['0', '0', '0']
+    rounding   ['0', '0', '0']
+    mass       ['0', '0', '0']
+    link_sym   ['0', '0', '0']
+    link_asym  ['0', '0', '0']
+    curl       ['0', '0', '0']
+    turn       ['0', '0', '0']
+    lays       ['0', '0', '0']
+    swap       ['0', '0', '0']
+    click      ['0', '0', '0']
+    step       ['0', '0', '0']
+  rounding bound [14882274441872041896, 14882274441872041896, 14877194361562822976] rounding/bound percent [0, 0, 0]
+  intervals with no click and no swap: 24 of 300 ; with a click or a birth: 197 ; with a swap: 238
+  intervals with the divisions' dL2 = 0: 300 ; with every term 0: 300 ; swap dL2 = 0: 300 ; lays dL2 = 0: 300
+  the largest term of the divisions, by interval: {}
+  intervals where the swap's change exceeds every division term: 0
