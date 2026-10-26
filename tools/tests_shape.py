@@ -53,10 +53,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         56,
         "CS4-S2 (2026-10-25, the owner's word of 22:50 UTC, The-Handed-Seed-And-Births_COMPARISON.md; the Boss's room of 40 named in 6404974647 for the cycle board at 6 intervals; this test's 56 asked in David's line: the pair beside its quarter-turned image, the 81 credits equal take for take, and SL-S2's merger board with every take's line re-derived by hand), the one take rule",
     ),
-    "tests/test_the_board.py::test_the_48_on_the_clicks_rotations_equal_and_reflections_exchanged_a48_s1": (
-        30,
-        "A48-S1 (2026-10-25, the owner's word of 17:16 UTC, The-48-In-The-Clicks_COMPARISON.md; the Boss's room named in 6404974647): the 48 on the clicks restored, 24 rotations equal, 24 reflections with the children exchanged, 0 apart on the chiral 3-cube",
-    ),
     "tests/test_the_board.py::test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1": (
         37,
         "PL-S1 (2026-10-25, the owner's word of 22:50 UTC, The-Plasma-Charge-At-The-Kick_COMPARISON.md; the Boss's room named in 6404974647 at the merge of toys-5 99a9ee860): nature's plasma on the 3-cube returning to Gamma exactly "

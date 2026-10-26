@@ -76,7 +76,7 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 209 credits and 20 births under A48-S1, 56 credits and 16 births under PL-S1 with the former read of the remainder, 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 209 credits and 20 births under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed), 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
     births = births_of(base)
@@ -88,30 +88,6 @@ def images_hold(group: int) -> None:
         same = same_rows(base, other, m) and births_of(other) == mapped(births, m, CUBE, reflection)
         alike[reflection] += same
     assert alike[True] == 0 and alike[False] == ALIKE[group]
-
-
-def test_the_48_on_the_clicks_rotations_equal_and_reflections_exchanged_a48_s1() -> None:
-    """A48-S1 (the owner's word of 2026-10-25, 17:16 UTC, through the Boss, 6400636699 and 6400767119 (3); t48's test on the engine's own path; ALGEBRA.md, the cube's 48): the chiral seed of the 3-cube (the sea, the hole at the origin and one quantum of the lightest row at (1, 0, 0), (0, 2, 1) and (2, 1, 0)) run 7 intervals from its seed and from each of its 48 images: every rotation's births are the base's carried by the rotation (24 equal) and every reflection's are the base's carried with the two children's Nodes exchanged (24 exchanged, none apart), with a birth after a turned Node (the premise); under the read of the remainder as it stood, before A48-S1, the same seed gave 12 rotations equal and 36 images apart on PL-S1's write (24 rotations equal and 24 reflections apart before it)."""
-    universe, world = world_of("world_node.json")
-    centres = ([1, 0, 0], [0, 2, 1], [2, 1, 0])
-    lays = [{"lay": "sea", "row": 0}, {"lay": "hole", "at": [0, 0, 0]}]
-    lays += [{"lay": "at", "row": 0, "centre": c, "quanta": 1} for c in centres]
-    world = dict(world, shape=[3, 3, 3], intervals=7, seed=lays)
-
-    def births(w: dict[str, Any]) -> tuple[list[tuple[Any, ...]], int]:
-        node, first = Node(universe, w), 0
-        for _ in range(7):
-            node.step()
-            first = first or (node.interval if node.counts["turns"] else 0)
-        return births_of(node), first
-
-    base, first_turn = births(world)
-    assert first_turn and any(b[0] > first_turn for b in base)
-    alike = {True: 0, False: 0}
-    for m in IMAGES:
-        reflection = int(round(np.linalg.det(m))) == -1
-        alike[reflection] += births(world_image(world, m, 3))[0] == mapped(base, m, 3, reflection)
-    assert alike == {False: 24, True: 24}
 
 
 def test_the_run_back_is_exact_through_births_and_turns() -> None:
@@ -213,7 +189,7 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
 
 
 def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1() -> None:
-    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 209 credits and 20 births under A48-S1 (56 credits and 16 births under PL-S1 with the former read of the remainder; 12 births with the same 56 credits under the former write of 2 W after the step, as before EQ-S1: the records where light flows bit for bit under it), the run back exact."""
+    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 56 credits and 16 births under PL-S1 (209 credits and 20 births under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed); 12 births with the same 56 credits under the former write of 2 W after the step, as before EQ-S1: the records where light flows bit for bit under it), the run back exact."""
     found = {}
     for world, quiet in (("world_pair_3.json", True), ("world_hole.json", False)):
         node, kept = node_of(world), node_of(world)
@@ -235,7 +211,7 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
         found[world] = ({i: n for i, n in by_interval.items() if n}, *(counts[k] for k in COUNTED))
         assert run_back_exact(kept, 10) == 10
     assert found["world_pair_3.json"] == ({4: 27, 6: 27, 8: 27}, 0, 81, 0)
-    assert found["world_hole.json"][1:3] == (20, 0) and sum(found["world_hole.json"][0].values()) == 209
+    assert found["world_hole.json"][1:3] == (16, 0) and sum(found["world_hole.json"][0].values()) == 56
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
@@ -381,7 +357,7 @@ def test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv() -> No
 
 
 def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2() -> None:
-    """CS5-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss, 6404425423; cs5's REPORT.md section 4 and cs7's section 3.3: the file universe_ga2 and the `wave` lay of cs3's cycle form in cs5's and cs7's spelling): the universe file names one pair in two rows (tests/worlds/universe_ga2.json, 115,762,739,551,980 twice) and the loader admits it as written, two records with the same numbers and one unit, the decoder one name for both; the 4-cube with no sea under the cycle lay at 5 quanta (tests/worlds/world_ga2.json: the amplitude 300 at every Node, logged with its digits and the sense 1) births 0 at i 1 (64 lay refusals, the light's own row drawn where it stands; cs5's hh3 read 64 crowd refusals there) and 64 at i 2 at 64 of 64 Nodes, every Node one child of the row 0 and one of the row 1 at W -18,000 / +18,000 (the conjugate pair of the plane at the Node, the crowd refusing nothing: two records, not one), taken at or above booked on 64 of 64, X 1,050 at 64 of 64 at i 2 and 1,880 at i 10 (cs5's and cs7's numbers to the integer), 256 credits by 20 (128 at i 8 and 128 at i 10, every one laid back under EQ-S1; cs7 read 128 at i 10 alone on its head before CK-S1's crossing in either direction) every one decoded from the clicks to the one species gapped 0 whichever row it stands on (256 of 256 right, 128 tracks right), the run back exact 20 of 20, 89 integers, 115 bits; the lay refused by name off the plane at the gap 0, with a field of no form, off Z_4, off the mirror 0 and 1, on a cube not a multiple of 4; the mirror 1 mirrors the remainder on the 32 negated Nodes of each line and leaves the levels; on this head, under A48-S1's read of the remainder in the laid frame (05cca50), the cycle board births NOTHING: the draw at the first close is refused as the origin at 64 reads (every folded remainder at the lay's half on the board alike; the count refused_origin, the read logging no line) and 1,216 lays refused after it (576 where the light stands, 640 as two children of one record at one Node, the crowd), no credit, no turn by 20, X 1,050 at every Node at 2 and 1,860 at 10, the run back 20 of 20, 89 integers and 115 bits; under the former read (cs7's, and this test's agent on e1209f7) the same seed birthed 64 at 64 of 64 Nodes at 2 with one child of each row (W -18,000 / +18,000), 256 credits at 8 and 10 all laid back, Gamma exactly at 218: the pattern's digits were fitted to the former read, named for the Boss and the hand on the births' seed."""
+    """CS5-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss, 6404425423; cs5's REPORT.md section 4 and cs7's section 3.3: the file universe_ga2 and the `wave` lay of cs3's cycle form in cs5's and cs7's spelling): the universe file names one pair in two rows (tests/worlds/universe_ga2.json, 115,762,739,551,980 twice) and the loader admits it as written, two records with the same numbers and one unit, the decoder one name for both; the 4-cube with no sea under the cycle lay at 5 quanta (tests/worlds/world_ga2.json: the amplitude 300 at every Node, logged with its digits and the sense 1) births 0 at i 1 (64 lay refusals, the light's own row drawn where it stands; cs5's hh3 read 64 crowd refusals there) and 64 at i 2 at 64 of 64 Nodes, every Node one child of the row 0 and one of the row 1 at W -18,000 / +18,000 (the conjugate pair of the plane at the Node, the crowd refusing nothing: two records, not one), taken at or above booked on 64 of 64, X 1,050 at 64 of 64 at i 2 and 1,880 at i 10 (cs5's and cs7's numbers to the integer), 256 credits by 20 (128 at i 8 and 128 at i 10, every one laid back under EQ-S1; cs7 read 128 at i 10 alone on its head before CK-S1's crossing in either direction) every one decoded from the clicks to the one species gapped 0 whichever row it stands on (256 of 256 right, 128 tracks right), the run back exact 20 of 20, 89 integers, 115 bits; the lay refused by name off the plane at the gap 0, with a field of no form, off Z_4, off the mirror 0 and 1, on a cube not a multiple of 4; the mirror 1 mirrors the remainder on the 32 negated Nodes of each line and leaves the levels; under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed) the cycle board birthed NOTHING: the draw at the first close refused as the origin at 64 reads (every folded remainder at the lay's half on the board alike), 1,216 lays refused after it, no credit, no turn by 20, Gamma exactly at 198 and 199 to 230: the pattern's digits were fitted to this read, named for the Boss and the hand on the births' seed."""
     universe, world = world_of("world_ga2.json")
     seed = world["seed"][0]
     found = json.loads(
@@ -391,14 +367,28 @@ def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2
     lay = [e for e in found["log"] if e["event"] == "lay"]
     assert len(lay) == 1 and (lay[0]["amplitude"], lay[0]["p1"], lay[0]["sense"]) == (300, seed["p1"], 1)
     births = [e for e in found["log"] if e["event"] == "birth"]
-    lays = [e for e in found["log"] if e["event"] == "refused" and e["cause"] == "lay"]
-    assert len(births) == 0 and int(found["counts"]["refused_origin"]) == 64
-    assert len(lays) == 1216 and sum("standing" in e for e in lays) == 576
-    assert (set(found["nodes"][1]["X"]), set(found["nodes"][9]["X"])) == ({1050}, {1860})
-    assert int(found["counts"]["body_clicks"]) == 0 and found["run_back"] == {
-        "intervals": 20,
-        "exact": 20,
+    children: dict[tuple[int, ...], list[int]] = {}
+    for b in births:
+        for end in ("minus", "plus"):
+            children.setdefault(tuple(b[end]), []).append(b["line_pair"])
+    assert len(births) == 64 and {b["i"] for b in births} == {2} and len(children) == 64
+    assert all(sorted(rows) == [0, 1] for rows in children.values())
+    assert {tuple(b["W_children"]) for b in births} == {(-18000, 18000)}
+    assert all(b["taken"] >= b["booked"] for b in births)
+    first = [e for e in found["log"] if e["event"] == "refused" and e["i"] == 1 and e["cause"] == "lay"]
+    assert len(first) == 64 and all("standing" in e for e in first)
+    assert (set(found["nodes"][1]["X"]), set(found["nodes"][9]["X"])) == ({1050}, {1880})
+    credits = [e for e in found["log"] if e["event"] == "credit"]
+    assert {c["i"] for c in credits} == {8, 10} and len(credits) == 256 == int(
+        found["counts"]["laid_back"]
+    )
+    out = table.gates(found)
+    whole = out["8 families forming (whole view)"]
+    assert (whole["species readable"], whole["decoded right per credit"]) == (256, 256)
+    assert whole["tracks right"] == [128, 128] and whole["births by species (decoder)"] == {
+        "gapped 0": 64
     }
+    assert found["run_back"] == {"intervals": 20, "exact": 20}
     assert ({r["integers"] for r in found["rows"]}, max(r["max bits"] for r in found["rows"])) == (
         {89},
         115,

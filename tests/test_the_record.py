@@ -1,4 +1,4 @@
-"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube, regenerated under PM-S1 on 2026-10-25, again under CK-S1 and the emission's odd rounding the same day, again under the crossing read even and the light no body (the plane at the gap 0 never credited as a body), and again under PL-S1 (the charge read at the kick in its momentum form, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423; the bodies bit for bit): the era of matter SHOWN on the hole seed, Coulomb's sign NOT SHOWN there under PL-S1 (SHOWN in part, unlike senses approach, under the former write of 2 W after the step; NOT SHOWN under the crossing odd at a touch of zero) and the collisions NOT SHOWN with it on the hole (SHOWN under the former write; SHOWN on the chiral), the bodies' well SHOWN, the bodies' credited Nodes receding, the bodies' gate 8 NOT SHOWN by two credits at turned Nodes decoding beyond the floor, so the take's event stands for the click; regenerated once more under A48-S1, the draw in the laid frame: the hole's births 24 and credits 1,124 (16 and 777 under PL-S1 with the former read of the remainder; 16 and 233 under the former write of 2 W after the step, 20 and 514 before), the chiral's 19 and 3,052 with its collisions NOT SHOWN, the credited Nodes receding (17 and 2,943 with the collisions SHOWN under PL-S1; 2,914; 16 and 2,336 before), the bodies' 1,973 bit for bit (1,819 before CK-S1)) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, den's circle under gate 19 by its count (MS-S2: 26 points at the toy's den, 8 at the middle's, the typed pairs among them); the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
+"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube, regenerated under PM-S1 on 2026-10-25, again under CK-S1 and the emission's odd rounding the same day, again under the crossing read even and the light no body (the plane at the gap 0 never credited as a body), and again under PL-S1 (the charge read at the kick in its momentum form, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423; the bodies bit for bit): the era of matter SHOWN on the hole seed, Coulomb's sign NOT SHOWN there under PL-S1 (SHOWN in part, unlike senses approach, under the former write of 2 W after the step; NOT SHOWN under the crossing odd at a touch of zero) and the collisions NOT SHOWN with it on the hole (SHOWN under the former write; SHOWN on the chiral), the bodies' well SHOWN, the bodies' credited Nodes receding, the bodies' gate 8 NOT SHOWN by two credits at turned Nodes decoding beyond the floor, so the take's event stands for the click; the hole's births 16 and credits 777 under PL-S1 (24 and 1,124 under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed); 16 and 233 under the former write of 2 W after the step, 20 and 514 before), the chiral's 17 and 2,943 with the collisions SHOWN (19 and 3,052 with them NOT SHOWN under the reverted read; 2,914; 16 and 2,336 before), the bodies' 1,973 bit for bit (1,819 before CK-S1)) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, den's circle under gate 19 by its count (MS-S2: 26 points at the toy's den, 8 at the middle's, the typed pairs among them); the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
 
 from __future__ import annotations
 
@@ -17,28 +17,7 @@ CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # the hole under PL-S1; 9 and 22 among them under the former write of 2 W after the step
     "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45},
-    "chiral": {
-        2,
-        4,
-        5,
-        7,
-        8,
-        10,
-        15,
-        16,
-        17,
-        18,
-        19,
-        21,
-        22,
-        25,
-        26,
-        27,
-        30,
-        37,
-        43,
-        45,
-    },  # 9 lost under A48-S1
+    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45},
     "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45},
 }
 VERDICTS = {  # the verdicts' words by name
@@ -47,7 +26,7 @@ VERDICTS = {  # the verdicts' words by name
         "22 Coulomb's sign": "NOT SHOWN: unlike senses do not approach, like senses do not part",
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
     },
-    "chiral": {"9 collisions": "NOT SHOWN: the credited Nodes receding"},
+    "chiral": {"9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart"},
     "bodies": {"37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link"},
 }
 
