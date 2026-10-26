@@ -1,0 +1,22 @@
+{
+ "world": "EQUAL",
+ "universe": "EQUAL",
+ "den": "EQUAL",
+ "cube": "EQUAL",
+ "intervals": "EQUAL",
+ "gapped": "EQUAL",
+ "planes": "EQUAL",
+ "T": "EQUAL",
+ "gamma": "EQUAL",
+ "G": "EQUAL",
+ "counts": "EQUAL",
+ "turns": "EQUAL",
+ "rows": "EQUAL",
+ "nodes": "EQUAL",
+ "run_back": "EQUAL",
+ "log": {
+  "committed": 21699,
+  "module": 21699,
+  "apart": 0
+ }
+}
