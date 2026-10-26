@@ -1,0 +1,3 @@
+hole exit 0 seconds 14.4 
+chiral exit 0 seconds 15.3 
+bodies exit 0 seconds 78.9 

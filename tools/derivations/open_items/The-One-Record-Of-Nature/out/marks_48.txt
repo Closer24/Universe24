@@ -1,0 +1,15 @@
+"i": 1	"births": 0	"body_clicks": 0	"max bits": 115
+"i": 2	"births": 0	"body_clicks": 0	"max bits": 120
+"i": 4	"births": 8	"body_clicks": 0	"max bits": 120
+"i": 8	"births": 8	"body_clicks": 0	"max bits": 121
+"i": 12	"births": 16	"body_clicks": 0	"max bits": 121
+"i": 16	"births": 18	"body_clicks": 0	"max bits": 121
+"i": 20	"births": 18	"body_clicks": 6	"max bits": 128
+"i": 24	"births": 22	"body_clicks": 12	"max bits": 132
+"i": 28	"births": 24	"body_clicks": 28	"max bits": 182
+"i": 32	"births": 26	"body_clicks": 40	"max bits": 382
+"i": 36	"births": 34	"body_clicks": 56	"max bits": 1179
+"i": 40	"births": 36	"body_clicks": 72	"max bits": 4367
+"i": 44	"births": 42	"body_clicks": 98	"max bits": 17121
+"i": 48	"births": 46	"body_clicks": 128	"max bits": 68161
+"births": 	"body_clicks": 		

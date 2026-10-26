@@ -29,6 +29,21 @@ The two commits main holds and the branch does not are main's own return of 2026
    - the hands' folders under tools/derivations: carried whole, the project's derivation record, every law's proof and every refusal's measure.
    So nothing of the carry waits on a word any more; the owner's word remains needed on the release itself, at step 6 of the order below.
 
+## 2a. What must REMAIN at the release, named so it cannot be lost (the owner's word of 21:3x UTC: make sure the papers and the important things stay)
+
+The release carries the branch's tree, so these stay by construction; they are named here so that no step of the order drops one by accident, and the confirming hand checks every line of this list by name:
+
+- **The papers and their deposits:** papers/one_rule (the paper, the supplement, their sources and the journal's abstract) and papers/spacetime_events (the time paper and its source); CITATION.cff with the version and the date; .zenodo.json; the deposit identifiers in the README; the licence.
+- **The law and the documents:** docs/ALGEBRA.md (the law, every sentence by name and date, the old kept by name), docs/ENGINE.md, docs/UNIVERSE24.md (the run's document with the gates' own table), docs/HIGHLIGHTS.md, docs/FURTHER_RESEARCH.md, docs/FOLLOW_UP_PAPERS.md, the CHANGELOG closed at the release, CONTRIBUTING.md, the README re-cut to what stands.
+- **The derivations:** tools/derivations whole, every comparison and every hand's folder with its numbers, and the index that names them in one row each; the two plans beside them.
+- **The records and the readings:** examples/records (the three committed records with their readings) and the one folder of pages that travels, with the gates' table written from the readings.
+- **The engine, its tests and the tools that gate**, and the kit that checks a record's laws.
+- **The one page of the three bangs** (section 2c), so that a reader who opens the repository sees what the project shows before reading a line of the law.
+
+## 2c. The one page of the three bangs (the owner's word of 21:3x UTC, with the Reader)
+
+One HTML page, written by the Reader with the project's own page tool and nothing typed of a universe: the three bangs played side by side from their landed tables, each with its explanation in plain words and the line of what it brings from nature; beneath them the derivations of the project, relativity among them, each named with the row it is read by and the verdict that row carries on the records. Every number on the page read from a reading, so the page cannot rot; the page regenerated from the records and the readings by one command. It stands at the repository's root or under the reader's folder with a link from the README, and it is the first thing the release shows.
+
 ## 2b. What remains of the old main after the release (the owner's question of 17:5x UTC)
 
 The content after the release is the branch's, and the history is main's: those are two different things and both are wanted.
