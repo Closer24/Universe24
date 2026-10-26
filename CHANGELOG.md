@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The law's lettered clauses under The rows against nature (a) to (z) numbered by the gates' rows that read them, the ten with no row named as such; no merge, the head unmoved at 8363981de.
 - The engine head 8363981de merged (f8b3f86ca; the Reader's Bell row at the law's own bound and the folders, the section 2 table his): the law's two bound paragraphs (Rule3's The bound and the click's) re-read under the owner's ruling of 22:1x, the width the engine's representation; rows 164 and 218.
 - The engine head c4f9e5d94 merged (3a9105801; CL-S2, acts.born, the whole-state run back and the re-wired kit on the head, no conflict): CL-S2's course on the long records and the Reader's 29 of 71 under the clause and in README's count line, the Bell row at the law's own bound under QG-S3, rows 164, 177, 209, 212 and 218.
 - The 48 pair's unification (acts.born, dba5adfa5), the run back over the whole state (66dd3e352), the mend list traced and the Reader's fifth problem (the long chiral parting at 1,146 under one of the folds) in the law and rows 164, 177, 209, 212 and 217; no merge, the head unmoved.
