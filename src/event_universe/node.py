@@ -18,12 +18,12 @@ from event_universe.rows import (
     CARRIER,
     HALF_WIDTH,
     PLANE,
+    POTENTIAL,
     Line,
     Row,
     records_of,
     row_of,
     rows_of,
-    walled_of,
     zeros,
 )
 
@@ -66,18 +66,17 @@ class Node:
         paces.certified(self.gamma)
         self.rows_, self.by_index = rows_of(universe, shape, self.w)
         for r in self.records():
-            if r.pair and r.gap and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
+            if r.pair and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
                 raise ValueError("a gapped pair off den's circle: num^2 + s^2 is not den^2 (MS-S2)")
-        self.gapped = [r for r in self.records() if r.gap is not None and r.gap > 0]
         self.units = [
-            unit_of(sine_den(r.pair[0], self.den) if r.gap else self.den, self.T)
-            for r in self.records()
-            if r.pair
+            unit_of(sine_den(num, self.den) + self.den * rule3.quotient(num, self.den), self.T)
+            for num in (r.pair[0] for r in self.records() if r.pair)
         ]
-        self.unit_gap0 = self.units[self.records().index(self.row(PLANE, gap=0))]
+        self.gapped = [r for r in self.records() if r is not self.emitter()]
+        self.unit_emitter = self.units[self.records().index(self.emitter())]
         self.start_state()
-        seed.lay_world(self, world.get("seed", []))
         self.ride_walls()
+        seed.lay_world(self, world.get("seed", []))
 
     def start_state(self) -> None:
         """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
@@ -98,18 +97,14 @@ class Node:
         self.stepped: list[list[Line]] = []
         self.lattices: dict[tuple[int, int, tuple[int, ...]], int] = {}
 
-        gamma, action = self.gamma, self.T
         for line in self.row(CARRIER).lines[:1]:
-            line.now[:] = gamma
-            line.before[:] = gamma
-        self.drift = rule3.largest_below(action)
-        self.A, self.B = rule3.balanced_pair(half(action))
-        self.X = phase.amplitude(phase.unit(gamma), HALF_WIDTH - 1)
-        seed_pair = phase.seed(self.X, gamma)
-        self.orbit_lines = [seed_pair]
-        self.orbit = [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
-        self.start_content = self.content()
-        self.start_x = self.row(CARRIER).lines[0].now
+            line.now[:], line.before[:] = self.gamma, self.gamma
+        self.drift = rule3.largest_below(self.T)
+        self.A, self.B = rule3.balanced_pair(half(self.T))
+        self.X = phase.amplitude(phase.unit(self.gamma), HALF_WIDTH - 1)
+        seed_pair = phase.seed(self.X, self.gamma)
+        self.orbit_lines, self.orbit = [seed_pair], [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
+        self.start_content, self.start_x = self.content(), self.row(CARRIER).lines[0].now
 
     def ride_walls(self) -> None:
         """The riding lines' remainders at the start: a riding line's remainder lives at the mean wall (w div 2)(X_before + X_now) of the carrier's two levels at its Node, half of it at the seed."""
@@ -128,13 +123,13 @@ class Node:
             raise ValueError(f"a Node off the board: {at!r}")
         return at
 
-    def row(self, shape: int, gap: int | None = None) -> Row:
-        """The one row of the shape (and of the gap den - num where given), chosen by the numbers alone."""
-        return row_of(self.rows_, shape, gap)
+    def row(self, shape: int) -> Row:
+        """The one row of the shape with a pair, chosen by the numbers alone (rows.row_of)."""
+        return row_of(self.rows_, shape)
 
-    def walled(self) -> Row:
-        """The one row with a wall of its own and no Links."""
-        return walled_of(self.rows_)
+    def emitter(self) -> Row:
+        """The plane of the potential's pair (rows.row_of, a lookup by the shape and the pair's values): the row the Wronskian's change is laid on and whose quanta the close takes."""
+        return row_of(self.rows_, PLANE, self.row(POTENTIAL).pair)
 
     def records(self) -> list[Row]:
         """The record rows in the acts' order, the planes and the quartets (rows.records_of)."""

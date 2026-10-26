@@ -14,7 +14,7 @@ from event_universe import run as writer
 from event_universe.core.ports import PORTS
 from event_universe.links import row_current
 from event_universe.node import Node
-from event_universe.rows import CARRIER, PLANE
+from event_universe.rows import CARRIER
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
 CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 6, 6, 6)  # rotations alike per part (CK-S1 even)
@@ -64,7 +64,7 @@ def run(universe: dict[str, Any], world: dict[str, Any]) -> Node:
 def same_rows(base: Node, other: Node, m: Any) -> bool:
     for line_b, line_o in (
         (base.row(CARRIER).lines[0], other.row(CARRIER).lines[0]),
-        (base.row(PLANE, gap=0).lines[0], other.row(PLANE, gap=0).lines[0]),
+        (base.emitter().lines[0], other.emitter().lines[0]),
     ):
         for at in np.ndindex(CUBE, CUBE, CUBE):
             there = image(m, at, CUBE)
@@ -76,7 +76,7 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 209 credits and 20 births under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed), 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
     births = births_of(base)
@@ -189,13 +189,13 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
 
 
 def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1() -> None:
-    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 56 credits and 16 births under PL-S1 (12 births with the same 56 credits under the former write of 2 W after the step, as before EQ-S1: the records where light flows bit for bit under it), the run back exact."""
+    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 56 credits and 16 births under PL-S1 (209 credits and 20 births under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed); 12 births with the same 56 credits under the former write of 2 W after the step, as before EQ-S1: the records where light flows bit for bit under it), the run back exact."""
     found = {}
     for world, quiet in (("world_pair_3.json", True), ("world_hole.json", False)):
         node, kept = node_of(world), node_of(world)
         by_interval: dict[int, int] = {}
         for _ in range(INTERVALS):
-            lines = node.row(PLANE, gap=0).lines
+            lines = node.emitter().lines
             net = sum((row_current(lines, port) for port in range(PORTS)), start=0)
             seen = len(node.log)
             node.step()
@@ -205,7 +205,7 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
                 assert (int(net[at]) == 0) == ("laid_back" in c) == quiet
                 if quiet:
                     assert c["laid_back"] == c["levels"] > 0 and c["dP_take"] == [0, 0, 0]
-                    assert int(node.row(PLANE, gap=0).lines[0].now[at]) == c["taken_now_was"]
+                    assert int(node.emitter().lines[0].now[at]) == c["taken_now_was"]
             by_interval[node.interval] = len(credits)
         counts = node.counts
         found[world] = ({i: n for i, n in by_interval.items() if n}, *(counts[k] for k in COUNTED))
@@ -354,3 +354,56 @@ def test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv() -> No
                 )
             alike[det] += same
     assert alike == {1: 24, -1: 24}
+
+
+def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2() -> None:
+    """CS5-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss, 6404425423; cs5's REPORT.md section 4 and cs7's section 3.3: the file universe_ga2 and the `wave` lay of cs3's cycle form in cs5's and cs7's spelling): the universe file names one pair in two rows (tests/worlds/universe_ga2.json, 115,762,739,551,980 twice) and the loader admits it as written, two records with the same numbers and one unit, the decoder one name for both; the 4-cube with no sea under the cycle lay at 5 quanta (tests/worlds/world_ga2.json: the amplitude 300 at every Node, logged with its digits and the sense 1) births 0 at i 1 (64 lay refusals, the light's own row drawn where it stands; cs5's hh3 read 64 crowd refusals there) and 64 at i 2 at 64 of 64 Nodes, every Node one child of the row 0 and one of the row 1 at W -18,000 / +18,000 (the conjugate pair of the plane at the Node, the crowd refusing nothing: two records, not one), taken at or above booked on 64 of 64, X 1,050 at 64 of 64 at i 2 and 1,880 at i 10 (cs5's and cs7's numbers to the integer), 256 credits by 20 (128 at i 8 and 128 at i 10, every one laid back under EQ-S1; cs7 read 128 at i 10 alone on its head before CK-S1's crossing in either direction) every one decoded from the clicks to the one species gapped 0 whichever row it stands on (256 of 256 right, 128 tracks right), the run back exact 20 of 20, 89 integers, 115 bits; the lay refused by name off the plane at the gap 0, with a field of no form, off Z_4, off the mirror 0 and 1, on a cube not a multiple of 4; the mirror 1 mirrors the remainder on the 32 negated Nodes of each line and leaves the levels; under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed) the cycle board birthed NOTHING: the draw at the first close refused as the origin at 64 reads (every folded remainder at the lay's half on the board alike), 1,216 lays refused after it, no credit, no turn by 20, Gamma exactly at 198 and 199 to 230: the pattern's digits were fitted to this read, named for the Boss and the hand on the births' seed."""
+    universe, world = world_of("world_ga2.json")
+    seed = world["seed"][0]
+    found = json.loads(
+        json.dumps(writer.record(universe, dict(world, intervals=20), 20, lambda line: None))
+    )
+    assert found["planes"][0] == found["planes"][1] != found["planes"][2]
+    lay = [e for e in found["log"] if e["event"] == "lay"]
+    assert len(lay) == 1 and (lay[0]["amplitude"], lay[0]["p1"], lay[0]["sense"]) == (300, seed["p1"], 1)
+    births = [e for e in found["log"] if e["event"] == "birth"]
+    children: dict[tuple[int, ...], list[int]] = {}
+    for b in births:
+        for end in ("minus", "plus"):
+            children.setdefault(tuple(b[end]), []).append(b["line_pair"])
+    assert len(births) == 64 and {b["i"] for b in births} == {2} and len(children) == 64
+    assert all(sorted(rows) == [0, 1] for rows in children.values())
+    assert {tuple(b["W_children"]) for b in births} == {(-18000, 18000)}
+    assert all(b["taken"] >= b["booked"] for b in births)
+    first = [e for e in found["log"] if e["event"] == "refused" and e["i"] == 1 and e["cause"] == "lay"]
+    assert len(first) == 64 and all("standing" in e for e in first)
+    assert (set(found["nodes"][1]["X"]), set(found["nodes"][9]["X"])) == ({1050}, {1880})
+    credits = [e for e in found["log"] if e["event"] == "credit"]
+    assert {c["i"] for c in credits} == {8, 10} and len(credits) == 256 == int(
+        found["counts"]["laid_back"]
+    )
+    out = table.gates(found)
+    whole = out["8 families forming (whole view)"]
+    assert (whole["species readable"], whole["decoded right per credit"]) == (256, 256)
+    assert whole["tracks right"] == [128, 128] and whole["births by species (decoder)"] == {
+        "gapped 0": 64
+    }
+    assert found["run_back"] == {"intervals": 20, "exact": 20}
+    assert ({r["integers"] for r in found["rows"]}, max(r["max bits"] for r in found["rows"])) == (
+        {89},
+        115,
+    )
+    for match, change in (
+        ("the plane at the gap 0", {"row": 1}),
+        ("a field of no form", {"sense": 1}),
+        ("each of Z_4", {"p1": seed["p1"][:15] + [4]}),
+        ("each of Z_4", {"cz": 4}),
+        ("mirror is 0 or 1", {"mirror": 2}),
+    ):
+        refused(match, Node, universe, dict(world, seed=[{**seed, **change}]))
+    refused("a multiple of 4", Node, universe, dict(world, shape=[3, 3, 3]))
+    plain, mirrored = (Node(universe, dict(world, seed=[{**seed, "mirror": m}])) for m in (0, 1))
+    for a, b in zip(plain.emitter().lines, mirrored.emitter().lines, strict=True):
+        assert (
+            (a.now == b.now).all() and (a.before == b.before).all() and int((a.rem != b.rem).sum()) == 32
+        )

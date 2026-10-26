@@ -17,7 +17,7 @@ from event_universe.features import volume
 from event_universe.links import links_of, stress_parts, tensor_parts
 from event_universe.loader.world import read_world
 from event_universe.node import Node
-from event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, zeros
+from event_universe.rows import CARRIER, POTENTIAL, TRACE, Line, walled_of, zeros
 
 AXES = 3
 CONTROLS = ("control", "detectors")
@@ -125,7 +125,7 @@ class Toy(Node):
         if not self.detectors or direction == -1:
             return
         c = self.start_content
-        gap0 = self.row(PLANE, gap=0)
+        gap0 = self.emitter()
         r_gap0 = self.rule_of(gap0, c, self.link_factors())
         z = gap0.lines[0]
         gap0_start = plane_starts[self.records().index(gap0)]
@@ -134,7 +134,7 @@ class Toy(Node):
             self.share([gap0_start[0]], r_gap0),
         )
         for det in self.detectors:
-            rise = int(sh_end[det]) // self.unit_gap0 - int(sh_vac[det]) // self.unit_gap0
+            rise = int(sh_end[det]) // self.unit_emitter - int(sh_vac[det]) // self.unit_emitter
             if rise > 0:
                 self.counts["light_credits"] += rise
                 self.log.append(
@@ -179,7 +179,7 @@ class Toy(Node):
             return line.now if direction == 1 else np.where(top, line.now, line.before)
 
         rows = self.rows()
-        metric, walled, potential = self.row(CARRIER), self.walled(), self.row(POTENTIAL)
+        metric, walled, potential = self.row(CARRIER), walled_of(self.rows_), self.row(POTENTIAL)
         c = np.asarray(volume.level_of(self.gamma, at(metric.lines[0])), dtype=object)
         self.start_content = c
         p0 = paces.clock_of(self.gamma, c)

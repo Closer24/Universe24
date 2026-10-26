@@ -1,4 +1,4 @@
-"""The seed as the world file lays it: a list of lays in the four forms of the law (the owner's word of 2026-10-25; the fourth, the uniform lay, by his word of 17:57 UTC): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in den's unit (h_a = den sin(k_a / 2)), moving at the band's rotation at that wave number with the optional flat `top` along the wave's axis (MV-S1 to MV-S3, 2026-10-25; one path for every record row, the plane at the gap 0 with a wave among them, with none the drift by name; a quartet's lay names its `vector`, the eight integers of the lattice, and may name one `sense`; the lay refused by state where the standing row's spin density agrees with the child's at the centre, SR-S4). Refused by name: a fourth form, a field of no form (an interval key among them), a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a quartet's lay with no vector, a wave number beyond the band's edge (|h| above den), a massless packet at the wave 0, a top not fitting the board."""
+"""The seed as the world file lays it: a list of lays in the five forms of the law (the owner's word of 2026-10-25; the fourth, the uniform lay, by his word of 17:57 UTC; the fifth, the light's cycle lay, by his word of 22:50 UTC, CS5-S2): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in den's unit (h_a = den sin(k_a / 2)), moving at the band's rotation at that wave number with the optional flat `top` along the wave's axis (MV-S1 to MV-S3, 2026-10-25; one path for every record row, the plane at the gap 0 with a wave among them, with none the drift by name; a quartet's lay names its `vector`, the eight integers of the lattice, and may name one `sense`; the lay refused by state where the standing row's spin density agrees with the child's at the centre, SR-S4); `wave` lays the light's cycle pattern at every Node (CS5-S2's world, the owner's word of 2026-10-25, 22:50 UTC: cs3's cycle form in cs5's and cs7's spelling, `row` the plane at the gap 0, `quanta` n, `p1` sixteen digits of Z_4 and `cz` one, the phase p(x, y, z) = (p1[4 (x mod 4) + (y mod 4)] + cz z) mod 4, `mirror` 0 or 1 for the negated lines' remainders). Refused by name: a form beyond these, a field of no form (an interval key among them), a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a quartet's lay with no vector, a wave number beyond the band's edge (|h| above den), a massless packet at the wave 0, a top not fitting the board, a cycle lay off the plane at the gap 0 or on a cube whose extent is not a multiple of 4, its digits off Z_4, its mirror off 0 and 1."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import largest_below, quotient, remainder
 from event_universe.links import turn_pair
 from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
+from event_universe.wave import lay_cycle
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -20,6 +21,7 @@ FIELDS = {  # the fields of each form of the law; a field of no form is refused 
     "sea": frozenset({"lay", "row", "quanta", "sense"}),
     "hole": frozenset({"lay", "at"}),
     "at": frozenset({"lay", "row", "centre", "quanta", "width", "vector", "sense", "wave", "top"}),
+    "wave": frozenset({"lay", "row", "quanta", "p1", "cz", "mirror"}),
 }
 Pair = tuple[Any, Any]
 
@@ -38,27 +40,34 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
         if row is not None and row not in node.records():
             raise ValueError("a lay is onto a record (a plane or a quartet)")
         if form == "sea" and "quanta" not in lay:
-            if row is None or row.gap != 0 or "sense" in lay:
+            if row is None or row is not node.emitter() or "sense" in lay:
                 raise ValueError(
                     "a sea without a count is the plane at the gap 0 alone (the drift, no sense); a plane with a gap names its quanta (the fourth form)"
                 )
             node.lay(node.records().index(row), Ellipsis, (node.drift, 0, 0, 0))
         elif form == "sea":
-            if row is None or row.gap == 0:
+            if row is None or row is node.emitter():
                 raise ValueError(
                     "the fourth form lays a plane with a gap at a count: the plane at the gap 0 alone is the drift"
                 )
             lay_uniform(node, node.records().index(row), int(lay["quanta"]), int(lay.get("sense", 0)))
         elif form == "hole":
             at = node.node_of(lay["at"])
-            node.lay(node.records().index(node.row(PLANE, gap=0)), at, (-node.drift, 0, 0, 0))
+            node.lay(node.records().index(node.emitter()), at, (-node.drift, 0, 0, 0))
+        elif form == "wave":
+            if row is None or row is not node.emitter() or "quanta" not in lay:
+                raise ValueError("the cycle lay is the light's: the plane at the gap 0 at its quanta")
+            digits = [int(v) for v in lay.get("p1", [])] + [int(lay.get("cz", 1))]
+            lay_cycle(
+                node, node.records().index(row), int(lay["quanta"]), digits, int(lay.get("mirror", 0))
+            )
         else:
             n = int(lay["quanta"])
             at = node.node_of(lay["centre"])
             if row is None:
                 raise ValueError("a packet names its row")
             wave = None if lay.get("wave") is None else tuple(int(x) for x in lay["wave"])
-            if row.gap == 0 and wave is None:
+            if row is node.emitter() and wave is None:
                 node.lay(node.records().index(row), at, (n * node.drift, 0, 0, 0))
             else:
                 vector = lay.get("vector")
