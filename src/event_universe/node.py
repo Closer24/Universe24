@@ -107,9 +107,7 @@ class Node:
         self.X = phase.amplitude(phase.unit(self.gamma), HALF_WIDTH - 1)
         seed_pair = phase.seed(self.X, self.gamma)
         self.orbit_lines, self.orbit = [seed_pair], [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
-        self.orbit_half: int | None = (
-            None  # the orbit's half turn once the table reaches it (readings.pair_angle)
-        )
+        self.orbit_half: int | None = None
         self.start_content, self.start_x = self.content(), self.row(CARRIER).lines[0].now
         self.start_clock = readings.paces_of(self, self.start_content)[0]
 
