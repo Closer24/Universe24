@@ -1,4 +1,4 @@
-"""The close, the Node's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every row's rule, the gap-0 plane's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`: every Link once from its +a end, both ends holding a whole quantum of the record, the + child at the end the record's current flows into where the twist is right-handed, the conjugate pair's selector for a record with a gap, the one-Link read of a number at that end), the lays refused by name (`refuse`), the births taken and laid (`births`: the birth's one take per Node from the gap-0 row, the merger's one take per end from the taken row, SL-S2), the bodies' closing (bodies.py); the lay, the exact take and the momentum they book; the close undone from the log (`unclick`)."""
+"""The close, the Node's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every row's rule, the gap-0 plane's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`: every Link once from its +a end, both ends holding a whole quantum of the record, the + child at the end the record's current flows into where the twist is right-handed, the conjugate pair's selector for a record with a gap, the one-Link read of a number at that end), the lays refused by name (`refuse`), the births taken and laid (`births`: the birth's one take per Node from the gap-0 row, the merger's one take per end from the taken row, SL-S2), the bodies' closing (bodies.py); the lay, the exact take and the momentum they book; the close undone from the log at the direction -1 (`click`)."""
 
 from __future__ import annotations
 
@@ -255,10 +255,41 @@ def click(
     direction: int = 1,
     frame: dict[str, Any] | None = None,
 ) -> None:
-    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule in the carrier's unit, PM-S1), the Link close of every record alike (SL-S1), the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame (`unclick`). `plane_starts` the records' lines at the interval's start, `held` every row's."""
+    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule in the carrier's unit, PM-S1), the Link close of every record alike (SL-S1), the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame in the reverse order of its lines: the lays removed, the taken line restored at every take's Node (`taken_line`, CS4-S2; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed), the take's remainder and the readings' counters restored (RW-S1: one function with the direction, the former `unclick` kept by name). `plane_starts` the records' lines at the interval's start, `held` every row's."""
     if direction == -1:
         assert frame is not None
-        unclick(node, frame)
+        rec0 = node.records().index(node.emitter())
+        for entry in reversed(node.log[frame["log_from"] :]):
+            at = tuple(entry["node"])
+            if entry["event"] == "birth":
+                s, (a, b) = entry["line_pair"], entry["amplitude"]
+                exact = entry.get("exact_lay", [None, None])
+                for where, sense, laid in zip(
+                    (entry["minus"], entry["plus"]), (-1, 1), exact, strict=True
+                ):
+                    if laid is None:
+                        lay(node, s, tuple(where), (sense * a, 0, 0, b), -1)
+                    else:
+                        move(node, s, laid[0], tuple(where), -laid[1])
+            if entry["event"] in ("birth", "credit"):
+                row = entry.get("taken_row", rec0)
+                for take in entry.get("takes", [entry]):
+                    where = tuple(take["node"])
+                    if "taken_levels" in take:
+                        lay(node, row, where, tuple(take["taken_levels"]))
+                        continue
+                    line = node.records()[row].lines[take["taken_line"]]
+                    move(
+                        node,
+                        row,
+                        take["taken_line"],
+                        where,
+                        take["taken_now_was"] - int(line.now[where]),
+                    )
+                    node.take_rem[where] = take["remainder_was"]
+                node.closes[at] -= 1
+        del node.log[frame["log_from"] :]
+        node.standing, node.crossed, node.beats = frame["counters"]
         return
     c = node.start_content
     node.lattices, node.drawn = {}, {}
@@ -277,31 +308,3 @@ def click(
     ]
     born_nodes = births(node, refuse(node, born, owns), c, factors, rules)
     bodies(node, plane_starts, owns, born_nodes, frozen, r_emitter)
-
-
-def unclick(node: Node, frame: dict[str, Any]) -> None:
-    """The close undone from the log, in the reverse order of its lines: the lays removed, the taken line restored at every take's Node (the line each take logged, `taken_line`, CS4-S2; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed; the take's remainder restored from the line, EX-S1), the readings' counters restored."""
-    rec0 = node.records().index(node.emitter())
-    for entry in reversed(node.log[frame["log_from"] :]):
-        at = tuple(entry["node"])
-        if entry["event"] == "birth":
-            s, (a, b) = entry["line_pair"], entry["amplitude"]
-            exact = entry.get("exact_lay", [None, None])
-            for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
-                if laid is None:
-                    lay(node, s, tuple(where), (sense * a, 0, 0, b), -1)
-                else:
-                    move(node, s, laid[0], tuple(where), -laid[1])
-        if entry["event"] in ("birth", "credit"):
-            row = entry.get("taken_row", rec0)
-            for take in entry.get("takes", [entry]):
-                where = tuple(take["node"])
-                if "taken_levels" in take:
-                    lay(node, row, where, tuple(take["taken_levels"]))
-                    continue
-                line = node.records()[row].lines[take["taken_line"]]
-                move(node, row, take["taken_line"], where, take["taken_now_was"] - int(line.now[where]))
-                node.take_rem[where] = take["remainder_was"]
-            node.closes[at] -= 1
-    del node.log[frame["log_from"] :]
-    node.standing, node.crossed, node.beats = frame["counters"]

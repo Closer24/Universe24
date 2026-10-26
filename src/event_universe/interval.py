@@ -38,8 +38,8 @@ class Interval:
 
     def __init__(self, node: Node, direction: int) -> None:
         self.node, self.direction = node, direction
+        node.interval += direction
         if direction == 1:
-            node.interval += 1
             self.top: Any = np.zeros(node.shape, dtype=bool)
             self.kept: list[list[Line]] | None = None
             self.frozen: Any = None
@@ -51,8 +51,7 @@ class Interval:
         self.still: Any = self.top if self.frozen is None else self.top | self.frozen
         self.held = [[line.copy() for line in row] for row in node.rows()]
         if direction == -1:
-            if self.top.any():
-                node.exchange(self.top, self.held)
+            node.swap(self.held, self.frozen, -1, self.top)
             self.kept = [[line.copy() for line in row] for row in node.rows()]
         self.rows = node.rows()
         self.where = {id(r): k for k, r in enumerate(node.rows_)}
@@ -221,11 +220,8 @@ class Interval:
             new = []
             for a, p, line in zip(self.starts[k], self.kicked[k], self.rows[k], strict=True):
                 v, rem = division_forward(p, ws, half(ws))
-                new.append(
-                    Line(a + v, a, rem, ws, line.wr, line.wwall)
-                    if self.direction == 1
-                    else Line(a, a - v, rem, ws, line.wr, line.wwall)
-                )
+                now, before = (a + self.direction * v, a)[:: self.direction]
+                new.append(Line(now, before, rem, ws, line.wr, line.wwall))
             if self.direction == -1 and self.kept is not None:
                 node.restore(new, self.kept[k], self.top)
             self.out[k] = new
@@ -281,7 +277,6 @@ def run(node: Node, direction: int) -> None:
     interval.kick()
     interval.division()
     if direction == -1:
-        node.interval -= 1
         return
     interval.swap()
     interval.close()
