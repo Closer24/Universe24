@@ -1,0 +1,19 @@
+1. the form, the re-run's counts equal to the record's: 15 of 15
+1. the form, the re-run's log equal to the record's event by event: 237121 of 237121
+1. the form, the run back exact: 20 of 20
+2. the current, intervals with F_ij + F_ji = 0 on every Link of the gap-0 line: 1200 of 1200
+2. the current, the record's Node lines' current equal to the board's: 1200 of 1200
+3. the Wronskian, the rows' W total at the marks equal to the board's: 15 of 15
+3. the charge, the births' two children W of opposite sign (the exact lays aside): 0 of 0
+3r. reading: the Wronskian, intervals without a birth with the board's W total unchanged: 1199 of 1199
+3r. reading: the births' two children W summed to 0 in magnitude: 0 of 0
+4r. reading: the lattice momentum, births with dP_take + dP_lay_ends = 0: 0 of 0
+4r. reading: the lattice momentum, intervals with the Links' sum 0 on three axes: 1200 of 1200
+5. the energy, credits with beat >= 1: 0 of 0
+6. the count, taken + remainder before - remainder after = booked per click (EX-S1): 0 of 0
+6. the count, taken >= booked per birth (gate 15's identity; the exact lays aside): 0 of 0
+6. the count, the births' taken and booked summed against the record's counts: 2 of 2
+6r. reading: taken >= booked per credit: 0 of 0
+8. integers, floats found in the record: 0 of 0
+{"births with an exact lay (one child W 0)": 0, "births W sum": 0, "births senses +/-": [0, 0], "W total at the marks": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "Links' current summed per axis, first and last interval": [[0, 0, 0], [0, 0, 0]], "recoil dP_take summed over the clicks": [0, 0, 0], "beats per 1000 proper, [quotient, remainder], min and max over the credited Nodes": [], "credited Nodes": 0, "beats summed over the credits": 0, "clicks without the take's remainders (the exact lays)": 0, "births taken summed": 0, "births booked summed": 0, "credits taken summed": 0, "credits booked summed": 0, "max bits at the marks": 117, "births": 0, "credits": 0, "intervals": 1200, "board W total at the end": 0}
+laws held in full: 12 of 12 (the readings marked r aside)

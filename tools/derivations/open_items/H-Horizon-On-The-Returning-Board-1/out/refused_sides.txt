@@ -1,0 +1,5 @@
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/sb1/src/event_universe/wave.py", line 49, in lay_cycle
+    raise ValueError("the cycle pattern is 4 by 4: the cube's extent is a multiple of 4")
+ValueError: the cycle pattern is 4 by 4: the cube's extent is a multiple of 4
+ValueError: the cycle pattern is 4 by 4: the cube's extent is a multiple of 4
+ValueError: the cycle pattern is 4 by 4: the cube's extent is a multiple of 4

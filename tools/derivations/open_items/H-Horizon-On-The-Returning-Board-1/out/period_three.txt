@@ -1,0 +1,18 @@
+record /dev/shm/tmp/sb1/r_chiral60.json intervals 60
+the volume vector repeated at the pairs (first ten) [] count 0
+the mean at the first, middle and last interval (1, 1002, 1014, 1000, 0) (31, 9290, 12133, 7680, 0) (60, 24001, 27598, 20639, 0)
+the frozen Nodes, the largest over the record 0
+the content-bearing max X 27598 the least min X 681
+------------------------------
+record /dev/shm/tmp/sb1/r_q5_500.json intervals 500
+the volume vector repeated at the pairs (first ten) [(109, 111), (108, 112), (107, 113), (106, 114), (105, 115), (104, 116), (103, 117), (102, 118), (101, 119), (100, 120)] count 110
+the mean at the first, middle and last interval (1, 1017, 1017, 1017, 0) (251, 5508, 5543, 5477, 0) (500, 51477, 55474, 47940, 0)
+the frozen Nodes, the largest over the record 0
+the content-bearing max X 55474 the least min X 999
+------------------------------
+record /dev/shm/tmp/sb1/r_w8.json intervals 140
+the volume vector repeated at the pairs (first ten) [(109, 111), (108, 112), (107, 113), (106, 114), (105, 115), (104, 116), (103, 117), (102, 118), (101, 119), (100, 120)] count 30
+the mean at the first, middle and last interval (1, 1017, 1017, 1017, 0) (71, 18028, 18028, 18028, 0) (140, 19815, 19815, 19815, 0)
+the frozen Nodes, the largest over the record 0
+the content-bearing max X 22585 the least min X 1017
+------------------------------
