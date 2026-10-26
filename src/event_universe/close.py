@@ -12,7 +12,14 @@ from event_universe.core import rule3
 from event_universe.core.ports import AXES, across, port_of
 from event_universe.core.rule3 import quotient, remainder
 from event_universe.links import cross, row_current, row_twist
-from event_universe.merger import child_at, light_children, merger_take, walls_of
+from event_universe.merger import (
+    child_at,
+    light_children,
+    merger_falls,
+    merger_take,
+    share_total,
+    walls_of,
+)
 from event_universe.rows import PLANE, Line
 from event_universe.take import lay, neighbour, read_number, take_at
 
@@ -60,7 +67,7 @@ def list_of(node: Node, rec: int, number: int) -> int:
 def meet(
     node: Node, rec: int, start: list[Line], sh: Any, rules: list[tuple[Line, rule3.Rule]], frozen: Any
 ) -> list[Birth]:
-    """The Link close of one record, the same for every record (SL-S1, the generic close): every Link once from its +a end; a meeting where both ends hold a whole quantum of the record at the interval's start and neither end is frozen (counted as `met`); the + child at the end the record's own current flows into where the twist of its transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); a record with a gap meets as the conjugate pair alone, the two ends' charges of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; refused by name `sense` where not), and at rest, no current across the Link, as the pair at rest (MG-S1: the + child at the end whose charge is positive, the birth's orientation read at -1, the twist not read); the Link's one number read at the current's end names the children's record (`list_of`). Returns the births as (the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room, the taken record)."""
+    """The Link close of one record, the same for every record (SL-S1, the generic close): every Link once from its +a end; a meeting where both ends hold a whole quantum of the record at the interval's start and neither end is frozen (counted as `met`); the + child at the end the record's own current flows into where the twist of its transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); a record with a gap meets as the conjugate pair alone, the two ends' charges of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; refused by name `sense` where not), and at rest, no current across the Link, as the pair at rest (MG-S1: the + child at the end whose charge is positive, the birth's orientation read at -1, the twist not read, its number read after the stop in `births`); the Link's one number read at the current's end names the children's record (`list_of`; one read per Node and record in a close). Returns the births as (the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room, the taken record)."""
     born: list[Birth] = []
     row, unit = node.records()[rec], node.units[rec]
     standing = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(sh) & ~frozen
@@ -87,7 +94,12 @@ def meet(
             else:
                 into, outof = (j, at) if flow > 0 else (at, j)
             plus, minus = (into, outof) if rest or h > 0 else (outof, into)
-            drawn = read_number(node, into, rules, unit)
+            if rest:
+                born.append(Birth(into, list_of(node, rec, 0), minus, plus, 0, rec))
+                continue
+            if (into, rec) not in node.drawn:
+                node.drawn[(into, rec)] = read_number(node, into, rules, unit)
+            drawn = node.drawn[(into, rec)]
             if drawn is None:
                 continue
             number, room = drawn
@@ -119,25 +131,43 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
     return [k for k in kept if k not in crowded] + inverse
 
 
-def births(node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...]) -> set[tuple[int, ...]]:
-    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid by one exact take at its own end (`merger_take`, SL-S2: the birth read at -1); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
+def births(
+    node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...], reads: list[tuple[Line, rule3.Rule]]
+) -> set[tuple[int, ...]]:
+    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made; the rules once per record), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid at its own end by the record's levels taken whole (`merger_falls` then `merger_take`, MG-S1: the birth read at -1; the record's share over the board read once per close until a merger writes; the Link's number read at the take's Node after the stop, the draw's refusal counted there); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
     by_node: dict[tuple[tuple[int, ...], int], list[Kid]] = {}
     for at, s, minus, plus, room, rec in kept:
         by_node.setdefault((at, rec), []).append(Kid(s, minus, plus, room))
-    walls = {k: walls_of(node, k.line_pair, k.minus, k.plus, c, factors) for k in kept}
+    records = node.records()
+    rules = {}
+    for r in {k.line_pair for k in kept} | {k.rec for k in kept}:
+        pair = records[r].pair
+        assert pair is not None
+        rules[r] = node.rule(pair, c, factors)
+    own: dict[tuple[int, int, tuple[int, ...]], int] = {}
+    walls = {k: walls_of(node, k.line_pair, k.minus, k.plus, rules[k.line_pair], own) for k in kept}
     taken: list[tuple[tuple[int, ...], int, list[Kid], dict[str, Any]]] = []
+    standing: dict[int, int] = {}
     for at, rec in sorted(by_node):
         kids = by_node[(at, rec)]
-        row = node.records()[rec]
-        assert row.pair is not None
-        rule = node.rule(row.pair, c, factors)
+        row, rule = records[rec], rules[rec]
         if row is not node.emitter():
             for kid in kids:
-                got = merger_take(
-                    node, kid.minus, kid.plus, walls[Birth(at, *kid, rec)], rule, rec, refused
+                total = standing.setdefault(rec, share_total(node, rec, rule))
+                kid_walls = walls[Birth(at, *kid, rec)]
+                ends = merger_falls(node, kid.minus, kid.plus, kid_walls, rule, rec, refused, total)
+                drawn = None if ends is None else read_number(node, at, reads, node.units[rec])
+                if ends is None or drawn is None:
+                    continue
+                taken.append(
+                    (
+                        at,
+                        rec,
+                        [Kid(kid.line_pair, kid.minus, kid.plus, drawn[1])],
+                        merger_take(node, ends, rule, rec),
+                    )
                 )
-                if got is not None:
-                    taken.append((at, rec, [kid], got))
+                del standing[rec]
             continue
         booked = sum(sum(walls[Birth(at, *kid, rec)]) for kid in kids)
         one = take_at(node, at, booked, rule, len(kids), rec)
@@ -252,7 +282,7 @@ def click(
         unclick(node, frame)
         return
     c = node.start_content
-    node.lattices = {}
+    node.lattices, node.drawn = {}, {}
     frozen = readings.frozen_of(node, c)
     factors = node.link_factors(None, frozen)
     r_emitter = node.rule_of(node.emitter(), c, factors)
@@ -266,7 +296,7 @@ def click(
         for rec in range(len(node.records()))
         for b in meet(node, rec, plane_starts[rec], owns[rec], rules, frozen)
     ]
-    born_nodes = births(node, refuse(node, born, owns), c, factors)
+    born_nodes = births(node, refuse(node, born, owns), c, factors, rules)
     bodies(node, plane_starts, owns, born_nodes, frozen, r_emitter)
 
 

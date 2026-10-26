@@ -100,6 +100,7 @@ class Node:
         self.start_odd: list[Any] = []
         self.stepped: list[list[Line]] = []
         self.lattices: dict[tuple[int, int, tuple[int, ...]], int] = {}
+        self.drawn: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
 
         for line in self.row(CARRIER).lines[:1]:
             line.now[:], line.before[:] = self.gamma, self.gamma

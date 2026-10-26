@@ -1,4 +1,4 @@
-"""The merger at rest, MG-S1 (H-Merger-At-Rest-1, 2026-10-26, the Boss's order under the owner's delegation; the former CS8-S1 and CS8-S2 as one letter): a child's wall is its own quantum, the share its levels (A, 0 | 0, +-B) hold alone at the Node under its row's rule, the same two integers for every row (`walls_of`; the former board's increment kept by name, equal to it on an empty plane); a record with a gap whose two ends hold a whole quantum each of opposite charge with no current across the Link meets as the conjugate pair (close.meet's rest branch); each child's wall is paid at its own end by the taken record's levels at that Node taken whole by the one lay act at -1, the fall the share the board loses, both ends read before either is written, refused by name `stop` where an end's fall is below the wall (`merger_take`); the light is laid at each end as the exact take at -1, on the line the take names, by the least count of levels at which the share rises by the wall (`rise_of`), as the child's lay where the line has no direction (`light_children`)."""
+"""The merger at rest, MG-S1 (H-Merger-At-Rest-1, 2026-10-26, the Boss's order under the owner's delegation; the former CS8-S1 and CS8-S2 as one letter): a child's wall is its own quantum, the share its levels (A, 0 | 0, +-B) hold alone at the Node under its row's rule, the same two integers for every row (`walls_of`; the former board's increment kept by name, equal to it on an empty plane); a record with a gap whose two ends hold a whole quantum each of opposite charge with no current across the Link meets as the conjugate pair (close.meet's rest branch); each child's wall is paid at its own end by the taken record's levels at that Node taken whole by the one lay act at -1, the fall the share the board loses, both ends read before either is written, refused by name `stop` where an end's fall is below the wall (`merger_falls`, `merger_take`; the Link's number read after the stop, so a stopped pair draws nothing); the light is laid at each end as the exact take at -1, on the line the take names, by the least count of levels at which the share rises by the wall (`rise_of`), as the child's lay where the line has no direction (`light_children`)."""
 
 from __future__ import annotations
 
@@ -30,19 +30,33 @@ def child_at(node: Node, s: int, where: tuple[int, ...], sense: int, sign: int =
 
 
 def walls_of(
-    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], c: Any, factors: tuple[Any, ...]
+    node: Node,
+    s: int,
+    minus: tuple[int, ...],
+    plus: tuple[int, ...],
+    rule: rule3.Rule,
+    cache: dict[tuple[int, int, tuple[int, ...]], int],
 ) -> tuple[int, int]:
-    """Each child's wall, its own quantum (MG-S1, CS8-S2): the child laid by the one lay act at its end on zero lines of the row's shape (the row's lines held and put back), the share summed over the board under the row's rule at the board's content, the lines discarded; the same two integers for every row and every Node of one content; the former reading, the board's increment where the plane already stands, kept by name."""
+    """Each child's wall, its own quantum (MG-S1, CS8-S2): the child laid by the one lay act at its end on zero lines of the row's shape (the row's lines held and put back), the share summed over the board under the row's rule at the board's content, the lines discarded; the same two integers for every row and every Node of one content, read once per end and row in a close (`cache`: no line of the board enters it); the former reading, the board's increment where the plane already stands, kept by name."""
     row = node.records()[s]
-    assert row.pair is not None
-    rule = node.rule(row.pair, c, factors)
     held, found = row.lines, []
     for where, sense in ((minus, -1), (plus, 1)):
-        row.lines = [Line(zeros(node.shape), zeros(node.shape), line.rem, line.wall) for line in held]
-        child_at(node, s, where, sense)
-        found.append(int(sum(int(x) for x in gram.share(node, row.lines, rule).reshape(-1))))
+        if (s, sense, where) not in cache:
+            row.lines = [
+                Line(zeros(node.shape), zeros(node.shape), line.rem, line.wall) for line in held
+            ]
+            child_at(node, s, where, sense)
+            cache[(s, sense, where)] = int(
+                sum(int(x) for x in gram.share(node, row.lines, rule).reshape(-1))
+            )
+        found.append(cache[(s, sense, where)])
     row.lines = held
     return found[0], found[1]
+
+
+def share_total(node: Node, rec: int, rule: rule3.Rule) -> int:
+    """A record's share summed over the board under its rule, as the close reads it (one reading per record per close while nothing is written)."""
+    return int(sum(int(x) for x in node.share(node.records()[rec].lines, rule).reshape(-1)))
 
 
 def levels_at(row: Any, where: tuple[int, ...]) -> tuple[int, ...]:
@@ -50,7 +64,7 @@ def levels_at(row: Any, where: tuple[int, ...]) -> tuple[int, ...]:
     return tuple(int(a[where]) for line in row.lines for a in (line.now, line.before))
 
 
-def merger_take(
+def merger_falls(
     node: Node,
     minus: tuple[int, ...],
     plus: tuple[int, ...],
@@ -58,26 +72,29 @@ def merger_take(
     rule: rule3.Rule,
     rec: int,
     refused: Callable[..., None],
-) -> dict[str, Any] | None:
-    """The merger's take (MG-S1, the birth's lay read at -1): at each end the taken record's levels at the Node read and the share the board loses by their lay at -1 read (laid and laid back), both ends read before either is written; refused by name `stop` where an end's fall is below its child's wall; then each end's levels taken whole by the one lay act at -1, its momentum booked on both lines. Returns the log's take fields, the two ends' takes summed and each end's own under `takes` (its `taken_levels` the levels taken, unclick laying them back), or None."""
+    standing: int,
+) -> list[tuple[tuple[int, ...], int, tuple[int, ...], int]] | None:
+    """The merger's reads (MG-S1, the birth's lay read at -1): at each end the taken record's levels at the Node and the share the board loses by their lay at -1 (laid and laid back, against the record's share `standing` over the board as the close holds it), both ends read before either is written, the first end's refusal sparing the second's read; refused by name `stop` where an end's fall is below its child's wall. Returns per end (the Node, the wall, the levels, the fall), or None."""
     row = node.records()[rec]
-    assert row.pair is not None
-
-    def total() -> int:
-        return int(sum(int(x) for x in node.share(row.lines, rule).reshape(-1)))
-
     ends = []
     for where, wall in zip((minus, plus), walls, strict=True):
         levels = levels_at(row, where)
-        before = total()
         lay(node, rec, where, levels, -1)
-        fall = before - total()
+        fall = standing - share_total(node, rec, rule)
         lay(node, rec, where, levels, 1)
-        ends.append((where, wall, levels, fall))
-    for where, wall, _levels, fall in ends:
         if fall < wall:
             refused(node, where, "stop", fall=fall, walls=wall, row=rec)
             return None
+        ends.append((where, wall, levels, fall))
+    return ends
+
+
+def merger_take(
+    node: Node, ends: list[tuple[tuple[int, ...], int, tuple[int, ...], int]], rule: rule3.Rule, rec: int
+) -> dict[str, Any]:
+    """The merger's take after its reads (`merger_falls`): each end's levels taken whole by the one lay act at -1, its momentum booked on both lines. Returns the log's take fields, the two ends' takes summed and each end's own under `takes` (its `taken_levels` the levels taken, unclick laying them back)."""
+    row = node.records()[rec]
+    assert row.pair is not None
     takes: list[dict[str, Any]] = []
     for where, wall, levels, fall in ends:
         (re, im), (re_now, re_before, im_now, im_before) = row.lines, levels
