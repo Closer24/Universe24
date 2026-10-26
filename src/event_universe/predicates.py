@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from collections.abc import Callable
 from typing import Any
 
 from event_universe.core.ports import AXES
@@ -20,129 +19,11 @@ from event_universe.decoder import (
     quot,
     unread_words,
 )
-from event_universe.rows import QUARTET
 
 
 def unread(key: str, why: str, predicate: str) -> dict[str, Any]:
     """A row the record cannot carry, its verdict alone."""
     return {key: {"verdict": unread_words(why, predicate)}}
-
-
-def no_wave(record: Record) -> str:
-    """Why a row of a packet's motion is not read: no wave lay in the world, else no position per close."""
-    return (
-        "no lay with a wave number in the world"
-        if not wave_lay(record)
-        else "a position per close is not read"
-    )
-
-
-def no_field(record: Record) -> str:
-    """Why the spinor's two beats are not read: a quartet's universe has no held field, the others no shape-8 row."""
-    quartet = any(int(r["shape"]) == QUARTET for r in record.run["universe"]["rows"])
-    return "no held field in the world" if quartet else "no shape-8 row in the record's universe"
-
-
-def no_conversion(record: Record) -> str:
-    """Why the neutrino is not read: no conversion in the record, every prime of den within the width."""
-    points = len(record.circle())
-    return f"no conversion in the record and every prime of den within the width ({points} points on den's circle)"
-
-
-UNREAD: tuple[tuple[str, str | Callable[[Record], str], str], ...] = (
-    (
-        "20 the twist's 24 and 24",
-        "one seed's run; the 48 images are the board test's",
-        "the 24 rotations' records equal, the 24 reflections' equal with the senses exchanged",
-    ),
-    (
-        "28 the conversion list",
-        "no record ends at a Node where others begin (the conversion act is not in the engine)",
-        "a lift ends and its children begin at one Node, the charge and the count kept",
-    ),
-    (
-        "32 the perihelion",
-        no_wave,
-        "the orbit's turning point advancing over a body's positions per close",
-    ),
-    (
-        "35 frame dragging for matter, light not dragged",
-        "no mass moves beside a body's track in the world",
-        "a plane's track turned beside a moving mass, light's not",
-    ),
-    (
-        "36 the shears as waves",
-        "the rows carry the tension's extremes and no shear line",
-        "the + polarisation travelling across the board, the x polarisation absent",
-    ),
-    (
-        "38 the Aharonov-Bohm phase",
-        "no held flux in the world",
-        "a plane's clicks around a held flux shifted by the enclosed count",
-    ),
-    (
-        "39 the Zeeman and Stark shifts",
-        "no held field in the world (the toy's one-Node test carries the doublet)",
-        "a body's beat shifted beside a neighbour's field, the doublet split",
-    ),
-    (
-        "41 the spinor's two beats",
-        no_field,
-        "two beats of one quantum at rest in a held uniform field (the Zeeman doublet, tests/test_the_quartet.py)",
-    ),
-    (
-        "42 the split along the gradient (Stern-Gerlach)",
-        "no gradient field in the world (the toy's records carry the verdict)",
-        "a neutral packet's credits in two spots along the gradient's axis, re-split on a second axis",
-    ),
-    (
-        "44 the moving lay's velocity against k",
-        no_wave,
-        "the centroid at the group velocity v = P / (2 E); the momentum summed before and after a collision",
-    ),
-    (
-        "48 the black body",
-        "no gap-0 credit in the record (the sea one mode)",
-        "a spectrum over the light credits' beats at a detector",
-    ),
-    (
-        "50 light on light",
-        "no two light packets in the world",
-        "two light packets' credits coupled after crossing",
-    ),
-    (
-        "51 the Casimir force and the running alpha",
-        "no plates and no bound pair in the world",
-        "a force between plates; a bound pair's beat changing with the content",
-    ),
-    ("52 the neutrino", no_conversion, "a third child's credits at a conversion"),
-    (
-        "53 a fast packet binds at its lay",
-        no_wave,
-        "a heavy packet keeps its velocity, or its stop is read as the momentum into its well and named",
-    ),
-    (
-        "54 scattering, two packets through each other",
-        "two packets of one plane are not told apart by their line, and the momentum across the click is row 23",
-        "the packets scatter, the momentum summed before and after",
-    ),
-)  # the rows no record from the seed carries: the key, why (a sentence, or read from the record), the predicate
-
-
-def stub(number: str) -> Callable[[Record], dict[str, Any]]:
-    """The row function of an UNREAD row by its number (the key's first word): NOT READ with its why and its predicate."""
-    key, why, predicate = next(entry for entry in UNREAD if entry[0].split()[0] == number)
-
-    def row(record: Record) -> dict[str, Any]:
-        return unread(key, why(record) if callable(why) else why, predicate)
-
-    row.__name__ = row.__qualname__ = f"row_{number}"
-    return row
-
-
-def wave_lay(record: Record) -> bool:
-    """Whether the world lays a packet with a wave number (the `wave` key of an `at` lay, MV-S1)."""
-    return any("wave" in lay for lay in record.run["world"].get("seed", []))
 
 
 def hand_of_birth(record: Record) -> dict[str, Any]:

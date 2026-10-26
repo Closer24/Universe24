@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from collections.abc import Callable
 from functools import cmp_to_key
 from typing import Any
 
@@ -13,7 +12,6 @@ from event_universe.decoder import (
     HALF,
     HUNDRED,
     LIFTS,
-    LISTED,
     MIL,
     PAIR,
     SPANS,
@@ -337,84 +335,3 @@ def merger(record: Record) -> dict[str, Any]:
             else f"NOT SHOWN: {reached} gapped meetings reached the premise and every one was refused by name",
         }
     }
-
-
-def eras_of(record: Record) -> tuple[list[int | None], list[list[int]], list[tuple[int, list[int]]]]:
-    """The eras in the clicks' view (rows 58 to 60): the spacing of a line's credits at one Node in the Node's own proper count, its mean per eighth of the run (the whole run's eighths, so a cut reads the same eighths; an eighth read once complete), the growth of each eighth over the complete one before it as (the eighth, the growth), and the last credit of each eighth (its interval and Node)."""
-    eighths: list[list[int]] = [[] for _ in range(LISTED)]
-    last: list[tuple[int, list[int]]] = [(0, []) for _ in range(LISTED)]
-    whole = int(record.run["intervals"])
-    for cs in record.bodies_of().values():
-        for a, b in zip(cs, cs[1:], strict=False):
-            k = int(quot((int(b["i"]) - 1) * LISTED, whole) or 0)
-            eighths[k].append(int(b["proper"]) - int(a["proper"]))
-            last[k] = max(last[k], (int(b["i"]), list(b["node"])), key=lambda p: p[0])
-    means = [
-        quot(sum(s), len(s)) if s and k < int(quot(record.intervals * LISTED, whole) or 0) else None
-        for k, s in enumerate(eighths)
-    ]
-    growths: list[list[int]] = []
-    for k in range(1, LISTED):
-        m, n = means[k - 1], means[k]
-        if m is not None and n is not None:
-            growths.append([k, n - m])
-    return means, growths, last
-
-
-def era_row(
-    record: Record, key: str, found: Callable[[list[int]], int | None], words: str, cause: str
-) -> dict[str, Any]:
-    """One era row: SHOWN at the growth found (the eighth completing the reading, its last credit's interval and Node), else NOT SHOWN with the cause, NOT READ with fewer than two growths."""
-    means, growths, last = eras_of(record)
-    numbers = {
-        "mean spacing per eighth (proper count)": means,
-        "growth per eighth over the one before (the eighth, the growth)": growths,
-    }
-    if len(growths) < PAIR:
-        return {key: numbers | {"verdict": "NOT READ: fewer than two eighths' growths of the spacing"}}
-    at = found([g for _k, g in growths])
-    if at is None:
-        return {key: numbers | {"verdict": f"NOT SHOWN: {cause}"}}
-    i, node = last[growths[at][0]]
-    return {
-        key: numbers
-        | {"at": node, "verdict": f"SHOWN: {words} (the eighth whose last credit is at {i})"}
-    }
-
-
-def fast_expansion(record: Record) -> dict[str, Any]:
-    """Row 58: the fast expansion after the bang, the spacing's growth largest in the first eighths (the first growth above zero and above the next)."""
-    return era_row(
-        record,
-        "58 the fast expansion after the bang",
-        lambda g: 1 if g[0] > 0 and g[0] > g[1] else None,
-        "the credits' spacing grows fastest in the first eighths",
-        "the first growth of the spacing is not above zero and above the next",
-    )
-
-
-def deceleration(record: Record) -> dict[str, Any]:
-    """Row 59: the deceleration, a later eighth's growth of the spacing smaller than the one before."""
-    return era_row(
-        record,
-        "59 the deceleration in the clicks",
-        lambda g: next((k for k in range(1, len(g)) if g[k] < g[k - 1]), None),
-        "an eighth's growth of the spacing smaller than the one before",
-        "no eighth's growth smaller than the one before",
-    )
-
-
-def acceleration_in_clicks(record: Record) -> dict[str, Any]:
-    """Row 60: the acceleration in the clicks, after a slowing an eighth's growth of the spacing larger than the one before."""
-
-    def quickens(g: list[int]) -> int | None:
-        slow = next((k for k in range(1, len(g)) if g[k] < g[k - 1]), len(g))
-        return next((j for j in range(slow + 1, len(g)) if g[j] > g[j - 1]), None)
-
-    return era_row(
-        record,
-        "60 the acceleration in the clicks",
-        quickens,
-        "after a slowing, an eighth's growth of the spacing larger than the one before",
-        "no eighth's growth larger than the one before after a slowing",
-    )

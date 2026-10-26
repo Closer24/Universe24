@@ -8,7 +8,7 @@ from collections import Counter, defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe import board, clicks, predicates
+from event_universe import board, clicks, events, predicates
 from event_universe.core.ports import AXES
 from event_universe.decoder import (
     HALF,
@@ -293,7 +293,7 @@ TABLE: tuple[Row, ...] = (
     clicks.charge,
     arrow,
     clicks.mass_ratios,
-    predicates.stub("20"),
+    events.stub("20"),
     predicates.hand_of_birth,
     predicates.coulomb,
     recoil,
@@ -301,39 +301,39 @@ TABLE: tuple[Row, ...] = (
     entropy,
     predicates.lifts,
     predicates.confinement,
-    predicates.stub("28"),
+    events.stub("28"),
     restated(*RESTATED[0]),
     restated(*RESTATED[1]),
     restated(*RESTATED[2]),
-    predicates.stub("32"),
+    events.stub("32"),
     restated(*RESTATED[3]),
     board.stopped_clock,
-    predicates.stub("35"),
-    predicates.stub("36"),
+    events.stub("35"),
+    events.stub("36"),
     board.maxwell,
-    predicates.stub("38"),
-    predicates.stub("39"),
+    events.stub("38"),
+    events.stub("39"),
     predicates.photoelectric,
-    predicates.stub("41"),
-    predicates.stub("42"),
+    events.stub("41"),
+    events.stub("42"),
     predicates.exclusion,
-    predicates.stub("44"),
+    events.stub("44"),
     board.well,
     board.same_gates,
     predicates.exact_take,
-    predicates.stub("48"),
+    events.stub("48"),
     predicates.decay,
-    predicates.stub("50"),
-    predicates.stub("51"),
-    predicates.stub("52"),
-    predicates.stub("53"),
-    predicates.stub("54"),
+    events.stub("50"),
+    events.stub("51"),
+    events.stub("52"),
+    events.stub("53"),
+    events.stub("54"),
     predicates.two_slits,
     predicates.bell,
     predicates.ghz,
-    clicks.fast_expansion,
-    clicks.deceleration,
-    clicks.acceleration_in_clicks,
+    events.fast_expansion,
+    events.deceleration,
+    events.acceleration_in_clicks,
     conservations,
     constants,
 )
@@ -349,8 +349,6 @@ def verdicts(record: Record) -> dict[str, Any]:
 
 def gates(run: dict[str, Any]) -> dict[str, Any]:
     """Every gate's verdict with its numbers from the record alone, the decoder's line (the rows of the gates of the phenomena and their count by the verdict's kind, the count of SHOWN in Universe24), and the event lines of the gates' first SHOWN (events.first_shown)."""
-    from event_universe import events  # the events read the table, after it
-
     record = Record(run)
     read = [(row, row(record)) for row in TABLE]
     out = {key: found for _row, rows in read for key, found in rows.items()}
