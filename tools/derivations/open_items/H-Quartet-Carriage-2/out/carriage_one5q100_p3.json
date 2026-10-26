@@ -1,0 +1,1186 @@
+{
+ "record": "one5q100_60_p3.json",
+ "run_back": {
+  "intervals": 20,
+  "exact": 20
+ },
+ "births": 16,
+ "quartet credits": 123,
+ "lays": [
+  {
+   "node": [
+    2,
+    2,
+    2
+   ],
+   "line_pair": 3,
+   "width": 2,
+   "quanta": 100,
+   "amplitude": 367,
+   "share": 160685555811115061724600,
+   "unit": 1615924816158049488000
+  }
+ ],
+ "quartet pairs born": [],
+ "pairs taken back at the next close": [
+  0,
+  0
+ ],
+ "mergers taking the quartet row": [],
+ "axis sign kept, all quartet credits": [
+  123,
+  123
+ ],
+ "dominant axis kept, all quartet credits": [
+  123,
+  123
+ ],
+ "axis sign kept, at the lay's Node": [
+  5,
+  5
+ ],
+ "dominant axis kept, at the lay's Node": [
+  5,
+  5
+ ],
+ "credits at the lay's Node, intervals": [
+  8,
+  24,
+  32,
+  40,
+  59
+ ],
+ "first credits": [
+  {
+   "i": 4,
+   "node": [
+    1,
+    1,
+    2
+   ],
+   "levels_now": [
+    121,
+    -24,
+    0,
+    0,
+    73,
+    48,
+    0,
+    0
+   ],
+   "axial": [
+    -484,
+    -96,
+    30432
+   ],
+   "W": 29894
+  },
+  {
+   "i": 4,
+   "node": [
+    1,
+    2,
+    1
+   ],
+   "levels_now": [
+    123,
+    -24,
+    0,
+    0,
+    73,
+    49,
+    0,
+    0
+   ],
+   "axial": [
+    -96,
+    492,
+    31408
+   ],
+   "W": 30646
+  },
+  {
+   "i": 4,
+   "node": [
+    1,
+    2,
+    3
+   ],
+   "levels_now": [
+    122,
+    -26,
+    0,
+    0,
+    74,
+    48,
+    0,
+    0
+   ],
+   "axial": [
+    0,
+    0,
+    31120
+   ],
+   "W": 30296
+  },
+  {
+   "i": 4,
+   "node": [
+    1,
+    3,
+    2
+   ],
+   "levels_now": [
+    121,
+    -25,
+    0,
+    0,
+    73,
+    49,
+    0,
+    0
+   ],
+   "axial": [
+    584,
+    -384,
+    30528
+   ],
+   "W": 30032
+  },
+  {
+   "i": 4,
+   "node": [
+    2,
+    1,
+    1
+   ],
+   "levels_now": [
+    121,
+    -24,
+    0,
+    0,
+    72,
+    49,
+    0,
+    0
+   ],
+   "axial": [
+    484,
+    96,
+    30432
+   ],
+   "W": 29894
+  },
+  {
+   "i": 4,
+   "node": [
+    2,
+    1,
+    3
+   ],
+   "levels_now": [
+    123,
+    -27,
+    0,
+    0,
+    75,
+    48,
+    0,
+    0
+   ],
+   "axial": [
+    0,
+    0,
+    31716
+   ],
+   "W": 31050
+  }
+ ],
+ "last credits": [
+  {
+   "i": 59,
+   "node": [
+    3,
+    2,
+    1
+   ],
+   "levels_now": [
+    41,
+    12,
+    0,
+    0,
+    14,
+    27,
+    0,
+    0
+   ],
+   "axial": [
+    164,
+    -48,
+    3648
+   ],
+   "W": 2448
+  },
+  {
+   "i": 60,
+   "node": [
+    1,
+    2,
+    2
+   ],
+   "levels_now": [
+    16,
+    -62,
+    0,
+    0,
+    39,
+    -23,
+    0,
+    0
+   ],
+   "axial": [
+    0,
+    0,
+    8200
+   ],
+   "W": 7440
+  },
+  {
+   "i": 60,
+   "node": [
+    3,
+    3,
+    2
+   ],
+   "levels_now": [
+    -26,
+    -26,
+    0,
+    0,
+    -1,
+    -26,
+    0,
+    0
+   ],
+   "axial": [
+    -208,
+    0,
+    2700
+   ],
+   "W": 1826
+  }
+ ],
+ "Nodes credited": 19,
+ "turns between consecutive credits at one Node": [
+  {
+   "node": [
+    1,
+    1,
+    2
+   ],
+   "i": [
+    4,
+    13
+   ],
+   "intervals": 9,
+   "along": [
+    30432,
+    14640
+   ],
+   "across squared": [
+    243472,
+    117136
+   ],
+   "cross sign": [
+    1,
+    -1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    1,
+    1,
+    2
+   ],
+   "i": [
+    13,
+    19
+   ],
+   "intervals": 6,
+   "along": [
+    14640,
+    23160
+   ],
+   "across squared": [
+    117136,
+    185296
+   ],
+   "cross sign": [
+    -1,
+    1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    1,
+    1,
+    2
+   ],
+   "i": [
+    19,
+    32
+   ],
+   "intervals": 13,
+   "along": [
+    23160,
+    6088
+   ],
+   "across squared": [
+    185296,
+    243920
+   ],
+   "cross sign": [
+    -1,
+    -1,
+    -1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    6
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    1
+   ],
+   "i": [
+    4,
+    7
+   ],
+   "intervals": 3,
+   "along": [
+    31408,
+    28660
+   ],
+   "across squared": [
+    251280,
+    0
+   ],
+   "cross sign": [
+    1,
+    1,
+    0
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    1
+   ],
+   "i": [
+    7,
+    21
+   ],
+   "intervals": 14,
+   "along": [
+    28660,
+    8864
+   ],
+   "across squared": [
+    0,
+    0
+   ],
+   "cross sign": [
+    0,
+    0,
+    0
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    1
+   ],
+   "i": [
+    21,
+    26
+   ],
+   "intervals": 5,
+   "along": [
+    8864,
+    8204
+   ],
+   "across squared": [
+    0,
+    262784
+   ],
+   "cross sign": [
+    1,
+    1,
+    0
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    3
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    1
+   ],
+   "i": [
+    26,
+    33
+   ],
+   "intervals": 7,
+   "along": [
+    8204,
+    7296
+   ],
+   "across squared": [
+    262784,
+    58384
+   ],
+   "cross sign": [
+    -1,
+    -1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    3,
+    1
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    1
+   ],
+   "i": [
+    33,
+    40
+   ],
+   "intervals": 7,
+   "along": [
+    7296,
+    2552
+   ],
+   "across squared": [
+    58384,
+    185040
+   ],
+   "cross sign": [
+    -1,
+    1,
+    -1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    1,
+    28
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    1
+   ],
+   "i": [
+    40,
+    49
+   ],
+   "intervals": 9,
+   "along": [
+    2552,
+    2148
+   ],
+   "across squared": [
+    185040,
+    279040
+   ],
+   "cross sign": [
+    -1,
+    1,
+    -1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    28,
+    60
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    1
+   ],
+   "i": [
+    49,
+    59
+   ],
+   "intervals": 10,
+   "along": [
+    2148,
+    2112
+   ],
+   "across squared": [
+    279040,
+    84880
+   ],
+   "cross sign": [
+    1,
+    -1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    60,
+    19
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    3
+   ],
+   "i": [
+    4,
+    8
+   ],
+   "intervals": 4,
+   "along": [
+    31120,
+    34832
+   ],
+   "across squared": [
+    0,
+    278672
+   ],
+   "cross sign": [
+    1,
+    1,
+    0
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    3
+   ],
+   "i": [
+    8,
+    13
+   ],
+   "intervals": 5,
+   "along": [
+    34832,
+    26984
+   ],
+   "across squared": [
+    278672,
+    0
+   ],
+   "cross sign": [
+    -1,
+    -1,
+    0
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    3
+   ],
+   "i": [
+    13,
+    19
+   ],
+   "intervals": 6,
+   "along": [
+    26984,
+    13400
+   ],
+   "across squared": [
+    0,
+    536400
+   ],
+   "cross sign": [
+    1,
+    -1,
+    0
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    2
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    3
+   ],
+   "i": [
+    19,
+    25
+   ],
+   "intervals": 6,
+   "along": [
+    13400,
+    10488
+   ],
+   "across squared": [
+    536400,
+    672256
+   ],
+   "cross sign": [
+    1,
+    1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    2,
+    6
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    3
+   ],
+   "i": [
+    25,
+    32
+   ],
+   "intervals": 7,
+   "along": [
+    10488,
+    8392
+   ],
+   "across squared": [
+    672256,
+    336080
+   ],
+   "cross sign": [
+    -1,
+    1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    6,
+    4
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    3
+   ],
+   "i": [
+    32,
+    39
+   ],
+   "intervals": 7,
+   "along": [
+    8392,
+    4328
+   ],
+   "across squared": [
+    336080,
+    34640
+   ],
+   "cross sign": [
+    -1,
+    1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    4,
+    1
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    3
+   ],
+   "i": [
+    39,
+    48
+   ],
+   "intervals": 9,
+   "along": [
+    4328,
+    3544
+   ],
+   "across squared": [
+    34640,
+    28368
+   ],
+   "cross sign": [
+    1,
+    -1,
+    -1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    1,
+    2
+   ]
+  },
+  {
+   "node": [
+    1,
+    2,
+    3
+   ],
+   "i": [
+    48,
+    58
+   ],
+   "intervals": 10,
+   "along": [
+    3544,
+    2576
+   ],
+   "across squared": [
+    28368,
+    20624
+   ],
+   "cross sign": [
+    -1,
+    1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    2,
+    3
+   ]
+  },
+  {
+   "node": [
+    1,
+    3,
+    2
+   ],
+   "i": [
+    4,
+    9
+   ],
+   "intervals": 5,
+   "along": [
+    30528,
+    19860
+   ],
+   "across squared": [
+    488512,
+    1272064
+   ],
+   "cross sign": [
+    -1,
+    1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    3
+   ]
+  },
+  {
+   "node": [
+    1,
+    3,
+    2
+   ],
+   "i": [
+    9,
+    12
+   ],
+   "intervals": 3,
+   "along": [
+    19860,
+    20260
+   ],
+   "across squared": [
+    1272064,
+    1297664
+   ],
+   "cross sign": [
+    1,
+    1,
+    -1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    3,
+    3
+   ]
+  },
+  {
+   "node": [
+    1,
+    3,
+    2
+   ],
+   "i": [
+    12,
+    17
+   ],
+   "intervals": 5,
+   "along": [
+    20260,
+    8416
+   ],
+   "across squared": [
+    1297664,
+    134720
+   ],
+   "cross sign": [
+    -1,
+    -1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    3,
+    1
+   ]
+  },
+  {
+   "node": [
+    2,
+    1,
+    1
+   ],
+   "i": [
+    4,
+    12
+   ],
+   "intervals": 8,
+   "along": [
+    30432,
+    21760
+   ],
+   "across squared": [
+    243472,
+    0
+   ],
+   "cross sign": [
+    1,
+    -1,
+    0
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    2,
+    1,
+    1
+   ],
+   "i": [
+    12,
+    22
+   ],
+   "intervals": 10,
+   "along": [
+    21760,
+    11136
+   ],
+   "across squared": [
+    0,
+    89104
+   ],
+   "cross sign": [
+    1,
+    -1,
+    0
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    2,
+    1,
+    1
+   ],
+   "i": [
+    22,
+    28
+   ],
+   "intervals": 6,
+   "along": [
+    11136,
+    6188
+   ],
+   "across squared": [
+    89104,
+    198272
+   ],
+   "cross sign": [
+    1,
+    -1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    5
+   ]
+  },
+  {
+   "node": [
+    2,
+    1,
+    1
+   ],
+   "i": [
+    28,
+    36
+   ],
+   "intervals": 8,
+   "along": [
+    6188,
+    3360
+   ],
+   "across squared": [
+    198272,
+    270400
+   ],
+   "cross sign": [
+    -1,
+    -1,
+    -1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    5,
+    23
+   ]
+  },
+  {
+   "node": [
+    2,
+    1,
+    1
+   ],
+   "i": [
+    36,
+    44
+   ],
+   "intervals": 8,
+   "along": [
+    3360,
+    1868
+   ],
+   "across squared": [
+    270400,
+    29952
+   ],
+   "cross sign": [
+    1,
+    1,
+    1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    23,
+    8
+   ]
+  },
+  {
+   "node": [
+    2,
+    1,
+    1
+   ],
+   "i": [
+    44,
+    54
+   ],
+   "intervals": 10,
+   "along": [
+    1868,
+    2496
+   ],
+   "across squared": [
+    29952,
+    80128
+   ],
+   "cross sign": [
+    1,
+    -1,
+    -1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    8,
+    12
+   ]
+  },
+  {
+   "node": [
+    2,
+    1,
+    3
+   ],
+   "i": [
+    4,
+    12
+   ],
+   "intervals": 8,
+   "along": [
+    31716,
+    31992
+   ],
+   "across squared": [
+    0,
+    255952
+   ],
+   "cross sign": [
+    -1,
+    1,
+    0
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    2,
+    1,
+    3
+   ],
+   "i": [
+    12,
+    18
+   ],
+   "intervals": 6,
+   "along": [
+    31992,
+    24416
+   ],
+   "across squared": [
+    255952,
+    195344
+   ],
+   "cross sign": [
+    1,
+    1,
+    -1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  },
+  {
+   "node": [
+    2,
+    1,
+    3
+   ],
+   "i": [
+    18,
+    24
+   ],
+   "intervals": 6,
+   "along": [
+    24416,
+    14920
+   ],
+   "across squared": [
+    195344,
+    119376
+   ],
+   "cross sign": [
+    1,
+    1,
+    -1
+   ],
+   "dot sign": 1,
+   "across over along, thousandths": [
+    0,
+    0
+   ]
+  }
+ ],
+ "turns: dot sign counts": {
+  "-1": 0,
+  "0": 0,
+  "1": 104
+ },
+ "turns: cross sign on the lay's axis counts": {
+  "-1": 29,
+  "0": 27,
+  "1": 48
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "record": "/dev/shm/tmp/qc1/hole5_60.json",
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "births": 27,
+ "quartet credits": 280,
+ "lays": [],
+ "quartet pairs born": [
+  {
+   "birth i": 11,
+   "minus": [
+    1,
+    2,
+    3
+   ],
+   "plus": [
+    2,
+    2,
+    3
+   ],
+   "W_children": [
+    -72000,
+    72000
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 4
+  },
+  {
+   "birth i": 12,
+   "minus": [
+    3,
+    4,
+    1
+   ],
+   "plus": [
+    4,
+    4,
+    1
+   ],
+   "W_children": [
+    -72000,
+    72000
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 6
+  },
+  {
+   "birth i": 13,
+   "minus": [
+    4,
+    2,
+    4
+   ],
+   "plus": [
+    4,
+    3,
+    4
+   ],
+   "W_children": [
+    -72000,
+    72000
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 4
+  }
+ ],
+ "pairs taken back at the next close": [
+  3,
+  3
+ ],
+ "mergers taking the quartet row": [
+  {
+   "i": 12,
+   "ends": [
+    [
+     1,
+     2,
+     3
+    ],
+    [
+     2,
+     2,
+     3
+    ]
+   ]
+  },
+  {
+   "i": 13,
+   "ends": [
+    [
+     3,
+     4,
+     1
+    ],
+    [
+     4,
+     4,
+     1
+    ]
+   ]
+  },
+  {
+   "i": 14,
+   "ends": [
+    [
+     4,
+     2,
+     4
+    ],
+    [
+     4,
+     3,
+     4
+    ]
+   ]
+  }
+ ]
+}

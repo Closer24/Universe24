@@ -1,0 +1,21 @@
+{"record": "/dev/shm/tmp/qe1/chiral3_p2.json", "births": 7, "credits": 980, "run_back": {"intervals": 10, "exact": 10}, "births by the children's shape": {"2": 6, "8": 1}, "W of the plane children (sum per birth)": {"0": 4, "-3744": 1, "469287": 1}, "axis sign kept, summed": [0, 0], "dominant axis kept, summed": [0, 0], "pairs' axes summed to 0": 1, "pairs' W summed to 0": 1, "quartet pairs clicked at both ends": 0, "plane pairs clicked at both ends": 4}
+{"birth i": 9, "node": [1, 1, 2], "sense": -1, "born axis": 0, "side": -1, "v.G.v": 4, "W": -72000, "W over T div 2": [-4, 0], "axial sign at birth": [1, 0, 0], "axial wronskian over W": [1, 0, 0], "stood at nothing": true, "credits on the track": 0, "axis sign kept": 0, "dominant axis kept": 0}
+{"birth i": 9, "node": [0, 1, 2], "sense": 1, "born axis": 0, "side": -1, "v.G.v": 4, "W": 72000, "W over T div 2": [4, 0], "axial sign at birth": [-1, 0, 0], "axial wronskian over W": [-1, 0, 0], "stood at nothing": true, "credits on the track": 0, "axis sign kept": 0, "dominant axis kept": 0}
+setting=turned outcome=axial on the twin Link S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=turned outcome=axial on the detector's axis S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=turned outcome=sense (control) S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=take_sign outcome=axial on the twin Link S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=take_sign outcome=axial on the detector's axis S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=take_sign outcome=sense (control) S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=line_named outcome=axial on the twin Link S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=line_named outcome=axial on the detector's axis S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=line_named outcome=sense (control) S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=sign_level outcome=axial on the twin Link S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=sign_level outcome=axial on the detector's axis S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=sign_level outcome=sense (control) S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=proper_parity outcome=axial on the twin Link S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=proper_parity outcome=axial on the detector's axis S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=proper_parity outcome=sense (control) S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=closes_parity outcome=axial on the twin Link S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=closes_parity outcome=axial on the detector's axis S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0
+setting=closes_parity outcome=sense (control) S None an empty setting cell E {'-1,-1': [0, 0], '-1,1': [0, 0], '1,-1': [0, 0], '1,1': [0, 0]} out 0

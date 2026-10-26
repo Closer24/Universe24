@@ -1,0 +1,168 @@
+{
+ "record": "one5_60_lift3.json",
+ "run_back": {
+  "intervals": 20,
+  "exact": 20
+ },
+ "births": 25,
+ "quartet credits": 0,
+ "lays": [
+  {
+   "node": [
+    2,
+    2,
+    2
+   ],
+   "line_pair": 3,
+   "width": 2,
+   "quanta": 1,
+   "amplitude": 38,
+   "share": 1604714375224551881100,
+   "unit": 1613701501183721088000
+  }
+ ],
+ "quartet pairs born": [
+  {
+   "birth i": 7,
+   "minus": [
+    1,
+    0,
+    4
+   ],
+   "plus": [
+    1,
+    0,
+    0
+   ],
+   "W_children": [
+    -72000,
+    72000
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 0
+  },
+  {
+   "birth i": 9,
+   "minus": [
+    0,
+    1,
+    4
+   ],
+   "plus": [
+    0,
+    1,
+    0
+   ],
+   "W_children": [
+    -72000,
+    72000
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 0
+  },
+  {
+   "birth i": 15,
+   "minus": [
+    4,
+    4,
+    1
+   ],
+   "plus": [
+    4,
+    0,
+    1
+   ],
+   "W_children": [
+    -72000,
+    72000
+   ],
+   "taken back by the merger": true,
+   "delay": 1,
+   "credits at the ends after the birth": 0
+  }
+ ],
+ "pairs taken back at the next close": [
+  3,
+  3
+ ],
+ "mergers taking the quartet row": [
+  {
+   "i": 8,
+   "ends": [
+    [
+     1,
+     0,
+     4
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ]
+  },
+  {
+   "i": 10,
+   "ends": [
+    [
+     0,
+     1,
+     4
+    ],
+    [
+     0,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "i": 16,
+   "ends": [
+    [
+     4,
+     4,
+     1
+    ],
+    [
+     4,
+     0,
+     1
+    ]
+   ]
+  }
+ ],
+ "axis sign kept, all quartet credits": [
+  0,
+  0
+ ],
+ "dominant axis kept, all quartet credits": [
+  0,
+  0
+ ],
+ "axis sign kept, at the lay's Node": [
+  0,
+  0
+ ],
+ "dominant axis kept, at the lay's Node": [
+  0,
+  0
+ ],
+ "credits at the lay's Node, intervals": [],
+ "first credits": [],
+ "last credits": [],
+ "Nodes credited": 0,
+ "turns between consecutive credits at one Node": [],
+ "turns: dot sign counts": {
+  "-1": 0,
+  "0": 0,
+  "1": 0
+ },
+ "turns: cross sign on the lay's axis counts": {
+  "-1": 0,
+  "0": 0,
+  "1": 0
+ }
+}
