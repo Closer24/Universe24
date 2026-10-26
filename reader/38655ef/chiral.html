@@ -101,6 +101,7 @@ function stretch(X) { return Math.max(length(X) - 1, 0); }
 function meanStretch(line) { let sum = 0; for (const X of line.X) sum += stretch(X); return sum / line.X.length; }
 const stretches = lines.map(meanStretch), most = Math.max(...stretches, 1e-9), full = canvas.width / (c + 1.5), touch = 16 / full;
 const bangs = D.eras.bangs || [lines[0].i], tops = D.eras.tops || [], spans = D.eras["spans (from, to, the gate, its label)"] || [];  // the reading's eras row: the bangs, the tops, the spans
+function bangName(b) { return (bangs.indexOf(b) + 1) + " of " + bangs.length; }  // the bang's number among the record's bangs
 let spots = [];
 const firstAt = new Map(); for (const e of D.events) if (e.i !== null) firstAt.set(e.gate, e.i);
 const boardRows = new Set(D.board);
@@ -209,10 +210,15 @@ function draw() {
   const lens = line.X.map(length), lenMin = Math.min(...lens), lenSpan = Math.max(Math.max(...lens) - lenMin, 1e-9);
   lay(line);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) {
-    const age = (line.i - b) / step, reach = (0.08 + 0.05 * age) * canvas.width, cx = canvas.width / 2, cy = canvas.height / 2;
-    ctx.strokeStyle = "#fde68a"; ctx.globalAlpha = Math.max(0, 1 - age / 12); ctx.lineWidth = 2;
-    for (let r = 0; r < 24; r++) { const ang = r * Math.PI / 12 + age * 0.1, inner = reach * (0.35 + 0.15 * (r % 2)); ctx.beginPath(); ctx.moveTo(cx + Math.cos(ang) * inner, cy + Math.sin(ang) * inner); ctx.lineTo(cx + Math.cos(ang) * reach, cy + Math.sin(ang) * reach); ctx.stroke(); }
+  for (const b of bangs) if (line.i >= b && line.i < b + 16 * step) {
+    const age = (line.i - b) / step, fade = Math.max(0, 1 - age / 16), cx = canvas.width / 2, cy = canvas.height / 2;
+    const reach = (0.12 + 0.03 * age) * canvas.width, front = (0.06 + 0.045 * age) * canvas.width;
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, reach);
+    glow.addColorStop(0, "rgba(255, 251, 235, " + (0.95 * fade) + ")"); glow.addColorStop(0.3, "rgba(253, 230, 138, " + (0.6 * fade) + ")"); glow.addColorStop(1, "rgba(245, 158, 11, 0)");
+    ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(cx, cy, reach, 0, 2 * Math.PI); ctx.fill();
+    ctx.strokeStyle = "#fde68a"; ctx.globalAlpha = fade; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(cx, cy, front, 0, 2 * Math.PI); ctx.stroke();
+    ctx.lineWidth = 2;
+    for (let r = 0; r < 24; r++) { const ang = r * Math.PI / 12 + age * 0.1, inner = front * (0.6 + 0.2 * (r % 2)), outer = front + reach * (0.5 + 0.3 * (r % 2)); ctx.beginPath(); ctx.moveTo(cx + Math.cos(ang) * inner, cy + Math.sin(ang) * inner); ctx.lineTo(cx + Math.cos(ang) * outer, cy + Math.sin(ang) * outer); ctx.stroke(); }
     ctx.globalAlpha = 1;
   }
   ctx.lineCap = "round";
@@ -292,9 +298,9 @@ function draw() {
     for (let moved = true; moved;) { moved = false; for (const q of placed) if (Math.abs(q[0] - x) < 220 && Math.abs(q[1] - y) < 42 && q[1] + 42 > y) { y = q[1] + 42; moved = true; } }
     placed.push([x, y]); return y;
   }
-  for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) {
+  for (const b of bangs) if (line.i >= b && line.i < b + 16 * step) {
     const div = document.createElement("div"); div.className = "label bang";
-    div.innerHTML = "Big Bang<small>the board at its zero and rising, interval " + b + "</small>";
+    div.innerHTML = "Big Bang " + bangName(b) + "<small>the board at its zero and rising, interval " + b + "</small>";
     div.style.left = "16px"; div.style.top = "16px";
     labels.appendChild(div);
   }
@@ -317,7 +323,7 @@ function draw() {
   cursor.style.left = (100 * (line.i - 1) / Math.max(N - 1, 1)) + "%";
   panel(line.i);
   now.innerHTML = "";
-  for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) { const s = document.createElement("span"); s.className = "era"; s.textContent = "Big Bang at " + b; now.appendChild(s); }
+  for (const b of bangs) if (line.i >= b && line.i < b + 16 * step) { const s = document.createElement("span"); s.className = "era"; s.textContent = "Big Bang " + bangName(b) + " at " + b; now.appendChild(s); }
   for (const e of D.events.filter(e => e.i !== null && e.i <= line.i && e.i > line.i - 60 * step).slice(-5)) { const s = document.createElement("span"); s.style.setProperty("--c", colour(e.gate)); s.textContent = e.label + " (" + e.i + ")"; now.appendChild(s); }
   let up = 0, down = 0; for (let i = 0; i < line.X.length; i++) { if (line.X[i] > before.X[i]) up++; else if (line.X[i] < before.X[i]) down++; }
   const course = t === 1 ? "the seed" : up === line.X.length ? "every clock's volume rising" : down === line.X.length ? "every clock's volume falling" : up + " rising, " + down + " falling, " + (line.X.length - up - down) + " at rest";
@@ -338,7 +344,7 @@ for (const [from, to, g, label] of spans) {
 for (const e of D.events) if (e.i !== null) {
   const d = document.createElement("div"); d.className = "tick"; d.style.left = (100 * (e.i - 1) / Math.max(N - 1, 1)) + "%"; d.title = e.label + " at " + e.i + ": " + e.numbers; bar.appendChild(d);
 }
-for (const b of bangs) { const d = document.createElement("div"); d.className = "tick"; d.style.left = (100 * (b - 1) / Math.max(N - 1, 1)) + "%"; d.style.background = "#f59e0b"; d.title = "Big Bang at " + b; bar.appendChild(d); }
+for (const b of bangs) { const d = document.createElement("div"); d.className = "tick"; d.style.left = (100 * (b - 1) / Math.max(N - 1, 1)) + "%"; d.style.background = "#f59e0b"; d.title = "Big Bang " + bangName(b) + " at " + b; bar.appendChild(d); }
 for (const i of D.births) { const d = document.createElement("div"); d.className = "birth"; d.style.left = (100 * (i - 1) / Math.max(N - 1, 1)) + "%"; d.title = "a birth at " + i; bar.appendChild(d); }
 bar.addEventListener("click", ev => { const r = bar.getBoundingClientRect(); t = seek(1 + Math.round((N - 1) * (ev.clientX - r.left) / r.width)); playing = false; draw(); });
 document.getElementById("play").addEventListener("click", () => { playing = !playing; });

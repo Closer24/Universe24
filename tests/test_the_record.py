@@ -128,6 +128,13 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
         e["i"] for e in run["log"] if e["event"] in ("birth", "credit")
     )
     assert all(len(e["label"].split()) <= 6 for e in events)
+    rows = {k[:2]: v for line in reading_of(name) for k, v in line.items() if k[:2] in ("1b", "1c")}
+    eras = next(line["the eras"] for line in reading_of(name) if "the eras" in line)
+    returns = int(rows["1c"]["cause"].split()[0]) if rows["1c"]["kind"] == "SHOWN" else 0
+    tops = int(rows["1b"]["cause"].split(" tops")[0].split()[-1]) if rows["1b"]["kind"] == "SHOWN" else 0
+    assert (
+        len(eras["bangs"]) == 1 + returns and len(eras["tops"]) == tops
+    )  # every one, beyond the eight listed
 
 
 def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_path: Path) -> None:

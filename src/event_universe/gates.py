@@ -368,7 +368,9 @@ def gates(run: dict[str, Any]) -> dict[str, Any]:
         ],
     }
     out["events"] = events.first_shown(record, read)
-    out["the eras"] = events.eras_of(out, record.intervals)
+    out["the eras"] = events.eras_of(
+        out, record.intervals, board.tops_of(record), board.exact_of(record)
+    )
     return out
 
 

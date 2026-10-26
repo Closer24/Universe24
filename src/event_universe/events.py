@@ -94,13 +94,8 @@ def phenomenon_of(key: str) -> str:
     return names_of(key)[1]
 
 
-def eras_of(out: dict[str, Any], intervals: int) -> dict[str, Any]:
-    """The eras row from the rows already read: the bangs (the seed's and one after every exact return of row 1c), the tops of row 1b, and the spans from each bang, from the era of matter (4), the acceleration (5) and the bang recurring (46) at the interval each first shows, each span to the next's start."""
-    rows = {k.split()[0]: v for k, v in out.items() if isinstance(v, dict)}
-    tops: list[int] = next((v for n, v in rows.get("1b", {}).items() if n.startswith("tops")), [])
-    returns: list[int] = next(
-        (v for n, v in rows.get("1c", {}).items() if n.startswith("exact returns")), []
-    )
+def eras_of(out: dict[str, Any], intervals: int, tops: list[int], returns: list[int]) -> dict[str, Any]:
+    """The eras row from the rows already read and the board's whole lists (the tops of row 1b and the exact returns of row 1c, every one, where the rows list the first eight alone): the bangs (the seed's and one after every exact return), the tops, and the spans from each bang, from the era of matter (4), the acceleration (5) and the bang recurring (46) at the interval each first shows, each span to the next's start."""
     bangs = [1] + [int(i) + 1 for i in returns]
     starts = [(b, "1", label_of("1")) for b in bangs] + [
         (e["i"], e["gate"].split()[0], e["label"])
