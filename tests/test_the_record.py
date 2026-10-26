@@ -8,8 +8,8 @@ from typing import Any
 
 import pytest
 
-from event_universe import symmetries
-from event_universe.core import rule3
+from event_universe import board, symmetries
+from event_universe.core import paces, rule3
 from event_universe.core.ports import AXES
 from event_universe.decoder import Record
 from event_universe.events import NAMES
@@ -296,6 +296,23 @@ def test_the_momentum_booked_on_the_link_is_an_identity_on_every_booking() -> No
     for entry in rec.takes:
         del entry["recoil"]
     assert symmetries.momentum_booked(Record(run))[gate]["verdict"].startswith("NOT READ")
+
+
+def test_the_horizon_is_read_from_the_node_lines_not_the_rows() -> None:
+    """Gate 14 on the hole record with one Node frozen on one Node line by hand (the Boss's 6416277638): the rows, one at every twelfth interval, keep their maximum below the frozen content while the Node line carries it, and the gate reads the horizon as silence from the Node lines; NOT REACHED on the record as committed."""
+    run = loaded("hole")
+    frozen = paces.frozen_content(int(run["gamma"]))
+    line = run["nodes"][len(run["nodes"]) // 2]
+    at = len(line["content"]) // 2
+    line["content"][at], line["frozen"] = frozen, [at]
+    found = board.horizon(Record(run))["14 the horizon"]
+    assert (
+        found["max content in the rows (one row at every twelfth interval)"]
+        < frozen
+        <= found["max content in the Node lines"]
+    )
+    assert found["Nodes frozen"] == 1 and found["verdict"].startswith("SHOWN as silence")
+    assert board.horizon(Record(loaded("hole")))["14 the horizon"]["verdict"] == "NOT REACHED"
 
 
 def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_path: Path) -> None:

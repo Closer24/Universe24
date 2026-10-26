@@ -260,10 +260,11 @@ def era(record: Record) -> dict[str, Any]:
 
 
 def horizon(record: Record) -> dict[str, Any]:
-    """Gate 14: the frozen content against the rows' max content; a credit at a frozen Node would deny the horizon."""
+    """Gate 14: the frozen content against the Node lines' max content (the Boss's 6416277638: the reader's rows stand one at every twelfth interval, so a horizon shorter than a twelfth of the run was blind to the rows' maximum while the freeze is in the Node lines; the rows' maximum named beside); a credit at a frozen Node would deny the horizon."""
     frozen = paces.frozen_content(record.gamma)
     at_frozen = [c for c in record.credits if c["content"] >= frozen]
-    cmax = max((int(r["content min/mean/max"][MAX]) for r in record.rows), default=0)
+    rows_max = max((int(r["content min/mean/max"][MAX]) for r in record.rows), default=0)
+    cmax = max((int(x) for line in record.nodes for x in line["content"]), default=rows_max)
     verdict = (
         "SHOWN as silence (no credit at a frozen Node)"
         if cmax >= frozen and not at_frozen
@@ -274,7 +275,9 @@ def horizon(record: Record) -> dict[str, Any]:
     return {
         "14 the horizon": {
             "frozen content": frozen,
-            "max content in the rows": cmax,
+            "max content in the Node lines": cmax,
+            "max content in the rows (one row at every twelfth interval)": rows_max,
+            "Nodes frozen": len(frozen_first),
             "credits at frozen Nodes": len(at_frozen),
             "at": first,
             "verdict": verdict,
