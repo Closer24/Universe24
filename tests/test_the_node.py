@@ -249,30 +249,6 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
     assert run_back_exact(kept, 100) == 100
 
 
-def test_a_frozen_node_is_released_by_the_turn_of_its_time() -> None:
-    """FR-S1 (the owner's word of 2026-10-26, 03:41 UTC, through the Boss, 6407706168; The-Frozen-Node-Release_COMPARISON.md section 3): a Node that rose into the frozen content is turned at its frozen interval by the swap's own trigger on its restored line (X0 < X1 = X2), its now and before exchanged, so at the next interval its content stands below the frozen content, unfrozen, its clock running; no Node frozen at two intervals in a row; the run back exact. The 3-cube centre fed to the frozen content 3,793 with its before at the content 3,700, 20 intervals: frozen at the first interval's start and turned at its end with its clock standing, below the horizon with its clock running at the second, the width held, the run back exact 20 of 20."""
-    node = node_of("world_node.json")
-    frozen = paces.frozen_content(node.gamma)
-    carrier = node.row(CARRIER).lines[0]
-    carrier.now[CENTRE], carrier.before[CENTRE] = level_at(node, frozen), level_at(node, 3700)
-    node.ride_walls()
-    light = node.emitter().lines[0]
-    light.now[CENTRE] = 4 * int(light.now[CENTRE])
-    proper, kept, was = int(node.proper[CENTRE]), copy.deepcopy(node), False
-    for _ in range(INTERVALS):
-        now = bool(np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object)[CENTRE] == 0)
-        assert not (was and now)
-        was = now
-        node.step()
-        if node.interval == 1:
-            assert now and node.turned[CENTRE] and int(node.proper[CENTRE]) == proper
-            assert int(node.content()[CENTRE]) < frozen
-        if node.interval == 2:
-            assert not now and int(node.proper[CENTRE]) > proper
-    assert node.max_transient <= 128 and node.census()[1] <= 128
-    assert run_back_exact(kept, INTERVALS) == INTERVALS
-
-
 def shares_of(node: Node) -> tuple[Any, Any, Any]:
     """The gap-0 line's share in the carrier's unit, and by hand at the frame's weight (X set to Gamma^3 div p_i^2) and at the vacuum's (X set to Gamma)."""
     gap0 = node.emitter()

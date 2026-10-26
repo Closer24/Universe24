@@ -202,7 +202,7 @@ class Interval:
             self.kicked[k] = p_other
 
     def division(self) -> None:
-        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms (the file's trace weight) den Gamma^2 - trace p_0^2) p_0 on its time line and, times p_0^2 on its nine axis lines by the position of their reading, the traceless stress, the records' count flux and the shears (Y-S1, Y-S3; the carrier's act node.act, the former `carried` by this name); every riding line's one carried division at the mean wall of the carrier's two levels at its end times the row's scale, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and after the step kept for the close; the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act but the swap changes any integer of a frozen Node's state in either direction; backward a Node both frozen and turned is restored to the pre-state the exchange returned (FR-S1)."""
+        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms (the file's trace weight) den Gamma^2 - trace p_0^2) p_0 on its time line and, times p_0^2 on its nine axis lines by the position of their reading, the traceless stress, the records' count flux and the shears (Y-S1, Y-S3; the carrier's act node.act, the former `carried` by this name); every riding line's one carried division at the mean wall of the carrier's two levels at its end times the row's scale, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and after the step kept for the close; the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act changes any integer of a frozen Node's state in either direction."""
         node, carrier = self.node, self.carrier
         k = self.where[id(carrier)]
         p02 = self.p0 * self.p0
@@ -238,13 +238,7 @@ class Interval:
         node.set_rows(self.out)
         if self.direction == 1:
             self.lays()
-        if self.direction == -1 and self.kept is not None:
-            node.restore(
-                node.all_lines(), [line for row in self.kept for line in row], self.frozen & self.top
-            )
-        node.restore(
-            node.all_lines(), [line for row in self.held for line in row], self.frozen & ~self.top
-        )
+        node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen)
 
     def lays(self) -> None:
         """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.odd_rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`); the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
@@ -260,8 +254,8 @@ class Interval:
                 node.write(line, n, self.direction)
 
     def swap(self) -> None:
-        """(4) The swap at the top and the floor (node.swap; the frozen Node released by its own trigger, FR-S1): the weak maximum of the carrier's three levels, the held before, the held now and the now after the lays, or an outer one below the floor; the turned Node ends the interval at its held pre-state, exchanged and complemented."""
-        self.top = self.node.swap(self.held)
+        """(4) The swap at the top and the floor (node.swap; a frozen Node never, BH-S1): the weak maximum of the carrier's three levels, the held before, the held now and the now after the lays, or an outer one below the floor; the turned Node ends the interval at its held pre-state, exchanged and complemented."""
+        self.top = self.node.swap(self.held, self.frozen)
 
     def close(self) -> None:
         """(5) The close (close.click) after the swap, the frame pushed for the run back: the turned Nodes, the counters as they stood before the click (the swap changes none), the log's length and the frozen mask."""

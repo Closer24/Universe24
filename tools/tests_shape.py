@@ -171,11 +171,6 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "BH-S1 (2026-10-25, the owner's word through the Boss, 6398593790: the test under 15 s beside the frozen Node's): the 3-cube centre fed to the frozen content for 100 intervals, "
         "its lines and proper count unchanged, the twelve factors 0, no click, the frozen count 1, the width held, the run back exact 100 of 100",
     ),
-    "tests/test_the_node.py::test_a_frozen_node_is_released_by_the_turn_of_its_time": (
-        20,
-        "FR-S1 (2026-10-26, the owner's word of 03:41 UTC through the Boss, 6407706168: the test under 3 s beside BH-S1's): the 3-cube centre fed to the frozen content with its before below it, "
-        "frozen and turned at the first interval, released with its clock running at the second, no Node frozen twice in a row, the width held, the run back exact 20 of 20",
-    ),
     "tests/test_rule3.py::test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd": (
         19,
         "the one rule of the remainder (2026-10-25, the owner's word through the Boss, 6398455072: the identities as a test under 15 s): the mirror once per reversal and the identity for an even count, "
