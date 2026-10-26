@@ -40,6 +40,10 @@ WORDS = (  # the three acts in plain words, the law's and no record's
         "A frozen Node is released by the turn of its own time: at the top, where every Node turns at once, the board exchanges its now and its before, and the frozen set empties. The board's volumes then fall back the way they rose.",
     ),
     (
+        "what the one moment's mend found",
+        "Two rows of the gates, families forming (8) and the uncertainty floor (16), once read a field of the credit's frame that the algebra does not fix: the state the exchange at a turn replaced, which the record had logged as if it were the step's output. Read on the levels the law fixes, both rows read NOT SHOWN on the records that showed them, so their former verdicts were never nature's rows; the reader reads what the algebra fixes and nothing else (the owner's ruling of 2026-10-26, 22:0x UTC).",
+    ),
+    (
         "the return and the bang",
         "The board returns when every Node's volume is back at the resolution it stood at before the seed was laid, or when the whole board stands again at the seed's own first state. Each return is a bang: the board at its zero, expanding again. A record with two returns holds three bangs, the seed's own and one at each return.",
     ),
