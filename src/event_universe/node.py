@@ -96,7 +96,8 @@ class Node:
         self.start_frames: list[Any] = []
         self.start_phases: list[tuple[Any, Any]] = []
         self.start_odd: list[Any] = []
-        self.stepped: list[list[Line]] = []
+        self.before_swap: list[list[Line]] = []
+        self.start_lines: list[list[Line]] = []
         self.lattices: dict[tuple[int, int, tuple[int, ...]], int] = {}
         self.drawn: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
         self.rotations: dict[tuple[int, int], int] = {}
@@ -120,7 +121,7 @@ class Node:
             if r.wall is None and r.shape != CARRIER:
                 scaled = wall * readings.scale(r.shape, self.gamma)
                 for line in r.lines:
-                    line.wall, line.rem = scaled, half(scaled)
+                    line.wall, line.rem = scaled, acts.born(scaled)
 
     def node_of(self, xyz: Any) -> tuple[int, ...]:
         """A Node named by the world file: three integers on the board; a Node off the board is refused by name."""

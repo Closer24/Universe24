@@ -96,7 +96,7 @@ class Toy(Node):
                 if r.wall is None and r.shape != CARRIER:
                     wall = self.w * readings.scale(r.shape, self.gamma)
                     for line in r.lines:
-                        line.wall, line.rem = wall, zeros(self.shape) + half(wall)
+                        line.wall, line.rem = wall, zeros(self.shape) + acts.born(wall)
         self.held_lines: list[int] = []
         for h in self.control.get("held_potential", []):
             k, at = int(h["line"]), self.node_of(h["at"])
@@ -319,7 +319,7 @@ class Toy(Node):
                     laid = out[k][0].now - levels[0]
                     self.counts["laid"] += int(sum(abs(int(x)) for x in laid.reshape(-1)))
                     self.counts["laid_nodes"] += int(sum(1 for x in laid.reshape(-1) if int(x) != 0))
-        self.stepped = stepped
+        self.before_swap = stepped
         self.set_rows(out)
         if direction == -1:
             return

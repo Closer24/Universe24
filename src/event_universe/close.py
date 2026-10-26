@@ -1,4 +1,4 @@
-"""The close, the Node's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every row's rule, the gap-0 plane's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`: every Link once from its +a end, both ends holding a whole quantum of the record, the + child at the end the record's current flows into where the twist is right-handed, the conjugate pair's selector for a record with a gap, the one-Link read of a number at that end), the lays refused by name (`refuse`), the births taken and laid (`births`: the birth's one take per Node from the gap-0 row, the merger's one take per end from the taken row, SL-S2, every take the one act at a list of ends, merger.takes, CR-S2), the bodies' closing (bodies.py); the lay, the exact take and the momentum they book; the close undone from the log at the direction -1 (`click`)."""
+"""The close, the Node's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every row's rule, the gap-0 plane's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`: every Link once from its +a end, both ends holding a whole quantum of the record, the + child at the end the record's current flows into where the twist is right-handed, the conjugate pair's selector for a record with a gap, the one-Link read of a number at that end), the lays refused by name (`refuse`), the births taken and laid (`births`: the birth's one take per Node from the gap-0 row, the merger's one take per end from the taken row, SL-S2, every take the one act at a list of ends, merger.takes, CR-S2), the bodies' closing (bodies.py); the lay, the exact take and the momentum they book; the close undone from the log at the direction -1 (`click`). The close's one moment (CL-S2, the owner's word of 2026-10-26, 22:0x UTC by the Boss's clock, the two blind hands' cut): every reading of a record the close LOGS is read at the record's levels at the interval's start (`plane_starts`, kept on the Node as `start_lines`), the sense a credit carries, the levels a credit's frame shows and the momentum a take books at each of its ends, with the cross term of a merger's two moves booked once at the meeting's own Node; the readings the close ACTS on keep their own moment by name, the share's fall and the exact count at a take and the levels a merger takes whole, read on the board the take writes, since a take sized on a level the board no longer holds breaks the law's width; the frame's level before the swap is the one record of the state the swap replaced, read at the turned Nodes alone."""
 
 from __future__ import annotations
 
@@ -140,7 +140,7 @@ def births(
                     into.append(read_number(node, at, reads, unit))
                     return into[-1]
 
-                got = takes(node, ends, rule, 1, rec, draw, shares)
+                got = takes(node, ends, rule, 1, rec, draw, shares, at)
                 if got is None:
                     continue
                 taken.append((at, rec, [kid._replace(room=drawn[-1][1])], summed(got)))
@@ -168,14 +168,19 @@ def children(
     c: Any,
     factors: tuple[Any, ...],
 ) -> set[tuple[int, ...]]:
-    """One take's children laid by the one lay act (merger.children_laid: the charged children at the charge T div 2, a merger's light children as the exact take at -1, merger.light_levels, MG-S1), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last), a merger's two ends' takes under `takes` and its lays under `exact_lay`. Returns the Nodes touched."""
+    """One take's children laid by the one lay act (merger.children_laid: the charged children at the charge T div 2, a merger's light children as the exact take at -1, merger.light_levels, MG-S1, each end's wall found by its Node and not by its place in the take's list, so the lay is order-free under the ends' naming, the comparison's bug of close.py:166-169, CL-S2), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last), a merger's two ends' takes under `takes` and its lays under `exact_lay`. Returns the Nodes touched."""
     touched = {at}
     for _at, s, minus, plus, room, _rec in kids:
         exact: list[list[int] | None] = []
         row = node.records()[s]
         assert row.pair is not None
         if "takes" in take:
-            walls = dict(zip((-1, 1), (t["booked"] for t in take["takes"]), strict=True))
+            walls = {
+                sense: t["booked"]
+                for t in take["takes"]
+                for sense, where in ((-1, minus), (1, plus))
+                if t["node"] == list(where)
+            }
             levels_of = light_levels(node, s, walls, readings.rule(node, row.pair, c, factors), exact)
         else:
 
@@ -201,7 +206,7 @@ def click(
     direction: int = 1,
     frame: dict[str, Any] | None = None,
 ) -> None:
-    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule in the carrier's unit, PM-S1), the Link close of every record alike (SL-S1), the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame in the reverse order of its lines: the lays removed, the taken line restored at every take's Node (`taken_line`, CS4-S2; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed), the take's remainder and the readings' counters restored (RW-S1: one function with the direction, the former `unclick` kept by name). `plane_starts` the records' lines at the interval's start, `held` every row's."""
+    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule in the carrier's unit, PM-S1), the Link close of every record alike (SL-S1), the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame in the reverse order of its lines: the lays removed, a merger's cross term unbooked at the meeting's Node, the taken line moved back by the take's own count at every take's Node (`taken_line`, CS4-S2; the former restore to the level that was, which read a line another lay of the same close had moved and undid that lay twice, struck 2026-10-26 under CL-S2's run back on the fed horizon world; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed), the take's remainder, the closes at every end and the readings' counters restored (a merger's ends count their close back, left uncounted by the former undo and met by the run back once the state's counters are compared, 2026-10-26) (RW-S1: one function with the direction, the former `unclick` kept by name). `plane_starts` the records' lines at the interval's start, `held` every row's."""
     if direction == -1:
         assert frame is not None
         rec0 = node.records().index(node.emitter())
@@ -225,6 +230,9 @@ def click(
                         lay(node, s, tuple(where), child_levels(node.records()[s], sense, a, b), -1)
                     else:
                         move(node, s, laid[0], tuple(where), -laid[1])
+                if "cross" in entry:
+                    cross = entry["cross"]
+                    recoil(node, tuple(cross["node"]), cross["dP"], cross["clock"], -1)
             if entry["event"] in ("birth", "credit"):
                 row = entry.get("taken_row", rec0)
                 for take in entry.get("takes", [entry]):
@@ -234,21 +242,18 @@ def click(
                         recoil(node, where, take["dP_take"], take["clock"], -1)
                     if "taken_levels" in take:
                         lay(node, row, where, tuple(take["taken_levels"]))
+                        node.closes[where] += 1
                         continue
-                    line = node.records()[row].lines[take["taken_line"]]
-                    move(
-                        node,
-                        row,
-                        take["taken_line"],
-                        where,
-                        take["taken_now_was"] - int(line.now[where]),
-                    )
+                    toward = 1 if take["taker"][1] > take["taker"][0] else -1
+                    count = 0 if "laid_back" in take else toward * take["levels"]
+                    move(node, row, take["taken_line"], where, -count)
                     node.take_rem[where] = take["remainder_was"]
                 node.closes[at] -= 1
         del node.log[frame["log_from"] :]
         node.standing, node.crossed, node.beats = frame["counters"]
         return
     c = node.start_content
+    node.start_lines = plane_starts
     node.lattices, node.drawn = {}, {}
     frozen = readings.frozen_of(node, c)
     read = factors(node, None, frozen)

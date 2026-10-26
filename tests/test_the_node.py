@@ -51,11 +51,11 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
     for _ in range(INTERVALS):
         node.step()
     clicks = clicks_at(node, CENTRE)
-    # two births of 270 levels at 10 before LT-S1 ((6, 18) at 54): the bookings move the fed board
-    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [(11, 1), (12, 519)]
-    # two credits under BH-S1's mask, six with the frozen Node released (FR-S1); (1, 0) then five (-1, 0) before LT-S1
+    # no birth at the fed Node under CL-S2 (the merger's two ends booked from the start at 6, the course following; (11, 1) and (12, 519) before it, two births of 270 levels at 10 before LT-S1, (6, 18) at 54)
+    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == []
+    # six credits under CL-S2 with the sense read at the start ((-1, 0), (0, 0), (1, 0), (0, 0), (0, 0) before it; two under BH-S1's mask, six with the frozen Node released, FR-S1)
     credits = [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"]
-    assert credits == [(-1, 0), (0, 0), (1, 0), (0, 0), (0, 0)]
+    assert credits == [(0, 0), (-1, 0), (1, 0), (1, 0), (1, 0), (0, 0)]
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
@@ -556,8 +556,8 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     kept = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
-    # ddfeb210 at 54
-    assert record.state_hash(node) == "ff82a0da34afd75bff667b6478758ab24e95adc6c49be85128a7d193ec15eb17"
+    # ddfeb210 at 54; over the whole state since 2026-10-26, ff82a0da over the lines and the take's remainder alone
+    assert record.state_hash(node) == "16c88d4bd6e4724e96eaf8b3d685c50bcc8b32856e82647b07e747d743c81549"
     interval = Interval(copy.deepcopy(node), 1)
     interval.readings()
     assert sorted(interval.links_at) == [0, 1] and any(

@@ -71,7 +71,7 @@ def bodies(
                 if row.shape == PLANE
                 else bilinears_of(node, rec, at)
             )
-            entry = credit(node, rec, at, take, frame)
+            entry = credit(node, rec, at, take, frame, plane_starts[rec])
             if int(net[at]) == 0:
                 move(node, rec0, k, at, now - int(node.records()[rec0].lines[k].now[at]))
                 entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
@@ -84,18 +84,18 @@ def bodies(
 def frame_of(
     node: Node, rec: int, at: tuple[int, ...], plane_starts: list[list[Line]]
 ) -> dict[str, Any]:
-    """A credit's frame: the record's levels at the Node now, stepped and at the start, its neighbours' at the start, the Link phases, frames, odd lines and factors the Node read at the start."""
+    """A credit's frame: the record's levels at the Node now, before the swap (the state the swap replaced at a turned Node, the levels now elsewhere; CL-S2: no second moment of the close, the former `stepped` kept by name) and at the start, its neighbours' at the start, the Link phases, frames, odd lines and factors the Node read at the start."""
     re, im = node.records()[rec].lines
     re0, im0 = plane_starts[rec]
     nodes = frame_nodes(node, at)[1:]
-    sre, sim = node.stepped[rec]
+    sre, sim = node.before_swap[rec]
     return {
         "re_now": int(re.now[at]),
         "im_now": int(im.now[at]),
         "re_before": int(re.before[at]),
         "im_before": int(im.before[at]),
-        "re_stepped": int(sre.now[at]),
-        "im_stepped": int(sim.now[at]),
+        "re_before_swap": int(sre.now[at]),
+        "im_before_swap": int(sim.now[at]),
         "re_start_now": int(re0.now[at]),
         "re_start_before": int(re0.before[at]),
         "im_start_now": int(im0.now[at]),
