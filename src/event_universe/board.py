@@ -17,6 +17,7 @@ from event_universe.decoder import (
     SHORT_LIST,
     THIRDS,
     Record,
+    unread_words,
 )
 
 BIRTHS = 2  # the index of the births in a mark (the interval, the mean volume, the births)
@@ -108,7 +109,10 @@ def recurring_bang(record: Record) -> dict[str, Any]:
         for lo, hi in zip(bangs, bangs[1:] + [record.intervals + 1], strict=False)
     ]
     verdict = (
-        "NOT READ: no Node line in the record; the predicate: the exact return to Gamma at every Node with the whole board turning at the top"
+        unread_words(
+            "no Node line in the record",
+            "the exact return to Gamma at every Node with the whole board turning at the top",
+        )
         if not lines
         else f"SHOWN: {len(exact)} exact returns to Gamma at every Node, the whole board turning at once at {len(whole)} tops, {len(bangs)} bangs"
         if exact and whole
@@ -140,7 +144,7 @@ def tops(record: Record) -> dict[str, Any]:
     return {
         "1b the board tops, every Node turning at once": {
             "tops (interval)": whole[:LISTED],
-            "verdict": "NOT READ: no Node line in the record; the predicate: every Node turned at one interval"
+            "verdict": unread_words("no Node line in the record", "every Node turned at one interval")
             if not lines
             else f"SHOWN: the whole board turns at once at {len(whole)} tops, the first at {whole[0]}"
             if whole
@@ -155,7 +159,9 @@ def returns(record: Record) -> dict[str, Any]:
     return {
         "1c the board returns to Gamma": {
             "exact returns (interval)": exact[:LISTED],
-            "verdict": "NOT READ: no Node line in the record; the predicate: a bottom of the mean volume at Gamma at every Node"
+            "verdict": unread_words(
+                "no Node line in the record", "a bottom of the mean volume at Gamma at every Node"
+            )
             if not record.nodes
             else f"SHOWN: {len(exact)} exact returns to Gamma at every Node, the first at {exact[0]}"
             if exact
@@ -302,7 +308,10 @@ def same_gates(record: Record) -> dict[str, Any]:
     if not exact:
         return {
             "46 the bangs recurring with the same gates": {
-                "verdict": "NOT READ: no exact return of the board (gate 1); the predicate: a later bang shows the gates the first showed, its credits counted"
+                "verdict": unread_words(
+                    "no exact return of the board (gate 1)",
+                    "a later bang shows the gates the first showed, its credits counted",
+                )
             }
         }
     since = exact[0]
@@ -346,7 +355,7 @@ def maxwell(record: Record) -> dict[str, Any]:
             "Node lines": len(record.nodes),
             "intervals the current's reach grew": grown,
             "Nodes lit beyond one Link of the interval before": violations,
-            "verdict": "NOT READ: no Node line with a current; the predicate: the signal of one Link per interval"
+            "verdict": unread_words("no Node line with a current", "the signal of one Link per interval")
             if not any(lit)
             else "SHOWN: the current's reach grows by one Link per interval"
             if violations == 0 and grown
@@ -372,7 +381,10 @@ def well(record: Record) -> dict[str, Any]:
             "bodies (Node, line) credited": len(spans),
             "of them standing from the first half into the last quarter": standing,
             "frozen Node lines (a collapse's end)": frozen,
-            "verdict": "NOT READ: no credit; the predicate: a body of enough quanta stands in its own well, a collapse ends in a frozen clock"
+            "verdict": unread_words(
+                "no credit",
+                "a body of enough quanta stands in its own well, a collapse ends in a frozen clock",
+            )
             if not spans
             else "SHOWN: a body stands in its own well through the run"
             if standing

@@ -55,6 +55,11 @@ def kind_of(verdict: str) -> str:
     return next((kind for kind in KINDS if words.startswith(kind)), f"{NOT} READ")
 
 
+def unread_words(why: str, predicate: str) -> str:
+    """The verdict of a row the record cannot carry: NOT READ, why, and the predicate it would be read by; the one form of the words."""
+    return f"{NOT} READ: {why}; the predicate: {predicate}"
+
+
 def shown(verdict: str) -> bool:
     """A verdict that shows (whole or in part) in its own right: a row restating another gate's verdict shows no event line of its own, the gate it restates has the line."""
     return verdict.startswith("SHOWN")

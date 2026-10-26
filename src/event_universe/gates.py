@@ -10,7 +10,17 @@ from typing import Any
 
 from event_universe import board, clicks, predicates
 from event_universe.core.ports import AXES
-from event_universe.decoder import HALF, HUNDRED, LISTED, PAIR, WIDTH, Record, kind_of, quot
+from event_universe.decoder import (
+    HALF,
+    HUNDRED,
+    LISTED,
+    PAIR,
+    WIDTH,
+    Record,
+    kind_of,
+    quot,
+    unread_words,
+)
 
 Row = Callable[[Record], dict[str, Any]]
 
@@ -101,15 +111,17 @@ def light(record: Record) -> dict[str, Any]:
     }
 
 
-UNREAD_LIGHT = "NOT READ: the record carries no credit of the gap-0 row (light has no period on the sea); the predicate: "
+UNREAD_LIGHT = "the record carries no credit of the gap-0 row (light has no period on the sea)"
 
 
 def redshift(record: Record) -> dict[str, Any]:
     """Gate 11: the gravitational redshift, the gap-0 credits' period longer where the content is deeper, by the clocks squared (EM-S4's predicate)."""
     return {
         "11 gravitational redshift": {
-            "verdict": UNREAD_LIGHT
-            + "the gap-0 credits' period longer where the content is deeper, by the clocks squared"
+            "verdict": unread_words(
+                UNREAD_LIGHT,
+                "the gap-0 credits' period longer where the content is deeper, by the clocks squared",
+            )
         }
     }
 
@@ -118,8 +130,10 @@ def delay(record: Record) -> dict[str, Any]:
     """Gate 12: light's delay or deflection, the gap-0 credits' first interval against the Link distance from the emitter (EM-S4's predicate)."""
     return {
         "12 light's delay or deflection": {
-            "verdict": UNREAD_LIGHT
-            + "the gap-0 credits' first interval against the Link distance from the emitter, later or off the line where deeper"
+            "verdict": unread_words(
+                UNREAD_LIGHT,
+                "the gap-0 credits' first interval against the Link distance from the emitter, later or off the line where deeper",
+            )
         }
     }
 
@@ -136,32 +150,6 @@ def arrow(record: Record) -> dict[str, Any]:
     else:
         verdict = f"NOT SHOWN: {rb['exact']} of {rb['intervals']}"
     return {"18 the arrow of time": {"run back on the record": rb, "verdict": verdict}}
-
-
-def restated(key: str, source: Row, record: Record) -> dict[str, Any]:
-    """A widened row that restates a gate of the nineteen: its verdict is that gate's, named."""
-    gate, out = next(iter(source(record).items()))
-    return {key: {"verdict": f"as gate {gate.split()[0]}: " + out["verdict"]}}
-
-
-def redshift_of_light(record: Record) -> dict[str, Any]:
-    """Row 29: the redshift of light, as gate 11."""
-    return restated("29 the redshift of light", redshift, record)
-
-
-def dilation_of_bodies(record: Record) -> dict[str, Any]:
-    """Row 30: the dilation of two bodies' clocks, as gate 10."""
-    return restated("30 the dilation", clicks.dilation, record)
-
-
-def track_of_light(record: Record) -> dict[str, Any]:
-    """Row 31: the deflection and the Shapiro delay, light's track, as gate 12."""
-    return restated("31 the deflection and the Shapiro delay", delay, record)
-
-
-def fall_by_tail(record: Record) -> dict[str, Any]:
-    """Row 33: free fall by the tail, as gate 13."""
-    return restated("33 free fall by the tail", free_fall, record)
 
 
 def recoil(record: Record) -> dict[str, Any]:
@@ -181,7 +169,7 @@ def recoil(record: Record) -> dict[str, Any]:
             "recoil passed to the laid pair (take + lay = 0 per birth)": [passed, len(lays)],
             "verdict": "NOT READ: no click booked its momentum"
             if not takes
-            else "NOT READ: no birth; the predicate: the take's dP and the lay's sum to 0 at every birth"
+            else unread_words("no birth", "the take's dP and the lay's sum to 0 at every birth")
             if not lays
             else "SHOWN: the recoil passed to the laid pair at every birth"
             if passed == len(lays)
@@ -272,6 +260,24 @@ def entropy(record: Record) -> dict[str, Any]:
     }
 
 
+def restated(key: str, source: Row) -> Row:
+    """A row restating another gate's verdict (29 to 31 and 33 restate 11, 10, 12 and 13): the source's verdict after "as gate N: "."""
+
+    def row(record: Record) -> dict[str, Any]:
+        gate, out = next(iter(source(record).items()))
+        return {key: {"verdict": f"as gate {gate.split()[0]}: " + out["verdict"]}}
+
+    row.__name__ = row.__qualname__ = f"row_{key.split()[0]}"
+    return row
+
+
+RESTATED = (
+    ("29 the redshift of light", redshift),
+    ("30 the dilation", clicks.dilation),
+    ("31 the deflection and the Shapiro delay", delay),
+    ("33 free fall by the tail", free_fall),
+)  # the rows of the widened table that restate a gate of the nineteen, the gate's row beside each
+
 TABLE: tuple[Row, ...] = (
     board.recurring_bang,
     board.tops,
@@ -295,7 +301,7 @@ TABLE: tuple[Row, ...] = (
     clicks.charge,
     arrow,
     clicks.mass_ratios,
-    predicates.twist,
+    predicates.stub("20"),
     predicates.hand_of_birth,
     predicates.coulomb,
     recoil,
@@ -303,33 +309,33 @@ TABLE: tuple[Row, ...] = (
     entropy,
     predicates.lifts,
     predicates.confinement,
-    predicates.conversion,
-    redshift_of_light,
-    dilation_of_bodies,
-    track_of_light,
-    predicates.perihelion,
-    fall_by_tail,
+    predicates.stub("28"),
+    restated(*RESTATED[0]),
+    restated(*RESTATED[1]),
+    restated(*RESTATED[2]),
+    predicates.stub("32"),
+    restated(*RESTATED[3]),
     board.stopped_clock,
-    predicates.dragging,
-    predicates.shears,
+    predicates.stub("35"),
+    predicates.stub("36"),
     board.maxwell,
-    predicates.aharonov_bohm,
-    predicates.zeeman,
+    predicates.stub("38"),
+    predicates.stub("39"),
     predicates.photoelectric,
-    predicates.two_beats,
-    predicates.stern_gerlach,
+    predicates.stub("41"),
+    predicates.stub("42"),
     predicates.exclusion,
-    predicates.velocity,
+    predicates.stub("44"),
     board.well,
     board.same_gates,
     predicates.exact_take,
-    predicates.black_body,
+    predicates.stub("48"),
     predicates.decay,
-    predicates.light_on_light,
-    predicates.casimir,
-    predicates.neutrino,
-    predicates.binds,
-    predicates.scattering,
+    predicates.stub("50"),
+    predicates.stub("51"),
+    predicates.stub("52"),
+    predicates.stub("53"),
+    predicates.stub("54"),
     predicates.two_slits,
     predicates.bell,
     predicates.ghz,

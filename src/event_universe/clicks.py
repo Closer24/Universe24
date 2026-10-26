@@ -26,6 +26,7 @@ from event_universe.decoder import (
     middle,
     nearest,
     quot,
+    unread_words,
 )
 
 Decoded = list[tuple[dict[str, Any], str, Rational]]
@@ -334,7 +335,10 @@ def merger(record: Record) -> dict[str, Any]:
         "24 the merger (a pair into light)": {
             "births taken from a gapped record (a pair into light)": len(mergers),
             "gapped meetings refused by cause": dict(refusals),
-            "verdict": "NOT READ: no gapped record's meeting in the record; the predicate: two conjugate records' credits ending at one Node with the gap-0 line rising there by their quanta, the charge kept"
+            "verdict": unread_words(
+                "no gapped record's meeting in the record",
+                "two conjugate records' credits ending at one Node with the gap-0 line rising there by their quanta, the charge kept",
+            )
             if not reached
             else f"SHOWN: {len(mergers)} pairs into light (the gap-0 children born from a gapped record's take)"
             if mergers

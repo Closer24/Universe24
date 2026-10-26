@@ -3,32 +3,147 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+from collections.abc import Callable
 from typing import Any
 
 from event_universe.circle import circle_of
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import largest_below
-from event_universe.decoder import HALF, HUNDRED, LIFTS, LISTED, PAIR, QUARTERS, THIRDS, Record, quot
+from event_universe.decoder import (
+    HALF,
+    HUNDRED,
+    LIFTS,
+    LISTED,
+    PAIR,
+    QUARTERS,
+    THIRDS,
+    Record,
+    quot,
+    unread_words,
+)
 from event_universe.rows import QUARTET
 
 
 def unread(key: str, why: str, predicate: str) -> dict[str, Any]:
-    """A row the record cannot carry: NOT READ, why, and the predicate it would be read by."""
-    return {key: {"verdict": f"NOT READ: {why}; the predicate: {predicate}"}}
+    """A row the record cannot carry, its verdict alone."""
+    return {key: {"verdict": unread_words(why, predicate)}}
+
+
+def no_wave(record: Record) -> str:
+    """Why a row of a packet's motion is not read: no wave lay in the world, else no position per close."""
+    return (
+        "no lay with a wave number in the world"
+        if not wave_lay(record)
+        else "a position per close is not read"
+    )
+
+
+def no_field(record: Record) -> str:
+    """Why the spinor's two beats are not read: a quartet's universe has no held field, the others no shape-8 row."""
+    quartet = any(int(r["shape"]) == QUARTET for r in record.run["universe"]["rows"])
+    return "no held field in the world" if quartet else "no shape-8 row in the record's universe"
+
+
+def no_conversion(record: Record) -> str:
+    """Why the neutrino is not read: no conversion in the record, every prime of den within the width."""
+    points = len(circle_of(record.den))
+    return f"no conversion in the record and every prime of den within the width ({points} points on den's circle)"
+
+
+UNREAD: tuple[tuple[str, str | Callable[[Record], str], str], ...] = (
+    (
+        "20 the twist's 24 and 24",
+        "one seed's run; the 48 images are the board test's",
+        "the 24 rotations' records equal, the 24 reflections' equal with the senses exchanged",
+    ),
+    (
+        "28 the conversion list",
+        "no record ends at a Node where others begin (the conversion act is not in the engine)",
+        "a lift ends and its children begin at one Node, the charge and the count kept",
+    ),
+    (
+        "32 the perihelion",
+        no_wave,
+        "the orbit's turning point advancing over a body's positions per close",
+    ),
+    (
+        "35 frame dragging for matter, light not dragged",
+        "no mass moves beside a body's track in the world",
+        "a plane's track turned beside a moving mass, light's not",
+    ),
+    (
+        "36 the shears as waves",
+        "the rows carry the tension's extremes and no shear line",
+        "the + polarisation travelling across the board, the x polarisation absent",
+    ),
+    (
+        "38 the Aharonov-Bohm phase",
+        "no held flux in the world",
+        "a plane's clicks around a held flux shifted by the enclosed count",
+    ),
+    (
+        "39 the Zeeman and Stark shifts",
+        "no held field in the world (the toy's one-Node test carries the doublet)",
+        "a body's beat shifted beside a neighbour's field, the doublet split",
+    ),
+    (
+        "41 the spinor's two beats",
+        no_field,
+        "two beats of one quantum at rest in a held uniform field (the Zeeman doublet, tests/test_the_quartet.py)",
+    ),
+    (
+        "42 the split along the gradient (Stern-Gerlach)",
+        "no gradient field in the world (the toy's records carry the verdict)",
+        "a neutral packet's credits in two spots along the gradient's axis, re-split on a second axis",
+    ),
+    (
+        "44 the moving lay's velocity against k",
+        no_wave,
+        "the centroid at the group velocity v = P / (2 E); the momentum summed before and after a collision",
+    ),
+    (
+        "48 the black body",
+        "no gap-0 credit in the record (the sea one mode)",
+        "a spectrum over the light credits' beats at a detector",
+    ),
+    (
+        "50 light on light",
+        "no two light packets in the world",
+        "two light packets' credits coupled after crossing",
+    ),
+    (
+        "51 the Casimir force and the running alpha",
+        "no plates and no bound pair in the world",
+        "a force between plates; a bound pair's beat changing with the content",
+    ),
+    ("52 the neutrino", no_conversion, "a third child's credits at a conversion"),
+    (
+        "53 a fast packet binds at its lay",
+        no_wave,
+        "a heavy packet keeps its velocity, or its stop is read as the momentum into its well and named",
+    ),
+    (
+        "54 scattering, two packets through each other",
+        "two packets of one plane are not told apart by their line, and the momentum across the click is row 23",
+        "the packets scatter, the momentum summed before and after",
+    ),
+)  # the rows no record from the seed carries: the key, why (a sentence, or read from the record), the predicate
+
+
+def stub(number: str) -> Callable[[Record], dict[str, Any]]:
+    """The row function of an UNREAD row by its number (the key's first word): NOT READ with its why and its predicate."""
+    key, why, predicate = next(entry for entry in UNREAD if entry[0].split()[0] == number)
+
+    def row(record: Record) -> dict[str, Any]:
+        return unread(key, why(record) if callable(why) else why, predicate)
+
+    row.__name__ = row.__qualname__ = f"row_{number}"
+    return row
 
 
 def wave_lay(record: Record) -> bool:
     """Whether the world lays a packet with a wave number (the `wave` key of an `at` lay, MV-S1)."""
     return any("wave" in lay for lay in record.run["world"].get("seed", []))
-
-
-def twist(record: Record) -> dict[str, Any]:
-    """Row 20: the twist's 24 and 24 (P and C violated, CP kept), read over the 48 images of the seed, which one record does not carry (tests/test_the_board.py reads them)."""
-    return unread(
-        "20 the twist's 24 and 24",
-        "one seed's run; the 48 images are the board test's",
-        "the 24 rotations' records equal, the 24 reflections' equal with the senses exchanged",
-    )
 
 
 def hand_of_birth(record: Record) -> dict[str, Any]:
@@ -38,7 +153,7 @@ def hand_of_birth(record: Record) -> dict[str, Any]:
     return {
         "21 the C of the birth": {
             "births with the + child at the take's Node / at the other end": [right, left],
-            "verdict": "NOT READ: no birth; the predicate: births of both hands over the record"
+            "verdict": unread_words("no birth", "births of both hands over the record")
             if not record.births
             else "SHOWN: births of both hands"
             if right and left
@@ -90,7 +205,10 @@ def coulomb(record: Record) -> dict[str, Any]:
             "like senses: mean distance first / last (hundredths)": [
                 quot(s, n, HUNDRED) for s, n in (means[True][:1] + means[True][-1:])
             ],
-            "verdict": "NOT READ: no two intervals hold a pair of credited senses; the predicate: unlike senses approach, like senses part"
+            "verdict": unread_words(
+                "no two intervals hold a pair of credited senses",
+                "unlike senses approach, like senses part",
+            )
             if unlike is None and likes is None
             else "SHOWN: unlike senses approach and like senses part"
             if unlike == -1 and likes == 1
@@ -122,7 +240,10 @@ def lifts(record: Record) -> dict[str, Any]:
             "mean beat per credited plane (hundredths), by the leg": [
                 [record.line_name[line], quot(*beats[line], HUNDRED)] for line in order
             ],
-            "verdict": "NOT READ: no birth and fewer than two planes credited; the predicate: three lifts born, the beats ordered as the legs"
+            "verdict": unread_words(
+                "no birth and fewer than two planes credited",
+                "three lifts born, the beats ordered as the legs",
+            )
             if not born and len(beats) < PAIR
             else "SHOWN: three lifts born, the beats ordered as the legs (the heavier the faster)"
             if len(born) >= LIFTS and len(beats) >= PAIR and ordered
@@ -155,69 +276,15 @@ def confinement(record: Record) -> dict[str, Any]:
         "27 confinement (no third alone)": {
             "children at the whole charge / at a third": [whole, thirds],
             "takes, every one whole levels": len(takes),
-            "verdict": "NOT READ: no birth; the predicate: no child carries a third of the charge, every take whole"
+            "verdict": unread_words(
+                "no birth", "no child carries a third of the charge, every take whole"
+            )
             if not record.births
             else "SHOWN: every child the whole charge, no third alone, every take whole"
             if thirds == 0 and whole
             else "NOT SHOWN: a child at a third of the charge",
         }
     }
-
-
-def conversion(record: Record) -> dict[str, Any]:
-    """Row 28: the conversion list (a lift ending at a Node with two or three beginning there)."""
-    return unread(
-        "28 the conversion list",
-        "no record ends at a Node where others begin (the conversion act is not in the engine)",
-        "a lift ends and its children begin at one Node, the charge and the count kept",
-    )
-
-
-def perihelion(record: Record) -> dict[str, Any]:
-    """Row 32: the perihelion, a body's orbit's turning point advancing (the moving lay)."""
-    return unread(
-        "32 the perihelion",
-        "no lay with a wave number in the world"
-        if not wave_lay(record)
-        else "a position per close is not read",
-        "the orbit's turning point advancing over a body's positions per close",
-    )
-
-
-def dragging(record: Record) -> dict[str, Any]:
-    """Row 35: frame dragging for matter, light not dragged."""
-    return unread(
-        "35 frame dragging for matter, light not dragged",
-        "no mass moves beside a body's track in the world",
-        "a plane's track turned beside a moving mass, light's not",
-    )
-
-
-def shears(record: Record) -> dict[str, Any]:
-    """Row 36: the shears as waves, the + polarisation travelling and the x absent."""
-    return unread(
-        "36 the shears as waves",
-        "the rows carry the tension's extremes and no shear line",
-        "the + polarisation travelling across the board, the x polarisation absent",
-    )
-
-
-def aharonov_bohm(record: Record) -> dict[str, Any]:
-    """Row 38: the Aharonov-Bohm phase around a held flux."""
-    return unread(
-        "38 the Aharonov-Bohm phase",
-        "no held flux in the world",
-        "a plane's clicks around a held flux shifted by the enclosed count",
-    )
-
-
-def zeeman(record: Record) -> dict[str, Any]:
-    """Row 39: the Zeeman and Stark shifts of a body's beat in a held field (the toy's one-Node test, tests/test_the_quartet.py)."""
-    return unread(
-        "39 the Zeeman and Stark shifts",
-        "no held field in the world (the toy's one-Node test carries the doublet)",
-        "a body's beat shifted beside a neighbour's field, the doublet split",
-    )
 
 
 def photoelectric(record: Record) -> dict[str, Any]:
@@ -229,32 +296,13 @@ def photoelectric(record: Record) -> dict[str, Any]:
         "40 the photoelectric click": {
             "the quantum's levels (the drift)": drift,
             "credits taking whole quanta / fewer levels": [whole, len(takes) - whole],
-            "verdict": "NOT READ: no credit; the predicate: one whole quantum per click"
+            "verdict": unread_words("no credit", "one whole quantum per click")
             if not takes
             else "SHOWN: every click takes whole quanta"
             if whole == len(takes)
             else f"NOT SHOWN: {len(takes) - whole} clicks take fewer levels than one quantum (the exact take in levels, row 47)",
         }
     }
-
-
-def two_beats(record: Record) -> dict[str, Any]:
-    """Row 41: the spinor's two beats, one quantum of the shape-8 row at rest in a held field."""
-    quartet = any(int(r["shape"]) == QUARTET for r in record.run["universe"]["rows"])
-    return unread(
-        "41 the spinor's two beats",
-        "no held field in the world" if quartet else "no shape-8 row in the record's universe",
-        "two beats of one quantum at rest in a held uniform field (the Zeeman doublet, tests/test_the_quartet.py)",
-    )
-
-
-def stern_gerlach(record: Record) -> dict[str, Any]:
-    """Row 42: the split along the gradient and the re-split (the toy's records under tools/derivations/toys/lean/records)."""
-    return unread(
-        "42 the split along the gradient (Stern-Gerlach)",
-        "no gradient field in the world (the toy's records carry the verdict)",
-        "a neutral packet's credits in two spots along the gradient's axis, re-split on a second axis",
-    )
 
 
 def exclusion(record: Record) -> dict[str, Any]:
@@ -265,20 +313,9 @@ def exclusion(record: Record) -> dict[str, Any]:
             "lays refused where a quantum of the record stood": len(refused),
             "verdict": "SHOWN: the lay refused where a quantum of the state stood, on every such Node"
             if refused
-            else "NOT READ: no lay met a standing quantum; the predicate: one quantum per full state at a Node",
+            else unread_words("no lay met a standing quantum", "one quantum per full state at a Node"),
         }
     }
-
-
-def velocity(record: Record) -> dict[str, Any]:
-    """Row 44: the moving lay's velocity against k and the collision's momentum (MV-S1, MV-S2)."""
-    return unread(
-        "44 the moving lay's velocity against k",
-        "no lay with a wave number in the world"
-        if not wave_lay(record)
-        else "a position per close is not read",
-        "the centroid at the group velocity v = P / (2 E); the momentum summed before and after a collision",
-    )
 
 
 def exact_take(record: Record) -> dict[str, Any]:
@@ -290,22 +327,13 @@ def exact_take(record: Record) -> dict[str, Any]:
         "47 the exact take": {
             "births taken exactly / in all": [exact, len(births)],
             "taken per booked over the births (hundredths)": quot(taken, booked, HUNDRED),
-            "verdict": "NOT READ: no birth; the predicate: taken equals booked on every line"
+            "verdict": unread_words("no birth", "taken equals booked on every line")
             if not births
             else "SHOWN: taken equals booked on every birth"
             if exact == len(births)
             else f"NOT SHOWN exact: the excess above 0 on {len(births) - exact} births (EX-S1)",
         }
     }
-
-
-def black_body(record: Record) -> dict[str, Any]:
-    """Row 48: the black body, a spectrum over the light credits' beats at a detector."""
-    return unread(
-        "48 the black body",
-        "no gap-0 credit in the record (the sea one mode)",
-        "a spectrum over the light credits' beats at a detector",
-    )
 
 
 def decay(record: Record) -> dict[str, Any]:
@@ -325,7 +353,7 @@ def decay(record: Record) -> dict[str, Any]:
             "spacings between a body's credits (proper count: how many)": dict(
                 sorted(spacings.items())[:LISTED]
             ),
-            "verdict": "NOT READ: fewer than two spacings; the predicate: the spacing geometric"
+            "verdict": unread_words("fewer than two spacings", "the spacing geometric")
             if total < PAIR
             else "SHOWN: the spacings' counts fall from the least spacing (geometric)"
             if falling and len(counts) > 1
@@ -334,54 +362,6 @@ def decay(record: Record) -> dict[str, Any]:
             else "NOT SHOWN: the spacings' counts do not fall from the least",
         }
     }
-
-
-def light_on_light(record: Record) -> dict[str, Any]:
-    """Row 50: light on light, a coupling of two light packets after crossing."""
-    return unread(
-        "50 light on light",
-        "no two light packets in the world",
-        "two light packets' credits coupled after crossing",
-    )
-
-
-def casimir(record: Record) -> dict[str, Any]:
-    """Row 51: the Casimir force and the running alpha."""
-    return unread(
-        "51 the Casimir force and the running alpha",
-        "no plates and no bound pair in the world",
-        "a force between plates; a bound pair's beat changing with the content",
-    )
-
-
-def neutrino(record: Record) -> dict[str, Any]:
-    """Row 52: the neutrino, a conversion's third child whose prime of den lies outside the width."""
-    points = len(circle_of(record.den))
-    return unread(
-        "52 the neutrino",
-        f"no conversion in the record and every prime of den within the width ({points} points on den's circle)",
-        "a third child's credits at a conversion",
-    )
-
-
-def binds(record: Record) -> dict[str, Any]:
-    """Row 53: a fast packet binds at its lay (a heavy packet digs its well and stands)."""
-    return unread(
-        "53 a fast packet binds at its lay",
-        "no lay with a wave number in the world"
-        if not wave_lay(record)
-        else "a position per close is not read",
-        "a heavy packet keeps its velocity, or its stop is read as the momentum into its well and named",
-    )
-
-
-def scattering(record: Record) -> dict[str, Any]:
-    """Row 54: scattering, two packets through each other with the momentum summed before and after."""
-    return unread(
-        "54 scattering, two packets through each other",
-        "two packets of one plane are not told apart by their line, and the momentum across the click is row 23",
-        "the packets scatter, the momentum summed before and after",
-    )
 
 
 SETTINGS = (
@@ -477,6 +457,9 @@ def ghz(record: Record) -> dict[str, Any]:
         "57 GHZ": {
             "births": len(record.births),
             "births by the pairs taken at one Node in one close": shared,
-            "verdict": "NOT READ: a birth gives two ends at one Link and a shared take four, no three ends with one root in the record; the predicate: M = E(xyy) + E(yxy) + E(yyx) - E(xxx) over three-ended births, M^2 > 4 as nature (|M| <= 2 for every local reading)",
+            "verdict": unread_words(
+                "a birth gives two ends at one Link and a shared take four, no three ends with one root in the record",
+                "M = E(xyy) + E(yxy) + E(yyx) - E(xxx) over three-ended births, M^2 > 4 as nature (|M| <= 2 for every local reading)",
+            ),
         }
     }
