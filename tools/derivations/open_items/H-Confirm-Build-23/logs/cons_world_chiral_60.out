@@ -1,0 +1,19 @@
+1. the form, the re-run's counts equal to the record's: 15 of 15
+1. the form, the re-run's log equal to the record's event by event: 23519 of 23519
+1. the form, the run back exact: 20 of 20
+2. the current, intervals with F_ij + F_ji = 0 on every Link of the gap-0 line: 60 of 60
+2. the current, the record's Node lines' current equal to the board's: 60 of 60
+3. the Wronskian, the rows' W total at the marks equal to the board's: 14 of 14
+3. the charge, the births' two children W of opposite sign (the exact lays aside): 16 of 16
+3r. reading: the Wronskian, intervals without a birth with the board's W total unchanged: 1 of 48
+3r. reading: the births' two children W summed to 0 in magnitude: 12 of 16
+4r. reading: the lattice momentum, births with dP_take + dP_lay_ends = 0: 0 of 17
+4r. reading: the lattice momentum, intervals with the Links' sum 0 on three axes: 0 of 60
+5. the energy, credits with beat >= 1: 2903 of 2903
+6. the count, taken + remainder before - remainder after = booked per click (EX-S1): 2919 of 2919
+6. the count, taken >= booked per birth (gate 15's identity; the exact lays aside): 13 of 16
+6. the count, the births' taken and booked summed against the record's counts: 2 of 2
+6r. reading: taken >= booked per credit: 161 of 2903
+8. integers, floats found in the record: 0 of 0
+{"births with an exact lay (one child W 0)": 1, "births W sum": 243205, "births senses +/-": [17, 17], "W total at the marks": [0, 0, -1307, 796, 239299, 110467, 32714, -22036, -50551, -27710, -45075, -22629, -32620, -33897], "Links' current summed per axis, first and last interval": [[-83349, 0, 0], [-5536, 3696, -25306]], "recoil dP_take summed over the clicks": [-470941796496445351846, -223790965334390590700, -288482974688955004184], "beats per 1000 proper, [quotient, remainder], min and max over the credited Nodes": [[1, 6955], [2, 16576]], "credited Nodes": 125, "beats summed over the credits": 5920, "clicks without the take's remainders (the exact lays)": 1, "births taken summed": 70769943529221060875807, "births booked summed": 69862070318996095731587, "credits taken summed": 165717505556173934064483, "credits booked summed": 131666043080401760160000, "max bits at the marks": 112, "births": 17, "credits": 2903, "intervals": 60, "board W total at the end": -33897}
+laws held in full: 11 of 12 (the readings marked r aside)
