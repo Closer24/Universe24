@@ -1,0 +1,63 @@
+{
+ "record": "/dev/shm/tmp/bb2/b9_sea_q5000000.json",
+ "intervals": 120,
+ "nodes": 64,
+ "gamma": 1000,
+ "seed X": 20000565,
+ "content top (value, interval)": [
+  3885,
+  4
+ ],
+ "frozen lines (interval, count)": [
+  [
+   4,
+   64
+  ]
+ ],
+ "frozen lines total": 1,
+ "tops (every Node turned at once)": [
+  5
+ ],
+ "tops total": 1,
+ "at the resolution at every Node": [
+  8,
+  9
+ ],
+ "at the seed's own first state": [
+  7
+ ],
+ "alike intervals of all": [
+  120,
+  120
+ ],
+ "births total": 0,
+ "birth intervals": [],
+ "nodes bearing per birth interval": {},
+ "credits total": 0,
+ "refused by cause": {
+  "orientation": 22848
+ },
+ "max bits (marks)": 116,
+ "max transient bits (marks)": 118,
+ "run back": {
+  "intervals": 20,
+  "exact": 20
+ },
+ "counts": {
+  "births": "0",
+  "taken": "0",
+  "booked": "0",
+  "body_clicks": "0",
+  "laid_back": "0",
+  "refused_stop": "0",
+  "refused_origin": "0",
+  "refused_lay": "0",
+  "refused_orientation": "22848",
+  "refused_twist": "0",
+  "refused_sense": "0",
+  "turns": "64",
+  "met": "22848",
+  "laid": "0",
+  "laid_nodes": "0"
+ }
+}
