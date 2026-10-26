@@ -292,7 +292,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     for _ in range(40):
         chiral.step()
     counts = (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census())
-    assert counts == (16, 2075, (99, 115))
+    assert counts == (16, 2127, (99, 115))  # 2,075 credits before H-Children-Charge-Bug-1
     assert run_back_exact(kept, 10) == 10
 
 
@@ -371,13 +371,17 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
     assert all(unit <= t["booked"] <= t["taken"] and t["booked"] < 2 * unit for t in merger["takes"])
     assert [t["taken_levels"][1::2] for t in merger["takes"]] == [[k * a, 0], [k * a, 0]]
     assert merger["taken"] >= merger["booked"] == sum(t["booked"] for t in merger["takes"])
-    assert merger["W_children"] == [-(node.T // 2), node.T // 2] and merger["stood"] == [[0] * 4] * 2
+    assert (
+        merger["W_children"] == [0, 0] and merger["stood"] == [[0] * 4] * 2
+    )  # the light at both ends, cc1
     refusals = [
         e
         for e in node.log
         if e["event"] == "refused" and e.get("row") == heavy and e["i"] <= merger["i"]
     ]
-    assert merger["i"] == 1 and refusals == [] and merger["exact_lay"] == [None, None]
+    assert (
+        merger["i"] == 1 and refusals == [] and [x[:2] for x in merger["exact_lay"]] == [[0, -191]] * 2
+    )  # cc1: both ends exact ([None, None] before)
     probe = copy.deepcopy(kept)
     for _ in range(merger["i"]):
         probe.step()
@@ -418,7 +422,7 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert node.wronskians["kept"] == node.wronskians["sites"] > 0
         assert not {"negated", "changed"} & node.wronskians.keys()
         found.append(node.wronskians)
-    assert [f["sites"] for f in found] == [296, 2152] and found[1]["nonzero"] == 664
+    assert [f["sites"] for f in found] == [296, 2152] and found[1]["nonzero"] == 708  # 664 before cc1
     assert "nonzero" not in found[0]
 
 
@@ -464,7 +468,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         seen = [c for c in crossings[(e["line"], tuple(e["node"]))] if c[0] <= e["i"]]
         assert e["beat"] == seen[-1][0] - seen[-2][0], e
         upward.append(seen[-1][1])
-    assert (len(credits), sum(upward)) == (1036, 365)
+    assert (len(credits), sum(upward)) == (1032, 366)  # 1,036 and 365 before cc1
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
@@ -519,8 +523,9 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
     births = [e for e in node.log if e["event"] == "birth"]
     assert births[0]["taken_row"] == heavy and births[0]["taken_line"] == [None, None]
     on_first = [(e["i"], e["taken_line"]) for e in births if "takes" not in e and not e["taken_line"]]
-    assert on_first == [] and len(births) == 7 and {e["taken_line"] for e in births[1:]} == {1}
-    assert (len(lines_taken), sum(lines_taken), node.counts["body_clicks"]) == (11, 11, 5)
+    # cc1: the merger's light exact at both ends, no charged child, no birth and no credit after it (7 births, 11 takes and 5 credits before)
+    assert on_first == [] and len(births) == 1
+    assert (len(lines_taken), sum(lines_taken), node.counts["body_clicks"]) == (0, 0, 0)
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 

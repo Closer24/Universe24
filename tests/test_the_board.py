@@ -14,6 +14,7 @@ from event_universe import gram, take
 from event_universe import run as writer
 from event_universe.core.ports import AXES, PORTS
 from event_universe.links import row_current
+from event_universe.merger import light_children, walls_of
 from event_universe.node import Node
 from event_universe.rows import CARRIER
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
@@ -452,10 +453,8 @@ def test_the_pair_at_rest_merges_into_light_by_its_own_quantum_taken_whole_mg_s1
         (merger,) = mergers
         assert (tuple(merger["plus"]), tuple(merger["minus"])) == (m, p)
         assert all(t["taken"] >= t["booked"] > 0 for t in merger["takes"])
-        assert merger["exact_lay"] == [None, None] and merger["W_children"] == [
-            -(bare.T // 2),
-            bare.T // 2,
-        ]
+        # H-Children-Charge-Bug-1: the light the exact take at -1 at both ends, the children's W 0 (the charged lay and [None, None] before)
+        assert [x[:2] for x in merger["exact_lay"]] == [[0, -191]] * 2 and merger["W_children"] == [0, 0]
         assert run_back_exact(held, 4) == 4
         found.append(
             (merger["i"], [(e["i"], e["cause"], e["fall"] * 1000 // e["walls"]) for e in refusals])
@@ -514,3 +513,25 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
     base.step(-1)
     far.step(-1)
     assert at_centre(base) == at_centre(far)
+
+
+def test_the_merger_lays_light_of_no_charge_at_both_ends_cc1() -> None:
+    """H-Children-Charge-Bug-1 (the Boss's 6410696786, 2026-10-26): a merger's light at an end whose named line has no direction (now equal to before, the largest gap the empty line's) was laid as the charged child's lay, so the merger's two children carried the charge -T div 2 + 0; the letter lays the light as the exact take at -1 on the named line at both ends, their own W 0. The chiral 60's merger of the interval 10 fed on the 3-cube: both ends exact, the children's own charge summing to 0; three pins."""
+    node = node_of("world_node.json")
+    node.step()
+    s, minus, plus = 0, (1, 1, 1), (1, 1, 2)
+    row = node.records()[s]
+    assert row.pair is not None
+    take.lay(node, s, minus, (939, 1175, 0, 0))
+    take.lay(node, s, plus, (1329, 1112, 0, 0))
+    rule = node.rule(row.pair, node.start_content, node.link_factors())
+    walls = list(walls_of(node, s, minus, plus, rule, {}))
+    _dp, _w, _stood, exact, _ends = light_children(node, s, minus, plus, walls, rule)
+    assert all(x is not None for x in exact) and [x[1] != 0 for x in exact] == [True, True]
+    assert (
+        sum(
+            0 if x is not None else sense * node.A * node.B
+            for x, sense in zip(exact, (-1, 1), strict=True)
+        )
+        == 0
+    )
