@@ -102,7 +102,7 @@ def test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero() -> None
     node = node_of("world_chiral.json")
     for _ in range(60):
         node.step()
-    births = [e for e in node.log if e["event"] == "birth"]
+    births = [e for e in node.log if e["event"] == "birth" and "exact_lay" not in e]
     assert len(births) >= 8
     signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
     assert sum(signs) == 0 and 0 not in signs
@@ -407,3 +407,49 @@ def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2
         assert (
             (a.now == b.now).all() and (a.before == b.before).all() and int((a.rem != b.rem).sum()) == 32
         )
+
+
+def test_the_pair_at_rest_merges_into_light_by_its_own_quantum_taken_whole_mg_s1() -> None:
+    """MG-S1 (the Boss's order of 2026-10-26, 01:03 UTC, 6405916579, under the owner's delegation; H-Merger-At-Rest-1's REPORT.md sections 1 and 3, built in merger.py; the test under 15 s): a child's wall is its own quantum, read on zero lines of the row's shape and not as the board's increment where the plane stands (equal on an empty plane: the cycle board's 64 births at the interval 2 book 1,682,128,072,219,779,093,684 per child, one value at 128 of 128 ends); a pair at rest (no current across the Link, the ends' charges opposite) meets as the conjugate pair, the + child at the end whose charge is positive, and each child's wall is paid at its own end by the taken record's four levels taken whole by the one lay act at -1, the fall the share the board loses, refused by name `stop` where below the wall: on the cycle board (tests/worlds/world_ga2.json) at the interval 3 the 384 pairs born at the bang reach the premise and every one is refused by the stop at 953 thousandths of the wall (one value; 0 negative walls; the hand's numbers to the integer), the board above the lay's X; on the bare 5-cube the heaviest record's pair at one quantum per end at two adjacent Nodes is refused by the stop at the first close (998 thousandths, the rotation's one step) and merges into light at the second (taken at or above booked, the light laid as the child's lay where the light line has no direction, W -+(T div 2)); at three quanta per end it merges at the first close; the run back exact. The hand's landing (64 mergers at 217 with taken = booked at 128 of 128 ends, X 999 at every Node at 218, 16 births at 219) is measured in the record and not here (450 intervals)."""
+    universe, world = world_of("world_ga2.json")
+    node = Node(universe, dict(world, intervals=6))
+    kept = copy.deepcopy(node)
+    for _ in range(6):
+        node.step()
+    births = [e for e in node.log if e["event"] == "birth"]
+    stops = [e for e in node.log if e["event"] == "refused" and e["cause"] == "stop"]
+    assert (
+        {b["i"] for b in births} == {2} and len(births) == 64 and not [b for b in births if "takes" in b]
+    )
+    assert {b["booked"] for b in births} == {2 * 1_682_128_072_219_779_093_684}
+    assert sum(1 for s in stops if s["i"] == 3) == 384 and all(s["walls"] > 0 for s in stops)
+    assert {s["fall"] * 1000 // s["walls"] for s in stops if s["i"] == 3} == {953}
+    assert run_back_exact(kept, 6) == 6
+    bare = node_of("world_node.json", shape=[5, 5, 5], seed=[])
+    a, b = bare.A, bare.B
+    heavy = max(range(len(bare.records())), key=lambda r: bare.records()[r].gap or 0)
+    gap0 = bare.records().index(bare.emitter())
+    m, p = (1, 1, 1), (2, 1, 1)
+    found = []
+    for k in (1, 3):
+        board = node_of("world_node.json", shape=[5, 5, 5], seed=[])
+        board.lay(heavy, m, (k * a, 0, 0, k * b))
+        board.lay(heavy, p, (k * a, 0, 0, -k * b))
+        held = copy.deepcopy(board)
+        for _ in range(4):
+            board.step()
+        mergers = [e for e in board.log if e["event"] == "birth" and e["taken_row"] == heavy]
+        refusals = [e for e in board.log if e["event"] == "refused" and e.get("row") == heavy]
+        assert len(mergers) == 1 and mergers[0]["line_pair"] == gap0
+        (merger,) = mergers
+        assert (tuple(merger["plus"]), tuple(merger["minus"])) == (m, p)
+        assert all(t["taken"] >= t["booked"] > 0 for t in merger["takes"])
+        assert merger["exact_lay"] == [None, None] and merger["W_children"] == [
+            -(bare.T // 2),
+            bare.T // 2,
+        ]
+        assert run_back_exact(held, 4) == 4
+        found.append(
+            (merger["i"], [(e["i"], e["cause"], e["fall"] * 1000 // e["walls"]) for e in refusals])
+        )
+    assert found == [(2, [(1, "stop", 998)]), (1, [])]

@@ -41,6 +41,10 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_board.py::test_the_pair_at_rest_merges_into_light_by_its_own_quantum_taken_whole_mg_s1": (
+        45,
+        "MG-S1 (2026-10-26, the Boss's order of 01:03 UTC under the owner's delegation, 6405916579 and 6404745207: the room 45 named; H-Merger-At-Rest-1's REPORT.md): the child's own quantum as the wall, the pair at rest met by its charges, the whole take at -1 and the stop, on the cycle board at 6 and the bare 5-cube's pairs",
+    ),
     "tests/test_the_node.py::test_the_files_are_refused_by_name": (
         46,
         "The loader's refusals by name (2026-10-26, the Boss's room at the merge of toys-5 50c73c972: the fifth form wave admitted by CS5-S2 and the former refusal of the word wave struck, so the test names one more refusal, "

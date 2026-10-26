@@ -17,7 +17,8 @@ CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # the hole under PL-S1; 9 and 22 among them under the former write of 2 W after the step
     "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45},
-    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45},
+    # the chiral under MG-S1: 24 SHOWN (3 pairs into light), 17 lost (the decoder counts the light children's W, 0 by the exact lay)
+    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 18, 19, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45},
     "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45},
 }
 VERDICTS = {  # the verdicts' words by name
@@ -53,7 +54,10 @@ def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
 def test_the_conservations_hold_on_the_record(name: str) -> None:
     run = loaded(name)
     births = [e for e in run["log"] if e["event"] == "birth"]
-    signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
+    pairs = [
+        b for b in births if "exact_lay" not in b
+    ]  # a merger's light children carry no sense (MG-S1)
+    signs = [(w > 0) - (w < 0) for b in pairs for w in b["W_children"]]
     assert sum(signs) == 0 and 0 not in signs
     assert all(b["taken"] >= b["booked"] for b in births)
     assert len({row["integers"] for row in run["rows"]}) == 1

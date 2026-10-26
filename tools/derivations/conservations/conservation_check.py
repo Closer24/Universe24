@@ -231,6 +231,19 @@ def main(argv: list[str]) -> int:
             booked = e["booked"] if e["event"] == "birth" else node.units[e["line"]]
             for tk in takes:
                 at = tuple(tk["node"])
+                walls = booked if len(takes) == 1 else tk["booked"]
+                if "taken_levels" in tk:
+                    L[names[2]].count(
+                        tk["taken"] >= walls, k, at, f"taken {tk['taken']}, booked {walls}"
+                    )
+                    L[names[3]].count(
+                        tk["taken"] == walls,
+                        k,
+                        at,
+                        f"taken {tk['taken']}, booked {walls}, excess {tk['taken'] - walls}",
+                    )
+                    reading["excess taken - booked (share units)"] += tk["taken"] - walls
+                    continue
                 now_was, before, levels = tk["taker"]
                 line_k = tk["taken_line"]
                 clicks_at.setdefault((at, rec, line_k), []).append((tk, e))
@@ -238,7 +251,6 @@ def main(argv: list[str]) -> int:
                 BEFORE_LINE["line"] = mid_r[rec][line_k]
                 fall, t_ = take_fall(node, rule, at, now_was, before, cube)
                 read, taken = fall(levels), tk["taken"]
-                walls = booked if len(takes) == 1 else tk["booked"]
                 L[names[0]].count(
                     read == taken, k, at, f"fall read {read}, credit line taken {taken}, levels {levels}"
                 )
@@ -267,6 +279,8 @@ def main(argv: list[str]) -> int:
                 f"the taken line now {stands}, the credit line's {want} ({'laid back' if 'laid_back' in e else 'taken'})",
             )
         for e in births:
+            if "exact_lay" in e:
+                continue
             s = e["line_pair"]
             row = recs[s]
             r = node.rule(row.pair, c, factors)
@@ -345,6 +359,13 @@ def main(argv: list[str]) -> int:
             rec = e["taken_row"] if e["event"] == "birth" else rec0
             for tk in takes:
                 at = tuple(tk["node"])
+                if "taken_levels" in tk:
+                    taken_levels = tk["taken_levels"]
+                    for line, n_, b_ in zip(
+                        exp_r[rec], taken_levels[0::2], taken_levels[1::2], strict=True
+                    ):
+                        line.now[at], line.before[at] = line.now[at] - n_, line.before[at] - b_
+                    continue
                 now_was, before, levels = tk["taker"]
                 t_ = 1 if before > now_was else -1
                 if "laid_back" not in e:
@@ -355,9 +376,13 @@ def main(argv: list[str]) -> int:
             s = e["line_pair"]
             amp_a, amp_b = e["amplitude"]
             re, im = exp_r[s]
-            for sense, where in ((-1, tuple(e["minus"])), (1, tuple(e["plus"]))):
-                re.now[where] = re.now[where] + amp_a
-                im.before[where] = im.before[where] + sense * amp_b
+            ends = ((-1, tuple(e["minus"])), (1, tuple(e["plus"])))
+            for (sense, where), laid in zip(ends, e.get("exact_lay", [None, None]), strict=True):
+                if laid is None:
+                    re.now[where] = re.now[where] + amp_a
+                    im.before[where] = im.before[where] + sense * amp_b
+                else:
+                    exp_r[s][laid[0]].now[where] = exp_r[s][laid[0]].now[where] + laid[1]
         book_ok, book_bad = True, None
         for ridx, (row_e, row_p) in enumerate(zip(expected_rows, post, strict=True)):
             for j, (le, lp) in enumerate(zip(row_e, row_p, strict=True)):
