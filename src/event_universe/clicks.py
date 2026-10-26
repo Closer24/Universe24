@@ -186,9 +186,11 @@ def one_click_floor(record: Record) -> dict[str, Any]:
 
 
 def charge(record: Record) -> dict[str, Any]:
-    """Gate 17: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name)."""
-    births = record.births
-    signs, sizes = record.signs_of(), sorted(record.laid_at_nothing())
+    """Gate 17: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births of a pair; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name; a merger's birth (MG-S1, a pair at rest into light, the line carrying its takes per end) counted apart, the light's charge 0 and its reading row 24's)."""
+    mergers = [b for b in record.births if "takes" in b]
+    births = [b for b in record.births if "takes" not in b]
+    signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
+    sizes = sorted(record.laid_at_nothing())
     residue = sum(1 for b in births for stood in b.get("stood", [[0], [0]]) if any(stood))
     sense_sum = sum(signs)
     opposite = sum(
@@ -221,6 +223,9 @@ def charge(record: Record) -> dict[str, Any]:
             if sizes
             else None,
             "children laid on a residue of their plane (W the Node's, not the lay's)": residue,
+            "mergers, a pair into light (MG-S1; the light's charge 0, read by row 24, not here)": len(
+                mergers
+            ),
             "at": births[0]["node"] if births else None,
             "verdict": verdict,
         }
@@ -228,17 +233,25 @@ def charge(record: Record) -> dict[str, Any]:
 
 
 def conservation_at_click(record: Record) -> dict[str, Any]:
-    """Gate 15: the conservation at the click, taken against booked over the births (the identity taken >= booked on every birth; the exact form is row 47)."""
+    """Gate 15: the conservation at the click, taken against booked over the births: where the birth carries the take's remainder (EX-S1, the remainder kept at the Node) the identity taken + the remainder before - the remainder after = booked on every birth, else the former identity taken >= booked (the exact form is row 47)."""
     births, (taken, booked) = record.births, record.takes_of()
-    exact = all(b["taken"] >= b["booked"] for b in births)
+    paid = [b for b in births if "remainder" in b]
+    identity = all(
+        b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] for b in paid
+    ) and all(b["taken"] >= b["booked"] for b in births if "remainder" not in b)
     return {
         "15 conservation at the click": {
             "births": len(births),
+            "births carrying the take's remainder (EX-S1)": len(paid),
             "taken per booked at the births (hundredths)": quot(taken, booked, HUNDRED),
             "verdict": "NOT READ: no birth in the record"
             if not births
+            else "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth (EX-S1)"
+            if identity and len(paid) == len(births)
+            else "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder (EX-S1), taken >= booked on the rest (the mergers' ends)"
+            if identity and paid
             else "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light)"
-            if exact
+            if identity
             else "NOT SHOWN",
         }
     }

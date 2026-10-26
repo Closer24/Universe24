@@ -32,6 +32,8 @@ VERDICTS = {  # the verdicts' words by name
     },
     "chiral": {
         "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
+        "15 conservation at the click": "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light)",
+        "47 the exact take": "NOT SHOWN exact: the excess above 0 on 17 births (EX-S1)",
         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -2 / 17",

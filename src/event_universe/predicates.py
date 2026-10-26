@@ -191,16 +191,24 @@ def exclusion(record: Record) -> dict[str, Any]:
 
 
 def exact_take(record: Record) -> dict[str, Any]:
-    """Row 47: the exact take, taken equal to booked on every birth (the excess 0); the credits' leak unread (a credit carries no booked walls)."""
+    """Row 47: the exact take, taken equal to booked on every birth (the excess 0), or, where the birth carries the take's remainder (EX-S1), the excess exactly the remainder's rise at the Node; the credits' leak unread (a credit carries no booked walls)."""
     births, (taken, booked) = record.births, record.takes_of()
-    exact = sum(1 for b in births if b["taken"] == b["booked"])
+    exact = sum(
+        1
+        for b in births
+        if b["taken"] - b["booked"] == b.get("remainder", 0) - b.get("remainder_was", 0)
+    )
+    kept = sum(1 for b in births if "remainder" in b)
     return {
         "47 the exact take": {
             "births taken exactly / in all": [exact, len(births)],
+            "births with the excess kept as the remainder (EX-S1)": kept,
             "taken per booked over the births (hundredths)": quot(taken, booked, HUNDRED),
             "verdict": unread_words("no birth", "taken equals booked on every line")
             if not births
             else "SHOWN: taken equals booked on every birth"
+            if exact == len(births) and not kept
+            else "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node (EX-S1)"
             if exact == len(births)
             else f"NOT SHOWN exact: the excess above 0 on {len(births) - exact} births (EX-S1)",
         }
