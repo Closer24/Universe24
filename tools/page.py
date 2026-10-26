@@ -86,7 +86,7 @@ function neighbour(i, axis) {
 function seek(i) { let k = 0; while (k + 1 < n && lines[k].i < i) k++; return k + 1; }
 function draw() {
   const line = lines[t - 1], before = lines[Math.max(t - 2, 0)], step = Math.max(1, line.i - before.i);
-  const held = new Set(); for (let k = 0; k + 1 < line.held.length; k += 2) held.add(line.held[k] + ":" + line.held[k + 1]);
+  const held = new Set(line.held.map(h => h[0] + ":" + h[1]));
   const frozen = new Set(line.frozen), turned = new Set(line.turned);
   const lens = line.X.map(length), lenMin = Math.min(...lens), lenSpan = Math.max(Math.max(...lens) - lenMin, 1e-9);
   lay(line);
@@ -213,8 +213,7 @@ def letters(current: list[Any]) -> str:
 
 
 def line_of(line: dict[str, Any]) -> dict[str, Any]:
-    """A Node line as the page carries it: X and the content as words of base 36, the current as letters per axis (the record's one flat list sliced by the Nodes' count), the turned, the frozen and the held (the Node then the axis of each held Link) as they are."""
-    count = len(line["X"])
+    """A Node line as the page carries it: X and the content as words of base 36, the current as letters, the turned, the frozen and the held as they are."""
     return {
         "i": int(line["i"]),
         "X": " ".join(word(int(x)) for x in line["X"]),
@@ -222,9 +221,7 @@ def line_of(line: dict[str, Any]) -> dict[str, Any]:
         "turned": line["turned"],
         "frozen": line["frozen"],
         "held": line["held"],
-        "current": [
-            letters(line["current"][a : a + count]) for a in range(0, len(line["current"]), count)
-        ],
+        "current": [letters(axis) for axis in line["current"]],
     }
 
 

@@ -96,7 +96,8 @@ def raised_cosine(h: int) -> tuple[int, ...]:
         raise ValueError("a plane packet has the half-width 2 or 3: a body is laid over its packet")
     doubled = [1 + 1, h - 1 - 1]
     while len(doubled) < h:
-        doubled.append(doubled[1] * doubled[-1] - doubled[-2])
+        *_, before, last = doubled
+        doubled.append(doubled[1] * last - before)
     return tuple(1 + 1 + t for t in doubled[:h])
 
 

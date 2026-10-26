@@ -23,11 +23,6 @@ from event_universe.decoder import (
     quot,
 )
 
-LIFTS, PAIRED = (
-    3,
-    2,
-)  # the three lifts the law births; a pair of credits to compare (the halves, the median)
-
 Decoded = list[tuple[dict[str, Any], str, Rational]]
 
 
@@ -83,7 +78,7 @@ def families(record: Record) -> dict[str, Any]:
     born = Counter(record.line_name[b["line_pair"]] for b in record.births)
     if not decoded:
         verdict = "NOT READ: no credit in the record"
-    elif within == len(decoded) and track_right == len(tracks) and len(born) >= LIFTS:
+    elif within == len(decoded) and track_right == len(tracks) and len(born) >= 3:
         verdict = "SHOWN (every credit within the one-click floor, every track read right)"
     elif within == len(decoded):
         verdict = (
@@ -131,14 +126,14 @@ def mass_ratios(record: Record) -> dict[str, Any]:
         found[f"{names[num][0]} leg in the clicks / header (parts per million)"] = quot(
             read_legs[num], sine_den(num, record.den) or 1, MIL
         )
-    if len(credited) < PAIRED:
+    if len(credited) < 2:
         read = (
             f"NOT SHOWN: {len(credited)} plane credited, a ratio needs two"
             if decoded
             else "NOT READ: no credit decoded"
         )
     else:
-        heavy, light = credited[-1], credited[-PAIRED]
+        heavy, light = credited[-1], credited[-2]
         clicks = quot(read_legs[heavy], read_legs[light], MIL) if read_legs[light] else None
         header = quot(sine_den(heavy, record.den), sine_den(light, record.den), MIL)
         floors = [f for f in floor_mil if f is not None]
@@ -169,12 +164,12 @@ def one_click_floor(record: Record) -> dict[str, Any]:
         return {"16 uncertainty floor (one click)": {"verdict": "NOT READ: no credit decoded"}}
     names = record.NAMES
     legs = sorted(((num, leg) for num, (_name, leg) in names.items() if leg), key=lambda kv: kv[1])
-    spacing = quot(abs(legs[-1][0] - legs[-2][0]), legs[-1][0], MIL) if len(legs) >= PAIRED else None
+    spacing = quot(abs(legs[-1][0] - legs[-2][0]), legs[-1][0], MIL) if len(legs) >= 2 else None
     return {
         "16 uncertainty floor (one click)": {
             "floor on x per credit, parts per million: min / middle / max": [
                 fl[0],
-                fl[len(fl) // PAIRED],
+                fl[len(fl) // 2],
                 fl[-1],
             ],
             "species spacing of the two heaviest, parts per million": spacing,
@@ -254,7 +249,7 @@ def conservation_at_click(record: Record) -> dict[str, Any]:
 
 def halves(pairs: list[tuple[int, Any]]) -> tuple[list[Any], list[Any]]:
     """The values split at the middle key, shallow and deep."""
-    med = sorted(p[0] for p in pairs)[len(pairs) // PAIRED]
+    med = sorted(p[0] for p in pairs)[len(pairs) // 2]
     return [p[1] for p in pairs if p[0] <= med], [p[1] for p in pairs if p[0] > med]
 
 
@@ -295,7 +290,7 @@ def lengthening(record: Record) -> dict[str, Any]:
     for at, cs in by_node.items():
         cs.sort(key=lambda c: int(c["i"]))
         spans += [
-            ((a["content"] + b["content"]) // PAIRED, b["i"] - a["i"])
+            ((a["content"] + b["content"]) // 2, b["i"] - a["i"])
             for a, b in zip(cs, cs[1:], strict=False)
             if b["i"] > a["i"]
         ]

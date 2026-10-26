@@ -10,7 +10,7 @@ from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, port_of, wrap
 from event_universe.core.rule3 import half, lattice, mirrored, quotient, remainder
 from event_universe.links import cross
-from event_universe.rows import LEVELS, PLANE, Line, Row
+from event_universe.rows import PLANE, Line, Row
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -68,8 +68,7 @@ def fall_of(
     node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, row: Row
 ) -> tuple[int | None, int, int]:
     """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls; the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
-    pairs = [(int(line.now[at]), int(line.before[at])) for line in row.lines]
-    gaps = [n * n - b * b for n, b in pairs]
+    gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in row.lines)]
     k = gaps.index(max(gaps))
     line = row.lines[k]
     now, before = int(line.now[at]), int(line.before[at])
@@ -86,8 +85,7 @@ def fall_of(
         moved = now + t * s
         return int(quotient(x * (w * (now * now - moved * moved) - t * s * pull), weight))
 
-    dist = abs(now - before)
-    full = fall(dist)
+    full = fall(dist := abs(now - before))
     if full < walls:
         return None, full, k
     for s in rule3.least_root(-w * x, -((w + w) * now + pull) * t * x, walls * weight, dist):
@@ -100,8 +98,8 @@ def lay(node: Node, rec: int, where: Any, levels: Any, sign: int = 1, line: int 
     """The one lay act: a record's levels (now, before per line: re_now, re_before, im_now, im_before for a plane) added at the Node `where` (or over the board), taken back with sign -1; with `line` named, `levels` is one count added to that line's now alone (the take's move and its undoing, CS4-S2)."""
     lines = node.records()[rec].lines
     if line is not None:
-        levels = tuple(levels if j == LEVELS * line else 0 for j in range(LEVELS * len(lines)))
-    for line_, now, before in zip(lines, levels[0::LEVELS], levels[1::LEVELS], strict=True):
+        levels = tuple(levels if j == PLANE * line else 0 for j in range(PLANE * len(lines)))
+    for line_, now, before in zip(lines, levels[0::PLANE], levels[1::PLANE], strict=True):
         line_.now[where] = line_.now[where] + sign * now
         line_.before[where] = line_.before[where] + sign * before
 
@@ -127,7 +125,7 @@ def momentum_of(
 def take_at(
     node: Node, at: tuple[int, ...], walls: int, rule: rule3.Rule, cause: int, rec: int | None = None
 ) -> tuple[int, int, int, int, int] | None:
-    """One exact take at a Node of the walls booked from the taken row (the gap-0 row's where none is named: a body's take) at its rule, on the line the fall's sign chooses (`fall_of`, CS4-S2): its level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the line's now before the take, its before, the line taken) or None."""
+    """One exact take at a Node of the walls booked from the taken row (the gap-0 row's where none is named: a body's take) at its rule, on the line the fall's sign chooses (`fall_of`, CS4-S2): its level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop; its log entry built in two lines since A48-S1's fold, kept as code). Returns (levels, fall, the line's now before the take, its before, the line taken) or None."""
     taken = node.records().index(node.emitter()) if rec is None else rec
     row = node.records()[taken]
     levels, fall, k = fall_of(node, at, walls, rule, row)

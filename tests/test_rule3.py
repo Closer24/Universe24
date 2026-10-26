@@ -102,11 +102,24 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
 
 
-LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 4, 6}), frozenset({12})
-# rows.py: the quartet's and the carrier's shapes, the width (the trace's 54 the file's key since the batch of 2026-10-26)
-ROW_INTEGERS = frozenset({8, 10, 128})
-# the record's writer and readers, no act of the Node: their scales are their own
-READERS = tuple(f"{n}.py" for n in "run decoder gates events circle board clicks predicates".split())
+LAW_INTEGERS, TOOL_INTEGERS = frozenset({0, 1}), frozenset({0, 1, 2, 3, 4, 6})
+# the fold's remainder by file (H-No-Numbers-In-Code-1 item 17, 2026-10-26): the Ports and the axes; Rule3's own line;
+# the shapes, the powers and the width (the trace's 54 the file's key); the Link wall's 4; the half widths; the turns;
+# the writer's marks; quartet.py's item 7 (the NamedTuples) deferred, its three as they stand
+FILE_INTEGERS = {
+    "ports.py": frozenset({2, 3}),
+    "rule3.py": frozenset({2, 3, 4}),
+    "rows.py": frozenset({2, 4, 8, 10, 128}),
+    "links.py": frozenset({4}),
+    "seed.py": frozenset({2, 3}),
+    "wave.py": frozenset({4}),
+    "run.py": frozenset({12, 24, 60}),
+    "quartet.py": frozenset({2, 3, 4}),
+}
+# the record's readers, Animate's since 00:42 UTC (their constants named at the module's top on reader-5), no act of the Node;
+# the writer run.py reads the inventory and not the names gate (its record keys are the files' words)
+READERS = tuple(f"{n}.py" for n in "decoder gates events circle board clicks predicates".split())
+WRITER = ("run.py",)
 NAMED_CALLS = {
     "refused",
     "get",
@@ -122,8 +135,9 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     for path in [*sorted(SOURCE.rglob("*.py")), *tools]:
         if path.name in READERS:
             continue
-        allowed = LAW_INTEGERS | (RULE_LINE_INTEGERS if path.name == "rule3.py" else frozenset())
-        allowed |= ROW_INTEGERS if path.name == "rows.py" else frozenset()
+        allowed = (
+            TOOL_INTEGERS if path in tools else LAW_INTEGERS | FILE_INTEGERS.get(path.name, frozenset())
+        )
         for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             if isinstance(item, ast.Constant) and type(item.value) in (int, float, complex):
                 if item.value not in allowed or type(item.value) is not int:
@@ -142,7 +156,7 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     found = []
     for path in sorted(SOURCE.rglob("*.py")):
         name = path.relative_to(SOURCE).as_posix()
-        if name.startswith("loader/") or name == "__init__.py" or name in READERS:
+        if name.startswith("loader/") or name == "__init__.py" or name in READERS + WRITER:
             continue
         tree = ast.parse(path.read_text(encoding="utf-8"))
         spoken = {id(item.value) for item in ast.walk(tree) if isinstance(item, ast.Expr)}

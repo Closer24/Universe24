@@ -83,7 +83,9 @@ class Node:
     def start_state(self) -> None:
         """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
         shape, nr = self.shape, len(self.records())
-        self.standing, self.crossed, self.beats = ([zeros(shape) for _ in range(nr)] for _ in range(3))
+        self.standing = [zeros(shape) for _ in range(nr)]
+        self.crossed = [zeros(shape) for _ in range(nr)]
+        self.beats = [zeros(shape) for _ in range(nr)]
         self.proper, self.closes, self.interval = zeros(shape), zeros(shape), 0
         self.log: list[dict[str, Any]] = []
         self.turns: list[tuple[int, int]] = []
@@ -186,9 +188,7 @@ class Node:
         starts: list[Any] | None,
     ) -> list[Line]:
         """Rule3's step of one row at every Node, the one function of a line: for each line the total S now - w before + SUM_j R_j m_j (+ the line's flux where the row carries its write inside the division), one carried division at the wall w per line. Backward the same act on the before slots with the division's direction -1."""
-        at = (
-            [line.now if direction == 1 else line.before for line in lines] if starts is None else starts
-        )
+        at = starts or [line.now if direction == 1 else line.before for line in lines]
         fluxes: list[Any] = flux or [0] * len(lines)
         totals = [
             r.self_coefficient * a - (r.wall * line.before if direction == 1 else 0) + f + m
@@ -254,11 +254,8 @@ class Node:
     def restore(self, lines: list[Line], kept: list[Line], top: Any) -> None:
         """Backward at the turned Nodes `top`: the row set to `kept`, the pre-state the exchange returned (the inverse at a turned Node is no act)."""
         for line, k in zip(lines, kept, strict=True):
-            line.now, line.before, line.rem = (
-                np.where(top, k.now, line.now),
-                np.where(top, k.before, line.before),
-                np.where(top, k.rem, line.rem),
-            )
+            line.now, line.before = np.where(top, k.now, line.now), np.where(top, k.before, line.before)
+            line.rem = np.where(top, k.rem, line.rem)
             if np.ndim(k.wall):
                 line.wall = np.where(top, k.wall, line.wall)
             if line.wr is not None:
@@ -285,10 +282,8 @@ class Node:
         """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the quartet's K0, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves."""
         for r, row, hrow in zip(self.rows_, self.rows(), held, strict=True):
             k = gram.conjugation(r.shape)
-            nows, befores = (
-                gram.matvec(k, [h.before for h in hrow]),
-                gram.matvec(k, [h.now for h in hrow]),
-            )
+            nows = gram.matvec(k, [h.before for h in hrow])
+            befores = gram.matvec(k, [h.now for h in hrow])
             for i, (line, h) in enumerate(zip(row, hrow, strict=True)):
                 line.now = np.where(top, nows[i], line.now)
                 line.before = np.where(top, befores[i], line.before)

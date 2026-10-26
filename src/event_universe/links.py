@@ -7,7 +7,7 @@ from typing import Any
 from event_universe.core.paces import odd_rounded
 from event_universe.core.ports import AXES, PORT_SIDES, across, port_of, wrap
 from event_universe.core.rule3 import odd as parity_of
-from event_universe.rows import LEVELS, Line, Row, zeros
+from event_universe.rows import PLANE, Line, Row, zeros
 
 
 def coupling_of(row: Row) -> int:
@@ -68,7 +68,7 @@ def turned(xs: list[Any], at: Link, scale: Any, gamma: Any) -> list[Any]:
     wl = link_wall(gamma)
     tc, ts, tw = wl * wl - at.odd * at.odd, (wl + wl) * at.odd, wl * wl + at.odd * at.odd
     found: list[Any] = []
-    for re_j, im_j in zip(xs[0::LEVELS], xs[1::LEVELS], strict=True):
+    for re_j, im_j in zip(xs[0::PLANE], xs[1::PLANE], strict=True):
         a_re, a_im = turn_pair(re_j, im_j, at.cosine, at.sine, scale)
         found += turn_pair(a_re, a_im, tc, ts, tw)
     return found

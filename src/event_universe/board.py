@@ -6,19 +6,8 @@ from collections import defaultdict
 from typing import Any
 
 from event_universe.core import paces
-from event_universe.core.ports import AXES
 from event_universe.core.rule3 import largest_below, quotient
 from event_universe.decoder import Record
-
-LISTED, FALLS_LISTED, LIFTS_LISTED = (
-    8,
-    6,
-    4,
-)  # the reader's list heads: the rows' and the tops' eight, the falls' six, the lifts' four
-QUARTER, LAST_PART = (
-    4,
-    3,
-)  # a body standing within the middle half of its span (a quarter each side); the last third of the marks
 
 
 def marks(record: Record) -> tuple[list[tuple[int, int, int]], list[tuple[int, int]]]:
@@ -42,9 +31,9 @@ def contraction(record: Record) -> dict[str, Any]:
         "6 contraction (the board, the reader's view)": {
             "at": at,
             "volume mean course (interval, mean)": [
-                (i, v) for i, v, _b in rows[:: max(1, len(rows) // LISTED)]
+                (i, v) for i, v, _b in rows[:: max(1, len(rows) // 8)]
             ],
-            "intervals with the mean volume falling": falls[:FALLS_LISTED],
+            "intervals with the mean volume falling": falls[:6],
             "turns (Node swaps) total": sum(len(line["turned"]) for line in record.nodes),
             "verdict": "SHOWN at the board: the mean volume falls"
             if falls
@@ -60,7 +49,7 @@ def shortening(record: Record) -> dict[str, Any]:
     after = [i for (i, d), (_j, e) in zip(steps, steps[1:], strict=False) if d < 0 and e > 0]
     return {
         "3 shortening then lengthening": {
-            "falls followed by a rise (the fall's interval)": after[:FALLS_LISTED],
+            "falls followed by a rise (the fall's interval)": after[:6],
             "verdict": "SHOWN at the board: a falling run between rising runs"
             if after
             else ("SHOWN in part: the course ends in a fall" if falls else "NOT SHOWN: no fall"),
@@ -71,10 +60,7 @@ def shortening(record: Record) -> dict[str, Any]:
 def returns_of(record: Record) -> list[tuple[int, int, int]]:
     """The marks at which the mean volume is back at or below the first mark's with a birth after the first mark (the rows' reading, kept beside the Node lines')."""
     rows, _steps = marks(record)
-    if not rows:
-        return []
-    _i0, v0, b0 = rows[0]
-    return [(i, v, b) for i, v, b in rows[1:] if v <= v0 and b > b0]
+    return [(i, v, b) for i, v, b in rows[1:] if v <= rows[0][1] and b > rows[0][2]] if rows else []
 
 
 def volumes(record: Record) -> list[tuple[int, list[int], int]]:
@@ -121,13 +107,13 @@ def recurring_bang(record: Record) -> dict[str, Any]:
     )
     return {
         "1 recurring bangs": {
-            "tops with every Node turning at once (interval)": whole[:LISTED],
-            "bottoms (interval, mean X, at Gamma at every Node)": bottoms[:LISTED],
-            "bangs numbered (the interval each begins)": bangs[:LISTED],
-            "births and body credits between the bangs": between[:LISTED],
+            "tops with every Node turning at once (interval)": whole[:8],
+            "bottoms (interval, mean X, at Gamma at every Node)": bottoms[:8],
+            "bangs numbered (the interval each begins)": bangs[:8],
+            "births and body credits between the bangs": between[:8],
             "rows' reading: marks back at or below the first mark's with a birth after it": returns_of(
                 record
-            )[:LIFTS_LISTED],
+            )[:4],
             "verdict": verdict,
         }
     }
@@ -143,11 +129,8 @@ def lift_of(record: Record) -> tuple[list[int], list[int]]:
             xs = [int(x) for x in line["X"]]
             lift = pull = 0
             for at, x in enumerate(xs):
-                lift += int(
-                    quotient(record.gamma * sum(xs[n] - x for n in neighbours(at, cube)), AXES * x)
-                )
-                root = largest_below(int(quotient(x, record.gamma)))
-                pull += root + root
+                lift += int(quotient(record.gamma * sum(xs[n] - x for n in neighbours(at, cube)), 3 * x))
+                pull += 2 * largest_below(int(quotient(x, record.gamma)))
             memo[id(line)] = (lift, pull)
         lifts.append(memo[id(line)][0])
         pulls.append(memo[id(line)][1])
@@ -165,11 +148,11 @@ def acceleration(record: Record) -> dict[str, Any]:
     last_run.reverse()
     quickening = sum(1 for a, b in zip(last_run, last_run[1:], strict=False) if b > a)
     lifts, pulls = lift_of(record)
-    third = max(1, len(lifts) // LAST_PART)
+    third = max(1, len(lifts) // 3)
     lift, pull = sum(lifts[-third:]), sum(pulls[-third:])
     return {
         "5 acceleration (the lengthening quickens)": {
-            "the last rising run's steps (per mark)": last_run[-FALLS_LISTED:],
+            "the last rising run's steps (per mark)": last_run[-6:],
             "steps larger than the one before": [quickening, max(len(last_run) - 1, 0)],
             "the Links' lift L and the mass pull at the last interval (LC-S1)": [lifts[-1], pulls[-1]]
             if lifts
@@ -177,7 +160,7 @@ def acceleration(record: Record) -> dict[str, Any]:
             "L and the pull summed over the last third": [lift, pull],
             "verdict": (
                 "SHOWN at the board: the rises grow from mark to mark"
-                if len(last_run) > 1 and quickening + quickening > len(last_run) - 1
+                if len(last_run) > 1 and quickening * 2 > len(last_run) - 1
                 else "NOT SHOWN: the rises do not grow"
                 if len(last_run) > 1
                 else "NOT READ: no rising run of two marks"
@@ -224,7 +207,7 @@ def horizon(record: Record) -> dict[str, Any]:
     """Gate 14: the frozen content against the rows' max content; a credit at a frozen Node would deny the horizon."""
     frozen = paces.frozen_content(record.gamma)
     at_frozen = [c for c in record.credits if c["content"] >= frozen]
-    cmax = max((int(r["content min/mean/max"][-1]) for r in record.rows), default=0)
+    cmax = max((int(r["content min/mean/max"][2]) for r in record.rows), default=0)
     verdict = (
         "SHOWN as silence (no credit at a frozen Node)"
         if cmax >= frozen and not at_frozen
@@ -300,12 +283,11 @@ def neighbours(at: int, cube: int) -> list[int]:
 
 
 def maxwell(record: Record) -> dict[str, Any]:
-    """Row 37: Maxwell's one Link per interval from the Node lines' gap-0 currents (one flat list, axis by axis, the Node i along the axis a at a count + i): a Node whose current turns on at an interval stood within one Link of a Node with a current the interval before; the violations counted."""
+    """Row 37: Maxwell's one Link per interval from the Node lines' gap-0 currents: a Node whose current turns on at an interval stood within one Link of a Node with a current the interval before; the violations counted."""
     cube = int(record.run["cube"])
-    count = cube * cube * cube
     lit = []
     for line in record.nodes:
-        on = {i for i in range(count) if any(line["current"][i::count])}
+        on = {i for axis in line["current"] for i, c in enumerate(axis) if c}
         lit.append(on | {n for i in on for n in neighbours(i, cube)})
     violations = grown = 0
     for before, after in zip(lit, lit[1:], strict=False):
@@ -334,9 +316,7 @@ def well(record: Record) -> dict[str, Any]:
     for c in record.credits:
         spans[(tuple(c["node"]), c["line"])].append(int(c["i"]))
     n = record.intervals
-    standing = sum(
-        1 for xs in spans.values() if min(xs) + min(xs) <= n and max(xs) * QUARTER >= (QUARTER - 1) * n
-    )
+    standing = sum(1 for xs in spans.values() if min(xs) * 2 <= n and max(xs) * 4 >= 3 * n)
     frozen = sum(len(line["frozen"]) for line in record.nodes)
     return {
         "45 the bodies' well, binding and collapse": {

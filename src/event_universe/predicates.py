@@ -10,12 +10,6 @@ from event_universe.core.rule3 import largest_below
 from event_universe.decoder import HUNDRED, Record, quot
 from event_universe.rows import QUARTET
 
-LIFTS, PAIRED, LISTED = (
-    3,
-    2,
-    8,
-)  # the three lifts the law births; a pair of beats or marks to compare; the reader's list head
-
 
 def unread(key: str, why: str, predicate: str) -> dict[str, Any]:
     """A row the record cannot carry: NOT READ, why, and the predicate it would be read by."""
@@ -77,7 +71,7 @@ def coulomb(record: Record) -> dict[str, Any]:
 
     def course(kind: bool) -> int | None:
         """The last mean against the first by cross multiplication: above 0 parting, below 0 approaching."""
-        if len(means[kind]) < PAIRED:
+        if len(means[kind]) < 2:
             return None
         (s0, n0), (s1, n1) = means[kind][0], means[kind][-1]
         return (s1 * n0 > s0 * n1) - (s1 * n0 < s0 * n1)
@@ -128,19 +122,19 @@ def lifts(record: Record) -> dict[str, Any]:
                 [record.line_name[line], quot(*beats[line], HUNDRED)] for line in order
             ],
             "verdict": "NOT READ: no birth and fewer than two planes credited; the predicate: three lifts born, the beats ordered as the legs"
-            if not born and len(beats) < PAIRED
+            if not born and len(beats) < 2
             else "SHOWN: three lifts born, the beats ordered as the legs (the heavier the faster)"
-            if len(born) >= LIFTS and len(beats) >= PAIRED and ordered
+            if len(born) >= 3 and len(beats) >= 2 and ordered
             else "SHOWN in part: "
             + ", ".join(
                 p
                 for p, ok in (
-                    (f"{len(born)} lifts born", len(born) >= LIFTS),
-                    ("the beats ordered as the legs", len(beats) >= PAIRED and ordered),
+                    (f"{len(born)} lifts born", len(born) >= 3),
+                    ("the beats ordered as the legs", len(beats) >= 2 and ordered),
                 )
                 if ok
             )
-            if (len(born) >= LIFTS) or (len(beats) >= PAIRED and ordered)
+            if (len(born) >= 3) or (len(beats) >= 2 and ordered)
             else f"NOT SHOWN: {len(born)} lifts born, the beats of {len(beats)} planes not ordered as the legs",
         }
     }
@@ -148,7 +142,7 @@ def lifts(record: Record) -> dict[str, Any]:
 
 def confinement(record: Record) -> dict[str, Any]:
     """Row 27: confinement, no third alone: every child laid where its plane stood at nothing carries the whole charge T div 2 and none a third of it; every take whole levels."""
-    half, third = record.T // PAIRED, record.T // (PAIRED * LIFTS)
+    half, third = record.T // 2, record.T // 6
     whole = thirds = 0
     for b in record.births:
         for w, stood in zip(b["W_children"], b.get("stood", [[0], [0]]), strict=True):
@@ -328,14 +322,14 @@ def decay(record: Record) -> dict[str, Any]:
     return {
         "49 the exponential decay": {
             "spacings between a body's credits (proper count: how many)": dict(
-                sorted(spacings.items())[:LISTED]
+                sorted(spacings.items())[:8]
             ),
             "verdict": "NOT READ: fewer than two spacings; the predicate: the spacing geometric"
-            if total < PAIRED
+            if total < 2
             else "SHOWN: the spacings' counts fall from the least spacing (geometric)"
             if falling and len(counts) > 1
             else "NOT SHOWN: the body's clicks periodic at its beat (one spacing holds the majority)"
-            if max(counts) + max(counts) > total
+            if max(counts) * 2 > total
             else "NOT SHOWN: the spacings' counts do not fall from the least",
         }
     }

@@ -1,4 +1,4 @@
-"""The writer: the world's intervals run, a reader's row at every twelfth and two early marks, then N intervals run back and compared bit for bit by the state's hash (the arrow's reading on the record); the record is the two files, the constants, the counts, the turns, the rows, the run back and the log as the run left it. Usage: `python -m event_universe.run <world.json> <out.json> [back N]`; the record carries a Node line per interval (X, content, turned, frozen, the Links held at the wall, the gap-0 current), every field one flat list of integers, for the page."""
+"""The writer: the world's intervals run, a reader's row at every twelfth and two early marks, then N intervals run back and compared bit for bit by the state's hash (the arrow's reading on the record); the record is the two files, the constants, the counts, the turns, the rows, the run back and the log as the run left it. Usage: `python -m event_universe.run <world.json> <out.json> [back N]`; the record carries a Node line per interval (X, content, turned, frozen, the Links held at the wall) for the page."""
 
 from __future__ import annotations
 
@@ -97,17 +97,16 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
 
 
 def node_lines(node: Node) -> dict[str, Any]:
-    """The record's Node and Link line at an interval, every Node by its index in the board's order: the carrier's level X, the content, the turned Nodes, the frozen Nodes (the Link pace 0), the Links held at the wall (the factor 0) as the Node then the axis of each held Link in turn (the k-th at 2 k and 2 k + 1), and every Link's current of the gap-0 line, F_ij from the Node along each axis (the sign the direction, the size the flow), axis by axis in one flat list (the Node i along the axis a at a count + i, count the Nodes'; LINE_UP row 117); the page draws the board from these and nothing else."""
+    """The record's Node and Link line at an interval, every Node by its index in the board's order: the carrier's level X, the content, the turned Nodes, the frozen Nodes (the Link pace 0), the Links held at the wall (the factor 0) as [Node, axis] pairs, and every Link's current of the gap-0 line, F_ij from the Node along each axis (the sign the direction, the size the flow); the page draws the board from these and nothing else."""
     carrier = node.row(CARRIER).lines[0]
     content = node.content()
     pace = paces.link_pace_of(node.gamma, content)
     factors = node.link_factors(None, readings.frozen_of(node, content))
     held = [
-        x
+        [i, axis]
         for axis in range(AXES)
         for i, f in enumerate(ints(factors[port_of(axis, 0)]))
         if f == 0
-        for x in (i, axis)
     ]
     emitter = node.emitter().lines[0]
     return {
@@ -117,7 +116,7 @@ def node_lines(node: Node) -> dict[str, Any]:
         "turned": [i for i, t in enumerate(node.turned.reshape(-1).tolist()) if t],
         "frozen": [i for i, p in enumerate(ints(pace)) if p == 0],
         "held": held,
-        "current": [x for axis in range(AXES) for x in ints(link_current(emitter, port_of(axis, 0)))],
+        "current": [ints(link_current(emitter, port_of(axis, 0))) for axis in range(AXES)],
     }
 
 
@@ -197,10 +196,11 @@ def record(
 def main(argv: list[str]) -> None:
     """The writer from the command line: the world file, the output file, `back N` for the run back."""
     sys.set_int_max_str_digits(0)
-    universe, world = load_world(argv[1])
+    _, world_path, out_path, *_rest = argv
+    universe, world = load_world(world_path)
     back = int(argv[argv.index("back") + 1]) if "back" in argv else 0
     found = record(universe, world, back, lambda line: print(line, flush=True))
-    with open(argv[2], "w", encoding="utf-8") as out:
+    with open(out_path, "w", encoding="utf-8") as out:
         json.dump(found, out)
 
 

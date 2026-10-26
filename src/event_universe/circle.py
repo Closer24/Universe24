@@ -4,29 +4,23 @@ from __future__ import annotations
 
 from event_universe.core import rule3
 
-LEAST_PRIME, GAUSS_MODULUS = (
-    2,
-    4,
-)  # the first prime (the trial division's start, the strong test's power of two); a prime splits in the Gaussian integers where it is 1 mod 4
-
 
 def witnesses(n: int) -> list[int]:
     """The primes below n's bit length (and two), the strong test's witnesses: the primes to 7 decide below 2^31, to 37 below 2^81."""
-    bound = n.bit_length() + LEAST_PRIME
-    return [p for p in range(LEAST_PRIME, bound) if all(p % q for q in range(LEAST_PRIME, p))]
+    return [p for p in range(2, n.bit_length() + 2) if all(p % q for q in range(2, p))]
 
 
 def is_prime(n: int) -> bool:
     """A prime by the strong test at the witnesses, enough far beyond the width."""
-    if n < LEAST_PRIME:
+    if n < 2:
         return False
     small = witnesses(n)
     for p in small:
         if n % p == 0:
             return n == p
     d, s = n - 1, 0
-    while d % LEAST_PRIME == 0:
-        d, s = d // LEAST_PRIME, s + 1
+    while d % 2 == 0:
+        d, s = d // 2, s + 1
     for a in small:
         x = pow(a, d, n)
         if x in (1, n - 1):
@@ -42,11 +36,11 @@ def is_prime(n: int) -> bool:
 
 def divisor_of(n: int) -> int:
     """A proper divisor of a composite n by Pollard's rho (Brent's cycle), the gcd rule3's lattice; the constant stepped where the walk closes."""
-    if n % LEAST_PRIME == 0:
-        return LEAST_PRIME
+    if n % 2 == 0:
+        return 2
     c = 1
     while True:
-        y, m, g, r, q = LEAST_PRIME, n.bit_length(), 1, 1, 1
+        y, m, g, r, q = 2, n.bit_length(), 1, 1, 1
         x = ys = y
         while g == 1:
             x = y
@@ -59,7 +53,7 @@ def divisor_of(n: int) -> int:
                     y = (y * y + c) % n
                     q = q * abs(x - y) % n
                 g, k = int(rule3.lattice(q, n)), k + m
-            r += r
+            r *= 2
         if g == n:
             g = 1
             while g == 1:
@@ -86,7 +80,7 @@ def circle_of(den: int) -> list[tuple[int, int]]:
     scale, gauss = 1, []
     for p in sorted(set(primes)):
         e = primes.count(p)
-        if p % GAUSS_MODULUS != 1:
+        if p % 4 != 1:
             scale *= p**e
             continue
         a = 1
@@ -100,11 +94,11 @@ def circle_of(den: int) -> list[tuple[int, int]]:
     for (a, b), e in gauss:
         grown = set()
         for x, y in points:
-            for j in range(e + e + 1):
+            for j in range(2 * e + 1):
                 zx, zy = 1, 0
                 for _ in range(j):
                     zx, zy = zx * a - zy * b, zx * b + zy * a
-                for _ in range(e + e - j):
+                for _ in range(2 * e - j):
                     zx, zy = zx * a + zy * b, -zx * b + zy * a
                 grown.add((x * zx - y * zy, x * zy + y * zx))
         points = grown
