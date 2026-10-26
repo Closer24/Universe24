@@ -1,0 +1,495 @@
+{
+ "record": "/dev/shm/tmp/mb2/hq_chiral5_60_lift3.json",
+ "per row": {
+  "2": {
+   "shape": 2,
+   "births": 8,
+   "taken back": 0,
+   "delays": {},
+   "F zero": 0,
+   "F nonzero": 0,
+   "W sum zero": 5,
+   "refused at the next close": {},
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "0": {
+   "shape": 2,
+   "births": 4,
+   "taken back": 2,
+   "delays": {
+    "2": 1,
+    "1": 1
+   },
+   "F zero": 0,
+   "F nonzero": 0,
+   "W sum zero": 3,
+   "refused at the next close": {},
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "3": {
+   "shape": 8,
+   "births": 10,
+   "taken back": 10,
+   "delays": {
+    "1": 10
+   },
+   "F zero": 0,
+   "F nonzero": 0,
+   "W sum zero": 9,
+   "refused at the next close": {},
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "1": {
+   "shape": 2,
+   "births": 7,
+   "taken back": 0,
+   "delays": {},
+   "F zero": 0,
+   "F nonzero": 0,
+   "W sum zero": 7,
+   "refused at the next close": {},
+   "credits at the ends after": 0,
+   "h zero": 0
+  }
+ },
+ "births": [
+  {
+   "i": 3,
+   "row": 2,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 3,
+   "row": 2,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 0,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 0,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": 2,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 1,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 5,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 5,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 5,
+   "row": 0,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -12240,
+    12096
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 6,
+   "row": 2,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 6,
+   "row": 0,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 6,
+   "row": 1,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 7,
+   "row": 2,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    17136
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 2,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 10,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -71712,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 10,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 10,
+   "row": 1,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 10,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 11,
+   "row": 1,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 11,
+   "row": 1,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 11,
+   "row": 2,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -17856,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 11,
+   "row": 1,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 13,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 13,
+   "row": 1,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 16,
+   "row": 2,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 17,
+   "row": 2,
+   "shape": 2,
+   "wave": null,
+   "F": null,
+   "W": [
+    -18000,
+    17690
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 17,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 18,
+   "row": 3,
+   "shape": 8,
+   "wave": null,
+   "F": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  }
+ ]
+}

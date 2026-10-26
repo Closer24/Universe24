@@ -1,0 +1,33 @@
+{
+ "universe": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/mb2/tools/derivations/open_items/H-Quartet-Carriage-2/worlds/universe_lift3.json",
+ "shape": [
+  5,
+  5,
+  5
+ ],
+ "intervals": 60,
+ "seed": [
+  {
+   "lay": "sea",
+   "row": 0
+  },
+  {
+   "lay": "hole",
+   "at": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "lay": "at",
+   "row": 0,
+   "centre": [
+    1,
+    0,
+    0
+   ],
+   "quanta": 1
+  }
+ ]
+}
