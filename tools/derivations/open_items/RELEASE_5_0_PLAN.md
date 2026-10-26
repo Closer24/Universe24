@@ -29,6 +29,14 @@ The two commits main holds and the branch does not are main's own return of 2026
    - the hands' folders under tools/derivations: carried whole, the project's derivation record, every law's proof and every refusal's measure.
    So nothing of the carry waits on a word any more; the owner's word remains needed on the release itself, at step 6 of the order below.
 
+## 2b. What remains of the old main after the release (the owner's question of 17:5x UTC)
+
+The content after the release is the branch's, and the history is main's: those are two different things and both are wanted.
+
+- **The content.** The release commits the BRANCH'S TREE. Main holds 93 files the branch does not: 38 modules of the engine's old source, 43 tests of the old suite, 10 tools and docs/CLAIMS.md with docs/ERRATA.md. A plain merge would keep every one of them, since a merge takes a file that only one side has. So the release does not take the merge's default: it commits the branch's tree exactly, with both parents, after main's own two commits have been merged INTO the branch (so nothing of main's is lost by accident rather than by decision). Every one of the 93 is then named in the confirming hand's report as dropped, and the two documents are read before they go: docs/CLAIMS.md and docs/ERRATA.md belong to the 4.0 claims and either carry forward into the 5.0 documents or are named as retired in the changelog, which is the Scribe's one item here.
+- **The history.** Main's commits stay, and the tag 4.0.0 stays on its own commit. That is what makes the rollback of section 5 one revert instead of a rescue, and it is why the release is a merge and never a force push or a rewrite. Nothing of main's past is erased; what the released tree holds is ours.
+- **So the answer in one line:** after the release every file of the project comes from our branch, and every commit of main's past is still there behind it.
+
 ## 3. The order of the commit itself
 
 1. The branch green and the folds in (section 2, items 1 and 2).
@@ -37,7 +45,7 @@ The two commits main holds and the branch does not are main's own return of 2026
 4. The release's files written (item 6) and pushed on the branch.
 5. H-Confirm-Release-5-1 reports; every refusal mended and the report re-run until it names none.
 6. The owner's word on the release itself (the carry decided at 17:3x UTC).
-7. The commit onto main: a merge of engine-5.0-test into main with no fast forward, its message naming the release, the laws of the cycle and the branch's head sha; no force, no rewrite, no pull request (the owner's standing rule), main's history kept.
+7. The commit onto main: a merge of engine-5.0-test into main with no fast forward, carrying the BRANCH'S TREE exactly (section 2b: the 93 files main alone holds are dropped by decision and named in the confirming hand's report, not kept by the merge's default), its message naming the release, the laws of the cycle and the branch's head sha; no force, no rewrite, no pull request (the owner's standing rule), main's history kept.
 8. The tag 5.0.0 on that commit, the Zenodo deposit as the former releases, and the branch left standing for the next cycle.
 9. The checks run on main by their own workflow at the push: their result is read and named here within the hour. A red check on main after a release is the release's own failure and is mended at once on the branch and re-committed, never left.
 
