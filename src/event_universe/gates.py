@@ -330,6 +330,9 @@ TABLE: tuple[Row, ...] = (
     predicates.neutrino,
     predicates.binds,
     predicates.scattering,
+    predicates.two_slits,
+    predicates.bell,
+    predicates.ghz,
     conservations,
     constants,
 )

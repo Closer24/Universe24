@@ -6,8 +6,9 @@ from collections import Counter, defaultdict
 from typing import Any
 
 from event_universe.circle import circle_of
+from event_universe.core.ports import AXES
 from event_universe.core.rule3 import largest_below
-from event_universe.decoder import HALF, HUNDRED, LIFTS, LISTED, PAIR, THIRDS, Record, quot
+from event_universe.decoder import HALF, HUNDRED, LIFTS, LISTED, PAIR, QUARTERS, THIRDS, Record, quot
 from event_universe.rows import QUARTET
 
 
@@ -381,3 +382,100 @@ def scattering(record: Record) -> dict[str, Any]:
         "two packets of one plane are not told apart by their line, and the momentum across the click is row 23",
         "the packets scatter, the momentum summed before and after",
     )
+
+
+SETTINGS = (
+    (1, 0),
+    (1, 1),
+    (12, 5),
+    (5, 12),
+)  # Bell's (p, q), two per end: the outcome sign(p re + q im)
+
+
+def two_slits(record: Record) -> dict[str, Any]:
+    """Row 55: the two slits (QG-S2), two gap-0 lays at one centre with one wave mirrored on one axis, read from the seed; the fringe (the gap-0 row's meetings at the dark offsets 4 C_d^2 < den^2 none and at the bright many over the beams' overlap) is counted by the hand's reader alone (H-Quantum-Gates-2/predicates_qg.py), the count owed to the decoder where a seed carries the beams."""
+    rows, seed = record.run["universe"]["rows"], record.run["world"].get("seed", [])
+    lays = [s for s in seed if s.get("wave") and int(rows[s["row"]]["pair"][0]) == record.den]
+    beams = [(a, b) for a in lays for b in lays if a is not b and a["centre"] == b["centre"]]
+    mirrored = [
+        (a, b)
+        for a, b in beams
+        if sum(x == -y != 0 for x, y in zip(a["wave"], b["wave"], strict=True)) == 1
+        and sum(x == y for x, y in zip(a["wave"], b["wave"], strict=True)) == AXES - 1
+    ]
+    why = (
+        "two gap-0 beams mirrored at one centre in the seed, their fringe the hand's count"
+        if mirrored
+        else "no two gap-0 packets at one centre with one wave mirrored on one axis in the seed"
+    )
+    return unread(
+        "55 the two slits",
+        why,
+        "the gap-0 row's meetings at the dark offsets 0 over the beams' overlap, at the bright offsets many",
+    )
+
+
+def bell(record: Record) -> dict[str, Any]:
+    """Row 56: Bell (QG-S3), S = E(a, b) - E(a, b') + E(a', b) + E(a', b') over the born pairs' two ends at their first clicks after the birth, each end's outcome the sign of p re_now + q im_now of its frame under two settings; nature's 2 sqrt 2 as the integer inequality num^2 > 8 den^2 on S = num / den over the pairs; the law's bound |S| <= 2 (every outcome a function of its own Node, the one-Link reach) with the senses' E = -1 beside it."""
+    pairs = []
+    for b in record.births:
+        ends = [
+            next(
+                (
+                    c["frame"]
+                    for c in record.credits
+                    if c["node"] == where
+                    and c["line"] == b["line_pair"]
+                    and int(c["i"]) > int(b["i"])
+                    and "re_now" in c["frame"]
+                ),
+                None,
+            )
+            for where in (b["minus"], b["plus"])
+        ]
+        pairs += [ends] if None not in ends else []
+    if not pairs:
+        return unread(
+            "56 Bell",
+            f"{len(record.births)} births, no born pair clicked at both ends",
+            "S from the pairs' two ends under two settings each, S^2 > 8 as nature",
+        )
+    e = [
+        sum(
+            ((u := (p * m["re_now"] + q * m["im_now"]) * (r * n["re_now"] + t * n["im_now"])) > 0)
+            - (u < 0)
+            for m, n in pairs
+        )
+        for p, q in SETTINGS[:PAIR]
+        for r, t in SETTINGS[PAIR:]
+    ]
+    s, opposite = (
+        e[0] - e[1] + e[2] + e[3],
+        sum(b["W_children"][0] * b["W_children"][1] < 0 for b in record.births),
+    )
+    verdict = (
+        "SHOWN as nature: S^2 > 8 at the pairs' clicks"
+        if s * s > PAIR * QUARTERS * len(pairs) ** PAIR
+        else f"NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = {s} / {len(pairs)} (the law's bound by the one-Link reach, every end's outcome a function of its own Node; the senses' E = -1 SHOWN on {opposite} of {len(record.births)} births)"
+    )
+    return {
+        "56 Bell": {
+            "births": len(record.births),
+            "pairs clicked at both ends": len(pairs),
+            "E per setting pair (same - opposite)": e,
+            "S as a rational": (s, len(pairs)),
+            "verdict": verdict,
+        }
+    }
+
+
+def ghz(record: Record) -> dict[str, Any]:
+    """Row 57: the GHZ gate (QG-S4), three ends with one root; a birth gives two children at one Link's ends and a shared take at one Node four, so no three-ended click is in the record."""
+    shared = dict(sorted(Counter(int(b.get("children_at_node", 1)) for b in record.births).items()))
+    return {
+        "57 GHZ": {
+            "births": len(record.births),
+            "births by the pairs taken at one Node in one close": shared,
+            "verdict": "NOT READ: a birth gives two ends at one Link and a shared take four, no three ends with one root in the record; the predicate: M = E(xyy) + E(yxy) + E(yyx) - E(xxx) over three-ended births, M^2 > 4 as nature (|M| <= 2 for every local reading)",
+        }
+    }

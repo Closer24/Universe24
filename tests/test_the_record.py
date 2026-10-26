@@ -25,13 +25,20 @@ VERDICTS = {  # the verdicts' words by name
         "9 collisions": "NOT SHOWN: the credited Nodes receding",
         "22 Coulomb's sign": "NOT SHOWN: unlike senses do not approach, like senses do not part",
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -16 / 16",
     },
     "chiral": {
         "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -6 / 17",
     },
-    "bodies": {"37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link"},
+    "bodies": {
+        "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link",
+        "55 the two slits": "NOT READ: no two gap-0 packets at one centre",
+        "56 Bell": "NOT READ: 0 births, no born pair clicked at both ends",
+        "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four",
+    },
 }
 
 
@@ -43,7 +50,7 @@ def loaded(name: str) -> dict[str, Any]:
 def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
     kinds = {int(k[:2]): kind_of(v["verdict"]) for k, v in found.items() if k[:2].strip().isdigit()}
-    assert len(kinds) == 54
+    assert len(kinds) == 57
     assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
     assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == {14, 34}  # the horizon
     for gate, verdict in VERDICTS[name].items():

@@ -65,6 +65,9 @@ LABELS = {
     "52": "a third child",
     "53": "a fast packet binds",
     "54": "two packets scatter",
+    "55": "the two slits",
+    "56": "Bell's bound holds",
+    "57": "the GHZ gate",
     "the conservations in the clicks": "the clicks conserve",
     "the three constants": "the three constants hold",
 }
