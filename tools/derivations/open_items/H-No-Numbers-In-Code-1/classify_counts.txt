@@ -1,0 +1,38 @@
+sites beyond 0, 1, -1: 331
+D D-TRACE               1  TRACE = 54, a number of the universe under derivation by two hands (rows.py)
+A A-PORTS-DEF           2  ports.py: AXES = 3 and SIDES = 2, the two definitions the lattice's names rest on
+A A-ROWS-SHAPES         6  rows.py: the rows' shapes CARRIER 10, POTENTIAL 4, PLANE 2, QUARTET 8 and the acts' order (3, 4 in order_of)
+A A-HELD-POWERS         2  rows.py:74, the held walls' powers: 4 the time line's, 2 the axis lines' (held_wall)
+B B-WIDTH               2  128 the law's width (decoder.WIDTH); 64 = WIDTH div 2 (rows.HALF_WIDTH), derived and typed
+C C-UNITS               9  the readers' units named once with their meaning: the million MIL, the hundred HUNDRED, the thousand THOUSAND,
+A A-PORTS6              1  6 = PORTS in wall_of, w = 6 den Gamma^2 G^2 (ports.py names PORTS the one definition of Rule3's 6)
+A A-SIDESPORTS12        2  12 = SIDES x PORTS, twice the six: the mass D_i (rule3.mass) and the decoder's re-typed weight 12 p0^2 G^2 (de
+B B-QUADRATIC           4  rule3.least_root: the quadratic's own 4 a c, 2 a, and the root's second neighbour s + 2
+B B-UNIT-3TS            1  3 T s the plane's unit (rule3.unit_of, the conventions' row 12)
+B B-HELD-WRITE-4        2  4 X (forms 54 den Gamma^2 - trace p0^2) p0 the held write (rule3.held_numerator); 4 Gamma^3 G^2 the share's wa
+B B-LINK-WALL-4G        2  W = 4 Gamma the Link's wall of the tangent triple, typed twice (links.turned, decoder.solve)
+A A-POWER-WRITTEN      12  x ** 2, x ** 3 (den**2, gamma**2, gamma**3 the paces' N_0, 2 Gamma^3 G^2 the take's weight): the square and th
+A A-POW2               12  2 ** e, 2 ** width: a power of two (the lattice's halves, the width's room): 1 << e
+A A-CYC-INDEX          76  quartet.py: the slot of a Cyc (a[2], a[3], a[4] the power of two) or a Gauss (g[2] the denominator) read by in
+A A-HALF-UP             2  quartet.nearest: (2 x + n) div 2 n, the half-up rounding (paces.rounded's own form, numerator + numerator over
+C C-CIRCLE             13  circle.py (a reader by the law's letter, den's circle from den alone): primality's 2, Pollard's start and doub
+C C-RECORD-SLOT         8  a reader's field read by index: lines[falls[0] - 2], rows[0][2], ["content min/mean/max"][2], credited[-2], le
+C C-THREE-LEVELS        2  decoder.carrier_levels: the three carrier levels (i - 3, i - 2, i - 1), the reader's own count
+B B-LAW-THIRD           1  T div 6 a third of the charge, no third alone (predicates.confinement, row 27)
+A A-TUPLE-SLOT          7  an act's tuple read by index: the Birth's k[2], k[3], kid[2] (close.py), act(...)[2] the write's return (node.
+E E-REFUSAL-HEAD        1  paces.certified: the refusal's message lists undecided[:3], a count no act reads (a message's head)
+A A-HALF               34  the halving: x // 2, quotient(x, 2), division_forward(x, 2, 0), (low + high) div 2 the bisection's middle, w /
+A A-PARITY              2  the parity: remainder(x, 2), x % 2, k % 2, reversals % 2 (circle apart)
+C C-LISTED             16  the readers' list heads and samples typed inline: [:8], [:6], [-6:], [:4], // 8 every eighth, // 3 the last th
+C C-THRESHOLD          20  the readers' counts typed inline: fewer than two (len < 2, >= 2), three lifts born (>= 3), the majority (x * 2
+B B-READER-PULL         2  board.lift_of: the pull 2 largest_below(X div Gamma) and the lift over 3 x (LC-S1's forms re-typed by the read
+A A-AXES3               7  3 = AXES: range(3) over the axes (gates, node), the mean over the three axes 3 den (seed.running_rotation), li
+A A-AXES-CYCLIC         4  wrap(axis + 2, AXES): the third axis of the cyclic triple, equal to wrap(axis - 1, AXES) (links.row_twist, lin
+A A-PORT-OF-AXIS       23  2 * axis, 2 * a (+1): the Port of an axis and side, SIDES * axis + side (close, gram, links, run, take)
+A A-PLANE-LINES        24  the plane's two lines (re, im): xs[0::2], 2 * p (+1), found[2 * p], m[2 * r], quotient(shape, 2), 2 * shape - 
+B B-SIGN                1  rule3.signed_quotient: the sign (x >= 0) * 2 - 1
+B B-RAISED-COSINE       6  seed.raised_cosine: the half-widths 2 or 3 (the law's envelope), the doubled cosine 2 cos 0 = 2 and w_k = 2 + 
+B B-SECOND-BEAT         1  gram.period: k = 2, the search from the second multiple of the count
+B B-TWICE              23  the law's twice, 2 * x: the reach 2 num p^2 Q (rule3), K-S1's 2 G^2 (2 Gamma - 1), the phase line's 2 Gamma an
+? UNPLACED              0
+by class: {'D': 1, 'A': 216, 'B': 45, 'C': 68, 'E': 1}
