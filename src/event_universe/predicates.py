@@ -311,7 +311,7 @@ def bell(record: Record) -> dict[str, Any]:
     ]
     s, opposite = (
         e[0] - e[1] + e[2] + e[3],
-        sum(b["W_children"][0] * b["W_children"][1] < 0 for b in record.births),
+        sum(a * c < 0 for a, c in record.charges_of()),
     )
     n = len(pairs)
     verdict = (

@@ -16,7 +16,7 @@ from tests.laws import ROOT, load_file, world_of
 RECORDS, WIDTH = ROOT / "examples" / "records", 128
 CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
-    # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the Links lengthening in the clicks, under GP-S1's lay) and gains 47 (the exact take, the excess kept as the remainder, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 and 17 kept by the decoder's read of the remainder and of the merger's birth; the bodies gain 8 and 16 with the credits the remainder pays; the hole under PL-S1 before: 9 and 22 among them under the former write of 2 W after the step
+    # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the Links lengthening in the clicks, under GP-S1's lay) and gains 47 (the exact take, the excess kept as the remainder, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 kept by the decoder's read of the remainder, 17 lost by the engine's bug at a merger's tie end (H-Children-Charge-Bug-1: the light laid as the charged child's lay, the children's own charges -36,000 over the births; SHOWN again at the fix); the bodies gain 8 and 16 with the credits the remainder pays; the hole under PL-S1 before: 9 and 22 among them under the former write of 2 W after the step
     "hole": {4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45, 47, 58, 59, 60, 62},
     "chiral": {
         2,
@@ -28,7 +28,6 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         10,
         15,
         16,
-        17,
         18,
         19,
         21,
@@ -64,7 +63,7 @@ VERDICTS = {  # the verdicts' words by name
     "chiral": {
         "24 the merger (a pair into light)": "SHOWN: 2 pairs into light (the gap-0 children born from a gapped record's take)",
         "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 2956 of 2956 frames",
-        "17 charge conservation": "SHOWN: the senses sum to 0; the magnitude SHOWN: one |W| on every child laid where its plane stood at nothing",
+        "17 charge conservation": "NOT SHOWN: the children's own charges sum to -36000 over the births, 2 mergers with a charged child",
         "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
         "15 conservation at the click": "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder (EX-S1), taken >= booked on the rest (the mergers' ends)",
         "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node (EX-S1)",

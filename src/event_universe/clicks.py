@@ -186,24 +186,26 @@ def one_click_floor(record: Record) -> dict[str, Any]:
 
 
 def charge(record: Record) -> dict[str, Any]:
-    """Gate 17: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births of a pair; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name; a merger's birth (MG-S1, a pair at rest into light, the line carrying its takes per end) counted apart, the light's charge 0 and its reading row 24's)."""
+    """Gate 17: the charge (each child's own charge, its sense times half the quantum of action at a child's lay and 0 at an exact lay, Record.charges_of, summed over every birth, each pair opposite, a merger's two children 0 and 0 by MG-S1 and read by name; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name; a merger's birth (MG-S1, a pair at rest into light, the line carrying its takes per end) counted apart, the light's charge 0 and its reading row 24's)."""
     mergers = [b for b in record.births if "takes" in b]
     births = [b for b in record.births if "takes" not in b]
-    signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
+    charges, signs = record.charges_of(), record.signs_of()
+    pair_signs = [
+        s for b, pair in zip(record.births, charges, strict=True) if "takes" not in b for s in pair
+    ]
     sizes = sorted(record.laid_at_nothing())
     residue = sum(1 for b in births for stood in b.get("stood", [[0], [0]]) if any(stood))
-    sense_sum = sum(signs)
-    opposite = sum(
-        1
-        for b in births
-        if (b["W_children"][0] > 0) != (b["W_children"][1] > 0) and 0 not in b["W_children"]
+    sense_sum, summed = sum(signs), sum(a + c for a, c in charges)
+    opposite = sum(1 for a, c in charges if a * c < 0)
+    light = sum(
+        1 for b, pair in zip(record.births, charges, strict=True) if "takes" in b and pair == (0, 0)
     )
     verdict = (
         "NOT READ: no birth in the record"
-        if not births
-        else "SHOWN: the senses sum to 0"
-        if sense_sum == 0 and 0 not in signs
-        else "NOT SHOWN: the senses"
+        if not record.births
+        else "SHOWN: the senses sum to 0 over every birth, each pair opposite, each merger's children 0 and 0"
+        if sense_sum == 0 and 0 not in pair_signs and light == len(mergers)
+        else f"NOT SHOWN: the children's own charges sum to {summed} over the births, {len(mergers) - light} mergers with a charged child"
     ) + (
         "; the magnitude SHOWN: one |W| on every child laid where its plane stood at nothing"
         if sizes and sizes[0] == sizes[-1]
@@ -213,8 +215,9 @@ def charge(record: Record) -> dict[str, Any]:
     )
     return {
         "17 charge conservation": {
-            "senses sum over births (from the children's Wronskian signs)": sense_sum,
-            "children with W = 0": signs.count(0),
+            "senses sum over births (the children's own charges' signs)": sense_sum,
+            "children's own charges summed over every birth": summed,
+            "children with no charge (laid as light, the exact take at -1)": signs.count(0),
             "births with the two children at opposite signs": opposite,
             "the children's |W| least / largest where the plane stood at nothing (the charge's magnitude, one e for every row: MS-S1)": [
                 sizes[0],
@@ -223,9 +226,10 @@ def charge(record: Record) -> dict[str, Any]:
             if sizes
             else None,
             "children laid on a residue of their plane (W the Node's, not the lay's)": residue,
-            "mergers, a pair into light (MG-S1; the light's charge 0, read by row 24, not here)": len(
-                mergers
-            ),
+            "mergers, a pair into light (MG-S1), and those whose two children carry 0 and 0": [
+                len(mergers),
+                light,
+            ],
             "at": births[0]["node"] if births else None,
             "verdict": verdict,
         }
