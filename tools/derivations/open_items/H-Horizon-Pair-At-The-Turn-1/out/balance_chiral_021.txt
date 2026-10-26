@@ -1,0 +1,12 @@
+node (0, 2, 1) num 15147693902353277 den 15162856759112389 w 23290147981996629504000000 G 16
+i content frozen released X | free(2now-before) link_term mass_term | X_next-X residual(q+tension shortfall) | 6R/w per million D/w per million
+2102 3837 True False 4320350994 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 0 D/w ppm 0 neighbours X [1251130603, 1379700506, 292373942, 212717737, 217254509, 296102446]
+2103 3792 False True 4266214876 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 1 D/w ppm 1 neighbours X [1263763071, 1397073180, 294576673, 214379270, 218661857, 298064040]
+2180 3837 True False 4296440187 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 0 D/w ppm 0 neighbours X [2744564490, 3593990736, 522515970, 368597774, 344472183, 492933105]
+2181 3792 False True 4222699243 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 1 D/w ppm 1 neighbours X [2772384175, 3637483999, 526312344, 370974261, 346344521, 496105110]
+2195 3748 False False 3437069340 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 1 D/w ppm 1 neighbours X [4301580626]
+2196 3748 False False 3401621270 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 1 D/w ppm 1 neighbours X [4250493338]
+2224 3792 False False 3855523936 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 1 D/w ppm 1 neighbours X [4276009274]
+2225 3792 False False 3925388665 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 1 D/w ppm 1 neighbours X [4233188825]
+2230 3837 True False 4326925270 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 0 D/w ppm 0 neighbours X [4025847497, 3026157279, 740554292, 502476632, 447517198, 670857640]
+2231 3792 False True 4239736724 | (no line: frozen, or no before/next/neighbours) 6R/w ppm 1 D/w ppm 1 neighbours X [3985771492, 3010870781, 745572945, 505436448, 449783431, 674869699]
