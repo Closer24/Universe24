@@ -315,6 +315,8 @@ def bell(record: Record) -> dict[str, Any]:
     verdict = (
         f"SHOWN as nature: 4 < S^2 <= 8 at the pairs' clicks, S = {s} / {n} (above the local bound 2, within Tsirelson's 2 sqrt 2)"
         if QUARTERS * n * n < s * s <= PAIR * QUARTERS * n * n
+        else f"SHOWN in part: the law's own bound met exactly, S = {s} / {n}, S squared 4 (an outcome that factorizes into the child's own sign times the setting's bit is bounded by 2 and meets it: the hands' derivation, the Boss's task of 19:1x UTC); nature's 4 < S^2 <= 8 not shown (the child has no axis, BS-S1 owed)"
+        if s * s == QUARTERS * n * n
         else f"NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = {s} / {n} (the outcome the child's sense fixed at the birth, reading no datum of the detector: the child has no axis, BS-S1 owed; every filled cell E = -1)"
     )
     return {
