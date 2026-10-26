@@ -28,6 +28,12 @@ The Boss's two additions, both on the critical path of (1) and neither of them a
 
 With those, "one bang of nature" becomes a sentence that can be said: a seed whose board freezes at once, releases by its own turn, returns to its first state, and does it again at a known period, with births and credits on the same record so the laws of nature can be read in its clicks. That last condition is the band below, and it is the one thing still missing from the picture.
 
+## 0b2. The bang of nature, and the one moment approved on a condition (the owner's words of 21:5x UTC)
+
+**The bang of nature.** The owner's word: go with the three bangs, and all three records may be nature's. So the record that goes and returns three times with matter born at it is THE BANG OF NATURE by his word of 21:5x UTC, and the three records of section 0c are read as nature's records, each for what it carries. Nothing is taken away by it: the chiral seed keeps its own table and its counts, and the project's reading of nature now stands on the three records beside it, the Reader counting what is SHOWN on each. The one record that would end the matter, carrying the three bangs AND the bodies' credits at once, stays named in the follow-up research.
+
+**The close's one moment, approved on a condition.** The owner's word: approved if it is right. So the condition is the one number neither hand could read: the Reader reads the gates' rows under the flag, above all any row riding on the credit's sense, which changes at 425 and 443 credits. **No verdict moving, David builds the sentence as it stands (the logged reads at the interval's start, the acting reads keeping their moment by name, the cross term booked once at the meeting's own Node, the frame's field named for the swap it records). A verdict moving, it comes back to the owner with that verdict named, before any build.** The release's own word stands at its place in the order.
+
 ## 0c. The three bangs, as animations, and what each brings from nature (the owner's word of 19:4x UTC; re-cut 20:0x UTC by the bang pair, which found the better second record)
 
 This is the bang's whole remaining work and it is the Reader's. Three records, three animations, each with its own line of what of nature it carries; every table is landed under the hands' folders, so nothing is re-run to draw them.
