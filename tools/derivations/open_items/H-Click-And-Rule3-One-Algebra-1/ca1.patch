@@ -1,0 +1,51 @@
+--- /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/ca1/src/event_universe/take.py	2026-10-26 06:31:42.076346765 +0000
++++ src_ca1/event_universe/take.py	2026-10-26 06:46:05.929985310 +0000
+@@ -11,6 +11,9 @@
+ from event_universe.core.rule3 import half, lattice, mirrored, quotient, remainder
+ from event_universe.links import cross
+ from event_universe.rows import PLANE, Line, Row
++import os
++
++CA1_ODD = bool(os.environ.get('CA1_ODD_TAKE', ''))  # ca1's flag: the take laid on the odd part of the record (now - before) alone
+ 
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+@@ -82,13 +85,20 @@
+     x, weight = int(node.start_x[at]), rule3.share_weight(node.gamma, node.G)
+ 
+     def fall(s: int) -> int:
++        if CA1_ODD:  # ca1: the fall read from the board exactly, the share before and after the odd lay (as walls_of reads the walls)
++            rec_ = node.records().index(row)
++            stood = int(sum(int(v) for v in node.share(row.lines, r).reshape(-1)))
++            lay(node, rec_, at, t * s, line=k)
++            after = int(sum(int(v) for v in node.share(row.lines, r).reshape(-1)))
++            lay(node, rec_, at, t * s, -1, line=k)
++            return stood - after
+         moved = now + t * s
+         return int(quotient(x * (w * (now * now - moved * moved) - t * s * pull), weight))
+ 
+-    full = fall(dist := abs(now - before))
++    full = fall(dist := abs(now - before)) if not CA1_ODD else fall(max(1, half(dist := abs(now - before))))  # ca1: the odd lay's full move is the exchange X itself (the form even, the fall 0); the guard reads the fall at the half move, the odd fall's peak
+     if full < walls:
+         return None, full, k
+-    for s in rule3.least_root(-w * x, -((w + w) * now + pull) * t * x, walls * weight, dist):
++    for s in ([] if CA1_ODD else rule3.least_root(-w * x, -((w + w) * now + pull) * t * x, walls * weight, dist)):  # ca1: under the flag the least s by the scan below
+         if s <= dist and fall(s) >= walls:
+             return s, fall(s), k
+     return (*next(((s, fall(s)) for s in range(1, dist + 1) if fall(s) >= walls), (dist, full)), k)
+@@ -98,7 +108,7 @@
+     """The one lay act: a record's levels (now, before per line: re_now, re_before, im_now, im_before for a plane) added at the Node `where` (or over the board), taken back with sign -1; with `line` named, `levels` is one count added to that line's now alone (the take's move and its undoing, CS4-S2)."""
+     lines = node.records()[rec].lines
+     if line is not None:
+-        levels = tuple(levels if j == PLANE * line else 0 for j in range(PLANE * len(lines)))
++        levels = tuple(levels if j == PLANE * line else (-levels if (CA1_ODD and j == PLANE * line + 1) else 0) for j in range(PLANE * len(lines)))  # ca1: the odd lay, before -= the count
+     for line_, now, before in zip(lines, levels[0::PLANE], levels[1::PLANE], strict=True):
+         line_.now[where] = line_.now[where] + sign * now
+         line_.before[where] = line_.before[where] + sign * before
+@@ -140,5 +150,5 @@
+     lay(node, taken, at, toward * levels, line=k)
+     node.closes[at] += 1
+     assert row.pair is not None
+-    node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=row.pair[0])
++    node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, d_before=(-toward * levels if CA1_ODD else 0), num=row.pair[0])  # ca1: both slots' momentum
+     return levels, fall, now, before, k

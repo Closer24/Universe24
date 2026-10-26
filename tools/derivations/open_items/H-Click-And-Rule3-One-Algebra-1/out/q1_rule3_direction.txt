@@ -1,0 +1,5 @@
+(a) forward 8 back 8 bit for bit: 20000 of 20000
+(b) X R X == R(-1), the exchange conjugated by the mirror: 20000 of 20000
+(e) the engine's R(-1) == the inverse: 20000 of 20000
+(c) the exchange alone (no mirror) == R(-1): 0 of 20000; off at r == 0: 0, off at r > 0: 20000
+(d) at the wall 1 (no remainder) the exchange alone == R(-1): 20000 of 20000
