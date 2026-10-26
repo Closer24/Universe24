@@ -319,7 +319,7 @@ class Toy(Node):
                     laid = out[k][0].now - levels[0]
                     self.counts["laid"] += int(sum(abs(int(x)) for x in laid.reshape(-1)))
                     self.counts["laid_nodes"] += int(sum(1 for x in laid.reshape(-1) if int(x) != 0))
-        self.stepped = stepped
+        self.before_swap = stepped
         self.set_rows(out)
         if direction == -1:
             return

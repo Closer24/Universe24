@@ -51,11 +51,11 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
     for _ in range(INTERVALS):
         node.step()
     clicks = clicks_at(node, CENTRE)
-    # two births of 270 levels at 10 before LT-S1 ((6, 18) at 54): the bookings move the fed board
-    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [(11, 1), (12, 519)]
-    # two credits under BH-S1's mask, six with the frozen Node released (FR-S1); (1, 0) then five (-1, 0) before LT-S1
+    # no birth at the fed Node under CL-S2 (the merger's two ends booked from the start at 6, the course following; (11, 1) and (12, 519) before it, two births of 270 levels at 10 before LT-S1, (6, 18) at 54)
+    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == []
+    # six credits under CL-S2 with the sense read at the start ((-1, 0), (0, 0), (1, 0), (0, 0), (0, 0) before it; two under BH-S1's mask, six with the frozen Node released, FR-S1)
     credits = [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"]
-    assert credits == [(-1, 0), (0, 0), (1, 0), (0, 0), (0, 0)]
+    assert credits == [(0, 0), (-1, 0), (1, 0), (1, 0), (1, 0), (0, 0)]
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 

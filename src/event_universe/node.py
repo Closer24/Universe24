@@ -96,7 +96,8 @@ class Node:
         self.start_frames: list[Any] = []
         self.start_phases: list[tuple[Any, Any]] = []
         self.start_odd: list[Any] = []
-        self.stepped: list[list[Line]] = []
+        self.before_swap: list[list[Line]] = []
+        self.start_lines: list[list[Line]] = []
         self.lattices: dict[tuple[int, int, tuple[int, ...]], int] = {}
         self.drawn: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
         self.rotations: dict[tuple[int, int], int] = {}

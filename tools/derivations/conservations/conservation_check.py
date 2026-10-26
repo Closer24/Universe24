@@ -26,10 +26,12 @@ import numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "src"))
 sys.set_int_max_str_digits(0)
 
-from event_universe import gram, readings, record  # noqa: E402
+from event_universe import gram, readings  # noqa: E402
+from event_universe import run as record  # noqa: E402
 from event_universe.core.ports import AXES, across, port_of  # noqa: E402
 from event_universe.core.rule3 import quotient, share_weight  # noqa: E402
 from event_universe.links import cross, link_current  # noqa: E402
+from event_universe.links import factors as link_factors  # noqa: E402
 from event_universe.loader.world import load_world  # noqa: E402
 from event_universe.node import Node  # noqa: E402
 from event_universe.rows import PLANE  # noqa: E402
@@ -219,7 +221,7 @@ def main(argv: list[str]) -> int:
         k = node.interval
         c = node.start_content
         pre_r, mid_r, post_r = record_rows(node, pre), record_rows(node, mid), record_rows(node, post)
-        factors = node.link_factors(None, readings.frozen_of(node, c))
+        factors = link_factors(node, None, readings.frozen_of(node, c))
         # ---- 4. FLUX: the gap-0 line's own current antisymmetric on every Link at the start
         line0 = pre_r[rec0][0]
         anti = True
@@ -254,7 +256,7 @@ def main(argv: list[str]) -> int:
                 now_was, before, levels = tk["taker"]
                 line_k = tk["taken_line"]
                 clicks_at.setdefault((at, rec, line_k), []).append((tk, e))
-                rule = node.rule_of(recs[rec], c, factors)
+                rule = readings.rule_of(node, recs[rec], c, factors)
                 BEFORE_LINE["line"] = mid_r[rec][line_k]
                 fall, t_ = take_fall(node, rule, at, now_was, before, cube)
                 read, taken = fall(levels), tk["taken"]
@@ -305,7 +307,7 @@ def main(argv: list[str]) -> int:
                 continue
             s = e["line_pair"]
             row = recs[s]
-            r = node.rule(row.pair, c, factors)
+            r = readings.rule(node, row.pair, c, factors)
             quanta = []
             for where in (tuple(e["minus"]), tuple(e["plus"])):
                 s1 = int(gram.share(node, post_r[s], r)[where])
@@ -328,6 +330,8 @@ def main(argv: list[str]) -> int:
                 rec = e["taken_row"] if e["event"] == "birth" else rec0
                 for a in range(AXES):
                     expected[rec][a] += e["dP_take"][a]
+                    if "cross" in e:  # CL-S2: a merger's cross term booked once at the meeting's Node
+                        expected[rec][a] += e["cross"]["dP"][a]
                 if e["event"] == "birth":
                     for a in range(AXES):
                         expected[e["line_pair"]][a] += e["dP_lay"][a]
