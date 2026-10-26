@@ -9,7 +9,7 @@ from typing import Any
 import pytest
 
 from event_universe.gates import gates
-from event_universe.run import record
+from event_universe.record import record
 from tests.laws import ROOT, load_file, world_of
 
 RECORDS, WIDTH = ROOT / "examples" / "records", 128

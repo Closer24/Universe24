@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 from typing import Any
 
 import numpy as np
@@ -14,6 +13,7 @@ from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import half, link_unit_of, unit_of, wall_of
 from event_universe.features import phase
 from event_universe.links import Link, turned
+from event_universe.record import bits_of
 from event_universe.rows import (
     CARRIER,
     HALF_WIDTH,
@@ -44,11 +44,6 @@ COUNTS = {  # the run's counts, every one 0 at the start
     "laid": 0,
     "laid_nodes": 0,
 }
-
-
-def bits_of(a: Any) -> int:
-    """The largest bit length of an integer array's values."""
-    return int(np.max(np.vectorize(lambda v: abs(int(v)).bit_length(), otypes=[object])(a)))
 
 
 class Node:
@@ -328,24 +323,3 @@ class Node:
     def step(self, direction: int = 1) -> None:
         """One interval forward, or back at -1 (the former step_back kept by name)."""
         self.run(direction)
-
-    def arrays(self) -> list[Any]:
-        """Every level and remainder of the state, the lines' arrays in the acts' order."""
-        lines = self.all_lines()
-        found = [a for line in lines for a in (line.now, line.before, line.rem)]
-        return found + [line.wr for line in lines if line.wr is not None]
-
-    def census(self) -> tuple[int, int]:
-        """The count of integer arrays the Node holds and the largest bit length among their values."""
-        arrays = self.arrays() + self.standing + self.crossed + self.beats + [self.proper, self.closes]
-        arrays.append(self.take_rem)
-        return len(arrays), max(bits_of(a) for a in arrays)
-
-    def state_bytes(self) -> bytes:
-        """Every level and remainder of the state as text bytes, the run back's comparison bit for bit."""
-        arrays = [*self.arrays(), self.take_rem]
-        return " ".join(str(int(v)) for a in arrays for v in a.reshape(-1)).encode()
-
-    def state_hash(self) -> str:
-        """The state's hash with the interval."""
-        return hashlib.sha256(self.state_bytes() + str(self.interval).encode()).hexdigest()

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram, readings
+from event_universe import gram, readings, record
 from event_universe.core import paces
 from event_universe.core.acts import divide
 from event_universe.core.ports import AXES, PORTS, across
@@ -278,22 +278,10 @@ class Interval:
     def close(self) -> None:
         """(5) The close (close.click) after the swap, the frame pushed for the run back: the turned Nodes, the counters as they stood before the click (the swap changes none), the log's length and the frozen mask."""
         node = self.node
-        counters = (
-            [a.copy() for a in node.standing],
-            [a.copy() for a in node.crossed],
-            [a.copy() for a in node.beats],
-        )
         log_from = len(node.log)
+        kept = record.frame(node, self.top, log_from, self.frozen, self.bookings)
         node.click(self.plane_starts, self.held)
-        node.stack.append(
-            {
-                "turned": self.top,
-                "counters": counters,
-                "log_from": log_from,
-                "frozen": self.frozen,
-                "bookings": self.bookings,
-            }
-        )
+        node.stack.append(kept)
 
 
 def run(node: Node, direction: int) -> None:

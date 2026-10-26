@@ -26,7 +26,7 @@ import numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "src"))
 sys.set_int_max_str_digits(0)
 
-from event_universe import gram, readings  # noqa: E402
+from event_universe import gram, readings, record  # noqa: E402
 from event_universe.core.ports import AXES, across, port_of  # noqa: E402
 from event_universe.core.rule3 import quotient, share_weight  # noqa: E402
 from event_universe.links import cross, link_current  # noqa: E402
@@ -201,7 +201,7 @@ def main(argv: list[str]) -> int:
         "W over the planes start/end": [None, None],
     }
     with_clicks = []
-    hashes = [node.state_hash()]
+    hashes = [record.state_hash(node)]
     for t in range(n):
         pre = snap(node)
         node.step()
@@ -445,12 +445,12 @@ def main(argv: list[str]) -> int:
                     "turned": int(turned.sum()),
                 }
             )
-        hashes.append(node.state_hash())
+        hashes.append(record.state_hash(node))
     # ---- 5. the run back
     exact, first_bad = 0, None
     for kk in range(n):
         node.step(-1)
-        if node.state_hash() == hashes[n - 1 - kk]:
+        if record.state_hash(node) == hashes[n - 1 - kk]:
             exact += 1
         elif first_bad is None:
             first_bad = n - 1 - kk

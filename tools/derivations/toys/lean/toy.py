@@ -9,7 +9,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, draw, gram, readings, run
+from event_universe import close, draw, gram, readings, record
 from event_universe.core import acts, paces, rule3
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import half, lattice, quotient, remainder
@@ -333,8 +333,7 @@ def main(argv: list[str]) -> None:
     sys.set_int_max_str_digits(0)
     universe, world = load_toy_world(argv[1])
     back = int(argv[argv.index("back") + 1]) if "back" in argv else 0
-    run.Node = Toy  # type: ignore[misc]
-    found = run.record(universe, world, back, lambda line: print(line, flush=True))
+    found = record.record(universe, world, back, lambda line: print(line, flush=True), node_of=Toy)
     found["counts"]["light_credits"] = (
         str(Toy.light_credits) if False else found["counts"].get("light_credits", "0")
     )

@@ -12,8 +12,8 @@ import numpy as np
 import pytest
 
 from event_universe import gates as table
-from event_universe import gram, take
-from event_universe import run as writer
+from event_universe import gram, record, take
+from event_universe import record as writer
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS
 from event_universe.links import row_current
@@ -174,7 +174,9 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
     laid_back = sum(1 for c in credits if "laid_back" in c)
     assert (len(credits), laid_back, sum(1 for c in credits if c["i"] < top)) == (162, 162, 135)
     assert node.counts["births"] == node.counts["laid"] == 0
-    assert node.census()[0] == 99 and node.census()[1] <= 128  # the take's remainder, EX-S1; 98 before
+    assert (
+        record.census(node)[0] == 99 and record.census(node)[1] <= 128
+    )  # the take's remainder, EX-S1; 98 before
     for _ in range(80):
         node.step(-1)
     assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step(-1)) == 10
@@ -184,7 +186,7 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
         node.set_rows([[line.copy() for line in row] for row in rows])
         if exchanged:
             node.exchange(everywhere, rows)
-        return node.state_bytes()
+        return record.state_text(node)
 
     assert (
         sum(text(states[top + k], False) == text(states[top - 1 - k], True) for k in range(1, top)) == 83
@@ -290,7 +292,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
     assert node.counts["births"] == 0 and run_back_exact(kept, 10) == 10
     rest, zero = laid(packet)[0], laid(dict(packet, wave=[0, 0, 0]))[0]
     for _ in range(2):
-        assert rest.state_hash() == zero.state_hash()
+        assert record.state_hash(rest) == record.state_hash(zero)
         rest.step()
         zero.step()
     for bad, match in (
@@ -472,7 +474,7 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
     for _ in range(10):
         node.step()
     lines = node.row(CARRIER).lines
-    assert len(lines) == 1 + 3 * AXES and node.census() == (99, 112)  # 115 bits at the trace 54
+    assert len(lines) == 1 + 3 * AXES and record.census(node) == (99, 112)  # 115 bits at the trace 54
     flux, shears = lines[1 + AXES : 1 + 2 * AXES], lines[1 + 2 * AXES :]
     # TW-S1, the trace 6: every one of the six lines reaches levels within three by 10 (none reached at the trace 54, every line at 0)
     assert [sum(1 for x in line.now.reshape(-1) if int(x)) for line in (*flux, *shears)] == [
@@ -569,5 +571,5 @@ def test_a_frozen_node_is_released_by_the_turn_of_its_time() -> None:
             assert int(node.content()[centre]) < frozen
         if node.interval == 2:
             assert not now and int(node.proper[centre]) > proper
-    assert node.max_transient <= 128 and node.census()[1] <= 128
+    assert node.max_transient <= 128 and record.census(node)[1] <= 128
     assert run_back_exact(kept, INTERVALS) == INTERVALS

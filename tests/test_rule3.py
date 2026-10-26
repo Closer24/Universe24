@@ -9,7 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import merger, take
+from event_universe import merger, record, take
 from event_universe.core import paces
 from event_universe.core import rule3 as core
 from event_universe.core.acts import mirror as mirrored
@@ -115,18 +115,19 @@ FILE_INTEGERS = {
     "links.py": frozenset({4}),
     "seed.py": frozenset({2, 3}),
     "wave.py": frozenset({4}),
-    "run.py": frozenset({12, 24, 60}),
+    "record.py": frozenset({12, 24, 60}),
     "quartet.py": frozenset({2, 3, 4}),
 }
 # the record's readers, Animate's since 00:42 UTC (their constants named at the module's top on reader-5), no act of the Node;
-# the writer run.py reads the inventory and not the names gate (its record keys are the files' words)
+# the writer record.py (run.py its command line) reads the inventory and not the names gate (its record keys are the files' words)
 READERS = tuple(f"{n}.py" for n in "decoder gates events circle board clicks predicates".split())
-WRITER = ("run.py",)
+WRITER = ("record.py", "run.py")
 NAMED_CALLS = {
     "refused",
+    "logged",
     "get",
     "join",
-}  # a refusal's cause by name; a file's key read by name; a separator
+}  # a refusal's cause by name; a log entry's event by name; a file's key read by name; a separator
 
 
 def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
@@ -287,7 +288,7 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
     flux = slice(1 + AXES, 1 + AXES + AXES)
     hashes, checked = [], 0
     for _ in range(14):
-        hashes.append(node.state_hash())
+        hashes.append(record.state_hash(node))
         from_log = len(node.log)
         node.step()
         last = {}
@@ -318,4 +319,4 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
     assert checked == 193
     for h in reversed(hashes):
         node.step(-1)
-        assert node.state_hash() == h
+        assert record.state_hash(node) == h

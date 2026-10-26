@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import gram
+from event_universe import gram, record
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import quotient
@@ -247,7 +247,7 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
             int(node.link_factors(None, frozen_now)[port ^ 1][n]) == 0
             for port, n in enumerate(frame_nodes(node, CENTRE)[1:])
         )
-    assert clicks_at(node, CENTRE) == [] and node.max_transient <= 128 and node.census()[1] <= 128
+    assert clicks_at(node, CENTRE) == [] and node.max_transient <= 128 and record.census(node)[1] <= 128
     assert run_back_exact(kept, 100) == 100
 
 
@@ -292,7 +292,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     kept = copy.deepcopy(chiral)
     for _ in range(40):
         chiral.step()
-    counts = (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census())
+    counts = (chiral.counts["births"], chiral.counts["body_clicks"], record.census(chiral))
     assert counts == (14, 1924, (99, 112))  # 16 and 1,973 under LT-S1 alone; 17 and 1,910 before LT-S1
     assert run_back_exact(kept, 10) == 10
 
@@ -558,7 +558,7 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     for _ in range(INTERVALS):
         node.step()
     # ddfeb210 at 54
-    assert node.state_hash() == "ff82a0da34afd75bff667b6478758ab24e95adc6c49be85128a7d193ec15eb17"
+    assert record.state_hash(node) == "ff82a0da34afd75bff667b6478758ab24e95adc6c49be85128a7d193ec15eb17"
     interval = Interval(copy.deepcopy(node), 1)
     interval.readings()
     assert sorted(interval.links_at) == [0, 1] and any(
@@ -582,7 +582,7 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
     node.start_content, node.start_x = c, node.row(CARRIER).lines[0].now
     rule = node.rule_of(light, c, node.link_factors())
     walls = node.unit_emitter + node.unit_emitter
-    hash_before, undo, paid, below = node.state_hash(), [], 0, 0
+    hash_before, undo, paid, below = record.state_hash(node), [], 0, 0
     for _ in range(20):
         got = takes(node, [(at, walls)], rule, 1)  # the one take act at one end (CR-S2)
         assert got is not None
@@ -592,9 +592,9 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
         paid += fall + rem_was - rem == walls
         below += 0 <= rem < fall_of(node, at, 1, rule, light)[1]
         undo.append((now, k, rem_was))
-    assert (paid, below) == (20, 20) and node.census()[0] == 99
+    assert (paid, below) == (20, 20) and record.census(node)[0] == 99
     for now, k, rem_was in reversed(undo):
         move(node, rec0, k, at, now - int(light.lines[k].now[at]))
         node.closes[at] -= 1
         node.take_rem[at] = rem_was
-    assert node.state_hash() == hash_before
+    assert record.state_hash(node) == hash_before

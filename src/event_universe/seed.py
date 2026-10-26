@@ -11,6 +11,7 @@ from event_universe.core.paces import odd_rounded, sine_den
 from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import half, largest_below, least_at, odd, quotient
 from event_universe.links import turn_pair
+from event_universe.record import logged
 from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
 from event_universe.wave import lay_cycle
 
@@ -219,19 +220,17 @@ def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
     )
     lines = uniform_levels(node, row, amplitude, sense)
     take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
-    node.log.append(
-        {
-            "event": "lay",
-            "i": 0,
-            "node": None,
-            "line_pair": rec,
-            "quanta": n,
-            "amplitude": amplitude,
-            "share": share_at_node(node, row, lines, rule),
-            "unit": node.units[rec],
-            "nodes": int(node.cube) ** AXES,
-            "sense": sense,
-        }
+    logged(
+        node,
+        "lay",
+        None,
+        line_pair=rec,
+        quanta=n,
+        amplitude=amplitude,
+        share=share_at_node(node, row, lines, rule),
+        unit=node.units[rec],
+        nodes=int(node.cube) ** AXES,
+        sense=sense,
     )
 
 
@@ -322,18 +321,16 @@ def lay_packet(
         take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
     lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
     rule = node.rule(row.pair, node.start_content, node.link_factors())
-    node.log.append(
-        {
-            "event": "lay",
-            "i": 0,
-            "node": list(at),
-            "line_pair": rec,
-            "width": h,
-            "quanta": n,
-            "amplitude": amplitude,
-            "share": packet_share(node, row, lines, rule),
-            "unit": node.units[rec],
-            "nodes": int(sum(1 for x in envelope.reshape(-1) if int(x) > 0)),
-            **named,
-        }
+    logged(
+        node,
+        "lay",
+        at,
+        line_pair=rec,
+        width=h,
+        quanta=n,
+        amplitude=amplitude,
+        share=packet_share(node, row, lines, rule),
+        unit=node.units[rec],
+        nodes=int(sum(1 for x in envelope.reshape(-1) if int(x) > 0)),
+        **named,
     )

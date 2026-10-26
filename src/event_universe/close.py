@@ -23,6 +23,7 @@ from event_universe.merger import (
     takes,
     walls_of,
 )
+from event_universe.record import birth, refused
 from event_universe.rows import PLANE, Line
 from event_universe.take import lay, move, neighbour, recoil
 
@@ -48,14 +49,6 @@ class Kid(NamedTuple):
     minus: tuple[int, ...]
     plus: tuple[int, ...]
     room: int
-
-
-def refused(node: Node, at: tuple[int, ...], cause: str, **numbers: Any) -> None:
-    """A refusal by name, counted and logged."""
-    node.counts["refused_" + cause] += 1
-    node.log.append(
-        {"event": "refused", "i": node.interval, "node": list(at), "cause": cause, **numbers}
-    )
 
 
 def list_of(node: Node, rec: int, number: int) -> int:
@@ -224,48 +217,18 @@ def children(
         ]
         node.counts["births"] += 1
         node.closes[at] += 1
-        node.log.append(
-            {
-                "event": "birth",
-                "i": node.interval,
-                "node": list(at),
-                "line_pair": s,
-                "senses": [-1, 1],
-                "W_children": w_children,
-                "minus": list(minus),
-                "plus": list(plus),
-                "taken": take["taken"],
-                "booked": take["booked"],
-                "levels": take["levels"],
-                "taken_now_was": take["taken_now_was"],
-                "taker": take["taker"],
-                "taken_row": rec,
-                "taken_line": take["taken_line"],
-                "proper": int(node.proper[at]),
-                "content": int(node.start_content[at]),
-                "amplitude": [node.A, node.B],
-                "stood": stood,
-                "children_at_node": len(kids),
-                "room": room,
-                "dP_take": take["dP_take"],
-                "dP_lay": dp_lay,
-                "dP_lay_ends": ends,
-                **{key + "_ends": [w[key] for w in written] for key in written[0]},
-                **{
-                    key: take[key]
-                    for key in (
-                        "remainder_was",
-                        "remainder",
-                        "owed",
-                        "clock",
-                        "recoil",
-                        "carry_was",
-                        "carry",
-                    )
-                    if key in take
-                },
-                **({"takes": take["takes"], "exact_lay": exact} if "takes" in take else {}),
-            }
+        birth(
+            node,
+            at,
+            s,
+            (minus, plus),
+            take,
+            rec,
+            (dp_lay, w_children, stood, ends),
+            written,
+            len(kids),
+            room,
+            exact,
         )
     return touched
 
