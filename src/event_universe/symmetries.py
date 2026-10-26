@@ -133,3 +133,21 @@ def cpt(record: Record) -> dict[str, Any]:
             else f"NOT SHOWN: {nonzero - even} frames' charge not even under CPT",
         }
     }
+
+
+def matter_against_antimatter(record: Record) -> dict[str, Any]:
+    """Row 68: matter against antimatter (HD-S1, the Boss's 6412271828): the hand enters the law in one act, the + child laid at the end the current flows into where the twist is right-handed, so over the record the + child stands at the take's Node on some births and at the other end on the rest; counted, the hand's choice read at every birth."""
+    at_node = sum(1 for b in record.births if list(b["plus"]) == list(b["node"]))
+    return {
+        "68 matter against antimatter": {
+            "births with the + child at the take's Node / at the other end": [
+                at_node,
+                len(record.births) - at_node,
+            ],
+            "verdict": unread_words(
+                "no birth", "the + child's end chosen by the twist's hand at every birth"
+            )
+            if not record.births
+            else f"SHOWN: the + child at the take's Node on {at_node} births and at the other end on {len(record.births) - at_node}, the hand's choice at every birth",
+        }
+    }

@@ -46,6 +46,7 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         65,
         66,
         67,
+        68,
     },
     "chiral": {
         2,
@@ -77,6 +78,7 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         65,
         66,
         67,
+        68,
     },
     "bodies": {
         3,
@@ -106,6 +108,7 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         65,
         66,
         67,
+        68,
     },
 }
 VERDICTS = {  # the verdicts' words by name
@@ -116,13 +119,14 @@ VERDICTS = {  # the verdicts' words by name
         "9 collisions": "NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last",
         "22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part",
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -48 / 24",
         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
         "60 the acceleration in the clicks": "SHOWN: after a slowing, an eighth's growth of the spacing larger than the one before",
         "15 conservation at the click": "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth",
         "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node",
         "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 2247 of 2247 frames",
+        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 births and at the other end on 10, the hand's choice at every birth",
     },
     "chiral": {
         "64 dark matter in kind": "SHOWN: 96 of 145 bodies credited at a Node where no light was laid",
@@ -136,19 +140,21 @@ VERDICTS = {  # the verdicts' words by name
         "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node",
         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -60 / 30",
+        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 8 births and at the other end on 9, the hand's choice at every birth",
     },
     "bodies": {
         "64 dark matter in kind": "SHOWN: 336 of 406 bodies credited at a Node where no light was laid",
         "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 49792 of 49792 frames",
         "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link per interval",
         "55 the two slits": "NOT READ: no two gap-0 packets at one centre with one wave mirrored on one axis in the seed; the predicate: the gap-0",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 7",
+        "56 Bell": "NOT READ: 22 births, 3 of the four setting cells filled by pairs clicked at both ends; the predicate: S from the pairs'",
         "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four, no three ends with one root in the record; the",
         "61 the horizon radiates": "NOT READ: no frozen Node in the record",
         "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 49792 of 49792 frames",
         "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero and above the next",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 13 births and at the other end on 9, the hand's choice at every birth",
     },
 }
 

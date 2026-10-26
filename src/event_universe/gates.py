@@ -341,6 +341,7 @@ TABLE: tuple[Row, ...] = (
     symmetries.lepton_number,
     symmetries.energy,
     symmetries.cpt,
+    symmetries.matter_against_antimatter,
     conservations,
     constants,
 )
