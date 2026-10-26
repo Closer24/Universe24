@@ -1,0 +1,4 @@
+tests 105 sum ms 284171 failed 0
+18531 ms tests.test_the_board::test_the_run_back_is_exact_through_births_and_turns
+15279 ms tests.test_the_board::test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero
+15161 ms tests.test_the_record::test_the_hole_record_is_the_engines_own_bit_for_bit

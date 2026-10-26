@@ -1,0 +1,11 @@
+version at HEAD = 4.0.0
+version at 6703dd95c = 4.0.0
+version at origin/main = 4.0.0
+version at 43cbefbc8 = 3.0.0
+version at 0963ae9ff = 4.0.0
+--- released(root, '6703dd95c') (the versions agree): None
+--- released(root, 'origin/main') (the versions agree): None
+--- released(root, '43cbefbc8') (the base names no version):
+the release 4.0.0 (the version bump 0963ae9ff from 3.0.0): the ratchets' base is the released branch's own head before the bump, 43cbefbc8
+    returned: 43cbefbc8755222bb1df72144df9a48b1a19e819
+--- base_ref with CHECK_BASE=6703dd95c: 6703dd95c
