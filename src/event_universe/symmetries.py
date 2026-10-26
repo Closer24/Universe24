@@ -135,35 +135,67 @@ def cpt(record: Record) -> dict[str, Any]:
     }
 
 
+def hands_of(record: Record) -> tuple[int, int, int]:
+    """The moving births' hands (the births of a pair; a merger lays its light at both ends and carries no hand): the + child at the take's Node, at the other end, and the mergers beside."""
+    moving = [b for b in record.births if "takes" not in b]
+    at_node = sum(1 for b in moving if list(b["plus"]) == list(b["node"]))
+    return at_node, len(moving) - at_node, len(record.births) - len(moving)
+
+
 def matter_against_antimatter(record: Record) -> dict[str, Any]:
-    """Row 68: matter against antimatter (HD-S1, the Boss's 6412271828): the hand enters the law in one act, the + child laid at the end the current flows into where the twist is right-handed, so over the record the + child stands at the take's Node on some births and at the other end on the rest; counted, the hand's choice read at every birth."""
-    at_node = sum(1 for b in record.births if list(b["plus"]) == list(b["node"]))
+    """Row 68: matter against antimatter (HD-S1, the Boss's 6412271828 and 6413689341): the hand enters the law in one act, the + child laid at the end the current flows into where the twist is right-handed, so over the moving births the + child stands at the take's Node on some and at the other end on the rest (the twist's sign at each click, P-odd and C-even, kept by the bijection), the mergers named beside; counted, the hand's choice read at every moving birth."""
+    at_node, other, mergers = hands_of(record)
     return {
         "68 matter against antimatter": {
-            "births with the + child at the take's Node / at the other end": [
-                at_node,
-                len(record.births) - at_node,
-            ],
+            "moving births with the + child at the take's Node / at the other end": [at_node, other],
+            "mergers beside (the light at both ends, no hand)": mergers,
             "verdict": unread_words(
-                "no birth", "the + child's end chosen by the twist's hand at every birth"
+                "no moving birth", "the + child's end chosen by the twist's hand at every moving birth"
             )
-            if not record.births
-            else f"SHOWN: the + child at the take's Node on {at_node} births and at the other end on {len(record.births) - at_node}, the hand's choice at every birth",
+            if not at_node + other
+            else f"SHOWN: the + child at the take's Node on {at_node} moving births and at the other end on {other}, the hand's choice at every one; {mergers} mergers beside",
         }
     }
 
 
 def one_hand(record: Record) -> dict[str, Any]:
-    """Row 69: the neutrino's one hand (the Boss's 6412773403, the helicity pair's reading): the hand of every birth, the end the + child is laid at (the take's Node or the other end, by the twist at the click), all one over the record where nature's neutrino shows one hand alone; NOT SHOWN with its cause where both hands stand (no conversion on the records, the births' hands split), NOT READ where no birth."""
-    at_node = sum(1 for b in record.births if list(b["plus"]) == list(b["node"]))
-    other = len(record.births) - at_node
+    """Row 69: the neutrino's one hand (the Boss's 6412773403, the helicity pair's reading): the hand of every moving birth, the end the + child is laid at (the take's Node or the other end, by the twist at the click), all one over the record where nature's neutrino shows one hand alone; NOT SHOWN with its cause where both hands stand (no conversion on the records, the births' hands split), NOT READ where no moving birth."""
+    at_node, other, mergers = hands_of(record)
     return {
         "69 the neutrino's one hand": {
-            "births by hand (the + child at the take's Node / at the other end)": [at_node, other],
-            "verdict": unread_words("no birth", "one hand at every birth of the record")
-            if not record.births
-            else "SHOWN: one hand at every birth of the record"
+            "moving births by hand (the + child at the take's Node / at the other end)": [
+                at_node,
+                other,
+            ],
+            "mergers beside (no hand)": mergers,
+            "verdict": unread_words("no moving birth", "one hand at every moving birth of the record")
+            if not at_node + other
+            else "SHOWN: one hand at every moving birth of the record"
             if not at_node or not other
-            else f"NOT SHOWN: both hands stand, {at_node} and {other} births (no conversion on the record, the births' hands split by the twist at each click)",
+            else f"NOT SHOWN: both hands stand, {at_node} and {other} moving births (no conversion on the record, the hands split by the twist at each click)",
+        }
+    }
+
+
+def baryon_number(record: Record) -> dict[str, Any]:
+    """Row 70: the baryon number, the C-odd count (the Boss's 6413689341, the floor pair's reading): the children's own charges summed over each birth's two children, 0 at every birth (a pair at opposite senses, a merger's light at 0 and 0: no matter-making act in the law, the count conserved at the click); the record's Wronskian at the children's Nodes summed beside it, apart from 0 where a child was laid on a standing level (the residue, the Node's W) and over the mergers' light (W of one sign on both until merger.py's fix); SHOWN where the own charges sum to 0 at every birth."""
+    own = [a + c for a, c in record.charges_of()]
+    pairs = [sum(b["W_children"]) for b in record.births if "takes" not in b]
+    mergers = [sum(b["W_children"]) for b in record.births if "takes" in b]
+    return {
+        "70 the baryon number": {
+            "births whose children's own charges sum to 0 / in all": [own.count(0), len(own)],
+            "births of a pair whose record W at the children's Nodes sums apart from 0 (the standing level's residue)": sum(
+                1 for w in pairs if w
+            ),
+            "the mergers' light children's record W summed (0 by the letter)": sum(mergers),
+            "verdict": unread_words(
+                "no birth",
+                "the children's own charges summing to 0 at every birth, no matter made by a click",
+            )
+            if not own
+            else "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click"
+            if own.count(0) == len(own)
+            else f"NOT SHOWN: {len(own) - own.count(0)} births whose children's own charges do not sum to 0",
         }
     }

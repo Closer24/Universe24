@@ -88,6 +88,7 @@ NAMES = {
         "matter against antimatter, the + child's end chosen by the hand",
     ),
     "69": ("the neutrino's one hand", "the neutrino's one hand, the births' hand all one"),
+    "70": ("the baryon number holds", "the baryon number, the C-odd count 0 at every birth"),
     "the conservations in the clicks": ("the clicks conserve", "the conservations in the clicks"),
     "the three constants": ("the three constants hold", "the three constants"),
 }  # every row by its number (the key's first word) or its key: its label of three to six words for the page, and the phenomenon in plain words for the table

@@ -78,7 +78,7 @@ const D = JSON.parse(document.getElementById("data").textContent);
 const MS = 1000, BASE = 36;  // a second in milliseconds (the ticks' pace); the base of the Node lines' words
 const FAMILIES = [  // the gates' families and their colours: the cosmos, matter, the gap-0 row, gravity and time, the conservations, the quantum, the constants
   [[1, 3, 5, 6, 46, 58, 59, 60, 63], "#fbbf24"], [[4, 8, 9, 13, 19, 26, 33, 45, 64, 68], "#f472b6"], [[7, 11, 12, 29, 31, 48, 50, 55], "#22d3ee"],
-  [[10, 14, 30, 32, 34, 35, 36, 61, 62], "#fb923c"], [[15, 16, 17, 18, 21, 22, 23, 25, 27, 43, 47, 65, 66], "#a3e635"], [[2, 37, 20, 24, 28, 38, 39, 40, 41, 42, 44, 49, 51, 52, 53, 54, 56, 57, 67, 69], "#c084fc"]];
+  [[10, 14, 30, 32, 34, 35, 36, 61, 62], "#fb923c"], [[15, 16, 17, 18, 21, 22, 23, 25, 27, 43, 47, 65, 66, 70], "#a3e635"], [[2, 37, 20, 24, 28, 38, 39, 40, 41, 42, 44, 49, 51, 52, 53, 54, 56, 57, 67, 69], "#c084fc"]];
 function colour(gate) { const g = parseInt(gate); for (const [gs, c] of FAMILIES) if (gs.includes(g)) return c; return "#38bdf8"; }
 const c = D.cube, G = D.gamma, N = D.intervals;
 const canvas = document.getElementById("board"), ctx = canvas.getContext("2d");

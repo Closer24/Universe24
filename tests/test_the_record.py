@@ -47,6 +47,7 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         66,
         67,
         68,
+        70,
     },
     "chiral": {
         2,
@@ -79,6 +80,7 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         66,
         67,
         68,
+        70,
     },
     "bodies": {
         3,
@@ -109,6 +111,7 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         66,
         67,
         68,
+        70,
     },
 }
 VERDICTS = {  # the verdicts' words by name
@@ -126,8 +129,9 @@ VERDICTS = {  # the verdicts' words by name
         "15 conservation at the click": "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth",
         "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node",
         "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 2247 of 2247 frames",
-        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 births and at the other end on 10, the hand's choice at every birth",
-        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 10 births",
+        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 10, the hand's choice at every one; 0",
+        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 10 moving births",
+        "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
     },
     "chiral": {
         "64 dark matter in kind": "SHOWN: 96 of 145 bodies credited at a Node where no light was laid",
@@ -142,8 +146,9 @@ VERDICTS = {  # the verdicts' words by name
         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -60 / 30",
-        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 8 births and at the other end on 9, the hand's choice at every birth",
-        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 8 and 9 births",
+        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 9, the hand's choice at every one; 1",
+        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 9 moving births",
+        "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
     },
     "bodies": {
         "64 dark matter in kind": "SHOWN: 336 of 406 bodies credited at a Node where no light was laid",
@@ -156,8 +161,9 @@ VERDICTS = {  # the verdicts' words by name
         "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 48189 of 48189 frames",
         "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero and above the next",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
-        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 13 births and at the other end on 9, the hand's choice at every birth",
-        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 13 and 9 births",
+        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 4 moving births and at the other end on 3, the hand's choice at every one; 15",
+        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 4 and 3 moving births",
+        "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
     },
 }
 
