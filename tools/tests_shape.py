@@ -41,6 +41,10 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_node.py::test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1": (
+        40,
+        "EX-S1 (2026-10-26, the Boss's order of 03:3x UTC under the owner's delegation, 6407630119 and 6405916579: the room 40 named; H-Exact-Take-Remainder-1's one-Node test): the take's remainder at the Node, the identity fall + remainder before - remainder after = booked at twenty takes, the undo to the hash",
+    ),
     "tests/test_the_board.py::test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_top_y_s3": (
         58,
         "Y-S3 (2026-10-26, the Boss's order of 03:3x UTC under the owner's delegation, 6407630119; H-Six-Metric-Lines-3's test with its room): the six metric lines written from the Node's own flux and shears, read by the fold at the rest rotation, run back exactly through a top; the hole at 20, the sea's return, the one-Link reach",

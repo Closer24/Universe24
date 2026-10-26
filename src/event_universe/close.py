@@ -11,6 +11,7 @@ from event_universe.bodies import bodies
 from event_universe.core import rule3
 from event_universe.core.ports import AXES, across, port_of
 from event_universe.core.rule3 import quotient, remainder
+from event_universe.draw import read_number
 from event_universe.links import cross, row_current, row_twist
 from event_universe.merger import (
     child_at,
@@ -20,7 +21,7 @@ from event_universe.merger import (
     walls_of,
 )
 from event_universe.rows import PLANE, Line
-from event_universe.take import lay, neighbour, read_number, take_at
+from event_universe.take import lay, neighbour, take_at
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -171,9 +172,9 @@ def births(
         one = take_at(node, at, booked, rule, len(kids), rec)
         if one is None:
             continue
-        levels, fall, now, before, k = one
+        levels, fall, now, before, k, rem_was, rem = one
         node.closes[at] -= 1
-        take = take_line(fall, booked, levels, now, before, node.last_dp, k)
+        take = take_line(fall, booked, levels, now, before, node.last_dp, k, rem_was, rem)
         taken.append((at, rec, kids, take))
     touched: set[tuple[int, ...]] = set()
     for at, rec, kids, take in taken:
@@ -184,9 +185,17 @@ def births(
 
 
 def take_line(
-    fall: int, booked: int, levels: int, now: int, before: int, dp: list[int], line: int
+    fall: int,
+    booked: int,
+    levels: int,
+    now: int,
+    before: int,
+    dp: list[int],
+    line: int,
+    rem_was: int,
+    rem: int,
 ) -> dict[str, Any]:
-    """One take's numbers as the log carries them: the fall taken, the walls booked, the levels moved, the line's now before the take, the taker's three levels, the take's momentum and the line taken (`taken_line`, logged per take: CS4-S2, unclick restoring that line)."""
+    """One take's numbers as the log carries them: the fall taken, the walls booked, the levels moved, the line's now before the take, the taker's three levels, the take's momentum, the line taken (`taken_line`, logged per take: CS4-S2, unclick restoring that line) and the take's remainder before and after with what was owed (EX-S1: taken + remainder_was - remainder = booked)."""
     return {
         "taken": fall,
         "booked": booked,
@@ -195,6 +204,9 @@ def take_line(
         "taker": [now, before, levels],
         "dP_take": dp,
         "taken_line": line,
+        "remainder_was": rem_was,
+        "remainder": rem,
+        "owed": booked - rem_was,
     }
 
 
@@ -261,6 +273,7 @@ def children(
                 "room": room,
                 "dP_take": take["dP_take"],
                 "dP_lay": dp_lay,
+                **{key: take[key] for key in ("remainder_was", "remainder", "owed") if key in take},
                 **({"takes": take["takes"], "exact_lay": exact} if "takes" in take else {}),
             }
         )
@@ -299,7 +312,7 @@ def click(
 
 
 def unclick(node: Node, frame: dict[str, Any]) -> None:
-    """The close undone from the log, in the reverse order of its lines: the lays removed, the taken line restored at every take's Node (the line each take logged, `taken_line`, CS4-S2; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed), the readings' counters restored."""
+    """The close undone from the log, in the reverse order of its lines: the lays removed, the taken line restored at every take's Node (the line each take logged, `taken_line`, CS4-S2; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed; the take's remainder restored from the line, EX-S1), the readings' counters restored."""
     rec0 = node.records().index(node.emitter())
     for entry in reversed(node.log[frame["log_from"] :]):
         at = tuple(entry["node"])
@@ -321,6 +334,7 @@ def unclick(node: Node, frame: dict[str, Any]) -> None:
                 k = take["taken_line"]
                 line = node.records()[row].lines[k]
                 lay(node, row, where, take["taken_now_was"] - int(line.now[where]), line=k)
+                node.take_rem[where] = take["remainder_was"]
             node.closes[at] -= 1
     del node.log[frame["log_from"] :]
     node.standing, node.crossed, node.beats = frame["counters"]

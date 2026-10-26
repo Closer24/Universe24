@@ -17,9 +17,10 @@ CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # the hole under GP-S1: 2 (the Links lengthening in the clicks) lost with the children's lay, SHOWN under PL-S1; 9 and 22 among them under the former write of 2 W after the step
     "hole": {4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45},
-    # the chiral under MG-S1: 24 SHOWN (3 pairs into light), 17 lost (the decoder counts the light children's W, 0 by the exact lay)
-    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 18, 19, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45},
-    "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45},
+    # the chiral under EX-S1: 15 (conservation at the click) lost, the decoder reading the former identity taken >= booked where the take's remainder now pays (Animate's line to read taken + remainder before - remainder after = booked); under MG-S1: 24 SHOWN (3 pairs into light), 17 lost (the decoder counts the light children's W, 0 by the exact lay)
+    "chiral": {2, 4, 5, 7, 8, 9, 10, 16, 18, 19, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45},
+    # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812 credits, 1,973 before)
+    "bodies": {2, 3, 5, 6, 7, 8, 9, 10, 16, 18, 30, 37, 43, 45},
 }
 VERDICTS = {  # the verdicts' words by name
     "hole": {
@@ -59,7 +60,12 @@ def test_the_conservations_hold_on_the_record(name: str) -> None:
     ]  # a merger's light children carry no sense (MG-S1)
     signs = [(w > 0) - (w < 0) for b in pairs for w in b["W_children"]]
     assert sum(signs) == 0 and 0 not in signs
-    assert all(b["taken"] >= b["booked"] for b in births)
+    assert all(  # EX-S1's identity at the gap-0 take; a merger's ends taken whole (MG-S1)
+        b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"]
+        if "remainder" in b
+        else b["taken"] >= b["booked"]
+        for b in births
+    )
     assert len({row["integers"] for row in run["rows"]}) == 1
     assert max(max(row["max bits"], row["max transient bits"]) for row in run["rows"]) <= WIDTH
     assert run["run_back"]["exact"] == run["run_back"]["intervals"] == 20

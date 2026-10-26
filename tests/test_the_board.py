@@ -111,7 +111,7 @@ def test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero() -> None
     assert len(births) >= 8
     signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
     assert sum(signs) == 0 and 0 not in signs
-    assert all(b["taken"] >= b["booked"] for b in births)
+    assert all(b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] for b in births)  # EX-S1
     hands = {1 if tuple(b["plus"]) > tuple(b["minus"]) else -1 for b in births}
     assert hands == {1, -1}
 
@@ -176,7 +176,7 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
     laid_back = sum(1 for c in credits if "laid_back" in c)
     assert (len(credits), laid_back, sum(1 for c in credits if c["i"] < top)) == (162, 162, 135)
     assert node.counts["births"] == node.counts["laid"] == 0
-    assert node.census()[0] == 98 and node.census()[1] <= 128
+    assert node.census()[0] == 99 and node.census()[1] <= 128  # the take's remainder, EX-S1; 98 before
     for _ in range(80):
         node.step_back()
     assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step_back()) == 10
@@ -216,7 +216,9 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
         found[world] = ({i: n for i, n in by_interval.items() if n}, *(counts[k] for k in COUNTED))
         assert run_back_exact(kept, 10) == 10
     assert found["world_pair_3.json"] == ({4: 27, 6: 27, 8: 27}, 0, 81, 0)
-    assert found["world_hole.json"][1:3] == (16, 0) and sum(found["world_hole.json"][0].values()) == 56
+    assert (
+        found["world_hole.json"][1:3] == (10, 0) and sum(found["world_hole.json"][0].values()) == 56
+    )  # 10 births under EX-S1, 16 before
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
@@ -379,7 +381,7 @@ def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2
     assert len(births) == 64 and {b["i"] for b in births} == {2} and len(children) == 64
     assert all(sorted(rows) == [0, 1] for rows in children.values())
     assert {tuple(b["W_children"]) for b in births} == {(-18000, 18000)}
-    assert all(b["taken"] >= b["booked"] for b in births)
+    assert all(b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] for b in births)  # EX-S1
     first = [e for e in found["log"] if e["event"] == "refused" and e["i"] == 1 and e["cause"] == "lay"]
     assert len(first) == 64 and all("standing" in e for e in first)
     assert (set(found["nodes"][1]["X"]), set(found["nodes"][9]["X"])) == ({1050}, {1880})
@@ -395,7 +397,7 @@ def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2
     }
     assert found["run_back"] == {"intervals": 20, "exact": 20}
     assert ({r["integers"] for r in found["rows"]}, max(r["max bits"] for r in found["rows"])) == (
-        {89},
+        {90},  # the take's remainder, EX-S1; 89 before
         115,
     )
     for match, change in (
@@ -467,7 +469,7 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
     for _ in range(10):
         node.step()
     lines = node.row(CARRIER).lines
-    assert len(lines) == 1 + 3 * AXES and node.census() == (98, 115)
+    assert len(lines) == 1 + 3 * AXES and node.census() == (99, 115)  # 98 before EX-S1
     flux, shears = lines[1 + AXES : 1 + 2 * AXES], lines[1 + 2 * AXES :]
     assert all(int(x) == 0 for line in (*flux, *shears) for x in line.now.reshape(-1))
     assert all(any(int(x) != line.wwall // 2 for x in line.wr.reshape(-1)) for line in (*flux, *shears))

@@ -4,7 +4,7 @@ Usage: python tools/derivations/conservations/conservation_check.py <world.json>
 Prints one line per law, "LAW: held N of N" or "LAW: broken at interval k, Node (x, y, z), the numbers", then the readings and the verdict; exit code 0 only when every law holds.
 
 The laws, each by its clause of docs/ALGEBRA.md:
- 1. ENERGY in the clicks (The ledger of exactness, the exact take; The conservation at the click): at every click the take re-read from the rows before the close equals the credit line's `taken`, the take is the least count of levels whose fall pays the walls, the fall pays the walls (taken >= booked) and taken == booked exactly; the taken line's level stands moved by the levels toward its before (or laid back, EQ-S1); the born pair carries two whole quanta (each child's share up by one unit of its own at its Node).
+ 1. ENERGY in the clicks (The ledger of exactness, the exact take; The conservation at the click): at every click the take re-read from the rows before the close equals the credit line's `taken`, the take is the least count of levels whose fall pays what is owed (the walls less the take's remainder standing at the Node, EX-S1), the fall with the remainders pays the walls and pays them exactly (taken + remainder before - remainder after = booked, EX-S1's identity; the former taken against booked where no remainder is logged); the taken line's level stands moved by the levels toward its before (or laid back, EQ-S1); the born pair carries two whole quanta (each child's share up by one unit of its own at its Node).
  2. MOMENTUM (The lattice momentum): the close's change of P_a per record row equals, exactly, what the credit and birth lines book (dP_take on the taken row, dP_lay on the children's row); P_a per row at the start and the end as a reading.
  3. CHARGE (The sign is the rotation sense; The charge written is the Wronskian): the board's W over the planes unchanged by the close, every birth's two children W of opposite sign summing to 0 (W_children), the senses [-1, 1].
  4. FLUX (The flux form of Rule3): F_ij = -F_ji on every Link of the gap-0 line's own current at the interval's start. Rule3's identity per Node and line and the write's book are the symmetric ride's (R5, the kick at the mean wall) and are not re-derived here: named for a hand.
@@ -254,17 +254,32 @@ def main(argv: list[str]) -> int:
                 L[names[0]].count(
                     read == taken, k, at, f"fall read {read}, credit line taken {taken}, levels {levels}"
                 )
-                least = levels >= 1 and (levels == 1 or fall(levels - 1) < walls) and read >= walls
+                owed = walls - tk["remainder_was"] if "remainder" in tk else walls
+                least = (levels == 0 and owed <= 0) or (
+                    levels >= 1 and (levels == 1 or fall(levels - 1) < owed) and read >= owed
+                )
                 L[names[1]].count(
                     least,
                     k,
                     at,
                     f"levels {levels}, fall at levels - 1 {fall(levels - 1) if levels > 1 else 0}, walls {walls}",
                 )
-                L[names[2]].count(taken >= walls, k, at, f"taken {taken}, booked {walls}")
-                L[names[3]].count(
-                    taken == walls, k, at, f"taken {taken}, booked {walls}, excess {taken - walls}"
-                )
+                if "remainder" in tk:
+                    paid = taken + tk["remainder_was"] - tk["remainder"]
+                    L[names[2]].count(
+                        paid >= walls,
+                        k,
+                        at,
+                        f"taken {taken} + remainder before {tk['remainder_was']} - after {tk['remainder']} against booked {walls}",
+                    )
+                    L[names[3]].count(
+                        paid == walls, k, at, f"paid {paid} against booked {walls} (EX-S1's identity)"
+                    )
+                else:
+                    L[names[2]].count(taken >= walls, k, at, f"taken {taken}, booked {walls}")
+                    L[names[3]].count(
+                        taken == walls, k, at, f"taken {taken}, booked {walls}, excess {taken - walls}"
+                    )
                 reading["excess taken - booked (share units)"] += taken - walls
         for (at, rec, line_k), found in clicks_at.items():
             tk, e = found[-1]

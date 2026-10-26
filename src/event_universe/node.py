@@ -81,12 +81,13 @@ class Node:
         seed.lay_world(self, world.get("seed", []))
 
     def start_state(self) -> None:
-        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
+        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the take's remainder (EX-S1, born at 0), the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
         shape, nr = self.shape, len(self.records())
         self.standing = [zeros(shape) for _ in range(nr)]
         self.crossed = [zeros(shape) for _ in range(nr)]
         self.beats = [zeros(shape) for _ in range(nr)]
         self.proper, self.closes, self.interval = zeros(shape), zeros(shape), 0
+        self.take_rem = zeros(shape)
         self.log: list[dict[str, Any]] = []
         self.turns: list[tuple[int, int]] = []
         self.stack: list[dict[str, Any]] = []
@@ -349,11 +350,13 @@ class Node:
     def census(self) -> tuple[int, int]:
         """The count of integer arrays the Node holds and the largest bit length among their values."""
         arrays = self.arrays() + self.standing + self.crossed + self.beats + [self.proper, self.closes]
+        arrays.append(self.take_rem)
         return len(arrays), max(bits_of(a) for a in arrays)
 
     def state_bytes(self) -> bytes:
         """Every level and remainder of the state as text bytes, the run back's comparison bit for bit."""
-        return " ".join(str(int(v)) for a in self.arrays() for v in a.reshape(-1)).encode()
+        arrays = [*self.arrays(), self.take_rem]
+        return " ".join(str(int(v)) for a in arrays for v in a.reshape(-1)).encode()
 
     def state_hash(self) -> str:
         """The state's hash with the interval."""

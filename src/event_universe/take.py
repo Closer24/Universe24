@@ -8,9 +8,9 @@ import numpy as np
 
 from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, port_of, wrap
-from event_universe.core.rule3 import half, lattice, mirrored, quotient, remainder
+from event_universe.core.rule3 import quotient
 from event_universe.links import cross
-from event_universe.rows import PLANE, Line, Row
+from event_universe.rows import PLANE, Row
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -32,43 +32,16 @@ def at_node(x: Any, at: tuple[int, ...]) -> int:
     return int(np.asarray(x)[at]) if np.ndim(x) else int(x)
 
 
-def read_number(
-    node: Node, at: tuple[int, ...], rules: list[tuple[Line, rule3.Rule]], unit: int
-) -> tuple[int, int] | None:
-    """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the taken row's unit times the planes' count, the shape-2 records the draw names (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse (A48-S1's read in the laid frame, a48b's form, built at 05cca50 and reverted: the 48 on the clicks held to the interval 10 and parted at 11 on every reflection at the tie of the sign row's time line's write remainder, and the cycle seed's draws fell on the origin; it returns with its mend)."""
-    modulus = unit * sum(1 for r in node.records() if r.shape == PLANE)
-    nodes, digits, origin, coarse, w_half = frame_nodes(node, at), [], True, True, half(node.w)
-    for line, r in rules:
-        for k, n in enumerate(nodes):
-            wl, key = at_node(line.wall, n), (id(r), k, n)
-            if key not in node.lattices:
-                node.lattices[key] = (
-                    lattice(wl, at_node(r.mass, n), *[at_node(x, n) for x in r.reaches])
-                    if k == 0
-                    else lattice(wl, at_node(r.reaches[k - 1], n))
-                )
-            rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f := node.lattices[key]))
-            origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
-            coarse = coarse and values <= AXES
-            digits.append((quotient(rem, f), values + 1))
-    if origin or coarse:
-        node.counts["refused_origin"] += origin
-        return None
-    carry, room = 0, 1
-    for d, b in sorted(digits):
-        carry = remainder(carry * b + d, modulus)
-        room = min(room * b, modulus)
-    return carry, room
-
-
 def fall_of(
     node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, row: Row
 ) -> tuple[int | None, int, int]:
-    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls; the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
+    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
     gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in row.lines)]
     k = gaps.index(max(gaps))
     line = row.lines[k]
     now, before = int(line.now[at]), int(line.before[at])
+    if walls <= 0:
+        return 0, 0, k
     if now == before:
         return None, 0, k
     t = 1 if before > now else -1
@@ -121,20 +94,23 @@ def momentum_of(
 
 def take_at(
     node: Node, at: tuple[int, ...], walls: int, rule: rule3.Rule, cause: int, rec: int | None = None
-) -> tuple[int, int, int, int, int] | None:
-    """One exact take at a Node of the walls booked from the taken row (the gap-0 row's where none is named: a body's take) at its rule, on the line the fall's sign chooses (`fall_of`, CS4-S2): its level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop; its log entry built in two lines since A48-S1's fold, kept as code). Returns (levels, fall, the line's now before the take, its before, the line taken) or None."""
+) -> tuple[int, int, int, int, int, int, int] | None:
+    """One exact take at a Node, EX-S1 (the take's remainder; the Boss's order of 03:3x UTC under the owner's delegation, H-Exact-Take-Remainder-1): what the close books less the take's remainder standing at the Node is what the take owes; the taken row's (the gap-0 row's where none is named: a body's take) line the fall's sign chooses (`fall_of`, CS4-S2) has its level now moved toward its before by the least count of levels at which the Node's share falls by what is owed, by none where the remainder alone pays; the fall above what is owed is the new remainder, one integer of the Node's state born at 0, so fall + remainder before - remainder after = booked exactly; refused by name where the fall cannot reach what is owed (the stop; its log entry built in two lines since A48-S1's fold, kept as code; the former take, the excess lost, kept by name as the remainder 0). Returns (levels, fall, the line's now before the take, its before, the line taken, the remainder before, the remainder after) or None."""
     row = node.records()[taken := node.records().index(node.emitter()) if rec is None else rec]
-    levels, fall, k = fall_of(node, at, walls, rule, row)
+    rem_was = int(node.take_rem[at])
+    owed = walls - rem_was
+    levels, fall, k = fall_of(node, at, owed, rule, row)
     z = row.lines[k]
     if levels is None:
         node.counts["refused_stop"] += cause
         entry = {"event": "refused", "i": node.interval, "node": list(at), "cause": "stop"}
-        node.log.append(entry | {"fall": fall, "walls": walls, "row": taken})
+        node.log.append(entry | {"fall": fall, "walls": walls, "owed": owed, "row": taken})
         return None
     now, before = int(z.now[at]), int(z.before[at])
     toward = 1 if before > now else -1
     lay(node, taken, at, toward * levels, line=k)
     node.closes[at] += 1
+    node.take_rem[at] = fall - owed
     assert row.pair is not None
     node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=row.pair[0])
-    return levels, fall, now, before, k
+    return levels, fall, now, before, k, rem_was, fall - owed

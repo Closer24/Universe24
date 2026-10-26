@@ -61,9 +61,9 @@ def bodies(
             node.standing[rec][at] = 0
             if got is None:
                 continue
-            levels, fall, now, before, k = got
+            levels, fall, now, before, k, rem_was, rem = got
             node.counts["body_clicks"] += 1
-            entry = credit(node, rec, at, plane_starts, fall, levels, now, before, k)
+            entry = credit(node, rec, at, plane_starts, fall, levels, now, before, k, rem_was, rem)
             if int(net[at]) == 0:
                 lay(node, rec0, at, now - int(node.records()[rec0].lines[k].now[at]), line=k)
                 entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
@@ -131,8 +131,10 @@ def credit(
     taken_was: int,
     taken_before: int,
     line: int,
+    rem_was: int,
+    rem: int,
 ) -> dict[str, Any]:
-    """A body's credit with its frame (a plane's `frame_of`, a quartet's `bilinears_of`), its sense the sign of its charge at the Node, its beat, the take's numbers and momentum, the taker's three levels (the taken line's now before the take, its before, the levels taken: PC-S2), the line taken (`taken_line`, CS4-S2), the sign level and whether the Node turned."""
+    """A body's credit with its frame (a plane's `frame_of`, a quartet's `bilinears_of`), its sense the sign of its charge at the Node, its beat, the take's numbers and momentum, the unit the close books, the take's remainder before and after and what was owed (EX-S1), the taker's three levels (the taken line's now before the take, its before, the levels taken: PC-S2), the line taken (`taken_line`, CS4-S2), the sign level and whether the Node turned."""
     row = node.records()[rec]
     w = int(gram.charge(row.shape, row.lines)[at])
     return {
@@ -149,8 +151,12 @@ def credit(
         if row.shape == PLANE
         else bilinears_of(node, rec, at),
         "taken": fall,
+        "booked": node.units[rec],
         "levels": levels,
         "taken_now_was": taken_was,
+        "remainder_was": rem_was,
+        "remainder": rem,
+        "owed": node.units[rec] - rem_was,
         "taker": [taken_was, taken_before, levels],
         "dP_take": node.last_dp,
         "taken_line": line,
