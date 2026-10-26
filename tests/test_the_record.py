@@ -111,6 +111,30 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
     assert all(len(e["label"].split()) <= 6 for e in events)
 
 
+def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_path: Path) -> None:
+    tool = load_file("phenomena", ROOT / "tools" / "phenomena.py")
+    readings = {name: tool.reading_of(RECORDS / f"{name}.reading.jsonl") for name in SHOWN_ROWS}
+    whole = {
+        g for rows in readings.values() for g, r in rows.items() if tool.kind_of(r["verdict"]) == "SHOWN"
+    }
+    table = tool.table_of("test", readings, {})
+    rows = [
+        line
+        for line in table.splitlines()
+        if line.startswith("| ") and line.split("|")[2].strip().isdigit()
+    ]
+    assert len(rows) == tool.ROWS and all(tool.PHENOMENA[k] in rows[k - 1] for k in tool.PHENOMENA)
+    assert (
+        whole <= set.union(*SHOWN_ROWS.values())
+        and f"SHOWN in Universe24: {len(whole)} of {tool.ROWS} on test" in table
+    )
+    document = tmp_path / "UNIVERSE24.md"
+    document.write_text(
+        "## 2\n\n### The gates widened to everything derived\n\nrest\n", encoding="utf-8"
+    )
+    assert tool.write(document, "test", readings) in document.read_text(encoding="utf-8")
+
+
 def test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed(tmp_path: Path) -> None:
     page = load_file("page", ROOT / "tools" / "page.py")
     out = tmp_path / "hole.html"

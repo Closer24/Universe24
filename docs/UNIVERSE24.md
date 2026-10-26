@@ -121,6 +121,70 @@ The owner's word, verbatim in translation: "all the time make sure the things ar
 
 **Problems by name, the Reader's (6404427576).** Regressed: 22 Coulomb's sign on the chiral (above). Per record, shown to not shown with the count unchanged: 45 the bodies' well on the chiral and the plasma (no body standing at one Node through the run, 0 of 151 into the last quarter on the chiral against 4 of 135 before; K, B and H keep it); 49 and 10 on world_universe; 8 and 16 on the bodies (2 credits beyond the floor); 5 on the hole. Gates 1 and 46 shown on world_universe (one exact return at 201, body credits 1,000 in the later cycle, no birth: the births on the return the one thing owed, a birth needing the twist) and 1 on world_sea; not shown on the chiral (the bottom 5,188 against 1,000), the collapse, the bodies, the hole and the plasma (939 and 946 against 1,000 at 167 and 333, PL-S1's item, approved). Gates 13, 23, 24, 40, 47 and 15 exact not shown on every board with matter (gate 24 shown first by the hand mg1 on ga2 under MG-S1, approved, unbuilt). Gates 11, 12, 48, 29 and 31 not read (no light credit); 32, 44 and 53 not read for want of a world with the `wave` key; 20, 28, 35, 36, 38, 39, 41, 42, 50, 51, 52 and 54 not read for want of a field, a flux, a row or an act. Gate 37 on the chiral 142 Nodes lit beyond one Link (116 before). The three constants on the chiral at 117 of 128 bits; the chiral record 152 MB. The chiral's course under the head: 17 births, 15,801 body credits (6,436 before), the bottoms 215, 403, 581, 745 and 905, 1,075 frozen Node lines (429 before).
 
+### The gates of the phenomena (the head 6a482bffb; written by tools/phenomena.py from the readings, the verdict of every row the decoder's)
+
+SHOWN in Universe24: 24 of 57 on 6a482bffb. The records read from the seed alone: C, K, B, H, U, P, S, P3, U3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
+
+| the phenomenon | gate | the verdict per record | the cause where not SHOWN | since the table before |
+| --- | --- | --- | --- | --- |
+| the recurring bang | 1 | SHOWN on U, P, S, P3, U3; NOT SHOWN on C, K, B, H | the bottom at 4611 against Gamma 1000, no whole-board turn | the first table |
+| the lengthening of the Links | 2 | SHOWN on C, K, B, H, U, P, P3, U3; NOT READ on S | too few spans between a Node's credits | the first table |
+| the Links shortening, then lengthening | 3 | SHOWN on C, K, B, H, U, P, S, P3, U3 |  | the first table |
+| the era of matter | 4 | SHOWN on C, H; NOT SHOWN on K, B, U, P, S, P3, U3 |  | the first table |
+| the acceleration of the expansion | 5 | SHOWN on C, B, H, P, S, P3; NOT READ on K, U, U3 | no rising run of two marks | the first table |
+| the contraction | 6 | SHOWN on C, K, B, H, U, P, S, P3, U3 |  | the first table |
+| light present and absorbed | 7 | SHOWN on C, K, B, H, U, P, P3, U3; NOT READ on S | no take in the record | the first table |
+| the families forming | 8 | SHOWN in part on C, H, U, P, P3, U3; NOT SHOWN on K, B; NOT READ on S | every credit within the floor, tracks right 140 of 149 | the first table |
+| the collision of two bodies | 9 | SHOWN on C, K, B, H, U, P, P3, U3; NOT READ on S | fewer than two bodies credited at one interval | the first table |
+| gravitational time dilation | 10 | SHOWN on C, K, B, H; NOT SHOWN on U, P, P3, U3; NOT READ on S | in the reader's view | the first table |
+| gravitational redshift | 11 | NOT READ on C, K, B, H, U, P, S, P3, U3 | the record carries no credit of the gap-0 row (light has no period on the sea) | the first table |
+| the delay and the bending of light | 12 | NOT READ on C, K, B, H, U, P, S, P3, U3 | the record carries no credit of the gap-0 row (light has no period on the sea) | the first table |
+| free fall | 13 | NOT SHOWN on C, K, B, H, U, P, P3, U3; NOT READ on S | the approach does not quicken | the first table |
+| the horizon, a black hole | 14 | SHOWN on C; NOT REACHED on K, B, H, U, P, S, P3, U3 |  | the first table |
+| conservation at the click | 15 | SHOWN on C, H; NOT READ on K, B, U, P, S, P3, U3 | no birth in the record | the first table |
+| the uncertainty floor | 16 | SHOWN on C, H, U, P, P3, U3; NOT SHOWN on K, B; NOT READ on S |  | the first table |
+| charge conservation | 17 | SHOWN on C, H; NOT READ on K, B, U, P, S, P3, U3 | no birth in the record | the first table |
+| the arrow of time and its reversal | 18 | SHOWN on C, K, B, H, U, P, S, P3, U3 |  | the first table |
+| the mass ratios | 19 | SHOWN on C, H, U, U3; NOT SHOWN on K, B, P, P3; NOT READ on S | 1 plane credited, a ratio needs two | the first table |
+| the twist, P and C violated, CP kept | 20 | NOT READ on C, K, B, H, U, P, S, P3, U3 | one seed's run | the first table |
+| the handedness of the birth | 21 | SHOWN on C, H; NOT READ on K, B, U, P, S, P3, U3 | no birth | the first table |
+| Coulomb's sign | 22 | SHOWN in part on C; NOT SHOWN on H, U, P, P3, U3; NOT READ on K, B, S | unlike senses approach | the first table |
+| the momentum across the click | 23 | NOT SHOWN on C, H; NOT READ on K, B, U, P, S, P3, U3 | the recoil passed at 0 of 17 births (the lay's form owed) | the first table |
+| the merger of a pair into light | 24 | NOT SHOWN on C, K, B, H, U, P, P3, U3; NOT READ on S | 885250 gapped meetings reached the premise and every one was refused by name | the first table |
+| the entropy rising | 25 | SHOWN on C, H; NOT READ on K, B, U, P, S, P3, U3 | no birth | the first table |
+| the three lifts and their masses | 26 | SHOWN on C; SHOWN in part on H, U, U3; NOT READ on K, B, P, S, P3 | no birth and fewer than two planes credited | the first table |
+| confinement, no third alone | 27 | SHOWN on C, H; NOT READ on K, B, U, P, S, P3, U3 | no birth | the first table |
+| the neutron's conversion | 28 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no record ends at a Node where others begin (the conversion act is not in the engine) | the first table |
+| the redshift of light | 29 | NOT READ on C, K, B, H, U, P, S, P3, U3 | the record carries no credit of the gap-0 row (light has no period on the sea) | the first table |
+| the dilation of a body's clock | 30 | SHOWN on C, K, B, H; NOT SHOWN on U, P, P3, U3; NOT READ on S | in the reader's view | the first table |
+| the deflection and the Shapiro delay | 31 | NOT READ on C, K, B, H, U, P, S, P3, U3 | the record carries no credit of the gap-0 row (light has no period on the sea) | the first table |
+| the perihelion's advance | 32 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no lay with a wave number in the world | the first table |
+| free fall by the tail | 33 | NOT SHOWN on C, K, B, H, U, P, P3, U3; NOT READ on S | the approach does not quicken | the first table |
+| the stopped clock at the horizon | 34 | NOT SHOWN on C; NOT REACHED on K, B, H, U, P, S, P3, U3 | a frozen Node credited or its content moving | the first table |
+| frame dragging | 35 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no mass moves beside a body's track in the world | the first table |
+| gravitational waves, the shears | 36 | NOT READ on C, K, B, H, U, P, S, P3, U3 | the rows carry the tension's extremes and no shear line | the first table |
+| Maxwell's one Link per interval | 37 | SHOWN on B; NOT SHOWN on C, K, H; NOT READ on U, P, S, P3, U3 | a Node lit beyond one Link of the interval before | the first table |
+| the Aharonov-Bohm phase | 38 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no held flux in the world | the first table |
+| the Zeeman and Stark shifts | 39 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no held field in the world (the toy's one-Node test carries the doublet) | the first table |
+| the photoelectric click | 40 | NOT SHOWN on C, K, B, H, U, P, P3, U3; NOT READ on S | 15316 clicks take fewer levels than one quantum (the exact take in levels, row 47) | the first table |
+| the spinor's two beats | 41 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no shape-8 row in the record's universe | the first table |
+| Stern-Gerlach, the split along the gradient | 42 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no gradient field in the world (the toy's records carry the verdict) | the first table |
+| the exclusion | 43 | SHOWN on C, K, B, H; NOT READ on U, P, S, P3, U3 | no lay met a standing quantum | the first table |
+| the moving packet's velocity | 44 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no lay with a wave number in the world | the first table |
+| the bound body in its well | 45 | SHOWN on K, B, H, P, P3; NOT SHOWN on C, U, U3; NOT READ on S | no body stands at one Node through the run | the first table |
+| the bang recurring with its gates | 46 | SHOWN on U, P, P3, U3; NOT SHOWN on S; NOT READ on C, K, B, H | no exact return of the board (gate 1) | the first table |
+| the exact take | 47 | NOT SHOWN on C, H; NOT READ on K, B, U, P, S, P3, U3 | exact: the excess above 0 on 17 births (EX-S1) | the first table |
+| the black body | 48 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no gap-0 credit in the record (the sea one mode) | the first table |
+| the exponential decay | 49 | NOT SHOWN on C, K, B, H, U, P, P3, U3; NOT READ on S | the spacings' counts do not fall from the least | the first table |
+| light on light | 50 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no two light packets in the world | the first table |
+| the Casimir force and the running alpha | 51 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no plates and no bound pair in the world | the first table |
+| the neutrino | 52 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no conversion in the record and every prime of den within the width (26 points on den's circle) | the first table |
+| a fast packet binding | 53 | NOT READ on C, K, B, H, U, P, S, P3, U3 | no lay with a wave number in the world | the first table |
+| scattering, two packets through each other | 54 | NOT READ on C, K, B, H, U, P, S, P3, U3 | two packets of one plane are not told apart by their line, and the momentum across the click is row 23 | the first table |
+| the two slits | 55 | NOT READ by the decoder: no row (the predicate in the hands' file, the row owed) |  | the first table |
+| Bell's correlation | 56 | NOT READ by the decoder: no row (the predicate in the hands' file, the row owed) |  | the first table |
+| the GHZ correlation | 57 | NOT READ by the decoder: no row (the predicate in the hands' file, the row owed) |  | the first table |
+
 ### The gates widened to everything derived, read on any bang of the same seed and at one Node where one Node can show it (2026-10-25, 11:0x UTC)
 
 The owner's two words (the owner's word of 2026-10-25, 11:0x UTC, through the Boss, #2187 comment 6396795317, verbatim in translation: "also everything you derive and need to see ... everything that was derived and seen, that you are supposed to see as nature does, add it to the gates, because you want to see not the 19, you want to see everything that was derived, you want to see it on the board from the same seed; you need not see it in one bang, you can see it in the second, the third, the fourth, the fifth bang ... but you can also check that they are seen at one Node"; and the owner's word of 2026-10-25, 11:0x UTC, through the Boss, #2187 comment 6396810268, verbatim in translation: "everything you wrote that did not come out must enter the 19 gates; everything is to be seen there; so the order of the checks is one: you check on a Node, you check on the toy, and then it is to be seen in Universe24 too, so that in Universe24 there is no surprise that things do not happen"): every derivation that says what nature's clicks show is a gate, read by the decoder from the record of the same seed (the chiral emergence seed and the bodies' seed) on any bang of the run, a gate SHOWN on the third bang SHOWN, and each also a one-Node test where one Node can show it; every item named NOT SHOWN or a finding against nature by name in the comparisons under tools/derivations/open_items is a gate of this table with its predicate and no note, SHOWN or NOT SHOWN on the record by the decoder, nothing left out because the law lacks it. The order of the checks is one: the Node, then the toy, then Universe24; a gate that did not show on the toy is not expected on Universe24. The rows below are compiled from the comparisons of the hands Q and V, W and G, U and D, R and K, Z and N, Y and PA, OB and SP, gn1 and dn1 by the Scribe on the Boss's request (#2187 comment 6396795317); mv and sr add their rows when their comparisons land; David's decoder grows to the rows as they are written, each reading credit lines alone, across the bangs, and the one-Node tests join the toy's tests (ENGINE.md, the list). The nineteen above stand as rows 1 to 19.

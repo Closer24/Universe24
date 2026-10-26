@@ -360,14 +360,14 @@ def kind_of(verdict: str) -> str:
 
 
 def gates(run: dict[str, Any]) -> dict[str, Any]:
-    """Every gate's verdict with its numbers from the record alone, the decoder's line (the count of rows by their verdict's kind, the Boss's count of SHOWN in Universe24), and the event lines of the gates' first SHOWN (events.first_shown)."""
+    """Every gate's verdict with its numbers from the record alone, the decoder's line (the rows of the gates of the phenomena and their count by the verdict's kind, the count of SHOWN in Universe24), and the event lines of the gates' first SHOWN (events.first_shown)."""
     from event_universe import events  # the events read the table, after it
 
     record = Record(run)
     out = verdicts(record)
     out["the decoder"] = {
         "floats used": 0,
-        "rows of the table": len(TABLE),
+        "rows of the gates of the phenomena": len(TABLE),
         "rows by the verdict's kind (the numbered rows)": dict(
             Counter(kind_of(v["verdict"]) for k, v in out.items() if k.split()[0].isdigit())
         ),
