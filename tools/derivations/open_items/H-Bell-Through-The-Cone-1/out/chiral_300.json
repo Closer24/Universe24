@@ -1,0 +1,320 @@
+{
+ "world": "tools/derivations/open_items/H-Bell-Through-The-Cone-1/worlds/world_chiral_300.json",
+ "cube": 5,
+ "intervals": 300,
+ "births": 17,
+ "pairs_both_clicked": 17,
+ "root_carried_by_the_birth_line (the first birth)": {
+  "i": 3,
+  "line_pair": 1,
+  "senses": [
+   -1,
+   1
+  ],
+  "W_children": [
+   -18000,
+   18000
+  ],
+  "amplitude": [
+   125,
+   144
+  ],
+  "taken_row": 3,
+  "taken_line": 0,
+  "levels": 28,
+  "taker": [
+   760,
+   587,
+   28
+  ],
+  "proper": 2999,
+  "content": 1,
+  "children_at_node": 1
+ },
+ "amplitude the same at every birth": true,
+ "W_children the same at every birth": false,
+ "children integers at the two ends at the birth (forward, the first birth)": {
+  "interval": 3,
+  "minus": [
+   [
+    125,
+    0,
+    11778992341894795371648000000
+   ],
+   [
+    0,
+    -144,
+    11778992341894795371648000000
+   ]
+  ],
+  "plus": [
+   [
+    125,
+    0,
+    11808105026872291158528000000
+   ],
+   [
+    0,
+    144,
+    11808105026872291158528000000
+   ]
+  ]
+ },
+ "cone": {
+  "clicks": 34,
+  "within_cone": 34,
+  "links_to_birth_end_max": 0,
+  "intervals_back_min_max": [
+   1,
+   12
+  ]
+ },
+ "run_back": {
+  "from_interval": 300,
+  "to_interval": 3,
+  "steps": 297,
+  "exact": 297,
+  "birth_and_click_intervals_compared": [
+   {
+    "interval": 20,
+    "exact": true,
+    "birth": false,
+    "click": true
+   },
+   {
+    "interval": 19,
+    "exact": true,
+    "birth": false,
+    "click": true
+   },
+   {
+    "interval": 18,
+    "exact": true,
+    "birth": false,
+    "click": true
+   },
+   {
+    "interval": 16,
+    "exact": true,
+    "birth": true,
+    "click": false
+   },
+   {
+    "interval": 15,
+    "exact": true,
+    "birth": false,
+    "click": true
+   },
+   {
+    "interval": 14,
+    "exact": true,
+    "birth": false,
+    "click": true
+   },
+   {
+    "interval": 13,
+    "exact": true,
+    "birth": false,
+    "click": true
+   },
+   {
+    "interval": 12,
+    "exact": true,
+    "birth": true,
+    "click": true
+   },
+   {
+    "interval": 11,
+    "exact": true,
+    "birth": false,
+    "click": true
+   },
+   {
+    "interval": 10,
+    "exact": true,
+    "birth": true,
+    "click": true
+   },
+   {
+    "interval": 9,
+    "exact": true,
+    "birth": true,
+    "click": true
+   },
+   {
+    "interval": 8,
+    "exact": true,
+    "birth": true,
+    "click": true
+   },
+   {
+    "interval": 7,
+    "exact": true,
+    "birth": true,
+    "click": true
+   },
+   {
+    "interval": 6,
+    "exact": true,
+    "birth": true,
+    "click": true
+   },
+   {
+    "interval": 5,
+    "exact": true,
+    "birth": true,
+    "click": false
+   },
+   {
+    "interval": 4,
+    "exact": true,
+    "birth": true,
+    "click": false
+   },
+   {
+    "interval": 3,
+    "exact": true,
+    "birth": true,
+    "click": false
+   }
+  ],
+  "roots_captured": 17,
+  "roots_recovered_equal_every_integer": 17
+ },
+ "root_hash_one_per_birth_independent_of_setting": true,
+ "E by the frame (same - opposite, pairs)": {
+  "a0 b0": [
+   5,
+   15
+  ],
+  "a0 b1": [
+   9,
+   15
+  ],
+  "a1 b0": [
+   -1,
+   17
+  ],
+  "a1 b1": [
+   -1,
+   17
+  ]
+ },
+ "S by the frame": "-24990 / 65025",
+ "S by the frame (thousandths)": -385,
+ "E by the senses": {
+  "a0 b0": [
+   -17,
+   17
+  ],
+  "a0 b1": [
+   -17,
+   17
+  ],
+  "a1 b0": [
+   -17,
+   17
+  ],
+  "a1 b1": [
+   -17,
+   17
+  ]
+ },
+ "S by the senses": "-167042 / 83521",
+ "E through the root": {
+  "a0 b0": [
+   5,
+   15
+  ],
+  "a0 b1": [
+   9,
+   15
+  ],
+  "a1 b0": [
+   -1,
+   17
+  ],
+  "a1 b1": [
+   -1,
+   17
+  ]
+ },
+ "S through the root": "-24990 / 65025",
+ "S through the root equals S by the frame": true,
+ "per-pair identity": {
+  "-2": 10,
+  "2": 7
+ },
+ "S^2 > 8 through the root": false,
+ "|S| <= 2 through the root": true,
+ "one-setting form (the setting drawn by the click's turned bit): subsample sizes": {
+  "a0 b0": 8,
+  "a0 b1": 3,
+  "a1 b0": 3,
+  "a1 b1": 3
+ },
+ "one-setting form: E": {
+  "a0 b0": [
+   4,
+   8
+  ],
+  "a0 b1": [
+   3,
+   3
+  ],
+  "a1 b0": [
+   1,
+   3
+  ],
+  "a1 b1": [
+   -1,
+   3
+  ]
+ },
+ "one-setting form: S": "-108 / 216",
+ "one-setting form: S (thousandths)": -500,
+ "one-setting form: S^2 > 8": false,
+ "one-setting form by the click's interval parity: subsample sizes": {
+  "a0 b0": 2,
+  "a0 b1": 5,
+  "a1 b0": 6,
+  "a1 b1": 2
+ },
+ "one-setting form by the click's interval parity: E": {
+  "a0 b0": [
+   2,
+   2
+  ],
+  "a0 b1": [
+   1,
+   5
+  ],
+  "a1 b0": [
+   -2,
+   6
+  ],
+  "a1 b1": [
+   0,
+   2
+  ]
+ },
+ "one-setting form by the click's interval parity: S": "56 / 120",
+ "one-setting form by the click's interval parity: S (thousandths)": 466,
+ "counts": {
+  "births": "17",
+  "taken": "63876498010977423440473",
+  "booked": "61960173871363033428109",
+  "body_clicks": "7934",
+  "laid_back": "13",
+  "refused_stop": "20154",
+  "refused_origin": "0",
+  "refused_lay": "52675",
+  "refused_orientation": "363",
+  "refused_twist": "43",
+  "refused_sense": "57407",
+  "turns": "1737",
+  "met": "110514",
+  "laid": "15",
+  "laid_nodes": "15"
+ }
+}

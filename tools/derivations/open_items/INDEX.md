@@ -134,3 +134,16 @@ The owner's word (2026-10-25, 23:14 UTC, in translation): "rename all the deriva
 | y2 | H-Six-Metric-Lines-2 | The ten lines by one write(rows), 9 of 9 readings equal to the by-hand bilinears; the run back with the six lines unmet on the inverse order, the mend named. |
 | z1 | H-Minimal-Seed-1 | The seed as a list of lays in three forms is the click's own lay act before the first interval; the run back MATCH through the births on the hole, plus-one and bodies' seeds. |
 | z2 | H-Minimal-Seed-2 | Z-S1 and Z-S2: the three forms lay the law's own seed bit for bit; the emergence seed births 121 pairs with the charge 0; 8 of 23 gates shown. |
+
+## The hands named by their meaning (from 2026-10-26)
+
+| hand | what it found |
+|---|---|
+| H-Lay-Rest-Mirror-1 | No lay rule lays the mirror's rest on a line laid at 0 at an even wall; the centred pick carries the rotations to 24 of 24 and the reflections part at 6; the mirror state holds to 14 with the walled row odd and parts at 15 by one rounding's tie (1719 against 1717); ga2 births 32 or 0 of 64 under the pick. |
+| H-Lay-Rest-Mirror-2 | The same by the letter and by the measure, the mirror state parting at 5 with the walled row even; the 5-cube's 48 under the pick with the lay rule: 12 rotations equal, the rest apart; the uniform boards bit for bit, the records with births changed. |
+| The-Lay-Rest-Mirror_COMPARISON.md | The Boss's verdict: the step's own tie is the 48's root, the lay stays, the centred pick cannot land while the births' seed loses its marks. |
+| NATUREFIRST.md | The project NatureFirst (the owner's word of 02:49): the derivations owed, the rows to add, the approved builds, the step's symmetry, the findings kept by name. |
+| H-Angular-Momentum-In-The-Clicks-1, -2 | The clicks conserve no angular momentum; a click's moment about any centre equals the board's change by its take to the integer (a Link's current lies along its axis); the senses are the charge's sign, not spin; the board and the clicks part by the step's torque. |
+| The-Angular-Momentum-In-The-Clicks_COMPARISON.md | A finding and a law missing by name; AJ-S1 the reading approved by the Boss under the owner's delegation; the next hands on the torque of the step. |
+| H-Bell-Through-The-Cone-1, -2 | The run back exact 427 of 427 and writing nothing; the root the birth's and the same under every setting; the bound 2 through the root as at the clicks; BC-F1 the cone's own digit-drawn reading. |
+| The-Bell-Bound-Through-The-Cone_COMPARISON.md | Does not pass the bound; the owner's two facts are why it holds; row 56 stands NOT SHOWN as nature; the owner's word owed on the cone's own form. |

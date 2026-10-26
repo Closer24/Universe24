@@ -1,0 +1,35 @@
+# The angular momentum in the clicks: two blind hands on engine-5.0-test 910648f74 (the Boss's cold read, 2026-10-26, 03:0x UTC; project NatureFirst, item A1)
+
+The owner's words: 2026-10-26, 02:45 UTC (nature is read in the clicks alone, so a conservation counts where it holds in the clicks; generic laws first, the angular momentum first of them if it is missing: a very important clause), 02:49 (project NatureFirst: derive what is needed, generic laws, unify all the time). The board hands H-Angular-Momentum-1 and -2 (The-Angular-Momentum_COMPARISON.md) found no conserved L on the board and the 48 exact. The question put to two blind hands: what angular momentum do the clicks carry, is it conserved in the clicks, and what are the senses.
+
+The hands: H-Angular-Momentum-In-The-Clicks-1 (ac1) and -2 (ac2), 02:46 to 02:56 UTC, each with a reader of the click lines alone (no act, no board read in the reading), on the records of 2ab32b518: the hole 60, the chiral 60, the bodies 300, the uniform boards, the cycle seed ga2 to 450 and the Compton world.
+
+## 1. Where the two hands agree (the verdict)
+
+1. **The clicks conserve no angular momentum of their own, and the law books none.** Both: the sum of the clicks' moments across a record is no constant, and no sentence of the law names a moment on the click lines.
+2. **What the clicks hold exactly is an identity with the board, by one theorem.** A Link's momentum lies along its own axis, so the moment of a one-Node take about any centre is (r_Node - c) x dP_take from the credit line's Node and three integers alone, and it equals the board's change of the moment of the lattice momentum density (MV-S1) by that take, to the integer, about any centre, the seam included. Measured per close: the hole 60 of 60 exact, the bodies 300 of 300, the Compton world 60 of 60, the chiral 56 of 60; the four misses are the closes with a birth whose children landed on standing light, where the birth line carries the lay's momentum summed and not per end. ac2 adds the centre law exact on 8 of 8 records: J(c') = J(c) - (c' - c) x P_clicks.
+3. **The board's L and the clicks' J part by the step itself.** The board's L changes across a record by the clicks' moments plus the torque of Rule3's step at non-uniform paces and of the swap (the board hands' terms, reproduced on the head: on the hole the clicks' part and the step's part sum to the board hands' L at the end, to the integer). The clicks read the board's recoil at the detectors, as nature's detectors read a target's recoil; they do not read a conserved quantity.
+4. **The senses are the charge, not spin.** The sense is the sign of the plane's Wronskian at one Node; the 48 moves Nodes and Ports and leaves a Node's four levels, so the sense is a true scalar under the 48, odd under the plane's conjugation: the charge's sign (MS-S1, gate 17). The senses' sum 0 at every birth is the charge's conservation. J's spin part is absent by the letter on every shipped record: no spinor-row births, the light lay without a sense, the shape-8 row's axial part unread.
+5. **The clicks' J about the centre is 0 where the seed has the symmetry**: the bodies 300 (the two packets mirrored about the centre) 0 at every one of 197 clicking closes; the Compton beam on the axis through the body 0 to the bit; ga2 0 about the centre with the 64 births' net recoil unreturned along z; the uniform boards every click laid back with dP_take 0.
+
+## 2. Where they differ
+
+- ac1 measured the chiral's four missed closes to the gap (the one-Link arm times the far end's transverse lay); ac2 measured the nine chiral births onto standing light carrying dP_lay transverse to the Link on 9 of 9. One finding read twice.
+- ac2 reads the one axial datum of a birth line, the oriented Link plus - minus (the twist's end), summed 0 on the hole and ga2 and [-2, 1, -6] on the chiral, and asks whether it is nature's unit of J in an emission (the owner's question, AM-S1 item 4): open, no form in the letter.
+
+## 3. The Boss's verdict
+
+**A FINDING**, and a law missing by name. The conservation of angular momentum is not in the law: not on the board (the board hands) and not in the clicks (these two). What holds exactly is the identity of the clicks' moment with the board's change by the take, which is the reading of J a detector makes. Under the owner's word of 02:45 (generic laws first, the angular momentum first if it is missing) the missing law is now the first derivation of NatureFirst: where does the step put torque. The two hands name the source: Rule3's step at non-uniform paces and the swap. The next pair of blind hands derives, within the local law alone (one Node and its six Links), whether a form of the step's rounding and of the swap conserves the moment of the lattice momentum density across a close, and measures it against the hole and the chiral to 60. No form is proposed here.
+
+**AJ-S1, the reading, approved by the Boss under the owner's word of 00:57 UTC** (the delegation on important derivations: generic, the same for every row, fits nature; brought to the owner in the next report): the angular momentum read in the clicks is the moment of the takes and lays booked on the click lines about a centre; summed over a close it equals the board's L change across that close, to the integer, about any centre, because a Link's current lies along its own axis; a laid-back credit's moment is 0 exactly and a pair born onto nothing carries 0; J(c') = J(c) - (c' - c) x P_clicks exactly; the senses are the charge's sign, not spin; the clicks conserve no angular momentum of their own. The two hands wrote the clause in the same three parts; the conservation is not in it and is not approved as a law.
+
+## 4. What goes where
+
+- **David**: the birth line's lay momentum per end (two vectors of three integers in the record's birth line, the same booking the take already has): a record key, no act, closing the chiral's 4 of 60 closes. After the step's tie.
+- **The Scribe**: AJ-S1 under the clicks' clauses in ALGEBRA.md, dated, marked approved by the Boss under the owner's word; the row "the angular momentum in the clicks" in the gates of the phenomena, SHOWN where the clicks' J per close equals the board's change to the integer and 0 to the bit where the seed has the symmetry (the hole, the bodies, the Compton world); the row "the conservation of angular momentum" NOT SHOWN, the law missing by name; NatureFirst A1 updated.
+- **The Reader (Animate)**: the reader moment_of_clicks(record, centre) from either hand's patch (ac2's is the smaller: tools/derivations/moment_of_clicks.py and its test, 4 tests in 0.21 s), as the row's reader.
+- **The next hands**: H-Torque-Of-The-Step-1 and -2 (the derivation above).
+
+## 5. Laws with a number
+
+Both hands: lines only, no board read in the reading; integers only, no division; the fixed count unchanged; the run back untouched; the one-Link reach held (a Link's axis theorem is one Node's); no name and no typed number in the readers; the clicks' images under the 48 not measured (named missing by both).

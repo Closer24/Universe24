@@ -1,0 +1,54 @@
+diff -ruN src/event_universe/node.py src/event_universe/node.py
+--- a/src/event_universe/node.py	2026-10-26 02:28:13.121055282 +0000
++++ b/src/event_universe/node.py	2026-10-26 02:40:22.752396899 +0000
+@@ -322,9 +322,10 @@
+         rules = [self.rule_of(r, c, factors) for r in self.rows_]
+         return [(line, rule) for rule, lines in zip(rules, held, strict=True) for line in lines]
+ 
+-    def digit_of(self, rem: int, values: int) -> tuple[int, int]:
+-        """One line's digit at a Node: its remainder on the lattice and the count of values the lattice holds."""
+-        return rem, values
++    def digit_of(self, rem: int, values: int, wall: int) -> tuple[int, int]:
++        """One line's digit at a Node (LR-S1, the centred digit; David's mend, #2187 6406297069): the remainder's distance from the centre of its wall, |2 r + 1 - wall| div 2, the same integer for r and wall - 1 - r (the one rule's mirror), over half the count of values the lattice holds; the base (wall div F) div 2 + 1 in the read."""
++        distance = rem + rem + 1 - wall
++        return half(distance if distance >= 0 else -distance), half(values)
+ 
+     def run(self, direction: int = 1) -> None:
+         """One interval of the Node's program in the direction (interval.run)."""
+diff -ruN src/event_universe/take.py src/event_universe/take.py
+--- a/src/event_universe/take.py	2026-10-26 02:28:13.121055282 +0000
++++ b/src/event_universe/take.py	2026-10-26 02:40:22.752100611 +0000
+@@ -38,7 +38,7 @@
+     """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the taken row's unit times the planes' count, the shape-2 records the draw names (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse (A48-S1's read in the laid frame, a48b's form, built at 05cca50 and reverted: the 48 on the clicks held to the interval 10 and parted at 11 on every reflection at the tie of the sign row's time line's write remainder, and the cycle seed's draws fell on the origin; it returns with its mend)."""
+     modulus = unit * sum(1 for r in node.records() if r.shape == PLANE)
+     nodes, digits = frame_nodes(node, at), []
+-    origin, coarse, w_half = True, True, half(node.w)
++    origin, coarse = True, True
+     for line, r in rules:
+         for k, n in enumerate(nodes):
+             key = (id(r), k, n)
+@@ -50,8 +50,9 @@
+                     else lattice(wl, at_node(r.reaches[k - 1], n))
+                 )
+             f = node.lattices[key]
+-            rem, values = node.digit_of(int(line.rem[n]), quotient(at_node(line.wall, n), f))
+-            origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
++            wl = at_node(line.wall, n)
++            rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f), int(wl))  # LR-S1: the centred digit, r and W - 1 - r alike
++            origin = origin and rem == 0
+             coarse = coarse and values <= AXES
+             digits.append((quotient(rem, f), values + 1))
+     if origin or coarse:
+@@ -102,6 +103,12 @@
+     for line_, now, before in zip(lines, levels[0::PLANE], levels[1::PLANE], strict=True):
+         line_.now[where] = line_.now[where] + sign * now
+         line_.before[where] = line_.before[where] + sign * before
++    if node.interval == 0:  # LR-S1: the seed's rest born at the half and mirrored once where the line's own level is negative (rule (iv) of the one rule, the odd rounding's birth), so the lay of a negated line is the lay mirrored
++        for line_ in lines:
++            negative = np.where(line_.now != 0, line_.now < 0, line_.before < 0)
++            line_.rem = np.where(negative, mirrored(half(line_.wall), line_.wall, 1), half(line_.wall)) + 0 * line_.rem
++            if line_.wr is not None:
++                line_.wr = np.where(negative, mirrored(half(line_.wwall), line_.wwall, 1), half(line_.wwall)) + 0 * line_.wr
+ 
+ 
+ def momentum_of(

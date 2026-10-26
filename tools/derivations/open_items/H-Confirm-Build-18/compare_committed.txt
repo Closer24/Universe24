@@ -1,0 +1,3 @@
+hole (60): EQUAL, 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world
+chiral (60): EQUAL, 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world
+bodies (300): EQUAL, 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world
