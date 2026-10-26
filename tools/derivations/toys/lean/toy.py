@@ -14,7 +14,8 @@ from event_universe.core import paces, rule3
 from event_universe.core.ports import PORTS, across
 from event_universe.core.rule3 import half, quotient
 from event_universe.features import volume
-from event_universe.links import links_of, stress_parts, tensor_parts
+from event_universe.links import links_of
+from event_universe.metric import stress_parts, tensor_parts
 from event_universe.loader.world import read_world
 from event_universe.node import Node
 from event_universe.rows import CARRIER, POTENTIAL, Line, walled_of, zeros
