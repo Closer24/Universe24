@@ -23,12 +23,13 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
     "chiral": {2, 4, 5, 7, 8, 9, 10, 16, 18, 19, 21, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812 credits, 1,973 before)
     # the bodies at 120 intervals (the Boss's 6412896537; {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60} at 300)
-    "bodies": {4, 5, 7, 8, 10, 15, 16, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
+    # under CL-S2 (the close's one moment, 2026-10-26): the bodies lose 8 (families forming) and 16 (the uncertainty floor) with the course parting at 19 (23 births, 22 before; the former {4, 5, 7, 8, 10, 15, 16, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60})
+    "bodies": {4, 5, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
 }
 VERDICTS = {  # the verdicts' words by name
     "hole": {
         "9 collisions": "NOT SHOWN: the credited Nodes receding",
-        "22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part",  # NOT SHOWN at the trace 54
+        "22 Coulomb's sign": "SHOWN in part: unlike senses approach",  # the sense read at the start under CL-S2 (SHOWN: unlike senses approach and like senses part before it; NOT SHOWN at the trace 54)
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 4 / 18",  # 6 / 17 before LT-S1; 12 / 16 at 54
         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
@@ -44,7 +45,7 @@ VERDICTS = {  # the verdicts' words by name
     "bodies": {
         "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link",
         "55 the two slits": "NOT READ: no two gap-0 packets at one centre",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 7",  # NOT READ at the trace 54, no birth
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 4 / 8",  # 2 / 7 before the one moment (CL-S2); not read at the trace 54, no birth
         "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four",
         "61 the horizon radiates": "NOT READ: no frozen Node in the record (as gate 14)",
         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",  # NOT SHOWN at 300: the first growth of the spacing not above zero

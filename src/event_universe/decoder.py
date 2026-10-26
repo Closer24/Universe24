@@ -220,7 +220,7 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
     w_in, w_out = (w // HALF) * (x_b + x_n), (w // HALF) * (x_n + x_x)
     zb = (f["re_start_before"], f["im_start_before"])
     zn = (f["re_start_now"], f["im_start_now"])
-    zx = (f["re_stepped"], f["im_stepped"])
+    zx = (f["re_now"], f["im_now"])
     if zn == (0, 0):
         return None
     scale, phases, odd, frames = f["X"], f["phases"], f["odd"], f["frames"]

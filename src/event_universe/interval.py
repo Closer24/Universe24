@@ -62,7 +62,7 @@ class Interval:
         self.common = max(self.scales.values())
         self.out: list[list[Line]] = [[] for _ in self.rows]
         self.plane_starts: list[list[Line]] = []
-        self.stepped: list[list[Line]] = []
+        self.before_swap: list[list[Line]] = []
 
     def at(self, line: Line) -> Any:
         """A line's start level: forward the now slot; backward the before slot, and the now slot at a still Node, turned or frozen (BH-S1), which ended the interval at its pre-state."""
@@ -195,7 +195,7 @@ class Interval:
             self.kicked[k] = p_other
 
     def division(self) -> None:
-        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms (the file's trace weight) den Gamma^2 - trace p_0^2) p_0 on its time line and, times p_0^2 on its nine axis lines by the position of their reading, the traceless stress, the records' count flux and the shears (Y-S1, Y-S3; the carrier's act node.act, the former `carried` by this name); every riding line's one carried division at the mean wall of the carrier's two levels at its end times the row's scale, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and after the step kept for the close; the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act but the swap changes any integer of a frozen Node's state in either direction; backward a Node both frozen and turned is restored to the pre-state the exchange returned (FR-S1)."""
+        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms (the file's trace weight) den Gamma^2 - trace p_0^2) p_0 on its time line and, times p_0^2 on its nine axis lines by the position of their reading, the traceless stress, the records' count flux and the shears (Y-S1, Y-S3; the carrier's act node.act, the former `carried` by this name); every riding line's one carried division at the mean wall of the carrier's two levels at its end times the row's scale, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and before the swap kept for the close (the latter the state the swap replaces at the turned Nodes, the levels now elsewhere, CL-S2; the former `stepped` kept by name); the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act but the swap changes any integer of a frozen Node's state in either direction; backward a Node both frozen and turned is restored to the pre-state the exchange returned (FR-S1)."""
         node, carrier = self.node, self.carrier
         k = self.where[id(carrier)]
         p02 = self.p0 * self.p0
@@ -223,8 +223,8 @@ class Interval:
                 start = self.rows[k] if self.direction == 1 else new
                 after = new if self.direction == 1 else self.held[k]
                 self.plane_starts.append(list(start))
-                self.stepped.append([line.copy() for line in after])
-        node.stepped = self.stepped
+                self.before_swap.append([line.copy() for line in after])
+        node.before_swap = self.before_swap
         node.set_rows(self.out)
         if self.direction == 1:
             self.lays()

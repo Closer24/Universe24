@@ -31,10 +31,11 @@ def children_laid(
 ) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:
     """The two children laid by the one lay act, the - child at the - end and the + child at the + end, each end's levels by `levels_of` at the end and its sense (the charged child's child_levels at the charge T div 2 with the charge's sign on the re line, GP-S1, the owner's word of 2026-10-26, 04:3x UTC; a merger's light the exact take at -1, `light_levels`, MG-S1), each lay's momentum booked per line of the row at its Node before it is laid (momentum_per_line, the Boss's 6413599502 (b)), the second end read on the board the first lay changed (the sum exact); the former child_at, close.child_laid and light_children one function (NL-S1's stroke 4, 2026-10-26). Returns the lays' momentum summed and per end (dP_lay_ends, the J hands' key, AJ-S2), each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the record's levels at each Node before the lay (the residue)."""
     row = node.records()[s]
+    assert row.pair is not None
     stood, ends = stood_at(row, minus, plus), []
     for where, sense in ((minus, -1), (plus, 1)):
         levels = levels_of(where, sense)
-        ends.append(momentum_per_line(node, row, where, levels))
+        ends.append(momentum_per_line(node, row.lines, row.pair[0], where, levels))
         lay(node, s, where, levels)
     return [a + b for a, b in zip(*ends, strict=True)], senses_at(row, minus, plus), stood, ends
 
@@ -57,12 +58,16 @@ def light_levels(
 
 
 def momentum_per_line(
-    node: Node, row: Any, where: tuple[int, ...], levels: tuple[int, ...], sign: int = 1
+    node: Node,
+    lines: list[Line],
+    num: int,
+    where: tuple[int, ...],
+    levels: tuple[int, ...],
+    sign: int = 1,
 ) -> list[int]:
-    """The momentum a lay of `levels` (now, before per line) at the Node books, summed over the record's lines (take.momentum_of per line; the form generic in the lines, the quartet pair's replacement 17)."""
-    assert row.pair is not None
+    """The momentum a lay of `levels` (now, before per line) at the Node books, summed over the record's lines as given, `lines` the board the reading is at (the live board for a lay, the interval's start for a take's end, CL-S2) and `num` the record's pair (take.momentum_of per line; the form generic in the lines, the quartet pair's replacement 17)."""
     found = [0] * AXES
-    for j, line in enumerate(row.lines):
+    for j, line in enumerate(lines):
         dj = momentum_of(
             node,
             line.now,
@@ -70,7 +75,7 @@ def momentum_per_line(
             where,
             sign * levels[PLANE * j],
             sign * levels[PLANE * j + 1],
-            row.pair[0],
+            num,
         )
         found = [a + b for a, b in zip(found, dj, strict=True)]
     return found
@@ -156,15 +161,23 @@ def read_ends(
 
 
 def write_ends(
-    node: Node, reads: list[tuple[tuple[int, ...], int, Any, int, int | None, int, int]], rec: int
+    node: Node,
+    reads: list[tuple[tuple[int, ...], int, Any, int, int | None, int, int]],
+    rec: int,
+    at: tuple[int, ...] | None = None,
 ) -> list[dict[str, Any]]:
-    """The take act's writes after its reads (CR-S2): at the gap-0 row the end's line moved toward its before by the count (take.move, CR-S1), the fall above what was owed its new remainder (EX-S1), the momentum booked; at a record with a gap the end's levels taken whole by the lay act at -1, the momentum booked on both lines (MG-S1). Returns each end's take as the log carries it; the former take_line and merger_take kept by name."""
+    """The take act's writes after its reads (CR-S2): at the gap-0 row the end's line moved toward its before by the count (take.move, CR-S1), the fall above what was owed its new remainder (EX-S1), the momentum booked; at a record with a gap the end's levels taken whole by the lay act at -1, the momentum each end books read at the record's levels at the interval's start (node.start_lines, CL-S2: so the two ends of one Link commute and the per-Node attribution does not depend on the order the meeting named them) and the cross term of the two moves, the live board's sum less the start's, nonzero on the Link's own axis alone, booked once at the meeting's own Node `at` after both ends (the levels taken whole keep their moment, the board the take writes, MG-S1). Returns each end's take as the log carries it, the cross under the last end's `cross` for `summed` to lift; the former take_line and merger_take kept by name."""
     row = node.records()[rec]
     assert row.pair is not None
     found: list[dict[str, Any]] = []
+    cross = [0] * AXES
     for where, wall, levels, fall, k, rem_was, owed in reads:
         if row is not node.emitter():
-            moment = momentum_per_line(node, row, where, tuple(levels), -1)
+            live = momentum_per_line(node, row.lines, row.pair[0], where, tuple(levels), -1)
+            moment = momentum_per_line(
+                node, node.start_lines[rec], row.pair[0], where, tuple(levels), -1
+            )
+            cross = [c + a - b for c, a, b in zip(cross, live, moment, strict=True)]
             lay(node, rec, where, levels, -1)
             node.closes[where] -= 1
             size = sum(abs(x) for x in levels)
@@ -205,6 +218,9 @@ def write_ends(
                 **node.last_recoil,
             }
         )
+    if at is not None and len(found) > 1 and row is not node.emitter():
+        booked = recoil(node, at, cross, int(node.start_clock[at]), 1)
+        found[-1]["cross"] = {"node": list(at), "dP": cross, **booked}
     return found
 
 
@@ -216,21 +232,26 @@ def takes(
     rec: int | None = None,
     draw: Callable[[], Any] | None = None,
     cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
+    at: tuple[int, ...] | None = None,
 ) -> list[dict[str, Any]] | None:
     """The close's one take act for every letter alike (CR-S2): the walls booked at each end paid by one exact take at that end from the taken row (the gap-0 row's where none is named: a body's take), every end read before any is written (`read_ends`) and refused by name at the first that cannot pay, the Link's number drawn between the reads and the writes where the letter draws one (`draw`, the merger's; None drawn refuses the take), then every end written (`write_ends`); the birth's list one end of its children's walls summed, the body's one end of its unit, the merger's its two ends. Returns each end's take, or None."""
     taken = node.records().index(node.emitter()) if rec is None else rec
     reads = read_ends(node, ends, rule, cause, taken, cache)
     if reads is None or (draw is not None and draw() is None):
         return None
-    return write_ends(node, reads, taken)
+    return write_ends(node, reads, taken, at)
 
 
 def summed(found: list[dict[str, Any]]) -> dict[str, Any]:
-    """One take's numbers as the log carries them: one end's own fields; two ends' summed, each end's own under `takes` (a merger's whole levels as the taken and the taker, no line)."""
+    """One take's numbers as the log carries them: one end's own fields; two ends' summed, each end's own under `takes` (a merger's whole levels as the taken and the taker, no line), the cross term's booking lifted from the last end under `cross` (CL-S2)."""
     if len(found) == 1:
         return {k: v for k, v in found[0].items() if k != "node"}
     whole = "taken_levels" in found[0]
+    cross = found[-1].get("cross")
+    if cross is not None:
+        del found[-1]["cross"]
     return {
+        **({} if cross is None else {"cross": cross}),
         "taken": sum(t["taken"] for t in found),
         "booked": sum(t["booked"] for t in found),
         "levels": sum(t["levels"] for t in found),

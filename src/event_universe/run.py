@@ -18,7 +18,7 @@ from event_universe.core.ports import AXES, SIDES, port_of
 from event_universe.decoder import THOUSAND
 from event_universe.links import factors, link_current
 from event_universe.loader.world import load_world
-from event_universe.rows import CARRIER, POTENTIAL, zeros
+from event_universe.rows import CARRIER, POTENTIAL, Line, zeros
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -91,15 +91,21 @@ def birth(
             if key in take
         },
         **({"takes": take["takes"], "exact_lay": exact} if "takes" in take else {}),
+        **({"cross": take["cross"]} if "cross" in take else {}),
     )
 
 
 def credit(
-    node: Node, rec: int, at: tuple[int, ...], take: dict[str, Any], frame: dict[str, Any]
+    node: Node,
+    rec: int,
+    at: tuple[int, ...],
+    take: dict[str, Any],
+    frame: dict[str, Any],
+    start: list[Line],
 ) -> dict[str, Any]:
-    """A body's credit with its frame (a plane's frame_of, a quartet's bilinears_of, the bodies' own readings of the record), its sense the sign of its charge at the Node, its beat, the take's numbers (the take act's dict), momentum and booking, the unit the close booked and what it owed; returned, not appended (the bodies append it after the lay-back)."""
+    """A body's credit with its frame (a plane's frame_of, a quartet's bilinears_of, the bodies' own readings of the record), its sense the sign of its charge at the Node read at the interval's start (`start`, the record's lines as the interval began, CL-S2; the former read on the board after the close's own writes kept by name), its beat, the take's numbers (the take act's dict), momentum and booking, the unit the close booked and what it owed; returned, not appended (the bodies append it after the lay-back)."""
     row = node.records()[rec]
-    w = int(gram.charge(row.shape, row.lines)[at])
+    w = int(gram.charge(row.shape, start)[at])
     fall, levels, taken_was, line = (
         take["taken"],
         take["levels"],
