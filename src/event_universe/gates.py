@@ -8,7 +8,7 @@ from collections import Counter, defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe import board, clicks, events, predicates
+from event_universe import board, clicks, events, predicates, symmetries
 from event_universe.core.ports import AXES
 from event_universe.decoder import (
     HALF,
@@ -336,6 +336,11 @@ TABLE: tuple[Row, ...] = (
     events.acceleration_in_clicks,
     clicks.horizon_radiates,
     predicates.arrow_of_time,
+    symmetries.uniformity,
+    symmetries.dark_matter,
+    symmetries.lepton_number,
+    symmetries.energy,
+    symmetries.cpt,
     conservations,
     constants,
 )

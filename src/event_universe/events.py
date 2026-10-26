@@ -78,6 +78,11 @@ NAMES = {
         "the arrow of time",
         "the arrow of time in the clicks, the charge odd under the slot exchange",
     ),
+    "63": ("the clicks spread alike", "the uniformity in the clicks"),
+    "64": ("dark matter in kind", "dark matter in kind, a body credited where no light was laid"),
+    "65": ("the lepton number holds", "the lepton number, every species' senses summing to 0"),
+    "66": ("the energy in the clicks", "the energy in the clicks, a body's beat kept across its click"),
+    "67": ("CPT holds in the clicks", "CPT, the charge even under C, P and T together"),
     "the conservations in the clicks": ("the clicks conserve", "the conservations in the clicks"),
     "the three constants": ("the three constants hold", "the three constants"),
 }  # every row by its number (the key's first word) or its key: its label of three to six words for the page, and the phenomenon in plain words for the table

@@ -123,7 +123,7 @@ The owner's word, verbatim in translation: "all the time make sure the things ar
 
 ### The gates of the phenomena (the head afb58d6b; written by tools/phenomena.py from the readings, the verdict of every row the decoder's)
 
-SHOWN in Universe24: 28 of 62 on afb58d6b. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
+SHOWN in Universe24: 33 of 67 on afb58d6b. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
 
 | the phenomenon | gate | the verdict per record | the cause where not SHOWN | since the table before |
 | --- | --- | --- | --- | --- |
@@ -188,7 +188,12 @@ SHOWN in Universe24: 28 of 62 on afb58d6b. The records read from the seed alone:
 | the deceleration, in the clicks | 59 | SHOWN on nature, ga2, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | fewer than two eighths' growths of the spacing | unchanged |
 | the acceleration, in the clicks | 60 | SHOWN on nature, ga2, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | fewer than two eighths' growths of the spacing | unchanged |
 | the horizon radiating, Hawking's radiation in the clicks | 61 | NOT SHOWN on nature; NOT READ on ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | 0 births at a frozen Node or its neighbour after the freeze, 0 credits beyond the horizon | unchanged |
-| the arrow of time in the clicks, the charge odd under the slot exchange | 62 | SHOWN on nature, ga2, hole, universe, plasma, plasma_3, universe_3; NOT READ on collapse_800, bodies, sea | no frame carries a charge | the first table |
+| the arrow of time in the clicks, the charge odd under the slot exchange | 62 | SHOWN on nature, ga2, hole, universe, plasma, plasma_3, universe_3; NOT READ on collapse_800, bodies, sea | no frame carries a charge | unchanged |
+| the uniformity in the clicks | 63 | SHOWN on ga2; NOT SHOWN on nature, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | 0 regions without a credit, the least 752 against the largest 3166 | the first table |
+| dark matter in kind, a body credited where no light was laid | 64 | SHOWN on nature, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT SHOWN on ga2; NOT READ on sea | every body's Node laid light | the first table |
+| the lepton number, every species' senses summing to 0 | 65 | SHOWN on nature, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth | the first table |
+| the energy in the clicks, a body's beat kept across its click | 66 | SHOWN on ga2, universe, plasma, plasma_3, universe_3; SHOWN in part on nature, collapse_800, bodies, hole; NOT READ on sea | on most pairs | the first table |
+| CPT, the charge even under C, P and T together | 67 | SHOWN on nature, ga2, hole, universe, plasma, plasma_3, universe_3; NOT READ on collapse_800, bodies, sea | no frame carries a charge | the first table |
 
 ### The gates widened to everything derived, read on any bang of the same seed and at one Node where one Node can show it (2026-10-25, 11:0x UTC)
 
