@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The engine head c4f9e5d94 merged (3a9105801; CL-S2, acts.born, the whole-state run back and the re-wired kit on the head, no conflict): CL-S2's course on the long records and the Reader's 29 of 71 under the clause and in README's count line, the Bell row at the law's own bound under QG-S3, rows 164, 177, 209, 212 and 218.
 - The 48 pair's unification (acts.born, dba5adfa5), the run back over the whole state (66dd3e352), the mend list traced and the Reader's fifth problem (the long chiral parting at 1,146 under one of the folds) in the law and rows 164, 177, 209, 212 and 217; no merge, the head unmoved.
 - CL-S2 built at toys-5 e03b70401 and the kit re-wired at 059d6248b recorded in the law and rows 170 and 212 (no merge: the engine head unmoved at 727ae98e9).
 - The engine head 727ae98e9 merged (aea6f6e99): the six folds, the release clause and the Reader's bangs.py and symmetries.py on the head through reader-5 f0c47f489, the engine twenty-two modules (ENGINE.md's paragraphs and rows kept both sides; README's duplicated section cut to the Reader's copy, the engine paragraph's counts re-cut to the tree); NL-S1's and The width is derived's build lines; rows 164, 170, 207 and 217; the kit's struck import named.
