@@ -1,0 +1,11 @@
+Auto-merging docs/ENGINE.md
+Auto-merging examples/records/bodies.reading.jsonl
+CONFLICT (content): Merge conflict in examples/records/bodies.reading.jsonl
+Auto-merging examples/records/chiral.reading.jsonl
+CONFLICT (content): Merge conflict in examples/records/chiral.reading.jsonl
+Auto-merging examples/records/hole.reading.jsonl
+CONFLICT (content): Merge conflict in examples/records/hole.reading.jsonl
+Auto-merging tests/test_the_record.py
+CONFLICT (content): Merge conflict in tests/test_the_record.py
+Auto-merging tools/tests_shape.py
+Automatic merge failed; fix conflicts and then commit the result.

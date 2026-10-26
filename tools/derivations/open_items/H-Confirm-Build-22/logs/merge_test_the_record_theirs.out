@@ -1,0 +1,46 @@
+FFF........                                                              [100%]
+=================================== FAILURES ===================================
+__________ test_the_committed_record_shows_the_gates_by_name[bodies] ___________
+
+name = 'bodies'
+
+    @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
+    def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
+        found = gates(loaded(name))
+        kinds = {int(k[:2]): kind_of(v["verdict"]) for k, v in found.items() if k[:2].strip().isdigit()}
+>       assert len(kinds) == 54
+E       AssertionError: assert 61 == 54
+E        +  where 61 = len({1: 'NOT SHOWN', 2: 'SHOWN', 3: 'SHOWN', 4: 'NOT SHOWN', ...})
+
+/dev/shm/tmp/cb22/merge_tests/test_the_record_theirs.py:44: AssertionError
+__________ test_the_committed_record_shows_the_gates_by_name[chiral] ___________
+
+name = 'chiral'
+
+    @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
+    def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
+        found = gates(loaded(name))
+        kinds = {int(k[:2]): kind_of(v["verdict"]) for k, v in found.items() if k[:2].strip().isdigit()}
+>       assert len(kinds) == 54
+E       AssertionError: assert 61 == 54
+E        +  where 61 = len({1: 'NOT SHOWN', 2: 'SHOWN', 3: 'NOT SHOWN', 4: 'SHOWN', ...})
+
+/dev/shm/tmp/cb22/merge_tests/test_the_record_theirs.py:44: AssertionError
+___________ test_the_committed_record_shows_the_gates_by_name[hole] ____________
+
+name = 'hole'
+
+    @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
+    def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
+        found = gates(loaded(name))
+        kinds = {int(k[:2]): kind_of(v["verdict"]) for k, v in found.items() if k[:2].strip().isdigit()}
+>       assert len(kinds) == 54
+E       AssertionError: assert 61 == 54
+E        +  where 61 = len({1: 'NOT SHOWN', 2: 'NOT SHOWN', 3: 'NOT SHOWN', 4: 'SHOWN', ...})
+
+/dev/shm/tmp/cb22/merge_tests/test_the_record_theirs.py:44: AssertionError
+=========================== short test summary info ============================
+FAILED ::test_the_committed_record_shows_the_gates_by_name[bodies] - Assertio...
+FAILED ::test_the_committed_record_shows_the_gates_by_name[chiral] - Assertio...
+FAILED ::test_the_committed_record_shows_the_gates_by_name[hole] - AssertionE...
+3 failed, 8 passed in 19.49s
