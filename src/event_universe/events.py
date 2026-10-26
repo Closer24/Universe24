@@ -68,6 +68,9 @@ LABELS = {
     "55": "the two slits",
     "56": "Bell's bound holds",
     "57": "the GHZ gate",
+    "58": "the fast expansion",
+    "59": "the expansion slows",
+    "60": "the expansion quickens again",
     "the conservations in the clicks": "the clicks conserve",
     "the three constants": "the three constants hold",
 }

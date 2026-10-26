@@ -16,9 +16,9 @@ RECORDS, WIDTH = ROOT / "examples" / "records", 128
 CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # the hole under PL-S1; 9 and 22 among them under the former write of 2 W after the step
-    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45},
-    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45},
-    "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45},
+    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
+    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
+    "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45, 59, 60},
 }
 VERDICTS = {  # the verdicts' words by name
     "hole": {
@@ -26,6 +26,9 @@ VERDICTS = {  # the verdicts' words by name
         "22 Coulomb's sign": "NOT SHOWN: unlike senses do not approach, like senses do not part",
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -16 / 16",
+        "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
+        "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+        "60 the acceleration in the clicks": "SHOWN: after a slowing, an eighth's growth of the spacing larger",
     },
     "chiral": {
         "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
@@ -38,6 +41,8 @@ VERDICTS = {  # the verdicts' words by name
         "55 the two slits": "NOT READ: no two gap-0 packets at one centre",
         "56 Bell": "NOT READ: 0 births, no born pair clicked at both ends",
         "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four",
+        "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero",
+        "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
     },
 }
 
@@ -50,7 +55,7 @@ def loaded(name: str) -> dict[str, Any]:
 def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
     kinds = {int(k[:2]): kind_of(v["verdict"]) for k, v in found.items() if k[:2].strip().isdigit()}
-    assert len(kinds) == 57
+    assert len(kinds) == 60
     assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
     assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == {14, 34}  # the horizon
     for gate, verdict in VERDICTS[name].items():

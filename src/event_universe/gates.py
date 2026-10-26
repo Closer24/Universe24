@@ -333,6 +333,9 @@ TABLE: tuple[Row, ...] = (
     predicates.two_slits,
     predicates.bell,
     predicates.ghz,
+    clicks.fast_expansion,
+    clicks.deceleration,
+    clicks.acceleration_in_clicks,
     conservations,
     constants,
 )

@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 HEADING = "### The gates of the phenomena"
-ROWS = 57  # the rows of the table, the phenomena of nature the run must show
+ROWS = 60  # the rows of the table, the phenomena of nature the run must show
 GATE_COLUMN, VERDICT_COLUMN = (
     1,
     2,
@@ -75,6 +75,9 @@ PHENOMENA = {
     55: "the two slits",
     56: "Bell's correlation",
     57: "the GHZ correlation",
+    58: "the fast expansion after the bang, in the clicks",
+    59: "the deceleration, in the clicks",
+    60: "the acceleration, in the clicks",
 }
 
 
