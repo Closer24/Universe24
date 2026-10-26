@@ -9,7 +9,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, draw, gram, readings, record
+from event_universe import close, gram, readings, record
 from event_universe.core import acts, paces, rule3
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import half, lattice, quotient, remainder
@@ -163,10 +163,14 @@ class Toy(Node):
     ) -> None:
         """The engine's close with the toy's digit hooks (the plane starts kept for the former digit set; the draw's reader the folded one under its key), then the detectors' reading (forward alone)."""
         self.plane_starts_ = plane_starts
-        close.read_number = (
-            read_number_folded if self.control.get("digits") == "folded" else draw.read_number
-        )
-        super().click(plane_starts, held, direction, frame)
+        bound = close.read_number
+        close.read_number = read_number_folded if self.control.get("digits") == "folded" else bound
+        try:
+            super().click(plane_starts, held, direction, frame)
+        finally:
+            close.read_number = (
+                bound  # the engine's own binding restored: nothing of the toy leaks past it
+            )
         if not self.detectors or direction == -1:
             return
         c = self.start_content

@@ -19,7 +19,7 @@ def rounded(numerator: Any, wall: Any) -> Any:
 
 
 def odd_rounded(numerator: Any, wall: Any) -> Any:
-    """The one rounding of a signed coefficient of the Node (the one rule of the remainder): the carried division from the half wall at the doubled wall, the carry mirrored (rule3.mirrored) where the numerator is negative, bit for bit sign(x) rounded(|x|, wall), odd at every integer; integers or whole-board arrays alike, the mirror in the numerator's own kind."""
+    """The one rounding of a signed coefficient of the Node (the one rule of the remainder): the carried division from the half wall at the doubled wall, the carry mirrored (acts.mirror, the former rule3.mirrored kept by name) where the numerator is negative, bit for bit sign(x) rounded(|x|, wall), odd at every integer; integers or whole-board arrays alike, the mirror in the numerator's own kind."""
     signed = np.asarray(numerator)
     kind, below = signed.dtype, signed < 0
     negative = below.astype(kind) if below.ndim else int(below)
