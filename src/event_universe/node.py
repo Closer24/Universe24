@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, gram, interval, readings, seed, take
+from event_universe import close, gram, interval, readings, seed
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, across
@@ -162,10 +162,6 @@ class Node:
         """The Link factor at each Port (readings.link_factors), 0 where either end is frozen."""
         return readings.link_factors(self, axis_levels, frozen)
 
-    def share(self, lines: list[Line], r: rule3.Rule) -> Any:
-        """A record's conserved form's share at every Node in the carrier's unit (gram.share)."""
-        return gram.share(self, lines, r)
-
     def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
         """The arrivals of a row's lines at one Port, read in the Node's frame (the row's conjugation where the frame sign is -1, gram.conjugated) and turned plane by plane by the Link's record (links.turned); a row of one line is turned by the identity; `turn` None is the identity for every shape."""
         if turn is None or len(arrivals) == 1:
@@ -200,8 +196,7 @@ class Node:
         ]
         found = []
         for line, a, t in zip(lines, at, totals, strict=True):
-            if direction == 1:
-                self.max_transient = max(self.max_transient, bits_of(t))
+            self.max_transient = max(self.max_transient, bits_of(t))
             quotient, rem = carried_division(t, r.wall, line.rem, direction)
             now, before = (quotient, a)[::direction]
             found.append(Line(now, before, rem, line.wall, line.wr, line.wwall))
@@ -285,10 +280,8 @@ class Node:
                 if line.wr is not None:
                     line.wr = np.where(top, mirrored(h.wr, line.wwall, 1), line.wr)
 
-    def swap(
-        self, held: list[list[Line]], frozen: Any = None, direction: int = 1, top: Any = None
-    ) -> Any:
-        """The swap at the top, in the direction (RW-S1; backward the exchange of the turned Nodes `top` from the frame, the former Interval's own exchange kept by name): the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), a frozen Node never (BH-S1); the turned Node ends the interval at the state it started from, exchanged and complemented."""
+    def swap(self, held: list[list[Line]], direction: int = 1, top: Any = None) -> Any:
+        """The swap at the top, in the direction (RW-S1; backward the exchange of the turned Nodes `top` from the frame, the former Interval's own exchange kept by name): the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), at a frozen Node by this trigger alone on its restored line (FR-S1, the owner's words of 2026-10-26, 03:41 UTC, approved, and 07:3x UTC, entered as the fix of a forbidden state: no Node frozen for ever; BH-S1's mask on the trigger struck and kept by name); the turned Node ends the interval at the state it started from, exchanged and complemented."""
         if direction == -1:
             if top.any():
                 self.exchange(top, held)
@@ -304,8 +297,6 @@ class Node:
         xf = readings.floor(self)
         below = np.vectorize(lambda a, c: int(a) < xf or int(c) < xf, otypes=[bool])
         top = peak(x0, x1, x2) | below(x0, x2)
-        if frozen is not None:
-            top = top & ~frozen
         self.turned = top
         if top.any():
             self.counts["turns"] += int(top.sum())
@@ -338,15 +329,9 @@ class Node:
         """The close (close.click), the Node's fourth act, in the direction: backward the close undone from the log's frame."""
         close.click(self, plane_starts, held, direction, frame)
 
-    def lay(self, rec: int, where: Any, levels: tuple[Any, ...], sign: int = 1) -> None:
-        """The one lay act (take.lay)."""
-        take.lay(self, rec, where, levels, sign)
-
-    def step(self) -> None:
-        self.run(1)
-
-    def step_back(self) -> None:
-        self.run(-1)
+    def step(self, direction: int = 1) -> None:
+        """One interval forward, or back at -1 (the former step_back kept by name)."""
+        self.run(direction)
 
     def arrays(self) -> list[Any]:
         """Every level and remainder of the state, the lines' arrays in the acts' order."""

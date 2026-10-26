@@ -1,0 +1,12 @@
+--- a/src/event_universe/close.py	2026-10-26 09:36:49.990391057 +0000
++++ b/src/event_universe/close.py	2026-10-26 09:48:33.999284655 +0000
+@@ -93,7 +93,8 @@
+                 into, outof = (at, j) if w[0] > 0 else (j, at)
+             else:
+                 into, outof = (j, at) if flow > 0 else (at, j)
+-            plus, minus = (into, outof) if rest or h > 0 else (outof, into)
++            hand = flow * h if flow else w[1] - w[0]
++            plus, minus = (j, at) if hand > 0 else (at, j)
+             if rest:
+                 born.append(Birth(into, list_of(node, rec, 0), minus, plus, 0, rec))
+                 continue

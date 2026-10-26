@@ -105,10 +105,10 @@ def test_the_exclusion_at_the_lay_reads_the_full_state_and_the_pile_is_gone_sr_s
     assert share > 0 and single.log[-1]["amplitude"] == 37
     like = toy_of(UP, seed=[sea, one, one])
     assert like.counts["refused_lay"] == 1 and like.log[1]["cause"] == "state"
-    assert int(like.share(lines_of(like), rule).sum()) == share
+    assert int(gram.share(like, lines_of(like), rule).sum()) == share
     opposite = toy_of(UP, seed=[sea, one, dict(one, vector=DOWN)])
     assert opposite.counts["refused_lay"] == 0
-    assert int(opposite.share(lines_of(opposite), rule).sum()) == 2 * share
+    assert int(gram.share(opposite, lines_of(opposite), rule).sum()) == 2 * share
     neutral = toy_of(UP, seed=[sea, one, dict(one, sense=-1)])
     assert (
         neutral.counts["refused_lay"] == 0 and int(gram.charge(QUARTET, lines_of(neutral))[CENTRE]) == 0
@@ -116,7 +116,7 @@ def test_the_exclusion_at_the_lay_reads_the_full_state_and_the_pile_is_gone_sr_s
     doubled = [copy.copy(line) for line in lines_of(single)]
     for line in doubled:
         line.now, line.before = 2 * line.now, 2 * line.before
-    assert int(single.share(doubled, rule).sum()) == 4 * share
+    assert int(gram.share(single, doubled, rule).sum()) == 4 * share
     refused("names its vector", toy_of, UP, seed=[sea, {k: v for k, v in one.items() if k != "vector"}])
     refused("onto a record", toy_of, UP, seed=[sea, dict(one, row=4)])
 

@@ -6,10 +6,10 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram
+from event_universe import gram, take
 from event_universe.core.paces import odd_rounded, sine_den
 from event_universe.core.ports import AXES, wrap
-from event_universe.core.rule3 import half, largest_below, odd, quotient
+from event_universe.core.rule3 import half, largest_below, least_at, odd, quotient
 from event_universe.links import turn_pair
 from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
 from event_universe.wave import lay_cycle
@@ -45,7 +45,7 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
                 raise ValueError(
                     "a sea without a count is the plane at the gap 0 alone (the drift, no sense); a plane with a gap names its quanta (the fourth form)"
                 )
-            node.lay(node.records().index(row), Ellipsis, (node.drift, 0, 0, 0))
+            take.lay(node, node.records().index(row), Ellipsis, (node.drift, 0, 0, 0))
         elif form == "sea":
             if row is None or row is node.emitter():
                 raise ValueError(
@@ -54,7 +54,7 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
             lay_uniform(node, node.records().index(row), int(lay["quanta"]), int(lay.get("sense", 0)))
         elif form == "hole":
             at = node.node_of(lay["at"])
-            node.lay(node.records().index(node.emitter()), at, (-node.drift, 0, 0, 0))
+            take.lay(node, node.records().index(node.emitter()), at, (-node.drift, 0, 0, 0))
         elif form == "wave":
             if row is None or row is not node.emitter() or "quanta" not in lay:
                 raise ValueError("the cycle lay is the light's: the plane at the gap 0 at its quanta")
@@ -69,7 +69,7 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
                 raise ValueError("a packet names its row")
             wave = None if lay.get("wave") is None else tuple(int(x) for x in lay["wave"])
             if row is node.emitter() and wave is None:
-                node.lay(node.records().index(row), at, (n * node.drift, 0, 0, 0))
+                take.lay(node, node.records().index(row), at, (n * node.drift, 0, 0, 0))
             else:
                 vector = lay.get("vector")
                 if (vector is None) != (row.shape == PLANE):
@@ -204,7 +204,7 @@ def uniform_levels(node: Node, row: Row, amplitude: int, sense: int) -> list[Lin
 
 def share_at_node(node: Node, row: Row, lines: list[Line], rule: Any) -> int:
     """A record's share at the vacuum's weight at the Node of the board's first index, the uniform lay's share at every Node alike."""
-    return int(node.share(lines, rule).reshape(-1)[0])
+    return int(gram.share(node, lines, rule).reshape(-1)[0])
 
 
 def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
@@ -214,19 +214,11 @@ def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
     node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
     rule = node.rule(row.pair, node.start_content, node.link_factors())
     target = n * node.units[rec]
-    high = 1
-    while share_at_node(node, row, uniform_levels(node, row, high, sense), rule) <= target:
-        high = high + high
-    low = 0
-    while high - low > 1:
-        middle = int(half(low + high))
-        if share_at_node(node, row, uniform_levels(node, row, middle, sense), rule) <= target:
-            low = middle
-        else:
-            high = middle
-    amplitude = low + 1
+    amplitude = least_at(
+        lambda a: share_at_node(node, row, uniform_levels(node, row, a, sense), rule) > target
+    )
     lines = uniform_levels(node, row, amplitude, sense)
-    node.lay(rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
+    take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
     node.log.append(
         {
             "event": "lay",
@@ -245,7 +237,7 @@ def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
 
 def packet_share(node: Node, row: Row, lines: list[Line], rule: Any) -> int:
     """A record's share at the vacuum's weight summed over the board."""
-    return int(sum(int(x) for x in node.share(lines, rule).reshape(-1)))
+    return int(sum(int(x) for x in gram.share(node, lines, rule).reshape(-1)))
 
 
 def fitted(
@@ -265,17 +257,7 @@ def fitted(
         lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
         return packet_share(node, row, lines, rule)
 
-    high = 1
-    while share_of(high) <= target:
-        high = high + high
-    low = 0
-    while high - low > 1:
-        middle = int(half(low + high))
-        if share_of(middle) <= target:
-            low = middle
-        else:
-            high = middle
-    return low
+    return least_at(lambda amplitude: share_of(amplitude) > target) - 1
 
 
 def wave_of(
@@ -337,7 +319,7 @@ def lay_packet(
             node.counts["refused_lay"] += 1
             node.log.append({"event": "refused", "i": 0, "node": list(at), "cause": "state", "dot": dot})
             continue
-        node.lay(rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
+        take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
     lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
     rule = node.rule(row.pair, node.start_content, node.link_factors())
     node.log.append(

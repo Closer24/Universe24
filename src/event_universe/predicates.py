@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+from math import gcd
 from typing import Any
 
+from event_universe.core import rule3
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import largest_below
 from event_universe.decoder import (
@@ -275,56 +277,52 @@ def two_slits(record: Record) -> dict[str, Any]:
 
 
 def bell(record: Record) -> dict[str, Any]:
-    """Row 56: Bell (QG-S3), S = E(a, b) - E(a, b') + E(a', b) + E(a', b') over the born pairs' two ends at their first clicks after the birth, each end's outcome the sign of p re_now + q im_now of its frame under two settings; nature's 2 sqrt 2 as the integer inequality num^2 > 8 den^2 on S = num / den over the pairs; the law's bound |S| <= 2 (every outcome a function of its own Node, the one-Link reach) with the senses' E = -1 beside it."""
-    pairs: list[tuple[dict[str, Any], dict[str, Any]]] = []
-    for b in record.births:
+    """Row 56: Bell (QG-S3, BK-S1; the reading of The-Setting-From-The-Frame_COMPARISON.md section 3, the Boss's 6411759969): S as the count over the born pairs' four cells, the setting at each end the detector's own datum at its click (the proper clock's parity, two-valued) and the outcome the child's own sense from the birth line; nature's band 4 < S^2 <= 8 SHOWN as nature, else NOT SHOWN with the cause named: the outcome reads no datum of the detector, the child has no axis (BS-S1 owed), so every filled cell reads E = -1 and S^2 = 4."""
+    cells: dict[tuple[int, int], list[int]] = {}
+    for b, (a, c) in zip(record.births, record.charges_of(), strict=True):
+        if not a or not c:
+            continue
         ends = [
             next(
                 (
-                    c["frame"]
-                    for c in record.credits
-                    if c["node"] == where
-                    and c["line"] == b["line_pair"]
-                    and int(c["i"]) > int(b["i"])
-                    and "re_now" in c["frame"]
+                    int(rule3.remainder(int(k["proper"]), PAIR))
+                    for k in record.credits
+                    if k["node"] == where and k["line"] == b["line_pair"] and int(k["i"]) > int(b["i"])
                 ),
                 None,
             )
             for where in (b["minus"], b["plus"])
         ]
         if ends[0] is not None and ends[1] is not None:
-            pairs.append((ends[0], ends[1]))
-    if not pairs:
+            cells.setdefault((ends[0], ends[1]), []).append((a > 0) - (a < 0) * ((c > 0) - (c < 0)))
+    if len(cells) < PAIR * PAIR:
         return unread(
             "56 Bell",
-            f"{len(record.births)} births, no born pair clicked at both ends",
-            "S from the pairs' two ends under two settings each, S^2 > 8 as nature",
+            f"{len(record.births)} births, {len(cells)} of the four setting cells filled by pairs clicked at both ends",
+            "S from the pairs' two ends under the detector's own setting at each (the proper clock's parity at its click), 4 < S^2 <= 8 as nature",
         )
-    e = [
-        sum(
-            ((u := (p * m["re_now"] + q * m["im_now"]) * (r * n["re_now"] + t * n["im_now"])) > 0)
-            - (u < 0)
-            for m, n in pairs
-        )
-        for p, q in SETTINGS[:PAIR]
-        for r, t in SETTINGS[PAIR:]
-    ]
-    s, opposite = (
-        e[0] - e[1] + e[2] + e[3],
-        sum(a * c < 0 for a, c in record.charges_of()),
-    )
-    n = len(pairs)
+    e = {
+        key: (sum(1 for x in v if x > 0) - sum(1 for x in v if x < 0), len(v))
+        for key, v in cells.items()
+    }
+    den = 1
+    for _n, d in e.values():
+        den = den * d // gcd(den, d)
+    s = sum((num * den // d) * (-1 if key == (0, 1) else 1) for key, (num, d) in e.items())
+    n = den
     verdict = (
         f"SHOWN as nature: 4 < S^2 <= 8 at the pairs' clicks, S = {s} / {n} (above the local bound 2, within Tsirelson's 2 sqrt 2)"
         if QUARTERS * n * n < s * s <= PAIR * QUARTERS * n * n
-        else f"NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = {s} / {n} (every outcome a function of its own Node, the setting the reader's and in no integer of the Node; nature's band 4 < S^2 <= 8, S = -14 / 5 at the cosines 3/5 and 4/5; the senses' E = -1 SHOWN on {opposite} of {len(record.births)} births)"
+        else f"NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = {s} / {n} (the outcome the child's sense fixed at the birth, reading no datum of the detector: the child has no axis, BS-S1 owed; every filled cell E = -1)"
     )
     return {
         "56 Bell": {
             "births": len(record.births),
-            "pairs clicked at both ends": len(pairs),
-            "E per setting pair (same - opposite)": e,
-            "S as a rational": (s, len(pairs)),
+            "pairs clicked at both ends": sum(d for _num, d in e.values()),
+            "E per cell of the detectors' settings (same - opposite, pairs)": {
+                f"{k[0]}{k[1]}": list(v) for k, v in sorted(e.items())
+            },
+            "S as a rational": (s, n),
             "verdict": verdict,
         }
     }

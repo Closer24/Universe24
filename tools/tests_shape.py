@@ -41,13 +41,29 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_node.py::test_the_turn_at_the_horizon_runs_back_exact": (
+        11,
+        "FR-S1's second test (2026-10-26, the owner's word of 07:3x UTC 'enter now', the frozen Node released by the turn of its time; the Boss's room at the merge of reader-5 a77fde969 carrying toys-5 3d7729581): the turn at the horizon run back exactly",
+    ),
+    "tests/laws.py::level_at": (
+        7,
+        "the level of a volume as one shared builder of tests/laws.py (2026-10-26, David's move of the helper out of a test at 3d7729581; the Boss's room at the merge of reader-5 a77fde969): read by the tests of the volumes and the metric lines",
+    ),
+    "tests/test_rule3.py::wrapped": (
+        14,
+        "TC-S1's helper (2026-10-26, the owner's word of 08:3x UTC; the Boss's room at the merge of reader-5 a77fde969 carrying toys-5 3d7729581): the hole seed's walls wrapped for the take count's one-Node test",
+    ),
+    "tests/test_rule3.py::test_the_take_count_is_one_carried_division_of_the_walls_by_the_price_tc_s1": (
+        42,
+        "TC-S1 (2026-10-26, the owner's word of 08:3x UTC, 'approved', the Boss's order 6411031946 under the owner's delegation: the hand's one-Node test under its room; H-Take-Count-As-Rule3-Division-1): the take's count one carried division of the walls by the price of one level, iterated from below, no root, on the hole seed's 47 first takes at the trace 6; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
+    ),
     "tests/test_the_node.py::test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1": (
         40,
         "EX-S1 (2026-10-26, the Boss's order of 03:3x UTC under the owner's delegation, 6407630119 and 6405916579: the room 40 named; H-Exact-Take-Remainder-1's one-Node test): the take's remainder at the Node, the identity fall + remainder before - remainder after = booked at twenty takes, the undo to the hash",
     ),
     "tests/test_the_board.py::test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_top_y_s3": (
-        58,
-        "Y-S3 (2026-10-26, the Boss's order of 03:3x UTC under the owner's delegation, 6407630119; H-Six-Metric-Lines-3's test with its room): the six metric lines written from the Node's own flux and shears, read by the fold at the rest rotation, run back exactly through a top; the hole at 20, the sea's return, the one-Link reach",
+        60,
+        "Y-S3 (2026-10-26, the Boss's order of 03:3x UTC under the owner's delegation, 6407630119; H-Six-Metric-Lines-3's test with its room): the six metric lines written from the Node's own flux and shears, read by the fold at the rest rotation, run back exactly through a top; the hole at 20, the sea's return, the one-Link reach; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
     ),
     "tests/test_the_board.py::test_the_pair_at_rest_merges_into_light_by_its_own_quantum_taken_whole_mg_s1": (
         45,
@@ -81,8 +97,8 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "at the resolution Gamma squared, bit for bit at every content to the edge, the Link's pace the clock twice",
     ),
     "tests/test_the_node.py::test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing": (
-        13,
-        "the horizon (2026-10-25, BH-S1's second test, the Boss's room at the merge of toys-5 84009e333): the frozen Node's Links held at the wall and no birth at it",
+        18,
+        "the horizon (2026-10-25, BH-S1's second test, the Boss's room at the merge of toys-5 84009e333): the frozen Node's Links held at the wall and no birth at it; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
     ),
     "tests/test_the_record.py::test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events": (
         30,
@@ -121,19 +137,19 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the whole reading (2026-10-26, the Reader's one check of every key, number, verdict, field and event; the Boss's room at the merge of reader-5 becc47f4d): the committed reading beside the record equal to a fresh read line for line",
     ),
     "tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1": (
-        24,
+        26,
         "SL-S1 (2026-10-25, the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "
-        "every born pair's Link meeting at the next close with no current and refused by the orientation (5 of 5), the meetings counted, the run back exact",
+        "every born pair's Link meeting at the next close with no current and refused by the orientation (5 of 5), the meetings counted, the run back exact; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
     ),
     "tests/test_the_node.py::test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the_light_sl_s2": (
-        40,
+        46,
         "SL-S2 (2026-10-25, the Boss's ledger item 10, The-Merger-As-The-Birth-Reversed_COMPARISON.md: the test under 15 s): the heaviest record's conjugate pair fed at two adjacent Nodes of the bare 5-cube at 20 intervals, "
-        "one merger (the taken row the heaviest record, the children the gap-0 row), each child's wall one light quantum to the rounding paid by one exact take at its own end, the gap-0 row whole at each end, the charge 0, the stop by name, the run back exact",
+        "one merger (the taken row the heaviest record, the children the gap-0 row), each child's wall one light quantum to the rounding paid by one exact take at its own end, the gap-0 row whole at each end, the charge 0, the stop by name, the run back exact; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
     ),
     "tests/test_the_node.py::test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1": (
-        43,
+        44,
         "CK-S1 (2026-10-25, the owner's word of 17:57 through the Boss, 6401141446; ck1's REPORT.md section 4: the test under 15 s): the crossing read in either direction, even under the negation of the line, "
-        "at one Node fed a plane's re line at rest over the period 6 and its negation (the counters equal step for step, the beat 3, the half period), and the chiral 5-cube at 20 intervals with every plane credit's beat the count between the two latest zero crossings of its re line read by hand, credits on a downward crossing among them, the run back exact",
+        "at one Node fed a plane's re line at rest over the period 6 and its negation (the counters equal step for step, the beat 3, the half period), and the chiral 5-cube at 20 intervals with every plane credit's beat the count between the two latest zero crossings of its re line read by hand, credits on a downward crossing among them, the run back exact; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
     ),
     "tests/test_the_node.py::test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1": (
         17,
@@ -141,8 +157,8 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the chiral 5-cube at 12 intervals with every child's Wronskian +-(T div 2) where its plane stood at nothing, the senses opposite and summing to 0, taken at or above booked, the run back exact",
     ),
     "tests/test_the_node.py::test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws": (
-        34,
-        "WS (2026-10-25, the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4: the test under 15 s): the reading Node within the test (its click reads W of the held pre-state against W after the swap at every turned Node and every plane before it lays), the Boss's 3-cube to 60 and the chiral 5-cube at 20, kept = sites, negated 0, changed 0, the nonzero sites counted",
+        35,
+        "WS (2026-10-25, the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4: the test under 15 s): the reading Node within the test (its click reads W of the held pre-state against W after the swap at every turned Node and every plane before it lays), the Boss's 3-cube to 60 and the chiral 5-cube at 20, kept = sites, negated 0, changed 0, the nonzero sites counted; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
     ),
     "tests/test_the_board.py::test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma": (
         27,
@@ -198,9 +214,19 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the shape-8 row (2026-10-25, the Boss's order 6398593790 (3) and The-Spinor-Row_COMPARISON.md's spec: the five tests under 15 s beside the row): the Stern-Gerlach gate read from the toy's committed records of the 9-cube at 60 intervals, the verdict asserted by name",
     ),
     "tests/test_the_node.py::test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1": (
-        24,
+        26,
         "BH-S1 (2026-10-25, the owner's word through the Boss, 6398593790: the test under 15 s beside the frozen Node's): the 3-cube centre fed to the frozen content for 100 intervals, "
-        "its lines and proper count unchanged, the twelve factors 0, no click, the frozen count 1, the width held, the run back exact 100 of 100",
+        "its lines and proper count unchanged, the twelve factors 0, no click, the frozen count 1, the width held, the run back exact 100 of 100; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
+    ),
+    "tests/test_the_board.py::test_the_merger_lays_light_of_no_charge_at_both_ends_cc1": (
+        20,
+        "H-Children-Charge-Bug-1 (2026-10-26, the Boss's 6410696786: the one-Node test under 1 s, three pins): the chiral's merger of the interval 10 fed on the 3-cube, "
+        "the light the exact take at -1 at both ends, the children's own charge 0; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
+    ),
+    "tests/test_the_board.py::test_a_frozen_node_is_released_by_the_turn_of_its_time": (
+        22,
+        "FR-S1 (2026-10-26, the owner's words of 03:41 and 07:3x UTC through the Boss, 6407706168 and 6410516303: the test under 3 s beside BH-S1's): the 3-cube centre fed to the frozen content with its before below it, "
+        "frozen and turned at the first interval, released with its clock running at the second, no Node frozen twice in a row, the width held, the run back exact 20 of 20; widened at the merge of reader-5 a77fde969 carrying toys-5 3d7729581 (2026-10-26, the Boss's room by name): the test as it stands on the merged tree",
     ),
     "tests/test_rule3.py::test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd": (
         19,

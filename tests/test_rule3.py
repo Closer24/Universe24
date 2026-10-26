@@ -3,14 +3,17 @@
 import ast
 import random
 import re
+import sys
 from fractions import Fraction
 from pathlib import Path
 
 import numpy as np
 
+from event_universe import merger, take
 from event_universe.core import paces
+from event_universe.core import rule3 as core
 from event_universe.core.rule3 import form_term, link_factor, mass, mirrored, rule3, rule_integers
-from tests.laws import arrivals_rule3
+from tests.laws import arrivals_rule3, node_of
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
@@ -232,3 +235,47 @@ def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd()
         assert paces.odd_rounded(q, wx) == paces.rounded(q, wx)
     half = 1_000 // 2
     assert (half, mirrored(half, 1_000, 1)) == (500, 499)
+
+
+def test_the_take_count_is_one_carried_division_of_the_walls_by_the_price_tc_s1():
+    """TC-S1 (the owner's word of 2026-10-26, 08:3x UTC, "approved"; both hands' one finding, The-Take-Count-As-Rule3-Division_COMPARISON.md section 3, H-Take-Count-As-Rule3-Division-1's one-Node test): on the hole seed's first takes the fall is the count times a price linear in the count, f(s) = s (price - X w s) over the share's weight with the price X times Rule3's backward numerator read at the now slot, -t (2 w now + pull), exactly to the division's remainder; the count taken is the least count paying the walls, the carried division of the walls by the price at the start lies at most one below it and below it exactly where that quotient's fall is short of the walls by the moved levels' own square: one carried division iterated from below, no root. Under 15 s."""
+    node, seen = node_of("world_hole.json", intervals=12), []
+    orig = take.fall_of
+
+    def wrapped(node_, at, walls, r, row):
+        got = orig(node_, at, walls, r, row)
+        if sys._getframe(1).f_code.co_name == "read_ends" and got[0]:
+            s, _fall, k = got
+            line = row.lines[k]
+            now, before = int(line.now[at]), int(line.before[at])
+            w, reached = int(r.wall), 0
+            for port, reach in enumerate(r.reaches):
+                reached += take.at_node(reach, at) * int(line.before[take.neighbour(node_, at, port)])
+            pull = take.at_node(r.self_coefficient, at) * before + reached
+            t = 1 if before > now else -1
+            x, weight = int(node_.start_x[at]), core.share_weight(node_.gamma, node_.G)
+            seen.append((now, t, w, pull, x, weight, walls, s, -t * ((w + w) * now + pull) * x))
+        return got
+
+    take.fall_of = wrapped
+    try:
+        for _ in range(12):
+            node.step()
+    finally:
+        take.fall_of = orig
+    assert merger.take.fall_of is orig and len(seen) == 47
+    below = short = 0
+    for now, t, w, pull, x, weight, walls, s, price in seen:
+        moved = now + t * s
+        fall = x * (w * (now * now - moved * moved) - t * s * pull)
+        assert fall == s * (price - x * w * s) and price > 0
+        assert (
+            core.quotient(fall, weight)
+            >= walls
+            > core.quotient((s - 1) * (price - x * w * (s - 1)), weight)
+        )
+        first = -core.quotient(-walls * weight, price)
+        assert first <= s <= first + 1
+        below += first < s
+        short += core.quotient(first * (price - x * w * first), weight) < walls
+    assert below == short > 0

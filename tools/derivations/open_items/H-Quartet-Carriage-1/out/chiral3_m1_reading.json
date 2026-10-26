@@ -1,0 +1,789 @@
+{
+ "record": "/dev/shm/tmp/qe1/chiral3_m1.json",
+ "births": 6,
+ "credits": 739,
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "counts": {
+  "births": "6",
+  "taken": "6045979935121288",
+  "booked": "4417886127731923",
+  "body_clicks": "739",
+  "laid_back": "0",
+  "refused_stop": "4089",
+  "refused_origin": "0",
+  "refused_lay": "3888",
+  "refused_orientation": "93",
+  "refused_twist": "11",
+  "refused_sense": "4574",
+  "turns": "152",
+  "met": "12645",
+  "laid": "37",
+  "laid_nodes": "37"
+ },
+ "births by the children's shape": {
+  "2": 4,
+  "8": 2
+ },
+ "W of the plane children (sum per birth)": {
+  "0": 2,
+  "335969": 1,
+  "182319": 1
+ },
+ "quartet children": [
+  {
+   "birth i": 4,
+   "node": [
+    2,
+    0,
+    0
+   ],
+   "sense": -1,
+   "born axis": 0,
+   "side": -1,
+   "vector": [
+    0,
+    -1,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "W": -72000,
+   "W_children (log)": [
+    -72000,
+    72000
+   ],
+   "T div 2": 18000,
+   "W over T div 2": [
+    -4,
+    0
+   ],
+   "axial at birth": [
+    62500,
+    0,
+    0
+   ],
+   "axial sign at birth": [
+    1,
+    0,
+    0
+   ],
+   "axial wronskian at birth": [
+    -72000,
+    0,
+    0
+   ],
+   "axial wronskian over W": [
+    1,
+    0,
+    0
+   ],
+   "stood at nothing": true,
+   "credits on the track": 3,
+   "axis sign kept": 1,
+   "dominant axis kept": 1,
+   "first credit": {
+    "i": 12,
+    "axial": [
+     5504,
+     -10928,
+     28544
+    ],
+    "axial_sign": [
+     1,
+     -1,
+     1
+    ],
+    "W": -1152,
+    "sense": -1,
+    "levels_now": [
+     -122,
+     -4,
+     0,
+     0,
+     -64,
+     -80,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "birth i": 4,
+   "node": [
+    1,
+    0,
+    0
+   ],
+   "sense": 1,
+   "born axis": 0,
+   "side": -1,
+   "vector": [
+    -1,
+    0,
+    0,
+    0,
+    -1,
+    0,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "W": 72000,
+   "W_children (log)": [
+    -72000,
+    72000
+   ],
+   "T div 2": 18000,
+   "W over T div 2": [
+    4,
+    0
+   ],
+   "axial at birth": [
+    -62500,
+    0,
+    0
+   ],
+   "axial sign at birth": [
+    -1,
+    0,
+    0
+   ],
+   "axial wronskian at birth": [
+    -72000,
+    0,
+    0
+   ],
+   "axial wronskian over W": [
+    -1,
+    0,
+    0
+   ],
+   "stood at nothing": true,
+   "credits on the track": 3,
+   "axis sign kept": 2,
+   "dominant axis kept": 0,
+   "first credit": {
+    "i": 11,
+    "axial": [
+     1400,
+     10312,
+     20084
+    ],
+    "axial_sign": [
+     1,
+     1,
+     1
+    ],
+    "W": 1386,
+    "sense": 1,
+    "levels_now": [
+     -26,
+     100,
+     0,
+     0,
+     -49,
+     26,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "birth i": 6,
+   "node": [
+    0,
+    1,
+    1
+   ],
+   "sense": -1,
+   "born axis": 0,
+   "side": -1,
+   "vector": [
+    0,
+    -1,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "W": -72000,
+   "W_children (log)": [
+    -72000,
+    72000
+   ],
+   "T div 2": 18000,
+   "W over T div 2": [
+    -4,
+    0
+   ],
+   "axial at birth": [
+    62500,
+    0,
+    0
+   ],
+   "axial sign at birth": [
+    1,
+    0,
+    0
+   ],
+   "axial wronskian at birth": [
+    -72000,
+    0,
+    0
+   ],
+   "axial wronskian over W": [
+    1,
+    0,
+    0
+   ],
+   "stood at nothing": true,
+   "credits on the track": 3,
+   "axis sign kept": 0,
+   "dominant axis kept": 0,
+   "first credit": {
+    "i": 10,
+    "axial": [
+     -9120,
+     544,
+     23760
+    ],
+    "axial_sign": [
+     -1,
+     1,
+     1
+    ],
+    "W": 0,
+    "sense": 0,
+    "levels_now": [
+     -100,
+     48,
+     0,
+     0,
+     -78,
+     -12,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "birth i": 6,
+   "node": [
+    2,
+    1,
+    1
+   ],
+   "sense": 1,
+   "born axis": 0,
+   "side": -1,
+   "vector": [
+    -1,
+    0,
+    0,
+    0,
+    -1,
+    0,
+    0,
+    0
+   ],
+   "v.G.v": 4,
+   "W": 72000,
+   "W_children (log)": [
+    -72000,
+    72000
+   ],
+   "T div 2": 18000,
+   "W over T div 2": [
+    4,
+    0
+   ],
+   "axial at birth": [
+    -61824,
+    0,
+    13000
+   ],
+   "axial sign at birth": [
+    -1,
+    0,
+    1
+   ],
+   "axial wronskian at birth": [
+    -72000,
+    0,
+    7488
+   ],
+   "axial wronskian over W": [
+    -1,
+    0,
+    0
+   ],
+   "stood at nothing": false,
+   "credits on the track": 2,
+   "axis sign kept": 2,
+   "dominant axis kept": 1,
+   "first credit": {
+    "i": 13,
+    "axial": [
+     -15576,
+     2376,
+     9892
+    ],
+    "axial_sign": [
+     -1,
+     1,
+     1
+    ],
+    "W": 3778,
+    "sense": 1,
+    "levels_now": [
+     50,
+     68,
+     0,
+     0,
+     24,
+     59,
+     0,
+     0
+    ]
+   }
+  }
+ ],
+ "axis sign kept, summed": [
+  5,
+  11
+ ],
+ "dominant axis kept, summed": [
+  2,
+  11
+ ],
+ "pairs' axes summed to 0": 1,
+ "pairs' W summed to 0": 2,
+ "quartet pairs clicked at both ends": 2,
+ "plane pairs clicked at both ends": 2,
+ "bell on the quartet pairs": {
+  "setting=turned outcome=axial on the twin Link": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     2,
+     2
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=turned outcome=axial on the detector's axis": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     -2,
+     2
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=turned outcome=sense (control)": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     -1,
+     1
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 1
+  },
+  "setting=take_sign outcome=axial on the twin Link": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     1,
+     1
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=take_sign outcome=axial on the detector's axis": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     1,
+     1
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=take_sign outcome=sense (control)": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     -1,
+     1
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 1
+  },
+  "setting=line_named outcome=axial on the twin Link": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     1,
+     1
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     1,
+     1
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=line_named outcome=axial on the detector's axis": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     -1,
+     1
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     1,
+     1
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=line_named outcome=sense (control)": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     -1,
+     1
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 1
+  },
+  "setting=sign_level outcome=axial on the twin Link": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 2
+  },
+  "setting=sign_level outcome=axial on the detector's axis": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 2
+  },
+  "setting=sign_level outcome=sense (control)": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 2
+  },
+  "setting=proper_parity outcome=axial on the twin Link": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     1,
+     1
+    ],
+    "1,1": [
+     1,
+     1
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=proper_parity outcome=axial on the detector's axis": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     -1,
+     1
+    ],
+    "1,1": [
+     1,
+     1
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=proper_parity outcome=sense (control)": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     0,
+     0
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     -1,
+     1
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 1
+  },
+  "setting=closes_parity outcome=axial on the twin Link": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     1,
+     1
+    ],
+    "-1,1": [
+     1,
+     1
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=closes_parity outcome=axial on the detector's axis": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     -1,
+     1
+    ],
+    "-1,1": [
+     -1,
+     1
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 0
+  },
+  "setting=closes_parity outcome=sense (control)": {
+   "E (same - opposite, n)": {
+    "-1,-1": [
+     -1,
+     1
+    ],
+    "-1,1": [
+     0,
+     0
+    ],
+    "1,-1": [
+     0,
+     0
+    ],
+    "1,1": [
+     0,
+     0
+    ]
+   },
+   "S": null,
+   "why": "an empty setting cell",
+   "pairs left out (a zero datum or outcome)": 1
+  }
+ }
+}

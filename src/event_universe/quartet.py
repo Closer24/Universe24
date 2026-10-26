@@ -126,10 +126,6 @@ def gsub(u: Gauss, v: Gauss) -> Gauss:
     return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
 
 
-def gadd(u: Gauss, v: Gauss) -> Gauss:
-    return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
-
-
 def greduced(u: Gauss) -> Gauss:
     """The Gaussian rational with its common factor out and a positive denominator."""
     g = lattice(u[0], u[1], u[2])

@@ -1,0 +1,3 @@
+control {} run back exact 3 of 3 births 0 clicks 0 close.read_number after the run: read_number draw's: read_number
+control {'digits': 'folded'} run back exact 3 of 3 births 0 clicks 0 close.read_number after the run: read_number_folded draw's: read_number
+control {'digits': 'former'} run back exact 3 of 3 births 0 clicks 0 close.read_number after the run: read_number draw's: read_number

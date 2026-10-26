@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -19,6 +20,7 @@ if TYPE_CHECKING:
 Matrix = list[list[int]]
 
 
+@lru_cache
 def identity(n: int) -> Matrix:
     """The identity on n lines."""
     return [[int(r == c) for c in range(n)] for r in range(n)]
@@ -43,7 +45,7 @@ def conjugation(shape: int) -> Matrix:
     """The row's conjugation K, the frame's and the swap's: the quartet's derived K0; for a plane the im line negated; the identity for a row of another shape (a line of one level is its own conjugate)."""
     if shape == QUARTET:
         return quartet().K0
-    found = identity(shape)
+    found = [list(row) for row in identity(shape)]
     if shape == PLANE:
         found[1][1] = -1
     return found
@@ -72,7 +74,9 @@ def matmul(a: Matrix, b: Matrix) -> Matrix:
 
 
 def weighted(m: Matrix, xs: list[Any], ys: list[Any]) -> list[Any]:
-    """The bilinear x.m.y line by line, x_k (m y)_k, so that a division per line stays one per line."""
+    """The bilinear x.m.y line by line, x_k (m y)_k, so that a division per line stays one per line; at the identity (every shape but the quartet's) the plain products x_k y_k."""
+    if m == identity(len(xs)):
+        return [x * y for x, y in zip(xs, ys, strict=True)]
     return [x * my for x, my in zip(xs, matvec(m, ys), strict=True)]
 
 

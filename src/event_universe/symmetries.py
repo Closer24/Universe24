@@ -133,3 +133,37 @@ def cpt(record: Record) -> dict[str, Any]:
             else f"NOT SHOWN: {nonzero - even} frames' charge not even under CPT",
         }
     }
+
+
+def matter_against_antimatter(record: Record) -> dict[str, Any]:
+    """Row 68: matter against antimatter (HD-S1, the Boss's 6412271828): the hand enters the law in one act, the + child laid at the end the current flows into where the twist is right-handed, so over the record the + child stands at the take's Node on some births and at the other end on the rest; counted, the hand's choice read at every birth."""
+    at_node = sum(1 for b in record.births if list(b["plus"]) == list(b["node"]))
+    return {
+        "68 matter against antimatter": {
+            "births with the + child at the take's Node / at the other end": [
+                at_node,
+                len(record.births) - at_node,
+            ],
+            "verdict": unread_words(
+                "no birth", "the + child's end chosen by the twist's hand at every birth"
+            )
+            if not record.births
+            else f"SHOWN: the + child at the take's Node on {at_node} births and at the other end on {len(record.births) - at_node}, the hand's choice at every birth",
+        }
+    }
+
+
+def one_hand(record: Record) -> dict[str, Any]:
+    """Row 69: the neutrino's one hand (the Boss's 6412773403, the helicity pair's reading): the hand of every birth, the end the + child is laid at (the take's Node or the other end, by the twist at the click), all one over the record where nature's neutrino shows one hand alone; NOT SHOWN with its cause where both hands stand (no conversion on the records, the births' hands split), NOT READ where no birth."""
+    at_node = sum(1 for b in record.births if list(b["plus"]) == list(b["node"]))
+    other = len(record.births) - at_node
+    return {
+        "69 the neutrino's one hand": {
+            "births by hand (the + child at the take's Node / at the other end)": [at_node, other],
+            "verdict": unread_words("no birth", "one hand at every birth of the record")
+            if not record.births
+            else "SHOWN: one hand at every birth of the record"
+            if not at_node or not other
+            else f"NOT SHOWN: both hands stand, {at_node} and {other} births (no conversion on the record, the births' hands split by the twist at each click)",
+        }
+    }

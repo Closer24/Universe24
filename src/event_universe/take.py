@@ -1,4 +1,4 @@
-"""The close's reads and writes at one Node: the one-Link read of a number on the frame's digit lattices (`read_number`), the exact take of the taken row's levels by the share's fall on the line the fall's sign chooses (`fall_of`; the take act at a list of ends is merger.takes, CR-S2), the one lay act (`lay`) and the take's move as the write's form (`move`, CR-S1), the lattice momentum a move books (`momentum_of`) and the refusal by name (`refused`)."""
+"""The close's reads and writes at one Node: the exact take of the taken row's levels by the share's fall on the line the fall's sign chooses (`fall_of`; the take act at a list of ends is merger.takes, CR-S2), the one lay act (`lay`) and the take's move as the write's form (`move`, CR-S1), the lattice momentum a move books (`momentum_of`) and the refusal by name (`refused`)."""
 
 from __future__ import annotations
 
@@ -35,7 +35,7 @@ def at_node(x: Any, at: tuple[int, ...]) -> int:
 def fall_of(
     node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, row: Row
 ) -> tuple[int | None, int, int]:
-    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
+    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) = s (price - X w s) over the share's weight 2 Gamma^3 G^2, the price X times Rule3's own numerator with the slots exchanged, -t (2 w now + pull); the count one carried division of the walls owed by the price, rounded up as the floor's mirror, and where the moved levels' own square leaves the fall short, the same division of the shortfall by the next level's price, price - 2 X w s, iterated from below to its fixed count (TC-S1, the owner's word of 2026-10-26, 08:3x UTC, "approved", both hands' one finding, H-Take-Count-As-Rule3-Division-1: the count Rule3's own kind of act, no root; the former least root by largest_below, least_root, kept by name); (None, the full fall) where no count within the full move pays, the division's fixed count passing the move or the next level's price falling to 0 before it (the former refusal read the fall at the full move alone, the parabola's far side, and refused a take a lesser count paid: the bug struck 2026-10-26 under the owner's priority, the Boss's 6411031946)."""
     gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in row.lines)]
     k = gaps.index(max(gaps))
     line = row.lines[k]
@@ -55,13 +55,14 @@ def fall_of(
         moved = now + t * s
         return int(quotient(x * (w * (now * now - moved * moved) - t * s * pull), weight))
 
-    full = fall(dist := abs(now - before))
-    if full < walls:
-        return None, full, k
-    for s in rule3.least_root(-w * x, -((w + w) * now + pull) * t * x, walls * weight, dist):
-        if s <= dist and fall(s) >= walls:
-            return s, fall(s), k
-    return (*next(((s, fall(s)) for s in range(1, dist + 1) if fall(s) >= walls), (dist, full)), k)
+    price, dist = -t * ((w + w) * now + pull) * x, abs(now - before)
+    s = -quotient(-walls * weight, price) if price > 0 else dist + 1
+    while s <= dist and fall(s) < walls:
+        slope = price - x * w * (s + s)
+        s = s - quotient(-(walls * weight - s * (price - x * w * s)), slope) if slope > 0 else dist + 1
+    if s > dist:
+        return None, fall(dist), k
+    return s, fall(s), k
 
 
 def lay(node: Node, rec: int, where: Any, levels: Any, sign: int = 1) -> None:

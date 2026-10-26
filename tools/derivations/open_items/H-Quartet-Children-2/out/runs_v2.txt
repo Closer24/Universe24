@@ -1,0 +1,30 @@
+== chiral5
+{"run back": {"intervals": 20, "exact": 20}}
+{"counts": {"births": "14", "taken": "155505592107478224694124", "booked": "102011060820211283778715", "body_clicks": "2819", "laid_back": "0", "refused_stop": "8906", "refused_origin": "0", "refused_lay": "652", "refused_orientation": "187", "refused_twist": "39", "refused_sense": "10130", "turns": "617", "met": "19806", "laid": "0", "laid_nodes": "0"}}
+== hole5
+{"run back": {"intervals": 20, "exact": 20}}
+{"counts": {"births": "24", "taken": "750675569634719313724553", "booked": "428988970693351588077946", "body_clicks": "2065", "laid_back": "0", "refused_stop": "8401", "refused_origin": "0", "refused_lay": "545", "refused_orientation": "290", "refused_twist": "132", "refused_sense": "8778", "turns": "561", "met": "18060", "laid": "0", "laid_nodes": "0"}}
+== chiral3
+{"run back": {"intervals": 20, "exact": 20}}
+{"counts": {"births": "7", "taken": "121836667116745104887554", "booked": "71345717202753364017751", "body_clicks": "532", "laid_back": "0", "refused_stop": "2279", "refused_origin": "0", "refused_lay": "240", "refused_orientation": "47", "refused_twist": "12", "refused_sense": "2166", "turns": "151", "met": "4735", "laid": "0", "laid_nodes": "0"}}
+== v1
+{"run back": {"intervals": 20, "exact": 20}}
+{"counts": {"births": "18", "taken": "528665290596648073621765", "booked": "307888981572758327386504", "body_clicks": "3692", "laid_back": "0", "refused_stop": "8712", "refused_origin": "0", "refused_lay": "950", "refused_orientation": "143", "refused_twist": "32", "refused_sense": "9580", "turns": "652", "met": "19331", "laid": "0", "laid_nodes": "0"}}
+== v2
+{"run back": {"intervals": 20, "exact": 20}}
+{"counts": {"births": "18", "taken": "363115683772692366389508", "booked": "220256228846752097355423", "body_clicks": "2871", "laid_back": "0", "refused_stop": "8781", "refused_origin": "0", "refused_lay": "904", "refused_orientation": "143", "refused_twist": "41", "refused_sense": "9405", "turns": "747", "met": "19183", "laid": "0", "laid_nodes": "0"}}
+== v3
+{"run back": {"intervals": 20, "exact": 20}}
+{"counts": {"births": "16", "taken": "176493998883417196018893", "booked": "116293436339992790636134", "body_clicks": "3465", "laid_back": "0", "refused_stop": "9353", "refused_origin": "0", "refused_lay": "784", "refused_orientation": "134", "refused_twist": "41", "refused_sense": "10295", "turns": "672", "met": "20513", "laid": "6", "laid_nodes": "6"}}
+== v4
+{"run back": {"intervals": 20, "exact": 20}}
+{"counts": {"births": "18", "taken": "386857979547324378540404", "booked": "228926548762756111130379", "body_clicks": "2641", "laid_back": "0", "refused_stop": "8267", "refused_origin": "0", "refused_lay": "699", "refused_orientation": "154", "refused_twist": "157", "refused_sense": "11082", "turns": "625", "met": "20250", "laid": "0", "laid_nodes": "0"}}
+== v5
+{"run back": {"intervals": 20, "exact": 20}}
+{"counts": {"births": "26", "taken": "447144118510789843884755", "booked": "270829235666999851110089", "body_clicks": "4258", "laid_back": "0", "refused_stop": "8919", "refused_origin": "0", "refused_lay": "754", "refused_orientation": "155", "refused_twist": "47", "refused_sense": "10238", "turns": "676", "met": "20020", "laid": "2", "laid_nodes": "2"}}
+== standing5
+{"run back": {"intervals": 20, "exact": 20}}
+{"counts": {"births": "25", "taken": "299458099490596806759389", "booked": "98803935616637879980641", "body_clicks": "2661", "laid_back": "0", "refused_stop": "9729", "refused_origin": "0", "refused_lay": "434", "refused_orientation": "174", "refused_twist": "160", "refused_sense": "10503", "turns": "586", "met": "20908", "laid": "0", "laid_nodes": "0"}}
+== bodies5
+    raise ValueError("a plane packet has the half-width 2 or 3: a body is laid over its packet")
+ValueError: a plane packet has the half-width 2 or 3: a body is laid over its packet

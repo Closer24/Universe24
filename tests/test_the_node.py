@@ -7,28 +7,19 @@ from typing import Any
 
 import numpy as np
 
+from event_universe import gram
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import quotient
-from event_universe.features import volume
 from event_universe.interval import Interval
 from event_universe.loader.world import read_world
 from event_universe.merger import takes
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
-from event_universe.take import fall_of, frame_nodes, move
-from tests.laws import node_of, refused, run_back_exact, state_of, world_of
+from event_universe.take import fall_of, frame_nodes, lay, move
+from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
 
 CENTRE, INTERVALS = (1, 1, 1), 20  # the fed Node, the 3-cube's centre; the run's intervals
-
-
-def level_at(node: Node, content: int) -> int:
-    """The carrier's level at a content."""
-    return int(
-        np.asarray(
-            volume.volume_of(node.gamma, np.array([content], dtype=object)), dtype=object
-        ).reshape(-1)[0]
-    )
 
 
 def clicks_at(node: Node, at: tuple[int, ...]) -> list[dict[str, Any]]:
@@ -58,8 +49,13 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
     for _ in range(INTERVALS):
         node.step()
     clicks = clicks_at(node, CENTRE)
-    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [(6, 18)] * 2
-    assert [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"] == [(1, 2)] * 3
+    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [
+        (10, 270)
+    ] * 2  # (6, 18) at 54
+    # two credits under BH-S1's mask; six with the frozen Node released (FR-S1)
+    assert [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"] == [(1, 0)] + [
+        (-1, 0)
+    ] * 5
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
@@ -129,7 +125,12 @@ def test_the_turn_at_the_horizon_runs_back_exact() -> None:
     node = fed_horizon(bumped(sea_only("world_node.json")), CENTRE)
     fed = copy.deepcopy(node)
     node.step()
-    assert [tuple(int(x) for x in q) for q in zip(*np.nonzero(node.turned), strict=True)] == [CENTRE]
+    turned = [tuple(int(x) for x in q) for q in zip(*np.nonzero(node.turned), strict=True)]
+    assert turned == [
+        (0, 1, 1),
+        CENTRE,
+        (2, 1, 1),
+    ]  # the centre alone at the trace 54; its x neighbours with it at 6
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
@@ -169,8 +170,8 @@ def test_the_step_reaches_one_link_forward_and_none_back() -> None:
     a2, b2 = copy.deepcopy(a), copy.deepcopy(a)
     light = b2.emitter().lines[0]
     light.now[at] = light.now[at] + 1
-    a2.step_back()
-    b2.step_back()
+    a2.step(-1)
+    b2.step(-1)
     assert differences(a2, b2, at) <= {0}
 
 
@@ -255,11 +256,11 @@ def shares_of(node: Node) -> tuple[Any, Any, Any]:
     gap0 = node.emitter()
     rule = node.rule(gap0.pair, node.start_content, node.link_factors())
     pace = np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)
-    x, carrier = node.start_x, node.share(gap0.lines, rule)
+    x, carrier = node.start_x, gram.share(node, gap0.lines, rule)
     node.start_x = np.vectorize(lambda p: quotient(node.gamma**3, p * p), otypes=[object])(pace)
-    frame = node.share(gap0.lines, rule)
+    frame = gram.share(node, gap0.lines, rule)
     node.start_x = zeros(node.shape) + node.gamma
-    vacuum, node.start_x = node.share(gap0.lines, rule), x
+    vacuum, node.start_x = gram.share(node, gap0.lines, rule), x
     return carrier, frame, vacuum
 
 
@@ -270,7 +271,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
         pace = paces.link_pace(node.gamma, c)
         assert quotient(node.gamma * node.gamma, pace * pace) == quotient(level_at(node, c), node.gamma)
     node.step()
-    node.step_back()
+    node.step(-1)
     carrier, frame, vacuum = shares_of(node)
     assert bool((node.start_x < 2 * node.gamma).all()) and int((abs(carrier - frame) <= 1).sum()) == 27
     assert carrier.tolist() == vacuum.tolist()
@@ -279,19 +280,20 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
     carrier, frame, vacuum = shares_of(node)
     totals = [sum(int(v) for v in a.reshape(-1)) for a in (carrier, frame, vacuum)]
-    assert totals[2] * 1000 // totals[0] == 390 and abs(totals[1] - totals[0]) * 1000 <= 4 * totals[0]
+    # 390 at 54
+    assert totals[2] * 1000 // totals[0] == 407 and abs(totals[1] - totals[0]) * 1000 <= 4 * totals[0]
     assert (
-        2_356
+        1_979  # 2_356 at the trace 54
         <= int(node.start_x.min()) * 1000 // node.gamma
         <= int(node.start_x.max()) * 1000 // node.gamma
-        <= 2_938
+        <= 2_995  # 2_938 at 54
     )
     chiral = node_of("world_nature.json")
     kept = copy.deepcopy(chiral)
     for _ in range(40):
         chiral.step()
     counts = (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census())
-    assert counts == (16, 2075, (99, 115))
+    assert counts == (17, 1910, (99, 112))  # 16, 2,127 and 115 bits at the trace 54
     assert run_back_exact(kept, 10) == 10
 
 
@@ -326,7 +328,8 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
         node.step()
     births = [e for e in node.log if e["event"] == "birth"]
     pairs = [b for b in births if b["line_pair"] != node.records().index(node.emitter())]
-    assert len(births) == 6 and len(pairs) == 6 and node.counts["met"] > len(births)  # 4 before GP-S1
+    # 6 pairs at 54, 4 before GP-S1
+    assert len(births) == 6 and len(pairs) == 5 and node.counts["met"] > len(births)
     for b in pairs:
         link = {tuple(b["minus"]), tuple(b["plus"])}
         assert any(
@@ -356,7 +359,7 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
         ((2, 1, 2), (b, a, 0, 0)),
     )
     for at, levels in feed:
-        node.lay(heavy, at, levels)
+        lay(node, heavy, at, levels)
     kept = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
@@ -370,13 +373,17 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
     assert all(unit <= t["booked"] <= t["taken"] and t["booked"] < 2 * unit for t in merger["takes"])
     assert [t["taken_levels"][1::2] for t in merger["takes"]] == [[k * a, 0], [k * a, 0]]
     assert merger["taken"] >= merger["booked"] == sum(t["booked"] for t in merger["takes"])
-    assert merger["W_children"] == [-(node.T // 2), node.T // 2] and merger["stood"] == [[0] * 4] * 2
+    # the light at both ends, cc1
+    assert merger["W_children"] == [0, 0] and merger["stood"] == [[0] * 4] * 2
     refusals = [
         e
         for e in node.log
         if e["event"] == "refused" and e.get("row") == heavy and e["i"] <= merger["i"]
     ]
-    assert merger["i"] == 1 and refusals == [] and merger["exact_lay"] == [None, None]
+    # cc1: both ends exact ([None, None] before)
+    assert (
+        merger["i"] == 1 and refusals == [] and [x[:2] for x in merger["exact_lay"]] == [[0, -191]] * 2
+    )
     probe = copy.deepcopy(kept)
     for _ in range(merger["i"]):
         probe.step()
@@ -417,7 +424,8 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert node.wronskians["kept"] == node.wronskians["sites"] > 0
         assert not {"negated", "changed"} & node.wronskians.keys()
         found.append(node.wronskians)
-    assert [f["sites"] for f in found] == [296, 2152] and found[1]["nonzero"] == 664
+        # 2,152 sites and 708 with W not 0 at the trace 54 (664 before cc1)
+    assert [f["sites"] for f in found] == [296, 2112] and found[1]["nonzero"] == 539
     assert "nonzero" not in found[0]
 
 
@@ -463,7 +471,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         seen = [c for c in crossings[(e["line"], tuple(e["node"]))] if c[0] <= e["i"]]
         assert e["beat"] == seen[-1][0] - seen[-2][0], e
         upward.append(seen[-1][1])
-    assert (len(credits), sum(upward)) == (1036, 365)
+    assert (len(credits), sum(upward)) == (1045, 488)  # 1,032 and 366 at the trace 54
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
@@ -498,7 +506,7 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
         ((1, 2, 1), (a, b, 0, 0)),
         ((2, 1, 2), (b, a, 0, 0)),
     ):
-        node.lay(heavy, at, levels)
+        lay(node, heavy, at, levels)
     kept, lines_taken = copy.deepcopy(node), []
     for _ in range(INTERVALS):
         seen = len(node.log)
@@ -518,8 +526,9 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
     births = [e for e in node.log if e["event"] == "birth"]
     assert births[0]["taken_row"] == heavy and births[0]["taken_line"] == [None, None]
     on_first = [(e["i"], e["taken_line"]) for e in births if "takes" not in e and not e["taken_line"]]
-    assert on_first == [] and len(births) == 7 and {e["taken_line"] for e in births[1:]} == {1}
-    assert (len(lines_taken), sum(lines_taken), node.counts["body_clicks"]) == (11, 11, 5)
+    # cc1: the merger's light exact at both ends, no charged child, no birth and no credit after it (7 births, 11 takes and 5 credits before)
+    assert on_first == [] and len(births) == 1
+    assert (len(lines_taken), sum(lines_taken), node.counts["body_clicks"]) == (0, 0, 0)
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
@@ -540,7 +549,8 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     kept = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
-    assert node.state_hash() == "ddfeb210af37dd74356499052f636f149256ba52007b6951c2269971935c3c86"
+    # ddfeb210 at 54
+    assert node.state_hash() == "ff82a0da34afd75bff667b6478758ab24e95adc6c49be85128a7d193ec15eb17"
     interval = Interval(copy.deepcopy(node), 1)
     interval.readings()
     assert sorted(interval.links_at) == [0, 1] and any(

@@ -1,0 +1,5 @@
+load 3.31 waiting 60 s
+load 4.79 waiting 60 s
+load 6.26 waiting 60 s
+load 7.20 waiting 60 s
+load 2.84 below 3

@@ -1,0 +1,66 @@
+{
+"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/mf1/tests/worlds/world_hole.json",
+"intervals": 12,
+"image": "C",
+"walled": 1,
+"first_off": 8,
+"first_apart": 8,
+"verdicts": {
+"EQUAL": 0,
+"CONJUGATE": 0,
+"APART": 4
+},
+"base": {
+"births": 9,
+"plus_at_take": 5,
+"plus_other": 4,
+"excess": 1,
+"W_children_sum": 0,
+"credits": 88
+},
+"mirror": {
+"births": 11,
+"plus_at_take": 7,
+"plus_other": 4,
+"excess": 3,
+"W_children_sum": 0,
+"credits": 23
+},
+"per_interval": [
+{
+"i": 8,
+"off": 62,
+"base_births": 8,
+"mirror_births": 6,
+"verdict": "APART"
+},
+{
+"i": 9,
+"off": 844,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 10,
+"off": 2095,
+"base_births": 0,
+"mirror_births": 1,
+"verdict": "APART"
+},
+{
+"i": 11,
+"off": 3714,
+"base_births": 1,
+"mirror_births": 3,
+"verdict": "APART"
+},
+{
+"i": 12,
+"off": 4903,
+"base_births": 0,
+"mirror_births": 1,
+"verdict": "APART"
+}
+]
+}

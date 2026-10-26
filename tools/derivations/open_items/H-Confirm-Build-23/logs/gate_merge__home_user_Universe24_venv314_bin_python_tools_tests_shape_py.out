@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb23_merge/tools/tests_shape.py", line 880, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb23_merge/tools/tests_shape.py", line 874, in main
+    found = violations(working_tree(root), at_ref(root, base_ref()))
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb23_merge/tools/tests_shape.py", line 840, in violations
+    head_tests, base_tests = lines_in(head, "tests/"), lines_in(base, "tests/") + room_of(head)
+                                                                                  ~~~~~~~^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb23_merge/tools/tests_shape.py", line 830, in room_of
+    for node in ast.walk(ast.parse(snapshot[path])):
+                         ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.14.6-linux-x86_64-gnu/lib/python3.14/ast.py", line 46, in parse
+    return compile(source, filename, mode, flags,
+                   _feature_version=feature_version, optimize=optimize)
+  File "<unknown>", line 89
+    >>>>>>> 3d7729581
+            ^
+SyntaxError: invalid decimal literal

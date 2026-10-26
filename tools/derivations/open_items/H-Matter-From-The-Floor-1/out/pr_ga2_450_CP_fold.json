@@ -1,0 +1,1823 @@
+{
+"world": "world_ga2_450.json",
+"intervals": 450,
+"image": "CP",
+"walled": 1,
+"first_off": 196,
+"first_apart": 197,
+"verdicts": {
+"EQUAL": 0,
+"CONJUGATE": 2,
+"APART": 18
+},
+"base": {
+"births": 152,
+"plus_at_take": 104,
+"plus_other": 48,
+"excess": 56,
+"W_children_sum": 10879698,
+"credits": 168
+},
+"mirror": {
+"births": 126,
+"plus_at_take": 98,
+"plus_other": 28,
+"excess": 70,
+"W_children_sum": -8469840,
+"credits": 104
+},
+"per_interval": [
+{
+"i": 195,
+"off": 0,
+"base_births": 32,
+"mirror_births": 32,
+"verdict": "CONJUGATE"
+},
+{
+"i": 196,
+"off": 128,
+"base_births": 56,
+"mirror_births": 56,
+"verdict": "CONJUGATE"
+},
+{
+"i": 197,
+"off": 192,
+"base_births": 32,
+"mirror_births": 24,
+"verdict": "APART"
+},
+{
+"i": 198,
+"off": 1218,
+"base_births": 10,
+"mirror_births": 2,
+"verdict": "APART"
+},
+{
+"i": 199,
+"off": 1976,
+"base_births": 0,
+"mirror_births": 2,
+"verdict": "APART"
+},
+{
+"i": 200,
+"off": 2300,
+"base_births": 0,
+"mirror_births": 2,
+"verdict": "APART"
+},
+{
+"i": 201,
+"off": 2528,
+"base_births": 2,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 202,
+"off": 2854,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 203,
+"off": 3034,
+"base_births": 0,
+"mirror_births": 2,
+"verdict": "APART"
+},
+{
+"i": 204,
+"off": 3168,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 205,
+"off": 3334,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 206,
+"off": 3432,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 207,
+"off": 3560,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 208,
+"off": 3774,
+"base_births": 2,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 209,
+"off": 3892,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 210,
+"off": 3918,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 211,
+"off": 3960,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 212,
+"off": 4014,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 213,
+"off": 4014,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 214,
+"off": 4022,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 215,
+"off": 4032,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 216,
+"off": 4016,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 217,
+"off": 4026,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 218,
+"off": 4018,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 219,
+"off": 4036,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 220,
+"off": 4094,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 221,
+"off": 4092,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 222,
+"off": 4106,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 223,
+"off": 4126,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 224,
+"off": 4092,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 225,
+"off": 4102,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 226,
+"off": 4132,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 227,
+"off": 4136,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 228,
+"off": 4164,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 229,
+"off": 4152,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 230,
+"off": 4088,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 231,
+"off": 4102,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 232,
+"off": 4156,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 233,
+"off": 4134,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 234,
+"off": 4120,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 235,
+"off": 4178,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 236,
+"off": 4180,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 237,
+"off": 4146,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 238,
+"off": 4152,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 239,
+"off": 4148,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 240,
+"off": 4142,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 241,
+"off": 4188,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 242,
+"off": 4172,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 243,
+"off": 4150,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 244,
+"off": 4170,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 245,
+"off": 4148,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 246,
+"off": 4146,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 247,
+"off": 4164,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 248,
+"off": 4178,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 249,
+"off": 4148,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 250,
+"off": 4168,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 251,
+"off": 4204,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 252,
+"off": 4206,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 253,
+"off": 4190,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 254,
+"off": 4172,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 255,
+"off": 4164,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 256,
+"off": 4184,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 257,
+"off": 4210,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 258,
+"off": 4220,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 259,
+"off": 4206,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 260,
+"off": 4210,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 261,
+"off": 4240,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 262,
+"off": 4250,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 263,
+"off": 4222,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 264,
+"off": 4206,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 265,
+"off": 4226,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 266,
+"off": 4216,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 267,
+"off": 4186,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 268,
+"off": 4214,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 269,
+"off": 4276,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 270,
+"off": 4244,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 271,
+"off": 4214,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 272,
+"off": 4242,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 273,
+"off": 4246,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 274,
+"off": 4232,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 275,
+"off": 4226,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 276,
+"off": 4244,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 277,
+"off": 4276,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 278,
+"off": 4284,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 279,
+"off": 4258,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 280,
+"off": 4254,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 281,
+"off": 4286,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 282,
+"off": 4302,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 283,
+"off": 4288,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 284,
+"off": 4298,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 285,
+"off": 4350,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 286,
+"off": 4336,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 287,
+"off": 4310,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 288,
+"off": 4312,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 289,
+"off": 4336,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 290,
+"off": 4358,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 291,
+"off": 4362,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 292,
+"off": 4354,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 293,
+"off": 4354,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 294,
+"off": 4336,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 295,
+"off": 4322,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 296,
+"off": 4312,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 297,
+"off": 4314,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 298,
+"off": 4322,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 299,
+"off": 4346,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 300,
+"off": 4364,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 301,
+"off": 4372,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 302,
+"off": 4358,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 303,
+"off": 4334,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 304,
+"off": 4328,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 305,
+"off": 4346,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 306,
+"off": 4370,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 307,
+"off": 4366,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 308,
+"off": 4376,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 309,
+"off": 4392,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 310,
+"off": 4410,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 311,
+"off": 4412,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 312,
+"off": 4394,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 313,
+"off": 4394,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 314,
+"off": 4418,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 315,
+"off": 4428,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 316,
+"off": 4426,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 317,
+"off": 4410,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 318,
+"off": 4390,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 319,
+"off": 4374,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 320,
+"off": 4342,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 321,
+"off": 4358,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 322,
+"off": 4386,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 323,
+"off": 4392,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 324,
+"off": 4358,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 325,
+"off": 4364,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 326,
+"off": 4382,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 327,
+"off": 4368,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 328,
+"off": 4348,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 329,
+"off": 4370,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 330,
+"off": 4394,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 331,
+"off": 4390,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 332,
+"off": 4396,
+"base_births": 2,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 333,
+"off": 4432,
+"base_births": 2,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 334,
+"off": 4454,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 335,
+"off": 4448,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 336,
+"off": 4450,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 337,
+"off": 4470,
+"base_births": 2,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 338,
+"off": 4478,
+"base_births": 4,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 339,
+"off": 4466,
+"base_births": 2,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 340,
+"off": 4444,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 341,
+"off": 4468,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 342,
+"off": 4498,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 343,
+"off": 4488,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 344,
+"off": 4474,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 345,
+"off": 4472,
+"base_births": 2,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 346,
+"off": 4488,
+"base_births": 2,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 347,
+"off": 4500,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 348,
+"off": 4478,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 349,
+"off": 4464,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 350,
+"off": 4474,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 351,
+"off": 4472,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 352,
+"off": 4480,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 353,
+"off": 4482,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 354,
+"off": 4488,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 355,
+"off": 4458,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 356,
+"off": 4442,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 357,
+"off": 4460,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 358,
+"off": 4466,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 359,
+"off": 4478,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 360,
+"off": 4512,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 361,
+"off": 4496,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 362,
+"off": 4494,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 363,
+"off": 4548,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 364,
+"off": 4554,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 365,
+"off": 4550,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 366,
+"off": 4542,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 367,
+"off": 4554,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 368,
+"off": 4554,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 369,
+"off": 4546,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 370,
+"off": 4526,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 371,
+"off": 4556,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 372,
+"off": 4574,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 373,
+"off": 4582,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 374,
+"off": 4590,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 375,
+"off": 4560,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 376,
+"off": 4564,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 377,
+"off": 4564,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 378,
+"off": 4572,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 379,
+"off": 4594,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 380,
+"off": 4580,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 381,
+"off": 4582,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 382,
+"off": 4588,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 383,
+"off": 4608,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 384,
+"off": 4626,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 385,
+"off": 4620,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 386,
+"off": 4636,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 387,
+"off": 4626,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 388,
+"off": 4636,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 389,
+"off": 4636,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 390,
+"off": 4604,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 391,
+"off": 4620,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 392,
+"off": 4646,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 393,
+"off": 4650,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 394,
+"off": 4616,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 395,
+"off": 4606,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 396,
+"off": 4630,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 397,
+"off": 4642,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 398,
+"off": 4628,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 399,
+"off": 4614,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 400,
+"off": 4626,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 401,
+"off": 4636,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 402,
+"off": 4624,
+"base_births": 0,
+"mirror_births": 2,
+"verdict": "APART"
+},
+{
+"i": 403,
+"off": 4632,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 404,
+"off": 4626,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 405,
+"off": 4618,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 406,
+"off": 4612,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 407,
+"off": 4602,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 408,
+"off": 4604,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 409,
+"off": 4604,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 410,
+"off": 4602,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 411,
+"off": 4608,
+"base_births": 2,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 412,
+"off": 4598,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 413,
+"off": 4602,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 414,
+"off": 4610,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 415,
+"off": 4606,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 416,
+"off": 4610,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 417,
+"off": 4608,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 418,
+"off": 4614,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 419,
+"off": 4610,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 420,
+"off": 4610,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 421,
+"off": 4614,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 422,
+"off": 4598,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 423,
+"off": 4596,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 424,
+"off": 4616,
+"base_births": 0,
+"mirror_births": 2,
+"verdict": "APART"
+},
+{
+"i": 425,
+"off": 4630,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 426,
+"off": 4628,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 427,
+"off": 4628,
+"base_births": 0,
+"mirror_births": 2,
+"verdict": "APART"
+},
+{
+"i": 428,
+"off": 4646,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 429,
+"off": 4652,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 430,
+"off": 4654,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 431,
+"off": 4646,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 432,
+"off": 4646,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 433,
+"off": 4666,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 434,
+"off": 4672,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 435,
+"off": 4678,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 436,
+"off": 4674,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 437,
+"off": 4668,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 438,
+"off": 4668,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 439,
+"off": 4672,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 440,
+"off": 4678,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 441,
+"off": 4680,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 442,
+"off": 4660,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 443,
+"off": 4660,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 444,
+"off": 4676,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 445,
+"off": 4680,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 446,
+"off": 4676,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 447,
+"off": 4680,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 448,
+"off": 4668,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 449,
+"off": 4658,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 450,
+"off": 4668,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+}
+]
+}
