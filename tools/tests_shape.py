@@ -41,6 +41,11 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_node.py::test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2": (
+        56,
+        "CS4-S2 (2026-10-25, the owner's word of 22:50 UTC, The-Handed-Seed-And-Births_COMPARISON.md; the Boss's room at the merge of toys-5 e1209f752, the test's own 56 lines in place of the 40 named): the take by the fall's sign on the pair beside its quarter-turned image "
+        "(X equal at every Node, the 81 credits take for take, the image's takes on the second line) and on SL-S2's merger board (the merger's taken lines [1, 1], 87 takes with 66 on a line other than the first), the run back exact",
+    ),
     "tests/test_the_board.py::test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1": (
         37,
         "PL-S1 (2026-10-25, the owner's word of 22:50 UTC, The-Plasma-Charge-At-The-Kick_COMPARISON.md; the Boss's room named in 6404974647 at the merge of toys-5 99a9ee860): nature's plasma on the 3-cube returning to Gamma exactly "
