@@ -274,6 +274,8 @@ def entropy(record: Record) -> dict[str, Any]:
 
 TABLE: tuple[Row, ...] = (
     board.recurring_bang,
+    board.tops,
+    board.returns,
     clicks.lengthening,
     board.shortening,
     board.era,

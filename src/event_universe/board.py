@@ -132,6 +132,38 @@ def recurring_bang(record: Record) -> dict[str, Any]:
     }
 
 
+def tops(record: Record) -> dict[str, Any]:
+    """Row 1b (the owner's word of 2026-10-26, 00:5x UTC: the top in the gate too): the board tops, every Node turning at once at one interval, read from the Node lines as gate 1 reads them; SHOWN from the first such top."""
+    lines = volumes(record)
+    count = len(lines[0][1]) if lines else 0
+    whole = [i for i, _xs, turned in lines if turned == count and count]
+    return {
+        "1b the board tops, every Node turning at once": {
+            "tops (interval)": whole[:LISTED],
+            "verdict": "NOT READ: no Node line in the record; the predicate: every Node turned at one interval"
+            if not lines
+            else f"SHOWN: the whole board turns at once at {len(whole)} tops, the first at {whole[0]}"
+            if whole
+            else "NOT SHOWN: no interval with every Node turned",
+        }
+    }
+
+
+def returns(record: Record) -> dict[str, Any]:
+    """Row 1c (the same word: the return in the gate too): the board returns to Gamma, a bottom of the mean volume with every Node at Gamma exactly, read from the Node lines as gate 1 reads them; SHOWN from the first such return."""
+    exact = [i for i, _m, at_gamma in bottoms_of(record) if at_gamma]
+    return {
+        "1c the board returns to Gamma": {
+            "exact returns (interval)": exact[:LISTED],
+            "verdict": "NOT READ: no Node line in the record; the predicate: a bottom of the mean volume at Gamma at every Node"
+            if not record.nodes
+            else f"SHOWN: {len(exact)} exact returns to Gamma at every Node, the first at {exact[0]}"
+            if exact
+            else "NOT SHOWN: no bottom at Gamma at every Node",
+        }
+    }
+
+
 def lift_of(record: Record) -> tuple[list[int], list[int]]:
     """LC-S1's lift per interval from the Node lines (lc1's quotient form): L = SUM_i quotient(Gamma SUM_j (X_j - X_i), 3 X_i) over the Nodes and their six neighbours, and the mass pull SUM_i 2 largest_below(X_i div Gamma); each Node line's read once per record."""
     cube = int(record.run["cube"])

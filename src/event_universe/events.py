@@ -9,6 +9,8 @@ from event_universe.decoder import HALF, Record
 
 LABELS = {
     "1": "a bang recurs",
+    "1b": "the board tops, every Node turns",
+    "1c": "the board returns to Gamma",
     "2": "the Links lengthen",
     "3": "the board shortens then lengthens",
     "4": "the era of matter",

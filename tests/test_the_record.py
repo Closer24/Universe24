@@ -26,7 +26,11 @@ VERDICTS = {  # the verdicts' words by name
         "22 Coulomb's sign": "NOT SHOWN: unlike senses do not approach, like senses do not part",
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
     },
-    "chiral": {"9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart"},
+    "chiral": {
+        "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
+        "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
+        "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+    },
     "bodies": {"37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link"},
 }
 
