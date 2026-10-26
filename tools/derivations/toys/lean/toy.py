@@ -160,7 +160,7 @@ class Toy(Node):
             top = frame["turned"]
         held = [[line.copy() for line in row] for row in self.rows()]
         if direction == -1:
-            self.swap(held, None, -1, top)
+            self.swap(held, -1, top)
             kept = [[line.copy() for line in row] for row in self.rows()]
 
         def at(line: Line) -> Any:
