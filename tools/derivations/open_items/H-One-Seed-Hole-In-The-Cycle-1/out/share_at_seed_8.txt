@@ -1,0 +1,15 @@
+c0_ga2_8.json | holes 0 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, False): [8187942649920690060000] = [500] hundredths; (1, False): [8187942649920690060000] = [500] hundredths; (2, False): [8187942649920690060000] = [500] hundredths; (3, False): [8187942649920690060000] = [500] hundredths
+  distinct shares over the board: 1
+  X (i, min, max, distinct, turned): [(1, 1017, 1017, 1, 0), (2, 1050, 1050, 1, 0), (3, 1100, 1100, 1, 0), (4, 1166, 1166, 1, 0)]
+  births to 4 : 512 | counts: {'births': 512, 'taken': 1725196628977408031358464, 'booked': 1722499145953053791932416, 'refused_stop': 1024, 'refused_lay': 1536, 'refused_orientation': 8192, 'refused_twist': 2048, 'met': 12288}
+c6_period4_lattice_8.json | holes 8 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, False): [8187942649920690060000] = [500] hundredths; (0, True): [4654435999347416264607] = [284] hundredths; (1, False): [7758075660799853831850, 8187942649920690060000] = [473, 500] hundredths; (2, False): [8187942649920690060000] = [500] hundredths; (3, False): [8187942649920690060000, 8617809639041526288150] = [500, 526] hundredths
+  distinct shares over the board: 4
+  X (i, min, max, distinct, turned): [(1, 1008, 1019, 4, 0), (2, 1043, 1052, 7, 0), (3, 1092, 1104, 12, 0), (4, 1158, 1173, 15, 0)]
+  births to 4 : 264 | counts: {'births': 264, 'taken': 889438554516011200907168, 'booked': 888018069260504186872976, 'body_clicks': 192, 'refused_stop': 336, 'refused_lay': 4080, 'refused_orientation': 2960, 'refused_twist': 1064, 'met': 8368}
+c1_class0_8.json | holes 128 | drift 189 | unit 1637588529984138012000
+  share at i 0 by (class, hole): (0, True): [4654435999347416264607] = [284] hundredths; (1, False): [7328208671679017603700] = [447] hundredths; (2, False): [8187942649920690060000] = [500] hundredths; (3, False): [9047676628162362516300] = [552] hundredths
+  distinct shares over the board: 4
+  X (i, min, max, distinct, turned): [(1, 1008, 1021, 4, 0), (2, 1038, 1055, 4, 0), (3, 1078, 1097, 4, 0), (4, 1125, 1161, 4, 0)]
+  births to 4 : 0 | counts: {'refused_lay': 4864, 'refused_orientation': 1280, 'met': 6144}

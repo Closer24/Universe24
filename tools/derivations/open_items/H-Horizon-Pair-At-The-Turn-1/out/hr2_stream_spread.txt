@@ -1,0 +1,12 @@
+2101 ever-frozen 1 frozen now 1 X min/max 4320350994 4320350994 spread 0 content min/max 3837 3837 board sum 387042
+2200 ever-frozen 4 frozen now 0 X min/max 3273261492 4216702833 spread 943441341 content min/max 3748 3792 board sum 407142
+2400 ever-frozen 24 frozen now 1 X min/max 2906955418 4294559327 spread 1387603909 content min/max 3707 3837 board sum 440013
+2600 ever-frozen 57 frozen now 3 X min/max 2790282981 4339137130 spread 1548854149 content min/max 3707 3837 board sum 459444
+2800 ever-frozen 98 frozen now 4 X min/max 2859119213 4337796723 spread 1478677510 content min/max 3707 3837 board sum 467643
+3000 ever-frozen 115 frozen now 0 X min/max 2821750193 4247728868 spread 1425978675 content min/max 3707 3792 board sum 471047
+4000 ever-frozen 125 frozen now 7 X min/max 3291595976 4548406933 spread 1256810957 content min/max 3748 3837 board sum 474139
+5000 ever-frozen 125 frozen now 14 X min/max 3719265118 4589004706 spread 869739588 content min/max 3792 3837 board sum 474630
+6000 ever-frozen 125 frozen now 22 X min/max 3803306659 4752938294 spread 949631635 content min/max 3792 3837 board sum 474990
+7000 ever-frozen 125 frozen now 25 X min/max 3932979901 4887123909 spread 954144008 content min/max 3792 3837 board sum 475125
+8000 ever-frozen 125 frozen now 28 X min/max 3861858288 5045709553 spread 1183851265 content min/max 3792 3837 board sum 475260
+max frozen at one interval (38, 7811) intervals with all 125 frozen [] 0
