@@ -1,0 +1,1 @@
+{"src": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/ca2/src", "flag": "", "hash": "fe1e50e94b0192bb", "births": 0, "W_children": [], "senses_sum": 0, "refused_sense": 0, "run_back": 20, "of": 20}

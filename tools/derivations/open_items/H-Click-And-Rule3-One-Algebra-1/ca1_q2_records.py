@@ -1,4 +1,4 @@
-"""Q2, Q4, Q8 on the records: for every take and lay of a record (the credit and birth lines), the slot moved, the sign of the move
+"""the questions 2, 4 and 8 on the records: for every take and lay of a record (the credit and birth lines), the slot moved, the sign of the move
 (toward = sign(before - now) of the taken line), whether the move is the full one (levels == |now - before|, the now slot set to its
 own past: the first component of Rule3 at -1 at that Node), the trigger's sign at a credit (the sign of re_now - re_before at the
 close, the crossing's direction), the Node turned (the swap's exchange, the Node's own time reversal) or not, and at a turned credit
