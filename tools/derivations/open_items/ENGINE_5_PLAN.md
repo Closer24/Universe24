@@ -13,6 +13,17 @@ The one line of the whole plan, in the owner's own terms: ONE record of nature f
 | the cube's 48 in the clicks | 3 equal of 48 | 48 of 48, or the rest proved impossible by name |
 | the laws of the day | the click one act, the lay one act, the booking, the Node's core | the child's axis, the matter, the horizon's exit |
 
+## 0b. What the commit of 5.0 carries, by the owner's word of 17:5x UTC (his own list, and the Boss's two additions)
+
+The owner's list, confirmed: (1) the recurring bang, working and SEEN going and returning again and again, with one bang defined as nature's bang; (2) the bugs mended; (3) the code cut, the six folds in; (4) every derivation of the cycle carried whole and named in the changelog as the follow-up research, the open questions among them by name.
+
+The Boss's two additions, both on the critical path of (1) and neither of them a new idea of their own:
+
+- **The clause on the width past the frozen content.** A released Node's state grows free and compounds at every freeze: 141 bits at the interval 10, 815 at 40, 64,102 by 166 on a heavier count, against the law's own bound of 128. Until that clause stands, the bang cannot be carried far enough to be seen going and returning many times: the record either stops or crawls. So the owner's own bound is what blocks his own picture, and the clause is the first thing the bang needs. It is a law, so it is his word; the measure of where the growth enters is David's and it is named.
+- **The bang's period, derived, and the animation over many bangs.** The lead returns at 87 and at 1,162 on 1,200 intervals: a period is in those numbers and it is derivable from the content's own line, so the Nth bang can be predicted before it is run and then shown. The Reader's animation then draws not three bangs but as many as the width allows, which is the picture the owner asks for.
+
+With those, "one bang of nature" becomes a sentence that can be said: a seed whose board freezes at once, releases by its own turn, returns to its first state, and does it again at a known period, with births and credits on the same record so the laws of nature can be read in its clicks. That last condition is the band below, and it is the one thing still missing from the picture.
+
 ## 1. The bang, first (the owner's word: advance it)
 
 The lead, from the hand of the hour: one seed of the law BOTH returns exactly AND freezes. It is neither nature's chiral seed nor the cycle's wave: it is the uniform sea of a plane with a gap, laid at a high count at every Node, on the side 4. On its record of 1,200 intervals every one of the 64 Nodes freezes AT ONCE at the interval 43 (the content passing the frozen mark, 192 Links held at the wall), the turn of its own time releases every one at 44, and the board returns to the resolution at every Node at 87 and at 1,162: three bangs with a horizon on one record. The frozen mark is derived, not fitted (the swap's own ceiling, the content at four times the resolution cubed), and the count needed is linear in the resolution. The world stands at tools/derivations/open_items/H-Horizon-On-The-Returning-Board-2/worlds/w9_side4_sea_q50000.json.
