@@ -8,6 +8,9 @@ from typing import Any
 
 import pytest
 
+from event_universe import symmetries
+from event_universe.core import rule3
+from event_universe.decoder import Record
 from event_universe.events import NAMES
 from event_universe.gates import gates
 from event_universe.run import record
@@ -132,6 +135,7 @@ VERDICTS = {  # the verdicts' words by name
         "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 10, the hand's choice at every one; 0",
         "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 10 moving births",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
+        "71 the momentum booked on the Link": "NOT READ: no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
     },
     "chiral": {
         "64 dark matter in kind": "SHOWN: 96 of 145 bodies credited at a Node where no light was laid",
@@ -149,6 +153,7 @@ VERDICTS = {  # the verdicts' words by name
         "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 9, the hand's choice at every one; 1",
         "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 9 moving births",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
+        "71 the momentum booked on the Link": "NOT READ: no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
     },
     "bodies": {
         "64 dark matter in kind": "SHOWN: 336 of 406 bodies credited at a Node where no light was laid",
@@ -164,6 +169,7 @@ VERDICTS = {  # the verdicts' words by name
         "68 matter against antimatter": "SHOWN: the + child at the take's Node on 4 moving births and at the other end on 3, the hand's choice at every one; 15",
         "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 4 and 3 moving births",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
+        "71 the momentum booked on the Link": "NOT READ: no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
     },
 }
 
@@ -261,6 +267,49 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
     assert (
         len(eras["bangs"]) == 1 + returns and len(eras["tops"]) == tops
     )  # every one, beyond the eight listed
+
+
+def test_the_momentum_booked_on_the_link_is_an_identity_on_every_booking() -> None:
+    """Row 71 read by hand on the hole record with the bookings' keys built on it from its own integers (LT-S1's keys absent on the committed records, run before the lay as the take reversed): at every take and every birth's end the momentum's change times the clock squared, the carry before and the carry after, the levels laid the quotient at the write wall 6 den Gamma^2 T and the carry the remainder; SHOWN exact on every axis booking, NOT SHOWN once one carry is moved by one level, NOT READ with the keys absent."""
+    run = loaded("hole")
+    rec = Record(run)
+    wall = rule3.wall_of(rec.den, rec.gamma) * rec.T
+
+    def booked(dp: list[int], clock: int, shift: int) -> tuple[list[int], list[int], list[int]]:
+        was = [wall - abs(p) - shift for p in dp]
+        laid, after = [], []
+        for p, w in zip(dp, was, strict=True):
+            q, r = divmod(-p * clock * clock + w, wall)
+            laid.append(q)
+            after.append(r)
+        return laid, was, after
+
+    bookings = 0
+    for entry in rec.takes:
+        clock = int(run["universe"]["integers"]["node_clock"]) + entry["i"]
+        entry["clock"] = clock
+        entry["recoil"], entry["carry_was"], entry["carry"] = booked(entry["dP_take"], clock, entry["i"])
+        bookings += 1
+        if entry["event"] == "birth":
+            entry["clock_ends"] = [clock, clock - 1]
+            ends = [
+                booked(dp, c, entry["i"])
+                for dp, c in zip(entry["dP_lay_ends"], entry["clock_ends"], strict=True)
+            ]
+            entry["recoil_ends"] = [e[0] for e in ends]
+            entry["carry_was_ends"] = [e[1] for e in ends]
+            entry["carry_ends"] = [e[2] for e in ends]
+            bookings += 2
+    gate = "71 the momentum booked on the Link"
+    found = symmetries.momentum_booked(Record(run))[gate]
+    assert found["axis bookings holding the identity / in all"] == [3 * bookings, 3 * bookings]
+    assert found["the write wall 6 den Gamma^2 T"] == wall and found["verdict"].startswith("SHOWN exact")
+    assert found["of them laying a level on the carrier's flux line (the rest kept in the carry)"] > 0
+    rec.takes[-1]["carry"][0] += 1
+    assert symmetries.momentum_booked(Record(run))[gate]["verdict"].startswith(
+        "NOT SHOWN: the identity fails on 1 of"
+    )
+    assert symmetries.momentum_booked(Record(loaded("hole")))[gate]["verdict"].startswith("NOT READ")
 
 
 def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_path: Path) -> None:

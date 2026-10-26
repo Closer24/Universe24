@@ -1,4 +1,4 @@
-"""The rows of the kinds and the symmetries in the clicks, rows 63 to 67 (the owner's word of 2026-10-26, 07:24 UTC, "enter 61 to 65", through the Boss, The-Laws-Of-Nature-Missing_COMPARISON.md section 3 item 2; the ledger's row 164), each one function of the reading in the one shape: the uniformity in the clicks (the credits spread over the board's eight regions alike), dark matter in kind (a body credited in its own well whose Nodes lay no light, the law's theorem of the lines), the lepton number (every gapped species' senses summing to 0 over its births, the record's count of each species conserved at the click), the energy in the clicks (a body's beat per proper interval before and after its click equal within one level, the taken light's beat the difference), and CPT as one row (on every credit's frame the charge W odd under the conjugation C, even under the reflection P of the Node's six Links, odd under the slot exchange T of CA-S1, so even under the three together)."""
+"""The rows of the kinds and the symmetries in the clicks, rows 63 to 71 (the owner's word of 2026-10-26, 07:24 UTC, "enter 61 to 65", through the Boss, The-Laws-Of-Nature-Missing_COMPARISON.md section 3 item 2; the ledger's row 164), each one function of the reading in the one shape: the uniformity in the clicks (the credits spread over the board's eight regions alike), dark matter in kind (a body credited in its own well whose Nodes lay no light, the law's theorem of the lines), the lepton number (every gapped species' senses summing to 0 over its births, the record's count of each species conserved at the click), the energy in the clicks (a body's beat per proper interval before and after its click equal within one level, the taken light's beat the difference), and CPT as one row (on every credit's frame the charge W odd under the conjugation C, even under the reflection P of the Node's six Links, odd under the slot exchange T of CA-S1, so even under the three together)."""
 
 from __future__ import annotations
 
@@ -197,5 +197,56 @@ def baryon_number(record: Record) -> dict[str, Any]:
             else "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click"
             if own.count(0) == len(own)
             else f"NOT SHOWN: {len(own) - own.count(0)} births whose children's own charges do not sum to 0",
+        }
+    }
+
+
+def bookings_of(record: Record) -> list[tuple[Any, ...]]:
+    """Every booking a move wrote on the Link's record (LT-S1, take.recoil): the momentum's change per axis the move books (dP_take at a take, dP_lay at a birth's end), the clock the Node read at the interval's start, the levels laid per axis on the carrier's flux lines, and their carry before and after; a line without the keys (a record run before LT-S1) is no booking."""
+    found: list[tuple[Any, ...]] = []
+    for entry in record.takes:
+        if "recoil" not in entry:
+            continue
+        found.append(
+            (entry["dP_take"], entry["clock"], entry["recoil"], entry["carry_was"], entry["carry"])
+        )
+        for k in range(PAIR):
+            if "recoil_ends" in entry:
+                found.append(
+                    (
+                        entry["dP_lay_ends"][k],
+                        entry["clock_ends"][k],
+                        entry["recoil_ends"][k],
+                        entry["carry_was_ends"][k],
+                        entry["carry_ends"][k],
+                    )
+                )
+    return found
+
+
+def momentum_booked(record: Record) -> dict[str, Any]:
+    """Row 71: the momentum booked on the Link (LT-S1, H-Lay-As-The-Take-Reversed-1's derivation, line 19 as the Boss corrected its sign): at every move the momentum the quantum lost is written on the carrier's flux line of each axis at the Node by the one write act, -dP_a p_0^2 + the carry before - the carry after = the levels laid times the write wall 6 den Gamma^2 T, the clock p_0 the Node's at the interval's start; so the records' and the lattice's momentum sum to what they were at every click, an identity on every booking of the record; NOT READ on a record without the bookings' keys."""
+    wall = rule3.wall_of(record.den, record.gamma) * record.T
+    held = laid = failed = 0
+    for dp, clock, recoil, was, after in bookings_of(record):
+        for a in range(AXES):
+            if -dp[a] * clock * clock + was[a] - after[a] == recoil[a] * wall:
+                held += 1
+                laid += recoil[a] != 0
+            else:
+                failed += 1
+    return {
+        "71 the momentum booked on the Link": {
+            "axis bookings holding the identity / in all": [held, held + failed],
+            "of them laying a level on the carrier's flux line (the rest kept in the carry)": laid,
+            "the write wall 6 den Gamma^2 T": wall,
+            "verdict": unread_words(
+                "no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
+                "-dP p_0^2 + the carry before - the carry after = the levels laid times the write wall at every move",
+            )
+            if not held + failed
+            else f"SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on {held} of {held} axis bookings, {laid} laying a level"
+            if not failed
+            else f"NOT SHOWN: the identity fails on {failed} of {held + failed} axis bookings",
         }
     }

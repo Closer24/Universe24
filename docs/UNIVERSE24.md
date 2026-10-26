@@ -123,7 +123,7 @@ The owner's word, verbatim in translation: "all the time make sure the things ar
 
 ### The gates of the phenomena (the head 83997d83; written by tools/phenomena.py from the readings, the verdict of every row the decoder's)
 
-SHOWN in Universe24: 33 of 70 on 83997d83. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
+SHOWN in Universe24: 33 of 71 on 83997d83. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
 
 | the phenomenon | gate | the verdict per record | the cause where not SHOWN | since the table before |
 | --- | --- | --- | --- | --- |
@@ -197,6 +197,7 @@ SHOWN in Universe24: 33 of 70 on 83997d83. The records read from the seed alone:
 | matter against antimatter, the + child's end chosen by the hand | 68 | SHOWN on nature, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no moving birth | unchanged |
 | the neutrino's one hand, the births' hand all one | 69 | NOT SHOWN on nature, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | both hands stand, 7 and 8 moving births (no conversion on the record, the hands split by the twist at each click) | unchanged |
 | the baryon number, the C-odd count 0 at every birth | 70 | SHOWN on ga2, hole; NOT SHOWN on nature; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | 2 births whose children's own charges do not sum to 0 | unchanged |
+| the momentum across the click booked on the Link's record, an identity at every move | 71 | NOT READ on nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent) | the first table |
 
 ### The gates widened to everything derived, read on any bang of the same seed and at one Node where one Node can show it (2026-10-25, 11:0x UTC)
 
