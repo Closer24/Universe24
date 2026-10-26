@@ -269,11 +269,13 @@ def horizon(record: Record) -> dict[str, Any]:
         if cmax >= frozen and not at_frozen
         else ("NOT REACHED" if cmax < frozen else "NOT SHOWN")
     )
+    first = next((record.node(line["frozen"][0]) for line in record.nodes if line["frozen"]), None)
     return {
         "14 the horizon": {
             "frozen content": frozen,
             "max content in the rows": cmax,
             "credits at frozen Nodes": len(at_frozen),
+            "at": first,
             "verdict": verdict,
         }
     }
