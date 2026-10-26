@@ -1,0 +1,98 @@
+{"record": "chiral300.json", "cube": 5, "intervals": 300, "run_back": {"intervals": 10, "exact": 10}, "gap-0 row": 3, "births": 16, "births with the twist read from the Node line": 14, "births read from the log alone": 2, "births whose ends are not one Link apart": 0, "into matches the log (the take's Node the end the current flows into)": [14, 14], "h's sign matches the log (the + child's end by the twist's sign)": [14, 14], "rest births (flow 0)": 0, "births by the helicity's sign (h e_a along +a: +, -)": [7, 9], "births by axis": [2, 3, 11], "children by lambda (the scalar along the arm: +, -)": [16, 16], "one hand row (every birth's h e_a of one sign)": false, "carriage": {"first/arrival": {"credits": 24, "link defined": 22, "twist 0": 0, "same axis as the birth Link": 9, "vector kept (axis and sign)": 6, "scalar kept (along the arm)": 12, "hd2 integer on the Link (a birth crossed it)": 2, "hd2 integer equal to the birth's (axis and sign)": 2}, "first/twin": {"credits": 24, "link defined": 24, "twist 0": 0, "same axis as the birth Link": 24, "vector kept (axis and sign)": 15, "scalar kept (along the arm)": 15, "hd2 integer on the Link (a birth crossed it)": 24, "hd2 integer equal to the birth's (axis and sign)": 24}, "own_until_next_birth/arrival": {"credits": 622, "link defined": 518, "twist 0": 0, "same axis as the birth Link": 194, "vector kept (axis and sign)": 89, "scalar kept (along the arm)": 269, "hd2 integer on the Link (a birth crossed it)": 108, "hd2 integer equal to the birth's (axis and sign)": 108}, "own_until_next_birth/twin": {"credits": 622, "link defined": 622, "twist 0": 0, "same axis as the birth Link": 622, "vector kept (axis and sign)": 287, "scalar kept (along the arm)": 287, "hd2 integer on the Link (a birth crossed it)": 622, "hd2 integer equal to the birth's (axis and sign)": 622}, "cone/arrival": {"credits": 119089, "link defined": 98687, "twist 0": 0, "same axis as the birth Link": 32948, "vector kept (axis and sign)": 16497, "scalar kept (along the arm)": 49341, "hd2 integer on the Link (a birth crossed it)": 3958, "hd2 integer equal to the birth's (axis and sign)": 911}, "cone/twin": {"credits": 119089, "link defined": 5011, "twist 0": 0, "same axis as the birth Link": 1415, "vector kept (axis and sign)": 782, "scalar kept (along the arm)": 2419, "hd2 integer on the Link (a birth crossed it)": 622, "hd2 integer equal to the birth's (axis and sign)": 622}}, "unit": {"T": 36000, "T div 2": 18000, "births with h read from the state": 14, "gcd of |h|": 1, "gcd div (T div 2)^2, remainder": [0, 1], "gcd div T^2, remainder": [0, 1], "|h| per birth as [quotient, remainder] by (T div 2)^2": [[3, 139962978], [1, 5984816], [0, 13391504], [3, 39340008], [22, 271593740], [25, 132817088], [2, 308740202], [34, 110071390], [31, 220502314], [93, 172813410], [20, 115479188], [3, 194457637], [11, 201824764], [264, 89858663]], "bits of |h| max": 37}}
+bell pairs 11
+int_arrival arrival_side used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+int_arrival arrival_twin used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+int_arrival arrival_axis_is_birth_axis used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+int_arrival taken_line used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+int_arrival turned used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+int_arrival link_frame used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+int_arrival phase_half used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+int_arrival proper_parity used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_arrival arrival_side used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_arrival arrival_twin used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_arrival arrival_axis_is_birth_axis used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_arrival taken_line used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_arrival turned used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_arrival link_frame used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_arrival phase_half used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_arrival proper_parity used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_birth*int_arrival_inward arrival_side used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_birth*int_arrival_inward arrival_twin used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_birth*int_arrival_inward arrival_axis_is_birth_axis used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_birth*int_arrival_inward taken_line used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_birth*int_arrival_inward turned used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_birth*int_arrival_inward link_frame used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_birth*int_arrival_inward phase_half used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_birth*int_arrival_inward proper_parity used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_twin arrival_side used 9 dropped 2 cells {'00': [3, 3, 0], '01': [2, 2, 0], '10': [1, 1, 0], '11': [3, 3, 0]} best {'S^2': [144, 36], 'labelling': 'a=0 b=0', 'passes 4': False, 'within 8': True}
+Hbirth.Int_twin arrival_twin used 9 dropped 2 cells {'00': [7, 7, 0], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_twin arrival_axis_is_birth_axis used 9 dropped 2 cells {'00': [3, 3, 0], '01': [2, 2, 0], '10': [4, 4, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_twin taken_line used 11 dropped 0 cells {'00': [9, 9, 0], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} best None
+Hbirth.Int_twin turned used 11 dropped 0 cells {'00': [4, 4, 0], '01': [4, 4, 0], '10': [2, 2, 0], '11': [1, 1, 0]} best {'S^2': [64, 16], 'labelling': 'a=0 b=0', 'passes 4': False, 'within 8': True}
+Hbirth.Int_twin link_frame used 11 dropped 0 cells {'00': [4, 4, 0], '01': [3, 3, 0], '10': [0, 0, 0], '11': [4, 4, 0]} best None
+Hbirth.Int_twin phase_half used 3 dropped 8 cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 2, 0]} best None
+Hbirth.Int_twin proper_parity used 11 dropped 0 cells {'00': [2, 2, 0], '01': [3, 3, 0], '10': [5, 5, 0], '11': [1, 1, 0]} best {'S^2': [3600, 900], 'labelling': 'a=0 b=0', 'passes 4': False, 'within 8': True}
+sense arrival_side used 9 dropped 2 cells {'00': [3, 0, 3], '01': [2, 0, 2], '10': [1, 0, 1], '11': [3, 0, 3]} best {'S^2': [144, 36], 'labelling': 'a=0 b=0', 'passes 4': False, 'within 8': True}
+sense arrival_twin used 9 dropped 2 cells {'00': [7, 0, 7], '01': [0, 0, 0], '10': [2, 0, 2], '11': [0, 0, 0]} best None
+sense arrival_axis_is_birth_axis used 9 dropped 2 cells {'00': [3, 0, 3], '01': [2, 0, 2], '10': [4, 0, 4], '11': [0, 0, 0]} best None
+sense taken_line used 11 dropped 0 cells {'00': [9, 0, 9], '01': [0, 0, 0], '10': [2, 0, 2], '11': [0, 0, 0]} best None
+sense turned used 11 dropped 0 cells {'00': [4, 0, 4], '01': [4, 0, 4], '10': [2, 0, 2], '11': [1, 0, 1]} best {'S^2': [64, 16], 'labelling': 'a=0 b=0', 'passes 4': False, 'within 8': True}
+sense link_frame used 11 dropped 0 cells {'00': [4, 0, 4], '01': [3, 0, 3], '10': [0, 0, 0], '11': [4, 0, 4]} best None
+sense phase_half used 3 dropped 8 cells {'00': [1, 0, 1], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 0, 2]} best None
+sense proper_parity used 11 dropped 0 cells {'00': [2, 0, 2], '01': [3, 0, 3], '10': [5, 0, 5], '11': [1, 0, 1]} best {'S^2': [3600, 900], 'labelling': 'a=0 b=0', 'passes 4': False, 'within 8': True}
+Hbirth.Harrival arrival_side used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Harrival arrival_twin used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Harrival arrival_axis_is_birth_axis used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Harrival taken_line used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Harrival turned used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Harrival link_frame used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Harrival phase_half used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Harrival proper_parity used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Hbirth.Htwin arrival_side used 9 dropped 2 cells {'00': [3, 2, 1], '01': [2, 1, 1], '10': [1, 1, 0], '11': [3, 2, 1]} best {'S^2': [100, 36], 'labelling': 'a=0 b=0', 'passes 4': False, 'within 8': True}
+Hbirth.Htwin arrival_twin used 9 dropped 2 cells {'00': [7, 4, 3], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} best None
+Hbirth.Htwin arrival_axis_is_birth_axis used 9 dropped 2 cells {'00': [3, 1, 2], '01': [2, 1, 1], '10': [4, 4, 0], '11': [0, 0, 0]} best None
+Hbirth.Htwin taken_line used 11 dropped 0 cells {'00': [9, 6, 3], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} best None
+Hbirth.Htwin turned used 11 dropped 0 cells {'00': [4, 1, 3], '01': [4, 3, 1], '10': [2, 2, 0], '11': [1, 1, 0]} best {'S^2': [144, 16], 'labelling': 'a=0 b=1', 'passes 4': True, 'within 8': False}
+Hbirth.Htwin link_frame used 11 dropped 0 cells {'00': [4, 2, 2], '01': [3, 2, 1], '10': [0, 0, 0], '11': [4, 3, 1]} best None
+Hbirth.Htwin phase_half used 3 dropped 8 cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 1, 1]} best None
+Hbirth.Htwin proper_parity used 11 dropped 0 cells {'00': [2, 1, 1], '01': [3, 2, 1], '10': [5, 4, 1], '11': [1, 0, 1]} best {'S^2': [3364, 900], 'labelling': 'a=1 b=0', 'passes 4': False, 'within 8': True}
+lambda_birth*lambda_arrival arrival_side used 9 dropped 2 cells {'00': [3, 1, 2], '01': [2, 0, 2], '10': [1, 0, 1], '11': [3, 2, 1]} best {'S^2': [256, 36], 'labelling': 'a=1 b=0', 'passes 4': True, 'within 8': True}
+lambda_birth*lambda_arrival arrival_twin used 9 dropped 2 cells {'00': [7, 2, 5], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} best None
+lambda_birth*lambda_arrival arrival_axis_is_birth_axis used 9 dropped 2 cells {'00': [3, 1, 2], '01': [2, 1, 1], '10': [4, 1, 3], '11': [0, 0, 0]} best None
+lambda_birth*lambda_arrival taken_line used 9 dropped 2 cells {'00': [9, 3, 6], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_birth*lambda_arrival turned used 9 dropped 2 cells {'00': [3, 1, 2], '01': [3, 1, 2], '10': [2, 0, 2], '11': [1, 1, 0]} best {'S^2': [256, 36], 'labelling': 'a=1 b=0', 'passes 4': True, 'within 8': True}
+lambda_birth*lambda_arrival link_frame used 9 dropped 2 cells {'00': [4, 1, 3], '01': [2, 1, 1], '10': [0, 0, 0], '11': [3, 1, 2]} best None
+lambda_birth*lambda_arrival phase_half used 3 dropped 8 cells {'00': [1, 0, 1], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 1, 1]} best None
+lambda_birth*lambda_arrival proper_parity used 9 dropped 2 cells {'00': [2, 1, 1], '01': [1, 0, 1], '10': [5, 1, 4], '11': [1, 1, 0]} best {'S^2': [676, 100], 'labelling': 'a=1 b=0', 'passes 4': True, 'within 8': True}
+lambda_birth*lambda_twin arrival_side used 9 dropped 2 cells {'00': [3, 2, 1], '01': [2, 1, 1], '10': [1, 1, 0], '11': [3, 2, 1]} best {'S^2': [100, 36], 'labelling': 'a=0 b=0', 'passes 4': False, 'within 8': True}
+lambda_birth*lambda_twin arrival_twin used 9 dropped 2 cells {'00': [7, 4, 3], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} best None
+lambda_birth*lambda_twin arrival_axis_is_birth_axis used 9 dropped 2 cells {'00': [3, 1, 2], '01': [2, 1, 1], '10': [4, 4, 0], '11': [0, 0, 0]} best None
+lambda_birth*lambda_twin taken_line used 11 dropped 0 cells {'00': [9, 6, 3], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} best None
+lambda_birth*lambda_twin turned used 11 dropped 0 cells {'00': [4, 1, 3], '01': [4, 3, 1], '10': [2, 2, 0], '11': [1, 1, 0]} best {'S^2': [144, 16], 'labelling': 'a=0 b=1', 'passes 4': True, 'within 8': False}
+lambda_birth*lambda_twin link_frame used 11 dropped 0 cells {'00': [4, 2, 2], '01': [3, 2, 1], '10': [0, 0, 0], '11': [4, 3, 1]} best None
+lambda_birth*lambda_twin phase_half used 3 dropped 8 cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 1, 1]} best None
+lambda_birth*lambda_twin proper_parity used 11 dropped 0 cells {'00': [2, 1, 1], '01': [3, 2, 1], '10': [5, 4, 1], '11': [1, 0, 1]} best {'S^2': [3364, 900], 'labelling': 'a=1 b=0', 'passes 4': False, 'within 8': True}
+Htwin.Harrival arrival_side used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Htwin.Harrival arrival_twin used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Htwin.Harrival arrival_axis_is_birth_axis used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Htwin.Harrival taken_line used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Htwin.Harrival turned used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Htwin.Harrival link_frame used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Htwin.Harrival phase_half used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+Htwin.Harrival proper_parity used 0 dropped 11 cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_twin*lambda_arrival arrival_side used 9 dropped 2 cells {'00': [3, 2, 1], '01': [2, 1, 1], '10': [1, 0, 1], '11': [3, 1, 2]} best {'S^2': [100, 36], 'labelling': 'a=0 b=1', 'passes 4': False, 'within 8': True}
+lambda_twin*lambda_arrival arrival_twin used 9 dropped 2 cells {'00': [7, 3, 4], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} best None
+lambda_twin*lambda_arrival arrival_axis_is_birth_axis used 9 dropped 2 cells {'00': [3, 1, 2], '01': [2, 2, 0], '10': [4, 1, 3], '11': [0, 0, 0]} best None
+lambda_twin*lambda_arrival taken_line used 9 dropped 2 cells {'00': [9, 4, 5], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+lambda_twin*lambda_arrival turned used 9 dropped 2 cells {'00': [3, 1, 2], '01': [3, 2, 1], '10': [2, 0, 2], '11': [1, 1, 0]} best {'S^2': [144, 36], 'labelling': 'a=1 b=0', 'passes 4': False, 'within 8': True}
+lambda_twin*lambda_arrival link_frame used 9 dropped 2 cells {'00': [4, 1, 3], '01': [2, 1, 1], '10': [0, 0, 0], '11': [3, 2, 1]} best None
+lambda_twin*lambda_arrival phase_half used 3 dropped 8 cells {'00': [1, 0, 1], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 0, 2]} best None
+lambda_twin*lambda_arrival proper_parity used 9 dropped 2 cells {'00': [2, 2, 0], '01': [1, 0, 1], '10': [5, 2, 3], '11': [1, 0, 1]} best {'S^2': [1024, 100], 'labelling': 'a=0 b=1', 'passes 4': True, 'within 8': False}
+sign_h_arrival arrival_side used 9 dropped 2 cells {'00': [3, 2, 1], '01': [2, 0, 2], '10': [1, 0, 1], '11': [3, 1, 2]} best {'S^2': [256, 36], 'labelling': 'a=0 b=1', 'passes 4': True, 'within 8': True}
+sign_h_arrival arrival_twin used 9 dropped 2 cells {'00': [7, 2, 5], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} best None
+sign_h_arrival arrival_axis_is_birth_axis used 9 dropped 2 cells {'00': [3, 1, 2], '01': [2, 1, 1], '10': [4, 1, 3], '11': [0, 0, 0]} best None
+sign_h_arrival taken_line used 9 dropped 2 cells {'00': [9, 3, 6], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} best None
+sign_h_arrival turned used 9 dropped 2 cells {'00': [3, 1, 2], '01': [3, 2, 1], '10': [2, 0, 2], '11': [1, 0, 1]} best {'S^2': [256, 36], 'labelling': 'a=0 b=0', 'passes 4': True, 'within 8': True}
+sign_h_arrival link_frame used 9 dropped 2 cells {'00': [4, 1, 3], '01': [2, 1, 1], '10': [0, 0, 0], '11': [3, 1, 2]} best None
+sign_h_arrival phase_half used 3 dropped 8 cells {'00': [1, 0, 1], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 1, 1]} best None
+sign_h_arrival proper_parity used 9 dropped 2 cells {'00': [2, 1, 1], '01': [1, 1, 0], '10': [5, 1, 4], '11': [1, 0, 1]} best {'S^2': [676, 100], 'labelling': 'a=0 b=0', 'passes 4': True, 'within 8': True}
