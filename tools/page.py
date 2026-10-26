@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch), the board's size the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every exact return the reading's row 1c names, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading names (each bang, the era of matter, the acceleration) and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding a second on every new label and then running at a quarter pace for four seconds, a big round play button and the page's look its tokens' (the board a card, the controls pills, the labels glass), a legend line under the controls, the reading's event lines (the gates of the phenomena, one per gate at its first SHOWN) as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes stand a hand apart as a tight lattice), the board's size a quarter and three quarters of the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view and its Nodes stay apart, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every exact return the reading's row 1c names, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading names (each bang, the era of matter, the acceleration) and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding a second on every new label and then running at a quarter pace for four seconds, a big round play button and the page's look its tokens' (the board a card at the left, the controls pills, the labels glass), the list of the gates of the phenomena beside the board (every row of the reading with its verdict's kind, the SHOWN rows with the interval they first show at, each lit as the play passes its interval and brightest for the intervals after it, the count of the numbered rows SHOWN at its head), a strip under the bar naming the bang and the latest labels, the bar carrying the ticks of the gates and the births and the bands of the eras with no names on it, the header folded to its first line until opened, the legend folded under the controls, the reading's event lines (the gates of the phenomena, one per gate at its first SHOWN) as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -13,34 +13,59 @@ LEVELS = 25  # the current's levels on a Link above zero, one letter each
 DIGITS = "0123456789abcdefghijklmnopqrstuvwxyz"
 
 TOKENS = """
-:root { --bg: #0f1114; --panel: #171a20; --fg: #e9e7df; --muted: #9a9ea8; --line: #2e323a; --board: #07080a;
-  --wall: #d7dae0; --forward: #4ade80; --back: #f59e0b; --hole: #ffffff; --focus: #5f97ea; --label: #fde68a;
+:root { --bg: #0b0d11; --panel: #14171d; --card: #10131a; --fg: #ecebe4; --muted: #8e939e; --dim: #5b606b; --line: #262b34; --board: #06070a;
+  --wall: #d7dae0; --forward: #4ade80; --back: #f59e0b; --hole: #ffffff; --focus: #5f97ea; --label: #fde68a; --shown: #fde68a; --part: #fbbf24; --not: #6b7280;
   --tones: #f472b6, #22d3ee, #a3e635, #fb923c, #c084fc, #facc15, #38bdf8, #f87171;
-  --font: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace; color-scheme: dark; }
-html, body { margin: 0; background: radial-gradient(1200px 700px at 50% -10%, #171c26 0%, var(--bg) 60%); color: var(--fg); font: 14px var(--font); }
-#title { padding: 14px 20px 0; font-size: 22px; font-weight: 700; letter-spacing: 0.3px; }
-#title small { margin-left: 12px; color: var(--muted); font-size: 13px; font-weight: 400; }
-#head { padding: 4px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 11px; white-space: pre-wrap; opacity: 0.85; }
-#stage { position: relative; }
-#board { display: block; margin: 0 auto; background: radial-gradient(circle at 50% 45%, #0c0f14 0%, var(--board) 70%); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), inset 0 0 80px rgba(95, 151, 234, 0.06); }
-#bar { position: relative; height: 70px; margin: 12px 20px 6px; background: linear-gradient(180deg, #1a1e26, var(--panel)); border: 1px solid var(--line); border-radius: 12px; cursor: pointer; overflow: visible; }
-#bar .era { position: absolute; top: 0; bottom: 0; pointer-events: none; border-radius: 12px; }
-#bar .tick { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--label); opacity: 0.9; }
-#bar .name { position: absolute; font-size: 10px; color: var(--label); font-family: var(--mono); white-space: nowrap; padding-left: 4px; pointer-events: none; }
-#bar .birth { position: absolute; bottom: 1px; font-size: 10px; color: var(--muted); font-family: var(--mono); }
-#bar #cursor { position: absolute; top: -4px; bottom: -4px; width: 3px; background: var(--focus); border-radius: 2px; box-shadow: 0 0 12px var(--focus), 0 0 24px rgba(95, 151, 234, 0.6); }
-#row { display: flex; gap: 14px; align-items: center; margin: 4px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
-button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 8px 16px; font: inherit; cursor: pointer; border-radius: 999px; transition: background 0.15s, transform 0.1s; }
+  --font: "Inter", "IBM Plex Sans", system-ui, sans-serif; --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: radial-gradient(1400px 600px at 30% -20%, #161b26 0%, var(--bg) 60%); color: var(--fg); font: 14px var(--font); overflow: hidden; }
+#top { display: flex; align-items: baseline; gap: 14px; padding: 12px 20px 4px; }
+#title { font-size: 20px; font-weight: 700; letter-spacing: 0.2px; white-space: nowrap; }
+#title small { margin-left: 10px; color: var(--muted); font-size: 12px; font-weight: 400; }
+#head { padding: 0 20px 6px; color: var(--muted); font-family: var(--mono); font-size: 10px; opacity: 0.8; }
+#head summary { cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; list-style: none; }
+#head summary::before { content: "+ "; color: var(--focus); } #head[open] summary::before { content: "- "; }
+#head pre { margin: 4px 0 0; white-space: pre-wrap; font: inherit; }
+#main { display: flex; gap: 16px; padding: 0 20px; align-items: stretch; }
+#stage { position: relative; flex: none; }
+#board { display: block; background: radial-gradient(circle at 50% 45%, #0c0f15 0%, var(--board) 72%); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), inset 0 0 90px rgba(95, 151, 234, 0.05); }
+#side { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 12px 14px 10px; }
+#side h2 { margin: 0 0 6px; font-size: 13px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; }
+#side h2 b { color: var(--shown); font-family: var(--mono); font-weight: 600; text-transform: none; letter-spacing: 0; }
+#gates { flex: 1; display: grid; grid-auto-flow: column; grid-template-rows: repeat(var(--rows), minmax(0, 1fr)); column-gap: 18px; min-height: 0; font-family: var(--mono); font-size: 11px; }
+.gate { display: flex; align-items: center; gap: 6px; min-width: 0; padding: 0 6px; border-radius: 6px; color: var(--dim); white-space: nowrap; transition: background 0.2s, color 0.2s; }
+.gate .n { width: 18px; text-align: right; flex: none; opacity: 0.8; }
+.gate .d { width: 8px; height: 8px; border-radius: 50%; flex: none; background: #2a2f39; }
+.gate .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.gate .k { flex: none; font-size: 9px; letter-spacing: 0.3px; opacity: 0.7; }
+.gate.shown { color: var(--muted); } .gate.shown .d { background: rgba(253, 230, 138, 0.35); border: 1px solid var(--shown); }
+.gate.part { color: var(--muted); } .gate.part .d { background: rgba(251, 191, 36, 0.3); border: 1px solid var(--part); }
+.gate.lit { color: var(--fg); background: rgba(253, 230, 138, 0.08); } .gate.lit .d { background: var(--shown); box-shadow: 0 0 8px var(--shown); border: none; }
+.gate.now { background: rgba(253, 230, 138, 0.2); color: var(--shown); }
+.gate.not .d { background: #1d2027; border: 1px solid #343944; }
+#bar { position: relative; height: 34px; margin: 10px 20px 0; background: linear-gradient(180deg, #1a1e26, var(--panel)); border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
+#bar .era { position: absolute; top: 0; bottom: 0; pointer-events: none; border-radius: 10px; }
+#bar .tick { position: absolute; top: 6px; bottom: 6px; width: 2px; background: var(--label); opacity: 0.8; border-radius: 1px; }
+#bar .birth { position: absolute; bottom: 3px; width: 2px; height: 8px; background: var(--forward); opacity: 0.8; border-radius: 1px; }
+#bar #cursor { position: absolute; top: -5px; bottom: -5px; width: 3px; background: var(--focus); border-radius: 2px; box-shadow: 0 0 12px var(--focus), 0 0 24px rgba(95, 151, 234, 0.6); }
+#now { display: flex; gap: 8px; margin: 6px 20px 0; min-height: 22px; overflow: hidden; }
+#now span { font-family: var(--mono); font-size: 11px; color: var(--label); background: rgba(253, 230, 138, 0.1); border: 1px solid rgba(253, 230, 138, 0.3); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+#now span.era { color: var(--focus); background: rgba(95, 151, 234, 0.1); border-color: rgba(95, 151, 234, 0.35); }
+#row { display: flex; gap: 12px; align-items: center; margin: 6px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
+button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 7px 14px; font: inherit; cursor: pointer; border-radius: 999px; transition: background 0.15s, transform 0.1s; }
 button:hover { background: #222733; } button:active { transform: scale(0.97); }
-#play { width: 64px; height: 64px; padding: 0; border: none; border-radius: 50%; background: linear-gradient(135deg, var(--focus), #22d3ee); box-shadow: 0 8px 28px rgba(95, 151, 234, 0.45); display: inline-flex; align-items: center; justify-content: center; }
-#play .tri { width: 0; height: 0; border-left: 24px solid var(--board); border-top: 14px solid transparent; border-bottom: 14px solid transparent; margin-left: 6px; }
-#play .bars { display: none; width: 8px; height: 28px; background: var(--board); box-shadow: 14px 0 0 var(--board); margin-right: 14px; }
+#play { width: 56px; height: 56px; padding: 0; border: none; border-radius: 50%; background: linear-gradient(135deg, var(--focus), #22d3ee); box-shadow: 0 8px 28px rgba(95, 151, 234, 0.45); display: inline-flex; align-items: center; justify-content: center; }
+#play .tri { width: 0; height: 0; border-left: 20px solid var(--board); border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
+#play .bars { display: none; width: 7px; height: 24px; background: var(--board); box-shadow: 12px 0 0 var(--board); margin-right: 12px; }
 body.playing #play .tri { display: none; } body.playing #play .bars { display: block; }
-#where { font-size: 13px; color: var(--fg); }
-#legend { margin: 0 20px 14px; color: var(--muted); font-family: var(--mono); font-size: 11px; opacity: 0.8; }
+#where { font-size: 12px; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#legend { margin-left: auto; color: var(--muted); font-family: var(--mono); font-size: 10px; max-width: 46%; }
+#legend summary { cursor: pointer; text-align: right; }
+#legend div { position: absolute; right: 20px; bottom: 70px; width: 520px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; line-height: 1.5; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); z-index: 5; }
 #labels { position: absolute; left: 0; top: 0; pointer-events: none; }
-.label { position: absolute; color: var(--label); font-family: var(--mono); font-size: 15px; font-weight: 600; white-space: nowrap; background: rgba(12, 14, 18, 0.72); backdrop-filter: blur(6px); border: 1px solid rgba(253, 230, 138, 0.25); border-left: 3px solid var(--label); border-radius: 8px; padding: 5px 10px 6px 10px; max-width: 420px; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); }
-.label small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
+.label { position: absolute; color: var(--label); font-family: var(--mono); font-size: 14px; font-weight: 600; white-space: nowrap; background: rgba(10, 12, 16, 0.78); backdrop-filter: blur(8px); border: 1px solid rgba(253, 230, 138, 0.22); border-left: 3px solid var(--label); border-radius: 8px; padding: 4px 10px 5px 10px; max-width: 340px; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); }
+.label small { display: block; color: var(--muted); font-size: 10px; font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
+.label.bang { font-size: 22px; letter-spacing: 1px; border-left-color: #f59e0b; color: #fde68a; background: rgba(245, 158, 11, 0.12); }
 a { color: var(--focus); }
 """
 
@@ -51,10 +76,10 @@ const c = D.cube, G = D.gamma, N = D.intervals;
 const canvas = document.getElementById("board"), ctx = canvas.getContext("2d");
 const stage = document.getElementById("stage"), labels = document.getElementById("labels"), cursor = document.getElementById("cursor");
 const bar = document.getElementById("bar"), where = document.getElementById("where");
-const head = document.getElementById("head"), row = document.getElementById("row");
-const titleBox = document.getElementById("title"), legendBox = document.getElementById("legend");
-const size = Math.max(320, Math.min(window.innerWidth - 40, window.innerHeight - titleBox.offsetHeight - head.offsetHeight - bar.offsetHeight - row.offsetHeight - legendBox.offsetHeight - 64));
-canvas.width = size; canvas.height = size;
+const head = document.getElementById("head"), row = document.getElementById("row"), topBox = document.getElementById("top");
+const now = document.getElementById("now"), gatesBox = document.getElementById("gates"), side = document.getElementById("side");
+const size = Math.max(320, Math.min(Math.floor(window.innerWidth * 0.48), window.innerHeight - topBox.offsetHeight - head.offsetHeight - bar.offsetHeight - now.offsetHeight - row.offsetHeight - 48));
+canvas.width = size; canvas.height = size; side.style.height = size + "px";
 function words(s) { return s.split(" ").map(w => parseInt(w, BASE)); }
 function levels(s) { return Array.from(s, ch => ch === "." ? 0 : (ch >= "a" ? ch.charCodeAt(0) - 96 : 64 - ch.charCodeAt(0))); }
 const unravel = i => [Math.floor(i / (c * c)), Math.floor(i / c) % c, i % c];
@@ -72,11 +97,19 @@ function place(x, y, z, grow) {
 function length(X) { return Math.pow(Math.max(X, 1) / G, 0.25); }
 function stretch(X) { return Math.max(length(X) - 1, 0); }
 function meanStretch(line) { let sum = 0; for (const X of line.X) sum += stretch(X); return sum / line.X.length; }
-const stretches = lines.map(meanStretch), most = Math.max(...stretches, 1e-9), full = canvas.width / (c + 1.5), touch = 5 / full;
+const stretches = lines.map(meanStretch), most = Math.max(...stretches, 1e-9), full = canvas.width / (c + 1.5), touch = 16 / full;
 const bangs = [lines[0].i].concat(D.events.filter(e => e.i !== null && /^1c /.test(e.gate)).map(e => e.i));  // the seed's bang and every exact return the reading names
 let spots = [];
+const firstAt = new Map(); for (const e of D.events) if (e.i !== null) firstAt.set(e.gate, e.i);
+const gateRows = D.gates.map(g => { const div = document.createElement("div"); div.className = "gate " + g[2]; const at = firstAt.get(g[0]);
+  div.innerHTML = '<span class="n">' + g[0].split(" ")[0] + '</span><span class="d"></span><span class="t"></span><span class="k"></span>';
+  div.querySelector(".t").textContent = g[0].split(" ").slice(1).join(" "); div.querySelector(".k").textContent = at ? "at " + at : g[1]; div.title = g[0] + ": " + g[3]; gatesBox.appendChild(div); return [div, at]; });
+gatesBox.style.setProperty("--rows", Math.ceil(D.gates.length / 2));
+const numbered = D.gates.filter(g => /^\d+ /.test(g[0]));
+document.getElementById("count").textContent = numbered.filter(g => g[2] === "shown").length + " of " + numbered.length + " shown";
+function panel(i) { for (const [div, at] of gateRows) { div.classList.toggle("lit", at !== undefined && at <= i); div.classList.toggle("now", at !== undefined && at <= i && at > i - 24); } }
 function lay(line) {
-  const mean = meanStretch(line), grow = Math.sqrt(mean / most), gaps = line.X.map(X => touch + (1 - touch) * grow * (mean > 0 ? stretch(X) / mean : 0));
+  const mean = meanStretch(line), grow = Math.min(1, 0.25 + 0.75 * Math.sqrt(mean / most)), gaps = line.X.map(X => touch + (1 - touch) * grow * (mean > 0 ? stretch(X) / mean : 0));
   const at = (x, y, z) => x * c * c + y * c + z, pos = [[], [], []];
   for (let p = 0; p < c; p++) for (let q = 0; q < c; q++) {
     const linesOf = [k => at(k, p, q), k => at(p, k, q), k => at(p, q, k)];
@@ -206,9 +239,9 @@ function draw() {
   labels.innerHTML = "";
   let free = 0;
   if (wholeTurn !== null) {
-    const div = document.createElement("div"); div.className = "label"; div.style.fontSize = "18px"; div.style.borderLeftColor = "#f59e0b"; div.style.color = "#f59e0b";
+    const div = document.createElement("div"); div.className = "label"; div.style.fontSize = "16px"; div.style.borderLeftColor = "#f59e0b"; div.style.color = "#f59e0b";
     div.innerHTML = "every Node turns at once<small>the clocks reversed at the top, interval " + lines[t - 1 - wholeTurn].i + "</small>";
-    div.style.left = (canvas.offsetLeft + canvas.width / 2 + 0.24 * canvas.width) + "px"; div.style.top = (canvas.offsetTop + canvas.height / 2 + 0.1 * canvas.width) + "px";
+    div.style.right = "16px"; div.style.top = "16px";
     labels.appendChild(div);
   }
   const placed = [];
@@ -217,12 +250,13 @@ function draw() {
     placed.push([x, y]); return y;
   }
   for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) {
-    const div = document.createElement("div"); div.className = "label"; div.style.fontSize = "20px";
+    const div = document.createElement("div"); div.className = "label bang";
     div.innerHTML = "Big Bang<small>the board at its zero and rising, interval " + b + "</small>";
-    div.style.left = (canvas.offsetLeft + 16) + "px"; div.style.top = (canvas.offsetTop + 16) + "px";
+    div.style.left = "16px"; div.style.top = "16px";
     labels.appendChild(div);
   }
-  for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 60 * step) {
+  const fresh = D.events.filter(e => e.i !== null && e.i <= line.i && e.i > line.i - 60 * step).slice(-4);
+  for (const e of fresh) {
     const div = document.createElement("div"); div.className = "label";
     div.innerHTML = e.label + "<small>" + e.numbers + "</small>";
     const click = e.node ? null : D.clicks.find(k => k.i === e.i), node = e.node || (click ? click.node : null);
@@ -233,11 +267,15 @@ function draw() {
       const y = settle(s[0] + 28, s[1] - 44);
       ctx.beginPath(); ctx.moveTo(s[0] + 26, s[1] - 26); ctx.lineTo(s[0] + 28, y + 18); ctx.stroke();
       glyph(e.gate, s[0] + 44, y + 18);
-      div.style.left = (canvas.offsetLeft + s[0] + 60) + "px"; div.style.top = (canvas.offsetTop + y) + "px";
-    } else { const fy = canvas.height - 48 - 40 * free++; glyph(e.gate, canvas.width / 2 - 96, fy + 18); div.style.left = (canvas.offsetLeft + canvas.width / 2 - 80) + "px"; div.style.top = (canvas.offsetTop + fy) + "px"; }
+      div.style.left = Math.min(s[0] + 60, canvas.width - 350) + "px"; div.style.top = Math.max(8, Math.min(y, canvas.height - 44)) + "px";
+    } else { const fy = canvas.height - 48 - 40 * free++; glyph(e.gate, 24, fy + 18); div.style.left = "40px"; div.style.top = fy + "px"; }
     labels.appendChild(div);
   }
   cursor.style.left = (100 * (line.i - 1) / Math.max(N - 1, 1)) + "%";
+  panel(line.i);
+  now.innerHTML = "";
+  for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) { const s = document.createElement("span"); s.className = "era"; s.textContent = "Big Bang at " + b; now.appendChild(s); }
+  for (const e of D.events.filter(e => e.i !== null && e.i <= line.i && e.i > line.i - 60 * step).slice(-5)) { const s = document.createElement("span"); s.textContent = e.label + " (" + e.i + ")"; now.appendChild(s); }
   let up = 0, down = 0; for (let i = 0; i < line.X.length; i++) { if (line.X[i] > before.X[i]) up++; else if (line.X[i] < before.X[i]) down++; }
   const course = t === 1 ? "the seed" : up === line.X.length ? "every clock's volume rising" : down === line.X.length ? "every clock's volume falling" : up + " rising, " + down + " falling, " + (line.X.length - up - down) + " at rest";
   where.textContent = "interval " + line.i + " of " + N + (D.stride > 1 ? " (1 of every " + D.stride + " intervals kept)" : "") + "; " + course;
@@ -256,17 +294,11 @@ for (let k = 0; k < eras.length; k++) {
   const d = document.createElement("div"); d.className = "era"; d.style.left = (100 * (from - 1) / Math.max(N - 1, 1)) + "%"; d.style.width = (100 * (to - from) / Math.max(N - 1, 1)) + "%";
   d.style.background = g === 4 ? "rgba(244,114,182,0.18)" : g === 5 ? "rgba(253,230,138,0.14)" : "rgba(95,151,234,0.16)"; d.title = eras[k][1]; bar.appendChild(d);
 }
-const rowEnds = [-100, -100, -100, -100, -100, -100];
 for (const e of D.events) if (e.i !== null) {
-  const pct = 100 * (e.i - 1) / Math.max(N - 1, 1), at = pct + "%";
-  const d = document.createElement("div"); d.className = "tick"; d.style.left = at; d.title = e.label + ": " + e.numbers; bar.appendChild(d);
-  let row = rowEnds.findIndex(end => pct - end > 11); if (row < 0) continue; rowEnds[row] = pct;
-  const m = document.createElement("div"); m.className = "name"; m.style.top = (2 + 11 * row) + "px"; m.textContent = e.label;
-  if (4 * (e.i - 1) > 3 * Math.max(N - 1, 1)) { m.style.right = "calc(100% - " + at + ")"; m.style.paddingRight = "4px"; } else m.style.left = at;
-  bar.appendChild(m);
+  const d = document.createElement("div"); d.className = "tick"; d.style.left = (100 * (e.i - 1) / Math.max(N - 1, 1)) + "%"; d.title = e.label + " at " + e.i + ": " + e.numbers; bar.appendChild(d);
 }
 for (const b of bangs) { const d = document.createElement("div"); d.className = "tick"; d.style.left = (100 * (b - 1) / Math.max(N - 1, 1)) + "%"; d.style.background = "#f59e0b"; d.title = "Big Bang at " + b; bar.appendChild(d); }
-D.births.forEach((i, k) => { const d = document.createElement("div"); d.className = "birth"; d.style.left = (100 * (i - 1) / Math.max(N - 1, 1)) + "%"; d.textContent = (k + 1); bar.appendChild(d); });
+for (const i of D.births) { const d = document.createElement("div"); d.className = "birth"; d.style.left = (100 * (i - 1) / Math.max(N - 1, 1)) + "%"; d.title = "a birth at " + i; bar.appendChild(d); }
 bar.addEventListener("click", ev => { const r = bar.getBoundingClientRect(); t = seek(1 + Math.round((N - 1) * (ev.clientX - r.left) / r.width)); playing = false; draw(); });
 document.getElementById("play").addEventListener("click", () => { playing = !playing; });
 document.getElementById("faster").addEventListener("click", () => { speed = Math.min(speed * 2, 48); });
@@ -346,9 +378,37 @@ def kept(lines: list[dict[str, Any]], named: set[int]) -> tuple[list[dict[str, A
     ], stride
 
 
+KINDS = (
+    "SHOWN in part",
+    "NOT SHOWN",
+    "NOT REACHED",
+    "NOT READ",
+    "SHOWN",
+)  # the verdicts' kinds, the longer first
+CLASSES = {
+    "SHOWN": "shown",
+    "SHOWN in part": "part",
+    "NOT SHOWN": "not",
+    "NOT REACHED": "not",
+    "NOT READ": "not",
+}
+
+
+def kind_of(verdict: str) -> str:
+    """The kind a verdict begins with, after a row restating another gate's ("as gate N: ...")."""
+    words = verdict.split(": ", 1)[1] if verdict.startswith("as gate") else verdict
+    return next((kind for kind in KINDS if words.startswith(kind)), "NOT READ")
+
+
 def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, Any]:
     """The page's data from the record and the reading: the Node lines, the clicks (every birth and credit as one short list: the interval, the Node's index, the row, the levels taken, the taken row or -1, a birth's two children's indices or 0), the births' intervals (numbered on the bar), the reading's event lines."""
     events = next((line["events"] for line in reading if "events" in line), [])
+    gates = [
+        [key, kind_of(row["verdict"]), CLASSES[kind_of(row["verdict"])], row["verdict"]]
+        for line in reading
+        for key, row in line.items()
+        if isinstance(row, dict) and "verdict" in row and key[:1].isdigit()
+    ]
     cube = int(record["cube"])
 
     def index(node: list[int]) -> int:
@@ -382,6 +442,7 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
         "clicks": clicks,
         "births": births,
         "events": events,
+        "gates": gates,
     }
 
 
@@ -394,15 +455,19 @@ def page_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> str:
         + "</title><style>"
         + TOKENS
         + "</style></head>\n<body>\n"
-        '<div id="title">'
+        '<div id="top"><div id="title">'
         + title
-        + "<small>the record and its reading, from the seed alone</small></div>\n"
-        '<div id="head">' + header_of(record) + "</div>\n"
-        '<div id="stage"><canvas id="board" width="320" height="320"></canvas><div id="labels"></div></div>\n'
-        '<div id="bar"><div id="cursor"></div></div>\n'
+        + "<small>the record and its reading, from the seed alone</small></div></div>\n"
+        '<details id="head"><summary>'
+        + header_of(record).split("\n")[0]
+        + "</summary><pre>"
+        + header_of(record)
+        + "</pre></details>\n"
+        '<div id="main"><div id="stage"><canvas id="board" width="320" height="320"></canvas><div id="labels"></div></div>\n'
+        '<div id="side"><h2><span>the gates of the phenomena</span><b id="count"></b></h2><div id="gates"></div></div></div>\n'
+        '<div id="bar"><div id="cursor"></div></div>\n<div id="now"></div>\n'
         '<div id="row"><button id="play" title="play / pause"><span class="tri"></span><span class="bars"></span></button><button id="slower">slower</button><button id="faster">faster</button><span id="where"></span>'
-        "<span>the gates of the phenomena: the verdicts in the reading file beside the record</span></div>\n"
-        '<div id="legend">green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate of the phenomena as it first shows; the bands of the bar: the spans from each bang, from the era of matter and from the acceleration, as the reading names them</div>\n'
+        '<details id="legend"><summary>what the marks mean</summary><div>green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate of the phenomena as it first shows, lit in the list at its interval; the bands of the bar: the spans from each bang, from the era of matter and from the acceleration, as the reading names them; the verdicts in the reading file beside the record</div></details></div>\n'
         '<script id="data" type="application/json">'
         + json.dumps(data_of(record, reading))
         + "</script>\n"
