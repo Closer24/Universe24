@@ -191,8 +191,10 @@ def exclusion(record: Record) -> dict[str, Any]:
 
 
 def exact_take(record: Record) -> dict[str, Any]:
-    """Row 47: the exact take, taken equal to booked on every birth (the excess 0), or, where the birth carries the take's remainder (EX-S1), the excess exactly the remainder's rise at the Node; the credits' leak unread (a credit carries no booked walls)."""
-    births, (taken, booked) = record.births, record.takes_of()
+    """Row 47: the exact take, taken equal to booked on every birth of a pair (the excess 0), or, where the birth carries the take's remainder (EX-S1), the excess exactly the remainder's rise at the Node; a merger's birth (MG-S1, the line carrying its takes per end, the ends taken whole by the share fall) counted apart and read by row 24; the credits' leak unread (a credit carries no booked walls)."""
+    births = [b for b in record.births if "takes" not in b]
+    mergers = len(record.births) - len(births)
+    taken, booked = sum(b["taken"] for b in births), sum(b["booked"] for b in births)
     exact = sum(
         1
         for b in births
@@ -203,6 +205,7 @@ def exact_take(record: Record) -> dict[str, Any]:
         "47 the exact take": {
             "births taken exactly / in all": [exact, len(births)],
             "births with the excess kept as the remainder (EX-S1)": kept,
+            "mergers apart (MG-S1, the ends taken whole by the share fall, row 24's reading)": mergers,
             "taken per booked over the births (hundredths)": quot(taken, booked, HUNDRED),
             "verdict": unread_words("no birth", "taken equals booked on every line")
             if not births
