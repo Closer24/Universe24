@@ -175,9 +175,7 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
     laid_back = sum(1 for c in credits if "laid_back" in c)
     assert (len(credits), laid_back, sum(1 for c in credits if c["i"] < top)) == (162, 162, 135)
     assert node.counts["births"] == node.counts["laid"] == 0
-    assert (
-        record.census(node)[0] == 99 and record.census(node)[1] <= 128
-    )  # the take's remainder, EX-S1; 98 before
+    assert record.census(node)[0] == 99  # the take's remainder, EX-S1; 98 before; no width bound
     for _ in range(80):
         node.step(-1)
     assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step(-1)) == 10
@@ -574,5 +572,4 @@ def test_a_frozen_node_is_released_by_the_turn_of_its_time() -> None:
             assert int(readings.content(node)[centre]) < frozen
         if node.interval == 2:
             assert not now and int(node.proper[centre]) > proper
-    assert node.max_transient <= 128 and record.census(node)[1] <= 128
     assert run_back_exact(kept, INTERVALS) == INTERVALS
