@@ -1,0 +1,24 @@
+--- a/src/event_universe/take.py
++++ b/src/event_universe/take.py
+@@ -35,7 +35,7 @@
+ def fall_of(
+     node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, row: Row
+ ) -> tuple[int | None, int, int]:
+-    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
++    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, concave with f(0) = 0, so the count is the one carried division at the direction -1 of the walls times the full move by the full move's fall (TC-S1: the chord count, the quotient rounded up by the remainder's mirror, paying the walls at every take within the full move, the surplus the take's remainder, EX-S1; the former least root by largest_below kept by name); (None, the full fall) where the full move cannot pay."""
+     gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in row.lines)]
+     k = gaps.index(max(gaps))
+     line = row.lines[k]
+@@ -58,10 +58,8 @@
+     full = fall(dist := abs(now - before))
+     if full < walls:
+         return None, full, k
+-    for s in rule3.least_root(-w * x, -((w + w) * now + pull) * t * x, walls * weight, dist):
+-        if s <= dist and fall(s) >= walls:
+-            return s, fall(s), k
+-    return (*next(((s, fall(s)) for s in range(1, dist + 1) if fall(s) >= walls), (dist, full)), k)
++    chord = rule3.carried_division(walls * dist, full, 0, -1)[0]
++    return chord, fall(chord), k
+ 
+ 
+ def lay(node: Node, rec: int, where: Any, levels: Any, sign: int = 1) -> None:
