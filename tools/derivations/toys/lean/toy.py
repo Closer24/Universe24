@@ -150,8 +150,8 @@ class Toy(Node):
 
     def former(self, direction: int) -> None:
         """The former interval: the readings at the start, one act on every row in the rows' order at the fixed wall times the row's scale (the walled row with its write inside the division, a record with a gap turned by the Link's pair and the odd tangent with the quartet's Node term inside its division (sr1's form), the plane at the gap 0 taking W-S1, the shape-4 row 2 W and the current with its held lines restored, the metric's row the riding rows' G-weighted forms less the pressure and the traceless stress), the swap and the close."""
+        self.interval += direction
         if direction == 1:
-            self.interval += 1
             top: Any = np.zeros(self.shape, dtype=bool)
             kept = None
         else:
@@ -160,8 +160,7 @@ class Toy(Node):
             top = frame["turned"]
         held = [[line.copy() for line in row] for row in self.rows()]
         if direction == -1:
-            if top.any():
-                self.exchange(top, held)
+            self.swap(held, None, -1, top)
             kept = [[line.copy() for line in row] for row in self.rows()]
 
         def at(line: Line) -> Any:
@@ -259,7 +258,6 @@ class Toy(Node):
         self.stepped = stepped
         self.set_rows(out)
         if direction == -1:
-            self.interval -= 1
             return
         counters = (
             [a.copy() for a in self.standing],

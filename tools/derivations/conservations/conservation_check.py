@@ -442,7 +442,7 @@ def main(argv: list[str]) -> int:
     # ---- 5. the run back
     exact, first_bad = 0, None
     for kk in range(n):
-        node.step_back()
+        node.step(-1)
         if node.state_hash() == hashes[n - 1 - kk]:
             exact += 1
         elif first_bad is None:

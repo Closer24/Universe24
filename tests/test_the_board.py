@@ -179,8 +179,8 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
     assert node.counts["births"] == node.counts["laid"] == 0
     assert node.census()[0] == 99 and node.census()[1] <= 128  # the take's remainder, EX-S1; 98 before
     for _ in range(80):
-        node.step_back()
-    assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step_back()) == 10
+        node.step(-1)
+    assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step(-1)) == 10
     everywhere = np.ones(node.shape, dtype=bool)
 
     def text(rows: list[list[Any]], exchanged: bool) -> bytes:
@@ -488,7 +488,7 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
             tops.append((sea.interval, int(sea.turned.sum())))
     six = sea.row(CARRIER).lines[1 + AXES :]
     assert all(int(x) == 0 for line in six for a in (line.now, line.before) for x in a.reshape(-1))
-    assert sum(state_of(sea) == kept[9 - k] for k in range(10) if not sea.step_back()) == 10
+    assert sum(state_of(sea) == kept[9 - k] for k in range(10) if not sea.step(-1)) == 10
 
     base = node_of("world_hole.json")
     for _ in range(6):
@@ -511,6 +511,6 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
     base.step()
     far.step()
     assert at_centre(base) == at_centre(far)
-    base.step_back()
-    far.step_back()
+    base.step(-1)
+    far.step(-1)
     assert at_centre(base) == at_centre(far)

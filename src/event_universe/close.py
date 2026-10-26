@@ -16,11 +16,9 @@ from event_universe.links import cross, row_current, row_twist
 from event_universe.merger import (
     child_at,
     light_children,
-    read_ends,
     summed,
     takes,
     walls_of,
-    write_ends,
 )
 from event_universe.rows import PLANE, Line
 from event_universe.take import lay, move, neighbour
@@ -156,12 +154,19 @@ def births(
         if row is not node.emitter():
             for kid in kids:
                 ends = list(zip((kid.minus, kid.plus), walls[Birth(at, *kid, rec)], strict=True))
-                read = read_ends(node, ends, rule, 1, rec, refused, shares)
-                drawn = None if read is None else read_number(node, at, reads, node.units[rec])
-                if read is None or drawn is None:
+                drawn: list[Any] = []
+
+                def draw(
+                    at: tuple[int, ...] = at, unit: int = node.units[rec], into: list[Any] = drawn
+                ) -> Any:
+                    into.append(read_number(node, at, reads, unit))
+                    return into[-1]
+
+                got = takes(node, ends, rule, 1, rec, draw, shares)
+                if got is None:
                     continue
-                kid = Kid(kid.line_pair, kid.minus, kid.plus, drawn[1])
-                taken.append((at, rec, [kid], summed(write_ends(node, read, rec))))
+                kid = Kid(kid.line_pair, kid.minus, kid.plus, drawn[-1][1])
+                taken.append((at, rec, [kid], summed(got)))
                 shares.clear()
             continue
         got = takes(

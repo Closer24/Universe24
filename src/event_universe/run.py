@@ -124,7 +124,7 @@ def run_back(node: Node, hashes: list[str]) -> dict[str, int]:
     """The run back: as many intervals back as states were kept, each compared with the kept state's hash."""
     exact = 0
     for k in range(len(hashes)):
-        node.step_back()
+        node.step(-1)
         exact += node.state_hash() == hashes[len(hashes) - 1 - k]
     return {"intervals": len(hashes), "exact": exact}
 

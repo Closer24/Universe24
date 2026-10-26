@@ -271,12 +271,9 @@ class Interval:
 def run(node: Node, direction: int) -> None:
     """One interval in the direction, five acts: the readings, the kick, the division, the swap at the top, the close; backward the close and the swap are undone at the Interval's making, the lays come off before the kick (the reverse order: the last laid, the first undone), the kick and the division are the same acts at -1 and the interval is counted down."""
     interval = Interval(node, direction)
-    interval.readings()
-    if direction == -1:
-        interval.lays()
-    interval.kick()
-    interval.division()
-    if direction == -1:
-        return
-    interval.swap()
-    interval.close()
+    acts = {
+        1: (interval.kick, interval.division, interval.swap, interval.close),
+        -1: (interval.lays, interval.kick, interval.division),
+    }
+    for act in (interval.readings, *acts[direction]):
+        act()

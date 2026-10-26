@@ -118,43 +118,39 @@ def read_ends(
     rule: rule3.Rule,
     cause: int,
     rec: int,
-    refused: Callable[..., None] | None = None,
     cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
-) -> list[tuple[tuple[int, ...], int, Any, int, int | None, int]] | None:
-    """The take act's reads (CR-S2, the owner's word of 2026-10-26, 06:1x UTC: every end read before any is written, refused by name `stop` at the first that cannot pay, the first end's refusal sparing the second's read): at the gap-0 row the end owes the walls booked less the take's remainder standing there (EX-S1) and its line by the fall's sign is read for the least count paying it (take.fall_of); at a record with a gap the end's levels are read whole with the share the board loses by their lay at -1 (`share_fall`, MG-S1, the birth read at -1), owing the wall. Returns per end (the Node, the wall, the levels or the count, the fall, the line or None, the remainder before), or None; the former merger_falls kept by name."""
-    row, whole = node.records()[rec], node.records()[rec] is not node.emitter()
+) -> list[tuple[tuple[int, ...], int, Any, int, int | None, int, int]] | None:
+    """The take act's reads (CR-S2, the owner's word of 2026-10-26, 06:1x UTC: every end read before any is written, refused by name `stop` at the first that cannot pay, the first end's refusal sparing the second's read): at the gap-0 row the end owes the walls booked less the take's remainder standing there (EX-S1) and its line by the fall's sign is read for the least count paying it (take.fall_of); at a record with a gap the end's levels are read whole with the share the board loses by their lay at -1 (`share_fall`, MG-S1, the birth read at -1), owing the wall. Returns per end (the Node, the wall, the levels or the count, the fall, the line or None, the remainder before, the owed), or None; the former merger_falls kept by name."""
+    row = node.records()[rec]
     found = []
     for where, wall in ends:
-        if whole:
+        rem_was = 0 if row is not node.emitter() else int(node.take_rem[where])
+        owed = wall - rem_was
+        if row is not node.emitter():
             levels: Any = levels_at(row, where)
-            fall, k, rem_was = share_fall(node, rec, rule, where, levels, cache or {}), None, 0
-            if fall < wall:
-                assert refused is not None
-                refused(node, where, "stop", fall=fall, walls=wall, row=rec)
-                return None
+            fall, k = share_fall(node, rec, rule, where, levels, cache or {}), None
+            short = fall < wall
         else:
-            rem_was = int(node.take_rem[where])
-            levels, fall, k = fall_of(node, where, wall - rem_was, rule, row)
-            if levels is None:
-                node.counts["refused_stop"] += cause
-                entry = {"event": "refused", "i": node.interval, "node": list(where), "cause": "stop"}
-                node.log.append(
-                    entry | {"fall": fall, "walls": wall, "owed": wall - rem_was, "row": rec}
-                )
-                return None
-        found.append((where, wall, levels, fall, k, rem_was))
+            levels, fall, k = fall_of(node, where, owed, rule, row)
+            short = levels is None
+        if short:
+            node.counts["refused_stop"] += cause
+            entry = {"event": "refused", "i": node.interval, "node": list(where), "cause": "stop"}
+            node.log.append(entry | {"fall": fall, "walls": wall, "owed": owed, "row": rec})
+            return None
+        found.append((where, wall, levels, fall, k, rem_was, owed))
     return found
 
 
 def write_ends(
-    node: Node, reads: list[tuple[tuple[int, ...], int, Any, int, int | None, int]], rec: int
+    node: Node, reads: list[tuple[tuple[int, ...], int, Any, int, int | None, int, int]], rec: int
 ) -> list[dict[str, Any]]:
     """The take act's writes after its reads (CR-S2): at the gap-0 row the end's line moved toward its before by the count (take.move, CR-S1), the fall above what was owed its new remainder (EX-S1), the momentum booked; at a record with a gap the end's levels taken whole by the lay act at -1, the momentum booked on both lines (MG-S1). Returns each end's take as the log carries it; the former take_line and merger_take kept by name."""
     row = node.records()[rec]
     assert row.pair is not None
     found: list[dict[str, Any]] = []
-    for where, wall, levels, fall, k, rem_was in reads:
-        if k is None:
+    for where, wall, levels, fall, k, rem_was, owed in reads:
+        if row is not node.emitter():
             (re, im), (re_now, re_before, im_now, im_before) = row.lines, levels
             dp = momentum_of(node, re.now, re.before, where, -re_now, -re_before, row.pair[0])
             dp_im = momentum_of(node, im.now, im.before, where, -im_now, -im_before, row.pair[0])
@@ -172,12 +168,13 @@ def write_ends(
                 )
             )
             continue
+        assert k is not None
         z = row.lines[k]
         now, before = int(z.now[where]), int(z.before[where])
         toward = 1 if before > now else -1
         move(node, rec, k, where, toward * levels)
         node.closes[where] += 1
-        node.take_rem[where] = fall - (wall - rem_was)
+        node.take_rem[where] = fall - owed
         node.last_dp = momentum_of(node, z.now, z.before, where, d_now=toward * levels, num=row.pair[0])
         found.append(
             {
@@ -190,8 +187,8 @@ def write_ends(
                 "dP_take": node.last_dp,
                 "taken_line": k,
                 "remainder_was": rem_was,
-                "remainder": fall - (wall - rem_was),
-                "owed": wall - rem_was,
+                "remainder": fall - owed,
+                "owed": owed,
             }
         )
     return found
@@ -203,11 +200,15 @@ def takes(
     rule: rule3.Rule,
     cause: int,
     rec: int | None = None,
+    draw: Callable[[], Any] | None = None,
+    cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
 ) -> list[dict[str, Any]] | None:
-    """The close's one take act for every letter alike (CR-S2): the walls booked at each end paid by one exact take at that end from the taken row (the gap-0 row's where none is named: a body's take), every end read before any is written (`read_ends`) and refused by name at the first that cannot pay, then every end written (`write_ends`); the birth's list one end of its children's walls summed, the body's one end of its unit, the merger's its two ends with the Link's number drawn between its reads and its writes. Returns each end's take, or None."""
+    """The close's one take act for every letter alike (CR-S2): the walls booked at each end paid by one exact take at that end from the taken row (the gap-0 row's where none is named: a body's take), every end read before any is written (`read_ends`) and refused by name at the first that cannot pay, the Link's number drawn between the reads and the writes where the letter draws one (`draw`, the merger's; None drawn refuses the take), then every end written (`write_ends`); the birth's list one end of its children's walls summed, the body's one end of its unit, the merger's its two ends. Returns each end's take, or None."""
     taken = node.records().index(node.emitter()) if rec is None else rec
-    reads = read_ends(node, ends, rule, cause, taken)
-    return None if reads is None else write_ends(node, reads, taken)
+    reads = read_ends(node, ends, rule, cause, taken, cache)
+    if reads is None or (draw is not None and draw() is None):
+        return None
+    return write_ends(node, reads, taken)
 
 
 def summed(found: list[dict[str, Any]]) -> dict[str, Any]:

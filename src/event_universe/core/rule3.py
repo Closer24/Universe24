@@ -73,7 +73,7 @@ def scaled(rule: Rule, scale: Any) -> Rule:
 
 
 def carried_division(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[Any, Any]:
-    """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = total + r, the quotient u div w and the remainder u mod w kept in [0, w) for a total of either sign; the act at -1 is the act at +1 conjugated by the remainder's mirror w - 1 - r (RW-S1, the owner's word of 2026-10-26, 08:2x UTC: the read is the write reversed, one function with the direction; the former sigma total + r with the quotient negated kept by name), exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
+    """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = total + r, the quotient u div w and the remainder u mod w kept in [0, w) for a total of either sign; the act at -1 is the act at +1 conjugated by the remainder's mirror w - 1 - r, spelt here as the primitive since `mirrored` reads its parity through this division (RW-S1, the owner's word of 2026-10-26, 08:2x UTC: the read is the write reversed, one function with the direction; the former sigma total + r with the quotient negated kept by name), exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
     carried = total + (remainder if direction == 1 else wall - 1 - remainder)
     quotient = carried // wall
     rest = carried - wall * quotient

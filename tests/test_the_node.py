@@ -170,8 +170,8 @@ def test_the_step_reaches_one_link_forward_and_none_back() -> None:
     a2, b2 = copy.deepcopy(a), copy.deepcopy(a)
     light = b2.emitter().lines[0]
     light.now[at] = light.now[at] + 1
-    a2.step_back()
-    b2.step_back()
+    a2.step(-1)
+    b2.step(-1)
     assert differences(a2, b2, at) <= {0}
 
 
@@ -271,7 +271,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
         pace = paces.link_pace(node.gamma, c)
         assert quotient(node.gamma * node.gamma, pace * pace) == quotient(level_at(node, c), node.gamma)
     node.step()
-    node.step_back()
+    node.step(-1)
     carrier, frame, vacuum = shares_of(node)
     assert bool((node.start_x < 2 * node.gamma).all()) and int((abs(carrier - frame) <= 1).sum()) == 27
     assert carrier.tolist() == vacuum.tolist()

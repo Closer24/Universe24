@@ -196,8 +196,7 @@ class Node:
         ]
         found = []
         for line, a, t in zip(lines, at, totals, strict=True):
-            if direction == 1:
-                self.max_transient = max(self.max_transient, bits_of(t))
+            self.max_transient = max(self.max_transient, bits_of(t))
             quotient, rem = carried_division(t, r.wall, line.rem, direction)
             now, before = (quotient, a)[::direction]
             found.append(Line(now, before, rem, line.wall, line.wr, line.wwall))
@@ -334,11 +333,9 @@ class Node:
         """The close (close.click), the Node's fourth act, in the direction: backward the close undone from the log's frame."""
         close.click(self, plane_starts, held, direction, frame)
 
-    def step(self) -> None:
-        self.run(1)
-
-    def step_back(self) -> None:
-        self.run(-1)
+    def step(self, direction: int = 1) -> None:
+        """One interval forward, or back at -1 (the former step_back kept by name)."""
+        self.run(direction)
 
     def arrays(self) -> list[Any]:
         """Every level and remainder of the state, the lines' arrays in the acts' order."""
