@@ -1,0 +1,51 @@
+pr2 predictions, written before any run (the kit's control (b)).
+
+A. The code's own order (derived from interval.py:229-233 and close.py:255-315, before any run)
+A1. close.meet reads plane_starts, the records' lines at the INTERVAL'S START, i.e. BEFORE this
+    interval's Rule3 step (interval.py:229 "start = self.rows[k] if self.direction == 1 else new").
+A2. The close is act 5, after the step; the children are laid onto the stepped board.
+A3. So between a birth's lay (close of interval n) and the premise's read (close of interval n+1)
+    NO Rule3 step acts on the children: the premise is already read at the pair's own state as the
+    birth laid it, plus whatever the stepped board held at the two ends.
+A4. Prediction: reading (a) is the head's own reading, bit for bit; reading (b) (the state one step
+    after the lay) is the change; the brief's "the engine reads that meeting one step after the
+    birth" is a misreading of the order of the acts, and so is the moving pair's "step's transient".
+
+B. The algebra's prediction on the numbers
+B1. flow at every born pair's next close under reading (a): exactly 0, and the twist exactly 0,
+    at every pair laid at two Nodes whose record stood at nothing (N of N).
+B2. The charges at the two ends: -A B and +A B, the product below 0, so the rest branch holds and
+    the pair is MG-S1's premise: every born pair a merger's premise at its next close.
+B3. flow under reading (b) (one step on the laid pair): NOT 0 generically. The re line after the
+    step reads q_minus and q_plus with q_minus + q_plus in {0, -1, +1} (the floor of the carried
+    division is not odd: for the total M at one end and -M at the other with one remainder r,
+    q_i + q_j = (2 r - s_i - s_j) div w), and the stepped current is A (q_minus + q_plus) den, so
+    of the order of the child's own amplitude A times den and 0 only where the wall divides the
+    total. Predicted: nonzero at most born pairs, so under (b) the merger's premise fails.
+B4. The im line contributes 0 to the stepped current at every pair (its before slot is the laid
+    im now, 0 at both ends): F_im = p_i 0 - 0 p_j = 0. One line, the re line, carries the whole
+    stepped current.
+B5. The condition on the row under which the stepped current is 0: the wall w = 6 den Gamma^2 G^2
+    divides the end's own total, the row's mass and reaches entering it (D A + SUM_j R_j (m_j + A)
+    a multiple of w). The carriage pair's inequality (den > 2 num, the row's mass above its
+    reaches) does not force it: it bounds the hop, not the divisibility, so a carrying leg has a
+    nonzero stepped current as a plane leg does.
+B6. The births of the head's records at their next close: the hole 60, the chiral 60 and the
+    bodies 120 all have flow 0 under (a) at every pair standing whole, and a nonzero stepped
+    current under (b) at every pair whose end total is not a multiple of the wall.
+
+C. The flag and the records
+C1. The flag empty: EQUAL bit for bit on the hole 60 and the chiral 60 (the kit's check, exit 0).
+C2. Under (b) the three records part at the first born pair's next close: the hole 60 at 9 or 10,
+    the chiral 60 at 4 or 5, the bodies 120 at 6 or none.
+C3. Under (b) the refusals change name at the born pair's Link: the rest branch's `stop` (the
+    merger's walls unpaid) gives way to `twist` where the stepped twist is 0 and to a drawn
+    moving meeting where it is not; refused_orientation unchanged on the gap-0 row.
+C4. The mergers PAID on the hole 60 and the chiral 60 at 60 intervals: 0 under either reading
+    (MG-S1's record: the mergers at rest are refused by the stop at the pair's first close and
+    land at the cycle's bottom, 217 on ga2), so the readings part in the refusals and the births
+    and not in a paid merger inside 60 intervals.
+C5. The run back: 20 of 20 under either reading (the close is undone from the log, which carries
+    the lays and the takes whatever read chose them).
+C6. The 48 on the chiral 3-cube at 60: 3 equal and 45 apart under either reading (the head's count;
+    both premises are bilinears of the Link read at both ends, covariant under the images).

@@ -1,0 +1,162 @@
+[
+ {
+  "file": "event_universe/rows.py",
+  "old": "from typing import Any\n\nimport numpy as np\n",
+  "new": "import os\nfrom typing import Any\n\nimport numpy as np\n"
+ },
+ {
+  "file": "event_universe/rows.py",
+  "old": "QUARTET = 8\n",
+  "new": "QUARTET = 8\nBORN = (PLANE, QUARTET) if os.environ.get(\"HQ_S1\", \"\") else (PLANE,)  # the shapes the draw names for a birth's children (HQ_S1: the quartet admitted; empty: the planes alone, the head)\n"
+ },
+ {
+  "file": "event_universe/draw.py",
+  "old": "from event_universe.rows import PLANE, Line\n",
+  "new": "from event_universe.rows import BORN, Line\n"
+ },
+ {
+  "file": "event_universe/draw.py",
+  "old": "modulus = unit * sum(1 for r in node.records() if r.shape == PLANE)",
+  "new": "modulus = unit * sum(1 for r in node.records() if r.shape in BORN)"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "from event_universe.rows import PLANE, Line\n",
+  "new": "from event_universe.rows import BORN, PLANE, Line\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "    planes = [k for k, r in enumerate(records) if r.shape == PLANE]\n",
+  "new": "    planes = [k for k, r in enumerate(records) if r.shape in BORN]\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "from event_universe.merger import (\n    child_at,\n",
+  "new": "from event_universe.merger import (\n    child_at,\n    child_levels,\n    child_vector,\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "    re, im = node.records()[s].lines\n    stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]\n    ends = [child_at(node, s, where, sense) for where, sense in ((minus, -1), (plus, 1))]\n    dp_lay = [a + b for a, b in zip(*ends, strict=True)]\n    senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]\n",
+  "new": "    row = node.records()[s]\n    stood = [[int(a[w_]) for line in row.lines for a in (line.now, line.before)] for w_ in (minus, plus)]\n    ends = [\n        child_at(node, s, where, sense, 1, child_vector(node, s, minus, plus, sense))\n        for where, sense in ((minus, -1), (plus, 1))\n    ]\n    dp_lay = [a + b for a, b in zip(*ends, strict=True)]\n    if row.shape == PLANE:\n        re, im = row.lines\n        senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]\n    else:\n        senses = [int(gram.charge(row.shape, row.lines)[w_]) for w_ in (minus, plus)]\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "                    if laid is None:\n                        lay(node, s, tuple(where), (sense * a, 0, 0, b), -1)\n",
+  "new": "                    if laid is None:\n                        vector = child_vector(node, s, tuple(entry[\"minus\"]), tuple(entry[\"plus\"]), sense)\n                        if vector is None:\n                            lay(node, s, tuple(where), (sense * a, 0, 0, b), -1)\n                        else:\n                            lay(node, s, tuple(where), child_levels(node, s, vector, sense), -1)\n"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "from event_universe.core.ports import AXES\n",
+  "new": "from event_universe.core.ports import AXES, PORTS, PORT_SIDES\n"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "from event_universe.rows import Line, zeros\n",
+  "new": "from event_universe.rows import PLANE, Line, zeros\n"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "def child_at(node: Node, s: int, where: tuple[int, ...], sense: int, sign: int = 1) -> list[int]:",
+  "new": "def child_vector(\n    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], sense: int\n) -> list[int] | None:\n    \"\"\"The lay's vector of a child by its row's shape (HQ_S1): none for a plane (the lay (A, 0 | 0, B) by name, the vector (1, 0)); for a row with axis matrices the integer eigenvector of the born Link's axis matrix at the eigenvalue of the sense's sign in the Link's direction from the - end to the + end (the two children's axes opposite).\"\"\"\n    row = node.records()[s]\n    if row.shape == PLANE:\n        return None\n    for port in range(PORTS):\n        if neighbour(node, minus, port) == plus:\n            axis, side = PORT_SIDES[port]\n            return gram.spin_vector(row.shape, axis, sense * side)\n    raise ValueError(\"the born Link's ends are not one Link apart\")\n\n\ndef child_levels(node: Node, s: int, vector: list[int], sense: int) -> tuple[int, ...]:\n    \"\"\"A child's levels (now, before per line) along the lay's vector v at the charge T div 2 (HQ_S1, GP-S1's one form for every shape): now = sense A v, before = B (J v); the plane's (sense A, 0 | 0, B) at v = (1, 0).\"\"\"\n    shape = node.records()[s].shape\n    turned = gram.matvec(gram.rotation(shape), list(vector))\n    found: list[int] = []\n    for v, j in zip(vector, turned, strict=True):\n        found += [sense * node.A * v, node.B * j]\n    return tuple(found)\n\n\ndef child_at(\n    node: Node,\n    s: int,\n    where: tuple[int, ...],\n    sense: int,\n    sign: int = 1,\n    vector: list[int] | None = None,\n) -> list[int]:"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "    row = node.records()[s]\n    re, im = row.lines\n    assert row.pair is not None\n    num = row.pair[0]\n    dp = momentum_of(node, re.now, re.before, where, d_now=sign * sense * node.A, num=num)\n",
+  "new": "    row = node.records()[s]\n    assert row.pair is not None\n    num = row.pair[0]\n    if vector is not None:\n        levels = child_levels(node, s, vector, sense)\n        dp_all = [0] * AXES\n        for k, line in enumerate(row.lines):\n            dk = momentum_of(\n                node,\n                line.now,\n                line.before,\n                where,\n                d_now=sign * levels[PLANE * k],\n                d_before=sign * levels[PLANE * k + 1],\n                num=num,\n            )\n            dp_all = [a + b for a, b in zip(dp_all, dk, strict=True)]\n        lay(node, s, where, levels, sign)\n        return dp_all\n    re, im = row.lines\n    dp = momentum_of(node, re.now, re.before, where, d_now=sign * sense * node.A, num=num)\n"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "    for where, sense in ((minus, -1), (plus, 1)):\n        if (s, sense, where) not in cache:\n            row.lines = [\n                Line(zeros(node.shape), zeros(node.shape), line.rem, line.wall) for line in held\n            ]\n            child_at(node, s, where, sense)\n            cache[(s, sense, where)] = sum(\n                share_at(node, row.lines, rule, at) for at in set(frame_nodes(node, where))\n            )\n        found.append(cache[(s, sense, where)])\n",
+  "new": "    for where, sense in ((minus, -1), (plus, 1)):\n        vector = child_vector(node, s, minus, plus, sense)\n        key: Any = (s, sense, where) if vector is None else (s, sense, where, tuple(vector))\n        if key not in cache:\n            row.lines = [\n                Line(zeros(node.shape), zeros(node.shape), line.rem, line.wall) for line in held\n            ]\n            child_at(node, s, where, sense, 1, vector)\n            cache[key] = sum(\n                share_at(node, row.lines, rule, at) for at in set(frame_nodes(node, where))\n            )\n        found.append(cache[key])\n"
+ },
+ {
+  "file": "event_universe/gram.py",
+  "old": "from event_universe.quartet import quartet\n",
+  "new": "from event_universe.quartet import kernel_vector, quartet\n"
+ },
+ {
+  "file": "event_universe/gram.py",
+  "old": "def scale(shape: int, gamma: Any) -> Any:",
+  "new": "def spin_vector(shape: int, axis: int, sign: int) -> list[int]:\n    \"\"\"The row's lay vector along the axis at the sign (HQ_S1): the integer eigenvector of the axis matrix Gamma_a at the eigenvalue +1 (the quartet's up along z the case axis 2), and at -1 that vector turned by the next axis's matrix, Gamma_(a+1) v, an eigenvector at -1 of the same G-norm (Gamma_b anticommutes with Gamma_a and keeps G), so the two children's charges are opposite and sum to 0.\"\"\"\n    g = axes(shape)[axis]\n    up = kernel_vector([[g[r][c] - int(r == c) for c in range(len(g))] for r in range(len(g))])\n    return up if sign > 0 else matvec(axes(shape)[wrap(axis + 1, AXES)], up)\n\n\ndef scale(shape: int, gamma: Any) -> Any:"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "            (re, im), (re_now, re_before, im_now, im_before) = row.lines, levels\n            dp = momentum_of(node, re.now, re.before, where, -re_now, -re_before, row.pair[0])\n            dp_im = momentum_of(node, im.now, im.before, where, -im_now, -im_before, row.pair[0])\n            lay(node, rec, where, levels, -1)\n            node.closes[where] -= 1\n            size, moment = sum(abs(x) for x in levels), [a + b for a, b in zip(dp, dp_im, strict=True)]\n",
+  "new": "            moment = [0] * AXES\n            for j, line in enumerate(row.lines):\n                dj = momentum_of(\n                    node,\n                    line.now,\n                    line.before,\n                    where,\n                    -levels[PLANE * j],\n                    -levels[PLANE * j + 1],\n                    row.pair[0],\n                )\n                moment = [a + b for a, b in zip(moment, dj, strict=True)]\n            lay(node, rec, where, levels, -1)\n            node.closes[where] -= 1\n            size = sum(abs(x) for x in levels)\n"
+ },
+ {
+  "file": "event_universe/rows.py",
+  "old": "BORN = (PLANE, QUARTET) if os.environ.get(\"HQ_S1\", \"\") else (PLANE,)",
+  "new": "BORN = (PLANE, QUARTET) if os.environ.get(\"HQ_S1\", \"\") else (PLANE,)\nMOVING = bool(os.environ.get(\"MB_S1\", \"\"))  # MB_S1: the born pair laid moving at the recoil's wave number along the born Link"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "from event_universe.core.rule3 import least_at, quotient, share_weight\n",
+  "new": "from event_universe.core.rule3 import half, largest_below, least_at, quotient, share_weight, signed_quotient\n"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "def child_levels(node: Node, s: int, vector: list[int], sense: int) -> tuple[int, ...]:",
+  "new": "def born_wave(\n    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], vector: list[int], recoil: list[int]\n) -> tuple[int, int, int, int]:\n    \"\"\"The born child's wave number from the take's recoil (MB_S1): along the born Link's axis a (the side from the - end to the + end, the slot's direction), den sin k = |dP_a| den div ((num + num) (E + E)), E the child's charge A B (v.G.v) (MV-S2's v = P / (2 E) at the pair's own Link momentum 2 num 2 E sin k), the band's edge where it exceeds den; h = den sin(k / 2) = largest_below(den (den - den cos k) div 2). Returns (axis, side, h, den sin k).\"\"\"\n    row = node.records()[s]\n    assert row.pair is not None\n    num, den = row.pair[0], node.den\n    g = gram.gram(row.shape)\n    norm = sum(vector[r] * g[r][c] * vector[c] for r in range(len(vector)) for c in range(len(vector)))\n    energy = node.A * node.B * norm\n    axis, side = PORT_SIDES[next(port for port in range(PORTS) if neighbour(node, minus, port) == plus)]\n    sine = min(den, (abs(recoil[axis]) * den) // ((num + num) * (energy + energy)))\n    cosine = largest_below(den * den - sine * sine)\n    return axis, side, largest_below(half(den * (den - cosine))), sine\n\n\ndef child_levels(\n    node: Node, s: int, vector: list[int], sense: int, phase: tuple[int, int] | None = None\n) -> tuple[int, ...]:"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "    turned = gram.matvec(gram.rotation(shape), list(vector))\n    found: list[int] = []\n    for v, j in zip(vector, turned, strict=True):\n        found += [sense * node.A * v, node.B * j]\n    return tuple(found)",
+  "new": "    turned = gram.matvec(gram.rotation(shape), list(vector))\n    c, sn = (node.den, 0) if phase is None else phase\n    found: list[int] = []\n    for v, j in zip(vector, turned, strict=True):\n        found += [\n            signed_quotient(sense * node.A * (c * v + sn * j), node.den),\n            signed_quotient(node.B * (c * j - sn * v), node.den),\n        ]\n    return tuple(found)"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "    sign: int = 1,\n    vector: list[int] | None = None,\n) -> list[int]:",
+  "new": "    sign: int = 1,\n    vector: list[int] | None = None,\n    phase: tuple[int, int] | None = None,\n) -> list[int]:"
+ },
+ {
+  "file": "event_universe/merger.py",
+  "old": "    if vector is not None:\n        levels = child_levels(node, s, vector, sense)",
+  "new": "    if vector is not None or phase is not None:\n        levels = child_levels(node, s, vector if vector is not None else gram.identity(PLANE)[0], sense, phase)"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "from event_universe.rows import BORN, PLANE, Line\n",
+  "new": "from event_universe.rows import BORN, MOVING, PLANE, Line\nfrom event_universe.seed import circle_point\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "from event_universe.merger import (\n    child_at,\n",
+  "new": "from event_universe.merger import (\n    born_wave,\n    child_at,\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "def child_laid(\n    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...]\n) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:",
+  "new": "def child_laid(\n    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], recoil: list[int] | None = None\n) -> tuple[list[int], list[int], list[list[int]], list[list[int]], dict[str, Any]]:"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "    ends = [\n        child_at(node, s, where, sense, 1, child_vector(node, s, minus, plus, sense))\n        for where, sense in ((minus, -1), (plus, 1))\n    ]\n    dp_lay = [a + b for a, b in zip(*ends, strict=True)]",
+  "new": "    vectors = {sense: child_vector(node, s, minus, plus, sense) for sense in (-1, 1)}\n    phases: dict[int, tuple[int, int] | None] = {-1: None, 1: None}\n    moving: dict[str, Any] = {}\n    if recoil is not None:\n        plane_vector = gram.identity(PLANE)[0]\n        axis, side, h, sine = born_wave(node, s, minus, plus, vectors[1] or plane_vector, recoil)\n        phases[1] = circle_point(node.den, side * h)\n        moving = {\n            \"mb_wave\": [axis, side, h, sine],\n            \"mb_phase\": list(phases[1]),\n            \"mb_levels\": [\n                list(child_levels(node, s, vectors[sense] or plane_vector, sense, phases[sense]))\n                for sense in (-1, 1)\n            ],\n        }\n    ends = [\n        child_at(node, s, where, sense, 1, vectors[sense], phases[sense])\n        for where, sense in ((minus, -1), (plus, 1))\n    ]\n    dp_lay = [a + b for a, b in zip(*ends, strict=True)]"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "        senses = [int(gram.charge(row.shape, row.lines)[w_]) for w_ in (minus, plus)]\n    return dp_lay, senses, stood, ends",
+  "new": "        senses = [int(gram.charge(row.shape, row.lines)[w_]) for w_ in (minus, plus)]\n    return dp_lay, senses, stood, ends, moving"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "        exact: list[list[int] | None] = []\n",
+  "new": "        exact: list[list[int] | None] = []\n        moving: dict[str, Any] = {}\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "            dp_lay, w_children, stood, ends = child_laid(node, s, minus, plus)",
+  "new": "            dp_lay, w_children, stood, ends, moving = child_laid(\n                node, s, minus, plus, take[\"dP_take\"] if MOVING else None\n            )"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "                **({\"takes\": take[\"takes\"], \"exact_lay\": exact} if \"takes\" in take else {}),",
+  "new": "                **({\"takes\": take[\"takes\"], \"exact_lay\": exact} if \"takes\" in take else {}),\n                **moving,"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "                    if laid is None:\n                        vector = child_vector(node, s, tuple(entry[\"minus\"]), tuple(entry[\"plus\"]), sense)",
+  "new": "                    if laid is None and \"mb_levels\" in entry:\n                        lay(node, s, tuple(where), tuple(entry[\"mb_levels\"][int(sense > 0)]), -1)\n                    elif laid is None:\n                        vector = child_vector(node, s, tuple(entry[\"minus\"]), tuple(entry[\"plus\"]), sense)"
+ }
+]
