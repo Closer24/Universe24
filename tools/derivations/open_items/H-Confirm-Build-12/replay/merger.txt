@@ -1,0 +1,8 @@
+merger board | the first birth at i 1 | taken_row heavy True | taken_line [1, 1] | heavy-row refusals at or before it 0 | births 11 | takes on the first line [(19, 0)]
+merger board | takes traced 87 | takes logged 87 | equal as multisets True | mismatches of the line (mine against the engine's) 0 []
+  takes per line (line: count) {0: 21, 1: 66} | births 11 | credits 74 | laid back 0 | stops 102
+  stops logged 102 | at intervals [3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  births 11 | charge at every birth (W_children summed 0): False | taken at or above booked 11 of 11
+  mergers 2 | both ends read before either written True [(1, [(1, 1, 1), (2, 1, 1)], [1, 1], [0, 1], [2, 3], True), (19, [(1, 4, 3), (2, 4, 3)], [0, 1], [110, 111], [112, 113], True)]
+  run back exact from the seed: 10 of 10
+  run back exact 20: 20 of 20

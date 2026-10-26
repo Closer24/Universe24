@@ -1,0 +1,69 @@
+........................................................................ [ 96%]
+...                                                                      [100%]
+============================== slowest durations ===============================
+8.54s call     tests/test_the_board.py::test_the_fourth_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged
+8.51s call     tests/test_the_board.py::test_the_first_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged
+8.00s call     tests/test_the_node.py::test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1
+7.82s call     tests/test_the_board.py::test_the_second_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged
+7.65s call     tests/test_the_board.py::test_the_third_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged
+7.53s call     tests/test_the_board.py::test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero
+6.15s call     tests/test_rule3.py::test_the_composed_paces_are_the_laws_carried_division_at_gamma_squared_bit_for_bit_the_power
+5.72s call     tests/test_the_board.py::test_the_run_back_is_exact_through_births_and_turns
+5.60s call     tests/test_the_node.py::test_every_count_is_read_in_the_carriers_unit_pm_s1
+5.45s call     tests/test_the_record.py::test_the_hole_record_is_the_engines_own_bit_for_bit
+4.61s call     tests/test_the_node.py::test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1
+3.81s call     tests/test_the_node.py::test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2
+3.33s call     tests/test_the_quartet.py::test_the_negated_vector_lays_the_lay_negated_with_the_charge_the_share_and_the_credits_equal_sr_s2
+3.30s call     tests/test_the_board.py::test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma
+3.08s call     tests/test_the_node.py::test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the_light_sl_s2
+2.66s call     tests/test_the_node.py::test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws
+2.57s call     tests/test_the_board.py::test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb
+2.51s call     tests/test_the_board.py::test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1
+2.06s call     tests/test_the_board.py::test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv
+1.91s call     tests/test_the_board.py::test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv
+1.81s call     tests/test_the_node.py::test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1
+1.47s call     tests/test_the_node.py::test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing
+1.33s call     tests/test_the_board.py::test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1
+1.27s call     tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1
+1.22s call     tests/test_the_record.py::test_the_committed_record_shows_the_gates_by_name[bodies]
+1.21s call     tests/test_the_node.py::test_the_frozen_node_is_not_read_and_never_clicks
+1.06s call     tests/test_the_record.py::test_the_committed_record_shows_the_gates_by_name[chiral]
+1.02s call     tests/test_the_record.py::test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events[chiral]
+0.95s call     tests/test_the_record.py::test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events[bodies]
+0.43s call     tests/test_the_node.py::test_the_turn_at_the_horizon_runs_back_exact
+0.38s call     tests/test_the_node.py::test_the_turn_is_the_pre_state_exchanged_and_complemented_and_runs_back_exact
+0.37s call     tests/test_the_quartet.py::test_the_zeeman_doublet_is_the_derived_shift_with_the_two_spins_opposite_sr_s3
+0.31s call     tests/test_rule3.py::test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools
+0.30s call     tests/test_the_quartet.py::test_the_exclusion_at_the_lay_reads_the_full_state_and_the_pile_is_gone_sr_s4
+0.26s call     tests/test_the_record.py::test_the_committed_record_shows_the_gates_by_name[hole]
+0.22s call     tests/test_the_record.py::test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events[hole]
+0.15s call     tests/test_the_quartet.py::test_the_quartet_sees_one_link_sr
+0.12s call     tests/test_the_record.py::test_the_conservations_hold_on_the_record[chiral]
+0.11s call     tests/test_the_record.py::test_the_conservations_hold_on_the_record[bodies]
+0.10s call     tests/test_the_node.py::test_the_step_reaches_one_link_forward_and_none_back
+0.09s call     tests/test_the_record.py::test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed
+0.09s call     tests/test_integer_algebra.py::test_floor_division_and_modulo_are_refused_outside_core_rule3
+0.05s call     tests/test_the_phase_line.py::test_the_reversal_is_bit_exact_over_ten_thousand_acts
+0.05s call     tests/test_the_record.py::test_the_conservations_hold_on_the_record[hole]
+0.03s call     tests/test_rule3.py::test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_contents
+0.02s call     tests/test_rule3.py::test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd
+0.02s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[quartet.py]
+0.01s call     tests/test_rule3.py::test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_arrays
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[node.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[close.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[seed.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[interval.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[board.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[gates.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[clicks.py]
+0.01s call     tests/test_the_quartet.py::test_stern_gerlach_reads_the_credits_centroids_per_spin_sign_along_the_gradient_sr
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[predicates.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[gram.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[run.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[decoder.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[take.py]
+0.01s call     tests/test_integer_algebra.py::test_a_physical_module_holds_integer_mathematics_only[bodies.py]
+
+(163 durations < 0.005s hidden.  Use -vv to show these durations.)
+75 passed in 115.80s (0:01:55)
+exit=0
