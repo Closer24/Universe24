@@ -6,13 +6,13 @@ from collections.abc import Callable
 from functools import partial
 from typing import TYPE_CHECKING, Any
 
-from event_universe import gram
+from event_universe import gram, take
 from event_universe.core import rule3
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import least_at, quotient, share_weight
 from event_universe.links import cross
 from event_universe.rows import Line, zeros
-from event_universe.take import at_node, fall_of, frame_nodes, lay, momentum_of, move, neighbour
+from event_universe.take import at_node, frame_nodes, lay, momentum_of, move, neighbour
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -131,7 +131,7 @@ def read_ends(
             fall, k = share_fall(node, rec, rule, where, levels, cache or {}), None
             short = fall < wall
         else:
-            levels, fall, k = fall_of(node, where, owed, rule, row)
+            levels, fall, k = take.fall_of(node, where, owed, rule, row)
             short = levels is None
         if short:
             node.counts["refused_stop"] += cause
@@ -232,7 +232,7 @@ def rise_of(
     node: Node, where: tuple[int, ...], wall: int, rule: rule3.Rule, row: Any
 ) -> tuple[int, int, int]:
     """The exact take at -1 (MG-S1): on the line the fall's sign names (take.fall_of, CS4-S2) the least count d of levels moved away from the before at which the Node's share rises by the wall (a line with no direction, now equal to before, moved away as the fall\'s own sense names it, -1: the bug of H-Children-Charge-Bug-1, the tie end laid as the charged child, struck 2026-10-26), the rise fall_of's form with the sign mirrored, x (w ((now + u d)^2 - now^2) + u d pull) over the weight, the least count by doubling and bisection in comparisons; (k, 0, 0) where the line has no direction (now = before). Returns (the line, the signed count, the rise)."""
-    _levels, _fall, k = fall_of(node, where, wall, rule, row)
+    _levels, _fall, k = take.fall_of(node, where, wall, rule, row)
     line = row.lines[k]
     now, before = int(line.now[where]), int(line.before[where])
     u = 1 if now > before else -1

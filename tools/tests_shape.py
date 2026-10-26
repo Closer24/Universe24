@@ -41,6 +41,10 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_rule3.py::test_the_take_count_is_one_carried_division_of_the_walls_by_the_price_tc_s1": (
+        40,
+        "TC-S1 (2026-10-26, the owner's word of 08:3x UTC, 'approved', the Boss's order 6411031946 under the owner's delegation: the hand's one-Node test under its room; H-Take-Count-As-Rule3-Division-1): the take's count one carried division of the walls by the price of one level, iterated from below, no root, on the hole seed's 47 first takes at the trace 6",
+    ),
     "tests/test_the_node.py::test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1": (
         40,
         "EX-S1 (2026-10-26, the Boss's order of 03:3x UTC under the owner's delegation, 6407630119 and 6405916579: the room 40 named; H-Exact-Take-Remainder-1's one-Node test): the take's remainder at the Node, the identity fall + remainder before - remainder after = booked at twenty takes, the undo to the hash",
@@ -206,6 +210,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         16,
         "H-Children-Charge-Bug-1 (2026-10-26, the Boss's 6410696786: the one-Node test under 1 s, three pins): the chiral's merger of the interval 10 fed on the 3-cube, "
         "the light the exact take at -1 at both ends, the children's own charge 0",
+    ),
+    "tests/test_the_board.py::test_a_frozen_node_is_released_by_the_turn_of_its_time": (
+        20,
+        "FR-S1 (2026-10-26, the owner's words of 03:41 and 07:3x UTC through the Boss, 6407706168 and 6410516303: the test under 3 s beside BH-S1's): the 3-cube centre fed to the frozen content with its before below it, "
+        "frozen and turned at the first interval, released with its clock running at the second, no Node frozen twice in a row, the width held, the run back exact 20 of 20",
     ),
     "tests/test_rule3.py::test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd": (
         19,

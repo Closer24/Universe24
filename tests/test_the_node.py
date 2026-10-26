@@ -11,25 +11,15 @@ from event_universe import gram
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import quotient
-from event_universe.features import volume
 from event_universe.interval import Interval
 from event_universe.loader.world import read_world
 from event_universe.merger import takes
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
 from event_universe.take import fall_of, frame_nodes, lay, move
-from tests.laws import node_of, refused, run_back_exact, state_of, world_of
+from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
 
 CENTRE, INTERVALS = (1, 1, 1), 20  # the fed Node, the 3-cube's centre; the run's intervals
-
-
-def level_at(node: Node, content: int) -> int:
-    """The carrier's level at a content."""
-    return int(
-        np.asarray(
-            volume.volume_of(node.gamma, np.array([content], dtype=object)), dtype=object
-        ).reshape(-1)[0]
-    )
 
 
 def clicks_at(node: Node, at: tuple[int, ...]) -> list[dict[str, Any]]:
@@ -62,7 +52,10 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
     assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [
         (10, 270)
     ] * 2  # (6, 18) at 54
-    assert [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"] == [(1, 0), (-1, 0)]
+    # two credits under BH-S1's mask; six with the frozen Node released (FR-S1)
+    assert [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"] == [(1, 0)] + [
+        (-1, 0)
+    ] * 5
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 

@@ -12,12 +12,13 @@ import numpy as np
 from event_universe import gates as table
 from event_universe import gram, take
 from event_universe import run as writer
+from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS
 from event_universe.links import row_current
 from event_universe.merger import light_children, walls_of
 from event_universe.node import Node
 from event_universe.rows import CARRIER
-from tests.laws import node_of, refused, run_back_exact, state_of, world_of
+from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
 
 # rotations alike per part: the trace 6 (6, 0, 0, 0 under GP-S1 at the trace 54; 6, 6, 6, 6 under CK-S1 even)
 CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (3, 0, 0, 0)
@@ -540,3 +541,27 @@ def test_the_merger_lays_light_of_no_charge_at_both_ends_cc1() -> None:
         )
         == 0
     )
+
+
+def test_a_frozen_node_is_released_by_the_turn_of_its_time() -> None:
+    """FR-S1 (the owner's words of 2026-10-26, 03:41 UTC, approved, and 07:3x UTC, "enter now": the fix of a forbidden state, no Node frozen for ever; The-Frozen-Node-Release_COMPARISON.md section 3): a Node that rose into the frozen content is turned at its frozen interval by the swap's own trigger on its restored line, its now and before exchanged, so at the next interval its content stands below the frozen content, unfrozen, its clock running; no Node frozen at two intervals in a row; the run back exact. The 3-cube centre fed to the frozen content 3,793 with its before at the content 3,700, 20 intervals."""
+    node, centre = node_of("world_node.json"), (1, 1, 1)
+    frozen = paces.frozen_content(node.gamma)
+    carrier = node.row(CARRIER).lines[0]
+    carrier.now[centre], carrier.before[centre] = level_at(node, frozen), level_at(node, 3700)
+    node.ride_walls()
+    light = node.emitter().lines[0]
+    light.now[centre] = 4 * int(light.now[centre])
+    proper, kept, was = int(node.proper[centre]), copy.deepcopy(node), False
+    for _ in range(INTERVALS):
+        now = bool(np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object)[centre] == 0)
+        assert not (was and now)
+        was = now
+        node.step()
+        if node.interval == 1:
+            assert now and node.turned[centre] and int(node.proper[centre]) == proper
+            assert int(node.content()[centre]) < frozen
+        if node.interval == 2:
+            assert not now and int(node.proper[centre]) > proper
+    assert node.max_transient <= 128 and node.census()[1] <= 128
+    assert run_back_exact(kept, INTERVALS) == INTERVALS
