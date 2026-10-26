@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core.paces import rounded
-from event_universe.core.ports import AXES, PORT_SIDES, PORTS, SIDES, across, port_of, wrap
+from event_universe.core.ports import AXES, PORT_SIDES, PORTS, SIDES, across, port_of, transverse
 from event_universe.core.rule3 import link_factor, quotient
 from event_universe.core.rule3 import odd as parity_of
 from event_universe.readings import pair_angle
@@ -158,7 +158,7 @@ def row_current(lines: list[Line], port: int) -> Any:
 
 def row_twist(lines: list[Line], axis: int) -> Any:
     """The twist of a record's transverse currents along the +axis Link (the lines' net currents summed per axis, then the cross of the two ends')."""
-    a, b, c = axis, wrap(axis + 1, AXES), wrap(axis - 1, AXES)
+    a, (b, c) = axis, transverse(axis)
     ub = sum((net_current(line, b) for line in lines), start=0)
     uc = sum((net_current(line, c) for line in lines), start=0)
     return cross(ub, uc, across(ub, port_of(a, 0)), across(uc, port_of(a, 0)))

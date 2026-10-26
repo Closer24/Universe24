@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core.ports import AXES, PORTS, across, port_of, wrap
+from event_universe.core.ports import AXES, PORTS, across, port_of, transverse
 from event_universe.core.rule3 import half, quotient, share_weight, signed_quotient
 from event_universe.links import gradient
 from event_universe.loader.quartet import quartet
@@ -115,11 +115,11 @@ def density(shape: int, nows: list[Any]) -> list[Any]:
 
 def curl(odd: list[Any]) -> list[Any]:
     """The one-Link curl of the shape-4 row's odd lines at the Node, Phi_a = d_b A_c - d_c A_b with d_b the centred difference through the two Ports of the axis b."""
-    return [
-        gradient(odd[wrap(a - 1, AXES)], wrap(a + 1, AXES))
-        - gradient(odd[wrap(a + 1, AXES)], wrap(a - 1, AXES))
-        for a in range(AXES)
-    ]
+    found = []
+    for a in range(AXES):
+        b, c = transverse(a)
+        found.append(gradient(odd[c], b) - gradient(odd[b], c))
+    return found
 
 
 def term(shape: int, coefficient: Any, phi: list[Any], xs: list[Any]) -> list[Any]:

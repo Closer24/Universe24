@@ -33,7 +33,7 @@ def content(node: Node) -> Any:
 
 
 def pair_angle(node: Node, n: Any) -> tuple[int, int]:
-    """The integer (cos, sin) pair at the count n along the one orbit from the seed (features/phase): the orbit a table built as far as the counts reach and stored to the half turn H alone, the first count where the cosine stops falling (254,469 at Gamma 1,000, 81 pi Gamma to the integer), every count beyond read by the orbit's own symmetry, the pair at 2 H - n with the sine negated, modulo the full turn 2 H (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372, under the owner's delegation of 08:3x: the table of the heavy quartet legs' beat reached 12,581,080 pairs and killed the run; the walked orbit beyond H kept by name, the mirror's read differing from it by the rounding of each step alone)."""
+    """The integer (cos, sin) pair at the count n along the one orbit from the seed (features/phase): the orbit a table built as far as the counts reach and stored to the half turn H alone, the first count where the cosine stops falling (3,142 at Gamma 1,000, pi Gamma to the integer; 254,469, the deepest cosine over 400,000 counts, the former docstring's number, H-Confirm-Build-25), every count beyond read by the orbit's own symmetry, the pair at 2 H - n with the sine negated, modulo the full turn 2 H (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372, under the owner's delegation of 08:3x: the table of the heavy quartet legs' beat reached 12,581,080 pairs and killed the run; the walked orbit beyond H kept by name, the mirror's read differing from it by the rounding of each step alone)."""
     n = int(n)
     s = 1 if n >= 0 else -1
     n = abs(n)

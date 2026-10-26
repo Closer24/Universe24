@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from event_universe import gram
-from event_universe.core.ports import AXES, wrap
+from event_universe.core.ports import AXES, transverse
 from event_universe.links import gradient
 from event_universe.rows import zeros
 
@@ -32,7 +32,7 @@ def shear_parts(rows: Sources, shape: tuple[int, ...]) -> list[Any]:
     for levels, num, g in rows:
         d = [[gradient(x, a) for x in levels] for a in range(AXES)]
         for a in range(AXES):
-            b = wrap(a + 1, AXES)
+            b = transverse(a)[0]
             pairs = ((k, m) for k in range(len(levels)) for m in range(len(levels)) if g[k][m])
             parts[a] = parts[a] + num * sum((g[k][m] * d[a][k] * d[b][m] for k, m in pairs), start=0)
     return parts
