@@ -1,0 +1,280 @@
+{
+ "meetings": 18568,
+ "births": 17,
+ "merger_births": 17,
+ "by_reading": {
+  "rest | refused twist": 10,
+  "rest | moving": 14,
+  "refused twist | moving": 31,
+  "refused twist | refused sense": 54,
+  "refused orientation | moving": 31,
+  "moving | moving": 6564,
+  "refused orientation | refused twist": 11,
+  "refused orientation | refused sense": 115,
+  "moving | refused sense": 2415,
+  "refused sense | refused sense": 6735,
+  "refused twist | refused twist": 25,
+  "refused orientation | refused orientation": 4,
+  "refused sense | moving": 2532,
+  "refused sense | rest": 4,
+  "rest | rest": 5,
+  "rest | refused sense": 4,
+  "moving | rest": 8,
+  "refused twist | rest": 1,
+  "refused sense | refused orientation": 3,
+  "moving | refused orientation": 2
+ },
+ "rest_under_close": {
+  "refused twist": 10,
+  "moving": 14,
+  "rest": 5,
+  "refused sense": 4
+ },
+ "stepped_current": {
+  "apart": 28,
+  "zero": 5
+ },
+ "sample": [
+  {
+   "i": 9,
+   "node": [
+    4,
+    1,
+    2
+   ],
+   "laid": [
+    0,
+    0,
+    -18000,
+    18000
+   ],
+   "shifted": [
+    -17058213854001437625,
+    0,
+    -16625,
+    16750
+   ]
+  },
+  {
+   "i": 9,
+   "node": [
+    4,
+    2,
+    1
+   ],
+   "laid": [
+    0,
+    0,
+    18000,
+    -18000
+   ],
+   "shifted": [
+    -17058213854001437625,
+    0,
+    16625,
+    -16750
+   ]
+  },
+  {
+   "i": 9,
+   "node": [
+    4,
+    2,
+    4
+   ],
+   "laid": [
+    0,
+    0,
+    -18000,
+    18000
+   ],
+   "shifted": [
+    -17058213854001437625,
+    -1156250,
+    -16625,
+    16750
+   ]
+  },
+  {
+   "i": 9,
+   "node": [
+    4,
+    4,
+    2
+   ],
+   "laid": [
+    0,
+    0,
+    18000,
+    -18000
+   ],
+   "shifted": [
+    -17058213854001437625,
+    1156250,
+    16625,
+    -16750
+   ]
+  },
+  {
+   "i": 9,
+   "node": [
+    4,
+    1,
+    3
+   ],
+   "laid": [
+    0,
+    0,
+    18000,
+    -18000
+   ],
+   "shifted": [
+    -1895357094889048625,
+    0,
+    16625,
+    -16750
+   ]
+  },
+  {
+   "i": 9,
+   "node": [
+    4,
+    3,
+    1
+   ],
+   "laid": [
+    0,
+    0,
+    -18000,
+    18000
+   ],
+   "shifted": [
+    -1895357094889048625,
+    0,
+    -16625,
+    16750
+   ]
+  },
+  {
+   "i": 9,
+   "node": [
+    4,
+    3,
+    4
+   ],
+   "laid": [
+    0,
+    0,
+    18000,
+    -18000
+   ],
+   "shifted": [
+    -1895357094889048625,
+    0,
+    16625,
+    -16750
+   ]
+  },
+  {
+   "i": 9,
+   "node": [
+    4,
+    4,
+    3
+   ],
+   "laid": [
+    0,
+    0,
+    -18000,
+    18000
+   ],
+   "shifted": [
+    -1895357094889048625,
+    0,
+    -16625,
+    16750
+   ]
+  },
+  {
+   "i": 15,
+   "node": [
+    2,
+    4,
+    2
+   ],
+   "laid": [
+    0,
+    0,
+    -18000,
+    18000
+   ],
+   "shifted": [
+    0,
+    0,
+    -14875,
+    14875
+   ]
+  },
+  {
+   "i": 16,
+   "node": [
+    2,
+    2,
+    4
+   ],
+   "laid": [
+    0,
+    0,
+    18000,
+    -18000
+   ],
+   "shifted": [
+    13267499664223340375,
+    0,
+    15750,
+    -14875
+   ]
+  },
+  {
+   "i": 16,
+   "node": [
+    2,
+    1,
+    1
+   ],
+   "laid": [
+    0,
+    0,
+    18000,
+    -18000
+   ],
+   "shifted": [
+    -17058213854001437625,
+    86000,
+    12375,
+    -15750
+   ]
+  },
+  {
+   "i": 16,
+   "node": [
+    1,
+    4,
+    2
+   ],
+   "laid": [
+    0,
+    -366336,
+    17280,
+    -17280
+   ],
+   "shifted": [
+    0,
+    -522495,
+    16200,
+    -16200
+   ]
+  }
+ ],
+ "merger_keys": 17
+}
