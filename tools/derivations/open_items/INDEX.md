@@ -178,3 +178,5 @@ The owner's word (2026-10-25, 23:14 UTC, in translation): "rename all the deriva
 | The-Children-Laid-Moving_COMPARISON.md | The central lesson of the four attempts: the work erred in the child's shape; the children as packets by the seed's lay act, the owner's word to open. |
 | H-Read-Is-Write-Reversed-1, -2 | Every state-moving act is one function with the direction; the reversal's three spellings one object; the two forms folded bit for bit on ten worlds; the frame is the reversal's record. |
 | The-Read-Is-Write-Reversed_COMPARISON.md | A finding with a cleaning: RW-S1 for the owner's word; rw2's fold for David. |
+| H-Kick-And-Lay-One-Act-1, -2 | The kick and the lay one act; the recoil's inverse on the taken row closes P and J to the integer where the far ends' lattice holds the target, but makes share no take booked and reaches a second shell; the children carry nothing; the 48 falls. |
+| The-Kick-And-Lay-One-Act_COMPARISON.md | A finding, not for entry; AJ-S4 the reading; the direction stands: the children as packets. |
