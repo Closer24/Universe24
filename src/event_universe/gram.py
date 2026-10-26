@@ -196,10 +196,13 @@ def rest(
 
 
 def cosine_count(node: Node, p: int, d: int) -> int:
-    """The count n along the law's orbit (features/phase, the step 1 / Gamma) at which the orbit's cosine first falls to p / d, the rotation's angle in the orbit's units: a search by comparisons, cos_n d <= p X."""
+    """The count n along the law's orbit (features/phase, the step 1 / Gamma) at which the orbit's cosine first falls to p / d, the rotation's angle in the orbit's units: a search by comparisons, cos_n d <= p X, bounded by the orbit's half turn where the table reaches it (the deepest cosine the orbit holds)."""
     high = 1
-    while pair_angle(node, high)[0] * d > p * node.X:
+    while pair_angle(node, high)[0] * d > p * node.X and (
+        node.orbit_half is None or high < node.orbit_half
+    ):
         high = high + high
+    high = high if node.orbit_half is None else min(high, node.orbit_half)
     low = 0
     while high - low > 1:
         middle = half(low + high)
