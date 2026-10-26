@@ -12,10 +12,13 @@ from event_universe.core import rule3
 from event_universe.core.ports import AXES, across, port_of
 from event_universe.core.rule3 import quotient, remainder
 from event_universe.draw import read_number
-from event_universe.links import cross, row_current, row_twist
+from event_universe.links import row_current, row_twist
 from event_universe.merger import (
     child_at,
+    child_levels,
     light_children,
+    senses_at,
+    stood_at,
     summed,
     takes,
     walls_of,
@@ -186,12 +189,11 @@ def child_laid(
     node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...]
 ) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:
     """The two children laid by the one lay act (`child_at`: the - child at the - end, the + child at the + end); returns the lays' momentum summed and per end (dP_lay_ends, the J hands' key: the momentum of every move booked at the Node of the move, AJ-S2), each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the plane's four levels at each Node before the lay (the residue)."""
-    re, im = node.records()[s].lines
-    stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
+    row = node.records()[s]
+    stood = stood_at(row, minus, plus)
     ends = [child_at(node, s, where, sense) for where, sense in ((minus, -1), (plus, 1))]
     dp_lay = [a + b for a, b in zip(*ends, strict=True)]
-    senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
-    return dp_lay, senses, stood, ends
+    return dp_lay, senses_at(row, minus, plus), stood, ends
 
 
 def children(
@@ -296,7 +298,7 @@ def click(
                     (entry["minus"], entry["plus"]), (-1, 1), exact, strict=True
                 ):
                     if laid is None:
-                        lay(node, s, tuple(where), (sense * a, 0, 0, b), -1)
+                        lay(node, s, tuple(where), child_levels(node.records()[s], sense, a, b), -1)
                     else:
                         move(node, s, laid[0], tuple(where), -laid[1])
             if entry["event"] in ("birth", "credit"):

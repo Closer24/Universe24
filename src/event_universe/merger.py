@@ -10,24 +10,48 @@ from event_universe import gram, take
 from event_universe.core import rule3
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import share_weight
-from event_universe.links import cross
-from event_universe.rows import Line, zeros
+from event_universe.rows import PLANE, Line, zeros
 from event_universe.take import at_node, frame_nodes, lay, momentum_of, move, neighbour, recoil
 
 if TYPE_CHECKING:
     from event_universe.node import Node
 
 
+def child_levels(row: Any, sense: int, a: int, b: int) -> tuple[int, ...]:
+    """A child's levels at one end, GP-S1's two integers on the record's first two lines (re_now sense A, im_before B) and 0 on every other level of the row's shape, the form generic in the lines (the former plane-typed four, the Boss's 6413599502 (b), kept by name)."""
+    levels = [0] * (PLANE * len(row.lines))
+    levels[0], levels[PLANE + 1] = sense * a, b
+    return tuple(levels)
+
+
 def child_at(node: Node, s: int, where: tuple[int, ...], sense: int, sign: int = 1) -> list[int]:
-    """One child laid at one end at the charge T div 2 at the quarter turn, with the charge's sign on the re line (GP-S1, the owner's word of 2026-10-26, 04:3x UTC: re_now sense A, im_before B, A B = T div 2, the same two integers for every row, so the light's re line carries its parity under C P, odd as the emission that sources it; MS-S1's former spelling (A, 0, 0, sense B) kept by name: the - child's two spellings are one record turned by a half turn, the same charge, share and wall), its lay's momentum booked and returned; taken back with the sign -1."""
+    """One child laid at one end at the charge T div 2 at the quarter turn, with the charge's sign on the re line (GP-S1, the owner's word of 2026-10-26, 04:3x UTC: re_now sense A, im_before B, A B = T div 2, the same two integers for every row, so the light's re line carries its parity under C P, one lay act for the plane and the quartet alike), its momentum booked per line of the row (the Boss's 6413599502 (b)); the lay taken back with the sign -1 (the undo). Returns the lay's momentum per axis."""
     row = node.records()[s]
-    re, im = row.lines
     assert row.pair is not None
-    num = row.pair[0]
-    dp = momentum_of(node, re.now, re.before, where, d_now=sign * sense * node.A, num=num)
-    dp_im = momentum_of(node, im.now, im.before, where, d_before=sign * node.B, num=num)
-    lay(node, s, where, (sense * node.A, 0, 0, node.B), sign)
-    return [a + b for a, b in zip(dp, dp_im, strict=True)]
+    levels = child_levels(row, sense, node.A, node.B)
+    dp = momentum_per_line(node, row, where, levels, sign)
+    lay(node, s, where, levels, sign)
+    return dp
+
+
+def momentum_per_line(
+    node: Node, row: Any, where: tuple[int, ...], levels: tuple[int, ...], sign: int = 1
+) -> list[int]:
+    """The momentum a lay of `levels` (now, before per line) at the Node books, summed over the record's lines (take.momentum_of per line; the form generic in the lines, the quartet pair's replacement 17)."""
+    assert row.pair is not None
+    found = [0] * AXES
+    for j, line in enumerate(row.lines):
+        dj = momentum_of(
+            node,
+            line.now,
+            line.before,
+            where,
+            sign * levels[PLANE * j],
+            sign * levels[PLANE * j + 1],
+            row.pair[0],
+        )
+        found = [a + b for a, b in zip(found, dj, strict=True)]
+    return found
 
 
 def walls_of(
@@ -46,7 +70,7 @@ def walls_of(
             row.lines = [
                 Line(zeros(node.shape), zeros(node.shape), line.rem, line.wall) for line in held
             ]
-            lay(node, s, where, (sense * node.A, 0, 0, node.B))
+            lay(node, s, where, child_levels(row, sense, node.A, node.B))
             cache[(s, sense, where)] = sum(
                 share_at(node, row.lines, rule, at) for at in set(frame_nodes(node, where))
             )
@@ -151,12 +175,10 @@ def write_ends(
     found: list[dict[str, Any]] = []
     for where, wall, levels, fall, k, rem_was, owed in reads:
         if row is not node.emitter():
-            (re, im), (re_now, re_before, im_now, im_before) = row.lines, levels
-            dp = momentum_of(node, re.now, re.before, where, -re_now, -re_before, row.pair[0])
-            dp_im = momentum_of(node, im.now, im.before, where, -im_now, -im_before, row.pair[0])
+            moment = momentum_per_line(node, row, where, tuple(levels), -1)
             lay(node, rec, where, levels, -1)
             node.closes[where] -= 1
-            size, moment = sum(abs(x) for x in levels), [a + b for a, b in zip(dp, dp_im, strict=True)]
+            size = sum(abs(x) for x in levels)
             found.append(
                 dict(
                     node=list(where),
@@ -236,9 +258,8 @@ def light_children(
 ) -> tuple[list[int], list[int], list[list[int]], list[list[int] | None], list[list[int]]]:
     """A merger's two light children (MG-S1): at each end the light laid as the exact take at -1 (take.fall_of at -1; the former rise_of kept by name) on the line the take names, at both ends (the light is never the child's lay, which carries the charge; the former `d == 0` branch the bug of H-Children-Charge-Bug-1, struck 2026-10-26); returns the lays' momentum, each child's Wronskian at its Node, the plane's four levels at each Node before the lay and the exact lays [line, count, rise] (None where the child's lay)."""
     row = node.records()[s]
-    re, im = row.lines
     assert row.pair is not None
-    stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
+    stood = stood_at(row, minus, plus)
     dp_lay, exact, ends = [0] * AXES, [], []  # type: list[int], list[list[int] | None], list[list[int]]
     for where, wall in zip((minus, plus), walls, strict=True):
         count, rise, k = take.fall_of(node, where, wall, rule, row, -1)
@@ -249,5 +270,15 @@ def light_children(
         move(node, s, k, where, d)
         exact.append([k, d, rise])
         dp_lay, ends = [a + b for a, b in zip(dp_lay, dp, strict=True)], [*ends, list(dp)]
-    senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
-    return dp_lay, senses, stood, exact, ends
+    return dp_lay, senses_at(row, minus, plus), stood, exact, ends
+
+
+def stood_at(row: Any, minus: tuple[int, ...], plus: tuple[int, ...]) -> list[list[int]]:
+    """The record's levels standing at the two ends, now and before per line in the row's order (the log's `stood`; generic in the lines)."""
+    return [[int(x[w_]) for line in row.lines for x in (line.now, line.before)] for w_ in (minus, plus)]
+
+
+def senses_at(row: Any, minus: tuple[int, ...], plus: tuple[int, ...]) -> list[int]:
+    """The record's charge at the two ends after the lay (gram.charge, the plane's Wronskian re_now im_before - im_now re_before; generic in the lines), the children's W as the log names it."""
+    charge = gram.charge(row.shape, row.lines)
+    return [int(charge[w_]) for w_ in (minus, plus)]
