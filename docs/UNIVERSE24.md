@@ -123,70 +123,70 @@ The owner's word, verbatim in translation: "all the time make sure the things ar
 
 ### The gates of the phenomena (the head ace6343; written by tools/phenomena.py from the readings, the verdict of every row the decoder's)
 
-SHOWN in Universe24: 26 of 60 on ace6343. The records read from the seed alone: chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
+SHOWN in Universe24: 27 of 60 on ace6343. The records read from the seed alone: chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
 
 | the phenomenon | gate | the verdict per record | the cause where not SHOWN | since the table before |
 | --- | --- | --- | --- | --- |
-| the recurring bang | 1 | SHOWN on universe, plasma, sea, plasma_3, universe_3; NOT SHOWN on chiral, collapse_800, bodies, hole | the bottom at 4611 against Gamma 1000, no whole-board turn | unchanged |
-| the lengthening of the Links | 2 | SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | too few spans between a Node's credits | unchanged |
-| the Links shortening, then lengthening | 3 | SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 |  | unchanged |
-| the era of matter | 4 | SHOWN on chiral, hole; NOT SHOWN on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 |  | unchanged |
-| the acceleration of the expansion | 5 | SHOWN on chiral, bodies, hole, plasma, sea, plasma_3; NOT READ on collapse_800, universe, universe_3 | no rising run of two marks | unchanged |
-| the contraction | 6 | SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 |  | unchanged |
-| light present and absorbed | 7 | SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | no take in the record | unchanged |
-| the families forming | 8 | SHOWN in part on chiral, hole, universe, plasma, plasma_3, universe_3; NOT SHOWN on collapse_800, bodies; NOT READ on sea | every credit within the floor, tracks right 140 of 149 | unchanged |
-| the collision of two bodies | 9 | SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | fewer than two bodies credited at one interval | unchanged |
-| gravitational time dilation | 10 | SHOWN on chiral, collapse_800, bodies, hole; NOT SHOWN on universe, plasma, plasma_3, universe_3; NOT READ on sea | in the reader's view | unchanged |
-| gravitational redshift | 11 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the record carries no credit of the gap-0 row (light has no period on the sea) | unchanged |
-| the delay and the bending of light | 12 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the record carries no credit of the gap-0 row (light has no period on the sea) | unchanged |
-| free fall | 13 | NOT SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | the approach does not quicken | unchanged |
-| the horizon, a black hole | 14 | SHOWN on chiral; NOT REACHED on collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 |  | unchanged |
-| conservation at the click | 15 | SHOWN on chiral, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth in the record | unchanged |
-| the uncertainty floor | 16 | SHOWN on chiral, hole, universe, plasma, plasma_3, universe_3; NOT SHOWN on collapse_800, bodies; NOT READ on sea |  | unchanged |
-| charge conservation | 17 | SHOWN on chiral, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth in the record | unchanged |
-| the arrow of time and its reversal | 18 | SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 |  | unchanged |
-| the mass ratios | 19 | SHOWN on chiral, hole, universe, universe_3; NOT SHOWN on collapse_800, bodies, plasma, plasma_3; NOT READ on sea | 1 plane credited, a ratio needs two | unchanged |
-| the twist, P and C violated, CP kept | 20 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | one seed's run | unchanged |
-| the handedness of the birth | 21 | SHOWN on chiral, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth | unchanged |
-| Coulomb's sign | 22 | SHOWN in part on chiral; NOT SHOWN on hole, universe, plasma, plasma_3, universe_3; NOT READ on collapse_800, bodies, sea | unlike senses approach | unchanged |
-| the momentum across the click | 23 | NOT SHOWN on chiral, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | the recoil passed at 0 of 17 births (the lay's form owed) | unchanged |
-| the merger of a pair into light | 24 | NOT SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | 885250 gapped meetings reached the premise and every one was refused by name | unchanged |
-| the entropy rising | 25 | SHOWN on chiral, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth | unchanged |
-| the three lifts and their masses | 26 | SHOWN on chiral; SHOWN in part on hole, universe, universe_3; NOT READ on collapse_800, bodies, plasma, sea, plasma_3 | no birth and fewer than two planes credited | unchanged |
-| confinement, no third alone | 27 | SHOWN on chiral, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth | unchanged |
-| the neutron's conversion | 28 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no record ends at a Node where others begin (the conversion act is not in the engine) | unchanged |
-| the redshift of light | 29 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the record carries no credit of the gap-0 row (light has no period on the sea) | unchanged |
-| the dilation of a body's clock | 30 | SHOWN on chiral, collapse_800, bodies, hole; NOT SHOWN on universe, plasma, plasma_3, universe_3; NOT READ on sea | in the reader's view | unchanged |
-| the deflection and the Shapiro delay | 31 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the record carries no credit of the gap-0 row (light has no period on the sea) | unchanged |
-| the perihelion's advance | 32 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no lay with a wave number in the world | unchanged |
-| free fall by the tail | 33 | NOT SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | the approach does not quicken | unchanged |
-| the stopped clock at the horizon | 34 | NOT SHOWN on chiral; NOT REACHED on collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | a frozen Node credited or its content moving | unchanged |
-| frame dragging | 35 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no mass moves beside a body's track in the world | unchanged |
-| gravitational waves, the shears | 36 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the rows carry the tension's extremes and no shear line | unchanged |
-| Maxwell's one Link per interval | 37 | SHOWN on bodies; NOT SHOWN on chiral, collapse_800, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | a Node lit beyond one Link of the interval before | unchanged |
-| the Aharonov-Bohm phase | 38 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no held flux in the world | unchanged |
-| the Zeeman and Stark shifts | 39 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no held field in the world (the toy's one-Node test carries the doublet) | unchanged |
-| the photoelectric click | 40 | NOT SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | 15316 clicks take fewer levels than one quantum (the exact take in levels, row 47) | unchanged |
-| the spinor's two beats | 41 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no shape-8 row in the record's universe | unchanged |
-| Stern-Gerlach, the split along the gradient | 42 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no gradient field in the world (the toy's records carry the verdict) | unchanged |
-| the exclusion | 43 | SHOWN on chiral, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | no lay met a standing quantum | unchanged |
-| the moving packet's velocity | 44 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no lay with a wave number in the world | unchanged |
-| the bound body in its well | 45 | SHOWN on collapse_800, bodies, hole, plasma, plasma_3; NOT SHOWN on chiral, universe, universe_3; NOT READ on sea | no body stands at one Node through the run | unchanged |
-| the bang recurring with its gates | 46 | SHOWN on universe, plasma, plasma_3, universe_3; NOT SHOWN on sea; NOT READ on chiral, collapse_800, bodies, hole | no exact return of the board (gate 1) | unchanged |
-| the exact take | 47 | NOT SHOWN on chiral, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | exact: the excess above 0 on 17 births (EX-S1) | unchanged |
-| the black body | 48 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no gap-0 credit in the record (the sea one mode) | unchanged |
-| the exponential decay | 49 | NOT SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | the spacings' counts do not fall from the least | unchanged |
-| light on light | 50 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no two light packets in the world | unchanged |
-| the Casimir force and the running alpha | 51 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no plates and no bound pair in the world | unchanged |
-| the neutrino | 52 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no conversion in the record and every prime of den within the width (26 points on den's circle) | unchanged |
-| a fast packet binding | 53 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no lay with a wave number in the world | unchanged |
-| scattering, two packets through each other | 54 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | two packets of one plane are not told apart by their line, and the momentum across the click is row 23 | unchanged |
-| the two slits | 55 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no two gap-0 packets at one centre with one wave mirrored on one axis in the seed | unchanged |
-| Bell's correlation | 56 | NOT SHOWN on chiral, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | as nature: |S| <= 2 at the pairs' clicks, S = -2 / 17 (the law's bound by the one-Link reach, every end's outcome a function of its own Node | unchanged |
-| the GHZ correlation | 57 | NOT READ on chiral, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | a birth gives two ends at one Link and a shared take four, no three ends with one root in the record | unchanged |
-| the fast expansion after the bang, in the clicks | 58 | NOT SHOWN on chiral, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | the first growth of the spacing is not above zero and above the next | unchanged |
-| the deceleration, in the clicks | 59 | SHOWN on chiral, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | fewer than two eighths' growths of the spacing | unchanged |
-| the acceleration, in the clicks | 60 | SHOWN on chiral, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | fewer than two eighths' growths of the spacing | unchanged |
+| the recurring bang | 1 | SHOWN on ga2, universe, plasma, sea, plasma_3, universe_3; NOT SHOWN on chiral, collapse_800, bodies, hole | the bottom at 4611 against Gamma 1000, no whole-board turn | SHOWN now on ga2 |
+| the lengthening of the Links | 2 | SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT SHOWN on ga2; NOT READ on sea | in the reader's view | unchanged |
+| the Links shortening, then lengthening | 3 | SHOWN on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 |  | SHOWN now on ga2 |
+| the era of matter | 4 | SHOWN on chiral, ga2, hole; NOT SHOWN on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 |  | SHOWN now on ga2 |
+| the acceleration of the expansion | 5 | SHOWN on chiral, bodies, hole, plasma, sea, plasma_3; NOT READ on ga2, collapse_800, universe, universe_3 | no rising run of two marks | unchanged |
+| the contraction | 6 | SHOWN on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 |  | SHOWN now on ga2 |
+| light present and absorbed | 7 | SHOWN on chiral, ga2, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | no take in the record | SHOWN now on ga2 |
+| the families forming | 8 | SHOWN in part on chiral, ga2, hole, universe, plasma, plasma_3, universe_3; NOT SHOWN on collapse_800, bodies; NOT READ on sea | every credit within the floor, tracks right 140 of 149 | unchanged |
+| the collision of two bodies | 9 | SHOWN on chiral, ga2, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | fewer than two bodies credited at one interval | SHOWN now on ga2 |
+| gravitational time dilation | 10 | SHOWN on chiral, collapse_800, bodies, hole; NOT SHOWN on ga2, universe, plasma, plasma_3, universe_3; NOT READ on sea | in the reader's view | unchanged |
+| gravitational redshift | 11 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the record carries no credit of the gap-0 row (light has no period on the sea) | unchanged |
+| the delay and the bending of light | 12 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the record carries no credit of the gap-0 row (light has no period on the sea) | unchanged |
+| free fall | 13 | NOT SHOWN on chiral, ga2, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | the approach does not quicken | unchanged |
+| the horizon, a black hole | 14 | SHOWN on chiral; NOT REACHED on ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 |  | unchanged |
+| conservation at the click | 15 | SHOWN on chiral, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth in the record | SHOWN now on ga2 |
+| the uncertainty floor | 16 | SHOWN on chiral, ga2, hole, universe, plasma, plasma_3, universe_3; NOT SHOWN on collapse_800, bodies; NOT READ on sea |  | SHOWN now on ga2 |
+| charge conservation | 17 | SHOWN on chiral, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth in the record | SHOWN now on ga2 |
+| the arrow of time and its reversal | 18 | SHOWN on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 |  | SHOWN now on ga2 |
+| the mass ratios | 19 | SHOWN on chiral, hole, universe, universe_3; NOT SHOWN on ga2, collapse_800, bodies, plasma, plasma_3; NOT READ on sea | 1 plane credited, a ratio needs two | unchanged |
+| the twist, P and C violated, CP kept | 20 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | one seed's run | unchanged |
+| the handedness of the birth | 21 | SHOWN on chiral, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth | SHOWN now on ga2 |
+| Coulomb's sign | 22 | SHOWN in part on chiral; NOT SHOWN on ga2, hole, universe, plasma, plasma_3, universe_3; NOT READ on collapse_800, bodies, sea | unlike senses approach | unchanged |
+| the momentum across the click | 23 | NOT SHOWN on chiral, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | the recoil passed at 0 of 17 births (the lay's form owed) | unchanged |
+| the merger of a pair into light | 24 | NOT SHOWN on chiral, ga2, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | 885250 gapped meetings reached the premise and every one was refused by name | unchanged |
+| the entropy rising | 25 | SHOWN on chiral, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth | SHOWN now on ga2 |
+| the three lifts and their masses | 26 | SHOWN on chiral; SHOWN in part on ga2, hole, universe, universe_3; NOT READ on collapse_800, bodies, plasma, sea, plasma_3 | the beats ordered as the legs | unchanged |
+| confinement, no third alone | 27 | SHOWN on chiral, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth | SHOWN now on ga2 |
+| the neutron's conversion | 28 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no record ends at a Node where others begin (the conversion act is not in the engine) | unchanged |
+| the redshift of light | 29 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the record carries no credit of the gap-0 row (light has no period on the sea) | unchanged |
+| the dilation of a body's clock | 30 | SHOWN on chiral, collapse_800, bodies, hole; NOT SHOWN on ga2, universe, plasma, plasma_3, universe_3; NOT READ on sea | in the reader's view | unchanged |
+| the deflection and the Shapiro delay | 31 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the record carries no credit of the gap-0 row (light has no period on the sea) | unchanged |
+| the perihelion's advance | 32 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no lay with a wave number in the world | unchanged |
+| free fall by the tail | 33 | NOT SHOWN on chiral, ga2, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | the approach does not quicken | unchanged |
+| the stopped clock at the horizon | 34 | NOT SHOWN on chiral; NOT REACHED on ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | a frozen Node credited or its content moving | unchanged |
+| frame dragging | 35 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no mass moves beside a body's track in the world | unchanged |
+| gravitational waves, the shears | 36 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | the rows carry the tension's extremes and no shear line | unchanged |
+| Maxwell's one Link per interval | 37 | SHOWN on bodies; NOT SHOWN on chiral, collapse_800, hole; NOT READ on ga2, universe, plasma, sea, plasma_3, universe_3 | a Node lit beyond one Link of the interval before | unchanged |
+| the Aharonov-Bohm phase | 38 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no held flux in the world | unchanged |
+| the Zeeman and Stark shifts | 39 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no held field in the world (the toy's one-Node test carries the doublet) | unchanged |
+| the photoelectric click | 40 | NOT SHOWN on chiral, ga2, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | 15316 clicks take fewer levels than one quantum (the exact take in levels, row 47) | unchanged |
+| the spinor's two beats | 41 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no shape-8 row in the record's universe | unchanged |
+| Stern-Gerlach, the split along the gradient | 42 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no gradient field in the world (the toy's records carry the verdict) | unchanged |
+| the exclusion | 43 | SHOWN on chiral, ga2, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | no lay met a standing quantum | SHOWN now on ga2 |
+| the moving packet's velocity | 44 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no lay with a wave number in the world | unchanged |
+| the bound body in its well | 45 | SHOWN on ga2, collapse_800, bodies, hole, plasma, plasma_3; NOT SHOWN on chiral, universe, universe_3; NOT READ on sea | no body stands at one Node through the run | SHOWN now on ga2 |
+| the bang recurring with its gates | 46 | SHOWN on ga2, universe, plasma, plasma_3, universe_3; NOT SHOWN on sea; NOT READ on chiral, collapse_800, bodies, hole | no exact return of the board (gate 1) | SHOWN now on ga2 |
+| the exact take | 47 | NOT SHOWN on chiral, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | exact: the excess above 0 on 17 births (EX-S1) | unchanged |
+| the black body | 48 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no gap-0 credit in the record (the sea one mode) | unchanged |
+| the exponential decay | 49 | SHOWN on ga2; NOT SHOWN on chiral, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3; NOT READ on sea | the spacings' counts do not fall from the least | SHOWN now on ga2 |
+| light on light | 50 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no two light packets in the world | unchanged |
+| the Casimir force and the running alpha | 51 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no plates and no bound pair in the world | unchanged |
+| the neutrino | 52 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no conversion in the record and every prime of den within the width (26 points on den's circle) | unchanged |
+| a fast packet binding | 53 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no lay with a wave number in the world | unchanged |
+| scattering, two packets through each other | 54 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | two packets of one plane are not told apart by their line, and the momentum across the click is row 23 | unchanged |
+| the two slits | 55 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no two gap-0 packets at one centre with one wave mirrored on one axis in the seed | unchanged |
+| Bell's correlation | 56 | NOT SHOWN on chiral, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | as nature: |S| <= 2 at the pairs' clicks, S = -2 / 17 (the law's bound by the one-Link reach, every end's outcome a function of its own Node | unchanged |
+| the GHZ correlation | 57 | NOT READ on chiral, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | a birth gives two ends at one Link and a shared take four, no three ends with one root in the record | unchanged |
+| the fast expansion after the bang, in the clicks | 58 | NOT SHOWN on chiral, collapse_800, bodies, hole; NOT READ on ga2, universe, plasma, sea, plasma_3, universe_3 | the first growth of the spacing is not above zero and above the next | unchanged |
+| the deceleration, in the clicks | 59 | SHOWN on chiral, collapse_800, bodies, hole; NOT READ on ga2, universe, plasma, sea, plasma_3, universe_3 | fewer than two eighths' growths of the spacing | unchanged |
+| the acceleration, in the clicks | 60 | SHOWN on chiral, collapse_800, bodies, hole; NOT READ on ga2, universe, plasma, sea, plasma_3, universe_3 | fewer than two eighths' growths of the spacing | unchanged |
 
 ### The gates widened to everything derived, read on any bang of the same seed and at one Node where one Node can show it (2026-10-25, 11:0x UTC)
 
