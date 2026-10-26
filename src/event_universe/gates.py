@@ -342,6 +342,7 @@ TABLE: tuple[Row, ...] = (
     symmetries.energy,
     symmetries.cpt,
     symmetries.matter_against_antimatter,
+    symmetries.one_hand,
     conservations,
     constants,
 )
