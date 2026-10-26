@@ -375,6 +375,9 @@ def gates(run: dict[str, Any]) -> dict[str, Any]:
             Counter(kind_of(v["verdict"]) for k, v in out.items() if k.split()[0].isdigit())
         ),
         "readings": "quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication",
+        "rows read from the Node lines (the board's view; the rest from the log, the clicks' view)": [
+            key for row in TABLE if row.__module__ == board.__name__ for key in row(record)
+        ],
     }
     out["events"] = events.first_shown(record, TABLE)
     return out

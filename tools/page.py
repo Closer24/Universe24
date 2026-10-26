@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes stand a hand apart as a tight lattice), the board's size a quarter and three quarters of the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view and its Nodes stay apart, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every exact return the reading's row 1c names, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading names (each bang, the era of matter, the acceleration) and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding a second on every new label and then running at a quarter pace for four seconds, a big round play button and the page's look its tokens' (the board a card at the left, the controls pills, the labels glass), the list of the gates of the phenomena beside the board (every row of the reading with its verdict's kind, the SHOWN rows with the interval they first show at, each lit as the play passes its interval and brightest for the intervals after it, the count of the numbered rows SHOWN at its head), a strip under the bar naming the bang and the latest labels, the bar carrying the ticks of the gates and the births and the bands of the eras with no names on it, the two files' lines and the legend out of the viewer's sight behind one info button at the top right, the reading's event lines (the gates of the phenomena, one per gate at its first SHOWN) as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes stand a hand apart as a tight lattice), the board's size a quarter and three quarters of the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view and its Nodes stay apart, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every exact return the reading's row 1c names, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading names (each bang, the era of matter, the acceleration) and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding a second on every new label and then running at a quarter pace for four seconds, a big round play button and the page's look its tokens' (the board a card at the left, the controls pills, the labels glass), the list of the gates of the phenomena beside the board (every row of the reading in two groups, the rows read from the Node lines (the board's view) and the rows read from the log (the clicks' view), as the decoder's line names them, each row with the gate's glyph as its icon, its verdict's kind, the SHOWN rows with the interval they first show at, each lit as the play passes its interval and brightest for the intervals after it, the count of the numbered rows SHOWN at its head), a strip under the bar naming the bang and the latest labels, the bar carrying the ticks of the gates and the births and the bands of the eras with no names on it, the two files' lines and the legend out of the viewer's sight behind one info button at the top right, the reading's event lines (the gates of the phenomena, one per gate at its first SHOWN) as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -36,6 +36,9 @@ body.info #card { display: block; }
 #gates { flex: 1; display: grid; grid-auto-flow: column; grid-template-rows: repeat(var(--rows), minmax(0, 1fr)); column-gap: 18px; min-height: 0; font-family: var(--mono); font-size: 11px; }
 .gate { display: flex; align-items: center; gap: 6px; min-width: 0; padding: 0 6px; border-radius: 6px; color: var(--dim); white-space: nowrap; transition: background 0.2s, color 0.2s; }
 .gate .n { width: 18px; text-align: right; flex: none; opacity: 0.8; }
+.gate .i { width: 20px; height: 20px; flex: none; opacity: 0.35; }
+.gate.shown .i, .gate.part .i { opacity: 0.7; } .gate.lit .i { opacity: 1; }
+.group { font: 600 10px var(--font); letter-spacing: 0.6px; text-transform: uppercase; color: var(--focus); padding: 0 6px; display: flex; align-items: center; border-bottom: 1px solid var(--line); }
 .gate .d { width: 8px; height: 8px; border-radius: 50%; flex: none; background: #2a2f39; }
 .gate .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .gate .k { flex: none; font-size: 9px; letter-spacing: 0.3px; opacity: 0.7; }
@@ -99,10 +102,17 @@ const stretches = lines.map(meanStretch), most = Math.max(...stretches, 1e-9), f
 const bangs = [lines[0].i].concat(D.events.filter(e => e.i !== null && /^1c /.test(e.gate)).map(e => e.i));  // the seed's bang and every exact return the reading names
 let spots = [];
 const firstAt = new Map(); for (const e of D.events) if (e.i !== null) firstAt.set(e.gate, e.i);
-const gateRows = D.gates.map(g => { const div = document.createElement("div"); div.className = "gate " + g[2]; const at = firstAt.get(g[0]);
-  div.innerHTML = '<span class="n">' + g[0].split(" ")[0] + '</span><span class="d"></span><span class="t"></span><span class="k"></span>';
-  div.querySelector(".t").textContent = g[0].split(" ").slice(1).join(" "); div.querySelector(".k").textContent = at ? "at " + at : g[1]; div.title = g[0] + ": " + g[3]; gatesBox.appendChild(div); return [div, at]; });
-gatesBox.style.setProperty("--rows", Math.ceil(D.gates.length / 2));
+const boardRows = new Set(D.board);
+const grouped = [["the board, from the Node lines", D.gates.filter(g => boardRows.has(g[0]))], ["the clicks, from the log", D.gates.filter(g => !boardRows.has(g[0]))]];
+const gateRows = [];
+for (const [name, rows] of grouped) {
+  const h = document.createElement("div"); h.className = "group"; h.textContent = name; gatesBox.appendChild(h);
+  for (const g of rows) { const div = document.createElement("div"); div.className = "gate " + g[2]; const at = firstAt.get(g[0]);
+    const icon = document.createElement("canvas"); icon.width = 26; icon.height = 26; icon.className = "i"; glyph(g[0], 13, 13, icon.getContext("2d"), 0.85);
+    div.innerHTML = '<span class="n"></span><span class="d"></span><span class="t"></span><span class="k"></span>'; div.insertBefore(icon, div.children[1]);
+    div.querySelector(".n").textContent = g[0].split(" ")[0]; div.querySelector(".t").textContent = g[0].split(" ").slice(1).join(" "); div.querySelector(".k").textContent = at ? "at " + at : g[1]; div.title = g[0] + ": " + g[3]; gatesBox.appendChild(div); gateRows.push([div, at]); }
+}
+gatesBox.style.setProperty("--rows", Math.ceil((D.gates.length + grouped.length) / 2));
 const numbered = D.gates.filter(g => /^[0-9]+ /.test(g[0]));
 document.getElementById("count").textContent = numbered.filter(g => g[2] === "shown").length + " of " + numbered.length + " shown";
 function panel(i) { for (const [div, at] of gateRows) { div.classList.toggle("lit", at !== undefined && at <= i); div.classList.toggle("now", at !== undefined && at <= i && at > i - 24); } }
@@ -128,33 +138,58 @@ function neighbour(i, axis) {
   q[axis] += 1;
   return q[0] * c * c + q[1] * c + q[2];
 }
-function glyph(gate, x, y) {
-  const g = parseInt(gate), r = 11, L = "#fde68a", M = "#9a9ea8";
-  ctx.save(); ctx.translate(x, y); ctx.lineWidth = 2; ctx.strokeStyle = L; ctx.fillStyle = L; ctx.lineCap = "round";
-  const dot = (cx, cy, rr, fill) => { ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 2 * Math.PI); if (fill) ctx.fill(); else ctx.stroke(); };
-  const arrow = (x1, y1, x2, y2) => { const a = Math.atan2(y2 - y1, x2 - x1); ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - 6 * Math.cos(a - 0.5), y2 - 6 * Math.sin(a - 0.5)); ctx.lineTo(x2 - 6 * Math.cos(a + 0.5), y2 - 6 * Math.sin(a + 0.5)); ctx.closePath(); ctx.fill(); };
-  const text = (t, cx, cy) => { ctx.font = "bold 11px monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(t, cx, cy); };
-  if (g === 1 || g === 46) { for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; ctx.beginPath(); ctx.moveTo(4 * Math.cos(a), 4 * Math.sin(a)); ctx.lineTo(r * Math.cos(a), r * Math.sin(a)); ctx.stroke(); } }
+function glyph(gate, x, y, on, scale) {
+  const cx2 = on || ctx, g = parseInt(gate), r = 11, L = "#fde68a";
+  cx2.save(); cx2.translate(x, y); if (scale) cx2.scale(scale, scale); cx2.lineWidth = 2; cx2.strokeStyle = L; cx2.fillStyle = L; cx2.lineCap = "round"; cx2.lineJoin = "round";
+  const dot = (cx, cy, rr, fill) => { cx2.beginPath(); cx2.arc(cx, cy, rr, 0, 2 * Math.PI); if (fill) cx2.fill(); else cx2.stroke(); };
+  const line = (x1, y1, x2, y2) => { cx2.beginPath(); cx2.moveTo(x1, y1); cx2.lineTo(x2, y2); cx2.stroke(); };
+  const arrow = (x1, y1, x2, y2) => { const a = Math.atan2(y2 - y1, x2 - x1); line(x1, y1, x2, y2); cx2.beginPath(); cx2.moveTo(x2, y2); cx2.lineTo(x2 - 6 * Math.cos(a - 0.5), y2 - 6 * Math.sin(a - 0.5)); cx2.lineTo(x2 - 6 * Math.cos(a + 0.5), y2 - 6 * Math.sin(a + 0.5)); cx2.closePath(); cx2.fill(); };
+  const wave = (x1, x2, yy, amp, k) => { cx2.beginPath(); for (let q = x1; q <= x2; q++) cx2.lineTo(q, yy + amp * Math.sin(q * k)); cx2.stroke(); };
+  const text = (s, cx, cy) => { cx2.font = "bold 11px monospace"; cx2.textAlign = "center"; cx2.textBaseline = "middle"; cx2.fillText(s, cx, cy); };
+  if (g === 1 || g === 46) { for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; line(4 * Math.cos(a), 4 * Math.sin(a), r * Math.cos(a), r * Math.sin(a)); } }
   else if (g === 17 || g === 21) { dot(-7, 0, 6, false); dot(7, 0, 6, false); text("+", -7, 0); text("-", 7, 0); }
   else if (g === 8) { dot(0, 0, 3, true); dot(0, 0, 7, false); dot(0, 0, 11, false); }
-  else if (g === 9 || g === 13 || g === 22) { dot(-9, 0, 4, true); dot(9, 0, 4, true); arrow(-4, -8, 4, -8); arrow(4, 8, -4, 8); }
-  else if (g === 14 || g === 34) { ctx.fillStyle = "#07080a"; dot(0, 0, 8, true); ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 3; dot(0, 0, 9, false); }
+  else if (g === 9 || g === 13 || g === 22 || g === 33) { dot(-9, 0, 4, true); dot(9, 0, 4, true); arrow(-4, -8, 4, -8); arrow(4, 8, -4, 8); }
+  else if (g === 14 || g === 34) { cx2.fillStyle = "#07080a"; dot(0, 0, 8, true); cx2.strokeStyle = "#ffffff"; cx2.lineWidth = 3; dot(0, 0, 9, false); if (g === 34) { cx2.strokeStyle = L; cx2.lineWidth = 2; line(0, 0, 0, -5); } }
   else if (g === 4) { dot(-7, 4, 4, true); dot(7, 4, 4, true); dot(0, -6, 4, true); }
-  else if (g === 10 || g === 30) { dot(0, 0, r, false); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -7); ctx.moveTo(0, 0); ctx.lineTo(5, 3); ctx.stroke(); }
-  else if (g === 2 || g === 5) { arrow(-2, 0, r + 2, 0); arrow(2, 0, -r - 2, 0); if (g === 5) { ctx.beginPath(); ctx.moveTo(-6, -7); ctx.lineTo(6, -7); ctx.stroke(); } }
+  else if (g === 10 || g === 30) { dot(0, 0, r, false); line(0, 0, 0, -7); line(0, 0, 5, 3); }
+  else if (g === 2 || g === 5) { arrow(-2, 0, r + 2, 0); arrow(2, 0, -r - 2, 0); if (g === 5) line(-6, -7, 6, -7); }
   else if (g === 3 || g === 6) { arrow(-r - 2, 0, -3, 0); arrow(r + 2, 0, 3, 0); }
-  else if (g === 7) { ctx.beginPath(); for (let k = -12; k <= 2; k++) ctx.lineTo(k, 4 * Math.sin(k * 0.9)); ctx.stroke(); dot(8, 0, 4, true); }
-  else if (g === 18) { ctx.beginPath(); ctx.arc(0, 0, 8, -0.5 * Math.PI, 1.1 * Math.PI); ctx.stroke(); arrow(-3, 7, -9, 3); }
-  else if (g === 16) { dot(0, -4, 4, true); ctx.beginPath(); ctx.moveTo(-r, 6); ctx.lineTo(r, 6); ctx.stroke(); }
+  else if (g === 7) { wave(-12, 2, 0, 4, 0.9); dot(8, 0, 4, true); }
+  else if (g === 11 || g === 29) { wave(-12, -1, 0, 3, 1.4); wave(0, 12, 0, 3, 0.7); }
+  else if (g === 12 || g === 31) { cx2.beginPath(); cx2.moveTo(-12, -6); cx2.quadraticCurveTo(0, 8, 12, -6); cx2.stroke(); dot(0, 6, 3, true); }
+  else if (g === 18) { cx2.beginPath(); cx2.arc(0, 0, 8, -0.5 * Math.PI, 1.1 * Math.PI); cx2.stroke(); arrow(-3, 7, -9, 3); }
+  else if (g === 15 || g === 47) { line(-10, 6, 10, 6); line(0, 6, 0, -6); line(-8, -4, 8, -4); dot(-8, -4, 2, true); dot(8, -4, 2, true); }
+  else if (g === 16) { dot(0, -4, 4, true); line(-r, 6, r, 6); }
   else if (g === 19 || g === 26) { dot(-7, 2, 3, true); dot(4, 0, 6, true); }
-  else if (g === 25) { ctx.beginPath(); ctx.moveTo(-10, 8); ctx.lineTo(-4, 8); ctx.lineTo(-4, 2); ctx.lineTo(2, 2); ctx.lineTo(2, -4); ctx.lineTo(8, -4); ctx.lineTo(8, -10); ctx.stroke(); }
-  else if (g === 27) { dot(-7, 5, 3, true); dot(7, 5, 3, true); dot(0, -6, 3, true); ctx.beginPath(); ctx.moveTo(-7, 5); ctx.lineTo(0, -6); ctx.lineTo(7, 5); ctx.closePath(); ctx.stroke(); }
+  else if (g === 20) { line(0, -10, 0, 10); dot(-6, 0, 3, true); dot(6, 0, 3, false); }
+  else if (g === 23) { dot(0, 0, 3, true); arrow(-3, -3, -11, -9); arrow(3, 3, 11, 9); }
+  else if (g === 24) { dot(-8, -4, 3, true); dot(-8, 4, 3, true); wave(-3, 12, 0, 3, 1.2); }
+  else if (g === 25) { cx2.beginPath(); cx2.moveTo(-10, 8); cx2.lineTo(-4, 8); cx2.lineTo(-4, 2); cx2.lineTo(2, 2); cx2.lineTo(2, -4); cx2.lineTo(8, -4); cx2.lineTo(8, -10); cx2.stroke(); }
+  else if (g === 27) { dot(-7, 5, 3, true); dot(7, 5, 3, true); dot(0, -6, 3, true); cx2.beginPath(); cx2.moveTo(-7, 5); cx2.lineTo(0, -6); cx2.lineTo(7, 5); cx2.closePath(); cx2.stroke(); }
+  else if (g === 28 || g === 52) { line(0, 10, 0, 0); line(0, 0, -8, -8); line(0, 0, 8, -8); dot(-8, -8, 2, true); dot(8, -8, 2, true); if (g === 52) dot(0, -10, 2, false); }
+  else if (g === 32) { cx2.beginPath(); cx2.ellipse(0, 0, 11, 6, 0.5, 0, 2 * Math.PI); cx2.stroke(); dot(-3, -1, 3, true); }
+  else if (g === 35) { cx2.beginPath(); for (let a = 0; a < 4.5; a += 0.2) cx2.lineTo(a * 2.4 * Math.cos(a), a * 2.4 * Math.sin(a)); cx2.stroke(); dot(0, 0, 2, true); }
+  else if (g === 36) { wave(-12, 12, -4, 3, 0.8); wave(-12, 12, 5, 3, 0.8); }
   else if (g === 37) { dot(-9, 0, 3, true); dot(9, 0, 3, true); arrow(-5, 0, 5, 0); }
-  else if (g === 43) { dot(0, 0, 6, false); ctx.beginPath(); ctx.moveTo(-9, -9); ctx.lineTo(9, 9); ctx.moveTo(9, -9); ctx.lineTo(-9, 9); ctx.stroke(); }
-  else if (g === 45) { ctx.beginPath(); ctx.moveTo(-9, -8); ctx.lineTo(-9, 4); ctx.quadraticCurveTo(0, 12, 9, 4); ctx.lineTo(9, -8); ctx.stroke(); dot(0, 3, 3, true); }
-  else if (g === 49) { ctx.beginPath(); ctx.moveTo(-10, -8); ctx.quadraticCurveTo(-6, 8, 10, 8); ctx.stroke(); }
-  else { ctx.beginPath(); ctx.moveTo(0, -r); ctx.lineTo(r, 0); ctx.lineTo(0, r); ctx.lineTo(-r, 0); ctx.closePath(); ctx.stroke(); }
-  ctx.restore();
+  else if (g === 38) { dot(0, 0, 9, false); dot(0, 0, 2, true); }
+  else if (g === 39) { line(-10, -6, 10, -6); line(-10, 2, 10, 2); line(-10, 7, 10, 7); }
+  else if (g === 40) { wave(-12, -2, 0, 3, 1.2); dot(2, 0, 4, true); arrow(5, -3, 12, -10); }
+  else if (g === 41) { cx2.beginPath(); cx2.arc(-5, 0, 6, 0.5 * Math.PI, 1.5 * Math.PI); cx2.stroke(); cx2.beginPath(); cx2.arc(5, 0, 6, -0.5 * Math.PI, 0.5 * Math.PI); cx2.stroke(); }
+  else if (g === 42) { line(-12, 0, -2, 0); arrow(-2, 0, 10, -7); arrow(-2, 0, 10, 7); }
+  else if (g === 43) { dot(0, 0, 6, false); line(-9, -9, 9, 9); line(9, -9, -9, 9); }
+  else if (g === 44 || g === 53) { dot(-4, 0, 4, true); if (g === 44) arrow(1, 0, 12, 0); else { cx2.beginPath(); cx2.moveTo(-11, -8); cx2.lineTo(-11, 4); cx2.quadraticCurveTo(-4, 11, 3, 4); cx2.lineTo(3, -8); cx2.stroke(); } }
+  else if (g === 45) { cx2.beginPath(); cx2.moveTo(-9, -8); cx2.lineTo(-9, 4); cx2.quadraticCurveTo(0, 12, 9, 4); cx2.lineTo(9, -8); cx2.stroke(); dot(0, 3, 3, true); }
+  else if (g === 48) { cx2.beginPath(); cx2.moveTo(-12, 8); cx2.quadraticCurveTo(-6, -14, 0, -4); cx2.quadraticCurveTo(6, 6, 12, 8); cx2.stroke(); }
+  else if (g === 49) { cx2.beginPath(); cx2.moveTo(-10, -8); cx2.quadraticCurveTo(-6, 8, 10, 8); cx2.stroke(); }
+  else if (g === 50) { wave(-12, 12, -3, 3, 0.9); wave(-12, 12, 3, 3, -0.9); }
+  else if (g === 51) { line(-7, -10, -7, 10); line(7, -10, 7, 10); arrow(-5, 0, -1, 0); arrow(5, 0, 1, 0); }
+  else if (g === 54) { arrow(-12, -5, 12, 5); arrow(12, -5, -12, 5); }
+  else if (g === 55) { line(-2, -11, -2, -4); line(-2, -1, -2, 1); line(-2, 4, -2, 11); wave(-12, -4, 0, 2, 1.5); for (let k = -8; k <= 8; k += 4) dot(9, k, 1.5, true); }
+  else if (g === 56) { dot(-8, 0, 4, false); dot(8, 0, 4, false); line(-4, 0, 4, 0); line(-8, -4, -8, -9); line(8, 4, 8, 9); }
+  else if (g === 57) { dot(0, 7, 2, true); for (const dx of [-8, 0, 8]) { line(0, 7, dx, -6); dot(dx, -6, 3, false); } }
+  else { cx2.beginPath(); cx2.moveTo(0, -r); cx2.lineTo(r, 0); cx2.lineTo(0, r); cx2.lineTo(-r, 0); cx2.closePath(); cx2.stroke(); }
+  cx2.restore();
 }
 function seek(i) { let k = 0; while (k + 1 < n && lines[k].i < i) k++; return k + 1; }
 function draw() {
@@ -408,6 +443,8 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
         for key, row in line.items()
         if isinstance(row, dict) and "verdict" in row and key[:1].isdigit()
     ]
+    decoder = next((line["the decoder"] for line in reading if "the decoder" in line), {})
+    board = next((v for k, v in decoder.items() if k.startswith("rows read from the Node lines")), [])
     cube = int(record["cube"])
 
     def index(node: list[int]) -> int:
@@ -442,6 +479,7 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
         "births": births,
         "events": events,
         "gates": gates,
+        "board": board,
     }
 
 
