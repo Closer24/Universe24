@@ -1,0 +1,100 @@
+{
+ "random": {
+  "divide": 20000,
+  "reversal": 20000,
+  "direction_read": 20000,
+  "move": 20000,
+  "write": 20000,
+  "count": 20000
+ },
+ "core_lines": 45,
+ "run": {
+  "divisions": 5756260,
+  "divisions_apart": 0,
+  "lays": 24784,
+  "lays_apart": 0,
+  "exchanges": 94,
+  "exchanges_apart": 0,
+  "exchanged_nodes": 1114,
+  "per_interval": [
+   [
+    7550,
+    0,
+    1
+   ],
+   [
+    3450,
+    0,
+    6
+   ],
+   [
+    3468,
+    0,
+    5
+   ],
+   [
+    3540,
+    0,
+    22
+   ],
+   [
+    9203,
+    0,
+    22
+   ],
+   [
+    "..."
+   ]
+  ],
+  "log_forward": 16903,
+  "run_back": [
+   60,
+   60
+  ],
+  "counts": {
+   "births": 16,
+   "taken": 172701936753844030676249,
+   "booked": 164947791671769606584854,
+   "body_clicks": 1653,
+   "laid_back": 0,
+   "refused_stop": 6924,
+   "refused_origin": 0,
+   "refused_lay": 352,
+   "refused_orientation": 331,
+   "refused_twist": 341,
+   "refused_sense": 7286,
+   "turns": 557,
+   "met": 15172,
+   "laid": 0,
+   "laid_nodes": 0
+  },
+  "log": 0,
+  "state_hash_after_forward": "38c116e69728a8f4a3d916dff9dffef3ff926e4aa553a711ae1f3a1bb693d4c0",
+  "census": [
+   99,
+   114
+  ]
+ },
+ "record": {
+  "counts_equal": true,
+  "log_equal": true,
+  "record_counts": {
+   "births": "16",
+   "taken": "172701936753844030676249",
+   "booked": "164947791671769606584854",
+   "body_clicks": "1653",
+   "laid_back": "0",
+   "refused_stop": "6924",
+   "refused_origin": "0",
+   "refused_lay": "352",
+   "refused_orientation": "331",
+   "refused_twist": "341",
+   "refused_sense": "7286",
+   "turns": "557",
+   "met": "15172",
+   "laid": "0",
+   "laid_nodes": "0"
+  },
+  "record_log": 16903
+ }
+}
