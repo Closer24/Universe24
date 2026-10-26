@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core import rule3
+from event_universe.core import acts, rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, port_of, wrap
 from event_universe.core.rule3 import quotient
 from event_universe.links import cross
@@ -69,8 +69,8 @@ def lay(node: Node, rec: int, where: Any, levels: Any, sign: int = 1) -> None:
     """The one lay act: a record's levels (now, before per line: re_now, re_before, im_now, im_before for a plane) added at the Node `where` (or over the board), taken back with sign -1 (the seed's forms, the children, a merger's ends taken whole and their undoing); the take's move on one line is `move` (CR-S1)."""
     lines = node.records()[rec].lines
     for line_, now, before in zip(lines, levels[0::PLANE], levels[1::PLANE], strict=True):
-        line_.now[where] = line_.now[where] + sign * now
-        line_.before[where] = line_.before[where] + sign * before
+        line_.now[where] = acts.lay(line_.now[where], now, sign)
+        line_.before[where] = acts.lay(line_.before[where], before, sign)
 
 
 def momentum_of(
@@ -95,5 +95,5 @@ def move(node: Node, rec: int, k: int, at: tuple[int, ...], count: int) -> None:
     """The take's move, the Node's write act at one Node (CR-S1, the owner's word of 2026-10-26, 06:1x UTC): one carried division at the line's own wall of the exact numerator, the count times the wall, the quotient count laid on the line's level now by the one lay act and the remainder unmoved; the take forward, its lay-back and its undoing are this one act with the count's sign; not the interval's write act, whose wall is the line's write wall, which the taken line does not hold. The former take_at (one Node's take, EX-S1's remainder owed at it) is kept by name: its act is merger.takes."""
     lines = node.records()[rec].lines
     wall = at_node(lines[k].wall, at)
-    q, _unmoved = rule3.carried_division(count * wall, wall, int(lines[k].rem[at]), 1)
+    q, _unmoved = acts.divide(count * wall, wall, int(lines[k].rem[at]), 1)
     lay(node, rec, at, tuple(q if j == PLANE * k else 0 for j in range(PLANE * len(lines))))

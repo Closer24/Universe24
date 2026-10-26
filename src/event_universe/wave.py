@@ -7,8 +7,9 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe import gram
+from event_universe.core import acts
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import least_at, mirrored, remainder
+from event_universe.core.rule3 import least_at, remainder
 from event_universe.rows import CARRIER, PLANE, Line, zeros
 from event_universe.take import lay
 
@@ -66,7 +67,7 @@ def lay_cycle(node: Node, rec: int, n: int, digits: list[int], mirror: int) -> N
     lay(node, rec, Ellipsis, levels)
     for line, now, before in zip(row.lines, levels[0::PLANE], levels[1::PLANE], strict=True):
         negated = np.vectorize(lambda a, b: int(a) < 0 or int(b) < 0, otypes=[bool])(now, before)
-        line.rem = np.where(negated & (mirror == 1), mirrored(line.rem, line.wall, 1), line.rem)
+        line.rem = np.where(negated & (mirror == 1), acts.mirror(line.rem, line.wall, 1), line.rem)
     node.log.append(
         {
             "event": "lay",

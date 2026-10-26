@@ -12,7 +12,8 @@ import numpy as np
 from event_universe import merger, take
 from event_universe.core import paces
 from event_universe.core import rule3 as core
-from event_universe.core.rule3 import link_factor, mass, mirrored, rule3, rule_integers
+from event_universe.core.acts import mirror as mirrored
+from event_universe.core.rule3 import link_factor, mass, rule3, rule_integers
 from tests.laws import arrivals_rule3, node_of
 
 ROOT = Path(__file__).resolve().parents[1]

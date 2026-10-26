@@ -8,10 +8,10 @@ from typing import Any
 import numpy as np
 
 from event_universe import close, gram, interval, readings, seed
-from event_universe.core import paces, rule3
+from event_universe.core import acts, paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, across
-from event_universe.core.rule3 import carried_division, half, link_unit_of, mirrored, unit_of, wall_of
+from event_universe.core.rule3 import half, link_unit_of, unit_of, wall_of
 from event_universe.features import phase
 from event_universe.links import Link, turned
 from event_universe.rows import (
@@ -197,15 +197,15 @@ class Node:
         found = []
         for line, a, t in zip(lines, at, totals, strict=True):
             self.max_transient = max(self.max_transient, bits_of(t))
-            quotient, rem = carried_division(t, r.wall, line.rem, direction)
+            quotient, rem = acts.divide(t, r.wall, line.rem, direction)
             now, before = (quotient, a)[::direction]
             found.append(Line(now, before, rem, line.wall, line.wr, line.wwall))
         return found
 
     def write(self, line: Line, numerator: Any, direction: int) -> None:
         """The one write act on a line: the numerator's carried division at the line's write wall, the quotient added to the level now (forward) or taken back (backward), the remainder carried in the line."""
-        q, line.wr = carried_division(numerator, line.wwall, line.wr, direction)
-        line.now = line.now + direction * q
+        q, line.wr = acts.divide(numerator, line.wwall, line.wr, direction)
+        line.now = acts.lay(line.now, q, direction)
 
     def act(
         self,
@@ -264,17 +264,21 @@ class Node:
     def exchange(self, top: Any, held: list[list[Line]]) -> None:
         """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the quartet's K0, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves."""
         for r, row, hrow in zip(self.rows_, self.rows(), held, strict=True):
-            k = gram.conjugation(r.shape)
-            nows = gram.matvec(k, [h.before for h in hrow])
-            befores = gram.matvec(k, [h.now for h in hrow])
+            nows, befores, rems = acts.exchange(
+                [h.now for h in hrow],
+                [h.before for h in hrow],
+                [h.rem for h in hrow],
+                [h.wall for h in hrow],
+                gram.conjugation(r.shape),
+            )
             for i, (line, h) in enumerate(zip(row, hrow, strict=True)):
                 line.now = np.where(top, nows[i], line.now)
                 line.before = np.where(top, befores[i], line.before)
-                line.rem = np.where(top, mirrored(h.rem, h.wall, 1 + (k[i][i] < 0)), line.rem)
+                line.rem = np.where(top, rems[i], line.rem)
                 if np.ndim(h.wall):
                     line.wall = np.where(top, h.wall, line.wall)
                 if line.wr is not None:
-                    line.wr = np.where(top, mirrored(h.wr, line.wwall, 1), line.wr)
+                    line.wr = np.where(top, acts.mirror(h.wr, line.wwall, 1), line.wr)
 
     def swap(self, held: list[list[Line]], direction: int = 1, top: Any = None) -> Any:
         """The swap at the top, in the direction (RW-S1; backward the exchange of the turned Nodes `top` from the frame, the former Interval's own exchange kept by name): the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), at a frozen Node by this trigger alone on its restored line (FR-S1, the owner's words of 2026-10-26, 03:41 UTC, approved, and 07:3x UTC, entered as the fix of a forbidden state: no Node frozen for ever; BH-S1's mask on the trigger struck and kept by name); the turned Node ends the interval at the state it started from, exchanged and complemented."""

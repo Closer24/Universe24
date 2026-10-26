@@ -1,10 +1,11 @@
-"""Rule3 in one place, written as the law writes it, the flux line (ALGEBRA.md #the-line, #the-direction, #the-interval): w (a_next - 2 a_now + a_before) + r' - r = SUM over the Node's six Links of R_ij (m_ij - a_now) - D_i a_now, the reach R_ij = 2 num p_i^2 Q_ij G^2 of each Link read from the Node's end (the Node's pace squared times the Link's factor), the mass D_i = 12 (den - num) p_0^2 G^2 of the Node (the clock's alone, 0 for light), the wall w = 6 den Gamma^2 G^2, the remainder r kept in [0, w). One function steps every plain line at every Node in either direction (`rule3`), the sum over the Links gathered by the step's module (flux.py) and handed in as one array; the one carried division under it (`carried_division`) is the division act with the remainder kept, which the division act's two functions call on a numerator. The own weight S_i = 2 w - D_i - SUM_j R_ij is derived here for the readings that name it, the form's Node term; the click's face reads the flux line's total (`flux_total`) with the face's arrival 0 (features/click `presented`); the law's first form, SUM R_ij m_ij + S a_now - w a_before + r, the same integers by the identity, is written in no file of src/ (tools/step_oracle.py keeps it as the step's oracle). The largest integer whose square is at most a count is found by a bisection on the share reading and no root (`largest_below`); the rule's integers from the paces stand beside (`coefficients`, `mass`), the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-paces)."""
+"""Rule3 in one place, written as the law writes it, the flux line (ALGEBRA.md #the-line, #the-direction, #the-interval): w (a_next - 2 a_now + a_before) + r' - r = SUM over the Node's six Links of R_ij (m_ij - a_now) - D_i a_now, the reach R_ij = 2 num p_i^2 Q_ij G^2 of each Link read from the Node's end (the Node's pace squared times the Link's factor), the mass D_i = 12 (den - num) p_0^2 G^2 of the Node (the clock's alone, 0 for light), the wall w = 6 den Gamma^2 G^2, the remainder r kept in [0, w). One function steps every plain line at every Node in either direction (`rule3`), the sum over the Links gathered by the step's module (flux.py) and handed in as one array; the one carried division under it is the core's act (core/acts.divide, NL-S1; the former carried_division kept by name), which the division act's two functions call on a numerator. The own weight S_i = 2 w - D_i - SUM_j R_ij is derived here for the readings that name it, the form's Node term; the click's face reads the flux line's total (`flux_total`) with the face's arrival 0 (features/click `presented`); the law's first form, SUM R_ij m_ij + S a_now - w a_before + r, the same integers by the identity, is written in no file of src/ (tools/step_oracle.py keeps it as the step's oracle). The largest integer whose square is at most a count is found by a bisection on the share reading and no root (`largest_below`); the rule's integers from the paces stand beside (`coefficients`, `mass`), the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-paces)."""
 
 from __future__ import annotations
 
 from collections.abc import Callable
 from typing import Any, NamedTuple
 
+from event_universe.core.acts import divide
 from event_universe.core.ports import PORTS
 
 # the Node's reaches, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij G^2 on
@@ -72,13 +73,6 @@ def scaled(rule: Rule, scale: Any) -> Rule:
     )
 
 
-def carried_division(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[Any, Any]:
-    """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = total + r, the quotient u div w and the remainder u mod w kept in [0, w) for a total of either sign; the act at -1 is the act at +1 conjugated by the remainder's mirror w - 1 - r, `mirrored`, written once (CA-S1, the owner's word of 2026-10-26, 07:04 UTC: the direction is the slot; RW-S1, the owner's word of 2026-10-26, 08:2x UTC: the read is the write reversed, one function with the direction; the former sigma total + r with the quotient negated kept by name), exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
-    carried = total + mirrored(remainder, wall, direction == -1)
-    quotient = carried // wall
-    return quotient, mirrored(carried - wall * quotient, wall, direction == -1)
-
-
 def least_at(above: Callable[[int], bool]) -> int:
     """The least positive count at which `above` holds, by comparisons alone (the one search of the lays' amplitudes and the merger's rise; its four spellings kept by name): the bound doubled from 1 until it holds, then halved between the last count below and the first above."""
     high = 1
@@ -100,12 +94,12 @@ def rule3(
     flux: Any, mass: Any, wall: Any, now: Any, other: Any, remainder: Any, direction: int = 1
 ) -> tuple[Any, Any]:
     """Rule3's line in the law's flux form, one interval in `direction` sigma (ALGEBRA.md #the-line, #the-direction): w a_next + r' = w (2 a_now - a_before) - D a_now + SUM over the six Links of R_ij (m_ij - a_now) + r (`flux_total`), the sum over the Links `flux` gathered Link by Link by the step's module (flux.py, one difference per Link, each end's own reach), the Node's mass `mass` (D_i), the division the carried one (`carried_division`); +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r), the same flux read from the same level. A line with no Links and the mass 2 w - 2 K on the wall w is the rotation act a_next = (2 K a_now + r) div w - a_before (features/phase, the phase line; features/click `rotated`)."""
-    return carried_division(flux_total(flux, mass, wall, now, other), wall, remainder, direction)
+    return divide(flux_total(flux, mass, wall, now, other), wall, remainder, direction)
 
 
 def division_forward(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
     """Rule3's division act forward: (numerator + carry) div wall and the remainder, the one carried division on a numerator (ALGEBRA.md #the-four-acts)."""
-    return carried_division(numerator, wall, carry, 1)
+    return divide(numerator, wall, carry, 1)
 
 
 def link_unit_of(gamma: Any) -> int:
@@ -136,11 +130,6 @@ def held_numerator(
 def unit_of(sine: Any, action: Any) -> Any:
     """A plane's quantum, its unit 3 T s (the conventions' row 12: W_c sin omega_0 to the unit), s the pair's sine or den at the gap 0."""
     return UNIT_WEIGHT * action * sine
-
-
-def mirrored(remainder: Any, wall: Any, reversals: int) -> Any:
-    """The one rule of the remainder's mirror (fd1's form, the owner's word of 2026-10-25): a remainder born at the half wall of its division is mirrored to wall - 1 - r once for every reversal of its line (time's exchange, the sign's negation), two reversals leaving it; the identity for an even count."""
-    return wall - 1 - remainder if reversals & 1 else remainder
 
 
 def signed_quotient(numerator: Any, wall: Any) -> Any:

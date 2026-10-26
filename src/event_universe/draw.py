@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from event_universe.core import rule3
+from event_universe.core import acts, rule3
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import half, lattice, mirrored, quotient, remainder
+from event_universe.core.rule3 import half, lattice, quotient, remainder
 from event_universe.rows import PLANE, Line
 from event_universe.take import at_node, frame_nodes
 
@@ -30,7 +30,7 @@ def read_number(
                     else lattice(wl, at_node(r.reaches[k - 1], n))
                 )
             rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f := node.lattices[key]))
-            origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
+            origin = origin and rem in (w_half, acts.mirror(w_half, node.w, 1))
             coarse = coarse and values <= AXES
             digits.append((quotient(rem, f), values + 1))
     if origin or coarse:

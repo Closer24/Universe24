@@ -8,8 +8,9 @@ import numpy as np
 
 from event_universe import gram, readings
 from event_universe.core import paces
+from event_universe.core.acts import divide
 from event_universe.core.ports import AXES, PORTS, across
-from event_universe.core.rule3 import carried_division, division_forward, half, held_numerator, quotient
+from event_universe.core.rule3 import division_forward, half, held_numerator, quotient
 from event_universe.features import volume
 from event_universe.links import coupling_of, links_of
 from event_universe.metric import (
@@ -183,7 +184,7 @@ class Interval:
             ]
             if r is self.potential:
                 line = self.rows[k][0]
-                q, line.wr = carried_division(charge, line.wwall, line.wr, self.direction)
+                q, line.wr = divide(charge, line.wwall, line.wr, self.direction)
                 p_other[0] = p_other[0] + self.direction * node.w * self.x_now * q
             u_in = [paces.odd_rounded(p + p + 1, ds) for p in p_side]
             u_out = [paces.odd_rounded(p + p + 1, ds) for p in p_other]
