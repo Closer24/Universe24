@@ -29,17 +29,19 @@ def unread(key: str, why: str, predicate: str) -> dict[str, Any]:
 
 
 def hand_of_birth(record: Record) -> dict[str, Any]:
-    """Row 21: the C of the birth, the births' hands: the + child laid at the take's Node (the current's end) or at the other end, births of both hands over the record."""
-    right = sum(1 for b in record.births if b["plus"] == b["node"])
-    left = len(record.births) - right
+    """Row 21: the C of the birth, the births' hands: the + child laid at the take's Node (the current's end) or at the other end, read over the moving births alone (the births of a pair; a merger lays its light at both ends by the letter and carries no hand, counted beside: the Boss's 6413689341), births of both hands over the record."""
+    moving = [b for b in record.births if "takes" not in b]
+    right = sum(1 for b in moving if b["plus"] == b["node"])
+    left = len(moving) - right
     return {
         "21 the C of the birth": {
-            "births with the + child at the take's Node / at the other end": [right, left],
-            "verdict": unread_words("no birth", "births of both hands over the record")
-            if not record.births
+            "moving births with the + child at the take's Node / at the other end": [right, left],
+            "mergers beside (the light at both ends, no hand)": len(record.births) - len(moving),
+            "verdict": unread_words("no moving birth", "births of both hands over the record")
+            if not moving
             else "SHOWN: births of both hands"
             if right and left
-            else "NOT SHOWN: every birth of one hand",
+            else "NOT SHOWN: every moving birth of one hand",
         }
     }
 

@@ -12,7 +12,7 @@ from event_universe.rows import QUARTET
 NAMES = {
     "1": ("a bang recurs", "the recurring bang"),
     "1b": ("the board tops, every Node turns", "the board topping, every Node turning at once"),
-    "1c": ("the board returns to Gamma", "the board returning to Gamma"),
+    "1c": ("the board returns to the seed", "the board returning to the seed's volumes"),
     "2": ("the Links lengthen", "the lengthening of the Links"),
     "3": ("the board shortens then lengthens", "the Links shortening, then lengthening"),
     "4": ("the era of matter", "the era of matter"),
@@ -88,6 +88,11 @@ NAMES = {
         "matter against antimatter, the + child's end chosen by the hand",
     ),
     "69": ("the neutrino's one hand", "the neutrino's one hand, the births' hand all one"),
+    "70": ("the baryon number holds", "the baryon number, the C-odd count 0 at every birth"),
+    "71": (
+        "the momentum booked on the Link",
+        "the momentum across the click booked on the Link's record, an identity at every move",
+    ),
     "the conservations in the clicks": ("the clicks conserve", "the conservations in the clicks"),
     "the three constants": ("the three constants hold", "the three constants"),
 }  # every row by its number (the key's first word) or its key: its label of three to six words for the page, and the phenomenon in plain words for the table
@@ -109,8 +114,8 @@ def phenomenon_of(key: str) -> str:
 
 
 def eras_of(out: dict[str, Any], intervals: int, tops: list[int], returns: list[int]) -> dict[str, Any]:
-    """The eras row from the rows already read and the board's whole lists (the tops of row 1b and the exact returns of row 1c, every one, where the rows list the first eight alone): the bangs (the seed's and one after every exact return), the tops, and the spans from each bang, from the era of matter (4), the acceleration (5) and the bang recurring (46) at the interval each first shows, each span to the next's start."""
-    bangs = [1] + [int(i) + 1 for i in returns]
+    """The eras row from the rows already read and the board's whole lists (the tops of row 1b and the exact returns of row 1c, every one, where the rows list the first eight alone): the bangs (the seed's and one at every exact return, the interval the board is back at the seed's first state, as gate 1 numbers them), the tops, and the spans from each bang, from the era of matter (4), the acceleration (5) and the bang recurring (46) at the interval each first shows, each span to the next's start."""
+    bangs = [1] + [int(i) for i in returns]
     starts = [(b, "1", label_of("1")) for b in bangs] + [
         (e["i"], e["gate"].split()[0], e["label"])
         for e in out["events"]
@@ -184,9 +189,9 @@ def no_field(record: Record) -> str:
 
 
 def no_conversion(record: Record) -> str:
-    """Why the neutrino is not read: no conversion in the record, every prime of den within the width."""
+    """Why the neutrino is not read: no conversion in the record, den's circle read whole."""
     points = len(record.circle())
-    return f"no conversion in the record and every prime of den within the width ({points} points on den's circle)"
+    return f"no conversion in the record, den's circle read whole ({points} points)"
 
 
 UNREAD: tuple[tuple[str, str | Callable[[Record], str], str], ...] = (

@@ -1,33 +1,79 @@
-"""The merger at rest, MG-S1 (H-Merger-At-Rest-1, 2026-10-26, the Boss's order under the owner's delegation; the former CS8-S1 and CS8-S2 as one letter): a child's wall is its own quantum, the share its levels (A, 0 | 0, +-B) hold alone at the Node under its row's rule, the same two integers for every row (`walls_of`; the former board's increment kept by name, equal to it on an empty plane); a record with a gap whose two ends hold a whole quantum each of opposite charge with no current across the Link meets as the conjugate pair (close.meet's rest branch); each child's wall is paid at its own end by the taken record's levels at that Node taken whole by the one lay act at -1, the fall the share the board loses, both ends read before either is written, refused by name `stop` where an end's fall is below the wall (`merger_falls`, `merger_take`; the Link's number read after the stop, so a stopped pair draws nothing); the light is laid at each end as the exact take at -1, on the line the take names, by the least count of levels at which the share rises by the wall (`rise_of`), as the child's lay where the line has no direction (`light_children`). The close's one take act for every letter (CR-S1 and CR-S2, the owner's word of 2026-10-26, 06:1x UTC): the ends read before any is written (`read_ends`), then written (`write_ends`), the birth's one end, the body's one end and the merger's two alike (`takes`, `summed`)."""
+"""The merger at rest, MG-S1 (H-Merger-At-Rest-1, 2026-10-26, the Boss's order under the owner's delegation; the former CS8-S1 and CS8-S2 as one letter): a child's wall is its own quantum, the share its levels (A, 0 | 0, +-B) hold alone at the Node under its row's rule, the same two integers for every row (`walls_of`; the former board's increment kept by name, equal to it on an empty plane); a record with a gap whose two ends hold a whole quantum each of opposite charge with no current across the Link meets as the conjugate pair (close.meet's rest branch); each child's wall is paid at its own end by the taken record's levels at that Node taken whole by the one lay act at -1, the fall the share the board loses, both ends read before either is written, refused by name `stop` where an end's fall is below the wall (`merger_falls`, `merger_take`; the Link's number read after the stop, so a stopped pair draws nothing); the light is laid at each end as the exact take at -1, on the line the take names, by the least count of levels at which the share rises by the wall (take.fall_of at -1; the former rise_of kept by name), the levels of that lay `light_levels`, the two children's lay one act for the light and the charged child alike (`children_laid`). The close's one take act for every letter (CR-S1 and CR-S2, the owner's word of 2026-10-26, 06:1x UTC): the ends read before any is written (`read_ends`), then written (`write_ends`), the birth's one end, the body's one end and the merger's two alike (`takes`, `summed`)."""
 
 from __future__ import annotations
 
 from collections.abc import Callable
-from functools import partial
 from typing import TYPE_CHECKING, Any
 
 from event_universe import gram, take
 from event_universe.core import rule3
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import least_at, quotient, share_weight
-from event_universe.links import cross
-from event_universe.rows import Line, zeros
-from event_universe.take import at_node, frame_nodes, lay, momentum_of, move, neighbour
+from event_universe.rows import PLANE, Line, zeros
+from event_universe.take import frame_nodes, lay, momentum_of, move, recoil
 
 if TYPE_CHECKING:
     from event_universe.node import Node
 
 
-def child_at(node: Node, s: int, where: tuple[int, ...], sense: int, sign: int = 1) -> list[int]:
-    """One child laid at one end at the charge T div 2 at the quarter turn, with the charge's sign on the re line (GP-S1, the owner's word of 2026-10-26, 04:3x UTC: re_now sense A, im_before B, A B = T div 2, the same two integers for every row, so the light's re line carries its parity under C P, odd as the emission that sources it; MS-S1's former spelling (A, 0, 0, sense B) kept by name: the - child's two spellings are one record turned by a half turn, the same charge, share and wall), its lay's momentum booked and returned; taken back with the sign -1."""
+def child_levels(row: Any, sense: int, a: int, b: int) -> tuple[int, ...]:
+    """A child's levels at one end, now and before per line of the row's shape: the one lay of the law laid at the unit (gram.moving, MV-S1's form; the seed's rest lay the same lay at the row's own pair), the now pair (sense A, 0) and the before pair (0, sense B) at the quarter turn along the vector (1, 0, ...), so re_now sense A and im_before B (GP-S1's two integers, A B = T div 2) and 0 on every other level; the former plane-typed four and the child's own spelling kept by name (the Boss's 6414464356: the rest lay and child_at one lay)."""
+    vector = [1] + [0] * (len(row.lines) - 1)
+    lines = gram.moving(row.shape, 1, vector, (sense * a, 0), (0, sense * b), 1, sense)
+    return tuple(int(x) for line in lines for x in (line.now, line.before))
+
+
+def children_laid(
+    node: Node,
+    s: int,
+    minus: tuple[int, ...],
+    plus: tuple[int, ...],
+    levels_of: Callable[[tuple[int, ...], int], tuple[int, ...]],
+) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:
+    """The two children laid by the one lay act, the - child at the - end and the + child at the + end, each end's levels by `levels_of` at the end and its sense (the charged child's child_levels at the charge T div 2 with the charge's sign on the re line, GP-S1, the owner's word of 2026-10-26, 04:3x UTC; a merger's light the exact take at -1, `light_levels`, MG-S1), each lay's momentum booked per line of the row at its Node before it is laid (momentum_per_line, the Boss's 6413599502 (b)), the second end read on the board the first lay changed (the sum exact); the former child_at, close.child_laid and light_children one function (NL-S1's stroke 4, 2026-10-26). Returns the lays' momentum summed and per end (dP_lay_ends, the J hands' key, AJ-S2), each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the record's levels at each Node before the lay (the residue)."""
     row = node.records()[s]
-    re, im = row.lines
+    stood, ends = stood_at(row, minus, plus), []
+    for where, sense in ((minus, -1), (plus, 1)):
+        levels = levels_of(where, sense)
+        ends.append(momentum_per_line(node, row, where, levels))
+        lay(node, s, where, levels)
+    return [a + b for a, b in zip(*ends, strict=True)], senses_at(row, minus, plus), stood, ends
+
+
+def light_levels(
+    node: Node, s: int, walls: dict[int, int], rule: rule3.Rule, exact: list[list[int] | None]
+) -> Callable[[tuple[int, ...], int], tuple[int, ...]]:
+    """A merger's light at an end (MG-S1), the levels its lay names: the exact take at -1 (take.fall_of at -1; the former rise_of kept by name) on the line the take names, the count of levels at which the share rises by the child's wall at that end (`walls` by the sense), laid on that line's now alone, at both ends (the light is never the child's lay, which carries the charge; the former `d == 0` branch the bug of H-Children-Charge-Bug-1, struck 2026-10-26), the exact lay [line, count, rise] appended to `exact`; the end's sense enters no level of the light (H-Matter-From-The-Floor's bug (a), open: the merger's orientation reaching the board)."""
+    row = node.records()[s]
+
+    def levels_of(where: tuple[int, ...], sense: int) -> tuple[int, ...]:
+        count, rise, k = take.fall_of(node, where, walls[sense], rule, row, -1)
+        assert count is not None
+        z = row.lines[k]
+        d = count * (1 if int(z.now[where]) > int(z.before[where]) else -1)
+        exact.append([k, d, rise])
+        return tuple(d if j == PLANE * k else 0 for j in range(PLANE * len(row.lines)))
+
+    return levels_of
+
+
+def momentum_per_line(
+    node: Node, row: Any, where: tuple[int, ...], levels: tuple[int, ...], sign: int = 1
+) -> list[int]:
+    """The momentum a lay of `levels` (now, before per line) at the Node books, summed over the record's lines (take.momentum_of per line; the form generic in the lines, the quartet pair's replacement 17)."""
     assert row.pair is not None
-    num = row.pair[0]
-    dp = momentum_of(node, re.now, re.before, where, d_now=sign * sense * node.A, num=num)
-    dp_im = momentum_of(node, im.now, im.before, where, d_before=sign * node.B, num=num)
-    lay(node, s, where, (sense * node.A, 0, 0, node.B), sign)
-    return [a + b for a, b in zip(dp, dp_im, strict=True)]
+    found = [0] * AXES
+    for j, line in enumerate(row.lines):
+        dj = momentum_of(
+            node,
+            line.now,
+            line.before,
+            where,
+            sign * levels[PLANE * j],
+            sign * levels[PLANE * j + 1],
+            row.pair[0],
+        )
+        found = [a + b for a, b in zip(found, dj, strict=True)]
+    return found
 
 
 def walls_of(
@@ -38,7 +84,7 @@ def walls_of(
     rule: rule3.Rule,
     cache: dict[tuple[int, int, tuple[int, ...]], int],
 ) -> tuple[int, int]:
-    """Each child's wall, its own quantum (MG-S1, CS8-S2): the child laid by the one lay act at its end on zero lines of the row's shape (the row's lines held and put back), the share summed under the row's rule at the board's content over the end and its six neighbours (`share_at`: the zero lines' share is 0 everywhere else), the lines discarded; the same two integers for every row and every Node of one content, read once per end and row in a close (`cache`: no line of the board enters it); the former reading, the board's increment where the plane already stands, kept by name."""
+    """Each child's wall, its own quantum (MG-S1, CS8-S2): the child laid by the one lay act at its end on zero lines of the row's shape (the row's lines held and put back), the share summed under the row's rule at the board's content over the end and its six neighbours (gram.share at that window: the zero lines' share is 0 everywhere else), the lines discarded; the same two integers for every row and every Node of one content, read once per end and row in a close (`cache`: no line of the board enters it); the former reading, the board's increment where the plane already stands, kept by name."""
     row = node.records()[s]
     held, found = row.lines, []
     for where, sense in ((minus, -1), (plus, 1)):
@@ -46,45 +92,12 @@ def walls_of(
             row.lines = [
                 Line(zeros(node.shape), zeros(node.shape), line.rem, line.wall) for line in held
             ]
-            child_at(node, s, where, sense)
-            cache[(s, sense, where)] = sum(
-                share_at(node, row.lines, rule, at) for at in set(frame_nodes(node, where))
-            )
+            lay(node, s, where, child_levels(row, sense, node.A, node.B))
+            window = sorted(set(frame_nodes(node, where)))
+            cache[(s, sense, where)] = sum(int(v) for v in gram.share(node, row.lines, rule, window))
         found.append(cache[(s, sense, where)])
     row.lines = held
     return found[0], found[1]
-
-
-def share_at(node: Node, lines: list[Line], r: rule3.Rule, at: tuple[int, ...]) -> int:
-    """A record's share at one Node (gram.share's form, the same integers read at the Node and its six neighbours alone)."""
-    g = gram.gram(len(lines))
-    weighted = partial(gram.weighted, g)
-    nows, befores = [int(line.now[at]) for line in lines], [int(line.before[at]) for line in lines]
-    reached, shared = [0] * len(lines), [0] * len(lines)
-    for port, reach in enumerate(r.reaches):
-        q, reach_at = neighbour(node, at, port), at_node(reach, at)
-        b_j, n_j = [int(line.before[q]) for line in lines], [int(line.now[q]) for line in lines]
-        reached = [x + reach_at * bj for x, bj in zip(reached, b_j, strict=True)]
-        parts = weighted(
-            [b - bj for b, bj in zip(befores, b_j, strict=True)],
-            [n + nj for n, nj in zip(nows, n_j, strict=True)],
-        )
-        shared = [x + reach_at * part for x, part in zip(shared, parts, strict=True)]
-    own = [
-        at_node(r.wall, at) * (nn + bb) - at_node(r.self_coefficient, at) * nb - nr
-        for nn, bb, nb, nr in zip(
-            weighted(nows, nows),
-            weighted(befores, befores),
-            weighted(nows, befores),
-            weighted(nows, reached),
-            strict=True,
-        )
-    ]
-    wall, x = share_weight(node.gamma, node.G) + share_weight(node.gamma, node.G), int(node.start_x[at])
-    return sum(
-        int(rule3.division_forward((o + o - s) * x, wall, 0)[0])
-        for o, s in zip(own, shared, strict=True)
-    )
 
 
 def share_fall(
@@ -96,13 +109,13 @@ def share_fall(
     cache: dict[tuple[int, tuple[int, ...]], int],
 ) -> int:
     """The share the board loses by a lay at -1 of the levels at the Node (laid and laid back): the lay changes the share at the Node and its six neighbours alone, so the fall is their shares' difference, bit for bit the board's (the former read of the whole board's share, kept by name); the shares as they stand kept in `cache` per record and Node for the close until a take writes."""
-    row, window, before = node.records()[rec], set(frame_nodes(node, where)), 0
-    for at in window:
-        if (rec, at) not in cache:
-            cache[(rec, at)] = share_at(node, row.lines, rule, at)
-        before += cache[(rec, at)]
+    row, window = node.records()[rec], sorted(set(frame_nodes(node, where)))
+    unread = [at for at in window if (rec, at) not in cache]
+    for at, v in zip(unread, gram.share(node, row.lines, rule, unread) if unread else [], strict=True):
+        cache[(rec, at)] = int(v)
+    before = sum(cache[(rec, at)] for at in window)
     lay(node, rec, where, levels, -1)
-    after = sum(share_at(node, row.lines, rule, at) for at in window)
+    after = sum(int(v) for v in gram.share(node, row.lines, rule, window))
     lay(node, rec, where, levels, 1)
     return before - after
 
@@ -151,12 +164,10 @@ def write_ends(
     found: list[dict[str, Any]] = []
     for where, wall, levels, fall, k, rem_was, owed in reads:
         if row is not node.emitter():
-            (re, im), (re_now, re_before, im_now, im_before) = row.lines, levels
-            dp = momentum_of(node, re.now, re.before, where, -re_now, -re_before, row.pair[0])
-            dp_im = momentum_of(node, im.now, im.before, where, -im_now, -im_before, row.pair[0])
+            moment = momentum_per_line(node, row, where, tuple(levels), -1)
             lay(node, rec, where, levels, -1)
             node.closes[where] -= 1
-            size, moment = sum(abs(x) for x in levels), [a + b for a, b in zip(dp, dp_im, strict=True)]
+            size = sum(abs(x) for x in levels)
             found.append(
                 dict(
                     node=list(where),
@@ -165,6 +176,7 @@ def write_ends(
                     levels=size,
                     taken_levels=list(levels),
                     dP_take=moment,
+                    **recoil(node, where, moment, int(node.start_clock[where]), 1),
                 )
             )
             continue
@@ -176,6 +188,7 @@ def write_ends(
         node.closes[where] += 1
         node.take_rem[where] = fall - owed
         node.last_dp = momentum_of(node, z.now, z.before, where, d_now=toward * levels, num=row.pair[0])
+        node.last_recoil = recoil(node, where, node.last_dp, int(node.start_clock[where]), 1)
         found.append(
             {
                 "node": list(where),
@@ -189,6 +202,7 @@ def write_ends(
                 "remainder_was": rem_was,
                 "remainder": fall - owed,
                 "owed": owed,
+                **node.last_recoil,
             }
         )
     return found
@@ -228,43 +242,12 @@ def summed(found: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def rise_of(
-    node: Node, where: tuple[int, ...], wall: int, rule: rule3.Rule, row: Any
-) -> tuple[int, int, int]:
-    """The exact take at -1 (MG-S1): on the line the fall's sign names (take.fall_of, CS4-S2) the least count d of levels moved away from the before at which the Node's share rises by the wall (a line with no direction, now equal to before, moved away as the fall\'s own sense names it, -1: the bug of H-Children-Charge-Bug-1, the tie end laid as the charged child, struck 2026-10-26), the rise fall_of's form with the sign mirrored, x (w ((now + u d)^2 - now^2) + u d pull) over the weight, the least count by doubling and bisection in comparisons; (k, 0, 0) where the line has no direction (now = before). Returns (the line, the signed count, the rise)."""
-    _levels, _fall, k = take.fall_of(node, where, wall, rule, row)
-    line = row.lines[k]
-    now, before = int(line.now[where]), int(line.before[where])
-    u = 1 if now > before else -1
-    own, w, reached = at_node(rule.self_coefficient, where), int(rule.wall), 0
-    for port, reach in enumerate(rule.reaches):
-        reached += at_node(reach, where) * int(line.before[neighbour(node, where, port)])
-    pull = own * before + reached
-    x, weight = int(node.start_x[where]), share_weight(node.gamma, node.G)
-
-    def rise(d: int) -> int:
-        moved = now + u * d
-        return int(quotient(x * (w * (moved * moved - now * now) + u * d * pull), weight))
-
-    high = least_at(lambda d: rise(d) >= wall)
-    return k, u * high, rise(high)
+def stood_at(row: Any, minus: tuple[int, ...], plus: tuple[int, ...]) -> list[list[int]]:
+    """The record's levels standing at the two ends, now and before per line in the row's order (the log's `stood`; generic in the lines)."""
+    return [[int(x[w_]) for line in row.lines for x in (line.now, line.before)] for w_ in (minus, plus)]
 
 
-def light_children(
-    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], walls: list[int], rule: rule3.Rule
-) -> tuple[list[int], list[int], list[list[int]], list[list[int] | None], list[list[int]]]:
-    """A merger's two light children (MG-S1): at each end the light laid as the exact take at -1 (`rise_of`) on the line the take names, at both ends (the light is never the child's lay, which carries the charge; the former `d == 0` branch the bug of H-Children-Charge-Bug-1, struck 2026-10-26); returns the lays' momentum, each child's Wronskian at its Node, the plane's four levels at each Node before the lay and the exact lays [line, count, rise] (None where the child's lay)."""
-    row = node.records()[s]
-    re, im = row.lines
-    assert row.pair is not None
-    stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
-    dp_lay, exact, ends = [0] * AXES, [], []  # type: list[int], list[list[int] | None], list[list[int]]
-    for where, wall in zip((minus, plus), walls, strict=True):
-        k, d, rise = rise_of(node, where, wall, rule, row)
-        z = row.lines[k]
-        dp = momentum_of(node, z.now, z.before, where, d_now=d, num=row.pair[0])
-        move(node, s, k, where, d)
-        exact.append([k, d, rise])
-        dp_lay, ends = [a + b for a, b in zip(dp_lay, dp, strict=True)], [*ends, list(dp)]
-    senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
-    return dp_lay, senses, stood, exact, ends
+def senses_at(row: Any, minus: tuple[int, ...], plus: tuple[int, ...]) -> list[int]:
+    """The record's charge at the two ends after the lay (gram.charge, the plane's Wronskian re_now im_before - im_now re_before; generic in the lines), the children's W as the log names it."""
+    charge = gram.charge(row.shape, row.lines)
+    return [int(charge[w_]) for w_ in (minus, plus)]

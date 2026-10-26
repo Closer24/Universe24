@@ -356,14 +356,14 @@ def merger(record: Record) -> dict[str, Any]:
 
 
 def horizon_radiates(record: Record) -> dict[str, Any]:
-    """Row 61: the horizon radiates (hp2's predicate, the Boss's 6408295798, the owner's word of 03:4x UTC: Hawking's radiation as nature looks in the clicks): after a Node's first freeze, a birth at that Node or at one of its six neighbours, and a credit two or more Links from every frozen Node (the radiation leaving the horizon); NOT READ with no frozen Node."""
+    """Row 61: the horizon radiates (hp2's predicate, the Boss's 6408295798, the owner's word of 03:4x UTC: Hawking's radiation as nature looks in the clicks): after a Node's first freeze, a birth at that Node or at one of its six neighbours, and a credit two or more Links from every Node frozen at the credit's own interval, the horizon standing then (the Reader's form of 6416667138 for the board frozen at every Node, the Boss's 6416342006: no credit passes while the whole board is the horizon, and the credits after a release are beyond the horizon as it shrinks; the former read against every Node ever frozen); NOT READ with no frozen Node."""
     first = record.first_frozen()
     if not first:
         return {
             "61 the horizon radiates": {
                 "verdict": unread_words(
                     "no frozen Node in the record (as gate 14)",
-                    "a birth at a frozen Node or its neighbour after its freeze, with a credit two or more Links from every frozen Node",
+                    "a birth at a frozen Node or its neighbour after its freeze, with a credit two or more Links from every Node frozen at the credit's interval",
                 )
             }
         }
@@ -371,20 +371,28 @@ def horizon_radiates(record: Record) -> dict[str, Any]:
         n: i for at, i in first.items() for n in neighbours(record, at)
     }
     births = [b for b in record.births if int(b["i"]) > near.get(record.index(b["node"]), int(b["i"]))]
+    standing = {int(line["i"]): [int(at) for at in line["frozen"]] for line in record.nodes}
     far = [
         c
         for c in record.credits
         if int(c["i"]) > min(first.values())
-        and all(record.distance(tuple(c["node"]), tuple(record.node(at))) >= PAIR for at in first)
+        and all(
+            record.distance(tuple(c["node"]), tuple(record.node(at))) >= PAIR
+            for at in standing.get(int(c["i"]), [])
+        )
     ]
+    released = sum(1 for c in far if not standing.get(int(c["i"])))
+    whole = any(len(ats) == len(record.nodes[0]["X"]) for ats in standing.values())
     return {
         "61 the horizon radiates": {
             "Nodes frozen": len(first),
+            "the whole board frozen at once": whole,
             "births at a frozen Node or its neighbour after the freeze": len(births),
-            "credits two or more Links from every frozen Node after the first freeze": len(far),
+            "credits two or more Links from every Node frozen at the credit's interval": len(far),
+            "of them after the whole board's release (no Node frozen at the interval)": released,
             "at": list(births[0]["node"]) if births else None,
             "verdict": f"SHOWN: a birth at the horizon and a credit beyond it, {len(births)} births and {len(far)} credits"
             if births and far
-            else f"NOT SHOWN: {len(births)} births at a frozen Node or its neighbour after the freeze, {len(far)} credits beyond the horizon",
+            else f"NOT SHOWN: {len(births)} births at a frozen Node or its neighbour after the freeze, {len(far)} credits beyond the horizon standing at the credit's interval",
         }
     }

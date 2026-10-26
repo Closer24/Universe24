@@ -2,17 +2,19 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from functools import lru_cache
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core.ports import AXES, PORTS, across, port_of, wrap
+from event_universe.core.ports import AXES, PORTS, across, port_of, transverse
 from event_universe.core.rule3 import half, quotient, share_weight, signed_quotient
 from event_universe.links import gradient
-from event_universe.quartet import quartet
+from event_universe.loader.quartet import quartet
 from event_universe.readings import pair_angle
 from event_universe.rows import PLANE, QUARTET, Line, zeros
+from event_universe.take import neighbour
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -54,11 +56,6 @@ def conjugation(shape: int) -> Matrix:
 def axes(shape: int) -> list[Matrix]:
     """The row's axis matrices Gamma_a, the coupling's: the quartet's three, none for another shape."""
     return quartet().gamma if shape == QUARTET else []
-
-
-def scale(shape: int, gamma: Any) -> Any:
-    """The row's scale on the rule and the walls: 2 x 6 Gamma for the quartet, so that the term's coefficient R / (2 Gamma) summed over the six Ports enters as the integer SUM_j R_j (SR-S3, sr1's form); 1 for every other shape."""
-    return (PORTS + PORTS) * gamma if shape == QUARTET else 1
 
 
 def matvec(m: Matrix, xs: list[Any]) -> list[Any]:
@@ -118,11 +115,11 @@ def density(shape: int, nows: list[Any]) -> list[Any]:
 
 def curl(odd: list[Any]) -> list[Any]:
     """The one-Link curl of the shape-4 row's odd lines at the Node, Phi_a = d_b A_c - d_c A_b with d_b the centred difference through the two Ports of the axis b."""
-    return [
-        gradient(odd[wrap(a - 1, AXES)], wrap(a + 1, AXES))
-        - gradient(odd[wrap(a + 1, AXES)], wrap(a - 1, AXES))
-        for a in range(AXES)
-    ]
+    found = []
+    for a in range(AXES):
+        b, c = transverse(a)
+        found.append(gradient(odd[c], b) - gradient(odd[b], c))
+    return found
 
 
 def term(shape: int, coefficient: Any, phi: list[Any], xs: list[Any]) -> list[Any]:
@@ -133,26 +130,43 @@ def term(shape: int, coefficient: Any, phi: list[Any], xs: list[Any]) -> list[An
     return found
 
 
-def share(node: Node, lines: list[Line], r: Any) -> Any:
-    """The conserved form's share of a record at the Node in the carrier's unit (PM-S1: every count of the Node read in the carrier's unit, the one weight for every read and every row alike), one division per line: for the line k, [w (n_k (G n)_k + b_k (G b)_k) - S n_k (G b)_k - n_k (G SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (G (n + n_j))_k, times X the carrier's level at the interval's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the plane's share line by line as the case G = I; at the row's unscaled rule."""
-    from event_universe.core.rule3 import division_forward
-
+def share(node: Node, lines: list[Line], r: Any, window: list[tuple[int, ...]] | None = None) -> Any:
+    """The conserved form's share of a record at the Node in the carrier's unit (PM-S1: every count of the Node read in the carrier's unit, the one weight for every read and every row alike), one division per line: for the line k, [w (n_k (G n)_k + b_k (G b)_k) - S n_k (G b)_k - n_k (G SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (G (n + n_j))_k, times X the carrier's level at the interval's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the plane's share line by line as the case G = I; at the row's unscaled rule. At a window of Nodes (`window`, a take's Node and its six neighbours, merger.walls_of and share_fall) the same integers read at those Nodes alone, each neighbour gathered by its place through take.neighbour, returned in the window's order (the former merger.share_at, gram.share's form re-spelt at one Node, folded 2026-10-26 as R3 of the readings' map: one spelling, the vectorised form inside it)."""
     g = gram(len(lines))
-    nows, befores = [line.now for line in lines], [line.before for line in lines]
-    reached = [zeros(node.shape) for _ in lines]
-    shared = [zeros(node.shape) for _ in lines]
+    at: Callable[[Any], Any]
+    beyond: Callable[[Any, int], Any]
+    if window is None:
+        at, beyond, x = (lambda a: a), across, node.start_x
+    else:
+        places = [tuple(np.array(w) for w in zip(*window, strict=True))]
+        for port in range(PORTS):
+            around = [neighbour(node, where, port) for where in window]
+            places.append(tuple(np.array(w) for w in zip(*around, strict=True)))
+
+        def at(a: Any) -> Any:
+            return a[places[0]] if np.ndim(a) else a
+
+        def beyond(a: Any, port: int) -> Any:
+            return a[places[1 + port]]
+
+        x = node.start_x[places[0]]
+    full_n, full_b = [line.now for line in lines], [line.before for line in lines]
+    nows, befores = [at(n) for n in full_n], [at(b) for b in full_b]
+    reached = [at(zeros(node.shape)) for _ in lines]
+    shared = [at(zeros(node.shape)) for _ in lines]
     for port, reach in enumerate(r.reaches):
-        b_j = [across(b, port) for b in befores]
-        n_j = [across(n, port) for n in nows]
-        reached = [x + reach * bj for x, bj in zip(reached, b_j, strict=True)]
+        b_j = [beyond(b, port) for b in full_b]
+        n_j = [beyond(n, port) for n in full_n]
+        here = at(reach)
+        reached = [v + here * bj for v, bj in zip(reached, b_j, strict=True)]
         parts = weighted(
             g,
             [b - bj for b, bj in zip(befores, b_j, strict=True)],
             [n + nj for n, nj in zip(nows, n_j, strict=True)],
         )
-        shared = [s + reach * part for s, part in zip(shared, parts, strict=True)]
+        shared = [s + here * part for s, part in zip(shared, parts, strict=True)]
     own = [
-        r.wall * (nn + bb) - r.self_coefficient * nb - nr
+        at(r.wall) * (nn + bb) - at(r.self_coefficient) * nb - nr
         for nn, bb, nb, nr in zip(
             weighted(g, nows, nows),
             weighted(g, befores, befores),
@@ -162,9 +176,9 @@ def share(node: Node, lines: list[Line], r: Any) -> Any:
         )
     ]
     wall = share_weight(node.gamma, node.G) + share_weight(node.gamma, node.G)
-    found = zeros(node.shape)
+    found = at(zeros(node.shape))
     for o, s in zip(own, shared, strict=True):
-        found = found + np.asarray(division_forward((o + o - s) * node.start_x, wall, 0)[0])
+        found = found + np.asarray(quotient((o + o - s) * x, wall))
     return found
 
 
@@ -197,10 +211,13 @@ def rest(
 
 
 def cosine_count(node: Node, p: int, d: int) -> int:
-    """The count n along the law's orbit (features/phase, the step 1 / Gamma) at which the orbit's cosine first falls to p / d, the rotation's angle in the orbit's units: a search by comparisons, cos_n d <= p X."""
+    """The count n along the law's orbit (features/phase, the step 1 / Gamma) at which the orbit's cosine first falls to p / d, the rotation's angle in the orbit's units: a search by comparisons, cos_n d <= p X, bounded by the orbit's half turn where the table reaches it (the deepest cosine the orbit holds)."""
     high = 1
-    while pair_angle(node, high)[0] * d > p * node.X:
+    while pair_angle(node, high)[0] * d > p * node.X and (
+        node.orbit_half is None or high < node.orbit_half
+    ):
         high = high + high
+    high = high if node.orbit_half is None else min(high, node.orbit_half)
     low = 0
     while high - low > 1:
         middle = half(low + high)

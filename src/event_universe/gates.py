@@ -8,7 +8,7 @@ from collections import Counter, defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe import board, clicks, events, predicates, symmetries
+from event_universe import bangs, board, clicks, events, predicates, symmetries
 from event_universe.core.ports import AXES
 from event_universe.decoder import (
     HALF,
@@ -21,7 +21,6 @@ from event_universe.decoder import (
     quot,
     unread_words,
 )
-from event_universe.rows import WIDTH
 
 Row = Callable[[Record], dict[str, Any]]
 
@@ -176,26 +175,19 @@ def recoil(record: Record) -> dict[str, Any]:
 
 
 def constants(record: Record) -> dict[str, Any]:
-    """The three constants: the count of integers per Node constant, every integer of the state and every transient within the width."""
+    """The three constants: the count of integers per Node constant through the run (the law's: a Node holds the same count of integers at every interval), with the widest integer of the state and of the transient named beside in bits as what the engine stores and nothing of nature (the owner's ruling of 2026-10-26, 22:1x UTC: the physics may not be tied to the bits of the run; the former verdict read every integer within the width, a wall of the machine's representation, and is struck)."""
     rows = record.rows
     counts_seen = sorted({r["integers"] for r in rows})
     state_bits = max((r["max bits"] for r in rows), default=0)
     transient_bits = max((r["max transient bits"] for r in rows), default=0)
-    lacks = ("the count changes; " if len(counts_seen) != 1 else "") + (
-        "the state past the width; " if state_bits > WIDTH else ""
-    )
-    lacks += "a transient past the width" if transient_bits > WIDTH else ""
     return {
         "the three constants": {
             "integers per Node": counts_seen,
-            "max state bits": state_bits,
-            "max transient bits": transient_bits,
-            "first interval past the width": next(
-                (r["i"] for r in rows if r["max transient bits"] > WIDTH or r["max bits"] > WIDTH), None
-            ),
-            "verdict": "SHOWN: the count constant, every integer and transient within the width"
-            if not lacks and rows
-            else "NOT SHOWN: " + lacks
+            "the engine's storage, no clause of the law: the widest integer of the state (bits)": state_bits,
+            "the engine's storage, no clause of the law: the widest transient (bits)": transient_bits,
+            "verdict": "SHOWN: the count of integers per Node constant through the run"
+            if len(counts_seen) == 1
+            else "NOT SHOWN: the count of integers per Node changes"
             if rows
             else "NOT READ: no row",
         }
@@ -271,9 +263,9 @@ RESTATED = (
 )  # the rows of the widened table that restate a gate of the nineteen, the gate's row beside each
 
 TABLE: tuple[Row, ...] = (
-    board.recurring_bang,
-    board.tops,
-    board.returns,
+    bangs.recurring_bang,
+    bangs.tops,
+    bangs.returns,
     clicks.lengthening,
     board.shortening,
     board.era,
@@ -343,6 +335,8 @@ TABLE: tuple[Row, ...] = (
     symmetries.cpt,
     symmetries.matter_against_antimatter,
     symmetries.one_hand,
+    symmetries.baryon_number,
+    symmetries.momentum_booked,
     conservations,
     constants,
 )
@@ -372,18 +366,22 @@ def gates(run: dict[str, Any]) -> dict[str, Any]:
         ),
         "readings": "quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication",
         "rows read from the Node lines (the board's view; the rest from the log, the clicks' view)": [
-            key for row in TABLE if row.__module__ == board.__name__ for key in row(record)
+            key
+            for row in TABLE
+            if row.__module__ in (bangs.__name__, board.__name__)
+            for key in row(record)
         ],
     }
     out["events"] = events.first_shown(record, read)
     out["the eras"] = events.eras_of(
-        out, record.intervals, board.tops_of(record), board.exact_of(record)
+        out, record.intervals, bangs.tops_of(record), bangs.exact_of(record)
     )
     return out
 
 
 def main(argv: list[str]) -> None:
-    """The gates of a record file, one line each."""
+    """The gates of a record file, one line each; the interpreter's limit on an integer's digits lifted, so a record whose volumes passed the law's width still loads (the Boss's 6418880289: a reader could not load the record carried to 48)."""
+    sys.set_int_max_str_digits(0)
     with open(argv[1], encoding="utf-8") as record:
         for k, v in gates(json.load(record)).items():
             print(json.dumps({k: v}))

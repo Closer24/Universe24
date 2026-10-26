@@ -7,17 +7,19 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import gram
+from event_universe import gram, readings
+from event_universe import run as record
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import quotient
 from event_universe.interval import Interval
+from event_universe.links import factors
 from event_universe.loader.world import read_world
 from event_universe.merger import takes
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
 from event_universe.take import fall_of, frame_nodes, lay, move
-from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
+from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of, wronskian
 
 CENTRE, INTERVALS = (1, 1, 1), 20  # the fed Node, the 3-cube's centre; the run's intervals
 
@@ -42,20 +44,18 @@ def fed_horizon(node: Node, at: tuple[int, ...]) -> Node:
 def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -> None:
     """The horizon: the fed Node's two x Links at the wall (the factor 0), its other four above; no Link close reads the Node (no birth at it, none with it as an end); under PM-S1 the near-massless plane's shared half from a child laid at a neighbour stands at the Node at its own unit, so the near-massless plane's credits are read there (twelve in 20 intervals under PL-S1, five at W = 0 (none by 20 under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed)); under the former write of 2 W after the step twelve with nine at W = 0, the first beat 4 and the rest 1, under MS-S1's lay at T div 2 and CK-S1's beat of the half period with the crossing read even; eleven with eight at W = 0 and every beat 1 under the crossing odd at a touch of zero; named: the bodies' closing is not the Link close); the run back exact."""
     node = fed_horizon(node_of("world_node.json"), CENTRE)
-    factors = node.link_factors()
-    assert [int(f[CENTRE]) for f in factors[:2]] == [0, 0]
-    assert all(int(f[CENTRE]) > 0 for f in factors[2:])
+    read = factors(node)
+    assert [int(f[CENTRE]) for f in read[:2]] == [0, 0]
+    assert all(int(f[CENTRE]) > 0 for f in read[2:])
     fed = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
     clicks = clicks_at(node, CENTRE)
-    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [
-        (10, 270)
-    ] * 2  # (6, 18) at 54
-    # two credits under BH-S1's mask; six with the frozen Node released (FR-S1)
-    assert [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"] == [(1, 0)] + [
-        (-1, 0)
-    ] * 5
+    # two births of 270 levels at 10 before LT-S1 ((6, 18) at 54): the bookings move the fed board
+    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [(11, 1), (12, 519)]
+    # two credits under BH-S1's mask, six with the frozen Node released (FR-S1); (1, 0) then five (-1, 0) before LT-S1
+    credits = [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"]
+    assert credits == [(-1, 0), (0, 0), (1, 0), (0, 0), (0, 0)]
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
@@ -77,7 +77,8 @@ def test_the_frozen_node_is_not_read_and_never_clicks() -> None:
 
 def exchanged(node: Node, held: list[list[Any]], at: tuple[int, ...]) -> bool:
     flat = [line for row in held for line in row]
-    for line, h, im in zip(node.all_lines(), flat, node.is_im(), strict=True):
+    ims = [gram.conjugation(r.shape)[k][k] < 0 for r in node.rows_ for k in range(r.shape)]
+    for line, h, im in zip(node.all_lines(), flat, ims, strict=True):
         sign = -1 if im else 1
         wall = int(np.asarray(line.wall)[at]) if np.ndim(line.wall) else int(line.wall)
         if int(line.now[at]) != sign * int(h.before[at]) or int(line.before[at]) != sign * int(
@@ -215,7 +216,7 @@ def test_the_files_are_refused_by_name() -> None:
         ("at its quanta", {"seed": [{"lay": "wave", "row": 0}]}),  # no form of the law before CS5-S2
         ("the plane at the gap 0 alone", {"seed": [{"lay": "sea", "row": 1}]}),
         (
-            "half-width 2 or 3",
+            "half-width 1 .the one Node., 2 or 3",
             {"seed": [{"lay": "at", "row": 1, "centre": [1, 1, 1], "quanta": 1, "width": 4}]},
         ),
     ):
@@ -240,21 +241,23 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
         lines = node.all_lines()
         assert [[int(a[CENTRE]) for a in (line.now, line.before, line.rem)] for line in lines] == fed
         assert int(node.proper[CENTRE]) == proper and not node.turned[CENTRE]
-        frozen_now = np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object) == 0
+        frozen_now = (
+            np.asarray(paces.link_pace_of(node.gamma, readings.content(node)), dtype=object) == 0
+        )
         assert int(frozen_now.sum()) == 1 and frozen_now[CENTRE]
-        assert all(int(f[CENTRE]) == 0 for f in node.link_factors(None, frozen_now))
+        assert all(int(f[CENTRE]) == 0 for f in factors(node, None, frozen_now))
         assert all(
-            int(node.link_factors(None, frozen_now)[port ^ 1][n]) == 0
+            int(factors(node, None, frozen_now)[port ^ 1][n]) == 0
             for port, n in enumerate(frame_nodes(node, CENTRE)[1:])
         )
-    assert clicks_at(node, CENTRE) == [] and node.max_transient <= 128 and node.census()[1] <= 128
+    assert clicks_at(node, CENTRE) == [] and node.max_transient <= 128 and record.census(node)[1] <= 128
     assert run_back_exact(kept, 100) == 100
 
 
 def shares_of(node: Node) -> tuple[Any, Any, Any]:
     """The gap-0 line's share in the carrier's unit, and by hand at the frame's weight (X set to Gamma^3 div p_i^2) and at the vacuum's (X set to Gamma)."""
     gap0 = node.emitter()
-    rule = node.rule(gap0.pair, node.start_content, node.link_factors())
+    rule = readings.rule(node, gap0.pair, node.start_content, factors(node))
     pace = np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)
     x, carrier = node.start_x, gram.share(node, gap0.lines, rule)
     node.start_x = np.vectorize(lambda p: quotient(node.gamma**3, p * p), otypes=[object])(pace)
@@ -277,7 +280,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     assert carrier.tolist() == vacuum.tolist()
     for _ in range(20):
         node.step()
-    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
+    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
     carrier, frame, vacuum = shares_of(node)
     totals = [sum(int(v) for v in a.reshape(-1)) for a in (carrier, frame, vacuum)]
     # 390 at 54
@@ -292,8 +295,12 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     kept = copy.deepcopy(chiral)
     for _ in range(40):
         chiral.step()
-    counts = (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census())
-    assert counts == (17, 1910, (99, 112))  # 16, 2,127 and 115 bits at the trace 54
+    counts = (chiral.counts["births"], chiral.counts["body_clicks"], record.census(chiral))
+    assert counts == (
+        16,
+        1973,
+        (99, 112),
+    )  # 14 and 1,924 under 4ad484eb9's bound; 17 and 1,910 before LT-S1
     assert run_back_exact(kept, 10) == 10
 
 
@@ -328,10 +335,11 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
         node.step()
     births = [e for e in node.log if e["event"] == "birth"]
     pairs = [b for b in births if b["line_pair"] != node.records().index(node.emitter())]
-    # 6 pairs at 54, 4 before GP-S1
+    # 6 births and 5 pairs before LT-S1 as at -dP; 6 pairs at 54, 4 before GP-S1
     assert len(births) == 6 and len(pairs) == 5 and node.counts["met"] > len(births)
     for b in pairs:
         link = {tuple(b["minus"]), tuple(b["plus"])}
+        # the lay's or the orientation's refusal under 4ad484eb9's bound; the stop again, MG-S1's own
         assert any(
             e["event"] == "refused"
             and e["i"] == b["i"] + 1
@@ -394,7 +402,6 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
 
 def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> None:
     """WS (the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the swap at the top is the conjugation composed with the exchange of the two levels, and W = re_now im_before - im_now re_before, odd under each, is even under the two: at every turned Node and every plane (the gap-0 plane with the gapped), W after the swap equals W of the held pre-state exactly (read by a Node whose click reads before it lays; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one quantum of row 1 at the centre, the first turn at 42 under EQ-S1, the centre's body laying back 12 of its 39 credits where nothing arrives; 35 with the take standing under CK-S1's crossing read even, 37 under the crossing odd at a touch of zero, 42 before CK-S1's credits) 296 of 296 sites by 60 (74 turned Nodes; 324 and 81 with the take standing), every W 0 there; on the chiral 5-cube at 20 intervals 2,152 of 2,152 sites, 664 of them with W not 0 under EX-S1 (2,124 and 632 under GP-S1; 2,172 of 2,172 by 543 turned Nodes, 686 with W not 0 under MG-S1; 2,156 sites by 539 turned Nodes and 625 under PL-S1; 2,180 sites by 545 turned Nodes and 722 under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed); 2,160 sites by 540 turned Nodes and 695 under the former write of 2 W after the step; 2,124 and 672 under the odd crossing; 2,120 and 668 under the upward crossing alone; at 60 the probe read 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head)."""
-    from event_universe.links import wronskian
 
     class Reading(Node):
         wronskians: dict[str, int] = {}
@@ -425,7 +432,7 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert not {"negated", "changed"} & node.wronskians.keys()
         found.append(node.wronskians)
         # 2,152 sites and 708 with W not 0 at the trace 54 (664 before cc1)
-    assert [f["sites"] for f in found] == [296, 2112] and found[1]["nonzero"] == 539
+    assert [f["sites"] for f in found] == [296, 2112] and found[1]["nonzero"] == 533  # 539 before LT-S1
     assert "nonzero" not in found[0]
 
 
@@ -437,7 +444,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
     rec, count = 1, len(node.records())
     re = node.records()[rec].lines[0]
     nothing, still = [zeros(node.shape) for _ in range(count)], np.zeros(node.shape, dtype=bool)
-    rule = node.rule_of(node.emitter(), node.content(), node.link_factors())
+    rule = readings.rule_of(node, node.emitter(), readings.content(node), factors(node))
     for period in ((2, 1, 0, -1, -2, -1, 0, 1), (2, 1, -1, -2, -1, 1)):
         counters = []
         for sign in (1, -1):
@@ -471,7 +478,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         seen = [c for c in crossings[(e["line"], tuple(e["node"]))] if c[0] <= e["i"]]
         assert e["beat"] == seen[-1][0] - seen[-2][0], e
         upward.append(seen[-1][1])
-    assert (len(credits), sum(upward)) == (1045, 488)  # 1,032 and 366 at the trace 54
+    assert (len(credits), sum(upward)) == (1037, 481)  # 1,045 and 488 before LT-S1; 1,032 and 366 at 54
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
@@ -550,7 +557,7 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     for _ in range(INTERVALS):
         node.step()
     # ddfeb210 at 54
-    assert node.state_hash() == "ff82a0da34afd75bff667b6478758ab24e95adc6c49be85128a7d193ec15eb17"
+    assert record.state_hash(node) == "ff82a0da34afd75bff667b6478758ab24e95adc6c49be85128a7d193ec15eb17"
     interval = Interval(copy.deepcopy(node), 1)
     interval.readings()
     assert sorted(interval.links_at) == [0, 1] and any(
@@ -570,11 +577,11 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
     light = node.emitter()
     rec0, z = node.records().index(light), light.lines[0]
     z.now[at] = int(z.before[at]) + 3_000
-    c = node.content()
+    c = readings.content(node)
     node.start_content, node.start_x = c, node.row(CARRIER).lines[0].now
-    rule = node.rule_of(light, c, node.link_factors())
+    rule = readings.rule_of(node, light, c, factors(node))
     walls = node.unit_emitter + node.unit_emitter
-    hash_before, undo, paid, below = node.state_hash(), [], 0, 0
+    hash_before, undo, paid, below = record.state_hash(node), [], 0, 0
     for _ in range(20):
         got = takes(node, [(at, walls)], rule, 1)  # the one take act at one end (CR-S2)
         assert got is not None
@@ -584,9 +591,9 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
         paid += fall + rem_was - rem == walls
         below += 0 <= rem < fall_of(node, at, 1, rule, light)[1]
         undo.append((now, k, rem_was))
-    assert (paid, below) == (20, 20) and node.census()[0] == 99
+    assert (paid, below) == (20, 20) and record.census(node)[0] == 99
     for now, k, rem_was in reversed(undo):
         move(node, rec0, k, at, now - int(light.lines[k].now[at]))
         node.closes[at] -= 1
         node.take_rem[at] = rem_was
-    assert node.state_hash() == hash_before
+    assert record.state_hash(node) == hash_before

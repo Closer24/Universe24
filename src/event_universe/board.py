@@ -4,11 +4,18 @@ from __future__ import annotations
 
 from typing import Any
 
+from event_universe.bangs import (  # noqa: F401  (the bang rows' readers, the names kept for the hands' scripts)
+    bottoms_of,
+    exact_of,
+    marks,
+    recurring_bang,
+    tops_of,
+    volumes,
+)
 from event_universe.core import paces
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import largest_below, quotient
 from event_universe.decoder import (
-    FOUR_LISTED,
     HALF,
     LISTED,
     MAX,
@@ -19,14 +26,7 @@ from event_universe.decoder import (
     unread_words,
 )
 
-BIRTHS = 2  # the index of the births in a mark (the interval, the mean volume, the births)
 PULL = 2  # the mass pull's weight, 2 sqrt(X / Gamma) per Node (BG-S1's form), against the Links' lift
-
-
-def marks(record: Record) -> tuple[list[tuple[int, int, int]], list[tuple[int, int]]]:
-    """The rows' marks (interval, the mean volume, the births so far) and the steps of the mean volume between marks (the interval, the difference)."""
-    rows = [(r["i"], int(r["volume mean"]), int(r["births"])) for r in record.rows]
-    return rows, [(b[0], b[1] - a[1]) for a, b in zip(rows, rows[1:], strict=False)]
 
 
 def contraction(record: Record) -> dict[str, Any]:
@@ -64,112 +64,6 @@ def shortening(record: Record) -> dict[str, Any]:
             "verdict": "SHOWN at the board: a falling run between rising runs"
             if after
             else ("SHOWN in part: the course ends in a fall" if falls else "NOT SHOWN: no fall"),
-        }
-    }
-
-
-def returns_of(record: Record) -> list[tuple[int, int, int]]:
-    """The marks at which the mean volume is back at or below the first mark's with a birth after the first mark (the rows' reading, kept beside the Node lines')."""
-    rows, _steps = marks(record)
-    return [(i, v, b) for i, v, b in rows[1:] if v <= rows[0][1] and b > rows[0][BIRTHS]] if rows else []
-
-
-def volumes(record: Record) -> list[tuple[int, list[int], int]]:
-    """The Node lines' volumes: per interval (the interval, every Node's X, the count of Nodes turned)."""
-    return [(int(line["i"]), [int(x) for x in line["X"]], len(line["turned"])) for line in record.nodes]
-
-
-def bottoms_of(record: Record) -> list[tuple[int, int, bool]]:
-    """The bottoms of the mean volume in the Node lines (a local least, at or below the mark before and below the one after): the interval, the mean, and whether every Node stands at Gamma exactly."""
-    lines = volumes(record)
-    means = [sum(xs) // len(xs) for _i, xs, _t in lines]
-    return [
-        (lines[k][0], means[k], all(x == record.gamma for x in lines[k][1]))
-        for k in range(1, len(means) - 1)
-        if means[k] <= means[k - 1] and means[k] < means[k + 1]
-    ]
-
-
-def tops_of(record: Record) -> list[int]:
-    """The intervals at which every Node turned at once, the board's tops, from the Node lines."""
-    lines = volumes(record)
-    count = len(lines[0][1]) if lines else 0
-    return [i for i, _xs, turned in lines if turned == count and count]
-
-
-def exact_of(record: Record) -> list[int]:
-    """The intervals of the exact returns, the bottoms of the mean volume at Gamma at every Node."""
-    return [i for i, _m, at_gamma in bottoms_of(record) if at_gamma]
-
-
-def recurring_bang(record: Record) -> dict[str, Any]:
-    """Gate 1 (MA-S1's predicate, the Boss's 6400767119): the recurring bang from the Node lines: the board tops with every Node turning at once, falls to a bottom at Gamma at every Node exactly (the exact return) and rises again; the bangs numbered from the seed's, the births and the body credits counted between the returns."""
-    lines, whole, bottoms = volumes(record), tops_of(record), bottoms_of(record)
-    exact = exact_of(record)
-    bangs = [1] + [i + 1 for i in exact]
-    between = [
-        [
-            sum(1 for b in record.births if lo <= int(b["i"]) < hi),
-            sum(1 for c in record.credits if lo <= int(c["i"]) < hi),
-        ]
-        for lo, hi in zip(bangs, bangs[1:] + [record.intervals + 1], strict=False)
-    ]
-    verdict = (
-        unread_words(
-            "no Node line in the record",
-            "the exact return to Gamma at every Node with the whole board turning at the top",
-        )
-        if not lines
-        else f"SHOWN: {len(exact)} exact returns to Gamma at every Node, the whole board turning at once at {len(whole)} tops, {len(bangs)} bangs"
-        if exact and whole
-        else f"NOT SHOWN: the bottom at {bottoms[0][1]} against Gamma {record.gamma}"
-        + (", the whole board turning at once at the top" if whole else ", no whole-board turn")
-        if bottoms
-        else "NOT SHOWN: no bottom of the mean volume"
-        + (", the whole board turning at once" if whole else "")
-    )
-    return {
-        "1 recurring bangs": {
-            "tops with every Node turning at once (interval)": whole[:LISTED],
-            "bottoms (interval, mean X, at Gamma at every Node)": bottoms[:LISTED],
-            "bangs numbered (the interval each begins)": bangs[:LISTED],
-            "births and body credits between the bangs": between[:LISTED],
-            "rows' reading: marks back at or below the first mark's with a birth after it": returns_of(
-                record
-            )[:FOUR_LISTED],
-            "verdict": verdict,
-        }
-    }
-
-
-def tops(record: Record) -> dict[str, Any]:
-    """Row 1b (the owner's word of 2026-10-26, 00:5x UTC: the top in the gate too): the board tops, every Node turning at once at one interval, read from the Node lines as gate 1 reads them; SHOWN from the first such top."""
-    lines, whole = volumes(record), tops_of(record)
-    return {
-        "1b the board tops, every Node turning at once": {
-            "tops (interval)": whole[:LISTED],
-            "verdict": unread_words("no Node line in the record", "every Node turned at one interval")
-            if not lines
-            else f"SHOWN: the whole board turns at once at {len(whole)} tops, the first at {whole[0]}"
-            if whole
-            else "NOT SHOWN: no interval with every Node turned",
-        }
-    }
-
-
-def returns(record: Record) -> dict[str, Any]:
-    """Row 1c (the same word: the return in the gate too): the board returns to Gamma, a bottom of the mean volume with every Node at Gamma exactly, read from the Node lines as gate 1 reads them; SHOWN from the first such return."""
-    exact = exact_of(record)
-    return {
-        "1c the board returns to Gamma": {
-            "exact returns (interval)": exact[:LISTED],
-            "verdict": unread_words(
-                "no Node line in the record", "a bottom of the mean volume at Gamma at every Node"
-            )
-            if not record.nodes
-            else f"SHOWN: {len(exact)} exact returns to Gamma at every Node, the first at {exact[0]}"
-            if exact
-            else "NOT SHOWN: no bottom at Gamma at every Node",
         }
     }
 
@@ -260,10 +154,13 @@ def era(record: Record) -> dict[str, Any]:
 
 
 def horizon(record: Record) -> dict[str, Any]:
-    """Gate 14: the frozen content against the rows' max content; a credit at a frozen Node would deny the horizon."""
+    """Gate 14: the frozen content against the Node lines' max content (the Boss's 6416277638: the reader's rows stand one at every twelfth interval, so a horizon shorter than a twelfth of the run was blind to the rows' maximum while the freeze is in the Node lines; the rows' maximum named beside); a credit at a Node while it stands in the frozen set of the Node lines would deny the horizon (the former read, a credit at or above the frozen content, named beside)."""
     frozen = paces.frozen_content(record.gamma)
-    at_frozen = [c for c in record.credits if c["content"] >= frozen]
-    cmax = max((int(r["content min/mean/max"][MAX]) for r in record.rows), default=0)
+    frozen_at = {(int(line["i"]), int(at)) for line in record.nodes for at in line["frozen"]}
+    at_frozen = [c for c in record.credits if (int(c["i"]), record.index(c["node"])) in frozen_at]
+    at_mark = sum(1 for c in record.credits if c["content"] >= frozen)
+    rows_max = max((int(r["content min/mean/max"][MAX]) for r in record.rows), default=0)
+    cmax = max((int(x) for line in record.nodes for x in line["content"]), default=rows_max)
     verdict = (
         "SHOWN as silence (no credit at a frozen Node)"
         if cmax >= frozen and not at_frozen
@@ -274,8 +171,11 @@ def horizon(record: Record) -> dict[str, Any]:
     return {
         "14 the horizon": {
             "frozen content": frozen,
-            "max content in the rows": cmax,
-            "credits at frozen Nodes": len(at_frozen),
+            "max content in the Node lines": cmax,
+            "max content in the rows (one row at every twelfth interval)": rows_max,
+            "Nodes frozen": len(frozen_first),
+            "credits at a Node while it stands in the frozen set": len(at_frozen),
+            "credits at or above the frozen content (the former read)": at_mark,
             "at": first,
             "verdict": verdict,
         }
@@ -283,26 +183,45 @@ def horizon(record: Record) -> dict[str, Any]:
 
 
 def stopped_clock(record: Record) -> dict[str, Any]:
-    """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent from its first frozen interval on (no credit at it at or after that interval) and its content standing at its first frozen content on every later frozen line (BH-S1's predicate, the Boss's 6407393577: the clock stops at the horizon)."""
-    frozen = [(int(line["i"]), at) for line in record.nodes for at in line["frozen"]]
+    """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent while it is frozen (no credit at it on any interval it stands in the frozen set) and its content standing at the content of its freeze on every line of that freeze, until its release (BH-S1's predicate, the Boss's 6407393577: the clock stops at the horizon; re-cut for a released horizon on the Boss's 6417313230: the former read every credit and every content from the first freeze on, which no released Node can hold)."""
     first = record.first_frozen()
-    held = {at: record.nodes[i - 1]["content"][at] for at, i in first.items()}
-    credits = [(record.index(c["node"]), int(c["i"])) for c in record.credits]
-    credited = {at for at, i in credits if at in first and i >= first[at]}
-    later = [(i, at) for i, at in frozen if i > first[at]]
+    frozen: list[tuple[int, int]] = []
+    held: dict[int, int] = {}
+    standing = later = 0
+    for line in record.nodes:
+        i, ats = int(line["i"]), {int(at) for at in line["frozen"]}
+        for at in list(held):
+            if at not in ats:
+                del held[at]
+        for at in sorted(ats):
+            content = int(line["content"][at])
+            if at in held:
+                standing += content == held[at]
+                later += 1
+            else:
+                held[at] = content
+            frozen.append((i, at))
+    frozen_at = set(frozen)
+    credited = {
+        record.index(c["node"])
+        for c in record.credits
+        if (int(c["i"]), record.index(c["node"])) in frozen_at
+    }
     silent = sum(1 for _i, at in frozen if at not in credited)
-    standing = sum(1 for i, at in later if record.nodes[i - 1]["content"][at] == held[at])
     earliest = min(first.items(), key=lambda p: p[1])[0] if first else None
     return {
         "34 the horizon and the stopped clock": {
             "Nodes frozen": len(first),
             "frozen Node lines (interval, Node)": len(frozen),
-            "of them silent (no credit at the Node from its first frozen interval on)": silent,
-            "later lines standing at the first frozen content / later lines": [standing, len(later)],
+            "of them silent (no credit at the Node while it is frozen)": silent,
+            "lines standing at the content of their freeze / lines after a freeze's first": [
+                standing,
+                later,
+            ],
             "at": record.node(earliest) if earliest is not None else None,
-            "verdict": "SHOWN: every frozen Node silent with its content standing, the clock stopped at the horizon"
-            if frozen and silent == len(frozen) and standing == len(later)
-            else "NOT SHOWN: a frozen Node credited after its freeze or its content moving"
+            "verdict": "SHOWN: every frozen Node silent with its content standing while frozen, the clock stopped at the horizon"
+            if frozen and silent == len(frozen) and standing == later
+            else "NOT SHOWN: a frozen Node credited while frozen or its content moving while frozen"
             if frozen
             else "NOT REACHED: no frozen Node in the record (as gate 14)",
         }

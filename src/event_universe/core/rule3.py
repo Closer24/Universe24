@@ -1,10 +1,11 @@
-"""Rule3 in one place, written as the law writes it, the flux line (ALGEBRA.md #the-line, #the-direction, #the-interval): w (a_next - 2 a_now + a_before) + r' - r = SUM over the Node's six Links of R_ij (m_ij - a_now) - D_i a_now, the reach R_ij = 2 num p_i^2 Q_ij G^2 of each Link read from the Node's end (the Node's pace squared times the Link's factor), the mass D_i = 12 (den - num) p_0^2 G^2 of the Node (the clock's alone, 0 for light), the wall w = 6 den Gamma^2 G^2, the remainder r kept in [0, w). One function steps every plain line at every Node in either direction (`rule3`), the sum over the Links gathered by the step's module (flux.py) and handed in as one array; the one carried division under it (`carried_division`) is the division act with the remainder kept, which the division act's two functions call on a numerator. The own weight S_i = 2 w - D_i - SUM_j R_ij is derived here for the readings that name it, the form's Node term; the click's face reads the flux line's total (`flux_total`) with the face's arrival 0 (features/click `presented`); the law's first form, SUM R_ij m_ij + S a_now - w a_before + r, the same integers by the identity, is written in no file of src/ (tools/step_oracle.py keeps it as the step's oracle). The largest integer whose square is at most a count is found by a bisection on the share reading and no root (`largest_below`); the rule's integers from the paces stand beside (`coefficients`, `mass`), the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-paces)."""
+"""Rule3 in one place, written as the law writes it, the flux line (ALGEBRA.md #the-line, #the-direction, #the-interval): w (a_next - 2 a_now + a_before) + r' - r = SUM over the Node's six Links of R_ij (m_ij - a_now) - D_i a_now, the reach R_ij = 2 num p_i^2 Q_ij G^2 of each Link read from the Node's end (the Node's pace squared times the Link's factor), the mass D_i = 12 (den - num) p_0^2 G^2 of the Node (the clock's alone, 0 for light), the wall w = 6 den Gamma^2 G^2, the remainder r kept in [0, w). One function steps every plain line at every Node in either direction (`rule3`), the sum over the Links gathered by the step's module (flux.py) and handed in as one array; the one carried division under it is the core's act (core/acts.divide, NL-S1; the former carried_division and division_forward, the same act by two names, kept by name), which the quotient and the remainder readings call on a numerator. The own weight S_i = 2 w - D_i - SUM_j R_ij is derived here for the readings that name it, the form's Node term; the click's face reads the flux line's total (`flux_total`) with the face's arrival 0 (features/click `presented`); the law's first form, SUM R_ij m_ij + S a_now - w a_before + r, the same integers by the identity, is written in no file of src/ (tools/step_oracle.py keeps it as the step's oracle). The largest integer whose square is at most a count is found by a bisection on the share reading and no root (`largest_below`); the rule's integers from the paces stand beside (`coefficients`, `mass`), the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-paces)."""
 
 from __future__ import annotations
 
 from collections.abc import Callable
 from typing import Any, NamedTuple
 
+from event_universe.core.acts import divide
 from event_universe.core.ports import PORTS
 
 # the Node's reaches, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij G^2 on
@@ -57,7 +58,7 @@ def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
     """The Link's factor Q_ij, the one place of its form (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; the Boss's booking): q_ij^2 / Gamma^2 = (Gamma - t_a(i, j))^2 / Gamma^2 booked squared as one integer per Link in the unit G^2 of the run's Link unit G, Q_ij = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2 by the division act, rounded once to the nearest from the Link's tension t and read the same from both ends; the step's coefficient matrix M is symmetric at uniform paces alone, and D M is symmetric at every pace with D = diag(1 / p_i^2), so the weighted form is exact at paces fixed in time; G^2 with no tension, 0 where the tension reaches Gamma (the Link's coefficient 0), the tension resolved to Gamma / (2 G^2)."""
     pace = gamma - tension
     wall = gamma * gamma
-    return division_forward(unit * unit * pace * pace, wall, half(wall))[0]
+    return divide(unit * unit * pace * pace, wall, half(wall))[0]
 
 
 def scaled(rule: Rule, scale: Any) -> Rule:
@@ -70,13 +71,6 @@ def scaled(rule: Rule, scale: Any) -> Rule:
         scale * rule.wall,
         scale * rule.mass,
     )
-
-
-def carried_division(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[Any, Any]:
-    """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = total + r, the quotient u div w and the remainder u mod w kept in [0, w) for a total of either sign; the act at -1 is the act at +1 conjugated by the remainder's mirror w - 1 - r, `mirrored`, written once (CA-S1, the owner's word of 2026-10-26, 07:04 UTC: the direction is the slot; RW-S1, the owner's word of 2026-10-26, 08:2x UTC: the read is the write reversed, one function with the direction; the former sigma total + r with the quotient negated kept by name), exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
-    carried = total + mirrored(remainder, wall, direction == -1)
-    quotient = carried // wall
-    return quotient, mirrored(carried - wall * quotient, wall, direction == -1)
 
 
 def least_at(above: Callable[[int], bool]) -> int:
@@ -99,13 +93,8 @@ def flux_total(flux: Any, mass: Any, wall: Any, now: Any, other: Any) -> Any:
 def rule3(
     flux: Any, mass: Any, wall: Any, now: Any, other: Any, remainder: Any, direction: int = 1
 ) -> tuple[Any, Any]:
-    """Rule3's line in the law's flux form, one interval in `direction` sigma (ALGEBRA.md #the-line, #the-direction): w a_next + r' = w (2 a_now - a_before) - D a_now + SUM over the six Links of R_ij (m_ij - a_now) + r (`flux_total`), the sum over the Links `flux` gathered Link by Link by the step's module (flux.py, one difference per Link, each end's own reach), the Node's mass `mass` (D_i), the division the carried one (`carried_division`); +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r), the same flux read from the same level. A line with no Links and the mass 2 w - 2 K on the wall w is the rotation act a_next = (2 K a_now + r) div w - a_before (features/phase, the phase line; features/click `rotated`)."""
-    return carried_division(flux_total(flux, mass, wall, now, other), wall, remainder, direction)
-
-
-def division_forward(numerator: Any, wall: Any, carry: Any) -> tuple[Any, Any]:
-    """Rule3's division act forward: (numerator + carry) div wall and the remainder, the one carried division on a numerator (ALGEBRA.md #the-four-acts)."""
-    return carried_division(numerator, wall, carry, 1)
+    """Rule3's line in the law's flux form, one interval in `direction` sigma (ALGEBRA.md #the-line, #the-direction): w a_next + r' = w (2 a_now - a_before) - D a_now + SUM over the six Links of R_ij (m_ij - a_now) + r (`flux_total`), the sum over the Links `flux` gathered Link by Link by the step's module (flux.py, one difference per Link, each end's own reach), the Node's mass `mass` (D_i), the division the carried one (core/acts.divide, the former carried_division kept by name); +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r), the same flux read from the same level. A line with no Links and the mass 2 w - 2 K on the wall w is the rotation act a_next = (2 K a_now + r) div w - a_before (features/phase, the phase line; features/click `rotated`)."""
+    return divide(flux_total(flux, mass, wall, now, other), wall, remainder, direction)
 
 
 def link_unit_of(gamma: Any) -> int:
@@ -138,11 +127,6 @@ def unit_of(sine: Any, action: Any) -> Any:
     return UNIT_WEIGHT * action * sine
 
 
-def mirrored(remainder: Any, wall: Any, reversals: int) -> Any:
-    """The one rule of the remainder's mirror (fd1's form, the owner's word of 2026-10-25): a remainder born at the half wall of its division is mirrored to wall - 1 - r once for every reversal of its line (time's exchange, the sign's negation), two reversals leaving it; the identity for an even count."""
-    return wall - 1 - remainder if reversals & 1 else remainder
-
-
 def signed_quotient(numerator: Any, wall: Any) -> Any:
     """The quotient of the magnitude with the sign after, sign(x) (|x| div w): the lay's rounding of a signed level at rest (the one rule's mirror by the numerator's sign at a remainder born at 0), so the negated vector's lay is the lay negated."""
     sign = (numerator >= 0) * 1 - (numerator < 0) * 1
@@ -151,12 +135,12 @@ def signed_quotient(numerator: Any, wall: Any) -> Any:
 
 def half(wall: Any) -> Any:
     """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor (the halving's own 2)."""
-    return division_forward(wall, 2, 0)[0]
+    return divide(wall, 2, 0)[0]
 
 
 def odd(count: Any) -> Any:
     """The parity of a count by the division act on 2, 1 where odd (the parity's own 2): the reversals' count, a line's odd part."""
-    return division_forward(count, 2, 0)[1]
+    return divide(count, 2, 0)[1]
 
 
 def share_weight(gamma: Any, unit: Any) -> Any:
@@ -166,12 +150,12 @@ def share_weight(gamma: Any, unit: Any) -> Any:
 
 def quotient(numerator: Any, wall: Any) -> Any:
     """The division act's quotient alone, numerator div wall with no carry (the digit on a lattice, the amplitude's share, the root's candidate)."""
-    return division_forward(numerator, wall, 0)[0]
+    return divide(numerator, wall, 0)[0]
 
 
 def remainder(numerator: Any, wall: Any) -> Any:
     """The division act's remainder alone, numerator mod wall in [0, wall) (the draw composed modulo the planes' count times the unit)."""
-    return division_forward(numerator, wall, 0)[1]
+    return divide(numerator, wall, 0)[1]
 
 
 def lattice(*values: Any) -> Any:
@@ -194,7 +178,7 @@ def balanced_pair(product: int) -> tuple[int, int]:
 
 
 def largest_below(square: int) -> int:
-    """The largest x with x^2 <= square, found by a bisection on the share reading x * x against square: products and comparisons of integers, no division on the count and no root (the hands' prescription for the rotation unit, `paces.rotation_unit`, applied to a count: a search by comparisons, issue #1793 comment 6077053307, "no root anywhere"). The upper end is the smallest power of two whose square exceeds square, found by doubling; the halving of the span of candidates is the division act on a count, `division_forward(low + high, 2, 0)`, kind D in the acts table (tests/test_the_acts_table.py), its remainder discarded; 0 at 0; a negative square is refused by name (ALGEBRA.md #the-four-acts, #the-guard)."""
+    """The largest x with x^2 <= square, found by a bisection on the share reading x * x against square: products and comparisons of integers, no division on the count and no root (the hands' prescription for the rotation unit, `paces.rotation_unit`, applied to a count: a search by comparisons, issue #1793 comment 6077053307, "no root anywhere"). The upper end is the smallest power of two whose square exceeds square, found by doubling; the halving of the span of candidates is the division act on a count, `half(low + high)`, kind D in the acts table (tests/test_the_acts_table.py), its remainder discarded; 0 at 0; a negative square is refused by name (ALGEBRA.md #the-four-acts, #the-guard)."""
     if square < 0:
         raise ValueError(f"no integer has a square at most {square}: the search is refused")
     high = 1
@@ -208,8 +192,3 @@ def largest_below(square: int) -> int:
         else:
             high = middle
     return low
-
-
-def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:
-    """The conserved form's term at one Node from the rule's integers, w (now^2 + before^2) - S now before (ALGEBRA.md #the-conserved-form)."""
-    return wall * (now * now + before * before) - self_coefficient * now * before

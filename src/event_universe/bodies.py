@@ -11,8 +11,9 @@ from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS
 from event_universe.links import row_current
 from event_universe.merger import takes
-from event_universe.rows import PLANE, POTENTIAL, Line
-from event_universe.take import frame_nodes, move
+from event_universe.rows import PLANE, Line
+from event_universe.run import credit
+from event_universe.take import frame_nodes, move, recoil
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -63,18 +64,19 @@ def bodies(
             if got is None:
                 continue
             (take,) = got
-            levels, fall, now, k = (
-                take["levels"],
-                take["taken"],
-                take["taken_now_was"],
-                take["taken_line"],
-            )
-            before, rem_was, rem = take["taker"][1], take["remainder_was"], take["remainder"]
+            levels, now, k = take["levels"], take["taken_now_was"], take["taken_line"]
             node.counts["body_clicks"] += 1
-            entry = credit(node, rec, at, plane_starts, fall, levels, now, before, k, rem_was, rem)
+            frame = (
+                frame_of(node, rec, at, plane_starts)
+                if row.shape == PLANE
+                else bilinears_of(node, rec, at)
+            )
+            entry = credit(node, rec, at, take, frame)
             if int(net[at]) == 0:
                 move(node, rec0, k, at, now - int(node.records()[rec0].lines[k].now[at]))
                 entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
+                back = recoil(node, at, [-x for x in node.last_dp], entry["clock"], 1)
+                entry["recoil"], entry["carry"] = [0] * AXES, back["carry"]
                 node.counts["laid_back"] += 1
             node.log.append(entry)
 
@@ -112,7 +114,7 @@ def frame_of(
 
 
 def bilinears_of(node: Node, rec: int, at: tuple[int, ...]) -> dict[str, Any]:
-    """A quartet's credit frame: its levels at the Node, its charge W, its spin density (the record's axial vector, signed per axis) and its axial Wronskians B.GJ Gamma_a.N (SR-S2; the decoder's species solve is a plane's, owed for the quartet by name)."""
+    """A quartet's credit frame: its levels at the Node, its charge W, its spin density (the record's axial vector, signed per axis) and its axial Wronskians B.GJ Gamma_a.N (SR-S2)."""
     row = node.records()[rec]
     nows, befores = [line.now for line in row.lines], [line.before for line in row.lines]
     gj = gram.matmul(gram.gram(row.shape), gram.rotation(row.shape))
@@ -126,48 +128,4 @@ def bilinears_of(node: Node, rec: int, at: tuple[int, ...]) -> dict[str, Any]:
         "axial_wronskian": [
             int(gram.form(gj, befores, gram.matvec(ga, nows))[at]) for ga in gram.axes(row.shape)
         ],
-    }
-
-
-def credit(
-    node: Node,
-    rec: int,
-    at: tuple[int, ...],
-    plane_starts: list[list[Line]],
-    fall: int,
-    levels: int,
-    taken_was: int,
-    taken_before: int,
-    line: int,
-    rem_was: int,
-    rem: int,
-) -> dict[str, Any]:
-    """A body's credit with its frame (a plane's `frame_of`, a quartet's `bilinears_of`), its sense the sign of its charge at the Node, its beat, the take's numbers and momentum, the unit the close books, the take's remainder before and after and what was owed (EX-S1), the taker's three levels (the taken line's now before the take, its before, the levels taken: PC-S2), the line taken (`taken_line`, CS4-S2), the sign level and whether the Node turned."""
-    row = node.records()[rec]
-    w = int(gram.charge(row.shape, row.lines)[at])
-    return {
-        "event": "credit",
-        "i": node.interval,
-        "node": list(at),
-        "proper": int(node.proper[at]),
-        "closes": int(node.closes[at]),
-        "content": int(node.start_content[at]),
-        "line": rec,
-        "sense": 1 if w > 0 else -1 if w < 0 else 0,
-        "beat": int(node.beats[rec][at]),
-        "frame": frame_of(node, rec, at, plane_starts)
-        if row.shape == PLANE
-        else bilinears_of(node, rec, at),
-        "taken": fall,
-        "booked": node.units[rec],
-        "levels": levels,
-        "taken_now_was": taken_was,
-        "remainder_was": rem_was,
-        "remainder": rem,
-        "owed": node.units[rec] - rem_was,
-        "taker": [taken_was, taken_before, levels],
-        "dP_take": node.last_dp,
-        "taken_line": line,
-        "sign_level": int(node.row(POTENTIAL).lines[0].now[at]),
-        "turned": bool(node.turned[at]),
     }

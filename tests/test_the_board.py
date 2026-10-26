@@ -12,12 +12,13 @@ import numpy as np
 import pytest
 
 from event_universe import gates as table
-from event_universe import gram, take
+from event_universe import gram, readings, take
+from event_universe import run as record
 from event_universe import run as writer
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS
-from event_universe.links import row_current
-from event_universe.merger import light_children, walls_of
+from event_universe.links import factors, row_current
+from event_universe.merger import children_laid, light_levels, walls_of
 from event_universe.node import Node
 from event_universe.rows import CARRIER
 from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
@@ -174,7 +175,9 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
     laid_back = sum(1 for c in credits if "laid_back" in c)
     assert (len(credits), laid_back, sum(1 for c in credits if c["i"] < top)) == (162, 162, 135)
     assert node.counts["births"] == node.counts["laid"] == 0
-    assert node.census()[0] == 99 and node.census()[1] <= 128  # the take's remainder, EX-S1; 98 before
+    assert (
+        record.census(node)[0] == 99 and record.census(node)[1] <= 128
+    )  # the take's remainder, EX-S1; 98 before
     for _ in range(80):
         node.step(-1)
     assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step(-1)) == 10
@@ -184,7 +187,7 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
         node.set_rows([[line.copy() for line in row] for row in rows])
         if exchanged:
             node.exchange(everywhere, rows)
-        return node.state_bytes()
+        return record.state_text(node)
 
     assert (
         sum(text(states[top + k], False) == text(states[top - 1 - k], True) for k in range(1, top)) == 83
@@ -220,17 +223,18 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
-    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); The-Uniform-Board-Returns_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to X = Gamma at every Node exactly at 115 and 230 (the bottoms), the bangs numbered 1, 116 and 231 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
+    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); The-Uniform-Board-Returns_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to the seed's first pair of states at 115 and 230 (its last line at the resolution; the former predicate's bottoms at Gamma the same), the bangs numbered 1, 115 and 230 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
     universe, world = world_of("world_sea_3.json")
     found = json.loads(json.dumps(writer.record(universe, world, 10, lambda line: None)))
     out = table.gates(found)
     bang = json.loads(json.dumps(out["1 recurring bangs"]))
     assert bang["tops with every Node turning at once (interval)"] == [58, 173]
-    assert bang["bottoms (interval, mean X, at Gamma at every Node)"] == [
+    assert bang["bottoms (interval, mean X, at Gamma at every Node, the resolution)"] == [
         [115, 1000, True],
         [230, 1000, True],
     ]
-    assert bang["bangs numbered (the interval each begins)"] == [1, 116, 231]
+    assert bang["exact returns to the seed's first state (interval)"] == [115, 230]
+    assert bang["bangs numbered (the interval each begins)"] == [1, 115, 230]
     assert bang["births and body credits between the bangs"] == [[0, 0], [0, 0], [0, 0]]
     assert bang["verdict"].startswith("SHOWN: 2 exact returns")
     assert out["46 the bangs recurring with the same gates"]["verdict"].startswith("NOT SHOWN")
@@ -258,7 +262,11 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
         re, im = row.lines
         assert row.pair is not None and not any(ints(re.now * im.before - im.now * re.before))
         energy = sum(
-            ints(gram.share(node, row.lines, node.rule(row.pair, node.content(), node.link_factors())))
+            ints(
+                gram.share(
+                    node, row.lines, readings.rule(node, row.pair, readings.content(node), factors(node))
+                )
+            )
         )
         momentum = sum(
             sum(
@@ -274,7 +282,9 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
     def centroid(node: Node) -> tuple[int, int]:
         row = node.by_index[2]
         assert row.pair is not None
-        share = gram.share(node, row.lines, node.rule(row.pair, node.content(), node.link_factors()))
+        share = gram.share(
+            node, row.lines, readings.rule(node, row.pair, readings.content(node), factors(node))
+        )
         return sum(ints(share * np.indices(node.shape)[0])), sum(ints(share))
 
     node, law = laid(moving)
@@ -290,7 +300,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
     assert node.counts["births"] == 0 and run_back_exact(kept, 10) == 10
     rest, zero = laid(packet)[0], laid(dict(packet, wave=[0, 0, 0]))[0]
     for _ in range(2):
-        assert rest.state_hash() == zero.state_hash()
+        assert record.state_hash(rest) == record.state_hash(zero)
         rest.step()
         zero.step()
     for bad, match in (
@@ -465,7 +475,7 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
     for _ in range(10):
         node.step()
     lines = node.row(CARRIER).lines
-    assert len(lines) == 1 + 3 * AXES and node.census() == (99, 112)  # 115 bits at the trace 54
+    assert len(lines) == 1 + 3 * AXES and record.census(node) == (99, 112)  # 115 bits at the trace 54
     flux, shears = lines[1 + AXES : 1 + 2 * AXES], lines[1 + 2 * AXES :]
     # TW-S1, the trace 6: every one of the six lines reaches levels within three by 10 (none reached at the trace 54, every line at 0)
     assert [sum(1 for x in line.now.reshape(-1) if int(x)) for line in (*flux, *shears)] == [
@@ -529,9 +539,9 @@ def test_the_merger_lays_light_of_no_charge_at_both_ends_cc1() -> None:
     assert row.pair is not None
     take.lay(node, s, minus, (939, 1175, 0, 0))
     take.lay(node, s, plus, (1329, 1112, 0, 0))
-    rule = node.rule(row.pair, node.start_content, node.link_factors())
-    walls = list(walls_of(node, s, minus, plus, rule, {}))
-    _dp, _w, _stood, exact, _ends = light_children(node, s, minus, plus, walls, rule)
+    rule = readings.rule(node, row.pair, node.start_content, factors(node))
+    walls, exact = dict(zip((-1, 1), walls_of(node, s, minus, plus, rule, {}), strict=True)), []
+    children_laid(node, s, minus, plus, light_levels(node, s, walls, rule, exact))
     assert all(x is not None for x in exact) and [x[1] != 0 for x in exact] == [True, True]
     assert (
         sum(
@@ -553,14 +563,16 @@ def test_a_frozen_node_is_released_by_the_turn_of_its_time() -> None:
     light.now[centre] = 4 * int(light.now[centre])
     proper, kept, was = int(node.proper[centre]), copy.deepcopy(node), False
     for _ in range(INTERVALS):
-        now = bool(np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object)[centre] == 0)
+        now = bool(
+            np.asarray(paces.link_pace_of(node.gamma, readings.content(node)), dtype=object)[centre] == 0
+        )
         assert not (was and now)
         was = now
         node.step()
         if node.interval == 1:
             assert now and node.turned[centre] and int(node.proper[centre]) == proper
-            assert int(node.content()[centre]) < frozen
+            assert int(readings.content(node)[centre]) < frozen
         if node.interval == 2:
             assert not now and int(node.proper[centre]) > proper
-    assert node.max_transient <= 128 and node.census()[1] <= 128
+    assert node.max_transient <= 128 and record.census(node)[1] <= 128
     assert run_back_exact(kept, INTERVALS) == INTERVALS

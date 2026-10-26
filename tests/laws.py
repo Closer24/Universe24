@@ -11,8 +11,10 @@ from typing import Any
 import numpy as np
 import pytest
 
-from event_universe.core.rule3 import carried_division
+from event_universe import run as record
+from event_universe.core.acts import divide
 from event_universe.features import volume
+from event_universe.links import cross
 from event_universe.loader.world import load_world
 from event_universe.node import Node
 
@@ -49,12 +51,12 @@ def arrivals_rule3(
 ) -> tuple[Any, Any]:
     """Rule3's first form by hand: w a_next + r' = SUM_j R_j m_j + S a_now - w a_before + r, the one carried division."""
     total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
-    return carried_division(total + self_coefficient * now - wall * before, wall, remainder, 1)
+    return divide(total + self_coefficient * now - wall * before, wall, remainder, 1)
 
 
 def state_of(node: Node) -> str:
     """Every level and remainder of the Node's state as one text, the run back's comparison bit for bit."""
-    return node.state_bytes().decode() + f" {node.interval}"
+    return record.state_text(node) + f" {node.interval}"
 
 
 def run_back_exact(node: Node, n: int) -> int:
@@ -73,3 +75,8 @@ def level_at(node: Node, content: int) -> int:
             volume.volume_of(node.gamma, np.array([content], dtype=object)), dtype=object
         ).reshape(-1)[0]
     )
+
+
+def wronskian(re: Any, im: Any) -> Any:
+    """The plane's bilinear W = re_now im_before - im_now re_before at every Node (the former links.wronskian, read by the tests alone)."""
+    return cross(re.now, im.now, re.before, im.before)
