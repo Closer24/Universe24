@@ -73,11 +73,10 @@ def scaled(rule: Rule, scale: Any) -> Rule:
 
 
 def carried_division(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[Any, Any]:
-    """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = total + r, the quotient u div w and the remainder u mod w kept in [0, w) for a total of either sign; the act at -1 is the act at +1 conjugated by the remainder's mirror w - 1 - r, spelt here as the primitive since `mirrored` reads its parity through this division (RW-S1, the owner's word of 2026-10-26, 08:2x UTC: the read is the write reversed, one function with the direction; the former sigma total + r with the quotient negated kept by name), exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
-    carried = total + (remainder if direction == 1 else wall - 1 - remainder)
+    """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = total + r, the quotient u div w and the remainder u mod w kept in [0, w) for a total of either sign; the act at -1 is the act at +1 conjugated by the remainder's mirror w - 1 - r, `mirrored`, written once (CA-S1, the owner's word of 2026-10-26, 07:04 UTC: the direction is the slot; RW-S1, the owner's word of 2026-10-26, 08:2x UTC: the read is the write reversed, one function with the direction; the former sigma total + r with the quotient negated kept by name), exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
+    carried = total + mirrored(remainder, wall, direction == -1)
     quotient = carried // wall
-    rest = carried - wall * quotient
-    return quotient, rest if direction == 1 else wall - 1 - rest
+    return quotient, mirrored(carried - wall * quotient, wall, direction == -1)
 
 
 def least_at(above: Callable[[int], bool]) -> int:
@@ -141,7 +140,7 @@ def unit_of(sine: Any, action: Any) -> Any:
 
 def mirrored(remainder: Any, wall: Any, reversals: int) -> Any:
     """The one rule of the remainder's mirror (fd1's form, the owner's word of 2026-10-25): a remainder born at the half wall of its division is mirrored to wall - 1 - r once for every reversal of its line (time's exchange, the sign's negation), two reversals leaving it; the identity for an even count."""
-    return wall - 1 - remainder if odd(reversals) else remainder
+    return wall - 1 - remainder if reversals & 1 else remainder
 
 
 def signed_quotient(numerator: Any, wall: Any) -> Any:
