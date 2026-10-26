@@ -1,0 +1,9 @@
+ruff check . -> exit 1 : Found 20 errors.
+ruff format --check . -> exit 2 : 190 files already formatted
+/home/user/Universe24/venv314/bin/python -m mypy -> exit 0 : Success: no issues found in 33 source files
+/home/user/Universe24/venv314/bin/python tools/engine_gates.py -> exit 0 : the engine gates hold against the merge base
+/home/user/Universe24/venv314/bin/python tools/record_code_shape.py -> exit 1 : SyntaxError: invalid decimal literal
+/home/user/Universe24/venv314/bin/python tools/tests_shape.py -> exit 1 : SyntaxError: invalid decimal literal
+/home/user/Universe24/venv314/bin/python tools/documents_gates.py -> exit 1 : SyntaxError: invalid decimal literal
+test_the_record (theirs side of the conflict, on the merged tree with the regenerated readings): exit 1: 3 failed, 8 passed in 19.49s
+test_the_record (ours side of the conflict, on the merged tree with the regenerated readings): exit 1: 5 failed, 10 passed in 22.32s

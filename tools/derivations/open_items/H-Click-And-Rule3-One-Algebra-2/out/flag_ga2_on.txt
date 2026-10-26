@@ -1,0 +1,5 @@
+{"src": "/dev/shm/tmp/ca2/src_ca2", "flag": "1", "hash": "33e01accbdcfa40a", "births": 0, "W_children": [], "senses_sum": 0, "refused_sense": 0, "run_back": 450, "of": 450, "cons": {"taken": 0, "booked": 0, "dP_take": [0, 0, 0], "dP_lay": [0, 0, 0], "senses": 0, "W": 0, "takes": 0, "taken_minus_booked": 0}}
+
+real	0m43.958s
+user	0m43.293s
+sys	0m0.070s

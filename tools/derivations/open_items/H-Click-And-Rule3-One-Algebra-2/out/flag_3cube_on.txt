@@ -1,0 +1,1 @@
+{"src": "/dev/shm/tmp/ca2/src_ca2", "flag": "1", "hash": "fe1e50e94b0192bb", "births": 0, "W_children": [], "senses_sum": 0, "refused_sense": 0, "run_back": 20, "of": 20}
