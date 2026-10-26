@@ -12,7 +12,7 @@ from event_universe.rows import QUARTET
 NAMES = {
     "1": ("a bang recurs", "the recurring bang"),
     "1b": ("the board tops, every Node turns", "the board topping, every Node turning at once"),
-    "1c": ("the board returns to Gamma", "the board returning to Gamma"),
+    "1c": ("the board returns to the seed", "the board returning to the seed's volumes"),
     "2": ("the Links lengthen", "the lengthening of the Links"),
     "3": ("the board shortens then lengthens", "the Links shortening, then lengthening"),
     "4": ("the era of matter", "the era of matter"),
@@ -114,8 +114,8 @@ def phenomenon_of(key: str) -> str:
 
 
 def eras_of(out: dict[str, Any], intervals: int, tops: list[int], returns: list[int]) -> dict[str, Any]:
-    """The eras row from the rows already read and the board's whole lists (the tops of row 1b and the exact returns of row 1c, every one, where the rows list the first eight alone): the bangs (the seed's and one after every exact return), the tops, and the spans from each bang, from the era of matter (4), the acceleration (5) and the bang recurring (46) at the interval each first shows, each span to the next's start."""
-    bangs = [1] + [int(i) + 1 for i in returns]
+    """The eras row from the rows already read and the board's whole lists (the tops of row 1b and the exact returns of row 1c, every one, where the rows list the first eight alone): the bangs (the seed's and one at every exact return, the interval the board is back at the seed's first state, as gate 1 numbers them), the tops, and the spans from each bang, from the era of matter (4), the acceleration (5) and the bang recurring (46) at the interval each first shows, each span to the next's start."""
+    bangs = [1] + [int(i) for i in returns]
     starts = [(b, "1", label_of("1")) for b in bangs] + [
         (e["i"], e["gate"].split()[0], e["label"])
         for e in out["events"]

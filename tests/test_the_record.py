@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from event_universe import board, symmetries
+from event_universe import bangs, board, clicks, symmetries
 from event_universe.core import paces, rule3
 from event_universe.core.ports import AXES
 from event_universe.decoder import Record
@@ -158,7 +158,7 @@ VERDICTS = {  # the verdicts' words by name
         "15 conservation at the click": "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder",
         "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node",
         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
-        "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+        "1c the board returns to the seed": "NOT SHOWN: no return to the seed's first state",
         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -120 / 60",
         "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 8, the hand's choice at every one; 1 me",
         "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 8 moving births",
@@ -313,6 +313,34 @@ def test_the_horizon_is_read_from_the_node_lines_not_the_rows() -> None:
     )
     assert found["Nodes frozen"] == 1 and found["verdict"].startswith("SHOWN as silence")
     assert board.horizon(Record(loaded("hole")))["14 the horizon"]["verdict"] == "NOT REACHED"
+
+
+def test_the_exact_return_is_the_seeds_first_state_and_the_horizon_standing() -> None:
+    """Rows 1, 1c and 61 on the hole record with its Node lines written by hand (the Boss's 6416499848 and 6416342006): a Node line equal to the first in X and content is an exact return and a bang, a bottom at Gamma is not; every Node frozen on one line and released on the next is a horizon that stands at that interval alone, so a credit after the release counts as beyond it, and a board frozen whole to the end lets no credit pass."""
+    run = loaded("hole")
+    nodes = run["nodes"]
+    k = len(nodes) // 2
+    nodes[k]["X"], nodes[k]["content"] = list(nodes[0]["X"]), list(nodes[0]["content"])
+    found = bangs.recurring_bang(Record(run))["1 recurring bangs"]
+    assert found["exact returns to the seed's first state (interval)"] == [nodes[k]["i"]]
+    assert found["bangs numbered (the interval each begins)"] == [1, nodes[k]["i"]]
+    assert bangs.returns(Record(run))["1c the board returns to the seed"]["verdict"].startswith(
+        "SHOWN: 1 exact"
+    )
+    assert bangs.exact_of(Record(loaded("hole"))) == []
+    run = loaded("hole")
+    every = list(range(len(run["nodes"][0]["X"])))
+    run["nodes"][k]["frozen"] = every
+    found = clicks.horizon_radiates(Record(run))["61 the horizon radiates"]
+    later = [c for c in run["log"] if c["event"] == "credit" and int(c["i"]) > run["nodes"][k]["i"]]
+    assert found["the whole board frozen at once"] and found[
+        "of them after the whole board's release (no Node frozen at the interval)"
+    ] == len(later)
+    for line in run["nodes"][k:]:
+        line["frozen"] = every
+    found = clicks.horizon_radiates(Record(run))["61 the horizon radiates"]
+    assert found["credits two or more Links from every Node frozen at the credit's interval"] == 0
+    assert found["verdict"].startswith("NOT SHOWN")
 
 
 def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_path: Path) -> None:

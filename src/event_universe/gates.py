@@ -8,7 +8,7 @@ from collections import Counter, defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe import board, clicks, events, predicates, symmetries
+from event_universe import bangs, board, clicks, events, predicates, symmetries
 from event_universe.core.ports import AXES
 from event_universe.decoder import (
     HALF,
@@ -271,9 +271,9 @@ RESTATED = (
 )  # the rows of the widened table that restate a gate of the nineteen, the gate's row beside each
 
 TABLE: tuple[Row, ...] = (
-    board.recurring_bang,
-    board.tops,
-    board.returns,
+    bangs.recurring_bang,
+    bangs.tops,
+    bangs.returns,
     clicks.lengthening,
     board.shortening,
     board.era,
@@ -374,12 +374,15 @@ def gates(run: dict[str, Any]) -> dict[str, Any]:
         ),
         "readings": "quotients at a named scale, counts, bit lengths; rationals compared by cross multiplication",
         "rows read from the Node lines (the board's view; the rest from the log, the clicks' view)": [
-            key for row in TABLE if row.__module__ == board.__name__ for key in row(record)
+            key
+            for row in TABLE
+            if row.__module__ in (bangs.__name__, board.__name__)
+            for key in row(record)
         ],
     }
     out["events"] = events.first_shown(record, read)
     out["the eras"] = events.eras_of(
-        out, record.intervals, board.tops_of(record), board.exact_of(record)
+        out, record.intervals, bangs.tops_of(record), bangs.exact_of(record)
     )
     return out
 

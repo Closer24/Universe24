@@ -148,7 +148,9 @@ INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the func
     ),
 )
 # the record's writer and readers, no act of the Node: their quotients are readings at a named scale
-READERS = tuple(f"{n}.py" for n in "run decoder gates events circle board clicks predicates".split())
+READERS = tuple(
+    f"{n}.py" for n in "run decoder gates events circle board bangs clicks predicates symmetries".split()
+)
 
 
 def divisions(tree: ast.AST) -> list[tuple[int, type[ast.AST], str]]:

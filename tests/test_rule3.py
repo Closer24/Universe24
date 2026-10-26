@@ -120,7 +120,9 @@ FILE_INTEGERS = {
 }
 # the record's readers, Animate's since 00:42 UTC (their constants named at the module's top on reader-5), no act of the Node;
 # the writer run.py reads the inventory and not the names gate (its record keys are the files' words)
-READERS = tuple(f"{n}.py" for n in "decoder gates events circle board clicks predicates".split())
+READERS = tuple(
+    f"{n}.py" for n in "decoder gates events circle board bangs clicks predicates symmetries".split()
+)
 WRITER = ("run.py",)
 NAMED_CALLS = {
     "refused",
