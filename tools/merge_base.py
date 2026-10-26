@@ -1,4 +1,4 @@
-"""The merge base a gate compares with: its ref (CHECK_BASE, else origin/main), resolved by name, and its tree unpacked for the gate to read (#1198, gate 7: no recorded baseline file)."""
+"""The merge base a gate compares with: its ref (CHECK_BASE, else origin/main), resolved by name, and its tree unpacked for the gate to read (#1198, gate 7: no recorded baseline file); at a release, named by the version bump in pyproject.toml, the released branch's own head before the bump (`released`, the release clause of RELEASE_5_0_PLAN.md, 2026-10-26)."""
 
 from __future__ import annotations
 
@@ -27,19 +27,50 @@ def ancestor(root: Path, commit: str, ref: str) -> bool:
     return found.returncode == 0
 
 
+def version_at(root: Path, ref: str) -> str | None:
+    """The version pyproject.toml names at a ref (its `version = "..."` line), None where the file or the line is absent."""
+    found = subprocess.run(
+        ["git", "-C", str(root), "show", f"{ref}:pyproject.toml"], capture_output=True, text=True
+    )
+    for line in found.stdout.splitlines():
+        if line.startswith("version = "):
+            return line.split('"')[1]
+    return None
+
+
+def released(root: Path, ref: str) -> str | None:
+    """The release clause (RELEASE_5_0_PLAN.md, the Boss's 6416419697, 2026-10-26): where HEAD's pyproject.toml names a version the base ref does not, HEAD is the release or carries it, and the ratchets would compare two different engines (the released branch against the former release); their base is then the released branch's own head before the version bump, the parent of the newest commit that set the version line, printed once by name; None where the versions agree."""
+    head, base = version_at(root, "HEAD"), version_at(root, ref)
+    if head is None or head == base:
+        return None
+    bump = subprocess.run(
+        ["git", "-C", str(root), "log", "-1", "--format=%H", "-G^version = ", "--", "pyproject.toml"],
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    if not bump or not ancestor(root, f"{bump}~1", "HEAD"):
+        return None
+    found = resolved(root, f"{bump}~1")
+    print(
+        f"the release {head} (the version bump {bump[:9]} from {base}): the ratchets' base is the released branch's own head before the bump, {found[:9]}",
+        flush=True,
+    )
+    return found
+
+
 def base_ref() -> str:
-    """The ref the gates compare with: CHECK_BASE, else origin/main; where tools/check_base.txt names a commit in this history that the ref does not hold, that commit (the fold of 2026-10-25: the lean Node's tree is its own base, and every later change holds against it)."""
+    """The ref the gates compare with: CHECK_BASE, else origin/main; where tools/check_base.txt names a commit in this history that the ref does not hold, that commit (the fold of 2026-10-25: the lean Node's tree is its own base, and every later change holds against it); at a release the released branch's own head before the version bump (`released`)."""
     ref = os.environ.get("CHECK_BASE") or "origin/main"
+    root = Path(__file__).resolve().parents[1]
     if REBASED.is_file():
         named = [
             line.strip()
             for line in REBASED.read_text(encoding="utf-8").splitlines()
             if line.strip() and not line.lstrip().startswith("#")
         ]
-        root = Path(__file__).resolve().parents[1]
         if named and ancestor(root, named[0], "HEAD") and not ancestor(root, named[0], ref):
-            return named[0]
-    return ref
+            ref = named[0]
+    return released(root, ref) or ref
 
 
 def on_pull_request(environment: dict[str, str]) -> bool:
