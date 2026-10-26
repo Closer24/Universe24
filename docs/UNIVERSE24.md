@@ -121,9 +121,9 @@ The owner's word, verbatim in translation: "all the time make sure the things ar
 
 **Problems by name, the Reader's (6404427576).** Regressed: 22 Coulomb's sign on the chiral (above). Per record, shown to not shown with the count unchanged: 45 the bodies' well on the chiral and the plasma (no body standing at one Node through the run, 0 of 151 into the last quarter on the chiral against 4 of 135 before; K, B and H keep it); 49 and 10 on world_universe; 8 and 16 on the bodies (2 credits beyond the floor); 5 on the hole. Gates 1 and 46 shown on world_universe (one exact return at 201, body credits 1,000 in the later cycle, no birth: the births on the return the one thing owed, a birth needing the twist) and 1 on world_sea; not shown on the chiral (the bottom 5,188 against 1,000), the collapse, the bodies, the hole and the plasma (939 and 946 against 1,000 at 167 and 333, PL-S1's item, approved). Gates 13, 23, 24, 40, 47 and 15 exact not shown on every board with matter (gate 24 shown first by the hand mg1 on ga2 under MG-S1, approved, unbuilt). Gates 11, 12, 48, 29 and 31 not read (no light credit); 32, 44 and 53 not read for want of a world with the `wave` key; 20, 28, 35, 36, 38, 39, 41, 42, 50, 51, 52 and 54 not read for want of a field, a flux, a row or an act. Gate 37 on the chiral 142 Nodes lit beyond one Link (116 before). The three constants on the chiral at 117 of 128 bits; the chiral record 152 MB. The chiral's course under the head: 17 births, 15,801 body credits (6,436 before), the bottoms 215, 403, 581, 745 and 905, 1,075 frozen Node lines (429 before).
 
-### The gates of the phenomena (the head bf41e433; written by tools/phenomena.py from the readings, the verdict of every row the decoder's)
+### The gates of the phenomena (the head 502aa9d9; written by tools/phenomena.py from the readings, the verdict of every row the decoder's)
 
-SHOWN in Universe24: 32 of 68 on bf41e433. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
+SHOWN in Universe24: 32 of 68 on 502aa9d9. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
 
 | the phenomenon | gate | the verdict per record | the cause where not SHOWN | since the table before |
 | --- | --- | --- | --- | --- |
@@ -194,7 +194,7 @@ SHOWN in Universe24: 32 of 68 on bf41e433. The records read from the seed alone:
 | the lepton number, every species' senses summing to 0 | 65 | SHOWN on ga2, hole; NOT SHOWN on nature; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | 1 species with a sum not 0 | unchanged |
 | the energy in the clicks, a body's beat kept across its click | 66 | SHOWN on universe, plasma, plasma_3, universe_3; SHOWN in part on nature, ga2, collapse_800, bodies, hole; NOT READ on sea | on most pairs | unchanged |
 | CPT, the charge even under C, P and T together | 67 | SHOWN on nature, ga2, collapse_800, hole, universe, plasma, plasma_3, universe_3; NOT READ on bodies, sea | no frame carries a charge | unchanged |
-| matter against antimatter, the + child's end chosen by the hand | 68 | SHOWN on nature, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth | the first table |
+| matter against antimatter, the + child's end chosen by the hand | 68 | SHOWN on nature, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | no birth | unchanged |
 
 ### The gates widened to everything derived, read on any bang of the same seed and at one Node where one Node can show it (2026-10-25, 11:0x UTC)
 
