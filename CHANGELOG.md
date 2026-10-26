@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- docs/ENGINE.md gains section 3, The readers (the owner's word of 2026-10-26, 00:1x UTC: every part of the system, the decoder among them, accounted for): the seven reading modules and the page with one sentence and their lines each, the readers' rules of the Boss's ruling of 23:57 UTC, the owners, the compacting and what the readers lack by name; the section the fourth, after the departures.
 - The owner's words of 2026-10-25, 23:40 to 23:59 UTC through the Boss: EX-S1 approved and the no-numbers word of 23:47 in docs/ALGEBRA.md; the Scribe's cadence under the efficiency word in the method of docs/UNIVERSE24.md; the gates' rows 1, 9, 10, 22, 30, 45, 46 and 49 with their cause under PL-S1; the ledger's rows for PL-S1 confirmed and merged, CS4-S2 and A48-S1 built on toys-5 and read whole, the five hands' ownership and the Reader's ruling; docs/HIGHLIGHTS.md the decisions.
 - PL-S1 marked built on toys-5 99a9ee860 in docs/ALGEBRA.md and in the ledger's row 97 of docs/UNIVERSE24.md with the Scribe's read and run and one note for the confirming hand (the charge summed in the riders' loop).
 - CS6-S1's clause re-cut in docs/ALGEBRA.md: the retrace holds down to the mirror of the last click that stood in the rise and was not laid back (the hands of the algebra of the whole; EQ-S1 supersedes the predicted parting), the former words kept by name.
