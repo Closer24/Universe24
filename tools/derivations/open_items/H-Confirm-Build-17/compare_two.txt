@@ -1,0 +1,4 @@
+plasma_3_170: EQUAL 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world
+exit 0 seconds 3
+ga2_450: EQUAL 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world
+exit 0 seconds 21

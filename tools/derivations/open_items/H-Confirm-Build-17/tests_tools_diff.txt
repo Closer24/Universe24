@@ -1,0 +1,78 @@
+diff --git a/tests/test_rule3.py b/tests/test_rule3.py
+index 8152859d0..28e64eff0 100644
+--- a/tests/test_rule3.py
++++ b/tests/test_rule3.py
+@@ -9,7 +9,7 @@ from pathlib import Path
+ import numpy as np
+ 
+ from event_universe.core import paces
+-from event_universe.core.rule3 import coefficients, form_term, link_factor, mass, mirrored, rule3
++from event_universe.core.rule3 import form_term, link_factor, mass, mirrored, rule3, rule_integers
+ from tests.laws import arrivals_rule3
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+@@ -31,23 +31,23 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
+         content, unit = rng.randint(-gamma + 1, gamma - 1), rng.choice([1, 2, 16])
+         factors = tuple(unit * unit + rng.randint(-50, 50) for _ in range(6))
+         clock, p = paces.clock(gamma, content), paces.link_pace(gamma, content)
+-        assert coefficients(num, den, gamma, clock, p) == law_line(num, den, gamma, clock, p)
+-        found = coefficients(num, den, gamma, clock, p, factors, unit)
++        assert rule_integers(num, den, gamma, clock, p)[:3] == law_line(num, den, gamma, clock, p)
++        found = rule_integers(num, den, gamma, clock, p, factors, unit)[:3]
+         assert found == law_line(num, den, gamma, clock, p, factors, unit)
+-        plain = coefficients(num, den, gamma, clock, p, None, unit)
+-        assert coefficients(num, den, gamma, clock, p, (unit * unit,) * 6, unit) == plain
+-        (read, *_), self_iso, wall = coefficients(num, den, gamma, clock, p)
++        plain = rule_integers(num, den, gamma, clock, p, None, unit)[:3]
++        assert rule_integers(num, den, gamma, clock, p, (unit * unit,) * 6, unit)[:3] == plain
++        (read, *_), self_iso, wall = rule_integers(num, den, gamma, clock, p)[:3]
+         assert plain == ((read * unit * unit,) * 6, self_iso * unit * unit, wall * unit * unit)
+         vacuum = ((2 * gamma**2 * num,) * 6, 0, 6 * den * gamma**2)
+-        assert coefficients(num, den, gamma, gamma, gamma) == vacuum
++        assert rule_integers(num, den, gamma, gamma, gamma)[:3] == vacuum
+         q = factors[0]
+         along = (2 * q * p**2 * num,) + (read,) * 5, self_iso - 2 * num * p**2 * (q - 1), wall
+-        assert coefficients(num, den, gamma, clock, p, (q,) + (1,) * 5) == along
++        assert rule_integers(num, den, gamma, clock, p, (q,) + (1,) * 5)[:3] == along
+     assert (link_factor(GAMMA, 16, 0), link_factor(GAMMA, 16, GAMMA)) == (256, 0)
+     assert link_factor(GAMMA, 16, -153) == 264 and link_factor(GAMMA, 16, GAMMA // 512) == 255
+     for num, den, c in ((800, 809, 500), (3200, 3227, 2000), (1, 1, 0), (1, 1, 2000)):
+         p_0, p_i = paces.clock(GAMMA, c), paces.link_pace(GAMMA, c)
+-        (read, *_), self_coefficient, wall = coefficients(num, den, GAMMA, p_0, p_i)
++        (read, *_), self_coefficient, wall = rule_integers(num, den, GAMMA, p_0, p_i)[:3]
+         clock, link = Fraction(p_0 * p_0, GAMMA**2), Fraction(p_i * p_i, GAMMA**2)
+         assert Fraction(6 * read + self_coefficient, wall) == 2 - 2 * clock * (1 - Fraction(num, den))
+         for cosine in (1, 0, -1):
+@@ -63,7 +63,7 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
+         content = rng.randint(-gamma + 1, gamma - 1)
+         factors = tuple(16 * 16 - rng.randint(0, 30) for _ in range(6))
+         clock, pace = paces.clock(gamma, content), paces.link_pace(gamma, content)
+-        reads, self_coefficient, wall = coefficients(num, den, gamma, clock, pace, factors, 16)
++        reads, self_coefficient, wall = rule_integers(num, den, gamma, clock, pace, factors, 16)[:3]
+         *arrivals, now, before = (rng.randint(-(10**6), 10**6) for _ in range(8))
+         remainder = rng.randint(0, wall - 1)
+         total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
+@@ -84,9 +84,9 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
+     content = generator.integers(-3000, 3000, shape, dtype=np.int64)
+     arrivals = tuple(generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(6))
+     now, before = (generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(2))
+-    reads, self_coefficient, wall = coefficients(
++    reads, self_coefficient, wall = rule_integers(
+         num, den, GAMMA, paces.clock_of(GAMMA, content), paces.link_pace_of(GAMMA, content)
+-    )
++    )[:3]
+     remainder = generator.integers(0, 10**9, shape, dtype=np.int64) % wall
+     fluxes = reads[0] * sum(arrival - now for arrival in arrivals)
+     own = 2 * wall - self_coefficient - sum(reads)
+@@ -96,9 +96,9 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
+     assert np.array_equal(carried, total - wall * nxt)
+     back = rule3(fluxes, own, wall, now, nxt, carried, -1)
+     assert np.array_equal(back, (before, remainder))
+-    _reads, self_coefficient, wall = coefficients(
++    _reads, self_coefficient, wall = rule_integers(
+         800, 809, GAMMA, paces.clock(GAMMA, 250), paces.link_pace(GAMMA, 250)
+-    )
++    )[:3]
+     assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
+ 
+ 

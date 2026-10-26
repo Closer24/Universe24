@@ -1,0 +1,2 @@
+{'field': "inside the cut's shell", 'dP': ['0', '0', '0'], 'dL': ['0', '0', '0'], 'dL / c': ['0', '0', '0'], 'dL multiple of c': True}
+{'field': 'across the cut', 'dP': ['0', '0', '0'], 'dL': ['1312353/400', '-1763531/300', '-146853/80'], 'dL / c': ['187479/400', '-251933/300', '-20979/80'], 'dL multiple of c': False}
