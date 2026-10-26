@@ -1,0 +1,35 @@
+{"flag": "", "walls": [1654009903854256729287, 1654009903854256729287], "exact": [null, [0, 12, 1671250041200833425780]], "stood": [[939, 1175, 0, 0], [1329, 1112, 0, 0]], "W_after": [117216, 0], "W_own": [-18000, 0]}
+F
+=================================== FAILURES ===================================
+_____________ test_the_merger_lays_light_of_no_charge_at_both_ends _____________
+
+    def test_the_merger_lays_light_of_no_charge_at_both_ends() -> None:
+        node = node_of("world_node.json")
+        node.step()
+        s = 0
+        row = node.records()[s]
+        assert row.pair is not None
+        minus, plus = (1, 1, 1), (1, 1, 2)
+        node.lay(s, minus, (939, 1175, 0, 0))
+        node.lay(s, plus, (1329, 1112, 0, 0))
+        c = node.start_content
+        factors = node.link_factors(None, readings.frozen_of(node, c))
+        rule = node.rule(row.pair, c, factors)
+        walls = list(walls_of(node, s, minus, plus, rule, {}))
+        A, B = (int(x) for x in rule3.balanced_pair(rule3.half(node.T)))
+        _dp, w_after, stood, exact, _ends = light_children(node, s, minus, plus, walls, rule)
+        own = [0 if exact[end] is not None else sense * A * B for end, sense in ((0, -1), (1, 1))]
+        print(json.dumps(dict(flag=os.environ.get("CC1_LIGHT_EXACT", ""), walls=walls, exact=exact, stood=stood, W_after=w_after, W_own=own)))
+>       assert all(x is not None for x in exact), f"a merger end laid as the charged child's lay: exact {exact}, W own {own}"
+E       AssertionError: a merger end laid as the charged child's lay: exact [None, [0, 12, 1671250041200833425780]], W own [-18000, 0]
+E       assert False
+E        +  where False = all(<generator object test_the_merger_lays_light_of_no_charge_at_both_ends.<locals>.<genexpr> at 0x7f0d44d4dcb0>)
+
+tools/derivations/open_items/H-Children-Charge-Bug-1/test_children_charge_cc1.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED tools/derivations/open_items/H-Children-Charge-Bug-1/test_children_charge_cc1.py::test_the_merger_lays_light_of_no_charge_at_both_ends
+1 failed in 0.36s
+
+real	0m0.762s
+user	0m0.466s
+sys	0m0.052s

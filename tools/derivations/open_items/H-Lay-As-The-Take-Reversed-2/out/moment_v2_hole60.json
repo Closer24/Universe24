@@ -1,0 +1,17 @@
+{
+ "record": "/dev/shm/tmp/lt2/v2_hole60.json",
+ "births": 32,
+ "births with the far reads": 20,
+ "births whose taken row and children's record share one num": 0,
+ "A": 125,
+ "far Nodes written (one carried division each)": 101,
+ "far Nodes shared by two or more births of one close": 17,
+ "far Nodes with A q_j = S_j (exact)": 12,
+ "far Nodes with |A q_j - S_j| < A (exact to the remainder)": 101,
+ "max |A q_j - S_j|": 57,
+ "closes with the far lay": 4,
+ "closes with SUM dP_take + SUM dP_lay_ends + dP_far = 0 (num-weighted)": 1,
+ "max |residual| of that balance": 942175435087327645824,
+ "max |q_j|": 628,
+ "max bits among q and the remainders": 96
+}
