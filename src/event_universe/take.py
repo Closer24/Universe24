@@ -35,7 +35,7 @@ def at_node(x: Any, at: tuple[int, ...]) -> int:
 def fall_of(
     node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, row: Row
 ) -> tuple[int | None, int, int]:
-    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) an exact quadratic in s scaled by X over 2 Gamma^3 G^2, its least root by largest_below checked at the neighbours, the exact guard where the root misses; (None, the full fall) where the full move cannot pay."""
+    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) = s (price - X w s) over the share's weight 2 Gamma^3 G^2, the price X times Rule3's own numerator with the slots exchanged, -t (2 w now + pull); the count one carried division of the walls owed by the price, rounded up as the floor's mirror, and where the moved levels' own square leaves the fall short, the same division of the shortfall by the next level's price, price - 2 X w s, iterated from below to its fixed count (TC-S1, the owner's word of 2026-10-26, 08:3x UTC, "approved", both hands' one finding, H-Take-Count-As-Rule3-Division-1: the count Rule3's own kind of act, no root; the former least root by largest_below, least_root, kept by name); (None, the full fall) where the full move cannot pay."""
     gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in row.lines)]
     k = gaps.index(max(gaps))
     line = row.lines[k]
@@ -55,13 +55,14 @@ def fall_of(
         moved = now + t * s
         return int(quotient(x * (w * (now * now - moved * moved) - t * s * pull), weight))
 
-    full = fall(dist := abs(now - before))
+    price = -t * ((w + w) * now + pull) * x
+    full = fall(abs(now - before))
     if full < walls:
         return None, full, k
-    for s in rule3.least_root(-w * x, -((w + w) * now + pull) * t * x, walls * weight, dist):
-        if s <= dist and fall(s) >= walls:
-            return s, fall(s), k
-    return (*next(((s, fall(s)) for s in range(1, dist + 1) if fall(s) >= walls), (dist, full)), k)
+    s = -quotient(-walls * weight, price)
+    while fall(s) < walls:
+        s -= quotient(-(walls * weight - s * (price - x * w * s)), price - x * w * (s + s))
+    return s, fall(s), k
 
 
 def lay(node: Node, rec: int, where: Any, levels: Any, sign: int = 1) -> None:

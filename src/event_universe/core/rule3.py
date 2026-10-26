@@ -185,16 +185,6 @@ def lattice(*values: Any) -> Any:
     return found
 
 
-def least_root(a: int, b: int, target: int, dist: int) -> list[int]:
-    """The least root's neighbours of a s^2 + b s >= target by one integer root (largest_below), checked exactly at s - 1, s, s + 1, s + 2; the full move alone where the discriminant is negative."""
-    disc = b * b + (a + a) * (target + target)
-    if disc < 0:
-        return [dist]
-    root = largest_below(disc)
-    s1 = quotient(b - root, -(a + a)) if a < 0 else quotient(-b + root, a + a)
-    return sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
-
-
 def balanced_pair(product: int) -> tuple[int, int]:
     """The pair (a, b) with a b = product exactly and a the largest divisor at most largest_below(product), found by a search by comparisons down from the root's floor (MS-S1: the lay's two levels with A B = T div 2 for every row, the same two integers from T alone; 125 and 144 at T 36,000)."""
     a = largest_below(product)

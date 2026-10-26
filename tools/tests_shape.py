@@ -41,6 +41,10 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_rule3.py::test_the_take_count_is_one_carried_division_of_the_walls_by_the_price_tc_s1": (
+        40,
+        "TC-S1 (2026-10-26, the owner's word of 08:3x UTC, 'approved', the Boss's order 6411031946 under the owner's delegation: the hand's one-Node test under its room; H-Take-Count-As-Rule3-Division-1): the take's count one carried division of the walls by the price of one level, iterated from below, no root, on the hole seed's 47 first takes at the trace 6",
+    ),
     "tests/test_the_node.py::test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1": (
         40,
         "EX-S1 (2026-10-26, the Boss's order of 03:3x UTC under the owner's delegation, 6407630119 and 6405916579: the room 40 named; H-Exact-Take-Remainder-1's one-Node test): the take's remainder at the Node, the identity fall + remainder before - remainder after = booked at twenty takes, the undo to the hash",
