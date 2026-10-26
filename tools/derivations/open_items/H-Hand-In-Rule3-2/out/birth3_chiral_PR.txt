@@ -1,0 +1,25 @@
+first birth interval of the base 3
+base refused lay node (0, 2, 3) row 3 {'standing': 1986881069782958961039, 'unit': 1637588529984138012000}
+base refused lay node (2, 2, 1) row 3 {'standing': 2378216695738181196386, 'unit': 1637588529984138012000}
+base refused lay node (1, 0, 2) row 3 {'children_at_one_node': 3}
+base refused lay node (2, 1, 1) row 3 {'children_at_one_node': 3}
+base refused lay node (1, 0, 2) row 3 {'children_at_one_node': 3}
+base refused lay node (1, 3, 0) row 3 {'children_at_one_node': 2}
+base refused lay node (2, 1, 1) row 3 {'children_at_one_node': 3}
+base refused lay node (1, 0, 2) row 3 {'children_at_one_node': 3}
+base refused lay node (1, 1, 2) row 3 {'children_at_one_node': 2}
+base refused lay node (1, 3, 0) row 3 {'children_at_one_node': 2}
+base refused lay node (2, 1, 1) row 3 {'children_at_one_node': 3}
+base birth node (0, 1, 3) line_pair 1 minus (0, 1, 3) plus (0, 1, 2) levels 28 W [-18000, 18000] taken 3367986282731521923554 booked 3324559906747056025864
+mirror refused lay node (1, 3, 0) row 3 {'standing': 2759673346808799596701, 'unit': 1637588529984138012000}
+mirror refused lay node (1, 3, 0) row 3 {'standing': 1966800870397303651746, 'unit': 1637588529984138012000}
+mirror refused lay node (1, 0, 2) row 3 {'children_at_one_node': 3}
+mirror refused lay node (2, 1, 1) row 3 {'children_at_one_node': 3}
+mirror refused lay node (2, 1, 1) row 3 {'children_at_one_node': 3}
+mirror refused lay node (1, 0, 2) row 3 {'children_at_one_node': 3}
+mirror refused lay node (2, 1, 1) row 3 {'children_at_one_node': 3}
+mirror refused lay node (1, 0, 2) row 3 {'children_at_one_node': 3}
+mirror birth node (0, 1, 3) line_pair 2 minus (0, 1, 2) plus (0, 1, 3) levels 28 W [-18000, 18000] taken 3367986282731521923554 booked 3324559906747056025864
+mirror birth node (0, 2, 3) line_pair 2 minus (1, 2, 3) plus (0, 2, 3) levels 27 W [-18000, 18000] taken 3326594748800829931373 booked 3324559906747056025864
+mirror birth node (2, 2, 1) line_pair 2 minus (2, 2, 1) plus (2, 2, 2) levels 27 W [-18000, 18000] taken 3326594748800829931373 booked 3324559906747056025864
+mirror birth node (1, 1, 2) line_pair 2 minus (1, 1, 2) plus (1, 1, 1) levels 26 W [-18000, 18000] taken 3327036883358650125975 booked 3322905896843201769135
