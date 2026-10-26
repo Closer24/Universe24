@@ -6,13 +6,14 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, gram, interval, readings, seed
+from event_universe import close, gram, interval, readings
 from event_universe.core import acts, paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import half, link_unit_of, unit_of, wall_of
 from event_universe.features import phase
 from event_universe.links import Link, turned
+from event_universe.loader import seed
 from event_universe.rows import (
     CARRIER,
     HALF_WIDTH,

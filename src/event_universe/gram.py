@@ -11,7 +11,7 @@ import numpy as np
 from event_universe.core.ports import AXES, PORTS, across, port_of, wrap
 from event_universe.core.rule3 import half, quotient, share_weight, signed_quotient
 from event_universe.links import gradient
-from event_universe.quartet import quartet
+from event_universe.loader.quartet import quartet
 from event_universe.readings import pair_angle
 from event_universe.rows import PLANE, QUARTET, Line, zeros
 from event_universe.take import neighbour

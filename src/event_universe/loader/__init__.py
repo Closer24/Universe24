@@ -1,1 +1,1 @@
-"""The loader: the world's files read into the lattice's world, every key checked and every other key refused by name; no default, no number of the universe and no family's name."""
+"""The loader: the world's files read into the lattice's world, every key checked and every other key refused by name; no default, no number of the universe and no family's name; beside it what is built once from the two files and read by the Node (R5 of the readings' map, 2026-10-26): the shape-8 row's algebra (quartet), the seed's lays and envelopes (seed) and the light's cycle lay (wave)."""
