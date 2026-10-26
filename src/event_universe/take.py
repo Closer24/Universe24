@@ -130,7 +130,7 @@ def take_at(
     node: Node, at: tuple[int, ...], walls: int, rule: rule3.Rule, cause: int, rec: int | None = None
 ) -> tuple[int, int, int, int, int] | None:
     """One exact take at a Node of the walls booked from the taken row (the gap-0 row's where none is named: a body's take) at its rule, on the line the fall's sign chooses (`fall_of`, CS4-S2): its level now moved toward its before by the least count of levels at which the Node's share falls by the walls; refused by name where the fall cannot reach the walls (the stop). Returns (levels, fall, the line's now before the take, its before, the line taken) or None."""
-    taken = node.records().index(node.row(PLANE, gap=0)) if rec is None else rec
+    taken = node.records().index(node.emitter()) if rec is None else rec
     row = node.records()[taken]
     levels, fall, k = fall_of(node, at, walls, rule, row)
     z = row.lines[k]

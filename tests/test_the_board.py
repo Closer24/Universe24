@@ -14,7 +14,7 @@ from event_universe import run as writer
 from event_universe.core.ports import PORTS
 from event_universe.links import row_current
 from event_universe.node import Node
-from event_universe.rows import CARRIER, PLANE
+from event_universe.rows import CARRIER
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
 CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 6, 6, 6)  # rotations alike per part (CK-S1 even)
@@ -64,7 +64,7 @@ def run(universe: dict[str, Any], world: dict[str, Any]) -> Node:
 def same_rows(base: Node, other: Node, m: Any) -> bool:
     for line_b, line_o in (
         (base.row(CARRIER).lines[0], other.row(CARRIER).lines[0]),
-        (base.row(PLANE, gap=0).lines[0], other.row(PLANE, gap=0).lines[0]),
+        (base.emitter().lines[0], other.emitter().lines[0]),
     ):
         for at in np.ndindex(CUBE, CUBE, CUBE):
             there = image(m, at, CUBE)
@@ -219,7 +219,7 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
         node, kept = node_of(world), node_of(world)
         by_interval: dict[int, int] = {}
         for _ in range(INTERVALS):
-            lines = node.row(PLANE, gap=0).lines
+            lines = node.emitter().lines
             net = sum((row_current(lines, port) for port in range(PORTS)), start=0)
             seen = len(node.log)
             node.step()
@@ -229,7 +229,7 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
                 assert (int(net[at]) == 0) == ("laid_back" in c) == quiet
                 if quiet:
                     assert c["laid_back"] == c["levels"] > 0 and c["dP_take"] == [0, 0, 0]
-                    assert int(node.row(PLANE, gap=0).lines[0].now[at]) == c["taken_now_was"]
+                    assert int(node.emitter().lines[0].now[at]) == c["taken_now_was"]
             by_interval[node.interval] = len(credits)
         counts = node.counts
         found[world] = ({i: n for i, n in by_interval.items() if n}, *(counts[k] for k in COUNTED))

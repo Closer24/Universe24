@@ -12,7 +12,8 @@ CARRIER = 10  # the shape of the row that carries the wall (the metric's row): i
 POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
 PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
 QUARTET = 8
-HALF_WIDTH = 64  # half the law's width of 128 bits: the phase pair's amplitude is read from it less one
+WIDTH = 128  # the law's width in bits (ALGEBRA.md, The Node): the phase pair's room is its half
+HALF_WIDTH = quotient(WIDTH, 2)
 TRACE = 54  # the trace's weight of the held walls and the carrier's write, 2 x 27 (ALGEBRA.md, the held write)
 
 
@@ -56,25 +57,19 @@ class Line:
 
     def copy(self) -> Line:
         """The line's arrays copied, its walls shared."""
-        return Line(
-            self.now.copy(),
-            self.before.copy(),
-            self.rem.copy(),
-            self.wall,
-            None if self.wr is None else self.wr.copy(),
-            self.wwall,
-        )
+        wr = None if self.wr is None else self.wr.copy()
+        return Line(self.now.copy(), self.before.copy(), self.rem.copy(), self.wall, wr, self.wwall)
 
 
 def write_walls(
     shape: int, pair: tuple[int, int] | None, den: int, gamma: int, action: int
 ) -> list[Any]:
-    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls (rule3.held_wall at the powers 4 and 2), the shape-4 row's four lines T, the plane at the gap 0 its first line T (the lay of W-S1), a plane with a gap none."""
+    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls (rule3.held_wall at the powers 4 and 2), the shape-4 row's four lines T, the plane at the universe's own pair (den, den), the emitter, its first line T (the lay of W-S1), another plane none."""
     if shape == CARRIER:
         return [held_wall(TRACE, den, gamma, action, p) for p in (4, *[2] * (shape - 1))]
     if shape == POTENTIAL:
         return [action] * shape
-    if shape == PLANE and pair is not None and pair[0] == pair[1]:
+    if shape == PLANE and pair == (den, den):
         return [action, None]
     return [None] * shape
 
@@ -103,17 +98,13 @@ def lines_of(
     ]
 
 
-def order_of(row: Row) -> int:
-    """The acts' order: a row whose write reads other rows comes after them: the row with its own wall, the records with a gap (the planes and the quartets), the plane at the gap 0 (its lay reads the records' charge), the shape-4 row, the carrier."""
-    if row.wall is not None:
-        return 0
-    if row.shape in (PLANE, QUARTET):
-        return 1 + (row.gap == 0)
-    return {POTENTIAL: 3, CARRIER: 4}.get(row.shape, CARRIER + 1)
+def order_key(row: Row) -> tuple[bool, int]:
+    """The acts' order as a key compared and never tested: the row with its own wall first, then every row by the count of lines it writes, a row whose write reads other rows after them (the records writing nothing, the emitter its one line, the shape-4 row its four, the carrier its ten), the ties in the file's order."""
+    return row.wall is None, sum(1 for line in row.lines if line.wwall is not None)
 
 
 def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[list[Row], list[Row]]:
-    """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the row at the gap 0 is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the plane at the gap 0 or the walled row other than one, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den)."""
+    """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the emitter is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the emitter or the walled row other than one, two planes at one pair, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den), no plane at another pair."""
     ints = universe["integers"]
     den, gamma, action = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
     by_index: list[Row] = []
@@ -125,29 +116,34 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
             raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
         lines = lines_of(board, shape, pair, wall, w, write_walls(shape, pair, den, gamma, action))
         by_index.append(Row(shape, pair, wall, lines))
-    rows = sorted(by_index, key=order_of)
+    rows = sorted(by_index, key=order_key)
     walled = [r for r in rows if r.wall is not None]
-    gap0 = [r for r in rows if r.shape == PLANE and r.gap == 0]
+    planes = [r for r in rows if r.shape == PLANE]
+    emitters = [r for r in planes if r.pair == (den, den)]
     carriers = [r for r in rows if r.shape == CARRIER]
     potentials = [r for r in rows if r.shape == POTENTIAL]
-    if len(walled) != 1 or len(gap0) != 1 or len(carriers) != 1 or len(potentials) != 1:
+    if len(walled) != 1 or len(emitters) != 1 or len(carriers) != 1 or len(potentials) != 1:
         raise ValueError(
             "the universe names one row with its own wall, one plane at the gap 0, one shape-10 row and one shape-4 row"
         )
+    if len({r.pair for r in planes}) != len(planes):
+        raise ValueError("two planes at one pair: the universe names every pair once")
     if carriers[0].pair != (den - quotient(den, gamma), den):
         raise ValueError(
             "the shape-10 row is the clock's one level: its pair (den - den div Gamma, den)"
         )
     if potentials[0].pair != (den, den):
         raise ValueError("the shape-4 row stands at (den, den)")
-    if not any(r.shape == PLANE and r.gap is not None and r.gap > 0 for r in rows):
+    if len(planes) == len(emitters):
         raise ValueError("the universe names no plane row with a gap")
     return rows, by_index
 
 
-def row_of(rows: list[Row], shape: int, gap: int | None = None) -> Row:
-    """The one row of the shape (and of the gap den - num where given), chosen by the numbers alone."""
-    return next(r for r in rows if r.shape == shape and r.wall is None and (gap is None or r.gap == gap))
+def row_of(rows: list[Row], shape: int, pair: tuple[int, int] | None = None) -> Row:
+    """The one row of the shape with a pair, and of the pair where given, chosen by the numbers alone (the emitter: the plane of the potential's pair)."""
+    return next(
+        r for r in rows if r.shape == shape and r.wall is None and (pair is None or r.pair == pair)
+    )
 
 
 def walled_of(rows: list[Row]) -> Row:
@@ -156,5 +152,5 @@ def walled_of(rows: list[Row]) -> Row:
 
 
 def records_of(rows: list[Row]) -> list[Row]:
-    """The record rows in the acts' order, the planes (the one at the gap 0 among them) and the quartets."""
+    """The record rows in the acts' order, the planes (the emitter among them) and the quartets."""
     return [r for r in rows if r.shape in (PLANE, QUARTET)]

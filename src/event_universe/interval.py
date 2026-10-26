@@ -11,15 +11,15 @@ from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import carried_division, division_forward, half, held_numerator, quotient
 from event_universe.features import volume
-from event_universe.links import links_of, stress_parts, tensor_parts
-from event_universe.rows import CARRIER, PLANE, POTENTIAL, TRACE, Line, Row, zeros
+from event_universe.links import coupling_of, links_of, stress_parts, tensor_parts
+from event_universe.rows import CARRIER, POTENTIAL, TRACE, Line, Row, walled_of, zeros
 
 if TYPE_CHECKING:
     from event_universe.node import Node
 
 
 def laid_on(node: Node, line: Line, levels: Any) -> None:
-    """The emission's size, a reading of the run: the levels laid on the gap-0 line and the Nodes they were laid at."""
+    """The emission's size, a reading of the run: the levels laid on the emitter's line and the Nodes they were laid at."""
     laid = line.now - levels
     node.counts["laid"] += int(sum(abs(int(x)) for x in laid.reshape(-1)))
     node.counts["laid_nodes"] += int(sum(1 for x in laid.reshape(-1) if int(x) != 0))
@@ -48,11 +48,11 @@ class Interval:
             self.kept = [[line.copy() for line in row] for row in node.rows()]
         self.rows = node.rows()
         self.where = {id(r): k for k, r in enumerate(node.rows_)}
-        self.carrier, self.walled = node.row(CARRIER), node.walled()
-        self.potential, self.gap0 = node.row(POTENTIAL), node.row(PLANE, gap=0)
+        self.carrier, self.walled = node.row(CARRIER), walled_of(node.rows_)
+        self.potential, self.emitter = node.row(POTENTIAL), node.emitter()
         self.riders = [r for r in node.rows_ if r.wall is None and r is not self.carrier]
         self.records = node.records()
-        self.gapped = [r for r in self.riders if r.gap]
+        self.planes = [(r, coupling_of(r)) for r in self.records]
         self.scales = {self.where[id(r)]: gram.scale(r.shape, node.gamma) for r in self.riders}
         self.common = max(self.scales.values())
         self.out: list[list[Line]] = [[] for _ in self.rows]
@@ -103,7 +103,7 @@ class Interval:
         self.trace, self.traceless = tensor_parts(stress)
 
     def walled_act(self) -> None:
-        """The walled row first: its act carries its own write; the Links' count and phases come from it, and the six Links' records (the factor, the frame, the pair, the odd part) are read once for the planes' turn."""
+        """The walled row first: its act carries its own write; the Links' count and phases come from it, and the six Links' records (the factor, the frame, the pair, the odd part) are read once per coupling present among the records (links.coupling_of), the frame sign, the count and the odd part at the coupling, so the turn at the coupling 0 is the identity by arithmetic (the orbit's pair at the count 0 being (X, 0))."""
         node, walled = self.node, self.walled
         k = self.where[id(walled)]
         rule = node.rule_of(walled, self.c, self.factors)
@@ -119,23 +119,31 @@ class Interval:
         self.phases = readings.link_phases(node, self.frames, count)
         self.odd = [self.at(line) for line in self.potential.lines[1 : 1 + AXES]]
         node.start_phases, node.start_odd = self.phases, [o.copy() for o in self.odd]
-        self.links = links_of(self.factors, self.frames, self.phases, self.odd)
+        self.links_at = {
+            c: links_of(
+                self.factors,
+                [f**c for f in self.frames],
+                readings.link_phases(node, self.frames, count * c),
+                [o * c for o in self.odd],
+            )
+            for c in sorted({c for _r, c in self.planes})
+        }
         self.curl = gram.curl(self.odd)
 
     def forces(self) -> None:
-        """Every riding line's force at the start, SUM_j R_j (m_j - a) - D a plus the row's Node term by shape (gram.term, the coefficient the unscaled reaches' sum), a riding row with a gap turned by the Links; the records' current at this end; and the emission read from the kick, X_now SUM over the records with a gap of F.GJ.N (the plane's re F_im - im F_re), each over its scale against the common one."""
+        """Every riding line's force at the start, SUM_j R_j (m_j - a) - D a plus the row's Node term by shape (gram.term, the coefficient the unscaled reaches' sum), every record turned by the Links at its coupling; the records' current at this end, each at its coupling; and the emission read from the kick, X_now SUM over the records with a gap of F.GJ.N (the plane's re F_im - im F_re), each over its scale against the common one."""
         node = self.node
         self.current = [zeros(node.shape) for _ in range(AXES)]
-        for r in self.gapped:
+        for r, cpl in self.planes:
             nows = [self.at(line) for line in self.lines(r)]
             for a, j_a in enumerate(gram.current(r.shape, nows, self.frames)):
-                self.current[a] = self.current[a] + j_a
+                self.current[a] = self.current[a] + cpl * j_a
         self.starts: dict[int, list[Any]] = {}
         self.force: dict[int, list[Any]] = {}
         self.walls: dict[int, Any] = {}
         for r in self.riders:
             rule = node.rule_of(r, self.c, self.factors)
-            turn = self.links if r.gap else None
+            turn = self.links_at[coupling_of(r)] if r in self.records else None
             k = self.where[id(r)]
             self.walls[k] = rule.wall
             self.starts[k] = [self.at(line) for line in self.lines(r)]
@@ -147,10 +155,10 @@ class Interval:
                 for a, m, t in zip(self.starts[k], arrivals, added, strict=True)
             ]
         self.emission = zeros(node.shape)
-        for r in self.gapped:
+        for r, cpl in self.planes:
             k = self.where[id(r)]
             gj = gram.matmul(gram.gram(r.shape), gram.rotation(r.shape))
-            flow = gram.form(gj, self.force[k], self.starts[k])
+            flow = cpl * gram.form(gj, self.force[k], self.starts[k])
             self.emission = self.emission + self.x_now * flow * quotient(self.common, self.scales[k])
 
     def mean_wall(self) -> Any:
@@ -158,10 +166,10 @@ class Interval:
         return self.w_half * (self.carrier.lines[0].before + self.carrier.lines[0].now)
 
     def unwrite(self) -> None:
-        """Backward: the riding rows' writes come off first, from the post state (the gap-0 line's W-S1 lay at the post mean wall at the common scale, the emission's quotient rounded odd as the forward write rounds it, the shape-4 row's current on its three odd lines; its time line's numerator None, the charge coming off at the kick, PL-S1)."""
+        """Backward: the riding rows' writes come off first, from the post state (the emitter's line's W-S1 lay at the post mean wall at the common scale, the emission's quotient rounded odd as the forward write rounds it, the shape-4 row's current on its three odd lines; its time line's numerator None, the charge coming off at the kick, PL-S1)."""
         node = self.node
         node.write(
-            self.lines(self.gap0)[0],
+            self.lines(self.emitter)[0],
             paces.odd_rounded(self.emission, self.common * self.mean_wall()),
             -1,
         )
@@ -170,7 +178,7 @@ class Interval:
                 node.write(line, n, -1)
 
     def kicks(self) -> None:
-        """Every riding line's momentum in and out at the mean wall times the row's scale, P_in = W (a_now - a_before) + r - W div 2 and P_out = P_in + X_now F, and the carrier's source from every riding row alike with its G, line by line u_in (G u_out) + (-a (G F)) div w with u the odd rounding of 2 P + 1 over 2 w X_now at the scale, w the row's wall; and the shape-4 row's time line kicked by the records' charge read at the kick (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423): SUM over the records with a gap of N.GJ.u_in + N.GJ.u_out, N the levels at the start and u the odd velocities already in hand (the plane's -(re u_im - im u_re) in and out: the same integers in either direction and its own mirror under the exchange and the conjugation), one carried division at the line's write wall T with the carry kept in its write remainder, the quotient landing as the momentum kick w X_now q before the line's one division, so the interval is its own mirror in every integer. The former write, 2 W of the records after the step added to the level after the division, is kept by name: a source pinned to the end of the step, whose mirror under the exchange is a start, so the fall wrote 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k), and every board whose charge varies parted in the write remainder at the first interval after the top (nature's plasma by 2 (W(83) - W(82)) = 32 at k = 1, its level at k = 8, X at k = 9)."""
+        """Every riding line's momentum in and out at the mean wall times the row's scale, P_in = W (a_now - a_before) + r - W div 2 and P_out = P_in + X_now F, and the carrier's source from every riding row alike with its G, line by line u_in (G u_out) + (-a (G F)) div w with u the odd rounding of 2 P + 1 over 2 w X_now at the scale, w the row's wall; and the shape-4 row's time line kicked by the records' charge read at the kick (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423): SUM over the records with a gap of N.GJ.u_in + N.GJ.u_out, N the levels at the start and u the odd velocities already in hand (the plane's -(re u_im - im u_re) in and out: the same integers in either direction and its own mirror under the exchange and the conjugation), one carried division at the line's write wall T with the carry kept in its write remainder, the quotient landing as the momentum kick w X_now q before the line's one division, so the interval is its own mirror in every integer. The former write, 2 W of the records after the step added to the level after the division, is kept by name: a source pinned to the end of the step, whose mirror under the exchange is a start, so the fall wrote 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k), and every board whose charge varies parted in the write remainder at the first interval after the top (nature's plasma by 2 (W(83) - W(82)) = 32 at k = 1, its level at k = 8, X at k = 9); the charge is summed over the records before the shape-4 row is met, which rests on rows.order_of (the records before the shape-4 row and the carrier; H-Confirm-Build-11 measured two permuted universe files bit for bit)."""
         node = self.node
         self.forms = zeros(node.shape)
         self.kicked: dict[int, list[Any]] = {}
@@ -190,11 +198,10 @@ class Interval:
                 p_other[0] = p_other[0] + self.direction * node.w * self.x_now * q
             u_in = [paces.odd_rounded(2 * p + 1, ds) for p in p_side]
             u_out = [paces.odd_rounded(2 * p + 1, ds) for p in p_other]
-            if r.gap:
+            if r in self.records:
                 gj = gram.matmul(g, gram.rotation(r.shape))
-                charge = (
-                    charge + gram.form(gj, self.starts[k], u_in) + gram.form(gj, self.starts[k], u_out)
-                )
+                forms = gram.form(gj, self.starts[k], u_in) + gram.form(gj, self.starts[k], u_out)
+                charge = charge + coupling_of(r) * forms
             pulls = gram.weighted(g, self.starts[k], self.force[k])
             for product, pull in zip(gram.weighted(g, u_in, u_out), pulls, strict=True):
                 self.forms = self.forms + product + quotient(-pull, self.walls[k])
@@ -248,7 +255,7 @@ class Interval:
     def writes(self) -> None:
         """Forward: the riding rows' writes after the divisions, from numbers known before them: the gap-0 line's W-S1 lay, the emission over the mean wall after at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.odd_rounded: the write exactly odd under the sense's flip, the former floor kept by name); the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1; the former 2 W of the records after the step kept by name in `kicks`)."""
         node = self.node
-        laid_line = self.out[self.where[id(self.gap0)]][0]
+        laid_line = self.out[self.where[id(self.emitter)]][0]
         before_write = laid_line.now
         node.write(laid_line, paces.odd_rounded(self.emission, self.common * self.w_div), 1)
         laid_on(node, laid_line, before_write)

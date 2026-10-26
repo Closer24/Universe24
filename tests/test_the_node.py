@@ -8,11 +8,13 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import paces
+from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import quotient
 from event_universe.features import volume
+from event_universe.interval import Interval
 from event_universe.loader.world import read_world
 from event_universe.node import Node
-from event_universe.rows import CARRIER, PLANE, zeros
+from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
 from event_universe.take import frame_nodes
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
@@ -39,7 +41,7 @@ def fed_horizon(node: Node, at: tuple[int, ...]) -> Node:
     axis = node.row(CARRIER).lines[1]
     axis.now[at] = 2 * node.gamma
     axis.before[at] = 2 * node.gamma
-    light = node.row(PLANE, gap=0).lines[0]
+    light = node.emitter().lines[0]
     light.now[at] = 4 * int(light.now[at])
     node.ride_walls()
     return node
@@ -67,7 +69,7 @@ def test_the_frozen_node_is_not_read_and_never_clicks() -> None:
     carrier.now[CENTRE] = level_at(node, frozen)
     carrier.before[CENTRE] = carrier.now[CENTRE]
     node.ride_walls()
-    light = node.row(PLANE, gap=0).lines[0]
+    light = node.emitter().lines[0]
     light.now[CENTRE] = 4 * int(light.now[CENTRE])
     fed = copy.deepcopy(node)
     for _ in range(INTERVALS):
@@ -156,7 +158,7 @@ def test_the_step_reaches_one_link_forward_and_none_back() -> None:
     for _ in range(2):
         a.step()
     b = copy.deepcopy(a)
-    light = b.row(PLANE, gap=0).lines[0]
+    light = b.emitter().lines[0]
     light.now[at] = light.now[at] + 1
     assert differences(a, b, at) == {0}
     a.step()
@@ -164,7 +166,7 @@ def test_the_step_reaches_one_link_forward_and_none_back() -> None:
     assert a.counts["births"] == b.counts["births"] == 0
     assert differences(a, b, at) <= {0, 1}
     a2, b2 = copy.deepcopy(a), copy.deepcopy(a)
-    light = b2.row(PLANE, gap=0).lines[0]
+    light = b2.emitter().lines[0]
     light.now[at] = light.now[at] + 1
     a2.step_back()
     b2.step_back()
@@ -248,7 +250,7 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
 
 def shares_of(node: Node) -> tuple[Any, Any, Any]:
     """The gap-0 line's share in the carrier's unit, and by hand at the frame's weight (X set to Gamma^3 div p_i^2) and at the vacuum's (X set to Gamma)."""
-    gap0 = node.row(PLANE, gap=0)
+    gap0 = node.emitter()
     rule = node.rule(gap0.pair, node.start_content, node.link_factors())
     pace = np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)
     x, carrier = node.start_x, node.share(gap0.lines, rule)
@@ -324,7 +326,7 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
     for _ in range(30):
         node.step()
     births = [e for e in node.log if e["event"] == "birth"]
-    pairs = [b for b in births if b["line_pair"] != node.records().index(node.row(PLANE, gap=0))]
+    pairs = [b for b in births if b["line_pair"] != node.records().index(node.emitter())]
     assert len(births) == 9 and len(pairs) == 8 and node.counts["met"] > len(births)
     for b in pairs:
         link = {tuple(b["minus"]), tuple(b["plus"])}
@@ -344,8 +346,8 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
     node = node_of("world_node.json", shape=[5, 5, 5], seed=[])
     a, b, k = node.A, node.B, 3
     heavy = max(range(len(node.records())), key=lambda r: node.records()[r].gap or 0)
-    light = node.row(PLANE, gap=0)
-    gap0, unit = node.records().index(light), node.unit_gap0
+    light = node.emitter()
+    gap0, unit = node.records().index(light), node.unit_emitter
     m, p = (1, 1, 1), (2, 1, 1)
     feed = (
         (m, (k * a, 0, 0, k * b)),
@@ -376,7 +378,7 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
     probe = copy.deepcopy(kept)
     for _ in range(merger["i"]):
         probe.step()
-    re, im = probe.row(PLANE, gap=0).lines
+    re, im = probe.emitter().lines
     assert int((re.now * im.before - im.now * re.before).sum()) == 0  # the light's charge at the merger
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
@@ -425,7 +427,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
     rec, count = 1, len(node.records())
     re = node.records()[rec].lines[0]
     nothing, still = [zeros(node.shape) for _ in range(count)], np.zeros(node.shape, dtype=bool)
-    rule = node.rule_of(node.row(PLANE, gap=0), node.content(), node.link_factors())
+    rule = node.rule_of(node.emitter(), node.content(), node.link_factors())
     for period in ((2, 1, 0, -1, -2, -1, 0, 1), (2, 1, -1, -2, -1, 1)):
         counters = []
         for sign in (1, -1):
@@ -466,7 +468,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
 def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2() -> None:
     """CS4-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss; cs4's REPORT.md sections 1.2, 1.5 and 4, The-Handed-Seed-And-Births_COMPARISON.md's finding (a) and cs5's mend, the line logged PER TAKE; the test under 15 s): the exact take moves the taken record's line whose level now stands farthest from its before (the largest now^2 - before^2, the first where equal), the line logged as `taken_line` on every birth, credit and merger take, unclick restoring that line. The pair's 3-cube at 20 intervals beside its image with the light turned a quarter at the seed ((re, im) -> (-im, re): the light on its second line, the first at 0): the two boards' X equal at every Node at 20 of 20 intervals and the 81 credits equal take for take in their numbers, every take on the first line on the board and on the second on the image, where the former act (the first line's take) is the stop by name (fall_of (None, 0) on a line at 0), the run back exact 20 of 20 through the takes on the second line; SL-S2's merger board (the heaviest record's conjugate pair at two adjacent Nodes of the bare 5-cube) at 20: under A48-S1 the merger at the second close with no stop before it, its two takes on the heavy row's first line (the farther at both ends there), one light birth after it and one credit both taking the light's second line, each of the 4 takes' lines re-derived by hand from the Node's levels after the close (the other line untouched by the take, the taken line as the take found it), 2 of 4 on a line other than the first (0 under the former act); under PL-S1 with the former read of the remainder the merger came at the first close on the second line (3 B against 0, the farthest at both ends; under the former act the first line's fall came short and the stop refused both ends) with ten light births after it, 87 takes with 66 on the second line and 74 credits; under the sign row's former write of 2 W after the step, before PL-S1, 9 births every one on the second line, 318 takes with 219 on it and 308 credits; the run back exact."""
     pair, image = node_of("world_pair_3.json"), node_of("world_pair_3.json")
-    re, im = image.row(PLANE, gap=0).lines
+    re, im = image.emitter().lines
     im.now[...], im.before[...], re.now[...], re.before[...] = re.now.copy(), re.before.copy(), 0, 0
     kept = copy.deepcopy(image)
     for _ in range(INTERVALS):
@@ -502,9 +504,7 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
         for e in node.log[seen:]:
             if e["event"] not in ("birth", "credit"):
                 continue
-            lines = node.records()[
-                e.get("taken_row", node.records().index(node.row(PLANE, gap=0)))
-            ].lines
+            lines = node.records()[e.get("taken_row", node.records().index(node.emitter()))].lines
             for t in e.get("takes", [e]):
                 at, k = tuple(t["node"]), t["taken_line"]
                 gaps = [int(line.now[at]) ** 2 - int(line.before[at]) ** 2 for line in lines]
@@ -518,4 +518,34 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
     ]
     assert on_first == [(2, 0), (2, 0)] and len(births) == 2
     assert (len(lines_taken), sum(lines_taken), node.counts["body_clicks"]) == (4, 2, 1)
+    assert run_back_exact(kept, INTERVALS) == INTERVALS
+
+
+def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() -> None:
+    """UN (UN_COMPARISON.md section 4, un2's table): every record's unit of universe_toy.json is 3 T (sine_den(num, den) + den (num div den)), the one formula giving 3 T den at the emitter and 3 T s at a gapped pair; the emitter is the plane of the potential's pair (den, den), the last record; the 3-cube hole at 20 intervals gives the state hash of the former finders bit for bit; then, with frame signs of -1 standing after the turns, the Links' record at the coupling 0 turns an arbitrary pair of arrays into itself at every Port; the run back exact."""
+    node = node_of("world_node.json")
+    den, t, records = node.den, node.T, node.records()
+    assert node.units == [
+        3 * t * (paces.sine_den(r.pair[0], den) + den * (r.pair[0] // den)) for r in records
+    ]
+    assert node.units[-1] == node.unit_emitter == 3 * t * den
+    assert (
+        (node.emitter().shape, node.emitter().pair)
+        == (PLANE, node.row(POTENTIAL).pair)
+        == (2, (den, den))
+    )
+    assert node.emitter() is records[-1] and node.gapped == records[:-1]
+    kept = copy.deepcopy(node)
+    for _ in range(INTERVALS):
+        node.step()
+    assert node.state_hash() == "d7f2c713f4d6165cad4d11683f70a7bea82d02c3320ebf4d79245835ed8bf656"
+    interval = Interval(copy.deepcopy(node), 1)
+    interval.walled_act()
+    assert sorted(interval.links_at) == [0, 1] and any(
+        int(x) == -1 for f in interval.frames for x in f.reshape(-1)
+    )
+    drawn = np.random.default_rng(0).integers(-(2**40), 2**40, size=(2, *node.shape)).tolist()
+    pair = [np.array(a, dtype=object) for a in drawn]
+    for port in range(PORTS):
+        assert [a.tolist() for a in node.turned_arrival(pair, port, interval.links_at[0])] == drawn
     assert run_back_exact(kept, INTERVALS) == INTERVALS

@@ -38,27 +38,27 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
         if row is not None and row not in node.records():
             raise ValueError("a lay is onto a record (a plane or a quartet)")
         if form == "sea" and "quanta" not in lay:
-            if row is None or row.gap != 0 or "sense" in lay:
+            if row is None or row is not node.emitter() or "sense" in lay:
                 raise ValueError(
                     "a sea without a count is the plane at the gap 0 alone (the drift, no sense); a plane with a gap names its quanta (the fourth form)"
                 )
             node.lay(node.records().index(row), Ellipsis, (node.drift, 0, 0, 0))
         elif form == "sea":
-            if row is None or row.gap == 0:
+            if row is None or row is node.emitter():
                 raise ValueError(
                     "the fourth form lays a plane with a gap at a count: the plane at the gap 0 alone is the drift"
                 )
             lay_uniform(node, node.records().index(row), int(lay["quanta"]), int(lay.get("sense", 0)))
         elif form == "hole":
             at = node.node_of(lay["at"])
-            node.lay(node.records().index(node.row(PLANE, gap=0)), at, (-node.drift, 0, 0, 0))
+            node.lay(node.records().index(node.emitter()), at, (-node.drift, 0, 0, 0))
         else:
             n = int(lay["quanta"])
             at = node.node_of(lay["centre"])
             if row is None:
                 raise ValueError("a packet names its row")
             wave = None if lay.get("wave") is None else tuple(int(x) for x in lay["wave"])
-            if row.gap == 0 and wave is None:
+            if row is node.emitter() and wave is None:
                 node.lay(node.records().index(row), at, (n * node.drift, 0, 0, 0))
             else:
                 vector = lay.get("vector")

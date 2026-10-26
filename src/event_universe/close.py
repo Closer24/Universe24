@@ -31,10 +31,10 @@ def refused(node: Node, at: tuple[int, ...], cause: str, **numbers: Any) -> None
 
 
 def list_of(node: Node, rec: int, number: int) -> int:
-    """The children's record of a meeting of the record `rec` by the pairs: where the taken row is the plane at the gap 0 the draw's pick among the planes (the number over the unit, modulo their count); where it is a row with a gap, the row whose pair is the product (den, den), the plane at the gap 0 (SL-S1: two gapped quanta meeting give light)."""
+    """The children's record of a meeting of the record `rec` by the pairs: where the taken row is the emitter the draw's pick among the planes (the number over the unit, modulo their count); where it is another record, the row whose pair is the product (den, den), the emitter (SL-S1: two gapped quanta meeting give light)."""
     records = node.records()
-    if records[rec].gap:
-        return records.index(node.row(PLANE, gap=0))
+    if records[rec] is not node.emitter():
+        return records.index(node.emitter())
     planes = [k for k, r in enumerate(records) if r.shape == PLANE]
     return planes[int(remainder(quotient(number, node.units[rec]), len(planes)))]
 
@@ -48,7 +48,7 @@ def meet(
     standing = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(sh) & ~frozen
     currents = [node.den * row_current(start, 2 * axis) for axis in range(AXES)]
     twists = [row_twist(start, axis) for axis in range(AXES)]
-    charges = gram.charge(row.shape, start) if row.gap else None
+    charges = gram.charge(row.shape, start) if row is not node.emitter() else None
     for axis in range(AXES):
         both = standing & across(standing, 2 * axis)
         for where in zip(*np.nonzero(both), strict=True):
@@ -109,7 +109,7 @@ def births(node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...]) -> s
         row = node.records()[rec]
         assert row.pair is not None
         rule = node.rule(row.pair, c, factors)
-        if row.gap:
+        if row is not node.emitter():
             for kid in kids:
                 got = merger_take(node, kid[1], kid[2], walls[(at, *kid, rec)], rule, rec)
                 if got is not None:
@@ -286,8 +286,7 @@ def click(
     node.lattices = {}
     frozen = readings.frozen_of(node, c)
     factors = node.link_factors(None, frozen)
-    gap0 = node.row(PLANE, gap=0)
-    r_gap0 = node.rule_of(gap0, c, factors)
+    r_emitter = node.rule_of(node.emitter(), c, factors)
     rules = node.read_lines(held, plane_starts, c, factors)
     owns = []
     for rec, r in enumerate(node.records()):
@@ -299,13 +298,12 @@ def click(
         for b in meet(node, rec, plane_starts[rec], owns[rec], rules, frozen)
     ]
     born_nodes = births(node, refuse(node, born, owns), c, factors)
-    bodies(node, plane_starts, owns, born_nodes, frozen, r_gap0)
+    bodies(node, plane_starts, owns, born_nodes, frozen, r_emitter)
 
 
 def unclick(node: Node, frame: dict[str, Any]) -> None:
     """The close undone from the log, in the reverse order of its lines: the lays removed, the taken line restored at every take's Node (the line each take logged, `taken_line`, CS4-S2; a merger's two ends under `takes`), the readings' counters restored."""
-    gap0 = node.row(PLANE, gap=0)
-    rec0 = node.records().index(gap0)
+    rec0 = node.records().index(node.emitter())
     for entry in reversed(node.log[frame["log_from"] :]):
         at = tuple(entry["node"])
         if entry["event"] == "birth":
