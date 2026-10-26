@@ -11,25 +11,15 @@ from event_universe import gram
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import quotient
-from event_universe.features import volume
 from event_universe.interval import Interval
 from event_universe.loader.world import read_world
 from event_universe.merger import takes
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
 from event_universe.take import fall_of, frame_nodes, lay, move
-from tests.laws import node_of, refused, run_back_exact, state_of, world_of
+from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
 
 CENTRE, INTERVALS = (1, 1, 1), 20  # the fed Node, the 3-cube's centre; the run's intervals
-
-
-def level_at(node: Node, content: int) -> int:
-    """The carrier's level at a content."""
-    return int(
-        np.asarray(
-            volume.volume_of(node.gamma, np.array([content], dtype=object)), dtype=object
-        ).reshape(-1)[0]
-    )
 
 
 def clicks_at(node: Node, at: tuple[int, ...]) -> list[dict[str, Any]]:

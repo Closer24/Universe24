@@ -189,6 +189,11 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "H-Children-Charge-Bug-1 (2026-10-26, the Boss's 6410696786: the one-Node test under 1 s, three pins): the chiral's merger of the interval 10 fed on the 3-cube, "
         "the light the exact take at -1 at both ends, the children's own charge 0",
     ),
+    "tests/test_the_board.py::test_a_frozen_node_is_released_by_the_turn_of_its_time": (
+        20,
+        "FR-S1 (2026-10-26, the owner's words of 03:41 and 07:3x UTC through the Boss, 6407706168 and 6410516303: the test under 3 s beside BH-S1's): the 3-cube centre fed to the frozen content with its before below it, "
+        "frozen and turned at the first interval, released with its clock running at the second, no Node frozen twice in a row, the width held, the run back exact 20 of 20",
+    ),
     "tests/test_rule3.py::test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd": (
         19,
         "the one rule of the remainder (2026-10-25, the owner's word through the Boss, 6398455072: the identities as a test under 15 s): the mirror once per reversal and the identity for an even count, "

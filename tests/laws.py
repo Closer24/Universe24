@@ -8,9 +8,11 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 import pytest
 
 from event_universe.core.rule3 import carried_division
+from event_universe.features import volume
 from event_universe.loader.world import load_world
 from event_universe.node import Node
 
@@ -62,3 +64,12 @@ def run_back_exact(node: Node, n: int) -> int:
         kept.append(state_of(node))
         node.step()
     return sum(state_of(node) == kept[n - 1 - k] for k in range(n) if not node.step(-1))
+
+
+def level_at(node: Node, content: int) -> int:
+    """The carrier's level at a content."""
+    return int(
+        np.asarray(
+            volume.volume_of(node.gamma, np.array([content], dtype=object)), dtype=object
+        ).reshape(-1)[0]
+    )
