@@ -191,8 +191,8 @@ function glyph(gate, x, y, on, scale) {
   else if (g === 54) { arrow(-12, -5, 12, 5); arrow(12, -5, -12, 5); }
   else if (g === 55) { line(-2, -11, -2, -4); line(-2, -1, -2, 1); line(-2, 4, -2, 11); wave(-12, -4, 0, 2, 1.5); for (let k = -8; k <= 8; k += 4) dot(9, k, 1.5, true); }
   else if (g === 56) { dot(-8, 0, 4, false); dot(8, 0, 4, false); line(-4, 0, 4, 0); line(-8, -4, -8, -9); line(8, 4, 8, 9); }
-  else if (g === 61) { cx2.fillStyle = "#07080a"; dot(-3, 0, 6, true); cx2.strokeStyle = "#ffffff"; dot(-3, 0, 7, false); cx2.strokeStyle = L; cx2.fillStyle = L; arrow(4, 0, 13, 0); }
-  else if (g === 62) { cx2.fillStyle = "#07080a"; dot(-4, 0, 5, true); cx2.strokeStyle = "#ffffff"; dot(-4, 0, 6, false); cx2.strokeStyle = L; for (const rr of [9, 13]) { cx2.beginPath(); cx2.arc(-4, 0, rr, -0.6, 0.6); cx2.stroke(); } }
+  else if (g === 62) { cx2.fillStyle = "#07080a"; dot(-3, 0, 6, true); cx2.strokeStyle = "#ffffff"; dot(-3, 0, 7, false); cx2.strokeStyle = L; cx2.fillStyle = L; arrow(4, 0, 13, 0); }
+  else if (g === 61) { cx2.fillStyle = "#07080a"; dot(-4, 0, 5, true); cx2.strokeStyle = "#ffffff"; dot(-4, 0, 6, false); cx2.strokeStyle = L; for (const rr of [9, 13]) { cx2.beginPath(); cx2.arc(-4, 0, rr, -0.6, 0.6); cx2.stroke(); } }
   else if (g === 58) { for (const a of [0, 2, 4]) arrow(0, 0, 11 * Math.cos(a * Math.PI / 3 - Math.PI / 2), 11 * Math.sin(a * Math.PI / 3 - Math.PI / 2)); dot(0, 0, 2, true); }
   else if (g === 59) { arrow(-11, 0, 4, 0); line(8, -7, 8, 7); }
   else if (g === 60) { arrow(-11, 4, 2, 4); arrow(-11, -4, 11, -4); }

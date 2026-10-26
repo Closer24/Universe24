@@ -41,6 +41,7 @@ VERDICTS = {  # the verdicts' words by name
         "55 the two slits": "NOT READ: no two gap-0 packets at one centre",
         "56 Bell": "NOT READ: 0 births, no born pair clicked at both ends",
         "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four",
+        "61 the horizon radiates": "NOT READ: no frozen Node in the record (as gate 14)",
         "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
     },
@@ -55,7 +56,7 @@ def loaded(name: str) -> dict[str, Any]:
 def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
     kinds = {int(k[:2]): v["kind"] for k, v in found.items() if k[:2].strip().isdigit()}
-    assert len(kinds) == 60
+    assert len(kinds) == 61
     assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
     assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == {14, 34}  # the horizon
     for gate, verdict in VERDICTS[name].items():

@@ -6,6 +6,7 @@ from collections import Counter, defaultdict
 from functools import cmp_to_key
 from typing import Any
 
+from event_universe.board import neighbours
 from event_universe.core.paces import sine_den
 from event_universe.decoder import (
     FEW,
@@ -333,5 +334,43 @@ def merger(record: Record) -> dict[str, Any]:
             else f"SHOWN: {len(mergers)} pairs into light (the gap-0 children born from a gapped record's take)"
             if mergers
             else f"NOT SHOWN: {reached} gapped meetings reached the premise and every one was refused by name",
+        }
+    }
+
+
+def horizon_radiates(record: Record) -> dict[str, Any]:
+    """Row 61: the horizon radiates (hp2's predicate, the Boss's 6408295798, the owner's word of 03:4x UTC: Hawking's radiation as nature looks in the clicks): after a Node's first freeze, a birth at that Node or at one of its six neighbours, and a credit two or more Links from every frozen Node (the radiation leaving the horizon); NOT READ with no frozen Node."""
+    first: dict[int, int] = {}
+    for line in record.nodes:
+        for at in line["frozen"]:
+            first.setdefault(at, int(line["i"]))
+    if not first:
+        return {
+            "61 the horizon radiates": {
+                "verdict": unread_words(
+                    "no frozen Node in the record (as gate 14)",
+                    "a birth at a frozen Node or its neighbour after its freeze, with a credit two or more Links from every frozen Node",
+                )
+            }
+        }
+    near = {at: i for at, i in first.items()} | {
+        n: i for at, i in first.items() for n in neighbours(record, at)
+    }
+    births = [b for b in record.births if int(b["i"]) > near.get(record.index(b["node"]), int(b["i"]))]
+    far = [
+        c
+        for c in record.credits
+        if int(c["i"]) > min(first.values())
+        and all(record.distance(tuple(c["node"]), tuple(record.node(at))) >= PAIR for at in first)
+    ]
+    return {
+        "61 the horizon radiates": {
+            "Nodes frozen": len(first),
+            "births at a frozen Node or its neighbour after the freeze": len(births),
+            "credits two or more Links from every frozen Node after the first freeze": len(far),
+            "at": list(births[0]["node"]) if births else None,
+            "verdict": f"SHOWN: a birth at the horizon and a credit beyond it, {len(births)} births and {len(far)} credits"
+            if births and far
+            else f"NOT SHOWN: {len(births)} births at a frozen Node or its neighbour after the freeze, {len(far)} credits beyond the horizon",
         }
     }

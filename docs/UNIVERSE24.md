@@ -123,7 +123,7 @@ The owner's word, verbatim in translation: "all the time make sure the things ar
 
 ### The gates of the phenomena (the head de5cd9b; written by tools/phenomena.py from the readings, the verdict of every row the decoder's)
 
-SHOWN in Universe24: 27 of 60 on de5cd9b. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
+SHOWN in Universe24: 27 of 61 on de5cd9b. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
 
 | the phenomenon | gate | the verdict per record | the cause where not SHOWN | since the table before |
 | --- | --- | --- | --- | --- |
@@ -182,11 +182,12 @@ SHOWN in Universe24: 27 of 60 on de5cd9b. The records read from the seed alone: 
 | a fast packet binding | 53 | NOT READ on nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no lay with a wave number in the world | unchanged |
 | scattering, two packets through each other | 54 | NOT READ on nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | two packets of one plane are not told apart by their line, and the momentum across the click is row 23 | unchanged |
 | the two slits | 55 | NOT READ on nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | no two gap-0 packets at one centre with one wave mirrored on one axis in the seed | unchanged |
-| Bell's correlation | 56 | NOT SHOWN on nature, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | as nature: |S| <= 2 at the pairs' clicks, S = -2 / 17 (the law's bound by the one-Link reach, every end's outcome a function of its own Node | unchanged |
+| Bell's correlation | 56 | NOT SHOWN on nature, ga2, hole; NOT READ on collapse_800, bodies, universe, plasma, sea, plasma_3, universe_3 | as nature: |S| <= 2 at the pairs' clicks, S = -2 / 17 (every outcome a function of its own Node, the setting the reader's and in no integer of the Node | unchanged |
 | the GHZ correlation | 57 | NOT READ on nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | a birth gives two ends at one Link and a shared take four, no three ends with one root in the record | unchanged |
 | the fast expansion after the bang, in the clicks | 58 | NOT SHOWN on nature, ga2, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | the first growth of the spacing is not above zero and above the next | unchanged |
 | the deceleration, in the clicks | 59 | SHOWN on nature, ga2, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | fewer than two eighths' growths of the spacing | unchanged |
 | the acceleration, in the clicks | 60 | SHOWN on nature, ga2, collapse_800, bodies, hole; NOT READ on universe, plasma, sea, plasma_3, universe_3 | fewer than two eighths' growths of the spacing | unchanged |
+| the horizon radiating, Hawking's radiation in the clicks | 61 | NOT SHOWN on nature; NOT READ on ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3 | 0 births at a frozen Node or its neighbour after the freeze, 0 credits beyond the horizon | the first table |
 
 ### The gates widened to everything derived, read on any bang of the same seed and at one Node where one Node can show it (2026-10-25, 11:0x UTC)
 

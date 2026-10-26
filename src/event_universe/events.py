@@ -73,6 +73,7 @@ NAMES = {
     "58": ("the fast expansion", "the fast expansion after the bang, in the clicks"),
     "59": ("the expansion slows", "the deceleration, in the clicks"),
     "60": ("the expansion quickens again", "the acceleration, in the clicks"),
+    "61": ("the horizon radiates", "the horizon radiating, Hawking's radiation in the clicks"),
     "the conservations in the clicks": ("the clicks conserve", "the conservations in the clicks"),
     "the three constants": ("the three constants hold", "the three constants"),
 }  # every row by its number (the key's first word) or its key: its label of three to six words for the page, and the phenomenon in plain words for the table
