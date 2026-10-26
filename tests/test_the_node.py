@@ -541,7 +541,7 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
         node.step()
     assert node.state_hash() == "d7f2c713f4d6165cad4d11683f70a7bea82d02c3320ebf4d79245835ed8bf656"
     interval = Interval(copy.deepcopy(node), 1)
-    interval.walled_act()
+    interval.readings()
     assert sorted(interval.links_at) == [0, 1] and any(
         int(x) == -1 for f in interval.frames for x in f.reshape(-1)
     )
