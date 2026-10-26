@@ -288,25 +288,19 @@ def stopped_clock(record: Record) -> dict[str, Any]:
     for i, at in frozen:
         first.setdefault(at, i)
     held = {at: record.nodes[i - 1]["content"][at] for at, i in first.items()}
-    credited = {
-        record.index(c["node"])
-        for c in record.credits
-        if int(c["i"]) >= first.get(record.index(c["node"]), int(c["i"]) + 1)
-    }
-    silent = sum(1 for _i, at in frozen if at not in credited)
+    credits = [(record.index(c["node"]), int(c["i"])) for c in record.credits]
+    credited = {at for at, i in credits if at in first and i >= first[at]}
     later = [(i, at) for i, at in frozen if i > first[at]]
+    silent = sum(1 for _i, at in frozen if at not in credited)
     standing = sum(1 for i, at in later if record.nodes[i - 1]["content"][at] == held[at])
-    at = min(first.items(), key=lambda p: p[1])[0] if first else None
+    earliest = min(first.items(), key=lambda p: p[1])[0] if first else None
     return {
         "34 the horizon and the stopped clock": {
             "Nodes frozen": len(first),
             "frozen Node lines (interval, Node)": len(frozen),
             "of them silent (no credit at the Node from its first frozen interval on)": silent,
-            "later frozen lines with the content standing at the Node's first frozen content": [
-                standing,
-                len(later),
-            ],
-            "at": record.node(at) if at is not None else None,
+            "later lines standing at the first frozen content / later lines": [standing, len(later)],
+            "at": record.node(earliest) if earliest is not None else None,
             "verdict": "SHOWN: every frozen Node silent with its content standing, the clock stopped at the horizon"
             if frozen and silent == len(frozen) and standing == len(later)
             else "NOT SHOWN: a frozen Node credited after its freeze or its content moving"
