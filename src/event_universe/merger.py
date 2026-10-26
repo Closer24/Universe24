@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 from event_universe import gram, take
 from event_universe.core import rule3
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import least_at, quotient, share_weight
+from event_universe.core.rule3 import share_weight
 from event_universe.links import cross
 from event_universe.rows import Line, zeros
 from event_universe.take import at_node, frame_nodes, lay, momentum_of, move, neighbour, recoil
@@ -231,40 +231,20 @@ def summed(found: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def rise_of(
-    node: Node, where: tuple[int, ...], wall: int, rule: rule3.Rule, row: Any
-) -> tuple[int, int, int]:
-    """The exact take at -1 (MG-S1): on the line the fall's sign names (take.fall_of, CS4-S2) the least count d of levels moved away from the before at which the Node's share rises by the wall (a line with no direction, now equal to before, moved away as the fall\'s own sense names it, -1: the bug of H-Children-Charge-Bug-1, the tie end laid as the charged child, struck 2026-10-26), the rise fall_of's form with the sign mirrored, x (w ((now + u d)^2 - now^2) + u d pull) over the weight, the least count by doubling and bisection in comparisons; (k, 0, 0) where the line has no direction (now = before). Returns (the line, the signed count, the rise)."""
-    _levels, _fall, k = take.fall_of(node, where, wall, rule, row)
-    line = row.lines[k]
-    now, before = int(line.now[where]), int(line.before[where])
-    u = 1 if now > before else -1
-    own, w, reached = at_node(rule.self_coefficient, where), int(rule.wall), 0
-    for port, reach in enumerate(rule.reaches):
-        reached += at_node(reach, where) * int(line.before[neighbour(node, where, port)])
-    pull = own * before + reached
-    x, weight = int(node.start_x[where]), share_weight(node.gamma, node.G)
-
-    def rise(d: int) -> int:
-        moved = now + u * d
-        return int(quotient(x * (w * (moved * moved - now * now) + u * d * pull), weight))
-
-    high = least_at(lambda d: rise(d) >= wall)
-    return k, u * high, rise(high)
-
-
 def light_children(
     node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], walls: list[int], rule: rule3.Rule
 ) -> tuple[list[int], list[int], list[list[int]], list[list[int] | None], list[list[int]]]:
-    """A merger's two light children (MG-S1): at each end the light laid as the exact take at -1 (`rise_of`) on the line the take names, at both ends (the light is never the child's lay, which carries the charge; the former `d == 0` branch the bug of H-Children-Charge-Bug-1, struck 2026-10-26); returns the lays' momentum, each child's Wronskian at its Node, the plane's four levels at each Node before the lay and the exact lays [line, count, rise] (None where the child's lay)."""
+    """A merger's two light children (MG-S1): at each end the light laid as the exact take at -1 (take.fall_of at -1; the former rise_of kept by name) on the line the take names, at both ends (the light is never the child's lay, which carries the charge; the former `d == 0` branch the bug of H-Children-Charge-Bug-1, struck 2026-10-26); returns the lays' momentum, each child's Wronskian at its Node, the plane's four levels at each Node before the lay and the exact lays [line, count, rise] (None where the child's lay)."""
     row = node.records()[s]
     re, im = row.lines
     assert row.pair is not None
     stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
     dp_lay, exact, ends = [0] * AXES, [], []  # type: list[int], list[list[int] | None], list[list[int]]
     for where, wall in zip((minus, plus), walls, strict=True):
-        k, d, rise = rise_of(node, where, wall, rule, row)
+        count, rise, k = take.fall_of(node, where, wall, rule, row, -1)
+        assert count is not None
         z = row.lines[k]
+        d = count * (1 if int(z.now[where]) > int(z.before[where]) else -1)
         dp = momentum_of(node, z.now, z.before, where, d_now=d, num=row.pair[0])
         move(node, s, k, where, d)
         exact.append([k, d, rise])

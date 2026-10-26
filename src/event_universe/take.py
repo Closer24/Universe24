@@ -33,18 +33,18 @@ def at_node(x: Any, at: tuple[int, ...]) -> int:
 
 
 def fall_of(
-    node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, row: Row
+    node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, row: Row, direction: int = 1
 ) -> tuple[int | None, int, int]:
-    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) = s (price - X w s) over the share's weight 2 Gamma^3 G^2, the price X times Rule3's own numerator with the slots exchanged, -t (2 w now + pull); the count one carried division of the walls owed by the price, rounded up as the floor's mirror, and where the moved levels' own square leaves the fall short, the same division of the shortfall by the next level's price, price - 2 X w s, iterated from below to its fixed count (TC-S1, the owner's word of 2026-10-26, 08:3x UTC, "approved", both hands' one finding, H-Take-Count-As-Rule3-Division-1: the count Rule3's own kind of act, no root; the former least root by largest_below, least_root, kept by name); (None, the full fall) where no count within the full move pays, the division's fixed count passing the move or the next level's price falling to 0 before it (the former refusal read the fall at the full move alone, the parabola's far side, and refused a take a lesser count paid: the bug struck 2026-10-26 under the owner's priority, the Boss's 6411031946)."""
+    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) = s (price - X w s) over the share's weight 2 Gamma^3 G^2, the price X times Rule3's own numerator with the slots exchanged, -t (2 w now + pull); the count one carried division of the walls owed by the price, rounded up as the floor's mirror, and where the moved levels' own square leaves the fall short, the same division of the shortfall by the next level's price, price - 2 X w s, iterated from below to its fixed count (TC-S1, the owner's word of 2026-10-26, 08:3x UTC, "approved", both hands' one finding, H-Take-Count-As-Rule3-Division-1: the count Rule3's own kind of act, no root; the former least root by largest_below, least_root, kept by name); (None, the full fall) where no count within the full move pays, the division's fixed count passing the move or the next level's price falling to 0 before it; at -1 the exact take reversed, the merger's light (MG-S1; the former merger.rise_of kept by name, folded 2026-10-26 on the Boss's 6413888338): the line's now moved away from its before (the tie resolved as away at -1, cc1) by the least count at which the share rises by the walls, the rise the same quadratic with the direction's sign on the square term, s (price + X w s), convex, so the same division is iterated from above, the first quotient paying and each step the excess divided by the next level's price, to its fixed count, never refused (the former refusal read the fall at the full move alone, the parabola's far side, and refused a take a lesser count paid: the bug struck 2026-10-26 under the owner's priority, the Boss's 6411031946)."""
     gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in row.lines)]
     k = gaps.index(max(gaps))
     line = row.lines[k]
     now, before = int(line.now[at]), int(line.before[at])
-    if walls <= 0:
+    if walls <= 0 and direction == 1:
         return 0, 0, k
-    if now == before:
+    if now == before and direction == 1:
         return None, 0, k
-    t = 1 if before > now else -1
+    t = (1 if before > now else -1) if direction == 1 else (1 if now > before else -1)
     own, w, reached = int(np.asarray(r.self_coefficient)[at]), int(r.wall), 0
     for port, reach in enumerate(r.reaches):
         reached += int(np.asarray(reach)[at]) * int(line.before[neighbour(node, at, port)])
@@ -53,9 +53,18 @@ def fall_of(
 
     def fall(s: int) -> int:
         moved = now + t * s
-        return int(quotient(x * (w * (now * now - moved * moved) - t * s * pull), weight))
+        return int(quotient(direction * x * (w * (now * now - moved * moved) - t * s * pull), weight))
 
-    price, dist = -t * ((w + w) * now + pull) * x, abs(now - before)
+    price, dist = -t * direction * ((w + w) * now + pull) * x, abs(now - before)
+    if direction == -1:
+        s = (
+            -quotient(-walls * weight, price)
+            if price > 0
+            else -quotient(price, x * w) - quotient(-walls * weight, x * w)
+        )
+        while s > 1 and fall(s - 1) >= walls:
+            s -= max(1, quotient(s * (price + x * w * s) - walls * weight, price + x * w * (s + s)))
+        return s, fall(s), k
     s = -quotient(-walls * weight, price) if price > 0 else dist + 1
     while s <= dist and fall(s) < walls:
         slope = price - x * w * (s + s)
