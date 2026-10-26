@@ -168,16 +168,21 @@ def arrays(node: Node) -> list[Any]:
     return found + [line.wr for line in lines if line.wr is not None]
 
 
+def state(node: Node) -> list[Any]:
+    """Every integer array of the Node's state: the lines' levels and remainders, the records' standing, crossings and beats, the proper count, the closes and the take's remainder (the one list the census counts and the run back compares; the former comparison of the lines and the take's remainder alone, which left the five counters the bodies' closing reads unchecked, kept by name, the Boss's 6421253357 item 4, 2026-10-26)."""
+    found = arrays(node) + node.standing + node.crossed + node.beats + [node.proper, node.closes]
+    return [*found, node.take_rem]
+
+
 def census(node: Node) -> tuple[int, int]:
     """The count of integer arrays the Node holds and the largest bit length among their values."""
-    found = arrays(node) + node.standing + node.crossed + node.beats + [node.proper, node.closes]
-    found.append(node.take_rem)
+    found = state(node)
     return len(found), max(bits_of(a) for a in found)
 
 
 def state_text(node: Node) -> str:
-    """Every level and remainder of the state as text, the run back's comparison bit for bit."""
-    return " ".join(str(int(v)) for a in [*arrays(node), node.take_rem] for v in a.reshape(-1))
+    """Every integer of the state as text (`state`), the run back's comparison bit for bit."""
+    return " ".join(str(int(v)) for a in state(node) for v in a.reshape(-1))
 
 
 def state_hash(node: Node) -> str:

@@ -6,8 +6,13 @@ from typing import Any
 
 
 def mirror(remainder: Any, wall: Any, reversals: int) -> Any:
-    """The one rule of the remainder's mirror (fd1's form, the owner's word of 2026-10-25): a remainder born at the half wall of its division is mirrored to wall - 1 - r once for every reversal of its line (time's exchange, the sign's negation), two reversals leaving it; the identity for an even count."""
+    """The one rule of the remainder's mirror (fd1's form, the owner's word of 2026-10-25): a remainder born at the half wall of its division (`born`) is mirrored to wall - 1 - r once for every reversal of its line (time's exchange, the sign's negation), two reversals leaving it; the identity for an even count. A remainder has two mirrors and this is the direction's (The-48-Holds_COMPARISON.md, 2026-10-26, F48-S1 derived and not built): the mirror of a negated line, a reflection or a charge's negation, is the two's complement (wall - r) mod wall, one apart at every nonzero remainder, whose fixed point at an even wall is the birth; the acts spell the direction's alone until F48-S1 is built."""
     return wall - 1 - remainder if reversals & 1 else remainder
+
+
+def born(wall: Any) -> Any:
+    """The remainder every line is born with, the half wall by the division act on 2 (the engine's one birth, spelt once; the former half(wall) at the rows' lines, the riding lines' walls, the riders' division, the phase line and the draw's origin kept by name): the fixed point of the negated line's mirror, (wall - r) mod wall = r, at an even wall, which the direction's mirror wall - 1 - r sends to the half wall less one; so the birth fits the negation's mirror and not the direction's, the third spelling the 48's pair named (The-48-Holds_COMPARISON.md section 5, 2026-10-26)."""
+    return divide(wall, 2, 0)[0]
 
 
 def divide(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[Any, Any]:

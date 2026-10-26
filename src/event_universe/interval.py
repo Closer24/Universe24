@@ -8,9 +8,9 @@ import numpy as np
 
 from event_universe import gram, readings
 from event_universe.core import paces
-from event_universe.core.acts import divide
+from event_universe.core.acts import born, divide
 from event_universe.core.ports import AXES, PORTS, across
-from event_universe.core.rule3 import half, held_numerator, quotient
+from event_universe.core.rule3 import held_numerator, quotient
 from event_universe.features import volume
 from event_universe.links import centred_count, coupling_of, factors, folded, frames, links_of, phases
 from event_universe.metric import net_flux, rotation_of, shear_parts, stress_parts, tensor_parts
@@ -171,7 +171,7 @@ class Interval:
         for r in self.riders:
             k = self.where[id(r)]
             ws, ds, g = self.scales[k] * w_side, self.scales[k] * d, gram.gram(r.shape)
-            p_side = [ws * (line.now - line.before) + line.rem - half(ws) for line in self.rows[k]]
+            p_side = [ws * (line.now - line.before) + line.rem - born(ws) for line in self.rows[k]]
             p_other = [
                 p + self.direction * self.x_now * f for p, f in zip(p_side, self.force[k], strict=True)
             ]
@@ -213,7 +213,7 @@ class Interval:
             ws = self.scales[k] * w_div
             new = []
             for a, p, line in zip(self.starts[k], self.kicked[k], self.rows[k], strict=True):
-                v, rem = divide(p, ws, half(ws))
+                v, rem = divide(p, ws, born(ws))
                 now, before = (a + self.direction * v, a)[:: self.direction]
                 new.append(Line(now, before, rem, ws, line.wr, line.wwall))
             if self.direction == -1 and self.kept is not None:
