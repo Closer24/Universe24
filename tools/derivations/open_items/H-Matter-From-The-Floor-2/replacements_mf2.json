@@ -1,0 +1,11 @@
+[
+ {"file": "event_universe/draw.py",
+  "old": "from __future__ import annotations\n\nfrom typing import TYPE_CHECKING\n",
+  "new": "from __future__ import annotations\n\nimport os\nfrom typing import TYPE_CHECKING\n"},
+ {"file": "event_universe/draw.py",
+  "old": "    nodes, digits, origin, coarse, w_half = frame_nodes(node, at), [], True, True, half(node.w)\n",
+  "new": "    nodes, digits, origin, coarse, w_half = frame_nodes(node, at), [], True, True, half(node.w)\n    raw: list[list[int]] = []\n"},
+ {"file": "event_universe/draw.py",
+  "old": "            digits.append((quotient(rem, f), values + 1))\n    if origin or coarse:\n",
+  "new": "            if os.environ.get(\"MF2_COVARIANT\"):\n                digits.append((quotient(abs(rem + rem + 1 - wl), f + f), quotient(wl - 1, f + f) + 1))\n            else:\n                digits.append((quotient(rem, f), values + 1))\n            raw.append([rem, f, wl])\n    if os.environ.get(\"MF2_DIGITS\"):\n        node.log.append({\"event\": \"draw\", \"i\": node.interval, \"node\": list(at), \"raw\": raw, \"origin\": bool(origin), \"coarse\": bool(coarse), \"unit\": unit, \"modulus\": modulus})\n    if origin or coarse:\n"}
+]

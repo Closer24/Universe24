@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb23_merge/tools/documents_gates.py", line 230, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb23_merge/tools/documents_gates.py", line 223, in main
+    undated_history() + numbers() + derived() + capitals() + module_count() + ascii_letters()
+                                                ~~~~~~~~^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb23_merge/tools/documents_gates.py", line 181, in capitals
+    texts = [n.value for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Constant)]
+                                       ~~~~~~~~~^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.14.6-linux-x86_64-gnu/lib/python3.14/ast.py", line 46, in parse
+    return compile(source, filename, mode, flags,
+                   _feature_version=feature_version, optimize=optimize)
+  File "<unknown>", line 89
+    >>>>>>> 3d7729581
+            ^
+SyntaxError: invalid decimal literal

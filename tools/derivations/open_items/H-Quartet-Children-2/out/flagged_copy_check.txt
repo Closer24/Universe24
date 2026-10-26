@@ -1,0 +1,15 @@
+{"replacement": 3, "file": "event_universe/merger.py", "old_bytes": 97, "new_bytes": 128}
+{"replacement": 4, "file": "event_universe/merger.py", "old_bytes": 196, "new_bytes": 670}
+{"replacement": 5, "file": "event_universe/merger.py", "old_bytes": 87, "new_bytes": 114}
+{"replacement": 6, "file": "event_universe/close.py", "old_bytes": 50, "new_bytes": 89}
+{"replacement": 7, "file": "event_universe/close.py", "old_bytes": 44, "new_bytes": 53}
+{"replacement": 8, "file": "event_universe/close.py", "old_bytes": 68, "new_bytes": 99}
+{"replacement": 9, "file": "event_universe/close.py", "old_bytes": 226, "new_bytes": 727}
+{"replacement": 10, "file": "event_universe/close.py", "old_bytes": 93, "new_bytes": 440}
+{"replacement": 11, "file": "event_universe/close.py", "old_bytes": 261, "new_bytes": 594}
+{"replacement": 12, "file": "event_universe/draw.py", "old_bytes": 44, "new_bytes": 90}
+{"replacement": 13, "file": "event_universe/draw.py", "old_bytes": 72, "new_bytes": 103}
+{"copy": "/dev/shm/tmp/qc2/src_qc2", "flag": "HQ_S1", "files changed": ["event_universe/close.py", "event_universe/draw.py", "event_universe/merger.py"]}
+{"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/qc2/tests/worlds/world_hole.json", "verdict": "EQUAL", "head": "c7060288e55c497b24f74111e1fd559df2434d7874cfc783fa48fece371f3c1f", "copy": "c7060288e55c497b24f74111e1fd559df2434d7874cfc783fa48fece371f3c1f", "head record": "/dev/shm/tmp/qc2/head_world_hole.json", "copy record": "/dev/shm/tmp/qc2/copy_qc2_world_hole.json"}
+{"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/qc2/tests/worlds/world_nature.json", "verdict": "EQUAL", "head": "4e5b63f9ac2f2fa7cc686ad902a42bd5ce567854c81618a3a6fff46ae6496374", "copy": "4e5b63f9ac2f2fa7cc686ad902a42bd5ce567854c81618a3a6fff46ae6496374", "head record": "/dev/shm/tmp/qc2/head_world_nature.json", "copy record": "/dev/shm/tmp/qc2/copy_qc2_world_nature.json"}
+worlds bit for bit with the head: 2 of 2

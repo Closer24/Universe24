@@ -1,0 +1,7 @@
+[
+ {"file": "event_universe/draw.py", "old": "from __future__ import annotations\n", "new": "from __future__ import annotations\n\nimport os\n"},
+ {"file": "event_universe/draw.py", "old": "    from event_universe.node import Node\n", "new": "    from event_universe.node import Node\n\nFOLD = os.environ.get(\"MF1_FOLD\", \"\")\nDRAW_LOG = os.environ.get(\"MF1_DRAW_LOG\", \"\")\n"},
+ {"file": "event_universe/draw.py", "old": "    nodes, digits, origin, coarse, w_half = frame_nodes(node, at), [], True, True, half(node.w)\n", "new": "    nodes, digits, origin, coarse, w_half = frame_nodes(node, at), [], True, True, half(node.w)\n    raw: list = []\n"},
+ {"file": "event_universe/draw.py", "old": "            digits.append((quotient(rem, f), values + 1))\n", "new": "            raw.append((rem, f, wl, values))\n            if FOLD:\n                digits.append((quotient(min(rem, wl - 1 - rem), f), quotient(values + 1, 2) + 1))\n            else:\n                digits.append((quotient(rem, f), values + 1))\n"},
+ {"file": "event_universe/draw.py", "old": "    return carry, room\n", "new": "    if DRAW_LOG:\n        node.log.append({\"event\": \"draw\", \"i\": node.interval, \"node\": list(at), \"unit\": unit, \"modulus\": modulus, \"raw\": raw, \"carry\": carry, \"room\": room})\n    return carry, room\n"}
+]

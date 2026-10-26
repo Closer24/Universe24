@@ -1,0 +1,584 @@
+invalid-syntax: Expected an expression
+  --> tests/test_the_record.py:19:1
+   |
+17 | CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
+18 | SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
+19 | <<<<<<< HEAD
+   | ^^
+20 |     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the…
+21 |     "hole": {
+   |
+
+invalid-syntax: Expected an expression
+  --> tests/test_the_record.py:19:3
+   |
+17 | CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
+18 | SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
+19 | <<<<<<< HEAD
+   |   ^^
+20 |     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the…
+21 |     "hole": {
+   |
+
+invalid-syntax: Expected an expression
+  --> tests/test_the_record.py:19:5
+   |
+17 | CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
+18 | SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
+19 | <<<<<<< HEAD
+   |     ^^
+20 |     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the…
+21 |     "hole": {
+   |
+
+invalid-syntax: Expected an expression
+  --> tests/test_the_record.py:19:7
+   |
+17 | CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
+18 | SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
+19 | <<<<<<< HEAD
+   |       ^
+20 |     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the…
+21 |     "hole": {
+   |
+
+invalid-syntax: Expected `,`, found string
+  --> tests/test_the_record.py:21:5
+   |
+19 | <<<<<<< HEAD
+20 |     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the…
+21 |     "hole": {
+   |     ^^^^^^
+22 |         4,
+23 |         5,
+   |
+
+invalid-syntax: Expected `,`, found `:`
+  --> tests/test_the_record.py:21:11
+   |
+19 | <<<<<<< HEAD
+20 |     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the…
+21 |     "hole": {
+   |           ^
+22 |         4,
+23 |         5,
+   |
+
+invalid-syntax: Expected `,`, found `:`
+  --> tests/test_the_record.py:50:13
+   |
+48 |         67,
+49 |     },
+50 |     "chiral": {
+   |             ^
+51 |         2,
+52 |         4,
+   |
+
+invalid-syntax: Expected `,`, found `:`
+  --> tests/test_the_record.py:80:13
+   |
+78 |         67,
+79 |     },
+80 |     "bodies": {2, 3, 5, 6, 7, 8, 9, 10, 16, 18, 30, 37, 43, 45, 59, 60, 64, 66},
+   |             ^
+81 | =======
+82 |     # the hole under GP-S1: 2 (the Links lengthening in the clicks) lost with the children's lay, SHOWN under PL-S1; 9 and 22 among th…
+   |
+
+invalid-syntax: Expected `,`, found `==`
+  --> tests/test_the_record.py:81:1
+   |
+79 |     },
+80 |     "bodies": {2, 3, 5, 6, 7, 8, 9, 10, 16, 18, 30, 37, 43, 45, 59, 60, 64, 66},
+81 | =======
+   | ^^
+82 |     # the hole under GP-S1: 2 (the Links lengthening in the clicks) lost with the children's lay, SHOWN under PL-S1; 9 and 22 among th…
+83 |     # TW-S1 (the trace's weight 6): the hole gains 22 (Coulomb's sign) and reads 15 by the former identity; the chiral loses 22; the b…
+   |
+
+invalid-syntax: Expected `,`, found `==`
+  --> tests/test_the_record.py:81:3
+   |
+79 |     },
+80 |     "bodies": {2, 3, 5, 6, 7, 8, 9, 10, 16, 18, 30, 37, 43, 45, 59, 60, 64, 66},
+81 | =======
+   |   ^^
+82 |     # the hole under GP-S1: 2 (the Links lengthening in the clicks) lost with the children's lay, SHOWN under PL-S1; 9 and 22 among th…
+83 |     # TW-S1 (the trace's weight 6): the hole gains 22 (Coulomb's sign) and reads 15 by the former identity; the chiral loses 22; the b…
+   |
+
+invalid-syntax: Expected `,`, found `==`
+  --> tests/test_the_record.py:81:5
+   |
+79 |     },
+80 |     "bodies": {2, 3, 5, 6, 7, 8, 9, 10, 16, 18, 30, 37, 43, 45, 59, 60, 64, 66},
+81 | =======
+   |     ^^
+82 |     # the hole under GP-S1: 2 (the Links lengthening in the clicks) lost with the children's lay, SHOWN under PL-S1; 9 and 22 among th…
+83 |     # TW-S1 (the trace's weight 6): the hole gains 22 (Coulomb's sign) and reads 15 by the former identity; the chiral loses 22; the b…
+   |
+
+invalid-syntax: Expected `,`, found `=`
+  --> tests/test_the_record.py:81:7
+   |
+79 |     },
+80 |     "bodies": {2, 3, 5, 6, 7, 8, 9, 10, 16, 18, 30, 37, 43, 45, 59, 60, 64, 66},
+81 | =======
+   |       ^
+82 |     # the hole under GP-S1: 2 (the Links lengthening in the clicks) lost with the children's lay, SHOWN under PL-S1; 9 and 22 among th…
+83 |     # TW-S1 (the trace's weight 6): the hole gains 22 (Coulomb's sign) and reads 15 by the former identity; the chiral loses 22; the b…
+   |
+
+invalid-syntax: Expected `,`, found `:`
+  --> tests/test_the_record.py:84:11
+   |
+82 |     # the hole under GP-S1: 2 (the Links lengthening in the clicks) lost with the children's lay, SHOWN under PL-S1; 9 and 22 among th…
+83 |     # TW-S1 (the trace's weight 6): the hole gains 22 (Coulomb's sign) and reads 15 by the former identity; the chiral loses 22; the b…
+84 |     "hole": {4, 5, 7, 8, 10, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
+   |           ^
+85 |     # the chiral under EX-S1: 15 (conservation at the click) lost, the decoder reading the former identity taken >= booked where the t…
+86 |     "chiral": {2, 4, 5, 7, 8, 9, 10, 16, 18, 19, 21, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+   |
+
+invalid-syntax: Expected `,`, found `:`
+  --> tests/test_the_record.py:86:13
+   |
+84 |     "hole": {4, 5, 7, 8, 10, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
+85 |     # the chiral under EX-S1: 15 (conservation at the click) lost, the decoder reading the former identity taken >= booked where the t…
+86 |     "chiral": {2, 4, 5, 7, 8, 9, 10, 16, 18, 19, 21, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+   |             ^
+87 |     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812…
+88 |     "bodies": {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+   |
+
+invalid-syntax: Expected `,`, found `:`
+  --> tests/test_the_record.py:88:13
+   |
+86 |     "chiral": {2, 4, 5, 7, 8, 9, 10, 16, 18, 19, 21, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+87 |     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812…
+88 |     "bodies": {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+   |             ^
+89 | >>>>>>> 3d7729581
+90 | }
+   |
+
+invalid-syntax: Expected `,`, found `>>`
+  --> tests/test_the_record.py:89:1
+   |
+87 |     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812…
+88 |     "bodies": {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+89 | >>>>>>> 3d7729581
+   | ^^
+90 | }
+91 | VERDICTS = {  # the verdicts' words by name
+   |
+
+invalid-syntax: Expected `,`, found `>>`
+  --> tests/test_the_record.py:89:3
+   |
+87 |     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812…
+88 |     "bodies": {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+89 | >>>>>>> 3d7729581
+   |   ^^
+90 | }
+91 | VERDICTS = {  # the verdicts' words by name
+   |
+
+invalid-syntax: Expected `,`, found `>>`
+  --> tests/test_the_record.py:89:5
+   |
+87 |     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812…
+88 |     "bodies": {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+89 | >>>>>>> 3d7729581
+   |     ^^
+90 | }
+91 | VERDICTS = {  # the verdicts' words by name
+   |
+
+invalid-syntax: Expected `,`, found `>`
+  --> tests/test_the_record.py:89:7
+   |
+87 |     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812…
+88 |     "bodies": {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+89 | >>>>>>> 3d7729581
+   |       ^
+90 | }
+91 | VERDICTS = {  # the verdicts' words by name
+   |
+
+invalid-syntax: Expected `,`, found identifier
+  --> tests/test_the_record.py:89:10
+   |
+87 |     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812…
+88 |     "bodies": {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+89 | >>>>>>> 3d7729581
+   |          ^^^^^^^^
+90 | }
+91 | VERDICTS = {  # the verdicts' words by name
+   |
+
+invalid-syntax: Expected `,`, found `<<`
+   --> tests/test_the_record.py:99:1
+    |
+ 97 |         "22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part",  # NOT SHOWN at the trace 54
+ 98 |         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+ 99 | <<<<<<< HEAD
+    | ^^
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+101 | =======
+    |
+
+invalid-syntax: Expected `,`, found `<<`
+   --> tests/test_the_record.py:99:3
+    |
+ 97 |         "22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part",  # NOT SHOWN at the trace 54
+ 98 |         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+ 99 | <<<<<<< HEAD
+    |   ^^
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+101 | =======
+    |
+
+invalid-syntax: Expected `,`, found `<<`
+   --> tests/test_the_record.py:99:5
+    |
+ 97 |         "22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part",  # NOT SHOWN at the trace 54
+ 98 |         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+ 99 | <<<<<<< HEAD
+    |     ^^
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+101 | =======
+    |
+
+invalid-syntax: Expected `,`, found `<`
+   --> tests/test_the_record.py:99:7
+    |
+ 97 |         "22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part",  # NOT SHOWN at the trace 54
+ 98 |         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+ 99 | <<<<<<< HEAD
+    |       ^
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+101 | =======
+    |
+
+invalid-syntax: Expected `:`, found string
+   --> tests/test_the_record.py:100:9
+    |
+ 98 |         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+ 99 | <<<<<<< HEAD
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+    |         ^^^^^^^^^
+101 | =======
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+    |
+
+invalid-syntax: Expected `,`, found `:`
+   --> tests/test_the_record.py:100:18
+    |
+ 98 |         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+ 99 | <<<<<<< HEAD
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+    |                  ^
+101 | =======
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+    |
+
+invalid-syntax: Expected `:`, found `,`
+   --> tests/test_the_record.py:100:85
+    |
+ 98 |         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+ 99 | <<<<<<< HEAD
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+    |                                                                                     ^
+101 | =======
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+    |
+
+invalid-syntax: Expected `,`, found `==`
+   --> tests/test_the_record.py:101:1
+    |
+ 99 | <<<<<<< HEAD
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+101 | =======
+    | ^^
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+    |
+
+invalid-syntax: Expected `,`, found `==`
+   --> tests/test_the_record.py:101:3
+    |
+ 99 | <<<<<<< HEAD
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+101 | =======
+    |   ^^
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+    |
+
+invalid-syntax: Expected `,`, found `==`
+   --> tests/test_the_record.py:101:5
+    |
+ 99 | <<<<<<< HEAD
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+101 | =======
+    |     ^^
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+    |
+
+invalid-syntax: Expected `,`, found `=`
+   --> tests/test_the_record.py:101:7
+    |
+ 99 | <<<<<<< HEAD
+100 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
+101 | =======
+    |       ^
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+    |
+
+invalid-syntax: Expected `,`, found `>>`
+   --> tests/test_the_record.py:103:1
+    |
+101 | =======
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+    | ^^
+104 |         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
+105 |         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+    |
+
+invalid-syntax: Expected `,`, found `>>`
+   --> tests/test_the_record.py:103:3
+    |
+101 | =======
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+    |   ^^
+104 |         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
+105 |         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+    |
+
+invalid-syntax: Expected `,`, found `>>`
+   --> tests/test_the_record.py:103:5
+    |
+101 | =======
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+    |     ^^
+104 |         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
+105 |         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+    |
+
+invalid-syntax: Expected `,`, found `>`
+   --> tests/test_the_record.py:103:7
+    |
+101 | =======
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+    |       ^
+104 |         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
+105 |         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+    |
+
+invalid-syntax: Expected `:`, found identifier
+   --> tests/test_the_record.py:103:10
+    |
+101 | =======
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+    |          ^^^^^^^^
+104 |         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
+105 |         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+    |
+
+invalid-syntax: Expected `,`, found string
+   --> tests/test_the_record.py:104:9
+    |
+102 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+103 | >>>>>>> 3d7729581
+104 |         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+105 |         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+106 |         "60 the acceleration in the clicks": "SHOWN: after a slowing, an eighth's growth of the spacing larger",
+    |
+
+invalid-syntax: Expected `,`, found `<<`
+   --> tests/test_the_record.py:123:1
+    |
+121 |         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
+122 |         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+123 | <<<<<<< HEAD
+    | ^^
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+125 | =======
+    |
+
+invalid-syntax: Expected `,`, found `<<`
+   --> tests/test_the_record.py:123:3
+    |
+121 |         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
+122 |         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+123 | <<<<<<< HEAD
+    |   ^^
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+125 | =======
+    |
+
+invalid-syntax: Expected `,`, found `<<`
+   --> tests/test_the_record.py:123:5
+    |
+121 |         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
+122 |         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+123 | <<<<<<< HEAD
+    |     ^^
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+125 | =======
+    |
+
+invalid-syntax: Expected `,`, found `<`
+   --> tests/test_the_record.py:123:7
+    |
+121 |         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
+122 |         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+123 | <<<<<<< HEAD
+    |       ^
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+125 | =======
+    |
+
+invalid-syntax: Expected `:`, found string
+   --> tests/test_the_record.py:124:9
+    |
+122 |         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+123 | <<<<<<< HEAD
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+    |         ^^^^^^^^^
+125 | =======
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+    |
+
+invalid-syntax: Expected `,`, found `:`
+   --> tests/test_the_record.py:124:18
+    |
+122 |         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+123 | <<<<<<< HEAD
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+    |                  ^
+125 | =======
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+    |
+
+invalid-syntax: Expected `:`, found `,`
+   --> tests/test_the_record.py:124:84
+    |
+122 |         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+123 | <<<<<<< HEAD
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+    |                                                                                    ^
+125 | =======
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+    |
+
+invalid-syntax: Expected `,`, found `==`
+   --> tests/test_the_record.py:125:1
+    |
+123 | <<<<<<< HEAD
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+125 | =======
+    | ^^
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+127 | >>>>>>> 3d7729581
+    |
+
+invalid-syntax: Expected `,`, found `==`
+   --> tests/test_the_record.py:125:3
+    |
+123 | <<<<<<< HEAD
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+125 | =======
+    |   ^^
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+127 | >>>>>>> 3d7729581
+    |
+
+invalid-syntax: Expected `,`, found `==`
+   --> tests/test_the_record.py:125:5
+    |
+123 | <<<<<<< HEAD
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+125 | =======
+    |     ^^
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+127 | >>>>>>> 3d7729581
+    |
+
+invalid-syntax: Expected `,`, found `=`
+   --> tests/test_the_record.py:125:7
+    |
+123 | <<<<<<< HEAD
+124 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
+125 | =======
+    |       ^
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+127 | >>>>>>> 3d7729581
+    |
+
+invalid-syntax: Expected `,`, found `>>`
+   --> tests/test_the_record.py:127:1
+    |
+125 | =======
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+127 | >>>>>>> 3d7729581
+    | ^^
+128 |     },
+129 |     "bodies": {
+    |
+
+invalid-syntax: Expected `,`, found `>>`
+   --> tests/test_the_record.py:127:3
+    |
+125 | =======
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+127 | >>>>>>> 3d7729581
+    |   ^^
+128 |     },
+129 |     "bodies": {
+    |
+
+invalid-syntax: Expected `,`, found `>>`
+   --> tests/test_the_record.py:127:5
+    |
+125 | =======
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+127 | >>>>>>> 3d7729581
+    |     ^^
+128 |     },
+129 |     "bodies": {
+    |
+
+invalid-syntax: Expected `,`, found `>`
+   --> tests/test_the_record.py:127:7
+    |
+125 | =======
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+127 | >>>>>>> 3d7729581
+    |       ^
+128 |     },
+129 |     "bodies": {
+    |
+
+invalid-syntax: Expected `:`, found identifier
+   --> tests/test_the_record.py:127:10
+    |
+125 | =======
+126 |         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+127 | >>>>>>> 3d7729581
+    |          ^^^^^^^^
+128 |     },
+129 |     "bodies": {
+    |
+
+Found 53 errors.

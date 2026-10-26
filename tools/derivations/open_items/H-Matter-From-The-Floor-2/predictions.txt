@@ -1,0 +1,7 @@
+Predictions written before the runs (mf2, 2026-10-26 09:42 UTC):
+1. ga2 450 base: births 146 (the brief); the + child at the take's Node against the other end: an excess of fixed sign and small size, predicted |excess| <= 10 of 146, the sign the twist's (the + child at the into-end where h > 0: into == the take's Node, so plus_at_take > minus_at_take where h > 0 births lead).
+2. The digit test: a digit flips under the mirror (d != b - 1 - ((w - 1 - r) div F)) only where r mod F > (w - 1) mod F; where F divides w, 0 flips. Predicted: the walls of ga2's lines mostly divisible by their lattices (F = gcd(w, ...)), so few flips; the plane drawn flips on a fraction of the emitter's births: predicted between 0 and half.
+3. The half read (MF2_COVARIANT=1): 0 plane flips by construction (the digit invariant under r -> w - 1 - r); the course of ga2 parts from the base at the first emitter draw; births change in number.
+4. The 48 on the chiral 3-cube at 60 under the half read: the 24 reflections predicted CONJUGATE where the draw was the only non-covariant reader; APART where close.refuse's reading parts them (the kit's base: 12 EQUAL, 36 APART).
+5. cz = 3 (the seed's screw reversed through the file, the z reflection of the pattern): the excess's sign predicted reversed if the excess is the seed's hand; kept if it is the floor's.
+6. The hole 60 and the chiral 60 with MF2_DIGITS alone: the records' births and counts equal to the head's (the log longer by the draw lines).

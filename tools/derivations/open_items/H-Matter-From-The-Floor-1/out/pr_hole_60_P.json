@@ -1,0 +1,402 @@
+{
+"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/mf1/tests/worlds/world_hole.json",
+"intervals": 60,
+"image": "P",
+"walled": 1,
+"first_off": 8,
+"first_apart": 8,
+"verdicts": {
+"EQUAL": 0,
+"CONJUGATE": 0,
+"APART": 9
+},
+"base": {
+"births": 17,
+"plus_at_take": 7,
+"plus_other": 10,
+"excess": -3,
+"W_children_sum": 432,
+"credits": 2288
+},
+"mirror": {
+"births": 15,
+"plus_at_take": 9,
+"plus_other": 6,
+"excess": 3,
+"W_children_sum": 720,
+"credits": 2248
+},
+"per_interval": [
+{
+"i": 8,
+"off": 50,
+"base_births": 8,
+"mirror_births": 6,
+"verdict": "APART"
+},
+{
+"i": 9,
+"off": 826,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 10,
+"off": 2087,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 11,
+"off": 3687,
+"base_births": 1,
+"mirror_births": 1,
+"verdict": "APART"
+},
+{
+"i": 12,
+"off": 4827,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 13,
+"off": 5589,
+"base_births": 0,
+"mirror_births": 2,
+"verdict": "APART"
+},
+{
+"i": 14,
+"off": 6341,
+"base_births": 1,
+"mirror_births": 1,
+"verdict": "APART"
+},
+{
+"i": 15,
+"off": 6886,
+"base_births": 3,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 16,
+"off": 7265,
+"base_births": 2,
+"mirror_births": 3,
+"verdict": "APART"
+},
+{
+"i": 17,
+"off": 7605,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 18,
+"off": 8012,
+"base_births": 0,
+"mirror_births": 1,
+"verdict": "APART"
+},
+{
+"i": 19,
+"off": 8238,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 20,
+"off": 8310,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 21,
+"off": 8425,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 22,
+"off": 8586,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 23,
+"off": 8659,
+"base_births": 1,
+"mirror_births": 0,
+"verdict": "APART"
+},
+{
+"i": 24,
+"off": 8703,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 25,
+"off": 8737,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 26,
+"off": 8797,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 27,
+"off": 8869,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 28,
+"off": 8926,
+"base_births": 1,
+"mirror_births": 1,
+"verdict": "APART"
+},
+{
+"i": 29,
+"off": 8994,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 30,
+"off": 9068,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 31,
+"off": 9137,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 32,
+"off": 9167,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 33,
+"off": 9228,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 34,
+"off": 9239,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 35,
+"off": 9247,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 36,
+"off": 9296,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 37,
+"off": 9311,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 38,
+"off": 9346,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 39,
+"off": 9375,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 40,
+"off": 9389,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 41,
+"off": 9411,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 42,
+"off": 9442,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 43,
+"off": 9488,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 44,
+"off": 9513,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 45,
+"off": 9524,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 46,
+"off": 9528,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 47,
+"off": 9552,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 48,
+"off": 9613,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 49,
+"off": 9614,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 50,
+"off": 9608,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 51,
+"off": 9648,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 52,
+"off": 9685,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 53,
+"off": 9711,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 54,
+"off": 9685,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 55,
+"off": 9679,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 56,
+"off": 9719,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 57,
+"off": 9721,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 58,
+"off": 9735,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 59,
+"off": 9739,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+},
+{
+"i": 60,
+"off": 9745,
+"base_births": 0,
+"mirror_births": 0,
+"verdict": "none"
+}
+]
+}
