@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The 48 pair's unification (acts.born, dba5adfa5), the run back over the whole state (66dd3e352), the mend list traced and the Reader's fifth problem (the long chiral parting at 1,146 under one of the folds) in the law and rows 164, 177, 209, 212 and 217; no merge, the head unmoved.
 - CL-S2 built at toys-5 e03b70401 and the kit re-wired at 059d6248b recorded in the law and rows 170 and 212 (no merge: the engine head unmoved at 727ae98e9).
 - The engine head 727ae98e9 merged (aea6f6e99): the six folds, the release clause and the Reader's bangs.py and symmetries.py on the head through reader-5 f0c47f489, the engine twenty-two modules (ENGINE.md's paragraphs and rows kept both sides; README's duplicated section cut to the Reader's copy, the engine paragraph's counts re-cut to the tree); NL-S1's and The width is derived's build lines; rows 164, 170, 207 and 217; the kit's struck import named.
 - The engine head bcb7300e1 merged (9281ace53; documents only): the owner's ruling of 22:1x by the Boss's clock in the law (the width the engine's representation, The width is derived struck as a clause and kept by name; ENGINE.md's WIDTH row and README's line), CL-S2 approved on its derivation with David's build measured and unpushed, the plan's section 0d and the period's demotion in OS-S1's reading; rows 164, 170, 205, 207, 212, 215 and 216; the owner's words of the hour in HIGHLIGHTS and the ledger head.
