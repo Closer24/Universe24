@@ -85,18 +85,36 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the horizon (2026-10-25, BH-S1's second test, the Boss's room at the merge of toys-5 84009e333): the frozen Node's Links held at the wall and no birth at it",
     ),
     "tests/test_the_record.py::test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events": (
-        23,
+        30,
         "the record's Node lines and the reading's event lines (2026-10-25, the owner's word through the Reader, every gate its event line; the Boss's room at the merge of toys-5 84009e333, 20; widened by 3 at the merge of reader-5 becc47f4d, 2026-10-26, the events read per record of the reader folder): "
-        "one Node line per interval and the events the page labels",
+        "one Node line per interval and the events the page labels"
+        ". Widened to 30 at the merge of reader-5 f1e5d5b68 (2026-10-26, the Boss): the events of rows 62 to 67.",
     ),
     "tests/test_the_record.py::test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed": (
         14,
         "the page (2026-10-25, the third tool of the standard, the owner's word through the Boss; the Boss's room at the merge of toys-5 84009e333): one HTML from the record and the reading with nothing of a universe typed",
     ),
     "tests/test_the_record.py::test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings": (
-        21,
+        24,
         "the table of the phenomena (2026-10-26, the fourth tool of the standard, tools/phenomena.py, the owner's word through the Boss; the Boss's room at the merge of reader-5 becc47f4d): "
-        "every row of the gates in one table written from the readings, the SHOWN count on the head and the document's section rewritten from it",
+        "every row of the gates in one table written from the readings, the SHOWN count on the head and the document's section rewritten from it"
+        ". Widened to 24 at the merge of reader-5 f1e5d5b68 (2026-10-26, the Boss): the rows' count read from the readings, the one shape for every row.",
+    ),
+    "tests/test_the_record.py::test_the_committed_record_shows_the_gates_by_name": (
+        11,
+        "the rows 62 to 67 and the SHOWN sets per record (2026-10-26, the owner's words of 07:04 and 07:24 UTC through the Reader; the Boss's room at the merge of reader-5 f1e5d5b68): the arrow of time, the uniformity in the clicks, dark matter in kind, the lepton number, the energy in the clicks, CPT as one row, each a function of the reading",
+    ),
+    "tests/test_the_record.py::test_the_conservations_hold_on_the_record": (
+        18,
+        "gate 47 on the births of a pair with EX-S1's identity and the charge read from the children's own senses (2026-10-26, the Reader's strokes 3 and 4 and the readers' charge bug, H-Children-Charge-Bug-1; the Boss's room at the merge of reader-5 f1e5d5b68)",
+    ),
+    "tests/test_the_board.py::test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1": (
+        26,
+        "EQ-S1, the body at rest lays back what it takes (David's test of 2026-10-25, never given a room by name; the Boss's room at the merge of reader-5 f1e5d5b68 carrying toys-5 3dc12e307)",
+    ),
+    "tests/test_rule3.py::test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools": (
+        56,
+        "the integer gate's own test, grown with symmetries.py's three refusals (2026-10-26, the Reader's rows 63 to 67; the Boss's room at the merge of reader-5 f1e5d5b68): no integer beyond the law's own in the engine or the tools",
     ),
     "tests/test_the_record.py::test_the_committed_reading_is_the_decoders_own_whole": (
         3,
