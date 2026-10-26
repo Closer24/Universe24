@@ -15,13 +15,13 @@ from event_universe.decoder import (
     HUNDRED,
     LISTED,
     PAIR,
-    WIDTH,
     Record,
     cause_of,
     kind_of,
     quot,
     unread_words,
 )
+from event_universe.rows import WIDTH
 
 Row = Callable[[Record], dict[str, Any]]
 

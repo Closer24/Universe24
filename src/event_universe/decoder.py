@@ -15,7 +15,6 @@ from event_universe.rows import PLANE, QUARTET
 MIL = 1000000  # readings in parts per million
 HUNDRED = 100  # readings in hundredths
 THOUSAND = 1000  # readings in thousandths
-WIDTH = 128  # the law's width: every integer of the state and of every transient within it
 FEW = 10  # the fewest decoded credits for the dilation's two halves
 SPANS = 20  # the fewest spans for the lengthening's two halves
 HALF = 2  # a half: a count div 2, and a majority as a count times 2 above the whole
