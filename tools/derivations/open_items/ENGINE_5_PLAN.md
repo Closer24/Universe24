@@ -13,6 +13,10 @@ The one line of the whole plan, in the owner's own terms: ONE record of nature f
 | the cube's 48 in the clicks | 3 equal of 48 | 48 of 48, or the rest proved impossible by name |
 | the laws of the day | the click one act, the lay one act, the booking, the Node's core | the child's axis, the matter, the horizon's exit |
 
+## 0a. The research line is CLOSED until the release (the owner's word of 19:2x UTC: "no more derivations")
+
+From 19:2x UTC no derivation pair opens. The one hand still running finishes and lands with its comparison; nothing replaces it. The hands that remain are CONFIRMING hands alone, one per exact sha of a fold and one on the release itself, which read and measure what is built and derive nothing new. Every open question of the cycle, with its numbers and its named cause, travels into the changelog as the follow-up research: the child's axis and Bell, matter without antimatter, the radiation from the horizon that would bound the width by nature, the one write that parts a reflected world and holds the 48 at three images of forty-eight, and the third of the three (a seed that births, freezes and returns at once, which the law as written refuses). The plan from here is builds, readings, gates and the release, in the order below.
+
 ## 0b. What the commit of 5.0 carries, by the owner's word of 17:5x UTC (his own list, and the Boss's two additions)
 
 The owner's list, confirmed: (1) the recurring bang, working and SEEN going and returning again and again, with one bang defined as nature's bang; (2) the bugs mended; (3) the code cut, the six folds in; (4) every derivation of the cycle carried whole and named in the changelog as the follow-up research, the open questions among them by name.
