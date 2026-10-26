@@ -1,0 +1,312 @@
+== hole60.json cube 5 intervals 60 run back {'intervals': 10, 'exact': 10}
+births : 17
+births with the twist read from the Node line : 17
+births read from the log alone : 0
+into matches the log (the take's Node the end the current flows into) : [17, 17]
+h's sign matches the log (the + child's end by the twist's sign) : [17, 17]
+births by the helicity's sign (h e_a along +a: +, -) : [7, 10]
+births by axis : [12, 2, 3]
+children by lambda (the scalar along the arm: +, -) : [17, 17]
+one hand row (every birth's h e_a of one sign) : False
+carriage first/arrival {'credits': 34, 'link defined': 31, 'twist 0': 0, 'same axis as the birth Link': 13, 'vector kept (axis and sign)': 2, 'scalar kept (along the arm)': 6, 'hd2 integer on the Link (a birth crossed it)': 12, "hd2 integer equal to the birth's (axis and sign)": 11}
+carriage first/twin {'credits': 34, 'link defined': 34, 'twist 0': 0, 'same axis as the birth Link': 34, 'vector kept (axis and sign)': 20, 'scalar kept (along the arm)': 20, 'hd2 integer on the Link (a birth crossed it)': 34, "hd2 integer equal to the birth's (axis and sign)": 34}
+carriage own_until_next_birth/arrival {'credits': 318, 'link defined': 274, 'twist 0': 0, 'same axis as the birth Link': 84, 'vector kept (axis and sign)': 35, 'scalar kept (along the arm)': 111, 'hd2 integer on the Link (a birth crossed it)': 52, "hd2 integer equal to the birth's (axis and sign)": 48}
+carriage own_until_next_birth/twin {'credits': 318, 'link defined': 318, 'twist 0': 0, 'same axis as the birth Link': 318, 'vector kept (axis and sign)': 147, 'scalar kept (along the arm)': 147, 'hd2 integer on the Link (a birth crossed it)': 318, "hd2 integer equal to the birth's (axis and sign)": 318}
+carriage cone/arrival {'credits': 22363, 'link defined': 18805, 'twist 0': 0, 'same axis as the birth Link': 7099, 'vector kept (axis and sign)': 3567, 'scalar kept (along the arm)': 9413, 'hd2 integer on the Link (a birth crossed it)': 921, "hd2 integer equal to the birth's (axis and sign)": 397}
+carriage cone/twin {'credits': 22363, 'link defined': 1220, 'twist 0': 4, 'same axis as the birth Link': 510, 'vector kept (axis and sign)': 241, 'scalar kept (along the arm)': 606, 'hd2 integer on the Link (a birth crossed it)': 318, "hd2 integer equal to the birth's (axis and sign)": 318}
+unit {'T': 36000, 'T div 2': 18000, 'births with h read from the state': 17, 'gcd of |h|': 1, 'gcd div (T div 2)^2, remainder': [0, 1], 'gcd div T^2, remainder': [0, 1], 'bits of |h| max': 37}
+bell pairs 17
+bell int_arrival | arrival_side | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | arrival_twin | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | taken_line | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | turned | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | link_frame | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | proper_parity | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | arrival_side | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | arrival_twin | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | taken_line | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | turned | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | link_frame | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | proper_parity | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | arrival_side | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | arrival_twin | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | taken_line | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | turned | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | link_frame | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | proper_parity | used 0 dropped 17 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | arrival_side | used 14 dropped 3 | cells {'00': [3, 3, 0], '01': [3, 3, 0], '10': [3, 3, 0], '11': [5, 5, 0]} | S [30, 15] q,r [2, 0] S^2 [900, 225] | at the local bound S^2 = 4
+bell Hbirth.Int_twin | arrival_twin | used 14 dropped 3 | cells {'00': [5, 5, 0], '01': [5, 5, 0], '10': [4, 4, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | taken_line | used 17 dropped 0 | cells {'00': [13, 13, 0], '01': [2, 2, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | turned | used 17 dropped 0 | cells {'00': [6, 6, 0], '01': [5, 5, 0], '10': [5, 5, 0], '11': [1, 1, 0]} | S [60, 30] q,r [2, 0] S^2 [3600, 900] | at the local bound S^2 = 4
+bell Hbirth.Int_twin | link_frame | used 17 dropped 0 | cells {'00': [3, 3, 0], '01': [1, 1, 0], '10': [1, 1, 0], '11': [12, 12, 0]} | S [24, 12] q,r [2, 0] S^2 [576, 144] | at the local bound S^2 = 4
+bell Hbirth.Int_twin | proper_parity | used 17 dropped 0 | cells {'00': [8, 8, 0], '01': [3, 3, 0], '10': [4, 4, 0], '11': [2, 2, 0]} | S [48, 24] q,r [2, 0] S^2 [2304, 576] | at the local bound S^2 = 4
+bell sense | arrival_side | used 14 dropped 3 | cells {'00': [3, 0, 3], '01': [3, 0, 3], '10': [3, 0, 3], '11': [5, 0, 5]} | S [-30, 15] q,r [-2, 0] S^2 [900, 225] | at the local bound S^2 = 4
+bell sense | arrival_twin | used 14 dropped 3 | cells {'00': [5, 0, 5], '01': [5, 0, 5], '10': [4, 0, 4], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sense | taken_line | used 17 dropped 0 | cells {'00': [13, 0, 13], '01': [2, 0, 2], '10': [2, 0, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sense | turned | used 17 dropped 0 | cells {'00': [6, 0, 6], '01': [5, 0, 5], '10': [5, 0, 5], '11': [1, 0, 1]} | S [-60, 30] q,r [-2, 0] S^2 [3600, 900] | at the local bound S^2 = 4
+bell sense | link_frame | used 17 dropped 0 | cells {'00': [3, 0, 3], '01': [1, 0, 1], '10': [1, 0, 1], '11': [12, 0, 12]} | S [-24, 12] q,r [-2, 0] S^2 [576, 144] | at the local bound S^2 = 4
+bell sense | proper_parity | used 17 dropped 0 | cells {'00': [8, 0, 8], '01': [3, 0, 3], '10': [4, 0, 4], '11': [2, 0, 2]} | S [-48, 24] q,r [-2, 0] S^2 [2304, 576] | at the local bound S^2 = 4
+bell Hbirth.Htwin | arrival_side | used 14 dropped 3 | cells {'00': [3, 1, 2], '01': [3, 0, 3], '10': [3, 1, 2], '11': [5, 2, 3]} | S [-22, 15] q,r [-2, 8] S^2 [484, 225] | below the local bound S^2 < 4
+bell Hbirth.Htwin | arrival_twin | used 14 dropped 3 | cells {'00': [5, 4, 1], '01': [5, 0, 5], '10': [4, 0, 4], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | taken_line | used 17 dropped 0 | cells {'00': [13, 5, 8], '01': [2, 0, 2], '10': [2, 0, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | turned | used 17 dropped 0 | cells {'00': [6, 5, 1], '01': [5, 0, 5], '10': [5, 0, 5], '11': [1, 0, 1]} | S [-110, 30] q,r [-4, 10] S^2 [12100, 900] | above nature's band S^2 > 8
+bell Hbirth.Htwin | link_frame | used 17 dropped 0 | cells {'00': [3, 1, 2], '01': [1, 0, 1], '10': [1, 0, 1], '11': [12, 4, 8]} | S [-24, 12] q,r [-2, 0] S^2 [576, 144] | at the local bound S^2 = 4
+bell Hbirth.Htwin | proper_parity | used 17 dropped 0 | cells {'00': [8, 1, 7], '01': [3, 0, 3], '10': [4, 2, 2], '11': [2, 2, 0]} | S [-66, 24] q,r [-3, 6] S^2 [4356, 576] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_arrival | arrival_side | used 14 dropped 3 | cells {'00': [3, 3, 0], '01': [3, 2, 1], '10': [3, 2, 1], '11': [5, 3, 2]} | S [22, 15] q,r [1, 7] S^2 [484, 225] | below the local bound S^2 < 4
+bell lambda_birth*lambda_arrival | arrival_twin | used 14 dropped 3 | cells {'00': [5, 5, 0], '01': [5, 3, 2], '10': [4, 2, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | taken_line | used 14 dropped 3 | cells {'00': [10, 8, 2], '01': [2, 1, 1], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | turned | used 14 dropped 3 | cells {'00': [4, 4, 0], '01': [5, 3, 2], '10': [4, 2, 2], '11': [1, 1, 0]} | S [44, 20] q,r [2, 4] S^2 [1936, 400] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_arrival | link_frame | used 14 dropped 3 | cells {'00': [1, 1, 0], '01': [1, 1, 0], '10': [1, 1, 0], '11': [11, 7, 4]} | S [30, 11] q,r [2, 8] S^2 [900, 121] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_arrival | proper_parity | used 14 dropped 3 | cells {'00': [6, 4, 2], '01': [3, 2, 1], '10': [4, 3, 1], '11': [1, 1, 0]} | S [18, 12] q,r [1, 6] S^2 [324, 144] | below the local bound S^2 < 4
+bell lambda_birth*lambda_twin | arrival_side | used 14 dropped 3 | cells {'00': [3, 1, 2], '01': [3, 0, 3], '10': [3, 1, 2], '11': [5, 2, 3]} | S [-22, 15] q,r [-2, 8] S^2 [484, 225] | below the local bound S^2 < 4
+bell lambda_birth*lambda_twin | arrival_twin | used 14 dropped 3 | cells {'00': [5, 4, 1], '01': [5, 0, 5], '10': [4, 0, 4], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | taken_line | used 17 dropped 0 | cells {'00': [13, 5, 8], '01': [2, 0, 2], '10': [2, 0, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | turned | used 17 dropped 0 | cells {'00': [6, 5, 1], '01': [5, 0, 5], '10': [5, 0, 5], '11': [1, 0, 1]} | S [-110, 30] q,r [-4, 10] S^2 [12100, 900] | above nature's band S^2 > 8
+bell lambda_birth*lambda_twin | link_frame | used 17 dropped 0 | cells {'00': [3, 1, 2], '01': [1, 0, 1], '10': [1, 0, 1], '11': [12, 4, 8]} | S [-24, 12] q,r [-2, 0] S^2 [576, 144] | at the local bound S^2 = 4
+bell lambda_birth*lambda_twin | proper_parity | used 17 dropped 0 | cells {'00': [8, 1, 7], '01': [3, 0, 3], '10': [4, 2, 2], '11': [2, 2, 0]} | S [-66, 24] q,r [-3, 6] S^2 [4356, 576] | in nature's band 4 < S^2 <= 8
+bell lambda_twin*lambda_arrival | arrival_side | used 14 dropped 3 | cells {'00': [3, 1, 2], '01': [3, 1, 2], '10': [3, 2, 1], '11': [5, 4, 1]} | S [14, 15] q,r [0, 14] S^2 [196, 225] | below the local bound S^2 < 4
+bell lambda_twin*lambda_arrival | arrival_twin | used 14 dropped 3 | cells {'00': [5, 4, 1], '01': [5, 2, 3], '10': [4, 2, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | taken_line | used 14 dropped 3 | cells {'00': [10, 6, 4], '01': [2, 1, 1], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | turned | used 14 dropped 3 | cells {'00': [4, 4, 0], '01': [5, 2, 3], '10': [4, 2, 2], '11': [1, 0, 1]} | S [-44, 20] q,r [-3, 16] S^2 [1936, 400] | in nature's band 4 < S^2 <= 8
+bell lambda_twin*lambda_arrival | link_frame | used 14 dropped 3 | cells {'00': [1, 1, 0], '01': [1, 0, 1], '10': [1, 0, 1], '11': [11, 7, 4]} | S [-30, 11] q,r [-3, 3] S^2 [900, 121] | in nature's band 4 < S^2 <= 8
+bell lambda_twin*lambda_arrival | proper_parity | used 14 dropped 3 | cells {'00': [6, 3, 3], '01': [3, 1, 2], '10': [4, 3, 1], '11': [1, 1, 0]} | S [22, 12] q,r [1, 10] S^2 [484, 144] | below the local bound S^2 < 4
+bell sign_h_arrival | arrival_side | used 14 dropped 3 | cells {'00': [3, 0, 3], '01': [3, 2, 1], '10': [3, 2, 1], '11': [5, 2, 3]} | S [22, 15] q,r [1, 7] S^2 [484, 225] | below the local bound S^2 < 4
+bell sign_h_arrival | arrival_twin | used 14 dropped 3 | cells {'00': [5, 2, 3], '01': [5, 2, 3], '10': [4, 2, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | taken_line | used 14 dropped 3 | cells {'00': [10, 2, 8], '01': [2, 2, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | turned | used 14 dropped 3 | cells {'00': [4, 1, 3], '01': [5, 3, 2], '10': [4, 2, 2], '11': [1, 0, 1]} | S [-34, 20] q,r [-2, 6] S^2 [1156, 400] | below the local bound S^2 < 4
+bell sign_h_arrival | link_frame | used 14 dropped 3 | cells {'00': [1, 0, 1], '01': [1, 0, 1], '10': [1, 1, 0], '11': [11, 5, 6]} | S [-34, 11] q,r [-4, 10] S^2 [1156, 121] | above nature's band S^2 > 8
+bell sign_h_arrival | proper_parity | used 14 dropped 3 | cells {'00': [6, 0, 6], '01': [3, 3, 0], '10': [4, 3, 1], '11': [1, 0, 1]} | S [-30, 12] q,r [-3, 6] S^2 [900, 144] | in nature's band 4 < S^2 <= 8
+== chiral60.json cube 5 intervals 60 run back {'intervals': 10, 'exact': 10}
+births : 17
+births with the twist read from the Node line : 16
+births read from the log alone : 1
+into matches the log (the take's Node the end the current flows into) : [16, 16]
+h's sign matches the log (the + child's end by the twist's sign) : [16, 16]
+births by the helicity's sign (h e_a along +a: +, -) : [8, 9]
+births by axis : [3, 7, 7]
+children by lambda (the scalar along the arm: +, -) : [17, 17]
+one hand row (every birth's h e_a of one sign) : False
+carriage first/arrival {'credits': 30, 'link defined': 25, 'twist 0': 0, 'same axis as the birth Link': 11, 'vector kept (axis and sign)': 3, 'scalar kept (along the arm)': 16, 'hd2 integer on the Link (a birth crossed it)': 4, "hd2 integer equal to the birth's (axis and sign)": 3}
+carriage first/twin {'credits': 30, 'link defined': 30, 'twist 0': 0, 'same axis as the birth Link': 30, 'vector kept (axis and sign)': 14, 'scalar kept (along the arm)': 14, 'hd2 integer on the Link (a birth crossed it)': 30, "hd2 integer equal to the birth's (axis and sign)": 30}
+carriage own_until_next_birth/arrival {'credits': 309, 'link defined': 253, 'twist 0': 0, 'same axis as the birth Link': 93, 'vector kept (axis and sign)': 42, 'scalar kept (along the arm)': 133, 'hd2 integer on the Link (a birth crossed it)': 50, "hd2 integer equal to the birth's (axis and sign)": 45}
+carriage own_until_next_birth/twin {'credits': 309, 'link defined': 309, 'twist 0': 0, 'same axis as the birth Link': 309, 'vector kept (axis and sign)': 140, 'scalar kept (along the arm)': 140, 'hd2 integer on the Link (a birth crossed it)': 309, "hd2 integer equal to the birth's (axis and sign)": 309}
+carriage cone/arrival {'credits': 27489, 'link defined': 23343, 'twist 0': 0, 'same axis as the birth Link': 7780, 'vector kept (axis and sign)': 3914, 'scalar kept (along the arm)': 11678, 'hd2 integer on the Link (a birth crossed it)': 1171, "hd2 integer equal to the birth's (axis and sign)": 233}
+carriage cone/twin {'credits': 27489, 'link defined': 1465, 'twist 0': 0, 'same axis as the birth Link': 571, 'vector kept (axis and sign)': 268, 'scalar kept (along the arm)': 728, 'hd2 integer on the Link (a birth crossed it)': 346, "hd2 integer equal to the birth's (axis and sign)": 315}
+unit {'T': 36000, 'T div 2': 18000, 'births with h read from the state': 16, 'gcd of |h|': 1, 'gcd div (T div 2)^2, remainder': [0, 1], 'gcd div T^2, remainder': [0, 1], 'bits of |h| max': 39}
+bell pairs 15
+bell int_arrival | arrival_side | used 1 dropped 14 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [1, 1, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | arrival_twin | used 1 dropped 14 | cells {'00': [0, 0, 0], '01': [1, 1, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | taken_line | used 1 dropped 14 | cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | turned | used 1 dropped 14 | cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | link_frame | used 1 dropped 14 | cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | proper_parity | used 1 dropped 14 | cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | arrival_side | used 0 dropped 15 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | arrival_twin | used 0 dropped 15 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | taken_line | used 0 dropped 15 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | turned | used 0 dropped 15 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | link_frame | used 0 dropped 15 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | proper_parity | used 0 dropped 15 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | arrival_side | used 1 dropped 14 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [1, 1, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | arrival_twin | used 1 dropped 14 | cells {'00': [0, 0, 0], '01': [1, 1, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | taken_line | used 1 dropped 14 | cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | turned | used 1 dropped 14 | cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | link_frame | used 1 dropped 14 | cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | proper_parity | used 1 dropped 14 | cells {'00': [1, 1, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | arrival_side | used 10 dropped 5 | cells {'00': [2, 2, 0], '01': [1, 1, 0], '10': [4, 4, 0], '11': [3, 3, 0]} | S [24, 12] q,r [2, 0] S^2 [576, 144] | at the local bound S^2 = 4
+bell Hbirth.Int_twin | arrival_twin | used 10 dropped 5 | cells {'00': [8, 8, 0], '01': [1, 1, 0], '10': [1, 1, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | taken_line | used 15 dropped 0 | cells {'00': [11, 11, 0], '01': [0, 0, 0], '10': [4, 4, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | turned | used 15 dropped 0 | cells {'00': [8, 8, 0], '01': [5, 5, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | link_frame | used 15 dropped 0 | cells {'00': [4, 4, 0], '01': [4, 4, 0], '10': [1, 1, 0], '11': [6, 6, 0]} | S [24, 12] q,r [2, 0] S^2 [576, 144] | at the local bound S^2 = 4
+bell Hbirth.Int_twin | proper_parity | used 15 dropped 0 | cells {'00': [5, 5, 0], '01': [5, 5, 0], '10': [2, 2, 0], '11': [3, 3, 0]} | S [60, 30] q,r [2, 0] S^2 [3600, 900] | at the local bound S^2 = 4
+bell sense | arrival_side | used 10 dropped 5 | cells {'00': [2, 0, 2], '01': [1, 0, 1], '10': [4, 0, 4], '11': [3, 0, 3]} | S [-24, 12] q,r [-2, 0] S^2 [576, 144] | at the local bound S^2 = 4
+bell sense | arrival_twin | used 10 dropped 5 | cells {'00': [8, 0, 8], '01': [1, 0, 1], '10': [1, 0, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sense | taken_line | used 15 dropped 0 | cells {'00': [11, 0, 11], '01': [0, 0, 0], '10': [4, 0, 4], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sense | turned | used 15 dropped 0 | cells {'00': [8, 0, 8], '01': [5, 0, 5], '10': [2, 0, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sense | link_frame | used 15 dropped 0 | cells {'00': [4, 0, 4], '01': [4, 0, 4], '10': [1, 0, 1], '11': [6, 0, 6]} | S [-24, 12] q,r [-2, 0] S^2 [576, 144] | at the local bound S^2 = 4
+bell sense | proper_parity | used 15 dropped 0 | cells {'00': [5, 0, 5], '01': [5, 0, 5], '10': [2, 0, 2], '11': [3, 0, 3]} | S [-60, 30] q,r [-2, 0] S^2 [3600, 900] | at the local bound S^2 = 4
+bell Hbirth.Htwin | arrival_side | used 10 dropped 5 | cells {'00': [2, 1, 1], '01': [1, 0, 1], '10': [4, 2, 2], '11': [3, 1, 2]} | S [-16, 12] q,r [-2, 8] S^2 [256, 144] | below the local bound S^2 < 4
+bell Hbirth.Htwin | arrival_twin | used 10 dropped 5 | cells {'00': [8, 3, 5], '01': [1, 0, 1], '10': [1, 1, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | taken_line | used 15 dropped 0 | cells {'00': [11, 4, 7], '01': [0, 0, 0], '10': [4, 3, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | turned | used 15 dropped 0 | cells {'00': [8, 4, 4], '01': [5, 2, 3], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | link_frame | used 15 dropped 0 | cells {'00': [4, 1, 3], '01': [4, 1, 3], '10': [1, 0, 1], '11': [6, 5, 1]} | S [-32, 12] q,r [-3, 4] S^2 [1024, 144] | in nature's band 4 < S^2 <= 8
+bell Hbirth.Htwin | proper_parity | used 15 dropped 0 | cells {'00': [5, 2, 3], '01': [5, 2, 3], '10': [2, 0, 2], '11': [3, 3, 0]} | S [-72, 30] q,r [-3, 18] S^2 [5184, 900] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_arrival | arrival_side | used 10 dropped 5 | cells {'00': [2, 1, 1], '01': [1, 1, 0], '10': [4, 2, 2], '11': [3, 1, 2]} | S [-16, 12] q,r [-2, 8] S^2 [256, 144] | below the local bound S^2 < 4
+bell lambda_birth*lambda_arrival | arrival_twin | used 10 dropped 5 | cells {'00': [8, 5, 3], '01': [1, 0, 1], '10': [1, 0, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | taken_line | used 10 dropped 5 | cells {'00': [8, 3, 5], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | turned | used 10 dropped 5 | cells {'00': [4, 1, 3], '01': [4, 3, 1], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | link_frame | used 10 dropped 5 | cells {'00': [3, 2, 1], '01': [1, 1, 0], '10': [1, 0, 1], '11': [5, 2, 3]} | S [32, 15] q,r [2, 2] S^2 [1024, 225] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_arrival | proper_parity | used 10 dropped 5 | cells {'00': [2, 0, 2], '01': [4, 2, 2], '10': [1, 1, 0], '11': [3, 2, 1]} | S [28, 12] q,r [2, 4] S^2 [784, 144] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_twin | arrival_side | used 10 dropped 5 | cells {'00': [2, 1, 1], '01': [1, 0, 1], '10': [4, 2, 2], '11': [3, 1, 2]} | S [-16, 12] q,r [-2, 8] S^2 [256, 144] | below the local bound S^2 < 4
+bell lambda_birth*lambda_twin | arrival_twin | used 10 dropped 5 | cells {'00': [8, 3, 5], '01': [1, 0, 1], '10': [1, 1, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | taken_line | used 15 dropped 0 | cells {'00': [11, 4, 7], '01': [0, 0, 0], '10': [4, 3, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | turned | used 15 dropped 0 | cells {'00': [8, 4, 4], '01': [5, 2, 3], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | link_frame | used 15 dropped 0 | cells {'00': [4, 1, 3], '01': [4, 1, 3], '10': [1, 0, 1], '11': [6, 5, 1]} | S [-32, 12] q,r [-3, 4] S^2 [1024, 144] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_twin | proper_parity | used 15 dropped 0 | cells {'00': [5, 2, 3], '01': [5, 2, 3], '10': [2, 0, 2], '11': [3, 3, 0]} | S [-72, 30] q,r [-3, 18] S^2 [5184, 900] | in nature's band 4 < S^2 <= 8
+bell lambda_twin*lambda_arrival | arrival_side | used 10 dropped 5 | cells {'00': [2, 0, 2], '01': [1, 0, 1], '10': [4, 4, 0], '11': [3, 1, 2]} | S [-40, 12] q,r [-4, 8] S^2 [1600, 144] | above nature's band S^2 > 8
+bell lambda_twin*lambda_arrival | arrival_twin | used 10 dropped 5 | cells {'00': [8, 4, 4], '01': [1, 1, 0], '10': [1, 0, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | taken_line | used 10 dropped 5 | cells {'00': [8, 3, 5], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | turned | used 10 dropped 5 | cells {'00': [4, 2, 2], '01': [4, 1, 3], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | link_frame | used 10 dropped 5 | cells {'00': [3, 1, 2], '01': [1, 0, 1], '10': [1, 1, 0], '11': [5, 3, 2]} | S [-32, 15] q,r [-3, 13] S^2 [1024, 225] | in nature's band 4 < S^2 <= 8
+bell lambda_twin*lambda_arrival | proper_parity | used 10 dropped 5 | cells {'00': [2, 2, 0], '01': [4, 1, 3], '10': [1, 0, 1], '11': [3, 2, 1]} | S [-26, 12] q,r [-3, 10] S^2 [676, 144] | in nature's band 4 < S^2 <= 8
+bell sign_h_arrival | arrival_side | used 10 dropped 5 | cells {'00': [2, 1, 1], '01': [1, 1, 0], '10': [4, 2, 2], '11': [3, 2, 1]} | S [16, 12] q,r [1, 4] S^2 [256, 144] | below the local bound S^2 < 4
+bell sign_h_arrival | arrival_twin | used 10 dropped 5 | cells {'00': [8, 5, 3], '01': [1, 0, 1], '10': [1, 1, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | taken_line | used 10 dropped 5 | cells {'00': [8, 4, 4], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | turned | used 10 dropped 5 | cells {'00': [4, 3, 1], '01': [4, 2, 2], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | link_frame | used 10 dropped 5 | cells {'00': [3, 0, 3], '01': [1, 1, 0], '10': [1, 0, 1], '11': [5, 5, 0]} | S [-30, 15] q,r [-2, 0] S^2 [900, 225] | at the local bound S^2 = 4
+bell sign_h_arrival | proper_parity | used 10 dropped 5 | cells {'00': [2, 1, 1], '01': [4, 2, 2], '10': [1, 0, 1], '11': [3, 3, 0]} | S [-24, 12] q,r [-2, 0] S^2 [576, 144] | at the local bound S^2 = 4
+== chiral300.json cube 5 intervals 300 run back {'intervals': 10, 'exact': 10}
+births : 16
+births with the twist read from the Node line : 14
+births read from the log alone : 2
+into matches the log (the take's Node the end the current flows into) : [14, 14]
+h's sign matches the log (the + child's end by the twist's sign) : [14, 14]
+births by the helicity's sign (h e_a along +a: +, -) : [7, 9]
+births by axis : [2, 3, 11]
+children by lambda (the scalar along the arm: +, -) : [16, 16]
+one hand row (every birth's h e_a of one sign) : False
+carriage first/arrival {'credits': 24, 'link defined': 22, 'twist 0': 0, 'same axis as the birth Link': 9, 'vector kept (axis and sign)': 6, 'scalar kept (along the arm)': 12, 'hd2 integer on the Link (a birth crossed it)': 2, "hd2 integer equal to the birth's (axis and sign)": 2}
+carriage first/twin {'credits': 24, 'link defined': 24, 'twist 0': 0, 'same axis as the birth Link': 24, 'vector kept (axis and sign)': 15, 'scalar kept (along the arm)': 15, 'hd2 integer on the Link (a birth crossed it)': 24, "hd2 integer equal to the birth's (axis and sign)": 24}
+carriage own_until_next_birth/arrival {'credits': 622, 'link defined': 518, 'twist 0': 0, 'same axis as the birth Link': 194, 'vector kept (axis and sign)': 89, 'scalar kept (along the arm)': 269, 'hd2 integer on the Link (a birth crossed it)': 108, "hd2 integer equal to the birth's (axis and sign)": 108}
+carriage own_until_next_birth/twin {'credits': 622, 'link defined': 622, 'twist 0': 0, 'same axis as the birth Link': 622, 'vector kept (axis and sign)': 287, 'scalar kept (along the arm)': 287, 'hd2 integer on the Link (a birth crossed it)': 622, "hd2 integer equal to the birth's (axis and sign)": 622}
+carriage cone/arrival {'credits': 119089, 'link defined': 98687, 'twist 0': 0, 'same axis as the birth Link': 32948, 'vector kept (axis and sign)': 16497, 'scalar kept (along the arm)': 49341, 'hd2 integer on the Link (a birth crossed it)': 3958, "hd2 integer equal to the birth's (axis and sign)": 911}
+carriage cone/twin {'credits': 119089, 'link defined': 5011, 'twist 0': 0, 'same axis as the birth Link': 1415, 'vector kept (axis and sign)': 782, 'scalar kept (along the arm)': 2419, 'hd2 integer on the Link (a birth crossed it)': 622, "hd2 integer equal to the birth's (axis and sign)": 622}
+unit {'T': 36000, 'T div 2': 18000, 'births with h read from the state': 14, 'gcd of |h|': 1, 'gcd div (T div 2)^2, remainder': [0, 1], 'gcd div T^2, remainder': [0, 1], 'bits of |h| max': 37}
+bell pairs 11
+bell int_arrival | arrival_side | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | arrival_twin | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | taken_line | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | turned | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | link_frame | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | proper_parity | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | arrival_side | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | arrival_twin | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | taken_line | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | turned | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | link_frame | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | proper_parity | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | arrival_side | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | arrival_twin | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | taken_line | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | turned | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | link_frame | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | proper_parity | used 0 dropped 11 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | arrival_side | used 9 dropped 2 | cells {'00': [3, 3, 0], '01': [2, 2, 0], '10': [1, 1, 0], '11': [3, 3, 0]} | S [12, 6] q,r [2, 0] S^2 [144, 36] | at the local bound S^2 = 4
+bell Hbirth.Int_twin | arrival_twin | used 9 dropped 2 | cells {'00': [7, 7, 0], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | taken_line | used 11 dropped 0 | cells {'00': [9, 9, 0], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | turned | used 11 dropped 0 | cells {'00': [4, 4, 0], '01': [4, 4, 0], '10': [2, 2, 0], '11': [1, 1, 0]} | S [8, 4] q,r [2, 0] S^2 [64, 16] | at the local bound S^2 = 4
+bell Hbirth.Int_twin | link_frame | used 11 dropped 0 | cells {'00': [4, 4, 0], '01': [3, 3, 0], '10': [0, 0, 0], '11': [4, 4, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | proper_parity | used 11 dropped 0 | cells {'00': [2, 2, 0], '01': [3, 3, 0], '10': [5, 5, 0], '11': [1, 1, 0]} | S [60, 30] q,r [2, 0] S^2 [3600, 900] | at the local bound S^2 = 4
+bell sense | arrival_side | used 9 dropped 2 | cells {'00': [3, 0, 3], '01': [2, 0, 2], '10': [1, 0, 1], '11': [3, 0, 3]} | S [-12, 6] q,r [-2, 0] S^2 [144, 36] | at the local bound S^2 = 4
+bell sense | arrival_twin | used 9 dropped 2 | cells {'00': [7, 0, 7], '01': [0, 0, 0], '10': [2, 0, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sense | taken_line | used 11 dropped 0 | cells {'00': [9, 0, 9], '01': [0, 0, 0], '10': [2, 0, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sense | turned | used 11 dropped 0 | cells {'00': [4, 0, 4], '01': [4, 0, 4], '10': [2, 0, 2], '11': [1, 0, 1]} | S [-8, 4] q,r [-2, 0] S^2 [64, 16] | at the local bound S^2 = 4
+bell sense | link_frame | used 11 dropped 0 | cells {'00': [4, 0, 4], '01': [3, 0, 3], '10': [0, 0, 0], '11': [4, 0, 4]} | S None q,r None S^2 None | None
+bell sense | proper_parity | used 11 dropped 0 | cells {'00': [2, 0, 2], '01': [3, 0, 3], '10': [5, 0, 5], '11': [1, 0, 1]} | S [-60, 30] q,r [-2, 0] S^2 [3600, 900] | at the local bound S^2 = 4
+bell Hbirth.Htwin | arrival_side | used 9 dropped 2 | cells {'00': [3, 2, 1], '01': [2, 1, 1], '10': [1, 1, 0], '11': [3, 2, 1]} | S [10, 6] q,r [1, 4] S^2 [100, 36] | below the local bound S^2 < 4
+bell Hbirth.Htwin | arrival_twin | used 9 dropped 2 | cells {'00': [7, 4, 3], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | taken_line | used 11 dropped 0 | cells {'00': [9, 6, 3], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | turned | used 11 dropped 0 | cells {'00': [4, 1, 3], '01': [4, 3, 1], '10': [2, 2, 0], '11': [1, 1, 0]} | S [12, 4] q,r [3, 0] S^2 [144, 16] | above nature's band S^2 > 8
+bell Hbirth.Htwin | link_frame | used 11 dropped 0 | cells {'00': [4, 2, 2], '01': [3, 2, 1], '10': [0, 0, 0], '11': [4, 3, 1]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | proper_parity | used 11 dropped 0 | cells {'00': [2, 1, 1], '01': [3, 2, 1], '10': [5, 4, 1], '11': [1, 0, 1]} | S [58, 30] q,r [1, 28] S^2 [3364, 900] | below the local bound S^2 < 4
+bell lambda_birth*lambda_arrival | arrival_side | used 9 dropped 2 | cells {'00': [3, 1, 2], '01': [2, 0, 2], '10': [1, 0, 1], '11': [3, 2, 1]} | S [-16, 6] q,r [-3, 2] S^2 [256, 36] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_arrival | arrival_twin | used 9 dropped 2 | cells {'00': [7, 2, 5], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | taken_line | used 9 dropped 2 | cells {'00': [9, 3, 6], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | turned | used 9 dropped 2 | cells {'00': [3, 1, 2], '01': [3, 1, 2], '10': [2, 0, 2], '11': [1, 1, 0]} | S [-16, 6] q,r [-3, 2] S^2 [256, 36] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_arrival | link_frame | used 9 dropped 2 | cells {'00': [4, 1, 3], '01': [2, 1, 1], '10': [0, 0, 0], '11': [3, 1, 2]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | proper_parity | used 9 dropped 2 | cells {'00': [2, 1, 1], '01': [1, 0, 1], '10': [5, 1, 4], '11': [1, 1, 0]} | S [-26, 10] q,r [-3, 4] S^2 [676, 100] | in nature's band 4 < S^2 <= 8
+bell lambda_birth*lambda_twin | arrival_side | used 9 dropped 2 | cells {'00': [3, 2, 1], '01': [2, 1, 1], '10': [1, 1, 0], '11': [3, 2, 1]} | S [10, 6] q,r [1, 4] S^2 [100, 36] | below the local bound S^2 < 4
+bell lambda_birth*lambda_twin | arrival_twin | used 9 dropped 2 | cells {'00': [7, 4, 3], '01': [0, 0, 0], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | taken_line | used 11 dropped 0 | cells {'00': [9, 6, 3], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | turned | used 11 dropped 0 | cells {'00': [4, 1, 3], '01': [4, 3, 1], '10': [2, 2, 0], '11': [1, 1, 0]} | S [12, 4] q,r [3, 0] S^2 [144, 16] | above nature's band S^2 > 8
+bell lambda_birth*lambda_twin | link_frame | used 11 dropped 0 | cells {'00': [4, 2, 2], '01': [3, 2, 1], '10': [0, 0, 0], '11': [4, 3, 1]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | proper_parity | used 11 dropped 0 | cells {'00': [2, 1, 1], '01': [3, 2, 1], '10': [5, 4, 1], '11': [1, 0, 1]} | S [58, 30] q,r [1, 28] S^2 [3364, 900] | below the local bound S^2 < 4
+bell lambda_twin*lambda_arrival | arrival_side | used 9 dropped 2 | cells {'00': [3, 2, 1], '01': [2, 1, 1], '10': [1, 0, 1], '11': [3, 1, 2]} | S [-10, 6] q,r [-2, 2] S^2 [100, 36] | below the local bound S^2 < 4
+bell lambda_twin*lambda_arrival | arrival_twin | used 9 dropped 2 | cells {'00': [7, 3, 4], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | taken_line | used 9 dropped 2 | cells {'00': [9, 4, 5], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | turned | used 9 dropped 2 | cells {'00': [3, 1, 2], '01': [3, 2, 1], '10': [2, 0, 2], '11': [1, 1, 0]} | S [-12, 6] q,r [-2, 0] S^2 [144, 36] | at the local bound S^2 = 4
+bell lambda_twin*lambda_arrival | link_frame | used 9 dropped 2 | cells {'00': [4, 1, 3], '01': [2, 1, 1], '10': [0, 0, 0], '11': [3, 2, 1]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | proper_parity | used 9 dropped 2 | cells {'00': [2, 2, 0], '01': [1, 0, 1], '10': [5, 2, 3], '11': [1, 0, 1]} | S [-32, 10] q,r [-4, 8] S^2 [1024, 100] | above nature's band S^2 > 8
+bell sign_h_arrival | arrival_side | used 9 dropped 2 | cells {'00': [3, 2, 1], '01': [2, 0, 2], '10': [1, 0, 1], '11': [3, 1, 2]} | S [-16, 6] q,r [-3, 2] S^2 [256, 36] | in nature's band 4 < S^2 <= 8
+bell sign_h_arrival | arrival_twin | used 9 dropped 2 | cells {'00': [7, 2, 5], '01': [0, 0, 0], '10': [2, 1, 1], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | taken_line | used 9 dropped 2 | cells {'00': [9, 3, 6], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | turned | used 9 dropped 2 | cells {'00': [3, 1, 2], '01': [3, 2, 1], '10': [2, 0, 2], '11': [1, 0, 1]} | S [-16, 6] q,r [-3, 2] S^2 [256, 36] | in nature's band 4 < S^2 <= 8
+bell sign_h_arrival | link_frame | used 9 dropped 2 | cells {'00': [4, 1, 3], '01': [2, 1, 1], '10': [0, 0, 0], '11': [3, 1, 2]} | S None q,r None S^2 None | None
+bell sign_h_arrival | proper_parity | used 9 dropped 2 | cells {'00': [2, 1, 1], '01': [1, 1, 0], '10': [5, 1, 4], '11': [1, 0, 1]} | S [-26, 10] q,r [-3, 4] S^2 [676, 100] | in nature's band 4 < S^2 <= 8
+== ga2_450.json cube 4 intervals 450 run back {'intervals': 10, 'exact': 10}
+births : 146
+births with the twist read from the Node line : 82
+births read from the log alone : 64
+into matches the log (the take's Node the end the current flows into) : [80, 82]
+h's sign matches the log (the + child's end by the twist's sign) : [82, 82]
+births by the helicity's sign (h e_a along +a: +, -) : [106, 40]
+births by axis : [110, 36, 0]
+children by lambda (the scalar along the arm: +, -) : [146, 146]
+one hand row (every birth's h e_a of one sign) : False
+carriage first/arrival {'credits': 164, 'link defined': 20, 'twist 0': 0, 'same axis as the birth Link': 4, 'vector kept (axis and sign)': 4, 'scalar kept (along the arm)': 14, 'hd2 integer on the Link (a birth crossed it)': 8, "hd2 integer equal to the birth's (axis and sign)": 4}
+carriage first/twin {'credits': 164, 'link defined': 164, 'twist 0': 0, 'same axis as the birth Link': 164, 'vector kept (axis and sign)': 160, 'scalar kept (along the arm)': 160, 'hd2 integer on the Link (a birth crossed it)': 164, "hd2 integer equal to the birth's (axis and sign)": 164}
+carriage own_until_next_birth/arrival {'credits': 402, 'link defined': 112, 'twist 0': 0, 'same axis as the birth Link': 34, 'vector kept (axis and sign)': 30, 'scalar kept (along the arm)': 64, 'hd2 integer on the Link (a birth crossed it)': 58, "hd2 integer equal to the birth's (axis and sign)": 24}
+carriage own_until_next_birth/twin {'credits': 402, 'link defined': 402, 'twist 0': 0, 'same axis as the birth Link': 402, 'vector kept (axis and sign)': 376, 'scalar kept (along the arm)': 376, 'hd2 integer on the Link (a birth crossed it)': 402, "hd2 integer equal to the birth's (axis and sign)": 402}
+carriage cone/arrival {'credits': 27972, 'link defined': 8998, 'twist 0': 0, 'same axis as the birth Link': 2772, 'vector kept (axis and sign)': 1388, 'scalar kept (along the arm)': 4500, 'hd2 integer on the Link (a birth crossed it)': 4674, "hd2 integer equal to the birth's (axis and sign)": 1236}
+carriage cone/twin {'credits': 27972, 'link defined': 2626, 'twist 0': 1028, 'same axis as the birth Link': 980, 'vector kept (axis and sign)': 566, 'scalar kept (along the arm)': 1062, 'hd2 integer on the Link (a birth crossed it)': 1126, "hd2 integer equal to the birth's (axis and sign)": 576}
+unit {'T': 36000, 'T div 2': 18000, 'births with h read from the state': 82, 'gcd of |h|': 2, 'gcd div (T div 2)^2, remainder': [0, 2], 'gcd div T^2, remainder': [0, 2], 'bits of |h| max': 35}
+bell pairs 82
+bell int_arrival | arrival_side | used 2 dropped 80 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 2, 0]} | S None q,r None S^2 None | None
+bell int_arrival | arrival_twin | used 2 dropped 80 | cells {'00': [0, 0, 0], '01': [2, 2, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | taken_line | used 2 dropped 80 | cells {'00': [0, 0, 0], '01': [2, 2, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | turned | used 2 dropped 80 | cells {'00': [2, 2, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell int_arrival | link_frame | used 2 dropped 80 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 2, 0]} | S None q,r None S^2 None | None
+bell int_arrival | proper_parity | used 2 dropped 80 | cells {'00': [2, 2, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | arrival_side | used 0 dropped 82 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | arrival_twin | used 0 dropped 82 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | taken_line | used 0 dropped 82 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | turned | used 0 dropped 82 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | link_frame | used 0 dropped 82 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_arrival | proper_parity | used 0 dropped 82 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | arrival_side | used 2 dropped 80 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 0, 2]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | arrival_twin | used 2 dropped 80 | cells {'00': [0, 0, 0], '01': [2, 0, 2], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | taken_line | used 2 dropped 80 | cells {'00': [0, 0, 0], '01': [2, 0, 2], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | turned | used 2 dropped 80 | cells {'00': [2, 0, 2], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | link_frame | used 2 dropped 80 | cells {'00': [0, 0, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [2, 0, 2]} | S None q,r None S^2 None | None
+bell lambda_birth*int_arrival_inward | proper_parity | used 2 dropped 80 | cells {'00': [2, 0, 2], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | arrival_side | used 8 dropped 74 | cells {'00': [4, 4, 0], '01': [0, 0, 0], '10': [2, 2, 0], '11': [2, 2, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | arrival_twin | used 8 dropped 74 | cells {'00': [6, 6, 0], '01': [2, 2, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | taken_line | used 82 dropped 0 | cells {'00': [2, 2, 0], '01': [42, 42, 0], '10': [36, 36, 0], '11': [2, 2, 0]} | S [504, 252] q,r [2, 0] S^2 [254016, 63504] | at the local bound S^2 = 4
+bell Hbirth.Int_twin | turned | used 82 dropped 0 | cells {'00': [82, 82, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | link_frame | used 82 dropped 0 | cells {'00': [2, 2, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [80, 80, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Int_twin | proper_parity | used 82 dropped 0 | cells {'00': [2, 2, 0], '01': [2, 2, 0], '10': [2, 2, 0], '11': [76, 76, 0]} | S [152, 76] q,r [2, 0] S^2 [23104, 5776] | at the local bound S^2 = 4
+bell sense | arrival_side | used 8 dropped 74 | cells {'00': [4, 0, 4], '01': [0, 0, 0], '10': [2, 0, 2], '11': [2, 0, 2]} | S None q,r None S^2 None | None
+bell sense | arrival_twin | used 8 dropped 74 | cells {'00': [6, 0, 6], '01': [2, 0, 2], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sense | taken_line | used 82 dropped 0 | cells {'00': [2, 0, 2], '01': [42, 0, 42], '10': [36, 0, 36], '11': [2, 0, 2]} | S [-504, 252] q,r [-2, 0] S^2 [254016, 63504] | at the local bound S^2 = 4
+bell sense | turned | used 82 dropped 0 | cells {'00': [82, 0, 82], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sense | link_frame | used 82 dropped 0 | cells {'00': [2, 0, 2], '01': [0, 0, 0], '10': [0, 0, 0], '11': [80, 0, 80]} | S None q,r None S^2 None | None
+bell sense | proper_parity | used 82 dropped 0 | cells {'00': [2, 0, 2], '01': [2, 0, 2], '10': [2, 0, 2], '11': [76, 0, 76]} | S [-152, 76] q,r [-2, 0] S^2 [23104, 5776] | at the local bound S^2 = 4
+bell Hbirth.Htwin | arrival_side | used 8 dropped 74 | cells {'00': [4, 4, 0], '01': [0, 0, 0], '10': [2, 2, 0], '11': [2, 2, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | arrival_twin | used 8 dropped 74 | cells {'00': [6, 6, 0], '01': [2, 2, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | taken_line | used 82 dropped 0 | cells {'00': [2, 2, 0], '01': [42, 42, 0], '10': [36, 36, 0], '11': [2, 2, 0]} | S [504, 252] q,r [2, 0] S^2 [254016, 63504] | at the local bound S^2 = 4
+bell Hbirth.Htwin | turned | used 82 dropped 0 | cells {'00': [82, 82, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | link_frame | used 82 dropped 0 | cells {'00': [2, 2, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [80, 80, 0]} | S None q,r None S^2 None | None
+bell Hbirth.Htwin | proper_parity | used 82 dropped 0 | cells {'00': [2, 2, 0], '01': [2, 2, 0], '10': [2, 2, 0], '11': [76, 76, 0]} | S [152, 76] q,r [2, 0] S^2 [23104, 5776] | at the local bound S^2 = 4
+bell lambda_birth*lambda_arrival | arrival_side | used 8 dropped 74 | cells {'00': [4, 2, 2], '01': [0, 0, 0], '10': [2, 0, 2], '11': [2, 0, 2]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | arrival_twin | used 8 dropped 74 | cells {'00': [6, 2, 4], '01': [2, 0, 2], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | taken_line | used 8 dropped 74 | cells {'00': [2, 0, 2], '01': [4, 0, 4], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | turned | used 8 dropped 74 | cells {'00': [8, 2, 6], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | link_frame | used 8 dropped 74 | cells {'00': [2, 0, 2], '01': [0, 0, 0], '10': [0, 0, 0], '11': [6, 2, 4]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_arrival | proper_parity | used 8 dropped 74 | cells {'00': [2, 0, 2], '01': [0, 0, 0], '10': [0, 0, 0], '11': [6, 2, 4]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | arrival_side | used 8 dropped 74 | cells {'00': [4, 4, 0], '01': [0, 0, 0], '10': [2, 2, 0], '11': [2, 2, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | arrival_twin | used 8 dropped 74 | cells {'00': [6, 6, 0], '01': [2, 2, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | taken_line | used 82 dropped 0 | cells {'00': [2, 2, 0], '01': [42, 42, 0], '10': [36, 36, 0], '11': [2, 2, 0]} | S [504, 252] q,r [2, 0] S^2 [254016, 63504] | at the local bound S^2 = 4
+bell lambda_birth*lambda_twin | turned | used 82 dropped 0 | cells {'00': [82, 82, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | link_frame | used 82 dropped 0 | cells {'00': [2, 2, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [80, 80, 0]} | S None q,r None S^2 None | None
+bell lambda_birth*lambda_twin | proper_parity | used 82 dropped 0 | cells {'00': [2, 2, 0], '01': [2, 2, 0], '10': [2, 2, 0], '11': [76, 76, 0]} | S [152, 76] q,r [2, 0] S^2 [23104, 5776] | at the local bound S^2 = 4
+bell lambda_twin*lambda_arrival | arrival_side | used 8 dropped 74 | cells {'00': [4, 2, 2], '01': [0, 0, 0], '10': [2, 0, 2], '11': [2, 0, 2]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | arrival_twin | used 8 dropped 74 | cells {'00': [6, 2, 4], '01': [2, 0, 2], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | taken_line | used 8 dropped 74 | cells {'00': [2, 0, 2], '01': [4, 0, 4], '10': [2, 2, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | turned | used 8 dropped 74 | cells {'00': [8, 2, 6], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | link_frame | used 8 dropped 74 | cells {'00': [2, 0, 2], '01': [0, 0, 0], '10': [0, 0, 0], '11': [6, 2, 4]} | S None q,r None S^2 None | None
+bell lambda_twin*lambda_arrival | proper_parity | used 8 dropped 74 | cells {'00': [2, 0, 2], '01': [0, 0, 0], '10': [0, 0, 0], '11': [6, 2, 4]} | S None q,r None S^2 None | None
+bell sign_h_arrival | arrival_side | used 8 dropped 74 | cells {'00': [4, 2, 2], '01': [0, 0, 0], '10': [2, 0, 2], '11': [2, 2, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | arrival_twin | used 8 dropped 74 | cells {'00': [6, 2, 4], '01': [2, 2, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | taken_line | used 8 dropped 74 | cells {'00': [2, 0, 2], '01': [4, 4, 0], '10': [2, 0, 2], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | turned | used 8 dropped 74 | cells {'00': [8, 4, 4], '01': [0, 0, 0], '10': [0, 0, 0], '11': [0, 0, 0]} | S None q,r None S^2 None | None
+bell sign_h_arrival | link_frame | used 8 dropped 74 | cells {'00': [2, 0, 2], '01': [0, 0, 0], '10': [0, 0, 0], '11': [6, 4, 2]} | S None q,r None S^2 None | None
+bell sign_h_arrival | proper_parity | used 8 dropped 74 | cells {'00': [2, 2, 0], '01': [0, 0, 0], '10': [0, 0, 0], '11': [6, 2, 4]} | S None q,r None S^2 None | None
