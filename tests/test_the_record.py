@@ -67,6 +67,7 @@ def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
 
 @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
 def test_the_conservations_hold_on_the_record(name: str) -> None:
+    """The independent check: the conservations recomputed from the record's log alone, beside what rows 15, 17, 18 and the constants read."""
     run = loaded(name)
     births = [e for e in run["log"] if e["event"] == "birth"]
     signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
@@ -90,6 +91,12 @@ def test_the_hole_record_is_the_engines_own_bit_for_bit() -> None:
     assert timeless == [{k: v for k, v in r.items() if k != "milliseconds"} for r in committed["rows"]]
 
 
+@pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
+def test_the_committed_reading_is_the_decoders_own_whole(name: str) -> None:
+    """The whole reading beside the record equals a fresh read, line for line after JSON (the one check of every key, number, verdict, field and event)."""
+    assert [{k: v} for k, v in json.loads(json.dumps(gates(loaded(name)))).items()] == reading_of(name)
+
+
 def reading_of(name: str) -> list[dict[str, Any]]:
     """The committed reading beside the record, one JSON per line (the gates' output)."""
     lines = (RECORDS / f"{name}.reading.jsonl").read_text(encoding="utf-8").splitlines()
@@ -108,7 +115,6 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
         assert all(h[1] in (0, 1, 2) for h in line["held"])
     assert sum(len(line["turned"]) for line in run["nodes"]) == int(run["counts"]["turns"])
     events = next(line["events"] for line in reading_of(name) if "events" in line)
-    assert events == gates(run)["events"]
     labels = [e["label"] for e in events]
     assert "the run back exact" in labels
     clicks = (
