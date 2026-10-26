@@ -9,18 +9,18 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import gram, readings, run
-from event_universe.core import paces, rule3
-from event_universe.core.ports import PORTS, across
-from event_universe.core.rule3 import half, quotient
+from event_universe import close, draw, gram, readings, run
+from event_universe.core import acts, paces, rule3
+from event_universe.core.ports import AXES, PORTS, across
+from event_universe.core.rule3 import half, lattice, quotient, remainder
 from event_universe.features import volume
 from event_universe.links import links_of
 from event_universe.loader.world import read_world
 from event_universe.metric import stress_parts, tensor_parts
 from event_universe.node import Node
-from event_universe.rows import CARRIER, POTENTIAL, Line, walled_of, zeros
+from event_universe.rows import CARRIER, PLANE, POTENTIAL, Line, walled_of, zeros
+from event_universe.take import at_node, frame_nodes
 
-AXES = 3
 CONTROLS = ("control", "detectors")
 
 
@@ -31,6 +31,36 @@ def load_toy_world(path: str | Path) -> tuple[dict[str, Any], dict[str, Any]]:
     universe = json.loads((where.parent / world["universe"]).read_text(encoding="utf-8"))
     read_world({k: v for k, v in world.items() if k not in CONTROLS}, universe)
     return universe, world
+
+
+def read_number_folded(
+    node: Node, at: tuple[int, ...], rules: list[tuple[Line, rule3.Rule]], unit: int
+) -> tuple[int, int] | None:
+    """The one-Link read (draw.read_number) with the toy's folded digit under its key: every remainder's distance to the nearer edge of its wall, conjugation-even on every line alike (the toy's own reader since 2026-10-26, the engine's digit hook struck)."""
+    modulus = unit * sum(1 for r in node.records() if r.shape == PLANE)
+    nodes, digits, origin, coarse, w_half = frame_nodes(node, at), [], True, True, half(node.w)
+    for line, r in rules:
+        for k, n in enumerate(nodes):
+            wl, key = at_node(line.wall, n), (id(r), k, n)
+            if key not in node.lattices:
+                node.lattices[key] = (
+                    lattice(wl, at_node(r.mass, n), *[at_node(x, n) for x in r.reaches])
+                    if k == 0
+                    else lattice(wl, at_node(r.reaches[k - 1], n))
+                )
+            rem, wall = int(line.rem[n]), quotient(wl, f := node.lattices[key])
+            rem, values = min(rem, wall - rem), wall // 2 + 1
+            origin = origin and rem in (w_half, acts.mirror(w_half, node.w, 1))
+            coarse = coarse and values <= AXES
+            digits.append((quotient(rem, f), values + 1))
+    if origin or coarse:
+        node.counts["refused_origin"] += origin
+        return None
+    carry, room = 0, 1
+    for d, b in sorted(digits):
+        carry = remainder(carry * b + d, modulus)
+        room = min(room * b, modulus)
+    return carry, room
 
 
 class Toy(Node):
@@ -83,24 +113,46 @@ class Toy(Node):
         return d - self.cube if d > self.cube // 2 else d
 
     def read_lines(
-        self, held: list[list[Line]], plane_starts: list[list[Line]], c: Any, factors: tuple[Any, ...]
+        self, held: list[list[Line]], c: Any, factors: tuple[Any, ...]
     ) -> list[tuple[Line, rule3.Rule]]:
-        """The digit set: the former (the shape-4 and shape-10 rows' first lines after the step, the planes' lines at the start) under the key, else the engine's."""
+        """The digit set: the former (the shape-4 and shape-10 rows' first lines after the step, the planes' lines at the start, kept by the toy's click) under the key, else the engine's (the toy's own hook since 2026-10-26: the engine's read_lines takes no plane starts)."""
         if self.control.get("digits") != "former":
-            return super().read_lines(held, plane_starts, c, factors)
+            return super().read_lines(held, c, factors)
         rules = [
             (r.lines[0], self.rule_of(r, c, factors)) for r in (self.row(POTENTIAL), self.row(CARRIER))
         ]
         for rec, r in enumerate(self.records()):
-            rules += [(line, self.rule_of(r, c, factors)) for line in plane_starts[rec]]
+            rules += [(line, self.rule_of(r, c, factors)) for line in self.plane_starts_[rec]]
         return rules
 
-    def digit_of(self, rem: int, values: int) -> tuple[int, int]:
-        """The folded digit under the key: every remainder's distance to the nearer edge of its wall, conjugation-even on every line alike."""
-        if self.control.get("digits") != "folded":
-            return rem, values
-        wall = values  # the lattice's values, the wall over its step
-        return min(rem, wall - rem), wall // 2 + 1
+    def act_levels(
+        self,
+        lines: list[Line],
+        r: rule3.Rule,
+        turn: Any,
+        numerators: list[Any],
+        direction: int,
+        flux: list[Any] | None = None,
+        top: Any = None,
+        kept: list[Line] | None = None,
+    ) -> tuple[list[Line], list[Any], list[Line]]:
+        """The engine's act (node.act) with the stepped levels before the write returned beside it, the former interval's reading (the toy's own since 2026-10-26, the engine's act returning no levels)."""
+        starts = None if kept is None else [np.where(top, line.now, line.before) for line in lines]
+        found = lines if direction == -1 else self.rotate(lines, r, turn, direction, flux, starts)
+        if direction == -1:
+            for line, n in zip(found, numerators, strict=True):
+                if n is not None:
+                    self.write(line, n, direction)
+        levels = [line.now for line in found]
+        if direction == 1:
+            for line, n in zip(found, numerators, strict=True):
+                if n is not None:
+                    self.write(line, n, direction)
+        else:
+            found = self.rotate(found, r, turn, direction, flux, starts)
+        if kept is not None:
+            self.restore(found, kept, top)
+        return (lines if direction == 1 else found), levels, found
 
     def click(
         self,
@@ -109,7 +161,11 @@ class Toy(Node):
         direction: int = 1,
         frame: dict[str, Any] | None = None,
     ) -> None:
-        """The engine's close, then the detectors' reading (forward alone)."""
+        """The engine's close with the toy's digit hooks (the plane starts kept for the former digit set; the draw's reader the folded one under its key), then the detectors' reading (forward alone)."""
+        self.plane_starts_ = plane_starts
+        close.read_number = (
+            read_number_folded if self.control.get("digits") == "folded" else draw.read_number
+        )
         super().click(plane_starts, held, direction, frame)
         if not self.detectors or direction == -1:
             return
@@ -222,7 +278,9 @@ class Toy(Node):
                 numerators = [4 * x * (forms * self.trace * self.den * self.gamma**2 - trace * p02) * p0]
                 numerators += [traceless[a] * p02 for a in range(AXES)] + [None] * (r.shape - 1 - AXES)
             ends = (top, None if kept is None else kept[k])
-            start, levels, out[k] = self.act(rows[k], rule, turn, numerators, direction, flux, *ends)
+            start, levels, out[k] = self.act_levels(
+                rows[k], rule, turn, numerators, direction, flux, *ends
+            )
             if r.shape == POTENTIAL:
                 for kk in self.held_lines:  # the held line a constant: forward the pre-state's, backward the exchanged post-state's (the pre-state at a turned Node)
                     out[k][kk] = (held if kept is None else kept)[k][kk].copy()

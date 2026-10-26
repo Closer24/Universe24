@@ -29,7 +29,7 @@ def read_number(
                     if k == 0
                     else lattice(wl, at_node(r.reaches[k - 1], n))
                 )
-            rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f := node.lattices[key]))
+            rem, values = int(line.rem[n]), quotient(wl, f := node.lattices[key])
             origin = origin and rem in (w_half, acts.mirror(w_half, node.w, 1))
             coarse = coarse and values <= AXES
             digits.append((quotient(rem, f), values + 1))

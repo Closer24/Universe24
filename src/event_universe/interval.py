@@ -118,7 +118,7 @@ class Interval:
         k, flux = self.where[id(self.walled)], [self.cphi + self.cphi]
         rule, ends = node.rule_of(self.walled, self.c, self.factors), self.ends(self.walled)
         act = node.act(self.rows[k], rule, None, [None], self.direction, flux, *ends)
-        (phi_start,), _levels, self.out[k] = act
+        (phi_start,), self.out[k] = act
         count = readings.centred_count(node, self.cphi, phi_start)
         node.count_max = max(
             int(abs(int(x)))

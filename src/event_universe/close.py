@@ -329,7 +329,7 @@ def click(
     frozen = readings.frozen_of(node, c)
     factors = node.link_factors(None, frozen)
     r_emitter = node.rule_of(node.emitter(), c, factors)
-    rules = node.read_lines(held, plane_starts, c, factors)
+    rules = node.read_lines(held, c, factors)
     owns = []
     for rec, r in enumerate(node.records()):
         assert r.pair is not None

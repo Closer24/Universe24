@@ -219,8 +219,8 @@ class Node:
         flux: list[Any] | None = None,
         top: Any = None,
         kept: list[Line] | None = None,
-    ) -> tuple[list[Line], list[Any], list[Line]]:
-        """The Node's act on one row in the direction, one path (RW-S1): Rule3's rotate and the lines' writes taken in the direction's order, the rotate first forward and the write first backward, each at the direction (the former two branches kept by name). Returns the row at the start, the stepped levels before the write (read by the lean toy's former interval alone), and the row as the act leaves it; backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned."""
+    ) -> tuple[list[Line], list[Line]]:
+        """The Node's act on one row in the direction, one path (RW-S1): Rule3's rotate and the lines' writes taken in the direction's order, the rotate first forward and the write first backward, each at the direction (the former two branches kept by name). Returns the row at the start and the row as the act leaves it (the stepped levels before the write, read by no engine code, struck 2026-10-26: the lean toy spells its own act for its former interval); backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned."""
         starts = None if kept is None else [np.where(top, line.now, line.before) for line in lines]
 
         def rotate(found: list[Line]) -> list[Line]:
@@ -233,12 +233,10 @@ class Node:
             return found
 
         first, second = (rotate, write)[::direction]
-        found = first(lines)
-        levels = [line.now for line in found]
-        found = second(found)
+        found = second(first(lines))
         if kept is not None:
             self.restore(found, kept, top)
-        return (lines if direction == 1 else found), levels, found
+        return (lines if direction == 1 else found), found
 
     def restore(self, lines: list[Line], kept: list[Line], top: Any) -> None:
         """Backward at the turned Nodes `top`: the row set to `kept`, the pre-state the exchange returned (the inverse at a turned Node is no act)."""
@@ -307,15 +305,11 @@ class Node:
         return top
 
     def read_lines(
-        self, held: list[list[Line]], plane_starts: list[list[Line]], c: Any, factors: tuple[Any, ...]
+        self, held: list[list[Line]], c: Any, factors: tuple[Any, ...]
     ) -> list[tuple[Line, rule3.Rule]]:
         """The lines the one-Link read takes with their rules: every line of every row at the interval's start, alike."""
         rules = [self.rule_of(r, c, factors) for r in self.rows_]
         return [(line, rule) for rule, lines in zip(rules, held, strict=True) for line in lines]
-
-    def digit_of(self, rem: int, values: int) -> tuple[int, int]:
-        """One line's digit at a Node: its remainder on the lattice and the count of values the lattice holds (the identity; the lean toy's folded digit overrides it under its key)."""
-        return rem, values
 
     def run(self, direction: int = 1) -> None:
         """One interval of the Node's program in the direction (interval.run)."""
