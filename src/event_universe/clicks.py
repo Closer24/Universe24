@@ -186,22 +186,26 @@ def one_click_floor(record: Record) -> dict[str, Any]:
 
 
 def charge(record: Record) -> dict[str, Any]:
-    """Gate 17: the charge (each child's sense the sign of its own Wronskian at its Node, summed over the births; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name)."""
-    births = record.births
-    signs, sizes = record.signs_of(), sorted(record.laid_at_nothing())
+    """Gate 17: the charge (each child's own charge, its sense times half the quantum of action at a child's lay and 0 at an exact lay, Record.charges_of, summed over every birth, each pair opposite, a merger's two children 0 and 0 by MG-S1 and read by name; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name; a merger's birth (MG-S1, a pair at rest into light, the line carrying its takes per end) counted apart, the light's charge 0 and its reading row 24's)."""
+    mergers = [b for b in record.births if "takes" in b]
+    births = [b for b in record.births if "takes" not in b]
+    charges, signs = record.charges_of(), record.signs_of()
+    pair_signs = [
+        s for b, pair in zip(record.births, charges, strict=True) if "takes" not in b for s in pair
+    ]
+    sizes = sorted(record.laid_at_nothing())
     residue = sum(1 for b in births for stood in b.get("stood", [[0], [0]]) if any(stood))
-    sense_sum = sum(signs)
-    opposite = sum(
-        1
-        for b in births
-        if (b["W_children"][0] > 0) != (b["W_children"][1] > 0) and 0 not in b["W_children"]
+    sense_sum, summed = sum(signs), sum(a + c for a, c in charges)
+    opposite = sum(1 for a, c in charges if a * c < 0)
+    light = sum(
+        1 for b, pair in zip(record.births, charges, strict=True) if "takes" in b and pair == (0, 0)
     )
     verdict = (
         "NOT READ: no birth in the record"
-        if not births
-        else "SHOWN: the senses sum to 0"
-        if sense_sum == 0 and 0 not in signs
-        else "NOT SHOWN: the senses"
+        if not record.births
+        else "SHOWN: the senses sum to 0 over every birth, each pair opposite, each merger's children 0 and 0"
+        if sense_sum == 0 and 0 not in pair_signs and light == len(mergers)
+        else f"NOT SHOWN: the children's own charges sum to {summed} over the births, {len(mergers) - light} mergers with a charged child"
     ) + (
         "; the magnitude SHOWN: one |W| on every child laid where its plane stood at nothing"
         if sizes and sizes[0] == sizes[-1]
@@ -211,8 +215,9 @@ def charge(record: Record) -> dict[str, Any]:
     )
     return {
         "17 charge conservation": {
-            "senses sum over births (from the children's Wronskian signs)": sense_sum,
-            "children with W = 0": signs.count(0),
+            "senses sum over births (the children's own charges' signs)": sense_sum,
+            "children's own charges summed over every birth": summed,
+            "children with no charge (laid as light, the exact take at -1)": signs.count(0),
             "births with the two children at opposite signs": opposite,
             "the children's |W| least / largest where the plane stood at nothing (the charge's magnitude, one e for every row: MS-S1)": [
                 sizes[0],
@@ -221,6 +226,10 @@ def charge(record: Record) -> dict[str, Any]:
             if sizes
             else None,
             "children laid on a residue of their plane (W the Node's, not the lay's)": residue,
+            "mergers, a pair into light (MG-S1), and those whose two children carry 0 and 0": [
+                len(mergers),
+                light,
+            ],
             "at": births[0]["node"] if births else None,
             "verdict": verdict,
         }
@@ -228,17 +237,25 @@ def charge(record: Record) -> dict[str, Any]:
 
 
 def conservation_at_click(record: Record) -> dict[str, Any]:
-    """Gate 15: the conservation at the click, taken against booked over the births (the identity taken >= booked on every birth; the exact form is row 47)."""
+    """Gate 15: the conservation at the click, taken against booked over the births: where the birth carries the take's remainder (EX-S1, the remainder kept at the Node) the identity taken + the remainder before - the remainder after = booked on every birth, else the former identity taken >= booked (the exact form is row 47)."""
     births, (taken, booked) = record.births, record.takes_of()
-    exact = all(b["taken"] >= b["booked"] for b in births)
+    paid = [b for b in births if "remainder" in b]
+    identity = all(
+        b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] for b in paid
+    ) and all(b["taken"] >= b["booked"] for b in births if "remainder" not in b)
     return {
         "15 conservation at the click": {
             "births": len(births),
+            "births carrying the take's remainder (EX-S1)": len(paid),
             "taken per booked at the births (hundredths)": quot(taken, booked, HUNDRED),
             "verdict": "NOT READ: no birth in the record"
             if not births
+            else "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth (EX-S1)"
+            if identity and len(paid) == len(births)
+            else "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder (EX-S1), taken >= booked on the rest (the mergers' ends)"
+            if identity and paid
             else "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light)"
-            if exact
+            if identity
             else "NOT SHOWN",
         }
     }
@@ -340,10 +357,7 @@ def merger(record: Record) -> dict[str, Any]:
 
 def horizon_radiates(record: Record) -> dict[str, Any]:
     """Row 61: the horizon radiates (hp2's predicate, the Boss's 6408295798, the owner's word of 03:4x UTC: Hawking's radiation as nature looks in the clicks): after a Node's first freeze, a birth at that Node or at one of its six neighbours, and a credit two or more Links from every frozen Node (the radiation leaving the horizon); NOT READ with no frozen Node."""
-    first: dict[int, int] = {}
-    for line in record.nodes:
-        for at in line["frozen"]:
-            first.setdefault(at, int(line["i"]))
+    first = record.first_frozen()
     if not first:
         return {
             "61 the horizon radiates": {

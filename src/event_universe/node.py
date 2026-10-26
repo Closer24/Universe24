@@ -81,12 +81,13 @@ class Node:
         seed.lay_world(self, world.get("seed", []))
 
     def start_state(self) -> None:
-        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
+        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the take's remainder (EX-S1, born at 0), the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
         shape, nr = self.shape, len(self.records())
         self.standing = [zeros(shape) for _ in range(nr)]
         self.crossed = [zeros(shape) for _ in range(nr)]
         self.beats = [zeros(shape) for _ in range(nr)]
         self.proper, self.closes, self.interval = zeros(shape), zeros(shape), 0
+        self.take_rem = zeros(shape)
         self.log: list[dict[str, Any]] = []
         self.turns: list[tuple[int, int]] = []
         self.stack: list[dict[str, Any]] = []
@@ -100,6 +101,8 @@ class Node:
         self.start_odd: list[Any] = []
         self.stepped: list[list[Line]] = []
         self.lattices: dict[tuple[int, int, tuple[int, ...]], int] = {}
+        self.drawn: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
+        self.rotations: dict[tuple[int, int], int] = {}
 
         for line in self.row(CARRIER).lines[:1]:
             line.now[:], line.before[:] = self.gamma, self.gamma
@@ -187,22 +190,21 @@ class Node:
         flux: list[Any] | None,
         starts: list[Any] | None,
     ) -> list[Line]:
-        """Rule3's step of one row at every Node, the one function of a line: for each line the total S now - w before + SUM_j R_j m_j (+ the line's flux where the row carries its write inside the division), one carried division at the wall w per line. Backward the same act on the before slots with the division's direction -1."""
-        at = starts or [line.now if direction == 1 else line.before for line in lines]
+        """Rule3's step of one row at every Node, the one function of a line in either direction (RW-S1: the line's two slots one pair read reversed by the direction, (a, y) = (now, before) forward and (before, now) backward, the total S a - w y + SUM_j R_j m_j, the new level the quotient on the slot the direction names): for each line the total S now - w before + SUM_j R_j m_j (+ the line's flux where the row carries its write inside the division), one carried division at the wall w per line. Backward the same act on the before slots with the division's direction -1."""
+        pairs = [(line.now, line.before)[::direction] for line in lines]
+        at = starts or [a for a, _y in pairs]
         fluxes: list[Any] = flux or [0] * len(lines)
         totals = [
-            r.self_coefficient * a - (r.wall * line.before if direction == 1 else 0) + f + m
-            for line, a, f, m in zip(lines, at, fluxes, self.arrivals(at, r, turn), strict=True)
+            r.self_coefficient * a - r.wall * y + f + m
+            for (_a, y), a, f, m in zip(pairs, at, fluxes, self.arrivals(at, r, turn), strict=True)
         ]
         found = []
         for line, a, t in zip(lines, at, totals, strict=True):
             if direction == 1:
                 self.max_transient = max(self.max_transient, bits_of(t))
             quotient, rem = carried_division(t, r.wall, line.rem, direction)
-            if direction == 1:
-                found.append(Line(quotient, line.now, rem, line.wall, line.wr, line.wwall))
-            else:
-                found.append(Line(a, quotient - line.now, rem, line.wall, line.wr, line.wwall))
+            now, before = (quotient, a)[::direction]
+            found.append(Line(now, before, rem, line.wall, line.wr, line.wwall))
         return found
 
     def write(self, line: Line, numerator: Any, direction: int) -> None:
@@ -221,35 +223,25 @@ class Node:
         top: Any = None,
         kept: list[Line] | None = None,
     ) -> tuple[list[Line], list[Any], list[Line]]:
-        """The Node's act on one row in the direction: Rule3's rotate of the row then its lines' writes (forward); the writes undone then the rotate inverted (backward). Returns the row at the start, the stepped levels before the write, and the row as the act leaves it; backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned."""
-        if direction == 1:
-            stepped = self.rotate(lines, r, turn, 1, flux, None)
-            levels = [line.now for line in stepped]
-            for line, n in zip(stepped, numerators, strict=True):
-                if n is not None:
-                    self.write(line, n, 1)
-            return lines, levels, stepped
+        """The Node's act on one row in the direction, one path (RW-S1): Rule3's rotate and the lines' writes taken in the direction's order, the rotate first forward and the write first backward, each at the direction (the former two branches kept by name). Returns the row at the start, the stepped levels before the write, and the row as the act leaves it; backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned."""
         starts = None if kept is None else [np.where(top, line.now, line.before) for line in lines]
-        for line, n in zip(lines, numerators, strict=True):
-            if n is not None:
-                self.write(line, n, -1)
-        levels = [line.now for line in lines]
-        start = self.rotate(lines, r, turn, -1, flux, starts)
-        if kept is not None:
-            self.restore(start, kept, top)
-        return start, levels, start
 
-    def carried(
-        self,
-        lines: list[Line],
-        r: rule3.Rule,
-        numerators: list[Any],
-        direction: int,
-        top: Any,
-        kept: list[Line] | None,
-    ) -> list[Line]:
-        """The carrier's act: its one division with the write sourced by the riding rows (the act of every row, the carrier's by this name so that a hand may hold it)."""
-        return self.act(lines, r, None, numerators, direction, None, top, kept)[-1]
+        def rotate(found: list[Line]) -> list[Line]:
+            return self.rotate(found, r, turn, direction, flux, starts)
+
+        def write(found: list[Line]) -> list[Line]:
+            for line, n in zip(found, numerators, strict=True):
+                if n is not None:
+                    self.write(line, n, direction)
+            return found
+
+        first, second = (rotate, write)[::direction]
+        found = first(lines)
+        levels = [line.now for line in found]
+        found = second(found)
+        if kept is not None:
+            self.restore(found, kept, top)
+        return (lines if direction == 1 else found), levels, found
 
     def restore(self, lines: list[Line], kept: list[Line], top: Any) -> None:
         """Backward at the turned Nodes `top`: the row set to `kept`, the pre-state the exchange returned (the inverse at a turned Node is no act)."""
@@ -293,8 +285,14 @@ class Node:
                 if line.wr is not None:
                     line.wr = np.where(top, mirrored(h.wr, line.wwall, 1), line.wr)
 
-    def swap(self, held: list[list[Line]], frozen: Any = None) -> Any:
-        """The swap at the top: the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), a frozen Node never (BH-S1); the turned Node ends the interval at the state it started from, exchanged and complemented."""
+    def swap(
+        self, held: list[list[Line]], frozen: Any = None, direction: int = 1, top: Any = None
+    ) -> Any:
+        """The swap at the top, in the direction (RW-S1; backward the exchange of the turned Nodes `top` from the frame, the former Interval's own exchange kept by name): the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), a frozen Node never (BH-S1); the turned Node ends the interval at the state it started from, exchanged and complemented."""
+        if direction == -1:
+            if top.any():
+                self.exchange(top, held)
+            return top
         k = self.rows_.index(self.row(CARRIER))
         x0, x1, x2 = held[k][0].before, held[k][0].now, self.row(CARRIER).lines[0].now
         peak = np.vectorize(
@@ -350,19 +348,21 @@ class Node:
     def step_back(self) -> None:
         self.run(-1)
 
+    def arrays(self) -> list[Any]:
+        """Every level and remainder of the state, the lines' arrays in the acts' order."""
+        lines = self.all_lines()
+        found = [a for line in lines for a in (line.now, line.before, line.rem)]
+        return found + [line.wr for line in lines if line.wr is not None]
+
     def census(self) -> tuple[int, int]:
         """The count of integer arrays the Node holds and the largest bit length among their values."""
-        lines = self.all_lines()
-        arrays = [a for line in lines for a in (line.now, line.before, line.rem)]
-        arrays += [line.wr for line in lines if line.wr is not None]
-        arrays += self.standing + self.crossed + self.beats + [self.proper, self.closes]
+        arrays = self.arrays() + self.standing + self.crossed + self.beats + [self.proper, self.closes]
+        arrays.append(self.take_rem)
         return len(arrays), max(bits_of(a) for a in arrays)
 
     def state_bytes(self) -> bytes:
         """Every level and remainder of the state as text bytes, the run back's comparison bit for bit."""
-        lines = self.all_lines()
-        arrays = [a for line in lines for a in (line.now, line.before, line.rem)]
-        arrays += [line.wr for line in lines if line.wr is not None]
+        arrays = [*self.arrays(), self.take_rem]
         return " ".join(str(int(v)) for a in arrays for v in a.reshape(-1)).encode()
 
     def state_hash(self) -> str:
