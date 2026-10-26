@@ -302,10 +302,11 @@ def bell(record: Record) -> dict[str, Any]:
         e[0] - e[1] + e[2] + e[3],
         sum(b["W_children"][0] * b["W_children"][1] < 0 for b in record.births),
     )
+    n = len(pairs)
     verdict = (
-        "SHOWN as nature: S^2 > 8 at the pairs' clicks"
-        if s * s > PAIR * QUARTERS * len(pairs) ** PAIR
-        else f"NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = {s} / {len(pairs)} (the law's bound by the one-Link reach, every end's outcome a function of its own Node; the senses' E = -1 SHOWN on {opposite} of {len(record.births)} births)"
+        f"SHOWN as nature: 4 < S^2 <= 8 at the pairs' clicks, S = {s} / {n} (above the local bound 2, within Tsirelson's 2 sqrt 2)"
+        if QUARTERS * n * n < s * s <= PAIR * QUARTERS * n * n
+        else f"NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = {s} / {n} (every outcome a function of its own Node, the setting the reader's and in no integer of the Node; nature's band 4 < S^2 <= 8, S = -14 / 5 at the cosines 3/5 and 4/5; the senses' E = -1 SHOWN on {opposite} of {len(record.births)} births)"
     )
     return {
         "56 Bell": {
