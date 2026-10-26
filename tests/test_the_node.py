@@ -216,7 +216,7 @@ def test_the_files_are_refused_by_name() -> None:
         ("at its quanta", {"seed": [{"lay": "wave", "row": 0}]}),  # no form of the law before CS5-S2
         ("the plane at the gap 0 alone", {"seed": [{"lay": "sea", "row": 1}]}),
         (
-            "half-width 2 or 3",
+            "half-width 1 (the one Node), 2 or 3",
             {"seed": [{"lay": "at", "row": 1, "centre": [1, 1, 1], "quanta": 1, "width": 4}]},
         ),
     ):

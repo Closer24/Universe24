@@ -128,7 +128,7 @@ The owner's question of 2026-10-26, 00:29 UTC, through the Boss (#2187 comment 6
 | UNIT_WEIGHT | 3 | core/rule3.py unit_of (the plane's unit 3 T s) | the law's literal with its clause (the conventions' row 12) | typed; whether it is AXES (w div 2 = 3 den Gamma^2 G^2) for the Boss to say before it is written so |
 | link_wall(gamma) | 4 Gamma | links.py (the decoder imports it) | the law's literal with its clause (the sign's Link phase at the tangent half-angle triple) | typed; twice the phase unit if the Boss confirms, then written as the sum |
 | share_weight(gamma, unit) | 2 Gamma^3 G^2, the take's weight; gram's wall its double | core/rule3.py | the law's own, derived | the doubling by the sum, the engine's convention |
-| HALF_WIDTHS | (2, 3) | seed.py (the raised cosine's envelope) | the law's literal with its clause (the seed's lays) | declared (the two widths the law admits); DOUBLED_COSINE by width derived from them |
+| HALF_WIDTHS | (1, 2, 3) | seed.py (the raised cosine's envelope) | the law's literal with its clause (the seed's lays) | declared (the two widths the law admits); DOUBLED_COSINE by width derived from them |
 | The arithmetic's own: half's 2, odd's 2, the root's second neighbour | 2, 2, s + 2 | core/rule3.py | the arithmetic's own | no derivation owed; the law's "div 2" |
 | MIL and HUNDRED and THOUSAND | 1,000,000; 100; 1,000 | decoder.py (run.py imports THOUSAND) | a reader's unit | a convention of reading (parts per million, hundredths, thousandths; a centroid in thousandths of a Link, a clock in milliseconds) |
 | FEW, SPANS | 10; 20 | decoder.py | a reader's unit | a convention of reading (the fewest credits for the dilation's halves, the fewest spans for the lengthening's) |

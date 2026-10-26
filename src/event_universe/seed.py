@@ -18,7 +18,11 @@ from event_universe.wave import lay_cycle
 if TYPE_CHECKING:
     from event_universe.node import Node
 
-HALF_WIDTHS = (2, 3)  # the envelope's half widths the raised cosine knows (the lay's `width`)
+HALF_WIDTHS = (
+    1,
+    2,
+    3,
+)  # the envelope's half widths the raised cosine knows (the lay's `width`; 1 the one Node, a born pair's own form)
 FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
     "sea": frozenset({"lay", "row", "quanta", "sense"}),
     "hole": frozenset({"lay", "at"}),
@@ -92,9 +96,11 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
 
 
 def raised_cosine(h: int) -> tuple[int, ...]:
-    """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer, at h = 2 (0) and h = 3 (1) and at no other width: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 (the weights 2, 1 and 4, 3, 1); another width refused by name."""
+    """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer, at h = 1 (-2, the one Node at the crest's weight 4: a born pair's own form laid from a file, the Boss's 6414464356), h = 2 (0) and h = 3 (1) and at no other width: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 (the weights 2, 1 and 4, 3, 1); another width refused by name."""
     if h not in HALF_WIDTHS:
-        raise ValueError("a plane packet has the half-width 2 or 3: a body is laid over its packet")
+        raise ValueError(
+            "a packet has the half-width 1 (the one Node), 2 or 3: a body is laid over its packet"
+        )
     doubled = [1 + 1, h - 1 - 1]
     while len(doubled) < h:
         *_, before, last = doubled
