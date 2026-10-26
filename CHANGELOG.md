@@ -4,7 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
-- Three duplicate clauses struck from docs/ALGEBRA.md's head under the owner's rule of 07:1x UTC (SL-S2, SL-S3 and CS6-S1 stood twice; the body's spellings kept, the head's replaced by pointers), row 186.
+- Three duplicate clauses struck from docs/ALGEBRA.md's head under the owner's rule of 07:1x UTC (the clauses SL-S2 and SL-S3 and CS6-S1 stood twice; the body's spellings kept, the head's replaced by pointers), row 186.
 - The owner's standing priority of 2026-10-26, 07:1x UTC (unifications, cleaning, generic solutions and bugs first; everything else when free) at the ledger's head, in the Scribe's method as item (8) and in docs/HIGHLIGHTS.md; David's fold of the confirm's departures 5f4878f5f read whole, rows 177 and 189.
 - CA-S1, the direction is the slot, law by the owner's word of 2026-10-26, 07:04 UTC, written under The direction in docs/ALGEBRA.md with the comparison's sentence exactly (the former clause and RW-S1 kept by name), CA-S2 the finding beside it, the owner's words of 06:38 and 07:04 in docs/HIGHLIGHTS.md and rows 188 and 190.
 - CA-S1 (the direction is the slot) as a candidate clause held for the owner's word and CA-S2 the finding under The direction in docs/ALGEBRA.md, the group 96 named; rows 170, 177 and 190 (the Reader's one road walked at reader-5 21525c6, David's merge c845abf5d, the Boss's kit hand).
