@@ -61,4 +61,4 @@ def run_back_exact(node: Node, n: int) -> int:
     for _ in range(n):
         kept.append(state_of(node))
         node.step()
-    return sum(state_of(node) == kept[n - 1 - k] for k in range(n) if not node.step_back())
+    return sum(state_of(node) == kept[n - 1 - k] for k in range(n) if not node.step(-1))

@@ -1,4 +1,4 @@
-"""The close, the Node's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every row's rule, the gap-0 plane's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`: every Link once from its +a end, both ends holding a whole quantum of the record, the + child at the end the record's current flows into where the twist is right-handed, the conjugate pair's selector for a record with a gap, the one-Link read of a number at that end), the lays refused by name (`refuse`), the births taken and laid (`births`: the birth's one take per Node from the gap-0 row, the merger's one take per end from the taken row, SL-S2), the bodies' closing (bodies.py); the lay, the exact take and the momentum they book; the close undone from the log at the direction -1 (`click`)."""
+"""The close, the Node's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every row's rule, the gap-0 plane's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`: every Link once from its +a end, both ends holding a whole quantum of the record, the + child at the end the record's current flows into where the twist is right-handed, the conjugate pair's selector for a record with a gap, the one-Link read of a number at that end), the lays refused by name (`refuse`), the births taken and laid (`births`: the birth's one take per Node from the gap-0 row, the merger's one take per end from the taken row, SL-S2, every take the one act at a list of ends, merger.takes, CR-S2), the bodies' closing (bodies.py); the lay, the exact take and the momentum they book; the close undone from the log at the direction -1 (`click`)."""
 
 from __future__ import annotations
 
@@ -16,11 +16,9 @@ from event_universe.links import cross, row_current, row_twist
 from event_universe.merger import (
     child_at,
     light_children,
-    read_ends,
     summed,
     takes,
     walls_of,
-    write_ends,
 )
 from event_universe.rows import PLANE, Line
 from event_universe.take import lay, move, neighbour
@@ -112,7 +110,7 @@ def meet(
 def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
     """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) pass both, the birth read at -1 (MG-S1). Returns the births kept."""
     records = node.records()
-    inverse = [k for k in born if records[k.rec].gap and records[k.line_pair].gap == 0]
+    inverse = [k for k in born if records[k.line_pair] is node.emitter() is not records[k.rec]]
     kept = []
     for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
         if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
@@ -156,12 +154,19 @@ def births(
         if row is not node.emitter():
             for kid in kids:
                 ends = list(zip((kid.minus, kid.plus), walls[Birth(at, *kid, rec)], strict=True))
-                read = read_ends(node, ends, rule, 1, rec, refused, shares)
-                drawn = None if read is None else read_number(node, at, reads, node.units[rec])
-                if read is None or drawn is None:
+                drawn: list[Any] = []
+
+                def draw(
+                    at: tuple[int, ...] = at, unit: int = node.units[rec], into: list[Any] = drawn
+                ) -> Any:
+                    into.append(read_number(node, at, reads, unit))
+                    return into[-1]
+
+                got = takes(node, ends, rule, 1, rec, draw, shares)
+                if got is None:
                     continue
-                kid = Kid(kid.line_pair, kid.minus, kid.plus, drawn[1])
-                taken.append((at, rec, [kid], summed(write_ends(node, read, rec))))
+                kid = Kid(kid.line_pair, kid.minus, kid.plus, drawn[-1][1])
+                taken.append((at, rec, [kid], summed(got)))
                 shares.clear()
             continue
         got = takes(
@@ -300,7 +305,7 @@ def click(
     owns = []
     for rec, r in enumerate(node.records()):
         assert r.pair is not None
-        owns.append(node.share(plane_starts[rec], node.rule(r.pair, c, factors)))
+        owns.append(gram.share(node, plane_starts[rec], node.rule(r.pair, c, factors)))
     born = [
         b
         for rec in range(len(node.records()))

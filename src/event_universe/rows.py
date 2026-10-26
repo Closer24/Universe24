@@ -65,7 +65,7 @@ class Line:
 def write_walls(
     shape: int, pair: tuple[int, int] | None, den: int, gamma: int, action: int, trace: int
 ) -> list[Any]:
-    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls at the file's trace weight (rule3.held_wall at the powers POWER_TIME 4 of the time line and POWER_AXIS 2 of the nine axis lines, K-S1 to K-S3, Y-S1), the shape-4 row's four lines T, the plane at the universe's own pair (den, den), the emitter, its first line T (the lay of W-S1), another plane none."""
+    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls at the file's trace weight (TW-S1, the owner's word of 2026-10-26, 07:5x UTC: the trace's weight is the universe file's integer, dimensionless, 6 in nature's files, the one value with a sentence in nature, light having no trace; 54 the records' value of 2026-10-25 kept by name, ga2's file at it until its re-lay; rule3.held_wall at the powers POWER_TIME 4 of the time line and POWER_AXIS 2 of the nine axis lines, K-S1 to K-S3, Y-S1), the shape-4 row's four lines T, the plane at the universe's own pair (den, den), the emitter, its first line T (the lay of W-S1), another plane none."""
     if shape == CARRIER:
         powers = (POWER_TIME, *[POWER_AXIS] * (shape - 1))
         return [held_wall(trace, den, gamma, action, p) for p in powers]
