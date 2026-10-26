@@ -54,7 +54,7 @@ class Side:
     def undecided(self, gamma: int, size: int) -> list[int]:
         """The contents through the size where the half lies within one of N, rounded(N - 1) != rounded(N + 1) at the resolution Gamma^2: none at a certified Gamma."""
         self.reach(gamma, size)
-        found, scaled, carry = [], gamma**3, int(half(self.wall))
+        found, scaled, carry = [], gamma * gamma * gamma, int(half(self.wall))
         for content in range(size + 1):
             if rounded(scaled - 1, gamma * gamma) != rounded(scaled + 1, gamma * gamma):
                 found.append(content)
@@ -66,8 +66,8 @@ class Side:
 def sides(gamma: int) -> tuple[Side, Side]:
     """The table at one Gamma, the hollows' side and the hills', each starting at N_0 = Gamma^3 with its remainder at the half wall, the hollows by Gamma - 1 over Gamma per content and the hills by Gamma over Gamma - 1."""
     return (
-        Side(gamma - 1, gamma, gamma**3, int(half(gamma))),
-        Side(gamma, gamma - 1, gamma**3, int(half(gamma - 1))),
+        Side(gamma - 1, gamma, gamma * gamma * gamma, int(half(gamma))),
+        Side(gamma, gamma - 1, gamma * gamma * gamma, int(half(gamma - 1))),
     )
 
 
@@ -78,7 +78,7 @@ def certified(gamma: int) -> int:
     undecided = sides(gamma)[0].undecided(gamma, frozen)
     if undecided:
         raise ValueError(
-            f"the clock at Gamma {gamma} is undecided at the contents {undecided[:3]}: the paces are refused"
+            f"the clock at Gamma {gamma} is undecided at the contents {undecided[0]}: the paces are refused"
         )
     return frozen
 

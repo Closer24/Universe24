@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core.ports import AXES, PORTS, across, wrap
-from event_universe.core.rule3 import quotient, signed_quotient
+from event_universe.core.ports import AXES, PORTS, across, port_of, wrap
+from event_universe.core.rule3 import half, quotient, share_weight, signed_quotient
 from event_universe.links import gradient
 from event_universe.quartet import quartet
 from event_universe.readings import pair_angle
@@ -34,8 +34,8 @@ def rotation(shape: int) -> Matrix:
     if shape == QUARTET:
         return quartet().J
     found = [[0] * shape for _ in range(shape)]
-    for p in range(quotient(shape, 2)):
-        found[2 * p][2 * p + 1], found[2 * p + 1][2 * p] = -1, 1
+    for p in range(quotient(shape, PLANE)):
+        found[PLANE * p][PLANE * p + 1], found[PLANE * p + 1][PLANE * p] = -1, 1
     return found
 
 
@@ -56,7 +56,7 @@ def axes(shape: int) -> list[Matrix]:
 
 def scale(shape: int, gamma: Any) -> Any:
     """The row's scale on the rule and the walls: 2 x 6 Gamma for the quartet, so that the term's coefficient R / (2 Gamma) summed over the six Ports enters as the integer SUM_j R_j (SR-S3, sr1's form); 1 for every other shape."""
-    return 2 * PORTS * gamma if shape == QUARTET else 1
+    return (PORTS + PORTS) * gamma if shape == QUARTET else 1
 
 
 def matvec(m: Matrix, xs: list[Any]) -> list[Any]:
@@ -100,8 +100,8 @@ def current(shape: int, nows: list[Any], frames: list[Any]) -> list[Any]:
     gj = matmul(gram(shape), rotation(shape))
     found = []
     for a in range(AXES):
-        up = conjugated(shape, [across(n, 2 * a) for n in nows], frames[2 * a])
-        down = conjugated(shape, [across(n, 2 * a + 1) for n in nows], frames[2 * a + 1])
+        up = conjugated(shape, [across(n, port_of(a, 0)) for n in nows], frames[port_of(a, 0)])
+        down = conjugated(shape, [across(n, port_of(a, 1)) for n in nows], frames[port_of(a, 1)])
         found.append(form(gj, [u - d for u, d in zip(up, down, strict=True)], nows))
     return found
 
@@ -115,8 +115,8 @@ def density(shape: int, nows: list[Any]) -> list[Any]:
 def curl(odd: list[Any]) -> list[Any]:
     """The one-Link curl of the shape-4 row's odd lines at the Node, Phi_a = d_b A_c - d_c A_b with d_b the centred difference through the two Ports of the axis b."""
     return [
-        gradient(odd[wrap(a + 2, AXES)], wrap(a + 1, AXES))
-        - gradient(odd[wrap(a + 1, AXES)], wrap(a + 2, AXES))
+        gradient(odd[wrap(a - 1, AXES)], wrap(a + 1, AXES))
+        - gradient(odd[wrap(a + 1, AXES)], wrap(a - 1, AXES))
         for a in range(AXES)
     ]
 
@@ -157,7 +157,7 @@ def share(node: Node, lines: list[Line], r: Any) -> Any:
             strict=True,
         )
     ]
-    wall = 4 * node.gamma * node.gamma * node.gamma * node.G * node.G
+    wall = share_weight(node.gamma, node.G) + share_weight(node.gamma, node.G)
     found = zeros(node.shape)
     for o, s in zip(own, shared, strict=True):
         found = found + np.asarray(division_forward((o + o - s) * node.start_x, wall, 0)[0])
@@ -199,7 +199,7 @@ def cosine_count(node: Node, p: int, d: int) -> int:
         high = high + high
     low = 0
     while high - low > 1:
-        middle = quotient(low + high, 2)
+        middle = half(low + high)
         if pair_angle(node, middle)[0] * d > p * node.X:
             low = middle
         else:
@@ -219,7 +219,7 @@ def period(node: Node, lines: list[Line], standing: Any) -> Any:
         if d == 0 or p >= d or p <= -d:
             continue
         n = cosine_count(node, p, d)
-        k = 2
+        k = 1
         while not (
             pair_angle(node, k * n)[0] >= pair_angle(node, (k - 1) * n)[0]
             and pair_angle(node, k * n)[0] >= pair_angle(node, (k + 1) * n)[0]

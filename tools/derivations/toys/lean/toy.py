@@ -17,7 +17,7 @@ from event_universe.features import volume
 from event_universe.links import links_of, stress_parts, tensor_parts
 from event_universe.loader.world import read_world
 from event_universe.node import Node
-from event_universe.rows import CARRIER, POTENTIAL, TRACE, Line, walled_of, zeros
+from event_universe.rows import CARRIER, POTENTIAL, Line, walled_of, zeros
 
 AXES = 3
 CONTROLS = ("control", "detectors")
@@ -231,7 +231,7 @@ class Toy(Node):
                     out[k] = rows[k]
                     continue
                 x, p02 = at(r.lines[0]), p0 * p0
-                numerators = [4 * x * (forms * TRACE * self.den * self.gamma**2 - trace * p02) * p0]
+                numerators = [4 * x * (forms * self.trace * self.den * self.gamma**2 - trace * p02) * p0]
                 numerators += [traceless[a] * p02 for a in range(AXES)] + [None] * (r.shape - 1 - AXES)
             ends = (top, None if kept is None else kept[k])
             start, levels, out[k] = self.act(rows[k], rule, turn, numerators, direction, flux, *ends)

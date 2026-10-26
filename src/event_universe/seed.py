@@ -9,7 +9,7 @@ import numpy as np
 from event_universe import gram
 from event_universe.core.paces import odd_rounded, sine_den
 from event_universe.core.ports import AXES, wrap
-from event_universe.core.rule3 import largest_below, quotient, remainder
+from event_universe.core.rule3 import half, largest_below, odd, quotient
 from event_universe.links import turn_pair
 from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
 from event_universe.wave import lay_cycle
@@ -17,6 +17,7 @@ from event_universe.wave import lay_cycle
 if TYPE_CHECKING:
     from event_universe.node import Node
 
+HALF_WIDTHS = (2, 3)  # the envelope's half widths the raised cosine knows (the lay's `width`)
 FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
     "sea": frozenset({"lay", "row", "quanta", "sense"}),
     "hole": frozenset({"lay", "at"}),
@@ -91,18 +92,19 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
 
 def raised_cosine(h: int) -> tuple[int, ...]:
     """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer, at h = 2 (0) and h = 3 (1) and at no other width: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 (the weights 2, 1 and 4, 3, 1); another width refused by name."""
-    if h not in (2, 3):
+    if h not in HALF_WIDTHS:
         raise ValueError("a plane packet has the half-width 2 or 3: a body is laid over its packet")
-    doubled = [2, h - 2]
+    doubled = [1 + 1, h - 1 - 1]
     while len(doubled) < h:
-        doubled.append(doubled[1] * doubled[-1] - doubled[-2])
-    return tuple(2 + t for t in doubled[:h])
+        *_, before, last = doubled
+        doubled.append(doubled[1] * last - before)
+    return tuple(1 + 1 + t for t in doubled[:h])
 
 
 def offsets(h: int, half_tops: tuple[int, ...]) -> list[tuple[int, ...]]:
     """Every offset of the envelope about the centre, along each axis from -(h - 1 + its half top) to h - 1 + its half top."""
     reach = [h - 1 + t for t in half_tops]
-    return [tuple(j[a] - reach[a] for a in range(AXES)) for j in np.ndindex(*(2 * r + 1 for r in reach))]
+    return [tuple(j[a] - reach[a] for a in range(AXES)) for j in np.ndindex(*(r + r + 1 for r in reach))]
 
 
 def envelope_of(
@@ -125,8 +127,8 @@ def circle_point(den: int, h: int) -> tuple[int, int]:
     if abs(h) > den:
         raise ValueError(f"a wave number beyond the band's edge: |h| {abs(h)} above den {den}")
     return (
-        int(odd_rounded(den * den - 2 * h * h, den)),
-        int(odd_rounded(2 * h * largest_below(den * den - h * h), den)),
+        int(odd_rounded(den * den - (h + h) * h, den)),
+        int(odd_rounded((h + h) * largest_below(den * den - h * h), den)),
     )
 
 
@@ -168,7 +170,7 @@ def phases_of(
 
 def running_rotation(num: int, den: int, points: list[tuple[int, int]]) -> tuple[int, int]:
     """The band's rotation at the wave number (the kinetic clause): den cos omega(k) = (num SUM_a den cos k_a) div (3 den) and its sine by the one search (paces.sine_den's form); the row's own pair (num, s) at the wave 0, (den, 0) for the massless row there, the double root with no rotation."""
-    cosine = int(quotient(num * sum(c for c, _s in points), 3 * den))
+    cosine = int(quotient(num * sum(c for c, _s in points), AXES * den))
     return cosine, sine_den(cosine, den)
 
 
@@ -217,7 +219,7 @@ def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
         high = high + high
     low = 0
     while high - low > 1:
-        middle = int(quotient(low + high, 2))
+        middle = int(half(low + high))
         if share_at_node(node, row, uniform_levels(node, row, middle, sense), rule) <= target:
             low = middle
         else:
@@ -268,7 +270,7 @@ def fitted(
         high = high + high
     low = 0
     while high - low > 1:
-        middle = int(quotient(low + high, 2))
+        middle = int(half(low + high))
         if share_of(middle) <= target:
             low = middle
         else:
@@ -283,12 +285,12 @@ def wave_of(
     assert row.pair is not None
     if len(wave) != AXES:
         raise ValueError("a wave number is three integers, one per axis")
-    if top < 1 or remainder(top, 2) == 0 or top + 2 * (h - 1) > node.cube:
+    if top < 1 or not odd(top) or top + (h - 1) + (h - 1) > node.cube:
         raise ValueError(
             "a top is an odd count of Nodes about the centre that fits the board with its edges"
         )
     largest = max(abs(x) for x in wave)
-    half_tops = tuple(int(quotient(top - 1, 2)) if abs(x) == largest else 0 for x in wave)
+    half_tops = tuple(int(half(top - 1)) if abs(x) == largest else 0 for x in wave)
     points = [circle_point(node.den, int(x)) for x in wave]
     rotation = running_rotation(row.pair[0], node.den, points)
     if rotation[1] == 0:

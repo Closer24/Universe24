@@ -11,16 +11,17 @@ PORT_SIDES = tuple((axis, side) for axis in range(AXES) for side in (1, -1))  # 
 
 
 def shifted(a: Any, axis: int, sigma: int) -> Any:
-    """The array shifted by one Link toward `sigma` on `axis` through the wrap, out[i] = a[i + sigma]; the array itself on a folded axis of extent one."""
+    """The array shifted by one Link toward `sigma` on `axis` through the wrap, out[i] = a[i + sigma]; the array itself on a folded axis of extent one (`arrival`, the level arriving through the Port, is this shift)."""
     extent = a.shape[axis]
-    if extent == 1:
-        return a
-    return a.take([(index + sigma) % extent for index in range(extent)], axis=axis)
+    return a if extent == 1 else a.take([(index + sigma) % extent for index in range(extent)], axis=axis)
 
 
-def arrival(a: Any, axis: int, sigma: int) -> Any:
-    """The level arriving through the Port toward `sigma` on `axis`, out[i] = a[i + sigma] (`shifted`), on the torus; the dtype the array's."""
-    return shifted(a, axis, sigma)
+arrival = shifted
+
+
+def port_of(axis: int, side: int) -> int:
+    """The Port of an axis and a side (0 the + side, 1 the - side), SIDES * axis + side: the inverse of PORT_SIDES, the one spelling of a Port's index."""
+    return SIDES * axis + side
 
 
 def wrap(index: int, extent: int) -> int:

@@ -1,0 +1,10 @@
+keys ['G', 'T', 'counts', 'cube', 'den', 'gamma', 'gapped', 'intervals', 'log', 'nodes', 'planes', 'rows', 'run_back', 'turns', 'universe', 'world']
+turns [[110, 64], [331, 64]]
+counts {'births': '64', 'taken': '215649578622176003919808', 'booked': '215312393244131723991552', 'body_clicks': '1408', 'laid_back': '1408', 'refused_stop': '1408', 'refused_origin': '0', 'refused_lay': '17088', 'refused_orientation': '33280', 'refused_twist': '17152', 'refused_sense': '0', 'turns': '128', 'met': '67584', 'laid': '0', 'laid_nodes': '0'}
+run_back {'intervals': 10, 'exact': 10}
+log entries 70401 log[0] {"event": "lay", "i": 0, "node": null, "line_pair": 2, "quanta": 5, "amplitude": 300, "share": 32751770599682760240000, "unit": 1637588529984138012000, "nodes": 64, "sense": 1, "p1": [0, 0, 1, 1, 2, 2, 3, 3, 1, 1, 0, 0, 3, 3, 2, 2], "cz": 1, "mirror": 0}
+births by interval Counter()
+events [('refused', 68928), ('credit', 1408), ('birth', 64), ('lay', 1)]
+births by interval {2: 64}
+nodes entries 450
+X = Gamma at every Node at [218, 442]
