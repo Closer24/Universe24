@@ -1,0 +1,291 @@
+--- a/src/event_universe/close.py
++++ b/src/event_universe/close.py
+@@ -5,11 +5,18 @@
+ from typing import TYPE_CHECKING, Any, NamedTuple
+ 
+ import numpy as np
++import os
++
++CP1_FORM = os.environ.get("CP1_FORM", "")  # cp1's flag: empty is the head bit for bit
++WAVE_0 = (0, 0, 0)  # the wave number of a packet at rest (one 0 per axis)
+ 
+ from event_universe import gram, readings
++from event_universe import seed as seed_module
++from event_universe.links import turn_pair
++from event_universe.core.rule3 import largest_below, signed_quotient
+ from event_universe.bodies import bodies
+ from event_universe.core import rule3
+-from event_universe.core.ports import AXES, across, port_of
++from event_universe.core.ports import AXES, across, port_of, wrap
+ from event_universe.core.rule3 import quotient, remainder
+ from event_universe.links import cross, row_current, row_twist
+ from event_universe.rows import PLANE, Line
+@@ -119,6 +126,7 @@
+ def births(node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...]) -> set[tuple[int, ...]]:
+     """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid by one exact take at its own end (`merger_take`, SL-S2: the birth read at -1); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
+     by_node: dict[tuple[tuple[int, ...], int], list[Kid]] = {}
++    cp1_close["rule"], cp1_close["amplitude"], cp1_close["read"] = {}, {}, (c, factors)
+     for at, s, minus, plus, room, rec in kept:
+         by_node.setdefault((at, rec), []).append(Kid(s, minus, plus, room))
+     walls = {k: walls_of(node, k.line_pair, k.minus, k.plus, c, factors) for k in kept}
+@@ -134,6 +142,7 @@
+                 if got is not None:
+                     taken.append((at, rec, [kid], got))
+             continue
++        waves = waves_of(node, at, kids, walls, rule, rec, c, factors) if CP1_FORM == "1" else None
+         booked = sum(sum(walls[Birth(at, *kid, rec)]) for kid in kids)
+         one = take_at(node, at, booked, rule, len(kids), rec)
+         if one is None:
+@@ -141,6 +150,8 @@
+         levels, fall, now, before, k = one
+         node.closes[at] -= 1
+         take = take_line(fall, booked, levels, now, before, node.last_dp, k)
++        if waves is not None:
++            take["waves"] = waves
+         taken.append((at, rec, kids, take))
+     touched: set[tuple[int, ...]] = set()
+     for at, rec, kids, take in taken:
+@@ -202,7 +213,7 @@
+ 
+ 
+ def walls_of(
+-    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], c: Any, factors: tuple[Any, ...]
++    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], c: Any, factors: tuple[Any, ...], waves: tuple[tuple[int, ...], tuple[int, ...]] = (WAVE_0, WAVE_0)
+ ) -> tuple[int, int]:
+     """Each child's wall (MS-S1): the share its lay adds to its plane on the board in the carrier's unit, read by laying the - child, then the + child, reading after each and taking both back; the birth's walls their sum."""
+     row = node.records()[s]
+@@ -213,6 +224,14 @@
+         return int(sum(int(x) for x in node.share(row.lines, rule).reshape(-1)))
+ 
+     before = total()
++    if CP1_FORM == "1":
++        packet_at(node, s, minus, -1, wave=waves[0])
++        middle = total()
++        packet_at(node, s, plus, 1, wave=waves[1])
++        after = total()
++        packet_at(node, s, plus, 1, -1, wave=waves[1])
++        packet_at(node, s, minus, -1, -1, wave=waves[0])
++        return middle - before, after - middle
+     child_at(node, s, minus, -1)
+     middle = total()
+     child_at(node, s, plus, 1)
+@@ -222,6 +241,151 @@
+     return middle - before, after - middle
+ 
+ 
++cp1_close: dict[str, Any] = {"rule": {}, "amplitude": {}}
++
++
++def packet_levels(
++    node: Node, s: int, where: tuple[int, ...], sense: int, wave: tuple[int, ...], amplitude: int | None = None
++) -> tuple[list[Line], int, list[tuple[tuple[int, ...], tuple[int, ...]]]]:
++    """cp1: the child as the seed's own packet (seed.lay_packet's forms, nothing of its own): the raised cosine's envelope of the least half-width the seed knows about the Link's end, at rest at the wave 0 (seed.rest_record, the rest lay) or moving at the wave number (MV-S1: seed.wave_of, seed.phases_of, the level before at the band's rotation), at the largest amplitude whose share summed over the packet is at most one quantum of the child's unit at the close's rule (seed.fitted's search, cached per close) where none is given; returns the lines over the board, the amplitude and the envelope's Nodes with their offsets from the centre."""
++    row = node.records()[s]
++    assert row.pair is not None
++    h, vector, half_tops, pairs = seed_module.HALF_WIDTHS[0], [1, 0], (0,) * AXES, None
++    if any(wave):
++        half_tops, points, rotation = seed_module.wave_of(node, row, h, tuple(wave), 1)
++    envelope, w0 = seed_module.envelope_of(node, where, h, half_tops)
++    if any(wave):
++        phases = seed_module.phases_of(node, where, h, half_tops, points)
++        pairs = (phases, turn_pair(phases[0], phases[1], rotation[0], rotation[1], node.den))
++    if amplitude is None:
++        key = (s, where, tuple(wave))
++        if key not in cp1_close["amplitude"]:
++            rule = cp1_close["rule"].get(s)
++            if rule is None:
++                c, factors = cp1_close.get("read", (node.content(), node.link_factors()))
++                rule = cp1_close["rule"][s] = node.rule(row.pair, c, factors)
++            cp1_close["amplitude"][key] = cp1_fitted(node, row, envelope, w0, node.units[s], vector, pairs, rule)
++        amplitude = cp1_close["amplitude"][key]
++    lines = seed_module.rest_record(node, row, envelope, w0, amplitude, sense, vector, pairs)
++    nodes = [
++        (off, tuple(wrap(where[a] + off[a], node.cube) for a in range(AXES)))
++        for off in seed_module.offsets(h, half_tops)
++    ]
++    return lines, amplitude, nodes
++
++
++def cp1_fitted(node: Node, row: Any, envelope: Any, w0: int, target: int, vector: list[int], pairs: Any, rule: Any) -> int:
++    """seed.fitted at the close's rule (the same search by comparisons, doubling then halving)."""
++
++    def share_of(amplitude: int) -> int:
++        lines = seed_module.rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
++        return seed_module.packet_share(node, row, lines, rule)
++
++    high = 1
++    while share_of(high) <= target:
++        high = high + high
++    low = 0
++    while high - low > 1:
++        middle = int(rule3.half(low + high))
++        if share_of(middle) <= target:
++            low = middle
++        else:
++            high = middle
++    return low
++
++
++def packet_at(
++    node: Node, s: int, where: tuple[int, ...], sense: int, sign: int = 1, wave: tuple[int, ...] = WAVE_0, amplitude: int | None = None
++) -> tuple[list[int], list[int], int, int, int]:
++    """cp1: one child laid as a packet at one end, Node by Node by the one lay act (take.lay) in the envelope's order (reversed with the sign -1), each Node's momentum booked by the law's reading at that Node (take.momentum_of: the one-Node act); returns the booked momentum summed, its moment about the packet's centre (the offset times the momentum booked at the Node), the packet's charge (the Wronskian's change summed over its Nodes), the amplitude and the Nodes' count."""
++    row = node.records()[s]
++    re, im = row.lines
++    assert row.pair is not None
++    num = row.pair[0]
++    lines, amplitude, nodes = packet_levels(node, s, where, sense, wave, amplitude)
++    dp, moment, charge = [0] * AXES, [0] * AXES, 0
++    for off, at in (nodes if sign == 1 else list(reversed(nodes))):
++        levels = (int(lines[0].now[at]), int(lines[0].before[at]), int(lines[1].now[at]), int(lines[1].before[at]))
++        d_re = momentum_of(node, re.now, re.before, at, d_now=sign * levels[0], d_before=sign * levels[1], num=num)
++        d_im = momentum_of(node, im.now, im.before, at, d_now=sign * levels[2], d_before=sign * levels[3], num=num)
++        w_was = int(cross(re.now[at], im.now[at], re.before[at], im.before[at]))
++        lay(node, s, at, levels, sign)
++        charge += int(cross(re.now[at], im.now[at], re.before[at], im.before[at])) - w_was
++        booked = [a + b for a, b in zip(d_re, d_im, strict=True)]
++        dp = [a + b for a, b in zip(dp, booked, strict=True)]
++        moment = [a + b for a, b in zip(moment, cross3(list(off), booked), strict=True)]
++    return dp, moment, charge, amplitude, len(nodes)
++
++
++def cross3(r: list[int], p: list[int]) -> list[int]:
++    """The moment r x p, the law's bilinear (links.cross) on each pair of axes."""
++    return [cross(r[1], r[2], p[1], p[2]), cross(r[2], r[0], p[2], p[0]), cross(r[0], r[1], p[0], p[1])]
++
++
++def pair_momentum(node: Node, kid: Kid, waves: tuple[tuple[int, ...], tuple[int, ...]]) -> list[int]:
++    """cp1: the two packets' booked momentum read by a trial lay of both, taken back (the exact read of what the lay books)."""
++    dp = [0] * AXES
++    for where, sense, wave in ((kid.minus, -1, waves[0]), (kid.plus, 1, waves[1])):
++        d = packet_at(node, kid.line_pair, where, sense, wave=wave)[0]
++        dp = [a + b for a, b in zip(dp, d, strict=True)]
++    for where, sense, wave in ((kid.plus, 1, waves[1]), (kid.minus, -1, waves[0])):
++        packet_at(node, kid.line_pair, where, sense, -1, wave=wave)
++    return dp
++
++
++def waves_of(
++    node: Node, at: tuple[int, ...], kids: list[Kid], walls: dict[Any, tuple[int, int]], rule: rule3.Rule, rec: int, c: Any, factors: tuple[Any, ...]
++) -> dict[Kid, tuple[tuple[int, ...], tuple[int, ...]]]:
++    """cp1: the packets' wave numbers per kid from the predicted recoil of the take of the walls (fall_of read, nothing written; momentum_of of the predicted levels on the taken line): the taker's packet (the end at the take's Node) carries the whole recoil, the far end's packet is at rest (the letter: the far packet's transverse momentum would turn about the taker's Node by the Link's arm, so J closes at every centre only with it at 0); per axis the wave number is the carried division of the residual by the packet's momentum per unit of the wave number read by a trial lay (the secant over a bump of the wave's own size), within the band's half (|h|^2 <= den^2 div 2, where the lattice momentum rises with the wave number), carried to its fixed point with the walls re-read at every pass (MS-S1: the lay books what the take pays)."""
++    row = node.records()[rec]
++    assert row.pair is not None
++    found = {kid: (WAVE_0, WAVE_0) for kid in kids}
++    cap = largest_below(int(quotient(node.den * node.den, 2)))
++    best: dict[Kid, tuple[int, tuple[tuple[int, ...], tuple[int, ...]]]] = {}
++    for _pass in range(AXES + AXES):
++        booked = sum(sum(walls[Birth(at, *kid, rec)]) for kid in kids)
++        levels, _fall, k = fall_of(node, at, booked, rule, row)
++        if levels is None:
++            return found
++        z = row.lines[k]
++        toward = 1 if int(z.before[at]) > int(z.now[at]) else -1
++        residual = [-x for x in momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=row.pair[0])]
++        before = dict(found)
++        for kid in kids:
++            end = 0 if kid.minus == at else 1
++            base = pair_momentum(node, kid, found[kid])
++            left = [r - b for r, b in zip(residual, base, strict=True)]
++            norm = sum(abs(x) for x in left)
++            if kid not in best or norm < best[kid][0]:
++                best[kid] = (norm, found[kid])
++            w = list(found[kid][end])
++            for a in range(AXES):
++                bump = max(abs(w[a]) // (AXES + AXES + AXES - 1), cap // (AXES + AXES)) if w[a] else int(rule3.half(cap))  # the secant's bump: the band's quarter from rest (the lattice momentum unresolved at the levels of one quantum near the wave 0), a ninth of the wave after
++                trial = list(w)
++                trial[a] = max(-cap, min(cap, trial[a] + bump))
++                if trial[a] == w[a]:
++                    trial[a] = w[a] - bump
++                waves = list(found[kid])
++                waves[end] = tuple(trial)
++                gain = pair_momentum(node, kid, (waves[0], waves[1]))[a] - base[a]
++                if gain:
++                    w[a] = max(-cap, min(cap, w[a] + int(signed_quotient(left[a] * (trial[a] - w[a]), gain))))
++            waves = list(found[kid])
++            waves[end] = tuple(w)
++            found[kid] = (waves[0], waves[1])
++            residual = [r - b for r, b in zip(residual, pair_momentum(node, kid, found[kid]), strict=True)]
++            walls[Birth(at, *kid, rec)] = walls_of(node, kid.line_pair, kid.minus, kid.plus, c, factors, found[kid])
++        if found == before:
++            break
++    for kid in kids:
++        if best[kid][1] != found[kid]:
++            base = pair_momentum(node, kid, found[kid])
++            if sum(abs(r - b) for r, b in zip(residual, base, strict=True)) > best[kid][0]:
++                found[kid] = best[kid][1]
++                walls[Birth(at, *kid, rec)] = walls_of(node, kid.line_pair, kid.minus, kid.plus, c, factors, found[kid])
++    return found
++
++
+ def child_at(node: Node, s: int, where: tuple[int, ...], sense: int, sign: int = 1) -> list[int]:
+     """One child laid at one end at the charge T div 2 at the quarter turn (MS-S1: re_now A, im_before sense B, A B = T div 2, the same two integers for every row), its lay's momentum booked and returned; taken back with the sign -1."""
+     row = node.records()[s]
+@@ -235,17 +399,30 @@
+ 
+ 
+ def child_laid(
+-    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...]
+-) -> tuple[list[int], list[int], list[list[int]]]:
++    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], waves: tuple[tuple[int, ...], tuple[int, ...]] | None = None
++) -> tuple[list[int], list[int], list[list[int]], dict[str, Any]]:
+     """The two children laid by the one lay act (`child_at`: the - child at the - end, the + child at the + end); returns the lays' momentum, each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the plane's four levels at each Node before the lay (the residue)."""
+     re, im = node.records()[s].lines
+     stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
+     dp_lay = [0, 0, 0]
++    if waves is not None:
++        ends, moments, charges, amplitudes, counts = [], [], [], [], []
++        for where, sense, wave in ((minus, -1, waves[0]), (plus, 1, waves[1])):
++            dp, moment, charge, amplitude, count = packet_at(node, s, where, sense, wave=wave)
++            ends.append(dp)
++            moments.append(moment)
++            charges.append(charge)
++            amplitudes.append(amplitude)
++            counts.append(count)
++            for a, d in enumerate(dp):
++                dp_lay[a] += d
++        extra = {"waves": [list(w) for w in waves], "dP_lay_ends": ends, "moment_ends": moments, "amplitude_packets": amplitudes, "packet_nodes": counts}
++        return dp_lay, charges, stood, extra
+     for where, sense in ((minus, -1), (plus, 1)):
+         for a, d in enumerate(child_at(node, s, where, sense)):
+             dp_lay[a] += d
+     senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
+-    return dp_lay, senses, stood
++    return dp_lay, senses, stood, {}
+ 
+ 
+ def children(
+@@ -254,7 +431,8 @@
+     """One take's children laid (`child_laid`), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last), a merger's two ends' takes under `takes`. Returns the Nodes touched."""
+     touched = {at}
+     for s, minus, plus, room in kids:
+-        dp_lay, w_children, stood = child_laid(node, s, minus, plus)
++        waves = None if "waves" not in take else take["waves"].get(Kid(s, minus, plus, room), (WAVE_0, WAVE_0))
++        dp_lay, w_children, stood, extra = child_laid(node, s, minus, plus, waves)
+         touched |= {minus, plus}
+         node.counts["births"] += 1
+         node.closes[at] += 1
+@@ -284,6 +462,7 @@
+                 "dP_take": take["dP_take"],
+                 "dP_lay": dp_lay,
+                 **({"takes": take["takes"]} if "takes" in take else {}),
++                **extra,
+             }
+         )
+     return touched
+@@ -327,8 +506,13 @@
+         at = tuple(entry["node"])
+         if entry["event"] == "birth":
+             s, (a, b) = entry["line_pair"], entry["amplitude"]
+-            lay(node, s, tuple(entry["minus"]), (a, 0, 0, -b), -1)
+-            lay(node, s, tuple(entry["plus"]), (a, 0, 0, b), -1)
++            if "waves" in entry:
++                for where, sense, wave, amplitude in zip(("plus", "minus"), (1, -1), reversed(entry["waves"]), reversed(entry["amplitude_packets"]), strict=True):
++                    lines, _amplitude, _nodes = packet_levels(node, s, tuple(entry[where]), sense, tuple(wave), amplitude)
++                    lay(node, s, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)), -1)
++            else:
++                lay(node, s, tuple(entry["minus"]), (a, 0, 0, -b), -1)
++                lay(node, s, tuple(entry["plus"]), (a, 0, 0, b), -1)
+         if entry["event"] in ("birth", "credit"):
+             row = entry.get("taken_row", rec0)
+             for take in entry.get("takes", [entry]):
