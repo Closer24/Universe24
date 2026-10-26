@@ -19,12 +19,8 @@ from event_universe.node import Node
 from event_universe.rows import CARRIER
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
-CUBE, INTERVALS, GROUPS, ALIKE = (
-    5,
-    20,
-    4,
-    (6, 0, 0, 0),
-)  # rotations alike per part: GP-S1 (6, 6, 6, 6 under CK-S1 even)
+# rotations alike per part: the trace 6 (6, 0, 0, 0 under GP-S1 at the trace 54; 6, 6, 6, 6 under CK-S1 even)
+CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (3, 0, 0, 0)
 COUNTED = ("births", "laid_back", "refused_stop")  # the counts the EQ-S1 test reads per world
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
@@ -219,7 +215,7 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
         assert run_back_exact(kept, 10) == 10
     assert found["world_pair_3.json"] == ({4: 27, 6: 27, 8: 27}, 0, 81, 0)
     assert (
-        found["world_hole.json"][1:3] == (10, 0) and sum(found["world_hole.json"][0].values()) == 56
+        found["world_hole.json"][1:3] == (15, 0) and sum(found["world_hole.json"][0].values()) == 489
     )  # 10 births under EX-S1, 16 before
 
 
@@ -469,9 +465,18 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
     for _ in range(10):
         node.step()
     lines = node.row(CARRIER).lines
-    assert len(lines) == 1 + 3 * AXES and node.census() == (99, 115)  # 98 before EX-S1
+    assert len(lines) == 1 + 3 * AXES and node.census() == (99, 112)  # 115 bits at the trace 54
     flux, shears = lines[1 + AXES : 1 + 2 * AXES], lines[1 + 2 * AXES :]
-    assert all(int(x) == 0 for line in (*flux, *shears) for x in line.now.reshape(-1))
+    # TW-S1, the trace 6: every one of the six lines reaches levels within three by 10 (none reached at the trace 54, every line at 0)
+    assert [sum(1 for x in line.now.reshape(-1) if int(x)) for line in (*flux, *shears)] == [
+        45,
+        42,
+        42,
+        20,
+        48,
+        20,
+    ]
+    assert all(abs(int(x)) <= 3 for line in (*flux, *shears) for x in line.now.reshape(-1))
     assert all(any(int(x) != line.wwall // 2 for x in line.wr.reshape(-1)) for line in (*flux, *shears))
     assert node.counts["turns"] > 0 and node.counts["births"] > 0
 
