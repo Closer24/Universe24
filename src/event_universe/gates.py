@@ -17,6 +17,7 @@ from event_universe.decoder import (
     PAIR,
     WIDTH,
     Record,
+    cause_of,
     kind_of,
     quot,
     unread_words,
@@ -353,6 +354,9 @@ def gates(run: dict[str, Any]) -> dict[str, Any]:
     record = Record(run)
     read = [(row, row(record)) for row in TABLE]
     out = {key: found for _row, rows in read for key, found in rows.items()}
+    for key, found in out.items():
+        found["kind"], found["cause"] = kind_of(found["verdict"]), cause_of(found["verdict"])
+        found["label"], found["phenomenon"] = events.label_of(key), events.phenomenon_of(key)
     out["the decoder"] = {
         "floats used": 0,
         "rows of the gates of the phenomena": len(TABLE),
@@ -365,6 +369,7 @@ def gates(run: dict[str, Any]) -> dict[str, Any]:
         ],
     }
     out["events"] = events.first_shown(record, read)
+    out["the eras"] = events.eras_of(out, record.intervals)
     return out
 
 

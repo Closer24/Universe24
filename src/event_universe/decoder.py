@@ -57,6 +57,15 @@ def kind_of(verdict: str) -> str:
     return next((kind for kind in KINDS if words.startswith(kind)), f"{NOT} READ")
 
 
+def cause_of(verdict: str) -> str:
+    """The verdict's own words after its kind, the cause where not SHOWN, one clause."""
+    words = verdict.split(": ", 1)[1] if verdict.startswith(RESTATED) else verdict
+    kind = kind_of(verdict)
+    if words.startswith(kind):
+        words = words[len(kind) :]
+    return words.strip(" :;").split(";")[0].strip()
+
+
 def unread_words(why: str, predicate: str) -> str:
     """The verdict of a row the record cannot carry: NOT READ, why, and the predicate it would be read by; the one form of the words."""
     return f"{NOT} READ: {why}; the predicate: {predicate}"

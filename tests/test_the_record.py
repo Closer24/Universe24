@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from event_universe.gates import gates, kind_of
+from event_universe.gates import gates
 from event_universe.run import record
 from tests.laws import ROOT, load_file, world_of
 
@@ -54,7 +54,7 @@ def loaded(name: str) -> dict[str, Any]:
 @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
 def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
-    kinds = {int(k[:2]): kind_of(v["verdict"]) for k, v in found.items() if k[:2].strip().isdigit()}
+    kinds = {int(k[:2]): v["kind"] for k, v in found.items() if k[:2].strip().isdigit()}
     assert len(kinds) == 60
     assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
     assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == {14, 34}  # the horizon
@@ -126,16 +126,15 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
 def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_path: Path) -> None:
     tool = load_file("phenomena", ROOT / "tools" / "phenomena.py")
     readings = {name: tool.reading_of(RECORDS / f"{name}.reading.jsonl") for name in SHOWN_ROWS}
-    whole = {
-        g for rows in readings.values() for g, r in rows.items() if tool.kind_of(r["verdict"]) == "SHOWN"
-    }
+    whole = {g for rows in readings.values() for g, r in rows.items() if r["kind"] == "SHOWN"}
     table = tool.table_of("test", readings, {})
     rows = [
         line
         for line in table.splitlines()
         if line.startswith("| ") and line.split("|")[2].strip().isdigit()
     ]
-    assert len(rows) == tool.ROWS and all(tool.PHENOMENA[k] in rows[k - 1] for k in tool.PHENOMENA)
+    names = {g: r["phenomenon"] for rows in readings.values() for g, r in rows.items()}
+    assert len(rows) == tool.ROWS and all(names[k] in rows[k - 1] for k in names)
     assert (
         whole <= set.union(*SHOWN_ROWS.values())
         and f"SHOWN in Universe24: {len(whole)} of {tool.ROWS} on test" in table
