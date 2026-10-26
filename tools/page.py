@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch) up to the record's largest, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row, the reading's event lines as labels at their interval and at their Node with a leader from the Node, a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes touch), the board's size the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a burst with its label at the first interval and at every interval where the board stands at its zero and rises again, read from the Node lines' X alone, a turned Node filled in the turn's colour for its interval, the turned and the frozen Nodes marked, the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading names (each bang, the era of matter, the acceleration) and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body bound at its Node as a steady ring where one line clicks there across a long span, the play holding a second on every new label and then running at a quarter pace for four seconds, a big round play button and the page's look its tokens' (the board a card, the controls pills, the labels glass), a legend line under the controls, the reading's event lines as labels at their interval and at their Node with a leader from the Node and a glyph per gate beside the label (a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node at the click of its interval where one stands (the click the gate first showed at), else at the board's foot, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -7,7 +7,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
-BOUND = 4 * 1024 * 1024  # the Node lines' bytes on the page, under the branch's bound per file
+MEBIBYTE = 1024 * 1024  # a mebibyte, the unit of the branch's bound per file
+BOUND = 4 * MEBIBYTE  # the Node lines' bytes on the page, under the branch's bound of 5 per file
 LEVELS = 25  # the current's levels on a Link above zero, one letter each
 DIGITS = "0123456789abcdefghijklmnopqrstuvwxyz"
 
@@ -16,34 +17,48 @@ TOKENS = """
   --wall: #d7dae0; --forward: #4ade80; --back: #f59e0b; --hole: #ffffff; --focus: #5f97ea; --label: #fde68a;
   --tones: #f472b6, #22d3ee, #a3e635, #fb923c, #c084fc, #facc15, #38bdf8, #f87171;
   --font: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace; color-scheme: dark; }
-html, body { margin: 0; background: var(--bg); color: var(--fg); font: 14px var(--font); }
-#head { padding: 8px 16px 4px; color: var(--muted); font-family: var(--mono); font-size: 11px; white-space: pre-wrap; }
+html, body { margin: 0; background: radial-gradient(1200px 700px at 50% -10%, #171c26 0%, var(--bg) 60%); color: var(--fg); font: 14px var(--font); }
+#title { padding: 14px 20px 0; font-size: 22px; font-weight: 700; letter-spacing: 0.3px; }
+#title small { margin-left: 12px; color: var(--muted); font-size: 13px; font-weight: 400; }
+#head { padding: 4px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 11px; white-space: pre-wrap; opacity: 0.85; }
 #stage { position: relative; }
-#board { display: block; margin: 0 auto; background: var(--board); border: 1px solid var(--line); }
-#bar { position: relative; height: 44px; margin: 8px 16px 4px; background: var(--panel); border: 1px solid var(--line); cursor: pointer; overflow: visible; }
-#bar .tick { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--label); }
+#board { display: block; margin: 0 auto; background: radial-gradient(circle at 50% 45%, #0c0f14 0%, var(--board) 70%); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), inset 0 0 80px rgba(95, 151, 234, 0.06); }
+#bar { position: relative; height: 70px; margin: 12px 20px 6px; background: linear-gradient(180deg, #1a1e26, var(--panel)); border: 1px solid var(--line); border-radius: 12px; cursor: pointer; overflow: visible; }
+#bar .era { position: absolute; top: 0; bottom: 0; pointer-events: none; border-radius: 12px; }
+#bar .tick { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--label); opacity: 0.9; }
 #bar .name { position: absolute; font-size: 10px; color: var(--label); font-family: var(--mono); white-space: nowrap; padding-left: 4px; pointer-events: none; }
-#bar .bang { position: absolute; bottom: 1px; font-size: 10px; color: var(--muted); font-family: var(--mono); }
-#bar #cursor { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--focus); }
-#row { display: flex; gap: 12px; align-items: center; margin: 0 16px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
-button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 3px 10px; font: inherit; cursor: pointer; }
+#bar .birth { position: absolute; bottom: 1px; font-size: 10px; color: var(--muted); font-family: var(--mono); }
+#bar #cursor { position: absolute; top: -4px; bottom: -4px; width: 3px; background: var(--focus); border-radius: 2px; box-shadow: 0 0 12px var(--focus), 0 0 24px rgba(95, 151, 234, 0.6); }
+#row { display: flex; gap: 14px; align-items: center; margin: 4px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
+button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 8px 16px; font: inherit; cursor: pointer; border-radius: 999px; transition: background 0.15s, transform 0.1s; }
+button:hover { background: #222733; } button:active { transform: scale(0.97); }
+#play { width: 64px; height: 64px; padding: 0; border: none; border-radius: 50%; background: linear-gradient(135deg, var(--focus), #22d3ee); box-shadow: 0 8px 28px rgba(95, 151, 234, 0.45); display: inline-flex; align-items: center; justify-content: center; }
+#play .tri { width: 0; height: 0; border-left: 24px solid var(--board); border-top: 14px solid transparent; border-bottom: 14px solid transparent; margin-left: 6px; }
+#play .bars { display: none; width: 8px; height: 28px; background: var(--board); box-shadow: 14px 0 0 var(--board); margin-right: 14px; }
+body.playing #play .tri { display: none; } body.playing #play .bars { display: block; }
+#where { font-size: 13px; color: var(--fg); }
+#legend { margin: 0 20px 14px; color: var(--muted); font-family: var(--mono); font-size: 11px; opacity: 0.8; }
 #labels { position: absolute; left: 0; top: 0; pointer-events: none; }
-.label { position: absolute; color: var(--label); font-family: var(--mono); font-size: 13px; text-shadow: 0 0 4px #000, 0 0 4px #000; white-space: nowrap; }
-.label small { display: block; color: var(--muted); font-size: 11px; }
+.label { position: absolute; color: var(--label); font-family: var(--mono); font-size: 15px; font-weight: 600; white-space: nowrap; background: rgba(12, 14, 18, 0.72); backdrop-filter: blur(6px); border: 1px solid rgba(253, 230, 138, 0.25); border-left: 3px solid var(--label); border-radius: 8px; padding: 5px 10px 6px 10px; max-width: 420px; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); }
+.label small { display: block; color: var(--muted); font-size: 11px; font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
 a { color: var(--focus); }
 """
 
 SCRIPT = """
 const D = JSON.parse(document.getElementById("data").textContent);
+const MS = 1000, BASE = 36;  // a second in milliseconds (the ticks' pace); the base of the Node lines' words
 const c = D.cube, G = D.gamma, N = D.intervals;
 const canvas = document.getElementById("board"), ctx = canvas.getContext("2d");
 const stage = document.getElementById("stage"), labels = document.getElementById("labels"), cursor = document.getElementById("cursor");
 const bar = document.getElementById("bar"), where = document.getElementById("where");
 const head = document.getElementById("head"), row = document.getElementById("row");
-const size = Math.max(320, Math.min(window.innerWidth - 32, window.innerHeight - head.offsetHeight - bar.offsetHeight - row.offsetHeight - 40));
+const titleBox = document.getElementById("title"), legendBox = document.getElementById("legend");
+const size = Math.max(320, Math.min(window.innerWidth - 40, window.innerHeight - titleBox.offsetHeight - head.offsetHeight - bar.offsetHeight - row.offsetHeight - legendBox.offsetHeight - 64));
 canvas.width = size; canvas.height = size;
-function words(s) { return s.split(" ").map(w => parseInt(w, 36)); }
+function words(s) { return s.split(" ").map(w => parseInt(w, BASE)); }
 function levels(s) { return Array.from(s, ch => ch === "." ? 0 : (ch >= "a" ? ch.charCodeAt(0) - 96 : 64 - ch.charCodeAt(0))); }
+const unravel = i => [Math.floor(i / (c * c)), Math.floor(i / c) % c, i % c];
+D.clicks = D.clicks.map(k => ({i: k[0], at: k[1], node: unravel(k[1]), line: k[2], levels: k[3], from: k[4] < 0 ? null : k[4], children: k[5] ? k[5] : null}));
 const lines = D.nodes.map(l => ({i: l.i, X: words(l.X), content: words(l.content), turned: l.turned, frozen: l.frozen, held: l.held, current: l.current.map(levels)}));
 const n = lines.length;
 let t = 1, playing = true, speed = 6;
@@ -57,12 +72,12 @@ function place(x, y, z, grow) {
 function length(X) { return Math.pow(Math.max(X, 1) / G, 0.25); }
 function stretch(X) { return Math.max(length(X) - 1, 0); }
 function meanStretch(line) { let sum = 0; for (const X of line.X) sum += stretch(X); return sum / line.X.length; }
-const stretches = lines.map(meanStretch), most = Math.max(...stretches, 1e-9), full = canvas.width / (c + 1.5), touch = 5 / full, unit = (1 - touch) / most;
+const stretches = lines.map(meanStretch), most = Math.max(...stretches, 1e-9), full = canvas.width / (c + 1.5), touch = 5 / full;
 const bangs = [lines[0].i];
 for (let k = 1; k + 1 < n; k++) if (stretches[k] <= stretches[k - 1] && stretches[k] < stretches[k + 1] && 10 * stretches[k] < most) bangs.push(lines[k].i);
 let spots = [];
 function lay(line) {
-  const gaps = line.X.map(X => touch + unit * stretch(X));
+  const mean = meanStretch(line), grow = Math.sqrt(mean / most), gaps = line.X.map(X => touch + (1 - touch) * grow * (mean > 0 ? stretch(X) / mean : 0));
   const at = (x, y, z) => x * c * c + y * c + z, pos = [[], [], []];
   for (let p = 0; p < c; p++) for (let q = 0; q < c; q++) {
     const linesOf = [k => at(k, p, q), k => at(p, k, q), k => at(p, q, k)];
@@ -83,11 +98,41 @@ function neighbour(i, axis) {
   q[axis] += 1;
   return q[0] * c * c + q[1] * c + q[2];
 }
+function glyph(gate, x, y) {
+  const g = parseInt(gate), r = 11, L = "#fde68a", M = "#9a9ea8";
+  ctx.save(); ctx.translate(x, y); ctx.lineWidth = 2; ctx.strokeStyle = L; ctx.fillStyle = L; ctx.lineCap = "round";
+  const dot = (cx, cy, rr, fill) => { ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 2 * Math.PI); if (fill) ctx.fill(); else ctx.stroke(); };
+  const arrow = (x1, y1, x2, y2) => { const a = Math.atan2(y2 - y1, x2 - x1); ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - 6 * Math.cos(a - 0.5), y2 - 6 * Math.sin(a - 0.5)); ctx.lineTo(x2 - 6 * Math.cos(a + 0.5), y2 - 6 * Math.sin(a + 0.5)); ctx.closePath(); ctx.fill(); };
+  const text = (t, cx, cy) => { ctx.font = "bold 11px monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(t, cx, cy); };
+  if (g === 1 || g === 46) { for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; ctx.beginPath(); ctx.moveTo(4 * Math.cos(a), 4 * Math.sin(a)); ctx.lineTo(r * Math.cos(a), r * Math.sin(a)); ctx.stroke(); } }
+  else if (g === 17 || g === 21) { dot(-7, 0, 6, false); dot(7, 0, 6, false); text("+", -7, 0); text("-", 7, 0); }
+  else if (g === 8) { dot(0, 0, 3, true); dot(0, 0, 7, false); dot(0, 0, 11, false); }
+  else if (g === 9 || g === 13 || g === 22) { dot(-9, 0, 4, true); dot(9, 0, 4, true); arrow(-4, -8, 4, -8); arrow(4, 8, -4, 8); }
+  else if (g === 14 || g === 34) { ctx.fillStyle = "#07080a"; dot(0, 0, 8, true); ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 3; dot(0, 0, 9, false); }
+  else if (g === 4) { dot(-7, 4, 4, true); dot(7, 4, 4, true); dot(0, -6, 4, true); }
+  else if (g === 10 || g === 30) { dot(0, 0, r, false); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -7); ctx.moveTo(0, 0); ctx.lineTo(5, 3); ctx.stroke(); }
+  else if (g === 2 || g === 5) { arrow(-2, 0, r + 2, 0); arrow(2, 0, -r - 2, 0); if (g === 5) { ctx.beginPath(); ctx.moveTo(-6, -7); ctx.lineTo(6, -7); ctx.stroke(); } }
+  else if (g === 3 || g === 6) { arrow(-r - 2, 0, -3, 0); arrow(r + 2, 0, 3, 0); }
+  else if (g === 7) { ctx.beginPath(); for (let k = -12; k <= 2; k++) ctx.lineTo(k, 4 * Math.sin(k * 0.9)); ctx.stroke(); dot(8, 0, 4, true); }
+  else if (g === 18) { ctx.beginPath(); ctx.arc(0, 0, 8, -0.5 * Math.PI, 1.1 * Math.PI); ctx.stroke(); arrow(-3, 7, -9, 3); }
+  else if (g === 16) { dot(0, -4, 4, true); ctx.beginPath(); ctx.moveTo(-r, 6); ctx.lineTo(r, 6); ctx.stroke(); }
+  else if (g === 19 || g === 26) { dot(-7, 2, 3, true); dot(4, 0, 6, true); }
+  else if (g === 25) { ctx.beginPath(); ctx.moveTo(-10, 8); ctx.lineTo(-4, 8); ctx.lineTo(-4, 2); ctx.lineTo(2, 2); ctx.lineTo(2, -4); ctx.lineTo(8, -4); ctx.lineTo(8, -10); ctx.stroke(); }
+  else if (g === 27) { dot(-7, 5, 3, true); dot(7, 5, 3, true); dot(0, -6, 3, true); ctx.beginPath(); ctx.moveTo(-7, 5); ctx.lineTo(0, -6); ctx.lineTo(7, 5); ctx.closePath(); ctx.stroke(); }
+  else if (g === 37) { dot(-9, 0, 3, true); dot(9, 0, 3, true); arrow(-5, 0, 5, 0); }
+  else if (g === 43) { dot(0, 0, 6, false); ctx.beginPath(); ctx.moveTo(-9, -9); ctx.lineTo(9, 9); ctx.moveTo(9, -9); ctx.lineTo(-9, 9); ctx.stroke(); }
+  else if (g === 45) { ctx.beginPath(); ctx.moveTo(-9, -8); ctx.lineTo(-9, 4); ctx.quadraticCurveTo(0, 12, 9, 4); ctx.lineTo(9, -8); ctx.stroke(); dot(0, 3, 3, true); }
+  else if (g === 49) { ctx.beginPath(); ctx.moveTo(-10, -8); ctx.quadraticCurveTo(-6, 8, 10, 8); ctx.stroke(); }
+  else { ctx.beginPath(); ctx.moveTo(0, -r); ctx.lineTo(r, 0); ctx.lineTo(0, r); ctx.lineTo(-r, 0); ctx.closePath(); ctx.stroke(); }
+  ctx.restore();
+}
 function seek(i) { let k = 0; while (k + 1 < n && lines[k].i < i) k++; return k + 1; }
 function draw() {
   const line = lines[t - 1], before = lines[Math.max(t - 2, 0)], step = Math.max(1, line.i - before.i);
   const held = new Set(line.held.map(h => h[0] + ":" + h[1]));
-  const frozen = new Set(line.frozen), turned = new Set(line.turned);
+  const frozen = new Set(line.frozen), turned = new Map();
+  for (let back = 0; back < 8 && t - 1 - back >= 0; back++) for (const i of lines[t - 1 - back].turned) if (!turned.has(i)) turned.set(i, back);
+  let wholeTurn = null; for (let back = 0; back < 12 && t - 1 - back >= 0; back++) if (2 * lines[t - 1 - back].turned.length >= line.X.length) { wholeTurn = back; break; }
   const lens = line.X.map(length), lenMin = Math.min(...lens), lenSpan = Math.max(Math.max(...lens) - lenMin, 1e-9);
   lay(line);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -113,15 +158,41 @@ function draw() {
   const cmin = Math.min(...line.content), cmax = Math.max(...line.content);
   for (const i of order) {
     const r = 3 + 9 * (line.content[i] - cmin) / Math.max(cmax - cmin, 1);
-    ctx.fillStyle = turned.has(i) ? "#f59e0b" : "#4ade80";
+    ctx.fillStyle = turned.has(i) && turned.get(i) === 0 ? "#f59e0b" : "#4ade80";
     ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r, 0, 2 * Math.PI); ctx.fill();
     if (frozen.has(i)) { ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 3, 0, 2 * Math.PI); ctx.stroke(); }
-    if (turned.has(i)) { ctx.strokeStyle = "#f59e0b"; ctx.lineWidth = 1.5; ctx.strokeRect(spots[i][0] - r - 2, spots[i][1] - r - 2, 2 * r + 4, 2 * r + 4); }
+    if (turned.has(i)) { ctx.globalAlpha = 1 - turned.get(i) / 8; ctx.strokeStyle = "#f59e0b"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 5, 0.2 * Math.PI, 1.7 * Math.PI); ctx.stroke(); ctx.fillStyle = "#f59e0b"; ctx.beginPath(); const ax = spots[i][0] + (r + 5) * Math.cos(0.2 * Math.PI), ay = spots[i][1] + (r + 5) * Math.sin(0.2 * Math.PI); ctx.moveTo(ax, ay); ctx.lineTo(ax - 5, ay - 5); ctx.lineTo(ax + 3, ay - 6); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1; }
+  }
+  const recent = new Map(), span = new Map();
+  for (const k of D.clicks) {
+    if (k.i > line.i) break;
+    const id = k.at, key = id + ":" + k.line;
+    if (k.i > line.i - 24 * step) { const m = recent.get(id) || new Map(); m.set(k.line, (m.get(k.line) || 0) + 1); recent.set(id, m); }
+    const sp = span.get(key); if (!sp) span.set(key, [k.i, k.i, 1]); else { sp[1] = k.i; sp[2]++; }
+  }
+  for (const [id, m] of recent) {
+    let best = -1, count = 0, total = 0; for (const [l, n] of m) { total += n; if (n > count) { count = n; best = l; } }
+    const sp = spots[id], r = 8 + Math.min(10, total);
+    ctx.fillStyle = tone(best); ctx.globalAlpha = 0.18 + 0.03 * Math.min(10, total); ctx.beginPath(); ctx.arc(sp[0], sp[1], r, 0, 2 * Math.PI); ctx.fill(); ctx.globalAlpha = 1;
+  }
+  for (const [key, sp] of span) if (sp[1] > line.i - 24 * step && sp[1] - sp[0] >= 60 * step && sp[2] >= 4) {
+    const id = parseInt(key), s = spots[id]; ctx.strokeStyle = tone(parseInt(key.split(":")[1])); ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(s[0], s[1], 14, 0, 2 * Math.PI); ctx.stroke();
   }
   for (const k of D.clicks) if (k.i <= line.i && k.i > line.i - 4 * step) {
-    const i = k.node[0] * c * c + k.node[1] * c + k.node[2], s = spots[i], age = (line.i - k.i) / step, fade = 1 - age / 4;
-    ctx.strokeStyle = tone(k.line); ctx.globalAlpha = fade; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.arc(s[0], s[1], 10 + 4 * age, 0, 2 * Math.PI); ctx.stroke(); ctx.globalAlpha = 1;
+    const s = spots[k.at], age = (line.i - k.i) / step, fade = 1 - age / 4;
+    ctx.globalAlpha = fade;
+    ctx.fillStyle = k.from === null ? "#5f97ea" : tone(k.from);
+    ctx.beginPath(); ctx.arc(s[0], s[1], 3 + Math.min(9, k.levels / 2), 0, 2 * Math.PI); ctx.fill();
+    ctx.strokeStyle = tone(k.line); ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(s[0], s[1], 10 + 4 * age, 0, 2 * Math.PI); ctx.stroke();
+    if (k.children) for (let h = 0; h < 2; h++) {
+      const sq = spots[k.children[h]];
+      ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(sq[0], sq[1]); ctx.stroke();
+      ctx.fillStyle = "#07080a"; ctx.beginPath(); ctx.arc(sq[0], sq[1], 7, 0, 2 * Math.PI); ctx.fill();
+      ctx.beginPath(); ctx.arc(sq[0], sq[1], 7, 0, 2 * Math.PI); ctx.stroke();
+      ctx.fillStyle = tone(k.line); ctx.font = "bold 11px monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(h === 0 ? "-" : "+", sq[0], sq[1]);
+    }
+    ctx.globalAlpha = 1;
   }
   for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) {
     const age = (line.i - b) / step, reach = (0.08 + 0.05 * age) * canvas.width, cx = canvas.width / 2, cy = canvas.height / 2;
@@ -129,17 +200,30 @@ function draw() {
     for (let r = 0; r < 24; r++) { const ang = r * Math.PI / 12 + age * 0.1, inner = reach * (0.35 + 0.15 * (r % 2)); ctx.beginPath(); ctx.moveTo(cx + Math.cos(ang) * inner, cy + Math.sin(ang) * inner); ctx.lineTo(cx + Math.cos(ang) * reach, cy + Math.sin(ang) * reach); ctx.stroke(); }
     ctx.globalAlpha = 1;
   }
+  if (wholeTurn !== null) {
+    const reach = (0.22 + 0.02 * wholeTurn) * canvas.width; ctx.strokeStyle = "#f59e0b"; ctx.globalAlpha = 1 - wholeTurn / 12; ctx.lineWidth = 6; ctx.setLineDash([14, 10]);
+    ctx.beginPath(); ctx.arc(canvas.width / 2, canvas.height / 2, reach, 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+  }
   labels.innerHTML = "";
   let free = 0;
+  if (wholeTurn !== null) {
+    const div = document.createElement("div"); div.className = "label"; div.style.fontSize = "18px"; div.style.borderLeftColor = "#f59e0b"; div.style.color = "#f59e0b";
+    div.innerHTML = "every Node turns at once<small>the clocks reversed at the top, interval " + lines[t - 1 - wholeTurn].i + "</small>";
+    div.style.left = (canvas.offsetLeft + canvas.width / 2 + 0.24 * canvas.width) + "px"; div.style.top = (canvas.offsetTop + canvas.height / 2 + 0.1 * canvas.width) + "px";
+    labels.appendChild(div);
+  }
   const placed = [];
-  function settle(x, y) { for (const q of placed) if (Math.abs(q[0] - x) < 220 && Math.abs(q[1] - y) < 36) return settle(x, q[1] + 36); placed.push([x, y]); return y; }
+  function settle(x, y) {
+    for (let moved = true; moved;) { moved = false; for (const q of placed) if (Math.abs(q[0] - x) < 220 && Math.abs(q[1] - y) < 42 && q[1] + 42 > y) { y = q[1] + 42; moved = true; } }
+    placed.push([x, y]); return y;
+  }
   for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) {
     const div = document.createElement("div"); div.className = "label"; div.style.fontSize = "20px";
     div.innerHTML = "Big Bang<small>the board at its zero and rising, interval " + b + "</small>";
     div.style.left = (canvas.offsetLeft + canvas.width / 2 + 0.14 * canvas.width) + "px"; div.style.top = (canvas.offsetTop + canvas.height / 2 - 0.16 * canvas.width) + "px";
     labels.appendChild(div);
   }
-  for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 6 * step) {
+  for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 60 * step) {
     const div = document.createElement("div"); div.className = "label";
     div.innerHTML = e.label + "<small>" + e.numbers + "</small>";
     const click = e.node ? null : D.clicks.find(k => k.i === e.i), node = e.node || (click ? click.node : null);
@@ -147,26 +231,43 @@ function draw() {
       const s = spots[node[0] * c * c + node[1] * c + node[2]];
       ctx.strokeStyle = "#fde68a"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(s[0] + 26, s[1] - 26); ctx.stroke();
       ctx.fillStyle = "#fde68a"; ctx.beginPath(); ctx.arc(s[0], s[1], 4, 0, 2 * Math.PI); ctx.fill();
-      const y = settle(s[0] + 28, s[1] - 40);
-      ctx.beginPath(); ctx.moveTo(s[0] + 26, s[1] - 26); ctx.lineTo(s[0] + 28, y + 14); ctx.stroke();
-      div.style.left = (canvas.offsetLeft + s[0] + 28) + "px"; div.style.top = (canvas.offsetTop + y) + "px";
-    } else { div.style.left = (canvas.offsetLeft + canvas.width / 2 - 80) + "px"; div.style.top = (canvas.offsetTop + canvas.height - 44 - 34 * free++) + "px"; }
+      const y = settle(s[0] + 28, s[1] - 44);
+      ctx.beginPath(); ctx.moveTo(s[0] + 26, s[1] - 26); ctx.lineTo(s[0] + 28, y + 18); ctx.stroke();
+      glyph(e.gate, s[0] + 44, y + 18);
+      div.style.left = (canvas.offsetLeft + s[0] + 60) + "px"; div.style.top = (canvas.offsetTop + y) + "px";
+    } else { const fy = canvas.height - 48 - 40 * free++; glyph(e.gate, canvas.width / 2 - 96, fy + 18); div.style.left = (canvas.offsetLeft + canvas.width / 2 - 80) + "px"; div.style.top = (canvas.offsetTop + fy) + "px"; }
     labels.appendChild(div);
   }
   cursor.style.left = (100 * (line.i - 1) / Math.max(N - 1, 1)) + "%";
-  where.textContent = "interval " + line.i + " of " + N + (D.stride > 1 ? " (1 of every " + D.stride + " intervals kept)" : "");
+  let up = 0, down = 0; for (let i = 0; i < line.X.length; i++) { if (line.X[i] > before.X[i]) up++; else if (line.X[i] < before.X[i]) down++; }
+  const course = t === 1 ? "the seed" : up === line.X.length ? "every clock's volume rising" : down === line.X.length ? "every clock's volume falling" : up + " rising, " + down + " falling, " + (line.X.length - up - down) + " at rest";
+  where.textContent = "interval " + line.i + " of " + N + (D.stride > 1 ? " (1 of every " + D.stride + " intervals kept)" : "") + "; " + course;
 }
-function tick() { if (playing) { t = t % n + 1; draw(); } setTimeout(tick, 1000 / speed); }
-let named = 0;
+let hold = 0, slow = 0, beat = 0;
+function tick() {
+  document.body.classList.toggle("playing", playing);
+  if (playing && hold > 0) hold--;
+  else if (playing && slow > 0 && (++beat % 4) !== 0) slow--;
+  else if (playing) { if (slow > 0) slow--; t = t % n + 1; draw(); const now = lines[t - 1].i, before = t > 1 ? lines[t - 2].i : 0; if (D.events.some(e => e.i !== null && e.i > before && e.i <= now) || bangs.some(b => b > before && b <= now)) { hold = speed; slow = 4 * speed; } }
+  setTimeout(tick, MS / speed);
+}
+const eras = D.events.filter(e => e.i !== null && /^(1|4|5|46) /.test(e.gate)).map(e => [e.i, e.gate]).concat(bangs.map(b => [b, "1 bang"])).sort((p, q) => p[0] - q[0]);
+for (let k = 0; k < eras.length; k++) {
+  const from = eras[k][0], to = k + 1 < eras.length ? eras[k + 1][0] : N + 1, g = parseInt(eras[k][1]);
+  const d = document.createElement("div"); d.className = "era"; d.style.left = (100 * (from - 1) / Math.max(N - 1, 1)) + "%"; d.style.width = (100 * (to - from) / Math.max(N - 1, 1)) + "%";
+  d.style.background = g === 4 ? "rgba(244,114,182,0.18)" : g === 5 ? "rgba(253,230,138,0.14)" : "rgba(95,151,234,0.16)"; d.title = eras[k][1]; bar.appendChild(d);
+}
+const rowEnds = [-100, -100, -100, -100, -100, -100];
 for (const e of D.events) if (e.i !== null) {
-  const at = (100 * (e.i - 1) / Math.max(N - 1, 1)) + "%";
+  const pct = 100 * (e.i - 1) / Math.max(N - 1, 1), at = pct + "%";
   const d = document.createElement("div"); d.className = "tick"; d.style.left = at; d.title = e.label + ": " + e.numbers; bar.appendChild(d);
-  const m = document.createElement("div"); m.className = "name"; m.style.top = (2 + 11 * (named++ % 3)) + "px"; m.textContent = e.label;
+  let row = rowEnds.findIndex(end => pct - end > 11); if (row < 0) continue; rowEnds[row] = pct;
+  const m = document.createElement("div"); m.className = "name"; m.style.top = (2 + 11 * row) + "px"; m.textContent = e.label;
   if (4 * (e.i - 1) > 3 * Math.max(N - 1, 1)) { m.style.right = "calc(100% - " + at + ")"; m.style.paddingRight = "4px"; } else m.style.left = at;
   bar.appendChild(m);
 }
 for (const b of bangs) { const d = document.createElement("div"); d.className = "tick"; d.style.left = (100 * (b - 1) / Math.max(N - 1, 1)) + "%"; d.style.background = "#f59e0b"; d.title = "Big Bang at " + b; bar.appendChild(d); }
-D.bangs.forEach((i, k) => { const d = document.createElement("div"); d.className = "bang"; d.style.left = (100 * (i - 1) / Math.max(N - 1, 1)) + "%"; d.textContent = (k + 1); bar.appendChild(d); });
+D.births.forEach((i, k) => { const d = document.createElement("div"); d.className = "birth"; d.style.left = (100 * (i - 1) / Math.max(N - 1, 1)) + "%"; d.textContent = (k + 1); bar.appendChild(d); });
 bar.addEventListener("click", ev => { const r = bar.getBoundingClientRect(); t = seek(1 + Math.round((N - 1) * (ev.clientX - r.left) / r.width)); playing = false; draw(); });
 document.getElementById("play").addEventListener("click", () => { playing = !playing; });
 document.getElementById("faster").addEventListener("click", () => { speed = Math.min(speed * 2, 48); });
@@ -184,8 +285,17 @@ def header_of(record: dict[str, Any]) -> str:
         + (f"pair {r['pair'][0]}/{r['pair'][1]}" if r.get("pair") is not None else f"wall {r['wall']}")
         for r in universe["rows"]
     )
-    seed = "; ".join(json.dumps(lay) for lay in world.get("seed", []))
+    seed = "; ".join(lays_of(world.get("seed", [])))
     return f"universe {world['universe']}: {integers}\nrows: {rows}\nworld: shape {world['shape']}, {world['intervals']} intervals, seed {seed}"
+
+
+def lays_of(seed: list[dict[str, Any]]) -> list[str]:
+    """The seed's lays as they are: a lone lay whole with its centre; lays alike in everything but their centre folded into one line with their count, so a seed laid at every Node reads as one line."""
+    found: dict[str, list[Any]] = {}
+    for lay in seed:
+        key = json.dumps({k: v for k, v in lay.items() if k != "centre"})
+        found.setdefault(key, [lay, 0])[1] += 1
+    return [json.dumps(lay) if n == 1 else f"{key} at {n} centres" for key, (lay, n) in found.items()]
 
 
 def word(n: int) -> str:
@@ -238,15 +348,27 @@ def kept(lines: list[dict[str, Any]], named: set[int]) -> tuple[list[dict[str, A
 
 
 def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, Any]:
-    """The page's data from the record and the reading: the Node lines, the clicks (every birth and credit with its Node and row), the bangs (the births' intervals), the reading's event lines."""
+    """The page's data from the record and the reading: the Node lines, the clicks (every birth and credit as one short list: the interval, the Node's index, the row, the levels taken, the taken row or -1, a birth's two children's indices or 0), the births' intervals (numbered on the bar), the reading's event lines."""
     events = next((line["events"] for line in reading if "events" in line), [])
+    cube = int(record["cube"])
+
+    def index(node: list[int]) -> int:
+        return int(node[0]) * cube * cube + int(node[1]) * cube + int(node[2])
+
     clicks = [
-        {"i": e["i"], "node": e["node"], "line": e.get("line", e.get("line_pair", 0))}
+        [
+            e["i"],
+            index(e["node"]),
+            e.get("line", e.get("line_pair", 0)),
+            int(e.get("levels", 0)),
+            e.get("taken_row", -1),
+            [index(e["minus"]), index(e["plus"])] if e["event"] == "birth" else 0,
+        ]
         for e in record["log"]
         if e["event"] in ("birth", "credit")
     ]
-    bangs = sorted({e["i"] for e in record["log"] if e["event"] == "birth"})
-    named = {int(e["i"]) for e in events if e["i"] is not None} | {int(k["i"]) for k in clicks}
+    births = sorted({e["i"] for e in record["log"] if e["event"] == "birth"})
+    named = {int(e["i"]) for e in events if e["i"] is not None} | {int(k[0]) for k in clicks}
     held = next((int(line["i"]) for line in record["nodes"] if line["held"] or line["frozen"]), None)
     if held is not None:
         named.add(held)
@@ -259,7 +381,7 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
         "stride": stride,
         "nodes": lines,
         "clicks": clicks,
-        "bangs": bangs,
+        "births": births,
         "events": events,
     }
 
@@ -273,11 +395,15 @@ def page_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> str:
         + "</title><style>"
         + TOKENS
         + "</style></head>\n<body>\n"
+        '<div id="title">'
+        + title
+        + "<small>the record and its reading, from the seed alone</small></div>\n"
         '<div id="head">' + header_of(record) + "</div>\n"
         '<div id="stage"><canvas id="board" width="320" height="320"></canvas><div id="labels"></div></div>\n'
         '<div id="bar"><div id="cursor"></div></div>\n'
-        '<div id="row"><button id="play">play / pause</button><button id="slower">slower</button><button id="faster">faster</button><span id="where"></span>'
+        '<div id="row"><button id="play" title="play / pause"><span class="tri"></span><span class="bars"></span></button><button id="slower">slower</button><button id="faster">faster</button><span id="where"></span>'
         "<span>the reading: the verdicts in the reading file beside the record</span></div>\n"
+        '<div id="legend">green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate as it first shows; the bands of the bar: the spans from each bang, from the era of matter and from the acceleration, as the reading names them</div>\n'
         '<script id="data" type="application/json">'
         + json.dumps(data_of(record, reading))
         + "</script>\n"

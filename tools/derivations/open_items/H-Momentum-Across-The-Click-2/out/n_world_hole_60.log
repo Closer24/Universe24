@@ -1,0 +1,280 @@
+{
+"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/mk2/tests/worlds/world_hole.json",
+"intervals": 60,
+"flag": "",
+"final state hash": "18768ac253034ef4423d1362ed46dbd27e02b1948a3c2a19b7b1c73b2308ee72",
+"log hash": "791c9814f45dcc0e29fa7c60adaa26c85639c84d854f33441f9a6710f2fb73ff",
+"counts": {
+"births": "16",
+"taken": "97378594708022625295320",
+"booked": "94999712837773089503304",
+"body_clicks": "777",
+"laid_back": "0",
+"refused_stop": "434",
+"refused_origin": "0",
+"refused_lay": "5672",
+"refused_orientation": "1727",
+"refused_twist": "2002",
+"refused_sense": "5792",
+"turns": "546",
+"met": "15217",
+"laid": "0",
+"laid_nodes": "0"
+},
+"run_back": {
+"intervals": 10,
+"exact": 10
+},
+"integers per Node": [
+98
+],
+"max state bits": 115,
+"max transient bits": 99,
+"gates SHOWN": [
+2,
+4,
+5,
+7,
+8,
+10,
+15,
+16,
+17,
+18,
+19,
+21,
+25,
+26,
+27,
+30,
+37,
+43,
+45
+],
+"gate 23": {
+"clicks booking dP": 793,
+"takes dP_a summed": [
+-1087813669612241011638,
+0,
+0
+],
+"lays dP_a summed": [
+0,
+0,
+0
+],
+"recoil passed to the laid pair (take + lay = 0 per birth)": [
+0,
+16
+],
+"verdict": "NOT SHOWN: the recoil passed at 0 of 16 births (the lay's form owed)"
+},
+"gate 54": "NOT READ: two packets of one plane are not told apart by their line, and the momentum across the click is row 23; the predicate: the packets scatter, the momentum summed before and after",
+"analysis": {
+"births": 16,
+"credits": 777,
+"credits laid back": 0,
+"births: take abs per axis": [
+588076236545414894976,
+1471585574185375577228,
+1471585574185375577228
+],
+"births: along the Link's axis, abs per axis": [
+430867737666937645824,
+175221972708302767284,
+175221972708302767284
+],
+"births: transverse to the Link's axis, abs per axis": [
+157208498878477249152,
+1296363601477072809944,
+1296363601477072809944
+],
+"births: along-axis remainder abs summed at the grain 2 num A": 9417508165932622608,
+"births: along-axis take abs summed": 781311683083543180392,
+"births: remainder exact 0": 0,
+"births: under the cap 2 num A^2": 16,
+"births: p (levels of before at the far end) largest": 88,
+"births: stood at nothing at both ends": 16,
+"credits: take abs per axis (no Link named by the click)": [
+1911763305902408229898,
+2065059787737034482688,
+2065059787737034482688
+],
+"first births": [
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+-120332431240315919104,
+-166912727204309178112
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+-120332431240315919104,
+166912727204309178112
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+-166912727204309178112,
+-120332431240315919104
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+-166912727204309178112,
+120332431240315919104
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+166912727204309178112,
+-120332431240315919104
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+166912727204309178112,
+120332431240315919104
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+}
+]
+}
+}

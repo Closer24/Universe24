@@ -1,0 +1,11 @@
+{"trace": 54, "world": "world_hole.json"}
+{"i": 6, "X[0]": 1006, "X min/mean/max": [918, 1044, 1166], "turned": 42, "met": 52, "births": 0, "credits": 0, "laid": 0, "refused_lay": 8, "refused_stop": 0}
+{"i": 12, "X[0]": 1328, "X min/mean/max": [1054, 1271, 1880], "turned": 33, "met": 339, "births": 8, "credits": 16, "laid": 0, "refused_lay": 80, "refused_stop": 16}
+{"i": 18, "X[0]": 1379, "X min/mean/max": [1379, 2338, 3141], "turned": 12, "met": 612, "births": 8, "credits": 48, "laid": 0, "refused_lay": 184, "refused_stop": 32}
+{"i": 24, "X[0]": 3020, "X min/mean/max": [3020, 4239, 6393], "turned": 1, "met": 870, "births": 16, "credits": 72, "laid": 0, "refused_lay": 276, "refused_stop": 36}
+{"i": 30, "X[0]": 9515, "X min/mean/max": [5804, 6636, 9515], "turned": 1, "met": 2082, "births": 16, "credits": 85, "laid": 0, "refused_lay": 520, "refused_stop": 40}
+{"i": 36, "X[0]": 9033, "X min/mean/max": [8309, 9277, 11002], "turned": 0, "met": 4429, "births": 16, "credits": 105, "laid": 0, "refused_lay": 1140, "refused_stop": 50}
+{"i": 42, "X[0]": 9965, "X min/mean/max": [9965, 12041, 13515], "turned": 5, "met": 6731, "births": 16, "credits": 133, "laid": 8, "refused_lay": 2100, "refused_stop": 60}
+{"i": 48, "X[0]": 17843, "X min/mean/max": [12116, 14817, 17843], "turned": 0, "met": 9044, "births": 16, "credits": 166, "laid": 8, "refused_lay": 2960, "refused_stop": 76}
+{"i": 54, "X[0]": 20881, "X min/mean/max": [14544, 17566, 23983], "turned": 0, "met": 11334, "births": 16, "credits": 199, "laid": 8, "refused_lay": 3684, "refused_stop": 101}
+{"i": 60, "X[0]": 17672, "X min/mean/max": [17672, 20251, 25935], "turned": 0, "met": 13626, "births": 16, "credits": 233, "laid": 8, "refused_lay": 4460, "refused_stop": 118}

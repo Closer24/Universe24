@@ -1,0 +1,19 @@
+record: ga2_vf12_450.json | intervals 450 | run back {'intervals': 10, 'exact': 10} | integers 89 | counts {'births': '64', 'taken': '215649578622176003919808', 'booked': '215312393244131723991552', 'body_clicks': '1408', 'laid_back': '1408', 'refused_stop': '1408', 'refused_origin': '0', 'refused_lay': '17088', 'refused_orientation': '33280', 'refused_twist': '17152', 'refused_sense': '0', 'turns': '128', 'met': '67584', 'laid': '0', 'laid_nodes': '0'}
+births: 64 at intervals [2]
+  i 2: 64 births at 64 Nodes; classes [0, 1, 2, 3]; (taken_row, child row) [(2, 0), (2, 1)]; taken lines [0, 1]; W_children [(-18000, 18000)]; taken >= booked 64 of 64
+credits: 1408 laid back 1408 | per interval (i: count, laid back, Nodes): [(8, 128, 128, 64), (10, 128, 128, 64), (219, 128, 128, 64), (221, 128, 128, 64), (223, 128, 128, 64), (231, 128, 128, 64), (439, 128, 128, 64), (441, 128, 128, 64), (443, 128, 128, 64), (445, 128, 128, 64), (447, 128, 128, 64)]
+the first intervals (i: X_mean, X_min, X_max, X_distinct, e_max, turned, births, light_share_min_max_hundredths, gapped_whole_nodes):
+   0 [1000, 1000, 1000, 1, 0, 0, 0, [500, 500], [0, 0]]
+   1 [1017, 1017, 1017, 1, 0, 0, 0, [494, 494], [0, 0]]
+   2 [1050, 1050, 1050, 1, 0, 0, 64, [285, 285], [64, 64]]
+   3 [1100, 1100, 1100, 1, 0, 0, 64, [275, 275], [64, 64]]
+   4 [1166, 1166, 1166, 1, 0, 0, 64, [278, 278], [64, 64]]
+   5 [1249, 1249, 1249, 1, 0, 0, 64, [269, 269], [0, 0]]
+   6 [1346, 1346, 1346, 1, 0, 0, 64, [264, 264], [0, 0]]
+tops of the mean X (i, X, turned at i + 1): [(109, 21888, 64), (330, 22321, 64)]
+intervals with 64 turning: [110, 331] | turns in parts (first 16): [] | count of turn intervals 2
+bottoms of the mean X (i, mean, min, max): [(218, 1000, 1000, 1000), (442, 1000, 1000, 1000)]
+exact returns to Gamma at every Node: [218, 442]
+uniform intervals (X one value): 450 of 450 | the first parted interval: None | e_max over the run: 0
+retrace about the top 109: X(top + k) == X(top - k) for every k < None
+retrace about the top 330: X(top + k) == X(top - k) for every k < None

@@ -1,0 +1,736 @@
+file:line | literal | class | group | source line
+event_universe/board.py:26 | 2 | C | C-RECORD-SLOT | before, after = lines[falls[0] - 2][1], lines[falls[0] - 1][1]
+event_universe/board.py:34 | 8 | C | C-LISTED | (i, v) for i, v, _b in rows[:: max(1, len(rows) // 8)]
+event_universe/board.py:36 | 6 | C | C-LISTED | "intervals with the mean volume falling": falls[:6],
+event_universe/board.py:52 | 6 | C | C-LISTED | "falls followed by a rise (the fall's interval)": after[:6],
+event_universe/board.py:63 | 2 | C | C-RECORD-SLOT | return [(i, v, b) for i, v, b in rows[1:] if v <= rows[0][1] and b > rows[0][2]] if rows else []
+event_universe/board.py:110 | 8 | C | C-LISTED | "tops with every Node turning at once (interval)": whole[:8],
+event_universe/board.py:111 | 8 | C | C-LISTED | "bottoms (interval, mean X, at Gamma at every Node)": bottoms[:8],
+event_universe/board.py:112 | 8 | C | C-LISTED | "bangs numbered (the interval each begins)": bangs[:8],
+event_universe/board.py:113 | 8 | C | C-LISTED | "births and body credits between the bangs": between[:8],
+event_universe/board.py:116 | 4 | C | C-LISTED | )[:4],
+event_universe/board.py:132 | 3 | B | B-READER-PULL | lift += int(quotient(record.gamma * sum(xs[n] - x for n in neighbours(at, cube)), 3 * x))
+event_universe/board.py:133 | 2 | B | B-READER-PULL | pull += 2 * largest_below(int(quotient(x, record.gamma)))
+event_universe/board.py:151 | 3 | C | C-LISTED | third = max(1, len(lifts) // 3)
+event_universe/board.py:155 | 6 | C | C-LISTED | "the last rising run's steps (per mark)": last_run[-6:],
+event_universe/board.py:163 | 2 | C | C-THRESHOLD | if len(last_run) > 1 and quickening * 2 > len(last_run) - 1
+event_universe/board.py:210 | 2 | C | C-RECORD-SLOT | cmax = max((int(r["content min/mean/max"][2]) for r in record.rows), default=0)
+event_universe/board.py:319 | 2 | C | C-THRESHOLD | standing = sum(1 for xs in spans.values() if min(xs) * 2 <= n and max(xs) * 4 >= 3 * n)
+event_universe/board.py:319 | 4 | C | C-THRESHOLD | standing = sum(1 for xs in spans.values() if min(xs) * 2 <= n and max(xs) * 4 >= 3 * n)
+event_universe/board.py:319 | 3 | C | C-THRESHOLD | standing = sum(1 for xs in spans.values() if min(xs) * 2 <= n and max(xs) * 4 >= 3 * n)
+event_universe/bodies.py:69 | 2 | A | A-PLANE-LINES | lay(node, rec0, at, (now - int(line.now[at]),) + (0,) * (2 * PLANE - 1))
+event_universe/circle.py:10 | 2 | C | C-CIRCLE | return [p for p in range(2, n.bit_length() + 2) if all(p % q for q in range(2, p))]
+event_universe/circle.py:10 | 2 | C | C-CIRCLE | return [p for p in range(2, n.bit_length() + 2) if all(p % q for q in range(2, p))]
+event_universe/circle.py:10 | 2 | C | C-CIRCLE | return [p for p in range(2, n.bit_length() + 2) if all(p % q for q in range(2, p))]
+event_universe/circle.py:15 | 2 | C | C-CIRCLE | if n < 2:
+event_universe/circle.py:22 | 2 | C | C-CIRCLE | while d % 2 == 0:
+event_universe/circle.py:23 | 2 | C | C-CIRCLE | d, s = d // 2, s + 1
+event_universe/circle.py:39 | 2 | C | C-CIRCLE | if n % 2 == 0:
+event_universe/circle.py:40 | 2 | C | C-CIRCLE | return 2
+event_universe/circle.py:43 | 2 | C | C-CIRCLE | y, m, g, r, q = 2, n.bit_length(), 1, 1, 1
+event_universe/circle.py:56 | 2 | C | C-CIRCLE | r *= 2
+event_universe/circle.py:83 | 4 | C | C-CIRCLE | if p % 4 != 1:
+event_universe/circle.py:97 | 2 | C | C-CIRCLE | for j in range(2 * e + 1):
+event_universe/circle.py:101 | 2 | C | C-CIRCLE | for _ in range(2 * e - j):
+event_universe/clicks.py:81 | 3 | C | C-THRESHOLD | elif within == len(decoded) and track_right == len(tracks) and len(born) >= 3:
+event_universe/clicks.py:129 | 2 | C | C-THRESHOLD | if len(credited) < 2:
+event_universe/clicks.py:136 | 2 | C | C-RECORD-SLOT | heavy, light = credited[-1], credited[-2]
+event_universe/clicks.py:167 | 2 | C | C-RECORD-SLOT | spacing = quot(abs(legs[-1][0] - legs[-2][0]), legs[-1][0], MIL) if len(legs) >= 2 else None
+event_universe/clicks.py:167 | 2 | C | C-RECORD-SLOT | spacing = quot(abs(legs[-1][0] - legs[-2][0]), legs[-1][0], MIL) if len(legs) >= 2 else None
+event_universe/clicks.py:172 | 2 | A | A-HALF | fl[len(fl) // 2],
+event_universe/clicks.py:252 | 2 | A | A-HALF | med = sorted(p[0] for p in pairs)[len(pairs) // 2]
+event_universe/clicks.py:293 | 2 | A | A-HALF | ((a["content"] + b["content"]) // 2, b["i"] - a["i"])
+event_universe/close.py:49 | 2 | A | A-PORT-OF-AXIS | currents = [node.den * row_current(start, 2 * axis) for axis in range(AXES)]
+event_universe/close.py:53 | 2 | A | A-PORT-OF-AXIS | both = standing & across(standing, 2 * axis)
+event_universe/close.py:56 | 2 | A | A-PORT-OF-AXIS | j = neighbour(node, at, 2 * axis)
+event_universe/close.py:92 | 2 | A | A-TUPLE-SLOT | crowded = [k for k in kept if landing[(k[1], k[2])] > 1 or landing[(k[1], k[3])] > 1]
+event_universe/close.py:92 | 3 | A | A-TUPLE-SLOT | crowded = [k for k in kept if landing[(k[1], k[2])] > 1 or landing[(k[1], k[3])] > 1]
+event_universe/close.py:105 | 2 | A | A-TUPLE-SLOT | walls = {k: walls_of(node, k[1], k[2], k[3], c, factors) for k in kept}
+event_universe/close.py:105 | 3 | A | A-TUPLE-SLOT | walls = {k: walls_of(node, k[1], k[2], k[3], c, factors) for k in kept}
+event_universe/close.py:114 | 2 | A | A-TUPLE-SLOT | got = merger_take(node, kid[1], kid[2], walls[(at, *kid, rec)], rule, rec)
+event_universe/close.py:331 | 2 | A | A-PLANE-LINES | + (0,) * (2 * node.records()[row].shape - 1),
+event_universe/decoder.py:13 | 1000000 | C | C-UNITS | MIL = 1000000  # readings in parts per million
+event_universe/decoder.py:14 | 100 | C | C-UNITS | HUNDRED = 100  # readings in hundredths
+event_universe/decoder.py:15 | 1000 | C | C-UNITS | THOUSAND = 1000  # readings in thousandths
+event_universe/decoder.py:16 | 128 | B | B-WIDTH | WIDTH = 128  # the law's width: every integer of the state and of every transient within it
+event_universe/decoder.py:17 | 10 | C | C-UNITS | FEW = 10  # the fewest decoded credits for the dilation's two halves
+event_universe/decoder.py:18 | 20 | C | C-UNITS | SPANS = 20  # the fewest spans for the lengthening's two halves
+event_universe/decoder.py:91 | 3 | C | C-THREE-LEVELS | found = [lines[k]["X"][index] if k >= 0 else record.gamma for k in (i - 3, i - 2, i - 1)]
+event_universe/decoder.py:91 | 2 | C | C-THREE-LEVELS | found = [lines[k]["X"][index] if k >= 0 else record.gamma for k in (i - 3, i - 2, i - 1)]
+event_universe/decoder.py:92 | 2 | C | C-RECORD-SLOT | return int(found[0]), int(found[1]), int(found[2])
+event_universe/decoder.py:104 | 2 | A | A-HALF | w_in, w_out = (w // 2) * (x_b + x_n), (w // 2) * (x_n + x_x)
+event_universe/decoder.py:104 | 2 | A | A-HALF | w_in, w_out = (w // 2) * (x_b + x_n), (w // 2) * (x_n + x_x)
+event_universe/decoder.py:111 | 4 | B | B-LINK-WALL-4G | wl = 4 * gamma
+event_universe/decoder.py:112 | 2 | C | C-THRESHOLD | e = tuple((zx[k] - zn[k]) * w_out - w_in * (zn[k] - zb[k]) for k in range(2))
+event_universe/decoder.py:113 | 12 | A | A-SIDESPORTS12 | weight = 12 * p0 * p0 * unit * unit
+event_universe/decoder.py:119 | 2 | B | B-TWICE | m = turn_pair(m[0], m[1], wl * wl - n * n, 2 * wl * n, wl * wl + n * n)
+event_universe/decoder.py:120 | 2 | B | B-TWICE | reach = 2 * pi * pi * f["factors"][port]
+event_universe/decoder.py:142 | 2 | A | A-PARITY | if k % 2:
+event_universe/decoder.py:143 | 2 | A | A-HALF | return xs[k // 2]
+event_universe/decoder.py:144 | 2 | A | A-HALF | p, q = xs[k // 2 - 1], xs[k // 2]
+event_universe/decoder.py:144 | 2 | A | A-HALF | p, q = xs[k // 2 - 1], xs[k // 2]
+event_universe/decoder.py:145 | 2 | A | A-HALF | return (p[0] * q[1] + q[0] * p[1], 2 * p[1] * q[1])
+event_universe/decoder.py:168 | 2 | A | A-POWER-WRITTEN | within += (n * den - num * d) ** 2 <= 2 * (record.w * den) ** 2 * d
+event_universe/decoder.py:168 | 2 | A | A-POWER-WRITTEN | within += (n * den - num * d) ** 2 <= 2 * (record.w * den) ** 2 * d
+event_universe/decoder.py:168 | 2 | A | A-POWER-WRITTEN | within += (n * den - num * d) ** 2 <= 2 * (record.w * den) ** 2 * d
+event_universe/decoder.py:170 | 2 | B | B-TWICE | rule3.largest_below((2 * record.w * record.w * den * den * MIL * MIL) // (d * num * num))
+event_universe/events.py:85 | 2 | A | A-HALF | mid = (low + high) // 2
+event_universe/gates.py:31 | 2 | C | C-THRESHOLD | if len(nodes) < 2:
+event_universe/gates.py:76 | 8 | C | C-LISTED | "the farthest credited Nodes' distance per interval with two (first eight)": spans[:8],
+event_universe/gates.py:81 | 2 | C | C-THRESHOLD | if quickening * 2 > max(len(closing) - 1, 1)
+event_universe/gates.py:173 | 3 | A | A-AXES3 | if b.get("dP_lay") and all(b["dP_take"][a] + b["dP_lay"][a] == 0 for a in range(3))
+event_universe/gates.py:178 | 3 | A | A-AXES3 | "takes dP_a summed": [sum(t[a] for t in takes) for a in range(3)],
+event_universe/gates.py:179 | 3 | A | A-AXES3 | "lays dP_a summed": [sum(lay[a] for lay in lays) for a in range(3)],
+event_universe/gates.py:245 | 2 | C | C-THRESHOLD | if births and sum(signs) == 0 and pairs and unchanged * 2 > len(pairs)
+event_universe/gates.py:266 | 8 | C | C-LISTED | "course (interval, H) at every eighth": found[:: max(1, len(found) // 8)],
+event_universe/gates.py:350 | 3 | C | C-LISTED | whole = words[1:3] != ["in", "part"]
+event_universe/gates.py:351 | 2 | C | C-LISTED | return words[0] if words[0] == "SHOWN" and whole else " ".join(words[: 2 if whole else 3])
+event_universe/gates.py:351 | 3 | C | C-LISTED | return words[0] if words[0] == "SHOWN" and whole else " ".join(words[: 2 if whole else 3])
+event_universe/gram.py:37 | 2 | A | A-HALF | for p in range(quotient(shape, 2)):
+event_universe/gram.py:38 | 2 | A | A-PLANE-LINES | found[2 * p][2 * p + 1], found[2 * p + 1][2 * p] = -1, 1
+event_universe/gram.py:38 | 2 | A | A-PLANE-LINES | found[2 * p][2 * p + 1], found[2 * p + 1][2 * p] = -1, 1
+event_universe/gram.py:38 | 2 | A | A-PLANE-LINES | found[2 * p][2 * p + 1], found[2 * p + 1][2 * p] = -1, 1
+event_universe/gram.py:38 | 2 | A | A-PLANE-LINES | found[2 * p][2 * p + 1], found[2 * p + 1][2 * p] = -1, 1
+event_universe/gram.py:59 | 2 | B | B-TWICE | return 2 * PORTS * gamma if shape == QUARTET else 1
+event_universe/gram.py:103 | 2 | A | A-PORT-OF-AXIS | up = conjugated(shape, [across(n, 2 * a) for n in nows], frames[2 * a])
+event_universe/gram.py:103 | 2 | A | A-PORT-OF-AXIS | up = conjugated(shape, [across(n, 2 * a) for n in nows], frames[2 * a])
+event_universe/gram.py:104 | 2 | A | A-PORT-OF-AXIS | down = conjugated(shape, [across(n, 2 * a + 1) for n in nows], frames[2 * a + 1])
+event_universe/gram.py:104 | 2 | A | A-PORT-OF-AXIS | down = conjugated(shape, [across(n, 2 * a + 1) for n in nows], frames[2 * a + 1])
+event_universe/gram.py:118 | 2 | A | A-AXES-CYCLIC | gradient(odd[wrap(a + 2, AXES)], wrap(a + 1, AXES))
+event_universe/gram.py:119 | 2 | A | A-AXES-CYCLIC | - gradient(odd[wrap(a + 1, AXES)], wrap(a + 2, AXES))
+event_universe/gram.py:160 | 4 | B | B-HELD-WRITE-4 | wall = 4 * node.gamma * node.gamma * node.gamma * node.G * node.G
+event_universe/gram.py:202 | 2 | A | A-HALF | middle = quotient(low + high, 2)
+event_universe/gram.py:222 | 2 | B | B-SECOND-BEAT | k = 2
+event_universe/interval.py:111 | 2 | B | B-TWICE | self.rows[k], rule, None, [None], self.direction, [2 * self.cphi], *self.ends(walled)
+event_universe/interval.py:148 | 2 | B | B-TWICE | m + t - (2 * rule.wall - rule.self_coefficient) * a
+event_universe/interval.py:170 | 2 | B | B-TWICE | for line, n in zip(self.lines(self.potential), [2 * self.w_end, *self.current], strict=True):
+event_universe/interval.py:178 | 2 | B | B-TWICE | d = 2 * node.w * self.x_now
+event_universe/interval.py:187 | 2 | A | A-PLANE-LINES | u_in = [paces.odd_rounded(2 * p + 1, ds) for p in p_side]
+event_universe/interval.py:188 | 2 | A | A-PLANE-LINES | u_out = [paces.odd_rounded(2 * p + 1, ds) for p in p_other]
+event_universe/interval.py:250 | 2 | B | B-TWICE | self.out[self.where[id(self.potential)]], [2 * self.w_after, *self.current], strict=True
+event_universe/links.py:50 | 2 | A | A-HALF | f = None if frame_bits is None else 1 - 2 * remainder(frame_bits + across(frame_bits, port), 2)
+event_universe/links.py:50 | 2 | A | A-HALF | f = None if frame_bits is None else 1 - 2 * remainder(frame_bits + across(frame_bits, port), 2)
+event_universe/links.py:56 | 4 | B | B-LINK-WALL-4G | wl = 4 * gamma
+event_universe/links.py:57 | 2 | B | B-TWICE | tc, ts, tw = wl * wl - at.odd * at.odd, 2 * wl * at.odd, wl * wl + at.odd * at.odd
+event_universe/links.py:59 | 2 | A | A-PLANE-LINES | for re_j, im_j in zip(xs[0::2], xs[1::2], strict=True):
+event_universe/links.py:59 | 2 | A | A-PLANE-LINES | for re_j, im_j in zip(xs[0::2], xs[1::2], strict=True):
+event_universe/links.py:67 | 2 | A | A-PORT-OF-AXIS | return across(a, 2 * axis) - across(a, 2 * axis + 1)
+event_universe/links.py:67 | 2 | A | A-PORT-OF-AXIS | return across(a, 2 * axis) - across(a, 2 * axis + 1)
+event_universe/links.py:79 | 2 | A | A-PORT-OF-AXIS | fp, fm = frames[2 * a], frames[2 * a + 1]
+event_universe/links.py:79 | 2 | A | A-PORT-OF-AXIS | fp, fm = frames[2 * a], frames[2 * a + 1]
+event_universe/links.py:81 | 2 | A | A-PORT-OF-AXIS | dz_im = fp * across(im.now, 2 * a) - fm * across(im.now, 2 * a + 1)
+event_universe/links.py:81 | 2 | A | A-PORT-OF-AXIS | dz_im = fp * across(im.now, 2 * a) - fm * across(im.now, 2 * a + 1)
+event_universe/links.py:101 | 2 | A | A-AXES3 | trace = parts[0] + parts[1] + parts[2]
+event_universe/links.py:117 | 2 | A | A-AXES-CYCLIC | a, b, c = axis, wrap(axis + 1, AXES), wrap(axis + 2, AXES)
+event_universe/links.py:120 | 2 | A | A-PORT-OF-AXIS | return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+event_universe/links.py:120 | 2 | A | A-PORT-OF-AXIS | return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+event_universe/links.py:125 | 2 | A | A-PORT-OF-AXIS | return link_current(line, 2 * axis + 1) - link_current(line, 2 * axis)
+event_universe/links.py:125 | 2 | A | A-PORT-OF-AXIS | return link_current(line, 2 * axis + 1) - link_current(line, 2 * axis)
+event_universe/links.py:130 | 2 | A | A-AXES-CYCLIC | a, b, c = axis, wrap(axis + 1, AXES), wrap(axis + 2, AXES)
+event_universe/links.py:132 | 2 | A | A-PORT-OF-AXIS | return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+event_universe/links.py:132 | 2 | A | A-PORT-OF-AXIS | return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+event_universe/node.py:69 | 2 | A | A-POWER-WRITTEN | if r.pair and r.gap and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
+event_universe/node.py:69 | 2 | A | A-POWER-WRITTEN | if r.pair and r.gap and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
+event_universe/node.py:69 | 2 | A | A-POWER-WRITTEN | if r.pair and r.gap and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
+event_universe/node.py:85 | 3 | A | A-AXES3 | self.standing, self.crossed, self.beats = ([zeros(shape) for _ in range(nr)] for _ in range(3))
+event_universe/node.py:151 | 2 | A | A-PLANE-LINES | return rule3.Rule(tuple(0 for _ in range(PORTS)), 2 * r.wall, r.wall, 0)
+event_universe/node.py:255 | 2 | A | A-TUPLE-SLOT | return self.act(lines, r, None, numerators, direction, None, top, kept)[2]
+event_universe/predicates.py:74 | 2 | C | C-THRESHOLD | if len(means[kind]) < 2:
+event_universe/predicates.py:125 | 2 | C | C-THRESHOLD | if not born and len(beats) < 2
+event_universe/predicates.py:127 | 3 | C | C-THRESHOLD | if len(born) >= 3 and len(beats) >= 2 and ordered
+event_universe/predicates.py:127 | 2 | C | C-THRESHOLD | if len(born) >= 3 and len(beats) >= 2 and ordered
+event_universe/predicates.py:132 | 3 | C | C-THRESHOLD | (f"{len(born)} lifts born", len(born) >= 3),
+event_universe/predicates.py:133 | 2 | C | C-THRESHOLD | ("the beats ordered as the legs", len(beats) >= 2 and ordered),
+event_universe/predicates.py:137 | 3 | C | C-THRESHOLD | if (len(born) >= 3) or (len(beats) >= 2 and ordered)
+event_universe/predicates.py:137 | 2 | C | C-THRESHOLD | if (len(born) >= 3) or (len(beats) >= 2 and ordered)
+event_universe/predicates.py:145 | 2 | A | A-HALF | half, third = record.T // 2, record.T // 6
+event_universe/predicates.py:145 | 6 | B | B-LAW-THIRD | half, third = record.T // 2, record.T // 6
+event_universe/predicates.py:325 | 8 | C | C-LISTED | sorted(spacings.items())[:8]
+event_universe/predicates.py:328 | 2 | C | C-THRESHOLD | if total < 2
+event_universe/predicates.py:332 | 2 | C | C-THRESHOLD | if max(counts) * 2 > total
+event_universe/quartet.py:20 | 2 | A | A-HALF | HALF = quotient(QUARTET, 2)  # the four Gaussian coordinates of a lattice vector
+event_universe/quartet.py:26 | 2 | A | A-HALF | while e > 0 and not any(remainder(x, 2) for x in (a0, a1, a2, a3)):
+event_universe/quartet.py:27 | 2 | A | A-HALF | a0, a1, a2, a3, e = quotient(a0, 2), quotient(a1, 2), quotient(a2, 2), quotient(a3, 2), e - 1
+event_universe/quartet.py:27 | 2 | A | A-HALF | a0, a1, a2, a3, e = quotient(a0, 2), quotient(a1, 2), quotient(a2, 2), quotient(a3, 2), e - 1
+event_universe/quartet.py:27 | 2 | A | A-HALF | a0, a1, a2, a3, e = quotient(a0, 2), quotient(a1, 2), quotient(a2, 2), quotient(a3, 2), e - 1
+event_universe/quartet.py:27 | 2 | A | A-HALF | a0, a1, a2, a3, e = quotient(a0, 2), quotient(a1, 2), quotient(a2, 2), quotient(a3, 2), e - 1
+event_universe/quartet.py:39 | 2 | A | A-CYC-INDEX | return normal((c[0], c[1], c[2], c[3], a[4] + b[4]))
+event_universe/quartet.py:39 | 3 | A | A-CYC-INDEX | return normal((c[0], c[1], c[2], c[3], a[4] + b[4]))
+event_universe/quartet.py:39 | 4 | A | A-CYC-INDEX | return normal((c[0], c[1], c[2], c[3], a[4] + b[4]))
+event_universe/quartet.py:39 | 4 | A | A-CYC-INDEX | return normal((c[0], c[1], c[2], c[3], a[4] + b[4]))
+event_universe/quartet.py:44 | 4 | A | A-CYC-INDEX | e = max(a[4], b[4])
+event_universe/quartet.py:44 | 4 | A | A-CYC-INDEX | e = max(a[4], b[4])
+event_universe/quartet.py:45 | 2 | A | A-POW2 | sa, sb = 2 ** (e - a[4]), 2 ** (e - b[4])
+event_universe/quartet.py:45 | 4 | A | A-CYC-INDEX | sa, sb = 2 ** (e - a[4]), 2 ** (e - b[4])
+event_universe/quartet.py:45 | 2 | A | A-POW2 | sa, sb = 2 ** (e - a[4]), 2 ** (e - b[4])
+event_universe/quartet.py:45 | 4 | A | A-CYC-INDEX | sa, sb = 2 ** (e - a[4]), 2 ** (e - b[4])
+event_universe/quartet.py:46 | 4 | A | A-CYC-INDEX | return normal(tuple(x * sa + y * sb for x, y in zip(a[:4], b[:4], strict=True)) + (e,))
+event_universe/quartet.py:46 | 4 | A | A-CYC-INDEX | return normal(tuple(x * sa + y * sb for x, y in zip(a[:4], b[:4], strict=True)) + (e,))
+event_universe/quartet.py:50 | 2 | A | A-CYC-INDEX | return (-a[0], -a[1], -a[2], -a[3], a[4])
+event_universe/quartet.py:50 | 3 | A | A-CYC-INDEX | return (-a[0], -a[1], -a[2], -a[3], a[4])
+event_universe/quartet.py:50 | 4 | A | A-CYC-INDEX | return (-a[0], -a[1], -a[2], -a[3], a[4])
+event_universe/quartet.py:55 | 3 | A | A-CYC-INDEX | return (a[0], -a[3], -a[2], -a[1], a[4])
+event_universe/quartet.py:55 | 2 | A | A-CYC-INDEX | return (a[0], -a[3], -a[2], -a[1], a[4])
+event_universe/quartet.py:55 | 4 | A | A-CYC-INDEX | return (a[0], -a[3], -a[2], -a[1], a[4])
+event_universe/quartet.py:64 | 2 | A | A-CYC-INDEX | cadd(cmul(a[0], b[0]), cmul(a[1], b[2])),
+event_universe/quartet.py:65 | 3 | A | A-CYC-INDEX | cadd(cmul(a[0], b[1]), cmul(a[1], b[3])),
+event_universe/quartet.py:66 | 2 | A | A-CYC-INDEX | cadd(cmul(a[2], b[0]), cmul(a[3], b[2])),
+event_universe/quartet.py:66 | 3 | A | A-CYC-INDEX | cadd(cmul(a[2], b[0]), cmul(a[3], b[2])),
+event_universe/quartet.py:66 | 2 | A | A-CYC-INDEX | cadd(cmul(a[2], b[0]), cmul(a[3], b[2])),
+event_universe/quartet.py:67 | 2 | A | A-CYC-INDEX | cadd(cmul(a[2], b[1]), cmul(a[3], b[3])),
+event_universe/quartet.py:67 | 3 | A | A-CYC-INDEX | cadd(cmul(a[2], b[1]), cmul(a[3], b[3])),
+event_universe/quartet.py:67 | 3 | A | A-CYC-INDEX | cadd(cmul(a[2], b[1]), cmul(a[3], b[3])),
+event_universe/quartet.py:72 | 2 | A | A-CYC-INDEX | return (cadd(cmul(a[0], v[0]), cmul(a[1], v[1])), cadd(cmul(a[2], v[0]), cmul(a[3], v[1])))
+event_universe/quartet.py:72 | 3 | A | A-CYC-INDEX | return (cadd(cmul(a[0], v[0]), cmul(a[1], v[1])), cadd(cmul(a[2], v[0]), cmul(a[3], v[1])))
+event_universe/quartet.py:110 | 2 | A | A-POW2 | d = 2 ** comp[4]
+event_universe/quartet.py:110 | 4 | A | A-CYC-INDEX | d = 2 ** comp[4]
+event_universe/quartet.py:111 | 2 | A | A-CYC-INDEX | found.append((comp[0], comp[2], d))
+event_universe/quartet.py:112 | 3 | A | A-CYC-INDEX | found.append((comp[1], comp[3], d))
+event_universe/quartet.py:113 | 2 | A | A-CYC-INDEX | return found[0], found[1], found[2], found[3]
+event_universe/quartet.py:113 | 3 | A | A-CYC-INDEX | return found[0], found[1], found[2], found[3]
+event_universe/quartet.py:118 | 2 | A | A-CYC-INDEX | return g[0] * g[0] + g[1] * g[1], g[2] * g[2]
+event_universe/quartet.py:118 | 2 | A | A-CYC-INDEX | return g[0] * g[0] + g[1] * g[1], g[2] * g[2]
+event_universe/quartet.py:122 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[0] - u[1] * v[1], u[0] * v[1] + u[1] * v[0], u[2] * v[2]))
+event_universe/quartet.py:122 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[0] - u[1] * v[1], u[0] * v[1] + u[1] * v[0], u[2] * v[2]))
+event_universe/quartet.py:126 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:126 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:126 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:126 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:126 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:126 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:130 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:130 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:130 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:130 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:130 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:130 | 2 | A | A-CYC-INDEX | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+event_universe/quartet.py:135 | 2 | A | A-CYC-INDEX | g = lattice(u[0], u[1], u[2])
+event_universe/quartet.py:137 | 2 | A | A-CYC-INDEX | return (quotient(u[0], g), quotient(u[1], g), quotient(u[2], g))
+event_universe/quartet.py:145 | 2 | A | A-CYC-INDEX | return greduced((num[0] * v[2], num[1] * v[2], num[2] * nrm))
+event_universe/quartet.py:145 | 2 | A | A-CYC-INDEX | return greduced((num[0] * v[2], num[1] * v[2], num[2] * nrm))
+event_universe/quartet.py:145 | 2 | A | A-CYC-INDEX | return greduced((num[0] * v[2], num[1] * v[2], num[2] * nrm))
+event_universe/quartet.py:150 | 2 | A | A-HALF-UP | return int(quotient(2 * x + n, 2 * n))
+event_universe/quartet.py:150 | 2 | A | A-HALF-UP | return int(quotient(2 * x + n, 2 * n))
+event_universe/quartet.py:156 | 2 | A | A-CYC-INDEX | return (nearest(q[0], q[2]), nearest(q[1], q[2]), 1)
+event_universe/quartet.py:156 | 2 | A | A-CYC-INDEX | return (nearest(q[0], q[2]), nearest(q[1], q[2]), 1)
+event_universe/quartet.py:164 | 2 | A | A-CYC-INDEX | rows = [list(v) for v in vectors if any(g[:2] != (0, 0) for g in v)]
+event_universe/quartet.py:168 | 2 | A | A-CYC-INDEX | pivots = [r for r in rows if r[col][:2] != (0, 0)]
+event_universe/quartet.py:177 | 2 | A | A-CYC-INDEX | rows = [r for r in rows if any(g[:2] != (0, 0) for g in r)]
+event_universe/quartet.py:178 | 2 | A | A-CYC-INDEX | pivots = [r for r in rows if r[col][:2] != (0, 0)]
+event_universe/quartet.py:195 | 2 | A | A-CYC-INDEX | scaled = [[greduced((g[0] * 2, g[1] * 2, g[2])) for g in vec] for vec in vectors]
+event_universe/quartet.py:195 | 2 | A | A-CYC-INDEX | scaled = [[greduced((g[0] * 2, g[1] * 2, g[2])) for g in vec] for vec in vectors]
+event_universe/quartet.py:195 | 2 | A | A-CYC-INDEX | scaled = [[greduced((g[0] * 2, g[1] * 2, g[2])) for g in vec] for vec in vectors]
+event_universe/quartet.py:197 | 2 | A | A-CYC-INDEX | if any(g[2] != 1 for g in vec):
+event_universe/quartet.py:199 | 2 | A | A-CYC-INDEX | return [[greduced((g[0], g[1], 2 * g[2])) for g in b] for b in hermite(scaled)]
+event_universe/quartet.py:199 | 2 | A | A-CYC-INDEX | return [[greduced((g[0], g[1], 2 * g[2])) for g in b] for b in hermite(scaled)]
+event_universe/quartet.py:207 | 2 | A | A-CYC-INDEX | d = max(p[2], q[2])
+event_universe/quartet.py:207 | 2 | A | A-CYC-INDEX | d = max(p[2], q[2])
+event_universe/quartet.py:208 | 2 | A | A-POW2 | while 2**e < d:
+event_universe/quartet.py:210 | 2 | A | A-POW2 | if 2**e != d or remainder(d, p[2]) or remainder(d, q[2]):
+event_universe/quartet.py:210 | 2 | A | A-POW2 | if 2**e != d or remainder(d, p[2]) or remainder(d, q[2]):
+event_universe/quartet.py:210 | 2 | A | A-POW2 | if 2**e != d or remainder(d, p[2]) or remainder(d, q[2]):
+event_universe/quartet.py:212 | 2 | A | A-CYC-INDEX | sp, sq = quotient(d, p[2]), quotient(d, q[2])
+event_universe/quartet.py:212 | 2 | A | A-CYC-INDEX | sp, sq = quotient(d, p[2]), quotient(d, q[2])
+event_universe/quartet.py:215 | 2 | A | A-CYC-INDEX | return (cyc(g[0], g[1]), cyc(g[2], g[3]))
+event_universe/quartet.py:215 | 3 | A | A-CYC-INDEX | return (cyc(g[0], g[1]), cyc(g[2], g[3]))
+event_universe/quartet.py:223 | 2 | A | A-CYC-INDEX | p = next(r for r in range(c, n) if a[r][c][:2] != (0, 0))
+event_universe/quartet.py:228 | 2 | A | A-CYC-INDEX | if r != c and a[r][c][:2] != (0, 0):
+event_universe/quartet.py:242 | 2 | A | A-PLANE-LINES | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+event_universe/quartet.py:242 | 2 | A | A-PLANE-LINES | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+event_universe/quartet.py:242 | 2 | A | A-PLANE-LINES | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+event_universe/quartet.py:242 | 2 | A | A-PLANE-LINES | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+event_universe/quartet.py:242 | 2 | A | A-PLANE-LINES | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+event_universe/quartet.py:242 | 2 | A | A-PLANE-LINES | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+event_universe/quartet.py:242 | 2 | A | A-PLANE-LINES | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+event_universe/quartet.py:242 | 2 | A | A-PLANE-LINES | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+event_universe/quartet.py:273 | 2 | A | A-POW2 | if remainder(HALF * h[0], 2 ** h[4]):
+event_universe/quartet.py:273 | 4 | A | A-CYC-INDEX | if remainder(HALF * h[0], 2 ** h[4]):
+event_universe/quartet.py:275 | 2 | A | A-POW2 | row.append(quotient(HALF * h[0], 2 ** h[4]))
+event_universe/quartet.py:275 | 4 | A | A-CYC-INDEX | row.append(quotient(HALF * h[0], 2 ** h[4]))
+event_universe/quartet.py:282 | 2 | A | A-POW2 | scale = 2 ** max(max(x[4] for x in v) for v in real + [vector])
+event_universe/quartet.py:282 | 4 | A | A-CYC-INDEX | scale = 2 ** max(max(x[4] for x in v) for v in real + [vector])
+event_universe/quartet.py:285 | 2 | A | A-POW2 | return [x[k] * quotient(scale, 2 ** x[4]) for x in v for k in range(HALF)]
+event_universe/quartet.py:285 | 4 | A | A-CYC-INDEX | return [x[k] * quotient(scale, 2 ** x[4]) for x in v for k in range(HALF)]
+event_universe/readings.py:54 | 4 | A | A-AXES3 | levels = [line.now for line in node.row(CARRIER).lines[1:4]] if axis_levels is None else axis_levels
+event_universe/readings.py:58 | 2 | A | A-HALF | t = paces.rounded(summed, 2)
+event_universe/readings.py:70 | 2 | A | A-TUPLE-SLOT | return [link(port, frame_bits=phi_rem)[2] for port in range(PORTS)]
+event_universe/readings.py:75 | 2 | B | B-TWICE | return 2 * (phi.now - phi.before) + cphi
+event_universe/rows.py:11 | 10 | A | A-ROWS-SHAPES | CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
+event_universe/rows.py:12 | 4 | A | A-ROWS-SHAPES | POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
+event_universe/rows.py:13 | 2 | A | A-ROWS-SHAPES | PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
+event_universe/rows.py:14 | 8 | A | A-ROWS-SHAPES | QUARTET = 8
+event_universe/rows.py:15 | 64 | B | B-WIDTH | HALF_WIDTH = 64  # half the law's width of 128 bits: the phase pair's amplitude is read from it less one
+event_universe/rows.py:16 | 54 | D | D-TRACE | TRACE = 54  # the trace's weight of the held walls and the carrier's write, 2 x 27 (ALGEBRA.md, the held write)
+event_universe/rows.py:74 | 4 | A | A-HELD-POWERS | return [held_wall(TRACE, den, gamma, action, p) for p in (4, *[2] * (shape - 1))]
+event_universe/rows.py:74 | 2 | A | A-HELD-POWERS | return [held_wall(TRACE, den, gamma, action, p) for p in (4, *[2] * (shape - 1))]
+event_universe/rows.py:112 | 3 | A | A-ROWS-SHAPES | return {POTENTIAL: 3, CARRIER: 4}.get(row.shape, CARRIER + 1)
+event_universe/rows.py:112 | 4 | A | A-ROWS-SHAPES | return {POTENTIAL: 3, CARRIER: 4}.get(row.shape, CARRIER + 1)
+event_universe/run.py:22 | 12 | C | C-UNITS | MARKS = 12  # the reader's rows: one at every twelfth of the run
+event_universe/run.py:23 | 60 | C | C-UNITS | EARLY = (60, 24)  # and two early marks, at the sixtieth and the twenty-fourth
+event_universe/run.py:23 | 24 | C | C-UNITS | EARLY = (60, 24)  # and two early marks, at the sixtieth and the twenty-fourth
+event_universe/run.py:24 | 1000 | C | C-UNITS | THOUSAND = 1000  # a centroid in thousandths of a Link, a clock in milliseconds
+event_universe/run.py:87 | 2 | A | A-PLANE-LINES | "links at the wall": sum(1 for f in node.link_factors()[0::2] for x in ints(f) if x == 0),
+event_universe/run.py:105 | 2 | A | A-PORT-OF-AXIS | held = [[i, axis] for axis in range(AXES) for i, f in enumerate(ints(factors[2 * axis])) if f == 0]
+event_universe/run.py:114 | 2 | A | A-PORT-OF-AXIS | "current": [ints(link_current(gap0, 2 * axis)) for axis in range(AXES)],
+event_universe/run.py:197 | 2 | C | C-RECORD-SLOT | with open(argv[2], "w", encoding="utf-8") as out:
+event_universe/seed.py:85 | 2 | B | B-RAISED-COSINE | if h not in (2, 3):
+event_universe/seed.py:85 | 3 | B | B-RAISED-COSINE | if h not in (2, 3):
+event_universe/seed.py:87 | 2 | B | B-RAISED-COSINE | doubled = [2, h - 2]
+event_universe/seed.py:87 | 2 | B | B-RAISED-COSINE | doubled = [2, h - 2]
+event_universe/seed.py:89 | 2 | B | B-RAISED-COSINE | doubled.append(doubled[1] * doubled[-1] - doubled[-2])
+event_universe/seed.py:90 | 2 | B | B-RAISED-COSINE | return tuple(2 + t for t in doubled[:h])
+event_universe/seed.py:96 | 2 | A | A-PLANE-LINES | return [tuple(j[a] - reach[a] for a in range(AXES)) for j in np.ndindex(*(2 * r + 1 for r in reach))]
+event_universe/seed.py:119 | 2 | B | B-TWICE | int(odd_rounded(den * den - 2 * h * h, den)),
+event_universe/seed.py:120 | 2 | B | B-TWICE | int(odd_rounded(2 * h * largest_below(den * den - h * h), den)),
+event_universe/seed.py:162 | 3 | A | A-AXES3 | cosine = int(quotient(num * sum(c for c, _s in points), 3 * den))
+event_universe/seed.py:211 | 2 | A | A-HALF | middle = int(quotient(low + high, 2))
+event_universe/seed.py:262 | 2 | A | A-HALF | middle = int(quotient(low + high, 2))
+event_universe/seed.py:277 | 2 | A | A-HALF | if top < 1 or remainder(top, 2) == 0 or top + 2 * (h - 1) > node.cube:
+event_universe/seed.py:277 | 2 | A | A-HALF | if top < 1 or remainder(top, 2) == 0 or top + 2 * (h - 1) > node.cube:
+event_universe/seed.py:282 | 2 | A | A-HALF | half_tops = tuple(int(quotient(top - 1, 2)) if abs(x) == largest else 0 for x in wave)
+event_universe/take.py:82 | 2 | B | B-TWICE | x, weight = int(node.start_x[at]), 2 * node.gamma**3 * node.G * node.G
+event_universe/take.py:82 | 3 | A | A-POWER-WRITTEN | x, weight = int(node.start_x[at]), 2 * node.gamma**3 * node.G * node.G
+event_universe/take.py:85 | 2 | A | A-POWER-WRITTEN | return int(quotient(x * (w * (now * now - (now + t * s) ** 2) - t * s * pull), weight))
+event_universe/take.py:91 | 2 | B | B-TWICE | for s in rule3.least_root(-w * x, -(2 * w * now + pull) * t * x, walls * weight, dist):
+event_universe/take.py:103 | 2 | A | A-PLANE-LINES | for line, now, before in zip(lines, levels[0::2], levels[1::2], strict=True):
+event_universe/take.py:103 | 2 | A | A-PLANE-LINES | for line, now, before in zip(lines, levels[0::2], levels[1::2], strict=True):
+event_universe/take.py:120 | 2 | A | A-PORT-OF-AXIS | up, down = neighbour(node, at, 2 * a), neighbour(node, at, 2 * a + 1)
+event_universe/take.py:120 | 2 | A | A-PORT-OF-AXIS | up, down = neighbour(node, at, 2 * a), neighbour(node, at, 2 * a + 1)
+event_universe/take.py:122 | 2 | B | B-TWICE | found.append(2 * num * cross(d_now, d_before, dn, db))
+event_universe/take.py:150 | 2 | A | A-PLANE-LINES | lay(node, taken, at, (toward * levels,) + (0,) * (2 * row.shape - 1))
+event_universe/core/paces.py:57 | 3 | A | A-POWER-WRITTEN | found, scaled, carry = [], gamma**3, int(half(self.wall))
+event_universe/core/paces.py:69 | 3 | A | A-POWER-WRITTEN | Side(gamma - 1, gamma, gamma**3, int(half(gamma))),
+event_universe/core/paces.py:70 | 3 | A | A-POWER-WRITTEN | Side(gamma, gamma - 1, gamma**3, int(half(gamma - 1))),
+event_universe/core/paces.py:81 | 3 | E | E-REFUSAL-HEAD | f"the clock at Gamma {gamma} is undecided at the contents {undecided[:3]}: the paces are refused"
+event_universe/core/ports.py:7 | 3 | A | A-PORTS-DEF | AXES = 3  # the lattice's three axes
+event_universe/core/ports.py:8 | 2 | A | A-PORTS-DEF | SIDES = 2  # the two Ports of one axis, +a and -a
+event_universe/core/rule3.py:25 | 6 | A | A-PORTS6 | return 6 * den * gamma * gamma * unit * unit
+event_universe/core/rule3.py:30 | 12 | A | A-SIDESPORTS12 | return 12 * (den - num) * clock * clock * unit * unit
+event_universe/core/rule3.py:46 | 2 | B | B-TWICE | reaches = tuple(2 * node_squared * factor * num for factor in links)
+event_universe/core/rule3.py:69 | 2 | A | A-HALF | half = division_forward(wall, 2, 0)[0]
+event_universe/core/rule3.py:112 | 2 | B | B-TWICE | while 2 * unit * unit * (2 * gamma - 1) <= gamma * gamma:
+event_universe/core/rule3.py:112 | 2 | B | B-TWICE | while 2 * unit * unit * (2 * gamma - 1) <= gamma * gamma:
+event_universe/core/rule3.py:126 | 4 | B | B-HELD-WRITE-4 | return 4 * level * (forms * weight * den * gamma**2 - trace * clock * clock) * clock
+event_universe/core/rule3.py:126 | 2 | A | A-POWER-WRITTEN | return 4 * level * (forms * weight * den * gamma**2 - trace * clock * clock) * clock
+event_universe/core/rule3.py:131 | 3 | B | B-UNIT-3TS | return 3 * action * sine
+event_universe/core/rule3.py:136 | 2 | A | A-PARITY | return remainder if reversals % 2 == 0 else wall - 1 - remainder
+event_universe/core/rule3.py:141 | 2 | B | B-SIGN | sign = (numerator >= 0) * 2 - 1
+event_universe/core/rule3.py:147 | 2 | A | A-HALF | return division_forward(wall, 2, 0)[0]
+event_universe/core/rule3.py:173 | 4 | B | B-QUADRATIC | disc = b * b + 4 * a * target
+event_universe/core/rule3.py:177 | 2 | B | B-QUADRATIC | s1 = quotient(b - root, -2 * a) if a < 0 else quotient(-b + root, 2 * a)
+event_universe/core/rule3.py:177 | 2 | B | B-QUADRATIC | s1 = quotient(b - root, -2 * a) if a < 0 else quotient(-b + root, 2 * a)
+event_universe/core/rule3.py:178 | 2 | B | B-QUADRATIC | return sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
+event_universe/core/rule3.py:198 | 2 | A | A-HALF | middle = int(division_forward(low + high, 2, 0)[0])
+event_universe/features/phase/__init__.py:20 | 2 | B | B-TWICE | return 2 * gamma
+event_universe/features/phase/__init__.py:25 | 2 | B | B-TWICE | return 2 * gamma * gamma
+event_universe/features/phase/__init__.py:35 | 2 | A | A-HALF | return division_forward(D(gamma), 2, 0)[0]
+event_universe/features/phase/__init__.py:62 | 2 | B | B-TWICE | wall + wall - 2 * K0(gamma)
+event_universe/features/phase/__init__.py:73 | 2 | A | A-POW2 | largest = 2**width - 1
+event_universe/features/phase/__init__.py:74 | 2 | B | B-TWICE | room = division_forward(largest, 2 * D(gamma), 0)[0]
+event_universe/features/phase/__init__.py:75 | 2 | A | A-HALF | half = division_forward(room, 2, 0)[0]
+event_universe/features/volume/__init__.py:29 | 2 | A | A-HALF | middle = int(division_forward(low + high, 2, 0)[0])
+event_universe/features/volume/__init__.py:96 | 2 | A | A-HALF | [division_forward(a + b, 2, 0)[0] for a, b in zip(low, high, strict=True)], dtype=object
+
+
+groups:
+
+[D-TRACE] class D, 1 sites: TRACE = 54, a number of the universe under derivation by two hands (rows.py)
+  event_universe/rows.py:16 | 54 | TRACE = 54  # the trace's weight of the held walls and the carrier's write, 2 x 27 (ALGEBRA.md, the held write)
+
+[A-PORTS-DEF] class A, 2 sites: ports.py: AXES = 3 and SIDES = 2, the two definitions the lattice's names rest on
+  event_universe/core/ports.py:7 | 3 | AXES = 3  # the lattice's three axes
+  event_universe/core/ports.py:8 | 2 | SIDES = 2  # the two Ports of one axis, +a and -a
+
+[A-ROWS-SHAPES] class A, 6 sites: rows.py: the rows' shapes CARRIER 10, POTENTIAL 4, PLANE 2, QUARTET 8 and the acts' order (3, 4 in order_of)
+  event_universe/rows.py:11 | 10 | CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
+  event_universe/rows.py:12 | 4 | POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
+  event_universe/rows.py:13 | 2 | PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
+  event_universe/rows.py:14 | 8 | QUARTET = 8
+  event_universe/rows.py:112 | 3 | return {POTENTIAL: 3, CARRIER: 4}.get(row.shape, CARRIER + 1)
+  event_universe/rows.py:112 | 4 | return {POTENTIAL: 3, CARRIER: 4}.get(row.shape, CARRIER + 1)
+
+[A-HELD-POWERS] class A, 2 sites: rows.py:74, the held walls' powers: 4 the time line's, 2 the axis lines' (held_wall)
+  event_universe/rows.py:74 | 4 | return [held_wall(TRACE, den, gamma, action, p) for p in (4, *[2] * (shape - 1))]
+  event_universe/rows.py:74 | 2 | return [held_wall(TRACE, den, gamma, action, p) for p in (4, *[2] * (shape - 1))]
+
+[B-WIDTH] class B, 2 sites: 128 the law's width (decoder.WIDTH); 64 = WIDTH div 2 (rows.HALF_WIDTH), derived and typed
+  event_universe/decoder.py:16 | 128 | WIDTH = 128  # the law's width: every integer of the state and of every transient within it
+  event_universe/rows.py:15 | 64 | HALF_WIDTH = 64  # half the law's width of 128 bits: the phase pair's amplitude is read from it less one
+
+[C-UNITS] class C, 9 sites: the readers' units named once with their meaning: the million MIL, the hundred HUNDRED, the thousand THOUSAND, the fewest credits FEW and the fewest spans SPANS (decoder.py), the marks MARKS and EARLY and the thousand (run.py)
+  event_universe/decoder.py:13 | 1000000 | MIL = 1000000  # readings in parts per million
+  event_universe/decoder.py:14 | 100 | HUNDRED = 100  # readings in hundredths
+  event_universe/decoder.py:15 | 1000 | THOUSAND = 1000  # readings in thousandths
+  event_universe/decoder.py:17 | 10 | FEW = 10  # the fewest decoded credits for the dilation's two halves
+  event_universe/decoder.py:18 | 20 | SPANS = 20  # the fewest spans for the lengthening's two halves
+  event_universe/run.py:22 | 12 | MARKS = 12  # the reader's rows: one at every twelfth of the run
+  event_universe/run.py:23 | 60 | EARLY = (60, 24)  # and two early marks, at the sixtieth and the twenty-fourth
+  event_universe/run.py:23 | 24 | EARLY = (60, 24)  # and two early marks, at the sixtieth and the twenty-fourth
+  event_universe/run.py:24 | 1000 | THOUSAND = 1000  # a centroid in thousandths of a Link, a clock in milliseconds
+
+[A-PORTS6] class A, 1 sites: 6 = PORTS in wall_of, w = 6 den Gamma^2 G^2 (ports.py names PORTS the one definition of Rule3's 6)
+  event_universe/core/rule3.py:25 | 6 | return 6 * den * gamma * gamma * unit * unit
+
+[A-SIDESPORTS12] class A, 2 sites: 12 = SIDES x PORTS, twice the six: the mass D_i (rule3.mass) and the decoder's re-typed weight 12 p0^2 G^2 (decoder.solve)
+  event_universe/decoder.py:113 | 12 | weight = 12 * p0 * p0 * unit * unit
+  event_universe/core/rule3.py:30 | 12 | return 12 * (den - num) * clock * clock * unit * unit
+
+[B-QUADRATIC] class B, 4 sites: rule3.least_root: the quadratic's own 4 a c, 2 a, and the root's second neighbour s + 2
+  event_universe/core/rule3.py:173 | 4 | disc = b * b + 4 * a * target
+  event_universe/core/rule3.py:177 | 2 | s1 = quotient(b - root, -2 * a) if a < 0 else quotient(-b + root, 2 * a)
+  event_universe/core/rule3.py:177 | 2 | s1 = quotient(b - root, -2 * a) if a < 0 else quotient(-b + root, 2 * a)
+  event_universe/core/rule3.py:178 | 2 | return sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
+
+[B-UNIT-3TS] class B, 1 sites: 3 T s the plane's unit (rule3.unit_of, the conventions' row 12)
+  event_universe/core/rule3.py:131 | 3 | return 3 * action * sine
+
+[B-HELD-WRITE-4] class B, 2 sites: 4 X (forms 54 den Gamma^2 - trace p0^2) p0 the held write (rule3.held_numerator); 4 Gamma^3 G^2 the share's wall (gram.py:160)
+  event_universe/gram.py:160 | 4 | wall = 4 * node.gamma * node.gamma * node.gamma * node.G * node.G
+  event_universe/core/rule3.py:126 | 4 | return 4 * level * (forms * weight * den * gamma**2 - trace * clock * clock) * clock
+
+[B-LINK-WALL-4G] class B, 2 sites: W = 4 Gamma the Link's wall of the tangent triple, typed twice (links.turned, decoder.solve)
+  event_universe/decoder.py:111 | 4 | wl = 4 * gamma
+  event_universe/links.py:56 | 4 | wl = 4 * gamma
+
+[A-POWER-WRITTEN] class A, 12 sites: x ** 2, x ** 3 (den**2, gamma**2, gamma**3 the paces' N_0, 2 Gamma^3 G^2 the take's weight): the square and the cube by the operator's literal where the code's convention is the product (gamma * gamma * gamma in gram.py:160)
+  event_universe/decoder.py:168 | 2 | within += (n * den - num * d) ** 2 <= 2 * (record.w * den) ** 2 * d
+  event_universe/decoder.py:168 | 2 | within += (n * den - num * d) ** 2 <= 2 * (record.w * den) ** 2 * d
+  event_universe/decoder.py:168 | 2 | within += (n * den - num * d) ** 2 <= 2 * (record.w * den) ** 2 * d
+  event_universe/node.py:69 | 2 | if r.pair and r.gap and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
+  event_universe/node.py:69 | 2 | if r.pair and r.gap and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
+  event_universe/node.py:69 | 2 | if r.pair and r.gap and r.pair[0] ** 2 + sine_den(r.pair[0], self.den) ** 2 != self.den**2:
+  event_universe/take.py:82 | 3 | x, weight = int(node.start_x[at]), 2 * node.gamma**3 * node.G * node.G
+  event_universe/take.py:85 | 2 | return int(quotient(x * (w * (now * now - (now + t * s) ** 2) - t * s * pull), weight))
+  event_universe/core/paces.py:57 | 3 | found, scaled, carry = [], gamma**3, int(half(self.wall))
+  event_universe/core/paces.py:69 | 3 | Side(gamma - 1, gamma, gamma**3, int(half(gamma))),
+  event_universe/core/paces.py:70 | 3 | Side(gamma, gamma - 1, gamma**3, int(half(gamma - 1))),
+  event_universe/core/rule3.py:126 | 2 | return 4 * level * (forms * weight * den * gamma**2 - trace * clock * clock) * clock
+
+[A-POW2] class A, 12 sites: 2 ** e, 2 ** width: a power of two (the lattice's halves, the width's room): 1 << e
+  event_universe/quartet.py:45 | 2 | sa, sb = 2 ** (e - a[4]), 2 ** (e - b[4])
+  event_universe/quartet.py:45 | 2 | sa, sb = 2 ** (e - a[4]), 2 ** (e - b[4])
+  event_universe/quartet.py:110 | 2 | d = 2 ** comp[4]
+  event_universe/quartet.py:208 | 2 | while 2**e < d:
+  event_universe/quartet.py:210 | 2 | if 2**e != d or remainder(d, p[2]) or remainder(d, q[2]):
+  event_universe/quartet.py:210 | 2 | if 2**e != d or remainder(d, p[2]) or remainder(d, q[2]):
+  event_universe/quartet.py:210 | 2 | if 2**e != d or remainder(d, p[2]) or remainder(d, q[2]):
+  event_universe/quartet.py:273 | 2 | if remainder(HALF * h[0], 2 ** h[4]):
+  event_universe/quartet.py:275 | 2 | row.append(quotient(HALF * h[0], 2 ** h[4]))
+  event_universe/quartet.py:282 | 2 | scale = 2 ** max(max(x[4] for x in v) for v in real + [vector])
+  event_universe/quartet.py:285 | 2 | return [x[k] * quotient(scale, 2 ** x[4]) for x in v for k in range(HALF)]
+  event_universe/features/phase/__init__.py:73 | 2 | largest = 2**width - 1
+
+[A-CYC-INDEX] class A, 76 sites: quartet.py: the slot of a Cyc (a[2], a[3], a[4] the power of two) or a Gauss (g[2] the denominator) read by index; g[:2] the Gaussian's two parts, a[:4] the four coordinates (HALF)
+  event_universe/quartet.py:39 | 2 | return normal((c[0], c[1], c[2], c[3], a[4] + b[4]))
+  event_universe/quartet.py:39 | 3 | return normal((c[0], c[1], c[2], c[3], a[4] + b[4]))
+  event_universe/quartet.py:39 | 4 | return normal((c[0], c[1], c[2], c[3], a[4] + b[4]))
+  event_universe/quartet.py:39 | 4 | return normal((c[0], c[1], c[2], c[3], a[4] + b[4]))
+  event_universe/quartet.py:44 | 4 | e = max(a[4], b[4])
+  event_universe/quartet.py:44 | 4 | e = max(a[4], b[4])
+  event_universe/quartet.py:45 | 4 | sa, sb = 2 ** (e - a[4]), 2 ** (e - b[4])
+  event_universe/quartet.py:45 | 4 | sa, sb = 2 ** (e - a[4]), 2 ** (e - b[4])
+  event_universe/quartet.py:46 | 4 | return normal(tuple(x * sa + y * sb for x, y in zip(a[:4], b[:4], strict=True)) + (e,))
+  event_universe/quartet.py:46 | 4 | return normal(tuple(x * sa + y * sb for x, y in zip(a[:4], b[:4], strict=True)) + (e,))
+  event_universe/quartet.py:50 | 2 | return (-a[0], -a[1], -a[2], -a[3], a[4])
+  event_universe/quartet.py:50 | 3 | return (-a[0], -a[1], -a[2], -a[3], a[4])
+  event_universe/quartet.py:50 | 4 | return (-a[0], -a[1], -a[2], -a[3], a[4])
+  event_universe/quartet.py:55 | 3 | return (a[0], -a[3], -a[2], -a[1], a[4])
+  event_universe/quartet.py:55 | 2 | return (a[0], -a[3], -a[2], -a[1], a[4])
+  event_universe/quartet.py:55 | 4 | return (a[0], -a[3], -a[2], -a[1], a[4])
+  event_universe/quartet.py:64 | 2 | cadd(cmul(a[0], b[0]), cmul(a[1], b[2])),
+  event_universe/quartet.py:65 | 3 | cadd(cmul(a[0], b[1]), cmul(a[1], b[3])),
+  event_universe/quartet.py:66 | 2 | cadd(cmul(a[2], b[0]), cmul(a[3], b[2])),
+  event_universe/quartet.py:66 | 3 | cadd(cmul(a[2], b[0]), cmul(a[3], b[2])),
+  event_universe/quartet.py:66 | 2 | cadd(cmul(a[2], b[0]), cmul(a[3], b[2])),
+  event_universe/quartet.py:67 | 2 | cadd(cmul(a[2], b[1]), cmul(a[3], b[3])),
+  event_universe/quartet.py:67 | 3 | cadd(cmul(a[2], b[1]), cmul(a[3], b[3])),
+  event_universe/quartet.py:67 | 3 | cadd(cmul(a[2], b[1]), cmul(a[3], b[3])),
+  event_universe/quartet.py:72 | 2 | return (cadd(cmul(a[0], v[0]), cmul(a[1], v[1])), cadd(cmul(a[2], v[0]), cmul(a[3], v[1])))
+  event_universe/quartet.py:72 | 3 | return (cadd(cmul(a[0], v[0]), cmul(a[1], v[1])), cadd(cmul(a[2], v[0]), cmul(a[3], v[1])))
+  event_universe/quartet.py:110 | 4 | d = 2 ** comp[4]
+  event_universe/quartet.py:111 | 2 | found.append((comp[0], comp[2], d))
+  event_universe/quartet.py:112 | 3 | found.append((comp[1], comp[3], d))
+  event_universe/quartet.py:113 | 2 | return found[0], found[1], found[2], found[3]
+  event_universe/quartet.py:113 | 3 | return found[0], found[1], found[2], found[3]
+  event_universe/quartet.py:118 | 2 | return g[0] * g[0] + g[1] * g[1], g[2] * g[2]
+  event_universe/quartet.py:118 | 2 | return g[0] * g[0] + g[1] * g[1], g[2] * g[2]
+  event_universe/quartet.py:122 | 2 | return greduced((u[0] * v[0] - u[1] * v[1], u[0] * v[1] + u[1] * v[0], u[2] * v[2]))
+  event_universe/quartet.py:122 | 2 | return greduced((u[0] * v[0] - u[1] * v[1], u[0] * v[1] + u[1] * v[0], u[2] * v[2]))
+  event_universe/quartet.py:126 | 2 | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:126 | 2 | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:126 | 2 | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:126 | 2 | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:126 | 2 | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:126 | 2 | return greduced((u[0] * v[2] - v[0] * u[2], u[1] * v[2] - v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:130 | 2 | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:130 | 2 | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:130 | 2 | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:130 | 2 | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:130 | 2 | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:130 | 2 | return greduced((u[0] * v[2] + v[0] * u[2], u[1] * v[2] + v[1] * u[2], u[2] * v[2]))
+  event_universe/quartet.py:135 | 2 | g = lattice(u[0], u[1], u[2])
+  event_universe/quartet.py:137 | 2 | return (quotient(u[0], g), quotient(u[1], g), quotient(u[2], g))
+  event_universe/quartet.py:145 | 2 | return greduced((num[0] * v[2], num[1] * v[2], num[2] * nrm))
+  event_universe/quartet.py:145 | 2 | return greduced((num[0] * v[2], num[1] * v[2], num[2] * nrm))
+  event_universe/quartet.py:145 | 2 | return greduced((num[0] * v[2], num[1] * v[2], num[2] * nrm))
+  event_universe/quartet.py:156 | 2 | return (nearest(q[0], q[2]), nearest(q[1], q[2]), 1)
+  event_universe/quartet.py:156 | 2 | return (nearest(q[0], q[2]), nearest(q[1], q[2]), 1)
+  event_universe/quartet.py:164 | 2 | rows = [list(v) for v in vectors if any(g[:2] != (0, 0) for g in v)]
+  event_universe/quartet.py:168 | 2 | pivots = [r for r in rows if r[col][:2] != (0, 0)]
+  event_universe/quartet.py:177 | 2 | rows = [r for r in rows if any(g[:2] != (0, 0) for g in r)]
+  event_universe/quartet.py:178 | 2 | pivots = [r for r in rows if r[col][:2] != (0, 0)]
+  event_universe/quartet.py:195 | 2 | scaled = [[greduced((g[0] * 2, g[1] * 2, g[2])) for g in vec] for vec in vectors]
+  event_universe/quartet.py:195 | 2 | scaled = [[greduced((g[0] * 2, g[1] * 2, g[2])) for g in vec] for vec in vectors]
+  event_universe/quartet.py:195 | 2 | scaled = [[greduced((g[0] * 2, g[1] * 2, g[2])) for g in vec] for vec in vectors]
+  event_universe/quartet.py:197 | 2 | if any(g[2] != 1 for g in vec):
+  event_universe/quartet.py:199 | 2 | return [[greduced((g[0], g[1], 2 * g[2])) for g in b] for b in hermite(scaled)]
+  event_universe/quartet.py:199 | 2 | return [[greduced((g[0], g[1], 2 * g[2])) for g in b] for b in hermite(scaled)]
+  event_universe/quartet.py:207 | 2 | d = max(p[2], q[2])
+  event_universe/quartet.py:207 | 2 | d = max(p[2], q[2])
+  event_universe/quartet.py:212 | 2 | sp, sq = quotient(d, p[2]), quotient(d, q[2])
+  event_universe/quartet.py:212 | 2 | sp, sq = quotient(d, p[2]), quotient(d, q[2])
+  event_universe/quartet.py:215 | 2 | return (cyc(g[0], g[1]), cyc(g[2], g[3]))
+  event_universe/quartet.py:215 | 3 | return (cyc(g[0], g[1]), cyc(g[2], g[3]))
+  event_universe/quartet.py:223 | 2 | p = next(r for r in range(c, n) if a[r][c][:2] != (0, 0))
+  event_universe/quartet.py:228 | 2 | if r != c and a[r][c][:2] != (0, 0):
+  event_universe/quartet.py:273 | 4 | if remainder(HALF * h[0], 2 ** h[4]):
+  event_universe/quartet.py:275 | 4 | row.append(quotient(HALF * h[0], 2 ** h[4]))
+  event_universe/quartet.py:282 | 4 | scale = 2 ** max(max(x[4] for x in v) for v in real + [vector])
+  event_universe/quartet.py:285 | 4 | return [x[k] * quotient(scale, 2 ** x[4]) for x in v for k in range(HALF)]
+
+[A-HALF-UP] class A, 2 sites: quartet.nearest: (2 x + n) div 2 n, the half-up rounding (paces.rounded's own form, numerator + numerator over wall + wall)
+  event_universe/quartet.py:150 | 2 | return int(quotient(2 * x + n, 2 * n))
+  event_universe/quartet.py:150 | 2 | return int(quotient(2 * x + n, 2 * n))
+
+[C-CIRCLE] class C, 13 sites: circle.py (a reader by the law's letter, den's circle from den alone): primality's 2, Pollard's start and doubling, the Gaussian exponent's range 2 e + 1, the primes 1 mod 4
+  event_universe/circle.py:10 | 2 | return [p for p in range(2, n.bit_length() + 2) if all(p % q for q in range(2, p))]
+  event_universe/circle.py:10 | 2 | return [p for p in range(2, n.bit_length() + 2) if all(p % q for q in range(2, p))]
+  event_universe/circle.py:10 | 2 | return [p for p in range(2, n.bit_length() + 2) if all(p % q for q in range(2, p))]
+  event_universe/circle.py:15 | 2 | if n < 2:
+  event_universe/circle.py:22 | 2 | while d % 2 == 0:
+  event_universe/circle.py:23 | 2 | d, s = d // 2, s + 1
+  event_universe/circle.py:39 | 2 | if n % 2 == 0:
+  event_universe/circle.py:40 | 2 | return 2
+  event_universe/circle.py:43 | 2 | y, m, g, r, q = 2, n.bit_length(), 1, 1, 1
+  event_universe/circle.py:56 | 2 | r *= 2
+  event_universe/circle.py:83 | 4 | if p % 4 != 1:
+  event_universe/circle.py:97 | 2 | for j in range(2 * e + 1):
+  event_universe/circle.py:101 | 2 | for _ in range(2 * e - j):
+
+[C-RECORD-SLOT] class C, 8 sites: a reader's field read by index: lines[falls[0] - 2], rows[0][2], ["content min/mean/max"][2], credited[-2], legs[-2], found[2], argv[2]
+  event_universe/board.py:26 | 2 | before, after = lines[falls[0] - 2][1], lines[falls[0] - 1][1]
+  event_universe/board.py:63 | 2 | return [(i, v, b) for i, v, b in rows[1:] if v <= rows[0][1] and b > rows[0][2]] if rows else []
+  event_universe/board.py:210 | 2 | cmax = max((int(r["content min/mean/max"][2]) for r in record.rows), default=0)
+  event_universe/clicks.py:136 | 2 | heavy, light = credited[-1], credited[-2]
+  event_universe/clicks.py:167 | 2 | spacing = quot(abs(legs[-1][0] - legs[-2][0]), legs[-1][0], MIL) if len(legs) >= 2 else None
+  event_universe/clicks.py:167 | 2 | spacing = quot(abs(legs[-1][0] - legs[-2][0]), legs[-1][0], MIL) if len(legs) >= 2 else None
+  event_universe/decoder.py:92 | 2 | return int(found[0]), int(found[1]), int(found[2])
+  event_universe/run.py:197 | 2 | with open(argv[2], "w", encoding="utf-8") as out:
+
+[C-THREE-LEVELS] class C, 2 sites: decoder.carrier_levels: the three carrier levels (i - 3, i - 2, i - 1), the reader's own count
+  event_universe/decoder.py:91 | 3 | found = [lines[k]["X"][index] if k >= 0 else record.gamma for k in (i - 3, i - 2, i - 1)]
+  event_universe/decoder.py:91 | 2 | found = [lines[k]["X"][index] if k >= 0 else record.gamma for k in (i - 3, i - 2, i - 1)]
+
+[B-LAW-THIRD] class B, 1 sites: T div 6 a third of the charge, no third alone (predicates.confinement, row 27)
+  event_universe/predicates.py:145 | 6 | half, third = record.T // 2, record.T // 6
+
+[A-TUPLE-SLOT] class A, 7 sites: an act's tuple read by index: the Birth's k[2], k[3], kid[2] (close.py), act(...)[2] the write's return (node.py), link(...)[2] the frame sign (readings.py)
+  event_universe/close.py:92 | 2 | crowded = [k for k in kept if landing[(k[1], k[2])] > 1 or landing[(k[1], k[3])] > 1]
+  event_universe/close.py:92 | 3 | crowded = [k for k in kept if landing[(k[1], k[2])] > 1 or landing[(k[1], k[3])] > 1]
+  event_universe/close.py:105 | 2 | walls = {k: walls_of(node, k[1], k[2], k[3], c, factors) for k in kept}
+  event_universe/close.py:105 | 3 | walls = {k: walls_of(node, k[1], k[2], k[3], c, factors) for k in kept}
+  event_universe/close.py:114 | 2 | got = merger_take(node, kid[1], kid[2], walls[(at, *kid, rec)], rule, rec)
+  event_universe/node.py:255 | 2 | return self.act(lines, r, None, numerators, direction, None, top, kept)[2]
+  event_universe/readings.py:70 | 2 | return [link(port, frame_bits=phi_rem)[2] for port in range(PORTS)]
+
+[E-REFUSAL-HEAD] class E, 1 sites: paces.certified: the refusal's message lists undecided[:3], a count no act reads (a message's head)
+  event_universe/core/paces.py:81 | 3 | f"the clock at Gamma {gamma} is undecided at the contents {undecided[:3]}: the paces are refused"
+
+[A-HALF] class A, 34 sites: the halving: x // 2, quotient(x, 2), division_forward(x, 2, 0), (low + high) div 2 the bisection's middle, w // 2 the mean wall, rounded(summed, 2) the tension's mean, the readers' middles and means (clicks, decoder.middle, events, predicates T div 2)
+  event_universe/clicks.py:172 | 2 | fl[len(fl) // 2],
+  event_universe/clicks.py:252 | 2 | med = sorted(p[0] for p in pairs)[len(pairs) // 2]
+  event_universe/clicks.py:293 | 2 | ((a["content"] + b["content"]) // 2, b["i"] - a["i"])
+  event_universe/decoder.py:104 | 2 | w_in, w_out = (w // 2) * (x_b + x_n), (w // 2) * (x_n + x_x)
+  event_universe/decoder.py:104 | 2 | w_in, w_out = (w // 2) * (x_b + x_n), (w // 2) * (x_n + x_x)
+  event_universe/decoder.py:143 | 2 | return xs[k // 2]
+  event_universe/decoder.py:144 | 2 | p, q = xs[k // 2 - 1], xs[k // 2]
+  event_universe/decoder.py:144 | 2 | p, q = xs[k // 2 - 1], xs[k // 2]
+  event_universe/decoder.py:145 | 2 | return (p[0] * q[1] + q[0] * p[1], 2 * p[1] * q[1])
+  event_universe/events.py:85 | 2 | mid = (low + high) // 2
+  event_universe/gram.py:37 | 2 | for p in range(quotient(shape, 2)):
+  event_universe/gram.py:202 | 2 | middle = quotient(low + high, 2)
+  event_universe/links.py:50 | 2 | f = None if frame_bits is None else 1 - 2 * remainder(frame_bits + across(frame_bits, port), 2)
+  event_universe/links.py:50 | 2 | f = None if frame_bits is None else 1 - 2 * remainder(frame_bits + across(frame_bits, port), 2)
+  event_universe/predicates.py:145 | 2 | half, third = record.T // 2, record.T // 6
+  event_universe/quartet.py:20 | 2 | HALF = quotient(QUARTET, 2)  # the four Gaussian coordinates of a lattice vector
+  event_universe/quartet.py:26 | 2 | while e > 0 and not any(remainder(x, 2) for x in (a0, a1, a2, a3)):
+  event_universe/quartet.py:27 | 2 | a0, a1, a2, a3, e = quotient(a0, 2), quotient(a1, 2), quotient(a2, 2), quotient(a3, 2), e - 1
+  event_universe/quartet.py:27 | 2 | a0, a1, a2, a3, e = quotient(a0, 2), quotient(a1, 2), quotient(a2, 2), quotient(a3, 2), e - 1
+  event_universe/quartet.py:27 | 2 | a0, a1, a2, a3, e = quotient(a0, 2), quotient(a1, 2), quotient(a2, 2), quotient(a3, 2), e - 1
+  event_universe/quartet.py:27 | 2 | a0, a1, a2, a3, e = quotient(a0, 2), quotient(a1, 2), quotient(a2, 2), quotient(a3, 2), e - 1
+  event_universe/readings.py:58 | 2 | t = paces.rounded(summed, 2)
+  event_universe/seed.py:211 | 2 | middle = int(quotient(low + high, 2))
+  event_universe/seed.py:262 | 2 | middle = int(quotient(low + high, 2))
+  event_universe/seed.py:277 | 2 | if top < 1 or remainder(top, 2) == 0 or top + 2 * (h - 1) > node.cube:
+  event_universe/seed.py:277 | 2 | if top < 1 or remainder(top, 2) == 0 or top + 2 * (h - 1) > node.cube:
+  event_universe/seed.py:282 | 2 | half_tops = tuple(int(quotient(top - 1, 2)) if abs(x) == largest else 0 for x in wave)
+  event_universe/core/rule3.py:69 | 2 | half = division_forward(wall, 2, 0)[0]
+  event_universe/core/rule3.py:147 | 2 | return division_forward(wall, 2, 0)[0]
+  event_universe/core/rule3.py:198 | 2 | middle = int(division_forward(low + high, 2, 0)[0])
+  event_universe/features/phase/__init__.py:35 | 2 | return division_forward(D(gamma), 2, 0)[0]
+  event_universe/features/phase/__init__.py:75 | 2 | half = division_forward(room, 2, 0)[0]
+  event_universe/features/volume/__init__.py:29 | 2 | middle = int(division_forward(low + high, 2, 0)[0])
+  event_universe/features/volume/__init__.py:96 | 2 | [division_forward(a + b, 2, 0)[0] for a, b in zip(low, high, strict=True)], dtype=object
+
+[A-PARITY] class A, 2 sites: the parity: remainder(x, 2), x % 2, k % 2, reversals % 2 (circle apart)
+  event_universe/decoder.py:142 | 2 | if k % 2:
+  event_universe/core/rule3.py:136 | 2 | return remainder if reversals % 2 == 0 else wall - 1 - remainder
+
+[C-LISTED] class C, 16 sites: the readers' list heads and samples typed inline: [:8], [:6], [-6:], [:4], // 8 every eighth, // 3 the last third, words[:2]/[:3], and paces' refusal undecided[:3]
+  event_universe/board.py:34 | 8 | (i, v) for i, v, _b in rows[:: max(1, len(rows) // 8)]
+  event_universe/board.py:36 | 6 | "intervals with the mean volume falling": falls[:6],
+  event_universe/board.py:52 | 6 | "falls followed by a rise (the fall's interval)": after[:6],
+  event_universe/board.py:110 | 8 | "tops with every Node turning at once (interval)": whole[:8],
+  event_universe/board.py:111 | 8 | "bottoms (interval, mean X, at Gamma at every Node)": bottoms[:8],
+  event_universe/board.py:112 | 8 | "bangs numbered (the interval each begins)": bangs[:8],
+  event_universe/board.py:113 | 8 | "births and body credits between the bangs": between[:8],
+  event_universe/board.py:116 | 4 | )[:4],
+  event_universe/board.py:151 | 3 | third = max(1, len(lifts) // 3)
+  event_universe/board.py:155 | 6 | "the last rising run's steps (per mark)": last_run[-6:],
+  event_universe/gates.py:76 | 8 | "the farthest credited Nodes' distance per interval with two (first eight)": spans[:8],
+  event_universe/gates.py:266 | 8 | "course (interval, H) at every eighth": found[:: max(1, len(found) // 8)],
+  event_universe/gates.py:350 | 3 | whole = words[1:3] != ["in", "part"]
+  event_universe/gates.py:351 | 2 | return words[0] if words[0] == "SHOWN" and whole else " ".join(words[: 2 if whole else 3])
+  event_universe/gates.py:351 | 3 | return words[0] if words[0] == "SHOWN" and whole else " ".join(words[: 2 if whole else 3])
+  event_universe/predicates.py:325 | 8 | sorted(spacings.items())[:8]
+
+[C-THRESHOLD] class C, 20 sites: the readers' counts typed inline: fewer than two (len < 2, >= 2), three lifts born (>= 3), the majority (x * 2 > n), the first half and the last quarter (min * 2 <= n, max * 4 >= 3 n), range(2) over the pair's parts
+  event_universe/board.py:163 | 2 | if len(last_run) > 1 and quickening * 2 > len(last_run) - 1
+  event_universe/board.py:319 | 2 | standing = sum(1 for xs in spans.values() if min(xs) * 2 <= n and max(xs) * 4 >= 3 * n)
+  event_universe/board.py:319 | 4 | standing = sum(1 for xs in spans.values() if min(xs) * 2 <= n and max(xs) * 4 >= 3 * n)
+  event_universe/board.py:319 | 3 | standing = sum(1 for xs in spans.values() if min(xs) * 2 <= n and max(xs) * 4 >= 3 * n)
+  event_universe/clicks.py:81 | 3 | elif within == len(decoded) and track_right == len(tracks) and len(born) >= 3:
+  event_universe/clicks.py:129 | 2 | if len(credited) < 2:
+  event_universe/decoder.py:112 | 2 | e = tuple((zx[k] - zn[k]) * w_out - w_in * (zn[k] - zb[k]) for k in range(2))
+  event_universe/gates.py:31 | 2 | if len(nodes) < 2:
+  event_universe/gates.py:81 | 2 | if quickening * 2 > max(len(closing) - 1, 1)
+  event_universe/gates.py:245 | 2 | if births and sum(signs) == 0 and pairs and unchanged * 2 > len(pairs)
+  event_universe/predicates.py:74 | 2 | if len(means[kind]) < 2:
+  event_universe/predicates.py:125 | 2 | if not born and len(beats) < 2
+  event_universe/predicates.py:127 | 3 | if len(born) >= 3 and len(beats) >= 2 and ordered
+  event_universe/predicates.py:127 | 2 | if len(born) >= 3 and len(beats) >= 2 and ordered
+  event_universe/predicates.py:132 | 3 | (f"{len(born)} lifts born", len(born) >= 3),
+  event_universe/predicates.py:133 | 2 | ("the beats ordered as the legs", len(beats) >= 2 and ordered),
+  event_universe/predicates.py:137 | 3 | if (len(born) >= 3) or (len(beats) >= 2 and ordered)
+  event_universe/predicates.py:137 | 2 | if (len(born) >= 3) or (len(beats) >= 2 and ordered)
+  event_universe/predicates.py:328 | 2 | if total < 2
+  event_universe/predicates.py:332 | 2 | if max(counts) * 2 > total
+
+[B-READER-PULL] class B, 2 sites: board.lift_of: the pull 2 largest_below(X div Gamma) and the lift over 3 x (LC-S1's forms re-typed by the reader)
+  event_universe/board.py:132 | 3 | lift += int(quotient(record.gamma * sum(xs[n] - x for n in neighbours(at, cube)), 3 * x))
+  event_universe/board.py:133 | 2 | pull += 2 * largest_below(int(quotient(x, record.gamma)))
+
+[A-AXES3] class A, 7 sites: 3 = AXES: range(3) over the axes (gates, node), the mean over the three axes 3 den (seed.running_rotation), lines[1:4] the three axis lines (readings), parts[0] + parts[1] + parts[2] (links)
+  event_universe/gates.py:173 | 3 | if b.get("dP_lay") and all(b["dP_take"][a] + b["dP_lay"][a] == 0 for a in range(3))
+  event_universe/gates.py:178 | 3 | "takes dP_a summed": [sum(t[a] for t in takes) for a in range(3)],
+  event_universe/gates.py:179 | 3 | "lays dP_a summed": [sum(lay[a] for lay in lays) for a in range(3)],
+  event_universe/links.py:101 | 2 | trace = parts[0] + parts[1] + parts[2]
+  event_universe/node.py:85 | 3 | self.standing, self.crossed, self.beats = ([zeros(shape) for _ in range(nr)] for _ in range(3))
+  event_universe/readings.py:54 | 4 | levels = [line.now for line in node.row(CARRIER).lines[1:4]] if axis_levels is None else axis_levels
+  event_universe/seed.py:162 | 3 | cosine = int(quotient(num * sum(c for c, _s in points), 3 * den))
+
+[A-AXES-CYCLIC] class A, 4 sites: wrap(axis + 2, AXES): the third axis of the cyclic triple, equal to wrap(axis - 1, AXES) (links.row_twist, links.twist, gram.curl)
+  event_universe/gram.py:118 | 2 | gradient(odd[wrap(a + 2, AXES)], wrap(a + 1, AXES))
+  event_universe/gram.py:119 | 2 | - gradient(odd[wrap(a + 1, AXES)], wrap(a + 2, AXES))
+  event_universe/links.py:117 | 2 | a, b, c = axis, wrap(axis + 1, AXES), wrap(axis + 2, AXES)
+  event_universe/links.py:130 | 2 | a, b, c = axis, wrap(axis + 1, AXES), wrap(axis + 2, AXES)
+
+[A-PORT-OF-AXIS] class A, 23 sites: 2 * axis, 2 * a (+1): the Port of an axis and side, SIDES * axis + side (close, gram, links, run, take)
+  event_universe/close.py:49 | 2 | currents = [node.den * row_current(start, 2 * axis) for axis in range(AXES)]
+  event_universe/close.py:53 | 2 | both = standing & across(standing, 2 * axis)
+  event_universe/close.py:56 | 2 | j = neighbour(node, at, 2 * axis)
+  event_universe/gram.py:103 | 2 | up = conjugated(shape, [across(n, 2 * a) for n in nows], frames[2 * a])
+  event_universe/gram.py:103 | 2 | up = conjugated(shape, [across(n, 2 * a) for n in nows], frames[2 * a])
+  event_universe/gram.py:104 | 2 | down = conjugated(shape, [across(n, 2 * a + 1) for n in nows], frames[2 * a + 1])
+  event_universe/gram.py:104 | 2 | down = conjugated(shape, [across(n, 2 * a + 1) for n in nows], frames[2 * a + 1])
+  event_universe/links.py:67 | 2 | return across(a, 2 * axis) - across(a, 2 * axis + 1)
+  event_universe/links.py:67 | 2 | return across(a, 2 * axis) - across(a, 2 * axis + 1)
+  event_universe/links.py:79 | 2 | fp, fm = frames[2 * a], frames[2 * a + 1]
+  event_universe/links.py:79 | 2 | fp, fm = frames[2 * a], frames[2 * a + 1]
+  event_universe/links.py:81 | 2 | dz_im = fp * across(im.now, 2 * a) - fm * across(im.now, 2 * a + 1)
+  event_universe/links.py:81 | 2 | dz_im = fp * across(im.now, 2 * a) - fm * across(im.now, 2 * a + 1)
+  event_universe/links.py:120 | 2 | return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+  event_universe/links.py:120 | 2 | return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+  event_universe/links.py:125 | 2 | return link_current(line, 2 * axis + 1) - link_current(line, 2 * axis)
+  event_universe/links.py:125 | 2 | return link_current(line, 2 * axis + 1) - link_current(line, 2 * axis)
+  event_universe/links.py:132 | 2 | return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+  event_universe/links.py:132 | 2 | return cross(ub, uc, across(ub, 2 * a), across(uc, 2 * a))
+  event_universe/run.py:105 | 2 | held = [[i, axis] for axis in range(AXES) for i, f in enumerate(ints(factors[2 * axis])) if f == 0]
+  event_universe/run.py:114 | 2 | "current": [ints(link_current(gap0, 2 * axis)) for axis in range(AXES)],
+  event_universe/take.py:120 | 2 | up, down = neighbour(node, at, 2 * a), neighbour(node, at, 2 * a + 1)
+  event_universe/take.py:120 | 2 | up, down = neighbour(node, at, 2 * a), neighbour(node, at, 2 * a + 1)
+
+[A-PLANE-LINES] class A, 24 sites: the plane's two lines (re, im): xs[0::2], 2 * p (+1), found[2 * p], m[2 * r], quotient(shape, 2), 2 * shape - 1, 2 * PLANE - 1, quotient(QUARTET, 2) = HALF, range(2) over the pair's parts (decoder.solve)
+  event_universe/bodies.py:69 | 2 | lay(node, rec0, at, (now - int(line.now[at]),) + (0,) * (2 * PLANE - 1))
+  event_universe/close.py:331 | 2 | + (0,) * (2 * node.records()[row].shape - 1),
+  event_universe/gram.py:38 | 2 | found[2 * p][2 * p + 1], found[2 * p + 1][2 * p] = -1, 1
+  event_universe/gram.py:38 | 2 | found[2 * p][2 * p + 1], found[2 * p + 1][2 * p] = -1, 1
+  event_universe/gram.py:38 | 2 | found[2 * p][2 * p + 1], found[2 * p + 1][2 * p] = -1, 1
+  event_universe/gram.py:38 | 2 | found[2 * p][2 * p + 1], found[2 * p + 1][2 * p] = -1, 1
+  event_universe/interval.py:187 | 2 | u_in = [paces.odd_rounded(2 * p + 1, ds) for p in p_side]
+  event_universe/interval.py:188 | 2 | u_out = [paces.odd_rounded(2 * p + 1, ds) for p in p_other]
+  event_universe/links.py:59 | 2 | for re_j, im_j in zip(xs[0::2], xs[1::2], strict=True):
+  event_universe/links.py:59 | 2 | for re_j, im_j in zip(xs[0::2], xs[1::2], strict=True):
+  event_universe/node.py:151 | 2 | return rule3.Rule(tuple(0 for _ in range(PORTS)), 2 * r.wall, r.wall, 0)
+  event_universe/quartet.py:242 | 2 | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+  event_universe/quartet.py:242 | 2 | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+  event_universe/quartet.py:242 | 2 | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+  event_universe/quartet.py:242 | 2 | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+  event_universe/quartet.py:242 | 2 | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+  event_universe/quartet.py:242 | 2 | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+  event_universe/quartet.py:242 | 2 | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+  event_universe/quartet.py:242 | 2 | m[2 * r][2 * c], m[2 * r][2 * c + 1], m[2 * r + 1][2 * c], m[2 * r + 1][2 * c + 1] = (
+  event_universe/run.py:87 | 2 | "links at the wall": sum(1 for f in node.link_factors()[0::2] for x in ints(f) if x == 0),
+  event_universe/seed.py:96 | 2 | return [tuple(j[a] - reach[a] for a in range(AXES)) for j in np.ndindex(*(2 * r + 1 for r in reach))]
+  event_universe/take.py:103 | 2 | for line, now, before in zip(lines, levels[0::2], levels[1::2], strict=True):
+  event_universe/take.py:103 | 2 | for line, now, before in zip(lines, levels[0::2], levels[1::2], strict=True):
+  event_universe/take.py:150 | 2 | lay(node, taken, at, (toward * levels,) + (0,) * (2 * row.shape - 1))
+
+[B-SIGN] class B, 1 sites: rule3.signed_quotient: the sign (x >= 0) * 2 - 1
+  event_universe/core/rule3.py:141 | 2 | sign = (numerator >= 0) * 2 - 1
+
+[B-RAISED-COSINE] class B, 6 sites: seed.raised_cosine: the half-widths 2 or 3 (the law's envelope), the doubled cosine 2 cos 0 = 2 and w_k = 2 + 2 cos (Chebyshev's recurrence)
+  event_universe/seed.py:85 | 2 | if h not in (2, 3):
+  event_universe/seed.py:85 | 3 | if h not in (2, 3):
+  event_universe/seed.py:87 | 2 | doubled = [2, h - 2]
+  event_universe/seed.py:87 | 2 | doubled = [2, h - 2]
+  event_universe/seed.py:89 | 2 | doubled.append(doubled[1] * doubled[-1] - doubled[-2])
+  event_universe/seed.py:90 | 2 | return tuple(2 + t for t in doubled[:h])
+
+[B-SECOND-BEAT] class B, 1 sites: gram.period: k = 2, the search from the second multiple of the count
+  event_universe/gram.py:222 | 2 | k = 2
+
+[B-TWICE] class B, 23 sites: the law's twice, 2 * x: the reach 2 num p^2 Q (rule3), K-S1's 2 G^2 (2 Gamma - 1), the phase line's 2 Gamma and 2 Gamma^2 and 2 K_0 and 2 D, the count 2 (Phi_now - Phi_before) + c, the own weight 2 w, the mean wall's 2 w X, 2 cphi, 2 w_end, the tangent triple's 2 W n, the circle point's 2 h^2 and 2 h s, the momentum's 2 num, the quartet's scale 2 PORTS Gamma, the decoder's 2 pi^2 Q and the floor's 2 w^2
+  event_universe/decoder.py:119 | 2 | m = turn_pair(m[0], m[1], wl * wl - n * n, 2 * wl * n, wl * wl + n * n)
+  event_universe/decoder.py:120 | 2 | reach = 2 * pi * pi * f["factors"][port]
+  event_universe/decoder.py:170 | 2 | rule3.largest_below((2 * record.w * record.w * den * den * MIL * MIL) // (d * num * num))
+  event_universe/gram.py:59 | 2 | return 2 * PORTS * gamma if shape == QUARTET else 1
+  event_universe/interval.py:111 | 2 | self.rows[k], rule, None, [None], self.direction, [2 * self.cphi], *self.ends(walled)
+  event_universe/interval.py:148 | 2 | m + t - (2 * rule.wall - rule.self_coefficient) * a
+  event_universe/interval.py:170 | 2 | for line, n in zip(self.lines(self.potential), [2 * self.w_end, *self.current], strict=True):
+  event_universe/interval.py:178 | 2 | d = 2 * node.w * self.x_now
+  event_universe/interval.py:250 | 2 | self.out[self.where[id(self.potential)]], [2 * self.w_after, *self.current], strict=True
+  event_universe/links.py:57 | 2 | tc, ts, tw = wl * wl - at.odd * at.odd, 2 * wl * at.odd, wl * wl + at.odd * at.odd
+  event_universe/readings.py:75 | 2 | return 2 * (phi.now - phi.before) + cphi
+  event_universe/seed.py:119 | 2 | int(odd_rounded(den * den - 2 * h * h, den)),
+  event_universe/seed.py:120 | 2 | int(odd_rounded(2 * h * largest_below(den * den - h * h), den)),
+  event_universe/take.py:82 | 2 | x, weight = int(node.start_x[at]), 2 * node.gamma**3 * node.G * node.G
+  event_universe/take.py:91 | 2 | for s in rule3.least_root(-w * x, -(2 * w * now + pull) * t * x, walls * weight, dist):
+  event_universe/take.py:122 | 2 | found.append(2 * num * cross(d_now, d_before, dn, db))
+  event_universe/core/rule3.py:46 | 2 | reaches = tuple(2 * node_squared * factor * num for factor in links)
+  event_universe/core/rule3.py:112 | 2 | while 2 * unit * unit * (2 * gamma - 1) <= gamma * gamma:
+  event_universe/core/rule3.py:112 | 2 | while 2 * unit * unit * (2 * gamma - 1) <= gamma * gamma:
+  event_universe/features/phase/__init__.py:20 | 2 | return 2 * gamma
+  event_universe/features/phase/__init__.py:25 | 2 | return 2 * gamma * gamma
+  event_universe/features/phase/__init__.py:62 | 2 | wall + wall - 2 * K0(gamma)
+  event_universe/features/phase/__init__.py:74 | 2 | room = division_forward(largest, 2 * D(gamma), 0)[0]

@@ -1,0 +1,2 @@
+the shape of tests/ holds against the merge base
+exit 0

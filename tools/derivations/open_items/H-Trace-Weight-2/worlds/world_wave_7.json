@@ -1,0 +1,1 @@
+{"universe": "../../../../../tests/worlds/universe_toy.json", "shape": [7, 7, 7], "intervals": 24, "seed": [{"lay": "sea", "row": 0}, {"lay": "at", "row": 0, "centre": [3, 3, 3], "quanta": 4, "width": 3, "wave": [1, 0, 0]}]}
