@@ -45,7 +45,7 @@ The list is The-Laws-Of-Nature-Missing_COMPARISON.md's four lists, kept here one
 | A8 | the baryon and lepton numbers | the credits' counts by sense and lift | owed (the lepton number readable now: row 63) | no clause |
 | A9 | the atom's spectra (Bohr's 1 / n^2) | the ladder of a bound pair's beats | owed (depends on gate 22 and EM-S4) | no row |
 | A10 | the length's contraction, the invariance of the one pace, the twin's return | a moving body's footprint and clicks | owed (a wave-key world first) | no row |
-| A11 | the children's charge on a standing plane (the kit's finding) | the births' W summed | owed (two hands after the lay's pair) | 4 of 17 births not 0 |
+| A11 | the children's charge on a standing plane (the kit's finding) | the births' W summed | H-Children-Charge-Bug-1 (the bug hunt of 07:2x UTC): a bug of the engine at merger.py:242-243, the merger's light at a tie end laid as the charged child's lay, the two children carrying -18,000 and 0; the fix 20 lines in merger.py, 4 out, the children's own W 0 at 16 of 16 on the chiral; the readers' sense read from the record's W after the lay, a bug of the readers | closed as a bug: David's patch (cc1.patch), the Reader's predicate; the earlier 4 of 17 and 3,149 were the record's W, not the children's |
 | A12 | the trace's weight's value (6 against 54) | the gates on the long records | H-Trace-Weight-1 to -3 done | 6 by the owner's word of 07:29 UTC (TW-S1 law: the universe file's integer, 6 = PORTS, light has no trace); nature's universe files at 6, David; ga2's at 54 until a hand re-lays the cycle seed at 6 |
 
 ## B. A clause, no row: a row to add (the Reader)
