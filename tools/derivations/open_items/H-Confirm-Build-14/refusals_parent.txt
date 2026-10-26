@@ -1,0 +1,5 @@
+shape [3, 3, 3] rows [(2, [15162856759112389, 15162856759112389], None), (2, [15162854575528411, 15162856759112389], None), (2, [2458210083751875, 15162856759112389], None), (2, [2580388913625285, 15162856759112389], None), (10, [15147693902353277, 15162856759112389], None), (4, [15162856759112389, 15162856759112389], None), (1, None, 2)]
+two planes at one pair ACCEPTED
+no plane but the emitter REFUSED: the universe names no plane row with a gap
+no emitter REFUSED: the universe names one row with its own wall, one plane at the gap 0, one shape-10 row and one shape
+world_node 20 hash d7f2c713f4d6165cad4d11683f70a7bea82d02c3320ebf4d79245835ed8bf656
