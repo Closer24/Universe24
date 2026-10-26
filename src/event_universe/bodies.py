@@ -12,7 +12,7 @@ from event_universe.core.ports import AXES, PORT_SIDES, PORTS
 from event_universe.links import row_current
 from event_universe.merger import takes
 from event_universe.rows import PLANE, POTENTIAL, Line
-from event_universe.take import frame_nodes, move
+from event_universe.take import frame_nodes, move, recoil
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -75,6 +75,8 @@ def bodies(
             if int(net[at]) == 0:
                 move(node, rec0, k, at, now - int(node.records()[rec0].lines[k].now[at]))
                 entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
+                back = recoil(node, at, [-x for x in node.last_dp], entry["clock"], 1)
+                entry["recoil"], entry["carry"] = [0] * AXES, back["carry"]
                 node.counts["laid_back"] += 1
             node.log.append(entry)
 
@@ -167,6 +169,7 @@ def credit(
         "owed": node.units[rec] - rem_was,
         "taker": [taken_was, taken_before, levels],
         "dP_take": node.last_dp,
+        **node.last_recoil,
         "taken_line": line,
         "sign_level": int(node.row(POTENTIAL).lines[0].now[at]),
         "turned": bool(node.turned[at]),

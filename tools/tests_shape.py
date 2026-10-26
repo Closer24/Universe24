@@ -41,6 +41,10 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_rule3.py::test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_identity_lt_s1": (
+        36,
+        "LT-S1 (2026-10-26, the owner's word of 08:4x UTC, 'approve', the Boss's order 6411867383: the hand's one-Node test under its room; H-Lay-As-The-Take-Reversed-1): every move of the close books its momentum on the carrier's flux line by the Node's write act, the identity per axis at every booking on the hole seed's 14 intervals, the run back exact",
+    ),
     "tests/test_rule3.py::test_the_take_count_is_one_carried_division_of_the_walls_by_the_price_tc_s1": (
         40,
         "TC-S1 (2026-10-26, the owner's word of 08:3x UTC, 'approved', the Boss's order 6411031946 under the owner's delegation: the hand's one-Node test under its room; H-Take-Count-As-Rule3-Division-1): the take's count one carried division of the walls by the price of one level, iterated from below, no root, on the hole seed's 47 first takes at the trace 6",

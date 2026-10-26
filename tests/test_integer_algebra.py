@@ -134,7 +134,7 @@ def test_a_physical_module_holds_integer_mathematics_only(name: str) -> None:
     assert numpy_violations(tree) == [], (name, numpy_violations(tree))
 
 
-RULE3, DIVISIONS = "core/rule3.py", {ast.FloorDiv, ast.Mod}
+CORE, DIVISIONS = "core/acts.py", {ast.FloorDiv, ast.Mod}  # core/rule3.py before NL-S1
 
 
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
@@ -169,10 +169,10 @@ def divisions(tree: ast.AST) -> list[tuple[int, type[ast.AST], str]]:
 
 
 def test_floor_division_and_modulo_are_refused_outside_core_rule3() -> None:
-    """The arithmetic of the engine is Rule3's division act (`division_forward` and its fixed point in core/rule3.py; ALGEBRA.md #the-four-acts): a raw floor division or modulo on a number of the law is refused in every other module of the engine (`//`, `%`, their augmented forms, `divmod`, numpy's floor division and remainder), and the index wraps and the row's shape divisions are the named exceptions (INDEX_ARITHMETIC, each by module, operator and function, no level, share, count or pace among them), refused in turn when one no longer stands in the code."""
+    """The arithmetic of the engine is Rule3's division act (core/acts.divide, the one carried division, and `division_forward` on it in core/rule3.py; ALGEBRA.md #the-four-acts): a raw floor division or modulo on a number of the law is refused in every other module of the engine (`//`, `%`, their augmented forms, `divmod`, numpy's floor division and remainder), and the index wraps and the row's shape divisions are the named exceptions (INDEX_ARITHMETIC, each by module, operator and function, no level, share, count or pace among them), refused in turn when one no longer stands in the code."""
     allowed = {(name, kind, function) for name, kind, function, _reason in INDEX_ARITHMETIC}
     standing, offenders = set(), []
-    for path in sorted(p for p in SRC.rglob("*.py") if p.relative_to(SRC).as_posix() != RULE3):
+    for path in sorted(p for p in SRC.rglob("*.py") if p.relative_to(SRC).as_posix() != CORE):
         name, source = path.relative_to(SRC).as_posix(), path.read_text(encoding="utf-8")
         if name in READERS:
             continue
@@ -183,4 +183,4 @@ def test_floor_division_and_modulo_are_refused_outside_core_rule3() -> None:
                 offenders.append(f"{name}:{line} {function}: {source.splitlines()[line - 1].strip()}")
     assert offenders == [], offenders
     assert standing == allowed, sorted(allowed - standing)
-    assert divisions(ast.parse((SRC / RULE3).read_text(encoding="utf-8"))), "the act's home divides"
+    assert divisions(ast.parse((SRC / CORE).read_text(encoding="utf-8"))), "the act's home divides"

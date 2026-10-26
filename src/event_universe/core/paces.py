@@ -9,7 +9,8 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.rule3 import division_forward, half, largest_below, mirrored
+from event_universe.core import acts
+from event_universe.core.rule3 import division_forward, half, largest_below
 
 
 def rounded(numerator: Any, wall: Any) -> Any:
@@ -22,7 +23,7 @@ def odd_rounded(numerator: Any, wall: Any) -> Any:
     signed = np.asarray(numerator)
     kind, below = signed.dtype, signed < 0
     negative = below.astype(kind) if below.ndim else int(below)
-    carry = wall + negative * (mirrored(wall, wall + wall, 1) - wall)
+    carry = wall + negative * (acts.mirror(wall, wall + wall, 1) - wall)
     return division_forward(numerator + numerator, wall + wall, carry)[0]
 
 

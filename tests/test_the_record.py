@@ -1,4 +1,4 @@
-"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 300 on the 7-cube, regenerated under PM-S1 on 2026-10-25, again under CK-S1 and the emission's odd rounding the same day, again under the crossing read even and the light no body (the plane at the gap 0 never credited as a body), and again under PL-S1 (the charge read at the kick in its momentum form, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423; the bodies bit for bit): the era of matter SHOWN on the hole seed, Coulomb's sign NOT SHOWN there under PL-S1 (SHOWN in part, unlike senses approach, under the former write of 2 W after the step; NOT SHOWN under the crossing odd at a touch of zero) and the collisions NOT SHOWN with it on the hole (SHOWN under the former write; SHOWN on the chiral), the bodies' well SHOWN, the bodies' credited Nodes receding, the bodies' gate 8 NOT SHOWN by two credits at turned Nodes decoding beyond the floor, so the take's event stands for the click; the hole's births 16 and credits 777 under PL-S1 (24 and 1,124 under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed); 16 and 233 under the former write of 2 W after the step, 20 and 514 before), the chiral's 17 and 2,943 with the collisions SHOWN (19 and 3,052 with them NOT SHOWN under the reverted read; 2,914; 16 and 2,336 before), the bodies' 1,973 bit for bit (1,819 before CK-S1)) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, den's circle under gate 19 by its count (MS-S2: 26 points at the toy's den, 8 at the middle's, the typed pairs among them); the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
+"""The committed records (examples/records: the hole seed at 60 on the 5-cube, the chiral seed at 60, the bodies' seed at 120 on the 7-cube, regenerated under PM-S1 on 2026-10-25, again under CK-S1 and the emission's odd rounding the same day, again under the crossing read even and the light no body (the plane at the gap 0 never credited as a body), and again under PL-S1 (the charge read at the kick in its momentum form, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423; the bodies bit for bit): the era of matter SHOWN on the hole seed, Coulomb's sign NOT SHOWN there under PL-S1 (SHOWN in part, unlike senses approach, under the former write of 2 W after the step; NOT SHOWN under the crossing odd at a touch of zero) and the collisions NOT SHOWN with it on the hole (SHOWN under the former write; SHOWN on the chiral), the bodies' well SHOWN, the bodies' credited Nodes receding, the bodies' gate 8 NOT SHOWN by two credits at turned Nodes decoding beyond the floor, so the take's event stands for the click; the hole's births 16 and credits 777 under PL-S1 (24 and 1,124 under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed); 16 and 233 under the former write of 2 W after the step, 20 and 514 before), the chiral's 17 and 2,943 with the collisions SHOWN (19 and 3,052 with them NOT SHOWN under the reverted read; 2,914; 16 and 2,336 before), the bodies' 1,973 bit for bit (1,819 before CK-S1)) read by the decoder's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, den's circle under gate 19 by its count (MS-S2: 26 points at the toy's den, 8 at the middle's, the typed pairs among them); the conservation check over every record's log (the charge, the count taken against booked, the integers' count constant, every integer within the width, the run back exact); the hole record re-run by the engine and compared with the committed one bit for bit."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ import pytest
 
 from event_universe import symmetries
 from event_universe.core import rule3
+from event_universe.core.ports import AXES
 from event_universe.decoder import Record
 from event_universe.events import NAMES
 from event_universe.gates import gates
@@ -17,10 +18,15 @@ from event_universe.run import record
 from tests.laws import ROOT, load_file, world_of
 
 RECORDS, WIDTH = ROOT / "examples" / "records", 128
-CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
+CIRCLES = {
+    "bodies": (8, 2),
+    "chiral": (26, 3),
+    "hole": (26, 3),
+}  # den's circle: its points, the typed  # den's circle: its points, the typed
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the Links lengthening in the clicks, under GP-S1's lay) and gains 47 (the exact take, the excess kept as the remainder, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 kept by the decoder's read of the remainder, 17 lost by the engine's bug at a merger's tie end (H-Children-Charge-Bug-1: the light laid as the charged child's lay, the children's own charges -36,000 over the births; SHOWN again at the fix); the bodies gain 8 and 16 with the credits the remainder pays; the hole under PL-S1 before: 9 and 22 among them under the former write of 2 W after the step
     "hole": {
+        2,
         4,
         5,
         7,
@@ -51,6 +57,7 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         67,
         68,
         70,
+        71,
     },
     "chiral": {
         2,
@@ -84,15 +91,16 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         67,
         68,
         70,
+        71,
     },
     "bodies": {
-        3,
         4,
         5,
-        6,
         7,
+        8,
         10,
         15,
+        16,
         17,
         18,
         21,
@@ -106,6 +114,7 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         43,
         45,
         47,
+        58,
         59,
         60,
         62,
@@ -115,61 +124,62 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         67,
         68,
         70,
+        71,
     },
 }
 VERDICTS = {  # the verdicts' words by name
     "hole": {
-        "63 the uniformity in the clicks": "NOT SHOWN: 0 regions without a credit, the least 167 against the largest 444",
+        "63 the uniformity in the clicks": "NOT SHOWN: 0 regions without a credit, the least 154 against the largest 454",
         "65 the lepton number": "SHOWN: every species' senses sum to 0 over its births, its number conserved at the click",
-        "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 2247 of 2247 frames",
+        "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 2228 of 2228 frames",
         "9 collisions": "NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last",
         "22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part",
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -48 / 24",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -240 / 120",
         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
         "60 the acceleration in the clicks": "SHOWN: after a slowing, an eighth's growth of the spacing larger than the one before",
         "15 conservation at the click": "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth",
         "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node",
-        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 2247 of 2247 frames",
-        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 10, the hand's choice at every one; 0",
-        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 10 moving births",
+        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 2228 of 2228 frames",
+        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 6 moving births and at the other end on 12, the hand's choice at every one; 0 m",
+        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 6 and 12 moving births",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
-        "71 the momentum booked on the Link": "NOT READ: no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
+        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 6948 of 6948 axis ",
     },
     "chiral": {
-        "64 dark matter in kind": "SHOWN: 96 of 145 bodies credited at a Node where no light was laid",
+        "64 dark matter in kind": "SHOWN: 97 of 143 bodies credited at a Node where no light was laid",
         "65 the lepton number": "SHOWN: every species' senses sum to 0 over its births, its number conserved at the click",
         "66 the energy in the clicks": "SHOWN in part: on most pairs",
         "24 the merger (a pair into light)": "SHOWN: 1 pairs into light",
-        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 2757 of 2757 frames",
+        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 2856 of 2856 frames",
         "17 charge conservation": "SHOWN: the senses sum to 0 over every birth, each pair opposite, each merger's children 0 and 0",
         "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
         "15 conservation at the click": "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder",
         "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node",
         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -60 / 30",
-        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 9, the hand's choice at every one; 1",
-        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 9 moving births",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -120 / 60",
+        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 8, the hand's choice at every one; 1 me",
+        "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 8 moving births",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
-        "71 the momentum booked on the Link": "NOT READ: no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
+        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 9144 of 9144 axis ",
     },
     "bodies": {
         "64 dark matter in kind": "SHOWN: 336 of 406 bodies credited at a Node where no light was laid",
-        "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 48189 of 48189 frames",
+        "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 17072 of 17072 frames",
         "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link per interval",
-        "55 the two slits": "NOT READ: no two gap-0 packets at one centre with one wave mirrored on one axis in the seed; the predicate: the gap-0",
-        "56 Bell": "NOT READ: 22 births, 3 of the four setting cells filled by pairs clicked at both ends; the predicate: S from the pairs'",
-        "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four, no three ends with one root in the record; the",
+        "55 the two slits": "NOT READ: no two gap-0 packets at one centre with one wave mirrored on one axis in the seed; the predicate: the gap-0 ro",
+        "56 Bell": "NOT READ: 22 births, 3 of the four setting cells filled by pairs clicked at both ends; the predicate: S from the pairs' ",
+        "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four, no three ends with one root in the record; the pred",
         "61 the horizon radiates": "NOT READ: no frozen Node in the record",
-        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 48189 of 48189 frames",
-        "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero and above the next",
+        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 17072 of 17072 frames",
+        "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
-        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 4 moving births and at the other end on 3, the hand's choice at every one; 15",
+        "68 matter against antimatter": "SHOWN: the + child at the take's Node on 4 moving births and at the other end on 3, the hand's choice at every one; 15 m",
         "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 4 and 3 moving births",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
-        "71 the momentum booked on the Link": "NOT READ: no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
+        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 53802 of 53802 axi",
     },
 }
 
@@ -270,46 +280,22 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
 
 
 def test_the_momentum_booked_on_the_link_is_an_identity_on_every_booking() -> None:
-    """Row 71 read by hand on the hole record with the bookings' keys built on it from its own integers (LT-S1's keys absent on the committed records, run before the lay as the take reversed): at every take and every birth's end the momentum's change times the clock squared, the carry before and the carry after, the levels laid the quotient at the write wall 6 den Gamma^2 T and the carry the remainder; SHOWN exact on every axis booking, NOT SHOWN once one carry is moved by one level, NOT READ with the keys absent."""
+    """Row 71 on the hole record's own bookings (LT-S1's keys on every take and every birth's end): SHOWN exact on every axis booking at the write wall 6 den Gamma^2 T, NOT SHOWN once one carry is moved by one level, NOT READ with the keys struck (a record run before LT-S1)."""
     run = loaded("hole")
     rec = Record(run)
-    wall = rule3.wall_of(rec.den, rec.gamma) * rec.T
-
-    def booked(dp: list[int], clock: int, shift: int) -> tuple[list[int], list[int], list[int]]:
-        was = [wall - abs(p) - shift for p in dp]
-        laid, after = [], []
-        for p, w in zip(dp, was, strict=True):
-            q, r = divmod(-p * clock * clock + w, wall)
-            laid.append(q)
-            after.append(r)
-        return laid, was, after
-
-    bookings = 0
-    for entry in rec.takes:
-        clock = int(run["universe"]["integers"]["node_clock"]) + entry["i"]
-        entry["clock"] = clock
-        entry["recoil"], entry["carry_was"], entry["carry"] = booked(entry["dP_take"], clock, entry["i"])
-        bookings += 1
-        if entry["event"] == "birth":
-            entry["clock_ends"] = [clock, clock - 1]
-            ends = [
-                booked(dp, c, entry["i"])
-                for dp, c in zip(entry["dP_lay_ends"], entry["clock_ends"], strict=True)
-            ]
-            entry["recoil_ends"] = [e[0] for e in ends]
-            entry["carry_was_ends"] = [e[1] for e in ends]
-            entry["carry_ends"] = [e[2] for e in ends]
-            bookings += 2
     gate = "71 the momentum booked on the Link"
-    found = symmetries.momentum_booked(Record(run))[gate]
-    assert found["axis bookings holding the identity / in all"] == [3 * bookings, 3 * bookings]
-    assert found["the write wall 6 den Gamma^2 T"] == wall and found["verdict"].startswith("SHOWN exact")
-    assert found["of them laying a level on the carrier's flux line (the rest kept in the carry)"] > 0
+    found = symmetries.momentum_booked(rec)[gate]
+    held, whole = found["axis bookings holding the identity / in all"]
+    assert held == whole == len(symmetries.bookings_of(rec)) * AXES and whole > 0
+    assert found["the write wall 6 den Gamma^2 T"] == rule3.wall_of(rec.den, rec.gamma) * rec.T
+    assert found["verdict"].startswith("SHOWN exact")
     rec.takes[-1]["carry"][0] += 1
     assert symmetries.momentum_booked(Record(run))[gate]["verdict"].startswith(
         "NOT SHOWN: the identity fails on 1 of"
     )
-    assert symmetries.momentum_booked(Record(loaded("hole")))[gate]["verdict"].startswith("NOT READ")
+    for entry in rec.takes:
+        del entry["recoil"]
+    assert symmetries.momentum_booked(Record(run))[gate]["verdict"].startswith("NOT READ")
 
 
 def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_path: Path) -> None:

@@ -8,10 +8,10 @@ from typing import Any
 import numpy as np
 
 from event_universe import close, gram, interval, readings, seed
-from event_universe.core import paces, rule3
+from event_universe.core import acts, paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, across
-from event_universe.core.rule3 import carried_division, half, link_unit_of, mirrored, unit_of, wall_of
+from event_universe.core.rule3 import half, link_unit_of, unit_of, wall_of
 from event_universe.features import phase
 from event_universe.links import Link, turned
 from event_universe.rows import (
@@ -95,6 +95,7 @@ class Node:
         self.counts: dict[str, int] = dict(COUNTS)
         self.max_transient = self.count_max = 0
         self.last_dp = [0, 0, 0]
+        self.last_recoil: dict[str, Any] = {}
         self.start_factors: tuple[Any, ...] = ()
         self.start_frames: list[Any] = []
         self.start_phases: list[tuple[Any, Any]] = []
@@ -112,6 +113,7 @@ class Node:
         seed_pair = phase.seed(self.X, self.gamma)
         self.orbit_lines, self.orbit = [seed_pair], [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
         self.start_content, self.start_x = self.content(), self.row(CARRIER).lines[0].now
+        self.start_clock = readings.paces_of(self, self.start_content)[0]
 
     def ride_walls(self) -> None:
         """The riding lines' remainders at the start: a riding line's remainder lives at the mean wall (w div 2)(X_before + X_now) of the carrier's two levels at its Node, half of it at the seed."""
@@ -197,15 +199,15 @@ class Node:
         found = []
         for line, a, t in zip(lines, at, totals, strict=True):
             self.max_transient = max(self.max_transient, bits_of(t))
-            quotient, rem = carried_division(t, r.wall, line.rem, direction)
+            quotient, rem = acts.divide(t, r.wall, line.rem, direction)
             now, before = (quotient, a)[::direction]
             found.append(Line(now, before, rem, line.wall, line.wr, line.wwall))
         return found
 
     def write(self, line: Line, numerator: Any, direction: int) -> None:
         """The one write act on a line: the numerator's carried division at the line's write wall, the quotient added to the level now (forward) or taken back (backward), the remainder carried in the line."""
-        q, line.wr = carried_division(numerator, line.wwall, line.wr, direction)
-        line.now = line.now + direction * q
+        q, line.wr = acts.divide(numerator, line.wwall, line.wr, direction)
+        line.now = acts.lay(line.now, q, direction)
 
     def act(
         self,
@@ -217,8 +219,8 @@ class Node:
         flux: list[Any] | None = None,
         top: Any = None,
         kept: list[Line] | None = None,
-    ) -> tuple[list[Line], list[Any], list[Line]]:
-        """The Node's act on one row in the direction, one path (RW-S1): Rule3's rotate and the lines' writes taken in the direction's order, the rotate first forward and the write first backward, each at the direction (the former two branches kept by name). Returns the row at the start, the stepped levels before the write, and the row as the act leaves it; backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned."""
+    ) -> tuple[list[Line], list[Line]]:
+        """The Node's act on one row in the direction, one path (RW-S1): Rule3's rotate and the lines' writes taken in the direction's order, the rotate first forward and the write first backward, each at the direction (the former two branches kept by name). Returns the row at the start and the row as the act leaves it (the stepped levels before the write, read by no engine code, struck 2026-10-26: the lean toy spells its own act for its former interval); backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned."""
         starts = None if kept is None else [np.where(top, line.now, line.before) for line in lines]
 
         def rotate(found: list[Line]) -> list[Line]:
@@ -231,12 +233,10 @@ class Node:
             return found
 
         first, second = (rotate, write)[::direction]
-        found = first(lines)
-        levels = [line.now for line in found]
-        found = second(found)
+        found = second(first(lines))
         if kept is not None:
             self.restore(found, kept, top)
-        return (lines if direction == 1 else found), levels, found
+        return (lines if direction == 1 else found), found
 
     def restore(self, lines: list[Line], kept: list[Line], top: Any) -> None:
         """Backward at the turned Nodes `top`: the row set to `kept`, the pre-state the exchange returned (the inverse at a turned Node is no act)."""
@@ -261,24 +261,24 @@ class Node:
         """Every line of every row, in the acts' order."""
         return [line for row in self.rows() for line in row]
 
-    def is_im(self) -> list[bool]:
-        """Which lines the row's conjugation negates (a plane's im line), its own entry of K below 0."""
-        return [gram.conjugation(r.shape)[k][k] < 0 for r in self.rows_ for k in range(r.shape)]
-
     def exchange(self, top: Any, held: list[list[Line]]) -> None:
         """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the quartet's K0, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves."""
         for r, row, hrow in zip(self.rows_, self.rows(), held, strict=True):
-            k = gram.conjugation(r.shape)
-            nows = gram.matvec(k, [h.before for h in hrow])
-            befores = gram.matvec(k, [h.now for h in hrow])
+            nows, befores, rems = acts.exchange(
+                [h.now for h in hrow],
+                [h.before for h in hrow],
+                [h.rem for h in hrow],
+                [h.wall for h in hrow],
+                gram.conjugation(r.shape),
+            )
             for i, (line, h) in enumerate(zip(row, hrow, strict=True)):
                 line.now = np.where(top, nows[i], line.now)
                 line.before = np.where(top, befores[i], line.before)
-                line.rem = np.where(top, mirrored(h.rem, h.wall, 1 + (k[i][i] < 0)), line.rem)
+                line.rem = np.where(top, rems[i], line.rem)
                 if np.ndim(h.wall):
                     line.wall = np.where(top, h.wall, line.wall)
                 if line.wr is not None:
-                    line.wr = np.where(top, mirrored(h.wr, line.wwall, 1), line.wr)
+                    line.wr = np.where(top, acts.mirror(h.wr, line.wwall, 1), line.wr)
 
     def swap(self, held: list[list[Line]], direction: int = 1, top: Any = None) -> Any:
         """The swap at the top, in the direction (RW-S1; backward the exchange of the turned Nodes `top` from the frame, the former Interval's own exchange kept by name): the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), at a frozen Node by this trigger alone on its restored line (FR-S1, the owner's words of 2026-10-26, 03:41 UTC, approved, and 07:3x UTC, entered as the fix of a forbidden state: no Node frozen for ever; BH-S1's mask on the trigger struck and kept by name); the turned Node ends the interval at the state it started from, exchanged and complemented."""
@@ -305,15 +305,11 @@ class Node:
         return top
 
     def read_lines(
-        self, held: list[list[Line]], plane_starts: list[list[Line]], c: Any, factors: tuple[Any, ...]
+        self, held: list[list[Line]], c: Any, factors: tuple[Any, ...]
     ) -> list[tuple[Line, rule3.Rule]]:
         """The lines the one-Link read takes with their rules: every line of every row at the interval's start, alike."""
         rules = [self.rule_of(r, c, factors) for r in self.rows_]
         return [(line, rule) for rule, lines in zip(rules, held, strict=True) for line in lines]
-
-    def digit_of(self, rem: int, values: int) -> tuple[int, int]:
-        """One line's digit at a Node: its remainder on the lattice and the count of values the lattice holds."""
-        return rem, values
 
     def run(self, direction: int = 1) -> None:
         """One interval of the Node's program in the direction (interval.run)."""
