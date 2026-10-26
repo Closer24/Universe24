@@ -335,6 +335,7 @@ TABLE: tuple[Row, ...] = (
     events.deceleration,
     events.acceleration_in_clicks,
     clicks.horizon_radiates,
+    predicates.arrow_of_time,
     conservations,
     constants,
 )

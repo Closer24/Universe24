@@ -17,7 +17,7 @@ RECORDS, WIDTH = ROOT / "examples" / "records", 128
 CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the Links lengthening in the clicks, under GP-S1's lay) and gains 47 (the exact take, the excess kept as the remainder, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 and 17 kept by the decoder's read of the remainder and of the merger's birth; the bodies gain 8 and 16 with the credits the remainder pays; the hole under PL-S1 before: 9 and 22 among them under the former write of 2 W after the step
-    "hole": {4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45, 47, 58, 59, 60},
+    "hole": {4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45, 47, 58, 59, 60, 62},
     "chiral": {
         2,
         4,
@@ -44,6 +44,7 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
         47,
         59,
         60,
+        62,
     },
     "bodies": {2, 3, 5, 6, 7, 8, 9, 10, 16, 18, 30, 37, 43, 45, 59, 60},
 }
@@ -58,9 +59,11 @@ VERDICTS = {  # the verdicts' words by name
         "60 the acceleration in the clicks": "SHOWN: after a slowing, an eighth's growth of the spacing larger",
         "15 conservation at the click": "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth (EX-S1)",
         "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node (EX-S1)",
+        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 1631 of 1631 frames",
     },
     "chiral": {
         "24 the merger (a pair into light)": "SHOWN: 2 pairs into light (the gap-0 children born from a gapped record's take)",
+        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 2956 of 2956 frames",
         "17 charge conservation": "SHOWN: the senses sum to 0; the magnitude SHOWN: one |W| on every child laid where its plane stood at nothing",
         "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
         "15 conservation at the click": "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder (EX-S1), taken >= booked on the rest (the mergers' ends)",
@@ -75,6 +78,7 @@ VERDICTS = {  # the verdicts' words by name
         "56 Bell": "NOT READ: 0 births, no born pair clicked at both ends",
         "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four",
         "61 the horizon radiates": "NOT READ: no frozen Node in the record (as gate 14)",
+        "62 the arrow of time in the clicks": "NOT READ: no frame carries a charge",
         "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
     },

@@ -343,3 +343,27 @@ def ghz(record: Record) -> dict[str, Any]:
             ),
         }
     }
+
+
+def arrow_of_time(record: Record) -> dict[str, Any]:
+    """Row 62: the arrow of time in the clicks (CA-S1, the owner's word of 2026-10-26, the direction is the slot): on every credit's frame the charge W = re_now im_before - im_now re_before is negated exactly by the exchange of the two slots (now for before), so the charge is the record of the direction, odd under the exchange; counted over the frames whose W is not 0, the frames at W = 0 named apart (a level on one slot alone carries no charge)."""
+    frames = [c["frame"] for c in record.credits if "frame" in c]
+    charges = [f["re_now"] * f["im_before"] - f["im_now"] * f["re_before"] for f in frames]
+    exchanged = [f["re_before"] * f["im_now"] - f["im_before"] * f["re_now"] for f in frames]
+    nonzero = sum(1 for w in charges if w)
+    odd = sum(1 for w, x in zip(charges, exchanged, strict=True) if w and x == -w)
+    return {
+        "62 the arrow of time in the clicks": {
+            "frames at the credits": len(frames),
+            "frames with a charge (W not 0)": nonzero,
+            "frames whose charge is negated by the slot exchange": odd,
+            "frames at W = 0": len(frames) - nonzero,
+            "verdict": unread_words(
+                "no frame carries a charge", "W negated by the exchange of the slots"
+            )
+            if not nonzero
+            else f"SHOWN: the charge odd under the slot exchange, {odd} of {nonzero} frames"
+            if odd == nonzero
+            else f"NOT SHOWN: {nonzero - odd} frames' charge not negated by the exchange",
+        }
+    }
