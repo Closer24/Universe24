@@ -1,0 +1,3 @@
+[{"file": "event_universe/run.py",
+  "old": "MARKS = 12  # the reader's rows: one at every twelfth of the run\n",
+  "new": "MARKS = 12  # the reader's rows: one at every twelfth of the run\nKT1_FLAG = __import__(\"os\").environ.get(\"KT1_FLAG\", \"\")  # kt1's proof flag: read and never used, the head's path bit for bit\n"}]
