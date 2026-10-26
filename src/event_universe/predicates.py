@@ -191,16 +191,27 @@ def exclusion(record: Record) -> dict[str, Any]:
 
 
 def exact_take(record: Record) -> dict[str, Any]:
-    """Row 47: the exact take, taken equal to booked on every birth (the excess 0); the credits' leak unread (a credit carries no booked walls)."""
-    births, (taken, booked) = record.births, record.takes_of()
-    exact = sum(1 for b in births if b["taken"] == b["booked"])
+    """Row 47: the exact take, taken equal to booked on every birth of a pair (the excess 0), or, where the birth carries the take's remainder (EX-S1), the excess exactly the remainder's rise at the Node; a merger's birth (MG-S1, the line carrying its takes per end, the ends taken whole by the share fall) counted apart and read by row 24; the credits' leak unread (a credit carries no booked walls)."""
+    births = [b for b in record.births if "takes" not in b]
+    mergers = len(record.births) - len(births)
+    taken, booked = sum(b["taken"] for b in births), sum(b["booked"] for b in births)
+    exact = sum(
+        1
+        for b in births
+        if b["taken"] - b["booked"] == b.get("remainder", 0) - b.get("remainder_was", 0)
+    )
+    kept = sum(1 for b in births if "remainder" in b)
     return {
         "47 the exact take": {
             "births taken exactly / in all": [exact, len(births)],
+            "births with the excess kept as the remainder (EX-S1)": kept,
+            "mergers apart (MG-S1, the ends taken whole by the share fall, row 24's reading)": mergers,
             "taken per booked over the births (hundredths)": quot(taken, booked, HUNDRED),
             "verdict": unread_words("no birth", "taken equals booked on every line")
             if not births
             else "SHOWN: taken equals booked on every birth"
+            if exact == len(births) and not kept
+            else "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node (EX-S1)"
             if exact == len(births)
             else f"NOT SHOWN exact: the excess above 0 on {len(births) - exact} births (EX-S1)",
         }
@@ -300,7 +311,7 @@ def bell(record: Record) -> dict[str, Any]:
     ]
     s, opposite = (
         e[0] - e[1] + e[2] + e[3],
-        sum(b["W_children"][0] * b["W_children"][1] < 0 for b in record.births),
+        sum(a * c < 0 for a, c in record.charges_of()),
     )
     n = len(pairs)
     verdict = (
@@ -330,5 +341,29 @@ def ghz(record: Record) -> dict[str, Any]:
                 "a birth gives two ends at one Link and a shared take four, no three ends with one root in the record",
                 "M = E(xyy) + E(yxy) + E(yyx) - E(xxx) over three-ended births, M^2 > 4 as nature (|M| <= 2 for every local reading)",
             ),
+        }
+    }
+
+
+def arrow_of_time(record: Record) -> dict[str, Any]:
+    """Row 62: the arrow of time in the clicks (CA-S1, the owner's word of 2026-10-26, the direction is the slot): on every credit's frame the charge W = re_now im_before - im_now re_before is negated exactly by the exchange of the two slots (now for before), so the charge is the record of the direction, odd under the exchange; counted over the frames whose W is not 0, the frames at W = 0 named apart (a level on one slot alone carries no charge)."""
+    frames = [c["frame"] for c in record.credits if "frame" in c]
+    charges = [f["re_now"] * f["im_before"] - f["im_now"] * f["re_before"] for f in frames]
+    exchanged = [f["re_before"] * f["im_now"] - f["im_before"] * f["re_now"] for f in frames]
+    nonzero = sum(1 for w in charges if w)
+    odd = sum(1 for w, x in zip(charges, exchanged, strict=True) if w and x == -w)
+    return {
+        "62 the arrow of time in the clicks": {
+            "frames at the credits": len(frames),
+            "frames with a charge (W not 0)": nonzero,
+            "frames whose charge is negated by the slot exchange": odd,
+            "frames at W = 0": len(frames) - nonzero,
+            "verdict": unread_words(
+                "no frame carries a charge", "W negated by the exchange of the slots"
+            )
+            if not nonzero
+            else f"SHOWN: the charge odd under the slot exchange, {odd} of {nonzero} frames"
+            if odd == nonzero
+            else f"NOT SHOWN: {nonzero - odd} frames' charge not negated by the exchange",
         }
     }

@@ -8,20 +8,20 @@ from collections import Counter, defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe import board, clicks, events, predicates
+from event_universe import board, clicks, events, predicates, symmetries
 from event_universe.core.ports import AXES
 from event_universe.decoder import (
     HALF,
     HUNDRED,
     LISTED,
     PAIR,
-    WIDTH,
     Record,
     cause_of,
     kind_of,
     quot,
     unread_words,
 )
+from event_universe.rows import WIDTH
 
 Row = Callable[[Record], dict[str, Any]]
 
@@ -335,6 +335,12 @@ TABLE: tuple[Row, ...] = (
     events.deceleration,
     events.acceleration_in_clicks,
     clicks.horizon_radiates,
+    predicates.arrow_of_time,
+    symmetries.uniformity,
+    symmetries.dark_matter,
+    symmetries.lepton_number,
+    symmetries.energy,
+    symmetries.cpt,
     conservations,
     constants,
 )

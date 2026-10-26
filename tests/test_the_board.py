@@ -11,13 +11,18 @@ import numpy as np
 
 from event_universe import gates as table
 from event_universe import run as writer
-from event_universe.core.ports import PORTS
+from event_universe.core.ports import AXES, PORTS
 from event_universe.links import row_current
 from event_universe.node import Node
 from event_universe.rows import CARRIER
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
-CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (6, 6, 6, 6)  # rotations alike per part (CK-S1 even)
+CUBE, INTERVALS, GROUPS, ALIKE = (
+    5,
+    20,
+    4,
+    (6, 0, 0, 0),
+)  # rotations alike per part: GP-S1 (6, 6, 6, 6 under CK-S1 even)
 COUNTED = ("births", "laid_back", "refused_stop")  # the counts the EQ-S1 test reads per world
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
@@ -76,7 +81,7 @@ def same_rows(base: Node, other: Node, m: Any) -> bool:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 209 credits and 20 births under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed), 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+    """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 209 credits and 20 births under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed), 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read. Under GP-S1 (the children laid with the charge's sign, the owner's word of 2026-10-26, 04:3x UTC) the rotations negating an axis part at the interval 19 (18 of 24 apart, 6 alike in the first part, 24 of 24 alike before): the state alike through 18, and at the 19th close the merger candidates' draw reads the negated lines' remainders r against W - 1 - r in its digits, so the image draws another child plane (the row 0 against 2 at four Nodes) and births at the other four of eight symmetric sites: A48-S1's open read of the remainder in the image (the centred pick, held unbuilt), named here and not this lay's."""
     universe, world = world_of("world_hole.json")
     base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
     births = births_of(base)
@@ -99,14 +104,14 @@ def test_the_run_back_is_exact_through_births_and_turns() -> None:
 
 
 def test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero() -> None:
-    node = node_of("world_chiral.json")
+    node = node_of("world_nature.json")
     for _ in range(60):
         node.step()
-    births = [e for e in node.log if e["event"] == "birth"]
+    births = [e for e in node.log if e["event"] == "birth" and "exact_lay" not in e]
     assert len(births) >= 8
     signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
     assert sum(signs) == 0 and 0 not in signs
-    assert all(b["taken"] >= b["booked"] for b in births)
+    assert all(b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] for b in births)  # EX-S1
     hands = {1 if tuple(b["plus"]) > tuple(b["minus"]) else -1 for b in births}
     assert hands == {1, -1}
 
@@ -171,7 +176,7 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
     laid_back = sum(1 for c in credits if "laid_back" in c)
     assert (len(credits), laid_back, sum(1 for c in credits if c["i"] < top)) == (162, 162, 135)
     assert node.counts["births"] == node.counts["laid"] == 0
-    assert node.census()[0] == 98 and node.census()[1] <= 128
+    assert node.census()[0] == 99 and node.census()[1] <= 128  # the take's remainder, EX-S1; 98 before
     for _ in range(80):
         node.step_back()
     assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step_back()) == 10
@@ -211,7 +216,9 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
         found[world] = ({i: n for i, n in by_interval.items() if n}, *(counts[k] for k in COUNTED))
         assert run_back_exact(kept, 10) == 10
     assert found["world_pair_3.json"] == ({4: 27, 6: 27, 8: 27}, 0, 81, 0)
-    assert found["world_hole.json"][1:3] == (16, 0) and sum(found["world_hole.json"][0].values()) == 56
+    assert (
+        found["world_hole.json"][1:3] == (10, 0) and sum(found["world_hole.json"][0].values()) == 56
+    )  # 10 births under EX-S1, 16 before
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
@@ -374,7 +381,7 @@ def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2
     assert len(births) == 64 and {b["i"] for b in births} == {2} and len(children) == 64
     assert all(sorted(rows) == [0, 1] for rows in children.values())
     assert {tuple(b["W_children"]) for b in births} == {(-18000, 18000)}
-    assert all(b["taken"] >= b["booked"] for b in births)
+    assert all(b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] for b in births)  # EX-S1
     first = [e for e in found["log"] if e["event"] == "refused" and e["i"] == 1 and e["cause"] == "lay"]
     assert len(first) == 64 and all("standing" in e for e in first)
     assert (set(found["nodes"][1]["X"]), set(found["nodes"][9]["X"])) == ({1050}, {1880})
@@ -390,7 +397,7 @@ def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2
     }
     assert found["run_back"] == {"intervals": 20, "exact": 20}
     assert ({r["integers"] for r in found["rows"]}, max(r["max bits"] for r in found["rows"])) == (
-        {89},
+        {90},  # the take's remainder, EX-S1; 89 before
         115,
     )
     for match, change in (
@@ -407,3 +414,102 @@ def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2
         assert (
             (a.now == b.now).all() and (a.before == b.before).all() and int((a.rem != b.rem).sum()) == 32
         )
+
+
+def test_the_pair_at_rest_merges_into_light_by_its_own_quantum_taken_whole_mg_s1() -> None:
+    """MG-S1 (the Boss's order of 2026-10-26, 01:03 UTC, 6405916579, under the owner's delegation; H-Merger-At-Rest-1's REPORT.md sections 1 and 3, built in merger.py; the test under 15 s): a child's wall is its own quantum, read on zero lines of the row's shape and not as the board's increment where the plane stands (equal on an empty plane: the cycle board's 64 births at the interval 2 book 1,682,128,072,219,779,093,684 per child, one value at 128 of 128 ends); a pair at rest (no current across the Link, the ends' charges opposite) meets as the conjugate pair, the + child at the end whose charge is positive, and each child's wall is paid at its own end by the taken record's four levels taken whole by the one lay act at -1, the fall the share the board loses, refused by name `stop` where below the wall: on the cycle board (tests/worlds/world_ga2.json) at the interval 3 the 384 pairs born at the bang reach the premise and every one is refused by the stop at 953 thousandths of the wall (one value; 0 negative walls; the hand's numbers to the integer), the board above the lay's X; on the bare 5-cube the heaviest record's pair at one quantum per end at two adjacent Nodes is refused by the stop at the first close (998 thousandths, the rotation's one step) and merges into light at the second (taken at or above booked, the light laid as the child's lay where the light line has no direction, W -+(T div 2)); at three quanta per end it merges at the first close; the run back exact. The hand's landing (64 mergers at 217 with taken = booked at 128 of 128 ends, X 999 at every Node at 218, 16 births at 219) is measured in the record and not here (450 intervals)."""
+    universe, world = world_of("world_ga2.json")
+    node = Node(universe, dict(world, intervals=6))
+    kept = copy.deepcopy(node)
+    for _ in range(6):
+        node.step()
+    births = [e for e in node.log if e["event"] == "birth"]
+    stops = [e for e in node.log if e["event"] == "refused" and e["cause"] == "stop"]
+    assert (
+        {b["i"] for b in births} == {2} and len(births) == 64 and not [b for b in births if "takes" in b]
+    )
+    assert {b["booked"] for b in births} == {2 * 1_682_128_072_219_779_093_684}
+    assert sum(1 for s in stops if s["i"] == 3) == 384 and all(s["walls"] > 0 for s in stops)
+    assert {s["fall"] * 1000 // s["walls"] for s in stops if s["i"] == 3} == {953}
+    assert run_back_exact(kept, 6) == 6
+    bare = node_of("world_node.json", shape=[5, 5, 5], seed=[])
+    a, b = bare.A, bare.B
+    heavy = max(range(len(bare.records())), key=lambda r: bare.records()[r].gap or 0)
+    gap0 = bare.records().index(bare.emitter())
+    m, p = (1, 1, 1), (2, 1, 1)
+    found = []
+    for k in (1, 3):
+        board = node_of("world_node.json", shape=[5, 5, 5], seed=[])
+        board.lay(heavy, m, (k * a, 0, 0, k * b))
+        board.lay(heavy, p, (k * a, 0, 0, -k * b))
+        held = copy.deepcopy(board)
+        for _ in range(4):
+            board.step()
+        mergers = [e for e in board.log if e["event"] == "birth" and e["taken_row"] == heavy]
+        refusals = [e for e in board.log if e["event"] == "refused" and e.get("row") == heavy]
+        assert len(mergers) == 1 and mergers[0]["line_pair"] == gap0
+        (merger,) = mergers
+        assert (tuple(merger["plus"]), tuple(merger["minus"])) == (m, p)
+        assert all(t["taken"] >= t["booked"] > 0 for t in merger["takes"])
+        assert merger["exact_lay"] == [None, None] and merger["W_children"] == [
+            -(bare.T // 2),
+            bare.T // 2,
+        ]
+        assert run_back_exact(held, 4) == 4
+        found.append(
+            (merger["i"], [(e["i"], e["cause"], e["fall"] * 1000 // e["walls"]) for e in refusals])
+        )
+    assert found == [(2, [(1, "stop", 998)]), (1, [])]
+
+
+def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_top_y_s3() -> None:
+    """Y-S3, the six metric lines written, read and run back exactly through a top (the hand H-Six-Metric-Lines-3, 2026-10-26; built in metric.py on the Boss's order of 03:3x UTC, 6407630119, under the owner's delegation): on the hole seed of the 5-cube to 20 the six lines' write stands in their write remainders (the flux lines' source the light's own velocities in and out against its gradient, the shears' its two gradients' product; at this den the quotient below one level to 60, every level 0 and the remainders off their half at the Nodes where light flows), the count per Node 98 and the bits within 128 as before, and the run back is exact 10 of 10 through the turns; on the uniform sea of the 3-cube to 120 through the whole-board top at 58 and the exact return at 115 the six lines stay 0 at every Node (the flux 0 by symmetry) and the run back is exact 10 of 10 through the top; a change of the flux lines two Links from a Node leaves its step and its step back bit for bit (the one-Link reach)."""
+    node = node_of("world_hole.json")
+    assert run_back_exact(node, 10) == 10
+    for _ in range(10):
+        node.step()
+    lines = node.row(CARRIER).lines
+    assert len(lines) == 1 + 3 * AXES and node.census() == (99, 115)  # 98 before EX-S1
+    flux, shears = lines[1 + AXES : 1 + 2 * AXES], lines[1 + 2 * AXES :]
+    assert all(int(x) == 0 for line in (*flux, *shears) for x in line.now.reshape(-1))
+    assert all(any(int(x) != line.wwall // 2 for x in line.wr.reshape(-1)) for line in (*flux, *shears))
+    assert node.counts["turns"] > 0 and node.counts["births"] > 0
+
+    sea = node_of("world_sea_3.json")
+    for _ in range(110):
+        sea.step()
+    kept = [state_of(sea)]
+    tops = []
+    for _ in range(10):
+        sea.step()
+        kept.append(state_of(sea))
+        if sea.turned.any():
+            tops.append((sea.interval, int(sea.turned.sum())))
+    six = sea.row(CARRIER).lines[1 + AXES :]
+    assert all(int(x) == 0 for line in six for a in (line.now, line.before) for x in a.reshape(-1))
+    assert sum(state_of(sea) == kept[9 - k] for k in range(10) if not sea.step_back()) == 10
+
+    base = node_of("world_hole.json")
+    for _ in range(6):
+        base.step()
+    far = copy.deepcopy(base)
+    centre = (2, 2, 2)
+    for k in range(1 + AXES, 1 + 3 * AXES):
+        line = far.row(CARRIER).lines[k]
+        for at in np.ndindex(*far.shape):
+            if sum(min(abs(a - c), far.cube - abs(a - c)) for a, c in zip(at, centre, strict=True)) >= 2:
+                line.now[at] = int(line.now[at]) + k
+
+    def at_centre(n):
+        return [
+            (int(line.now[centre]), int(line.before[centre]), int(line.rem[centre]))
+            for row in n.rows()
+            for line in row
+        ]
+
+    base.step()
+    far.step()
+    assert at_centre(base) == at_centre(far)
+    base.step_back()
+    far.step_back()
+    assert at_centre(base) == at_centre(far)

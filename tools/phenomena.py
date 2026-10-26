@@ -9,7 +9,6 @@ from pathlib import Path
 from typing import Any
 
 HEADING = "### The gates of the phenomena"
-ROWS = 61  # the rows of the table, the phenomena of nature the run must show
 GATE_COLUMN, VERDICT_COLUMN = (
     1,
     2,
@@ -25,23 +24,33 @@ KINDS = (
 )  # the kinds the decoder writes, in the table's order
 
 
+def reading_lines(path: str | Path) -> list[dict[str, Any]]:
+    """A reading file's lines (one JSON object per line, the gates' output), the one loader of a reading for the table and the page."""
+    return [
+        json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()
+    ]
+
+
 def reading_of(path: str | Path) -> dict[int, dict[str, Any]]:
     """A reading file's numbered rows: the gate's number to its row (its verdict among the numbers)."""
     rows: dict[int, dict[str, Any]] = {}
-    for line in Path(path).read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        for key, row in json.loads(line).items():
+    for line in reading_lines(path):
+        for key, row in line.items():
             found = re.match(r"(\d+) ", key)
             if found and isinstance(row, dict) and "verdict" in row:
                 rows[int(found.group(1))] = row | {"key": key}
     return rows
 
 
+def rows_in(readings: dict[str, dict[int, dict[str, Any]]]) -> int:
+    """The rows of the table, the phenomena of nature the run must show: the largest numbered row the readings carry (the decoder's table names them, one function per row, so a new row enters the table with its reading alone)."""
+    return max((gate for rows in readings.values() for gate in rows), default=0)
+
+
 def rows_of(readings: dict[str, dict[int, dict[str, Any]]], before: dict[int, set[str]]) -> list[str]:
     """The table's rows from the named readings and the SHOWN sets of the table before."""
     found = []
-    for gate in range(1, ROWS + 1):
+    for gate in range(1, rows_in(readings) + 1):
         kinds = {name: rows[gate]["kind"] for name, rows in readings.items() if gate in rows}
         phenomenon = next(
             (rows[gate]["phenomenon"] for rows in readings.values() if gate in rows), f"row {gate}"
@@ -103,10 +112,10 @@ def table_of(
     """The section: its heading, one line on the head and the records, the table."""
     shown = sum(
         1
-        for gate in range(1, ROWS + 1)
+        for gate in range(1, rows_in(readings) + 1)
         if any(gate in rows and rows[gate]["kind"] == "SHOWN" for rows in readings.values())
     )
-    head = f"SHOWN in Universe24: {shown} of {ROWS} on {sha}"
+    head = f"SHOWN in Universe24: {shown} of {rows_in(readings)} on {sha}"
     records = ", ".join(readings)
     return "\n".join(
         [

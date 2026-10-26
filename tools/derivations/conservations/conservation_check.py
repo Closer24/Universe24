@@ -4,7 +4,7 @@ Usage: python tools/derivations/conservations/conservation_check.py <world.json>
 Prints one line per law, "LAW: held N of N" or "LAW: broken at interval k, Node (x, y, z), the numbers", then the readings and the verdict; exit code 0 only when every law holds.
 
 The laws, each by its clause of docs/ALGEBRA.md:
- 1. ENERGY in the clicks (The ledger of exactness, the exact take; The conservation at the click): at every click the take re-read from the rows before the close equals the credit line's `taken`, the take is the least count of levels whose fall pays the walls, the fall pays the walls (taken >= booked) and taken == booked exactly; the taken line's level stands moved by the levels toward its before (or laid back, EQ-S1); the born pair carries two whole quanta (each child's share up by one unit of its own at its Node).
+ 1. ENERGY in the clicks (The ledger of exactness, the exact take; The conservation at the click): at every click the take re-read from the rows before the close equals the credit line's `taken`, the take is the least count of levels whose fall pays what is owed (the walls less the take's remainder standing at the Node, EX-S1), the fall with the remainders pays the walls and pays them exactly (taken + remainder before - remainder after = booked, EX-S1's identity; the former taken against booked where no remainder is logged); the taken line's level stands moved by the levels toward its before (or laid back, EQ-S1); the born pair carries two whole quanta (each child's share up by one unit of its own at its Node).
  2. MOMENTUM (The lattice momentum): the close's change of P_a per record row equals, exactly, what the credit and birth lines book (dP_take on the taken row, dP_lay on the children's row); P_a per row at the start and the end as a reading.
  3. CHARGE (The sign is the rotation sense; The charge written is the Wronskian): the board's W over the planes unchanged by the close, every birth's two children W of opposite sign summing to 0 (W_children), the senses [-1, 1].
  4. FLUX (The flux form of Rule3): F_ij = -F_ji on every Link of the gap-0 line's own current at the interval's start. Rule3's identity per Node and line and the write's book are the symmetric ride's (R5, the kick at the mean wall) and are not re-derived here: named for a hand.
@@ -231,6 +231,19 @@ def main(argv: list[str]) -> int:
             booked = e["booked"] if e["event"] == "birth" else node.units[e["line"]]
             for tk in takes:
                 at = tuple(tk["node"])
+                walls = booked if len(takes) == 1 else tk["booked"]
+                if "taken_levels" in tk:
+                    L[names[2]].count(
+                        tk["taken"] >= walls, k, at, f"taken {tk['taken']}, booked {walls}"
+                    )
+                    L[names[3]].count(
+                        tk["taken"] == walls,
+                        k,
+                        at,
+                        f"taken {tk['taken']}, booked {walls}, excess {tk['taken'] - walls}",
+                    )
+                    reading["excess taken - booked (share units)"] += tk["taken"] - walls
+                    continue
                 now_was, before, levels = tk["taker"]
                 line_k = tk["taken_line"]
                 clicks_at.setdefault((at, rec, line_k), []).append((tk, e))
@@ -238,21 +251,35 @@ def main(argv: list[str]) -> int:
                 BEFORE_LINE["line"] = mid_r[rec][line_k]
                 fall, t_ = take_fall(node, rule, at, now_was, before, cube)
                 read, taken = fall(levels), tk["taken"]
-                walls = booked if len(takes) == 1 else tk["booked"]
                 L[names[0]].count(
                     read == taken, k, at, f"fall read {read}, credit line taken {taken}, levels {levels}"
                 )
-                least = levels >= 1 and (levels == 1 or fall(levels - 1) < walls) and read >= walls
+                owed = walls - tk["remainder_was"] if "remainder" in tk else walls
+                least = (levels == 0 and owed <= 0) or (
+                    levels >= 1 and (levels == 1 or fall(levels - 1) < owed) and read >= owed
+                )
                 L[names[1]].count(
                     least,
                     k,
                     at,
                     f"levels {levels}, fall at levels - 1 {fall(levels - 1) if levels > 1 else 0}, walls {walls}",
                 )
-                L[names[2]].count(taken >= walls, k, at, f"taken {taken}, booked {walls}")
-                L[names[3]].count(
-                    taken == walls, k, at, f"taken {taken}, booked {walls}, excess {taken - walls}"
-                )
+                if "remainder" in tk:
+                    paid = taken + tk["remainder_was"] - tk["remainder"]
+                    L[names[2]].count(
+                        paid >= walls,
+                        k,
+                        at,
+                        f"taken {taken} + remainder before {tk['remainder_was']} - after {tk['remainder']} against booked {walls}",
+                    )
+                    L[names[3]].count(
+                        paid == walls, k, at, f"paid {paid} against booked {walls} (EX-S1's identity)"
+                    )
+                else:
+                    L[names[2]].count(taken >= walls, k, at, f"taken {taken}, booked {walls}")
+                    L[names[3]].count(
+                        taken == walls, k, at, f"taken {taken}, booked {walls}, excess {taken - walls}"
+                    )
                 reading["excess taken - booked (share units)"] += taken - walls
         for (at, rec, line_k), found in clicks_at.items():
             tk, e = found[-1]
@@ -267,6 +294,8 @@ def main(argv: list[str]) -> int:
                 f"the taken line now {stands}, the credit line's {want} ({'laid back' if 'laid_back' in e else 'taken'})",
             )
         for e in births:
+            if "exact_lay" in e:
+                continue
             s = e["line_pair"]
             row = recs[s]
             r = node.rule(row.pair, c, factors)
@@ -345,6 +374,13 @@ def main(argv: list[str]) -> int:
             rec = e["taken_row"] if e["event"] == "birth" else rec0
             for tk in takes:
                 at = tuple(tk["node"])
+                if "taken_levels" in tk:
+                    taken_levels = tk["taken_levels"]
+                    for line, n_, b_ in zip(
+                        exp_r[rec], taken_levels[0::2], taken_levels[1::2], strict=True
+                    ):
+                        line.now[at], line.before[at] = line.now[at] - n_, line.before[at] - b_
+                    continue
                 now_was, before, levels = tk["taker"]
                 t_ = 1 if before > now_was else -1
                 if "laid_back" not in e:
@@ -355,9 +391,13 @@ def main(argv: list[str]) -> int:
             s = e["line_pair"]
             amp_a, amp_b = e["amplitude"]
             re, im = exp_r[s]
-            for sense, where in ((-1, tuple(e["minus"])), (1, tuple(e["plus"]))):
-                re.now[where] = re.now[where] + amp_a
-                im.before[where] = im.before[where] + sense * amp_b
+            ends = ((-1, tuple(e["minus"])), (1, tuple(e["plus"])))
+            for (sense, where), laid in zip(ends, e.get("exact_lay", [None, None]), strict=True):
+                if laid is None:  # GP-S1: the charge's sign on the re line
+                    re.now[where] = re.now[where] + sense * amp_a
+                    im.before[where] = im.before[where] + amp_b
+                else:
+                    exp_r[s][laid[0]].now[where] = exp_r[s][laid[0]].now[where] + laid[1]
         book_ok, book_bad = True, None
         for ridx, (row_e, row_p) in enumerate(zip(expected_rows, post, strict=True)):
             for j, (le, lp) in enumerate(zip(row_e, row_p, strict=True)):

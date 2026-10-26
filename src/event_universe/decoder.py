@@ -15,7 +15,6 @@ from event_universe.rows import PLANE, QUARTET
 MIL = 1000000  # readings in parts per million
 HUNDRED = 100  # readings in hundredths
 THOUSAND = 1000  # readings in thousandths
-WIDTH = 128  # the law's width: every integer of the state and of every transient within it
 FEW = 10  # the fewest decoded credits for the dilation's two halves
 SPANS = 20  # the fewest spans for the lengthening's two halves
 HALF = 2  # a half: a count div 2, and a majority as a count times 2 above the whole
@@ -82,6 +81,7 @@ class Record:
     def __init__(self, run: dict[str, Any]) -> None:
         self.run = run
         self.den = int(run["den"])
+        self.action = int(run["universe"]["integers"]["quantum_action"])
         self.gamma, self.G, self.T = int(run["gamma"]), int(run["G"]), int(run["T"])
         rows = run["universe"]["rows"]
         planes = {
@@ -159,9 +159,26 @@ class Record:
         bodies: dict[tuple[tuple[int, ...], int], list[dict[str, Any]]] = self.memo[key]
         return bodies
 
+    def first_frozen(self) -> dict[int, int]:
+        """The first frozen interval of every Node that freezes (the Link pace 0, BH-S1's mask on the Node lines), the Node's index to the interval; the one reader of the horizon's Nodes for rows 14, 34 and 61."""
+        first: dict[int, int] = {}
+        for line in self.nodes:
+            for at in line["frozen"]:
+                first.setdefault(int(at), int(line["i"]))
+        return first
+
+    def charges_of(self) -> list[tuple[int, int]]:
+        """The two children's own charges at every birth, in the births' order (H-Children-Charge-Bug-1, the Boss's 6410696786): a child laid by the child's lay carries its sense times half the quantum of action (the Wronskian of its own two levels), a child laid as the exact take at -1 (a merger's light, the line's `exact_lay` at its end) carries 0; the log's W_children is the record's Wronskian at the Node after the lay (the standing level's and the cross term in it) and is read for the residue by name, never for the sign."""
+
+        def own(b: dict[str, Any], k: int) -> int:
+            exact = b.get("exact_lay", [None, None])[k] is not None
+            return 0 if exact else int(b["senses"][k]) * (self.action // HALF)
+
+        return [(own(b, 0), own(b, 1)) for b in self.births]
+
     def signs_of(self) -> list[int]:
-        """The births' children's senses as signs of their Wronskians, in the births' order."""
-        return [(w > 0) - (w < 0) for b in self.births for w in b["W_children"]]
+        """The births' children's senses as the signs of their own charges, in the births' order (0 for a child laid as light)."""
+        return [(w > 0) - (w < 0) for pair in self.charges_of() for w in pair]
 
     def takes_of(self) -> tuple[int, int]:
         """The sums over the births of what the takes took and what they booked."""

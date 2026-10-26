@@ -269,7 +269,8 @@ def horizon(record: Record) -> dict[str, Any]:
         if cmax >= frozen and not at_frozen
         else ("NOT REACHED" if cmax < frozen else "NOT SHOWN")
     )
-    first = next((record.node(line["frozen"][0]) for line in record.nodes if line["frozen"]), None)
+    frozen_first = record.first_frozen()
+    first = record.node(min(frozen_first, key=frozen_first.__getitem__)) if frozen_first else None
     return {
         "14 the horizon": {
             "frozen content": frozen,
@@ -284,9 +285,7 @@ def horizon(record: Record) -> dict[str, Any]:
 def stopped_clock(record: Record) -> dict[str, Any]:
     """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent from its first frozen interval on (no credit at it at or after that interval) and its content standing at its first frozen content on every later frozen line (BH-S1's predicate, the Boss's 6407393577: the clock stops at the horizon)."""
     frozen = [(int(line["i"]), at) for line in record.nodes for at in line["frozen"]]
-    first: dict[int, int] = {}
-    for i, at in frozen:
-        first.setdefault(at, i)
+    first = record.first_frozen()
     held = {at: record.nodes[i - 1]["content"][at] for at, i in first.items()}
     credits = [(record.index(c["node"]), int(c["i"])) for c in record.credits]
     credited = {at for at, i in credits if at in first and i >= first[at]}
