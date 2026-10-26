@@ -57,21 +57,22 @@ def balanced(seconds, count):
 
 def recorded_seconds():
     """The test files and the table's seconds per test function the files still hold
-    (`tests/<file>.py::<function>`; a name a file no longer has is left out)."""
+    (`tests/<file>.py::<function>` or `::<function>[<id>]`; a name a file no longer has is left out)."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
     files = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "tests").glob("test_*.py"))
     recorded = {}
     for file in files:
         text = (ROOT / file).read_text(encoding="utf-8")
         for target, seconds in table["tests"].items():
-            if target.startswith(file + "::") and f"\ndef {target.partition('::')[2]}(" in text:
+            function = target.partition("::")[2].partition("[")[0]  # a part's id after its function
+            if target.startswith(file + "::") and f"\ndef {function}(" in text:
                 recorded[target] = seconds
     return files, recorded
 
 
 def shards():
     """The CI jobs by name, each its pytest arguments: the suite's test functions in equal parts by
-    their recorded seconds (`tests/<file>.py::<function>`, its parametrizations with it); a file runs
+    their recorded seconds (`tests/<file>.py::<function>`, a parametrized function's parts each by id); a file runs
     whole in the part of its longest function, less the functions placed elsewhere (`--deselect`), so
     a function the table does not hold, or holds under a name the file no longer has, runs with its
     file; the parts from the heaviest to the lightest, the lint in the last; no world job."""
@@ -101,14 +102,17 @@ def shards():
 
 
 def seconds_of(junit):
-    """The seconds per test function read from a junit file (`tests/<file>.py::<function>`, its
-    parametrizations summed)."""
+    """The seconds per test function read from a junit file (`tests/<file>.py::<function>`), each
+    part of a parametrized function its own target (`<function>[<id>]`, as pytest takes it), so the
+    plan and the bound read a part as one unit (the Boss's 6414364173, the sixteen parts of the 48)."""
     import xml.etree.ElementTree as ElementTree
 
     tests = {}
     for case in ElementTree.parse(junit).getroot().iter("testcase"):
         path = case.get("classname", "").replace(".", "/") + ".py"
-        target = path + "::" + case.get("name", "").partition("[")[0]  # the function, its parts summed
+        target = (
+            path + "::" + case.get("name", "")
+        )  # the function, or one part of a parametrized one, by its id
         tests[target] = round(tests.get(target, 0.0) + float(case.get("time", 0)), 1)
     return tests
 
