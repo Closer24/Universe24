@@ -218,7 +218,7 @@ class Node:
         top: Any = None,
         kept: list[Line] | None = None,
     ) -> tuple[list[Line], list[Any], list[Line]]:
-        """The Node's act on one row in the direction, one path (RW-S1): Rule3's rotate and the lines' writes taken in the direction's order, the rotate first forward and the write first backward, each at the direction (the former two branches kept by name). Returns the row at the start, the stepped levels before the write, and the row as the act leaves it; backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned."""
+        """The Node's act on one row in the direction, one path (RW-S1): Rule3's rotate and the lines' writes taken in the direction's order, the rotate first forward and the write first backward, each at the direction (the former two branches kept by name). Returns the row at the start, the stepped levels before the write (read by the lean toy's former interval alone), and the row as the act leaves it; backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned."""
         starts = None if kept is None else [np.where(top, line.now, line.before) for line in lines]
 
         def rotate(found: list[Line]) -> list[Line]:
@@ -260,10 +260,6 @@ class Node:
     def all_lines(self) -> list[Line]:
         """Every line of every row, in the acts' order."""
         return [line for row in self.rows() for line in row]
-
-    def is_im(self) -> list[bool]:
-        """Which lines the row's conjugation negates (a plane's im line), its own entry of K below 0."""
-        return [gram.conjugation(r.shape)[k][k] < 0 for r in self.rows_ for k in range(r.shape)]
 
     def exchange(self, top: Any, held: list[list[Line]]) -> None:
         """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the quartet's K0, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves."""
@@ -312,7 +308,7 @@ class Node:
         return [(line, rule) for rule, lines in zip(rules, held, strict=True) for line in lines]
 
     def digit_of(self, rem: int, values: int) -> tuple[int, int]:
-        """One line's digit at a Node: its remainder on the lattice and the count of values the lattice holds."""
+        """One line's digit at a Node: its remainder on the lattice and the count of values the lattice holds (the identity; the lean toy's folded digit overrides it under its key)."""
         return rem, values
 
     def run(self, direction: int = 1) -> None:

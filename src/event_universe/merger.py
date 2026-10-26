@@ -46,7 +46,7 @@ def walls_of(
             row.lines = [
                 Line(zeros(node.shape), zeros(node.shape), line.rem, line.wall) for line in held
             ]
-            child_at(node, s, where, sense)
+            lay(node, s, where, (sense * node.A, 0, 0, node.B))
             cache[(s, sense, where)] = sum(
                 share_at(node, row.lines, rule, at) for at in set(frame_nodes(node, where))
             )

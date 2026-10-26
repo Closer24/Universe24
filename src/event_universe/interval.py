@@ -127,7 +127,7 @@ class Interval:
             c: links_of(
                 self.factors,
                 [f**c for f in self.frames],
-                readings.link_phases(node, self.frames, count * c),
+                self.phases if c == 1 else readings.link_phases(node, self.frames, count * c),
                 [o * c for o in self.odd],
             )
             for c in sorted({c for _r, c in self.planes})

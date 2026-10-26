@@ -208,8 +208,3 @@ def largest_below(square: int) -> int:
         else:
             high = middle
     return low
-
-
-def form_term(self_coefficient: Any, wall: Any, now: Any, before: Any) -> Any:
-    """The conserved form's term at one Node from the rule's integers, w (now^2 + before^2) - S now before (ALGEBRA.md #the-conserved-form)."""
-    return wall * (now * now + before * before) - self_coefficient * now * before

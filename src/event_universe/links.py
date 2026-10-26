@@ -84,11 +84,6 @@ def gradient(a: Any, axis: int) -> Any:
     return across(a, port_of(axis, 0)) - across(a, port_of(axis, 1))
 
 
-def wronskian(re: Line, im: Line) -> Any:
-    """The plane's bilinear W = re_now im_before - im_now re_before at every Node (the charge density, the sign's source)."""
-    return cross(re.now, im.now, re.before, im.before)
-
-
 def link_current(line: Line, port: int) -> Any:
     """The line's own current on the Link at the Port, F_ij = now_i before_j - before_i now_j: odd under the exchange of the ends (the other end reads -F), read at the interval's start; the + child of a Link birth goes to the end the current flows into."""
     return cross(line.now, line.before, across(line.now, port), across(line.before, port))

@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core.ports import AXES, PORTS, across, port_of, wrap
-from event_universe.core.rule3 import half, quotient, share_weight, signed_quotient
+from event_universe.core.rule3 import division_forward, half, quotient, share_weight, signed_quotient
 from event_universe.links import gradient
 from event_universe.quartet import quartet
 from event_universe.readings import pair_angle
@@ -135,7 +135,6 @@ def term(shape: int, coefficient: Any, phi: list[Any], xs: list[Any]) -> list[An
 
 def share(node: Node, lines: list[Line], r: Any) -> Any:
     """The conserved form's share of a record at the Node in the carrier's unit (PM-S1: every count of the Node read in the carrier's unit, the one weight for every read and every row alike), one division per line: for the line k, [w (n_k (G n)_k + b_k (G b)_k) - S n_k (G b)_k - n_k (G SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (G (n + n_j))_k, times X the carrier's level at the interval's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the plane's share line by line as the case G = I; at the row's unscaled rule."""
-    from event_universe.core.rule3 import division_forward
 
     g = gram(len(lines))
     nows, befores = [line.now for line in lines], [line.before for line in lines]

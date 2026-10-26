@@ -12,7 +12,7 @@ import numpy as np
 from event_universe import merger, take
 from event_universe.core import paces
 from event_universe.core import rule3 as core
-from event_universe.core.rule3 import form_term, link_factor, mass, mirrored, rule3, rule_integers
+from event_universe.core.rule3 import link_factor, mass, mirrored, rule3, rule_integers
 from tests.laws import arrivals_rule3, node_of
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -99,10 +99,6 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     assert np.array_equal(carried, total - wall * nxt)
     back = rule3(fluxes, own, wall, now, nxt, carried, -1)
     assert np.array_equal(back, (before, remainder))
-    _reads, self_coefficient, wall = rule_integers(
-        800, 809, GAMMA, paces.clock(GAMMA, 250), paces.link_pace(GAMMA, 250)
-    )[:3]
-    assert form_term(self_coefficient, wall, 7, -3) == wall * (49 + 9) + self_coefficient * 21
 
 
 LAW_INTEGERS, TOOL_INTEGERS = frozenset({0, 1}), frozenset({0, 1, 2, 3, 4, 6})

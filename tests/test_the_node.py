@@ -17,7 +17,7 @@ from event_universe.merger import takes
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
 from event_universe.take import fall_of, frame_nodes, lay, move
-from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
+from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of, wronskian
 
 CENTRE, INTERVALS = (1, 1, 1), 20  # the fed Node, the 3-cube's centre; the run's intervals
 
@@ -77,7 +77,8 @@ def test_the_frozen_node_is_not_read_and_never_clicks() -> None:
 
 def exchanged(node: Node, held: list[list[Any]], at: tuple[int, ...]) -> bool:
     flat = [line for row in held for line in row]
-    for line, h, im in zip(node.all_lines(), flat, node.is_im(), strict=True):
+    ims = [gram.conjugation(r.shape)[k][k] < 0 for r in node.rows_ for k in range(r.shape)]
+    for line, h, im in zip(node.all_lines(), flat, ims, strict=True):
         sign = -1 if im else 1
         wall = int(np.asarray(line.wall)[at]) if np.ndim(line.wall) else int(line.wall)
         if int(line.now[at]) != sign * int(h.before[at]) or int(line.before[at]) != sign * int(
@@ -394,7 +395,6 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
 
 def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> None:
     """WS (the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the swap at the top is the conjugation composed with the exchange of the two levels, and W = re_now im_before - im_now re_before, odd under each, is even under the two: at every turned Node and every plane (the gap-0 plane with the gapped), W after the swap equals W of the held pre-state exactly (read by a Node whose click reads before it lays; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one quantum of row 1 at the centre, the first turn at 42 under EQ-S1, the centre's body laying back 12 of its 39 credits where nothing arrives; 35 with the take standing under CK-S1's crossing read even, 37 under the crossing odd at a touch of zero, 42 before CK-S1's credits) 296 of 296 sites by 60 (74 turned Nodes; 324 and 81 with the take standing), every W 0 there; on the chiral 5-cube at 20 intervals 2,152 of 2,152 sites, 664 of them with W not 0 under EX-S1 (2,124 and 632 under GP-S1; 2,172 of 2,172 by 543 turned Nodes, 686 with W not 0 under MG-S1; 2,156 sites by 539 turned Nodes and 625 under PL-S1; 2,180 sites by 545 turned Nodes and 722 under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed); 2,160 sites by 540 turned Nodes and 695 under the former write of 2 W after the step; 2,124 and 672 under the odd crossing; 2,120 and 668 under the upward crossing alone; at 60 the probe read 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head)."""
-    from event_universe.links import wronskian
 
     class Reading(Node):
         wronskians: dict[str, int] = {}

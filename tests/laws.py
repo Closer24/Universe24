@@ -13,6 +13,7 @@ import pytest
 
 from event_universe.core.rule3 import carried_division
 from event_universe.features import volume
+from event_universe.links import cross
 from event_universe.loader.world import load_world
 from event_universe.node import Node
 
@@ -73,3 +74,8 @@ def level_at(node: Node, content: int) -> int:
             volume.volume_of(node.gamma, np.array([content], dtype=object)), dtype=object
         ).reshape(-1)[0]
     )
+
+
+def wronskian(re: Any, im: Any) -> Any:
+    """The plane's bilinear W = re_now im_before - im_now re_before at every Node (the former links.wronskian, read by the tests alone)."""
+    return cross(re.now, im.now, re.before, im.before)
