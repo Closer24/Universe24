@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- CA-S1 (the direction is the slot) as a candidate clause held for the owner's word and CA-S2 the finding under The direction in docs/ALGEBRA.md, the group 96 named; rows 170, 177 and 190 (the Reader's one road walked at reader-5 21525c6, David's merge c845abf5d, the Boss's kit hand).
 - ENGINE.md's modules line back at twenty, the tree's, by the Boss's word of 07:0x by his clock ("carry the count at the merge"), the three modules of toys-5 named for that merge; David's audit cleaning 794125d38 read whole and recorded in rows 178 to 185 (two items not folded, for the Boss's word); H-Confirm-Build-22's confirmation of 3dc12e307 and the merge's road through reader-5 in rows 104 and 177; the confirm's departures of form as row 189.
 - The owner's word of 2026-10-26, 06:31 UTC (the click and Rule3 one algebra, the pair opened) in docs/HIGHLIGHTS.md and row 188; AJ-S6, the children as packets, as a reading under The cube's symmetry and in row 161.
 - The Boss's decision on the one seed (the chiral stays nature's seed, the join is the step's: FR-S1 and the Link-carried turn under locality; project One Bang reached by the step) and H-Confirm-Build-22 opened on toys-5 3dc12e307, in rows 167, 177 and 187.
