@@ -1,0 +1,5 @@
+hole_60: EQUAL 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world exit 0 seconds 17
+chiral_60: EQUAL 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world exit 0 seconds 22
+bodies_300: EQUAL 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world exit 0 seconds 28
+pair_3_400: EQUAL 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world exit 0 seconds 14
+universe_400: EQUAL 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world exit 0 seconds 23
