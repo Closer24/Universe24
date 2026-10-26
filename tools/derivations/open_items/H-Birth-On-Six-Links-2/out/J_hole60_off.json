@@ -1,0 +1,103 @@
+{
+ "cube": 5,
+ "centre2": [
+  4,
+  4,
+  4
+ ],
+ "counts": {
+  "credits": 777,
+  "credits laid back": 0,
+  "births": 16,
+  "takes": 16,
+  "six lines": 0,
+  "six solved": 0,
+  "six closed": 0,
+  "six open (remainder named)": 0,
+  "takes with J balance 0 about the centre": 0,
+  "takes with P balance 0": 0,
+  "births: W_children summing 0": 16,
+  "births: dP_lay 0": 16,
+  "mergers": 0
+ },
+ "J2 by class": {
+  "credits": [
+   87580660640633158864,
+   -263348496192263972152,
+   263348496192263972152
+  ],
+  "takes": [
+   -1066615995863001891816,
+   -588076236545414894976,
+   588076236545414894976
+  ],
+  "children": [
+   0,
+   0,
+   0
+  ],
+  "six": [
+   0,
+   0,
+   0
+  ]
+ },
+ "P by class": {
+  "credits": [
+   -499737433066826116662,
+   0,
+   0
+  ],
+  "takes": [
+   -588076236545414894976,
+   0,
+   0
+  ],
+  "children": [
+   0,
+   0,
+   0
+  ],
+  "six": [
+   0,
+   0,
+   0
+  ]
+ },
+ "J2 clicks": [
+  -979035335222368732952,
+  -851424732737678867128,
+  851424732737678867128
+ ],
+ "P clicks": [
+  -1087813669612241011638,
+  0,
+  0
+ ],
+ "worst |2J| balance at a take": 667650908817236712448,
+ "max |laid integer| at the six ends": 0,
+ "intervals with a click moment not 0": 46,
+ "open remainders": [],
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ },
+ "counts_record": {
+  "births": "16",
+  "taken": "97378594708022625295320",
+  "booked": "94999712837773089503304",
+  "body_clicks": "777",
+  "laid_back": "0",
+  "refused_stop": "434",
+  "refused_origin": "0",
+  "refused_lay": "5672",
+  "refused_orientation": "1727",
+  "refused_twist": "2002",
+  "refused_sense": "5792",
+  "turns": "546",
+  "met": "15217",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "record": "hole60_off.json"
+}

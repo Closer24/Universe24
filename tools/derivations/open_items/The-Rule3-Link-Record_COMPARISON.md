@@ -1,0 +1,33 @@
+# The Link's record read alike from both ends: two blind hands on engine-5.0-test 2395f9141 (the Boss's cold read, 2026-10-26, 07:0x UTC; the owner's words of 05:3x, 05:4x and 06:2x: one generic problem in Rule3?)
+
+The owner's words: 05:3x UTC (the 48 touches Rule3 itself), 05:4x (the problem above; one generic fix solving many), 06:2x (perhaps the horizon, the angular momentum and the Links are one problem in Rule3). The leads: hp2's symmetric reach gave 24 of 24 rotations on the chiral 3-cube; the torque hands' one-sided coupling term; the horizon's zero reach. The question put to two blind hands: is Rule3's Link coupling read from one end the one place the letter holds the Link's record twice, and is the Link's record read alike from both ends the one generic form solving the three.
+
+The hands: H-Rule3-Link-Record-1 (rl1) and -2 (rl2), 05:13 to 05:4x UTC, each with four symmetric forms flagged (the arithmetic sum, the geometric mean, the harmonic form, the Link's own pace), the 48 on the chiral 3-cube (rl1 the 5-cube too), the torque reader on the hole 60, the uniform boards and ga2 against the cache, the chiral under FR-S1.
+
+## 1. Where the two hands agree (the verdict)
+
+1. **DOES NOT: every symmetric reach crosses Rule3's conserved form.** Both by the algebra: the weighted form (the weight 1 / p_i^2, the share in the carrier's unit) is exact iff f(p_i, p_j) / p_i^2 = f(p_j, p_i) / p_j^2, so a symmetric f forces equal paces or 0; the head's reach conserves the weighted form to 0 and every symmetric form drifts 10^81 under the law's weighting (rl2's exact check; rl1's identity at every Link). The arithmetic form crosses the 128 bits besides (135 transient bits on the chiral 60).
+2. **The premise fails: the letter holds the Link's record once.** The coupling is the Node's clock squared (the Node's record) times Q_ij (the Link's record, one integer per Link read the same from both ends); under the law's own weight the coupling D M = 2 num Q is symmetric already. The one-sided appearance is the lapse of a wave on a curved clock (the redshift form), not a defect; the Link's own pace from two contents is the former two-end pace the owner replaced by "the clock is the Node's, the tension is the Link's", kept by name.
+3. **The three items are not one problem in the reach, each by name (both):** the 48: the step is covariant under every image for every reach (an image maps Node to Node and Port to Port; the exchange of a Link's two ends is no element of the 48), the parting of the rotations is elsewhere (rl1: the carried division's tie, and symmetry is neither necessary nor sufficient: the sum form gives 24 of 24 on the 3-cube and 3 of 24 on the 5-cube, the geometric 3 of 24 on the 3-cube; rl2: the draw's digit folding the remainder by a Link lattice read differently from the two ends, a reader's lead, the proof owed); the torque: the one-sided term is the Node's weight, not the reach's; every symmetric form grows it one to three decades (the slow end given the fast end's clock); the horizon: Q_ij is 0 across a frozen Link under every form and every form is the head's at the paces 1 and 1: no equalization, no turn as one (rl1 under the Link's pace: the horizon four times sooner, 125 at the horizon by 1,500, still 125 distinct X).
+4. **The two reaches are not one coefficient but one locality (both):** the birth's J balance holds no coefficient of Rule3 (0 of N births conserve J under every form); the one form that would unify them is the birth laid through the six Ports the step reads, the transverse recoil on the other axes' Links at the taker's Node, one act for every row, weighted by the six Links' records: the J hands' next pair (H-Kick-And-Lay-One-Act-1 and -2, running), not built here.
+5. **Measured alike:** the uniform boards and ga2 450 bit for bit under every form (a theorem: equal paces give the head's integer); the hole 60 and the chiral 60 change their course under every form from the intervals 8 and 3; the run back 10 of 10 on every run; the 48 on the chiral 3-cube 24 of 24 proper rotations under the sum and the Link's pace, the reflections 24 apart under every form.
+
+## 2. Where they differ
+
+rl2 names a reader's mend on the head's reach (one lattice per Link in the draw's digit, gcd(w, R_ij, R_ji)) as the road to 24 of 24 without touching Rule3; rl1's 5-cube measure (the sum form 3 of 24) says a symmetric lattice is not sufficient and points at the carried division's tie. Both are leads for A48-S1's read, neither proven: the next 48 hands take both with the 5-cube as the judge.
+
+## 3. The Boss's verdict
+
+**DOES NOT, and the owner's question answered by the letter and the measure:** the three are not one problem in Rule3's reach. Rule3's coupling is already the Link's record read once, with the Node's clock and its exact dual weight; a symmetric reach breaks the law's conserved form. The unification the hands found instead is in the locality, not the coefficient: the kick and the lay as one act at a Node and its six Links (the one-Node theorem of the six-Link pair), which is where J at a birth, the recoil's three components and the orbits are decided, and which the next pair derives. The 48's rotations stay a reading's item with two leads and the 5-cube as the judge; the horizon stays the horizon (the reach 0 by definition), its exit still missing by name.
+
+**RL-S1** (both hands, one reading, dated; no sentence for approval): Rule3's Link coupling is the Node's clock squared times the Link's one record Q_ij, symmetric under the law's own weight 1 / p_i^2; any reach symmetric in the two ends' paces breaks the weighted conserved form unless the paces are equal; the uniform boards are the head's under every such form; the 48's rotations, the step's torque and the horizon's reach are three items, not one.
+
+## 4. What goes where
+
+- **The Scribe**: RL-S1 as a reading beside TQ-S1; the ledger rows from both reports; NatureFirst: the owner's one-problem question answered, the items separate.
+- **The 48's next hands**: the two reader leads (the one lattice per Link; the carried division's tie), the 5-cube as the judge.
+- **Missing by name (both)**: the chiral to 3,000 under FR-S1 with the sum form (starved); why the Link's pace brings the chiral's content to the horizon by 500; the share re-weighted to the plain form (a change of Rule3's conserved form, the owner's, not proposed); the proof of rl2's lattice reading.
+
+## 5. Laws with a number
+
+Both: integers only; the one-Link reach (every form reads the far end through across alone); the fixed count unchanged; the run back 10 of 10 on every run; the suite 78 of 78 on the copy with the flag unset; 128 bits held on the head and crossed by the arithmetic form.

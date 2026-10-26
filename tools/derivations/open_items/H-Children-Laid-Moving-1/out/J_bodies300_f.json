@@ -1,0 +1,79 @@
+{
+ "counts": {
+  "births": 0,
+  "mergers": 0,
+  "P balance 0": 0,
+  "P balance 0 along the Link": 0,
+  "P along the Link within half the lay's quantum 4 num A": 0,
+  "transverse recoil carried": 0,
+  "J2 balance 0": 0,
+  "J2 balance 0 where at is the + end": 0,
+  "taker at the + end": 0,
+  "relative L2 0": 0,
+  "fixed point reached": 0,
+  "Q 0": 0,
+  "W summing 0": 0,
+  "dP_lay_ends present": 0
+ },
+ "P take summed": [
+  0,
+  0,
+  0
+ ],
+ "P lay summed": [
+  0,
+  0,
+  0
+ ],
+ "P balance summed": [
+  0,
+  0,
+  0
+ ],
+ "J2 take summed": [
+  0,
+  0,
+  0
+ ],
+ "J2 lay summed": [
+  0,
+  0,
+  0
+ ],
+ "J2 balance summed": [
+  0,
+  0,
+  0
+ ],
+ "relative L2 summed": [
+  0,
+  0,
+  0
+ ],
+ "worst |P balance| at a birth": 0,
+ "worst |J2 balance| at a birth": 0,
+ "Q min max": null,
+ "bits (log integers)": 0,
+ "record": "bodies300_f.json",
+ "counts_record": {
+  "births": "0",
+  "taken": "0",
+  "booked": "0",
+  "body_clicks": "1973",
+  "laid_back": "0",
+  "refused_stop": "825",
+  "refused_origin": "0",
+  "refused_lay": "112",
+  "refused_orientation": "1062",
+  "refused_twist": "8656",
+  "refused_sense": "3152",
+  "turns": "4229",
+  "met": "12982",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ }
+}

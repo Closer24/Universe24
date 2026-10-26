@@ -1,0 +1,4 @@
+head sum over axes of |terms| per 10^18 (integer part): {'LINKS_SYM': 639699, 'LINKS_ASYM': 362951, 'TURN': 14896, 'OWN': 744002, 'CURL': 0, 'RIDE': 108167, 'ROUND': 5358, 'REST': 0}
+   one-sided over read-alike, per mille: 567  clicks phase sum [-979035335222368732952, -851424732737678867128, 851424732737678867128]  swap [3119, -16988, 16987]  step [-2570, 17862, -17863]
+six-Link form sum over axes of |terms| per 10^18 (integer part): {'LINKS_SYM': 1086069, 'LINKS_ASYM': 698093, 'TURN': 27063, 'OWN': 1433227, 'CURL': 0, 'RIDE': 199704, 'ROUND': 10942, 'REST': 0}
+   one-sided over read-alike, per mille: 642  clicks phase sum [7391859982339571889068, -22434792201078484387304, -4185943644433781958704]  swap [-13183, -76810, 77550]  step [7090, 96674, -74567]

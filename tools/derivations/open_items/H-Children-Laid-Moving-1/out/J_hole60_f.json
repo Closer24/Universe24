@@ -1,0 +1,82 @@
+{
+ "counts": {
+  "births": 16,
+  "mergers": 0,
+  "P balance 0": 0,
+  "P balance 0 along the Link": 0,
+  "P along the Link within half the lay's quantum 4 num A": 16,
+  "transverse recoil carried": 0,
+  "J2 balance 0": 0,
+  "J2 balance 0 where at is the + end": 0,
+  "taker at the + end": 8,
+  "relative L2 0": 16,
+  "fixed point reached": 16,
+  "Q 0": 0,
+  "W summing 0": 16,
+  "dP_lay_ends present": 16
+ },
+ "P take summed": [
+  -1014577071465728172768,
+  0,
+  0
+ ],
+ "P lay summed": [
+  1016951669838627668000,
+  0,
+  0
+ ],
+ "P balance summed": [
+  2374598372899495232,
+  0,
+  0
+ ],
+ "J2 take summed": [
+  -675899502894193852064,
+  -1014577071465728172768,
+  1014577071465728172768
+ ],
+ "J2 lay summed": [
+  0,
+  1016951669838627668000,
+  -1016951669838627668000
+ ],
+ "J2 balance summed": [
+  -675899502894193852064,
+  2374598372899495232,
+  -2374598372899495232
+ ],
+ "relative L2 summed": [
+  0,
+  0,
+  0
+ ],
+ "worst |P balance| at a birth": 177344772654578501744,
+ "worst |J2 balance| at a birth": 709379090618314006976,
+ "Q min max": [
+  -84,
+  47
+ ],
+ "bits (log integers)": 73,
+ "record": "hole60_f.json",
+ "counts_record": {
+  "births": "16",
+  "taken": "83614428720258485549272",
+  "booked": "81318456890707786048240",
+  "body_clicks": "1080",
+  "laid_back": "0",
+  "refused_stop": "603",
+  "refused_origin": "0",
+  "refused_lay": "5724",
+  "refused_orientation": "1889",
+  "refused_twist": "2882",
+  "refused_sense": "6048",
+  "turns": "570",
+  "met": "16567",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "run_back": {
+  "intervals": 10,
+  "exact": 10
+ }
+}
