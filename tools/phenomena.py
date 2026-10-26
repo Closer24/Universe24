@@ -10,7 +10,13 @@ from typing import Any
 
 HEADING = "### The gates of the phenomena"
 ROWS = 57  # the rows of the table, the phenomena of nature the run must show
-KINDS = ("SHOWN", "SHOWN in part", "NOT SHOWN", "NOT REACHED", "NOT READ")
+GATE_COLUMN, VERDICT_COLUMN = (
+    1,
+    2,
+)  # the table's cells after the phenomenon: the gate's number, the verdict
+OPTION_WORDS = 2  # a --document option and its path, two words of the command line
+NOT = "NOT"  # the word a verdict begins with where the gate is not shown, read or reached
+KINDS = ("SHOWN", "SHOWN in part", f"{NOT} SHOWN", f"{NOT} REACHED", f"{NOT} READ")
 PHENOMENA = {
     1: "the recurring bang",
     2: "the lengthening of the Links",
@@ -86,7 +92,7 @@ def reading_of(path: str | Path) -> dict[int, dict[str, Any]]:
 
 
 def kind_of(verdict: str) -> str:
-    """A verdict's kind: SHOWN, SHOWN in part, NOT SHOWN, NOT REACHED or NOT READ; a restated row's by the gate it restates."""
+    """A verdict's kind: SHOWN or SHOWN in part, else NOT with SHOWN, with REACHED or with READ; a restated row's by the gate it restates."""
     words = verdict.split(": ", 1)[1] if verdict.startswith("as gate") else verdict
     return next((kind for kind in reversed(KINDS) if words.startswith(kind)), "NOT READ")
 
@@ -142,9 +148,9 @@ def before_of(document: str) -> dict[int, set[str]]:
     found: dict[int, set[str]] = {}
     for line in section_of(document).splitlines():
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) >= 3 and cells[1].isdigit():
-            shown = re.match(r"SHOWN on ([^;]+)", cells[2])
-            found[int(cells[1])] = set(shown.group(1).split(", ")) if shown else set()
+        if len(cells) > VERDICT_COLUMN and cells[GATE_COLUMN].isdigit():
+            shown = re.match(r"SHOWN on ([^;]+)", cells[VERDICT_COLUMN])
+            found[int(cells[GATE_COLUMN])] = set(shown.group(1).split(", ")) if shown else set()
     return found
 
 
@@ -202,8 +208,8 @@ def main(argv: list[str]) -> None:
     document = None
     if "--document" in argv:
         at = argv.index("--document")
-        document = Path(argv[at + 1])
-        argv = argv[:at] + argv[at + 2 :]
+        document = Path(argv[at + OPTION_WORDS - 1])
+        argv = argv[:at] + argv[at + OPTION_WORDS :]
     sha = argv[1]
     readings = {pair.split("=", 1)[0]: reading_of(pair.split("=", 1)[1]) for pair in argv[2:]}
     if document is None:

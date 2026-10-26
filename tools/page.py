@@ -412,11 +412,12 @@ def kept(lines: list[dict[str, Any]], named: set[int]) -> tuple[list[dict[str, A
     ], stride
 
 
+NOT = "NOT"  # the word a verdict begins with where the gate is not shown, read or reached
 KINDS = (
     "SHOWN in part",
-    "NOT SHOWN",
-    "NOT REACHED",
-    "NOT READ",
+    f"{NOT} SHOWN",
+    f"{NOT} REACHED",
+    f"{NOT} READ",
     "SHOWN",
 )  # the verdicts' kinds, the longer first
 CLASSES = {
