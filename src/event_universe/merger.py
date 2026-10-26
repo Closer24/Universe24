@@ -264,13 +264,13 @@ def rise_of(
 
 def light_children(
     node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...], walls: list[int], rule: rule3.Rule
-) -> tuple[list[int], list[int], list[list[int]], list[list[int] | None]]:
+) -> tuple[list[int], list[int], list[list[int]], list[list[int] | None], list[list[int]]]:
     """A merger's two light children (MG-S1): at each end the light laid as the exact take at -1 (`rise_of`) on the line the take names, or as the child's lay where the line has no direction; returns the lays' momentum, each child's Wronskian at its Node, the plane's four levels at each Node before the lay and the exact lays [line, count, rise] (None where the child's lay)."""
     row = node.records()[s]
     re, im = row.lines
     assert row.pair is not None
     stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
-    dp_lay, exact = [0] * AXES, []
+    dp_lay, exact, ends = [0] * AXES, [], []  # type: list[int], list[list[int] | None], list[list[int]]
     for where, sense, wall in zip((minus, plus), (-1, 1), walls, strict=True):
         k, d, rise = rise_of(node, where, wall, rule, row)
         if d == 0:
@@ -281,6 +281,6 @@ def light_children(
             move(node, s, k, where, d)
             exact_lay = [k, d, rise]
         exact.append(exact_lay)
-        dp_lay = [a + b for a, b in zip(dp_lay, dp, strict=True)]
+        dp_lay, ends = [a + b for a, b in zip(dp_lay, dp, strict=True)], [*ends, list(dp)]
     senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
-    return dp_lay, senses, stood, exact
+    return dp_lay, senses, stood, exact, ends

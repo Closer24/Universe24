@@ -181,16 +181,14 @@ def births(
 
 def child_laid(
     node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...]
-) -> tuple[list[int], list[int], list[list[int]]]:
-    """The two children laid by the one lay act (`child_at`: the - child at the - end, the + child at the + end); returns the lays' momentum, each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the plane's four levels at each Node before the lay (the residue)."""
+) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:
+    """The two children laid by the one lay act (`child_at`: the - child at the - end, the + child at the + end); returns the lays' momentum summed and per end (dP_lay_ends, the J hands' key: the momentum of every move booked at the Node of the move, AJ-S2), each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the plane's four levels at each Node before the lay (the residue)."""
     re, im = node.records()[s].lines
     stood = [[int(a[w_]) for a in (re.now, re.before, im.now, im.before)] for w_ in (minus, plus)]
-    dp_lay = [0, 0, 0]
-    for where, sense in ((minus, -1), (plus, 1)):
-        for a, d in enumerate(child_at(node, s, where, sense)):
-            dp_lay[a] += d
+    ends = [child_at(node, s, where, sense) for where, sense in ((minus, -1), (plus, 1))]
+    dp_lay = [a + b for a, b in zip(*ends, strict=True)]
     senses = [int(cross(re.now[w_], im.now[w_], re.before[w_], im.before[w_])) for w_ in (minus, plus)]
-    return dp_lay, senses, stood
+    return dp_lay, senses, stood, ends
 
 
 def children(
@@ -211,9 +209,9 @@ def children(
             assert row.pair is not None
             walls = [t["booked"] for t in take["takes"]]
             rule = node.rule(row.pair, c, factors)
-            dp_lay, w_children, stood, exact = light_children(node, s, minus, plus, walls, rule)
+            dp_lay, w_children, stood, exact, ends = light_children(node, s, minus, plus, walls, rule)
         else:
-            dp_lay, w_children, stood = child_laid(node, s, minus, plus)
+            dp_lay, w_children, stood, ends = child_laid(node, s, minus, plus)
         touched |= {minus, plus}
         node.counts["births"] += 1
         node.closes[at] += 1
@@ -242,6 +240,7 @@ def children(
                 "room": room,
                 "dP_take": take["dP_take"],
                 "dP_lay": dp_lay,
+                "dP_lay_ends": ends,
                 **{key: take[key] for key in ("remainder_was", "remainder", "owed") if key in take},
                 **({"takes": take["takes"], "exact_lay": exact} if "takes" in take else {}),
             }
