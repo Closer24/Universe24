@@ -8,6 +8,7 @@ from typing import Any
 
 import pytest
 
+from event_universe.events import NAMES
 from event_universe.gates import gates
 from event_universe.run import record
 from tests.laws import ROOT, load_file, world_of
@@ -88,7 +89,7 @@ def loaded(name: str) -> dict[str, Any]:
 def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
     kinds = {int(k[:2]): v["kind"] for k, v in found.items() if k[:2].strip().isdigit()}
-    assert len(kinds) == 61
+    assert set(kinds) == {int(k) for k in NAMES if k.isdigit()}  # the rows named once, in events.NAMES
     assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
     assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == {14, 34}  # the horizon
     for gate, verdict in VERDICTS[name].items():
@@ -186,10 +187,13 @@ def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_
         if line.startswith("| ") and line.split("|")[2].strip().isdigit()
     ]
     names = {g: r["phenomenon"] for rows in readings.values() for g, r in rows.items()}
-    assert len(rows) == tool.ROWS and all(names[k] in rows[k - 1] for k in names)
+    count = len(
+        {int(k) for k in NAMES if k.isdigit()}
+    )  # the rows named once, the table's count from the readings
+    assert len(rows) == tool.rows_in(readings) == count and all(names[k] in rows[k - 1] for k in names)
     assert (
         whole <= set.union(*SHOWN_ROWS.values())
-        and f"SHOWN in Universe24: {len(whole)} of {tool.ROWS} on test" in table
+        and f"SHOWN in Universe24: {len(whole)} of {count} on test" in table
     )
     document = tmp_path / "UNIVERSE24.md"
     document.write_text(
