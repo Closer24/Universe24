@@ -118,6 +118,9 @@ FILE_INTEGERS = {
     "wave.py": frozenset({4}),
     "run.py": frozenset({12, 24, 60}),
     "quartet.py": frozenset({2, 3, 4}),
+    "acts.py": frozenset(
+        {2}
+    ),  # the birth at the half wall by the division act on 2 (core/acts.born, the halving's own 2 as rule3.half's)
 }
 # the record's readers, Animate's since 00:42 UTC (their constants named at the module's top on reader-5), no act of the Node;
 # the writer run.py reads the inventory and not the names gate (its record keys are the files' words)

@@ -6,7 +6,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core.acts import divide
+from event_universe.core.acts import born, divide
 from event_universe.core.paces import rounded
 from event_universe.core.rule3 import half, quotient, rule3
 
@@ -32,8 +32,8 @@ def K0(gamma: Any) -> Any:
 
 
 def half_wall(gamma: Any) -> Any:
-    """The half wall D div 2 = Gamma^2, the remainder every line is born with (the engine's birth; item (i) 4, the resonance's leading term cancelled by it)."""
-    return half(D(gamma))
+    """The half wall D div 2 = Gamma^2, the remainder every line is born with (the engine's one birth, core/acts.born; item (i) 4, the resonance's leading term cancelled by it)."""
+    return born(D(gamma))
 
 
 def seed(amplitude: Any, gamma: Any) -> Pair:

@@ -6,6 +6,7 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core.acts import born
 from event_universe.core.rule3 import half, held_wall, quotient
 
 CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
@@ -86,11 +87,11 @@ def lines_of(
 ) -> list[Line]:
     """A row's lines at the start: every level 0, every remainder at half its wall (the rule's w, or the row's own wall), a write remainder at half the write wall where the line writes."""
     if wall is not None:
-        return [Line(zeros(board), zeros(board), zeros(board) + half(wall), wall)]
+        return [Line(zeros(board), zeros(board), zeros(board) + born(wall), wall)]
     found = []
     for ww in walls:
-        wr = None if ww is None else zeros(board) + half(ww)
-        found.append(Line(zeros(board), zeros(board), zeros(board) + half(w), w, wr, ww))
+        wr = None if ww is None else zeros(board) + born(ww)
+        found.append(Line(zeros(board), zeros(board), zeros(board) + born(w), w, wr, ww))
     return found
 
 
