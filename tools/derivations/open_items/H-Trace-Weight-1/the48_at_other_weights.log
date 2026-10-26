@@ -1,0 +1,24 @@
+W 18: E       assert 0 > 0
+W 18: E        +  where 0 = len([])
+W 18: E       assert 0 > 0
+W 18: E        +  where 0 = len([])
+W 18: 2 failed, 9 deselected in 3.82s
+W 48: E       assert 0 > 0
+W 48: E        +  where 0 = len([])
+W 48: E       assert 0 > 0
+W 48: E        +  where 0 = len([])
+W 48: 2 failed, 9 deselected in 5.14s
+W 60: E       assert 0 > 0
+W 60: E        +  where 0 = len([])
+W 60: E       assert 0 > 0
+W 60: E        +  where 0 = len([])
+W 60: 2 failed, 9 deselected in 4.70s
+W 108: E       assert 0 > 0
+W 108: E        +  where 0 = len([])
+W 108: E       assert 0 > 0
+W 108: E        +  where 0 = len([])
+W 108: 2 failed, 9 deselected in 4.49s
+W 72: 2 passed, 9 deselected in 38.66s
+W 27: E       assert (0 == 0 and 3 == 6)
+W 27: E       assert (0 == 0 and 0 == 6)
+W 27: 2 failed, 9 deselected in 49.44s

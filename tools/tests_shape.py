@@ -41,8 +41,13 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_node.py::test_the_files_are_refused_by_name": (
+        46,
+        "The loader's refusals by name (2026-10-26, the Boss's room at the merge of toys-5 50c73c972: the fifth form wave admitted by CS5-S2 and the former refusal of the word wave struck, so the test names one more refusal, "
+        "the cycle form at its quanta; with it the six module-level lines the finders' rename and CS5-S2's imports added to tests/test_the_board.py and tests/test_the_node.py)",
+    ),
     "tests/test_the_board.py::test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2": (
-        45,
+        51,
         "CS5-S2 with the fifth form wave (2026-10-25, the owner's word of 22:50 UTC, The-Handed-Seed-And-Births_COMPARISON.md; the Boss's room named in 6404974647 and 6405218245): one pair in several rows admitted, the file's cycle form laid, the loader's refusals by name, the board's course on the head",
     ),
     "tests/test_the_node.py::test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un": (
@@ -77,7 +82,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         "the page (2026-10-25, the third tool of the standard, the owner's word through the Boss; the Boss's room at the merge of toys-5 84009e333): one HTML from the record and the reading with nothing of a universe typed",
     ),
     "tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1": (
-        23,
+        24,
         "SL-S1 (2026-10-25, the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic close's one-Node test under 15 s): the chiral seed on the 3-cube at 30 intervals, "
         "every born pair's Link meeting at the next close with no current and refused by the orientation (5 of 5), the meetings counted, the run back exact",
     ),

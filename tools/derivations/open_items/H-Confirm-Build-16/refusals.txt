@@ -1,0 +1,4 @@
+badlen: ValueError: the cycle form is sixteen digits p1 and one digit cz, each of Z_4
+mirror2: ValueError: the cycle lay's mirror is 0 or 1
+cz4: ValueError: the cycle form is sixteen digits p1 and one digit cz, each of Z_4
+row3: ValueError: a lay is onto a record (a plane or a quartet)

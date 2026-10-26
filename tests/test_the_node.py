@@ -523,7 +523,7 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
 
 
 def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() -> None:
-    """UN (UN_COMPARISON.md section 4, un2's table): every record's unit of universe_toy.json is 3 T (sine_den(num, den) + den (num div den)), the one formula giving 3 T den at the emitter and 3 T s at a gapped pair; the emitter is the plane of the potential's pair (den, den), the last record; the 3-cube hole at 20 intervals gives the state hash of the former finders bit for bit; then, with frame signs of -1 standing after the turns, the Links' record at the coupling 0 turns an arbitrary pair of arrays into itself at every Port; the run back exact."""
+    """UN (The-Unit-And-The-Coupling_COMPARISON.md section 4, un2's table): every record's unit of universe_toy.json is 3 T (sine_den(num, den) + den (num div den)), the one formula giving 3 T den at the emitter and 3 T s at a gapped pair; the emitter is the plane of the potential's pair (den, den), the last record; the 3-cube hole at 20 intervals gives the state hash of the former finders bit for bit; then, with frame signs of -1 standing after the turns, the Links' record at the coupling 0 turns an arbitrary pair of arrays into itself at every Port; the run back exact."""
     node = node_of("world_node.json")
     den, t, records = node.den, node.T, node.records()
     assert node.units == [

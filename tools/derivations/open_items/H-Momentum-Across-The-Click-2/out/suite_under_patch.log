@@ -1,0 +1,452 @@
+.................................FFFF..F...F.....FF.F.FFF...F.........F. [ 96%]
+...                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_the_first_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged _
+
+    def test_the_first_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged() -> None:
+>       images_hold(0)
+
+tests/test_the_board.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = 0
+
+    def images_hold(group: int) -> None:
+        """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+        universe, world = world_of("world_hole.json")
+        base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
+        births = births_of(base)
+        assert len(births) > 0
+        alike = {True: 0, False: 0}
+        for m in IMAGES[group::GROUPS]:
+            other = run(universe, world_image(world, m, CUBE))
+            reflection = int(round(np.linalg.det(m))) == -1
+            same = same_rows(base, other, m) and births_of(other) == mapped(births, m, CUBE, reflection)
+            alike[reflection] += same
+>       assert alike[True] == 0 and alike[False] == ALIKE[group]
+E       assert (0 == 0 and 3 == 6)
+
+tests/test_the_board.py:90: AssertionError
+_ test_the_second_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged _
+
+    def test_the_second_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged() -> None:
+>       images_hold(1)
+
+tests/test_the_board.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = 1
+
+    def images_hold(group: int) -> None:
+        """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+        universe, world = world_of("world_hole.json")
+        base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
+        births = births_of(base)
+        assert len(births) > 0
+        alike = {True: 0, False: 0}
+        for m in IMAGES[group::GROUPS]:
+            other = run(universe, world_image(world, m, CUBE))
+            reflection = int(round(np.linalg.det(m))) == -1
+            same = same_rows(base, other, m) and births_of(other) == mapped(births, m, CUBE, reflection)
+            alike[reflection] += same
+>       assert alike[True] == 0 and alike[False] == ALIKE[group]
+E       assert (0 == 0 and 0 == 6)
+
+tests/test_the_board.py:90: AssertionError
+_ test_the_third_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged _
+
+    def test_the_third_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged() -> None:
+>       images_hold(2)
+
+tests/test_the_board.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = 2
+
+    def images_hold(group: int) -> None:
+        """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+        universe, world = world_of("world_hole.json")
+        base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
+        births = births_of(base)
+        assert len(births) > 0
+        alike = {True: 0, False: 0}
+        for m in IMAGES[group::GROUPS]:
+            other = run(universe, world_image(world, m, CUBE))
+            reflection = int(round(np.linalg.det(m))) == -1
+            same = same_rows(base, other, m) and births_of(other) == mapped(births, m, CUBE, reflection)
+            alike[reflection] += same
+>       assert alike[True] == 0 and alike[False] == ALIKE[group]
+E       assert (0 == 0 and 0 == 6)
+
+tests/test_the_board.py:90: AssertionError
+_ test_the_fourth_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged _
+
+    def test_the_fourth_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged() -> None:
+>       images_hold(3)
+
+tests/test_the_board.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+group = 3
+
+    def images_hold(group: int) -> None:
+        """The images of one part of the 48 (every fourth from the group's first): a rotation that negates no axis runs alike the seed through the image (the rows and the births), a rotation negating the y or the z axis runs alike too once the bodies' closing reads the crossing even (24 of 24 at 20 intervals on the hole seed, 56 credits and 16 births under PL-S1, 12 births under the former write of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated line at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read."""
+        universe, world = world_of("world_hole.json")
+        base = run(universe, world_image(world, np.eye(3, dtype=int), CUBE))
+        births = births_of(base)
+        assert len(births) > 0
+        alike = {True: 0, False: 0}
+        for m in IMAGES[group::GROUPS]:
+            other = run(universe, world_image(world, m, CUBE))
+            reflection = int(round(np.linalg.det(m))) == -1
+            same = same_rows(base, other, m) and births_of(other) == mapped(births, m, CUBE, reflection)
+            alike[reflection] += same
+>       assert alike[True] == 0 and alike[False] == ALIKE[group]
+E       assert (0 == 0 and 0 == 6)
+
+tests/test_the_board.py:90: AssertionError
+_ test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1 _
+
+    def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1() -> None:
+        """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the uniform pair of the 3-cube the gap-0 row's current across the six Links sums to 0 at every Node at every interval's start (nothing arrives), every credit carries laid_back equal to its levels with its momentum booked 0 and leaves the gap-0 line's level at its Node as the take found it (the light whole), the credits 27 at each of 4, 6 and 8 (81 in 20 intervals; before EQ-S1 the board, its light taken, credited at 10 and 13 too), no refusal of the stop, the run back exact 10 of 10; on the hole seed of the 5-cube at 20 every credit stands at a Node whose net current is not 0 (something arrives), none laid back, 56 credits and 16 births under PL-S1 (12 births with the same 56 credits under the former write of 2 W after the step, as before EQ-S1: the records where light flows bit for bit under it), the run back exact."""
+        found = {}
+        for world, quiet in (("world_pair_3.json", True), ("world_hole.json", False)):
+            node, kept = node_of(world), node_of(world)
+            by_interval: dict[int, int] = {}
+            for _ in range(INTERVALS):
+                lines = node.row(PLANE, gap=0).lines
+                net = sum((row_current(lines, port) for port in range(PORTS)), start=0)
+                seen = len(node.log)
+                node.step()
+                credits = [e for e in node.log[seen:] if e["event"] == "credit"]
+                for c in credits:
+                    at = tuple(c["node"])
+                    assert (int(net[at]) == 0) == ("laid_back" in c) == quiet
+                    if quiet:
+                        assert c["laid_back"] == c["levels"] > 0 and c["dP_take"] == [0, 0, 0]
+                        assert int(node.row(PLANE, gap=0).lines[0].now[at]) == c["taken_now_was"]
+                by_interval[node.interval] = len(credits)
+            counts = node.counts
+            found[world] = ({i: n for i, n in by_interval.items() if n}, *(counts[k] for k in COUNTED))
+            assert run_back_exact(kept, 10) == 10
+        assert found["world_pair_3.json"] == ({4: 27, 6: 27, 8: 27}, 0, 81, 0)
+>       assert found["world_hole.json"][1:3] == (16, 0) and sum(found["world_hole.json"][0].values()) == 56
+E       assert ((12, 0) == (16, 0)
+E         
+E         At index 0 diff: 12 != 16
+E         Use -v to get more diff)
+
+tests/test_the_board.py:214: AssertionError
+___ test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing ___
+
+    def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -> None:
+        """The horizon: the fed Node's two x Links at the wall (the factor 0), its other four above; no Link close reads the Node (no birth at it, none with it as an end); under PM-S1 the near-massless plane's shared half from a child laid at a neighbour stands at the Node at its own unit, so the near-massless plane's credits are read there (twelve in 20 intervals under PL-S1, five at W = 0; under the former write of 2 W after the step twelve with nine at W = 0, the first beat 4 and the rest 1, under MS-S1's lay at T div 2 and CK-S1's beat of the half period with the crossing read even; eleven with eight at W = 0 and every beat 1 under the crossing odd at a touch of zero; named: the bodies' closing is not the Link close); the run back exact."""
+        node = fed_horizon(node_of("world_node.json"), CENTRE)
+        factors = node.link_factors()
+        assert [int(f[CENTRE]) for f in factors[:2]] == [0, 0]
+        assert all(int(f[CENTRE]) > 0 for f in factors[2:])
+        fed = copy.deepcopy(node)
+        for _ in range(INTERVALS):
+            node.step()
+        assert [e for e in clicks_at(node, CENTRE) if e["event"] == "birth"] == []
+        credits = [(e["sense"], e["line"]) for e in clicks_at(node, CENTRE)]
+>       assert credits == [(0, 0)] * 4 + [(1, 0), (0, 0), (-1, 0), (-1, 0)] + [(1, 0)] * 4
+E       assert [(0, 0), (0, ... (-1, 0), ...] == [(0, 0), (0, ..., (0, 0), ...]
+E         
+E         At index 3 diff: (-1, 0) != (0, 0)
+E         Right contains 2 more items, first extra item: (1, 0)
+E         Use -v to get more diff
+
+tests/test_the_node.py:59: AssertionError
+_______ test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1 _______
+
+    def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
+        """BH-S1 (the owner's word of 2026-10-25 through the Boss, 6398593790; The-Frozen-Node-Black-Hole_COMPARISON.md section 6): a Node whose Link pace reads 0 at the interval's start is frozen: no act changes any integer of its state and its proper count rests, no click reads it, every Link with a frozen end is at the wall from both ends; the frozen mask booked in the frame for the run back. The 3-cube centre fed to the frozen content 3,793 at Gamma 1,000 (X 4,268,834,097), 100 intervals: the centre's lines equal to the fed values at every interval, proper[centre] unchanged, the twelve factors 0, 0 clicks at it, the frozen count 1 at every interval, the transient within 128, the run back exact 100 of 100."""
+        node = node_of("world_node.json")
+        frozen = paces.frozen_content(node.gamma)
+        carrier = node.row(CARRIER).lines[0]
+        carrier.now[CENTRE] = level_at(node, frozen)
+        carrier.before[CENTRE] = carrier.now[CENTRE]
+        node.ride_walls()
+        assert int(carrier.now[CENTRE]) == 4_268_834_097
+        fed = [[int(a[CENTRE]) for a in (line.now, line.before, line.rem)] for line in node.all_lines()]
+        proper = int(node.proper[CENTRE])
+        kept = copy.deepcopy(node)
+        for _ in range(100):
+            node.step()
+            lines = node.all_lines()
+>           assert [[int(a[CENTRE]) for a in (line.now, line.before, line.rem)] for line in lines] == fed
+E           assert [[0, 0, 1], [...4000000], ...] == [[0, 0, 1], [...4000000], ...]
+E             
+E             At index 3 diff: [0, -241, 49710888914861477082875698944000000] != [0, 0, 49710888914861477082875698944000000]
+E             Use -v to get more diff
+
+tests/test_the_node.py:236: AssertionError
+_____________ test_every_count_is_read_in_the_carriers_unit_pm_s1 ______________
+
+    def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
+        """PM-S1 (the owner's word of 2026-10-25, 15:18 UTC, through the Boss, 6399410929; The-Count-In-The-Carriers-Unit_COMPARISON.md section 5): the identity Gamma^2 div p_i^2 = X(c) div Gamma at c = 0 to 1,000 by 100 (pm1); on the 3-cube hole the carrier's share within one unit of the frame's at 27 of 27 Nodes at the interval 1 (X / Gamma below 2) and equal to the vacuum's there (X = Gamma); at 20 the vacuum's below the carrier's by X / Gamma (390 thousandths at X / Gamma between 2.36 and 2.94) and the frame's within four per mille; the chiral 5-cube at 40: births 17, body clicks 1,999 under PL-S1 (1,996 under the former write of 2 W after the step), the run back 10 of 10, 98 integers, 115 bits (at 60 under the crossing odd at a touch of zero and the standing light credited as a body: births 16 and 2,336 credits, pm2's 15 and 24 under the lay by the unit; the births and the credits re-cut by MS-S1's lay at T div 2; the credits 533 under the upward crossing alone, re-cut by CK-S1's beat of the half period; 40 intervals so the test stands under 10 s alone, the Boss's 6402497841)."""
+        node = node_of("world_node.json")
+        for c in range(0, 1_001, 100):
+            pace = paces.link_pace(node.gamma, c)
+            assert quotient(node.gamma * node.gamma, pace * pace) == quotient(level_at(node, c), node.gamma)
+        node.step()
+        node.step_back()
+        carrier, frame, vacuum = shares_of(node)
+        assert bool((node.start_x < 2 * node.gamma).all()) and int((abs(carrier - frame) <= 1).sum()) == 27
+        assert carrier.tolist() == vacuum.tolist()
+        for _ in range(20):
+            node.step()
+        node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
+        carrier, frame, vacuum = shares_of(node)
+        totals = [sum(int(v) for v in a.reshape(-1)) for a in (carrier, frame, vacuum)]
+        assert totals[2] * 1000 // totals[0] == 390 and abs(totals[1] - totals[0]) * 1000 <= 4 * totals[0]
+        assert (
+            2_356
+            <= int(node.start_x.min()) * 1000 // node.gamma
+            <= int(node.start_x.max()) * 1000 // node.gamma
+            <= 2_938
+        )
+        chiral = node_of("world_chiral.json")
+        kept = copy.deepcopy(chiral)
+        for _ in range(40):
+            chiral.step()
+>       assert (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census()) == (
+            17,
+            1999,
+            (98, 115),
+        )
+E       assert (15, 844, (98, 115)) == (17, 1999, (98, 115))
+E         
+E         At index 0 diff: 15 != 17
+E         Use -v to get more diff
+
+tests/test_the_node.py:289: AssertionError
+_ test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1 _
+
+    def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1() -> (
+        None
+    ):
+        """SL-S1 (the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic close, every record's meeting by its own list): the chiral seed on the 3-cube at 30 intervals: every born pair's Link meets at the next close (the two ends holding a whole quantum of the children's record) and reads no current, F = 0 exactly, so the orientation refuses the undoing with no name (4 of 4 born Links under PL-S1; 5 of 5 under the former write of 2 W after the step); the meetings counted as `met`; the run back exact."""
+        universe, world = world_of("world_chiral.json")
+        lays = [lay for lay in world["seed"] if lay.get("lay") != "at" or all(x < 3 for x in lay["centre"])]
+        node = Node(universe, dict(world, shape=[3, 3, 3], intervals=30, seed=lays))
+        kept = copy.deepcopy(node)
+        for _ in range(30):
+            node.step()
+        births = [e for e in node.log if e["event"] == "birth"]
+>       assert len(births) == 4 and node.counts["met"] > len(births)
+E       AssertionError: assert (8 == 4)
+E        +  where 8 = len([{'recoil': -235, 'dP_recoil': [151597848675485493750, 0, 0], 'recoil_wall': -645097228406321250, 'recoil_axis': 0, .....ecoil': 11, 'dP_recoil': [41697850082703130250, 0, 0], 'recoil_wall': 3790713643882102750, 'recoil_axis': 0, ...}, ...])
+
+tests/test_the_node.py:327: AssertionError
+____ test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws _____
+
+    def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> None:
+        """WS (the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the swap at the top is the conjugation composed with the exchange of the two levels, and W = re_now im_before - im_now re_before, odd under each, is even under the two: at every turned Node and every plane (the gap-0 plane with the gapped), W after the swap equals W of the held pre-state exactly (read by a Node whose click reads before it lays; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one quantum of row 1 at the centre, the first turn at 42 under EQ-S1, the centre's body laying back 12 of its 39 credits where nothing arrives; 35 with the take standing under CK-S1's crossing read even, 37 under the crossing odd at a touch of zero, 42 before CK-S1's credits) 296 of 296 sites by 60 (74 turned Nodes; 324 and 81 with the take standing), every W 0 there; on the chiral 5-cube at 20 intervals 2,156 of 2,156 sites (539 turned Nodes by the four planes), 625 of them with W not 0 (2,160 sites by 540 turned Nodes and 695 under the former write of 2 W after the step; 2,124 and 672 under the odd crossing; 2,120 and 668 under the upward crossing alone; at 60 the probe read 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head)."""
+        from event_universe.links import wronskian
+    
+        class Reading(Node):
+            wronskians: dict[str, int] = {}
+    
+            def click(self, *args: Any, **keys: Any) -> Any:
+                where = list(zip(*np.nonzero(self.turned), strict=True))
+                for r, row, hrow in zip(self.rows_, self.rows(), args[1], strict=True):
+                    if r.shape == PLANE:
+                        pre, after = wronskian(*hrow), wronskian(*row)
+                        for at in where:
+                            wp, wa = int(pre[at]), int(after[at])
+                            key = "kept" if wa == wp else "negated" if wa == -wp else "changed"
+                            for k in ("sites", key, "nonzero" if wp else "zero"):
+                                self.wronskians[k] = self.wronskians.get(k, 0) + 1
+                return super().click(*args, **keys)
+    
+        universe, world = world_of("world_node.json")
+        one = {"lay": "at", "row": 1, "centre": [1, 1, 1], "quanta": 1, "width": 2, "sense": 1}
+        found = []
+        for node, n in (
+            (Reading(universe, dict(world, seed=[world["seed"][0], one])), 60),
+            (Reading(*world_of("world_chiral.json")), 20),
+        ):
+            node.wronskians = {}
+            for _ in range(n):
+                node.step()
+            assert node.wronskians["kept"] == node.wronskians["sites"] > 0
+            assert not {"negated", "changed"} & node.wronskians.keys()
+            found.append(node.wronskians)
+>       assert [f["sites"] for f in found] == [296, 2156] and found[1]["nonzero"] == 625
+E       assert ([296, 1516] == [296, 2156]
+E         
+E         At index 1 diff: 1516 != 2156
+E         Use -v to get more diff)
+
+tests/test_the_node.py:415: AssertionError
+_ test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1 _
+
+    def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1() -> None:
+        """CK-S1 (the owner's word of 2026-10-25, 17:57 UTC, through the Boss, 6401141446; ck1's REPORT.md section 4): a record standing at a whole quantum of its own unit through one period of its re line's zero crossings, in either direction, clicks, the beat the half period, the crossing read even under the negation of the line (the two levels' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike; the Boss's 6402516165): at one Node a plane's re line fed at rest over the period 8 touching zero (2, 1, 0, -1, -2, -1, 0, 1) and over the period 6 (2, 1, -1, -2, -1, 1), each with its negation, gives the counters crossed and beats equal step for step, the period 6 the beat 3; on the chiral 5-cube at 20 intervals every plane credit's beat is the interval count between the two latest zero crossings of the record's re line at its Node in either direction, read by hand from the lines by the even form, 825 credits with 128 of them on a downward crossing under PL-S1 (819 and 177 under the former write of 2 W after the step; 536 and 50 under the form `b < 0 <= n or n < 0 <= b`, odd where exactly one level is 0; 115 credits under the upward crossing alone); the run back exact."""
+        from event_universe.bodies import bodies
+    
+        node = node_of("world_node.json")
+        rec, count = 1, len(node.records())
+        re = node.records()[rec].lines[0]
+        nothing, still = [zeros(node.shape) for _ in range(count)], np.zeros(node.shape, dtype=bool)
+        rule = node.rule_of(node.row(PLANE, gap=0), node.content(), node.link_factors())
+        for period in ((2, 1, 0, -1, -2, -1, 0, 1), (2, 1, -1, -2, -1, 1)):
+            counters = []
+            for sign in (1, -1):
+                node.standing, node.crossed, node.beats = [
+                    [zeros(node.shape) for _ in range(count)] for _ in range(3)
+                ]
+                levels = [sign * v for v in period * 3]
+                for before, now in zip(levels, levels[1:], strict=False):
+                    re.before[CENTRE], re.now[CENTRE] = before, now
+                    bodies(node, [r.lines for r in node.records()], nothing, set(), still, rule)
+                    counters.append((sign, int(node.crossed[rec][CENTRE]), int(node.beats[rec][CENTRE])))
+            assert [c[1:] for c in counters if c[0] == 1] == [c[1:] for c in counters if c[0] == -1]
+        assert counters[-1][2] == 3 and node.counts["body_clicks"] == 0
+        node = node_of("world_chiral.json")
+        kept = copy.deepcopy(node)
+        crossings: dict[tuple[int, tuple[int, ...]], list[tuple[int, bool]]] = {}
+        for t in range(1, INTERVALS + 1):
+            node.step()
+            for r, row in enumerate(node.records()):
+                if row.shape == PLANE:
+                    before, now = row.lines[0].before, row.lines[0].now
+                    crossed = (before * now < 0) | ((before == 0) != (now == 0))
+                    for where in zip(*np.nonzero(crossed), strict=True):
+                        at = tuple(int(x) for x in where)
+                        crossings.setdefault((r, at), []).append((t, int(now[at]) >= 0))
+        credits = [
+            e for e in node.log if e["event"] == "credit" and node.records()[e["line"]].shape == PLANE
+        ]
+        upward = []
+        for e in credits:
+            seen = [c for c in crossings[(e["line"], tuple(e["node"]))] if c[0] <= e["i"]]
+>           assert e["beat"] == seen[-1][0] - seen[-2][0], e
+                                              ^^^^^^^^
+E           IndexError: list index out of range
+
+tests/test_the_node.py:459: IndexError
+_ test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2 _
+
+    def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2() -> None:
+        """CS4-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss; cs4's REPORT.md sections 1.2, 1.5 and 4, The-Handed-Seed-And-Births_COMPARISON.md's finding (a) and cs5's mend, the line logged PER TAKE; the test under 15 s): the exact take moves the taken record's line whose level now stands farthest from its before (the largest now^2 - before^2, the first where equal), the line logged as `taken_line` on every birth, credit and merger take, unclick restoring that line. The pair's 3-cube at 20 intervals beside its image with the light turned a quarter at the seed ((re, im) -> (-im, re): the light on its second line, the first at 0): the two boards' X equal at every Node at 20 of 20 intervals and the 81 credits equal take for take in their numbers, every take on the first line on the board and on the second on the image, where the former act (the first line's take) is the stop by name (fall_of (None, 0) on a line at 0), the run back exact 20 of 20 through the takes on the second line; SL-S2's merger board (the heaviest record's conjugate pair at two adjacent Nodes of the bare 5-cube) at 20: the merger at the first close with no stop before it (the heavy row's second line, 3 B against 0, the farthest at both ends: its two takes on the second line; under the former act the first line's fall came short and the stop refused both ends before the merger paid), the ten light births after it taking the light's second line but one (at 19, where the first line's gap is the larger), 74 credits, each of the 87 takes' lines re-derived by hand from the Node's levels after the close (the other line untouched by the take, the taken line as the take found it), 66 of 87 on a line other than the first (0 under the former act; under the sign row's former write of 2 W after the step, before PL-S1, the board read 9 births every one on the second line, 318 takes with 219 on it and 308 credits), the run back exact."""
+        pair, image = node_of("world_pair_3.json"), node_of("world_pair_3.json")
+        re, im = image.row(PLANE, gap=0).lines
+        im.now[...], im.before[...], re.now[...], re.before[...] = re.now.copy(), re.before.copy(), 0, 0
+        kept = copy.deepcopy(image)
+        for _ in range(INTERVALS):
+            pair.step()
+            image.step()
+            assert (pair.row(CARRIER).lines[0].now == image.row(CARRIER).lines[0].now).all()
+        credits = [
+            [
+                (e["i"], e["node"], e["taken"], e["levels"], e["taker"], e["taken_line"])
+                for e in n.log
+                if e["event"] == "credit"
+            ]
+            for n in (pair, image)
+        ]
+        assert len(credits[0]) == 81 and [c[:5] for c in credits[0]] == [c[:5] for c in credits[1]]
+        assert {c[5] for c in credits[0]} == {0} and {c[5] for c in credits[1]} == {1}
+        assert all(int(re.now[tuple(c[1])]) == int(re.before[tuple(c[1])]) for c in credits[1])
+        assert run_back_exact(kept, INTERVALS) == INTERVALS
+        node = node_of("world_node.json", shape=[5, 5, 5], seed=[])
+        a, b, k = node.A, node.B, 3
+        heavy = max(range(len(node.records())), key=lambda r: node.records()[r].gap or 0)
+        for at, levels in (
+            ((1, 1, 1), (k * a, 0, 0, k * b)),
+            ((2, 1, 1), (k * a, b, 0, -k * b)),
+            ((1, 2, 1), (a, b, 0, 0)),
+            ((2, 1, 2), (b, a, 0, 0)),
+        ):
+            node.lay(heavy, at, levels)
+        kept, lines_taken = copy.deepcopy(node), []
+        for _ in range(INTERVALS):
+            seen = len(node.log)
+            node.step()
+            for e in node.log[seen:]:
+                if e["event"] not in ("birth", "credit"):
+                    continue
+                lines = node.records()[
+                    e.get("taken_row", node.records().index(node.row(PLANE, gap=0)))
+                ].lines
+                for t in e.get("takes", [e]):
+                    at, k = tuple(t["node"]), t["taken_line"]
+                    gaps = [int(line.now[at]) ** 2 - int(line.before[at]) ** 2 for line in lines]
+                    gaps[k] = t["taken_now_was"] ** 2 - t["taker"][1] ** 2
+                    assert gaps.index(max(gaps)) == k and t["taker"][0] == t["taken_now_was"]
+                    lines_taken.append(k)
+        births = [e for e in node.log if e["event"] == "birth"]
+        assert births[0]["taken_row"] == heavy and births[0]["taken_line"] == [1, 1]
+        on_first = [
+            (e["i"], t["taken_line"]) for e in births for t in e.get("takes", [e]) if not t["taken_line"]
+        ]
+>       assert on_first == [(19, 0)] and len(births) == 11
+E       assert ([] == [(19, 0)]
+E         
+E         Right contains one more item: (19, 0)
+E         Use -v to get more diff)
+
+tests/test_the_node.py:518: AssertionError
+_ test_the_negated_vector_lays_the_lay_negated_with_the_charge_the_share_and_the_credits_equal_sr_s2 _
+
+    def test_the_negated_vector_lays_the_lay_negated_with_the_charge_the_share_and_the_credits_equal_sr_s2() -> (
+        None
+    ):
+        """The double cover's -I (the 2 pi turn): the lay along -v is the lay along v with every level negated, its share and its charge equal (the bilinears even), and the run's credits equal line for line but for the levels, which are the negation; the run back exact on both."""
+        a, b = toy_of(UP, ride="symmetric"), toy_of([-v for v in UP], ride="symmetric")
+        la, lb = lines_of(a), lines_of(b)
+        for slot in ("now", "before"):
+            assert [getattr(x, slot).tolist() for x in lb] == [(-getattr(x, slot)).tolist() for x in la]
+        assert a.log[-1]["share"] == b.log[-1]["share"] > 0
+        assert gram.charge(QUARTET, la).tolist() == gram.charge(QUARTET, lb).tolist()
+        kept = copy.deepcopy(a), copy.deepcopy(b)
+        for _ in range(10):
+            a.step()
+            b.step()
+        credits = [[e for e in node.log if e["event"] == "credit"] for node in (a, b)]
+        assert len(credits[0]) == len(credits[1]) > 0
+        for ca, cb in zip(*credits, strict=True):
+            fa, fb = ca.pop("frame"), cb.pop("frame")
+>           assert ca == cb and fb["levels_now"] == [-x for x in fa["levels_now"]]
+E           AssertionError: assert ({'event': 'cr...r': 3904, ...} == {'event': 'cr...r': 3904, ...}
+E             
+E             Omitting 21 identical items, use -vv to show
+E             Differing items:
+E             {'recoil_wall': -137713080752} != {'recoil_wall': 137713080752}
+E             Use -v to get more diff)
+
+tests/test_the_quartet.py:78: AssertionError
+_____________ test_the_hole_record_is_the_engines_own_bit_for_bit ______________
+
+    def test_the_hole_record_is_the_engines_own_bit_for_bit() -> None:
+        universe, world = world_of("world_hole.json")
+        committed = loaded("hole")
+        assert committed["world"] == world and committed["universe"] == universe
+        found = json.loads(json.dumps(record(universe, world, 20, lambda line: None)))
+>       assert found["log"] == committed["log"] and found["counts"] == committed["counts"]
+E       AssertionError: assert ([{'event': 'r...n', ...}, ...] == [{'event': 'r...n', ...}, ...]
+E         
+E         At index 175 diff: {'recoil': 88, 'dP_recoil': [54080621842541250000, 0, 0], 'recoil_wall': 614552520937968750, 'recoil_axis': 0, 'recoil_at': [0, 1, 2], 'event': 'birth', 'i': 9, 'node': [1, 1, 2], 'line_pair': 1, 'senses': [-1, 1], 'W_children': [-18000, 18000], 'minus': [0, 1, 2], 'plus': [1, 1, 2], 'taken': 3581512956090551111744, 'booked': 3526349115017275346839, 'levels': 16, 'taken_now_was': 1227, 'taker': [1227, 920, 16], 'taken_row': 3, 'taken_line': 0, 'proper': 8949, 'content': 7, 'amplitude': [125, 144], 'stood': [[0, 0, 0, 0], [0, 0, 0, 0]], 'children_at_no...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show)
+
+tests/test_the_record.py:71: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_the_board.py::test_the_first_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged
+FAILED tests/test_the_board.py::test_the_second_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged
+FAILED tests/test_the_board.py::test_the_third_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged
+FAILED tests/test_the_board.py::test_the_fourth_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_exchanged
+FAILED tests/test_the_board.py::test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1
+FAILED tests/test_the_node.py::test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing
+FAILED tests/test_the_node.py::test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1
+FAILED tests/test_the_node.py::test_every_count_is_read_in_the_carriers_unit_pm_s1
+FAILED tests/test_the_node.py::test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1
+FAILED tests/test_the_node.py::test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws
+FAILED tests/test_the_node.py::test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1
+FAILED tests/test_the_node.py::test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2
+FAILED tests/test_the_quartet.py::test_the_negated_vector_lays_the_lay_negated_with_the_charge_the_share_and_the_credits_equal_sr_s2
+FAILED tests/test_the_record.py::test_the_hole_record_is_the_engines_own_bit_for_bit
+14 failed, 61 passed in 112.92s (0:01:52)

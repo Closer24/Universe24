@@ -1,0 +1,27 @@
+# Angular momentum under the cube's 48: two blind hands (the Boss's cold read, 2026-10-26, 01:4x UTC; engine-5.0-test b9c52f5f6)
+
+The owner's word (2026-10-26, 01:02 UTC): all of nature's laws must be inside. Both audit hands ranked the conservation of angular momentum first of the laws of nature with no clause and no row. Two hands, blind to each other: H-Angular-Momentum-1 (am1) and H-Angular-Momentum-2 (am2). Integers only; the reading L_c(z) = SUM over the Links of (r_i - z) x p_a(i) with p the lattice momentum density MV-S1 reads (2 num (now_(i+a) before_i - now_i before_(i+a))).
+
+## 1. The same finding from both: the law holds no conserved angular momentum and names none; what it holds exactly is the cube's 48 about a centre
+
+- **Exact to the bit where the seed has the symmetry (both):** on the uniform boards (pair_3 400, universe 400), the bodies 300 (two packets mirrored about the centre: through 1,973 clicks and 4,229 turns), the standing packet 150, the quartet 60: L = 0 and P = 0 at every phase of every interval; a moving lay's L about its own centre 0 to the bit (am1: 41 of 41; am2: W L = 0), about another point exactly (c - c') x P until a current reaches the seam of the minimum image (am1: the seam Links add their arm's jump times their current, 6 of 6 to the integer).
+- **Where no symmetry holds (the hole, the chiral), L walks (both):** by Rule3's torque at non-uniform paces (am1: about 10^22 per interval against a remainders' bound of 10^23 to 10^24, far above a walk of remainders; am2: the well's torque 98.8 per cent of the step's change), by the swap at the top (am2: the turned Nodes' currents negated, the largest mover, 4.57 x 10^23 against the step's 3.60 x 10^23 on the hole), by the click's take and lay (am2: 1.6 and 3.5 per cent) and the emission's write. The hole's seed keeps P_y = P_z = 0 and L_y = -L_z at 60 of 60 (the transposition's pseudovector), L_x 0 through the eight births and off after the draw at 9 (am1: the draw's where not covariant under a reflection, the same finding as the read in the laid frame's pair).
+- **Why (both):** a bilinear now^T A before is exact under Rule3 where A commutes with the step's matrix; for L the commutator vanishes in the bulk (summation by parts) and fails at the torus's seam and at non-uniform paces; the letter has the 48 and the translations and no continuous rotation, so no Noether charge of rotation exists in it; P and the 48's images are the exact invariants, L a reading.
+- **The spin part (both):** the plane's sense sums to 0 at every birth (am2: 43 of 43; am1: W total 0 across every birth); the light lay carries no sense (the gap-0 im line 0), so nature's unit of J in an emission has no row in the letter; no spinor-row world births on the shipped worlds.
+
+## 2. Where they differ
+
+Only in the row's spelling: am1 writes the row as "the 48 about a centre exact; nature's conserved L not expected by the letter"; am2 as "the 48's selection rule exactly (the forbidden components 0 on every seed with the symmetry); L's conservation NOT SHOWN and claimed by no sentence". One row, both readings.
+
+## 3. The cold read and what enters
+
+1. **A finding, not a missing act.** Nature's conservation of angular momentum rests on a continuous rotation the lattice does not have; the law conserves what its symmetry gives: the lattice momentum and the cube's 48, exactly. No sentence of the law claims L's conservation, so nothing is broken and no act changes. The owner asked for every law of nature inside: this one is inside in the form the lattice allows (the 48's selection rule), and nature's continuous form is not derivable from a lattice with six Links. Recorded by name in the findings' list beside Bell's bound and the one polarisation.
+2. **AM-S1 (approved by the Boss under the owner's delegation of 00:57 UTC, as a reading's clause, no act):** the law's rotational invariants are the lattice momentum and the cube's 48 about a centre; the moment of the lattice momentum density about a point is a reading, exact to the bit on every seed with the symmetry and moved by Rule3's torque, the swap and the clicks where none; the senses of a born pair sum to 0.
+3. **The row for the gates of the phenomena (the Reader; 61 or the next free):** "angular momentum under the 48": SHOWN where L and P stand at 0 to the bit through the record on a seed with the symmetry (the uniform boards, the bodies), the torque's walk read on the others; the reader `moment(node, centre)` beside `momentum` (am1's spec; am2's reader in am2_angular.py); the tests of both hands (7, under a second) for the readings' test with their room.
+4. **For the owner's morning:** nature's J in an emission (the photon's unit) has no form in the letter (the light lay carries no sense): a question for him, not a derivation the Boss orders.
+
+## 4. The ledger row
+
+| item | derived | one-Node test | toy | gates | spec | missing by name |
+|---|---|---|---|---|---|---|
+| angular momentum under the 48 (two hands) | a finding: no conserved L, the 48 exact; the seam and the torque located; the senses sum 0 at births | am1 4 tests, am2 3 tests, under a second | the uniform boards, the bodies, the packet, the hole, the chiral, the quartet, a moving lay | a new row (the Reader) | moment(node, centre), a reading | the light's unit of J; the spin across a birth on a spinor world; the draw's covariance under a reflection (the read in the laid frame's pair) |

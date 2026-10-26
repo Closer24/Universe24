@@ -1,0 +1,7 @@
+cycle board (ga2, 4-cube, cycle_m5_m0, no flag) to 450 | takes at i 2: 64 at 64 Nodes | by line {0: 32, 1: 32} | by (phase class, line) {(0, 0): 16, (1, 1): 16, (2, 0): 16, (3, 1): 16}
+cycle board | takes traced 1472 | takes logged 1472 | equal as multisets True | mismatches of the line (mine against the engine's) 0 []
+  takes per line (line: count) {0: 736, 1: 736} | births 64 | credits 1408 | laid back 1408 | stops 1408
+  stops logged 1408 | at intervals [4, 6, 12, 216, 218, 225, 227, 229, 232, 444, 449]
+  births 64 | charge at every birth (W_children summed 0): True | taken at or above booked 64 of 64
+  mergers 0 | both ends read before either written True []
+  run back exact from the seed: 10 of 10

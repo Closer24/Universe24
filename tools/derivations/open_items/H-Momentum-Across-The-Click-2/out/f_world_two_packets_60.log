@@ -1,0 +1,92 @@
+{
+"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/mk2/tools/derivations/open_items/H-Momentum-Across-The-Click-2/worlds/world_two_packets.json",
+"intervals": 60,
+"flag": "1",
+"final state hash": "ba5d346dfca099ad9a9017d2d97cbd84d519955e1f4b2cf6f02d0758ed0304eb",
+"log hash": "937acb245d82e271466eb0d019766a2401f05a32a59e670e4332a61a356bf315",
+"counts": {
+"births": "0",
+"taken": "0",
+"booked": "0",
+"body_clicks": "0",
+"laid_back": "0",
+"refused_stop": "0",
+"refused_origin": "0",
+"refused_lay": "160",
+"refused_orientation": "222",
+"refused_twist": "590",
+"refused_sense": "0",
+"turns": "16531",
+"met": "972",
+"laid": "0",
+"laid_nodes": "0"
+},
+"run_back": {
+"intervals": 10,
+"exact": 10
+},
+"integers per Node": [
+89
+],
+"max state bits": 92,
+"max transient bits": 74,
+"gates SHOWN": [
+3,
+5,
+6,
+18,
+37,
+43
+],
+"gate 23": {
+"clicks booking dP": 0,
+"takes dP_a summed": [
+0,
+0,
+0
+],
+"lays dP_a summed": [
+0,
+0,
+0
+],
+"recoil passed to the laid pair (take + lay = 0 per birth)": [
+0,
+0
+],
+"verdict": "NOT READ: no click booked its momentum"
+},
+"gate 54": "NOT READ: two packets of one plane are not told apart by their line, and the momentum across the click is row 23; the predicate: the packets scatter, the momentum summed before and after",
+"analysis": {
+"births": 0,
+"credits": 0,
+"credits laid back": 0,
+"births: take abs per axis": [
+0,
+0,
+0
+],
+"births: along the Link's axis, abs per axis": [
+0,
+0,
+0
+],
+"births: transverse to the Link's axis, abs per axis": [
+0,
+0,
+0
+],
+"births: along-axis remainder abs summed at the grain 2 num A": 0,
+"births: along-axis take abs summed": 0,
+"births: remainder exact 0": 0,
+"births: under the cap 2 num A^2": 0,
+"births: p (levels of before at the far end) largest": 0,
+"births: stood at nothing at both ends": 0,
+"credits: take abs per axis (no Link named by the click)": [
+0,
+0,
+0
+],
+"first births": []
+}
+}

@@ -1,0 +1,99 @@
+{
+"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/mk2/tools/derivations/open_items/H-Momentum-Across-The-Click-2/worlds/world_compton.json",
+"intervals": 60,
+"flag": "1",
+"final state hash": "fa27772d53ed627a8f7962994040834941921353e3e79e7df0d712b7154b8804",
+"log hash": "aa2ec85609333e3b702819dc64ab99ee61bd456d16d534c4c23fb0550f65cba4",
+"counts": {
+"births": "0",
+"taken": "0",
+"booked": "0",
+"body_clicks": "127",
+"laid_back": "0",
+"refused_stop": "813",
+"refused_origin": "0",
+"refused_lay": "72",
+"refused_orientation": "4",
+"refused_twist": "2570",
+"refused_sense": "2668",
+"turns": "6184",
+"met": "5314",
+"laid": "0",
+"laid_nodes": "0",
+"recoil": "98",
+"recoil_flat": "12"
+},
+"run_back": {
+"intervals": 10,
+"exact": 10
+},
+"integers per Node": [
+89
+],
+"max state bits": 92,
+"max transient bits": 76,
+"gates SHOWN": [
+2,
+5,
+7,
+8,
+9,
+10,
+16,
+18,
+30,
+43,
+45
+],
+"gate 23": {
+"clicks booking dP": 127,
+"takes dP_a summed": [
+-298633278124504,
+0,
+0
+],
+"lays dP_a summed": [
+0,
+0,
+0
+],
+"recoil passed to the laid pair (take + lay = 0 per birth)": [
+0,
+0
+],
+"verdict": "NOT READ: no birth; the predicate: the take's dP and the lay's sum to 0 at every birth"
+},
+"gate 54": "NOT READ: two packets of one plane are not told apart by their line, and the momentum across the click is row 23; the predicate: the packets scatter, the momentum summed before and after",
+"analysis": {
+"births": 0,
+"credits": 127,
+"credits laid back": 0,
+"births: take abs per axis": [
+0,
+0,
+0
+],
+"births: along the Link's axis, abs per axis": [
+0,
+0,
+0
+],
+"births: transverse to the Link's axis, abs per axis": [
+0,
+0,
+0
+],
+"births: along-axis remainder abs summed at the grain 2 num A": 0,
+"births: along-axis take abs summed": 0,
+"births: remainder exact 0": 0,
+"births: under the cap 2 num A^2": 0,
+"births: p (levels of before at the far end) largest": 0,
+"births: stood at nothing at both ends": 0,
+"credits: take abs per axis (no Link named by the click)": [
+763301253998796,
+286704108672740,
+285147554080200
+],
+"first births": []
+}
+}

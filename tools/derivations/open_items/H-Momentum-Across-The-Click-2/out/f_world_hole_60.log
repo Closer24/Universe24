@@ -1,0 +1,282 @@
+{
+"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/mk2/tests/worlds/world_hole.json",
+"intervals": 60,
+"flag": "1",
+"final state hash": "39444e40bbe42c53a99c5018b3c632607bac72971e45f6bb55e1dad2cd6a00ba",
+"log hash": "034160999bbfe26f0b9ab82539f39f2c562fd6dd5a5a054376fa2f02091d0fe4",
+"counts": {
+"births": "13",
+"taken": "66027030368063261640717",
+"booked": "64525523513325577634257",
+"body_clicks": "899",
+"laid_back": "0",
+"refused_stop": "433",
+"refused_origin": "0",
+"refused_lay": "7811",
+"refused_orientation": "374",
+"refused_twist": "233",
+"refused_sense": "7902",
+"turns": "558",
+"met": "16344",
+"laid": "0",
+"laid_nodes": "0",
+"recoil": "728",
+"recoil_flat": "30"
+},
+"run_back": {
+"intervals": 10,
+"exact": 10
+},
+"integers per Node": [
+98
+],
+"max state bits": 115,
+"max transient bits": 100,
+"gates SHOWN": [
+2,
+4,
+5,
+7,
+8,
+10,
+15,
+16,
+17,
+18,
+19,
+21,
+25,
+26,
+27,
+30,
+37,
+43,
+45
+],
+"gate 23": {
+"clicks booking dP": 912,
+"takes dP_a summed": [
+-358965470915226697186,
+102227980269935726638,
+97739774669238459494
+],
+"lays dP_a summed": [
+-6100039391810173740,
+107867079348929217510,
+110390699706454746240
+],
+"recoil passed to the laid pair (take + lay = 0 per birth)": [
+0,
+13
+],
+"verdict": "NOT SHOWN: the recoil passed at 0 of 13 births (the lay's form owed)"
+},
+"gate 54": "NOT READ: two packets of one plane are not told apart by their line, and the momentum across the click is row 23; the predicate: the packets scatter, the momentum summed before and after",
+"analysis": {
+"births": 13,
+"credits": 899,
+"credits laid back": 0,
+"births: take abs per axis": [
+622526247102118242784,
+1362564634087357500318,
+1372936028110590374394
+],
+"births: along the Link's axis, abs per axis": [
+524028329594924163840,
+152659641850743532452,
+20348553770728826038
+],
+"births: transverse to the Link's axis, abs per axis": [
+98497917507194078944,
+1209904992236613967866,
+1352587474339861548356
+],
+"births: along-axis remainder abs summed at the grain 2 num A": 4060204085973079542,
+"births: along-axis take abs summed": 697036525216396522330,
+"births: remainder exact 0": 0,
+"births: under the cap 2 num A^2": 12,
+"births: p (levels of before at the far end) largest": 145,
+"births: stood at nothing at both ends": 13,
+"credits: take abs per axis (no Link named by the click)": [
+1660484443690397719390,
+1810445097038019246600,
+1715525613725975691460
+],
+"first births": [
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+-120332431240315919104,
+-166912727204309178112
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+-120332431240315919104,
+166912727204309178112
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+-166912727204309178112,
+-120332431240315919104
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+-166912727204309178112,
+120332431240315919104
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+166912727204309178112,
+-120332431240315919104
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+},
+{
+"i": 9,
+"axis": 0,
+"dP_take": [
+-53858467208367205728,
+166912727204309178112,
+120332431240315919104
+],
+"along": -53858467208367205728,
+"grain": 614552520937968750,
+"p": 88,
+"r": -222154634174044272,
+"cap": 76819065117246093750,
+"A": 125,
+"stood": [
+[
+0,
+0,
+0,
+0
+],
+[
+0,
+0,
+0,
+0
+]
+]
+}
+]
+}
+}

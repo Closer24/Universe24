@@ -1,0 +1,20 @@
+(1) the lattice's constants whose product is 54 (SIDES 2, AXES 3, PORTS 6, the wall's 6, the mass's 12, d + 1 = 4):
+    ['SIDES^0 AXES^2 PORTS^1', 'SIDES^1 AXES^3 PORTS^0'] (every one is 2 x 3^3: one SIDES and three AXES in some grouping; no clause names three AXES on the time line)
+(2) the forms' term under the weight: Euclid
+    W 54 against 18: the quotients equal at 5000 of 5000 intervals (the trace 0)
+    W 54 against 36: the quotients equal at 5000 of 5000 intervals (the trace 0)
+    W 6 against 108: the quotients equal at 5000 of 5000 intervals (the trace 0)
+(3) The stress is the Links': SUM over a ring of (a_+ - a_-)^2 = -2 SUM (a_- a_+ - a^2), to the bit
+    ring of 3: SUM d^2 381026, -2 SUM h 381026, equal True
+    ring of 4: SUM d^2 1853000, -2 SUM h 1853000, equal True
+    ring of 5: SUM d^2 2723354, -2 SUM h 2723354, equal True
+    ring of 6: SUM d^2 4705484, -2 SUM h 4705484, equal True
+    ring of 12: SUM d^2 6337240, -2 SUM h 6337240, equal True
+(4) the massless wave on the lattice at the vacuum paces: the bracket W den Gamma^2 forms - trace p_0^2 per Node, board mean
+    the rule at the vacuum for light: R 697786000000, w 2093358000000, 3 R == w: True, D 0
+    period 2 (cos k = -1/1): forms 8/9 b^2, trace 0/1 den b^2, W_0(k) = 0/1; the light's write over its forms at W 6, 18, 36, 54: {6: '48/48', 18: '144/144', 36: '288/288', 54: '432/432'}
+    period 3 (cos k = -1/2): forms 27/36 b^2, trace 6/4 den b^2, W_0(k) = 2/1; the light's write over its forms at W 6, 18, 36, 54: {6: '432/648', 18: '1728/1944', 36: '3672/3888', 54: '5616/5832'}
+    period 4 (cos k = 0/1): forms 5/9 b^2, trace 2/1 den b^2, W_0(k) = 18/5; the light's write over its forms at W 6, 18, 36, 54: {6: '12/30', 18: '72/90', 36: '162/180', 54: '252/270'}
+    period 6 (cos k = 1/2): forms 11/36 b^2, trace 6/4 den b^2, W_0(k) = 54/11; the light's write over its forms at W 6, 18, 36, 54: {6: '48/264', 18: '576/792', 36: '1368/1584', 54: '2160/2376'}
+    period long wave (cos k = 1/1): forms 0/9 b^2, trace 0/1 den b^2, W_0(k) = 6/1; the light's write over its forms at W 6, 18, 36, 54: {6: '0/0', 18: '0/0', 36: '0/0', 54: '0/0'}
+    (with the squared velocity in place of the two-level product the forms are 2 (1 - c) / 3 and W_0(k) = 3 (1 + c): 6 at the long wave, 3 at the period 4, 0 at the band's top)
