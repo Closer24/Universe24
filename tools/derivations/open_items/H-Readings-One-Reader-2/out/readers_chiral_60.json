@@ -1,0 +1,109 @@
+{
+ "world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/ro2/tests/worlds/world_nature.json",
+ "intervals": 60,
+ "run_back": {
+  "intervals": 20,
+  "exact": 20
+ },
+ "counts": {
+  "births": "17",
+  "taken": "70769943529221060875807",
+  "booked": "69862070318996095731587",
+  "body_clicks": "2903",
+  "laid_back": "0",
+  "refused_stop": "9371",
+  "refused_origin": "0",
+  "refused_lay": "683",
+  "refused_orientation": "110",
+  "refused_twist": "42",
+  "refused_sense": "10393",
+  "turns": "612",
+  "met": "20497",
+  "laid": "3",
+  "laid_nodes": "3"
+ },
+ "readings": {
+  "gram.charge": {
+   "calls": 3139,
+   "apart": 0
+  },
+  "gram.conjugated": {
+   "calls": 3840,
+   "apart": 0
+  },
+  "gram.curl": {
+   "calls": 80,
+   "apart": 0
+  },
+  "gram.current": {
+   "calls": 320,
+   "apart": 0
+  },
+  "gram.form": {
+   "calls": 5101,
+   "apart": 0
+  },
+  "gram.share": {
+   "calls": 240,
+   "apart": 0
+  },
+  "gram.term": {
+   "calls": 400,
+   "apart": 0
+  },
+  "gram.weighted": {
+   "calls": 2036691,
+   "apart": 0
+  },
+  "links.gradient": {
+   "calls": 8160,
+   "apart": 0
+  },
+  "links.link": {
+   "calls": 4644,
+   "apart": 0
+  },
+  "links.link_current": {
+   "calls": 8100,
+   "apart": 0
+  },
+  "links.links_of (factor, frame, odd)": {
+   "calls": 160,
+   "apart": 0
+  },
+  "links.net_current": {
+   "calls": 2880,
+   "apart": 0
+  },
+  "links.row_current": {
+   "calls": 1080,
+   "apart": 0
+  },
+  "links.row_twist": {
+   "calls": 720,
+   "apart": 0
+  },
+  "links.turned": {
+   "calls": 1920,
+   "apart": 0
+  },
+  "metric.fold_links": {
+   "calls": 320,
+   "apart": 0
+  },
+  "readings.frames": {
+   "calls": 80,
+   "apart": 0
+  },
+  "readings.link_factors": {
+   "calls": 214,
+   "apart": 0
+  },
+  "readings.link_phases": {
+   "calls": 240,
+   "apart": 0
+  }
+ },
+ "calls": 2078329,
+ "apart": 0
+}

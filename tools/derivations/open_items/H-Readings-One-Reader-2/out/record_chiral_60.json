@@ -1,0 +1,47 @@
+{
+ "world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/ro2/tests/worlds/world_nature.json",
+ "committed": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/ro2/examples/records/chiral.json",
+ "keys": {
+  "G": true,
+  "T": true,
+  "counts": true,
+  "cube": true,
+  "den": true,
+  "gamma": true,
+  "gapped": true,
+  "intervals": true,
+  "log": true,
+  "nodes": true,
+  "planes": true,
+  "rows": true,
+  "run_back": true,
+  "turns": true,
+  "universe": true,
+  "world": true
+ },
+ "log entries mine": 23519,
+ "log entries committed": 23519,
+ "log entries equal": 23519,
+ "counts": {
+  "births": "17",
+  "taken": "70769943529221060875807",
+  "booked": "69862070318996095731587",
+  "body_clicks": "2903",
+  "laid_back": "0",
+  "refused_stop": "9371",
+  "refused_origin": "0",
+  "refused_lay": "683",
+  "refused_orientation": "110",
+  "refused_twist": "42",
+  "refused_sense": "10393",
+  "turns": "612",
+  "met": "20497",
+  "laid": "3",
+  "laid_nodes": "3"
+ },
+ "run_back": {
+  "intervals": 20,
+  "exact": 20
+ },
+ "equal": true
+}
