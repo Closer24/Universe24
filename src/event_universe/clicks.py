@@ -361,11 +361,11 @@ def eras_of(record: Record) -> tuple[list[int | None], list[list[int]], list[tup
         quot(sum(s), len(s)) if s and k < (record.intervals * LISTED) // whole else None
         for k, s in enumerate(eighths)
     ]
-    growths = [
-        [k, means[k] - means[k - 1]]
-        for k in range(1, LISTED)
-        if means[k] is not None and means[k - 1] is not None
-    ]
+    growths: list[list[int]] = []
+    for k in range(1, LISTED):
+        m, n = means[k - 1], means[k]
+        if m is not None and n is not None:
+            growths.append([k, n - m])
     return means, growths, last
 
 
@@ -414,11 +414,15 @@ def deceleration(record: Record) -> dict[str, Any]:
 
 def acceleration_in_clicks(record: Record) -> dict[str, Any]:
     """Row 60: the acceleration in the clicks, after a slowing an eighth's growth of the spacing larger than the one before."""
-    slow = lambda g: next((k for k in range(1, len(g)) if g[k] < g[k - 1]), len(g))  # noqa: E731
+
+    def quickens(g: list[int]) -> int | None:
+        slow = next((k for k in range(1, len(g)) if g[k] < g[k - 1]), len(g))
+        return next((j for j in range(slow + 1, len(g)) if g[j] > g[j - 1]), None)
+
     return era_row(
         record,
         "60 the acceleration in the clicks",
-        lambda g: next((j for j in range(slow(g) + 1, len(g)) if g[j] > g[j - 1]), None),
+        quickens,
         "after a slowing, an eighth's growth of the spacing larger than the one before",
         "no eighth's growth larger than the one before after a slowing",
     )

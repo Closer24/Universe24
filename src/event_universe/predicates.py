@@ -417,7 +417,7 @@ def two_slits(record: Record) -> dict[str, Any]:
 
 def bell(record: Record) -> dict[str, Any]:
     """Row 56: Bell (QG-S3), S = E(a, b) - E(a, b') + E(a', b) + E(a', b') over the born pairs' two ends at their first clicks after the birth, each end's outcome the sign of p re_now + q im_now of its frame under two settings; nature's 2 sqrt 2 as the integer inequality num^2 > 8 den^2 on S = num / den over the pairs; the law's bound |S| <= 2 (every outcome a function of its own Node, the one-Link reach) with the senses' E = -1 beside it."""
-    pairs = []
+    pairs: list[tuple[dict[str, Any], dict[str, Any]]] = []
     for b in record.births:
         ends = [
             next(
@@ -433,7 +433,8 @@ def bell(record: Record) -> dict[str, Any]:
             )
             for where in (b["minus"], b["plus"])
         ]
-        pairs += [ends] if None not in ends else []
+        if ends[0] is not None and ends[1] is not None:
+            pairs.append((ends[0], ends[1]))
     if not pairs:
         return unread(
             "56 Bell",
