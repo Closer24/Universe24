@@ -8,7 +8,7 @@ t = TOY.Toy(universe, dict(world, control={}))
 t.step()
 try:
     t.step(-1)
-    print("TOY BACK OK interval", t.interval)
+    print("the toy back holds interval", t.interval)
 except Exception as e:
     traceback.print_exc()
-    print("TOY BACK FAILS:", type(e).__name__, e)
+    print("the toy back fails:", type(e).__name__, e)
