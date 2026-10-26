@@ -1,0 +1,63 @@
+{
+ "world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/kt1/tests/worlds/world_hole.json",
+ "cube": 5,
+ "changed node": [
+  2,
+  2,
+  2
+ ],
+ "levels added": 5,
+ "interval of the change": 21,
+ "births this interval a/b": [
+  1,
+  1
+ ],
+ "links compared by distance of the nearer end": {
+  "1": {
+   "links": 5,
+   "equal": 5,
+   "apart": 0,
+   "births a": 0,
+   "births b": 0
+  },
+  "2": {
+   "links": 14,
+   "equal": 14,
+   "apart": 0,
+   "births a": 0,
+   "births b": 0
+  },
+  "3": {
+   "links": 20,
+   "equal": 20,
+   "apart": 0,
+   "births a": 0,
+   "births b": 0
+  },
+  "4": {
+   "links": 8,
+   "equal": 8,
+   "apart": 0,
+   "births a": 1,
+   "births b": 1
+  },
+  "5": {
+   "links": 1,
+   "equal": 1,
+   "apart": 0,
+   "births a": 0,
+   "births b": 0
+  }
+ },
+ "farthest distance with a Link apart": null,
+ "links at distance >= 2 equal / of": [
+  43,
+  43
+ ],
+ "line slots differing by distance": {
+  "0": 19,
+  "1": 59
+ },
+ "farthest distance with a slot differing": 1,
+ "reach one Link (no slot differing at distance >= 2)": true
+}

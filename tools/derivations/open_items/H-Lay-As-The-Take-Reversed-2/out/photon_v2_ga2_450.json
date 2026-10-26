@@ -1,0 +1,17 @@
+{
+ "record": "/dev/shm/tmp/lt2/v2_ga2_450.json",
+ "T": 36000,
+ "A, B": [
+  125,
+  144
+ ],
+ "children": 292,
+ "children with |W| = T div 2 (one child of light, the intrinsic datum)": 158,
+ "light's Link records read (F_re = sense A q_j along the Link)": 480,
+ "links whose moment about the take's Node is 0": 480,
+ "closes with the far lay": 3,
+ "closes whose light 2J about the centre is a multiple of T": 1,
+ "closes whose light 2J about the centre is a multiple of T div 2": 1,
+ "closes whose light 2J about the centre is a multiple of num_s T": 1,
+ "max |light 2J about the centre|": 9620086342216313923500
+}

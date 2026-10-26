@@ -1,0 +1,17 @@
+{
+ "record": "/dev/shm/tmp/lt2/v2_ga2_450.json",
+ "births": 146,
+ "births with the far reads": 80,
+ "births whose taken row and children's record share one num": 40,
+ "A": 125,
+ "far Nodes written (one carried division each)": 202,
+ "far Nodes shared by two or more births of one close": 148,
+ "far Nodes with A q_j = S_j (exact)": 130,
+ "far Nodes with |A q_j - S_j| < A (exact to the remainder)": 202,
+ "max |A q_j - S_j|": 70,
+ "closes with the far lay": 3,
+ "closes with SUM dP_take + SUM dP_lay_ends + dP_far = 0 (num-weighted)": 0,
+ "max |residual| of that balance": 206362356194481135720192,
+ "max |q_j|": 196,
+ "max bits among q and the remainders": 95
+}

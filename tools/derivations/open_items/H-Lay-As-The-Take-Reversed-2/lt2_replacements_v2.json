@@ -1,0 +1,57 @@
+[
+ {
+  "file": "event_universe/close.py",
+  "old": "from event_universe.core.ports import AXES, across, port_of\n",
+  "new": "from os import environ\n\nfrom event_universe.core.ports import AXES, PORTS, across, port_of\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "from event_universe.take import lay, move, neighbour\n",
+  "new": "from event_universe.take import at_node, lay, momentum_of, move, neighbour\n\nLAY_REVERSED = environ.get(\"LT2_LAY_REVERSED\", \"\")\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "def child_laid(\n    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...]\n) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:\n",
+  "new": "def lay_reversed(\n    node: Node,\n    s: int,\n    at: tuple[int, ...],\n    sense: int,\n    take: dict[str, Any],\n    rec: int,\n    totals: dict[tuple[int, tuple[int, ...]], int],\n) -> list[list[Any]]:\n    \"\"\"The lay as the take reversed on the Link's record, the reads (H-Lay-As-The-Take-Reversed-2, behind the flag LT2_LAY_REVERSED): at each of the six neighbours j of the take's Node the taken line's Link record the take removed, R_j = d before_j (the count d of quanta the take moved times the taken line's level before at j), to be returned on the children's re line's before at j, whose now at the take's Node is the child's sense A; the numerator -sense R_j times the quotient of that line's wall at j by A is summed into `totals` per record and Node, so that one carried division per Node is written after every birth of the close is read (CR-S2); returns the Link records read.\"\"\"\n    re = node.records()[s].lines[0]\n    z = node.records()[rec].lines[take[\"taken_line\"]]\n    now_was, before_at, count = take[\"taker\"]\n    d = count if before_at > now_was else -count\n    found: list[list[Any]] = []\n    for port in range(PORTS):\n        j = neighbour(node, at, port)\n        record = d * int(z.before[j])\n        total = -sense * record * quotient(at_node(re.wall, j), node.A)\n        totals[(s, j)] = totals.get((s, j), 0) + total\n        found.append([list(j), record, total])\n    return found\n\n\ndef far_flush(\n    node: Node, totals: dict[tuple[int, tuple[int, ...]], int]\n) -> tuple[list[list[Any]], list[int]]:\n    \"\"\"The lay as the take reversed, the writes: per record and Node one carried division of the summed numerator at the children's re line's own wall at that Node in the direction -1, the quotient laid on the line's before, the remainder kept in the line's own remainder (exact where A divides the wall), the momentum of each write booked at its Node; returns the writes and the momentum summed.\"\"\"\n    found: list[list[Any]] = []\n    dp = [0] * AXES\n    for s, j in sorted(totals):\n        row = node.records()[s]\n        assert row.pair is not None\n        re = row.lines[0]\n        wall, rem_was = at_node(re.wall, j), int(re.rem[j])\n        q, rest = rule3.carried_division(totals[(s, j)], wall, rem_was, -1)\n        moved = momentum_of(node, re.now, re.before, j, d_before=q, num=row.pair[0])\n        dp = [a + b for a, b in zip(dp, moved, strict=True)]\n        re.before[j] = re.before[j] + q\n        re.rem[j] = rest\n        found.append([s, list(j), totals[(s, j)], q, rem_was, rest])\n    return found, dp\n\n\ndef child_laid(\n    node: Node,\n    s: int,\n    minus: tuple[int, ...],\n    plus: tuple[int, ...],\n    reversed_at: tuple[Any, ...] | None = None,\n) -> tuple[list[int], list[int], list[list[int]], list[list[int]], list[list[Any]]]:\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "    ends = [child_at(node, s, where, sense) for where, sense in ((minus, -1), (plus, 1))]\n    dp_lay = [a + b for a, b in zip(*ends, strict=True)]\n",
+  "new": "    ends = [child_at(node, s, where, sense) for where, sense in ((minus, -1), (plus, 1))]\n    far: list[list[Any]] = []\n    if LAY_REVERSED and reversed_at is not None:\n        at, take, rec, totals = reversed_at\n        which = (minus, plus).index(at)\n        far = lay_reversed(node, s, at, which + which - 1, take, rec, totals)\n    dp_lay = [a + b for a, b in zip(*ends, strict=True)]\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "    return dp_lay, senses, stood, ends\n",
+  "new": "    return dp_lay, senses, stood, ends, far\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "        exact: list[list[int] | None] = []\n",
+  "new": "        exact: list[list[int] | None] = []\n        far: list[list[Any]] = []\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "            dp_lay, w_children, stood, ends = child_laid(node, s, minus, plus)\n",
+  "new": "            dp_lay, w_children, stood, ends, far = child_laid(\n                node,\n                s,\n                minus,\n                plus,\n                (at, take, rec, totals) if take.get(\"taken_line\") is not None else None,\n            )\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "                **({\"takes\": take[\"takes\"], \"exact_lay\": exact} if \"takes\" in take else {}),\n",
+  "new": "                **({\"takes\": take[\"takes\"], \"exact_lay\": exact} if \"takes\" in take else {}),\n                **({\"far_records\": far} if far else {}),\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "    rec: int,\n    c: Any,\n    factors: tuple[Any, ...],\n) -> set[tuple[int, ...]]:\n",
+  "new": "    rec: int,\n    c: Any,\n    factors: tuple[Any, ...],\n    totals: dict[tuple[int, tuple[int, ...]], int] | None = None,\n) -> set[tuple[int, ...]]:\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "    touched: set[tuple[int, ...]] = set()\n    for at, rec, kids, take in taken:\n        touched |= children(node, at, kids, take, rec, c, factors)\n        node.counts[\"taken\"] += take[\"taken\"]\n        node.counts[\"booked\"] += take[\"booked\"]\n    return touched\n",
+  "new": "    touched: set[tuple[int, ...]] = set()\n    totals: dict[tuple[int, tuple[int, ...]], int] = {}\n    for at, rec, kids, take in taken:\n        touched |= children(node, at, kids, take, rec, c, factors, totals)\n        node.counts[\"taken\"] += take[\"taken\"]\n        node.counts[\"booked\"] += take[\"booked\"]\n    if totals:\n        far, dp_far = far_flush(node, totals)\n        node.log[-1][\"lay_far\"] = far\n        node.log[-1][\"dP_far\"] = dp_far\n    return touched\n"
+ },
+ {
+  "file": "event_universe/close.py",
+  "old": "                exact = entry.get(\"exact_lay\", [None, None])\n",
+  "new": "                exact = entry.get(\"exact_lay\", [None, None])\n                for s_far, where, _total, q, rem_was, _rest in reversed(entry.get(\"lay_far\", [])):\n                    far_line = node.records()[s_far].lines[0]\n                    far_line.before[tuple(where)] = far_line.before[tuple(where)] - q\n                    far_line.rem[tuple(where)] = rem_was\n"
+ }
+]

@@ -1,0 +1,205 @@
+Binary files event_universe/__pycache__/__init__.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/__init__.cpython-314.pyc differ
+Binary files event_universe/__pycache__/bodies.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/bodies.cpython-314.pyc differ
+Binary files event_universe/__pycache__/close.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/close.cpython-314.pyc differ
+Binary files event_universe/__pycache__/decoder.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/decoder.cpython-314.pyc differ
+Binary files event_universe/__pycache__/draw.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/draw.cpython-314.pyc differ
+Binary files event_universe/__pycache__/gram.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/gram.cpython-314.pyc differ
+Binary files event_universe/__pycache__/interval.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/interval.cpython-314.pyc differ
+Binary files event_universe/__pycache__/links.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/links.cpython-314.pyc differ
+Binary files event_universe/__pycache__/merger.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/merger.cpython-314.pyc differ
+Binary files event_universe/__pycache__/metric.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/metric.cpython-314.pyc differ
+Binary files event_universe/__pycache__/node.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/node.cpython-314.pyc differ
+Binary files event_universe/__pycache__/quartet.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/quartet.cpython-314.pyc differ
+Binary files event_universe/__pycache__/readings.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/readings.cpython-314.pyc differ
+Binary files event_universe/__pycache__/rows.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/rows.cpython-314.pyc differ
+Binary files event_universe/__pycache__/run.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/run.cpython-314.pyc differ
+Binary files event_universe/__pycache__/seed.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/seed.cpython-314.pyc differ
+Binary files event_universe/__pycache__/take.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/take.cpython-314.pyc differ
+Binary files event_universe/__pycache__/wave.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/__pycache__/wave.cpython-314.pyc differ
+diff -ru event_universe/bodies.py /dev/shm/tmp/lt1/src_lt1/event_universe/bodies.py
+--- event_universe/bodies.py	2026-10-26 07:44:17.480829840 +0000
++++ /dev/shm/tmp/lt1/src_lt1/event_universe/bodies.py	2026-10-26 08:01:13.246180789 +0000
+@@ -12,7 +12,7 @@
+ from event_universe.links import row_current
+ from event_universe.merger import takes
+ from event_universe.rows import PLANE, POTENTIAL, Line
+-from event_universe.take import frame_nodes, move
++from event_universe.take import frame_nodes, move, recoil
+ 
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+@@ -75,6 +75,9 @@
+             if int(net[at]) == 0:
+                 move(node, rec0, k, at, now - int(node.records()[rec0].lines[k].now[at]))
+                 entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
++                back = recoil(node, at, [-x for x in node.last_dp], take.get("clock", 0), 1)
++                if back:
++                    entry["recoil"], entry["carry"] = [0] * AXES, back["carry"]
+                 node.counts["laid_back"] += 1
+             node.log.append(entry)
+ 
+@@ -167,6 +170,7 @@
+         "owed": node.units[rec] - rem_was,
+         "taker": [taken_was, taken_before, levels],
+         "dP_take": node.last_dp,
++        **getattr(node, "last_recoil", {}),
+         "taken_line": line,
+         "sign_level": int(node.row(POTENTIAL).lines[0].now[at]),
+         "turned": bool(node.turned[at]),
+diff -ru event_universe/close.py /dev/shm/tmp/lt1/src_lt1/event_universe/close.py
+--- event_universe/close.py	2026-10-26 07:44:17.480829840 +0000
++++ /dev/shm/tmp/lt1/src_lt1/event_universe/close.py	2026-10-26 08:01:13.246201159 +0000
+@@ -23,7 +23,7 @@
+     write_ends,
+ )
+ from event_universe.rows import PLANE, Line
+-from event_universe.take import lay, move, neighbour
++from event_universe.take import lay, move, neighbour, recoil
+ 
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+@@ -213,6 +213,10 @@
+         else:
+             dp_lay, w_children, stood, ends = child_laid(node, s, minus, plus)
+         touched |= {minus, plus}
++        written = [
++            recoil(node, where, dp, int(node.start_clock[where]), 1)
++            for where, dp in zip((minus, plus), ends, strict=True)
++        ]
+         node.counts["births"] += 1
+         node.closes[at] += 1
+         node.log.append(
+@@ -241,7 +245,16 @@
+                 "dP_take": take["dP_take"],
+                 "dP_lay": dp_lay,
+                 "dP_lay_ends": ends,
+-                **{key: take[key] for key in ("remainder_was", "remainder", "owed") if key in take},
++                **(
++                    {key + "_ends": [w[key] for w in written] for key in written[0]}
++                    if written[0]
++                    else {}
++                ),
++                **{
++                    key: take[key]
++                    for key in ("remainder_was", "remainder", "owed", "clock", "recoil", "carry_was", "carry")
++                    if key in take
++                },
+                 **({"takes": take["takes"], "exact_lay": exact} if "takes" in take else {}),
+             }
+         )
+@@ -263,6 +276,13 @@
+             at = tuple(entry["node"])
+             if entry["event"] == "birth":
+                 s, (a, b) = entry["line_pair"], entry["amplitude"]
++                for where, dp, clock in zip(
++                    (entry["plus"], entry["minus"]),
++                    entry["dP_lay_ends"][::-1],
++                    entry.get("clock_ends", [0, 0])[::-1],
++                    strict=True,
++                ):
++                    recoil(node, tuple(where), dp, clock, -1)
+                 exact = entry.get("exact_lay", [None, None])
+                 for where, sense, laid in zip(
+                     (entry["minus"], entry["plus"]), (-1, 1), exact, strict=True
+@@ -275,6 +295,7 @@
+                 row = entry.get("taken_row", rec0)
+                 for take in entry.get("takes", [entry]):
+                     where = tuple(take["node"])
++                    recoil(node, where, take["dP_take"], take.get("clock", 0), -1)
+                     if "taken_levels" in take:
+                         lay(node, row, where, tuple(take["taken_levels"]))
+                         continue
+@@ -292,6 +313,7 @@
+         node.standing, node.crossed, node.beats = frame["counters"]
+         return
+     c = node.start_content
++    node.start_clock = readings.paces_of(node, c)[0]
+     node.lattices, node.drawn = {}, {}
+     frozen = readings.frozen_of(node, c)
+     factors = node.link_factors(None, frozen)
+Binary files event_universe/core/__pycache__/__init__.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/core/__pycache__/__init__.cpython-314.pyc differ
+Binary files event_universe/core/__pycache__/paces.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/core/__pycache__/paces.cpython-314.pyc differ
+Binary files event_universe/core/__pycache__/ports.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/core/__pycache__/ports.cpython-314.pyc differ
+Binary files event_universe/core/__pycache__/rule3.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/core/__pycache__/rule3.cpython-314.pyc differ
+Binary files event_universe/features/__pycache__/__init__.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/features/__pycache__/__init__.cpython-314.pyc differ
+Binary files event_universe/features/phase/__pycache__/__init__.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/features/phase/__pycache__/__init__.cpython-314.pyc differ
+Binary files event_universe/features/volume/__pycache__/__init__.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/features/volume/__pycache__/__init__.cpython-314.pyc differ
+Binary files event_universe/loader/__pycache__/__init__.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/loader/__pycache__/__init__.cpython-314.pyc differ
+Binary files event_universe/loader/__pycache__/world.cpython-314.pyc and /dev/shm/tmp/lt1/src_lt1/event_universe/loader/__pycache__/world.cpython-314.pyc differ
+diff -ru event_universe/merger.py /dev/shm/tmp/lt1/src_lt1/event_universe/merger.py
+--- event_universe/merger.py	2026-10-26 07:44:17.482733653 +0000
++++ /dev/shm/tmp/lt1/src_lt1/event_universe/merger.py	2026-10-26 08:01:13.246154547 +0000
+@@ -12,7 +12,7 @@
+ from event_universe.core.rule3 import half, quotient, share_weight
+ from event_universe.links import cross
+ from event_universe.rows import Line, zeros
+-from event_universe.take import at_node, fall_of, frame_nodes, lay, momentum_of, move, neighbour
++from event_universe.take import at_node, fall_of, frame_nodes, lay, momentum_of, move, neighbour, recoil
+ 
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+@@ -174,6 +174,7 @@
+                     levels=size,
+                     taken_levels=list(levels),
+                     dP_take=moment,
++                    **recoil(node, where, moment, int(node.start_clock[where]), 1),
+                 )
+             )
+             continue
+@@ -184,6 +185,7 @@
+         node.closes[where] += 1
+         node.take_rem[where] = fall - (wall - rem_was)
+         node.last_dp = momentum_of(node, z.now, z.before, where, d_now=toward * levels, num=row.pair[0])
++        node.last_recoil = recoil(node, where, node.last_dp, int(node.start_clock[where]), 1)
+         found.append(
+             {
+                 "node": list(where),
+@@ -197,6 +199,7 @@
+                 "remainder_was": rem_was,
+                 "remainder": fall - (wall - rem_was),
+                 "owed": wall - rem_was,
++                **node.last_recoil,
+             }
+         )
+     return found
+diff -ru event_universe/take.py /dev/shm/tmp/lt1/src_lt1/event_universe/take.py
+--- event_universe/take.py	2026-10-26 07:44:17.482733653 +0000
++++ /dev/shm/tmp/lt1/src_lt1/event_universe/take.py	2026-10-26 08:01:13.246107950 +0000
+@@ -2,6 +2,7 @@
+ 
+ from __future__ import annotations
+ 
++import os
+ from typing import TYPE_CHECKING, Any
+ 
+ import numpy as np
+@@ -10,7 +11,7 @@
+ from event_universe.core.ports import AXES, PORT_SIDES, PORTS, port_of, wrap
+ from event_universe.core.rule3 import quotient
+ from event_universe.links import cross
+-from event_universe.rows import PLANE, Row
++from event_universe.rows import CARRIER, PLANE, Row, zeros
+ 
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+@@ -96,3 +97,20 @@
+     wall = at_node(lines[k].wall, at)
+     q, _unmoved = rule3.carried_division(count * wall, wall, int(lines[k].rem[at]), 1)
+     lay(node, rec, at, tuple(q if j == PLANE * k else 0 for j in range(PLANE * len(lines))))
++
++
++def recoil(
++    node: Node, where: tuple[int, ...], dp: list[int], clock: int, direction: int
++) -> dict[str, Any]:
++    """The move's recoil written on the Link's record the Node holds (the flag LT1_RECOIL; the lay as the take reversed, RW-S1 read on the Link's record): the momentum a move books at its Node (momentum_of, the change of the records' current on the Node's six Links) is written per axis on the carrier's flux line at that Node by the Node's one write act (one carried division at the line's write wall, the carry in its write remainder; Y-S3's line, whose source summed over the board is the records' momentum negated, so the records' loss is the line's gain at the sign of the booking, at the clock squared by the position of the reading), in the direction given; at -1 the same write undone from the log's numbers. Returns the log's numbers (the clock, the levels laid per axis, the carry before and after), nothing with the flag empty."""
++    if not os.environ.get("LT1_RECOIL"):
++        return {}
++    lines = node.row(CARRIER).lines[1 + AXES : 1 + AXES + AXES]
++    was, laid = [int(line.wr[where]) for line in lines], []
++    for line, p in zip(lines, dp, strict=True):
++        numerator = zeros(node.shape)
++        numerator[where] = p * clock * clock
++        level = int(line.now[where])
++        node.write(line, numerator, direction)
++        laid.append(int(line.now[where]) - level)
++    return {"clock": clock, "recoil": laid, "carry_was": was, "carry": [int(line.wr[where]) for line in lines]}

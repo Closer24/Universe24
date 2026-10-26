@@ -1,0 +1,20 @@
+{
+ "record": "/dev/shm/tmp/lt2/flag_bodies_300.json",
+ "births": 0,
+ "births with the far lay": 0,
+ "A, B": [
+  0,
+  0
+ ],
+ "links read": 0,
+ "links with R_j + sense A q_j = 0 (the unweighted identity exact)": 0,
+ "links with |R_j + sense A q_j| < A (exact to the division's remainder)": 0,
+ "max |R_j + sense A q_j|": 0,
+ "links with num_taken R_j + num_children sense A q_j = 0 (the weighted identity)": 0,
+ "births with the kit's balance dP_take + dP_lay_ends = 0": 0,
+ "births with 2J about the centre 0 from the per-Link momenta (weighted)": 0,
+ "births with 2J about the take's Node 0 from the per-Link momenta (weighted)": 0,
+ "max |q_j| (the far lay's levels)": 0,
+ "max bits among q, rest, R_j": 0,
+ "num taken, num children (first birth)": null
+}

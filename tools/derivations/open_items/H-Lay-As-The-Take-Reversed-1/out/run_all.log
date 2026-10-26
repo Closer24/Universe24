@@ -1,0 +1,23 @@
+start 08:01:54
+test exit 1 08:01:55
+hole exit 0 08:02:08
+chiral exit 0 08:02:22
+moment hole exit 0
+moment chiral exit 0
+cons hole exit 0 08:02:33
+cons chiral exit 1 08:02:49
+load 3.94 waiting 60 s
+load 3.23 waiting 60 s
+load 1.95 below 3
+ga2 exit 0 08:05:16
+moment ga2 exit 0
+return flag exit 0
+load 1.97 below 3
+ga2 head exit 0 08:05:44
+return head exit 0
+load 2.06 below 3
+bodies exit 0 08:06:02
+moment bodies exit 0
+load 2.27 below 3
+c48 exit 0 08:09:15
+all done 08:09:15

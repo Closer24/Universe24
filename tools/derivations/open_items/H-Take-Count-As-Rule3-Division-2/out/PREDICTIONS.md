@@ -1,0 +1,8 @@
+# The predictions, written before each run's result was read (tc2)
+
+- The flag empty on the copy: the state hash equal to the head's src on the hole 60 and the chiral 60 (written before the head runs; measured equal: 67eec79514fbf0f7, a53897d02b433687).
+- Every run under the chord: the chord pays at every take (fall >= walls) and stays within [1, dist]; the chord never below the least root; the run back 10 of 10; taken >= owed and taken - owed == remainder at every birth and credit; the course apart from the head's after the first take where the chord exceeds the least root.
+- ga2 450 under the chord (written at 07:15 before the result was read): 64 births at 64 of 64 Nodes at the interval 2 (the chord agrees with the least root where the fall is near linear, so the first bang stands); the second bang's births near 219 but not at it (the overpaid takes shift the return by a few intervals); X = Gamma at every Node at 218 under the head; under the chord the count at Gamma at 218 below 64 and the return reached a few intervals later or not at all.
+- The 48 on the chiral 3-cube to 60: the head's own counts (the comparison of the frozen Node's hands: 12 EQUAL, 36 APART on the head) and under the chord the same split or nearly (the chord is covariant: it reads three scalars of the Node), the APART ones the head's own GP-S1 mark.
+- The bodies 300: the chord pays at every take; the credits fewer than the head's (each take moves more levels, so the bodies' standing falls sooner) with the births 0 on both (two packets, the light no body).
+- The return probes (written at 07:19 before the run): the head 64 of 64 Nodes at Gamma at 218 and 442; the chord fewer than 64 at both, the second bang at 221 reading 64 at Gamma at 220 or not at all.

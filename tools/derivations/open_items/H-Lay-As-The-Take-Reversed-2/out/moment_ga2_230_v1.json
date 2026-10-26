@@ -1,0 +1,23 @@
+{
+ "record": "/dev/shm/tmp/lt2/flag_ga2_450.json",
+ "births": 146,
+ "births with the far lay": 80,
+ "A, B": [
+  125,
+  144
+ ],
+ "links read": 480,
+ "links with R_j + sense A q_j = 0 (the unweighted identity exact)": 2,
+ "links with |R_j + sense A q_j| < A (exact to the division's remainder)": 480,
+ "max |R_j + sense A q_j|": 88,
+ "links with num_taken R_j + num_children sense A q_j = 0 (the weighted identity)": 0,
+ "births with the kit's balance dP_take + dP_lay_ends = 0": 0,
+ "births with 2J about the centre 0 from the per-Link momenta (weighted)": 0,
+ "births with 2J about the take's Node 0 from the per-Link momenta (weighted)": 80,
+ "max |q_j| (the far lay's levels)": 426,
+ "max bits among q, rest, R_j": 95,
+ "num taken, num children (first birth)": [
+  115762739551980,
+  115762739551980
+ ]
+}

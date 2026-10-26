@@ -1,0 +1,23 @@
+{
+ "record": "/dev/shm/tmp/lt2/flag_chiral60.json",
+ "births": 30,
+ "births with the far lay": 19,
+ "A, B": [
+  125,
+  144
+ ],
+ "links read": 114,
+ "links with R_j + sense A q_j = 0 (the unweighted identity exact)": 0,
+ "links with |R_j + sense A q_j| < A (exact to the division's remainder)": 114,
+ "max |R_j + sense A q_j|": 118,
+ "links with num_taken R_j + num_children sense A q_j = 0 (the weighted identity)": 0,
+ "births with the kit's balance dP_take + dP_lay_ends = 0": 0,
+ "births with 2J about the centre 0 from the per-Link momenta (weighted)": 0,
+ "births with 2J about the take's Node 0 from the per-Link momenta (weighted)": 19,
+ "max |q_j| (the far lay's levels)": 213,
+ "max bits among q, rest, R_j": 96,
+ "num taken, num children (first birth)": [
+  2580388913625285,
+  15162854575528411
+ ]
+}
