@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's words of 2026-10-26, 07:2x UTC (every item a unification, the lists sorted, David fed several at once, the Reader alike) and 07:3x ("enter now": FR-S1 enters the code as a bug fix of a forbidden state) in docs/HIGHLIGHTS.md, at the ledger's head, in FR-S1's clause of docs/ALGEBRA.md (held to entered) and in rows 171, 187 and 192 and the NatureFirst mirror's D4.
 - Row 191: the Reader's read of the merged engine's course (the horizon lost on nature, the recurring bang lost on ga2, the uniform boards' returns kept; the (a)/(b) question for the Boss), with the cross-notes in rows 33, 104, 162 and 187; David's CA-S1 clause e69f1d986 read whole and the cleaning's counts in row 177; row 189 done whole; the Reader's row 62 in row 190.
 - Three duplicate clauses struck from docs/ALGEBRA.md's head under the owner's rule of 07:1x UTC (the clauses SL-S2 and SL-S3 and CS6-S1 stood twice; the body's spellings kept, the head's replaced by pointers), row 186.
 - The owner's standing priority of 2026-10-26, 07:1x UTC (unifications, cleaning, generic solutions and bugs first; everything else when free) at the ledger's head, in the Scribe's method as item (8) and in docs/HIGHLIGHTS.md; David's fold of the confirm's departures 5f4878f5f read whole, rows 177 and 189.
