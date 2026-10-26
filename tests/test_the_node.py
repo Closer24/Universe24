@@ -46,7 +46,7 @@ def fed_horizon(node: Node, at: tuple[int, ...]) -> Node:
 
 
 def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -> None:
-    """The horizon: the fed Node's two x Links at the wall (the factor 0), its other four above; no Link close reads the Node (no birth at it, none with it as an end); under PM-S1 the near-massless plane's shared half from a child laid at a neighbour stands at the Node at its own unit, so the near-massless plane's credits are read there (twelve in 20 intervals under MS-S1's lay at T div 2 and CK-S1's beat of the half period with the crossing read even, nine at W = 0, the first beat 4 and the rest 1; eleven with eight at W = 0 and every beat 1 under the crossing odd at a touch of zero; named: the bodies' closing is not the Link close); the run back exact."""
+    """The horizon: the fed Node's two x Links at the wall (the factor 0), its other four above; no Link close reads the Node (no birth at it, none with it as an end); under PM-S1 the near-massless plane's shared half from a child laid at a neighbour stands at the Node at its own unit, so the near-massless plane's credits are read there (twelve in 20 intervals under PL-S1, five at W = 0; under the former write of 2 W after the step twelve with nine at W = 0, the first beat 4 and the rest 1, under MS-S1's lay at T div 2 and CK-S1's beat of the half period with the crossing read even; eleven with eight at W = 0 and every beat 1 under the crossing odd at a touch of zero; named: the bodies' closing is not the Link close); the run back exact."""
     node = fed_horizon(node_of("world_node.json"), CENTRE)
     factors = node.link_factors()
     assert [int(f[CENTRE]) for f in factors[:2]] == [0, 0]
@@ -56,7 +56,7 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
         node.step()
     assert [e for e in clicks_at(node, CENTRE) if e["event"] == "birth"] == []
     credits = [(e["sense"], e["line"]) for e in clicks_at(node, CENTRE)]
-    assert credits == [(0, 0)] * 9 + [(-1, 0), (1, 0), (1, 0)]
+    assert credits == [(0, 0)] * 4 + [(1, 0), (0, 0), (-1, 0), (-1, 0)] + [(1, 0)] * 4
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
@@ -260,7 +260,7 @@ def shares_of(node: Node) -> tuple[Any, Any, Any]:
 
 
 def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
-    """PM-S1 (the owner's word of 2026-10-25, 15:18 UTC, through the Boss, 6399410929; The-Count-In-The-Carriers-Unit_COMPARISON.md section 5): the identity Gamma^2 div p_i^2 = X(c) div Gamma at c = 0 to 1,000 by 100 (pm1); on the 3-cube hole the carrier's share within one unit of the frame's at 27 of 27 Nodes at the interval 1 (X / Gamma below 2) and equal to the vacuum's there (X = Gamma); at 20 the vacuum's below the carrier's by X / Gamma (390 thousandths at X / Gamma between 2.36 and 2.94) and the frame's within four per mille; the chiral 5-cube at 40: births 17, body clicks 1,996, the run back 10 of 10, 98 integers, 115 bits (at 60 under the crossing odd at a touch of zero and the standing light credited as a body: births 16 and 2,336 credits, pm2's 15 and 24 under the lay by the unit; the births and the credits re-cut by MS-S1's lay at T div 2; the credits 533 under the upward crossing alone, re-cut by CK-S1's beat of the half period; 40 intervals so the test stands under 10 s alone, the Boss's 6402497841)."""
+    """PM-S1 (the owner's word of 2026-10-25, 15:18 UTC, through the Boss, 6399410929; The-Count-In-The-Carriers-Unit_COMPARISON.md section 5): the identity Gamma^2 div p_i^2 = X(c) div Gamma at c = 0 to 1,000 by 100 (pm1); on the 3-cube hole the carrier's share within one unit of the frame's at 27 of 27 Nodes at the interval 1 (X / Gamma below 2) and equal to the vacuum's there (X = Gamma); at 20 the vacuum's below the carrier's by X / Gamma (390 thousandths at X / Gamma between 2.36 and 2.94) and the frame's within four per mille; the chiral 5-cube at 40: births 17, body clicks 1,999 under PL-S1 (1,996 under the former write of 2 W after the step), the run back 10 of 10, 98 integers, 115 bits (at 60 under the crossing odd at a touch of zero and the standing light credited as a body: births 16 and 2,336 credits, pm2's 15 and 24 under the lay by the unit; the births and the credits re-cut by MS-S1's lay at T div 2; the credits 533 under the upward crossing alone, re-cut by CK-S1's beat of the half period; 40 intervals so the test stands under 10 s alone, the Boss's 6402497841)."""
     node = node_of("world_node.json")
     for c in range(0, 1_001, 100):
         pace = paces.link_pace(node.gamma, c)
@@ -288,7 +288,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
         chiral.step()
     assert (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census()) == (
         17,
-        1996,
+        1999,
         (98, 115),
     )
     assert run_back_exact(kept, 10) == 10
@@ -316,7 +316,7 @@ def test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1() -> None:
 def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1() -> (
     None
 ):
-    """SL-S1 (the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic close, every record's meeting by its own list): the chiral seed on the 3-cube at 30 intervals: every born pair's Link meets at the next close (the two ends holding a whole quantum of the children's record) and reads no current, F = 0 exactly, so the orientation refuses the undoing with no name (5 of 5 born Links); the meetings counted as `met`; the run back exact."""
+    """SL-S1 (the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic close, every record's meeting by its own list): the chiral seed on the 3-cube at 30 intervals: every born pair's Link meets at the next close (the two ends holding a whole quantum of the children's record) and reads no current, F = 0 exactly, so the orientation refuses the undoing with no name (4 of 4 born Links under PL-S1; 5 of 5 under the former write of 2 W after the step); the meetings counted as `met`; the run back exact."""
     universe, world = world_of("world_chiral.json")
     lays = [lay for lay in world["seed"] if lay.get("lay") != "at" or all(x < 3 for x in lay["centre"])]
     node = Node(universe, dict(world, shape=[3, 3, 3], intervals=30, seed=lays))
@@ -324,7 +324,7 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
     for _ in range(30):
         node.step()
     births = [e for e in node.log if e["event"] == "birth"]
-    assert len(births) == 5 and node.counts["met"] > len(births)
+    assert len(births) == 4 and node.counts["met"] > len(births)
     for b in births:
         link = {tuple(b["minus"]), tuple(b["plus"])}
         assert any(
@@ -381,7 +381,7 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
 
 
 def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> None:
-    """WS (the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the swap at the top is the conjugation composed with the exchange of the two levels, and W = re_now im_before - im_now re_before, odd under each, is even under the two: at every turned Node and every plane (the gap-0 plane with the gapped), W after the swap equals W of the held pre-state exactly (read by a Node whose click reads before it lays; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one quantum of row 1 at the centre, the first turn at 42 under EQ-S1, the centre's body laying back 12 of its 39 credits where nothing arrives; 35 with the take standing under CK-S1's crossing read even, 37 under the crossing odd at a touch of zero, 42 before CK-S1's credits) 296 of 296 sites by 60 (74 turned Nodes; 324 and 81 with the take standing), every W 0 there; on the chiral 5-cube at 20 intervals 2,160 of 2,160 sites (540 turned Nodes by the four planes), 695 of them with W not 0 (2,124 and 672 under the odd crossing; 2,120 and 668 under the upward crossing alone; at 60 the probe read 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head)."""
+    """WS (the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the swap at the top is the conjugation composed with the exchange of the two levels, and W = re_now im_before - im_now re_before, odd under each, is even under the two: at every turned Node and every plane (the gap-0 plane with the gapped), W after the swap equals W of the held pre-state exactly (read by a Node whose click reads before it lays; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one quantum of row 1 at the centre, the first turn at 42 under EQ-S1, the centre's body laying back 12 of its 39 credits where nothing arrives; 35 with the take standing under CK-S1's crossing read even, 37 under the crossing odd at a touch of zero, 42 before CK-S1's credits) 296 of 296 sites by 60 (74 turned Nodes; 324 and 81 with the take standing), every W 0 there; on the chiral 5-cube at 20 intervals 2,156 of 2,156 sites (539 turned Nodes by the four planes), 625 of them with W not 0 (2,160 sites by 540 turned Nodes and 695 under the former write of 2 W after the step; 2,124 and 672 under the odd crossing; 2,120 and 668 under the upward crossing alone; at 60 the probe read 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head)."""
     from event_universe.links import wronskian
 
     class Reading(Node):
@@ -412,12 +412,12 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert node.wronskians["kept"] == node.wronskians["sites"] > 0
         assert not {"negated", "changed"} & node.wronskians.keys()
         found.append(node.wronskians)
-    assert [f["sites"] for f in found] == [296, 2160] and found[1]["nonzero"] == 695
+    assert [f["sites"] for f in found] == [296, 2156] and found[1]["nonzero"] == 625
     assert "nonzero" not in found[0]
 
 
 def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1() -> None:
-    """CK-S1 (the owner's word of 2026-10-25, 17:57 UTC, through the Boss, 6401141446; ck1's REPORT.md section 4): a record standing at a whole quantum of its own unit through one period of its re line's zero crossings, in either direction, clicks, the beat the half period, the crossing read even under the negation of the line (the two levels' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike; the Boss's 6402516165): at one Node a plane's re line fed at rest over the period 8 touching zero (2, 1, 0, -1, -2, -1, 0, 1) and over the period 6 (2, 1, -1, -2, -1, 1), each with its negation, gives the counters crossed and beats equal step for step, the period 6 the beat 3; on the chiral 5-cube at 20 intervals every plane credit's beat is the interval count between the two latest zero crossings of the record's re line at its Node in either direction, read by hand from the lines by the even form, 819 credits with 177 of them on a downward crossing (536 and 50 under the form `b < 0 <= n or n < 0 <= b`, odd where exactly one level is 0; 115 credits under the upward crossing alone); the run back exact."""
+    """CK-S1 (the owner's word of 2026-10-25, 17:57 UTC, through the Boss, 6401141446; ck1's REPORT.md section 4): a record standing at a whole quantum of its own unit through one period of its re line's zero crossings, in either direction, clicks, the beat the half period, the crossing read even under the negation of the line (the two levels' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike; the Boss's 6402516165): at one Node a plane's re line fed at rest over the period 8 touching zero (2, 1, 0, -1, -2, -1, 0, 1) and over the period 6 (2, 1, -1, -2, -1, 1), each with its negation, gives the counters crossed and beats equal step for step, the period 6 the beat 3; on the chiral 5-cube at 20 intervals every plane credit's beat is the interval count between the two latest zero crossings of the record's re line at its Node in either direction, read by hand from the lines by the even form, 825 credits with 128 of them on a downward crossing under PL-S1 (819 and 177 under the former write of 2 W after the step; 536 and 50 under the form `b < 0 <= n or n < 0 <= b`, odd where exactly one level is 0; 115 credits under the upward crossing alone); the run back exact."""
     from event_universe.bodies import bodies
 
     node = node_of("world_node.json")
@@ -458,5 +458,5 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         seen = [c for c in crossings[(e["line"], tuple(e["node"]))] if c[0] <= e["i"]]
         assert e["beat"] == seen[-1][0] - seen[-2][0], e
         upward.append(seen[-1][1])
-    assert (len(credits), sum(upward)) == (819, 642)
+    assert (len(credits), sum(upward)) == (825, 697)
     assert run_back_exact(kept, INTERVALS) == INTERVALS

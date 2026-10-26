@@ -1,0 +1,2 @@
+acts' order of rows_: [(1, None), (2, 2183583978), (2, 12704646675360514), (2, 12582467845487104), (2, 0), (4, 0), (10, 15162856759112)]
+out/canon_original.json turns [(84, 27)] counts {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 162, 'laid_back': 162, 'refused_stop': 81, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 12960, 'refused_twist': 0, 'refused_sense': 0, 'turns': 27, 'met': 12960, 'laid': 0, 'laid_nodes': 0}
