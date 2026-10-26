@@ -52,7 +52,10 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
     assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [
         (10, 270)
     ] * 2  # (6, 18) at 54
-    assert [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"] == [(1, 0), (-1, 0)]
+    # two credits under BH-S1's mask; six with the frozen Node released (FR-S1)
+    assert [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"] == [(1, 0)] + [
+        (-1, 0)
+    ] * 5
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
