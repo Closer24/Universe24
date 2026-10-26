@@ -23,8 +23,8 @@ The owner's list, confirmed: (1) the recurring bang, working and SEEN going and 
 
 The Boss's two additions, both on the critical path of (1) and neither of them a new idea of their own:
 
-- **The clause on the width past the frozen content.** A released Node's state grows free and compounds at every freeze: 141 bits at the interval 10, 815 at 40, 64,102 by 166 on a heavier count, against the law's own bound of 128. Until that clause stands, the bang cannot be carried far enough to be seen going and returning many times: the record either stops or crawls. So the owner's own bound is what blocks his own picture, and the clause is the first thing the bang needs. It is a law, so it is his word; the measure of where the growth enters is David's and it is named.
-- **The bang's period, derived, and the animation over many bangs.** The lead returns at 87 and at 1,162 on 1,200 intervals: a period is in those numbers and it is derivable from the content's own line, so the Nth bang can be predicted before it is run and then shown. The Reader's animation then draws not three bangs but as many as the width allows, which is the picture the owner asks for.
+- **The line kept in lowest terms, and NOT a clause on the width** (re-cut at 22:1x UTC by the owner's ruling: the physics may not be tied to the bits of the run). What this addition asked for first was a law bounding the state past the frozen content. That is struck: a clause on the width would be exactly the physics tied to the machine the owner forbids, and the measurement says it was never needed. Read on nature's own record, group by group, per interval: the LEVELS, which are what the next interval reads, stand at 19 to 45 bits and repeat with the bang (the interval 1 and the interval 11 both 26, 2 and 12 both 37, 5 and 15 both 31, 6 and 16 both 32), so the physics does not grow at all; the REMAINDERS of the carried division sit at 108 to 128 bits FROM THE FIRST INTERVAL, bounded by the wall they are carried against, at about twice the world's own den of 54 bits, so their size is the seed's resolution and not an accumulation of time. One drift alone is real: the same place in the next bang is six or seven bits wider (the interval 7 reads 121 and the interval 17 reads 127; 8 reads 121 and 18 reads 128) while every other place repeats exactly, and it enters at the bang's own top where a merger widens the common denominator by its lcm. So the addition becomes a FOLD and not a clause: the line kept in lowest terms, the common factor divided out of the levels and the wall together by the lattice's gcd, which is already a named act of Rule3 (core/rule3.py:178, the lattice of a line's remainders). A lattice is the same lattice under its gcd, so this is the algebra's own identity and no new law: the ratios do not change, the record must come out bit for bit on the levels and the gates unmoved, and the drift dies. With it the width stops bounding anything at all, which is what lets the bang be carried as far as the owner wants to see it.
+- **The bang's period, MEASURED, with its derivation owed, and the animation over many bangs.** The lead returns at 87 and at 1,162 on 1,200 intervals: a period is in those numbers and the lead's period reads exactly 1,162 as 87 plus 1,075 on that record. That is a MEASURED number, not a derived one: no clause of the clicks' algebra yields it yet, so by the owner's ruling of 22:0x UTC it travels as a measurement of a record and never as a law row, and its derivation from the content's own line is named in the follow-up research. What the animation needs from it is only the next top's place, which the record itself gives. The Reader's animation then draws not three bangs but as many as the width allows, which is the picture the owner asks for.
 
 With those, "one bang of nature" becomes a sentence that can be said: a seed whose board freezes at once, releases by its own turn, returns to its first state, and does it again at a known period, with births and credits on the same record so the laws of nature can be read in its clicks. That last condition is the band below, and it is the one thing still missing from the picture.
 
@@ -47,6 +47,35 @@ This is the bang's whole remaining work and it is the Reader's. Three records, t
 **The fourth record, and it is the answer to the owner's question of 22:3x UTC (The-One-Record-Of-Nature beside this plan):** the second record's own seed run longer, nothing else changed, shows EVERYTHING on one record within every law the project holds: the tops at 3, 8, 13 and 18, three exact returns at 4, 10 and 14, 18 births WITH 6 body credits, the bang recurring with the same gates, and 23 of 77 rows SHOWN at the interval 20, the state's width standing at the law's own 128 bits there; the horizon's row reads NOT REACHED by the reader's own bug alone, which the Reader has mended. Carried to 48 intervals it gives 46 births, 128 credits and 30 of 77 rows with the horizon among them, outside the width. So the Reader's page carries this record as the one record of nature, and the three above it as what each kind of bang brings.
 
 Read together the three say what the law gives: a horizon, matter and recurrence stand together on one record, and what is still owed is the three bangs AND the bodies' credits at once, which is named for the follow-up research.
+
+## 0d. Every item of 5.0 against the clicks' algebra (the owner's word of 22:2x UTC: make sure the plan is derived on the algebra of the clicks)
+
+The rule this section applies is the owner's own of 22:0x UTC: what is not derived from the algebra does not weigh. So every item 5.0 carries is set here against the clicks' algebra - the Node with its six Links, Rule3's carried division, the click as the meeting - and named by the sentence that gives it. An item with no sentence does not enter the release as a law; it enters as a measurement, a fold or a named gap.
+
+| what 5.0 carries | derived from the clicks' algebra by | its standing in 5.0 |
+|---|---|---|
+| the freeze of a Node | the swap's own ceiling, the content at four times the resolution cubed (SB-S1, BB-S1) | derived; a law row |
+| the release of a frozen Node | the turn of its own time (FR-S1 with BH-S1) | derived; a law row |
+| the exact return of the board | the step's own inverse, the retrace (CS6-S1) | derived; a law row |
+| the bang as freeze, release and return on one board | the three above, nothing added | derived; a law row |
+| one bang named the bang of nature | the owner's word of 21:5x UTC | a NAME, not a claim; carried as his word and dated |
+| the bang's period, 1,162 as 87 plus 1,075 | nothing yet | MEASURED; a record's number, its derivation in the follow-up research |
+| the click's three choices | the division's three outputs (CX-S1 with TC-S1) | derived; a law row |
+| the direction of a take | the slot (CA-S1) | derived; a law row |
+| the children's lay at a birth | GP-S1 with HQ-S1 for the quartet | derived; a law row |
+| the booking of every move of the close | the carrier's flux line, built at -dP (LT-S1) | derived; a law row |
+| the close's one moment | both blind hands at the same joint, the two ends of the meeting commuting (CL-S2) | derived; built now |
+| the cube's 48 in the clicks | every click reading covariant by the slot, a remainder with two mirrors (F48-S1, A48-S1) | derived; the CODE departs from it at three of forty-eight, so a bug and not a gap |
+| the six folds of the engine | nothing, and nothing is owed: a fold claims nothing about nature and must change no number, bit for bit on the three records | identity; neutral by construction |
+| the line kept in lowest terms | the lattice of a line's remainders under its own gcd, a named act of Rule3 (core/rule3.py:178) | derived; a fold, and it is what frees the law from the width |
+| the bugs named by file and line | each one a departure of the code from a sentence above (the merger's light children from the division's two signed outputs; the plane-typed levels from the generic Node of NL-S1; rise_of by search from the acts being named; the merger's orientation from CA-S1; the two ends' write order from LT-S1's booking; the draw's base from the digit's own read) | derived; bugs, mended inside the fold that touches the file |
+| the state's width, 128 bits | nothing, and nothing may be owed | the MACHINE's representation; out of the law and out of every gate verdict by the ruling of 22:1x UTC |
+| the child's axis and Bell | nothing: no act carries an axis to the child's own click, and an outcome that factorizes is bounded by two | NOT derived; the follow-up research |
+| matter without antimatter | nothing: the law holds no matter-making act | NOT derived; the follow-up research |
+| the radiation from a frozen Node | nothing: it would be the first NEW act of the law | NOT derived; the follow-up research, and it needs the owner's word before it is even derived |
+| a seed that births, freezes and returns at once | the law as written refuses it | NOT derived; the follow-up research |
+
+Read down the table: every law row 5.0 carries has its sentence, the two things with no sentence that were on the critical path have been taken off it (the width clause struck, the period demoted to a measurement), and everything else with no sentence is named as the follow-up research. That is the whole of the owner's word of 22:2x UTC applied to the plan.
 
 ## 1. The bang, after the three animations (the owner's word: advance it)
 
@@ -88,7 +117,7 @@ The bugs ride inside whichever fold touches their file: the merger's orientation
 - **The owner** alone changes a law, and alone changes a course where the Boss says a course is at stake. The Boss corrects a number or a wording inside an approved sentence, and approves a unification that changes no record and no number and takes code out, reporting each in one line.
 - **David** writes the engine's code alone; the Reader writes the readers, the gates, the pages and the readings alone; the Scribe writes the law's text and the ledger; the Boss gives the tests' room by name at a merge and merges.
 - **Every hand** is two blind hands on one question, time boxed, each handing back one patch or one measure with its numbers; the Boss compares them and writes the comparison.
-- **The gates** are the plan's guard: the seven gates and the full check, push only on exit 0, main never touched, no float, every integer within 128 bits, only local law, no numbers in the code.
+- **The gates** are the plan's guard: the seven gates and the full check, push only on exit 0, main never touched, no float, only local law, no numbers in the code, and the engine's own representation within 128 bits (a rule of the machine by the owner's word, never a clause of the law and never a verdict of a gate, by his ruling of 22:1x UTC).
 
 ## 4b. The release onto main
 
