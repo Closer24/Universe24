@@ -16,12 +16,14 @@ from event_universe.links import cross, row_current, row_twist
 from event_universe.merger import (
     child_at,
     light_children,
-    merger_falls,
-    merger_take,
+    read_ends,
+    summed,
+    takes,
     walls_of,
+    write_ends,
 )
 from event_universe.rows import PLANE, Line
-from event_universe.take import lay, neighbour, take_at
+from event_universe.take import lay, move, neighbour
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -134,7 +136,7 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
 def births(
     node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...], reads: list[tuple[Line, rule3.Rule]]
 ) -> set[tuple[int, ...]]:
-    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made; the rules once per record), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid at its own end by the record's levels taken whole (`merger_falls` then `merger_take`, MG-S1: the birth read at -1, the share's fall read at the end's Node and its six neighbours, where alone the lay changes it, the standing shares kept per close until a merger writes; the Link's number read at the take's Node after the stop, the draw's refusal counted there); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
+    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made; the rules once per record), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid at its own end by the record's levels taken whole (MG-S1: the birth read at -1, the share's fall read at the end's Node and its six neighbours, where alone the lay changes it, the standing shares kept per close until a merger writes; the Link's number read at the take's Node after the stop, the draw's refusal counted there); every take the close's one act at a list of ends, read whole before any write (merger.read_ends, write_ends, takes; CR-S2, the owner's word of 2026-10-26, 06:1x UTC; the former take_at, take_line and merger_take kept by name); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
     by_node: dict[tuple[tuple[int, ...], int], list[Kid]] = {}
     for at, s, minus, plus, room, rec in kept:
         by_node.setdefault((at, rec), []).append(Kid(s, minus, plus, room))
@@ -153,61 +155,28 @@ def births(
         row, rule = records[rec], rules[rec]
         if row is not node.emitter():
             for kid in kids:
-                kid_walls = walls[Birth(at, *kid, rec)]
-                ends = merger_falls(node, kid.minus, kid.plus, kid_walls, rule, rec, refused, shares)
-                drawn = None if ends is None else read_number(node, at, reads, node.units[rec])
-                if ends is None or drawn is None:
+                ends = list(zip((kid.minus, kid.plus), walls[Birth(at, *kid, rec)], strict=True))
+                read = read_ends(node, ends, rule, 1, rec, refused, shares)
+                drawn = None if read is None else read_number(node, at, reads, node.units[rec])
+                if read is None or drawn is None:
                     continue
-                taken.append(
-                    (
-                        at,
-                        rec,
-                        [Kid(kid.line_pair, kid.minus, kid.plus, drawn[1])],
-                        merger_take(node, ends, rule, rec),
-                    )
-                )
+                kid = Kid(kid.line_pair, kid.minus, kid.plus, drawn[1])
+                taken.append((at, rec, [kid], summed(write_ends(node, read, rec))))
                 shares.clear()
             continue
-        booked = sum(sum(walls[Birth(at, *kid, rec)]) for kid in kids)
-        one = take_at(node, at, booked, rule, len(kids), rec)
-        if one is None:
+        got = takes(
+            node, [(at, sum(sum(walls[Birth(at, *kid, rec)]) for kid in kids))], rule, len(kids), rec
+        )
+        if got is None:
             continue
-        levels, fall, now, before, k, rem_was, rem = one
         node.closes[at] -= 1
-        take = take_line(fall, booked, levels, now, before, node.last_dp, k, rem_was, rem)
-        taken.append((at, rec, kids, take))
+        taken.append((at, rec, kids, summed(got)))
     touched: set[tuple[int, ...]] = set()
     for at, rec, kids, take in taken:
         touched |= children(node, at, kids, take, rec, c, factors)
         node.counts["taken"] += take["taken"]
         node.counts["booked"] += take["booked"]
     return touched
-
-
-def take_line(
-    fall: int,
-    booked: int,
-    levels: int,
-    now: int,
-    before: int,
-    dp: list[int],
-    line: int,
-    rem_was: int,
-    rem: int,
-) -> dict[str, Any]:
-    """One take's numbers as the log carries them: the fall taken, the walls booked, the levels moved, the line's now before the take, the taker's three levels, the take's momentum, the line taken (`taken_line`, logged per take: CS4-S2, unclick restoring that line) and the take's remainder before and after with what was owed (EX-S1: taken + remainder_was - remainder = booked)."""
-    return {
-        "taken": fall,
-        "booked": booked,
-        "levels": levels,
-        "taken_now_was": now,
-        "taker": [now, before, levels],
-        "dP_take": dp,
-        "taken_line": line,
-        "remainder_was": rem_was,
-        "remainder": rem,
-        "owed": booked - rem_was,
-    }
 
 
 def child_laid(
@@ -323,7 +292,7 @@ def unclick(node: Node, frame: dict[str, Any]) -> None:
                 if laid is None:
                     lay(node, s, tuple(where), (sense * a, 0, 0, b), -1)
                 else:
-                    lay(node, s, tuple(where), -laid[1], line=laid[0])
+                    move(node, s, laid[0], tuple(where), -laid[1])
         if entry["event"] in ("birth", "credit"):
             row = entry.get("taken_row", rec0)
             for take in entry.get("takes", [entry]):
@@ -331,9 +300,8 @@ def unclick(node: Node, frame: dict[str, Any]) -> None:
                 if "taken_levels" in take:
                     lay(node, row, where, tuple(take["taken_levels"]))
                     continue
-                k = take["taken_line"]
-                line = node.records()[row].lines[k]
-                lay(node, row, where, take["taken_now_was"] - int(line.now[where]), line=k)
+                line = node.records()[row].lines[take["taken_line"]]
+                move(node, row, take["taken_line"], where, take["taken_now_was"] - int(line.now[where]))
                 node.take_rem[where] = take["remainder_was"]
             node.closes[at] -= 1
     del node.log[frame["log_from"] :]

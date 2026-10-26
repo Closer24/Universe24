@@ -13,9 +13,10 @@ from event_universe.core.rule3 import quotient
 from event_universe.features import volume
 from event_universe.interval import Interval
 from event_universe.loader.world import read_world
+from event_universe.merger import takes
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
-from event_universe.take import fall_of, frame_nodes, lay, take_at
+from event_universe.take import fall_of, frame_nodes, move
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
 CENTRE, INTERVALS = (1, 1, 1), 20  # the fed Node, the 3-cube's centre; the run's intervals
@@ -574,15 +575,17 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
     walls = node.unit_emitter + node.unit_emitter
     hash_before, undo, paid, below = node.state_hash(), [], 0, 0
     for _ in range(20):
-        got = take_at(node, at, walls, rule, 1)
+        got = takes(node, [(at, walls)], rule, 1)  # the one take act at one end (CR-S2)
         assert got is not None
-        levels, fall, now, _before, k, rem_was, rem = got
+        (take,) = got
+        fall, now, k = take["taken"], take["taken_now_was"], take["taken_line"]
+        rem_was, rem = take["remainder_was"], take["remainder"]
         paid += fall + rem_was - rem == walls
         below += 0 <= rem < fall_of(node, at, 1, rule, light)[1]
         undo.append((now, k, rem_was))
     assert (paid, below) == (20, 20) and node.census()[0] == 99
     for now, k, rem_was in reversed(undo):
-        lay(node, rec0, at, now - int(light.lines[k].now[at]), line=k)
+        move(node, rec0, k, at, now - int(light.lines[k].now[at]))
         node.closes[at] -= 1
         node.take_rem[at] = rem_was
     assert node.state_hash() == hash_before

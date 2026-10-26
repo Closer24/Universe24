@@ -1,4 +1,4 @@
-"""The close's reads and writes at one Node: the one-Link read of a number on the frame's digit lattices (`read_number`), the exact take of the taken row's levels by the share's fall on the line the fall's sign chooses (`fall_of`, `take_at`), the one lay act (`lay`, on one line for the take), the lattice momentum a move books (`momentum_of`) and the refusal by name (`refused`)."""
+"""The close's reads and writes at one Node: the one-Link read of a number on the frame's digit lattices (`read_number`), the exact take of the taken row's levels by the share's fall on the line the fall's sign chooses (`fall_of`; the take act at a list of ends is merger.takes, CR-S2), the one lay act (`lay`) and the take's move as the write's form (`move`, CR-S1), the lattice momentum a move books (`momentum_of`) and the refusal by name (`refused`)."""
 
 from __future__ import annotations
 
@@ -64,11 +64,9 @@ def fall_of(
     return (*next(((s, fall(s)) for s in range(1, dist + 1) if fall(s) >= walls), (dist, full)), k)
 
 
-def lay(node: Node, rec: int, where: Any, levels: Any, sign: int = 1, line: int | None = None) -> None:
-    """The one lay act: a record's levels (now, before per line: re_now, re_before, im_now, im_before for a plane) added at the Node `where` (or over the board), taken back with sign -1; with `line` named, `levels` is one count added to that line's now alone (the take's move and its undoing, CS4-S2)."""
+def lay(node: Node, rec: int, where: Any, levels: Any, sign: int = 1) -> None:
+    """The one lay act: a record's levels (now, before per line: re_now, re_before, im_now, im_before for a plane) added at the Node `where` (or over the board), taken back with sign -1 (the seed's forms, the children, a merger's ends taken whole and their undoing); the take's move on one line is `move` (CR-S1)."""
     lines = node.records()[rec].lines
-    if line is not None:
-        levels = tuple(levels if j == PLANE * line else 0 for j in range(PLANE * len(lines)))
     for line_, now, before in zip(lines, levels[0::PLANE], levels[1::PLANE], strict=True):
         line_.now[where] = line_.now[where] + sign * now
         line_.before[where] = line_.before[where] + sign * before
@@ -92,25 +90,9 @@ def momentum_of(
     return found
 
 
-def take_at(
-    node: Node, at: tuple[int, ...], walls: int, rule: rule3.Rule, cause: int, rec: int | None = None
-) -> tuple[int, int, int, int, int, int, int] | None:
-    """One exact take at a Node, EX-S1 (the take's remainder; the Boss's order of 03:3x UTC under the owner's delegation, H-Exact-Take-Remainder-1): what the close books less the take's remainder standing at the Node is what the take owes; the taken row's (the gap-0 row's where none is named: a body's take) line the fall's sign chooses (`fall_of`, CS4-S2) has its level now moved toward its before by the least count of levels at which the Node's share falls by what is owed, by none where the remainder alone pays; the fall above what is owed is the new remainder, one integer of the Node's state born at 0, so fall + remainder before - remainder after = booked exactly; refused by name where the fall cannot reach what is owed (the stop; its log entry built in two lines since A48-S1's fold, kept as code; the former take, the excess lost, kept by name as the remainder 0). Returns (levels, fall, the line's now before the take, its before, the line taken, the remainder before, the remainder after) or None."""
-    row = node.records()[taken := node.records().index(node.emitter()) if rec is None else rec]
-    rem_was = int(node.take_rem[at])
-    owed = walls - rem_was
-    levels, fall, k = fall_of(node, at, owed, rule, row)
-    z = row.lines[k]
-    if levels is None:
-        node.counts["refused_stop"] += cause
-        entry = {"event": "refused", "i": node.interval, "node": list(at), "cause": "stop"}
-        node.log.append(entry | {"fall": fall, "walls": walls, "owed": owed, "row": taken})
-        return None
-    now, before = int(z.now[at]), int(z.before[at])
-    toward = 1 if before > now else -1
-    lay(node, taken, at, toward * levels, line=k)
-    node.closes[at] += 1
-    node.take_rem[at] = fall - owed
-    assert row.pair is not None
-    node.last_dp = momentum_of(node, z.now, z.before, at, d_now=toward * levels, num=row.pair[0])
-    return levels, fall, now, before, k, rem_was, fall - owed
+def move(node: Node, rec: int, k: int, at: tuple[int, ...], count: int) -> None:
+    """The take's move, the Node's write act at one Node (CR-S1, the owner's word of 2026-10-26, 06:1x UTC): one carried division at the line's own wall of the exact numerator, the count times the wall, the quotient count laid on the line's level now by the one lay act and the remainder unmoved; the take forward, its lay-back and its undoing are this one act with the count's sign; not the interval's write act, whose wall is the line's write wall, which the taken line does not hold. The former take_at (one Node's take, EX-S1's remainder owed at it) is kept by name: its act is merger.takes."""
+    lines = node.records()[rec].lines
+    wall = at_node(lines[k].wall, at)
+    q, _unmoved = rule3.carried_division(count * wall, wall, int(lines[k].rem[at]), 1)
+    lay(node, rec, at, tuple(q if j == PLANE * k else 0 for j in range(PLANE * len(lines))))

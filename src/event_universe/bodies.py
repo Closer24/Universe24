@@ -10,8 +10,9 @@ from event_universe import gram
 from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS
 from event_universe.links import row_current
+from event_universe.merger import takes
 from event_universe.rows import PLANE, POTENTIAL, Line
-from event_universe.take import frame_nodes, lay, take_at
+from event_universe.take import frame_nodes, move
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -57,15 +58,22 @@ def bodies(
             at = tuple(int(x) for x in where)
             if at in born_nodes or frozen[at]:
                 continue
-            got = take_at(node, at, node.units[rec], r_emitter, 1)
+            got = takes(node, [(at, node.units[rec])], r_emitter, 1)
             node.standing[rec][at] = 0
             if got is None:
                 continue
-            levels, fall, now, before, k, rem_was, rem = got
+            (take,) = got
+            levels, fall, now, k = (
+                take["levels"],
+                take["taken"],
+                take["taken_now_was"],
+                take["taken_line"],
+            )
+            before, rem_was, rem = take["taker"][1], take["remainder_was"], take["remainder"]
             node.counts["body_clicks"] += 1
             entry = credit(node, rec, at, plane_starts, fall, levels, now, before, k, rem_was, rem)
             if int(net[at]) == 0:
-                lay(node, rec0, at, now - int(node.records()[rec0].lines[k].now[at]), line=k)
+                move(node, rec0, k, at, now - int(node.records()[rec0].lines[k].now[at]))
                 entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
                 node.counts["laid_back"] += 1
             node.log.append(entry)
