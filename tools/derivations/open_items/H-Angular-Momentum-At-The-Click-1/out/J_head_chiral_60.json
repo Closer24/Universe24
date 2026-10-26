@@ -1,0 +1,115 @@
+{
+ "cube": 5,
+ "centre2": [
+  4,
+  4,
+  4
+ ],
+ "counts": {
+  "credits": 2943,
+  "credits laid back": 3,
+  "births": 17,
+  "mergers": 0,
+  "births: taker's moment about the Link's midpoint 0": 0,
+  "births: lay's moment about the Link's midpoint 0": 8,
+  "births: moment about the Link's own axis 0 (take and lay)": 17,
+  "births: dP_lay along the Link's axis": 8,
+  "births: dP_lay 0": 8,
+  "births: dP_take along the Link's axis only": 0,
+  "births: balance 0 about the centre (J conserved at the event)": 0,
+  "births: W_children summing 0": 13,
+  "births: dP_lay_ends present": 0,
+  "births: dP_lay_ends summing to dP_lay": 0,
+  "births: the taker at one end of the Link": 17
+ },
+ "J2 by class": {
+  "credits": [
+   -3561451795580317928320,
+   590199036491690629436,
+   -706831730682783125624
+  ],
+  "births' takes": [
+   304894723712231918012,
+   743950404029090253896,
+   100317460318287565624
+  ],
+  "births' lays": [
+   1382556584370384935336,
+   -1754959247502580427344,
+   1627541950902903259180
+  ],
+  "mergers' takes": [
+   0,
+   0,
+   0
+  ],
+  "mergers' lays": [
+   0,
+   0,
+   0
+  ]
+ },
+ "P by class": {
+  "credits": [
+   -418343217983910812510,
+   591715322167601868336,
+   -289610564099046629900
+  ],
+  "births' takes": [
+   -459343582660550712366,
+   144320070633231718502,
+   -256434233510108722768
+  ],
+  "births' lays": [
+   207014759398364951532,
+   289887539016826024630,
+   16221484407646020760
+  ],
+  "mergers' takes": [
+   0,
+   0,
+   0
+  ],
+  "mergers' lays": [
+   0,
+   0,
+   0
+  ]
+ },
+ "J2 clicks": [
+  -1874000487497701074972,
+  -420809806981799544012,
+  1021027680538407699180
+ ],
+ "P clicks": [
+  -670672041246096573344,
+  1025922931817659611468,
+  -529823313201509331908
+ ],
+ "J2 remainder = the births' takes (the lays carrying 0)": [
+  304894723712231918012,
+  743950404029090253896,
+  100317460318287565624
+ ],
+ "worst |2J| balance at a birth": 2138629703549075169884,
+ "dipole sum (r_plus - r_minus, Links)": [
+  -2,
+  1,
+  -6
+ ],
+ "W_children summed over births": 3149,
+ "intervals with a click moment not 0": 58,
+ "births per interval": {
+  "3": 1,
+  "4": 4,
+  "5": 1,
+  "6": 1,
+  "7": 5,
+  "8": 1,
+  "9": 1,
+  "10": 1,
+  "12": 1,
+  "16": 1
+ },
+ "record": "world_chiral_60.json"
+}

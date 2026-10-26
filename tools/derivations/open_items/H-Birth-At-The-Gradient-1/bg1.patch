@@ -1,0 +1,165 @@
+diff -ru a/src/event_universe/close.py b/src/event_universe/close.py
+--- a/src/event_universe/close.py	2026-10-26 04:38:10.355760385 +0000
++++ b/src/event_universe/close.py	2026-10-26 04:44:10.286016702 +0000
+@@ -3,9 +3,13 @@
+ from __future__ import annotations
+ 
+ from typing import TYPE_CHECKING, Any, NamedTuple
++import os
+ 
+ import numpy as np
+ 
++# bg1 (H-Birth-At-The-Gradient-1): the orientation clause re-read at the current 0 by the Link's gradient; off (unset) the head bit for bit
++BG1_FORM = bool(os.environ.get("BG1_FORM"))
++
+ from event_universe import gram, readings
+ from event_universe.bodies import bodies
+ from event_universe.core import rule3
+@@ -66,6 +70,7 @@
+     currents = [node.den * row_current(start, port_of(axis, 0)) for axis in range(AXES)]
+     twists = [row_twist(start, axis) for axis in range(AXES)]
+     charges = gram.charge(row.shape, start) if row is not node.emitter() else None
++    paces_ = np.asarray(readings.paces_of(node, node.start_content)[1], dtype=object) if BG1_FORM else None
+     for axis in range(AXES):
+         both = standing & across(standing, port_of(axis, 0))
+         for where in zip(*np.nonzero(both), strict=True):
+@@ -73,9 +78,34 @@
+             j = neighbour(node, at, port_of(axis, 0))
+             node.counts["met"] += 1
+             flow = int(currents[axis][at])
+-            if flow == 0:
++            slope = 0
++            if flow == 0 and BG1_FORM:
++                # bg1: the Link's gradient, the two ends' Link paces from the content at the start (one Link read); the axis from the slower end to the faster
++                slope = int(paces_[j]) - int(paces_[at])
++            if flow == 0 and slope == 0:
+                 refused(node, at, "orientation", link=list(j), row=rec)
+                 continue
++            if flow == 0:
++                node.counts["gradient"] = node.counts.get("gradient", 0) + 1
++                into, outof = (j, at) if slope > 0 else (at, j)
++                h = int(twists[axis][at])
++                if h == 0:
++                    node.counts["gradient_twist_0"] = node.counts.get("gradient_twist_0", 0) + 1
++                # bg1: the gradient gives the hand: the + child free at the faster end, the - child falling in at the slower
++                plus, minus = into, outof
++                if charges is not None and int(charges[at]) * int(charges[j]) >= 0:
++                    w = [int(charges[at]), int(charges[j])]
++                    refused(node, at, "sense", link=list(j), row=rec, charges=w, gradient=slope)
++                    continue
++                node.counts["gradient_sense_ok"] = node.counts.get("gradient_sense_ok", 0) + 1
++                drawn = read_number(node, into, rules, unit)
++                if drawn is None:
++                    continue
++                number, room = drawn
++                node.counts["gradient_born"] = node.counts.get("gradient_born", 0) + 1
++                node.log.append({"event": "gradient", "i": node.interval, "node": list(at), "link": list(j), "row": rec, "paces": [int(paces_[at]), int(paces_[j])], "twist": h})
++                born.append(Birth(into, list_of(node, rec, number), minus, plus, room, rec))
++                continue
+             into, outof = (j, at) if flow > 0 else (at, j)
+             h = int(twists[axis][at])
+             if h == 0:
+diff -ru a/src/event_universe/interval.py b/src/event_universe/interval.py
+--- a/src/event_universe/interval.py	2026-10-26 04:38:10.359760385 +0000
++++ b/src/event_universe/interval.py	2026-10-26 04:41:27.454789034 +0000
+@@ -2,6 +2,8 @@
+ 
+ from __future__ import annotations
+ 
++import os
++
+ from typing import TYPE_CHECKING, Any
+ 
+ import numpy as np
+@@ -17,6 +19,9 @@
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+ 
++# fr2 (H-Frozen-Node-Release-2): the flag from the environment; unset, the head bit for bit
++FR2_RELEASE = bool(os.environ.get("FR2_RELEASE"))
++
+ 
+ def laid_on(node: Node, line: Line, levels: Any) -> None:
+     """The emission's size, a reading of the run: the levels laid on the emitter's line and the Nodes they were laid at."""
+@@ -234,7 +239,12 @@
+         node.set_rows(self.out)
+         if self.direction == 1:
+             self.lays()
+-        node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen)
++        if self.direction == -1 and self.kept is not None and FR2_RELEASE:
++            # fr2: a Node both frozen and turned ended the interval at its held pre-state exchanged; backward it is restored to the pre-state the exchange returned (kept); a frozen Node not turned to the held
++            node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen & ~self.top)
++            node.restore(node.all_lines(), [line for row in self.kept for line in row], self.frozen & self.top)
++        else:
++            node.restore(node.all_lines(), [line for row in self.held for line in row], self.frozen)
+ 
+     def lays(self) -> None:
+         """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.odd_rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`); the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
+diff -ru a/src/event_universe/node.py b/src/event_universe/node.py
+--- a/src/event_universe/node.py	2026-10-26 04:38:10.361957475 +0000
++++ b/src/event_universe/node.py	2026-10-26 04:41:27.454977816 +0000
+@@ -14,6 +14,10 @@
+ from event_universe.core.rule3 import carried_division, half, link_unit_of, mirrored, unit_of, wall_of
+ from event_universe.features import phase
+ from event_universe.links import Link, turned
++import os
++
++# fr2 (H-Frozen-Node-Release-2): the swap's own trigger unmasked at a frozen Node; off (unset) the head bit for bit
++FR2_RELEASE = bool(os.environ.get("FR2_RELEASE"))
+ from event_universe.rows import (
+     CARRIER,
+     HALF_WIDTH,
+@@ -306,7 +310,7 @@
+         xf = readings.floor(self)
+         below = np.vectorize(lambda a, c: int(a) < xf or int(c) < xf, otypes=[bool])
+         top = peak(x0, x1, x2) | below(x0, x2)
+-        if frozen is not None:
++        if frozen is not None and not FR2_RELEASE:
+             top = top & ~frozen
+         self.turned = top
+         if top.any():
+diff -ruN a/tests/test_birth_at_the_gradient_bg1.py b/tests/test_birth_at_the_gradient_bg1.py
+--- a/tests/test_birth_at_the_gradient_bg1.py
++++ b/tests/test_birth_at_the_gradient_bg1.py
+@@ -0,0 +1,41 @@
++"""bg1 (H-Birth-At-The-Gradient-1): the fed 3-cube under FR-S1's two lines with the orientation re-read by the Link's gradient (BG1_FORM): the gradient meets where the current is 0 and the paces differ, every one with the twist 0, every one reaching the lay and refused there (the children's plane standing), 0 births, the run back exact. Run: BG1_FORM=1 FR2_RELEASE=1 PYTHONPATH=src_bg1 python -m pytest tests_bg1.py (under 15 s)."""
++import os
++import sys
++
++HERE = os.path.dirname(os.path.abspath(__file__))
++sys.path.insert(0, os.path.join(HERE, "..", "src"))
++os.environ["FR2_RELEASE"] = "1"
++os.environ["BG1_FORM"] = "1"
++sys.set_int_max_str_digits(0)
++
++from event_universe.loader.world import load_world  # noqa: E402
++from event_universe.node import Node  # noqa: E402
++from event_universe.rows import CARRIER  # noqa: E402
++
++WORLD = os.path.join(HERE, "worlds", "world_node.json")
++
++
++def test_gradient_meets_and_the_lay_refuses():
++    universe, world = load_world(WORLD)
++    node = Node(universe, dict(world, intervals=40))
++    car = node.row(CARRIER).lines[0]
++    centre = (1, 1, 1)
++    car.now[centre], car.before[centre] = 4268834097, 2560000000
++    node.start_content, node.start_x = node.content(), car.now
++    hashes = []
++    for k in range(40):
++        if k >= 30:
++            hashes.append(node.state_bytes())
++        node.step()
++    met = node.counts.get("gradient", 0)
++    assert met > 0
++    assert node.counts.get("gradient_twist_0", 0) == met
++    assert node.counts.get("gradient_born", 0) == met
++    assert int(node.counts["births"]) == 0
++    assert int(node.counts["refused_lay"]) >= met
++    assert node.max_transient <= 128
++    ok = 0
++    for k in range(10):
++        node.step_back()
++        ok += node.state_bytes() == hashes[9 - k]
++    assert ok == 10
