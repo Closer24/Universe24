@@ -16,6 +16,25 @@ THOUSAND = 1000  # readings in thousandths
 WIDTH = 128  # the law's width: every integer of the state and of every transient within it
 FEW = 10  # the fewest decoded credits for the dilation's two halves
 SPANS = 20  # the fewest spans for the lengthening's two halves
+HALF = 2  # a half: a count div 2, and a majority as a count times 2 above the whole
+PAIR = 2  # two of a kind: the two ends of a Link, the two parts of a plane's pair, two bodies, two beats, two marks
+THIRDS = 3  # the thirds of a run (its last third), of the half charge (T div 2 div 3)
+QUARTERS = 4  # the quarters of a run (a body standing into the last quarter)
+LIFTS = 3  # the three lifts of den's circle, the families forming when all three are born
+LISTED = 8  # the most entries a row prints of a course (its first eight) and the eighths a course is sampled at
+SHORT_LIST = 6  # the most falls and steps a row prints
+FOUR_LISTED = 4  # the most returns the rows' reading prints
+MAX = 2  # the index of the max in a row's min / mean / max
+LEVELS_BACK = (
+    2,
+    1,
+    0,
+)  # the carrier's three levels read from the Node lines: before the interval, at its start, after it, as lines behind the interval's own
+LINK_WALL_GAMMAS = 4  # the Link's wall in Gammas, links.py's wl = 4 gamma, mirrored here for the solve
+KICK_WEIGHT = (
+    12  # the law's weight of the kick, 12 p_0^2 G^2 (interval.py's form), mirrored here for the solve
+)
+REACH = 2  # the reach's weight, R_j = 2 p_i^2 Q_j G^2 (the law's form), mirrored here for the solve
 Rational = tuple[int, int]
 
 
@@ -88,8 +107,11 @@ def carrier_levels(record: Record, credit: dict[str, Any]) -> tuple[int, int, in
     x, y, z = credit["node"]
     index, i = x * cube * cube + y * cube + z, int(credit["i"])
     lines = record.run["nodes"]
-    found = [lines[k]["X"][index] if k >= 0 else record.gamma for k in (i - 3, i - 2, i - 1)]
-    return int(found[0]), int(found[1]), int(found[2])
+    found = [
+        lines[i - 1 - back]["X"][index] if i - 1 - back >= 0 else record.gamma for back in LEVELS_BACK
+    ]
+    before, start, after = found
+    return int(before), int(start), int(after)
 
 
 def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
@@ -101,23 +123,23 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
     p0, pi = paces.clock(gamma, content), paces.link_pace(gamma, content)
     w = rule3.wall_of(den, gamma, unit)
     x_b, x_n, x_x = carrier_levels(record, credit)
-    w_in, w_out = (w // 2) * (x_b + x_n), (w // 2) * (x_n + x_x)
+    w_in, w_out = (w // HALF) * (x_b + x_n), (w // HALF) * (x_n + x_x)
     zb = (f["re_start_before"], f["im_start_before"])
     zn = (f["re_start_now"], f["im_start_now"])
     zx = (f["re_stepped"], f["im_stepped"])
     if zn == (0, 0):
         return None
     scale, phases, odd, frames = f["X"], f["phases"], f["odd"], f["frames"]
-    wl = 4 * gamma
-    e = tuple((zx[k] - zn[k]) * w_out - w_in * (zn[k] - zb[k]) for k in range(2))
-    weight = 12 * p0 * p0 * unit * unit
+    wl = LINK_WALL_GAMMAS * gamma
+    e = tuple((zx[k] - zn[k]) * w_out - w_in * (zn[k] - zb[k]) for k in range(PAIR))
+    weight = KICK_WEIGHT * p0 * p0 * unit * unit
     a_re = a_im = 0
     for port, (a, b) in enumerate(zip(f["re_neighbours_start"], f["im_neighbours_start"], strict=True)):
         m: Rational = (a, frames[port] * b)
         m = turn_pair(m[0], m[1], phases[port][0], phases[port][1], scale)
         n = odd[port]
-        m = turn_pair(m[0], m[1], wl * wl - n * n, 2 * wl * n, wl * wl + n * n)
-        reach = 2 * pi * pi * f["factors"][port]
+        m = turn_pair(m[0], m[1], wl * wl - n * n, PAIR * wl * n, wl * wl + n * n)
+        reach = REACH * pi * pi * f["factors"][port]
         a_re, a_im = a_re + reach * (m[0] - zn[0]), a_im + reach * (m[1] - zn[1])
     p = (e[0] + weight * den * zn[0] * x_n, e[1] + weight * den * zn[1] * x_n)
     q = ((a_re + weight * zn[0]) * x_n, (a_im + weight * zn[1]) * x_n)
@@ -139,10 +161,10 @@ def nearest(record: Record, x: Rational, beat: int = 0) -> str:
 def middle(xs: list[Rational]) -> Rational:
     """The middle of sorted rationals, the mean of the two middle ones at an even count."""
     k = len(xs)
-    if k % 2:
-        return xs[k // 2]
-    p, q = xs[k // 2 - 1], xs[k // 2]
-    return (p[0] * q[1] + q[0] * p[1], 2 * p[1] * q[1])
+    if k % HALF:
+        return xs[k // HALF]
+    p, q = xs[k // HALF - 1], xs[k // HALF]
+    return (p[0] * q[1] + q[0] * p[1], HALF * p[1] * q[1])
 
 
 def decoded_credits(
@@ -165,9 +187,9 @@ def decoded_credits(
         decoded.append((c, name, x))
         n, d = x
         num = line_num[c["line"]]
-        within += (n * den - num * d) ** 2 <= 2 * (record.w * den) ** 2 * d
+        within += (n * den - num * d) ** PAIR <= PAIR * (record.w * den) ** PAIR * d
         floors.append(
-            rule3.largest_below((2 * record.w * record.w * den * den * MIL * MIL) // (d * num * num))
+            rule3.largest_below((PAIR * record.w * record.w * den * den * MIL * MIL) // (d * num * num))
             if num
             else None
         )

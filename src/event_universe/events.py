@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
-from event_universe.decoder import Record
+from event_universe.decoder import HALF, Record
 
 LABELS = {
     "1": "a bang recurs",
@@ -82,7 +82,7 @@ def first_interval(record: Record, row: Callable[[Record], dict[str, Any]], key:
     """The least interval at which the row shows on the record cut to it, by a search on the cuts (the verdict read as standing from its first interval on)."""
     low, high = 1, record.intervals
     while low < high:
-        mid = (low + high) // 2
+        mid = (low + high) // HALF
         if shown(row(record.to(mid))[key]["verdict"]):
             high = mid
         else:

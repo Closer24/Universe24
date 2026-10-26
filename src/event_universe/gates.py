@@ -9,7 +9,8 @@ from collections.abc import Callable
 from typing import Any
 
 from event_universe import board, clicks, predicates
-from event_universe.decoder import HUNDRED, WIDTH, Record, quot
+from event_universe.core.ports import AXES
+from event_universe.decoder import HALF, HUNDRED, LISTED, PAIR, WIDTH, Record, quot
 
 Row = Callable[[Record], dict[str, Any]]
 
@@ -28,7 +29,7 @@ def approach(record: Record) -> tuple[int, int, bool, list[int]]:
     adjacent = False
     for i in sorted(by_interval):
         nodes = sorted(by_interval[i])
-        if len(nodes) < 2:
+        if len(nodes) < PAIR:
             continue
         spans.append(max(distance(a, b) for a in nodes for b in nodes if a < b))
         adjacent = adjacent or any(distance(a, b) == 1 for a in nodes for b in nodes if a < b)
@@ -73,12 +74,12 @@ def free_fall(record: Record) -> dict[str, Any]:
     quickening = sum(1 for a, b in zip(closing, closing[1:], strict=False) if b > a > 0)
     return {
         "13 free fall": {
-            "the farthest credited Nodes' distance per interval with two (first eight)": spans[:8],
+            "the farthest credited Nodes' distance per interval with two (first eight)": spans[:LISTED],
             "intervals the closing quickens": [quickening, max(len(closing) - 1, 0)],
             "verdict": "NOT READ: fewer than two bodies credited at one interval"
             if first == 0
             else "SHOWN: the approach quickens from interval to interval (the tail's second difference toward matter)"
-            if quickening * 2 > max(len(closing) - 1, 1)
+            if quickening * HALF > max(len(closing) - 1, 1)
             else "NOT SHOWN: the approach does not quicken",
         }
     }
@@ -170,13 +171,13 @@ def recoil(record: Record) -> dict[str, Any]:
     passed = sum(
         1
         for b in record.births
-        if b.get("dP_lay") and all(b["dP_take"][a] + b["dP_lay"][a] == 0 for a in range(3))
+        if b.get("dP_lay") and all(b["dP_take"][a] + b["dP_lay"][a] == 0 for a in range(AXES))
     )
     return {
         "23 the momentum across the click": {
             "clicks booking dP": len(takes),
-            "takes dP_a summed": [sum(t[a] for t in takes) for a in range(3)],
-            "lays dP_a summed": [sum(lay[a] for lay in lays) for a in range(3)],
+            "takes dP_a summed": [sum(t[a] for t in takes) for a in range(AXES)],
+            "lays dP_a summed": [sum(lay[a] for lay in lays) for a in range(AXES)],
             "recoil passed to the laid pair (take + lay = 0 per birth)": [passed, len(lays)],
             "verdict": "NOT READ: no click booked its momentum"
             if not takes
@@ -242,7 +243,7 @@ def conservations(record: Record) -> dict[str, Any]:
                 "changed by more": sum(1 for a, b in pairs if abs(a - b) > 1),
             },
             "verdict": "SHOWN: the charge 0 over the births and the beat unchanged on most click pairs"
-            if births and sum(signs) == 0 and pairs and unchanged * 2 > len(pairs)
+            if births and sum(signs) == 0 and pairs and unchanged * HALF > len(pairs)
             else "NOT SHOWN"
             if births and pairs
             else "NOT READ: no birth or no click pair",
@@ -263,7 +264,7 @@ def entropy(record: Record) -> dict[str, Any]:
         "25 the entropy of the clicks rising": {
             "births with a room": len(record.births),
             "H at the end (bits)": total,
-            "course (interval, H) at every eighth": found[:: max(1, len(found) // 8)],
+            "course (interval, H) at every eighth": found[:: max(1, len(found) // LISTED)],
             "verdict": f"SHOWN: H never falls (a sum of bit lengths), {total} bits over {len(record.births)} births"
             if record.births
             else "NOT READ: no birth",
@@ -347,8 +348,13 @@ def kind_of(verdict: str) -> str:
         .replace(":", " ")
         .split()
     )
-    whole = words[1:3] != ["in", "part"]
-    return words[0] if words[0] == "SHOWN" and whole else " ".join(words[: 2 if whole else 3])
+    in_part = ["in", "part"]
+    whole = words[1 : 1 + len(in_part)] != in_part
+    return (
+        words[0]
+        if words[0] == "SHOWN" and whole
+        else " ".join(words[: PAIR if whole else 1 + len(in_part)])
+    )
 
 
 def gates(run: dict[str, Any]) -> dict[str, Any]:

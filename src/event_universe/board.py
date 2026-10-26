@@ -6,8 +6,21 @@ from collections import defaultdict
 from typing import Any
 
 from event_universe.core import paces
+from event_universe.core.ports import AXES
 from event_universe.core.rule3 import largest_below, quotient
-from event_universe.decoder import Record
+from event_universe.decoder import (
+    FOUR_LISTED,
+    HALF,
+    LISTED,
+    MAX,
+    QUARTERS,
+    SHORT_LIST,
+    THIRDS,
+    Record,
+)
+
+BIRTHS = 2  # the index of the births in a mark (the interval, the mean volume, the births)
+PULL = 2  # the mass pull's weight, 2 sqrt(X / Gamma) per Node (BG-S1's form), against the Links' lift
 
 
 def marks(record: Record) -> tuple[list[tuple[int, int, int]], list[tuple[int, int]]]:
@@ -23,7 +36,7 @@ def contraction(record: Record) -> dict[str, Any]:
     lines = volumes(record)
     at = None
     if falls and len(lines) >= falls[0]:
-        before, after = lines[falls[0] - 2][1], lines[falls[0] - 1][1]
+        before, after = lines[falls[0] - 1 - 1][1], lines[falls[0] - 1][1]
         cube = int(record.run["cube"])
         k = min(range(len(after)), key=lambda n: after[n] - before[n])
         at = [k // (cube * cube), (k // cube) % cube, k % cube]
@@ -31,9 +44,9 @@ def contraction(record: Record) -> dict[str, Any]:
         "6 contraction (the board, the reader's view)": {
             "at": at,
             "volume mean course (interval, mean)": [
-                (i, v) for i, v, _b in rows[:: max(1, len(rows) // 8)]
+                (i, v) for i, v, _b in rows[:: max(1, len(rows) // LISTED)]
             ],
-            "intervals with the mean volume falling": falls[:6],
+            "intervals with the mean volume falling": falls[:SHORT_LIST],
             "turns (Node swaps) total": sum(len(line["turned"]) for line in record.nodes),
             "verdict": "SHOWN at the board: the mean volume falls"
             if falls
@@ -49,7 +62,7 @@ def shortening(record: Record) -> dict[str, Any]:
     after = [i for (i, d), (_j, e) in zip(steps, steps[1:], strict=False) if d < 0 and e > 0]
     return {
         "3 shortening then lengthening": {
-            "falls followed by a rise (the fall's interval)": after[:6],
+            "falls followed by a rise (the fall's interval)": after[:SHORT_LIST],
             "verdict": "SHOWN at the board: a falling run between rising runs"
             if after
             else ("SHOWN in part: the course ends in a fall" if falls else "NOT SHOWN: no fall"),
@@ -60,7 +73,7 @@ def shortening(record: Record) -> dict[str, Any]:
 def returns_of(record: Record) -> list[tuple[int, int, int]]:
     """The marks at which the mean volume is back at or below the first mark's with a birth after the first mark (the rows' reading, kept beside the Node lines')."""
     rows, _steps = marks(record)
-    return [(i, v, b) for i, v, b in rows[1:] if v <= rows[0][1] and b > rows[0][2]] if rows else []
+    return [(i, v, b) for i, v, b in rows[1:] if v <= rows[0][1] and b > rows[0][BIRTHS]] if rows else []
 
 
 def volumes(record: Record) -> list[tuple[int, list[int], int]]:
@@ -107,13 +120,13 @@ def recurring_bang(record: Record) -> dict[str, Any]:
     )
     return {
         "1 recurring bangs": {
-            "tops with every Node turning at once (interval)": whole[:8],
-            "bottoms (interval, mean X, at Gamma at every Node)": bottoms[:8],
-            "bangs numbered (the interval each begins)": bangs[:8],
-            "births and body credits between the bangs": between[:8],
+            "tops with every Node turning at once (interval)": whole[:LISTED],
+            "bottoms (interval, mean X, at Gamma at every Node)": bottoms[:LISTED],
+            "bangs numbered (the interval each begins)": bangs[:LISTED],
+            "births and body credits between the bangs": between[:LISTED],
             "rows' reading: marks back at or below the first mark's with a birth after it": returns_of(
                 record
-            )[:4],
+            )[:FOUR_LISTED],
             "verdict": verdict,
         }
     }
@@ -129,8 +142,10 @@ def lift_of(record: Record) -> tuple[list[int], list[int]]:
             xs = [int(x) for x in line["X"]]
             lift = pull = 0
             for at, x in enumerate(xs):
-                lift += int(quotient(record.gamma * sum(xs[n] - x for n in neighbours(at, cube)), 3 * x))
-                pull += 2 * largest_below(int(quotient(x, record.gamma)))
+                lift += int(
+                    quotient(record.gamma * sum(xs[n] - x for n in neighbours(at, cube)), AXES * x)
+                )
+                pull += PULL * largest_below(int(quotient(x, record.gamma)))
             memo[id(line)] = (lift, pull)
         lifts.append(memo[id(line)][0])
         pulls.append(memo[id(line)][1])
@@ -148,11 +163,11 @@ def acceleration(record: Record) -> dict[str, Any]:
     last_run.reverse()
     quickening = sum(1 for a, b in zip(last_run, last_run[1:], strict=False) if b > a)
     lifts, pulls = lift_of(record)
-    third = max(1, len(lifts) // 3)
+    third = max(1, len(lifts) // THIRDS)
     lift, pull = sum(lifts[-third:]), sum(pulls[-third:])
     return {
         "5 acceleration (the lengthening quickens)": {
-            "the last rising run's steps (per mark)": last_run[-6:],
+            "the last rising run's steps (per mark)": last_run[-SHORT_LIST:],
             "steps larger than the one before": [quickening, max(len(last_run) - 1, 0)],
             "the Links' lift L and the mass pull at the last interval (LC-S1)": [lifts[-1], pulls[-1]]
             if lifts
@@ -160,7 +175,7 @@ def acceleration(record: Record) -> dict[str, Any]:
             "L and the pull summed over the last third": [lift, pull],
             "verdict": (
                 "SHOWN at the board: the rises grow from mark to mark"
-                if len(last_run) > 1 and quickening * 2 > len(last_run) - 1
+                if len(last_run) > 1 and quickening * HALF > len(last_run) - 1
                 else "NOT SHOWN: the rises do not grow"
                 if len(last_run) > 1
                 else "NOT READ: no rising run of two marks"
@@ -207,7 +222,7 @@ def horizon(record: Record) -> dict[str, Any]:
     """Gate 14: the frozen content against the rows' max content; a credit at a frozen Node would deny the horizon."""
     frozen = paces.frozen_content(record.gamma)
     at_frozen = [c for c in record.credits if c["content"] >= frozen]
-    cmax = max((int(r["content min/mean/max"][2]) for r in record.rows), default=0)
+    cmax = max((int(r["content min/mean/max"][MAX]) for r in record.rows), default=0)
     verdict = (
         "SHOWN as silence (no credit at a frozen Node)"
         if cmax >= frozen and not at_frozen
@@ -316,7 +331,9 @@ def well(record: Record) -> dict[str, Any]:
     for c in record.credits:
         spans[(tuple(c["node"]), c["line"])].append(int(c["i"]))
     n = record.intervals
-    standing = sum(1 for xs in spans.values() if min(xs) * 2 <= n and max(xs) * 4 >= 3 * n)
+    standing = sum(
+        1 for xs in spans.values() if min(xs) * HALF <= n and max(xs) * QUARTERS >= (QUARTERS - 1) * n
+    )
     frozen = sum(len(line["frozen"]) for line in record.nodes)
     return {
         "45 the bodies' well, binding and collapse": {
