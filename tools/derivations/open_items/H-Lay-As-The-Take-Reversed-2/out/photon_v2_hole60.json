@@ -1,0 +1,17 @@
+{
+ "record": "/dev/shm/tmp/lt2/v2_hole60.json",
+ "T": 36000,
+ "A, B": [
+  125,
+  144
+ ],
+ "children": 64,
+ "children with |W| = T div 2 (one child of light, the intrinsic datum)": 40,
+ "light's Link records read (F_re = sense A q_j along the Link)": 120,
+ "links whose moment about the take's Node is 0": 120,
+ "closes with the far lay": 4,
+ "closes whose light 2J about the centre is a multiple of T": 0,
+ "closes whose light 2J about the centre is a multiple of T div 2": 0,
+ "closes whose light 2J about the centre is a multiple of num_s T": 0,
+ "max |light 2J about the centre|": 432141355402559713500
+}
