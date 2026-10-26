@@ -1,0 +1,21 @@
+record c0_ga2_4.json | intervals 450 | cube 4 | Gamma 1000 | run back {'intervals': 10, 'exact': 10} | counts {'births': '64', 'taken': '215649578622176003919808', 'booked': '215312393244131723991552', 'body_clicks': '1408', 'laid_back': '1408', 'refused_stop': '1408', 'refused_origin': '0', 'refused_lay': '17088', 'refused_orientation': '33280', 'refused_twist': '17152', 'refused_sense': '0', 'turns': '128', 'met': '67584', 'laid': '0', 'laid_nodes': '0'}
+lays: 1 | the wave lay: [{'quanta': 5, 'amplitude': 300, 'share': 32751770599682760240000, 'sense': 1}]
+integers 89 | max bits 115 | max transient bits 99
+the first intervals (i, X min, X max, X distinct, turned, frozen, held Links):
+   (1, 1017, 1017, 1, 0, 0, 0)
+   (2, 1050, 1050, 1, 0, 0, 0)
+   (3, 1100, 1100, 1, 0, 0, 0)
+   (4, 1166, 1166, 1, 0, 0, 0)
+   (5, 1249, 1249, 1, 0, 0, 0)
+   (6, 1346, 1346, 1, 0, 0, 0)
+   (7, 1459, 1459, 1, 0, 0, 0)
+   (8, 1586, 1586, 1, 0, 0, 0)
+exact returns to Gamma at every Node: [218, 442]
+the first parted interval (X distinct above 1): None | uniform intervals: 450 of 450
+intervals with every Node turning: [110, 331] | turns in parts (first 12): [] | count 0
+frozen Nodes (i, count), first 12: [] | intervals with a frozen Node: 0 | the most frozen at once: 0
+held Links (i, count), first 8: [] | intervals with a held Link: 0
+the lowest X (i, min, max): (218, 1000, 1000) | the highest X: (330, 22321, 22321) | X at the end (min, max, distinct): (1586, 1586, 1)
+births: 64 | by interval (i, count, Nodes): [(2, 64, 64)]
+credits: 1408 | laid back 1408 | by interval (i, count), first 16: [(8, 128), (10, 128), (219, 128), (221, 128), (223, 128), (231, 128), (439, 128), (441, 128), (443, 128), (445, 128), (447, 128)]
+refusals by cause: {'orientation': 33280, 'twist': 17152, 'lay': 17088, 'stop': 1408}

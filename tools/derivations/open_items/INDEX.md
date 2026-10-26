@@ -159,3 +159,5 @@ The owner's word (2026-10-25, 23:14 UTC, in translation): "rename all the deriva
 | The-Horizon-Radiates_COMPARISON.md | Does not radiate; the law missing by name is the carrier's Link term (the owner's reading); FR-S1 held for the full solution (D7). |
 | H-One-Seed-Hole-In-The-Cycle-2 | No lay pattern of the four forms carries a hole and returns exactly: the return needs every Node alike, the horizon a Node unlike its neighbours. |
 | H-Confirm-Build-20 | Y-S3 on 61b045a5c refused: a ruff line, two pins, ga2 not bit for bit (the flux line reaching a level at 5 on the cycle board). |
+| H-One-Seed-Hole-In-The-Cycle-1 | The hole lay is the standing digit off the pattern's orbit; the hole inside the cycle's symmetry is the pattern's own negated digit; eight hole candidates, 0 exact returns, no horizon. |
+| The-One-Seed-Hole-In-The-Cycle_COMPARISON.md | A finding: the one seed is the step's question (the carrier's Link term, D7), not the seed's; the chiral stays nature's seed. |
