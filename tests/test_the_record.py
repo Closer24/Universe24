@@ -15,28 +15,32 @@ from tests.laws import ROOT, load_file, world_of
 RECORDS, WIDTH = ROOT / "examples" / "records", 128
 CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
-    # the hole under PL-S1; 9 and 22 among them under the former write of 2 W after the step
-    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
-    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
-    "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45, 59, 60},
+    # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the Links lengthening in the clicks, under GP-S1's lay) and gains 47 (the exact take, the excess kept as the remainder, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 and 17 kept by the decoder's read of the remainder and of the merger's birth; the bodies gain 8 and 16 with the credits the remainder pays; the hole under PL-S1 before: 9 and 22 among them under the former write of 2 W after the step
+    "hole": {4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45, 47, 58, 59, 60},
+    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+    "bodies": {2, 3, 5, 6, 7, 8, 9, 10, 16, 18, 30, 37, 43, 45, 59, 60},
 }
 VERDICTS = {  # the verdicts' words by name
     "hole": {
         "9 collisions": "NOT SHOWN: the credited Nodes receding",
         "22 Coulomb's sign": "NOT SHOWN: unlike senses do not approach, like senses do not part",
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -16 / 16",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 12 / 16",
         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
         "60 the acceleration in the clicks": "SHOWN: after a slowing, an eighth's growth of the spacing larger",
+        "15 conservation at the click": "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth (EX-S1)",
+        "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node (EX-S1)",
     },
     "chiral": {
+        "24 the merger (a pair into light)": "SHOWN: 2 pairs into light (the gap-0 children born from a gapped record's take)",
+        "17 charge conservation": "SHOWN: the senses sum to 0; the magnitude SHOWN: one |W| on every child laid where its plane stood at nothing",
         "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
-        "15 conservation at the click": "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light)",
-        "47 the exact take": "NOT SHOWN exact: the excess above 0 on 17 births (EX-S1)",
+        "15 conservation at the click": "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder (EX-S1), taken >= booked on the rest (the mergers' ends)",
+        "47 the exact take": "NOT SHOWN exact: the excess above 0 on 2 births (EX-S1)",
         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -2 / 17",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 11",
     },
     "bodies": {
         "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link",
@@ -73,9 +77,15 @@ def test_the_conservations_hold_on_the_record(name: str) -> None:
     """The independent check: the conservations recomputed from the record's log alone, beside what rows 15, 17, 18 and the constants read."""
     run = loaded(name)
     births = [e for e in run["log"] if e["event"] == "birth"]
-    signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
+    pairs = [
+        b for b in births if "exact_lay" not in b
+    ]  # a merger's light children carry no sense (MG-S1)
+    signs = [(w > 0) - (w < 0) for b in pairs for w in b["W_children"]]
     assert sum(signs) == 0 and 0 not in signs
-    assert all(b["taken"] >= b["booked"] for b in births)
+
+    # EX-S1's identity at the gap-0 take; a merger's ends taken whole (MG-S1)
+    paid = [b["taken"] + b.get("remainder_was", 0) - b.get("remainder", 0) - b["booked"] for b in births]
+    assert all(x == 0 if "remainder" in b else x >= 0 for x, b in zip(paid, births, strict=True))
     assert len({row["integers"] for row in run["rows"]}) == 1
     assert max(max(row["max bits"], row["max transient bits"]) for row in run["rows"]) <= WIDTH
     assert run["run_back"]["exact"] == run["run_back"]["intervals"] == 20

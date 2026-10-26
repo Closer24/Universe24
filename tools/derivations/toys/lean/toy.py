@@ -14,8 +14,9 @@ from event_universe.core import paces, rule3
 from event_universe.core.ports import PORTS, across
 from event_universe.core.rule3 import half, quotient
 from event_universe.features import volume
-from event_universe.links import links_of, stress_parts, tensor_parts
+from event_universe.links import links_of
 from event_universe.loader.world import read_world
+from event_universe.metric import stress_parts, tensor_parts
 from event_universe.node import Node
 from event_universe.rows import CARRIER, POTENTIAL, Line, walled_of, zeros
 
@@ -80,18 +81,6 @@ class Toy(Node):
         """The torus-centred offset of a Node from `at` along the axis."""
         d = (node[axis] - at[axis]) % self.cube
         return d - self.cube if d > self.cube // 2 else d
-
-    def carried(
-        self,
-        lines: list[Line],
-        r: rule3.Rule,
-        numerators: list[Any],
-        direction: int,
-        top: Any,
-        kept: list[Line] | None,
-    ) -> list[Line]:
-        """The carrier's act, or the carrier held by hand (the well's `held`)."""
-        return lines if self.hold_volume else super().carried(lines, r, numerators, direction, top, kept)
 
     def read_lines(
         self, held: list[list[Line]], plane_starts: list[list[Line]], c: Any, factors: tuple[Any, ...]
