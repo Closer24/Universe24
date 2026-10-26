@@ -249,6 +249,30 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
     assert run_back_exact(kept, 100) == 100
 
 
+def test_a_frozen_node_is_released_by_the_turn_of_its_time() -> None:
+    """FR-S1 (the owner's word of 2026-10-26, 03:41 UTC, through the Boss, 6407706168; The-Frozen-Node-Release_COMPARISON.md section 3): a Node that rose into the frozen content is turned at its frozen interval by the swap's own trigger on its restored line (X0 < X1 = X2), its now and before exchanged, so at the next interval its content stands below the frozen content, unfrozen, its clock running; no Node frozen at two intervals in a row; the run back exact. The 3-cube centre fed to the frozen content 3,793 with its before at the content 3,700, 20 intervals: frozen at the first interval's start and turned at its end with its clock standing, below the horizon with its clock running at the second, the width held, the run back exact 20 of 20."""
+    node = node_of("world_node.json")
+    frozen = paces.frozen_content(node.gamma)
+    carrier = node.row(CARRIER).lines[0]
+    carrier.now[CENTRE], carrier.before[CENTRE] = level_at(node, frozen), level_at(node, 3700)
+    node.ride_walls()
+    light = node.emitter().lines[0]
+    light.now[CENTRE] = 4 * int(light.now[CENTRE])
+    proper, kept, was = int(node.proper[CENTRE]), copy.deepcopy(node), False
+    for _ in range(INTERVALS):
+        now = bool(np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object)[CENTRE] == 0)
+        assert not (was and now)
+        was = now
+        node.step()
+        if node.interval == 1:
+            assert now and node.turned[CENTRE] and int(node.proper[CENTRE]) == proper
+            assert int(node.content()[CENTRE]) < frozen
+        if node.interval == 2:
+            assert not now and int(node.proper[CENTRE]) > proper
+    assert node.max_transient <= 128 and node.census()[1] <= 128
+    assert run_back_exact(kept, INTERVALS) == INTERVALS
+
+
 def shares_of(node: Node) -> tuple[Any, Any, Any]:
     """The gap-0 line's share in the carrier's unit, and by hand at the frame's weight (X set to Gamma^3 div p_i^2) and at the vacuum's (X set to Gamma)."""
     gap0 = node.emitter()
@@ -470,7 +494,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
 
 
 def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2() -> None:
-    """CS4-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss; cs4's REPORT.md sections 1.2, 1.5 and 4, The-Handed-Seed-And-Births_COMPARISON.md's finding (a) and cs5's mend, the line logged PER TAKE; the test under 15 s): the exact take moves the taken record's line whose level now stands farthest from its before (the largest now^2 - before^2, the first where equal), the line logged as `taken_line` on every birth, credit and merger take, unclick restoring that line. The pair's 3-cube at 20 intervals beside its image with the light turned a quarter at the seed ((re, im) -> (-im, re): the light on its second line, the first at 0): the two boards' X equal at every Node at 20 of 20 intervals and the 81 credits equal take for take in their numbers, every take on the first line on the board and on the second on the image, where the former act (the first line's take) is the stop by name (fall_of (None, 0) on a line at 0), the run back exact 20 of 20 through the takes on the second line; SL-S2's merger board (the heaviest record's conjugate pair at two adjacent Nodes of the bare 5-cube) at 20: under MG-S1 the merger at the first close with no stop before it, its two ends' levels taken whole (no line), one light birth after it at 9 on the light's second line, each of the 344 takes' lines re-derived by hand from the Node's levels after the close (the other line untouched by the take, the taken line as the take found it), 233 of 344 on a line other than the first, 343 credits (before MG-S1 the merger's two takes on the heavy row's second line, 3 B against 0, the farthest at both ends, where under the former act the first line's fall came short and the stop refused both ends, ten light births after it taking the light's second line but one at 19 where the first line's gap is the larger, 87 takes with 66 on another line, 0 under the former act, 74 credits (the merger at the second close on the first line with 2 births, 4 takes and 1 credit under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed)); under the sign row's former write of 2 W after the step, before PL-S1, 9 births every one on the second line, 318 takes with 219 on it and 308 credits; the run back exact."""
+    """CS4-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss; cs4's REPORT.md sections 1.2, 1.5 and 4, The-Handed-Seed-And-Births_COMPARISON.md's finding (a) and cs5's mend, the line logged PER TAKE; the test under 15 s): the exact take moves the taken record's line whose level now stands farthest from its before (the largest now^2 - before^2, the first where equal), the line logged as `taken_line` on every birth, credit and merger take, unclick restoring that line. The pair's 3-cube at 20 intervals beside its image with the light turned a quarter at the seed ((re, im) -> (-im, re): the light on its second line, the first at 0): the two boards' X equal at every Node at 20 of 20 intervals and the 81 credits equal take for take in their numbers, every take on the first line on the board and on the second on the image, where the former act (the first line's take) is the stop by name (fall_of (None, 0) on a line at 0), the run back exact 20 of 20 through the takes on the second line; SL-S2's merger board (the heaviest record's conjugate pair at two adjacent Nodes of the bare 5-cube) at 20: under MG-S1 the merger at the first close with no stop before it, its two ends' levels taken whole (no line), three light births after it at 9, 19 and 20 on the light's second line (one at 9 and 343 credits before Y-S3's six lines), each of the 344 takes' lines re-derived by hand from the Node's levels after the close (the other line untouched by the take, the taken line as the take found it), 233 of 344 on a line other than the first, 341 credits (before MG-S1 the merger's two takes on the heavy row's second line, 3 B against 0, the farthest at both ends, where under the former act the first line's fall came short and the stop refused both ends, ten light births after it taking the light's second line but one at 19 where the first line's gap is the larger, 87 takes with 66 on another line, 0 under the former act, 74 credits (the merger at the second close on the first line with 2 births, 4 takes and 1 credit under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed)); under the sign row's former write of 2 W after the step, before PL-S1, 9 births every one on the second line, 318 takes with 219 on it and 308 credits; the run back exact."""
     pair, image = node_of("world_pair_3.json"), node_of("world_pair_3.json")
     re, im = image.emitter().lines
     im.now[...], im.before[...], re.now[...], re.before[...] = re.now.copy(), re.before.copy(), 0, 0
@@ -520,8 +544,8 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
     births = [e for e in node.log if e["event"] == "birth"]
     assert births[0]["taken_row"] == heavy and births[0]["taken_line"] == [None, None]
     on_first = [(e["i"], e["taken_line"]) for e in births if "takes" not in e and not e["taken_line"]]
-    assert on_first == [] and len(births) == 2 and births[1]["taken_line"] == 1
-    assert (len(lines_taken), sum(lines_taken), node.counts["body_clicks"]) == (344, 233, 343)
+    assert on_first == [] and len(births) == 4 and {e["taken_line"] for e in births[1:]} == {1}
+    assert (len(lines_taken), sum(lines_taken), node.counts["body_clicks"]) == (344, 233, 341)
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
@@ -542,7 +566,9 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     kept = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
-    assert node.state_hash() == "d7f2c713f4d6165cad4d11683f70a7bea82d02c3320ebf4d79245835ed8bf656"
+    assert (
+        node.state_hash() == "c608a485594752b47c39c70726700d9352dda39a9a45997149a65d6a0394a8d0"
+    )  # d7f2c713 before Y-S3
     interval = Interval(copy.deepcopy(node), 1)
     interval.readings()
     assert sorted(interval.links_at) == [0, 1] and any(
