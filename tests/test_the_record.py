@@ -21,7 +21,8 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
     # the chiral under EX-S1: 15 (conservation at the click) lost, the decoder reading the former identity taken >= booked where the take's remainder now pays (Animate's line to read taken + remainder before - remainder after = booked); under MG-S1: 24 SHOWN (3 pairs into light), 17 lost (the decoder counts the light children's W, 0 by the exact lay)
     "chiral": {2, 4, 5, 7, 8, 9, 10, 16, 18, 19, 21, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812 credits, 1,973 before)
-    "bodies": {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
+    # the bodies at 120 intervals (the Boss's 6412896537; {3, 4, 5, 6, 7, 10, 15, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60} at 300)
+    "bodies": {4, 5, 7, 8, 10, 15, 16, 18, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
 }
 VERDICTS = {  # the verdicts' words by name
     "hole": {
@@ -45,7 +46,7 @@ VERDICTS = {  # the verdicts' words by name
         "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 2 / 7",  # NOT READ at the trace 54, no birth
         "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four",
         "61 the horizon radiates": "NOT READ: no frozen Node in the record (as gate 14)",
-        "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero",
+        "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",  # NOT SHOWN at 300: the first growth of the spacing not above zero
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
     },
 }
