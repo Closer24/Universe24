@@ -32,3 +32,7 @@ The hands: H-Bell-Through-The-Cone-1 (bc1) and -2 (bc2), 02:46 to 02:57 UTC, eac
 ## 5. Laws with a number
 
 Both hands: readers only, no act; integers only; the one-Link reach held (the run back one Link per interval); the run back exact 427 of 427; no name and no typed number; ASCII; no non-local form proposed, built or measured.
+
+## 6. A correction of the number for nature (the Boss, 2026-10-26, 03:2x UTC, on the owner's question "if there is a bound, why do you say it is not nature?")
+
+Nature's bound on S is 2 sqrt 2 (S^2 <= 8): nature passes the local bound 2 and never passes 2 sqrt 2. The two hands, the predicate of row 56 and QG-S3 wrote nature as S^2 > 8, a criterion nature itself never meets. The right reading is the band between the two bounds, 4 < S^2 <= 8 (4 den^2 < num^2 <= 8 den^2 on S = num / den). No verdict moves: every reading of the law gives |S| <= 2, so row 56 stays NOT SHOWN as nature on every record, and the senses' S = -2 exactly is the local bound met and not passed. QG-S3's number is re-cut by the owner's word (asked at 03:2x), the former kept by name; the predicate's two lines are Animate's (#2187 comment 6407463924).
