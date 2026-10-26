@@ -14,7 +14,9 @@ The list is The-Laws-Of-Nature-Missing_COMPARISON.md's four lists, kept here one
 
 **The pairs next, in order (four at a time; the owner's word of 07:23 UTC puts Bell first):** (a0) Bell's setting from the click's own act (A2; the owner's word: "look for something generic in what the click does that solves it"; H-Setting-From-The-Frame-1 and -2, named by The-Bell-In-The-Click_COMPARISON.md section 3: the detector's own state at the click, the frame's bit and sign under CA-S1 the slot, as the setting the law itself gives; S counted on many pairs under one generic rule, never a digit); (a) A1's next form after the take-count pair; (b) the 48's rotations (the reader's two leads, the 5-cube as the judge, the mirror state under the table widened for Y-S3's lines: GP-S1's open mark; kl2's covariant kernel choice); (c) the long-wave measure of the angular momentum on the board (the torque against the moment on the chiral 2,400 and the collapse); (d) Bell's setting from the frame (A2); (e) the unifications by the code and the algebra (the owner's word of 04:1x); (f) A3 the bounded well's depth; (g) A4 the sign row under the time reversal (the second hand); (h) A11 the children's charge on a standing plane; (i) the seven of section F (AlgebraUpdated); (j) A5 to A10 in order; (k) spin at a birth as its own item if the packets give no axial datum.
 
-**The owner's words owed (asked again at his next word):** A12 the trace's value (6 against 54; the Boss leans to 6); rows 61 to 65 as phenomena (his morning word); row 56's form (the cone's own, BC-F1, or NOT SHOWN as nature: the Boss recommends the latter); the photon's unit of J (no form in the letter); AJ-S3 to AJ-S6 as readings.
+**The owner's words owed (asked again at his next word):** A12 the trace's value (6 against 54; the Boss leans to 6); row 56's form (the cone's own, BC-F1, or NOT SHOWN as nature: the Boss recommends the latter); the photon's unit of J (no form in the letter); AJ-S3 to AJ-S6 as readings.
+
+**Rows 61 to 65 approved (07:24 UTC):** the uniformity in the clicks, dark matter in kind, the lepton number, the energy in the clicks, CPT as one row (section B): the Reader's, through the one predicate shape, after the merge, the readers' fold and their bugs.
 
 **Law by the owner's word, 07:04 UTC:** CA-S1, the direction is the slot (The-Click-And-Rule3-One-Algebra_COMPARISON.md section 3): to the Scribe for ALGEBRA.md under The direction; no act added, RW-S1's fold its code; the Reader's row "the arrow of time in the clicks: the charge odd under the slot exchange".
 
@@ -48,7 +50,7 @@ The list is The-Laws-Of-Nature-Missing_COMPARISON.md's four lists, kept here one
 
 ## B. A clause, no row: a row to add (the Reader)
 
-B1 the energy in the clicks (row 64); B2 the uniformity in the clicks (61); B3 dark matter in kind (62); B4 the lepton number (63); B5 CPT as one row (65); B6 the equivalence of inertia and weight; B7 E = m at the merger; B8 the Doppler shift; B9 the polarisations of light (a clause first); B10 the baryon as a shape (a clause first); B11 angular momentum under the 48 (after A1). Rows 55 to 60 entered this night.
+B1 the energy in the clicks (row 64); B2 the uniformity in the clicks (61); B3 dark matter in kind (62); B4 the lepton number (63); B5 CPT as one row (65), the five APPROVED by the owner's word of 07:24 UTC ("enter 61 to 65"), the Reader's through the one predicate shape after his three strokes, each row one function with its event line; B6 the equivalence of inertia and weight; B7 E = m at the merger; B8 the Doppler shift; B9 the polarisations of light (a clause first); B10 the baryon as a shape (a clause first); B11 angular momentum under the 48 (after A1). Rows 55 to 60 entered this night.
 
 ## C. Rows NOT SHOWN for want of a law (the builds approved)
 
