@@ -219,7 +219,7 @@ function draw() {
   for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) {
     const div = document.createElement("div"); div.className = "label"; div.style.fontSize = "20px";
     div.innerHTML = "Big Bang<small>the board at its zero and rising, interval " + b + "</small>";
-    div.style.left = (canvas.offsetLeft + canvas.width / 2 + 0.14 * canvas.width) + "px"; div.style.top = (canvas.offsetTop + canvas.height / 2 - 0.16 * canvas.width) + "px";
+    div.style.left = (canvas.offsetLeft + 16) + "px"; div.style.top = (canvas.offsetTop + 16) + "px";
     labels.appendChild(div);
   }
   for (const e of D.events) if (e.i !== null && e.i <= line.i && e.i > line.i - 60 * step) {
