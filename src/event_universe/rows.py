@@ -104,7 +104,7 @@ def order_key(row: Row) -> tuple[bool, int]:
 
 
 def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[list[Row], list[Row]]:
-    """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the emitter is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the emitter or the walled row other than one, two planes at one pair, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den), no plane at another pair."""
+    """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the emitter is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the emitter or the walled row other than one, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den), no plane at another pair; a pair named in several rows is admitted as written, each row a record of its own with the same numbers (CS5-S2, the owner's word of 2026-10-25, 22:50 UTC, through the Boss: no row refused for its pair's repetition)."""
     ints = universe["integers"]
     den, gamma, action = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
     by_index: list[Row] = []
@@ -126,8 +126,6 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
         raise ValueError(
             "the universe names one row with its own wall, one plane at the gap 0, one shape-10 row and one shape-4 row"
         )
-    if len({r.pair for r in planes}) != len(planes):
-        raise ValueError("two planes at one pair: the universe names every pair once")
     if carriers[0].pair != (den - quotient(den, gamma), den):
         raise ValueError(
             "the shape-10 row is the clock's one level: its pair (den - den div Gamma, den)"

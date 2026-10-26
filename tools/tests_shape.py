@@ -41,6 +41,10 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_board.py::test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2": (
+        45,
+        "CS5-S2 with the fifth form wave (2026-10-25, the owner's word of 22:50 UTC, The-Handed-Seed-And-Births_COMPARISON.md; the Boss's room named in 6404974647 and 6405218245): one pair in several rows admitted, the file's cycle form laid, the loader's refusals by name, the board's course on the head",
+    ),
     "tests/test_the_node.py::test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un": (
         30,
         "The gap-0 finders (2026-10-26, the owner's word of 23:40 UTC, The-Unit-And-The-Coupling_COMPARISON.md section 4; the Boss's room named in 6405000794 and 6405218245): the twelve branches on the gap folded to the pair's values (the unit, the emitter, the coupling and its identity turn) shown on the three records bit for bit and the loader's refusals by name",

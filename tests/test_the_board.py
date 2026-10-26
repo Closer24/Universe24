@@ -378,3 +378,42 @@ def test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv() -> No
                 )
             alike[det] += same
     assert alike == {1: 24, -1: 24}
+
+
+def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2() -> None:
+    """CS5-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss, 6404425423; cs5's REPORT.md section 4 and cs7's section 3.3: the file universe_ga2 and the `wave` lay of cs3's cycle form in cs5's and cs7's spelling): the universe file names one pair in two rows (tests/worlds/universe_ga2.json, 115,762,739,551,980 twice) and the loader admits it as written, two records with the same numbers and one unit, the decoder one name for both; the 4-cube with no sea under the cycle lay at 5 quanta (tests/worlds/world_ga2.json: the amplitude 300 at every Node, logged with its digits and the sense 1) births 0 at i 1 (64 lay refusals, the light's own row drawn where it stands; cs5's hh3 read 64 crowd refusals there) and 64 at i 2 at 64 of 64 Nodes, every Node one child of the row 0 and one of the row 1 at W -18,000 / +18,000 (the conjugate pair of the plane at the Node, the crowd refusing nothing: two records, not one), taken at or above booked on 64 of 64, X 1,050 at 64 of 64 at i 2 and 1,880 at i 10 (cs5's and cs7's numbers to the integer), 256 credits by 20 (128 at i 8 and 128 at i 10, every one laid back under EQ-S1; cs7 read 128 at i 10 alone on its head before CK-S1's crossing in either direction) every one decoded from the clicks to the one species gapped 0 whichever row it stands on (256 of 256 right, 128 tracks right), the run back exact 20 of 20, 89 integers, 115 bits; the lay refused by name off the plane at the gap 0, with a field of no form, off Z_4, off the mirror 0 and 1, on a cube not a multiple of 4; the mirror 1 mirrors the remainder on the 32 negated Nodes of each line and leaves the levels; on this head, under A48-S1's read of the remainder in the laid frame (05cca50), the cycle board births NOTHING: the draw at the first close is refused as the origin at 64 reads (every folded remainder at the lay's half on the board alike; the count refused_origin, the read logging no line) and 1,216 lays refused after it (576 where the light stands, 640 as two children of one record at one Node, the crowd), no credit, no turn by 20, X 1,050 at every Node at 2 and 1,860 at 10, the run back 20 of 20, 89 integers and 115 bits; under the former read (cs7's, and this test's agent on e1209f7) the same seed birthed 64 at 64 of 64 Nodes at 2 with one child of each row (W -18,000 / +18,000), 256 credits at 8 and 10 all laid back, Gamma exactly at 218: the pattern's digits were fitted to the former read, named for the Boss and the hand on the births' seed."""
+    universe, world = world_of("world_ga2.json")
+    seed = world["seed"][0]
+    found = json.loads(
+        json.dumps(writer.record(universe, dict(world, intervals=20), 20, lambda line: None))
+    )
+    assert found["planes"][0] == found["planes"][1] != found["planes"][2]
+    lay = [e for e in found["log"] if e["event"] == "lay"]
+    assert len(lay) == 1 and (lay[0]["amplitude"], lay[0]["p1"], lay[0]["sense"]) == (300, seed["p1"], 1)
+    births = [e for e in found["log"] if e["event"] == "birth"]
+    lays = [e for e in found["log"] if e["event"] == "refused" and e["cause"] == "lay"]
+    assert len(births) == 0 and int(found["counts"]["refused_origin"]) == 64
+    assert len(lays) == 1216 and sum("standing" in e for e in lays) == 576
+    assert (set(found["nodes"][1]["X"]), set(found["nodes"][9]["X"])) == ({1050}, {1860})
+    assert int(found["counts"]["body_clicks"]) == 0 and found["run_back"] == {
+        "intervals": 20,
+        "exact": 20,
+    }
+    assert ({r["integers"] for r in found["rows"]}, max(r["max bits"] for r in found["rows"])) == (
+        {89},
+        115,
+    )
+    for match, change in (
+        ("the plane at the gap 0", {"row": 1}),
+        ("a field of no form", {"sense": 1}),
+        ("each of Z_4", {"p1": seed["p1"][:15] + [4]}),
+        ("each of Z_4", {"cz": 4}),
+        ("mirror is 0 or 1", {"mirror": 2}),
+    ):
+        refused(match, Node, universe, dict(world, seed=[{**seed, **change}]))
+    refused("a multiple of 4", Node, universe, dict(world, shape=[3, 3, 3]))
+    plain, mirrored = (Node(universe, dict(world, seed=[{**seed, "mirror": m}])) for m in (0, 1))
+    for a, b in zip(plain.emitter().lines, mirrored.emitter().lines, strict=True):
+        assert (
+            (a.now == b.now).all() and (a.before == b.before).all() and int((a.rem != b.rem).sum()) == 32
+        )

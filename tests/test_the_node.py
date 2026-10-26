@@ -209,7 +209,8 @@ def test_the_files_are_refused_by_name() -> None:
     for match, change in (
         ("a cube", {"shape": [3, 3, 4]}),
         ("off the board", {"seed": [{"lay": "hole", "at": [3, 0, 0]}]}),
-        ("no form of the law", {"seed": [{"lay": "wave", "row": 0}]}),
+        ("no form of the law", {"seed": [{"lay": "cycle", "row": 0}]}),
+        ("at its quanta", {"seed": [{"lay": "wave", "row": 0}]}),  # no form of the law before CS5-S2
         ("the plane at the gap 0 alone", {"seed": [{"lay": "sea", "row": 1}]}),
         (
             "half-width 2 or 3",

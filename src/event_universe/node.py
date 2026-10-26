@@ -75,8 +75,8 @@ class Node:
         self.gapped = [r for r in self.records() if r is not self.emitter()]
         self.unit_emitter = self.units[self.records().index(self.emitter())]
         self.start_state()
-        seed.lay_world(self, world.get("seed", []))
         self.ride_walls()
+        seed.lay_world(self, world.get("seed", []))
 
     def start_state(self) -> None:
         """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
