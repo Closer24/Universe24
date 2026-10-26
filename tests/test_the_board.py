@@ -10,19 +10,18 @@ from typing import Any
 import numpy as np
 
 from event_universe import gates as table
+from event_universe import gram, take
 from event_universe import run as writer
+from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS
 from event_universe.links import row_current
+from event_universe.merger import light_children, walls_of
 from event_universe.node import Node
 from event_universe.rows import CARRIER
-from tests.laws import node_of, refused, run_back_exact, state_of, world_of
+from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
 
-CUBE, INTERVALS, GROUPS, ALIKE = (
-    5,
-    20,
-    4,
-    (6, 0, 0, 0),
-)  # rotations alike per part: GP-S1 (6, 6, 6, 6 under CK-S1 even)
+# rotations alike per part: the trace 6 (6, 0, 0, 0 under GP-S1 at the trace 54; 6, 6, 6, 6 under CK-S1 even)
+CUBE, INTERVALS, GROUPS, ALIKE = 5, 20, 4, (3, 0, 0, 0)
 COUNTED = ("births", "laid_back", "refused_stop")  # the counts the EQ-S1 test reads per world
 IMAGES = [
     np.array([[s[a] if pi[a] == b else 0 for a in range(3)] for b in range(3)])
@@ -178,8 +177,8 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
     assert node.counts["births"] == node.counts["laid"] == 0
     assert node.census()[0] == 99 and node.census()[1] <= 128  # the take's remainder, EX-S1; 98 before
     for _ in range(80):
-        node.step_back()
-    assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step_back()) == 10
+        node.step(-1)
+    assert sum(state_of(node) == kept[9 - k] for k in range(10) if not node.step(-1)) == 10
     everywhere = np.ones(node.shape, dtype=bool)
 
     def text(rows: list[list[Any]], exchanged: bool) -> bytes:
@@ -217,7 +216,7 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
         assert run_back_exact(kept, 10) == 10
     assert found["world_pair_3.json"] == ({4: 27, 6: 27, 8: 27}, 0, 81, 0)
     assert (
-        found["world_hole.json"][1:3] == (10, 0) and sum(found["world_hole.json"][0].values()) == 56
+        found["world_hole.json"][1:3] == (15, 0) and sum(found["world_hole.json"][0].values()) == 489
     )  # 10 births under EX-S1, 16 before
 
 
@@ -260,7 +259,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
         re, im = row.lines
         assert row.pair is not None and not any(ints(re.now * im.before - im.now * re.before))
         energy = sum(
-            ints(node.share(row.lines, node.rule(row.pair, node.content(), node.link_factors())))
+            ints(gram.share(node, row.lines, node.rule(row.pair, node.content(), node.link_factors())))
         )
         momentum = sum(
             sum(
@@ -276,7 +275,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
     def centroid(node: Node) -> tuple[int, int]:
         row = node.by_index[2]
         assert row.pair is not None
-        share = node.share(row.lines, node.rule(row.pair, node.content(), node.link_factors()))
+        share = gram.share(node, row.lines, node.rule(row.pair, node.content(), node.link_factors()))
         return sum(ints(share * np.indices(node.shape)[0])), sum(ints(share))
 
     node, law = laid(moving)
@@ -440,8 +439,8 @@ def test_the_pair_at_rest_merges_into_light_by_its_own_quantum_taken_whole_mg_s1
     found = []
     for k in (1, 3):
         board = node_of("world_node.json", shape=[5, 5, 5], seed=[])
-        board.lay(heavy, m, (k * a, 0, 0, k * b))
-        board.lay(heavy, p, (k * a, 0, 0, -k * b))
+        take.lay(board, heavy, m, (k * a, 0, 0, k * b))
+        take.lay(board, heavy, p, (k * a, 0, 0, -k * b))
         held = copy.deepcopy(board)
         for _ in range(4):
             board.step()
@@ -451,10 +450,8 @@ def test_the_pair_at_rest_merges_into_light_by_its_own_quantum_taken_whole_mg_s1
         (merger,) = mergers
         assert (tuple(merger["plus"]), tuple(merger["minus"])) == (m, p)
         assert all(t["taken"] >= t["booked"] > 0 for t in merger["takes"])
-        assert merger["exact_lay"] == [None, None] and merger["W_children"] == [
-            -(bare.T // 2),
-            bare.T // 2,
-        ]
+        # H-Children-Charge-Bug-1: the light the exact take at -1 at both ends, the children's W 0 (the charged lay and [None, None] before)
+        assert [x[:2] for x in merger["exact_lay"]] == [[0, -191]] * 2 and merger["W_children"] == [0, 0]
         assert run_back_exact(held, 4) == 4
         found.append(
             (merger["i"], [(e["i"], e["cause"], e["fall"] * 1000 // e["walls"]) for e in refusals])
@@ -469,9 +466,18 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
     for _ in range(10):
         node.step()
     lines = node.row(CARRIER).lines
-    assert len(lines) == 1 + 3 * AXES and node.census() == (99, 115)  # 98 before EX-S1
+    assert len(lines) == 1 + 3 * AXES and node.census() == (99, 112)  # 115 bits at the trace 54
     flux, shears = lines[1 + AXES : 1 + 2 * AXES], lines[1 + 2 * AXES :]
-    assert all(int(x) == 0 for line in (*flux, *shears) for x in line.now.reshape(-1))
+    # TW-S1, the trace 6: every one of the six lines reaches levels within three by 10 (none reached at the trace 54, every line at 0)
+    assert [sum(1 for x in line.now.reshape(-1) if int(x)) for line in (*flux, *shears)] == [
+        45,
+        42,
+        42,
+        20,
+        48,
+        20,
+    ]
+    assert all(abs(int(x)) <= 3 for line in (*flux, *shears) for x in line.now.reshape(-1))
     assert all(any(int(x) != line.wwall // 2 for x in line.wr.reshape(-1)) for line in (*flux, *shears))
     assert node.counts["turns"] > 0 and node.counts["births"] > 0
 
@@ -487,7 +493,7 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
             tops.append((sea.interval, int(sea.turned.sum())))
     six = sea.row(CARRIER).lines[1 + AXES :]
     assert all(int(x) == 0 for line in six for a in (line.now, line.before) for x in a.reshape(-1))
-    assert sum(state_of(sea) == kept[9 - k] for k in range(10) if not sea.step_back()) == 10
+    assert sum(state_of(sea) == kept[9 - k] for k in range(10) if not sea.step(-1)) == 10
 
     base = node_of("world_hole.json")
     for _ in range(6):
@@ -510,6 +516,52 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
     base.step()
     far.step()
     assert at_centre(base) == at_centre(far)
-    base.step_back()
-    far.step_back()
+    base.step(-1)
+    far.step(-1)
     assert at_centre(base) == at_centre(far)
+
+
+def test_the_merger_lays_light_of_no_charge_at_both_ends_cc1() -> None:
+    """H-Children-Charge-Bug-1 (the Boss's 6410696786, 2026-10-26): a merger's light at an end whose named line has no direction (now equal to before, the largest gap the empty line's) was laid as the charged child's lay, so the merger's two children carried the charge -T div 2 + 0; the letter lays the light as the exact take at -1 on the named line at both ends, their own W 0. The chiral 60's merger of the interval 10 fed on the 3-cube: both ends exact, the children's own charge summing to 0; three pins."""
+    node = node_of("world_node.json")
+    node.step()
+    s, minus, plus = 0, (1, 1, 1), (1, 1, 2)
+    row = node.records()[s]
+    assert row.pair is not None
+    take.lay(node, s, minus, (939, 1175, 0, 0))
+    take.lay(node, s, plus, (1329, 1112, 0, 0))
+    rule = node.rule(row.pair, node.start_content, node.link_factors())
+    walls = list(walls_of(node, s, minus, plus, rule, {}))
+    _dp, _w, _stood, exact, _ends = light_children(node, s, minus, plus, walls, rule)
+    assert all(x is not None for x in exact) and [x[1] != 0 for x in exact] == [True, True]
+    assert (
+        sum(
+            0 if x is not None else sense * node.A * node.B
+            for x, sense in zip(exact, (-1, 1), strict=True)
+        )
+        == 0
+    )
+
+
+def test_a_frozen_node_is_released_by_the_turn_of_its_time() -> None:
+    """FR-S1 (the owner's words of 2026-10-26, 03:41 UTC, approved, and 07:3x UTC, "enter now": the fix of a forbidden state, no Node frozen for ever; The-Frozen-Node-Release_COMPARISON.md section 3): a Node that rose into the frozen content is turned at its frozen interval by the swap's own trigger on its restored line, its now and before exchanged, so at the next interval its content stands below the frozen content, unfrozen, its clock running; no Node frozen at two intervals in a row; the run back exact. The 3-cube centre fed to the frozen content 3,793 with its before at the content 3,700, 20 intervals."""
+    node, centre = node_of("world_node.json"), (1, 1, 1)
+    frozen = paces.frozen_content(node.gamma)
+    carrier = node.row(CARRIER).lines[0]
+    carrier.now[centre], carrier.before[centre] = level_at(node, frozen), level_at(node, 3700)
+    node.ride_walls()
+    light = node.emitter().lines[0]
+    light.now[centre] = 4 * int(light.now[centre])
+    proper, kept, was = int(node.proper[centre]), copy.deepcopy(node), False
+    for _ in range(INTERVALS):
+        now = bool(np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object)[centre] == 0)
+        assert not (was and now)
+        was = now
+        node.step()
+        if node.interval == 1:
+            assert now and node.turned[centre] and int(node.proper[centre]) == proper
+            assert int(node.content()[centre]) < frozen
+        if node.interval == 2:
+            assert not now and int(node.proper[centre]) > proper
+    assert node.max_transient <= 128 and node.census()[1] <= 128
+    assert run_back_exact(kept, INTERVALS) == INTERVALS

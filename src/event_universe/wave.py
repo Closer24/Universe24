@@ -6,9 +6,11 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
+from event_universe import gram
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import half, mirrored, remainder
+from event_universe.core.rule3 import least_at, mirrored, remainder
 from event_universe.rows import CARRIER, PLANE, Line, zeros
+from event_universe.take import lay
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -56,20 +58,12 @@ def lay_cycle(node: Node, rec: int, n: int, digits: list[int], mirror: int) -> N
             Line(base[k] + levels[k], base[k + 1] + levels[k + 1], None, None)
             for k in range(0, PLANE * PLANE, PLANE)
         ]
-        return min(int(x) for x in node.share(lines, rule).reshape(-1))
+        return min(int(x) for x in gram.share(node, lines, rule).reshape(-1))
 
-    target, high = n * node.units[rec], 1
-    while least_share(high) < target:
-        high = high + high
-    low = 0
-    while high - low > 1:
-        middle = int(half(low + high))
-        if least_share(middle) < target:
-            low = middle
-        else:
-            high = middle
+    target = n * node.units[rec]
+    high = least_at(lambda amplitude: least_share(amplitude) >= target)
     levels = cycle_levels(p, high)
-    node.lay(rec, Ellipsis, levels)
+    lay(node, rec, Ellipsis, levels)
     for line, now, before in zip(row.lines, levels[0::PLANE], levels[1::PLANE], strict=True):
         negated = np.vectorize(lambda a, b: int(a) < 0 or int(b) < 0, otypes=[bool])(now, before)
         line.rem = np.where(negated & (mirror == 1), mirrored(line.rem, line.wall, 1), line.rem)
