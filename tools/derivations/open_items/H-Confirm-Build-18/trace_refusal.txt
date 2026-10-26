@@ -1,0 +1,7 @@
+2:  File "<frozen runpy>", line 203, in _run_module_as_main
+3:  File "<frozen runpy>", line 88, in _run_code
+4:  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/vf18/src/event_universe/run.py", line 208, in <module>
+7:  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/vf18/src/event_universe/run.py", line 202, in main
+9:  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/vf18/src/event_universe/run.py", line 167, in record
+11:  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/vf18/src/event_universe/node.py", line 61, in __init__
+14:KeyError: 'trace'

@@ -1,0 +1,21 @@
+core/ports.py:7:7 = 3 :: AXES = 3  # the lattice's three axes
+core/ports.py:8:8 = 2 :: SIDES = 2  # the two Ports of one axis, +a and -a
+core/rule3.py:13:4 = 4 ::     4  # the held write's 4 X (...) p_0 (the hypothesis The stress's trace is the time line's, d + 1)
+core/rule3.py:15:14 = 3 :: UNIT_WEIGHT = 3  # the plane's unit 3 T s (the conventions' row 12)
+core/rule3.py:141:34 = 2 ::     return division_forward(wall, 2, 0)[0]
+core/rule3.py:146:35 = 2 ::     return division_forward(count, 2, 0)[1]
+core/rule3.py:182:75 = 2 ::     return sorted({max(1, s1 - 1), max(1, s1), max(1, s1 + 1), max(1, s1 + 2)})
+links.py:63:11 = 4 ::     return 4 * gamma
+rows.py:11:10 = 10 :: CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
+rows.py:12:12 = 4 :: POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
+rows.py:13:8 = 2 :: PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
+rows.py:14:10 = 8 :: QUARTET = 8
+rows.py:15:8 = 128 :: WIDTH = 128  # the law's width in bits (ALGEBRA.md, The Node): the phase pair's room is its half
+rows.py:17:13 = 4 :: POWER_TIME = 4  # the held wall's power of Gamma on the carrier's time line, POWER_AXIS the nine axis lines' (K-S1 to K-S3, Y-S1)
+rows.py:18:13 = 2 :: POWER_AXIS = 2
+run.py:23:8 = 12 :: MARKS = 12  # the reader's rows: one at every twelfth of the run
+run.py:24:9 = 60 :: EARLY = (60, 24)  # and two early marks, at the sixtieth and the twenty-fourth
+run.py:24:13 = 24 :: EARLY = (60, 24)  # and two early marks, at the sixtieth and the twenty-fourth
+seed.py:20:15 = 2 :: HALF_WIDTHS = (2, 3)  # the envelope's half widths the raised cosine knows (the lay's `width`)
+seed.py:20:18 = 3 :: HALF_WIDTHS = (2, 3)  # the envelope's half widths the raised cosine knows (the lay's `width`)
+wave.py:16:8 = 4 :: TURNS = 4  # the quarter turns of Z_4, the cycle lay's digits and the side of its 4 by 4 pattern

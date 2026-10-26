@@ -13,7 +13,8 @@ import numpy as np
 from event_universe import gram, readings
 from event_universe.core import paces
 from event_universe.core.paces import sine_den
-from event_universe.core.ports import AXES
+from event_universe.core.ports import AXES, SIDES, port_of
+from event_universe.decoder import THOUSAND
 from event_universe.links import link_current
 from event_universe.loader.world import load_world
 from event_universe.node import Node
@@ -21,7 +22,6 @@ from event_universe.rows import CARRIER, POTENTIAL, zeros
 
 MARKS = 12  # the reader's rows: one at every twelfth of the run
 EARLY = (60, 24)  # and two early marks, at the sixtieth and the twenty-fourth
-THOUSAND = 1000  # a centroid in thousandths of a Link, a clock in milliseconds
 
 
 def ints(a: Any) -> list[int]:
@@ -84,7 +84,7 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
         "max transient bits": node.max_transient,
         "sign level max": max(abs(x) for x in ints(potential.lines[0].now)),
         "planes energy bits": energy.bit_length(),
-        "links at the wall": sum(1 for f in node.link_factors()[0::2] for x in ints(f) if x == 0),
+        "links at the wall": sum(1 for f in node.link_factors()[0::SIDES] for x in ints(f) if x == 0),
         "tension min/max": [min(tens), max(tens)],
         "odd max bits": odd_max.bit_length(),
         "link count max": node.count_max,
@@ -102,7 +102,12 @@ def node_lines(node: Node) -> dict[str, Any]:
     content = node.content()
     pace = paces.link_pace_of(node.gamma, content)
     factors = node.link_factors(None, readings.frozen_of(node, content))
-    held = [[i, axis] for axis in range(AXES) for i, f in enumerate(ints(factors[2 * axis])) if f == 0]
+    held = [
+        [i, axis]
+        for axis in range(AXES)
+        for i, f in enumerate(ints(factors[port_of(axis, 0)]))
+        if f == 0
+    ]
     emitter = node.emitter().lines[0]
     return {
         "i": node.interval,
@@ -111,7 +116,7 @@ def node_lines(node: Node) -> dict[str, Any]:
         "turned": [i for i, t in enumerate(node.turned.reshape(-1).tolist()) if t],
         "frozen": [i for i, p in enumerate(ints(pace)) if p == 0],
         "held": held,
-        "current": [ints(link_current(emitter, 2 * axis)) for axis in range(AXES)],
+        "current": [ints(link_current(emitter, port_of(axis, 0))) for axis in range(AXES)],
     }
 
 
@@ -191,10 +196,11 @@ def record(
 def main(argv: list[str]) -> None:
     """The writer from the command line: the world file, the output file, `back N` for the run back."""
     sys.set_int_max_str_digits(0)
-    universe, world = load_world(argv[1])
+    _, world_path, out_path, *_rest = argv
+    universe, world = load_world(world_path)
     back = int(argv[argv.index("back") + 1]) if "back" in argv else 0
     found = record(universe, world, back, lambda line: print(line, flush=True))
-    with open(argv[2], "w", encoding="utf-8") as out:
+    with open(out_path, "w", encoding="utf-8") as out:
         json.dump(found, out)
 
 

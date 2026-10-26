@@ -13,8 +13,9 @@ POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three o
 PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
 QUARTET = 8
 WIDTH = 128  # the law's width in bits (ALGEBRA.md, The Node): the phase pair's room is its half
-HALF_WIDTH = quotient(WIDTH, 2)
-TRACE = 54  # the trace's weight of the held walls and the carrier's write, 2 x 27 (ALGEBRA.md, the held write)
+HALF_WIDTH = half(WIDTH)
+POWER_TIME = 4  # the held wall's power of Gamma on the carrier's time line, POWER_AXIS the nine axis lines' (K-S1 to K-S3, Y-S1)
+POWER_AXIS = 2
 
 
 def zeros(shape: tuple[int, ...]) -> Any:
@@ -39,7 +40,7 @@ class Row:
 
 
 class Line:
-    """One line of a row: its two levels, its rotation remainder at the rule's wall `wall`, and where the row writes it, its write remainder `wr` at the write wall `wwall`."""
+    """One line of a row: its two levels, its rotation remainder at the rule's wall `wall`, and where the row writes it, its write remainder `wr` at the write wall `wwall`. A lay names a line's two levels, now and before, in that order (two per line, the plane's count PLANE at the slices)."""
 
     __slots__ = ("now", "before", "rem", "wall", "wr", "wwall")
 
@@ -62,11 +63,12 @@ class Line:
 
 
 def write_walls(
-    shape: int, pair: tuple[int, int] | None, den: int, gamma: int, action: int
+    shape: int, pair: tuple[int, int] | None, den: int, gamma: int, action: int, trace: int
 ) -> list[Any]:
-    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls (rule3.held_wall at the powers 4 and 2), the shape-4 row's four lines T, the plane at the universe's own pair (den, den), the emitter, its first line T (the lay of W-S1), another plane none."""
+    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls at the file's trace weight (rule3.held_wall at the powers POWER_TIME 4 of the time line and POWER_AXIS 2 of the nine axis lines, K-S1 to K-S3, Y-S1), the shape-4 row's four lines T, the plane at the universe's own pair (den, den), the emitter, its first line T (the lay of W-S1), another plane none."""
     if shape == CARRIER:
-        return [held_wall(TRACE, den, gamma, action, p) for p in (4, *[2] * (shape - 1))]
+        powers = (POWER_TIME, *[POWER_AXIS] * (shape - 1))
+        return [held_wall(trace, den, gamma, action, p) for p in powers]
     if shape == POTENTIAL:
         return [action] * shape
     if shape == PLANE and pair == (den, den):
@@ -85,17 +87,11 @@ def lines_of(
     """A row's lines at the start: every level 0, every remainder at half its wall (the rule's w, or the row's own wall), a write remainder at half the write wall where the line writes."""
     if wall is not None:
         return [Line(zeros(board), zeros(board), zeros(board) + half(wall), wall)]
-    return [
-        Line(
-            zeros(board),
-            zeros(board),
-            zeros(board) + half(w),
-            w,
-            None if ww is None else zeros(board) + half(ww),
-            ww,
-        )
-        for ww in walls
-    ]
+    found = []
+    for ww in walls:
+        wr = None if ww is None else zeros(board) + half(ww)
+        found.append(Line(zeros(board), zeros(board), zeros(board) + half(w), w, wr, ww))
+    return found
 
 
 def order_key(row: Row) -> tuple[bool, int]:
@@ -107,6 +103,7 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
     """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the emitter is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the emitter or the walled row other than one, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den), no plane at another pair; a pair named in several rows is admitted as written, each row a record of its own with the same numbers (CS5-S2, the owner's word of 2026-10-25, 22:50 UTC, through the Boss: no row refused for its pair's repetition)."""
     ints = universe["integers"]
     den, gamma, action = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
+    trace = int(ints["trace"])
     by_index: list[Row] = []
     for r in universe["rows"]:
         shape = int(r["shape"])
@@ -114,7 +111,8 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
         wall = None if r.get("wall") is None else int(r["wall"])
         if shape == 1 and wall is None:
             raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
-        lines = lines_of(board, shape, pair, wall, w, write_walls(shape, pair, den, gamma, action))
+        walls = write_walls(shape, pair, den, gamma, action, trace)
+        lines = lines_of(board, shape, pair, wall, w, walls)
         by_index.append(Row(shape, pair, wall, lines))
     rows = sorted(by_index, key=order_key)
     walled = [r for r in rows if r.wall is not None]

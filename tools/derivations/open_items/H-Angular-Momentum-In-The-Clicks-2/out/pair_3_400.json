@@ -1,0 +1,111 @@
+{
+ "credits": 297,
+ "credits laid back": 297,
+ "laid back with dP_take 0": 297,
+ "laid back with dP_take not 0": 0,
+ "credits standing (dP_take booked)": 0,
+ "credits with dP_take 0 and not laid back": 0,
+ "births": 0,
+ "births with dP_lay 0": 0,
+ "births with dP_lay along the Link's axis": 0,
+ "births with senses summing to 0": 0,
+ "births with W_children summing to 0": 0,
+ "births with dP_take along the Link's axis only": 0,
+ "mergers (two ends' takes)": 0,
+ "sense sum over credits": 0,
+ "credits by sense": {
+  "-1": 0,
+  "0": 297,
+  "1": 0
+ },
+ "J2 of the takes' along-axis part at births": [
+  0,
+  0,
+  0
+ ],
+ "J2 of the takes' transverse part at births": [
+  0,
+  0,
+  0
+ ],
+ "J2 of the credits": [
+  0,
+  0,
+  0
+ ],
+ "J2 of the births' takes": [
+  0,
+  0,
+  0
+ ],
+ "J2 of the births' lays": [
+  0,
+  0,
+  0
+ ],
+ "cube": 3,
+ "centre2": [
+  2,
+  2,
+  2
+ ],
+ "J2 clicks": [
+  0,
+  0,
+  0
+ ],
+ "P clicks": [
+  0,
+  0,
+  0
+ ],
+ "intervals with a click moment not 0": 0,
+ "max abs J2 per interval": 0,
+ "centre shift identity (J2(c') = J2(c) - (2c'-2c) x P) at c' = 0": true,
+ "against the board": {
+  "am1": "am_pair_3_400.json",
+  "intervals": 400,
+  "board 2L end - start": [
+   0,
+   0,
+   0
+  ],
+  "clicks J2 summed": [
+   0,
+   0,
+   0
+  ],
+  "board change less clicks (the torque of the step and the swap)": [
+   0,
+   0,
+   0
+  ],
+  "sum |board d2L| per interval": [
+   0,
+   0,
+   0
+  ],
+  "sum |clicks J2| per interval": [
+   0,
+   0,
+   0
+  ],
+  "sum |rest| per interval": [
+   0,
+   0,
+   0
+  ],
+  "intervals with a click moment": 0,
+  "at those intervals: sum |clicks J2|": [
+   0,
+   0,
+   0
+  ],
+  "at those intervals: sum |board d2L|": [
+   0,
+   0,
+   0
+  ]
+ },
+ "record": "world_pair_3_400.json"
+}

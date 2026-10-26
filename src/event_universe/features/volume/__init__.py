@@ -9,7 +9,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import division_forward
+from event_universe.core.rule3 import division_forward, half
 
 EXPONENT = (
     AXES + 1
@@ -26,7 +26,7 @@ def clock_zero(gamma: int) -> int:
     while paces.clock(gamma, high) > 0:
         high += high
     while high - low > 1:
-        middle = int(division_forward(low + high, 2, 0)[0])
+        middle = int(half(low + high))
         if paces.clock(gamma, middle) > 0:
             low = middle
         else:
@@ -92,9 +92,7 @@ def searched_levels(gamma: int, volumes: Any) -> Any:
         low, step = np.where(good, probe, low), np.where(good, step + step, step)
     high = np.minimum(low + step, top)
     while (high - low > 1).any():
-        middle = np.array(
-            [division_forward(a + b, 2, 0)[0] for a, b in zip(low, high, strict=True)], dtype=object
-        )
+        middle = np.array([half(a + b) for a, b in zip(low, high, strict=True)], dtype=object)
         good = reached(middle)
         low, high = np.where(good, middle, low), np.where(good, high, middle)
     return np.array([int(a) for a in low], dtype=object)

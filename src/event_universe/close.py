@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, NamedTuple
 
 import numpy as np
 
 from event_universe import gram, readings
 from event_universe.bodies import bodies
 from event_universe.core import rule3
-from event_universe.core.ports import AXES, across
+from event_universe.core.ports import AXES, across, port_of
 from event_universe.core.rule3 import quotient, remainder
 from event_universe.links import cross, row_current, row_twist
 from event_universe.rows import PLANE, Line
@@ -18,8 +18,25 @@ from event_universe.take import fall_of, lay, momentum_of, neighbour, read_numbe
 if TYPE_CHECKING:
     from event_universe.node import Node
 
-Birth = tuple[tuple[int, ...], int, tuple[int, ...], tuple[int, ...], int, int]
-Kid = tuple[int, tuple[int, ...], tuple[int, ...], int]
+
+class Birth(NamedTuple):
+    """A birth read at the Link close: the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room and the taken record."""
+
+    at: tuple[int, ...]
+    line_pair: int
+    minus: tuple[int, ...]
+    plus: tuple[int, ...]
+    room: int
+    rec: int
+
+
+class Kid(NamedTuple):
+    """A child pair at one Node for the take: the children's record, the - child's Node, the + child's Node and the draw's room."""
+
+    line_pair: int
+    minus: tuple[int, ...]
+    plus: tuple[int, ...]
+    room: int
 
 
 def refused(node: Node, at: tuple[int, ...], cause: str, **numbers: Any) -> None:
@@ -46,14 +63,14 @@ def meet(
     born: list[Birth] = []
     row, unit = node.records()[rec], node.units[rec]
     standing = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(sh) & ~frozen
-    currents = [node.den * row_current(start, 2 * axis) for axis in range(AXES)]
+    currents = [node.den * row_current(start, port_of(axis, 0)) for axis in range(AXES)]
     twists = [row_twist(start, axis) for axis in range(AXES)]
     charges = gram.charge(row.shape, start) if row is not node.emitter() else None
     for axis in range(AXES):
-        both = standing & across(standing, 2 * axis)
+        both = standing & across(standing, port_of(axis, 0))
         for where in zip(*np.nonzero(both), strict=True):
             at = tuple(int(x) for x in where)
-            j = neighbour(node, at, 2 * axis)
+            j = neighbour(node, at, port_of(axis, 0))
             node.counts["met"] += 1
             flow = int(currents[axis][at])
             if flow == 0:
@@ -73,7 +90,7 @@ def meet(
             if drawn is None:
                 continue
             number, room = drawn
-            born.append((into, list_of(node, rec, number), minus, plus, room, rec))
+            born.append(Birth(into, list_of(node, rec, number), minus, plus, room, rec))
     return born
 
 
@@ -84,12 +101,14 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
         if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
             refused(node, at, "lay", standing=int(owns[s][minus]), unit=node.units[s], row=rec)
             continue
-        kept.append((at, s, minus, plus, room, rec))
+        kept.append(Birth(at, s, minus, plus, room, rec))
     landing: dict[tuple[int, tuple[int, ...]], int] = {}
     for _at, s, minus, plus, _room, _rec in kept:
         landing[(s, minus)] = landing.get((s, minus), 0) + 1
         landing[(s, plus)] = landing.get((s, plus), 0) + 1
-    crowded = [k for k in kept if landing[(k[1], k[2])] > 1 or landing[(k[1], k[3])] > 1]
+    crowded = [
+        k for k in kept if landing[(k.line_pair, k.minus)] > 1 or landing[(k.line_pair, k.plus)] > 1
+    ]
     for at, s, minus, plus, _room, rec in crowded:
         refused(
             node, at, "lay", children_at_one_node=max(landing[(s, minus)], landing[(s, plus)]), row=rec
@@ -101,8 +120,8 @@ def births(node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...]) -> s
     """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid by one exact take at its own end (`merger_take`, SL-S2: the birth read at -1); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
     by_node: dict[tuple[tuple[int, ...], int], list[Kid]] = {}
     for at, s, minus, plus, room, rec in kept:
-        by_node.setdefault((at, rec), []).append((s, minus, plus, room))
-    walls = {k: walls_of(node, k[1], k[2], k[3], c, factors) for k in kept}
+        by_node.setdefault((at, rec), []).append(Kid(s, minus, plus, room))
+    walls = {k: walls_of(node, k.line_pair, k.minus, k.plus, c, factors) for k in kept}
     taken: list[tuple[tuple[int, ...], int, list[Kid], dict[str, Any]]] = []
     for at, rec in sorted(by_node):
         kids = by_node[(at, rec)]
@@ -111,11 +130,11 @@ def births(node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...]) -> s
         rule = node.rule(row.pair, c, factors)
         if row is not node.emitter():
             for kid in kids:
-                got = merger_take(node, kid[1], kid[2], walls[(at, *kid, rec)], rule, rec)
+                got = merger_take(node, kid.minus, kid.plus, walls[Birth(at, *kid, rec)], rule, rec)
                 if got is not None:
                     taken.append((at, rec, [kid], got))
             continue
-        booked = sum(sum(walls[(at, *kid, rec)]) for kid in kids)
+        booked = sum(sum(walls[Birth(at, *kid, rec)]) for kid in kids)
         one = take_at(node, at, booked, rule, len(kids), rec)
         if one is None:
             continue
