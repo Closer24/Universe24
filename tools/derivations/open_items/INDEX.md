@@ -174,3 +174,7 @@ The owner's word (2026-10-25, 23:14 UTC, in translation): "rename all the deriva
 | The-Birth-On-Six-Links_COMPARISON.md | A finding; AJ-S3 the reading; the order above: the Link's record read alike first, then the kick's inverse on the taken row. |
 | H-Rule3-Link-Record-1, -2 | Every reach symmetric in the two ends' paces crosses Rule3's conserved form; the Link's record is held once (the Node's clock with its dual weight); the 48's rotations, the torque and the horizon are three items. |
 | The-Rule3-Link-Record_COMPARISON.md | Does not; the unification is in the locality, not the coefficient; the 48's rotations to the reader's two leads with the 5-cube as the judge. |
+| H-Children-Laid-Moving-1, -2 | The children carry the parent's momentum along the birth's Link alone; the lattice momentum is the Link's record, a child at a Node has none; the transverse recoil needs a child of extent, a packet. |
+| The-Children-Laid-Moving_COMPARISON.md | The central lesson of the four attempts: the work erred in the child's shape; the children as packets by the seed's lay act, the owner's word to open. |
+| H-Read-Is-Write-Reversed-1, -2 | Every state-moving act is one function with the direction; the reversal's three spellings one object; the two forms folded bit for bit on ten worlds; the frame is the reversal's record. |
+| The-Read-Is-Write-Reversed_COMPARISON.md | A finding with a cleaning: RW-S1 for the owner's word; rw2's fold for David. |

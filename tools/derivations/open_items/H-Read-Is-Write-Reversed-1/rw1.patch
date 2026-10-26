@@ -1,0 +1,133 @@
+diff -ruN a/src/event_universe/core/rule3.py b/src/event_universe/core/rule3.py
+--- a/src/event_universe/core/rule3.py	2026-10-26 05:49:28.745509837 +0000
++++ b/src/event_universe/core/rule3.py	2026-10-26 05:49:28.748189086 +0000
+@@ -72,10 +72,11 @@
+ 
+ 
+ def carried_division(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[Any, Any]:
+-    """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = sigma total + r, the quotient sigma (u div w) and the remainder u mod w kept in [0, w) for a total of either sign; +1 forward, -1 the same act back, exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it."""
+-    total = direction * total + remainder
+-    quotient = total // wall
+-    return direction * quotient, total - wall * quotient
++    """The one carried division of the law (ALGEBRA.md #the-four-acts, #the-direction): u = total + r, the quotient u div w and the remainder u mod w kept in [0, w) for a total of either sign; the act at -1 is the act at +1 conjugated by the one rule's mirror (RW-S1: the remainder mirrored in, w - 1 - r, the forward division, the remainder mirrored out, the quotient as it falls), exact: from the quotient and the remainder the forward act wrote, the level and the remainder before it; the former spelling sigma total + r with the quotient sigma (u div w), the same integers, kept by name."""
++    carried = total + (remainder if direction == 1 else wall - 1 - remainder)
++    quotient = carried // wall
++    rest = carried - wall * quotient
++    return quotient, rest if direction == 1 else wall - 1 - rest
+ 
+ 
+ def flux_total(flux: Any, mass: Any, wall: Any, now: Any, other: Any) -> Any:
+diff -ruN a/src/event_universe/interval.py b/src/event_universe/interval.py
+--- a/src/event_universe/interval.py	2026-10-26 05:49:28.745752343 +0000
++++ b/src/event_universe/interval.py	2026-10-26 05:49:28.748001200 +0000
+@@ -30,8 +30,8 @@
+ 
+     def __init__(self, node: Node, direction: int) -> None:
+         self.node, self.direction = node, direction
++        node.interval += direction
+         if direction == 1:
+-            node.interval += 1
+             self.top: Any = np.zeros(node.shape, dtype=bool)
+             self.kept: list[list[Line]] | None = None
+             self.frozen: Any = None
+@@ -218,9 +218,7 @@
+             for a, p, line in zip(self.starts[k], self.kicked[k], self.rows[k], strict=True):
+                 v, rem = division_forward(p, ws, half(ws))
+                 new.append(
+-                    Line(a + v, a, rem, ws, line.wr, line.wwall)
+-                    if self.direction == 1
+-                    else Line(a, a - v, rem, ws, line.wr, line.wwall)
++                    Line(*(a + self.direction * v, a)[:: self.direction], rem, ws, line.wr, line.wwall)
+                 )
+             if self.direction == -1 and self.kept is not None:
+                 node.restore(new, self.kept[k], self.top)
+@@ -269,7 +267,7 @@
+ 
+ 
+ def run(node: Node, direction: int) -> None:
+-    """One interval in the direction, five acts: the readings, the kick, the division, the swap at the top, the close; backward the close and the swap are undone at the Interval's making, the lays come off before the kick (the reverse order: the last laid, the first undone), the kick and the division are the same acts at -1 and the interval is counted down."""
++    """One interval in the direction, five acts: the readings, the kick, the division, the swap at the top, the close; backward the close and the swap are undone at the Interval's making, the lays come off before the kick (the reverse order: the last laid, the first undone), the kick and the division are the same acts at -1 and the interval is counted by the direction at the Interval's making (RW-S1)."""
+     interval = Interval(node, direction)
+     interval.readings()
+     if direction == -1:
+@@ -277,7 +275,6 @@
+     interval.kick()
+     interval.division()
+     if direction == -1:
+-        node.interval -= 1
+         return
+     interval.swap()
+     interval.close()
+diff -ruN a/src/event_universe/node.py b/src/event_universe/node.py
+--- a/src/event_universe/node.py	2026-10-26 05:49:28.745857885 +0000
++++ b/src/event_universe/node.py	2026-10-26 05:49:28.748098123 +0000
+@@ -187,22 +187,20 @@
+         flux: list[Any] | None,
+         starts: list[Any] | None,
+     ) -> list[Line]:
+-        """Rule3's step of one row at every Node, the one function of a line: for each line the total S now - w before + SUM_j R_j m_j (+ the line's flux where the row carries its write inside the division), one carried division at the wall w per line. Backward the same act on the before slots with the division's direction -1."""
+-        at = starts or [line.now if direction == 1 else line.before for line in lines]
++        """Rule3's step of one row at every Node, the one function of a line in either direction (RW-S1): the line's two slots one pair read reversed by the direction, (a, y) = (now, before) forward and (before, now) backward, the total S a - w y + SUM_j R_j m_j (+ the line's flux where the row carries its write inside the division), one carried division at the wall w per line, the new line the pair (quotient, a) reversed by the direction; the former spelling (the total without w y backward and y taken off the quotient after), the same integers, kept by name."""
++        pairs = [(line.now, line.before)[::direction] for line in lines]
++        at = starts or [a for a, _y in pairs]
+         fluxes: list[Any] = flux or [0] * len(lines)
+         totals = [
+-            r.self_coefficient * a - (r.wall * line.before if direction == 1 else 0) + f + m
+-            for line, a, f, m in zip(lines, at, fluxes, self.arrivals(at, r, turn), strict=True)
++            r.self_coefficient * a - r.wall * y + f + m
++            for (_a, y), a, f, m in zip(pairs, at, fluxes, self.arrivals(at, r, turn), strict=True)
+         ]
+         found = []
+         for line, a, t in zip(lines, at, totals, strict=True):
+             if direction == 1:
+                 self.max_transient = max(self.max_transient, bits_of(t))
+             quotient, rem = carried_division(t, r.wall, line.rem, direction)
+-            if direction == 1:
+-                found.append(Line(quotient, line.now, rem, line.wall, line.wr, line.wwall))
+-            else:
+-                found.append(Line(a, quotient - line.now, rem, line.wall, line.wr, line.wwall))
++            found.append(Line(*(quotient, a)[::direction], rem, line.wall, line.wr, line.wwall))
+         return found
+ 
+     def write(self, line: Line, numerator: Any, direction: int) -> None:
+@@ -221,23 +219,25 @@
+         top: Any = None,
+         kept: list[Line] | None = None,
+     ) -> tuple[list[Line], list[Any], list[Line]]:
+-        """The Node's act on one row in the direction: Rule3's rotate of the row then its lines' writes (forward); the writes undone then the rotate inverted (backward). Returns the row at the start, the stepped levels before the write, and the row as the act leaves it; backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned."""
+-        if direction == 1:
+-            stepped = self.rotate(lines, r, turn, 1, flux, None)
+-            levels = [line.now for line in stepped]
+-            for line, n in zip(stepped, numerators, strict=True):
+-                if n is not None:
+-                    self.write(line, n, 1)
+-            return lines, levels, stepped
++        """The Node's act on one row in the direction, one path (RW-S1): Rule3's rotate and the lines' writes taken in the direction's order, the rotate first forward and the write first backward, each at the direction, the stepped levels read between the two; backward at the turned Nodes `top` the row is set to `kept`, the pre-state the exchange returned (`kept` None forward). Returns the row at the start (the row given forward, the row made backward), the stepped levels before the write, and the row as the act leaves it; the former two paths, the same integers, kept by name."""
+         starts = None if kept is None else [np.where(top, line.now, line.before) for line in lines]
+-        for line, n in zip(lines, numerators, strict=True):
+-            if n is not None:
+-                self.write(line, n, -1)
+-        levels = [line.now for line in lines]
+-        start = self.rotate(lines, r, turn, -1, flux, starts)
++        row = [lines]
++
++        def rotate() -> None:
++            row[0] = self.rotate(row[0], r, turn, direction, flux, starts)
++
++        def write() -> None:
++            for line, n in zip(row[0], numerators, strict=True):
++                if n is not None:
++                    self.write(line, n, direction)
++
++        first, second = (rotate, write)[::direction]
++        first()
++        levels = [line.now for line in row[0]]
++        second()
+         if kept is not None:
+-            self.restore(start, kept, top)
+-        return start, levels, start
++            self.restore(row[0], kept, top)
++        return (lines, row[0])[::direction][0], levels, row[0]
+ 
+     def carried(
+         self,
