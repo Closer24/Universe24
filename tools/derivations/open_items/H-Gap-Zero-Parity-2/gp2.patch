@@ -1,0 +1,98 @@
+diff -ru -x __pycache__ ../../../../../src/event_universe/close.py event_universe/close.py
+--- ../../../../../src/event_universe/close.py	2026-10-26 03:34:32.436961490 +0000
++++ event_universe/close.py	2026-10-26 03:41:18.931737423 +0000
+@@ -5,6 +5,9 @@
+ from typing import TYPE_CHECKING, Any, NamedTuple
+ 
+ import numpy as np
++import os
++
++GP2_FORM = os.environ.get("GP2_FORM", "")  # gp2's flag: empty is the head bit for bit
+ 
+ from event_universe import gram, readings
+ from event_universe.bodies import bodies
+@@ -309,7 +312,9 @@
+             s, (a, b) = entry["line_pair"], entry["amplitude"]
+             exact = entry.get("exact_lay", [None, None])
+             for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
+-                if laid is None:
++                if laid is None and GP2_FORM == "children_sign":  # gp2: the child's lay taken back in its form
++                    lay(node, s, tuple(where), (sense * a, 0, 0, b), -1)
++                elif laid is None:
+                     lay(node, s, tuple(where), (a, 0, 0, sense * b), -1)
+                 else:
+                     lay(node, s, tuple(where), -laid[1], line=laid[0])
+diff -ru -x __pycache__ ../../../../../src/event_universe/merger.py event_universe/merger.py
+--- ../../../../../src/event_universe/merger.py	2026-10-26 03:34:32.438437936 +0000
++++ event_universe/merger.py	2026-10-26 03:41:18.931047739 +0000
+@@ -2,6 +2,10 @@
+ 
+ from __future__ import annotations
+ 
++import os
++
++GP2_FORM = os.environ.get("GP2_FORM", "")  # gp2's flag: empty is the head bit for bit
++
+ from collections.abc import Callable
+ from typing import TYPE_CHECKING, Any
+ 
+@@ -23,6 +27,11 @@
+     re, im = row.lines
+     assert row.pair is not None
+     num = row.pair[0]
++    if GP2_FORM == "children_sign":  # gp2: the sense on the re line, (s A, 0, 0, B)
++        dp = momentum_of(node, re.now, re.before, where, d_now=sign * sense * node.A, num=num)
++        dp_im = momentum_of(node, im.now, im.before, where, d_before=sign * node.B, num=num)
++        lay(node, s, where, (sense * node.A, 0, 0, node.B), sign)
++        return [a + b for a, b in zip(dp, dp_im, strict=True)]
+     dp = momentum_of(node, re.now, re.before, where, d_now=sign * node.A, num=num)
+     dp_im = momentum_of(node, im.now, im.before, where, d_before=sign * sense * node.B, num=num)
+     lay(node, s, where, (node.A, 0, 0, sense * node.B), sign)
+diff -ru -x __pycache__ ../../../../../src/event_universe/node.py event_universe/node.py
+--- ../../../../../src/event_universe/node.py	2026-10-26 03:34:32.438437936 +0000
++++ event_universe/node.py	2026-10-26 03:41:18.932501975 +0000
+@@ -323,9 +323,12 @@
+         rules = [self.rule_of(r, c, factors) for r in self.rows_]
+         return [(line, rule) for rule, lines in zip(rules, held, strict=True) for line in lines]
+ 
+-    def digit_of(self, rem: int, values: int) -> tuple[int, int]:
+-        """One line's digit at a Node: its remainder on the lattice and the count of values the lattice holds."""
+-        return rem, values
++    def digit_of(self, rem: int, values: int, wall: int | None = None) -> tuple[int, int]:
++        """One line's digit at a Node: its remainder on the lattice and the count of values the lattice holds; with the wall named (lr2's centred digit) the distance from the centre |2 r + 1 - wall| div 2, the same for r and wall - 1 - r, over half the count."""
++        if wall is None:
++            return rem, values
++        distance = rem + rem + 1 - wall
++        return half(distance if distance >= 0 else -distance), half(values)
+ 
+     def run(self, direction: int = 1) -> None:
+         """One interval of the Node's program in the direction (interval.run)."""
+diff -ru -x __pycache__ ../../../../../src/event_universe/take.py event_universe/take.py
+--- ../../../../../src/event_universe/take.py	2026-10-26 03:34:32.438437936 +0000
++++ event_universe/take.py	2026-10-26 03:41:18.932293347 +0000
+@@ -5,6 +5,9 @@
+ from typing import TYPE_CHECKING, Any
+ 
+ import numpy as np
++import os
++
++GP2_PICK = os.environ.get("GP2_PICK", "")  # lr2's centred pick under gp2's name: empty is the head bit for bit
+ 
+ from event_universe.core import rule3
+ from event_universe.core.ports import AXES, PORT_SIDES, PORTS, port_of, wrap
+@@ -50,8 +53,13 @@
+                     else lattice(wl, at_node(r.reaches[k - 1], n))
+                 )
+             f = node.lattices[key]
+-            rem, values = node.digit_of(int(line.rem[n]), quotient(at_node(line.wall, n), f))
+-            origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
++            wl = at_node(line.wall, n)
++            if GP2_PICK == "1":  # lr2's centred digit, r and W - 1 - r alike
++                rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f), int(wl))
++                origin = origin and rem == 0
++            else:
++                rem, values = node.digit_of(int(line.rem[n]), quotient(wl, f))
++                origin = origin and rem in (w_half, mirrored(w_half, node.w, 1))
+             coarse = coarse and values <= AXES
+             digits.append((quotient(rem, f), values + 1))
+     if origin or coarse:

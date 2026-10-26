@@ -153,3 +153,9 @@ The owner's word (2026-10-25, 23:14 UTC, in translation): "rename all the deriva
 | The-Frozen-Node-Release_COMPARISON.md | WORKS; FR-S1 for the owner's word; two engine lines for David; the evaporation the next item. |
 | H-Bell-In-The-Click-1, -2 | The click writes one integer at one Node and clears nothing else; the twin one Link away receives its trace within the cone; the law's |S| <= 2 parts from nature's -14/5 at the setting, the reader's, in no integer of the Node; the close's take as one act for the birth and the body named as the unification first. |
 | The-Bell-In-The-Click_COMPARISON.md | The click is not built wrongly; the missing piece is where the setting lives; the next hands read it as the detector's own state at the click. |
+| H-Gap-Zero-Parity-1, -2 | The emission is the charge's rate, odd under C and right as written; the light's children are the lay written wrongly: laid with the charge's sign, and under one rule of the sign for every line the C P mirror state is exact to 60 on both cubes. |
+| The-Gap-Zero-Parity_COMPARISON.md | WORKS on the mirror state; GP-S1 law by the owner's word of 04:3x; the 48 through reflected files stays A48-S1's reading. |
+| H-Horizon-Radiates-1, -2 | Under the release alone the Node hovers and refreezes, the neighbours climb, the whole 5-cube stands at the horizon by 2,800, the clicks silent from 1,643; the carrier's row has no Link term. |
+| The-Horizon-Radiates_COMPARISON.md | Does not radiate; the law missing by name is the carrier's Link term (the owner's reading); FR-S1 held for the full solution (D7). |
+| H-One-Seed-Hole-In-The-Cycle-2 | No lay pattern of the four forms carries a hole and returns exactly: the return needs every Node alike, the horizon a Node unlike its neighbours. |
+| H-Confirm-Build-20 | Y-S3 on 61b045a5c refused: a ruff line, two pins, ga2 not bit for bit (the flux line reaching a level at 5 on the cycle board). |
