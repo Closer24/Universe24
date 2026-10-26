@@ -13,7 +13,9 @@ from event_universe import merger, take
 from event_universe.core import paces
 from event_universe.core import rule3 as core
 from event_universe.core.acts import mirror as mirrored
+from event_universe.core.ports import AXES
 from event_universe.core.rule3 import link_factor, mass, rule3, rule_integers
+from event_universe.rows import CARRIER
 from tests.laws import arrivals_rule3, node_of
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -276,3 +278,44 @@ def test_the_take_count_is_one_carried_division_of_the_walls_by_the_price_tc_s1(
         below += first < s
         short += core.quotient(first * (price - x * w * first), weight) < walls
     assert below == short > 0
+
+
+def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_identity_lt_s1():
+    """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-Node test): on the hole seed every move of the close writes its booking on the carrier's flux line of its axis at its Node by the Node's one write act, so at every click the Link's record identity holds per axis at every end, -dP p_0^2 + carry before - carry after = laid x (K den Gamma^2 T), the line gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the Node's own lines and not the log alone; the Node's carry after the interval is the last booking's at that Node; the run back exact through 14 intervals with the bookings undone. Under 15 s."""
+    node = node_of("world_hole.json", intervals=14)
+    wall = node.trace * node.den * node.gamma * node.gamma * node.T
+    flux = slice(1 + AXES, 1 + AXES + AXES)
+    hashes, checked = [], 0
+    for _ in range(14):
+        hashes.append(node.state_hash())
+        from_log = len(node.log)
+        node.step()
+        last = {}
+        for e in node.log[from_log:]:
+            if e["event"] not in ("birth", "credit"):
+                continue
+            bookings = [(tuple(t["node"]), t["dP_take"], t) for t in e.get("takes", [e])]
+            if e["event"] == "birth":
+                bookings += [
+                    (
+                        tuple(where),
+                        dp,
+                        {k: e[k + "_ends"][j] for k in ("clock", "recoil", "carry_was", "carry")},
+                    )
+                    for j, (where, dp) in enumerate(
+                        zip((e["minus"], e["plus"]), e["dP_lay_ends"], strict=True)
+                    )
+                ]
+            for where, dp, t in bookings:
+                for a in range(AXES):
+                    assert (
+                        t["carry_was"][a] - t["carry"][a] - dp[a] * t["clock"] ** 2
+                        == t["recoil"][a] * wall
+                    )
+                last[where], checked = t["carry"], checked + 1
+        lines = node.row(CARRIER).lines[flux]
+        assert all(carry == [int(line.wr[at]) for line in lines] for at, carry in last.items())
+    assert checked == 193
+    for h in reversed(hashes):
+        node.step(-1)
+        assert node.state_hash() == h

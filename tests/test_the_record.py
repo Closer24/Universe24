@@ -17,7 +17,8 @@ CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # the hole under GP-S1: 2 (the Links lengthening in the clicks) lost with the children's lay, SHOWN under PL-S1; 9 and 22 among them under the former write of 2 W after the step
     # TW-S1 (the trace's weight 6): the hole gains 22 (Coulomb's sign) and reads 15 by the former identity; the chiral loses 22; the bodies birth (22 births) and gain 4, 15, 21, 22, 24 to 27, losing 2, 8, 9 and 16
-    "hole": {4, 5, 7, 8, 10, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
+    # the hole gains 2 (the Links lengthening in the clicks) under LT-S1
+    "hole": {2, 4, 5, 7, 8, 10, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
     # the chiral under EX-S1: 15 (conservation at the click) lost, the decoder reading the former identity taken >= booked where the take's remainder now pays (Animate's line to read taken + remainder before - remainder after = booked); under MG-S1: 24 SHOWN (3 pairs into light), 17 lost (the decoder counts the light children's W, 0 by the exact lay)
     "chiral": {2, 4, 5, 7, 8, 9, 10, 16, 18, 19, 21, 24, 25, 26, 27, 30, 37, 43, 45, 59, 60},
     # the bodies under EX-S1: 8 (families forming) and 16 (the uncertainty floor) gained with the credits paid by the remainder (2,812 credits, 1,973 before)
@@ -29,7 +30,7 @@ VERDICTS = {  # the verdicts' words by name
         "9 collisions": "NOT SHOWN: the credited Nodes receding",
         "22 Coulomb's sign": "SHOWN: unlike senses approach and like senses part",  # NOT SHOWN at the trace 54
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 6 / 17",  # 12 / 16 at the trace 54
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 4 / 18",  # 6 / 17 before LT-S1; 12 / 16 at 54
         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
         "60 the acceleration in the clicks": "SHOWN: after a slowing, an eighth's growth of the spacing larger",
@@ -38,7 +39,7 @@ VERDICTS = {  # the verdicts' words by name
         "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
         "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
         "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
-        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 14 / 15",  # 2 / 11 at the trace 54
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = 16 / 14",  # 14 / 15 before LT-S1; 2 / 11 at 54
     },
     "bodies": {
         "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link",

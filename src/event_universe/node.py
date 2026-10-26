@@ -95,6 +95,7 @@ class Node:
         self.counts: dict[str, int] = dict(COUNTS)
         self.max_transient = self.count_max = 0
         self.last_dp = [0, 0, 0]
+        self.last_recoil: dict[str, Any] = {}
         self.start_factors: tuple[Any, ...] = ()
         self.start_frames: list[Any] = []
         self.start_phases: list[tuple[Any, Any]] = []
@@ -112,6 +113,7 @@ class Node:
         seed_pair = phase.seed(self.X, self.gamma)
         self.orbit_lines, self.orbit = [seed_pair], [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
         self.start_content, self.start_x = self.content(), self.row(CARRIER).lines[0].now
+        self.start_clock = readings.paces_of(self, self.start_content)[0]
 
     def ride_walls(self) -> None:
         """The riding lines' remainders at the start: a riding line's remainder lives at the mean wall (w div 2)(X_before + X_now) of the carrier's two levels at its Node, half of it at the seed."""

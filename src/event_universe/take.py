@@ -10,7 +10,7 @@ from event_universe.core import acts, rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, port_of, wrap
 from event_universe.core.rule3 import quotient
 from event_universe.links import cross
-from event_universe.rows import PLANE, Row
+from event_universe.rows import CARRIER, PLANE, Row, zeros
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -97,3 +97,23 @@ def move(node: Node, rec: int, k: int, at: tuple[int, ...], count: int) -> None:
     wall = at_node(lines[k].wall, at)
     q, _unmoved = acts.divide(count * wall, wall, int(lines[k].rem[at]), 1)
     lay(node, rec, at, tuple(q if j == PLANE * k else 0 for j in range(PLANE * len(lines))))
+
+
+def recoil(
+    node: Node, where: tuple[int, ...], dp: list[int], clock: int, direction: int
+) -> dict[str, Any]:
+    """The move's booking written on the Link's record the Node holds (LT-S1, the owner's word of 2026-10-26, 08:4x UTC, "approve"; H-Lay-As-The-Take-Reversed-1, the lay as the take reversed read on the Link's record): the momentum a move books at its Node (momentum_of, the change of the records' current on the Node's six Links) is written per axis on the carrier's flux line of that axis at that Node by the Node's one write act (one carried division at the line's write wall, the carry in its write remainder; Y-S3's line, whose source summed over the board is the records' momentum negated, so the line gains what the moved quantum lost, -dP, at the clock squared by the position of the reading, and the records' and the lattice's momentum sum to what they were: the Boss's correction of the sign under the delegation of 00:57, 2026-10-26, 10:18 UTC, the derivation's line 19 having carried the move's sign where the sentence means the book's), in the direction given, the same act at -1 undoing it from the log's numbers; so the momentum and the angular momentum at every click are an identity, -dP_a p_0^2 + wr_a - wr_a' = q_a K den Gamma^2 T. Returns the log's numbers: the clock, the levels laid per axis, the carry before and after."""
+    lines = node.row(CARRIER).lines[1 + AXES : 1 + AXES + AXES]
+    was, laid = [int(line.wr[where]) for line in lines], []
+    for line, p in zip(lines, dp, strict=True):
+        numerator = zeros(node.shape)
+        numerator[where] = -p * clock * clock
+        level = int(line.now[where])
+        node.write(line, numerator, direction)
+        laid.append(int(line.now[where]) - level)
+    return {
+        "clock": clock,
+        "recoil": laid,
+        "carry_was": was,
+        "carry": [int(line.wr[where]) for line in lines],
+    }

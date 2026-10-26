@@ -29,12 +29,19 @@ sys.set_int_max_str_digits(0)
 from event_universe import gram, readings  # noqa: E402
 from event_universe.core.ports import AXES, across, port_of  # noqa: E402
 from event_universe.core.rule3 import quotient, share_weight  # noqa: E402
-from event_universe.links import link_current, wronskian  # noqa: E402
+from event_universe.links import cross, link_current  # noqa: E402
 from event_universe.loader.world import load_world  # noqa: E402
 from event_universe.node import Node  # noqa: E402
 from event_universe.rows import PLANE  # noqa: E402
 
 IMAGE_CUBE = AXES  # the 48 are read on the 3-cube image of the world
+
+
+def wronskian(re: Any, im: Any) -> Any:
+    """The plane's bilinear W = re_now im_before - im_now re_before at every Node (the kit's own reading; the engine's links.wronskian struck 2026-10-26 as a line no engine code read)."""
+    return cross(re.now, im.now, re.before, im.before)
+
+
 IMAGE_INTERVALS = 30
 
 

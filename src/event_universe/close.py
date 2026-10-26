@@ -21,7 +21,7 @@ from event_universe.merger import (
     walls_of,
 )
 from event_universe.rows import PLANE, Line
-from event_universe.take import lay, move, neighbour
+from event_universe.take import lay, move, neighbour, recoil
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -218,6 +218,10 @@ def children(
         else:
             dp_lay, w_children, stood, ends = child_laid(node, s, minus, plus)
         touched |= {minus, plus}
+        written = [
+            recoil(node, where, dp, int(node.start_clock[where]), 1)
+            for where, dp in zip((minus, plus), ends, strict=True)
+        ]
         node.counts["births"] += 1
         node.closes[at] += 1
         node.log.append(
@@ -246,7 +250,20 @@ def children(
                 "dP_take": take["dP_take"],
                 "dP_lay": dp_lay,
                 "dP_lay_ends": ends,
-                **{key: take[key] for key in ("remainder_was", "remainder", "owed") if key in take},
+                **{key + "_ends": [w[key] for w in written] for key in written[0]},
+                **{
+                    key: take[key]
+                    for key in (
+                        "remainder_was",
+                        "remainder",
+                        "owed",
+                        "clock",
+                        "recoil",
+                        "carry_was",
+                        "carry",
+                    )
+                    if key in take
+                },
                 **({"takes": take["takes"], "exact_lay": exact} if "takes" in take else {}),
             }
         )
@@ -264,10 +281,18 @@ def click(
     if direction == -1:
         assert frame is not None
         rec0 = node.records().index(node.emitter())
+        unbooked: set[tuple[Any, ...]] = set()
         for entry in reversed(node.log[frame["log_from"] :]):
             at = tuple(entry["node"])
             if entry["event"] == "birth":
                 s, (a, b) = entry["line_pair"], entry["amplitude"]
+                for where, dp, clock in zip(
+                    (entry["plus"], entry["minus"]),
+                    entry["dP_lay_ends"][::-1],
+                    entry["clock_ends"][::-1],
+                    strict=True,
+                ):
+                    recoil(node, tuple(where), dp, clock, -1)
                 exact = entry.get("exact_lay", [None, None])
                 for where, sense, laid in zip(
                     (entry["minus"], entry["plus"]), (-1, 1), exact, strict=True
@@ -280,6 +305,9 @@ def click(
                 row = entry.get("taken_row", rec0)
                 for take in entry.get("takes", [entry]):
                     where = tuple(take["node"])
+                    if entry["event"] == "credit" or (where, row, at) not in unbooked:
+                        unbooked.add((where, row, at))
+                        recoil(node, where, take["dP_take"], take["clock"], -1)
                     if "taken_levels" in take:
                         lay(node, row, where, tuple(take["taken_levels"]))
                         continue

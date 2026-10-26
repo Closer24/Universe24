@@ -12,7 +12,7 @@ from event_universe.core.ports import AXES
 from event_universe.core.rule3 import least_at, quotient, share_weight
 from event_universe.links import cross
 from event_universe.rows import Line, zeros
-from event_universe.take import at_node, frame_nodes, lay, momentum_of, move, neighbour
+from event_universe.take import at_node, frame_nodes, lay, momentum_of, move, neighbour, recoil
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -165,6 +165,7 @@ def write_ends(
                     levels=size,
                     taken_levels=list(levels),
                     dP_take=moment,
+                    **recoil(node, where, moment, int(node.start_clock[where]), 1),
                 )
             )
             continue
@@ -176,6 +177,7 @@ def write_ends(
         node.closes[where] += 1
         node.take_rem[where] = fall - owed
         node.last_dp = momentum_of(node, z.now, z.before, where, d_now=toward * levels, num=row.pair[0])
+        node.last_recoil = recoil(node, where, node.last_dp, int(node.start_clock[where]), 1)
         found.append(
             {
                 "node": list(where),
@@ -189,6 +191,7 @@ def write_ends(
                 "remainder_was": rem_was,
                 "remainder": fall - owed,
                 "owed": owed,
+                **node.last_recoil,
             }
         )
     return found

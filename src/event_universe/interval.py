@@ -22,6 +22,7 @@ from event_universe.metric import (
     tensor_parts,
 )
 from event_universe.rows import CARRIER, POTENTIAL, Line, Row, walled_of, zeros
+from event_universe.take import momentum_of, recoil
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -44,11 +45,13 @@ class Interval:
             self.top: Any = np.zeros(node.shape, dtype=bool)
             self.kept: list[list[Line]] | None = None
             self.frozen: Any = None
+            self.bookings: list[tuple[tuple[int, ...], list[int], int]] = []
         else:
             frame = node.stack.pop()
             node.click([], [], -1, frame)
             self.top = frame["turned"]
             self.frozen = frame["frozen"]
+            self.bookings = frame["bookings"]
         self.still: Any = self.top if self.frozen is None else self.top | self.frozen
         self.held = [[line.copy() for line in row] for row in node.rows()]
         if direction == -1:
@@ -90,6 +93,7 @@ class Interval:
         self.c = np.asarray(volume.level_of(node.gamma, self.at(self.carrier.lines[0])), dtype=object)
         node.start_content = self.c
         self.p0, self.pi = readings.paces_of(node, self.c)
+        node.start_clock = self.p0
         if self.frozen is None:
             self.frozen = readings.frozen_of(node, self.c)
             self.still = self.top | self.frozen
@@ -244,7 +248,7 @@ class Interval:
         )
 
     def lays(self) -> None:
-        """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.odd_rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`); the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
+        """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.odd_rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`), its booking per Node laid written on the carrier's flux lines by the Node's write act (take.recoil, LT-S1: the emission's lay taken into the clause), its bookings kept in the interval's frame for the run back and undone at -1 by the same act, the last first, after the swap's undoing and before the writes come off, at no still Node (turned or frozen), where the swap or the restore wiped the forward's booking with the lay; the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
         node = self.node
         line, carrier = node.emitter().lines[0], node.row(CARRIER).lines[0]
         levels = line.now
@@ -252,6 +256,17 @@ class Interval:
         node.write(line, paces.odd_rounded(self.emission, wall), self.direction)
         if self.direction == 1:
             laid_on(node, line, levels)
+        if self.direction == -1:
+            for at, dp, clock in reversed(self.bookings):
+                if not self.still[at]:
+                    recoil(node, at, dp, clock, -1)
+        else:
+            laid, pair = line.now - levels, node.emitter().pair
+            assert pair is not None
+            for at in (at for at in np.ndindex(node.shape) if int(laid[at])):
+                dp = momentum_of(node, line.now, line.before, at, d_now=int(laid[at]), num=pair[0])
+                self.bookings.append((at, dp, int(node.start_clock[at])))
+                recoil(node, at, dp, int(node.start_clock[at]), 1)
         for line, n in zip(node.row(POTENTIAL).lines, [None, *self.current], strict=True):
             if n is not None:
                 node.write(line, n, self.direction)
@@ -271,7 +286,13 @@ class Interval:
         log_from = len(node.log)
         node.click(self.plane_starts, self.held)
         node.stack.append(
-            {"turned": self.top, "counters": counters, "log_from": log_from, "frozen": self.frozen}
+            {
+                "turned": self.top,
+                "counters": counters,
+                "log_from": log_from,
+                "frozen": self.frozen,
+                "bookings": self.bookings,
+            }
         )
 
 
