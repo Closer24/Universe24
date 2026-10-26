@@ -72,7 +72,9 @@ def matmul(a: Matrix, b: Matrix) -> Matrix:
 
 
 def weighted(m: Matrix, xs: list[Any], ys: list[Any]) -> list[Any]:
-    """The bilinear x.m.y line by line, x_k (m y)_k, so that a division per line stays one per line."""
+    """The bilinear x.m.y line by line, x_k (m y)_k, so that a division per line stays one per line; at the identity (every shape but the quartet's) the plain products x_k y_k."""
+    if m == identity(len(xs)):
+        return [x * y for x, y in zip(xs, ys, strict=True)]
     return [x * my for x, my in zip(xs, matvec(m, ys), strict=True)]
 
 

@@ -1,4 +1,4 @@
-"""The close's reads and writes at one Node: the one-Link read of a number on the frame's digit lattices (`read_number`), the exact take of the taken row's levels by the share's fall on the line the fall's sign chooses (`fall_of`; the take act at a list of ends is merger.takes, CR-S2), the one lay act (`lay`) and the take's move as the write's form (`move`, CR-S1), the lattice momentum a move books (`momentum_of`) and the refusal by name (`refused`)."""
+"""The close's reads and writes at one Node: the exact take of the taken row's levels by the share's fall on the line the fall's sign chooses (`fall_of`; the take act at a list of ends is merger.takes, CR-S2), the one lay act (`lay`) and the take's move as the write's form (`move`, CR-S1), the lattice momentum a move books (`momentum_of`) and the refusal by name (`refused`)."""
 
 from __future__ import annotations
 

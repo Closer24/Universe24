@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, gram, interval, readings, seed, take
+from event_universe import close, gram, interval, readings, seed
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, PORTS, across
@@ -161,10 +161,6 @@ class Node:
     def link_factors(self, axis_levels: list[Any] | None = None, frozen: Any = None) -> tuple[Any, ...]:
         """The Link factor at each Port (readings.link_factors), 0 where either end is frozen."""
         return readings.link_factors(self, axis_levels, frozen)
-
-    def share(self, lines: list[Line], r: rule3.Rule) -> Any:
-        """A record's conserved form's share at every Node in the carrier's unit (gram.share)."""
-        return gram.share(self, lines, r)
 
     def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
         """The arrivals of a row's lines at one Port, read in the Node's frame (the row's conjugation where the frame sign is -1, gram.conjugated) and turned plane by plane by the Link's record (links.turned); a row of one line is turned by the identity; `turn` None is the identity for every shape."""
@@ -337,10 +333,6 @@ class Node:
     ) -> None:
         """The close (close.click), the Node's fourth act, in the direction: backward the close undone from the log's frame."""
         close.click(self, plane_starts, held, direction, frame)
-
-    def lay(self, rec: int, where: Any, levels: tuple[Any, ...], sign: int = 1) -> None:
-        """The one lay act (take.lay)."""
-        take.lay(self, rec, where, levels, sign)
 
     def step(self) -> None:
         self.run(1)

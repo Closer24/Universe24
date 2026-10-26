@@ -7,6 +7,7 @@ from typing import Any
 
 import numpy as np
 
+from event_universe import gram
 from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import quotient
@@ -16,7 +17,7 @@ from event_universe.loader.world import read_world
 from event_universe.merger import takes
 from event_universe.node import Node
 from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
-from event_universe.take import fall_of, frame_nodes, move
+from event_universe.take import fall_of, frame_nodes, lay, move
 from tests.laws import node_of, refused, run_back_exact, state_of, world_of
 
 CENTRE, INTERVALS = (1, 1, 1), 20  # the fed Node, the 3-cube's centre; the run's intervals
@@ -255,11 +256,11 @@ def shares_of(node: Node) -> tuple[Any, Any, Any]:
     gap0 = node.emitter()
     rule = node.rule(gap0.pair, node.start_content, node.link_factors())
     pace = np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)
-    x, carrier = node.start_x, node.share(gap0.lines, rule)
+    x, carrier = node.start_x, gram.share(node, gap0.lines, rule)
     node.start_x = np.vectorize(lambda p: quotient(node.gamma**3, p * p), otypes=[object])(pace)
-    frame = node.share(gap0.lines, rule)
+    frame = gram.share(node, gap0.lines, rule)
     node.start_x = zeros(node.shape) + node.gamma
-    vacuum, node.start_x = node.share(gap0.lines, rule), x
+    vacuum, node.start_x = gram.share(node, gap0.lines, rule), x
     return carrier, frame, vacuum
 
 
@@ -356,7 +357,7 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
         ((2, 1, 2), (b, a, 0, 0)),
     )
     for at, levels in feed:
-        node.lay(heavy, at, levels)
+        lay(node, heavy, at, levels)
     kept = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
@@ -498,7 +499,7 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
         ((1, 2, 1), (a, b, 0, 0)),
         ((2, 1, 2), (b, a, 0, 0)),
     ):
-        node.lay(heavy, at, levels)
+        lay(node, heavy, at, levels)
     kept, lines_taken = copy.deepcopy(node), []
     for _ in range(INTERVALS):
         seen = len(node.log)

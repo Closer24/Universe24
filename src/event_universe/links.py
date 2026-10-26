@@ -89,17 +89,6 @@ def wronskian(re: Line, im: Line) -> Any:
     return cross(re.now, im.now, re.before, im.before)
 
 
-def plane_current(re: Line, im: Line, frames: list[Any]) -> list[Any]:
-    """The plane's sign current on each axis, J_a = Im(conj z (z(i + a) - z(i - a))) from the levels now, the neighbours' im read in the Node's frame; the three odd lines' source."""
-    found = []
-    for a in range(AXES):
-        fp, fm = frames[port_of(a, 0)], frames[port_of(a, 1)]
-        dz_re = gradient(re.now, a)
-        dz_im = fp * across(im.now, port_of(a, 0)) - fm * across(im.now, port_of(a, 1))
-        found.append(cross(re.now, im.now, dz_re, dz_im))
-    return found
-
-
 def link_current(line: Line, port: int) -> Any:
     """The line's own current on the Link at the Port, F_ij = now_i before_j - before_i now_j: odd under the exchange of the ends (the other end reads -F), read at the interval's start; the + child of a Link birth goes to the end the current flows into."""
     return cross(line.now, line.before, across(line.now, port), across(line.before, port))
@@ -121,8 +110,3 @@ def row_twist(lines: list[Line], axis: int) -> Any:
 def net_current(line: Line, axis: int) -> Any:
     """A line's net transverse current at every Node along an axis, u_b(k) = F(k, k - b) - F(k, k + b): the current into the Node from the -b Link less the current out along the +b Link, read from the Node's own two Links of that axis."""
     return link_current(line, port_of(axis, 1)) - link_current(line, port_of(axis, 0))
-
-
-def twist(line: Line, axis: int) -> Any:
-    """The twist of a line's transverse current along the +axis Link of every Node (PA2's form, the owner's sentence 4): h(k, k + e_a) = u_b(k) u_c(k + e_a) - u_c(k) u_b(k + e_a) with (a, b, c) cyclic, the cross product of the two ends' transverse currents read at each end from its own Links; a pseudoscalar of the unoriented Link, the handedness of the born pair (the record's twist of one line, `row_twist`)."""
-    return row_twist([line], axis)

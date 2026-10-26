@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 from event_universe import gram
 from event_universe.core import rule3
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import half, quotient, share_weight
+from event_universe.core.rule3 import least_at, quotient, share_weight
 from event_universe.links import cross
 from event_universe.rows import Line, zeros
 from event_universe.take import at_node, fall_of, frame_nodes, lay, momentum_of, move, neighbour
@@ -55,15 +55,10 @@ def walls_of(
     return found[0], found[1]
 
 
-def products(xs: list[int], ys: list[int]) -> list[int]:
-    """The bilinear x.G.y line by line at the identity G (gram.weighted's form for every shape but the quartet's), x_k y_k."""
-    return [x * y for x, y in zip(xs, ys, strict=True)]
-
-
 def share_at(node: Node, lines: list[Line], r: rule3.Rule, at: tuple[int, ...]) -> int:
     """A record's share at one Node (gram.share's form, the same integers read at the Node and its six neighbours alone)."""
     g = gram.gram(len(lines))
-    weighted = products if g == gram.identity(len(lines)) else partial(gram.weighted, g)
+    weighted = partial(gram.weighted, g)
     nows, befores = [int(line.now[at]) for line in lines], [int(line.before[at]) for line in lines]
     reached, shared = [0] * len(lines), [0] * len(lines)
     for port, reach in enumerate(r.reaches):
@@ -252,13 +247,7 @@ def rise_of(
         moved = now + u * d
         return int(quotient(x * (w * (moved * moved - now * now) + u * d * pull), weight))
 
-    high = 1
-    while rise(high) < wall:
-        high += high
-    low = 0
-    while high - low > 1:
-        middle = int(half(low + high))
-        low, high = (middle, high) if rise(middle) < wall else (low, middle)
+    high = least_at(lambda d: rise(d) >= wall)
     return k, u * high, rise(high)
 
 

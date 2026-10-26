@@ -119,8 +119,8 @@ class Toy(Node):
         z = gap0.lines[0]
         gap0_start = plane_starts[self.records().index(gap0)]
         sh_end, sh_vac = (
-            self.share([z], r_gap0),
-            self.share([gap0_start[0]], r_gap0),
+            gram.share(self, [z], r_gap0),
+            gram.share(self, [gap0_start[0]], r_gap0),
         )
         for det in self.detectors:
             rise = int(sh_end[det]) // self.unit_emitter - int(sh_vac[det]) // self.unit_emitter

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from typing import Any, NamedTuple
 
 from event_universe.core.ports import PORTS
@@ -77,6 +78,18 @@ def carried_division(total: Any, wall: Any, remainder: Any, direction: int = 1) 
     quotient = carried // wall
     rest = carried - wall * quotient
     return quotient, rest if direction == 1 else wall - 1 - rest
+
+
+def least_at(above: Callable[[int], bool]) -> int:
+    """The least positive count at which `above` holds, by comparisons alone (the one search of the lays' amplitudes and the merger's rise; its four spellings kept by name): the bound doubled from 1 until it holds, then halved between the last count below and the first above."""
+    high = 1
+    while not above(high):
+        high += high
+    low = 0
+    while high - low > 1:
+        middle = int(half(low + high))
+        low, high = (middle, high) if not above(middle) else (low, middle)
+    return high
 
 
 def flux_total(flux: Any, mass: Any, wall: Any, now: Any, other: Any) -> Any:

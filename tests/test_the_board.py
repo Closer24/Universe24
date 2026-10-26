@@ -10,6 +10,7 @@ from typing import Any
 import numpy as np
 
 from event_universe import gates as table
+from event_universe import gram, take
 from event_universe import run as writer
 from event_universe.core.ports import AXES, PORTS
 from event_universe.links import row_current
@@ -260,7 +261,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
         re, im = row.lines
         assert row.pair is not None and not any(ints(re.now * im.before - im.now * re.before))
         energy = sum(
-            ints(node.share(row.lines, node.rule(row.pair, node.content(), node.link_factors())))
+            ints(gram.share(node, row.lines, node.rule(row.pair, node.content(), node.link_factors())))
         )
         momentum = sum(
             sum(
@@ -276,7 +277,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
     def centroid(node: Node) -> tuple[int, int]:
         row = node.by_index[2]
         assert row.pair is not None
-        share = node.share(row.lines, node.rule(row.pair, node.content(), node.link_factors()))
+        share = gram.share(node, row.lines, node.rule(row.pair, node.content(), node.link_factors()))
         return sum(ints(share * np.indices(node.shape)[0])), sum(ints(share))
 
     node, law = laid(moving)
@@ -440,8 +441,8 @@ def test_the_pair_at_rest_merges_into_light_by_its_own_quantum_taken_whole_mg_s1
     found = []
     for k in (1, 3):
         board = node_of("world_node.json", shape=[5, 5, 5], seed=[])
-        board.lay(heavy, m, (k * a, 0, 0, k * b))
-        board.lay(heavy, p, (k * a, 0, 0, -k * b))
+        take.lay(board, heavy, m, (k * a, 0, 0, k * b))
+        take.lay(board, heavy, p, (k * a, 0, 0, -k * b))
         held = copy.deepcopy(board)
         for _ in range(4):
             board.step()

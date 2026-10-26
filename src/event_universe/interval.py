@@ -146,7 +146,7 @@ class Interval:
             turn = None
             if r in self.records:
                 assert r.pair is not None
-                rotation = rotation_of(node, r.pair) if r.gap else 0
+                rotation = coupling_of(r) * rotation_of(node, r.pair)
                 turn = fold_links(self.links_at[coupling_of(r)], rotation, self.flux_lines, node.gamma)
             k = self.where[id(r)]
             self.walls[k] = rule.wall
