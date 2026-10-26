@@ -1,0 +1,586 @@
+{
+"range": [
+2101,
+2250
+],
+"totals": {
+"released_node_intervals": 10,
+"frozen_node_intervals": 10
+},
+"per_record_at_released_nodes": {
+"0": {
+"unit": 878848879465440000,
+"node_standing": 10,
+"node_share_max": 24201005223475045831996,
+"neighbour_standing_links": 60,
+"both_standing_links": 60,
+"current_nonzero_at_node": 0,
+"twist_nonzero_at_node": 0,
+"neighbours_seen": 60,
+"charge_nonzero": 0
+},
+"1": {
+"unit": 1615924816158049488000,
+"node_standing": 0,
+"node_share_max": 173178301807570110321,
+"neighbour_standing_links": 0,
+"both_standing_links": 0,
+"current_nonzero_at_node": 0,
+"twist_nonzero_at_node": 0,
+"neighbours_seen": 60,
+"charge_nonzero": 0
+},
+"2": {
+"unit": 1613701501183721088000,
+"node_standing": 0,
+"node_share_max": 170819156222946870406,
+"neighbour_standing_links": 0,
+"both_standing_links": 0,
+"current_nonzero_at_node": 0,
+"twist_nonzero_at_node": 0,
+"neighbours_seen": 60,
+"charge_nonzero": 0
+},
+"3": {
+"unit": 1637588529984138012000,
+"node_standing": 0,
+"node_share_max": 27531267911609721165,
+"neighbour_standing_links": 0,
+"both_standing_links": 0,
+"current_nonzero_at_node": 0,
+"twist_nonzero_at_node": 0,
+"neighbours_seen": 60,
+"charge_nonzero": 0
+}
+},
+"first_examples": [
+{
+"i": 2103,
+"node": [
+0,
+2,
+1
+],
+"content": 3792,
+"X": 4266214876,
+"records": [
+[
+0,
+22083,
+true,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+1,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+2,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+3,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+]
+],
+"neighbours_standing_rec_emitter": [
+false,
+false,
+false,
+false,
+false,
+false
+],
+"neighbours_content": [
+3521,
+3521,
+3156,
+3066,
+3066,
+3156
+]
+},
+{
+"i": 2181,
+"node": [
+0,
+2,
+1
+],
+"content": 3792,
+"X": 4222699243,
+"records": [
+[
+0,
+23968,
+true,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+1,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+2,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+3,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+]
+],
+"neighbours_standing_rec_emitter": [
+false,
+false,
+false,
+false,
+false,
+false
+],
+"neighbours_content": [
+3707,
+3792,
+3281,
+3204,
+3180,
+3281
+]
+},
+{
+"i": 2188,
+"node": [
+4,
+4,
+1
+],
+"content": 3792,
+"X": 4247915923,
+"records": [
+[
+0,
+13770,
+true,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+1,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+2,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+3,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+]
+],
+"neighbours_standing_rec_emitter": [
+false,
+false,
+false,
+false,
+false,
+false
+],
+"neighbours_content": [
+3204,
+3281,
+3336,
+3667,
+3707,
+3556
+]
+},
+{
+"i": 2196,
+"node": [
+4,
+2,
+1
+],
+"content": 3792,
+"X": 4250493338,
+"records": [
+[
+0,
+20489,
+true,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+1,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+2,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+3,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+]
+],
+"neighbours_standing_rec_emitter": [
+false,
+false,
+false,
+false,
+false,
+false
+],
+"neighbours_content": [
+3748,
+3281,
+3707,
+3255,
+3424,
+3336
+]
+},
+{
+"i": 2200,
+"node": [
+1,
+1,
+2
+],
+"content": 3792,
+"X": 4254444921,
+"records": [
+[
+0,
+18261,
+true,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+1,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+2,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+3,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+]
+],
+"neighbours_standing_rec_emitter": [
+false,
+false,
+false,
+false,
+false,
+false
+],
+"neighbours_content": [
+3456,
+3180,
+3424,
+3424,
+3628,
+3424
+]
+},
+{
+"i": 2221,
+"node": [
+4,
+4,
+2
+],
+"content": 3792,
+"X": 4226163717,
+"records": [
+[
+0,
+20807,
+true,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+1,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+2,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+],
+[
+3,
+0,
+false,
+[
+false,
+false,
+false
+],
+[
+false,
+false,
+false
+]
+]
+],
+"neighbours_standing_rec_emitter": [
+false,
+false,
+false,
+false,
+false,
+false
+],
+"neighbours_content": [
+3365,
+3521,
+3591,
+3792,
+3521,
+3748
+]
+}
+]
+}
