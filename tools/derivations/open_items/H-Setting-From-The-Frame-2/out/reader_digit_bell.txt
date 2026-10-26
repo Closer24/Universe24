@@ -1,0 +1,5 @@
+hole_60.json pairs 16 e (same - opposite) per setting pair [-6, -6, 6, 6] S [12, 16] S^2 [144, 256] below 4
+chiral_60.json pairs 11 e (same - opposite) per setting pair [-3, -3, 2, 4] S [6, 11] S^2 [36, 121] below 4
+chiral_300.json pairs 11 e (same - opposite) per setting pair [-3, -3, 2, 4] S [6, 11] S^2 [36, 121] below 4
+ga2_450.json pairs 82 e (same - opposite) per setting pair [-76, -12, -74, -10] S [-148, 82] S^2 [21904, 6724] below 4
+chiral3_300.json pairs 5 e (same - opposite) per setting pair [2, 2, 1, 1] S [2, 5] S^2 [4, 25] below 4
