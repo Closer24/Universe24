@@ -4,6 +4,20 @@ The owner's law of the project (02:45 UTC): nature is read in the clicks alone; 
 
 The list is The-Laws-Of-Nature-Missing_COMPARISON.md's four lists, kept here one by one with the state; the Scribe mirrors it in the ledger; the Reader's rows carry the verdicts.
 
+## 0. The order now (the Boss's check of the whole plan at the owner's word of 07:5x UTC, 2026-10-26)
+
+**Running (four hands and one audit):** A1 the children laid moving (H-Children-Laid-Moving-1 and -2) and the kick's inverse (H-Kick-And-Lay-One-Act-2); the read as the write reversed (H-Read-Is-Write-Reversed-1; -2 landed); the unification audit (H-Unification-Audit-1: every unification one function, no old road).
+
+**David's queue (the standing order: an approved unification first):** (1) the tests' room line, then the merge of 8b1dbb781 (MG-S1, Y-S3, GP-S1, EX-S1; confirmed by H-Confirm-Build-21) under the lock; (2) CR-S1 and CR-S2's fold (approved 06:1x); (3) the audit's cleaning list; (4) RW-S1's fold on the owner's word; (5) dP_lay_ends (pushed 05:58, the hand to confirm); (6) AJ-S5 when the children-laid-moving pair lands and the owner's word; (7) FR-S1 with the horizon's full solution when one exists; (8) Y-S3's three lines; (9) the take as one act (in CR-S2).
+
+**The Reader's blocker (open since 01:5x UTC):** reader-5 is unmerged on the code-shape gate (clicks.py 428 and predicates.py 482 lines against 400): the readers' fold (H-Readers-Unification-1) is the Reader's first push; the gates of the phenomena tool, rows 55 to 60, the cycle board's frames and the page's design all wait on it. The Boss pokes it at every check-in until it lands.
+
+**The pairs next, in order (four at a time):** (a) A1's next form after the children-laid-moving verdict; (b) the 48's rotations (the reader's two leads, the 5-cube as the judge, the mirror state under the table widened for Y-S3's lines: GP-S1's open mark); (c) the long-wave measure of the angular momentum on the board (the torque against the moment on the chiral 2,400 and the collapse); (d) Bell's setting from the frame (A2); (e) the unifications by the code and the algebra (the owner's word of 04:1x); (f) A3 the bounded well's depth; (g) A4 the sign row under the time reversal (the second hand); (h) A11 the children's charge on a standing plane; (i) the seven of section F (AlgebraUpdated); (j) A5 to A10 in order; (k) spin at a birth as its own item if the moving children give no axial datum.
+
+**The owner's words owed (asked again at his next word):** A12 the trace's value (6 against 54; the Boss leans to 6); rows 61 to 65 as phenomena (his morning word); row 56's form (the cone's own, BC-F1, or NOT SHOWN as nature: the Boss recommends the latter); the photon's unit of J (no form in the letter); RW-S1 and AJ-S3 as readings.
+
+**Held by the owner's word:** FR-S1 (approved 03:41, built and withdrawn by David, waits for the horizon's exit); the centred pick and the live origin check.
+
 ## A. Missing by name: a derivation owed (generic laws first)
 
 | # | the law of nature | in the clicks? | the hands | state (2026-10-26, 02:5x UTC) |
