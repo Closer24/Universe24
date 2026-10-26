@@ -7,6 +7,9 @@ import sys
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from phenomena import reading_lines  # noqa: E402  (the one loader of a reading, the table's)
+
 MEBIBYTE = 1024 * 1024  # a mebibyte, the unit of the branch's bound per file
 BOUND = 4 * MEBIBYTE  # the Node lines' bytes on the page, under the branch's bound of 5 per file
 LEVELS = 25  # the current's levels on a Link above zero, one letter each
@@ -519,12 +522,7 @@ def page_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> str:
 def write_page(record_path: str | Path, reading_path: str | Path, out_path: str | Path) -> None:
     """The page written from the record file and the reading file (one JSON per line, the gates' output)."""
     record = json.loads(Path(record_path).read_text(encoding="utf-8"))
-    reading = [
-        json.loads(line)
-        for line in Path(reading_path).read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
-    Path(out_path).write_text(page_of(record, reading), encoding="utf-8")
+    Path(out_path).write_text(page_of(record, reading_lines(reading_path)), encoding="utf-8")
 
 
 if __name__ == "__main__":

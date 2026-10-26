@@ -353,10 +353,7 @@ def merger(record: Record) -> dict[str, Any]:
 
 def horizon_radiates(record: Record) -> dict[str, Any]:
     """Row 61: the horizon radiates (hp2's predicate, the Boss's 6408295798, the owner's word of 03:4x UTC: Hawking's radiation as nature looks in the clicks): after a Node's first freeze, a birth at that Node or at one of its six neighbours, and a credit two or more Links from every frozen Node (the radiation leaving the horizon); NOT READ with no frozen Node."""
-    first: dict[int, int] = {}
-    for line in record.nodes:
-        for at in line["frozen"]:
-            first.setdefault(at, int(line["i"]))
+    first = record.first_frozen()
     if not first:
         return {
             "61 the horizon radiates": {

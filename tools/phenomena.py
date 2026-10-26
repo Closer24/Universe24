@@ -25,13 +25,18 @@ KINDS = (
 )  # the kinds the decoder writes, in the table's order
 
 
+def reading_lines(path: str | Path) -> list[dict[str, Any]]:
+    """A reading file's lines (one JSON object per line, the gates' output), the one loader of a reading for the table and the page."""
+    return [
+        json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()
+    ]
+
+
 def reading_of(path: str | Path) -> dict[int, dict[str, Any]]:
     """A reading file's numbered rows: the gate's number to its row (its verdict among the numbers)."""
     rows: dict[int, dict[str, Any]] = {}
-    for line in Path(path).read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        for key, row in json.loads(line).items():
+    for line in reading_lines(path):
+        for key, row in line.items():
             found = re.match(r"(\d+) ", key)
             if found and isinstance(row, dict) and "verdict" in row:
                 rows[int(found.group(1))] = row | {"key": key}

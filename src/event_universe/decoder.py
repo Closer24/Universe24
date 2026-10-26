@@ -158,6 +158,14 @@ class Record:
         bodies: dict[tuple[tuple[int, ...], int], list[dict[str, Any]]] = self.memo[key]
         return bodies
 
+    def first_frozen(self) -> dict[int, int]:
+        """The first frozen interval of every Node that freezes (the Link pace 0, BH-S1's mask on the Node lines), the Node's index to the interval; the one reader of the horizon's Nodes for rows 14, 34 and 61."""
+        first: dict[int, int] = {}
+        for line in self.nodes:
+            for at in line["frozen"]:
+                first.setdefault(int(at), int(line["i"]))
+        return first
+
     def signs_of(self) -> list[int]:
         """The births' children's senses as signs of their Wronskians, in the births' order."""
         return [(w > 0) - (w < 0) for b in self.births for w in b["W_children"]]
