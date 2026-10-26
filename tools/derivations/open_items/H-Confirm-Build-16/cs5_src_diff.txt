@@ -1,0 +1,171 @@
+diff --git a/src/event_universe/node.py b/src/event_universe/node.py
+index 98aa79024..f0786317a 100644
+--- a/src/event_universe/node.py
++++ b/src/event_universe/node.py
+@@ -75,8 +75,8 @@ class Node:
+         self.gapped = [r for r in self.records() if r is not self.emitter()]
+         self.unit_emitter = self.units[self.records().index(self.emitter())]
+         self.start_state()
+-        seed.lay_world(self, world.get("seed", []))
+         self.ride_walls()
++        seed.lay_world(self, world.get("seed", []))
+ 
+     def start_state(self) -> None:
+         """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
+diff --git a/src/event_universe/rows.py b/src/event_universe/rows.py
+index 78f060784..6f2f0ce4c 100644
+--- a/src/event_universe/rows.py
++++ b/src/event_universe/rows.py
+@@ -104,7 +104,7 @@ def order_key(row: Row) -> tuple[bool, int]:
+ 
+ 
+ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[list[Row], list[Row]]:
+-    """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the emitter is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the emitter or the walled row other than one, two planes at one pair, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den), no plane at another pair."""
++    """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the emitter is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the emitter or the walled row other than one, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den), no plane at another pair; a pair named in several rows is admitted as written, each row a record of its own with the same numbers (CS5-S2, the owner's word of 2026-10-25, 22:50 UTC, through the Boss: no row refused for its pair's repetition)."""
+     ints = universe["integers"]
+     den, gamma, action = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
+     by_index: list[Row] = []
+@@ -126,8 +126,6 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
+         raise ValueError(
+             "the universe names one row with its own wall, one plane at the gap 0, one shape-10 row and one shape-4 row"
+         )
+-    if len({r.pair for r in planes}) != len(planes):
+-        raise ValueError("two planes at one pair: the universe names every pair once")
+     if carriers[0].pair != (den - quotient(den, gamma), den):
+         raise ValueError(
+             "the shape-10 row is the clock's one level: its pair (den - den div Gamma, den)"
+diff --git a/src/event_universe/seed.py b/src/event_universe/seed.py
+index 8b508efc8..802c97f81 100644
+--- a/src/event_universe/seed.py
++++ b/src/event_universe/seed.py
+@@ -1,4 +1,4 @@
+-"""The seed as the world file lays it: a list of lays in the four forms of the law (the owner's word of 2026-10-25; the fourth, the uniform lay, by his word of 17:57 UTC): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in den's unit (h_a = den sin(k_a / 2)), moving at the band's rotation at that wave number with the optional flat `top` along the wave's axis (MV-S1 to MV-S3, 2026-10-25; one path for every record row, the plane at the gap 0 with a wave among them, with none the drift by name; a quartet's lay names its `vector`, the eight integers of the lattice, and may name one `sense`; the lay refused by state where the standing row's spin density agrees with the child's at the centre, SR-S4). Refused by name: a fourth form, a field of no form (an interval key among them), a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a quartet's lay with no vector, a wave number beyond the band's edge (|h| above den), a massless packet at the wave 0, a top not fitting the board."""
++"""The seed as the world file lays it: a list of lays in the five forms of the law (the owner's word of 2026-10-25; the fourth, the uniform lay, by his word of 17:57 UTC; the fifth, the light's cycle lay, by his word of 22:50 UTC, CS5-S2): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in den's unit (h_a = den sin(k_a / 2)), moving at the band's rotation at that wave number with the optional flat `top` along the wave's axis (MV-S1 to MV-S3, 2026-10-25; one path for every record row, the plane at the gap 0 with a wave among them, with none the drift by name; a quartet's lay names its `vector`, the eight integers of the lattice, and may name one `sense`; the lay refused by state where the standing row's spin density agrees with the child's at the centre, SR-S4); `wave` lays the light's cycle pattern at every Node (CS5-S2's world, the owner's word of 2026-10-25, 22:50 UTC: cs3's cycle form in cs5's and cs7's spelling, `row` the plane at the gap 0, `quanta` n, `p1` sixteen digits of Z_4 and `cz` one, the phase p(x, y, z) = (p1[4 (x mod 4) + (y mod 4)] + cz z) mod 4, `mirror` 0 or 1 for the negated lines' remainders). Refused by name: a form beyond these, a field of no form (an interval key among them), a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a quartet's lay with no vector, a wave number beyond the band's edge (|h| above den), a massless packet at the wave 0, a top not fitting the board, a cycle lay off the plane at the gap 0 or on a cube whose extent is not a multiple of 4, its digits off Z_4, its mirror off 0 and 1."""
+ 
+ from __future__ import annotations
+ 
+@@ -12,6 +12,7 @@ from event_universe.core.ports import AXES, wrap
+ from event_universe.core.rule3 import largest_below, quotient, remainder
+ from event_universe.links import turn_pair
+ from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
++from event_universe.wave import lay_cycle
+ 
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+@@ -20,6 +21,7 @@ FIELDS = {  # the fields of each form of the law; a field of no form is refused
+     "sea": frozenset({"lay", "row", "quanta", "sense"}),
+     "hole": frozenset({"lay", "at"}),
+     "at": frozenset({"lay", "row", "centre", "quanta", "width", "vector", "sense", "wave", "top"}),
++    "wave": frozenset({"lay", "row", "quanta", "p1", "cz", "mirror"}),
+ }
+ Pair = tuple[Any, Any]
+ 
+@@ -52,6 +54,13 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
+         elif form == "hole":
+             at = node.node_of(lay["at"])
+             node.lay(node.records().index(node.emitter()), at, (-node.drift, 0, 0, 0))
++        elif form == "wave":
++            if row is None or row is not node.emitter() or "quanta" not in lay:
++                raise ValueError("the cycle lay is the light's: the plane at the gap 0 at its quanta")
++            digits = [int(v) for v in lay.get("p1", [])] + [int(lay.get("cz", 1))]
++            lay_cycle(
++                node, node.records().index(row), int(lay["quanta"]), digits, int(lay.get("mirror", 0))
++            )
+         else:
+             n = int(lay["quanta"])
+             at = node.node_of(lay["centre"])
+diff --git a/src/event_universe/wave.py b/src/event_universe/wave.py
+new file mode 100644
+index 000000000..28b1a73c3
+--- /dev/null
++++ b/src/event_universe/wave.py
+@@ -0,0 +1,89 @@
++"""The `wave` lay, the light's cycle pattern at every Node (CS5-S2's world, the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss; cs3's cycle form in cs5's and cs7's spelling, the lay cs5_run.lay_pattern laid by script beside the engine, here the world file's own form): `{"lay": "wave", "row": r, "quanta": n, "p1": [16 digits], "cz": c, "mirror": m}`, the phase p(x, y, z) = (p1[4 (x mod 4) + (y mod 4)] + c z) mod 4 in Z_4 at every Node, the light z_now = A i^p and z_before = A i^(p + 1) (the quarter turn per interval, cs1's eigenmode; on the cycle cover the passing Links flow into every Node once, cs3), A the least amplitude whose least share over the board is at or above n quanta of the light, laid by the one lay act, the negated lines' remainders mirrored where m is 1 (cs1's gauge); refused by name off Z_4, off 0 and 1, and on a cube whose extent is not a multiple of 4; seed.lay_world names the form and its row."""
++
++from __future__ import annotations
++
++from typing import TYPE_CHECKING, Any
++
++import numpy as np
++
++from event_universe.core.ports import AXES
++from event_universe.core.rule3 import mirrored, quotient, remainder
++from event_universe.rows import CARRIER, PLANE, Line, zeros
++
++if TYPE_CHECKING:
++    from event_universe.node import Node
++
++TURNS = 4  # the quarter turns of Z_4, the cycle lay's digits and the side of its 4 by 4 pattern
++QUARTER = ((1, 0), (0, 1), (-1, 0), (0, -1))  # i^q as (re, im) for q in Z_4
++
++
++def cycle_phases(node: Node, digits: list[int]) -> Any:
++    """The cycle form's phase digit of Z_4 at every Node (cs3's spelling), p(x, y, z) = (p1[4 (x mod 4) + (y mod 4)] + cz z) mod 4 from the sixteen digits p1 and the digit cz after them."""
++    found = zeros(node.shape)
++    for at in np.ndindex(*node.shape):
++        x, y, z = (remainder(v, TURNS) for v in at)
++        found[at] = remainder(digits[TURNS * x + y] + digits[TURNS * TURNS] * z, TURNS)
++    return found
++
++
++def cycle_levels(p: Any, amplitude: int) -> tuple[Any, ...]:
++    """The light's four levels from the phase digits at an amplitude A (re_now, re_before, im_now, im_before): z_now = A i^p and z_before = A i^(p + 1), the quarter turn per interval of cs1's eigenmode."""
++    found = [zeros(p.shape) for _ in range(2 * PLANE)]
++    for at in np.ndindex(*p.shape):
++        for k, q in enumerate((int(p[at]), remainder(int(p[at]) + 1, TURNS))):
++            found[k][at], found[PLANE + k][at] = (amplitude * v for v in QUARTER[q])
++    return tuple(found)
++
++
++def lay_cycle(node: Node, rec: int, n: int, digits: list[int], mirror: int) -> None:
++    """The cycle lay of the light (CS5-S2's world; cs3's cycle form as cs5's cs5_run.lay_pattern laid it by flag, here the file's own form): the phase digits at every Node (`cycle_phases`) laid at the least amplitude whose least share over the board is at or above n quanta of the light (the search by comparisons, doubling then halving) by the one lay act over what stands, the negated lines' remainders mirrored once where the mirror is 1 (cs1's gauge: the remainder of a line whose level is negated, as the exchange mirrors it); refused by name off Z_4, off 0 and 1, and on a cube whose extent is not a multiple of 4; the lay logged with its digits and the sense 1, the quarter turn."""
++    row = node.records()[rec]
++    assert row.pair is not None
++    if len(digits) != TURNS * TURNS + 1 or any(d not in range(TURNS) for d in digits):
++        raise ValueError("the cycle form is sixteen digits p1 and one digit cz, each of Z_4")
++    if mirror not in (0, 1):
++        raise ValueError("the cycle lay's mirror is 0 or 1")
++    if remainder(node.cube, TURNS):
++        raise ValueError("the cycle pattern is 4 by 4: the cube's extent is a multiple of 4")
++    p = cycle_phases(node, digits)
++    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
++    rule = node.rule(row.pair, node.start_content, node.link_factors())
++    base = [x for line in row.lines for x in (line.now, line.before)]
++
++    def least_share(amplitude: int) -> int:
++        levels = cycle_levels(p, amplitude)
++        lines = [Line(base[k] + levels[k], base[k + 1] + levels[k + 1], None, None) for k in (0, 2)]
++        return min(int(x) for x in node.share(lines, rule).reshape(-1))
++
++    target, high = n * node.units[rec], 1
++    while least_share(high) < target:
++        high = high + high
++    low = 0
++    while high - low > 1:
++        middle = int(quotient(low + high, 2))
++        if least_share(middle) < target:
++            low = middle
++        else:
++            high = middle
++    levels = cycle_levels(p, high)
++    node.lay(rec, Ellipsis, levels)
++    for line, now, before in zip(row.lines, levels[0::2], levels[1::2], strict=True):
++        negated = np.vectorize(lambda a, b: int(a) < 0 or int(b) < 0, otypes=[bool])(now, before)
++        line.rem = np.where(negated & (mirror == 1), mirrored(line.rem, line.wall, 1), line.rem)
++    node.log.append(
++        {
++            "event": "lay",
++            "i": 0,
++            "node": None,
++            "line_pair": rec,
++            "quanta": n,
++            "amplitude": high,
++            "share": least_share(high),
++            "unit": node.units[rec],
++            "nodes": int(node.cube) ** AXES,
++            "sense": 1,
++            "p1": digits[: TURNS * TURNS],
++            "cz": digits[TURNS * TURNS],
++            "mirror": mirror,
++        }
++    )

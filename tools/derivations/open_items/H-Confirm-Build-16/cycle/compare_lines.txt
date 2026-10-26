@@ -1,0 +1,4 @@
+file lay vs cs5_run.lay_pattern (the finders' two renames applied: row(PLANE, gap=0) -> emitter(), unit_gap0 -> unit_emitter) intervals 10 10 equal lines 10 of 10 first apart None
+ hashes ['7cd1f39bb8e9736c', '33de0ec881ae405e', '3b2f5e59eedd63de'] ... cfc74c0f1b804417
+ lay logs common equal keys ['amplitude', 'i', 'line_pair', 'sense', 'unit'] a-only ['cz', 'mirror', 'node', 'nodes', 'p1', 'quanta', 'share'] b-only ['mirrored_lines', 'pattern', 'phase_counts', 'phases', 'share_min'] apart ['event']
+ counts equal True 64 64 log len 5505 5515

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/vf16/tools/derivations/open_items/H-Confirm-Build-16/cycle/cs5_run_emitter.py", line 367, in <module>
+    main(sys.argv)
+    ~~~~^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/vf16/tools/derivations/open_items/H-Confirm-Build-16/cycle/cs5_run_emitter.py", line 327, in main
+    node = CsNode(universe, world, pattern)
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/vf16/tools/derivations/open_items/H-Confirm-Build-16/cycle/cs5_run_emitter.py", line 230, in __init__
+    self.lay_line = lay_pattern(self, pattern)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/vf16/tools/derivations/open_items/H-Confirm-Build-16/cycle/cs5_run_emitter.py", line 111, in lay_pattern
+    entry: dict[str, Any] = {"event": "lay_pattern", "i": 0, "pattern": {k: v for k, v in pattern.items() if k != "phases"}, "line_pair": rec, "unit": node.unit_gap0}
+                                                                                                                                                       ^^^^^^^^^^^^^^
+AttributeError: 'CsNode' object has no attribute 'unit_gap0'

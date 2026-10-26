@@ -1,0 +1,27 @@
+# Nature's laws against Universe24: two blind hands (the Boss's cold read, 2026-10-26, 01:2x UTC; engine-5.0-test df53f82fe)
+
+The owner's word (2026-10-26, 01:02 UTC): check whether a physical law or new rows are missing to represent nature; all of nature's laws must be inside for everything to work. Two hands, blind to each other, walked every law of nature against the law's clauses (ALGEBRA.md) and the sixty rows of the gates of the phenomena: H-Laws-Of-Nature-Missing-1 (70 laws) and H-Laws-Of-Nature-Missing-2 (80 laws). Nothing measured anew; every verdict the Reader's.
+
+## 1. Where they agree
+
+- **Missing by name, no clause and no row, both hands:** the conservation of angular momentum (ranked first by both: a law for every row with no name anywhere in the law; under the cube's 48 no continuous Noether charge, so what the law conserves is the question); the nucleus's binding with fusion and the elements (no declared holder under The Node; gravity's well alone); the tunnel effect; the equipartition and the temperature. Hand 2 adds: the baryon number, the lepton number, the atom's spectra (Bohr's 1 / n^2), the length's contraction, the fast expansion's era as a reading.
+- **A clause and no row, the rows to add (the union, ranked):** the energy in the clicks (a body's beat per proper interval before and after its click equal within one level, the taken light's beat the difference); the eras of the bang as rows (approved by the owner at 00:52 as rows 58 to 60); the equivalence of inertia and weight; the uniformity in the clicks; dark matter in kind (a body credited in its own well whose Nodes lay no light); the lepton number; CPT as one row; E = m at the merger; the Doppler shift; the polarisations of light (a clause first); the twin's return, the length's contraction, the invariance of the one pace (a wave-key world); the atom of the law; the baryon as a shape (a clause first).
+- **Rows NOT SHOWN for want of a law (not a seed or a reader), both:** gate 13 (and 33) the free fall: G-S4's second half, the bounded well's depth; 23 and 54 the momentum across the click (MK-S2 approved 00:44: the predicate changes to what the law conserves); 47 and 15 exact (EX-S1 approved, a build); 24 the merger (MG-S1 approved, a build); 1 and 46 with births on structured seeds (the births at every bang); 35 and 36 (Y-S3 approved, a build); 22 Coulomb's regression (a root cause unread).
+- **The laws the law refuses or reads differently (findings by name, both):** Bell's bound 2; the GHZ gate unreadable; one polarisation of the metric's waves; the black body and the background light one mode; the decay periodic at the beat, not exponential; the generations and the masses' ratios den's choice; light's speed below the causal bound and dispersing (the invariance in the clicks by The measured speed); flatness by construction; no matter excess from the births (the senses' sum exact, so nature's excess is the seed's); dark matter in kind the neutral pair; dark energy the Links' lift; no Casimir force and no running alpha; light on light; the neutrino outside the 128 bits; the trace's weight 54 with no clause.
+
+## 2. Where they differ
+
+Hand 1 counts 35 laws with a clause and a row and 15 with a clause and no row; hand 2 counts 64 and 6: hand 2 reads a row as present where a gate shows the law in part or in a related reading (the eras under gate 5, the Doppler under gate 2), hand 1 asks for the law's own row. The cold read: the owner wants every law of nature readable as its own phenomenon; the rows to add are hand 1's list with hand 2's six beside (CPT, E = m at the merger, the radiation era's crossing, dark matter's silent well, the equivalence, the excess after the mergers). Hand 1 names the sign row as a four-vector under time's reversal (OL-S1's second hand) as the second derivation (CPT hangs on it); hand 2 the nucleus's binding; both are in the queue after angular momentum.
+
+## 3. What enters (the Boss, under the owner's delegation of 00:57 UTC)
+
+1. **Derivations, two blind hands each, in this order:** the conservation of angular momentum (spawned: H-Angular-Momentum-1 and -2); G-S4's second half, the bounded well's depth (gate 13's free fall); OL-S1's second hand (the sign row under time's reversal, CPT); the nucleus's binding from the seed; the tunnel; the equipartition and the temperature.
+2. **Rows for the Reader, readable now on the records (61 to 65 after the owner's morning word):** the uniformity in the clicks, dark matter in kind, the lepton number, the energy in the clicks, CPT as one row; then with a wave-key world: the Doppler, the length's contraction, the invariance, the twin's return; after a clause: the polarisations, the baryon as a shape.
+3. **Builds already approved that close rows:** EX-S1 (47, 15), MG-S1 (24, the births on the return), Y-S3 (35, 36), MK-S2's predicate (23, 54), rows 55 to 57 and 58 to 60 (the Reader).
+4. **The findings** into the ledger's findings list by name (section 1's last bullet), each with its comparison.
+
+## 4. The ledger row
+
+| item | derived | one-Node test | toy | gates | spec | missing by name |
+|---|---|---|---|---|---|---|
+| nature's laws against Universe24 (two hands) | 70 and 80 laws walked; the four lists reconciled | none (an audit) | none | every row of the table placed | the derivations' order; the rows 61 to 65; the findings' names | the owner's word on the rows 61 to 65 as phenomena; the derivations above |

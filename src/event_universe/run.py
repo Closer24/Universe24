@@ -17,7 +17,7 @@ from event_universe.core.ports import AXES
 from event_universe.links import link_current
 from event_universe.loader.world import load_world
 from event_universe.node import Node
-from event_universe.rows import CARRIER, PLANE, POTENTIAL, zeros
+from event_universe.rows import CARRIER, POTENTIAL, zeros
 
 MARKS = 12  # the reader's rows: one at every twelfth of the run
 EARLY = (60, 24)  # and two early marks, at the sixtieth and the twenty-fourth
@@ -33,7 +33,7 @@ def packets_of(node: Node) -> dict[str, Any]:
     """The reader's view of every plane with a gap: its weight's centroid in thousandths of a Link, its Nodes with levels, its energy's bits."""
     found = {}
     for rec, row in enumerate(node.records()):
-        if row.gap == 0:
+        if row is node.emitter():
             continue
         nows = [line.now for line in row.lines]
         weight = gram.form(gram.gram(row.shape), nows, nows)
@@ -55,12 +55,12 @@ def packets_of(node: Node) -> dict[str, Any]:
 
 def reading(node: Node, maxbits: int) -> dict[str, Any]:
     """The reader's row at an interval: the board's numbers read from outside (no Node reads them)."""
-    metric, potential, gap0 = node.row(CARRIER), node.row(POTENTIAL), node.row(PLANE, gap=0).lines[0]
+    metric, potential, emitter = node.row(CARRIER), node.row(POTENTIAL), node.emitter().lines[0]
     records = node.records()
     cs, vs = ints(node.content()), ints(metric.lines[0].now)
     energy = sum(x * x for r in records for line in r.lines for x in ints(line.now))
     odd_max = max(abs(x) for line in potential.lines[1:] for x in ints(line.now))
-    gap0_v = max(abs(a - b) for a, b in zip(ints(gap0.now), ints(gap0.before), strict=True))
+    emitter_v = max(abs(a - b) for a, b in zip(ints(emitter.now), ints(emitter.before), strict=True))
     total = zeros(node.shape)
     charges = [gram.charge(r.shape, r.lines) for r in records]
     for w in charges:
@@ -89,10 +89,10 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
         "odd max bits": odd_max.bit_length(),
         "link count max": node.count_max,
         "orbit table": len(node.orbit),
-        "gap-0 W abs max": max(abs(x) for x in ints(charges[records.index(node.row(PLANE, gap=0))])),
+        "gap-0 W abs max": max(abs(x) for x in ints(charges[records.index(node.emitter())])),
         "W total": sum(ints(total)),
         "W abs sum": sum(abs(x) for w in charges for x in ints(w)),
-        "gap-0 velocity max": gap0_v,
+        "gap-0 velocity max": emitter_v,
     }
 
 
@@ -103,7 +103,7 @@ def node_lines(node: Node) -> dict[str, Any]:
     pace = paces.link_pace_of(node.gamma, content)
     factors = node.link_factors(None, readings.frozen_of(node, content))
     held = [[i, axis] for axis in range(AXES) for i, f in enumerate(ints(factors[2 * axis])) if f == 0]
-    gap0 = node.row(PLANE, gap=0).lines[0]
+    emitter = node.emitter().lines[0]
     return {
         "i": node.interval,
         "X": ints(carrier.now),
@@ -111,7 +111,7 @@ def node_lines(node: Node) -> dict[str, Any]:
         "turned": [i for i, t in enumerate(node.turned.reshape(-1).tolist()) if t],
         "frozen": [i for i, p in enumerate(ints(pace)) if p == 0],
         "held": held,
-        "current": [ints(link_current(gap0, 2 * axis)) for axis in range(AXES)],
+        "current": [ints(link_current(emitter, 2 * axis)) for axis in range(AXES)],
     }
 
 

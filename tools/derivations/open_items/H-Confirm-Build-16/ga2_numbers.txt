@@ -1,0 +1,14 @@
+births 64 at intervals Counter({2: 64}) distinct nodes 64
+birth keys ['W_children', 'amplitude', 'booked', 'children_at_node', 'content', 'dP_lay', 'dP_take', 'event', 'i', 'levels', 'line_pair', 'minus', 'node', 'plus', 'proper', 'room', 'senses', 'stood', 'taken', 'taken_line', 'taken_now_was', 'taken_row', 'taker']
+taken lines at births Counter({'0': 32, '1': 32})
+credits 1408 laid_back count 1408 credit keys ['beat', 'closes', 'content', 'dP_take', 'event', 'frame', 'i', 'laid_back', 'levels', 'line', 'node', 'proper', 'sense', 'sign_level', 'taken', 'taken_line', 'taken_now_was', 'taker', 'turned']
+stop refusals 1408 fall values [(526989703101897527141, 128), (145894988793533435816, 128), (681580336295457317759, 128), (652804788972965422141, 128), (633366728108425559554, 128)] intervals 4 449
+refused causes Counter({'orientation': 33280, 'twist': 17152, 'lay': 17088, 'stop': 1408})
+X peaks (local maxima of max X) at [109, 330] values [(109, 21888, 21888), (330, 22321, 22321)]
+nodes keys ['X', 'content', 'current', 'frozen', 'held', 'i', 'turned']
+intervals with turns (i, count) [(110, 63), (331, 63)] total turns 128
+X == Gamma at every Node at [218, 442]
+X at 218 Counter({1000: 64}) at 442 Counter({1000: 64}) at 109 [(21888, 64)] at 330 [(22321, 64)]
+integers Counter({89: 15}) max bits 115 max transient bits 99
+run_back {'intervals': 10, 'exact': 10} intervals 450 turns [[110, 64], [331, 64]]
+lay {'event': 'lay', 'i': 0, 'node': None, 'line_pair': 2, 'quanta': 5, 'amplitude': 300, 'share': 32751770599682760240000, 'unit': 1637588529984138012000, 'nodes': 64, 'sense': 1, 'p1': [0, 0, 1, 1, 2, 2, 3, 3, 1, 1, 0, 0, 3, 3, 2, 2], 'cz': 1, 'mirror': 0}

@@ -1,0 +1,37 @@
+== decoder
+19
+13	1000000	MIL = 1000000  # readings in parts per million
+14	100	HUNDRED = 100  # readings in hundredths
+15	1000	THOUSAND = 1000  # readings in thousandths
+16	128	WIDTH = 128  # the law's width: every integer of the state and of every transient within it
+17	10	FEW = 10  # the fewest decoded credits for the dilation's two halves
+18	20	SPANS = 20  # the fewest spans for the lengthening's two halves
+19	2	HALF = 2  # a half: a count div 2, and a majority as a count times 2 above the whole
+20	2	PAIR = 2  # two of a kind: the two ends of a Link, the two parts of a plane's pair, two bodies, two beats, two
+21	3	THIRDS = 3  # the thirds of a run (its last third), of the half charge (T div 2 div 3)
+22	4	QUARTERS = 4  # the quarters of a run (a body standing into the last quarter)
+23	3	LIFTS = 3  # the three lifts of den's circle, the families forming when all three are born
+24	8	LISTED = 8  # the most entries a row prints of a course (its first eight) and the eighths a course is sampled 
+25	6	SHORT_LIST = 6  # the most falls and steps a row prints
+26	4	FOUR_LISTED = 4  # the most returns the rows' reading prints
+27	2	MAX = 2  # the index of the max in a row's min / mean / max
+29	2	2,
+33	4	LINK_WALL_GAMMAS = 4  # the Link's wall in Gammas, links.py's wl = 4 gamma, mirrored here for the solve
+35	12	12  # the law's weight of the kick, 12 p_0^2 G^2 (interval.py's form), mirrored here for the solve
+37	2	REACH = 2  # the reach's weight, R_j = 2 p_i^2 Q_j G^2 (the law's form), mirrored here for the solve
+== gates
+0
+== events
+0
+== board
+2
+22	2	BIRTHS = 2  # the index of the births in a mark (the interval, the mean volume, the births)
+23	2	PULL = 2  # the mass pull's weight, 2 sqrt(X / Gamma) per Node (BG-S1's form), against the Links' lift
+== clicks
+0
+== predicates
+0
+== circle
+2
+7	2	EVEN = 2  # the modulus of parity, the least prime, and the doubling of a search
+8	4	GAUSS = 4  # a prime splits over the Gaussian integers at 1 mod 4
