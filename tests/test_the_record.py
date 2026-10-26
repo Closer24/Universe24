@@ -15,8 +15,8 @@ from tests.laws import ROOT, load_file, world_of
 RECORDS, WIDTH = ROOT / "examples" / "records", 128
 CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
-    # the hole under PL-S1; 9 and 22 among them under the former write of 2 W after the step
-    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45},
+    # the hole under GP-S1: 2 (the Links lengthening in the clicks) lost with the children's lay, SHOWN under PL-S1; 9 and 22 among them under the former write of 2 W after the step
+    "hole": {4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45},
     # the chiral under MG-S1: 24 SHOWN (3 pairs into light), 17 lost (the decoder counts the light children's W, 0 by the exact lay)
     "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 18, 19, 21, 22, 24, 25, 26, 27, 30, 37, 43, 45},
     "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45},

@@ -378,9 +378,9 @@ def main(argv: list[str]) -> int:
             re, im = exp_r[s]
             ends = ((-1, tuple(e["minus"])), (1, tuple(e["plus"])))
             for (sense, where), laid in zip(ends, e.get("exact_lay", [None, None]), strict=True):
-                if laid is None:
-                    re.now[where] = re.now[where] + amp_a
-                    im.before[where] = im.before[where] + sense * amp_b
+                if laid is None:  # GP-S1: the charge's sign on the re line
+                    re.now[where] = re.now[where] + sense * amp_a
+                    im.before[where] = im.before[where] + amp_b
                 else:
                     exp_r[s][laid[0]].now[where] = exp_r[s][laid[0]].now[where] + laid[1]
         book_ok, book_bad = True, None

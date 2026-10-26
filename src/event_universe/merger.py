@@ -19,14 +19,14 @@ if TYPE_CHECKING:
 
 
 def child_at(node: Node, s: int, where: tuple[int, ...], sense: int, sign: int = 1) -> list[int]:
-    """One child laid at one end at the charge T div 2 at the quarter turn (MS-S1: re_now A, im_before sense B, A B = T div 2, the same two integers for every row), its lay's momentum booked and returned; taken back with the sign -1."""
+    """One child laid at one end at the charge T div 2 at the quarter turn, with the charge's sign on the re line (GP-S1, the owner's word of 2026-10-26, 04:3x UTC: re_now sense A, im_before B, A B = T div 2, the same two integers for every row, so the light's re line carries its parity under C P, odd as the emission that sources it; MS-S1's former spelling (A, 0, 0, sense B) kept by name: the - child's two spellings are one record turned by a half turn, the same charge, share and wall), its lay's momentum booked and returned; taken back with the sign -1."""
     row = node.records()[s]
     re, im = row.lines
     assert row.pair is not None
     num = row.pair[0]
-    dp = momentum_of(node, re.now, re.before, where, d_now=sign * node.A, num=num)
-    dp_im = momentum_of(node, im.now, im.before, where, d_before=sign * sense * node.B, num=num)
-    lay(node, s, where, (node.A, 0, 0, sense * node.B), sign)
+    dp = momentum_of(node, re.now, re.before, where, d_now=sign * sense * node.A, num=num)
+    dp_im = momentum_of(node, im.now, im.before, where, d_before=sign * node.B, num=num)
+    lay(node, s, where, (sense * node.A, 0, 0, node.B), sign)
     return [a + b for a, b in zip(dp, dp_im, strict=True)]
 
 

@@ -308,7 +308,7 @@ def unclick(node: Node, frame: dict[str, Any]) -> None:
             exact = entry.get("exact_lay", [None, None])
             for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
                 if laid is None:
-                    lay(node, s, tuple(where), (a, 0, 0, sense * b), -1)
+                    lay(node, s, tuple(where), (sense * a, 0, 0, b), -1)
                 else:
                     lay(node, s, tuple(where), -laid[1], line=laid[0])
         if entry["event"] in ("birth", "credit"):
