@@ -189,9 +189,9 @@ def no_field(record: Record) -> str:
 
 
 def no_conversion(record: Record) -> str:
-    """Why the neutrino is not read: no conversion in the record, every prime of den within the width."""
+    """Why the neutrino is not read: no conversion in the record, den's circle read whole."""
     points = len(record.circle())
-    return f"no conversion in the record and every prime of den within the width ({points} points on den's circle)"
+    return f"no conversion in the record, den's circle read whole ({points} points)"
 
 
 UNREAD: tuple[tuple[str, str | Callable[[Record], str], str], ...] = (
