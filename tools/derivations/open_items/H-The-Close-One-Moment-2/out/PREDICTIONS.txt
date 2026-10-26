@@ -1,0 +1,42 @@
+Predictions of H-The-Close-One-Moment-2, written before any run (2026-10-26).
+
+P1 (prize a). At every plane credit of every record, re_stepped == re_now and im_stepped == im_now
+exactly, because the close writes a record with a gap only at the Nodes a birth touched (close.births'
+`touched`, the children's lays and a merger's take at -1) and bodies() skips those Nodes and the frozen
+ones, while the restore at a frozen Node is the only other write of that row after the step. So the
+two logged fields are duplicates of two fields already logged: expected equal at 100 percent of the
+credits of the hole 60, the chiral 60 and the bodies 120. If so, node.stepped leaves the engine with no
+number changed anywhere.
+
+P2 (prize b, the ends). On the head the two ends of a merger do not commute: the per-end dP_take of the
+second end is read on a board the first end's lay changed, the ends being neighbours on one Link; the
+SUM is exact by telescoping. Under ONE_MOMENT (both ends' momentum read before any write) the per-end
+bookings are equal under either naming (ENDS_REVERSED on and off) and their sum is unchanged from the
+head's, because the cross term of the second order in P_a = 2 num SUM_i (now_(i+a) before_i -
+now_i before_(i+a)) over the two neighbouring ends is d_now_v d_before_u - d_now_u d_before_v per line,
+which vanishes for a pair whose two ends are antiparallel on the re line and parallel on the im line
+(the lay's own form and every mirror step of it). Expected on the chiral 60: 1 merger take of 17 births,
+the per-end bookings order-free under the flag, the sum the same integer as the head's.
+
+P3 (the credit's sense at the start). The sense is the sign of the plane's Wronskian W at the Node.
+Read at the interval's start in place of the live lines it is a different integer at the Nodes where the
+step turned the sign of W. Expected: the credits' count unchanged (the sense is logged, not acted on),
+the field `sense` apart at some credits, and nothing else of the record apart. The board cannot move.
+
+P4 (the gap-0 row's exact take at the start, TC-S1 and EX-S1). fall_of read at the start changes the
+line chosen k (the largest now^2 - before^2 at the start), the count of levels and the fall; EX-S1's
+identity taken + remainder_was - remainder = booked holds by the algebra under either moment (remainder
+= fall - owed, owed = booked - remainder_was), so the exact take is NOT at risk. What moves: the count
+`levels` written by take.move, so the board itself moves; the refusals by name `stop` (now == before at
+the start where it is not live, and the reverse); the credits' counts. Expected: the hole 60 and the
+chiral 60 PART on the board, at an early interval (within the first ten), the births' count possibly
+apart, the run back still 20 of 20 exact (the log carries taken_now_was from the live line).
+
+P5 (the merger's taken levels). NOT a reading: merger.levels_at is the write's own argument (MG-S1, the
+pair taken whole). Moving it to the start would leave the step's own difference on the board, so
+CL-S1's sentence must name the share's FALL and not the levels taken. Derived, not measured here.
+
+P6 (the laws). The run back exact under the flag on both records; the charge law (the births' W of
+opposite sign) untouched, the lay being untouched; the count of integers per Node and the 128 bits
+untouched (one array less, no array more, under the removal of node.stepped); integers only, no float;
+the one-Link reach untouched (every mend reads the same Nodes it read before).

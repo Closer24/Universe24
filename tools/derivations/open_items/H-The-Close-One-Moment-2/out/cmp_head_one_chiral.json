@@ -1,0 +1,115 @@
+{
+ "left": "head_world_nature.json",
+ "right": "one_nature.json",
+ "counts left": {
+  "births": "17",
+  "taken": "70769943529221060875807",
+  "booked": "69862070318996095731587",
+  "body_clicks": "2903",
+  "laid_back": "0",
+  "refused_stop": "9371",
+  "refused_origin": "0",
+  "refused_lay": "683",
+  "refused_orientation": "110",
+  "refused_twist": "42",
+  "refused_sense": "10393",
+  "turns": "612",
+  "met": "20497",
+  "laid": "3",
+  "laid_nodes": "3"
+ },
+ "counts right": {
+  "births": "15",
+  "taken": "71273455936064175842997",
+  "booked": "70467437943806753694515",
+  "body_clicks": "2749",
+  "laid_back": "0",
+  "refused_stop": "9219",
+  "refused_origin": "0",
+  "refused_lay": "695",
+  "refused_orientation": "112",
+  "refused_twist": "41",
+  "refused_sense": "10512",
+  "turns": "624",
+  "met": "20521",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "run back": [
+  {
+   "intervals": 20,
+   "exact": 20
+  },
+  {
+   "intervals": 20,
+   "exact": 20
+  }
+ ],
+ "nodes equal": false,
+ "log lengths": [
+  23519,
+  23343
+ ],
+ "first apart": {
+  "log line": 24,
+  "interval": [
+   3,
+   3
+  ],
+  "event": [
+   "birth",
+   "birth"
+  ]
+ },
+ "mergers left": [
+  {
+   "i": 11,
+   "ends": [
+    [
+     3,
+     0,
+     1
+    ],
+    [
+     3,
+     0,
+     2
+    ]
+   ],
+   "dP_take": [
+    [
+     4773843982646141250,
+     693215243618028750,
+     -5604718990954275000
+    ],
+    [
+     7433627293265670000,
+     3716813646632835000,
+     0
+    ]
+   ],
+   "sum": [
+    12207471275911811250,
+    4410028890250863750,
+    -5604718990954275000
+   ],
+   "taken": [
+    1896908860139602233350,
+    2334771023281023091181
+   ],
+   "dP_lay_ends": [
+    [
+     6792959828082350272,
+     -60651427036449556000,
+     -3881691330332771584
+    ],
+    [
+     0,
+     0,
+     0
+    ]
+   ]
+  }
+ ],
+ "mergers right": []
+}

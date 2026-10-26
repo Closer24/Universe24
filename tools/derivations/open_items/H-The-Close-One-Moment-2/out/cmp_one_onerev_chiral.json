@@ -1,0 +1,56 @@
+{
+ "left": "one_nature.json",
+ "right": "onerev_nature.json",
+ "counts left": {
+  "births": "15",
+  "taken": "71273455936064175842997",
+  "booked": "70467437943806753694515",
+  "body_clicks": "2749",
+  "laid_back": "0",
+  "refused_stop": "9219",
+  "refused_origin": "0",
+  "refused_lay": "695",
+  "refused_orientation": "112",
+  "refused_twist": "41",
+  "refused_sense": "10512",
+  "turns": "624",
+  "met": "20521",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "counts right": {
+  "births": "15",
+  "taken": "71273455936064175842997",
+  "booked": "70467437943806753694515",
+  "body_clicks": "2749",
+  "laid_back": "0",
+  "refused_stop": "9219",
+  "refused_origin": "0",
+  "refused_lay": "695",
+  "refused_orientation": "112",
+  "refused_twist": "41",
+  "refused_sense": "10512",
+  "turns": "624",
+  "met": "20521",
+  "laid": "0",
+  "laid_nodes": "0"
+ },
+ "run back": [
+  {
+   "intervals": 20,
+   "exact": 20
+  },
+  {
+   "intervals": 20,
+   "exact": 20
+  }
+ ],
+ "nodes equal": true,
+ "log lengths": [
+  23343,
+  23343
+ ],
+ "first apart": null,
+ "mergers left": [],
+ "mergers right": []
+}
