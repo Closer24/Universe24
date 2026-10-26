@@ -1,13 +1,12 @@
-"""The metric's sources and the flux lines' fold, Y-S1 to Y-S3 (H-Six-Metric-Lines-3, 2026-10-26, the Boss's order under the owner's delegation): the stress tensor's diagonal parts and their trace (the tensions, the time line's write), its off-diagonal parts (the shears, T_2g) and the records' count flux on each axis (the momentum density, T_1u: the record's own velocities in and out against the centred gradient of its levels at the start, one Link's reach, the same integers in either direction), the nine axis lines' sources by the position of their reading; the read, the planes with a gap turned at each Link by the flux lines' odd part at the record's rest rotation K = omega_0 Gamma as a second tangent triple multiplied into the odd line's (`fold_links`), the row at the gap 0 turned by nothing."""
+"""The metric's sources and the flux lines' fold, Y-S1 to Y-S3 (H-Six-Metric-Lines-3, 2026-10-26, the Boss's order under the owner's delegation): the stress tensor's diagonal parts and their trace (the tensions, the time line's write), its off-diagonal parts (the shears, T_2g) and the records' count flux on each axis (the momentum density, T_1u: the record's own velocities in and out against the centred gradient of its levels at the start, one Link's reach, the same integers in either direction), the nine axis lines' sources by the position of their reading; the read, the planes with a gap turned at each Link by the flux lines' odd part at the record's rest rotation K = omega_0 Gamma (`rotation_of`) as a second tangent triple multiplied into the odd line's (links.folded, the former fold_links kept by name), the row at the gap 0 turned by nothing."""
 
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
 from event_universe import gram
-from event_universe.core.ports import AXES, PORT_SIDES, PORTS, wrap
-from event_universe.core.rule3 import half
-from event_universe.links import Link, gradient, link
+from event_universe.core.ports import AXES, wrap
+from event_universe.links import gradient
 from event_universe.rows import zeros
 
 if TYPE_CHECKING:
@@ -57,16 +56,3 @@ def rotation_of(node: Node, pair: tuple[int, int]) -> int:
     if pair not in node.rotations:
         node.rotations[pair] = gram.cosine_count(node, pair[0], pair[1])
     return node.rotations[pair]
-
-
-def fold_links(links: list[Link], rotation: int, flux_lines: list[Any], gamma: int) -> list[Link]:
-    """The six Links' records with the flux lines' fold for one record (Y-S2, Y-S3): the flux line of the Link's axis summed over the two ends with the Port's sign, n_ij = V_a(i) + V_a(j) = -n_ji, read as the odd line is, turned at the record's rest rotation K as the tangent triple (W^2 - m^2, 2 W m, W^2 + m^2), W = Gamma^2 and m = 3 K n (the fold form's sine 6 K n / Gamma^2 to first order), the identity where K is 0 (the row at the gap 0) or the flux 0."""
-    w2 = gamma * gamma
-    found = []
-    for port, (axis, _side) in enumerate(PORT_SIDES):
-        n = link(port, odd=(flux_lines[axis],))[1][0]
-        m = half(PORTS) * rotation * n
-        fold = (w2 * w2 - m * m, (w2 + w2) * m, w2 * w2 + m * m)
-        at = links[port]
-        found.append(Link(at.factor, at.frame, at.cosine, at.sine, at.odd, fold))
-    return found

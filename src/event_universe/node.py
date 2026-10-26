@@ -156,10 +156,6 @@ class Node:
         """The content at every Node (readings.content)."""
         return readings.content(self)
 
-    def link_factors(self, axis_levels: list[Any] | None = None, frozen: Any = None) -> tuple[Any, ...]:
-        """The Link factor at each Port (readings.link_factors), 0 where either end is frozen."""
-        return readings.link_factors(self, axis_levels, frozen)
-
     def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
         """The arrivals of a row's lines at one Port, read in the Node's frame (the row's conjugation where the frame sign is -1, gram.conjugated) and turned plane by plane by the Link's record (links.turned); a row of one line is turned by the identity; `turn` None is the identity for every shape."""
         if turn is None or len(arrivals) == 1:

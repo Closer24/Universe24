@@ -17,7 +17,7 @@ from event_universe import run as record
 from event_universe import run as writer
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS
-from event_universe.links import row_current
+from event_universe.links import factors, row_current
 from event_universe.merger import children_laid, light_levels, walls_of
 from event_universe.node import Node
 from event_universe.rows import CARRIER
@@ -261,7 +261,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
         re, im = row.lines
         assert row.pair is not None and not any(ints(re.now * im.before - im.now * re.before))
         energy = sum(
-            ints(gram.share(node, row.lines, node.rule(row.pair, node.content(), node.link_factors())))
+            ints(gram.share(node, row.lines, node.rule(row.pair, node.content(), factors(node))))
         )
         momentum = sum(
             sum(
@@ -277,7 +277,7 @@ def test_the_moving_lay_runs_at_its_momentum_over_twice_its_share_mv() -> None:
     def centroid(node: Node) -> tuple[int, int]:
         row = node.by_index[2]
         assert row.pair is not None
-        share = gram.share(node, row.lines, node.rule(row.pair, node.content(), node.link_factors()))
+        share = gram.share(node, row.lines, node.rule(row.pair, node.content(), factors(node)))
         return sum(ints(share * np.indices(node.shape)[0])), sum(ints(share))
 
     node, law = laid(moving)
@@ -532,7 +532,7 @@ def test_the_merger_lays_light_of_no_charge_at_both_ends_cc1() -> None:
     assert row.pair is not None
     take.lay(node, s, minus, (939, 1175, 0, 0))
     take.lay(node, s, plus, (1329, 1112, 0, 0))
-    rule = node.rule(row.pair, node.start_content, node.link_factors())
+    rule = node.rule(row.pair, node.start_content, factors(node))
     walls, exact = dict(zip((-1, 1), walls_of(node, s, minus, plus, rule, {}), strict=True)), []
     children_laid(node, s, minus, plus, light_levels(node, s, walls, rule, exact))
     assert all(x is not None for x in exact) and [x[1] != 0 for x in exact] == [True, True]

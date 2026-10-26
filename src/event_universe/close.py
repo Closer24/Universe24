@@ -12,7 +12,7 @@ from event_universe.core import rule3
 from event_universe.core.ports import AXES, across, port_of
 from event_universe.core.rule3 import quotient, remainder
 from event_universe.draw import read_number
-from event_universe.links import row_current, row_twist
+from event_universe.links import factors, row_current, row_twist
 from event_universe.merger import child_levels, children_laid, light_levels, summed, takes, walls_of
 from event_universe.rows import PLANE, Line, Row
 from event_universe.run import birth, refused
@@ -251,17 +251,17 @@ def click(
     c = node.start_content
     node.lattices, node.drawn = {}, {}
     frozen = readings.frozen_of(node, c)
-    factors = node.link_factors(None, frozen)
-    r_emitter = node.rule_of(node.emitter(), c, factors)
-    rules = node.read_lines(held, c, factors)
+    read = factors(node, None, frozen)
+    r_emitter = node.rule_of(node.emitter(), c, read)
+    rules = node.read_lines(held, c, read)
     owns = []
     for rec, r in enumerate(node.records()):
         assert r.pair is not None
-        owns.append(gram.share(node, plane_starts[rec], node.rule(r.pair, c, factors)))
+        owns.append(gram.share(node, plane_starts[rec], node.rule(r.pair, c, read)))
     born = [
         b
         for rec in range(len(node.records()))
         for b in meet(node, rec, plane_starts[rec], owns[rec], rules, frozen)
     ]
-    born_nodes = births(node, refuse(node, born, owns), c, factors, rules)
+    born_nodes = births(node, refuse(node, born, owns), c, read, rules)
     bodies(node, plane_starts, owns, born_nodes, frozen, r_emitter)

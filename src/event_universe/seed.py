@@ -10,7 +10,7 @@ from event_universe import gram, take
 from event_universe.core.paces import rounded, sine_den
 from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import half, largest_below, least_at, odd, quotient
-from event_universe.links import turn_pair
+from event_universe.links import factors, turn_pair
 from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
 from event_universe.run import logged
 from event_universe.wave import lay_cycle
@@ -219,7 +219,7 @@ def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
     row = node.records()[rec]
     assert row.pair is not None
     node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
-    rule = node.rule(row.pair, node.start_content, node.link_factors())
+    rule = node.rule(row.pair, node.start_content, factors(node))
     target = n * node.units[rec]
     amplitude = least_at(
         lambda a: share_at_node(node, row, uniform_levels(node, row, a, sense), rule) > target
@@ -256,7 +256,7 @@ def fitted(
 ) -> int:
     """The largest amplitude at which the record's share at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
     assert row.pair is not None
-    rule = node.rule(row.pair, node.content(), node.link_factors())
+    rule = node.rule(row.pair, node.content(), factors(node))
 
     def share_of(amplitude: int) -> int:
         lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
@@ -326,7 +326,7 @@ def lay_packet(
             continue
         take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
     lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
-    rule = node.rule(row.pair, node.start_content, node.link_factors())
+    rule = node.rule(row.pair, node.start_content, factors(node))
     logged(
         node,
         "lay",

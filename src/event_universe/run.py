@@ -16,7 +16,7 @@ from event_universe.core import paces
 from event_universe.core.paces import sine_den
 from event_universe.core.ports import AXES, SIDES, port_of
 from event_universe.decoder import THOUSAND
-from event_universe.links import link_current
+from event_universe.links import factors, link_current
 from event_universe.loader.world import load_world
 from event_universe.rows import CARRIER, POTENTIAL, zeros
 
@@ -239,7 +239,7 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
         "max transient bits": node.max_transient,
         "sign level max": max(abs(x) for x in ints(potential.lines[0].now)),
         "planes energy bits": energy.bit_length(),
-        "links at the wall": sum(1 for f in node.link_factors()[0::SIDES] for x in ints(f) if x == 0),
+        "links at the wall": sum(1 for f in factors(node)[0::SIDES] for x in ints(f) if x == 0),
         "tension min/max": [min(tens), max(tens)],
         "odd max bits": odd_max.bit_length(),
         "link count max": node.count_max,
@@ -256,12 +256,9 @@ def node_lines(node: Node) -> dict[str, Any]:
     carrier = node.row(CARRIER).lines[0]
     content = node.content()
     pace = paces.link_pace_of(node.gamma, content)
-    factors = node.link_factors(None, readings.frozen_of(node, content))
+    read = factors(node, None, readings.frozen_of(node, content))
     held = [
-        [i, axis]
-        for axis in range(AXES)
-        for i, f in enumerate(ints(factors[port_of(axis, 0)]))
-        if f == 0
+        [i, axis] for axis in range(AXES) for i, f in enumerate(ints(read[port_of(axis, 0)])) if f == 0
     ]
     emitter = node.emitter().lines[0]
     return {

@@ -8,6 +8,7 @@ from typing import Any
 
 from event_universe import gram
 from event_universe.core.rule3 import signed_quotient
+from event_universe.links import factors
 from event_universe.rows import POTENTIAL, QUARTET
 from tests.laws import ROOT, load_file, refused, run_back_exact, world_of
 
@@ -101,7 +102,7 @@ def test_the_exclusion_at_the_lay_reads_the_full_state_and_the_pile_is_gone_sr_s
     one = dict(one, quanta=1, sense=1)
     single = toy_of(UP, seed=[sea, one])
     share = single.log[-1]["share"]
-    rule = single.rule(single.records()[2].pair, single.content(), single.link_factors())
+    rule = single.rule(single.records()[2].pair, single.content(), factors(single))
     assert share > 0 and single.log[-1]["amplitude"] == 37
     like = toy_of(UP, seed=[sea, one, one])
     assert like.counts["refused_lay"] == 1 and like.log[1]["cause"] == "state"

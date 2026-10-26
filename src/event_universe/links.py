@@ -1,13 +1,20 @@
-"""The Links' readings, each a function of arrays at every Node alike and every read across a Link through core/ports.across (the owner's word of 2026-10-25: the Link's act in one place): the two ends' sums even and odd, the centred gradient, the plane's Wronskian and current, a line's current on a Link, its net transverse current and its twist (the stress's parts and the metric's sources in metric.py, Y-S1 to Y-S3)."""
+"""The one reader of the Link (R2 of the readings' map, H-Readings-One-Reader-1, 2026-10-26, under the owner's word of 12:2x UTC; the owner's word of 2026-10-25: the Link's act in one place): every reading of a Link at a Port is a reading of the Link's one record, each a function of arrays at every Node alike and every read across a Link through core/ports.across, the same from both ends up to the side's sign: the two ends' even sum (`even`), the two ends' odd sum signed by the Port's side (`odd_sum`), the frame sign, the parity of the frame bits' even sum (`frame`), and the one bilinear, the cross x_i y_j - y_i x_j (`cross`); the Link's factor from the two ends' axis parts, the six frame signs, the centred count and the Links' phase pairs, the six records of an interval at a coupling and their fold by the flux lines (the former readings.link_factors, frames, centred_count, link_phases, links.link, links_of and metric.fold_links kept by name), the centred gradient, a line's current on a Link, its net transverse current and the twist are named readings of these four (the stress's parts and the metric's sources in metric.py, Y-S1 to Y-S3)."""
 
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+import numpy as np
 
 from event_universe.core.paces import rounded
-from event_universe.core.ports import AXES, PORT_SIDES, across, port_of, wrap
+from event_universe.core.ports import AXES, PORT_SIDES, PORTS, SIDES, across, port_of, wrap
+from event_universe.core.rule3 import link_factor, quotient
 from event_universe.core.rule3 import odd as parity_of
-from event_universe.rows import PLANE, Line, Row
+from event_universe.readings import pair_angle
+from event_universe.rows import CARRIER, PLANE, Line, Row
+
+if TYPE_CHECKING:
+    from event_universe.node import Node
 
 
 def coupling_of(row: Row) -> int:
@@ -21,13 +28,29 @@ def cross(x_i: Any, y_i: Any, x_j: Any, y_j: Any) -> Any:
     return x_i * y_j - y_i * x_j
 
 
+def even(a: Any, port: int) -> Any:
+    """The Link's even sum at the Port, a_i + a_j, read the same from both ends (fd2, U5)."""
+    return a + across(a, port)
+
+
+def odd_sum(a: Any, port: int) -> Any:
+    """The Link's odd sum at the Port, the two ends' sum signed by the Port's side: the other end reads the negative (the one Link read of an odd part)."""
+    return PORT_SIDES[port][1] * even(a, port)
+
+
+def frame(bits: Any, port: int) -> Any:
+    """The frame sign f_ij at the Port, 1 where the two ends' frame bits agree and -1 where they differ, the parity of the Link's even part (fd2, U5)."""
+    parity = parity_of(even(bits, port))
+    return 1 - parity - parity
+
+
 def turn_pair(re: Any, im: Any, c: Any, s: Any, scale: Any) -> tuple[Any, Any]:
     """The pair (re, im) turned by the pair (c, s) over the scale, one odd rounding per part (fd2, U2; fd1: the turn's rounding is odd by the one rule of the remainder, a fold with no tie): the phase pair over the amplitude X, the odd tangent triple over its wall, the decoder's solve."""
     return rounded(c * re - s * im, scale), rounded(s * re + c * im, scale)
 
 
 class Link:
-    """The Link's record at one Port for the interval, read once from its two ends and the same from both (X2's link(i, j)): the factor Q_ij from the two ends' tensions, the frame sign f_ij, the Link's phase pair (cos, sin) over X from the two ends' centred counts, and the odd part n_ij of the shape-4 row's odd line on the Link's axis for the tangent triple, and the flux lines' fold for one record (metric.fold_links, Y-S3: a tangent triple, the identity (1, 0, 1) where the record has no gap or the flux is 0); every act reads these and recomputes none."""
+    """The Link's record at one Port for the interval, read once from its two ends and the same from both (X2's link(i, j)): the factor Q_ij from the two ends' tensions, the frame sign f_ij, the Link's phase pair (cos, sin) over X from the two ends' centred counts, and the odd part n_ij of the shape-4 row's odd line on the Link's axis for the tangent triple, and the flux lines' fold for one record (`folded`, Y-S3: a tangent triple, the identity (1, 0, 1) where the record has no gap or the flux is 0); every act reads these and recomputes none."""
 
     __slots__ = ("factor", "frame", "cosine", "sine", "odd", "fold")
 
@@ -38,27 +61,66 @@ class Link:
         self.fold = fold
 
 
-def links_of(
-    factors: tuple[Any, ...], frames: list[Any], phases: list[tuple[Any, Any]], odd_lines: list[Any]
-) -> list[Link]:
-    """The six Links' records from the interval's readings: the factors, the frame signs, the phase pairs and, per Port, the odd line of its axis summed over the two ends with the Port's sign (the one Link read of an odd part)."""
+def factors(node: Node, axis_levels: list[Any] | None = None, frozen: Any = None) -> tuple[Any, ...]:
+    """The Link factor at each Port from the two ends' axis parts of the carrier (the former readings.link_factors and node.link_factors kept by name): the tension the mean of the two ends' levels rounded half up, the division act's quotient of their even sum plus one at the two sides (the one rounding not reached by the remainder's rule, so not paces.rounded: fd1 measured the odd rounding here parts the 48's reflections), a tension at or past Gamma read at the wall, the factor 0 (the horizon); and 0 where either end is frozen, the Link pace 0 at the interval's start (BH-S1: every Link with a frozen end is at the wall, from both ends)."""
+    levels = (
+        [line.now for line in node.row(CARRIER).lines[1 : 1 + AXES]]
+        if axis_levels is None
+        else axis_levels
+    )
     found = []
     for port, (axis, _side) in enumerate(PORT_SIDES):
-        _even, (n,), _f = link(port, odd=(odd_lines[axis],))
-        found.append(Link(factors[port], frames[port], phases[port][0], phases[port][1], n))
+        t = quotient(even(levels[axis], port) + 1, SIDES)
+        factor = np.vectorize(
+            lambda tt: int(link_factor(node.gamma, node.G, min(int(tt), node.gamma))),
+            otypes=[object],
+        )
+        at_wall = None if frozen is None else frozen | across(frozen, port)
+        found.append(factor(t) if at_wall is None else np.where(at_wall, 0, factor(t)))
+    return tuple(found)
+
+
+def frames(phi_rem: Any) -> list[Any]:
+    """The frame signs per Port (the former readings.frames kept by name): +1 where the two ends' frame bits (the phase row's remainder at the wall 2, complemented at every swap) agree, -1 where they differ; there the neighbour's plane is read conjugated and its count negated."""
+    return [frame(phi_rem, port) for port in range(PORTS)]
+
+
+def centred_count(cphi: Any, phi: Line) -> Any:
+    """The Node's centred count K = 2 (Phi_now - Phi_before) + c from the phase row at the start, twice the trapezoid sum of the clocked potential to the triple's centre (the former readings.centred_count kept by name)."""
+    moved = phi.now - phi.before
+    return moved + moved + cphi
+
+
+def phases(node: Node, frames: list[Any], count: Any) -> list[tuple[Any, Any]]:
+    """The Link's count n_ij = K_i - f_ij K_j (the two ends' centred counts; f_ij the frame sign, the neighbour's count negated where the frames differ) and its (cos, sin) pair over X (readings.pair_angle; the former readings.link_phases kept by name)."""
+    found = []
+    for port in range(PORTS):
+        n = count - frames[port] * across(count, port)
+        pairs = np.vectorize(lambda m: pair_angle(node, m), otypes=[object, object])(n)
+        found.append((pairs[0], pairs[1]))
     return found
 
 
-def link(
-    port: int, even: tuple[Any, ...] = (), odd: tuple[Any, ...] = (), frame_bits: Any = None
-) -> tuple[list[Any], list[Any], Any]:
-    """The Link's numbers at one Port, read the same from both ends: for each `even` array the two ends' sum (symmetric), for each `odd` array the two ends' sum signed by the Port's side (antisymmetric: the other end reads the negative), and the frame sign f_ij = 1 where the two ends' frame bits agree and -1 where they differ, the parity of the Link's even part (fd2, U5)."""
-    _axis, side = PORT_SIDES[port]
-    evens = [a + across(a, port) for a in even]
-    odds = [side * (a + across(a, port)) for a in odd]
-    parity = None if frame_bits is None else parity_of(frame_bits + across(frame_bits, port))
-    f = None if parity is None else 1 - parity - parity
-    return evens, odds, f
+def links_of(
+    factors: tuple[Any, ...], frames: list[Any], phases: list[tuple[Any, Any]], odd_lines: list[Any]
+) -> list[Link]:
+    """The six Links' records from the interval's readings: the factors, the frame signs, the phase pairs and, per Port, the odd line of its axis summed over the two ends with the Port's sign (`odd_sum`)."""
+    return [
+        Link(factors[port], frames[port], *phases[port], odd_sum(odd_lines[axis], port))
+        for port, (axis, _side) in enumerate(PORT_SIDES)
+    ]
+
+
+def folded(links: list[Link], rotation: int, flux_lines: list[Any], gamma: int) -> list[Link]:
+    """The six Links' records with the flux lines' fold for one record (Y-S2, Y-S3; the former metric.fold_links kept by name): the flux line of the Link's axis summed over the two ends with the Port's sign, n_ij = V_a(i) + V_a(j) = -n_ji, read as the odd line is, turned at the record's rest rotation K as the tangent triple (W^2 - m^2, 2 W m, W^2 + m^2), W = Gamma^2 and m = 3 K n (the fold form's sine 6 K n / Gamma^2 to first order), the identity where K is 0 (the row at the gap 0) or the flux 0."""
+    w2 = gamma * gamma
+    found = []
+    for port, (axis, _side) in enumerate(PORT_SIDES):
+        m = AXES * rotation * odd_sum(flux_lines[axis], port)
+        fold = (w2 * w2 - m * m, (w2 + w2) * m, w2 * w2 + m * m)
+        at = links[port]
+        found.append(Link(at.factor, at.frame, at.cosine, at.sine, at.odd, fold))
+    return found
 
 
 def link_wall(gamma: Any) -> Any:

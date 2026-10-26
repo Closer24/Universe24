@@ -13,6 +13,7 @@ from event_universe.core import paces
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import quotient
 from event_universe.interval import Interval
+from event_universe.links import factors
 from event_universe.loader.world import read_world
 from event_universe.merger import takes
 from event_universe.node import Node
@@ -43,9 +44,9 @@ def fed_horizon(node: Node, at: tuple[int, ...]) -> Node:
 def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -> None:
     """The horizon: the fed Node's two x Links at the wall (the factor 0), its other four above; no Link close reads the Node (no birth at it, none with it as an end); under PM-S1 the near-massless plane's shared half from a child laid at a neighbour stands at the Node at its own unit, so the near-massless plane's credits are read there (twelve in 20 intervals under PL-S1, five at W = 0 (none by 20 under A48-S1 (05cca50, the read of the remainder in the laid frame, reverted for the tie of the sign row's write remainder and the births' seed)); under the former write of 2 W after the step twelve with nine at W = 0, the first beat 4 and the rest 1, under MS-S1's lay at T div 2 and CK-S1's beat of the half period with the crossing read even; eleven with eight at W = 0 and every beat 1 under the crossing odd at a touch of zero; named: the bodies' closing is not the Link close); the run back exact."""
     node = fed_horizon(node_of("world_node.json"), CENTRE)
-    factors = node.link_factors()
-    assert [int(f[CENTRE]) for f in factors[:2]] == [0, 0]
-    assert all(int(f[CENTRE]) > 0 for f in factors[2:])
+    read = factors(node)
+    assert [int(f[CENTRE]) for f in read[:2]] == [0, 0]
+    assert all(int(f[CENTRE]) > 0 for f in read[2:])
     fed = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
@@ -242,9 +243,9 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
         assert int(node.proper[CENTRE]) == proper and not node.turned[CENTRE]
         frozen_now = np.asarray(paces.link_pace_of(node.gamma, node.content()), dtype=object) == 0
         assert int(frozen_now.sum()) == 1 and frozen_now[CENTRE]
-        assert all(int(f[CENTRE]) == 0 for f in node.link_factors(None, frozen_now))
+        assert all(int(f[CENTRE]) == 0 for f in factors(node, None, frozen_now))
         assert all(
-            int(node.link_factors(None, frozen_now)[port ^ 1][n]) == 0
+            int(factors(node, None, frozen_now)[port ^ 1][n]) == 0
             for port, n in enumerate(frame_nodes(node, CENTRE)[1:])
         )
     assert clicks_at(node, CENTRE) == [] and node.max_transient <= 128 and record.census(node)[1] <= 128
@@ -254,7 +255,7 @@ def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
 def shares_of(node: Node) -> tuple[Any, Any, Any]:
     """The gap-0 line's share in the carrier's unit, and by hand at the frame's weight (X set to Gamma^3 div p_i^2) and at the vacuum's (X set to Gamma)."""
     gap0 = node.emitter()
-    rule = node.rule(gap0.pair, node.start_content, node.link_factors())
+    rule = node.rule(gap0.pair, node.start_content, factors(node))
     pace = np.asarray(paces.link_pace_of(node.gamma, node.start_content), dtype=object)
     x, carrier = node.start_x, gram.share(node, gap0.lines, rule)
     node.start_x = np.vectorize(lambda p: quotient(node.gamma**3, p * p), otypes=[object])(pace)
@@ -441,7 +442,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
     rec, count = 1, len(node.records())
     re = node.records()[rec].lines[0]
     nothing, still = [zeros(node.shape) for _ in range(count)], np.zeros(node.shape, dtype=bool)
-    rule = node.rule_of(node.emitter(), node.content(), node.link_factors())
+    rule = node.rule_of(node.emitter(), node.content(), factors(node))
     for period in ((2, 1, 0, -1, -2, -1, 0, 1), (2, 1, -1, -2, -1, 1)):
         counters = []
         for sign in (1, -1):
@@ -576,7 +577,7 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
     z.now[at] = int(z.before[at]) + 3_000
     c = node.content()
     node.start_content, node.start_x = c, node.row(CARRIER).lines[0].now
-    rule = node.rule_of(light, c, node.link_factors())
+    rule = node.rule_of(light, c, factors(node))
     walls = node.unit_emitter + node.unit_emitter
     hash_before, undo, paid, below = record.state_hash(node), [], 0, 0
     for _ in range(20):

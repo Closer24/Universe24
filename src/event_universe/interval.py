@@ -12,15 +12,8 @@ from event_universe.core.acts import divide
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import half, held_numerator, quotient
 from event_universe.features import volume
-from event_universe.links import coupling_of, links_of
-from event_universe.metric import (
-    fold_links,
-    net_flux,
-    rotation_of,
-    shear_parts,
-    stress_parts,
-    tensor_parts,
-)
+from event_universe.links import centred_count, coupling_of, factors, folded, frames, links_of, phases
+from event_universe.metric import net_flux, rotation_of, shear_parts, stress_parts, tensor_parts
 from event_universe.rows import CARRIER, POTENTIAL, Line, Row, walled_of, zeros
 from event_universe.run import frame
 from event_universe.take import momentum_of, recoil
@@ -89,7 +82,7 @@ class Interval:
         return self.w_half * (line.before + line.now)
 
     def readings(self) -> None:
-        """(1) The readings at the start (the former `readings`, `walled_act` and `forces`): the content and the clock, the frozen mask (BH-S1), the proper count resting at a frozen Node, the Link factors with a frozen end at the wall, the frames, the clocked potential, the carrier's level and the stress of the planes; the walled row's act, one carried division with the flux 2 c Phi inside it (its start the Links' count K = 2 (Phi_now - Phi_before) + c, backward recovered by the inverse division alone), the six Links' records read once per coupling present among the records (links.coupling_of; the frame sign, the count and the odd part at the coupling, so the turn at the coupling 0 is the identity by arithmetic), the curl of the odd lines; the records' current at this end, each at its coupling; every riding line's force, SUM_j R_j (m_j - a) - D a plus the row's Node term by shape (gram.term), every record turned by the Links at its coupling and by the flux lines' fold at its rest rotation (metric.fold_links, Y-S3; the row at the gap 0 by nothing); and the emission, X_now SUM over the records with a gap of F.GJ.N (the plane's re F_im - im F_re), each over its scale against the common one."""
+        """(1) The readings at the start (the former `readings`, `walled_act` and `forces`): the content and the clock, the frozen mask (BH-S1), the proper count resting at a frozen Node, the Link factors with a frozen end at the wall, the frames, the clocked potential, the carrier's level and the stress of the planes; the walled row's act, one carried division with the flux 2 c Phi inside it (its start the Links' count K = 2 (Phi_now - Phi_before) + c, backward recovered by the inverse division alone), the six Links' records read once per coupling present among the records (links.coupling_of; the frame sign, the count and the odd part at the coupling, so the turn at the coupling 0 is the identity by arithmetic), the curl of the odd lines; the records' current at this end, each at its coupling; every riding line's force, SUM_j R_j (m_j - a) - D a plus the row's Node term by shape (gram.term), every record turned by the Links at its coupling and by the flux lines' fold at its rest rotation (links.folded, Y-S3; the row at the gap 0 by nothing); and the emission, X_now SUM over the records with a gap of F.GJ.N (the plane's re F_im - im F_re), each over its scale against the common one."""
         node = self.node
         self.c = np.asarray(volume.level_of(node.gamma, self.at(self.carrier.lines[0])), dtype=object)
         node.start_content = self.c
@@ -99,11 +92,11 @@ class Interval:
             self.frozen = readings.frozen_of(node, self.c)
             self.still = self.top | self.frozen
         node.proper = node.proper + self.direction * np.where(self.frozen, 0, self.p0)
-        self.factors = node.link_factors(
-            [self.at(line) for line in self.carrier.lines[1 : 1 + AXES]], self.frozen
+        self.factors = factors(
+            node, [self.at(line) for line in self.carrier.lines[1 : 1 + AXES]], self.frozen
         )
         node.start_factors = self.factors
-        self.frames = readings.frames(node, self.walled.lines[0].rem)
+        self.frames = frames(self.walled.lines[0].rem)
         node.start_frames = self.frames
         self.cphi = paces.rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
         self.x_now = self.at(self.carrier.lines[0])
@@ -120,20 +113,20 @@ class Interval:
         rule, ends = node.rule_of(self.walled, self.c, self.factors), self.ends(self.walled)
         act = node.act(self.rows[k], rule, None, [None], self.direction, flux, *ends)
         (phi_start,), self.out[k] = act
-        count = readings.centred_count(node, self.cphi, phi_start)
+        count = centred_count(self.cphi, phi_start)
         node.count_max = max(
             int(abs(int(x)))
             for port in range(PORTS)
             for x in (count - self.frames[port] * across(count, port)).reshape(-1)
         )
-        self.phases = readings.link_phases(node, self.frames, count)
+        self.phases = phases(node, self.frames, count)
         self.odd = [self.at(line) for line in self.potential.lines[1 : 1 + AXES]]
         node.start_phases, node.start_odd = self.phases, [o.copy() for o in self.odd]
         self.links_at = {
             c: links_of(
                 self.factors,
                 [f**c for f in self.frames],
-                self.phases if c == 1 else readings.link_phases(node, self.frames, count * c),
+                self.phases if c == 1 else phases(node, self.frames, count * c),
                 [o * c for o in self.odd],
             )
             for c in sorted({c for _r, c in self.planes})
@@ -153,7 +146,7 @@ class Interval:
             if r in self.records:
                 assert r.pair is not None
                 rotation = coupling_of(r) * rotation_of(node, r.pair)
-                turn = fold_links(self.links_at[coupling_of(r)], rotation, self.flux_lines, node.gamma)
+                turn = folded(self.links_at[coupling_of(r)], rotation, self.flux_lines, node.gamma)
             k = self.where[id(r)]
             self.walls[k] = rule.wall
             self.starts[k] = [self.at(line) for line in self.lines(r)]

@@ -9,13 +9,13 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, gram, readings
+from event_universe import close, gram
 from event_universe import run as record
 from event_universe.core import acts, paces, rule3
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import half, lattice, quotient, remainder
 from event_universe.features import volume
-from event_universe.links import links_of
+from event_universe.links import centred_count, factors, frames, links_of, phases
 from event_universe.loader.world import read_world
 from event_universe.metric import stress_parts, tensor_parts
 from event_universe.node import Node
@@ -176,7 +176,7 @@ class Toy(Node):
             return
         c = self.start_content
         gap0 = self.emitter()
-        r_gap0 = self.rule_of(gap0, c, self.link_factors())
+        r_gap0 = self.rule_of(gap0, c, factors(self))
         z = gap0.lines[0]
         gap0_start = plane_starts[self.records().index(gap0)]
         sh_end, sh_vac = (
@@ -233,10 +233,10 @@ class Toy(Node):
         self.start_content = c
         p0 = paces.clock_of(self.gamma, c)
         self.proper = self.proper + direction * p0
-        factors = self.link_factors([at(line) for line in metric.lines[1 : 1 + AXES]])
-        self.start_factors = factors
-        frames = readings.frames(self, walled.lines[0].rem)
-        self.start_frames = frames
+        read = factors(self, [at(line) for line in metric.lines[1 : 1 + AXES]])
+        self.start_factors = read
+        signs = frames(walled.lines[0].rem)
+        self.start_frames = signs
         cphi = paces.rounded(at(potential.lines[0]) * p0, self.gamma)
         out: list[list[Line]] = [[] for _ in rows]
         riding = self.records() + (
@@ -259,7 +259,7 @@ class Toy(Node):
         links: Any = None
         curl: list[Any] = []
         for k, r in enumerate(self.rows_):
-            rule = self.rule_of(r, c, factors)
+            rule = self.rule_of(r, c, read)
             turn = None
             flux = None
             numerators: list[Any] = [None] * r.shape
@@ -294,16 +294,16 @@ class Toy(Node):
                 nows, befores = [l0.now for l0 in start], [l0.before for l0 in start]
                 forms = forms + gram.form(g, nows, nows) - gram.form(g, levels, befores)
             if r.wall is not None:
-                count = readings.centred_count(self, cphi, start[0])
+                count = centred_count(cphi, start[0])
                 self.count_max = max(
                     int(abs(int(x)))
                     for port in range(PORTS)
-                    for x in (count - frames[port] * across(count, port)).reshape(-1)
+                    for x in (count - signs[port] * across(count, port)).reshape(-1)
                 )
-                phases = readings.link_phases(self, frames, count)
+                pairs = phases(self, signs, count)
                 odd = [at(line) for line in potential.lines[1 : 1 + AXES]]
-                self.start_phases, self.start_odd = phases, [o.copy() for o in odd]
-                links = links_of(factors, frames, phases, odd)
+                self.start_phases, self.start_odd = pairs, [o.copy() for o in odd]
+                links = links_of(read, signs, pairs, odd)
                 curl = gram.curl(odd)
             elif r in self.records():
                 w_start = w_start + gram.charge(r.shape, start)
@@ -312,7 +312,7 @@ class Toy(Node):
                 stepped.append([line.copy() for line in after])
                 plane_starts.append(start)
                 nows = [line.now for line in start]
-                for a, j_a in enumerate(gram.current(r.shape, nows, frames)):
+                for a, j_a in enumerate(gram.current(r.shape, nows, signs)):
                     current[a] = current[a] + j_a
                 if r.gap == 0 and direction == 1:
                     laid = out[k][0].now - levels[0]
