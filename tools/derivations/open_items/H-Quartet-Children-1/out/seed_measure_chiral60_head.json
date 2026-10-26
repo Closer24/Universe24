@@ -1,0 +1,215 @@
+{
+ "record": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/qc1/examples/records/chiral.json",
+ "births": 17,
+ "credits": 2903,
+ "cube": 5,
+ "clicks by kind": {
+  "spontaneous click (no independent body)": 22,
+  "pairs spontaneous at both ends": 9,
+  "body at the click (any root)": 18,
+  "measurement click (independent body)": 8,
+  "pairs measured at one end": 4,
+  "pairs measured at both ends": 2
+ },
+ "cells (measured pairs)": {
+  "E (same - opposite, n)": {
+   "-1,-1": [
+    0,
+    0
+   ],
+   "-1,1": [
+    -1,
+    1
+   ],
+   "1,-1": [
+    0,
+    0
+   ],
+   "1,1": [
+    0,
+    0
+   ]
+  },
+  "S": null,
+  "why": "an empty setting cell"
+ },
+ "cells (spontaneous pairs, the control: the sense by the turned bit)": {
+  "E (same - opposite, n)": {
+   "-1,-1": [
+    -6,
+    6
+   ],
+   "-1,1": [
+    -1,
+    1
+   ],
+   "1,-1": [
+    -2,
+    2
+   ],
+   "1,1": [
+    0,
+    0
+   ]
+  },
+  "S": null,
+  "why": "an empty setting cell"
+ },
+ "examples": [
+  {
+   "pair birth": [
+    5,
+    [
+     3,
+     4,
+     1
+    ]
+   ],
+   "end": "plus",
+   "click": [
+    10,
+    [
+     3,
+     4,
+     2
+    ]
+   ],
+   "body row": 0,
+   "body credit i": 10,
+   "body origin": [
+    6,
+    [
+     1,
+     4,
+     1
+    ]
+   ],
+   "outcome": 1,
+   "setting": 1
+  },
+  {
+   "pair birth": [
+    6,
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "end": "plus",
+   "click": [
+    8,
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "body row": 0,
+   "body credit i": 9,
+   "body origin": [
+    6,
+    [
+     1,
+     4,
+     1
+    ]
+   ],
+   "outcome": 1,
+   "setting": -1
+  },
+  {
+   "pair birth": [
+    7,
+    [
+     0,
+     2,
+     0
+    ]
+   ],
+   "end": "minus",
+   "click": [
+    9,
+    [
+     1,
+     2,
+     0
+    ]
+   ],
+   "body row": 0,
+   "body credit i": 9,
+   "body origin": [
+    6,
+    [
+     1,
+     4,
+     1
+    ]
+   ],
+   "outcome": -1,
+   "setting": -1
+  },
+  {
+   "pair birth": [
+    7,
+    [
+     0,
+     2,
+     0
+    ]
+   ],
+   "end": "plus",
+   "click": [
+    11,
+    [
+     0,
+     2,
+     0
+    ]
+   ],
+   "body row": 0,
+   "body credit i": 11,
+   "body origin": [
+    8,
+    [
+     3,
+     2,
+     1
+    ]
+   ],
+   "outcome": 1,
+   "setting": 1
+  },
+  {
+   "pair birth": [
+    8,
+    [
+     3,
+     0,
+     4
+    ]
+   ],
+   "end": "minus",
+   "click": [
+    10,
+    [
+     3,
+     1,
+     4
+    ]
+   ],
+   "body row": 0,
+   "body credit i": 10,
+   "body origin": [
+    8,
+    [
+     3,
+     2,
+     1
+    ]
+   ],
+   "outcome": -1,
+   "setting": 0
+  }
+ ]
+}
