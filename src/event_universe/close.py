@@ -206,7 +206,7 @@ def click(
     direction: int = 1,
     frame: dict[str, Any] | None = None,
 ) -> None:
-    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule in the carrier's unit, PM-S1), the Link close of every record alike (SL-S1), the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame in the reverse order of its lines: the lays removed, a merger's cross term unbooked at the meeting's Node, the taken line moved back by the take's own count at every take's Node (`taken_line`, CS4-S2; the former restore to the level that was, which read a line another lay of the same close had moved and undid that lay twice, struck 2026-10-26 under CL-S2's run back on the fed horizon world; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed), the take's remainder and the readings' counters restored (RW-S1: one function with the direction, the former `unclick` kept by name). `plane_starts` the records' lines at the interval's start, `held` every row's."""
+    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule in the carrier's unit, PM-S1), the Link close of every record alike (SL-S1), the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame in the reverse order of its lines: the lays removed, a merger's cross term unbooked at the meeting's Node, the taken line moved back by the take's own count at every take's Node (`taken_line`, CS4-S2; the former restore to the level that was, which read a line another lay of the same close had moved and undid that lay twice, struck 2026-10-26 under CL-S2's run back on the fed horizon world; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed), the take's remainder, the closes at every end and the readings' counters restored (a merger's ends count their close back, left uncounted by the former undo and met by the run back once the state's counters are compared, 2026-10-26) (RW-S1: one function with the direction, the former `unclick` kept by name). `plane_starts` the records' lines at the interval's start, `held` every row's."""
     if direction == -1:
         assert frame is not None
         rec0 = node.records().index(node.emitter())
@@ -242,6 +242,7 @@ def click(
                         recoil(node, where, take["dP_take"], take["clock"], -1)
                     if "taken_levels" in take:
                         lay(node, row, where, tuple(take["taken_levels"]))
+                        node.closes[where] += 1
                         continue
                     toward = 1 if take["taker"][1] > take["taker"][0] else -1
                     count = 0 if "laid_back" in take else toward * take["levels"]

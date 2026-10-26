@@ -121,7 +121,7 @@ class Node:
             if r.wall is None and r.shape != CARRIER:
                 scaled = wall * readings.scale(r.shape, self.gamma)
                 for line in r.lines:
-                    line.wall, line.rem = scaled, half(scaled)
+                    line.wall, line.rem = scaled, acts.born(scaled)
 
     def node_of(self, xyz: Any) -> tuple[int, ...]:
         """A Node named by the world file: three integers on the board; a Node off the board is refused by name."""
