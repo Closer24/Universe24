@@ -82,18 +82,6 @@ class Toy(Node):
         d = (node[axis] - at[axis]) % self.cube
         return d - self.cube if d > self.cube // 2 else d
 
-    def carried(
-        self,
-        lines: list[Line],
-        r: rule3.Rule,
-        numerators: list[Any],
-        direction: int,
-        top: Any,
-        kept: list[Line] | None,
-    ) -> list[Line]:
-        """The carrier's act, or the carrier held by hand (the well's `held`)."""
-        return lines if self.hold_volume else super().carried(lines, r, numerators, direction, top, kept)
-
     def read_lines(
         self, held: list[list[Line]], plane_starts: list[list[Line]], c: Any, factors: tuple[Any, ...]
     ) -> list[tuple[Line, rule3.Rule]]:

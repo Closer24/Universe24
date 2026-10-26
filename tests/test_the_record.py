@@ -60,12 +60,10 @@ def test_the_conservations_hold_on_the_record(name: str) -> None:
     ]  # a merger's light children carry no sense (MG-S1)
     signs = [(w > 0) - (w < 0) for b in pairs for w in b["W_children"]]
     assert sum(signs) == 0 and 0 not in signs
-    assert all(  # EX-S1's identity at the gap-0 take; a merger's ends taken whole (MG-S1)
-        b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"]
-        if "remainder" in b
-        else b["taken"] >= b["booked"]
-        for b in births
-    )
+
+    # EX-S1's identity at the gap-0 take; a merger's ends taken whole (MG-S1)
+    paid = [b["taken"] + b.get("remainder_was", 0) - b.get("remainder", 0) - b["booked"] for b in births]
+    assert all(x == 0 if "remainder" in b else x >= 0 for x, b in zip(paid, births, strict=True))
     assert len({row["integers"] for row in run["rows"]}) == 1
     assert max(max(row["max bits"], row["max transient bits"]) for row in run["rows"]) <= WIDTH
     assert run["run_back"]["exact"] == run["run_back"]["intervals"] == 20

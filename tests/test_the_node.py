@@ -1,4 +1,4 @@
-"""The one-Node tests (the owner's word of 2026-10-25: every property tested on one Node fed through its six Links): the horizon (a Node whose x Links stand at the wall holds on that axis, is read by no Link close and births nothing; a body standing at it by a neighbour's shared half credits, PM-S1), the frozen content (a Node at the Link pace 0 is not read and never clicks), the turn (the turned Node ends the interval at its pre-state exchanged and complemented, the exchange an involution), the run back exact through all of it; the step's reach of one Link forward and none back; the files' refusals by name."""
+"""The one-Node tests (the owner's word of 2026-10-25: every property tested on one Node fed through its six Links): the horizon (a Node whose x Links stand at the wall holds on that axis, is read by no Link close and births nothing; a body standing at it by a neighbour's shared half credits, PM-S1), the frozen content (a Node at the Link pace 0 is not read and never clicks), the turn (the turned Node ends the interval at its pre-state exchanged and complemented, the exchange an involution), the run back exact through all of it; the step's reach of one Link forward and none back; the files' refusals by name. The horizon's fed Node births once on its own z Link at 6 under EX-S1 (listed as its own and as its + end; nothing under the former take)."""
 
 from __future__ import annotations
 
@@ -57,11 +57,9 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
     fed = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
-    births = [e for e in clicks_at(node, CENTRE) if e["event"] == "birth"]
-    # EX-S1: one birth of the centre's own z Link at 6, listed as its own and as its + end; none under the former take (whose credits were 7 under GP-S1 and 12 before it)
-    assert [(e["i"], e["levels"], e["remainder_was"]) for e in births] == [(6, 18, 0)] * 2
-    credits = [(e["sense"], e["line"]) for e in clicks_at(node, CENTRE) if e["event"] == "credit"]
-    assert credits == [(1, 2)] * 3
+    clicks = clicks_at(node, CENTRE)
+    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == [(6, 18)] * 2
+    assert [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"] == [(1, 2)] * 3
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
 
@@ -292,11 +290,8 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     kept = copy.deepcopy(chiral)
     for _ in range(40):
         chiral.step()
-    assert (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census()) == (
-        16,
-        2075,
-        (99, 115),
-    )
+    counts = (chiral.counts["births"], chiral.counts["body_clicks"], chiral.census())
+    assert counts == (16, 2075, (99, 115))
     assert run_back_exact(kept, 10) == 10
 
 
@@ -313,9 +308,7 @@ def test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1() -> None:
         for w, stood in zip(b["W_children"], b["stood"], strict=True):
             assert abs(w) == node.T // 2 or any(stood), (w, stood)
         assert (b["W_children"][0] > 0) != (b["W_children"][1] > 0) and 0 not in b["W_children"]
-        assert (
-            b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] > 0
-        )  # EX-S1; taken >= booked before
+        assert b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] > 0  # EX-S1
     assert sum((w > 0) - (w < 0) for b in births for w in b["W_children"]) == 0
     assert sum(1 for b in births for w in b["W_children"] if abs(w) == node.T // 2) >= len(births)
     assert run_back_exact(kept, 12) == 12
@@ -531,7 +524,7 @@ def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_c
 
 
 def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() -> None:
-    """UN (The-Unit-And-The-Coupling_COMPARISON.md section 4, un2's table): every record's unit of universe_toy.json is 3 T (sine_den(num, den) + den (num div den)), the one formula giving 3 T den at the emitter and 3 T s at a gapped pair; the emitter is the plane of the potential's pair (den, den), the last record; the 3-cube hole at 20 intervals gives the state hash of the former finders bit for bit; then, with frame signs of -1 standing after the turns, the Links' record at the coupling 0 turns an arbitrary pair of arrays into itself at every Port; the run back exact."""
+    """UN (The-Unit-And-The-Coupling_COMPARISON.md section 4, un2's table): every record's unit of universe_toy.json is 3 T (sine_den(num, den) + den (num div den)), the one formula giving 3 T den at the emitter and 3 T s at a gapped pair; the emitter is the plane of the potential's pair (den, den), the last record; the 3-cube hole at 20 intervals gives the state hash of the former finders bit for bit; then, with frame signs of -1 standing after the turns, the Links' record at the coupling 0 turns an arbitrary pair of arrays into itself at every Port; the run back exact. The state hash at 20: ddfeb210 under EX-S1 (c608a485 before it, d7f2c713 before Y-S3)."""
     node = node_of("world_node.json")
     den, t, records = node.den, node.T, node.records()
     assert node.units == [
@@ -547,9 +540,7 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     kept = copy.deepcopy(node)
     for _ in range(INTERVALS):
         node.step()
-    assert (
-        node.state_hash() == "ddfeb210af37dd74356499052f636f149256ba52007b6951c2269971935c3c86"
-    )  # c608a485 before EX-S1, d7f2c713 before Y-S3
+    assert node.state_hash() == "ddfeb210af37dd74356499052f636f149256ba52007b6951c2269971935c3c86"
     interval = Interval(copy.deepcopy(node), 1)
     interval.readings()
     assert sorted(interval.links_at) == [0, 1] and any(
