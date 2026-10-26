@@ -15,7 +15,7 @@ Suppose nature is discrete: space is made of Nodes, and between one Node and the
 
 ## The documents
 
-- [The law of the lattice](https://closer24.github.io/Universe24/docs/ALGEBRA.md): one algebraic line per rule, every clause dated and the old kept by name, the one Node, the click's read of the board, the board reading itself, the families at the click, the volume holder and the swap at the top
+- [The law of the lattice](https://closer24.github.io/Universe24/docs/ALGEBRA.md): the project's postulates at its head in one place (the many Nodes with no centre and the locality they force; whole numbers for the reversibility of time), then one algebraic line per rule, every clause dated and the old kept by name, the one Node, the click's read of the board, the board reading itself, the families at the click, the volume holder and the swap at the top
 - [The decisions in force](https://closer24.github.io/Universe24/docs/HIGHLIGHTS.md): the owner's words of 2026-10-24 one line each, and the day's structure in the law's own words with its dated clause by heading
 - [Further research](https://closer24.github.io/Universe24/docs/FURTHER_RESEARCH.md): what does not match nature, by name, first; then the one world's open items with where to start; the former courses' items named and struck, their text kept in the file's history
 - [Follow-up papers](https://closer24.github.io/Universe24/docs/FOLLOW_UP_PAPERS.md): the papers the project proposes next, from the careful to the bold, each with its one question, what the project has in the law's status words, and the run or derivation it needs
