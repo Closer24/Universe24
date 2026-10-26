@@ -1,0 +1,1005 @@
+{
+ "record": "/dev/shm/tmp/mb2/hq_chiral5_60_lift3.json",
+ "counts": {
+  "births": "41",
+  "taken": "459113171267503018140757",
+  "booked": "320702596297917254268223",
+  "body_clicks": "3070",
+  "laid_back": "0",
+  "refused_stop": "9226",
+  "refused_origin": "0",
+  "refused_lay": "17538",
+  "refused_orientation": "138",
+  "refused_twist": "48",
+  "refused_sense": "10458",
+  "turns": "547",
+  "met": "37348",
+  "laid": "3",
+  "laid_nodes": "3"
+ },
+ "run_back": {
+  "intervals": 20,
+  "exact": 20
+ },
+ "births": 29,
+ "mergers": 12,
+ "credits": 3070,
+ "waves": [
+  {
+   "i": 3,
+   "row": 2,
+   "minus": [
+    0,
+    2,
+    3
+   ],
+   "plus": [
+    1,
+    2,
+    3
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    34389359129666898252,
+    -17194679564833449126,
+    17194679564833449126
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 3,
+   "row": 2,
+   "minus": [
+    2,
+    2,
+    2
+   ],
+   "plus": [
+    2,
+    2,
+    1
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    17194679564833449126,
+    -17194679564833449126,
+    34389359129666898252
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 4,
+   "row": 0,
+   "minus": [
+    1,
+    4,
+    2
+   ],
+   "plus": [
+    0,
+    4,
+    2
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    15920999597068008450,
+    -84153855013073758950,
+    162242567322502562300
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 4,
+   "row": 3,
+   "minus": [
+    1,
+    2,
+    4
+   ],
+   "plus": [
+    1,
+    3,
+    4
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "dP_take": [
+    38210399032963220280,
+    171946795648334491260,
+    -95525997582408050700
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 4,
+   "row": 3,
+   "minus": [
+    2,
+    3,
+    1
+   ],
+   "plus": [
+    2,
+    4,
+    1
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "dP_take": [
+    0,
+    105685111611013351330,
+    0
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 4,
+   "row": 0,
+   "minus": [
+    2,
+    4,
+    2
+   ],
+   "plus": [
+    2,
+    4,
+    1
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    -13373639661537127098,
+    0,
+    -22289399435895211830
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 4,
+   "row": 1,
+   "minus": [
+    3,
+    2,
+    0
+   ],
+   "plus": [
+    3,
+    2,
+    4
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    257647262050837713888,
+    -15284159613185288112,
+    -25473599355308813520
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 5,
+   "row": 3,
+   "minus": [
+    0,
+    3,
+    1
+   ],
+   "plus": [
+    0,
+    4,
+    1
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "dP_take": [
+    -239724765361566870090,
+    -38665284735736591950,
+    -59286769928129440990
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 5,
+   "row": 3,
+   "minus": [
+    0,
+    4,
+    0
+   ],
+   "plus": [
+    0,
+    4,
+    4
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "dP_take": [
+    -237510988274736461296,
+    -122758488321773901344,
+    -66716569740094511600
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 5,
+   "row": 0,
+   "minus": [
+    3,
+    4,
+    1
+   ],
+   "plus": [
+    3,
+    4,
+    2
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -12240,
+    12096
+   ],
+   "dP_take": [
+    -143743882076385447720,
+    -61864455577178547120,
+    97042283258319289600
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 6,
+   "row": 2,
+   "minus": [
+    0,
+    0,
+    2
+   ],
+   "plus": [
+    0,
+    1,
+    2
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    54707587186877499512,
+    22683633711632133944,
+    6004491276608506044
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 6,
+   "row": 0,
+   "minus": [
+    0,
+    1,
+    4
+   ],
+   "plus": [
+    1,
+    1,
+    4
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    -12736799677654406760,
+    -24260570814579822400,
+    10310742596196424520
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 6,
+   "row": 1,
+   "minus": [
+    0,
+    4,
+    1
+   ],
+   "plus": [
+    1,
+    4,
+    1
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    -90977140554674334000,
+    68536112551187998280,
+    32145256329318264680
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 7,
+   "row": 2,
+   "minus": [
+    4,
+    0,
+    3
+   ],
+   "plus": [
+    0,
+    0,
+    3
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    17136
+   ],
+   "dP_take": [
+    50916872997099402262,
+    6974914109191698940,
+    273416633080314598448
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 8,
+   "row": 2,
+   "minus": [
+    3,
+    3,
+    4
+   ],
+   "plus": [
+    4,
+    3,
+    4
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    10917256866560920080,
+    46853227385657282010,
+    -26838256463628928530
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 10,
+   "row": 3,
+   "minus": [
+    2,
+    0,
+    0
+   ],
+   "plus": [
+    1,
+    0,
+    0
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -71712,
+    72000
+   ],
+   "dP_take": [
+    477993896474258950836,
+    493065776092816665502,
+    383256367443324744364
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 10,
+   "row": 3,
+   "minus": [
+    1,
+    1,
+    1
+   ],
+   "plus": [
+    2,
+    1,
+    1
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "dP_take": [
+    -362998790813150592660,
+    -221256405828967980288,
+    -451155640010630022306
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 10,
+   "row": 1,
+   "minus": [
+    1,
+    1,
+    4
+   ],
+   "plus": [
+    1,
+    1,
+    3
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    87883917775815406644,
+    61136638452741152448,
+    19529759505736757032
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 10,
+   "row": 3,
+   "minus": [
+    4,
+    1,
+    0
+   ],
+   "plus": [
+    4,
+    2,
+    0
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "dP_take": [
+    587105813712831702080,
+    475355559398173395150,
+    311899963534941841730
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 11,
+   "row": 1,
+   "minus": [
+    2,
+    0,
+    2
+   ],
+   "plus": [
+    2,
+    1,
+    2
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    136708316540157299224,
+    28020959290839694872,
+    -36512159075942632712
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 11,
+   "row": 1,
+   "minus": [
+    4,
+    1,
+    2
+   ],
+   "plus": [
+    3,
+    1,
+    2
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    75965912363153068890,
+    -43669027466243680320,
+    -84608740715847130620
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 11,
+   "row": 2,
+   "minus": [
+    2,
+    4,
+    2
+   ],
+   "plus": [
+    3,
+    4,
+    2
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -17856,
+    18000
+   ],
+   "dP_take": [
+    295736358229728035056,
+    -850939521321387270680,
+    -1795342891705943307156
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 11,
+   "row": 1,
+   "minus": [
+    4,
+    0,
+    3
+   ],
+   "plus": [
+    3,
+    0,
+    3
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    29112684977495786880,
+    4730811308843065368,
+    -5458628433280460040
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 13,
+   "row": 3,
+   "minus": [
+    0,
+    1,
+    3
+   ],
+   "plus": [
+    1,
+    1,
+    3
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "dP_take": [
+    -80909003666623707704,
+    -61379244160886950672,
+    255281856396416181204
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 13,
+   "row": 1,
+   "minus": [
+    2,
+    4,
+    3
+   ],
+   "plus": [
+    2,
+    3,
+    3
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    278390050097303462040,
+    -539251837781073002396,
+    774336768974351481452
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 16,
+   "row": 2,
+   "minus": [
+    1,
+    0,
+    0
+   ],
+   "plus": [
+    1,
+    0,
+    1
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    18000
+   ],
+   "dP_take": [
+    848270858531783490216,
+    -187382583829110903262,
+    683329302706158922674
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 17,
+   "row": 2,
+   "minus": [
+    0,
+    4,
+    0
+   ],
+   "plus": [
+    0,
+    0,
+    0
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -18000,
+    17690
+   ],
+   "dP_take": [
+    41788833228113744084,
+    50856221570062952706,
+    25230993647163015296
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": false
+  },
+  {
+   "i": 17,
+   "row": 3,
+   "minus": [
+    2,
+    3,
+    4
+   ],
+   "plus": [
+    2,
+    4,
+    4
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "dP_take": [
+    -67505038291568355828,
+    -35359781962250091148,
+    147868179114864017528
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  },
+  {
+   "i": 18,
+   "row": 3,
+   "minus": [
+    3,
+    3,
+    2
+   ],
+   "plus": [
+    3,
+    4,
+    2
+   ],
+   "wave": null,
+   "phase": null,
+   "levels": null,
+   "W": [
+    -72000,
+    72000
+   ],
+   "dP_take": [
+    -34874570545958494700,
+    -80363140823295661700,
+    -43972284601425928100
+   ],
+   "credits of the row at the ends after": 0,
+   "taken back": true
+  }
+ ],
+ "pairs taken back by a merger": "12 of 29",
+ "delays": {
+  "1": 11,
+  "2": 1
+ },
+ "pairs surviving (i, node, row)": [
+  [
+   3,
+   [
+    0,
+    2,
+    3
+   ],
+   2
+  ],
+  [
+   3,
+   [
+    2,
+    2,
+    1
+   ],
+   2
+  ],
+  [
+   4,
+   [
+    0,
+    4,
+    2
+   ],
+   0
+  ],
+  [
+   4,
+   [
+    3,
+    2,
+    0
+   ],
+   1
+  ],
+  [
+   6,
+   [
+    0,
+    1,
+    2
+   ],
+   2
+  ],
+  [
+   6,
+   [
+    0,
+    1,
+    4
+   ],
+   0
+  ],
+  [
+   6,
+   [
+    1,
+    4,
+    1
+   ],
+   1
+  ],
+  [
+   7,
+   [
+    0,
+    0,
+    3
+   ],
+   2
+  ],
+  [
+   8,
+   [
+    4,
+    3,
+    4
+   ],
+   2
+  ],
+  [
+   10,
+   [
+    1,
+    1,
+    4
+   ],
+   1
+  ],
+  [
+   11,
+   [
+    2,
+    0,
+    2
+   ],
+   1
+  ],
+  [
+   11,
+   [
+    3,
+    1,
+    2
+   ],
+   1
+  ],
+  [
+   11,
+   [
+    3,
+    4,
+    2
+   ],
+   2
+  ],
+  [
+   11,
+   [
+    4,
+    0,
+    3
+   ],
+   1
+  ],
+  [
+   13,
+   [
+    2,
+    3,
+    3
+   ],
+   1
+  ],
+  [
+   16,
+   [
+    1,
+    0,
+    1
+   ],
+   2
+  ],
+  [
+   17,
+   [
+    0,
+    4,
+    0
+   ],
+   2
+  ]
+ ],
+ "h zero": 0,
+ "h above zero": 0,
+ "at the band's edge": 0,
+ "W summed per pair 0": "24 of 29"
+}

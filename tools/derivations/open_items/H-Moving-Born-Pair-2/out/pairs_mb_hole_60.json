@@ -1,0 +1,436 @@
+{
+ "record": "/dev/shm/tmp/mb2/mb_hole_60.json",
+ "per row": {
+  "0": {
+   "shape": 2,
+   "births": 5,
+   "taken back": 0,
+   "delays": {},
+   "F zero": 0,
+   "F nonzero": 5,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 4
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "1": {
+   "shape": 2,
+   "births": 5,
+   "taken back": 0,
+   "delays": {},
+   "F zero": 0,
+   "F nonzero": 5,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 4
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "2": {
+   "shape": 2,
+   "births": 6,
+   "taken back": 1,
+   "delays": {
+    "1": 1
+   },
+   "F zero": 0,
+   "F nonzero": 6,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 5
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  }
+ },
+ "births": [
+  {
+   "i": 8,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    431473825504118,
+    862598197628966
+   ],
+   "F": -8,
+   "W": [
+    -18000,
+    17788
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    2703689051640747,
+    5320721411978856
+   ],
+   "F": -58,
+   "W": [
+    -18000,
+    17828
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    431473825504118,
+    862598197628966
+   ],
+   "F": 8,
+   "W": [
+    -18000,
+    17788
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    431473825504118,
+    862598197628966
+   ],
+   "F": -8,
+   "W": [
+    -18000,
+    17788
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    2703689051640747,
+    5320721411978856
+   ],
+   "F": 58,
+   "W": [
+    -18000,
+    17828
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    2571651766701344,
+    5068790583736127
+   ],
+   "F": -96,
+   "W": [
+    -18000,
+    17763
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    431473825504118,
+    862598197628966
+   ],
+   "F": 8,
+   "W": [
+    -18000,
+    17788
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    2571651766701344,
+    5068790583736127
+   ],
+   "F": 96,
+   "W": [
+    -18000,
+    17763
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 9,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    2,
+    -1,
+    1567198630591407,
+    3117610202331361
+   ],
+   "F": -25,
+   "W": [
+    -18000,
+    17805
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     10
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 9,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    1,
+    -1,
+    1492241275670205,
+    2969994482657886
+   ],
+   "F": -44,
+   "W": [
+    -18864,
+    17874
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 11,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    7189269744049908,
+    12659601482329243
+   ],
+   "F": 24,
+   "W": [
+    -18000,
+    17852
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     12
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 11,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    7189269744049908,
+    12659601482329243
+   ],
+   "F": -24,
+   "W": [
+    -18000,
+    17852
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     12
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 11,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    624734852705970,
+    1248408719615360
+   ],
+   "F": 65,
+   "W": [
+    -17875,
+    17842
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 13,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    830009176068618,
+    1657529424239507
+   ],
+   "F": -3,
+   "W": [
+    -18000,
+    17927
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 16,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    1565878393653575,
+    3115012193829418
+   ],
+   "F": 25,
+   "W": [
+    -18000,
+    17805
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     17
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 21,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    1204176103008570,
+    2400745540148458
+   ],
+   "F": -14,
+   "W": [
+    -18000,
+    17884
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     22
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  }
+ ]
+}

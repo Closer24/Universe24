@@ -1,0 +1,12 @@
+{"replacement": 24, "file": "event_universe/close.py", "old_bytes": 50, "new_bytes": 65}
+{"replacement": 25, "file": "event_universe/close.py", "old_bytes": 153, "new_bytes": 202}
+{"replacement": 26, "file": "event_universe/close.py", "old_bytes": 214, "new_bytes": 906}
+{"replacement": 27, "file": "event_universe/close.py", "old_bytes": 124, "new_bytes": 132}
+{"replacement": 28, "file": "event_universe/close.py", "old_bytes": 43, "new_bytes": 79}
+{"replacement": 29, "file": "event_universe/close.py", "old_bytes": 78, "new_bytes": 153}
+{"replacement": 30, "file": "event_universe/close.py", "old_bytes": 92, "new_bytes": 118}
+{"replacement": 31, "file": "event_universe/close.py", "old_bytes": 143, "new_bytes": 305}
+{"copy": "/dev/shm/tmp/mb2/src_mb2", "flag": "MB_S1", "files changed": ["event_universe/close.py", "event_universe/draw.py", "event_universe/gram.py", "event_universe/merger.py", "event_universe/rows.py"]}
+{"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/mb2/tests/worlds/world_hole.json", "verdict": "EQUAL", "head": "c7060288e55c497b24f74111e1fd559df2434d7874cfc783fa48fece371f3c1f", "copy": "c7060288e55c497b24f74111e1fd559df2434d7874cfc783fa48fece371f3c1f", "head record": "/dev/shm/tmp/mb2/head_world_hole.json", "copy record": "/dev/shm/tmp/mb2/copy_mb2_world_hole.json"}
+{"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/mb2/tests/worlds/world_nature.json", "verdict": "EQUAL", "head": "4e5b63f9ac2f2fa7cc686ad902a42bd5ce567854c81618a3a6fff46ae6496374", "copy": "4e5b63f9ac2f2fa7cc686ad902a42bd5ce567854c81618a3a6fff46ae6496374", "head record": "/dev/shm/tmp/mb2/head_world_nature.json", "copy record": "/dev/shm/tmp/mb2/copy_mb2_world_nature.json"}
+worlds bit for bit with the head: 2 of 2

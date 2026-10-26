@@ -1,0 +1,708 @@
+{
+ "record": "/dev/shm/tmp/mb2/mb_chiral5_60_lift3.json",
+ "per row": {
+  "2": {
+   "shape": 2,
+   "births": 6,
+   "taken back": 0,
+   "delays": {},
+   "F zero": 1,
+   "F nonzero": 5,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 4
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "0": {
+   "shape": 2,
+   "births": 7,
+   "taken back": 1,
+   "delays": {
+    "2": 1
+   },
+   "F zero": 2,
+   "F nonzero": 5,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 4
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "3": {
+   "shape": 8,
+   "births": 6,
+   "taken back": 6,
+   "delays": {
+    "3": 3,
+    "2": 3
+   },
+   "F zero": 6,
+   "F nonzero": 0,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 6
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "1": {
+   "shape": 2,
+   "births": 8,
+   "taken back": 0,
+   "delays": {},
+   "F zero": 0,
+   "F nonzero": 8,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 6
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  }
+ },
+ "births": [
+  {
+   "i": 3,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    1409424424861889,
+    2806644786111703
+   ],
+   "F": -62,
+   "W": [
+    -18000,
+    17800
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     4
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 3,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    2,
+    -1,
+    1409424424861889,
+    2806644786111703
+   ],
+   "F": 62,
+   "W": [
+    -18000,
+    17800
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     4
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    110565452614333,
+    221125026247659
+   ],
+   "F": -106,
+   "W": [
+    -18000,
+    17734
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     5
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 3,
+   "shape": 8,
+   "wave": [
+    1,
+    1,
+    1766175360186630,
+    3508305982639629
+   ],
+   "F": 0,
+   "W": [
+    -72000,
+    71456
+   ],
+   "delay": 3,
+   "refused next": [
+    [
+     "twist",
+     5
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 3,
+   "shape": 8,
+   "wave": [
+    1,
+    1,
+    1080919926727700,
+    2156339744179736
+   ],
+   "F": 0,
+   "W": [
+    -72000,
+    71224
+   ],
+   "delay": 3,
+   "refused next": [
+    [
+     "twist",
+     5
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    2,
+    -1,
+    154795585055902,
+    309575036746723
+   ],
+   "F": 38,
+   "W": [
+    -18000,
+    17736
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     5
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    2,
+    -1,
+    1094014877544588,
+    2182327141631952
+   ],
+   "F": -52,
+   "W": [
+    -18000,
+    17806
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     5
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 5,
+   "row": 3,
+   "shape": 8,
+   "wave": [
+    1,
+    1,
+    394586023031038,
+    788904784456001
+   ],
+   "F": 0,
+   "W": [
+    -72000,
+    71096
+   ],
+   "delay": 2,
+   "refused next": [
+    [
+     "twist",
+     6
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 5,
+   "row": 3,
+   "shape": 8,
+   "wave": [
+    2,
+    -1,
+    681311857151953,
+    1361247471218198
+   ],
+   "F": 0,
+   "W": [
+    -72000,
+    71456
+   ],
+   "delay": 2,
+   "refused next": [
+    [
+     "twist",
+     6
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 5,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    2,
+    1,
+    674572738677766,
+    1347809683795260
+   ],
+   "F": -84,
+   "W": [
+    -12240,
+    12001
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     6
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 5,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    2,
+    1,
+    4700075005963738,
+    8937149246683235
+   ],
+   "F": -12,
+   "W": [
+    -18000,
+    17732
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     6
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 6,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    1,
+    1,
+    973664663733142,
+    1943310359453215
+   ],
+   "F": -54,
+   "W": [
+    -18000,
+    17754
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     7
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 6,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    88451515467809,
+    176900020998127
+   ],
+   "F": -19,
+   "W": [
+    -18000,
+    17733
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     7
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 7,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    4525443260224219,
+    8638378268959813
+   ],
+   "F": -26,
+   "W": [
+    -18000,
+    17858
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     8
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 7,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    735940981492727,
+    1470147268915654
+   ],
+   "F": -103,
+   "W": [
+    -18000,
+    17888
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     8
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 7,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    1,
+    -1,
+    34116518979101,
+    68232865242135
+   ],
+   "F": 0,
+   "W": [
+    -18000,
+    17732
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 7,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    1,
+    1,
+    4698653472525147,
+    8934733401995810
+   ],
+   "F": -12,
+   "W": [
+    -18000,
+    17732
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     8
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    1,
+    -1,
+    103194068801556,
+    206383357831149
+   ],
+   "F": 19,
+   "W": [
+    -12816,
+    17733
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    1,
+    -1,
+    1263125506911317,
+    2517470238382574
+   ],
+   "F": 5,
+   "W": [
+    -18000,
+    17926
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 3,
+   "shape": 8,
+   "wave": [
+    1,
+    1,
+    1478743058685383,
+    2943388282084076
+   ],
+   "F": 0,
+   "W": [
+    -72000,
+    71400
+   ],
+   "delay": 2,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    2,
+    1,
+    62352731247676,
+    124704408093254
+   ],
+   "F": -19,
+   "W": [
+    -18000,
+    17733
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    1,
+    -1,
+    1482775665367487,
+    2951337658207021
+   ],
+   "F": -44,
+   "W": [
+    -17856,
+    17874
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    1,
+    1,
+    890053634417658,
+    1777037815328875
+   ],
+   "F": -16,
+   "W": [
+    -18000,
+    17956
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 3,
+   "shape": 8,
+   "wave": [
+    1,
+    1,
+    847774566098117,
+    1692896855114995
+   ],
+   "F": 0,
+   "W": [
+    -72000,
+    71760
+   ],
+   "delay": 3,
+   "refused next": [
+    [
+     "twist",
+     9
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 8,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    2,
+    1,
+    25271466670647,
+    50542863142322
+   ],
+   "F": 0,
+   "W": [
+    -22752,
+    17732
+   ],
+   "delay": 2,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 10,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    5385225623759096,
+    10068281296210236
+   ],
+   "F": 77,
+   "W": [
+    -18000,
+    17836
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 17,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    1,
+    -1,
+    29700001800823,
+    59399889653157
+   ],
+   "F": 0,
+   "W": [
+    -18000,
+    17732
+   ],
+   "delay": null,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  }
+ ]
+}

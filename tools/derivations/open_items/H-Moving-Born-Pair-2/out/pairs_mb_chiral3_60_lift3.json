@@ -1,0 +1,187 @@
+{
+ "record": "/dev/shm/tmp/mb2/mb_chiral3_60_lift3.json",
+ "per row": {
+  "3": {
+   "shape": 8,
+   "births": 1,
+   "taken back": 1,
+   "delays": {
+    "2": 1
+   },
+   "F zero": 1,
+   "F nonzero": 0,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 1
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "2": {
+   "shape": 2,
+   "births": 2,
+   "taken back": 1,
+   "delays": {
+    "1": 1
+   },
+   "F zero": 0,
+   "F nonzero": 2,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 1
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "0": {
+   "shape": 2,
+   "births": 1,
+   "taken back": 0,
+   "delays": {},
+   "F zero": 0,
+   "F nonzero": 1,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 1
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  },
+  "1": {
+   "shape": 2,
+   "births": 1,
+   "taken back": 0,
+   "delays": {},
+   "F zero": 0,
+   "F nonzero": 1,
+   "W sum zero": 0,
+   "refused at the next close": {
+    "twist": 1
+   },
+   "credits at the ends after": 0,
+   "h zero": 0
+  }
+ },
+ "births": [
+  {
+   "i": 2,
+   "row": 3,
+   "shape": 8,
+   "wave": [
+    1,
+    1,
+    10721758836528647,
+    15162856759112389
+   ],
+   "F": 0,
+   "W": [
+    -72000,
+    70928
+   ],
+   "delay": 2,
+   "refused next": [
+    [
+     "twist",
+     3
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 4,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    7060159115803914,
+    12496251785783059
+   ],
+   "F": 82,
+   "W": [
+    -18000,
+    17824
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     5
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 6,
+   "row": 2,
+   "shape": 2,
+   "wave": [
+    0,
+    -1,
+    1602878103845052,
+    3187794078052798
+   ],
+   "F": -6,
+   "W": [
+    -18000,
+    17860
+   ],
+   "delay": 1,
+   "refused next": [],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 6,
+   "row": 0,
+   "shape": 2,
+   "wave": [
+    1,
+    1,
+    797152477568222,
+    1592100188983151
+   ],
+   "F": 3,
+   "W": [
+    -18000,
+    17927
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     7
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  },
+  {
+   "i": 7,
+   "row": 1,
+   "shape": 2,
+   "wave": [
+    0,
+    1,
+    7825653567435533,
+    13405723870024853
+   ],
+   "F": 35,
+   "W": [
+    -18000,
+    17856
+   ],
+   "delay": null,
+   "refused next": [
+    [
+     "twist",
+     8
+    ]
+   ],
+   "credits at ends after": 0,
+   "credits of the row after": 0
+  }
+ ]
+}
