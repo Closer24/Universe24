@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
-from event_universe.decoder import HALF, Record
+from event_universe.decoder import HALF, Record, shown
 
 LABELS = {
     "1": "a bang recurs",
@@ -81,11 +81,6 @@ def label_of(key: str) -> str:
     return LABELS.get(key.split()[0], LABELS.get(key, key))
 
 
-def shown(verdict: str) -> bool:
-    """A verdict that shows (whole or in part)."""
-    return verdict.startswith("SHOWN")
-
-
 def first_interval(record: Record, row: Callable[[Record], dict[str, Any]], key: str) -> int:
     """The least interval at which the row shows on the record cut to it, by a search on the cuts (the verdict read as standing from its first interval on)."""
     low, high = 1, record.intervals
@@ -99,12 +94,12 @@ def first_interval(record: Record, row: Callable[[Record], dict[str, Any]], key:
 
 
 def first_shown(
-    record: Record, table: tuple[Callable[[Record], dict[str, Any]], ...]
+    record: Record, read: list[tuple[Callable[[Record], dict[str, Any]], dict[str, Any]]]
 ) -> list[dict[str, Any]]:
-    """Every event line in the order of its interval: for every row of the table that shows on the whole record, the interval it first shows, its Node where the row names one, its label and its verdict's first clause as its numbers."""
+    """Every event line in the order of its interval: for every row of the table that shows on the whole record (the rows as read once, each with its reading), the interval it first shows, its Node where the row names one, its label and its verdict's first clause as its numbers."""
     found = []
-    for row in table:
-        for key, out in row(record).items():
+    for row, rows in read:
+        for key, out in rows.items():
             if not shown(out["verdict"]):
                 continue
             i = first_interval(record, row, key)

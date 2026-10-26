@@ -1,4 +1,4 @@
-"""The decoder's reads of the record, integers only (the owner's word: no float anywhere, every reading a quotient with its remainder or a count over a span): the record as read from the run's log alone (credits, births, refusals; the rows of the board's course; the Node lines), cut to an interval for a gate read as it first shows (`Record.to`), its own names for the planes (never the Node's), the species solved from a credit's frame and the nearest name; the gates themselves are the table of gates.py, the rows read from the clicks clicks.py, the board's board.py and the widened rows predicates.py."""
+"""The decoder's reads of the record, integers only (the owner's word: no float anywhere, every reading a quotient with its remainder or a count over a span): the record as read from the run's log alone (credits, births, refusals; the rows of the board's course; the Node lines), cut to an interval for a gate read as it first shows (`Record.to`), its own names for the planes (never the Node's), the species solved from a credit's frame and the nearest name; the verdicts' kinds and their one reader (kind_of, shown); the gates themselves are the table of gates.py, the rows read from the clicks clicks.py, the board's board.py and the widened rows predicates.py."""
 
 from __future__ import annotations
 
@@ -36,6 +36,28 @@ KICK_WEIGHT = (
 )
 REACH = 2  # the reach's weight, R_j = 2 p_i^2 Q_j G^2 (the law's form), mirrored here for the solve
 Rational = tuple[int, int]
+NOT = "NOT"  # the word a verdict begins with where the gate is not shown, read or reached
+KINDS = (
+    "SHOWN in part",
+    f"{NOT} SHOWN",
+    f"{NOT} REACHED",
+    f"{NOT} READ",
+    "SHOWN",
+)  # the verdicts' kinds, the longer first
+RESTATED = (
+    "as gate"  # a verdict restating another gate's begins so, the gate's number and a colon after it
+)
+
+
+def kind_of(verdict: str) -> str:
+    """A verdict's kind (SHOWN, SHOWN in part, or NOT with SHOWN, READ or REACHED), a restated row's by the gate it restates; the one reader of the kind from the words."""
+    words = verdict.split(": ", 1)[1] if verdict.startswith(RESTATED) else verdict
+    return next((kind for kind in KINDS if words.startswith(kind)), f"{NOT} READ")
+
+
+def shown(verdict: str) -> bool:
+    """A verdict that shows (whole or in part) in its own right: a row restating another gate's verdict shows no event line of its own, the gate it restates has the line."""
+    return verdict.startswith("SHOWN")
 
 
 class Record:
@@ -79,6 +101,9 @@ class Record:
 
     def to(self, i: int) -> Record:
         """The record cut to the intervals 1 to i (its log, its rows and its Node lines, each in the run's order, cut by a search on the interval), for a gate read as it first shows; the solves and the run back stay the whole record's."""
+        cuts: dict[int, Record] = self.memo.setdefault("cuts", {})
+        if i in cuts:
+            return cuts[i]
         found = Record.__new__(Record)
         found.__dict__.update(self.__dict__)
         found.intervals = i
@@ -87,6 +112,7 @@ class Record:
             setattr(found, name, whole[: bisect_right(whole, i, key=lambda e: int(e["i"]))])
         found.rows = self.rows[: bisect_right(self.rows, i, key=lambda r: int(r["i"]))]
         found.nodes = self.nodes[: bisect_right(self.nodes, i, key=lambda n: int(n["i"]))]
+        cuts[i] = found
         return found
 
 

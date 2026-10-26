@@ -10,7 +10,7 @@ from typing import Any
 
 from event_universe import board, clicks, predicates
 from event_universe.core.ports import AXES
-from event_universe.decoder import HALF, HUNDRED, LISTED, PAIR, WIDTH, Record, quot
+from event_universe.decoder import HALF, HUNDRED, LISTED, PAIR, WIDTH, Record, kind_of, quot
 
 Row = Callable[[Record], dict[str, Any]]
 
@@ -349,28 +349,13 @@ def verdicts(record: Record) -> dict[str, Any]:
     return out
 
 
-def kind_of(verdict: str) -> str:
-    """A verdict's kind (SHOWN, SHOWN in part, or NOT with SHOWN, READ or REACHED), a restated row's by the gate it restates."""
-    words = (
-        (verdict.split(": ", 1)[1] if verdict.startswith("as gate") else verdict)
-        .replace(":", " ")
-        .split()
-    )
-    in_part = ["in", "part"]
-    whole = words[1 : 1 + len(in_part)] != in_part
-    return (
-        words[0]
-        if words[0] == "SHOWN" and whole
-        else " ".join(words[: PAIR if whole else 1 + len(in_part)])
-    )
-
-
 def gates(run: dict[str, Any]) -> dict[str, Any]:
     """Every gate's verdict with its numbers from the record alone, the decoder's line (the rows of the gates of the phenomena and their count by the verdict's kind, the count of SHOWN in Universe24), and the event lines of the gates' first SHOWN (events.first_shown)."""
     from event_universe import events  # the events read the table, after it
 
     record = Record(run)
-    out = verdicts(record)
+    read = [(row, row(record)) for row in TABLE]
+    out = {key: found for _row, rows in read for key, found in rows.items()}
     out["the decoder"] = {
         "floats used": 0,
         "rows of the gates of the phenomena": len(TABLE),
@@ -382,7 +367,7 @@ def gates(run: dict[str, Any]) -> dict[str, Any]:
             key for row in TABLE if row.__module__ == board.__name__ for key in row(record)
         ],
     }
-    out["events"] = events.first_shown(record, TABLE)
+    out["events"] = events.first_shown(record, read)
     return out
 
 
