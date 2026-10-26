@@ -300,11 +300,12 @@ def neighbours(at: int, cube: int) -> list[int]:
 
 
 def maxwell(record: Record) -> dict[str, Any]:
-    """Row 37: Maxwell's one Link per interval from the Node lines' gap-0 currents: a Node whose current turns on at an interval stood within one Link of a Node with a current the interval before; the violations counted."""
+    """Row 37: Maxwell's one Link per interval from the Node lines' gap-0 currents (one flat list, axis by axis, the Node i along the axis a at a count + i): a Node whose current turns on at an interval stood within one Link of a Node with a current the interval before; the violations counted."""
     cube = int(record.run["cube"])
+    count = cube * cube * cube
     lit = []
     for line in record.nodes:
-        on = {i for axis in line["current"] for i, c in enumerate(axis) if c}
+        on = {i for i in range(count) if any(line["current"][i::count])}
         lit.append(on | {n for i in on for n in neighbours(i, cube)})
     violations = grown = 0
     for before, after in zip(lit, lit[1:], strict=False):

@@ -87,9 +87,10 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
     assert [line["i"] for line in run["nodes"]] == list(range(1, int(run["intervals"]) + 1))
     for line in run["nodes"]:
         assert len(line["X"]) == len(line["content"]) == count
-        sites = line["turned"] + line["frozen"] + [h[0] for h in line["held"]]
+        sites = line["turned"] + line["frozen"] + line["held"][0::2]
         assert all(0 <= i < count for i in sites)
-        assert all(h[1] in (0, 1, 2) for h in line["held"])
+        assert all(axis in (0, 1, 2) for axis in line["held"][1::2])
+        assert len(line["current"]) == 3 * count
     assert sum(len(line["turned"]) for line in run["nodes"]) == int(run["counts"]["turns"])
     events = next(line["events"] for line in reading_of(name) if "events" in line)
     assert events == gates(run)["events"]

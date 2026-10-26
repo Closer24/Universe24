@@ -12,7 +12,7 @@ from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import carried_division, division_forward, half, held_numerator, quotient
 from event_universe.features import volume
 from event_universe.links import coupling_of, links_of, stress_parts, tensor_parts
-from event_universe.rows import CARRIER, POTENTIAL, TRACE, Line, Row, walled_of, zeros
+from event_universe.rows import CARRIER, POTENTIAL, Line, Row, walled_of, zeros
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -193,12 +193,12 @@ class Interval:
             self.kicked[k] = p_other
 
     def division(self) -> None:
-        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms 54 den Gamma^2 - trace p_0^2) p_0 on its time line and the traceless stress times p_0^2 on its axis lines (node.carried); every riding line's one carried division at the mean wall of the carrier's two levels at its end times the row's scale, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and after the step kept for the close; the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act changes any integer of a frozen Node's state in either direction."""
+        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms (the file's trace weight) den Gamma^2 - trace p_0^2) p_0 on its time line and the traceless stress times p_0^2 on its axis lines (node.carried); every riding line's one carried division at the mean wall of the carrier's two levels at its end times the row's scale, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and after the step kept for the close; the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act changes any integer of a frozen Node's state in either direction."""
         node, carrier = self.node, self.carrier
         k = self.where[id(carrier)]
         p02 = self.p0 * self.p0
         numerators = [
-            held_numerator(TRACE, self.x_now, self.forms, self.trace, self.p0, node.den, node.gamma)
+            held_numerator(node.trace, self.x_now, self.forms, self.trace, self.p0, node.den, node.gamma)
         ]
         numerators += [self.traceless[a] * p02 for a in range(AXES)] + [None] * (
             carrier.shape - 1 - AXES

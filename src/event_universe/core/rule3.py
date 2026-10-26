@@ -104,14 +104,14 @@ def link_unit_of(gamma: Any) -> int:
 
 
 def held_wall(weight: Any, den: Any, gamma: Any, action: Any, power: int) -> Any:
-    """A held row's write wall (K-S1 to K-S3, Y-S1): weight den Gamma^power T with the trace's weight 54 (rows.TRACE), the time line's at the power 4 and the nine lines' at 2."""
+    """A held row's write wall (K-S1 to K-S3, Y-S1): weight den Gamma^power T with the trace's weight the universe file's `trace` key, the time line's at the power 4 and the nine lines' at 2."""
     return weight * den * gamma**power * action
 
 
 def held_numerator(
     weight: Any, level: Any, forms: Any, trace: Any, clock: Any, den: Any, gamma: Any
 ) -> Any:
-    """The carrier's time line's write numerator (the metric time line, the held write): 4 X (forms 54 den Gamma^2 - trace p_0^2) p_0 with the trace's weight 54 (rows.TRACE)."""
+    """The carrier's time line's write numerator (the metric time line, the held write): 4 X (forms weight den Gamma^2 - trace p_0^2) p_0 with the trace's weight the universe file's `trace` key."""
     return (
         HELD_WRITE_WEIGHT
         * level

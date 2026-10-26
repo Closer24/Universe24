@@ -103,8 +103,8 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
 
 
 LAW_INTEGERS, RULE_LINE_INTEGERS = frozenset({0, 1, 2, 3, 4, 6}), frozenset({12})
-# rows.py: the quartet's and the carrier's shapes, the trace's weight 2 x 27, the width's half
-ROW_INTEGERS = frozenset({8, 10, 54, 128})
+# rows.py: the quartet's and the carrier's shapes, the width (the trace's 54 the file's key since the batch of 2026-10-26)
+ROW_INTEGERS = frozenset({8, 10, 128})
 # the record's writer and readers, no act of the Node: their scales are their own
 READERS = tuple(f"{n}.py" for n in "run decoder gates events circle board clicks predicates".split())
 NAMED_CALLS = {

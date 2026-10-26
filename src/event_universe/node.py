@@ -58,6 +58,7 @@ class Node:
         ints = universe["integers"]
         self.den, self.gamma = int(ints["den"]), int(ints["node_clock"])
         self.T, self.G = int(ints["quantum_action"]), link_unit_of(self.gamma)
+        self.trace = int(ints["trace"])
         shape = tuple(int(x) for x in world["shape"])
         if len(shape) != AXES or len(set(shape)) != 1:
             raise ValueError("the board is a cube: the shape is [c, c, c]")
