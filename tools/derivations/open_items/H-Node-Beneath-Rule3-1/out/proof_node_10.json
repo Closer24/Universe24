@@ -1,0 +1,77 @@
+{
+ "random": {
+  "divide": 20000,
+  "reversal": 20000,
+  "direction_read": 20000,
+  "move": 20000,
+  "write": 20000,
+  "count": 20000
+ },
+ "core_lines": 45,
+ "run": {
+  "divisions": 73618,
+  "divisions_apart": 0,
+  "lays": 3,
+  "lays_apart": 0,
+  "exchanges": 20,
+  "exchanges_apart": 0,
+  "exchanged_nodes": 116,
+  "per_interval": [
+   [
+    5198,
+    0,
+    1
+   ],
+   [
+    1098,
+    0,
+    5
+   ],
+   [
+    1125,
+    0,
+    5
+   ],
+   [
+    1125,
+    0,
+    9
+   ],
+   [
+    6721,
+    0,
+    5
+   ],
+   [
+    "..."
+   ]
+  ],
+  "run_back": [
+   10,
+   10
+  ],
+  "counts": {
+   "births": 0,
+   "taken": 0,
+   "booked": 0,
+   "body_clicks": 0,
+   "laid_back": 0,
+   "refused_stop": 0,
+   "refused_origin": 0,
+   "refused_lay": 16,
+   "refused_orientation": 53,
+   "refused_twist": 27,
+   "refused_sense": 0,
+   "turns": 58,
+   "met": 96,
+   "laid": 0,
+   "laid_nodes": 0
+  },
+  "log": 0,
+  "state_hash_after_forward": "577ffed804f36206ab49a6e836b65002af43ba464bf645faa3ba2b64906066c9",
+  "census": [
+   99,
+   114
+  ]
+ }
+}

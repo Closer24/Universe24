@@ -1,0 +1,15 @@
+{
+ "mode": "node",
+ "calls": {
+  "divide": 103680,
+  "lay": 6,
+  "rotate": 440,
+  "write": 560,
+  "exchange": 828
+ },
+ "mismatches": {},
+ "intervals": 20,
+ "run_back_exact": 20,
+ "births": 0,
+ "turns": 84
+}
