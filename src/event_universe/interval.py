@@ -10,7 +10,7 @@ from event_universe import gram, readings
 from event_universe.core import paces
 from event_universe.core.acts import divide
 from event_universe.core.ports import AXES, PORTS, across
-from event_universe.core.rule3 import division_forward, half, held_numerator, quotient
+from event_universe.core.rule3 import half, held_numerator, quotient
 from event_universe.features import volume
 from event_universe.links import coupling_of, links_of
 from event_universe.metric import (
@@ -105,7 +105,7 @@ class Interval:
         node.start_factors = self.factors
         self.frames = readings.frames(node, self.walled.lines[0].rem)
         node.start_frames = self.frames
-        self.cphi = paces.odd_rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
+        self.cphi = paces.rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
         self.x_now = self.at(self.carrier.lines[0])
         node.start_x = self.x_now
         sources = [
@@ -191,8 +191,8 @@ class Interval:
                 line = self.rows[k][0]
                 q, line.wr = divide(charge, line.wwall, line.wr, self.direction)
                 p_other[0] = p_other[0] + self.direction * node.w * self.x_now * q
-            u_in = [paces.odd_rounded(p + p + 1, ds) for p in p_side]
-            u_out = [paces.odd_rounded(p + p + 1, ds) for p in p_other]
+            u_in = [paces.rounded(p + p + 1, ds) for p in p_side]
+            u_out = [paces.rounded(p + p + 1, ds) for p in p_other]
             if r in self.records:
                 gj = gram.matmul(g, gram.rotation(r.shape))
                 forms = gram.form(gj, self.starts[k], u_in) + gram.form(gj, self.starts[k], u_out)
@@ -225,7 +225,7 @@ class Interval:
             ws = self.scales[k] * w_div
             new = []
             for a, p, line in zip(self.starts[k], self.kicked[k], self.rows[k], strict=True):
-                v, rem = division_forward(p, ws, half(ws))
+                v, rem = divide(p, ws, half(ws))
                 now, before = (a + self.direction * v, a)[:: self.direction]
                 new.append(Line(now, before, rem, ws, line.wr, line.wwall))
             if self.direction == -1 and self.kept is not None:
@@ -249,12 +249,12 @@ class Interval:
         )
 
     def lays(self) -> None:
-        """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.odd_rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`), its booking per Node laid written on the carrier's flux lines by the Node's write act (take.recoil, LT-S1: the emission's lay taken into the clause), its bookings kept in the interval's frame for the run back and undone at -1 by the same act, the last first, after the swap's undoing and before the writes come off, at no still Node (turned or frozen), where the swap or the restore wiped the forward's booking with the lay; the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
+        """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`), its booking per Node laid written on the carrier's flux lines by the Node's write act (take.recoil, LT-S1: the emission's lay taken into the clause), its bookings kept in the interval's frame for the run back and undone at -1 by the same act, the last first, after the swap's undoing and before the writes come off, at no still Node (turned or frozen), where the swap or the restore wiped the forward's booking with the lay; the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
         node = self.node
         line, carrier = node.emitter().lines[0], node.row(CARRIER).lines[0]
         levels = line.now
         wall = self.common * self.mean_wall(carrier)
-        node.write(line, paces.odd_rounded(self.emission, wall), self.direction)
+        node.write(line, paces.rounded(self.emission, wall), self.direction)
         if self.direction == 1:
             laid_on(node, line, levels)
         if self.direction == -1:

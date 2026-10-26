@@ -201,13 +201,13 @@ class Toy(Node):
                     }
                 )
 
-    def run(self, direction: int = 1) -> None:
+    def step(self, direction: int = 1) -> None:
         """The symmetric ride under the key, else the former loop; the held field runs on the former loop alone (on the ride every riding row's momenta source the carrier, and a held row's are no bijection), refused by name on the ride."""
         if self.control.get("ride") != "symmetric":
             return self.former(direction)
         if self.held_lines:
             raise ValueError("the held field runs on the former loop alone")
-        super().run(direction)
+        super().step(direction)
 
     def former(self, direction: int) -> None:
         """The former interval: the readings at the start, one act on every row in the rows' order at the fixed wall times the row's scale (the walled row with its write inside the division, a record with a gap turned by the Link's pair and the odd tangent with the quartet's Node term inside its division (sr1's form), the plane at the gap 0 taking W-S1, the shape-4 row 2 W and the current with its held lines restored, the metric's row the riding rows' G-weighted forms less the pressure and the traceless stress), the swap and the close."""
@@ -237,7 +237,7 @@ class Toy(Node):
         self.start_factors = factors
         frames = readings.frames(self, walled.lines[0].rem)
         self.start_frames = frames
-        cphi = paces.odd_rounded(at(potential.lines[0]) * p0, self.gamma)
+        cphi = paces.rounded(at(potential.lines[0]) * p0, self.gamma)
         out: list[list[Line]] = [[] for _ in rows]
         riding = self.records() + (
             [potential] if self.control.get("metric_sources") == "every riding row" else []

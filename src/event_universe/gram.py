@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core.ports import AXES, PORTS, across, port_of, wrap
-from event_universe.core.rule3 import division_forward, half, quotient, share_weight, signed_quotient
+from event_universe.core.rule3 import half, quotient, share_weight, signed_quotient
 from event_universe.links import gradient
 from event_universe.quartet import quartet
 from event_universe.readings import pair_angle
@@ -163,7 +163,7 @@ def share(node: Node, lines: list[Line], r: Any) -> Any:
     wall = share_weight(node.gamma, node.G) + share_weight(node.gamma, node.G)
     found = zeros(node.shape)
     for o, s in zip(own, shared, strict=True):
-        found = found + np.asarray(division_forward((o + o - s) * node.start_x, wall, 0)[0])
+        found = found + np.asarray(quotient((o + o - s) * node.start_x, wall))
     return found
 
 

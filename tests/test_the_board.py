@@ -18,7 +18,7 @@ from event_universe import run as writer
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORTS
 from event_universe.links import row_current
-from event_universe.merger import light_children, walls_of
+from event_universe.merger import children_laid, light_levels, walls_of
 from event_universe.node import Node
 from event_universe.rows import CARRIER
 from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of
@@ -533,8 +533,8 @@ def test_the_merger_lays_light_of_no_charge_at_both_ends_cc1() -> None:
     take.lay(node, s, minus, (939, 1175, 0, 0))
     take.lay(node, s, plus, (1329, 1112, 0, 0))
     rule = node.rule(row.pair, node.start_content, node.link_factors())
-    walls = list(walls_of(node, s, minus, plus, rule, {}))
-    _dp, _w, _stood, exact, _ends = light_children(node, s, minus, plus, walls, rule)
+    walls, exact = dict(zip((-1, 1), walls_of(node, s, minus, plus, rule, {}), strict=True)), []
+    children_laid(node, s, minus, plus, light_levels(node, s, walls, rule, exact))
     assert all(x is not None for x in exact) and [x[1] != 0 for x in exact] == [True, True]
     assert (
         sum(

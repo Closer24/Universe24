@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe import gram, take
-from event_universe.core.paces import odd_rounded, sine_den
+from event_universe.core.paces import rounded, sine_den
 from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import half, largest_below, least_at, odd, quotient
 from event_universe.links import turn_pair
@@ -130,12 +130,12 @@ def envelope_of(
 
 
 def circle_point(den: int, h: int) -> tuple[int, int]:
-    """The point of den's circle at the half-angle sine h (MV-S1, the wave number's unit): den cos k = (den^2 - 2 h^2) over den and den sin k = 2 h largest_below(den^2 - h^2) over den, each rounded once with the sign after (paces.odd_rounded), so the point at -h is the conjugate; (den, 0) at h = 0, (-den, 0) at |h| = den, the band's edge (MV-S2); beyond it refused by name."""
+    """The point of den's circle at the half-angle sine h (MV-S1, the wave number's unit): den cos k = (den^2 - 2 h^2) over den and den sin k = 2 h largest_below(den^2 - h^2) over den, each rounded once with the sign after (paces.rounded), so the point at -h is the conjugate; (den, 0) at h = 0, (-den, 0) at |h| = den, the band's edge (MV-S2); beyond it refused by name."""
     if abs(h) > den:
         raise ValueError(f"a wave number beyond the band's edge: |h| {abs(h)} above den {den}")
     return (
-        int(odd_rounded(den * den - (h + h) * h, den)),
-        int(odd_rounded((h + h) * largest_below(den * den - h * h), den)),
+        int(rounded(den * den - (h + h) * h, den)),
+        int(rounded((h + h) * largest_below(den * den - h * h), den)),
     )
 
 

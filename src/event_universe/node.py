@@ -258,7 +258,7 @@ class Node:
         return [line for row in self.rows() for line in row]
 
     def exchange(self, top: Any, held: list[list[Line]]) -> None:
-        """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the quartet's K0, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves."""
+        """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the quartet's K0, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves; the rows set at the top by the Node's one restore."""
         for r, row, hrow in zip(self.rows_, self.rows(), held, strict=True):
             nows, befores, rems = acts.exchange(
                 [h.now for h in hrow],
@@ -267,14 +267,11 @@ class Node:
                 [h.wall for h in hrow],
                 gram.conjugation(r.shape),
             )
-            for i, (line, h) in enumerate(zip(row, hrow, strict=True)):
-                line.now = np.where(top, nows[i], line.now)
-                line.before = np.where(top, befores[i], line.before)
-                line.rem = np.where(top, rems[i], line.rem)
-                if np.ndim(h.wall):
-                    line.wall = np.where(top, h.wall, line.wall)
-                if line.wr is not None:
-                    line.wr = np.where(top, acts.mirror(h.wr, line.wwall, 1), line.wr)
+            exchanged = [
+                Line(n, b, rem, h.wall, None if h.wr is None else acts.mirror(h.wr, h.wwall, 1), h.wwall)
+                for n, b, rem, h in zip(nows, befores, rems, hrow, strict=True)
+            ]
+            self.restore(row, exchanged, top)
 
     def swap(self, held: list[list[Line]], direction: int = 1, top: Any = None) -> Any:
         """The swap at the top, in the direction (RW-S1; backward the exchange of the turned Nodes `top` from the frame, the former Interval's own exchange kept by name): the weak maximum X0 <= X1 >= X2 with one strict (the held before, the held now, the now after the writes), or the floor (X0 or X2 below X_f), at a frozen Node by this trigger alone on its restored line (FR-S1, the owner's words of 2026-10-26, 03:41 UTC, approved, and 07:3x UTC, entered as the fix of a forbidden state: no Node frozen for ever; BH-S1's mask on the trigger struck and kept by name); the turned Node ends the interval at the state it started from, exchanged and complemented."""
@@ -284,15 +281,8 @@ class Node:
             return top
         k = self.rows_.index(self.row(CARRIER))
         x0, x1, x2 = held[k][0].before, held[k][0].now, self.row(CARRIER).lines[0].now
-        peak = np.vectorize(
-            lambda a, b, c: (
-                int(a) <= int(b) and int(c) <= int(b) and (int(a) < int(b) or int(c) < int(b))
-            ),
-            otypes=[bool],
-        )
         xf = readings.floor(self)
-        below = np.vectorize(lambda a, c: int(a) < xf or int(c) < xf, otypes=[bool])
-        top = peak(x0, x1, x2) | below(x0, x2)
+        top = (x0 <= x1) & (x2 <= x1) & ((x0 < x1) | (x2 < x1)) | (x0 < xf) | (x2 < xf)
         self.turned = top
         if top.any():
             self.counts["turns"] += int(top.sum())
@@ -307,10 +297,6 @@ class Node:
         rules = [self.rule_of(r, c, factors) for r in self.rows_]
         return [(line, rule) for rule, lines in zip(rules, held, strict=True) for line in lines]
 
-    def run(self, direction: int = 1) -> None:
-        """One interval of the Node's program in the direction (interval.run)."""
-        interval.run(self, direction)
-
     def click(
         self,
         plane_starts: list[list[Line]],
@@ -322,5 +308,5 @@ class Node:
         close.click(self, plane_starts, held, direction, frame)
 
     def step(self, direction: int = 1) -> None:
-        """One interval forward, or back at -1 (the former step_back kept by name)."""
-        self.run(direction)
+        """One interval of the Node's program forward, or back at -1 (interval.run; the former step_back and run kept by name)."""
+        interval.run(self, direction)

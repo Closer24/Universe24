@@ -6,8 +6,9 @@ from typing import Any
 
 import numpy as np
 
+from event_universe.core.acts import divide
 from event_universe.core.paces import rounded
-from event_universe.core.rule3 import division_forward, half, rule3
+from event_universe.core.rule3 import half, quotient, rule3
 
 # a line of the phase, (now, before, remainder), each an integer or an integer array over the Links
 Line = tuple[Any, Any, Any]
@@ -38,7 +39,7 @@ def half_wall(gamma: Any) -> Any:
 def seed(amplitude: Any, gamma: Any) -> Pair:
     """The pair at the angle 0: the cosine line (X, X cos theta_0 rounded as the engine rounds, D div 2), the before X K_0 over D rounded half up once (`core/paces.rounded`, the (D) act at load), and the sine line a quarter turn behind, (0, -(X div Gamma), D div 2), X sin theta_0 the one exact division X div Gamma (the advisor's second, item 4: within 6 x 10^-4 of a level at 2^30, no root); X must be a multiple of Gamma (item (i) 4: the sum's extremum X Gamma then a multiple of D, the half-wall birth cancelling the resonance), refused by name otherwise (2^35 itself is none at Gamma 6,000 = 2^4 3 5^3: the amplitude of 2^35's size is (2^35 div Gamma) Gamma, as the mathematician's item (i) takes 178,956 Gamma for 2^30's size); width 63 holds X below 2^35.9 (2 K_0 X + D below 2^63)."""
     wall = D(gamma)
-    quotient, remainder = division_forward(amplitude, gamma, 0)
+    quotient_, remainder = divide(amplitude, gamma, 0)
     off = np.asarray(remainder) != 0
     if np.any(off):
         raise ValueError(
@@ -48,7 +49,7 @@ def seed(amplitude: Any, gamma: Any) -> Pair:
         )
     carry = half_wall(gamma) + 0 * amplitude  # the half wall in the amplitude's shape and kind
     cosine: Line = (amplitude, rounded(amplitude * K0(gamma), wall), carry)
-    sine: Line = (0 * amplitude, -quotient, carry)
+    sine: Line = (0 * amplitude, -quotient_, carry)
     return cosine, sine
 
 
@@ -71,8 +72,8 @@ def act(line: Line, gamma: Any, direction: int = 1) -> Line:
 def amplitude(gamma: Any, width: int) -> int:
     """The phase line's amplitude X, derived from the width and never written (the two hands' item (i): X of 2^35's size at width 63, 2 K_0 X + D below 2^width): half of the act's room, (2^width - 1) div (2 D) div 2, the half the walk's room (the pair's magnitude within 1.42 N + 2.3 Gamma levels of X over N acts), rounded down to a multiple of Gamma (the half-wall birth cancels the resonance at a multiple of Gamma alone, `seed`): 32,025,594,000 at Gamma 6,000 and width 63 (2^34.9; the hands' 2^35 div Gamma times Gamma is 34,359,738,000, 35 being no literal of the law); refused by name where the width leaves no multiple of Gamma."""
     largest = (1 << width) - 1
-    room = division_forward(largest, D(gamma) + D(gamma), 0)[0]
-    found = division_forward(half(room), gamma, 0)[0] * gamma
+    room = quotient(largest, D(gamma) + D(gamma))
+    found = quotient(half(room), gamma) * gamma
     if int(found) < int(gamma):
         raise ValueError(
             f"the width {width} leaves no multiple of Gamma = {gamma} inside the phase act's room "

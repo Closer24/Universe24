@@ -13,17 +13,8 @@ from event_universe.core.ports import AXES, across, port_of
 from event_universe.core.rule3 import quotient, remainder
 from event_universe.draw import read_number
 from event_universe.links import row_current, row_twist
-from event_universe.merger import (
-    child_at,
-    child_levels,
-    light_children,
-    senses_at,
-    stood_at,
-    summed,
-    takes,
-    walls_of,
-)
-from event_universe.rows import PLANE, Line
+from event_universe.merger import child_levels, children_laid, light_levels, summed, takes, walls_of
+from event_universe.rows import PLANE, Line, Row
 from event_universe.run import birth, refused
 from event_universe.take import lay, move, neighbour, recoil
 
@@ -40,15 +31,6 @@ class Birth(NamedTuple):
     plus: tuple[int, ...]
     room: int
     rec: int
-
-
-class Kid(NamedTuple):
-    """A child pair at one Node for the take: the children's record, the - child's Node, the + child's Node and the draw's room."""
-
-    line_pair: int
-    minus: tuple[int, ...]
-    plus: tuple[int, ...]
-    room: int
 
 
 def list_of(node: Node, rec: int, number: int) -> int:
@@ -131,9 +113,9 @@ def births(
     node: Node, kept: list[Birth], c: Any, factors: tuple[Any, ...], reads: list[tuple[Line, rule3.Rule]]
 ) -> set[tuple[int, ...]]:
     """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made; the rules once per record), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid at its own end by the record's levels taken whole (MG-S1: the birth read at -1, the share's fall read at the end's Node and its six neighbours, where alone the lay changes it, the standing shares kept per close until a merger writes; the Link's number read at the take's Node after the stop, the draw's refusal counted there); every take the close's one act at a list of ends, read whole before any write (merger.read_ends, write_ends, takes; CR-S2, the owner's word of 2026-10-26, 06:1x UTC; the former take_at, take_line and merger_take kept by name); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
-    by_node: dict[tuple[tuple[int, ...], int], list[Kid]] = {}
-    for at, s, minus, plus, room, rec in kept:
-        by_node.setdefault((at, rec), []).append(Kid(s, minus, plus, room))
+    by_node: dict[tuple[tuple[int, ...], int], list[Birth]] = {}
+    for k in kept:
+        by_node.setdefault((k.at, k.rec), []).append(k)
     records = node.records()
     rules = {}
     for r in {k.line_pair for k in kept} | {k.rec for k in kept}:
@@ -142,14 +124,14 @@ def births(
         rules[r] = node.rule(pair, c, factors)
     own: dict[tuple[int, int, tuple[int, ...]], int] = {}
     walls = {k: walls_of(node, k.line_pair, k.minus, k.plus, rules[k.line_pair], own) for k in kept}
-    taken: list[tuple[tuple[int, ...], int, list[Kid], dict[str, Any]]] = []
+    taken: list[tuple[tuple[int, ...], int, list[Birth], dict[str, Any]]] = []
     shares: dict[tuple[int, tuple[int, ...]], int] = {}
     for at, rec in sorted(by_node):
         kids = by_node[(at, rec)]
         row, rule = records[rec], rules[rec]
         if row is not node.emitter():
             for kid in kids:
-                ends = list(zip((kid.minus, kid.plus), walls[Birth(at, *kid, rec)], strict=True))
+                ends = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
                 drawn: list[Any] = []
 
                 def draw(
@@ -161,13 +143,10 @@ def births(
                 got = takes(node, ends, rule, 1, rec, draw, shares)
                 if got is None:
                     continue
-                kid = Kid(kid.line_pair, kid.minus, kid.plus, drawn[-1][1])
-                taken.append((at, rec, [kid], summed(got)))
+                taken.append((at, rec, [kid._replace(room=drawn[-1][1])], summed(got)))
                 shares.clear()
             continue
-        got = takes(
-            node, [(at, sum(sum(walls[Birth(at, *kid, rec)]) for kid in kids))], rule, len(kids), rec
-        )
+        got = takes(node, [(at, sum(sum(walls[kid]) for kid in kids))], rule, len(kids), rec)
         if got is None:
             continue
         node.closes[at] -= 1
@@ -180,58 +159,38 @@ def births(
     return touched
 
 
-def child_laid(
-    node: Node, s: int, minus: tuple[int, ...], plus: tuple[int, ...]
-) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:
-    """The two children laid by the one lay act (`child_at`: the - child at the - end, the + child at the + end); returns the lays' momentum summed and per end (dP_lay_ends, the J hands' key: the momentum of every move booked at the Node of the move, AJ-S2), each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the plane's four levels at each Node before the lay (the residue)."""
-    row = node.records()[s]
-    stood = stood_at(row, minus, plus)
-    ends = [child_at(node, s, where, sense) for where, sense in ((minus, -1), (plus, 1))]
-    dp_lay = [a + b for a, b in zip(*ends, strict=True)]
-    return dp_lay, senses_at(row, minus, plus), stood, ends
-
-
 def children(
     node: Node,
     at: tuple[int, ...],
-    kids: list[Kid],
+    kids: list[Birth],
     take: dict[str, Any],
     rec: int,
     c: Any,
     factors: tuple[Any, ...],
 ) -> set[tuple[int, ...]]:
-    """One take's children laid (`child_laid`; a merger's light children as the exact take at -1, merger.light_children, MG-S1), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last), a merger's two ends' takes under `takes` and its lays under `exact_lay`. Returns the Nodes touched."""
+    """One take's children laid by the one lay act (merger.children_laid: the charged children at the charge T div 2, a merger's light children as the exact take at -1, merger.light_levels, MG-S1), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last), a merger's two ends' takes under `takes` and its lays under `exact_lay`. Returns the Nodes touched."""
     touched = {at}
-    for s, minus, plus, room in kids:
+    for _at, s, minus, plus, room, _rec in kids:
         exact: list[list[int] | None] = []
+        row = node.records()[s]
+        assert row.pair is not None
         if "takes" in take:
-            row = node.records()[s]
-            assert row.pair is not None
-            walls = [t["booked"] for t in take["takes"]]
-            rule = node.rule(row.pair, c, factors)
-            dp_lay, w_children, stood, exact, ends = light_children(node, s, minus, plus, walls, rule)
+            walls = dict(zip((-1, 1), (t["booked"] for t in take["takes"]), strict=True))
+            levels_of = light_levels(node, s, walls, node.rule(row.pair, c, factors), exact)
         else:
-            dp_lay, w_children, stood, ends = child_laid(node, s, minus, plus)
+
+            def levels_of(_where: tuple[int, ...], sense: int, row: Row = row) -> tuple[int, ...]:
+                return child_levels(row, sense, node.A, node.B)
+
+        laid = children_laid(node, s, minus, plus, levels_of)
         touched |= {minus, plus}
         written = [
             recoil(node, where, dp, int(node.start_clock[where]), 1)
-            for where, dp in zip((minus, plus), ends, strict=True)
+            for where, dp in zip((minus, plus), laid[-1], strict=True)
         ]
         node.counts["births"] += 1
         node.closes[at] += 1
-        birth(
-            node,
-            at,
-            s,
-            (minus, plus),
-            take,
-            rec,
-            (dp_lay, w_children, stood, ends),
-            written,
-            len(kids),
-            room,
-            exact,
-        )
+        birth(node, at, s, (minus, plus), take, rec, laid, written, len(kids), room, exact)
     return touched
 
 

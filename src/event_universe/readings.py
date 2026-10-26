@@ -8,7 +8,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS, SIDES, across
-from event_universe.core.rule3 import link_factor, remainder
+from event_universe.core.rule3 import link_factor, quotient, remainder
 from event_universe.features import phase, volume
 from event_universe.links import link
 from event_universe.rows import CARRIER, Line
@@ -57,7 +57,7 @@ def pair_angle(node: Node, n: Any) -> tuple[int, int]:
 def link_factors(
     node: Node, axis_levels: list[Any] | None = None, frozen: Any = None
 ) -> tuple[Any, ...]:
-    """The Link factor at each Port from the two ends' axis parts of the carrier: the tension the mean of the two ends' levels rounded half up (the one rounding not reached by the remainder's rule: fd1 measured the odd rounding here parts the 48's reflections), a tension at or past Gamma read at the wall, the factor 0 (the horizon); and 0 where either end is frozen, the Link pace 0 at the interval's start (BH-S1: every Link with a frozen end is at the wall, from both ends)."""
+    """The Link factor at each Port from the two ends' axis parts of the carrier: the tension the mean of the two ends' levels rounded half up, the division act's quotient of their sum plus one at the two sides (the one rounding not reached by the remainder's rule, so not paces.rounded: fd1 measured the odd rounding here parts the 48's reflections), a tension at or past Gamma read at the wall, the factor 0 (the horizon); and 0 where either end is frozen, the Link pace 0 at the interval's start (BH-S1: every Link with a frozen end is at the wall, from both ends)."""
     levels = (
         [line.now for line in node.row(CARRIER).lines[1 : 1 + AXES]]
         if axis_levels is None
@@ -66,7 +66,7 @@ def link_factors(
     found = []
     for port, (axis, _side) in enumerate(PORT_SIDES):
         (summed,), _odd, _f = link(port, even=(levels[axis],))
-        t = paces.rounded(summed, SIDES)
+        t = quotient(summed + 1, SIDES)
         factor = np.vectorize(
             lambda tt: int(link_factor(node.gamma, node.G, min(int(tt), node.gamma))),
             otypes=[object],

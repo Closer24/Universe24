@@ -169,7 +169,7 @@ def divisions(tree: ast.AST) -> list[tuple[int, type[ast.AST], str]]:
 
 
 def test_floor_division_and_modulo_are_refused_outside_core_rule3() -> None:
-    """The arithmetic of the engine is Rule3's division act (core/acts.divide, the one carried division, and `division_forward` on it in core/rule3.py; ALGEBRA.md #the-four-acts): a raw floor division or modulo on a number of the law is refused in every other module of the engine (`//`, `%`, their augmented forms, `divmod`, numpy's floor division and remainder), and the index wraps and the row's shape divisions are the named exceptions (INDEX_ARITHMETIC, each by module, operator and function, no level, share, count or pace among them), refused in turn when one no longer stands in the code."""
+    """The arithmetic of the engine is Rule3's division act (core/acts.divide, the one carried division, and the quotient and remainder readings on it in core/rule3.py; ALGEBRA.md #the-four-acts): a raw floor division or modulo on a number of the law is refused in every other module of the engine (`//`, `%`, their augmented forms, `divmod`, numpy's floor division and remainder), and the index wraps and the row's shape divisions are the named exceptions (INDEX_ARITHMETIC, each by module, operator and function, no level, share, count or pace among them), refused in turn when one no longer stands in the code."""
     allowed = {(name, kind, function) for name, kind, function, _reason in INDEX_ARITHMETIC}
     standing, offenders = set(), []
     for path in sorted(p for p in SRC.rglob("*.py") if p.relative_to(SRC).as_posix() != CORE):
