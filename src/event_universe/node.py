@@ -101,6 +101,7 @@ class Node:
         self.stepped: list[list[Line]] = []
         self.lattices: dict[tuple[int, int, tuple[int, ...]], int] = {}
         self.drawn: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
+        self.rotations: dict[tuple[int, int], int] = {}
 
         for line in self.row(CARRIER).lines[:1]:
             line.now[:], line.before[:] = self.gamma, self.gamma
@@ -240,18 +241,6 @@ class Node:
             self.restore(start, kept, top)
         return start, levels, start
 
-    def carried(
-        self,
-        lines: list[Line],
-        r: rule3.Rule,
-        numerators: list[Any],
-        direction: int,
-        top: Any,
-        kept: list[Line] | None,
-    ) -> list[Line]:
-        """The carrier's act: its one division with the write sourced by the riding rows (the act of every row, the carrier's by this name so that a hand may hold it)."""
-        return self.act(lines, r, None, numerators, direction, None, top, kept)[-1]
-
     def restore(self, lines: list[Line], kept: list[Line], top: Any) -> None:
         """Backward at the turned Nodes `top`: the row set to `kept`, the pre-state the exchange returned (the inverse at a turned Node is no act)."""
         for line, k in zip(lines, kept, strict=True):
@@ -351,20 +340,20 @@ class Node:
     def step_back(self) -> None:
         self.run(-1)
 
+    def arrays(self) -> list[Any]:
+        """Every level and remainder of the state, the lines' arrays in the acts' order."""
+        lines = self.all_lines()
+        found = [a for line in lines for a in (line.now, line.before, line.rem)]
+        return found + [line.wr for line in lines if line.wr is not None]
+
     def census(self) -> tuple[int, int]:
         """The count of integer arrays the Node holds and the largest bit length among their values."""
-        lines = self.all_lines()
-        arrays = [a for line in lines for a in (line.now, line.before, line.rem)]
-        arrays += [line.wr for line in lines if line.wr is not None]
-        arrays += self.standing + self.crossed + self.beats + [self.proper, self.closes]
+        arrays = self.arrays() + self.standing + self.crossed + self.beats + [self.proper, self.closes]
         return len(arrays), max(bits_of(a) for a in arrays)
 
     def state_bytes(self) -> bytes:
         """Every level and remainder of the state as text bytes, the run back's comparison bit for bit."""
-        lines = self.all_lines()
-        arrays = [a for line in lines for a in (line.now, line.before, line.rem)]
-        arrays += [line.wr for line in lines if line.wr is not None]
-        return " ".join(str(int(v)) for a in arrays for v in a.reshape(-1)).encode()
+        return " ".join(str(int(v)) for a in self.arrays() for v in a.reshape(-1)).encode()
 
     def state_hash(self) -> str:
         """The state's hash with the interval."""
