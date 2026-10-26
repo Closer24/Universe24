@@ -1,0 +1,26 @@
+# The read in the laid frame and the births' seed (the 48 in the clicks, the second pair): two blind hands (the Boss's cold read, 2026-10-26, 01:2x UTC; toys-5 d9d7914ff, the hands' head)
+
+The owner's word (2026-10-26, 00:52 UTC): the one-Link read's digit is re-derived so that the 48 on the clicks and the births' seed both hold. The hands: H-48-In-The-Clicks-3 (a483) and H-48-In-The-Clicks-4 (a484), blind to each other, on the head that carried A48-S1 as David built it (05cca5015, refused at the merge by H-Confirm-Build-13: the clicks' 48 parting at the interval 11) and the cycle lay from the file (CS5-S2's `wave`).
+
+## 1. The same finding from both: the parting is in the step, before any read
+
+- Under a reflection of the chiral 3-cube the STATE parts from the base's conjugate at the interval 5, at the mirror-fixed Node (1, 1, 0): the shape-2 record's re level moves 994 to 934 in the base and 994 to 936 in the image with the remainders equal (a484, under the z reflection; a483 the same Node under the x reflection: two scalar levels, the walled row's -1 against 1 at the remainder 0 and the emitter's re line); every birth to the interval 6 and every credit to 10 the exact conjugate, so the clicks' parting at 11 is downstream of the state's at 5.
+- The cause (a484, located line by line): the walled row's one carried division takes the flux 2 c Phi (interval readings: the odd rounding of the time line times p_0 at Gamma); the shape-4 row's time line is odd under the reflection, so the walled row's quotient negates and the centred count K = 2 (Phi_now - Phi_before) + c Phi enters the plane's division with the image's sign: the level lands 2 off, the remainder equal, no credit at that Node at 5. a483 from the one rule's side: the two's complement is an automorphism of Z_W and commutes with the remainder's walk, but N = q W + s goes to (1 - q) W at s = 0: the level off by one exactly where the wall divides; the one rule W - 1 - r is the exact mirror of the division at every s, and the lay's gauge (every remainder born at the half) puts the reflected seed off that mirror by one on every negated line from the interval 1.
+- A48-S1 was the right read of the state the lay gives (a484: the return to the laid frame plus the two's complement fold is covariant with the state's own carry; 24 / 24 / 0 through 10 where A2 held through 3). No read mends a parting of the step: a483's ones' complement fold parts at 7, a484's at 24; both 24 / 0 / 24 at 60.
+
+## 2. The births' seed under the reads
+
+The cycle lay's remainders stand at the half of every wall, and the half is its own mirror under both complements: a tie. Under A48-S1's read the ga2 seed births nothing (every draw the origin at 64 of 64, David's measure and both hands'); under the ones' complement fold with the exact-half origin: a483 32 births at 32 of 64 at the interval 2, X at 218 in [1,378, 1,404], Gamma at no Node; a484 0 at 2 and 48 at 3, no top, no return. The 64 births at 64 of 64 under the former read were the composition's accident of naming the free plane (a484: under the exact-half origin the one number at 64 of 64 Nodes picks the standing plane in close.list_of). The letter's form, the free row named where no record is named, is a change of the pick, not a read; neither hand built it.
+
+## 3. The cold read and what enters
+
+1. **The step's defect first (David, a law not to be crossed):** The cube's symmetry must hold on the step: the odd rounding of the clocked potential's flux under a negated time line must read alike on the base and its mirror (the flux's sign and the rounding's tie). The locators: H-48-In-The-Clicks-4/locate_state.py and -3/locate_11.py; the test tests_a484.py pins the parting at 5 (8 s). Until it is mended no read of the remainders can hold the clicks' 48 past 10, and A48-S1 as built stays reverted.
+2. **The pick where no record is named (David, after the mend):** the free row named by the law's letter (the records' order or the row's pair, the same under every image), so the births' seed names the free rows at the first close; measured on ga2: 64 births at 64 of 64 at the interval 2 and the return at 218 are the pass marks.
+3. **Then A48-S1 returns** (the laid frame and the two's complement fold, as David built it) with the clicks' 48 measured to 60 on both cubes.
+4. A finding for the Scribe's list: the 64 births of H-Handed-Seed-7 and H-Births-Seed-On-Head-1 stood on the former read's accident of the pick; the recurring bang with births is the cycle lay's and the pick's, not the read's.
+
+## 4. The ledger row
+
+| item | derived | one-Node test | toy | gates | spec | missing by name |
+|---|---|---|---|---|---|---|
+| the read in the laid frame and the births' seed (two hands) | the parting in the step at 5 under a reflection, located; A48-S1 the right read of the state's carry; no read mends a step | tests_a483.py, tests_a484.py (the parting at 5 and 11; ga2's births) | the chiral 3-cube to 60 under the 48; ga2 230 and 450; the hole 60 | 46 with births NOT SHOWN from the seed under every read; the clicks' 48 24 / 0 / 24 | the step's covariance at the odd rounding (David); the pick of the free row (David); then A48-S1 | the 5-cube's 40 images; the walled row's source under a reflection (odd or even); the charge summed over the births under the forms |

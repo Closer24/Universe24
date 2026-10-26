@@ -1,0 +1,37 @@
+event_universe read from /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/a484/tools/derivations/open_items/H-48-In-The-Clicks-4/src_a484/event_universe/__init__.py
+FF
+=================================== FAILURES ===================================
+_________________________ test_48_on_the_clicks_to_60 __________________________
+
+    def test_48_on_the_clicks_to_60():
+        universe, world = chiral_world()
+        base = run(universe, world, N)
+        eye = np.eye(3, dtype=int)
+        rot = clicks(run(universe, world_image(world, ROTATION, 3), N), eye, 3, False)
+        refl = clicks(run(universe, world_image(world, REFLECTION, 3), N), eye, 3, False)
+        want_rot = clicks(base, ROTATION, 3, False)
+        want_refl = clicks(base, REFLECTION, 3, True)
+        i_rot, i_refl = first_apart(rot, want_rot), first_apart(refl, want_refl)
+        assert i_rot is None, f"the rotation parts at the interval {i_rot}"
+>       assert i_refl is None, f"the reflection's conjugate parts at the interval {i_refl}"
+E       AssertionError: the reflection's conjugate parts at the interval 24
+E       assert 24 is None
+
+tests_a484.py:69: AssertionError
+_________________________ test_cycle_seed_births_at_2 __________________________
+
+    def test_cycle_seed_births_at_2():
+        universe, world = load_world(os.path.join(ROOT, "tests", "worlds", "world_ga2.json"))
+        log = run(universe, dict(world, intervals=3), 3)
+        at_2 = {tuple(e["node"]) for e in log if e["event"] == "birth" and e["i"] == 2}
+        refused = sorted({e["cause"] for e in log if e["event"] == "refused" and e["i"] == 2})
+>       assert len(at_2) == 64, f"births at 64 of 64 Nodes wanted at the interval 2; {len(at_2)} found, the refusals by name {refused}"
+E       AssertionError: births at 64 of 64 Nodes wanted at the interval 2; 0 found, the refusals by name ['lay', 'orientation', 'twist']
+E       assert 0 == 64
+E        +  where 0 = len(set())
+
+tests_a484.py:77: AssertionError
+=========================== short test summary info ============================
+FAILED tests_a484.py::test_48_on_the_clicks_to_60 - AssertionError: the refle...
+FAILED tests_a484.py::test_cycle_seed_births_at_2 - AssertionError: births at...
+2 failed in 7.28s
