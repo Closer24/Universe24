@@ -29,10 +29,10 @@ body.info #card { display: block; }
 .gate .d { width: 8px; height: 8px; border-radius: 50%; flex: none; background: #2a2f39; }
 .gate .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .gate .k { flex: none; font-size: 9px; letter-spacing: 0.3px; opacity: 0.7; }
-.gate.shown { color: var(--muted); } .gate.shown .d { background: rgba(253, 230, 138, 0.35); border: 1px solid var(--shown); }
+.gate.shown { color: var(--muted); } .gate.shown .d { background: color-mix(in srgb, var(--c) 35%, transparent); border: 1px solid var(--c); }
 .gate.part { color: var(--muted); } .gate.part .d { background: rgba(251, 191, 36, 0.3); border: 1px solid var(--part); }
-.gate.lit { color: var(--fg); background: rgba(253, 230, 138, 0.08); } .gate.lit .d { background: var(--shown); box-shadow: 0 0 8px var(--shown); border: none; }
-.gate.now { background: rgba(253, 230, 138, 0.2); color: var(--shown); }
+.gate.lit { color: var(--fg); background: color-mix(in srgb, var(--c) 9%, transparent); } .gate.lit .d { background: var(--c); box-shadow: 0 0 8px var(--c); border: none; }
+.gate.now { background: color-mix(in srgb, var(--c) 22%, transparent); color: var(--c); }
 .gate.not .d { background: #1d2027; border: 1px solid #343944; }
 #bar { position: relative; height: 34px; margin: 10px 20px 0; background: linear-gradient(180deg, #1a1e26, var(--panel)); border: 1px solid var(--line); border-radius: 10px; cursor: pointer; }
 #bar .era { position: absolute; top: 0; bottom: 0; pointer-events: none; border-radius: 10px; }
@@ -40,7 +40,7 @@ body.info #card { display: block; }
 #bar .birth { position: absolute; bottom: 3px; width: 2px; height: 8px; background: var(--forward); opacity: 0.8; border-radius: 1px; }
 #bar #cursor { position: absolute; top: -5px; bottom: -5px; width: 3px; background: var(--focus); border-radius: 2px; box-shadow: 0 0 12px var(--focus), 0 0 24px rgba(95, 151, 234, 0.6); }
 #now { display: flex; gap: 8px; margin: 6px 20px 0; min-height: 22px; overflow: hidden; }
-#now span { font-family: var(--mono); font-size: 11px; color: var(--label); background: rgba(253, 230, 138, 0.1); border: 1px solid rgba(253, 230, 138, 0.3); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+#now span { font-family: var(--mono); font-size: 11px; color: var(--c, var(--label)); background: color-mix(in srgb, var(--c, var(--label)) 10%, transparent); border: 1px solid color-mix(in srgb, var(--c, var(--label)) 35%, transparent); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
 #now span.era { color: var(--focus); background: rgba(95, 151, 234, 0.1); border-color: rgba(95, 151, 234, 0.35); }
 #row { display: flex; gap: 12px; align-items: center; margin: 6px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
 button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 7px 14px; font: inherit; cursor: pointer; border-radius: 999px; transition: background 0.15s, transform 0.1s; }
@@ -60,7 +60,7 @@ a { color: var(--focus); }
 <div id="top"><div id="title">universe_middle.json on 7^3 for 300 intervals<small>the record and its reading, from the seed alone</small></div><button id="info" title="the two files and the marks">i</button></div>
 <div id="card"><h3>the two files</h3><pre>universe universe_middle.json: den 1655909141, node_clock 1000, quantum_action 36000
 rows: shape 2 pair 1655909141/1655909141; shape 2 pair 1655880909/1655909141; shape 2 pair 506298091/1655909141; shape 10 pair 1654253232/1655909141; shape 4 pair 1655909141/1655909141; shape 1 wall 2
-world: shape [7, 7, 7], 300 intervals, seed {"lay": "sea", "row": 0}; {"lay": "at", "row": 2, "width": 2, "quanta": 125} at 2 centres</pre><h3>the marks</h3>green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; white ring: the Node frozen; thick white Link: at the wall; yellow: a gate of the phenomena as it first shows, lit in the list at its interval; the bands of the bar: the spans from each bang, from the era of matter and from the acceleration, as the reading names them; the verdicts in the reading file beside the record</div>
+world: shape [7, 7, 7], 300 intervals, seed {"lay": "sea", "row": 0}; {"lay": "at", "row": 2, "width": 2, "quanta": 125} at 2 centres</pre><h3>the marks</h3>green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; a black disc in a white ring with a dark halo: the Node frozen, the horizon; thick white Link: at the wall; yellow: a gate of the phenomena as it first shows, lit in the list at its interval; the bands of the bar: the spans from each bang, from the era of matter and from the acceleration, as the reading names them; the verdicts in the reading file beside the record</div>
 <div id="main"><div id="stage"><canvas id="board" width="320" height="320"></canvas><div id="labels"></div></div>
 <div id="side"><h2><span>the gates of the phenomena</span><b id="count"></b></h2><div id="gates"></div></div></div>
 <div id="bar"><div id="cursor"></div></div>
@@ -70,6 +70,10 @@ world: shape [7, 7, 7], 300 intervals, seed {"lay": "sea", "row": 0}; {"lay": "a
 <script>
 const D = JSON.parse(document.getElementById("data").textContent);
 const MS = 1000, BASE = 36;  // a second in milliseconds (the ticks' pace); the base of the Node lines' words
+const FAMILIES = [  // the gates' families and their colours: the cosmos, matter, the gap-0 row, gravity and time, the conservations, the quantum, the constants
+  [[1, 3, 5, 6, 46, 58, 59, 60], "#fbbf24"], [[4, 8, 9, 13, 19, 26, 33, 45], "#f472b6"], [[7, 11, 12, 29, 31, 48, 50, 55], "#22d3ee"],
+  [[10, 14, 30, 32, 34, 35, 36], "#fb923c"], [[15, 16, 17, 18, 21, 22, 23, 25, 27, 43, 47], "#a3e635"], [[2, 37, 20, 24, 28, 38, 39, 40, 41, 42, 44, 49, 51, 52, 53, 54, 56, 57], "#c084fc"]];
+function colour(gate) { const g = parseInt(gate); for (const [gs, c] of FAMILIES) if (gs.includes(g)) return c; return "#38bdf8"; }
 const c = D.cube, G = D.gamma, N = D.intervals;
 const canvas = document.getElementById("board"), ctx = canvas.getContext("2d");
 const stage = document.getElementById("stage"), labels = document.getElementById("labels"), cursor = document.getElementById("cursor");
@@ -107,7 +111,7 @@ for (const [name, rows] of grouped) {
   for (const g of rows) { const div = document.createElement("div"); div.className = "gate " + g[2]; const at = firstAt.get(g[0]);
     const icon = document.createElement("canvas"); icon.width = 26; icon.height = 26; icon.className = "i"; glyph(g[0], 13, 13, icon.getContext("2d"), 0.85);
     div.innerHTML = '<span class="n"></span><span class="d"></span><span class="t"></span><span class="k"></span>'; div.insertBefore(icon, div.children[1]);
-    div.querySelector(".n").textContent = g[0].split(" ")[0]; div.querySelector(".t").textContent = g[0].split(" ").slice(1).join(" "); div.querySelector(".k").textContent = at ? "at " + at : g[1]; div.title = g[0] + ": " + g[3]; gatesBox.appendChild(div); gateRows.push([div, at]); }
+    div.style.setProperty("--c", colour(g[0])); div.querySelector(".n").textContent = g[0].split(" ")[0]; div.querySelector(".t").textContent = g[0].split(" ").slice(1).join(" "); div.querySelector(".k").textContent = at ? "at " + at : g[1]; div.title = g[0] + ": " + g[3]; gatesBox.appendChild(div); gateRows.push([div, at]); }
 }
 gatesBox.style.setProperty("--rows", Math.ceil((D.gates.length + grouped.length) / 2));
 const numbered = D.gates.filter(g => /^[0-9]+ /.test(g[0]));
@@ -136,8 +140,8 @@ function neighbour(i, axis) {
   return q[0] * c * c + q[1] * c + q[2];
 }
 function glyph(gate, x, y, on, scale) {
-  const cx2 = on || ctx, g = parseInt(gate), r = 11, L = "#fde68a";
-  cx2.save(); cx2.translate(x, y); if (scale) cx2.scale(scale, scale); cx2.lineWidth = 2; cx2.strokeStyle = L; cx2.fillStyle = L; cx2.lineCap = "round"; cx2.lineJoin = "round";
+  const cx2 = on || ctx, g = parseInt(gate), r = 11, L = colour(gate);
+  cx2.save(); cx2.translate(x, y); if (scale) cx2.scale(scale, scale); cx2.lineWidth = 2.4; cx2.strokeStyle = L; cx2.fillStyle = L; cx2.lineCap = "round"; cx2.lineJoin = "round"; cx2.shadowColor = L; cx2.shadowBlur = 6;
   const dot = (cx, cy, rr, fill) => { cx2.beginPath(); cx2.arc(cx, cy, rr, 0, 2 * Math.PI); if (fill) cx2.fill(); else cx2.stroke(); };
   const line = (x1, y1, x2, y2) => { cx2.beginPath(); cx2.moveTo(x1, y1); cx2.lineTo(x2, y2); cx2.stroke(); };
   const arrow = (x1, y1, x2, y2) => { const a = Math.atan2(y2 - y1, x2 - x1); line(x1, y1, x2, y2); cx2.beginPath(); cx2.moveTo(x2, y2); cx2.lineTo(x2 - 6 * Math.cos(a - 0.5), y2 - 6 * Math.sin(a - 0.5)); cx2.lineTo(x2 - 6 * Math.cos(a + 0.5), y2 - 6 * Math.sin(a + 0.5)); cx2.closePath(); cx2.fill(); };
@@ -225,7 +229,7 @@ function draw() {
     const r = 3 + 9 * (line.content[i] - cmin) / Math.max(cmax - cmin, 1);
     ctx.fillStyle = turned.has(i) && turned.get(i) === 0 ? "#f59e0b" : "#4ade80";
     ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r, 0, 2 * Math.PI); ctx.fill();
-    if (frozen.has(i)) { ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 3, 0, 2 * Math.PI); ctx.stroke(); }
+    if (frozen.has(i)) { ctx.fillStyle = "rgba(0,0,0,0.55)"; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 14, 0, 2 * Math.PI); ctx.fill(); ctx.fillStyle = "#000000"; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 2, 0, 2 * Math.PI); ctx.fill(); ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 4, 0, 2 * Math.PI); ctx.stroke(); }
     if (turned.has(i)) { ctx.globalAlpha = 1 - turned.get(i) / 8; ctx.strokeStyle = "#f59e0b"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(spots[i][0], spots[i][1], r + 5, 0.2 * Math.PI, 1.7 * Math.PI); ctx.stroke(); ctx.fillStyle = "#f59e0b"; ctx.beginPath(); const ax = spots[i][0] + (r + 5) * Math.cos(0.2 * Math.PI), ay = spots[i][1] + (r + 5) * Math.sin(0.2 * Math.PI); ctx.moveTo(ax, ay); ctx.lineTo(ax - 5, ay - 5); ctx.lineTo(ax + 3, ay - 6); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1; }
   }
   const recent = new Map(), span = new Map();
@@ -290,7 +294,7 @@ function draw() {
   }
   const fresh = D.events.filter(e => e.i !== null && e.i <= line.i && e.i > line.i - 60 * step).slice(-4);
   for (const e of fresh) {
-    const div = document.createElement("div"); div.className = "label";
+    const div = document.createElement("div"); div.className = "label"; div.style.borderLeftColor = colour(e.gate); div.style.color = colour(e.gate);
     div.innerHTML = e.label + "<small>" + e.numbers + "</small>";
     const click = e.node ? null : D.clicks.find(k => k.i === e.i), node = e.node || (click ? click.node : null);
     if (node) {
@@ -308,7 +312,7 @@ function draw() {
   panel(line.i);
   now.innerHTML = "";
   for (const b of bangs) if (line.i >= b && line.i < b + 12 * step) { const s = document.createElement("span"); s.className = "era"; s.textContent = "Big Bang at " + b; now.appendChild(s); }
-  for (const e of D.events.filter(e => e.i !== null && e.i <= line.i && e.i > line.i - 60 * step).slice(-5)) { const s = document.createElement("span"); s.textContent = e.label + " (" + e.i + ")"; now.appendChild(s); }
+  for (const e of D.events.filter(e => e.i !== null && e.i <= line.i && e.i > line.i - 60 * step).slice(-5)) { const s = document.createElement("span"); s.style.setProperty("--c", colour(e.gate)); s.textContent = e.label + " (" + e.i + ")"; now.appendChild(s); }
   let up = 0, down = 0; for (let i = 0; i < line.X.length; i++) { if (line.X[i] > before.X[i]) up++; else if (line.X[i] < before.X[i]) down++; }
   const course = t === 1 ? "the seed" : up === line.X.length ? "every clock's volume rising" : down === line.X.length ? "every clock's volume falling" : up + " rising, " + down + " falling, " + (line.X.length - up - down) + " at rest";
   where.textContent = "interval " + line.i + " of " + N + (D.stride > 1 ? " (1 of every " + D.stride + " intervals kept)" : "") + "; " + course;
