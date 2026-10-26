@@ -3,15 +3,13 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from functools import partial
 from typing import TYPE_CHECKING, Any
 
 from event_universe import gram, take
 from event_universe.core import rule3
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import share_weight
 from event_universe.rows import PLANE, Line, zeros
-from event_universe.take import at_node, frame_nodes, lay, momentum_of, move, neighbour, recoil
+from event_universe.take import frame_nodes, lay, momentum_of, move, recoil
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -86,7 +84,7 @@ def walls_of(
     rule: rule3.Rule,
     cache: dict[tuple[int, int, tuple[int, ...]], int],
 ) -> tuple[int, int]:
-    """Each child's wall, its own quantum (MG-S1, CS8-S2): the child laid by the one lay act at its end on zero lines of the row's shape (the row's lines held and put back), the share summed under the row's rule at the board's content over the end and its six neighbours (`share_at`: the zero lines' share is 0 everywhere else), the lines discarded; the same two integers for every row and every Node of one content, read once per end and row in a close (`cache`: no line of the board enters it); the former reading, the board's increment where the plane already stands, kept by name."""
+    """Each child's wall, its own quantum (MG-S1, CS8-S2): the child laid by the one lay act at its end on zero lines of the row's shape (the row's lines held and put back), the share summed under the row's rule at the board's content over the end and its six neighbours (gram.share at that window: the zero lines' share is 0 everywhere else), the lines discarded; the same two integers for every row and every Node of one content, read once per end and row in a close (`cache`: no line of the board enters it); the former reading, the board's increment where the plane already stands, kept by name."""
     row = node.records()[s]
     held, found = row.lines, []
     for where, sense in ((minus, -1), (plus, 1)):
@@ -95,41 +93,11 @@ def walls_of(
                 Line(zeros(node.shape), zeros(node.shape), line.rem, line.wall) for line in held
             ]
             lay(node, s, where, child_levels(row, sense, node.A, node.B))
-            cache[(s, sense, where)] = sum(
-                share_at(node, row.lines, rule, at) for at in set(frame_nodes(node, where))
-            )
+            window = sorted(set(frame_nodes(node, where)))
+            cache[(s, sense, where)] = sum(int(v) for v in gram.share(node, row.lines, rule, window))
         found.append(cache[(s, sense, where)])
     row.lines = held
     return found[0], found[1]
-
-
-def share_at(node: Node, lines: list[Line], r: rule3.Rule, at: tuple[int, ...]) -> int:
-    """A record's share at one Node (gram.share's form, the same integers read at the Node and its six neighbours alone)."""
-    g = gram.gram(len(lines))
-    weighted = partial(gram.weighted, g)
-    nows, befores = [int(line.now[at]) for line in lines], [int(line.before[at]) for line in lines]
-    reached, shared = [0] * len(lines), [0] * len(lines)
-    for port, reach in enumerate(r.reaches):
-        q, reach_at = neighbour(node, at, port), at_node(reach, at)
-        b_j, n_j = [int(line.before[q]) for line in lines], [int(line.now[q]) for line in lines]
-        reached = [x + reach_at * bj for x, bj in zip(reached, b_j, strict=True)]
-        parts = weighted(
-            [b - bj for b, bj in zip(befores, b_j, strict=True)],
-            [n + nj for n, nj in zip(nows, n_j, strict=True)],
-        )
-        shared = [x + reach_at * part for x, part in zip(shared, parts, strict=True)]
-    own = [
-        at_node(r.wall, at) * (nn + bb) - at_node(r.self_coefficient, at) * nb - nr
-        for nn, bb, nb, nr in zip(
-            weighted(nows, nows),
-            weighted(befores, befores),
-            weighted(nows, befores),
-            weighted(nows, reached),
-            strict=True,
-        )
-    ]
-    wall, x = share_weight(node.gamma, node.G) + share_weight(node.gamma, node.G), int(node.start_x[at])
-    return sum(int(rule3.quotient((o + o - s) * x, wall)) for o, s in zip(own, shared, strict=True))
 
 
 def share_fall(
@@ -141,13 +109,13 @@ def share_fall(
     cache: dict[tuple[int, tuple[int, ...]], int],
 ) -> int:
     """The share the board loses by a lay at -1 of the levels at the Node (laid and laid back): the lay changes the share at the Node and its six neighbours alone, so the fall is their shares' difference, bit for bit the board's (the former read of the whole board's share, kept by name); the shares as they stand kept in `cache` per record and Node for the close until a take writes."""
-    row, window, before = node.records()[rec], set(frame_nodes(node, where)), 0
-    for at in window:
-        if (rec, at) not in cache:
-            cache[(rec, at)] = share_at(node, row.lines, rule, at)
-        before += cache[(rec, at)]
+    row, window = node.records()[rec], sorted(set(frame_nodes(node, where)))
+    unread = [at for at in window if (rec, at) not in cache]
+    for at, v in zip(unread, gram.share(node, row.lines, rule, unread) if unread else [], strict=True):
+        cache[(rec, at)] = int(v)
+    before = sum(cache[(rec, at)] for at in window)
     lay(node, rec, where, levels, -1)
-    after = sum(share_at(node, row.lines, rule, at) for at in window)
+    after = sum(int(v) for v in gram.share(node, row.lines, rule, window))
     lay(node, rec, where, levels, 1)
     return before - after
 

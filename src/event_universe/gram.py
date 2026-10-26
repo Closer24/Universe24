@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from functools import lru_cache
 from typing import TYPE_CHECKING, Any
 
@@ -13,6 +14,7 @@ from event_universe.links import gradient
 from event_universe.quartet import quartet
 from event_universe.readings import pair_angle
 from event_universe.rows import PLANE, QUARTET, Line, zeros
+from event_universe.take import neighbour
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -133,25 +135,43 @@ def term(shape: int, coefficient: Any, phi: list[Any], xs: list[Any]) -> list[An
     return found
 
 
-def share(node: Node, lines: list[Line], r: Any) -> Any:
-    """The conserved form's share of a record at the Node in the carrier's unit (PM-S1: every count of the Node read in the carrier's unit, the one weight for every read and every row alike), one division per line: for the line k, [w (n_k (G n)_k + b_k (G b)_k) - S n_k (G b)_k - n_k (G SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (G (n + n_j))_k, times X the carrier's level at the interval's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the plane's share line by line as the case G = I; at the row's unscaled rule."""
-
+def share(node: Node, lines: list[Line], r: Any, window: list[tuple[int, ...]] | None = None) -> Any:
+    """The conserved form's share of a record at the Node in the carrier's unit (PM-S1: every count of the Node read in the carrier's unit, the one weight for every read and every row alike), one division per line: for the line k, [w (n_k (G n)_k + b_k (G b)_k) - S n_k (G b)_k - n_k (G SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (G (n + n_j))_k, times X the carrier's level at the interval's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the plane's share line by line as the case G = I; at the row's unscaled rule. At a window of Nodes (`window`, a take's Node and its six neighbours, merger.walls_of and share_fall) the same integers read at those Nodes alone, each neighbour gathered by its place through take.neighbour, returned in the window's order (the former merger.share_at, gram.share's form re-spelt at one Node, folded 2026-10-26 as R3 of the readings' map: one spelling, the vectorised form inside it)."""
     g = gram(len(lines))
-    nows, befores = [line.now for line in lines], [line.before for line in lines]
-    reached = [zeros(node.shape) for _ in lines]
-    shared = [zeros(node.shape) for _ in lines]
+    at: Callable[[Any], Any]
+    beyond: Callable[[Any, int], Any]
+    if window is None:
+        at, beyond, x = (lambda a: a), across, node.start_x
+    else:
+        places = [tuple(np.array(w) for w in zip(*window, strict=True))]
+        for port in range(PORTS):
+            around = [neighbour(node, where, port) for where in window]
+            places.append(tuple(np.array(w) for w in zip(*around, strict=True)))
+
+        def at(a: Any) -> Any:
+            return a[places[0]] if np.ndim(a) else a
+
+        def beyond(a: Any, port: int) -> Any:
+            return a[places[1 + port]]
+
+        x = node.start_x[places[0]]
+    full_n, full_b = [line.now for line in lines], [line.before for line in lines]
+    nows, befores = [at(n) for n in full_n], [at(b) for b in full_b]
+    reached = [at(zeros(node.shape)) for _ in lines]
+    shared = [at(zeros(node.shape)) for _ in lines]
     for port, reach in enumerate(r.reaches):
-        b_j = [across(b, port) for b in befores]
-        n_j = [across(n, port) for n in nows]
-        reached = [x + reach * bj for x, bj in zip(reached, b_j, strict=True)]
+        b_j = [beyond(b, port) for b in full_b]
+        n_j = [beyond(n, port) for n in full_n]
+        here = at(reach)
+        reached = [v + here * bj for v, bj in zip(reached, b_j, strict=True)]
         parts = weighted(
             g,
             [b - bj for b, bj in zip(befores, b_j, strict=True)],
             [n + nj for n, nj in zip(nows, n_j, strict=True)],
         )
-        shared = [s + reach * part for s, part in zip(shared, parts, strict=True)]
+        shared = [s + here * part for s, part in zip(shared, parts, strict=True)]
     own = [
-        r.wall * (nn + bb) - r.self_coefficient * nb - nr
+        at(r.wall) * (nn + bb) - at(r.self_coefficient) * nb - nr
         for nn, bb, nb, nr in zip(
             weighted(g, nows, nows),
             weighted(g, befores, befores),
@@ -161,9 +181,9 @@ def share(node: Node, lines: list[Line], r: Any) -> Any:
         )
     ]
     wall = share_weight(node.gamma, node.G) + share_weight(node.gamma, node.G)
-    found = zeros(node.shape)
+    found = at(zeros(node.shape))
     for o, s in zip(own, shared, strict=True):
-        found = found + np.asarray(quotient((o + o - s) * node.start_x, wall))
+        found = found + np.asarray(quotient((o + o - s) * x, wall))
     return found
 
 
