@@ -9,12 +9,13 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import close, draw, gram, readings, run
+from event_universe import close, gram, readings
+from event_universe import run as record
 from event_universe.core import acts, paces, rule3
 from event_universe.core.ports import AXES, PORTS, across
 from event_universe.core.rule3 import half, lattice, quotient, remainder
 from event_universe.features import volume
-from event_universe.links import links_of
+from event_universe.links import centred_count, factors, frames, links_of, phases
 from event_universe.loader.world import read_world
 from event_universe.metric import stress_parts, tensor_parts
 from event_universe.node import Node
@@ -93,7 +94,7 @@ class Toy(Node):
         ):  # the former loop: every line's remainder at the fixed wall w times the row's scale
             for r in self.rows_:
                 if r.wall is None and r.shape != CARRIER:
-                    wall = self.w * gram.scale(r.shape, self.gamma)
+                    wall = self.w * readings.scale(r.shape, self.gamma)
                     for line in r.lines:
                         line.wall, line.rem = wall, zeros(self.shape) + half(wall)
         self.held_lines: list[int] = []
@@ -119,10 +120,11 @@ class Toy(Node):
         if self.control.get("digits") != "former":
             return super().read_lines(held, c, factors)
         rules = [
-            (r.lines[0], self.rule_of(r, c, factors)) for r in (self.row(POTENTIAL), self.row(CARRIER))
+            (r.lines[0], readings.rule_of(self, r, c, factors))
+            for r in (self.row(POTENTIAL), self.row(CARRIER))
         ]
         for rec, r in enumerate(self.records()):
-            rules += [(line, self.rule_of(r, c, factors)) for line in self.plane_starts_[rec]]
+            rules += [(line, readings.rule_of(self, r, c, factors)) for line in self.plane_starts_[rec]]
         return rules
 
     def act_levels(
@@ -163,15 +165,19 @@ class Toy(Node):
     ) -> None:
         """The engine's close with the toy's digit hooks (the plane starts kept for the former digit set; the draw's reader the folded one under its key), then the detectors' reading (forward alone)."""
         self.plane_starts_ = plane_starts
-        close.read_number = (
-            read_number_folded if self.control.get("digits") == "folded" else draw.read_number
-        )
-        super().click(plane_starts, held, direction, frame)
+        bound = close.read_number
+        close.read_number = read_number_folded if self.control.get("digits") == "folded" else bound
+        try:
+            super().click(plane_starts, held, direction, frame)
+        finally:
+            close.read_number = (
+                bound  # the engine's own binding restored: nothing of the toy leaks past it
+            )
         if not self.detectors or direction == -1:
             return
         c = self.start_content
         gap0 = self.emitter()
-        r_gap0 = self.rule_of(gap0, c, self.link_factors())
+        r_gap0 = readings.rule_of(self, gap0, c, factors(self))
         z = gap0.lines[0]
         gap0_start = plane_starts[self.records().index(gap0)]
         sh_end, sh_vac = (
@@ -196,13 +202,13 @@ class Toy(Node):
                     }
                 )
 
-    def run(self, direction: int = 1) -> None:
+    def step(self, direction: int = 1) -> None:
         """The symmetric ride under the key, else the former loop; the held field runs on the former loop alone (on the ride every riding row's momenta source the carrier, and a held row's are no bijection), refused by name on the ride."""
         if self.control.get("ride") != "symmetric":
             return self.former(direction)
         if self.held_lines:
             raise ValueError("the held field runs on the former loop alone")
-        super().run(direction)
+        super().step(direction)
 
     def former(self, direction: int) -> None:
         """The former interval: the readings at the start, one act on every row in the rows' order at the fixed wall times the row's scale (the walled row with its write inside the division, a record with a gap turned by the Link's pair and the odd tangent with the quartet's Node term inside its division (sr1's form), the plane at the gap 0 taking W-S1, the shape-4 row 2 W and the current with its held lines restored, the metric's row the riding rows' G-weighted forms less the pressure and the traceless stress), the swap and the close."""
@@ -228,11 +234,11 @@ class Toy(Node):
         self.start_content = c
         p0 = paces.clock_of(self.gamma, c)
         self.proper = self.proper + direction * p0
-        factors = self.link_factors([at(line) for line in metric.lines[1 : 1 + AXES]])
-        self.start_factors = factors
-        frames = readings.frames(self, walled.lines[0].rem)
-        self.start_frames = frames
-        cphi = paces.odd_rounded(at(potential.lines[0]) * p0, self.gamma)
+        read = factors(self, [at(line) for line in metric.lines[1 : 1 + AXES]])
+        self.start_factors = read
+        signs = frames(walled.lines[0].rem)
+        self.start_frames = signs
+        cphi = paces.rounded(at(potential.lines[0]) * p0, self.gamma)
         out: list[list[Line]] = [[] for _ in rows]
         riding = self.records() + (
             [potential] if self.control.get("metric_sources") == "every riding row" else []
@@ -254,7 +260,7 @@ class Toy(Node):
         links: Any = None
         curl: list[Any] = []
         for k, r in enumerate(self.rows_):
-            rule = self.rule_of(r, c, factors)
+            rule = readings.rule_of(self, r, c, read)
             turn = None
             flux = None
             numerators: list[Any] = [None] * r.shape
@@ -266,7 +272,7 @@ class Toy(Node):
                     numerators = [w_after - w_start, None]
                 elif self.control.get("pauli", True):
                     starts = [at(line) for line in r.lines]
-                    coefficient = quotient(sum(rule.reaches), gram.scale(r.shape, self.gamma))
+                    coefficient = quotient(sum(rule.reaches), readings.scale(r.shape, self.gamma))
                     flux = gram.term(r.shape, coefficient, curl, starts)
             elif r.shape == POTENTIAL:
                 numerators = [2 * w_after, *current]
@@ -289,16 +295,16 @@ class Toy(Node):
                 nows, befores = [l0.now for l0 in start], [l0.before for l0 in start]
                 forms = forms + gram.form(g, nows, nows) - gram.form(g, levels, befores)
             if r.wall is not None:
-                count = readings.centred_count(self, cphi, start[0])
+                count = centred_count(cphi, start[0])
                 self.count_max = max(
                     int(abs(int(x)))
                     for port in range(PORTS)
-                    for x in (count - frames[port] * across(count, port)).reshape(-1)
+                    for x in (count - signs[port] * across(count, port)).reshape(-1)
                 )
-                phases = readings.link_phases(self, frames, count)
+                pairs = phases(self, signs, count)
                 odd = [at(line) for line in potential.lines[1 : 1 + AXES]]
-                self.start_phases, self.start_odd = phases, [o.copy() for o in odd]
-                links = links_of(factors, frames, phases, odd)
+                self.start_phases, self.start_odd = pairs, [o.copy() for o in odd]
+                links = links_of(read, signs, pairs, odd)
                 curl = gram.curl(odd)
             elif r in self.records():
                 w_start = w_start + gram.charge(r.shape, start)
@@ -307,7 +313,7 @@ class Toy(Node):
                 stepped.append([line.copy() for line in after])
                 plane_starts.append(start)
                 nows = [line.now for line in start]
-                for a, j_a in enumerate(gram.current(r.shape, nows, frames)):
+                for a, j_a in enumerate(gram.current(r.shape, nows, signs)):
                     current[a] = current[a] + j_a
                 if r.gap == 0 and direction == 1:
                     laid = out[k][0].now - levels[0]
@@ -333,8 +339,7 @@ def main(argv: list[str]) -> None:
     sys.set_int_max_str_digits(0)
     universe, world = load_toy_world(argv[1])
     back = int(argv[argv.index("back") + 1]) if "back" in argv else 0
-    run.Node = Toy  # type: ignore[misc]
-    found = run.record(universe, world, back, lambda line: print(line, flush=True))
+    found = record.record(universe, world, back, lambda line: print(line, flush=True), node_of=Toy)
     found["counts"]["light_credits"] = (
         str(Toy.light_credits) if False else found["counts"].get("light_credits", "0")
     )

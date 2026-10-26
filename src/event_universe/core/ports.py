@@ -24,6 +24,11 @@ def port_of(axis: int, side: int) -> int:
     return SIDES * axis + side
 
 
+def transverse(axis: int) -> tuple[int, int]:
+    """The cube's hand once (R7 of the readings' map, 2026-10-26; the Hand pair's one cross act): the two axes transverse to the axis in the cube's cyclic order, (axis + 1, axis - 1) modulo the three, the first the second's right hand about the axis; the curl, the twist and the shears read the hand here and nowhere else."""
+    return wrap(axis + 1, AXES), wrap(axis - 1, AXES)
+
+
 def wrap(index: int, extent: int) -> int:
     """The periodic wrap of a Node's index or an axis along its extent, the torus's one index arithmetic."""
     return index % extent

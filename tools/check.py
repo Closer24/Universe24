@@ -32,7 +32,8 @@ TEST_SECONDS_BOUND = 30.0
 # dependencies), one test per core, so a test's seconds on the run's clock are its own and not the
 # cores' sharing
 LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
-# the ratchets against the merge base (CHECK_BASE, the `--base` revision), each one script of
+# the ratchets against the merge base (CHECK_BASE, the `--base` revision; at a release, named by the version bump in
+# pyproject.toml, the released branch's own head before the bump, merge_base.released), each one script of
 # tools/ run by its path and failing with its own message: on every selection, with --full and
 # in the lint shard; the documents' gates among them since 2026-10-24 (tests/test_documents.py
 # and tests/test_repository_language.py folded into tools/documents_gates.py by the tests' audit)
@@ -320,6 +321,10 @@ def main():
     parser.add_argument("--shard", help="Run one CI job of the plan: the whole suite in parts")
     parser.add_argument("--record-seconds", metavar="JUNIT", help="Re-record tools/test_seconds.json")
     args = parser.parse_args()
+    sys.path.insert(0, str(ROOT / "tools"))
+    from merge_base import released  # noqa: PLC0415 (the release clause, read where the base is chosen)
+
+    args.base = released(ROOT, args.base) or args.base
     if args.record_seconds:
         record_seconds(args.record_seconds)
         return

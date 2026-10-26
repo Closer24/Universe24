@@ -388,7 +388,8 @@ def gates(run: dict[str, Any]) -> dict[str, Any]:
 
 
 def main(argv: list[str]) -> None:
-    """The gates of a record file, one line each."""
+    """The gates of a record file, one line each; the interpreter's limit on an integer's digits lifted, so a record whose volumes passed the law's width still loads (the Boss's 6418880289: a reader could not load the record carried to 48)."""
+    sys.set_int_max_str_digits(0)
     with open(argv[1], encoding="utf-8") as record:
         for k, v in gates(json.load(record)).items():
             print(json.dumps({k: v}))

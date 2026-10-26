@@ -1,4 +1,4 @@
-"""The composed paces, the law's two functions of the content (ALGEBRA.md #the-paces; PC-S1, the owner's approved sentence K-S4 in pc1's form, 2026-10-25): the clock p_0(c) = Gamma (1 - 1 / Gamma)^c to the unit, the exact power rounded half up once, by the law's carried division at the resolution Gamma^2: N_0 = Gamma^3 with the remainder r_0 = Gamma div 2, N(c + 1) Gamma + r(c + 1) = N(c) (Gamma - 1) + r(c), one carried division per content at the wall Gamma, the pace rounded(N, Gamma^2) half up, bit for bit the exact power at every content to the edge; a hill (c < 0) by the inverse factors, N Gamma + r over Gamma - 1; the Link's pace the clock twice, p_a = p_0^2 div Gamma rounded once (h N = 1, the ruler goes with the clock), the clock the primary number and its square derived, so no act takes a root and every integer stays within the width (40 bits at Gamma 1,000; the former running fraction of 4.0, the one transient beyond 128 bits, kept by name and gone). The loader certifies the margin once per Gamma, one pass to the frozen content, and refuses by name where the half lies within one of N (`certified`). The table per Gamma holds each content's clock once, two sides, the hollows (c >= 0) and the hills (c < 0); the vectorised entries look every Node's content up in the array's own kind. The rounding of a coefficient (`rounded`, half up) and of a signed one (`odd_rounded`), and the integer sine of a pair (`sine_den`) stand beside. The Link's pace rounds to 0 first, where p_0^2 falls below Gamma div 2 (`frozen_content`, the horizon's content)."""
+"""The composed paces, the law's two functions of the content (ALGEBRA.md #the-paces; PC-S1, the owner's approved sentence K-S4 in pc1's form, 2026-10-25): the clock p_0(c) = Gamma (1 - 1 / Gamma)^c to the unit, the exact power rounded half up once, by the law's carried division at the resolution Gamma^2: N_0 = Gamma^3 with the remainder r_0 = Gamma div 2, N(c + 1) Gamma + r(c + 1) = N(c) (Gamma - 1) + r(c), one carried division per content at the wall Gamma, the pace rounded(N, Gamma^2) half up, bit for bit the exact power at every content to the edge; a hill (c < 0) by the inverse factors, N Gamma + r over Gamma - 1; the Link's pace the clock twice, p_a = p_0^2 div Gamma rounded once (h N = 1, the ruler goes with the clock), the clock the primary number and its square derived, so no act takes a root and every integer stays within the width (40 bits at Gamma 1,000; the former running fraction of 4.0, the one transient beyond 128 bits, kept by name and gone). The loader certifies the margin once per Gamma, one pass to the frozen content, and refuses by name where the half lies within one of N (`certified`). The table per Gamma holds each content's clock once, two sides, the hollows (c >= 0) and the hills (c < 0); the vectorised entries look every Node's content up in the array's own kind. The one rounding of a coefficient (`rounded`, half up on the magnitude with the sign after, odd) and the integer sine of a pair (`sine_den`) stand beside. The Link's pace rounds to 0 first, where p_0^2 falls below Gamma div 2 (`frozen_content`, the horizon's content)."""
 
 from __future__ import annotations
 
@@ -10,21 +10,16 @@ from typing import Any
 import numpy as np
 
 from event_universe.core import acts
-from event_universe.core.rule3 import division_forward, half, largest_below
+from event_universe.core.rule3 import half, largest_below
 
 
 def rounded(numerator: Any, wall: Any) -> Any:
-    """The numerator over the wall rounded half up in one division of the division act, (2 numerator + wall) div (2 wall), no remainder kept: a pace and a factor are coefficients of the interval and no level; integers or whole-board arrays alike."""
-    return division_forward(numerator + numerator, wall + wall, wall)[0]
-
-
-def odd_rounded(numerator: Any, wall: Any) -> Any:
-    """The one rounding of a signed coefficient of the Node (the one rule of the remainder): the carried division from the half wall at the doubled wall, the carry mirrored (rule3.mirrored) where the numerator is negative, bit for bit sign(x) rounded(|x|, wall), odd at every integer; integers or whole-board arrays alike, the mirror in the numerator's own kind."""
+    """The one rounding of a coefficient of the Node (the one rule of the remainder; the former plain half-up rounding, the same integers at a numerator of either sign but a negative odd one, struck 2026-10-26 under NL-S1, its one read, the tension's mean, spelt as the division act's quotient in readings.link_factors; the former odd_rounded kept by name): the numerator over the wall rounded half up on the magnitude with the sign after, one carried division from the half wall at the doubled wall, the carry mirrored (acts.mirror, the former rule3.mirrored kept by name) where the numerator is negative, odd at every integer, no remainder kept, a pace and a factor being coefficients of the interval and no level; integers or whole-board arrays alike, the mirror in the numerator's own kind."""
     signed = np.asarray(numerator)
     kind, below = signed.dtype, signed < 0
     negative = below.astype(kind) if below.ndim else int(below)
     carry = wall + negative * (acts.mirror(wall, wall + wall, 1) - wall)
-    return division_forward(numerator + numerator, wall + wall, carry)[0]
+    return acts.divide(numerator + numerator, wall + wall, carry)[0]
 
 
 def sine_den(num: int, den: int, scale: int = 1) -> int:
@@ -49,7 +44,7 @@ class Side:
             pace = int(rounded(self.scaled, gamma * gamma))
             self.clocks.append(pace)
             self.links.append(int(rounded(pace * pace, gamma)))
-            scaled, carry = division_forward(self.scaled * self.factor, self.wall, self.carry)
+            scaled, carry = acts.divide(self.scaled * self.factor, self.wall, self.carry)
             self.scaled, self.carry = int(scaled), int(carry)
 
     def undecided(self, gamma: int, size: int) -> list[int]:
@@ -59,7 +54,7 @@ class Side:
         for content in range(size + 1):
             if rounded(scaled - 1, gamma * gamma) != rounded(scaled + 1, gamma * gamma):
                 found.append(content)
-            scaled, carry = (int(x) for x in division_forward(scaled * self.factor, self.wall, carry))
+            scaled, carry = (int(x) for x in acts.divide(scaled * self.factor, self.wall, carry))
         return found
 
 

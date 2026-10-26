@@ -6,11 +6,13 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram
+from event_universe import gram, readings
 from event_universe.core import acts
 from event_universe.core.ports import AXES
 from event_universe.core.rule3 import least_at, remainder
+from event_universe.links import factors
 from event_universe.rows import CARRIER, PLANE, Line, zeros
+from event_universe.run import logged
 from event_universe.take import lay
 
 if TYPE_CHECKING:
@@ -49,8 +51,8 @@ def lay_cycle(node: Node, rec: int, n: int, digits: list[int], mirror: int) -> N
     if remainder(node.cube, TURNS):
         raise ValueError("the cycle pattern is 4 by 4: the cube's extent is a multiple of 4")
     p = cycle_phases(node, digits)
-    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
-    rule = node.rule(row.pair, node.start_content, node.link_factors())
+    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
+    rule = readings.rule(node, row.pair, node.start_content, factors(node))
     base = [x for line in row.lines for x in (line.now, line.before)]
 
     def least_share(amplitude: int) -> int:
@@ -68,20 +70,18 @@ def lay_cycle(node: Node, rec: int, n: int, digits: list[int], mirror: int) -> N
     for line, now, before in zip(row.lines, levels[0::PLANE], levels[1::PLANE], strict=True):
         negated = np.vectorize(lambda a, b: int(a) < 0 or int(b) < 0, otypes=[bool])(now, before)
         line.rem = np.where(negated & (mirror == 1), acts.mirror(line.rem, line.wall, 1), line.rem)
-    node.log.append(
-        {
-            "event": "lay",
-            "i": 0,
-            "node": None,
-            "line_pair": rec,
-            "quanta": n,
-            "amplitude": high,
-            "share": least_share(high),
-            "unit": node.units[rec],
-            "nodes": int(node.cube) ** AXES,
-            "sense": 1,
-            "p1": digits[: TURNS * TURNS],
-            "cz": digits[TURNS * TURNS],
-            "mirror": mirror,
-        }
+    logged(
+        node,
+        "lay",
+        None,
+        line_pair=rec,
+        quanta=n,
+        amplitude=high,
+        share=least_share(high),
+        unit=node.units[rec],
+        nodes=int(node.cube) ** AXES,
+        sense=1,
+        p1=digits[: TURNS * TURNS],
+        cz=digits[TURNS * TURNS],
+        mirror=mirror,
     )

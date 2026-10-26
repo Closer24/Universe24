@@ -11,6 +11,7 @@ from typing import Any
 import numpy as np
 import pytest
 
+from event_universe import run as record
 from event_universe.core.acts import divide
 from event_universe.features import volume
 from event_universe.links import cross
@@ -55,7 +56,7 @@ def arrivals_rule3(
 
 def state_of(node: Node) -> str:
     """Every level and remainder of the Node's state as one text, the run back's comparison bit for bit."""
-    return node.state_bytes().decode() + f" {node.interval}"
+    return record.state_text(node) + f" {node.interval}"
 
 
 def run_back_exact(node: Node, n: int) -> int:

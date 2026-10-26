@@ -10,6 +10,7 @@ from pathlib import Path
 import numpy as np
 
 from event_universe import merger, take
+from event_universe import run as record
 from event_universe.core import paces
 from event_universe.core import rule3 as core
 from event_universe.core.acts import mirror as mirrored
@@ -126,9 +127,10 @@ READERS = tuple(
 WRITER = ("run.py",)
 NAMED_CALLS = {
     "refused",
+    "logged",
     "get",
     "join",
-}  # a refusal's cause by name; a file's key read by name; a separator
+}  # a refusal's cause by name; a log entry's event by name; a file's key read by name; a separator
 
 
 def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
@@ -221,7 +223,7 @@ def test_the_composed_paces_are_the_laws_carried_division_at_gamma_squared_bit_f
 
 
 def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd():
-    """The one rule of the remainder (fd1's form, the owner's word of 2026-10-25): the mirror r -> w - 1 - r once per reversal and the identity for an even count (rule3.mirrored), the coefficient's rounding the carried division from the half wall with the carry mirrored for a negative numerator, so odd_rounded(x, w) = sign(x) rounded(|x|, w) and odd at every integer; the turn's pair and the ride's kicks odd with no tie (a fold), the origin pair the half wall and its mirror."""
+    """The one rule of the remainder (fd1's form, the owner's word of 2026-10-25): the mirror r -> w - 1 - r once per reversal and the identity for an even count (rule3.mirrored), the coefficient's rounding the carried division from the half wall with the carry mirrored for a negative numerator, so the one rounding is sign(x) times the magnitude's half-up rounding, (2 |x| + w) div 2 w, odd at every integer; the turn's pair and the ride's kicks odd with no tie (a fold), the origin pair the half wall and its mirror."""
     rng = random.Random(11)
     for _ in range(2_000):
         wall, r = rng.randint(2, 10**6), rng.randint(0, 10**6)
@@ -230,10 +232,10 @@ def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd()
         assert mirrored(r, wall, 2) == r and mirrored(r, wall, 0) == r
         x = rng.randint(-(10**9), 10**9)
         sign = (x > 0) - (x < 0)
-        assert paces.odd_rounded(x, wall) == sign * paces.rounded(abs(x), wall)
-        assert paces.odd_rounded(-x, wall) == -paces.odd_rounded(x, wall)
+        assert paces.rounded(x, wall) == sign * ((2 * abs(x) + wall) // (2 * wall))
+        assert paces.rounded(-x, wall) == -paces.rounded(x, wall)
         q, wx = 2 * rng.randint(-(10**6), 10**6) + 1, 2 * rng.randint(1, 10**6)
-        assert paces.odd_rounded(q, wx) == paces.rounded(q, wx)
+        assert paces.rounded(q, wx) == (2 * q + wx) // (2 * wx)
     half = 1_000 // 2
     assert (half, mirrored(half, 1_000, 1)) == (500, 499)
 
@@ -289,7 +291,7 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
     flux = slice(1 + AXES, 1 + AXES + AXES)
     hashes, checked = [], 0
     for _ in range(14):
-        hashes.append(node.state_hash())
+        hashes.append(record.state_hash(node))
         from_log = len(node.log)
         node.step()
         last = {}
@@ -320,4 +322,4 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
     assert checked == 193
     for h in reversed(hashes):
         node.step(-1)
-        assert node.state_hash() == h
+        assert record.state_hash(node) == h

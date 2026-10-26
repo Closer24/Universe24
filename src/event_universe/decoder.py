@@ -205,7 +205,7 @@ class Record:
 
 def quot(a: int, b: int, scale: int = 1) -> int | None:
     """The integer reading of a / b: the quotient of the scaled numerator (the remainder dropped)."""
-    return None if b == 0 else int(rule3.division_forward(a * scale, b, 0)[0])
+    return None if b == 0 else int(rule3.quotient(a * scale, b))
 
 
 def cmp_rat(p: Rational, q: Rational) -> int:

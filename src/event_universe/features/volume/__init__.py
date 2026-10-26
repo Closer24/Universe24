@@ -9,7 +9,7 @@ import numpy as np
 
 from event_universe.core import paces
 from event_universe.core.ports import AXES
-from event_universe.core.rule3 import division_forward, half
+from event_universe.core.rule3 import half, quotient
 
 EXPONENT = (
     AXES + 1
@@ -39,9 +39,7 @@ def volume_of(gamma: int, levels: Any) -> Any:
     found = np.asarray(levels)
     clocks = np.asarray(paces.clock_of(gamma, found), dtype=object).reshape(-1)
     target = gamma ** (EXPONENT + 1)
-    volumes = [
-        division_forward(target + int(p) ** EXPONENT - 1, int(p) ** EXPONENT, 0)[0] for p in clocks
-    ]
+    volumes = [quotient(target + int(p) ** EXPONENT - 1, int(p) ** EXPONENT) for p in clocks]
     return np.array([int(x) for x in volumes], dtype=object).reshape(found.shape)
 
 

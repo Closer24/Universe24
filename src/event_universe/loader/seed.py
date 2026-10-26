@@ -6,18 +6,23 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram, take
-from event_universe.core.paces import odd_rounded, sine_den
+from event_universe import gram, readings, take
+from event_universe.core.paces import rounded, sine_den
 from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import half, largest_below, least_at, odd, quotient
-from event_universe.links import turn_pair
+from event_universe.links import factors, turn_pair
+from event_universe.loader.wave import lay_cycle
 from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
-from event_universe.wave import lay_cycle
+from event_universe.run import logged
 
 if TYPE_CHECKING:
     from event_universe.node import Node
 
-HALF_WIDTHS = (2, 3)  # the envelope's half widths the raised cosine knows (the lay's `width`)
+HALF_WIDTHS = (
+    1,
+    2,
+    3,
+)  # the envelope's half widths the raised cosine knows (the lay's `width`; 1 the one Node, a born pair's own form)
 FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
     "sea": frozenset({"lay", "row", "quanta", "sense"}),
     "hole": frozenset({"lay", "at"}),
@@ -91,9 +96,11 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
 
 
 def raised_cosine(h: int) -> tuple[int, ...]:
-    """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer, at h = 2 (0) and h = 3 (1) and at no other width: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 (the weights 2, 1 and 4, 3, 1); another width refused by name."""
+    """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer, at h = 1 (-2, the one Node at the crest's weight 4: a born pair's own form laid from a file, the Boss's 6414464356), h = 2 (0) and h = 3 (1) and at no other width: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 (the weights 2, 1 and 4, 3, 1); another width refused by name."""
     if h not in HALF_WIDTHS:
-        raise ValueError("a plane packet has the half-width 2 or 3: a body is laid over its packet")
+        raise ValueError(
+            "a packet has the half-width 1 (the one Node), 2 or 3: a body is laid over its packet"
+        )
     doubled = [1 + 1, h - 1 - 1]
     while len(doubled) < h:
         *_, before, last = doubled
@@ -123,12 +130,12 @@ def envelope_of(
 
 
 def circle_point(den: int, h: int) -> tuple[int, int]:
-    """The point of den's circle at the half-angle sine h (MV-S1, the wave number's unit): den cos k = (den^2 - 2 h^2) over den and den sin k = 2 h largest_below(den^2 - h^2) over den, each rounded once with the sign after (paces.odd_rounded), so the point at -h is the conjugate; (den, 0) at h = 0, (-den, 0) at |h| = den, the band's edge (MV-S2); beyond it refused by name."""
+    """The point of den's circle at the half-angle sine h (MV-S1, the wave number's unit): den cos k = (den^2 - 2 h^2) over den and den sin k = 2 h largest_below(den^2 - h^2) over den, each rounded once with the sign after (paces.rounded), so the point at -h is the conjugate; (den, 0) at h = 0, (-den, 0) at |h| = den, the band's edge (MV-S2); beyond it refused by name."""
     if abs(h) > den:
         raise ValueError(f"a wave number beyond the band's edge: |h| {abs(h)} above den {den}")
     return (
-        int(odd_rounded(den * den - (h + h) * h, den)),
-        int(odd_rounded((h + h) * largest_below(den * den - h * h), den)),
+        int(rounded(den * den - (h + h) * h, den)),
+        int(rounded((h + h) * largest_below(den * den - h * h), den)),
     )
 
 
@@ -211,27 +218,25 @@ def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
     """The fourth form laid: the plane with a gap at every Node alike at the least amplitude whose share at the vacuum's weight is at or above n quanta of its unit at every Node (ma2's fitted_uniform: the search by comparisons, doubling then halving, its answer plus one), at the sense -1 or 1 or the conjugate pair at 0; the lay logged."""
     row = node.records()[rec]
     assert row.pair is not None
-    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
-    rule = node.rule(row.pair, node.start_content, node.link_factors())
+    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
+    rule = readings.rule(node, row.pair, node.start_content, factors(node))
     target = n * node.units[rec]
     amplitude = least_at(
         lambda a: share_at_node(node, row, uniform_levels(node, row, a, sense), rule) > target
     )
     lines = uniform_levels(node, row, amplitude, sense)
     take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
-    node.log.append(
-        {
-            "event": "lay",
-            "i": 0,
-            "node": None,
-            "line_pair": rec,
-            "quanta": n,
-            "amplitude": amplitude,
-            "share": share_at_node(node, row, lines, rule),
-            "unit": node.units[rec],
-            "nodes": int(node.cube) ** AXES,
-            "sense": sense,
-        }
+    logged(
+        node,
+        "lay",
+        None,
+        line_pair=rec,
+        quanta=n,
+        amplitude=amplitude,
+        share=share_at_node(node, row, lines, rule),
+        unit=node.units[rec],
+        nodes=int(node.cube) ** AXES,
+        sense=sense,
     )
 
 
@@ -251,7 +256,7 @@ def fitted(
 ) -> int:
     """The largest amplitude at which the record's share at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
     assert row.pair is not None
-    rule = node.rule(row.pair, node.content(), node.link_factors())
+    rule = readings.rule(node, row.pair, readings.content(node), factors(node))
 
     def share_of(amplitude: int) -> int:
         lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
@@ -307,7 +312,7 @@ def lay_packet(
     if wave is not None:
         phases = phases_of(node, at, h, half_tops, points)
         pairs = (phases, turn_pair(phases[0], phases[1], rotation[0], rotation[1], node.den))
-    node.start_content, node.start_x = node.content(), node.row(CARRIER).lines[0].now
+    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
     amplitude = fitted(node, row, envelope, w0, n * node.units[rec], vector, pairs)
     for sense in (-1, 1) if not one_sense else (int(one_sense),):
         lines = rest_record(node, row, envelope, w0, amplitude, sense, vector, pairs)
@@ -321,19 +326,17 @@ def lay_packet(
             continue
         take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
     lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
-    rule = node.rule(row.pair, node.start_content, node.link_factors())
-    node.log.append(
-        {
-            "event": "lay",
-            "i": 0,
-            "node": list(at),
-            "line_pair": rec,
-            "width": h,
-            "quanta": n,
-            "amplitude": amplitude,
-            "share": packet_share(node, row, lines, rule),
-            "unit": node.units[rec],
-            "nodes": int(sum(1 for x in envelope.reshape(-1) if int(x) > 0)),
-            **named,
-        }
+    rule = readings.rule(node, row.pair, node.start_content, factors(node))
+    logged(
+        node,
+        "lay",
+        at,
+        line_pair=rec,
+        width=h,
+        quanta=n,
+        amplitude=amplitude,
+        share=packet_share(node, row, lines, rule),
+        unit=node.units[rec],
+        nodes=int(sum(1 for x in envelope.reshape(-1) if int(x) > 0)),
+        **named,
     )
