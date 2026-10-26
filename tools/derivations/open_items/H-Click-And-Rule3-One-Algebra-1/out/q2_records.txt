@@ -1,0 +1,147 @@
+world_hole_60.json credits 777 births 16 turns 546
+   W != 0 761
+   W flips under X 761
+   W kept under X K (the swap) 777
+   full move (now set to before) 16
+   laid back (no current) 0
+   not turned: re_now != re_stepped (a write between) 0
+   not turned: re_now == re_stepped 731
+   partial move 761
+   sense == sign W 777
+   take on the now slot 777
+   toward -1 (now above its past) 777
+   trigger sign + 77
+   trigger sign - 71
+   trigger sign 0 629
+   turned Node 46
+   turned: frame == start exchanged and conjugated 46
+   turned: frame differs (a write or a kick between) 0
+   birth take: full move 0
+   birth take: partial move 16
+   birth: take on the now slot of the taken line 16
+   children W opposite, sum 0 16
+   lay im on before (sense B) at both ends 16
+   lay re on now (A) at both ends 16
+   taken == booked 0
+   taken >= booked 16
+world_chiral_60.json credits 2943 births 17 turns 639
+   W != 0 2829
+   W flips under X 2829
+   W kept under X K (the swap) 2943
+   full move (now set to before) 121
+   laid back (no current) 3
+   not turned: re_now != re_stepped (a write between) 0
+   not turned: re_now == re_stepped 2741
+   partial move 2822
+   sense == sign W 2943
+   take on the now slot 2943
+   toward -1 (now above its past) 2943
+   trigger sign + 137
+   trigger sign - 114
+   trigger sign 0 2692
+   turned Node 202
+   turned: frame == start exchanged and conjugated 202
+   turned: frame differs (a write or a kick between) 0
+   birth take: full move 0
+   birth take: partial move 17
+   birth: take on the now slot of the taken line 17
+   children W opposite, sum 0 13
+   lay im on before (sense B) at both ends 17
+   lay re on now (A) at both ends 17
+   taken == booked 0
+   taken >= booked 17
+world_ga2_450.json credits 1408 births 64 turns 128
+   W != 0 1408
+   W flips under X 1408
+   W kept under X K (the swap) 1408
+   full move (now set to before) 0
+   laid back (no current) 1408
+   not turned: re_now != re_stepped (a write between) 0
+   not turned: re_now == re_stepped 1408
+   partial move 1408
+   sense == sign W 1408
+   take on the now slot 1408
+   toward +1 (now below its past) 704
+   toward -1 (now above its past) 704
+   trigger sign + 384
+   trigger sign - 384
+   trigger sign 0 640
+   turned Node 0
+   birth take: full move 0
+   birth take: partial move 64
+   birth: take on the now slot of the taken line 64
+   children W opposite, sum 0 64
+   lay im on before (sense B) at both ends 64
+   lay re on now (A) at both ends 64
+   taken == booked 0
+   taken >= booked 64
+hole.json credits 777 births 16 turns 546
+   W != 0 761
+   W flips under X 761
+   W kept under X K (the swap) 777
+   full move (now set to before) 16
+   laid back (no current) 0
+   not turned: re_now != re_stepped (a write between) 0
+   not turned: re_now == re_stepped 731
+   partial move 761
+   sense == sign W 777
+   take on the now slot 777
+   toward -1 (now above its past) 777
+   trigger sign + 77
+   trigger sign - 71
+   trigger sign 0 629
+   turned Node 46
+   turned: frame == start exchanged and conjugated 46
+   turned: frame differs (a write or a kick between) 0
+   birth take: full move 0
+   birth take: partial move 16
+   birth: take on the now slot of the taken line 16
+   children W opposite, sum 0 16
+   lay im on before (sense B) at both ends 16
+   lay re on now (A) at both ends 16
+   taken == booked 0
+   taken >= booked 16
+chiral.json credits 2943 births 17 turns 639
+   W != 0 2829
+   W flips under X 2829
+   W kept under X K (the swap) 2943
+   full move (now set to before) 121
+   laid back (no current) 3
+   not turned: re_now != re_stepped (a write between) 0
+   not turned: re_now == re_stepped 2741
+   partial move 2822
+   sense == sign W 2943
+   take on the now slot 2943
+   toward -1 (now above its past) 2943
+   trigger sign + 137
+   trigger sign - 114
+   trigger sign 0 2692
+   turned Node 202
+   turned: frame == start exchanged and conjugated 202
+   turned: frame differs (a write or a kick between) 0
+   birth take: full move 0
+   birth take: partial move 17
+   birth: take on the now slot of the taken line 17
+   children W opposite, sum 0 13
+   lay im on before (sense B) at both ends 17
+   lay re on now (A) at both ends 17
+   taken == booked 0
+   taken >= booked 17
+bodies.json credits 1973 births 0 turns 4229
+   W != 0 0
+   W flips under X 0
+   W kept under X K (the swap) 1973
+   full move (now set to before) 108
+   laid back (no current) 0
+   not turned: re_now != re_stepped (a write between) 0
+   not turned: re_now == re_stepped 1828
+   partial move 1865
+   sense == sign W 1973
+   take on the now slot 1973
+   toward -1 (now above its past) 1973
+   trigger sign + 203
+   trigger sign - 190
+   trigger sign 0 1580
+   turned Node 145
+   turned: frame == start exchanged and conjugated 145
+   turned: frame differs (a write or a kick between) 0

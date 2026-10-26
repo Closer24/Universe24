@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb22_merge/tools/record_code_shape.py", line 369, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb22_merge/tools/record_code_shape.py", line 363, in main
+    found = violations(ROOT, record_at(ROOT))
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb22_merge/tools/record_code_shape.py", line 351, in violations
+    for name, count in sorted(importers(loop_internal_imports(root)).items()):
+                                        ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb22_merge/tools/record_code_shape.py", line 247, in loop_internal_imports
+    for module, imported in imports_of(path, module_name_of(root, path))
+                            ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cb22_merge/tools/record_code_shape.py", line 214, in imports_of
+    for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+                         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.local/share/uv/python/cpython-3.14.6-linux-x86_64-gnu/lib/python3.14/ast.py", line 46, in parse
+    return compile(source, filename, mode, flags,
+                   _feature_version=feature_version, optimize=optimize)
+  File "<unknown>", line 30
+    >>>>>>> 3dc12e307
+            ^
+SyntaxError: invalid decimal literal

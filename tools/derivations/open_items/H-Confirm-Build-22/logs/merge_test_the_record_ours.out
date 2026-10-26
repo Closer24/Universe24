@@ -1,0 +1,106 @@
+FFF.F........F.                                                          [100%]
+=================================== FAILURES ===================================
+__________ test_the_committed_record_shows_the_gates_by_name[bodies] ___________
+
+name = 'bodies'
+
+    @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
+    def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
+        found = gates(loaded(name))
+        kinds = {int(k[:2]): v["kind"] for k, v in found.items() if k[:2].strip().isdigit()}
+        assert len(kinds) == 61
+>       assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
+E       assert {2, 3, 5, 6, 7, 8, ...} == {2, 3, 5, 6, 7, 9, ...}
+E         
+E         Extra items in the left set:
+E         8
+E         16
+E         Use -v to get more diff
+
+/dev/shm/tmp/cb22/merge_tests/test_the_record_ours.py:60: AssertionError
+__________ test_the_committed_record_shows_the_gates_by_name[chiral] ___________
+
+name = 'chiral'
+
+    @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
+    def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
+        found = gates(loaded(name))
+        kinds = {int(k[:2]): v["kind"] for k, v in found.items() if k[:2].strip().isdigit()}
+        assert len(kinds) == 61
+>       assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
+E       assert {2, 4, 5, 7, 8, 9, ...} == {2, 4, 5, 7, 8, 9, ...}
+E         
+E         Extra items in the left set:
+E         24
+E         Extra items in the right set:
+E         17
+E         58
+E         15
+E         Use -v to get more diff
+
+/dev/shm/tmp/cb22/merge_tests/test_the_record_ours.py:60: AssertionError
+___________ test_the_committed_record_shows_the_gates_by_name[hole] ____________
+
+name = 'hole'
+
+    @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
+    def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
+        found = gates(loaded(name))
+        kinds = {int(k[:2]): v["kind"] for k, v in found.items() if k[:2].strip().isdigit()}
+        assert len(kinds) == 61
+>       assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
+E       assert {4, 5, 7, 8, 10, 15, ...} == {2, 4, 5, 7, 8, 10, ...}
+E         
+E         Extra items in the right set:
+E         2
+E         Use -v to get more diff
+
+/dev/shm/tmp/cb22/merge_tests/test_the_record_ours.py:60: AssertionError
+______________ test_the_conservations_hold_on_the_record[chiral] _______________
+
+name = 'chiral'
+
+    @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
+    def test_the_conservations_hold_on_the_record(name: str) -> None:
+        """The independent check: the conservations recomputed from the record's log alone, beside what rows 15, 17, 18 and the constants read."""
+        run = loaded(name)
+        births = [e for e in run["log"] if e["event"] == "birth"]
+        signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
+>       assert sum(signs) == 0 and 0 not in signs
+E       assert (2 == 0)
+E        +  where 2 = sum([-1, 1, -1, 1, -1, 1, ...])
+
+/dev/shm/tmp/cb22/merge_tests/test_the_record_ours.py:75: AssertionError
+___ test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings ____
+
+tmp_path = PosixPath('/dev/shm/tmp/pytest-of-root/pytest-37/test_the_gates_of_the_phenomen0')
+
+    def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_path: Path) -> None:
+        tool = load_file("phenomena", ROOT / "tools" / "phenomena.py")
+        readings = {name: tool.reading_of(RECORDS / f"{name}.reading.jsonl") for name in SHOWN_ROWS}
+        whole = {g for rows in readings.values() for g, r in rows.items() if r["kind"] == "SHOWN"}
+        table = tool.table_of("test", readings, {})
+        rows = [
+            line
+            for line in table.splitlines()
+            if line.startswith("| ") and line.split("|")[2].strip().isdigit()
+        ]
+        names = {g: r["phenomenon"] for rows in readings.values() for g, r in rows.items()}
+        assert len(rows) == tool.ROWS and all(names[k] in rows[k - 1] for k in names)
+>       assert (
+            whole <= set.union(*SHOWN_ROWS.values())
+            and f"SHOWN in Universe24: {len(whole)} of {tool.ROWS} on test" in table
+        )
+E       assert ({2, 3, 4, 5, 6, 7, ...} <= {2, 3, 4, 5, 6, 7, ...}
+E         
+E         Extra items in the left set:
+E         24)
+
+/dev/shm/tmp/cb22/merge_tests/test_the_record_ours.py:152: AssertionError
+=========================== short test summary info ============================
+FAILED ::test_the_committed_record_shows_the_gates_by_name[bodies] - assert {...
+FAILED ::test_the_committed_record_shows_the_gates_by_name[chiral] - assert {...
+FAILED ::test_the_committed_record_shows_the_gates_by_name[hole] - assert {4,...
+FAILED ::test_the_conservations_hold_on_the_record[chiral] - assert (2 == 0)
+FAILED ::test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings
+5 failed, 10 passed in 22.32s

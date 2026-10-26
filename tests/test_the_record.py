@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from event_universe.gates import gates, kind_of
+from event_universe.gates import gates
 from event_universe.run import record
 from tests.laws import ROOT, load_file, world_of
 
@@ -16,18 +16,35 @@ RECORDS, WIDTH = ROOT / "examples" / "records", 128
 CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # the hole under PL-S1; 9 and 22 among them under the former write of 2 W after the step
-    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45},
-    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45},
-    "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45},
+    "hole": {2, 4, 5, 7, 8, 10, 15, 16, 17, 18, 19, 21, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
+    "chiral": {2, 4, 5, 7, 8, 9, 10, 15, 16, 17, 18, 19, 21, 22, 25, 26, 27, 30, 37, 43, 45, 58, 59, 60},
+    "bodies": {2, 3, 5, 6, 7, 9, 10, 18, 30, 37, 43, 45, 59, 60},
 }
 VERDICTS = {  # the verdicts' words by name
     "hole": {
         "9 collisions": "NOT SHOWN: the credited Nodes receding",
         "22 Coulomb's sign": "NOT SHOWN: unlike senses do not approach, like senses do not part",
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -16 / 16",
+        "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths",
+        "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+        "60 the acceleration in the clicks": "SHOWN: after a slowing, an eighth's growth of the spacing larger",
     },
-    "chiral": {"9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart"},
-    "bodies": {"37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link"},
+    "chiral": {
+        "9 collisions": "SHOWN: two bodies' credited Nodes approached and stood one Link apart",
+        "1b the board tops, every Node turning at once": "NOT SHOWN: no interval with every Node turned",
+        "1c the board returns to Gamma": "NOT SHOWN: no bottom at Gamma at every Node",
+        "56 Bell": "NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -2 / 17",
+    },
+    "bodies": {
+        "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link",
+        "55 the two slits": "NOT READ: no two gap-0 packets at one centre",
+        "56 Bell": "NOT READ: 0 births, no born pair clicked at both ends",
+        "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four",
+        "61 the horizon radiates": "NOT READ: no frozen Node in the record (as gate 14)",
+        "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero",
+        "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
+    },
 }
 
 
@@ -38,8 +55,8 @@ def loaded(name: str) -> dict[str, Any]:
 @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
 def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
     found = gates(loaded(name))
-    kinds = {int(k[:2]): kind_of(v["verdict"]) for k, v in found.items() if k[:2].strip().isdigit()}
-    assert len(kinds) == 54
+    kinds = {int(k[:2]): v["kind"] for k, v in found.items() if k[:2].strip().isdigit()}
+    assert len(kinds) == 61
     assert {n for n, kind in kinds.items() if kind.startswith("SHOWN")} == SHOWN_ROWS[name]
     assert {n for n, kind in kinds.items() if kind == "NOT REACHED"} == {14, 34}  # the horizon
     for gate, verdict in VERDICTS[name].items():
@@ -51,6 +68,7 @@ def test_the_committed_record_shows_the_gates_by_name(name: str) -> None:
 
 @pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
 def test_the_conservations_hold_on_the_record(name: str) -> None:
+    """The independent check: the conservations recomputed from the record's log alone, beside what rows 15, 17, 18 and the constants read."""
     run = loaded(name)
     births = [e for e in run["log"] if e["event"] == "birth"]
     signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
@@ -74,6 +92,12 @@ def test_the_hole_record_is_the_engines_own_bit_for_bit() -> None:
     assert timeless == [{k: v for k, v in r.items() if k != "milliseconds"} for r in committed["rows"]]
 
 
+@pytest.mark.parametrize("name", sorted(SHOWN_ROWS))
+def test_the_committed_reading_is_the_decoders_own_whole(name: str) -> None:
+    """The whole reading beside the record equals a fresh read, line for line after JSON (the one check of every key, number, verdict, field and event)."""
+    assert [{k: v} for k, v in json.loads(json.dumps(gates(loaded(name)))).items()] == reading_of(name)
+
+
 def reading_of(name: str) -> list[dict[str, Any]]:
     """The committed reading beside the record, one JSON per line (the gates' output)."""
     lines = (RECORDS / f"{name}.reading.jsonl").read_text(encoding="utf-8").splitlines()
@@ -92,7 +116,6 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
         assert all(h[1] in (0, 1, 2) for h in line["held"])
     assert sum(len(line["turned"]) for line in run["nodes"]) == int(run["counts"]["turns"])
     events = next(line["events"] for line in reading_of(name) if "events" in line)
-    assert events == gates(run)["events"]
     labels = [e["label"] for e in events]
     assert "the run back exact" in labels
     clicks = (
@@ -105,6 +128,36 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
         e["i"] for e in run["log"] if e["event"] in ("birth", "credit")
     )
     assert all(len(e["label"].split()) <= 6 for e in events)
+    rows = {k[:2]: v for line in reading_of(name) for k, v in line.items() if k[:2] in ("1b", "1c")}
+    eras = next(line["the eras"] for line in reading_of(name) if "the eras" in line)
+    returns = int(rows["1c"]["cause"].split()[0]) if rows["1c"]["kind"] == "SHOWN" else 0
+    tops = int(rows["1b"]["cause"].split(" tops")[0].split()[-1]) if rows["1b"]["kind"] == "SHOWN" else 0
+    assert (
+        len(eras["bangs"]) == 1 + returns and len(eras["tops"]) == tops
+    )  # every one, beyond the eight listed
+
+
+def test_the_gates_of_the_phenomena_are_one_table_written_from_the_readings(tmp_path: Path) -> None:
+    tool = load_file("phenomena", ROOT / "tools" / "phenomena.py")
+    readings = {name: tool.reading_of(RECORDS / f"{name}.reading.jsonl") for name in SHOWN_ROWS}
+    whole = {g for rows in readings.values() for g, r in rows.items() if r["kind"] == "SHOWN"}
+    table = tool.table_of("test", readings, {})
+    rows = [
+        line
+        for line in table.splitlines()
+        if line.startswith("| ") and line.split("|")[2].strip().isdigit()
+    ]
+    names = {g: r["phenomenon"] for rows in readings.values() for g, r in rows.items()}
+    assert len(rows) == tool.ROWS and all(names[k] in rows[k - 1] for k in names)
+    assert (
+        whole <= set.union(*SHOWN_ROWS.values())
+        and f"SHOWN in Universe24: {len(whole)} of {tool.ROWS} on test" in table
+    )
+    document = tmp_path / "UNIVERSE24.md"
+    document.write_text(
+        "## 2\n\n### The gates widened to everything derived\n\nrest\n", encoding="utf-8"
+    )
+    assert tool.write(document, "test", readings) in document.read_text(encoding="utf-8")
 
 
 def test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed(tmp_path: Path) -> None:
