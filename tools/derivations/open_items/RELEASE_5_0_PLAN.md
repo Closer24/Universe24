@@ -1,4 +1,4 @@
-# The plan for the commit of engine 5.0 onto main (the owner's word of 2026-10-26, 17:1x UTC; his word is needed at step 7 and at nothing else)
+# The plan for the commit of engine 5.0 onto main (the owner's word of 2026-10-26, 17:1x UTC; the carry decided by his word of 17:3x UTC, the release itself his word at the end)
 
 Main is the released state of the project and nothing reaches it but a release. This plan is the order of that one commit, with every gate it must pass, what it carries, what it leaves behind, and the one decision that is the owner's.
 
@@ -23,10 +23,11 @@ The two commits main holds and the branch does not are main's own return of 2026
 4. A confirming hand on the release itself (H-Confirm-Release-5-1): the merge of main into the branch read whole, then the seven gates on the merged tree with CHECK_BASE set to main's head, every one named with its exit and its reason, the suite's own times against the ten-minute ceiling per shard and the thirty-second bound per test, and the record tests' pins read against the committed readings. Its report lands before the commit.
 5. The ratchets' baseline, which is the one real obstacle and needs David first: tools/tests_shape.py, tools/record_code_shape.py, tools/engine_gates.py and tools/documents_gates.py all compare a head against a base. At a release the base is main at 4.0, so the comparison is between two different engines and means nothing (tests fell from 5,138 lines to 2,226, which the gate reads as a pass for the wrong reason, while the code shape and the module counts read as breaches for the wrong reason). **The mend, David's, one clause in tools/check.py and the four gates: at a release commit, named by the version bump in pyproject.toml, the ratchets take their base from the released branch's own previous head, not from main, and print that they did.** Without it the first run of the checks on main after the push is noise, and noise on main is what a release must never leave.
 6. The release's own files, in one commit with the merge: the version 5.0.0 in pyproject.toml and CITATION.cff with the date, the CHANGELOG's Unreleased section closed as 5.0.0 with the cycle's laws by name, .zenodo.json, and every document that names the version (README.md, index.html, llms.txt, the papers' front matter).
-7. **The owner's word on what the release carries**, the one decision that is his and not mine:
-   - the engine, the tests, the documents, the examples and the tools that gate: carried, no question;
-   - **the reader's folder (about 190 MB of pages, readings and frames)**: my recommendation is to carry the table of the gates, the readings of the committed records and ONE folder of pages (the newest), and to leave the older folders on the branch, naming them in the changelog. A released repository of a quarter of a gigabyte of generated pages serves nobody who clones it, and the pages are regenerated from the records by one command.
-   - **the hands' folders (10,138 files under tools/derivations)**: my recommendation is to carry them whole. They are the project's derivation record, every law's proof and every refusal's measure, they are text, and a law without its derivation is an assertion.
+7. **What the release carries, DECIDED by the owner's word of 2026-10-26, 17:3x UTC (the Boss's recommendation taken whole):**
+   - the engine, the tests, the documents, the examples and the tools that gate: carried;
+   - the reader's folder: the gates' table, the readings of the committed records and ONE folder of pages, the newest, are carried; the older folders stay on the branch and are named in the changelog, since the pages regenerate from the records by one command (the Reader names which folder is the newest at the release and leaves the rest, keeping the reader's own size under its bound);
+   - the hands' folders under tools/derivations: carried whole, the project's derivation record, every law's proof and every refusal's measure.
+   So nothing of the carry waits on a word any more; the owner's word remains needed on the release itself, at step 6 of the order below.
 
 ## 3. The order of the commit itself
 
@@ -35,7 +36,7 @@ The two commits main holds and the branch does not are main's own return of 2026
 3. `git merge origin/main` into engine-5.0-test; the version files resolved to the release's own numbers; the push green.
 4. The release's files written (item 6) and pushed on the branch.
 5. H-Confirm-Release-5-1 reports; every refusal mended and the report re-run until it names none.
-6. The owner's word on the carry (item 7) and on the release itself.
+6. The owner's word on the release itself (the carry decided at 17:3x UTC).
 7. The commit onto main: a merge of engine-5.0-test into main with no fast forward, its message naming the release, the laws of the cycle and the branch's head sha; no force, no rewrite, no pull request (the owner's standing rule), main's history kept.
 8. The tag 5.0.0 on that commit, the Zenodo deposit as the former releases, and the branch left standing for the next cycle.
 9. The checks run on main by their own workflow at the push: their result is read and named here within the hour. A red check on main after a release is the release's own failure and is mended at once on the branch and re-committed, never left.
