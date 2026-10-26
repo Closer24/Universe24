@@ -282,22 +282,34 @@ def horizon(record: Record) -> dict[str, Any]:
 
 
 def stopped_clock(record: Record) -> dict[str, Any]:
-    """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent (no credit at it) and its content standing from the interval it froze."""
-    frozen = [(line["i"], at) for line in record.nodes for at in line["frozen"]]
-    credited = {tuple(c["node"]) for c in record.credits}
-    silent = sum(1 for _i, at in frozen if tuple(record.node(at)) not in credited)
-    standing = 0
-    for (i, at), (j, bt) in zip(frozen, frozen[1:], strict=False):
-        if at == bt and j == i + 1:
-            standing += record.nodes[j - 1]["content"][at] == record.nodes[i - 1]["content"][at]
+    """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent from its first frozen interval on (no credit at it at or after that interval) and its content standing at its first frozen content on every later frozen line (BH-S1's predicate, the Boss's 6407393577: the clock stops at the horizon)."""
+    frozen = [(int(line["i"]), at) for line in record.nodes for at in line["frozen"]]
+    first: dict[int, int] = {}
+    for i, at in frozen:
+        first.setdefault(at, i)
+    held = {at: record.nodes[i - 1]["content"][at] for at, i in first.items()}
+    credited = {
+        record.index(c["node"])
+        for c in record.credits
+        if int(c["i"]) >= first.get(record.index(c["node"]), int(c["i"]) + 1)
+    }
+    silent = sum(1 for _i, at in frozen if at not in credited)
+    later = [(i, at) for i, at in frozen if i > first[at]]
+    standing = sum(1 for i, at in later if record.nodes[i - 1]["content"][at] == held[at])
+    at = min(first.items(), key=lambda p: p[1])[0] if first else None
     return {
         "34 the horizon and the stopped clock": {
+            "Nodes frozen": len(first),
             "frozen Node lines (interval, Node)": len(frozen),
-            "of them silent": silent,
-            "frozen Node lines with the content standing from the one before": standing,
-            "verdict": "SHOWN: a frozen Node silent with its content standing"
-            if frozen and silent == len(frozen) and standing
-            else "NOT SHOWN: a frozen Node credited or its content moving"
+            "of them silent (no credit at the Node from its first frozen interval on)": silent,
+            "later frozen lines with the content standing at the Node's first frozen content": [
+                standing,
+                len(later),
+            ],
+            "at": record.node(at) if at is not None else None,
+            "verdict": "SHOWN: every frozen Node silent with its content standing, the clock stopped at the horizon"
+            if frozen and silent == len(frozen) and standing == len(later)
+            else "NOT SHOWN: a frozen Node credited after its freeze or its content moving"
             if frozen
             else "NOT REACHED: no frozen Node in the record (as gate 14)",
         }
