@@ -305,3 +305,13 @@ def decoded_credits(
             else None
         )
     return decoded, right, within, floors
+
+
+if (
+    __name__ == "__main__"
+):  # the kit's documented command (the Boss's 6416894866: the decoder owed a main entry): the gates of a record file, one line each, as `python -m event_universe.gates`
+    import sys
+
+    from event_universe.gates import main
+
+    main(sys.argv)

@@ -154,9 +154,11 @@ def era(record: Record) -> dict[str, Any]:
 
 
 def horizon(record: Record) -> dict[str, Any]:
-    """Gate 14: the frozen content against the Node lines' max content (the Boss's 6416277638: the reader's rows stand one at every twelfth interval, so a horizon shorter than a twelfth of the run was blind to the rows' maximum while the freeze is in the Node lines; the rows' maximum named beside); a credit at a frozen Node would deny the horizon."""
+    """Gate 14: the frozen content against the Node lines' max content (the Boss's 6416277638: the reader's rows stand one at every twelfth interval, so a horizon shorter than a twelfth of the run was blind to the rows' maximum while the freeze is in the Node lines; the rows' maximum named beside); a credit at a Node while it stands in the frozen set of the Node lines would deny the horizon (the former read, a credit at or above the frozen content, named beside)."""
     frozen = paces.frozen_content(record.gamma)
-    at_frozen = [c for c in record.credits if c["content"] >= frozen]
+    frozen_at = {(int(line["i"]), int(at)) for line in record.nodes for at in line["frozen"]}
+    at_frozen = [c for c in record.credits if (int(c["i"]), record.index(c["node"])) in frozen_at]
+    at_mark = sum(1 for c in record.credits if c["content"] >= frozen)
     rows_max = max((int(r["content min/mean/max"][MAX]) for r in record.rows), default=0)
     cmax = max((int(x) for line in record.nodes for x in line["content"]), default=rows_max)
     verdict = (
@@ -172,7 +174,8 @@ def horizon(record: Record) -> dict[str, Any]:
             "max content in the Node lines": cmax,
             "max content in the rows (one row at every twelfth interval)": rows_max,
             "Nodes frozen": len(frozen_first),
-            "credits at frozen Nodes": len(at_frozen),
+            "credits at a Node while it stands in the frozen set": len(at_frozen),
+            "credits at or above the frozen content (the former read)": at_mark,
             "at": first,
             "verdict": verdict,
         }
@@ -180,26 +183,45 @@ def horizon(record: Record) -> dict[str, Any]:
 
 
 def stopped_clock(record: Record) -> dict[str, Any]:
-    """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent from its first frozen interval on (no credit at it at or after that interval) and its content standing at its first frozen content on every later frozen line (BH-S1's predicate, the Boss's 6407393577: the clock stops at the horizon)."""
-    frozen = [(int(line["i"]), at) for line in record.nodes for at in line["frozen"]]
+    """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent while it is frozen (no credit at it on any interval it stands in the frozen set) and its content standing at the content of its freeze on every line of that freeze, until its release (BH-S1's predicate, the Boss's 6407393577: the clock stops at the horizon; re-cut for a released horizon on the Boss's 6417313230: the former read every credit and every content from the first freeze on, which no released Node can hold)."""
     first = record.first_frozen()
-    held = {at: record.nodes[i - 1]["content"][at] for at, i in first.items()}
-    credits = [(record.index(c["node"]), int(c["i"])) for c in record.credits]
-    credited = {at for at, i in credits if at in first and i >= first[at]}
-    later = [(i, at) for i, at in frozen if i > first[at]]
+    frozen: list[tuple[int, int]] = []
+    held: dict[int, int] = {}
+    standing = later = 0
+    for line in record.nodes:
+        i, ats = int(line["i"]), {int(at) for at in line["frozen"]}
+        for at in list(held):
+            if at not in ats:
+                del held[at]
+        for at in sorted(ats):
+            content = int(line["content"][at])
+            if at in held:
+                standing += content == held[at]
+                later += 1
+            else:
+                held[at] = content
+            frozen.append((i, at))
+    frozen_at = set(frozen)
+    credited = {
+        record.index(c["node"])
+        for c in record.credits
+        if (int(c["i"]), record.index(c["node"])) in frozen_at
+    }
     silent = sum(1 for _i, at in frozen if at not in credited)
-    standing = sum(1 for i, at in later if record.nodes[i - 1]["content"][at] == held[at])
     earliest = min(first.items(), key=lambda p: p[1])[0] if first else None
     return {
         "34 the horizon and the stopped clock": {
             "Nodes frozen": len(first),
             "frozen Node lines (interval, Node)": len(frozen),
-            "of them silent (no credit at the Node from its first frozen interval on)": silent,
-            "later lines standing at the first frozen content / later lines": [standing, len(later)],
+            "of them silent (no credit at the Node while it is frozen)": silent,
+            "lines standing at the content of their freeze / lines after a freeze's first": [
+                standing,
+                later,
+            ],
             "at": record.node(earliest) if earliest is not None else None,
-            "verdict": "SHOWN: every frozen Node silent with its content standing, the clock stopped at the horizon"
-            if frozen and silent == len(frozen) and standing == len(later)
-            else "NOT SHOWN: a frozen Node credited after its freeze or its content moving"
+            "verdict": "SHOWN: every frozen Node silent with its content standing while frozen, the clock stopped at the horizon"
+            if frozen and silent == len(frozen) and standing == later
+            else "NOT SHOWN: a frozen Node credited while frozen or its content moving while frozen"
             if frozen
             else "NOT REACHED: no frozen Node in the record (as gate 14)",
         }

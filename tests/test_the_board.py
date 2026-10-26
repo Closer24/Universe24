@@ -220,7 +220,7 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
-    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); The-Uniform-Board-Returns_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to the seed's first state exactly at 116 and 231 (the bottoms at Gamma at 115 and 230 before them, the former predicate, kept by name), the bangs numbered 1, 116 and 231 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
+    """BB-S1 and MA-S1 read by gate 1 from the Node lines (the Boss's 6400540638 and 6400767119 (2); The-Uniform-Board-Returns_COMPARISON.md section 4): the sea alone on the 3-cube to 240 (tests/worlds/world_sea_3.json, the Universe seed that returns) tops at 58 and 173 with all 27 Nodes turning at once, returns to the seed's first pair of states at 115 and 230 (its last line at the resolution; the former predicate's bottoms at Gamma the same), the bangs numbered 1, 115 and 230 with no birth and no credit between them; the record read through the table, gate 1 SHOWN, gate 46 NOT SHOWN (no body in the later cycle), the run back exact 10 of 10."""
     universe, world = world_of("world_sea_3.json")
     found = json.loads(json.dumps(writer.record(universe, world, 10, lambda line: None)))
     out = table.gates(found)
@@ -230,9 +230,8 @@ def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() 
         [115, 1000, True],
         [230, 1000, True],
     ]
-    assert bang["exact returns to the seed's first state (interval)"] == [116, 231]
-    assert bang["of them repeating the course whole (the first pair of states)"] == [116, 231]
-    assert bang["bangs numbered (the interval each begins)"] == [1, 116, 231]
+    assert bang["exact returns to the seed's first state (interval)"] == [115, 230]
+    assert bang["bangs numbered (the interval each begins)"] == [1, 115, 230]
     assert bang["births and body credits between the bangs"] == [[0, 0], [0, 0], [0, 0]]
     assert bang["verdict"].startswith("SHOWN: 2 exact returns")
     assert out["46 the bangs recurring with the same gates"]["verdict"].startswith("NOT SHOWN")

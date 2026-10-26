@@ -301,9 +301,10 @@ def test_the_momentum_booked_on_the_link_is_an_identity_on_every_booking() -> No
 def test_the_horizon_is_read_from_the_node_lines_not_the_rows() -> None:
     """Gate 14 on the hole record with one Node frozen on one Node line by hand (the Boss's 6416277638): the rows, one at every twelfth interval, keep their maximum below the frozen content while the Node line carries it, and the gate reads the horizon as silence from the Node lines; NOT REACHED on the record as committed."""
     run = loaded("hole")
-    frozen = paces.frozen_content(int(run["gamma"]))
+    rec, frozen = Record(run), paces.frozen_content(int(run["gamma"]))
     line = run["nodes"][len(run["nodes"]) // 2]
-    at = len(line["content"]) // 2
+    credited = {rec.index(c["node"]) for c in rec.credits if int(c["i"]) == int(line["i"])}
+    at = next(k for k in range(len(line["content"])) if k not in credited)
     line["content"][at], line["frozen"] = frozen, [at]
     found = board.horizon(Record(run))["14 the horizon"]
     assert (
@@ -381,4 +382,21 @@ def test_the_page_is_one_html_from_the_record_and_the_reading_with_nothing_typed
     events = next(line["events"] for line in reading_of("hole") if "events" in line)
     assert all(e["label"] in text for e in events)
     source = (ROOT / "tools" / "page.py").read_text(encoding="utf-8")
+    assert str(run["den"]) not in source and "electron" not in source and "light" not in source
+
+
+def test_the_page_of_the_bangs_is_one_html_from_the_records_and_the_readings(tmp_path: Path) -> None:
+    """The page of the bangs (tools/bangs_page.py, the owner's words of 2026-10-26 through the Boss, 6417065257 and 6417873704): one HTML from the records and their readings with the pages named beside, the records' numbers and what each brings read from its rows, every numbered row in the table with its verdict per record; ASCII, nothing of a universe typed in the tool."""
+    tool = load_file("bangs_page", ROOT / "tools" / "bangs_page.py")
+    out = tmp_path / "bangs.html"
+    run = loaded("hole")
+    bangs = [(name, run, str(RECORDS / "hole.reading.jsonl"), f"{name}.html") for name in ("one", "two")]
+    out.write_text(
+        tool.page_of(bangs, [("beside", str(RECORDS / "chiral.reading.jsonl"))]), encoding="utf-8"
+    )
+    text = out.read_text(encoding="utf-8")
+    rows = {k for line in reading_of("hole") for k in line if k[:2].strip().isdigit()}
+    assert text.isascii() and text.count("<iframe") == 2 and "color-scheme: dark" in text
+    assert text.count("<tr><td>") == len(rows) and "It brings:" in text and "Together:" in text
+    source = (ROOT / "tools" / "bangs_page.py").read_text(encoding="utf-8")
     assert str(run["den"]) not in source and "electron" not in source and "light" not in source

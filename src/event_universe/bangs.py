@@ -49,29 +49,30 @@ def state_of(line: dict[str, Any]) -> tuple[list[int], list[int]]:
     return [int(x) for x in line["X"]], [int(c) for c in line["content"]]
 
 
+def at_resolution(record: Record, line: dict[str, Any]) -> bool:
+    """Whether a Node line stands at the resolution, every Node's volume X at Gamma: the board's volumes before the seed's lay, whatever content stands on it."""
+    return all(x == record.gamma for x in state_of(line)[0])
+
+
 def exact_of(record: Record) -> list[int]:
-    """The intervals of the exact returns (the Boss's 6416499848): the board back at the seed's own first state, every Node's X and content as the first Node line holds them, and not at a constant of the universe (on a sea laid at Gamma the two are one); a run of such lines with no whole-board top between them is one return, read at its last line (the board passes down through the seed's state to its bottom and up through it again, the rising side the bang's)."""
+    """The intervals of the exact returns (the Boss's 6416499848): the board back at the seed's own first pair of states, the board's volumes before the lay (every Node's X at the resolution, whatever content stands on it) or the laid state itself (every Node's X and content as the first Node line holds them), and not at a mark of the rows; a run of such lines with no whole-board top at or between them is one return (the board passes down through the seed's state to the resolution and up through it again), read at its last line at the resolution, else at its last line."""
     lines = record.nodes
     if not lines:
         return []
     first, tops = state_of(lines[0]), tops_of(record)
-    matches = [int(line["i"]) for line in lines[1:] if state_of(line) == first]
-    found: list[int] = []
-    for i in matches:
-        if found and not any(found[-1] < t < i for t in tops):
-            found[-1] = i
+    groups: list[list[int]] = []
+    for line in lines[1:]:
+        i = int(line["i"])
+        if state_of(line) != first and not at_resolution(record, line):
+            continue
+        if groups and not any(groups[-1][-1] < t <= i for t in tops):
+            groups[-1].append(i)
         else:
-            found.append(i)
-    return found
-
-
-def repeats_of(record: Record) -> list[int]:
-    """The exact returns at which the course repeats whole: the line after the return equal to the second Node line too, the pair that fixes Rule3's course (the seed's first pair of states)."""
-    lines = record.nodes
-    second = state_of(lines[1]) if len(lines) > 1 else None
+            groups.append([i])
     return [
-        i for i in exact_of(record) if i < len(lines) and state_of(lines[i]) == second
-    ]  # the line after the interval i is lines[i] (the lines from 1)
+        next((i for i in reversed(group) if at_resolution(record, lines[i - 1])), group[-1])
+        for group in groups
+    ]
 
 
 def recurring_bang(record: Record) -> dict[str, Any]:
@@ -104,7 +105,6 @@ def recurring_bang(record: Record) -> dict[str, Any]:
         "1 recurring bangs": {
             "tops with every Node turning at once (interval)": whole[:LISTED],
             "exact returns to the seed's first state (interval)": exact[:LISTED],
-            "of them repeating the course whole (the first pair of states)": repeats_of(record)[:LISTED],
             "bottoms (interval, mean X, at Gamma at every Node, the resolution)": bottoms[:LISTED],
             "bangs numbered (the interval each begins)": bangs[:LISTED],
             "births and body credits between the bangs": between[:LISTED],
@@ -139,7 +139,7 @@ def returns(record: Record) -> dict[str, Any]:
             "exact returns (interval)": exact[:LISTED],
             "verdict": unread_words(
                 "no Node line in the record",
-                "the board back at the seed's first state, every Node's X and content as the first Node line holds them",
+                "the board back at the seed's first pair of states, the resolution or the laid state",
             )
             if not record.nodes
             else f"SHOWN: {len(exact)} exact returns to the seed's first state, the first at {exact[0]}"
