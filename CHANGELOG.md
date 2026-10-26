@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- PL-S1 marked built on toys-5 99a9ee860 in docs/ALGEBRA.md and in the ledger's row 97 of docs/UNIVERSE24.md with the Scribe's read and run and one note for the confirming hand (the charge summed in the riders' loop).
 - CS6-S1's clause re-cut in docs/ALGEBRA.md: the retrace holds down to the mirror of the last click that stood in the rise and was not laid back (the hands of the algebra of the whole; EQ-S1 supersedes the predicted parting), the former words kept by name.
 - Rows 55 to 57 of the gates' table in docs/UNIVERSE24.md's section 2 (the two slits, Bell, the GHZ gate) with the verdicts and causes of The-Three-Quantum-Gates_COMPARISON.md (the Boss's 6404890926; the sentences QG-S1 to QG-S4 for the owner's word).
 - The ledger of docs/UNIVERSE24.md's section 4 reconciled by the line-up of H-Align-Ledger-1 (LINE_UP.md, 155 rows; the Boss's 6404890926): one table in four groups, to build approved (5), to build derived (17), to derive or to weigh (45 and the two findings of the algebra of the whole), to read or to run (10), and the closed table (78); the duplicates folded, the owners named, the built marked; the owner's words of 23:08, 23:14, 23:22, 23:27 and 23:50 UTC at its head; the derivations cited by their new names.
