@@ -5,7 +5,7 @@
   --tones: #f472b6, #22d3ee, #a3e635, #fb923c, #c084fc, #facc15, #38bdf8, #f87171;
   --font: "Inter", "IBM Plex Sans", system-ui, sans-serif; --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace; color-scheme: dark; }
 * { box-sizing: border-box; }
-html, body { margin: 0; background: radial-gradient(1400px 600px at 30% -20%, #161b26 0%, var(--bg) 60%); color: var(--fg); font: 14px var(--font); overflow: hidden; }
+html, body { margin: 0; background: radial-gradient(1400px 600px at 30% -20%, #161b26 0%, var(--bg) 60%); color: var(--fg); font: 14px var(--font); overflow: auto; }
 #top { display: flex; align-items: center; gap: 14px; padding: 12px 20px 10px; }
 #title { font-size: 20px; font-weight: 700; letter-spacing: 0.2px; white-space: nowrap; }
 #title small { margin-left: 10px; color: var(--muted); font-size: 12px; font-weight: 400; }
@@ -42,14 +42,14 @@ body.info #card { display: block; }
 #now { display: flex; gap: 8px; margin: 6px 20px 0; min-height: 22px; overflow: hidden; }
 #now span { font-family: var(--mono); font-size: 11px; color: var(--c, var(--label)); background: color-mix(in srgb, var(--c, var(--label)) 10%, transparent); border: 1px solid color-mix(in srgb, var(--c, var(--label)) 35%, transparent); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
 #now span.era { color: var(--focus); background: rgba(95, 151, 234, 0.1); border-color: rgba(95, 151, 234, 0.35); }
-#row { display: flex; gap: 12px; align-items: center; margin: 6px 20px 8px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
+#row { display: flex; gap: 14px; align-items: center; justify-content: center; margin: 8px 20px 12px; color: var(--muted); font-family: var(--mono); font-size: 12px; }
 button { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 7px 14px; font: inherit; cursor: pointer; border-radius: 999px; transition: background 0.15s, transform 0.1s; }
 button:hover { background: #222733; } button:active { transform: scale(0.97); }
-#play { width: 48px; height: 48px; padding: 0; border: none; border-radius: 50%; background: linear-gradient(135deg, var(--focus), #22d3ee); box-shadow: 0 8px 28px rgba(95, 151, 234, 0.45); display: inline-flex; align-items: center; justify-content: center; }
-#play .tri { width: 0; height: 0; border-left: 17px solid var(--board); border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
-#play .bars { display: none; width: 6px; height: 20px; background: var(--board); box-shadow: 10px 0 0 var(--board); margin-right: 10px; }
+#play { width: 60px; height: 60px; padding: 0; border: none; border-radius: 50%; background: linear-gradient(135deg, var(--focus), #22d3ee); box-shadow: 0 8px 28px rgba(95, 151, 234, 0.45); display: inline-flex; align-items: center; justify-content: center; }
+#play .tri { width: 0; height: 0; border-left: 22px solid var(--board); border-top: 13px solid transparent; border-bottom: 13px solid transparent; margin-left: 5px; }
+#play .bars { display: none; width: 7px; height: 24px; background: var(--board); box-shadow: 12px 0 0 var(--board); margin-right: 12px; }
 body.playing #play .tri { display: none; } body.playing #play .bars { display: block; }
-#where { font-size: 12px; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#where { font-size: 12px; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 260px; }
 #labels { position: absolute; left: 0; top: 0; pointer-events: none; }
 .label { position: absolute; color: var(--label); font-family: var(--mono); font-size: 14px; font-weight: 600; white-space: nowrap; background: rgba(10, 12, 16, 0.78); backdrop-filter: blur(8px); border: 1px solid rgba(253, 230, 138, 0.22); border-left: 3px solid var(--label); border-radius: 8px; padding: 4px 10px 5px 10px; max-width: 330px; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); }
 .label small { display: block; color: var(--muted); font-size: 10px; font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
@@ -80,7 +80,7 @@ const stage = document.getElementById("stage"), labels = document.getElementById
 const bar = document.getElementById("bar"), where = document.getElementById("where");
 const row = document.getElementById("row"), topBox = document.getElementById("top");
 const now = document.getElementById("now"), gatesBox = document.getElementById("gates"), side = document.getElementById("side");
-const size = Math.max(320, Math.min(Math.floor(window.innerWidth * 0.48), window.innerHeight - topBox.offsetHeight - bar.offsetHeight - now.offsetHeight - row.offsetHeight - 48));
+const size = Math.max(320, Math.min(Math.floor(window.innerWidth * 0.48), window.innerHeight - topBox.offsetHeight - bar.offsetHeight - now.offsetHeight - row.offsetHeight - 64));
 canvas.width = size; canvas.height = size; side.style.height = size + "px";
 function words(s) { return s.split(" ").map(w => parseInt(w, BASE)); }
 function levels(s) { return Array.from(s, ch => ch === "." ? 0 : (ch >= "a" ? ch.charCodeAt(0) - 96 : 64 - ch.charCodeAt(0))); }
@@ -337,6 +337,7 @@ for (const b of bangs) { const d = document.createElement("div"); d.className = 
 for (const i of D.births) { const d = document.createElement("div"); d.className = "birth"; d.style.left = (100 * (i - 1) / Math.max(N - 1, 1)) + "%"; d.title = "a birth at " + i; bar.appendChild(d); }
 bar.addEventListener("click", ev => { const r = bar.getBoundingClientRect(); t = seek(1 + Math.round((N - 1) * (ev.clientX - r.left) / r.width)); playing = false; draw(); });
 document.getElementById("play").addEventListener("click", () => { playing = !playing; });
+document.addEventListener("keydown", ev => { if (ev.key === " ") { ev.preventDefault(); playing = !playing; } });
 document.getElementById("info").addEventListener("click", () => { document.body.classList.toggle("info"); });
 document.getElementById("faster").addEventListener("click", () => { speed = Math.min(speed * 2, 48); });
 document.getElementById("slower").addEventListener("click", () => { speed = Math.max(speed / 2, 1); });
