@@ -11,7 +11,7 @@ from event_universe.core.rule3 import carries, mesh_factor
 from event_universe.core.rule3 import odd as parity_of
 from event_universe.core.spokes import AXES, SIDES, SPOKE_SIDES, SPOKES, across, spoke_of, transverse
 from event_universe.readings import standard_angle
-from event_universe.trains import HAND, REGULATOR, Gear, Train
+from event_universe.trains import REGULATOR, Gear, Train
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
@@ -55,7 +55,7 @@ class Mesh:
     __slots__ = ("factor", "pawl", "cosine", "sine", "odd", "skew")
 
     def __init__(
-        self, factor: Any, frame: Any, cosine: Any, sine: Any, odd: Any, fold: Any = (1, 0, 1)
+        self, factor: Any, frame: Any, cosine: Any, sine: Any, odd: Any, fold: Any = (1, 0)
     ) -> None:
         self.factor, self.pawl, self.cosine, self.sine, self.odd = factor, frame, cosine, sine, odd
         self.skew = fold
@@ -116,8 +116,7 @@ def skewed(links: list[Mesh], rotation: int, flux_lines: list[Any], gamma: int) 
     w2 = gamma * gamma
     found = []
     for port, (axis, _side) in enumerate(SPOKE_SIDES):
-        m = AXES * rotation * odd_sum(flux_lines[axis], port)
-        fold = (w2 * w2 - m * m, (w2 + w2) * m, w2 * w2 + m * m)
+        fold = (w2, AXES * rotation * odd_sum(flux_lines[axis], port))
         at = links[port]
         found.append(Mesh(at.factor, at.pawl, at.cosine, at.sine, at.odd, fold))
     return found
@@ -130,15 +129,10 @@ def mesh_teeth(gamma: Any) -> Any:
 
 def through_mesh(xs: list[Any], at: Mesh, scale: Any, gamma: Any) -> list[Any]:
     """A row's lines at a Port, read in the Node's frame, turned plane by plane ((0, 1), (2, 3), ...) by the Link's pair over X and by the odd line's tangent triple (W^2 - n^2, 2 W n, W^2 + n^2), W = 4 Gamma, multiplied exactly by the flux lines' fold triple (Y-S3, the Link's `fold`), one rounding per Link per part, every number the Link's record."""
-    wl = mesh_teeth(gamma)
-    tc, ts, tw = wl * wl - at.odd * at.odd, (wl + wl) * at.odd, wl * wl + at.odd * at.odd
-    fc, fs, fw = at.skew
-    tc, ts, tw = tc * fc - ts * fs, ts * fc + tc * fs, tw * fw
-    found: list[Any] = []
-    for re_j, im_j in zip(xs[0::HAND], xs[1::HAND], strict=True):
-        a_re, a_im = offset_pair(re_j, im_j, at.cosine, at.sine, scale)
-        found += offset_pair(a_re, a_im, tc, ts, tw)
-    return found
+    wl, (w2, m), (three, twelve) = mesh_teeth(gamma), at.skew, xs
+    g3, g12 = wl * w2 - at.odd * m, wl * m + at.odd * w2
+    three, twelve = offset_pair(three, twelve, at.cosine, at.sine, scale)
+    return list(offset_pair(three, twelve, g3 * g3 - g12 * g12, (g3 + g3) * g12, g3 * g3 + g12 * g12))
 
 
 def gradient(a: Any, axis: int) -> Any:
