@@ -1,0 +1,781 @@
+DAVID-SPIN-IN-CLOCKS.md's checks (David, 2026-10-27). Every script ran on this box from a worktree of the engine head 67a7633d5
+with DAVID-SPIN-IN-CLOCKS_DIFF.txt applied: PYTHONPATH=<worktree>/src venv314/bin/python <script> <args>, inside the worktree.
+
+========================================================================
+== patch_clocks.py: the build as one step on 67a7633d5 (DAVID-SPIN-IN-CLOCKS_DIFF.txt is the whole, with patch_types.py's types, the refusal's words for a misplaced offset and ruff's format)
+========================================================================
+"""Spin one half on twin hands, in the clock's words, on the engine head 67a7633d5: a sprung train of four gears is a
+pair of twin hands (read from its count of gears and its ratio); the two fitted hands of a fitting on the twins; the
+unspringing across the twins; the offset's curl gearing the twins through the Pauli gearing (twin_pulls), one carry on
+each gear's drive wheel at SPOKES (full rate + full rate) teeth. No switch in the engine: the tests replace
+tick.offset_curl (a held curl), Tick.twin_pulls (the pulls off) and meshes.coupling_of (the offset's turn off)."""
+
+def edit(path, pairs):
+    s = open(path).read()
+    for old, new in pairs:
+        assert s.count(old) == 1, (path, old[:90], s.count(old))
+        s = s.replace(old, new)
+    open(path, "w").write(s)
+
+T = "src/event_universe/trains.py"
+edit(T, [
+    ('''from event_universe.core.spokes import AXES
+''', '''from event_universe.core.spokes import AXES, SPOKES
+'''),
+    ('''    __slots__ = ("size", "ratio", "teeth", "gears")
+
+    def __init__(
+        self, shape: int, pair: tuple[int, int] | None, wall: int | None, lines: list[Gear]
+    ) -> None:
+        self.size, self.ratio, self.teeth, self.gears = shape, pair, wall, lines
+''', '''    __slots__ = ("size", "ratio", "teeth", "gears", "twin")
+
+    def __init__(
+        self, shape: int, pair: tuple[int, int] | None, wall: int | None, lines: list[Gear]
+    ) -> None:
+        self.size, self.ratio, self.teeth, self.gears = shape, pair, wall, lines
+        self.twin: Train | None = None
+'''),
+    ('''    return row.teeth is None, sum(1 for line in row.gears if line.dteeth is not None)
+''', '''    return row.teeth is None, 0 if row.twin is not None else sum(1 for line in row.gears if line.dteeth is not None)
+'''),
+    ('''    by_index: list[Train] = []
+    for r in calibre["rows"]:
+        shape = int(r["shape"])
+        pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
+        wall = None if r.get("wall") is None else int(r["wall"])
+        if shape == 1 and wall is None:
+            raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
+        walls = drive_teeth(shape, pair, den, gamma, action, trace)
+        lines = gears_of(size, shape, pair, wall, w, walls)
+        by_index.append(Train(shape, pair, wall, lines))
+    rows = sorted(by_index, key=order_key)
+''', '''    by_index: list[Train] = []
+    everything: list[Train] = []
+    regulating = (den - carries(den, gamma), den)
+    for r in calibre["rows"]:
+        shape = int(r["shape"])
+        pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
+        wall = None if r.get("wall") is None else int(r["wall"])
+        if shape == 1 and wall is None:
+            raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
+        if pair is not None and pair[0] < pair[1] and pair != regulating and shape == HAND + HAND:
+            twins = []
+            for _ in range(carries(shape, HAND)):
+                walls = [SPOKES * (gamma + gamma)] * HAND
+                twins.append(Train(HAND, pair, wall, gears_of(size, HAND, pair, wall, w, walls)))
+            twins[0].twin, twins[1].twin = twins[1], twins[0]
+            by_index.append(twins[0])
+            everything.extend(twins)
+            continue
+        walls = drive_teeth(shape, pair, den, gamma, action, trace)
+        lines = gears_of(size, shape, pair, wall, w, walls)
+        by_index.append(Train(shape, pair, wall, lines))
+        everything.append(by_index[-1])
+    rows = sorted(everything, key=order_key)
+'''),
+    ('''def ratchet_of(rows: list[Train]) -> Train:''', '''def twin_of(records: list[Train], s: int) -> int:
+    """The + fitted hand's hand: the twin of the - fitted hand's hand where its train is twin hands (the pair's spin kept), the same hand otherwise."""
+    twin = records[s].twin
+    return s if twin is None else records.index(twin)
+
+
+def ratchet_of(rows: list[Train]) -> Train:'''),
+])
+
+K = "src/event_universe/striking.py"
+edit(K, [
+    ('''from event_universe.trains import HAND, Gear, Train
+''', '''from event_universe.trains import HAND, Gear, Train, twin_of
+'''),
+    ('''    rules: list[tuple[Gear, rule3.Gearing]],
+    frozen: Any,
+) -> list[Fitting]:''', '''    rules: list[tuple[Gear, rule3.Gearing]],
+    frozen: Any,
+    other: tuple[int, Any, list[Gear]] | None = None,
+) -> list[Fitting]:'''),
+    ('''    charges = hands.sweep(row.size, start) if row is not node.unsprung() else None
+    for axis in range(AXES):
+        both = standing & across(standing, spoke_of(axis, 0))
+''', '''    charges = hands.sweep(row.size, start) if row is not node.unsprung() else None
+    far, far_charges = standing, charges
+    if other is not None:
+        q, q_sh, q_start = other
+        far = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(q_sh) & ~frozen
+        currents = [c + node.rim * train_lead(q_start, spoke_of(axis, 0)) for axis, c in enumerate(currents)]
+        twists = [t + train_twist(q_start, axis) for axis, t in enumerate(twists)]
+        far_charges = hands.sweep(row.size, q_start)
+    for axis in range(AXES):
+        both = standing & across(far, spoke_of(axis, 0))
+'''),
+    ('''            w = [0, 0] if charges is None else [int(charges[at]), int(charges[j])]
+''', '''            w = [0, 0] if charges is None else [int(charges[at]), int(far_charges[j])]
+'''),
+    ('''            plus, minus = (into, outof) if rest or h > 0 else (outof, into)
+''', '''            plus, minus = (into, outof) if rest or h > 0 else (outof, into)
+            if other is not None:
+                ends_of = {at: rec, j: other[0]}
+                node.twin_ends[(rec, minus, plus)] = (ends_of[minus], ends_of[plus])
+'''),
+    ('''        if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
+''', '''        if int(owns[s][minus]) > 0 or int(owns[twin_of(records, s)][plus]) > 0:
+'''),
+    ('''        landing[(s, plus)] = landing.get((s, plus), 0) + 1
+''', '''        landing[(twin_of(records, s), plus)] = landing.get((twin_of(records, s), plus), 0) + 1
+'''),
+    ('''        k for k in kept if landing[(k.gear_ratio, k.minus)] > 1 or landing[(k.gear_ratio, k.plus)] > 1
+''', '''        k
+        for k in kept
+        if landing[(k.gear_ratio, k.minus)] > 1
+        or landing[(twin_of(records, k.gear_ratio), k.plus)] > 1
+'''),
+    ('''            node, at, "lay", children_at_one_node=max(landing[(s, minus)], landing[(s, plus)]), row=rec
+''', '''            node,
+            at,
+            "lay",
+            children_at_one_node=max(landing[(s, minus)], landing[(twin_of(records, s), plus)]),
+            row=rec,
+'''),
+    ('''                ends = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
+''', '''                ends: list[Any] = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
+                ends_hands = node.twin_ends.get((rec, kid.minus, kid.plus))
+                if ends_hands is not None:
+                    ends = [(w_, wall, h) for (w_, wall), h in zip(ends, ends_hands, strict=True)]
+'''),
+    ('''                if laid is None:
+                    advance(node, s, tuple(where), fitted_notches(node.hands()[s], sense, a, b), -1)
+''', '''                if laid is None:
+                    h = s if sense < 0 else twin_of(node.hands(), s)
+                    advance(node, h, tuple(where), fitted_notches(node.hands()[h], sense, a, b), -1)
+'''),
+    ('''                    advance(node, row, where, tuple(take["taken_levels"]))
+''', '''                    advance(node, take.get("hand", row), where, tuple(take["taken_levels"]))
+'''),
+    ('''    node.pitches, node.vernier_read = {}, {}
+''', '''    node.pitches, node.vernier_read, node.twin_ends = {}, {}, {}
+'''),
+    ('''        for b in engage(node, rec, plane_starts[rec], owns[rec], rules, frozen)
+''', '''        for b in engage(node, rec, plane_starts[rec], owns[rec], rules, frozen, twin_at(node, rec, owns, plane_starts))
+'''),
+    ('''def jam(node: Clock, born: list[Fitting], owns: list[Any]) -> list[Fitting]:''', '''def twin_at(
+    node: Clock, rec: int, owns: list[Any], plane_starts: list[list[Gear]]
+) -> tuple[int, Any, list[Gear]] | None:
+    """The hand's twin with its wind and its gears at the tick's start, where its train is twin hands."""
+    twin = node.hands()[rec].twin
+    if twin is None:
+        return None
+    q = node.hands().index(twin)
+    return q, owns[q], plane_starts[q]
+
+
+def jam(node: Clock, born: list[Fitting], owns: list[Any]) -> list[Fitting]:'''),
+])
+
+U = "src/event_universe/unspring.py"
+edit(U, [
+    ('''    row = node.hands()[s]
+    assert row.ratio is not None
+    stood, ends = stood_at(row, minus, plus), []
+    for where, sense in ((minus, -1), (plus, 1)):
+        levels = levels_of(where, sense)
+        ends.append(push_per_gear(node, row.gears, row.ratio[0], where, levels))
+        advance(node, s, where, levels)
+    return [a + b for a, b in zip(*ends, strict=True)], senses_at(row, minus, plus), stood, ends
+''', '''    from event_universe.trains import twin_of
+
+    twins = (s, twin_of(node.hands(), s))
+    row = node.hands()[s]
+    assert row.ratio is not None
+    stood = [stood_at(node.hands()[h], minus, plus)[k] for k, h in enumerate(twins)]
+    ends = []
+    for where, sense, h in ((minus, -1, twins[0]), (plus, 1, twins[1])):
+        levels = levels_of(where, sense)
+        ends.append(push_per_gear(node, node.hands()[h].gears, row.ratio[0], where, levels))
+        advance(node, h, where, levels)
+    senses = [senses_at(node.hands()[h], minus, plus)[k] for k, h in enumerate(twins)]
+    return [a + b for a, b in zip(*ends, strict=True)], senses, stood, ends
+'''),
+    ('''    row = node.hands()[rec]
+    found = []
+    for where, wall in ends:
+        rem_was = 0 if row is not node.unsprung() else int(node.slack[where])
+        owed = wall - rem_was
+        if row is not node.unsprung():
+            levels: Any = notches_at(row, where)
+            fall, k = wind_fall(node, rec, rule, where, levels, cache or {}), None
+''', '''    found = []
+    for end in ends:
+        where, wall, *named = end
+        r = named[0] if named else rec
+        row = node.hands()[r]
+        rem_was = 0 if row is not node.unsprung() else int(node.slack[where])
+        owed = wall - rem_was
+        if row is not node.unsprung():
+            levels: Any = notches_at(row, where)
+            fall, k = wind_fall(node, r, rule, where, levels, cache or {}), None
+'''),
+    ('''        found.append((where, wall, levels, fall, k, rem_was, owed))
+    return found
+
+
+Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int]
+''', '''        found.append((where, wall, levels, fall, k, rem_was, owed, r))
+    return found
+
+
+Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int, int]
+'''),
+    ('''    where, wall, levels, fall, _k, _rem_was, _owed = read
+    row = node.hands()[rec]
+    assert row.ratio is not None
+    live = push_per_gear(node, row.gears, row.ratio[0], where, tuple(levels), -1)
+    moment = push_per_gear(node, node.start_gears[rec], row.ratio[0], where, tuple(levels), -1)
+    advance(node, rec, where, levels, -1)
+''', '''    where, wall, levels, fall, _k, _rem_was, _owed, r = read
+    row = node.hands()[r]
+    assert row.ratio is not None
+    live = push_per_gear(node, row.gears, row.ratio[0], where, tuple(levels), -1)
+    moment = push_per_gear(node, node.start_gears[r], row.ratio[0], where, tuple(levels), -1)
+    advance(node, r, where, levels, -1)
+'''),
+    ('''        taken_levels=list(levels),
+''', '''        taken_levels=list(levels),
+        **({} if r == rec else {"hand": r}),
+'''),
+    ('''    where, wall, levels, fall, k, rem_was, owed = read
+''', '''    where, wall, levels, fall, k, rem_was, owed, _r = read
+'''),
+])
+
+R = "src/event_universe/run.py"
+s = open(R).read()
+import re
+m = re.search(r"from event_universe\.trains import ([^\n]+)\n", s)
+assert m, "no trains import in run.py"
+s = s.replace(m.group(0), f"from event_universe.trains import {m.group(1)}, twin_of\n", 1)
+open(R, "w").write(s)
+edit(R, [
+    ('''        line_pair=s,
+        senses=[-1, 1],
+''', '''        line_pair=s,
+        **({} if twin_of(node.hands(), s) == s else {"plus_hand": twin_of(node.hands(), s)}),
+        senses=[-1, 1],
+'''),
+])
+
+A = "src/event_universe/assembly/setting.py"
+edit(A, [
+    ('''    "sea": frozenset({"lay", "row", "quanta", "sense"}),''', '''    "sea": frozenset({"lay", "row", "quanta", "sense", "hand"}),'''),
+    ('''    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top"}),''', '''    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top", "hand"}),'''),
+    ('''        row = node.by_index[int(lay["row"])] if "row" in lay else None
+''', '''        row = node.by_index[int(lay["row"])] if "row" in lay else None
+        if "hand" in lay:
+            if row is None or row.twin is None or int(lay["hand"]) not in (0, 1):
+                raise ValueError("a lay names a hand of a train of twin hands: 0 or 1")
+            row = row if int(lay["hand"]) == 0 else row.twin
+'''),
+])
+
+I = "src/event_universe/tick.py"
+edit(I, [
+    ('''from event_universe.core.spokes import AXES, SPOKES, across
+''', '''from event_universe.core.spokes import AXES, SPOKES, across, transverse
+'''),
+    ('''from event_universe.meshes import centred_count, coupling_of, factors, meshes_of, offsets, pawls, skewed
+''', '''from event_universe.meshes import centred_count, coupling_of, factors, gradient, meshes_of, offsets, pawls, skewed
+'''),
+    ('''        self.release = zeros(node.size)
+        for r, cpl in self.hand_couplings:
+''', '''        self.twin_pulls()
+        self.release = zeros(node.size)
+        for r, cpl in self.hand_couplings:
+'''),
+    ('''    def impulse(self) -> None:''', '''    def twin_pulls(self) -> None:
+        """The twins' gearing to the offset (SR-S3 on twin hands): the offset's one-mesh curl Phi at the tick's start turns a train of twin hands through the Pauli gearing on its four gears (three_up, twelve_up, three_down, twelve_down): sigma_x swaps the twins, sigma_y = i sigma_x sigma_z, sigma_z reverses the down twin; per gear the numerator SUM_j grip_j SUM_a Phi_a (sigma_a x), one carry at the gear's drive teeth SPOKES (full rate + full rate), the carries added to the gear's pull (the coefficient grip / (2 full rate) per spoke, g = 2), the fine tooth kept on the gear's drive wheel."""
+        node = self.clock
+        cx, cy, cz = offset_curl(self.odd)
+        for r in self.hands:
+            if r.twin is None or self.hands.index(r) > self.hands.index(r.twin):
+                continue
+            ku, kd = self.where[id(r)], self.where[id(r.twin)]
+            up, dn = self.starts[ku], self.starts[kd]
+            grip = sum(readings.gearing_of(node, r, self.load, self.factors).grips)
+            pauli = (
+                (r, ku, dn, (dn[1], -dn[0]), up),
+                (r.twin, kd, up, (-up[1], up[0]), [-g for g in dn]),
+            )
+            for hand, k, sx, sy, sz in pauli:
+                for i, gear in enumerate(self.gears(hand)):
+                    numerator = grip * (cx * sx[i] + cy * sy[i] + cz * sz[i])
+                    q, gear.dfine = carry(numerator, gear.dteeth, gear.dfine, self.going)
+                    self.pull[k][i] = self.pull[k][i] + q
+
+    def impulse(self) -> None:'''),
+    ('''def run(node: Clock, direction: int) -> None:''', '''def offset_curl(odd: list[Any]) -> list[Any]:
+    """The offset's one-mesh curl at every clock, Phi_a = d_b A_c - d_c A_b from its odd gears, d_b the centred difference through the axis b's two spokes (the struck hands.curl, 6501cd679)."""
+    found = []
+    for a in range(AXES):
+        b, c = transverse(a)
+        found.append(gradient(odd[c], b) - gradient(odd[b], c))
+    return found
+
+
+def run(node: Clock, direction: int) -> None:'''),
+])
+print("the clock patch applied")
+
+========================================================================
+== patch_types.py: the types and the import order
+========================================================================
+"""The clock patch's types and import order: Clock declares twin_ends; read_ends' Read carries the hand; the far
+sweep typed."""
+def edit(path, pairs):
+    s = open(path).read()
+    for old, new in pairs:
+        assert s.count(old) == 1, (path, old[:90], s.count(old))
+        s = s.replace(old, new)
+    open(path, "w").write(s)
+edit("src/event_universe/clock.py", [
+    ('''        self.vernier_read: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
+''', '''        self.vernier_read: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
+        self.twin_ends: dict[tuple[int, tuple[int, ...], tuple[int, ...]], tuple[int, int]] = {}
+'''),
+])
+edit("src/event_universe/unspring.py", [
+    ('''    cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
+) -> list[tuple[tuple[int, ...], int, Any, int, int | None, int, int]] | None:''', '''    cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
+) -> list[tuple[tuple[int, ...], int, Any, int, int | None, int, int, int]] | None:'''),
+    ('''        where, wall, *named = end
+        r = named[0] if named else rec
+''', '''        where, wall = end[0], end[1]
+        r = int(end[-1]) if len(end) > len((where, wall)) else rec
+'''),
+])
+edit("src/event_universe/striking.py", [
+    ('''    far, far_charges = standing, charges
+''', '''    far, far_charges = standing, charges
+    assert other is None or charges is not None
+'''),
+])
+print("ok")
+
+========================================================================
+== clk.py: the harness: the twin calibre and the tests' three controls, each the replacement of one engine function
+========================================================================
+"""The harness on the engine in clock words (67a7633d5 with DAVID-SPIN-IN-CLOCKS_DIFF.txt): a calibre's sprung hands
+named as twin hands, and the tests' three controls, each a replacement of one engine function and none an engine act:
+the twins' pulls off (Tick.twin_pulls a no-op), a held curl (tick.offset_curl), the offset's turn of a sprung train off
+(meshes.coupling_of 0 for the twins: the neutral control)."""
+import copy, sys
+sys.set_int_max_str_digits(0)
+import numpy as np
+
+def doubled(calibre):
+    u = copy.deepcopy(calibre)
+    den, gamma = int(u["integers"]["den"]), int(u["integers"]["node_clock"])
+    regulating = den - den // gamma
+    for r in u["rows"]:
+        if r.get("pair") and int(r["shape"]) == 2 and int(r["pair"][0]) not in (den, regulating):
+            r["shape"] = 4
+    return u
+
+def pulls_off():
+    import event_universe.tick as T
+    T.Tick.twin_pulls = lambda self: None
+
+def hold_curl(cx, cy, cz, grad_z=(0, 0, 0), x_below=None):
+    import event_universe.tick as T
+    def held(odd):
+        size = odd[0].shape
+        z = np.zeros(size, dtype=object)
+        for k in range(size[2]):
+            z[:, :, k] = k - size[2] // 2
+        found = [np.zeros(size, dtype=object) + v + g * z for v, g in zip((cx, cy, cz), grad_z)]
+        if x_below is not None:
+            mask = np.zeros(size, dtype=bool); mask[:x_below] = True
+            found = [np.where(mask, f, 0) for f in found]
+        return found
+    T.offset_curl = held
+
+def neutral():
+    import event_universe.meshes as M, event_universe.tick as T
+    real = M.coupling_of
+    def coupling(r):
+        return 0 if getattr(r, "twin", None) is not None else real(r)
+    M.coupling_of = T.coupling_of = coupling
+
+def twins_of(node, pair):
+    hands = node.hands()
+    up = next(k for k, r in enumerate(hands) if r.ratio == pair and r.twin is not None and hands.index(r.twin) > k)
+    return up, hands.index(hands[up].twin)
+
+========================================================================
+== control.py: the control: no twin train, the head's own state
+========================================================================
+"""The control: a committed chart's piece with no twin hands, its state hash after n ticks (the head's own)."""
+import json, sys
+sys.set_int_max_str_digits(0)
+from event_universe.clock import Clock
+from event_universe.run import state_hash
+r = json.load(open(sys.argv[1])); n = int(sys.argv[2])
+node = Clock(r["universe"], dict(r["world"], intervals=n))
+for _ in range(n): node.tick()
+print(sys.argv[1].split("/")[-1], n, state_hash(node)[:16], "fittings", node.counts["births"], "chimes", node.counts["body_clicks"])
+
+---- its output (control.txt)
+hole.json 20 2a2cf7426cf6a7d7 fittings 15 chimes 489
+chiral.json 30 c2c11f072d6630db fittings 16 chimes 1501
+
+========================================================================
+== spin_book.py: the spin kept at the striking, the rewind
+========================================================================
+"""A committed chart's piece with its sprung hands as twins: every fitting's two hands, every unspringing's two taken
+hands, the spin's book (up fitted - down fitted - (up taken - down taken)), the rewind exact."""
+import json, sys, collections
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from clk import doubled
+from event_universe.clock import Clock
+from event_universe.run import state_hash
+record = json.load(open(sys.argv[1])); n, back = int(sys.argv[2]), int(sys.argv[3])
+node = Clock(doubled(record["universe"]), dict(record["world"], intervals=n))
+hands = node.hands()
+up = {k for k, r in enumerate(hands) if r.twin is not None and k < hands.index(r.twin)}
+kept = []
+for _ in range(n):
+    node.tick(); kept.append(state_hash(node))
+book, unsprung = collections.Counter(), []
+for e in node.log:
+    if e["event"] != "birth":
+        continue
+    if "takes" in e:
+        taken = [t.get("hand", e["taken_row"]) for t in e["takes"]]
+        unsprung.append(taken)
+        for h in taken:
+            book["taken up" if h in up else "taken down"] += 1
+    else:
+        for h in (e["line_pair"], e.get("plus_hand", e["line_pair"])):
+            if hands[h].twin is not None:
+                book["fitted up" if h in up else "fitted down"] += 1
+print(f"{sys.argv[1].split('/')[-1]} as twins, {n} ticks: fittings {node.counts['births']}, unspringings {len(unsprung)} taken hands {unsprung[:8]}; the book {dict(book)}")
+print(f"  the spin made by the striking: {(book['fitted up'] - book['fitted down']) - (book['taken up'] - book['taken down'])}")
+for _ in range(back):
+    node.tick(-1)
+print(f"  the rewind {back}: exact {state_hash(node) == kept[n - back - 1]}")
+
+---- its output (spin_book.txt)
+hole.json as twins, 60 ticks: fittings 38, unspringings 6 taken hands [[3, 2], [3, 2], [3, 2], [3, 2], [4, 5], [2, 3]]; the book {'fitted up': 32, 'fitted down': 32, 'taken down': 6, 'taken up': 6}
+  the spin made by the striking: 0
+  the rewind 20: exact True
+chiral.json as twins, 60 ticks: fittings 34, unspringings 2 taken hands [[4, 5], [3, 2]]; the book {'fitted down': 32, 'fitted up': 32, 'taken up': 2, 'taken down': 2}
+  the spin made by the striking: 0
+  the rewind 20: exact True
+
+========================================================================
+== gates.py: Pauli by the sweep; the one-tick shift; Kramers and the two beats; the full turn on the great clock; the rewind with the twins' pulls; the full turn at the chimes
+========================================================================
+"""The spin gates on the engine in clock words, each read from the chimes or the great clock, every control a
+replacement of one engine function (clk.py). Run: gates.py <gate>."""
+import json, os, sys, math, collections
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from clk import doubled, hold_curl, neutral, pulls_off, twins_of
+import numpy as np
+gate = sys.argv[1]
+calibre = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(calibre["rows"][2]["pair"])
+
+if gate == "sweep":  # Pauli at the chimes by the sweep, on a committed chart's piece as twins
+    from event_universe import bobs as Bm, striking as St, hands
+    from event_universe.clock import Clock
+    record = json.load(open(sys.argv[2]))
+    at_chimes, census = collections.Counter(), collections.Counter()
+    orig = Bm.bobs
+    def watched(node, starts, owns, born, frozen, r_un):
+        e = node.A * node.B
+        before = len(node.log)
+        for h, row in enumerate(node.hands()):
+            if row is node.unsprung():
+                continue
+            w = hands.sweep(row.size, starts[h])
+            census[h] = max(census[h], int(np.vectorize(lambda v: abs(int(v)) // e, otypes=[object])(w).max()))
+        orig(node, starts, owns, born, frozen, r_un)
+        for ent in node.log[before:]:
+            if ent["event"] == "credit":
+                h, at = ent["line"], tuple(ent["node"])
+                at_chimes[(h, abs(int(hands.sweep(node.hands()[h].size, starts[h])[at])) // e)] += 1
+    St.bobs = watched
+    node = Clock(doubled(record["universe"]), record["world"])
+    for _ in range(record["world"]["intervals"]):
+        node.tick()
+    for h in sorted({k[0] for k in at_chimes}):
+        print(f"  hand {h}: |sweep| div e at its chimes {dict(sorted((q, k) for (hh, q), k in at_chimes.items() if hh == h))}")
+    print(f"  the census, the most |sweep| div e of a sprung hand at any clock at any tick: {dict(census)}")
+
+elif gate == "zeeman":  # the two beats' one-tick shift against the derived
+    import event_universe.tick as T
+    from event_universe.clock import Clock
+    from event_universe.core.rule3 import signed_carries
+    from event_universe.trains import OFFSET
+    real = T.Tick.twin_pulls
+    B0, C = 400, (2, 2, 2)
+    def clock_for(hand):
+        node = Clock(calibre, {"shape": [5] * 3, "intervals": 1, "seed": [{"lay": "sea", "row": 0},
+                     {"lay": "at", "row": 2, "hand": hand, "centre": list(C), "width": 2, "quanta": 100, "sense": 1}]})
+        ax = node.train(OFFSET).gears[1]
+        for y in range(5):
+            ax.now[:, y, :] = -B0 * (y - C[1]); ax.before[:, y, :] = -B0 * (y - C[1])
+        return node
+    for hand in (0, 1):
+        a, b = clock_for(hand), clock_for(hand)
+        up, dn = twins_of(a, pair)
+        gears = lambda n: [*n.hands()[up].gears, *n.hands()[dn].gears]
+        now = [int(gr.now[C]) for gr in gears(a)]
+        T.Tick.twin_pulls = real; a.tick()
+        T.Tick.twin_pulls = lambda self: None; b.tick()
+        T.Tick.twin_pulls = real
+        shifts = [int(x.now[C]) - int(y.now[C]) for x, y in zip(gears(a), gears(b))]
+        derived = [int(signed_carries(pair[0] * B0 * x * s, 3 * a.rim * a.full_rate)) for x, s in zip(now, (1, 1, -1, -1))]
+        print(f"  the {'up' if hand == 0 else 'down'} twin set: gears at the centre {now}; the shift, pulls on less off, {shifts}; derived {derived}; within one notch {all(abs(s - d) <= 1 for s, d in zip(shifts, derived))}")
+
+elif gate == "beats":  # Kramers and the two beats at the chimes
+    neutral()
+    curl = tuple(int(v) for v in sys.argv[2].split(","))
+    hold_curl(*curl)
+    from event_universe.clock import Clock
+    node = Clock(calibre, {"shape": [5] * 3, "intervals": 40, "seed": [{"lay": "sea", "row": 0},
+                 {"lay": "sea", "row": 2, "hand": 0, "quanta": 1, "sense": 1}, {"lay": "sea", "row": 2, "hand": 1, "quanta": 1, "sense": 1}]})
+    up, dn = twins_of(node, pair)
+    for _ in range(40):
+        node.tick()
+    for name, h in (("up", up), ("down", dn)):
+        bs = collections.Counter(e["beat"] for e in node.log if e["event"] == "credit" and e["line"] == h)
+        tot = sum(bs.values())
+        print(f"  held curl {curl}, {name}: {tot} chimes, the beats {dict(sorted(bs.items()))}, mean {sum(b * k for b, k in bs.items()) / tot:.3f} ticks")
+
+elif gate == "full_turn":  # the full turn's sign on the great clock, one mode
+    neutral(); hold_curl(16000, 0, 0)
+    import event_universe.tick as T
+    real = T.Tick.twin_pulls
+    from event_universe.clock import Clock
+    piece = {"shape": [5] * 3, "intervals": 44, "seed": [{"lay": "sea", "row": 2, "hand": 0, "quanta": 1, "sense": 1}]}
+    on, off = Clock(calibre, piece), Clock(calibre, piece)
+    up, dn = twins_of(on, pair)
+    gears = lambda n: [*n.hands()[up].gears, *n.hands()[dn].gears]
+    for t in range(1, 45):
+        T.Tick.twin_pulls = real; on.tick()
+        T.Tick.twin_pulls = lambda self: None; off.tick()
+        a, b = gears(on), gears(off)
+        dot = sum(int((x.now * y.now).sum()) for x, y in zip(a, b)); norm = sum(int((y.now * y.now).sum()) for y in b)
+        u = sum(int((x.now * x.now).sum()) for x in a[:2]); d = sum(int((x.now * x.now).sum()) for x in a[2:])
+        if t in (1, 7, 15, 25, 36, 44):
+            print(f"  tick {t:2d}: S_z / N {(u - d) / (u + d):+.3f}   the overlap with the free run {dot / norm:+.3f}")
+    T.Tick.twin_pulls = real
+
+elif gate == "four_pi":  # the full turn's sign at the chimes, the boundary of a held half
+    neutral(); hold_curl(0, 0, 16000, x_below=3)
+    from event_universe.clock import Clock
+    N = 6
+    node = Clock(calibre, {"shape": [N] * 3, "intervals": 90, "seed": [{"lay": "sea", "row": 0},
+                 {"lay": "sea", "row": 2, "hand": 0, "quanta": 1, "sense": 1}, {"lay": "sea", "row": 2, "hand": 1, "quanta": 1, "sense": 1}]})
+    up, dn = twins_of(node, pair)
+    for h in (up, dn):
+        for gr in node.hands()[h].gears:
+            gr.now = gr.now * 97 // 100; gr.before = gr.before * 97 // 100
+    edge_x = {2, 3, 5, 0}; seen = 0; rows = []
+    for t in range(1, 91):
+        node.tick()
+        new = [e for e in node.log[seen:] if e["event"] == "credit" and e["line"] in (up, dn)]; seen = len(node.log)
+        edge = sum(1 for e in new if e["node"][0] in edge_x)
+        a = node.hands()[up].gears
+        pl = math.atan2(int(a[1].now[1, 2, 2]), int(a[0].now[1, 2, 2])); pr = math.atan2(int(a[1].now[4, 2, 2]), int(a[0].now[4, 2, 2]))
+        rows.append((t, edge, len(new) - edge, (pl - pr + math.pi) % (2 * math.pi) - math.pi))
+    unw, off_, prev = [], 0.0, None
+    for t, e, b, d in rows:
+        if prev is not None and d - prev < -math.pi: off_ += 2 * math.pi
+        if prev is not None and d - prev > math.pi: off_ -= 2 * math.pi
+        unw.append(d + off_); prev = d
+    near2, near4 = sum(e for (t, e, b, d), u in zip(rows, unw) if 2 * u < math.radians(495)), sum(e for (t, e, b, d), u in zip(rows, unw) if 2 * u >= math.radians(495))
+    bulk = sum(b for t, e, b, d in rows)
+    print(f"  the boundary's chimes with the precession theta below 495 degrees (around 2 pi): {near2}; at 495 and above (through 4 pi): {near4}; the bulk's chimes all along {bulk}; theta at the last tick {math.degrees(2 * unw[-1]):.0f} degrees")
+
+elif gate == "rewind":  # the rewind with the twins' pulls on
+    from event_universe.clock import Clock
+    from event_universe.run import state_hash
+    from event_universe.trains import OFFSET
+    if len(sys.argv) > 2:
+        hold_curl(4000, 2000, 8000)
+    N, C = 7, (3, 3, 3)
+    lay = {"lay": "at", "row": 2, "centre": list(C), "width": 2, "quanta": 50, "sense": 1}
+    node = Clock(calibre, {"shape": [N] * 3, "intervals": 30, "seed": [{"lay": "sea", "row": 0}, dict(lay, hand=0), dict(lay, hand=1, sense=-1)]})
+    az = node.train(OFFSET).gears[3]
+    for y in range(N):
+        az.now[:, y, :] = 400 * (y - C[1]); az.before[:, y, :] = 400 * (y - C[1])
+    kept = []
+    for _ in range(30):
+        node.tick(); kept.append(state_hash(node))
+    exact = 0
+    for k in range(20):
+        node.tick(-1); exact += state_hash(node) == kept[28 - k]
+    print(f"  {'a held curl' if len(sys.argv) > 2 else 'the field left to the engine'}: the rewind {exact} of 20 exact, fittings {node.counts['births']}")
+
+---- its output (sweep.txt)
+  hand 0: |sweep| div e at its chimes {0: 3737, 1: 2}
+  hand 1: |sweep| div e at its chimes {0: 3739, 1: 1}
+  hand 2: |sweep| div e at its chimes {0: 42, 1: 8}
+  hand 3: |sweep| div e at its chimes {0: 38, 1: 7}
+  hand 4: |sweep| div e at its chimes {0: 36, 1: 3}
+  hand 5: |sweep| div e at its chimes {0: 46, 1: 5}
+  the census, the most |sweep| div e of a sprung hand at any clock at any tick: {0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
+  hand 0: |sweep| div e at its chimes {0: 5359, 1: 3}
+  hand 1: |sweep| div e at its chimes {0: 5237, 1: 1}
+  hand 2: |sweep| div e at its chimes {0: 28, 1: 3}
+  hand 3: |sweep| div e at its chimes {0: 18, 1: 6}
+  hand 4: |sweep| div e at its chimes {0: 28, 1: 1}
+  hand 5: |sweep| div e at its chimes {0: 25, 1: 2}
+  the census, the most |sweep| div e of a sprung hand at any clock at any tick: {0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
+
+---- its output (gates.txt)
+  the up twin set: gears at the centre [733, 0, 0, 0]; the shift, pulls on less off, [15, 0, 0, 0]; derived [15, 0, 0, 0]; within one notch True
+  the down twin set: gears at the centre [0, 0, 733, 0]; the shift, pulls on less off, [0, 0, -15, 0]; derived [0, 0, -15, 0]; within one notch True
+  held curl (0, 0, 0), up: 625 chimes, the beats {2: 625}, mean 2.000 ticks
+  held curl (0, 0, 0), down: 625 chimes, the beats {2: 625}, mean 2.000 ticks
+  held curl (0, 0, 16000), up: 375 chimes, the beats {2: 250, 3: 125}, mean 2.333 ticks
+  held curl (0, 0, 16000), down: 750 chimes, the beats {2: 750}, mean 2.000 ticks
+  tick  1: S_z / N +0.682   the overlap with the free run +1.000
+  tick  7: S_z / N -0.952   the overlap with the free run -0.153
+  tick 15: S_z / N +0.943   the overlap with the free run -1.007
+  tick 25: S_z / N -0.989   the overlap with the free run +0.039
+  tick 36: S_z / N +0.977   the overlap with the free run +1.006
+  tick 44: S_z / N -0.094   the overlap with the free run +0.752
+  the field left to the engine: the rewind 20 of 20 exact, fittings 0
+  a held curl: the rewind 20 of 20 exact, fittings 0
+
+---- its output (four_pi.txt)
+  the boundary's chimes with the precession theta below 495 degrees (around 2 pi): 1224; at 495 and above (through 4 pi): 0; the bulk's chimes all along 1584; theta at the last tick 786 degrees
+
+========================================================================
+== sg_slab.py: Stern-Gerlach at the chimes, the neutral twins
+========================================================================
+"""Stern-Gerlach at the chimes: a 9-cube, the toy calibre's sprung hands as twins, the unsprung sea for the chimes'
+unwinds, the heavy lift's twin hands set even at one winding each and kept in the slab z = c - 1 .. c + 1 alone (a
+setting made by the test), a held curl along z with a gradient (Phi_z = B + g (z - c)), the offset's turn of the twins
+off (the neutral control: a neutral spin one half, as Stern and Gerlach's silver), the twins' pulls on or off.
+Read from the chimes alone: per hand the chimes, their place along z weighted by each chime's beat (the ticks it
+stood: a chime per beat, so the beat-weighted count is the time wound, free of the beat's rate), and the plain place;
+beside it the great clock's wind centroid per hand. In thousandths of a mesh from the slab's middle."""
+import json, os, sys
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from clk import doubled, hold_curl, neutral, pulls_off, twins_of
+import numpy as np
+
+n, B, g = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
+on = sys.argv[4] == "on"
+N, c = 9, 4
+neutral()
+hold_curl(0, 0, B, grad_z=(0, 0, g))
+if not on:
+    pulls_off()
+from event_universe.clock import Clock
+calibre = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(calibre["rows"][2]["pair"])
+piece = {"shape": [N] * 3, "intervals": n, "seed": [{"lay": "sea", "row": 0},
+         {"lay": "sea", "row": 2, "hand": 0, "quanta": 1, "sense": 1}, {"lay": "sea", "row": 2, "hand": 1, "quanta": 1, "sense": 1}]}
+node = Clock(calibre, piece)
+up, dn = twins_of(node, pair)
+for h in (up, dn):
+    for gear in node.hands()[h].gears:
+        for k in range(N):
+            if abs(k - c) > 1:
+                gear.now[:, :, k] = 0; gear.before[:, :, k] = 0
+zs = np.zeros((N, N, N), dtype=object)
+for k in range(N): zs[:, :, k] = k - c
+for _ in range(n):
+    node.tick()
+def chimes(h):
+    return [(e["node"][2] - c, e["beat"]) for e in node.log if e["event"] == "credit" and e["line"] == h]
+def board(h):
+    w = sum(gear.now * gear.now for gear in node.hands()[h].gears)
+    return int((w * zs).sum()) * 1000 // int(w.sum())
+for name, h in (("up", up), ("down", dn)):
+    cs = chimes(h)
+    weighted = sum(z * b for z, b in cs) * 1000 // sum(b for z, b in cs) if cs else None
+    plain = sum(z for z, b in cs) * 1000 // len(cs) if cs else None
+    print(f"  twins' pulls {'on' if on else 'off'}, {name}: {len(cs)} chimes; place weighted by the beat {weighted} milli, plain {plain} milli; the great clock's wind centroid {board(h)} milli")
+
+========================================================================
+== sg_slab2.py: Stern-Gerlach, the neutral twins (pulls on, off) then the charged (pulls on, off)
+========================================================================
+"""Stern-Gerlach at the chimes, with CHARGED=1 the charged case (the struck row's held offset A_x = -(y - c)(B / 2 + (g / 2)(z - c)) laid on the offset's odd gear every tick, its curl read by the engine, the offset's turn of the twins on), otherwise as sg_slab.py: a 9-cube, the toy calibre's sprung hands as twins, the unsprung sea for the chimes'
+unwinds, the heavy lift's twin hands set even at one winding each and kept in the slab z = c - 1 .. c + 1 alone (a
+setting made by the test), a held curl along z with a gradient (Phi_z = B + g (z - c)), the offset's turn of the twins
+off (the neutral control: a neutral spin one half, as Stern and Gerlach's silver), the twins' pulls on or off.
+Read from the chimes alone: per hand the chimes, their place along z weighted by each chime's beat (the ticks it
+stood: a chime per beat, so the beat-weighted count is the time wound, free of the beat's rate), and the plain place;
+beside it the great clock's wind centroid per hand. In thousandths of a mesh from the slab's middle."""
+import json, os, sys
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from clk import doubled, hold_curl, neutral, pulls_off, twins_of
+import numpy as np
+
+n, B, g = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
+on = sys.argv[4] == "on"
+N, c = 9, 4
+CHARGED = os.environ.get("CHARGED") == "1"
+if not CHARGED:
+    neutral()
+if not CHARGED:
+    hold_curl(0, 0, B, grad_z=(0, 0, g))
+if not on:
+    pulls_off()
+from event_universe.clock import Clock
+calibre = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(calibre["rows"][2]["pair"])
+piece = {"shape": [N] * 3, "intervals": n, "seed": [{"lay": "sea", "row": 0},
+         {"lay": "sea", "row": 2, "hand": 0, "quanta": 1, "sense": 1}, {"lay": "sea", "row": 2, "hand": 1, "quanta": 1, "sense": 1}]}
+node = Clock(calibre, piece)
+up, dn = twins_of(node, pair)
+for h in (up, dn):
+    for gear in node.hands()[h].gears:
+        for k in range(N):
+            if abs(k - c) > 1:
+                gear.now[:, :, k] = 0; gear.before[:, :, k] = 0
+zs = np.zeros((N, N, N), dtype=object)
+for k in range(N): zs[:, :, k] = k - c
+from event_universe.trains import OFFSET
+ax = node.train(OFFSET).gears[1]
+for _ in range(n):
+    if CHARGED:
+        for y in range(N):
+            for k in range(N):
+                v = -(y - c) * (B // 2 + (g // 2) * (k - c))
+                ax.now[:, y, k] = v; ax.before[:, y, k] = v
+    node.tick()
+def chimes(h):
+    return [(e["node"][2] - c, e["beat"]) for e in node.log if e["event"] == "credit" and e["line"] == h]
+def board(h):
+    w = sum(gear.now * gear.now for gear in node.hands()[h].gears)
+    return int((w * zs).sum()) * 1000 // int(w.sum())
+for name, h in (("up", up), ("down", dn)):
+    cs = chimes(h)
+    weighted = sum(z * b for z, b in cs) * 1000 // sum(b for z, b in cs) if cs else None
+    plain = sum(z for z, b in cs) * 1000 // len(cs) if cs else None
+    print(f"  twins' pulls {'on' if on else 'off'}, {name}: {len(cs)} chimes; place weighted by the beat {weighted} milli, plain {plain} milli; the great clock's wind centroid {board(h)} milli")
+
+---- its output (sg.txt)
+  twins' pulls on, up: 2268 chimes; place weighted by the beat 446 milli, plain 428 milli; the great clock's wind centroid 565 milli
+  twins' pulls on, down: 1944 chimes; place weighted by the beat -328 milli, plain -334 milli; the great clock's wind centroid -574 milli
+  twins' pulls off, up: 1377 chimes; place weighted by the beat 0 milli, plain 0 milli; the great clock's wind centroid 0 milli
+  twins' pulls off, down: 1377 chimes; place weighted by the beat 0 milli, plain 0 milli; the great clock's wind centroid 0 milli
+  twins' pulls on, up: 171 chimes; place weighted by the beat -19 milli, plain 52 milli; the great clock's wind centroid 68 milli
+  twins' pulls on, down: 171 chimes; place weighted by the beat 74 milli, plain -53 milli; the great clock's wind centroid 56 milli
+  twins' pulls off, up: 180 chimes; place weighted by the beat 120 milli, plain 0 milli; the great clock's wind centroid 37 milli
+  twins' pulls off, down: 180 chimes; place weighted by the beat 120 milli, plain 0 milli; the great clock's wind centroid 37 milli
+
+========================================================================
+== the engine's suite on the build
+========================================================================
+106 passed in 437.89s (0:07:17)
+
