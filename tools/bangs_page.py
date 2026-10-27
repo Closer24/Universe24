@@ -17,7 +17,10 @@ FAMILIES = (  # the rows by family: the name, the numbered rows
         (10, 11, 12, 13, 14, 30, 31, 32, 33, 34, 35, 36, 61, 62),
     ),
     ("matter and the bodies", (4, 8, 9, 19, 26, 45, 64, 68, 69)),
-    ("the conservations in the clicks", (15, 16, 17, 18, 21, 22, 23, 25, 27, 43, 47, 65, 66, 70, 71)),
+    (
+        "the conservations in the clicks",
+        (15, 16, 17, 18, 21, 22, 23, 25, 27, 43, 47, 65, 66, 70, 71, 72, 73),
+    ),
     (
         "the quantum",
         (2, 7, 20, 24, 28, 29, 37, 38, 39, 40, 41, 42, 44, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 67),

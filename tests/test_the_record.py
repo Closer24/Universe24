@@ -9,11 +9,11 @@ from typing import Any
 import pytest
 
 from event_universe import great_clock, strikes, swings, symmetries
-from event_universe.core import rates, rule3
+from event_universe.core import rates
 from event_universe.core.spokes import AXES
 from event_universe.events import NAMES
 from event_universe.gates import gates
-from event_universe.reckoner import Chart
+from event_universe.reckoner import Chart, shown
 from event_universe.run import chart
 from tests.laws import ROOT, load_file, world_of
 
@@ -26,105 +26,16 @@ CIRCLES = {
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the Links lengthening in the clicks, under GP-S1's lay) and gains 47 (the exact take, the excess kept as the remainder, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 kept by the decoder's read of the remainder, 17 lost by the engine's bug at a merger's tie end (H-Children-Charge-Bug-1: the light laid as the charged child's lay, the children's own charges -36,000 over the births; SHOWN again at the fix); the bodies gain 8 and 16 with the credits the remainder pays; the hole under PL-S1 before: 9 and 22 among them under the former write of 2 W after the step
     "hole": {
-        2,
-        4,
-        5,
-        7,
-        8,
-        10,
-        15,
-        16,
-        17,
-        18,
-        19,
-        21,
-        22,
-        25,
-        26,
-        27,
-        30,
-        37,
-        43,
-        45,
-        47,
-        56,
-        58,
-        59,
-        60,
-        62,
-        64,
-        65,
-        66,
-        67,
-        68,
-        70,
-        71,
+        int(n)
+        for n in "2 4 5 7 8 10 15 16 17 18 19 21 22 25 26 27 30 37 43 45 47 56 58 59 60 62 64 65 66 67 68 70 71 72".split()
     },
     "chiral": {
-        2,
-        4,
-        5,
-        7,
-        8,
-        9,
-        10,
-        15,
-        16,
-        17,
-        18,
-        19,
-        21,
-        24,
-        25,
-        26,
-        27,
-        30,
-        37,
-        43,
-        45,
-        47,
-        56,
-        59,
-        60,
-        62,
-        64,
-        65,
-        66,
-        67,
-        68,
-        70,
-        71,
+        int(n)
+        for n in "2 4 5 7 8 9 10 15 16 17 18 19 21 24 25 26 27 30 37 43 45 47 56 59 60 62 64 65 66 67 68 70 71 72".split()
     },
     "bodies": {
-        4,
-        5,
-        7,
-        10,
-        15,
-        17,
-        18,
-        21,
-        22,
-        24,
-        25,
-        26,
-        27,
-        30,
-        37,
-        43,
-        45,
-        47,
-        58,
-        59,
-        60,
-        62,
-        64,
-        65,
-        66,
-        67,
-        68,
-        70,
-        71,
+        int(n)
+        for n in "4 5 7 10 15 17 18 21 22 24 25 26 27 30 37 43 45 47 58 59 60 62 64 65 66 67 68 70 71 72".split()
     },
 }
 VERDICTS = {  # the verdicts' words by name
@@ -146,6 +57,8 @@ VERDICTS = {  # the verdicts' words by name
         "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 6 and 12 moving births",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
         "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 6948 of 6948 axis ",
+        "72 the angular momentum booked on the Link": "SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 2316 of 2316 bookings, the record",
+        "73 E = mc^2 at the merger": "NOT READ: no merger in the record; the predicate: at every merger end the pair's share taken equal to the light's quantu",
     },
     "chiral": {
         "64 dark matter in kind": "SHOWN: 97 of 143 bodies credited at a Node where no light was laid",
@@ -163,7 +76,9 @@ VERDICTS = {  # the verdicts' words by name
         "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 8, the hand's choice at every one; 1 me",
         "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 7 and 8 moving births",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
-        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 9144 of 9144 axis ",
+        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 9159 of 9159 axis ",
+        "72 the angular momentum booked on the Link": "SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 3053 of 3053 bookings, the record",
+        "73 E = mc^2 at the merger": "NOT SHOWN: at 2 of 2 merger ends the pair's share taken exceeds the light's quantum booked, up to 1103 thousandths of it",
     },
     "bodies": {
         "64 dark matter in kind": "SHOWN: 335 of 409 bodies credited at a Node where no light was laid",
@@ -179,7 +94,9 @@ VERDICTS = {  # the verdicts' words by name
         "68 matter against antimatter": "SHOWN: the + child at the take's Node on 5 moving births and at the other end on 3, the hand's choice at every one; 15 m",
         "69 the neutrino's one hand": "NOT SHOWN: both hands stand, 5 and 3 moving births",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
-        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 53904 of 53904 axi",
+        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 54129 of 54129 axi",
+        "72 the angular momentum booked on the Link": "SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 18043 of 18043 bookings, the reco",
+        "73 E = mc^2 at the merger": "NOT SHOWN: at 30 of 30 merger ends the pair's share taken exceeds the light's quantum booked, up to 25516 thousandths of",
     },
 }
 
@@ -279,22 +196,40 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
 
 
 def test_the_momentum_booked_on_the_link_is_an_identity_on_every_booking() -> None:
-    """Row 71 on the hole record's own bookings (LT-S1's keys on every take and every birth's end): SHOWN exact on every axis booking at the write wall 6 den Gamma^2 T, NOT SHOWN once one carry is moved by one level, NOT READ with the keys struck (a record run before LT-S1)."""
-    run = loaded("hole")
-    rec = Chart(run)
-    gate = "71 the momentum booked on the Link"
-    found = symmetries.momentum_booked(rec)[gate]
-    held, whole = found["axis bookings holding the identity / in all"]
-    assert held == whole == len(symmetries.tallies_of(rec)) * AXES and whole > 0
-    assert found["the write wall 6 den Gamma^2 T"] == rule3.teeth_of(rec.rim, rec.full_rate) * rec.key
-    assert found["verdict"].startswith("SHOWN exact")
+    """Row 71 on the chiral record's bookings, a merger's two takes, cross term and two lays among them: SHOWN exact at the write wall of the universe file's own trace, NOT SHOWN at another trace (the one booking laying a level) or with one carry moved by one level, NOT READ with the keys struck (a record run before LT-S1)."""
+    run, gate = loaded("chiral"), "71 the momentum booked on the Link"
+    rec, ints = Chart(run), run["universe"]["integers"]
+    held, whole = symmetries.momentum_booked(rec)[gate]["axis bookings holding the identity / in all"]
+    assert held == whole == len(symmetries.tallies_of(rec)) * AXES == 9159
+    ints["trace"], trace = ints["trace"] * ints["trace"], ints["trace"]
+    failed = "NOT SHOWN: the identity fails on 1 of"
+    assert symmetries.momentum_booked(Chart(run))[gate]["verdict"].startswith(failed)
+    ints["trace"] = trace
     rec.unwinds[-1]["carry"][0] += 1
-    assert symmetries.momentum_booked(Chart(run))[gate]["verdict"].startswith(
-        "NOT SHOWN: the identity fails on 1 of"
-    )
+    assert symmetries.momentum_booked(Chart(run))[gate]["verdict"].startswith(failed)
     for entry in rec.unwinds:
-        del entry["recoil"]
+        for key in ("recoil", "recoil_ends", "cross", "takes"):
+            entry.pop(key, None)
     assert symmetries.momentum_booked(Chart(run))[gate]["verdict"].startswith("NOT READ")
+
+
+def test_the_angular_momentum_closes_at_every_booking_and_the_mass_becomes_light() -> None:
+    """Rows 72 and 73 on the chiral record: the moment closed at every booking with the merger's cross term off the Link's axis counted, open once one carry is moved by one level; the pair's share taken above the light's quantum at both merger ends, SHOWN once it is the quantum, NOT READ on the hole with no merger."""
+    run, light = loaded("chiral"), "73 E = mc^2 at the merger"
+    turn = "72 the angular momentum booked on the Link"
+    rec = Chart(run)
+    found = symmetries.angular_momentum(rec)[turn]
+    off = "mergers whose cross term carries a part off the Link's own axis / with a cross term"
+    assert found[off] == [1, 1] and found["verdict"].startswith("SHOWN exact")
+    assert not shown(symmetries.mass_to_light(rec)[light]["verdict"])
+    rec.unwinds[-1]["carry"][0] += 1
+    verdict = symmetries.angular_momentum(Chart(run))[turn]["verdict"]
+    assert verdict.startswith("NOT SHOWN: the moment does not close at 1 of")
+    for take in (t for b in rec.fittings for t in b.get("takes", [])):
+        take["taken"] = take["booked"]
+    verdict = symmetries.mass_to_light(Chart(run))[light]["verdict"]
+    assert verdict.startswith("SHOWN: at every one of 2 merger ends")
+    assert symmetries.mass_to_light(Chart(loaded("hole")))[light]["verdict"].startswith("NOT READ")
 
 
 def test_the_horizon_is_read_from_the_node_lines_not_the_rows() -> None:
