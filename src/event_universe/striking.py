@@ -12,7 +12,7 @@ from event_universe.core import rule3
 from event_universe.core.rule3 import carries, remainder
 from event_universe.core.spokes import AXES, across, spoke_of
 from event_universe.draw import kept_pitch, vernier
-from event_universe.meshes import factors, train_lead, train_twists
+from event_universe.meshes import train_lead, train_twists
 from event_universe.run import fitting, jammed
 from event_universe.trains import HAND, Gear, Train
 from event_universe.unspring import (
@@ -80,6 +80,9 @@ def engage(
             at = tuple(int(x) for x in where)
             j = neighbour(clock, at, spoke_of(axis, 0))
             clock.counts["met"] += 1
+            if int(clock.start_factors[spoke_of(axis, 0)][at]) == 0:
+                jammed(clock, at, "disengaged", link=list(j), row=rec)
+                continue
             lead, h = int(axis_leads[axis][at]), int(twists[axis][at])
             w = (
                 [0, 0]
@@ -329,7 +332,7 @@ def strike(
     clock.pitches, clock.vernier_read, clock.twin_ends = {}, {}, {}
     kept_pitch.cache_clear()
     stopped = readings.stopped_of(clock, c)
-    read = factors(clock, None, stopped)
+    read = clock.start_factors
     r_unsprung = readings.gearing_of(clock, clock.unsprung(), c, read)
     gearings = clock.read_gears(held, c, read)
     winds, hand_gearings = [], []

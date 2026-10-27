@@ -41,6 +41,10 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_fits_matter": (
+        11,
+        "The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): the 4-cube's one wave of 5,000,000 quanta under the three bounds returns to the full rate at every clock twice in every five ticks, every integer within 128 bits, matter fitted and chiming, the run back exact.",
+    ),
     "tests/test_the_record.py::test_the_light_is_polarized_along_its_sources_current_at_the_detectors_chimes": (
         21,
         "The polarization of light seen at the chimes (the owner's words of 2026-10-27, 14:32 and 14:5x UTC, the four phenomena on the board after the chimes, and his rule of 14:5x UTC that a push's test sees what it was pushed for; David's DAVID-FOUR-PHENOMENA.md section 1, toys-5 96caee2d8): the offset's transverse odd gears at a neutral bob's chimes follow the current of a charged source two clocks away, along x and, turned a quarter about the line of sight, along y, and stand equal at rest; the world as written runs back exactly; the Boss's room by name.",

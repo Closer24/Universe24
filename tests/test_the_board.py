@@ -25,7 +25,7 @@ from tests.laws import level_at, node_of, refused, run_back_exact, state_of, wor
 
 # rotations alike per part: the trace 6 (6, 0, 0, 0 under GP-S1 at the trace 54; 6, 6, 6, 6 under CK-S1 even); IMAGED the images' ticks
 CUBE, INTERVALS, GROUPS, IMAGED = 5, 20, 16, 14
-# the 48 in sixteen parts of three (four parts of twelve before, (3, 0, 0, 0)): the rotations 0, 24 and 32 EQUAL at the trace 6, the chiral setting's to 14 (its 5 fittings by 13) under the wave's light as the hole's to 20 before it
+# the 48 in sixteen parts of three (four parts of twelve before, (3, 0, 0, 0)): the rotations 0, 24 and 32 EQUAL at the trace 6, the chiral setting's to 14 (its 2 fittings by 13 under the great clock's bounds, 5 at the wave) under the wave's light as the hole's to 20 before it
 ALIKE = (2, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0)
 COUNTED = ("births", "laid_back", "refused_stop")  # the counts the EQ-S1 test reads per piece
 IMAGES = [
@@ -92,7 +92,7 @@ def seed_run() -> tuple[Clock, list[tuple[Any, ...]]]:
 
 
 def images_hold(group: int) -> None:
-    """The images of one part of the 48 (every sixteenth from the group's first; the setting's own run once per worker, `seed_run`, so each part is three runs under 15 s alone): a rotation that negates no axis runs alike the setting through the image (the trains and the fittings), a rotation negating the y or the z axis runs alike too once the bobs' striking reads the crossing even (24 of 24 at 20 ticks on the hole setting, 56 chimes and 16 fittings under PL-S1, 209 chimes and 20 fittings under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting), 12 fittings under the former drive of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated gear at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read. Under GP-S1 (the fitted hands advanced with the sweep's sign, the owner's word of 2026-10-26, 04:3x UTC) the rotations negating an axis part at the tick 19 (18 of 24 apart, 6 alike in the first part, 24 of 24 alike before): the state alike through 18, and at the 19th striking the unspringing candidates' vernier reads the negated gears' fine teeth r against W - 1 - r in its digits, so the image's vernier picks another fitted hand (the train 0 against 2 at four clocks) and makes its fittings at the other four of eight symmetric sites: A48-S1's open read of the fine tooth in the image (the centred pick, held unbuilt), named here and not this advance's. Under the wave's light (the take by the wind's own fall, David's part-B seeds) the hole setting fits nothing before its tick 53, so the images run the chiral setting to 14: its 5 fittings by 13, the identity and the two turns that cycle the axes (0, 24, 32) alike, the 21 other rotations and every reflection apart, ALIKE as at the hole's 20 before."""
+    """The images of one part of the 48 (every sixteenth from the group's first; the setting's own run once per worker, `seed_run`, so each part is three runs under 15 s alone): a rotation that negates no axis runs alike the setting through the image (the trains and the fittings), a rotation negating the y or the z axis runs alike too once the bobs' striking reads the crossing even (24 of 24 at 20 ticks on the hole setting, 56 chimes and 16 fittings under PL-S1, 209 chimes and 20 fittings under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting), 12 fittings under the former drive of 2 W after the step; 6 of 24 under the crossing odd at a touch of zero, the form `b < 0 <= n or n < 0 <= b`, which parted a negated gear at its touch of zero: A2's standing item, 6 of 24 under MS-S1 against 24 before it, read now to the odd crossing), every reflection apart; the counts held by name so that an image coming alike or parting is read. Under GP-S1 (the fitted hands advanced with the sweep's sign, the owner's word of 2026-10-26, 04:3x UTC) the rotations negating an axis part at the tick 19 (18 of 24 apart, 6 alike in the first part, 24 of 24 alike before): the state alike through 18, and at the 19th striking the unspringing candidates' vernier reads the negated gears' fine teeth r against W - 1 - r in its digits, so the image's vernier picks another fitted hand (the train 0 against 2 at four clocks) and makes its fittings at the other four of eight symmetric sites: A48-S1's open read of the fine tooth in the image (the centred pick, held unbuilt), named here and not this advance's. Under the wave's light (the take by the wind's own fall, David's part-B seeds) the hole setting fits nothing before its tick 53, so the images run the chiral setting to 14: its 2 fittings by 13 under the great clock's bounds (5 at the wave), the identity and the two turns that cycle the axes (0, 24, 32) alike, the 21 other rotations and every reflection apart, ALIKE as at the hole's 20 before."""
     calibre, piece = world_of("world_nature.json")
     base, fittings = seed_run()
     assert len(fittings) > 0
@@ -114,11 +114,12 @@ def test_the_run_back_is_exact_through_births_and_turns() -> None:
 
 
 def test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero() -> None:
-    clock = node_of("world_nature.json")
+    seed = world_of("world_nature.json")[1]["seed"]  # the packets of light at 5 quanta (2 in the world)
+    clock = node_of("world_nature.json", seed=[dict(s, quanta=5) if "quanta" in s else s for s in seed])
     for _ in range(INTERVALS):
         clock.tick()
     births = [e for e in clock.log if e["event"] == "birth" and "exact_lay" not in e]
-    assert len(births) >= 5  # at 5, 5, 5, 9 and 13 under the wave's light (8 or more by 60 before)
+    assert len(births) >= 5  # 12 by 13 under the great clock's bounds (2 at 2 quanta, 5 at the wave)
     signs = [(w > 0) - (w < 0) for b in births for w in b["W_children"]]
     assert sum(signs) == 0 and 0 not in signs
     assert all(b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] for b in births)  # EX-S1
@@ -132,7 +133,7 @@ def test_each_part_of_the_48_images_runs_alike_a_reflection_with_the_hands_excha
 
 
 def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_once_ma() -> None:
-    """MA-S1 by the fourth form of the file (the owner's word of 17:57 through the Boss, 6401141446; ma2's spelling, the Boss's 6401095909) with EQ-S1 in cs7's letter (6403341352): the pair of the heavy train set at every clock of the 3-cube at one winding (tests/worlds/world_pair_3.json, {"lay": "sea", "row": 2, "quanta": 1, "sense": 0}: the hand length 96, ma1's, three_now 192 the two senses summed, W 0) keeps every clock alike to the integer (400 of 400), turns every clock over at once at both tops (27 at 84 and at 252; 85, ma1's, before the wave), fits nothing, and returns to Gamma EXACTLY at 167 and 336 (169 and 334 before the wave; ma1's 168 / 169 and 333 / 334); under the wave's honest books (the take by the wind's own fall) the light of one quantum a clock pays no heavy bob's winding until the return at 336, where a bob chimes at every clock, 27 chimes every one returned (nothing arrives at a clock of the great clock alike), the 270 earlier chimes jammed by the stop (297 chimes before the wave, 27 at each of 4, 6 and 8 and after each return, a bob at every clock in every cycle); before EQ-S1 the unwind stood and the bottoms read 953 at 171 and 888 at 342 with 351 chimes and the second top at 255 (992 and 966 with 162 chimes under the upward crossing alone); the rewind exact 10 of 10."""
+    """MA-S1 by the fourth form of the file (the owner's word of 17:57 through the Boss, 6401141446; ma2's spelling, the Boss's 6401095909) with EQ-S1 in cs7's letter (6403341352): the pair of the heavy train set at every clock of the 3-cube at one winding (tests/worlds/world_pair_3.json, {"lay": "sea", "row": 2, "quanta": 1, "sense": 0}: the hand length 96, ma1's, three_now 192 the two senses summed, W 0) keeps every clock alike to the integer (400 of 400), turns every clock over at once at both tops (27 at 84 and at 252; 85, ma1's, before the wave), fits nothing, and returns to Gamma EXACTLY at 167 and 336 (169 and 334 before the wave; ma1's 168 / 169 and 333 / 334); under the great clock's bounds (act 12: a chime where nothing arrives takes nothing) a bob chimes at every clock at 4, 6 and 12, at 168, 170 and 172 after the first return and at 336, 338, 340, 342 and 348 from the second, 297 chimes every one credited laid back with nothing taken (nothing arrives at a clock of the great clock alike; under the wave's honest books 27 at 336 returned and the 270 others jammed by the stop, the light of one quantum a clock paying no heavy bob's winding before the return; 297 chimes before the wave, 27 at each of 4, 6 and 8 and after each return); before EQ-S1 the unwind stood and the bottoms read 953 at 171 and 888 at 342 with 351 chimes and the second top at 255 (992 and 966 with 162 chimes under the upward crossing alone); the rewind exact 10 of 10."""
     clock = node_of("world_pair_3.json")
     assert int(clock.by_index[2].gears[0].now.min()) == int(clock.by_index[2].gears[0].now.max()) == 192
     kept = copy.deepcopy(clock)
@@ -149,14 +150,14 @@ def test_the_uniform_pair_at_every_node_returns_with_the_whole_board_turning_at_
         (k + 1, means[k]) for k in range(1, 399) if means[k] <= means[k - 1] and means[k] < means[k + 1]
     ]
     chimes = [e for e in clock.log if e["event"] == "credit"]
-    assert (alike, tops, clock.counts["births"], len(chimes)) == (400, 2, 0, 27)
+    assert (alike, tops, clock.counts["births"], len(chimes)) == (400, 2, 0, 297)  # 27 at the wave
     assert bottoms == [(167, 1000), (336, 1000)] and sum(1 for c in chimes if c["i"] == 336) == 27
-    assert (clock.counts["laid_back"], clock.counts["refused_stop"]) == (27, 270)
+    assert (clock.counts["laid_back"], clock.counts["refused_stop"]) == (297, 0)  # (27, 270) at the wave
     assert run_back_exact(kept, 10) == 10
 
 
 def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() -> None:
-    """PL-S1 (the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423; pl1's test_pl1.py and pl2's test_pl2.py brought to the engine's own path): nature's plasma on the 3-cube (tests/worlds/world_plasma_3.json, the heavy train at +1 and the light train at -1 at every clock) to 170 tops at 85 with 27 turning over (84 before the wave), the fall's state at top + k the reverse of the rise's at top - 1 - k in every notch and fine tooth at 84 of 84 k (83 of 83 before the wave; before PL-S1 the sign train's time gear's drive fine tooth parted at k = 1 by 2 (W(83) - W(82)) = 32, its notch at k = 8 and X at k = 9), X = Gamma at every clock at 168 and 169 and nowhere else (166 and 167 before the wave; the bottom 1,000 at 167, 939 before PL-S1), no chime standing under the wave's honest books, the bobs' 162 chimes jammed by the stop (one light quantum a clock pays no heavy bob's winding; 162 chimes with 135 in the rise, every one returned, before the wave), fittings 0, the release advanced 0, the rewind exact 10 of 10 through the top (170 back to 80), 107 integers, the bits within 128."""
+    """PL-S1 (the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423; pl1's test_pl1.py and pl2's test_pl2.py brought to the engine's own path): nature's plasma on the 3-cube (tests/worlds/world_plasma_3.json, the heavy train at +1 and the light train at -1 at every clock) to 170 tops at 85 with 27 turning over (84 before the wave), the fall's state at top + k the reverse of the rise's at top - 1 - k in every notch and fine tooth at 84 of 84 k (83 of 83 before the wave; before PL-S1 the sign train's time gear's drive fine tooth parted at k = 1 by 2 (W(83) - W(82)) = 32, its notch at k = 8 and X at k = 9), X = Gamma at every clock at 168 and 169 and nowhere else (166 and 167 before the wave; the bottom 1,000 at 167, 939 before PL-S1), the bobs' 162 chimes, 135 in the rise (5 to 13) and 27 at 169, every one credited laid back with nothing taken under the great clock's bounds (act 12: nothing arrives at a clock of the plasma alike; no chime standing under the wave's honest books, the 162 jammed by the stop, one light quantum a clock paying no heavy bob's winding; 162 chimes with 135 in the rise, every one returned, before the wave), fittings 0, the release advanced 0, the rewind exact 10 of 10 through the top (170 back to 80), 107 integers, the bits within 128."""
     clock = node_of("world_plasma_3.json")
     states, kept, exact, tops = [], [], [], []
     for _ in range(170):
@@ -172,8 +173,8 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
     chimes = [e for e in clock.log if e["event"] == "credit"]
     top = tops[0][0]
     assert tops[0] == (85, 27) and [i + 1 for i, e in enumerate(exact) if e] == [168, 169]
-    returned = sum(1 for c in chimes if "laid_back" in c)
-    assert (len(chimes), returned, clock.counts["refused_stop"]) == (0, 0, 162)
+    returned = sum(1 for c in chimes if "laid_back" in c and c["taken"] == 0)
+    assert (len(chimes), returned, clock.counts["refused_stop"]) == (162, 162, 0)
     assert clock.counts["births"] == clock.counts["laid"] == 0
     assert record.census(clock)[0] == 107  # the beats' references; 99, 98 before
     for _ in range(80):
@@ -193,7 +194,7 @@ def test_the_plasma_retraces_bit_for_bit_and_returns_to_gamma_exactly_pl_s1() ->
 
 
 def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s1() -> None:
-    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the even pair of the 3-cube the unsprung train's lead across the six meshes sums to 0 at every clock at every tick's start (nothing arrives), every chime carries laid_back equal to its notches with its push tallied 0 and leaves the unsprung gear's notch at its clock as the unwind found it (the unsprung hand whole), the chimes 27 at 336 under the wave's honest books, the light of one quantum a clock paying no heavy bob's winding before it (162 chimes jammed by the stop by 337; 27 at each of 4, 6 and 8, 81 in 20 ticks with no jam of the stop, before the wave; before EQ-S1 the great clock, its unsprung hand unwound, chimed at 10 and 13 too), the rewind exact 10 of 10; on the hole setting of the 5-cube to 60 every chime stands at a clock whose net lead is not 0 (something arrives), none returned, 8 chimes at 59 and 60 and 6 fittings under the wave's light (15 fittings and 489 chimes at 20 before the wave; 56 chimes and 16 fittings under PL-S1 (209 chimes and 20 fittings under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); 12 fittings with the same 56 chimes under the former drive of 2 W after the step, as before EQ-S1: the charts where light flows bit for bit under it)), the rewind exact."""
+    """EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352; eq1's test_eq1_equilibrium.py and eq2's test_eq2.py re-read on the engine's own path): on the even pair of the 3-cube the unsprung train's lead across the six meshes sums to 0 at every clock at every tick's start (nothing arrives), every chime under the great clock's bounds takes nothing (act 12: credited laid back with its notches, its take and its laid_back 0, its push tallied 0) and leaves the unsprung gear's notch at its clock, on the gear a take would move, as it found it (the unsprung hand whole), 27 chimes at each of 4, 6, 12, 168, 170, 172 and 336, 189 by 337 with no jam of the stop (27 at 336 under the wave's honest books, laid_back equal to their notches, the 162 earlier jammed by the stop; 27 at each of 4, 6 and 8, 81 in 20 ticks with no jam of the stop, before the wave; before EQ-S1 the great clock, its unsprung hand unwound, chimed at 10 and 13 too), the rewind exact 10 of 10; on the hole setting of the 5-cube to 60 every chime stands at a clock whose net lead is not 0 (something arrives), none returned, 885 chimes from 21 to 60 and 17 births, 4 of them unspringings, under the great clock's bounds (8 chimes at 59 and 60 and 6 births under the wave's light; 15 fittings and 489 chimes at 20 before the wave; 56 chimes and 16 fittings under PL-S1 (209 chimes and 20 fittings under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); 12 fittings with the same 56 chimes under the former drive of 2 W after the step, as before EQ-S1: the charts where light flows bit for bit under it)), the rewind exact."""
     found = {}
     for piece, quiet, ticks in (("world_pair_3.json", True, 337), ("world_hole.json", False, 60)):
         clock, kept = node_of(piece), node_of(piece)
@@ -208,16 +209,16 @@ def test_the_body_at_rest_lays_back_what_it_takes_and_the_light_stays_whole_eq_s
                 at = tuple(c["node"])
                 assert (int(net[at]) == 0) == ("laid_back" in c) == quiet
                 if quiet:
-                    assert c["laid_back"] == c["levels"] > 0 and c["dP_take"] == [0, 0, 0]
-                    assert int(clock.unsprung().gears[0].now[at]) == c["taken_now_was"]
+                    assert c["laid_back"] == c["levels"] == c["taken"] == 0 and c["dP_take"] == [0] * 3
+                    assert int(clock.unsprung().gears[c["taken_line"]].now[at]) == c["taken_now_was"]
             by_tick[clock.ticks] = len(chimes)
         counts = clock.counts
         found[piece] = ({i: n for i, n in by_tick.items() if n}, *(counts[k] for k in COUNTED))
         assert run_back_exact(kept, 10) == 10
-    assert found["world_pair_3.json"] == ({336: 27}, 0, 27, 162)
+    assert found["world_pair_3.json"] == (dict.fromkeys((4, 6, 12, 168, 170, 172, 336), 27), 0, 189, 0)
     assert (
-        found["world_hole.json"][1:3] == (6, 0) and sum(found["world_hole.json"][0].values()) == 8
-    )  # 15 at 20 before the wave, 10 fittings under EX-S1, 16 before
+        found["world_hole.json"][1:3] == (17, 0) and sum(found["world_hole.json"][0].values()) == 885
+    )  # 6 births and 8 chimes at the wave (15 fittings at 20 before it, 10 under EX-S1, 16 before)
 
 
 def test_the_bare_sea_returns_exactly_with_the_whole_board_turning_at_once_bb() -> None:
@@ -374,7 +375,7 @@ def test_the_moving_lay_is_carried_by_the_48_with_its_centre_and_wave_mv() -> No
 
 
 def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2() -> None:
-    """CS5-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss, 6404425423; cs5's REPORT.md section 4 and cs7's section 3.3: the file universe_ga2 and the `wave` setting of cs3's cycle form in cs5's and cs7's spelling): the calibre file names one ratio in two trains (tests/worlds/universe_ga2.json, 115,762,739,551,980 twice) and the assembly admits it as written, two hands with the same numbers and one winding, the reckoner one name for both; the 4-cube with no sea under the cycle setting at 5 windings (tests/worlds/world_ga2.json: the hand length 300 at every clock, logged with its digits and the sense 1) fittings 0 at i 1 (64 advance jams, the unsprung hand's own train picked by the vernier where it stands; cs5's hh3 read 64 crowd jams there) and 64 at i 2 at 64 of 64 clocks, every clock one fitted hand of the train 0 and one of the train 1 at W -18,000 / +18,000 (the reflected pair of the hand at the clock, the crowd jamming nothing: two hands, not one), unwound at or above tallied on 64 of 64, X 1,050 at 64 of 64 at i 2 and 1,880 at i 10 (cs5's and cs7's numbers to the integer), 128 chimes by 20, all at i 13, every one returned, under the wave's honest books and the own beat (256 before the wave, 128 at i 8 and 128 at i 10, every one returned under EQ-S1; cs7 read 128 at i 10 alone on its head before CK-S1's crossing in either direction) every one reckoned from the strikes to the one species `gapped 0` whichever train it stands on (128 of 128 right, 256 of 256 before the wave, 128 tracks right), the rewind exact 20 of 20, 96 integers (89 before the slack and the beats' references), 115 bits; the setting refused by name off the unsprung hand, with a field of no form, off Z_4, off the flip 0 and 1, on a cube not a multiple of 4; the flip 1 flips the fine tooth on the 32 negated clocks of each gear and leaves the notches; under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting) the cycle great clock fitted NOTHING: the vernier at the first striking refused as the origin at 64 reads (every folded fine tooth at the setting's half on the great clock alike), 1,216 advances jammed after it, no chime, no turnover by 20, Gamma exactly at 198 and 199 to 230: the pattern's digits were tuned to this read, named for the Boss and the hand on the fittings' setting."""
+    """CS5-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss, 6404425423; cs5's REPORT.md section 4 and cs7's section 3.3: the file universe_ga2 and the `wave` setting of cs3's cycle form in cs5's and cs7's spelling): the calibre file names one ratio in two trains (tests/worlds/universe_ga2.json, 115,762,739,551,980 twice) and the assembly admits it as written, two hands with the same numbers and one winding, the reckoner one name for both; the 4-cube with no sea under the cycle setting at 5 windings (tests/worlds/world_ga2.json: the hand length 300 at every clock, logged with its digits and the sense 1) fittings 0 at i 1 (64 advance jams, the unsprung hand's own train picked by the vernier where it stands; cs5's hh3 read 64 crowd jams there) and 64 at i 2 at 64 of 64 clocks, every clock one fitted hand of the train 0 and one of the train 1 at W -18,000 / +18,000 (the reflected pair of the hand at the clock, the crowd jamming nothing: two hands, not one), unwound at or above tallied on 64 of 64, X 1,050 at 64 of 64 at i 2 and 1,880 at i 10 (cs5's and cs7's numbers to the integer), 640 chimes by 20, 128 at each of i 7, 9, 11, 13 and 15 (64 a train), every one credited laid back with nothing taken under the great clock's bounds and the own beat (act 12: nothing arrives at a chiming clock of the cycle great clock; 128 at i 13, every one returned, and 512 jammed by the stop at i 7, 9, 11 and 15 under the wave's honest books; 256 before the wave, 128 at i 8 and 128 at i 10, every one returned under EQ-S1; cs7 read 128 at i 10 alone on its head before CK-S1's crossing in either direction) every one reckoned from the strikes to the one species `gapped 0` whichever train it stands on (640 of 640 right, 128 of 128 at the wave, 256 of 256 before it, 128 tracks right), the rewind exact 20 of 20, 96 integers (89 before the slack and the beats' references), 115 bits; the setting refused by name off the unsprung hand, with a field of no form, off Z_4, off the flip 0 and 1, on a cube not a multiple of 4; the flip 1 flips the fine tooth on the 32 negated clocks of each gear and leaves the notches; under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting) the cycle great clock fitted NOTHING: the vernier at the first striking refused as the origin at 64 reads (every folded fine tooth at the setting's half on the great clock alike), 1,216 advances jammed after it, no chime, no turnover by 20, Gamma exactly at 198 and 199 to 230: the pattern's digits were tuned to this read, named for the Boss and the hand on the fittings' setting."""
     calibre, piece = world_of("world_ga2.json")
     seed = piece["seed"][0]
     found = json.loads(
@@ -396,10 +397,11 @@ def test_one_pair_in_several_rows_births_the_conjugate_pair_at_every_node_cs5_s2
     assert len(first) == 64 and all("standing" in e for e in first)
     assert (set(found["nodes"][1]["X"]), set(found["nodes"][9]["X"])) == ({1050}, {1880})
     chimes = [e for e in found["log"] if e["event"] == "credit"]
-    assert {c["i"] for c in chimes} == {13} and len(chimes) == 128 == int(found["counts"]["laid_back"])
+    assert {c["i"] for c in chimes} == {7, 9, 11, 13, 15} and len(chimes) == 640  # 128 at 13 at the wave
+    assert int(found["counts"]["laid_back"]) == 640 and {c["taken"] for c in chimes} == {0}
     out = table.gates(found)
     whole = out["8 families forming (whole view)"]
-    assert (whole["species readable"], whole["decoded right per credit"]) == (128, 128)
+    assert (whole["species readable"], whole["decoded right per credit"]) == (640, 640)
     assert whole["tracks right"] == [128, 128] and whole["births by species (decoder)"] == {
         "gapped 0": 64
     }
@@ -479,15 +481,9 @@ def test_the_six_metric_lines_are_written_read_and_run_back_exactly_through_a_to
     gears = clock.train(REGULATOR).gears
     assert len(gears) == 1 + 3 * AXES and record.census(clock) == (107, 112)  # 99, 115 bits at 54
     flow, shears = gears[1 + AXES : 1 + 2 * AXES], gears[1 + 2 * AXES :]
-    # TW-S1, the trace 6: every one of the six gears reaches notches within five by 10 on the chiral setting (within three on the hole's, 45, 42, 42, 20, 48, 20 clocks, before the wave; none reached at the trace 54, every gear at 0)
-    assert [sum(1 for x in gear.now.reshape(-1) if int(x)) for gear in (*flow, *shears)] == [
-        80,
-        85,
-        74,
-        75,
-        69,
-        108,
-    ]
+    # TW-S1, the trace 6: every one of the six gears reaches notches within five by 10 on the chiral setting, at the clocks counted below under the great clock's bounds (80, 85, 74, 75, 69, 108 at the wave; within three on the hole's, 45, 42, 42, 20, 48, 20 clocks, before the wave; none reached at the trace 54, every gear at 0)
+    reached = [sum(1 for x in gear.now.reshape(-1) if int(x)) for gear in (*flow, *shears)]
+    assert reached == [80, 78, 78, 72, 72, 105]
     assert all(abs(int(x)) <= 5 for gear in (*flow, *shears) for x in gear.now.reshape(-1))
     assert all(
         any(int(x) != gear.dteeth // 2 for x in gear.dfine.reshape(-1)) for gear in (*flow, *shears)
