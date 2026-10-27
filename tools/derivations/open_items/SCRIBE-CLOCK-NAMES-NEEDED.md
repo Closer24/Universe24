@@ -1,0 +1,471 @@
+# What the documents need from DAVID-CLOCK-NAMES.md (the Scribe, 2026-10-27, 11:1x UTC)
+
+The owner's words of 10:5x and 11:0x UTC: every name in clock words, the documents and the law's text included, one dictionary for everything. For stage 3 (the documents and the law's text as a diff on the clocks branch, every clause by its clock name with the former kept by name and dated) the table wants, beside src's identifiers and the record's and the files' keys, three columns the documents read: the former name (kept by name), the clock name, and the level (a wheel of a line or the hand of a plane; the big clock's own words for the board, the record and the files), so that every clause head below can be renamed by one row of the table.
+
+## 1. The recurring terms of the documents (71)
+
+Node, Link, Port, board, record, universe file, world file, seed, interval, line, level, remainder, wall, row, plane, pair (num, den), shape, share, take, lay, draw, credit, click, birth, born pair, close, merger, bang, run back, the 48, volume, sign, content, carrier, potential, emitter, metric, Wronskian, quantum, family, lift, gap, sense, frozen Node, horizon, body, rest mode, beat, turn, pace, frame, census, log, gates, readings, phase, amplitude, floor, orbit, cosine, period, proper count, mask, tension, flux, shear, tick, dial, hand, gear, wheel
+
+## 2. The law's clause heads, docs/ALGEBRA.md (353 heads, in the order of the text)
+
+- Postulate 1, the many Nodes and no centre, so locality
+- Postulate 2, whole numbers, for the reversibility of time
+- Postulate 3, the Nodes speak at the speed of light at most
+- Postulate 4, nature is cyclic and information does not vanish
+- The postulates against the code
+- The ten postulates of 2026-10-24 and 2026-10-25
+- The former form of the postulates, 2026-10-17, kept by name
+- The Node
+- Every act of the Node is one act on every row alike
+- The two kinds of act
+- One function steps a line; the Node is five functions; the code is folded
+- Locality is never broken
+- The Node and the Link are generic; there is no if
+- The interval is one function of the Node
+- No float anywhere in the system
+- The constants of the universe
+- The three shapes
+- Y-S3, the six metric lines' write is the Node's own, and their run back is exact
+- MS-S2, the rows are den's circle
+- The seed is a list of lays
+- The one rule of the remainder
+- A48-S1, the one-Link read in the frame the line was laid in
+- The five sentences of the owner's return
+- The sign row's write and the kick, every formula once as built
+- The riding line and the symmetric ride
+- BH-S1, the frozen Node
+- EM-S1, the emission is the law's continuity
+- The volume's source is every row's form at one weight
+- The three sentences of 09:2x UTC, under the one condition
+- The click's read of the board
+- EX-S1, the exact take is one carried division of the Node
+- MG-S1, the merger at rest and the child's own wall
+- The light no body
+- One point and one beat
+- The meaning of the click
+- The laws the law refuses or reads differently, by the audit of nature's laws
+- Nature is read in the clicks alone
+- The way to a solution
+- The vacuum content
+- LocalRule
+- Alignment, 2026-10-25
+- The unbounded board
+- The two slits as run are the click test
+- Gamma is not constant
+- Alignment, 2026-10-25
+- Alignment, 2026-10-25
+- The families from the rule
+- Every family has a dimension
+- The universe holds the lines' pairs as numbers
+- No family is declared: the families emerge at the click
+- The line of a record
+- The mass is one integer
+- The wall is one
+- The final unification
+- The exact bands
+- The exact bands are exact only in the vacuum
+- The third and the colours, closed as absent
+- The generations
+- The generations through unification and the quarks
+- The conversion
+- The click's parity
+- Matter's birth from light
+- The one universe
+- The volume holder is massless, derived from den
+- The one universe file since the merge of 2026-10-24
+- The lightest point is derived
+- The lightest point is derived
+- The click's algebra beyond the law
+- The click's momentum on the board
+- The conservation at the click, line by line
+- The presence effect of the click as defined
+- The share rule
+- The lattice momentum
+- The rule's own universe
+- One world, defined to the bit, compared clicks to clicks
+- A pair's numerator may be negative
+- The staggering is exact
+- The bound body is one Node
+- Every body is bound; records may be free
+- The click joins and parts
+- The observer is a cluster
+- The tree
+- Every body is bound; records may be free
+- The three distances are the rule's
+- The algebra of clusters
+- The count is the record's form
+- The five looks on this section
+- The screen is a cluster
+- The hierarchy is recursive
+- The click is the pointer
+- The levels at a Node are the nesting
+- The couplings are at the edge
+- The stable pixel is one
+- The wavelength is the giver's beat
+- The closed lattice has no rest
+- The uniform mode carried by Rule3's own k = 0 line
+- The mean's velocity is the content's
+- The sign side of the exponent
+- The width bounds A by the least of the two
+- The width is derived
+- The electron needs no band of its own
+- The three masses of a body
+- The generator is Rule3
+- The count is the record's form over its period
+- Gamma is not constant
+- The clusters' cosmology
+- The close's weights under the term
+- The two readings of Gamma are two levels
+- The bound states of a Node
+- Three kinds of binding, not three levels
+- The atom is a bound body of the holder of the sign
+- The fine structure is Klein-Gordon's
+- The proton in the engine's worlds
+- The electron in the engine's worlds
+- The atom in the engine's worlds
+- What nature splits is a body
+- The vacuum's row steps at the divisor 1
+- The gate reads the form at any phase
+- The generator has no sink
+- The generator of the rule's universe writes bound bodies alone
+- The interval's dependency radius is one Link
+- Only local
+- The one Node
+- Alignment, 2026-10-25
+- The click's view: the readings on the credit line
+- The law in one line
+- Alignment, 2026-10-25
+- The tick is the count of rounds
+- Time is a count of a record's turns
+- The flux form of Rule3
+- Alignment, 2026-10-25
+- The clock once and the Link twice
+- Proof
+- Alignment, 2026-10-25
+- The cube's symmetry
+- Proof
+- The symmetric lay
+- The quarter turn of a two-plane record
+- CA-S1, the direction is the slot
+- A composition
+- Theorem
+- Proof
+- The three tests of every rule
+- Alignment, 2026-10-25
+- Alignment, 2026-10-25
+- Every row reads the content
+- The clock is the Node's, the tension is the Link's
+- The same clock and the same ruler for every act
+- The board's interval is no observable
+- The board is a torus
+- The paces compose
+- The second order of the exponential metric
+- The two rounded integers of the rule
+- The linear form's regime
+- The moving pattern's clock
+- The clock near matter
+- The two-way reading
+- The cube's slowing and the tick's bound
+- The write per proper volume and per proper interval
+- The turn per proper interval
+- The reads are the held row's pair's
+- The sign is the rotation sense
+- The charge of a plane is bounded by its share
+- The level enters the Link twice and the clock once
+- Computed
+- The clock family on the Ports
+- The push on a moving record
+- The guard
+- Alignment, 2026-10-25
+- The band at a pace
+- The lattice constants
+- Alignment, 2026-10-25
+- Alignment, 2026-10-25
+- Proof
+- Alignment, 2026-10-25
+- What the lattice conserves
+- The static frame and the two gauges
+- The bilinears of one pair
+- The remainders' walk accumulates on a bounded board
+- The flux form of Rule3
+- The flux form on a turned or folded Link
+- Gravity's flux and the enclosed write
+- At a Node there is Rule3 and nothing else; nothing on the board draws
+- The loader and the generator carry no law but Rule3's own lines and the file's declarations
+- The emission of a bound record is the click's act of the taker
+- CX-S1, what the click chooses beyond Rule3
+- CL-S1, the close's one moment
+- CL-S2, the close logs at one moment and acts at its own
+- The share's change is the currents
+- The paces' own change moves the share with no current
+- The mass defect is the form's fall at a kept count
+- The sign's count is the record's own
+- The Gram determinant of the planes
+- The click's unit: the whole of a click is the detector's own transition
+- What a click reads of a quantum
+- The frozen Node has no share
+- The click is the detector's report
+- Light is born by the write; no quantum changes family at a crossing
+- The anti-body
+- No click names a Node
+- The uncertainty relation is the detector's three declarations
+- The uncertainty principle is the record's and the click's
+- The share and the wall
+- The inverse
+- Theorem
+- Proof
+- The velocity
+- The bound
+- The algebra of the exclusivity
+- A detector is the future having met the past; it always receives two quanta; from it the new future goes out; what produces the click is not known, the draw stands in its place; a click is Rule3's division act on the families
+- The born pair's meeting
+- The click is the meeting of the future with the past
+- The meeting's reading
+- The cone's run is the board's run, exactly
+- The count on the board
+- The births' book
+- The meeting's identity
+- The click writes on the lattice
+- The lay across parts
+- Only a bound body clicks
+- The one click of a set of Nodes
+- The click's read of the board
+- The board is deterministic, but it cannot be read through clicks, because of the uncertainty principle
+- The digits' budget
+- The content
+- The booking is the frame's
+- The digits' base and a total's factors
+- The dark board and the standing body
+- What a body reads
+- The NodeDetector in six steps
+- The NodeDetector is one declaration kind for every world
+- Every step derived from the law's lines, where it can be
+- The linewidth renamed, the stone stated and not explained
+- The eye is not the real detector; the detector gives as well as takes; the action closed from the detector's side; the frequency closed as a number
+- What clicks
+- The one form
+- The click's algebraic definition
+- The Ports' three readings
+- The share's sign and the credit's floor
+- The pair family and Bell's gate
+- Tsirelson's bound is a theorem of the credit's form
+- The GHZ gate
+- The three quantum gates, the four sentences
+- MK-S2, the momentum across the click is conserved along the click's Link
+- CR-S1 and CR-S2, the click as a row act
+- The wave is the future, the click is the present, the track is the past; there is no duality
+- The click formulas
+- The two slits' variants under the click's read
+- The two-mode line
+- A family's write is one act
+- The tension
+- The stress is the Links'
+- The conventions and the units
+- The two branches
+- The compact pixel under the composed paces
+- A pixel
+- The tail of a body
+- The four lines of the body
+- The reach of a held family is its pair
+- The functional
+- Theorem
+- Proof
+- Computed
+- The photon channel is the write
+- What is missing
+- The free part
+- The bound surplus does not leave by itself
+- The held rows radiate
+- The mass defect is the form's fall at a kept count
+- The cooling's local trigger is the record's own current
+- The number of quanta a cloud gives to settle
+- The quantum's action sets the resolution
+- The fine unit of a rest
+- The start
+- The uniform seed is a lay
+- The lay is a standing state of the step
+- No write from outside Rule3 wakes either double root of the massless row
+- The integer-exact constructions are the preferred ones
+- The method of derivation is the law's own and the team's way of working
+- The integer budget of a derived row
+- The ledger of exactness
+- Rule3 is not changed; it is used to solve problems
+- The chain that reached the level weight
+- The chain from the lattice to the bodies to the formulas
+- The law's own formulas
+- Einstein lives in the clicks of bound bodies, and the board is never measured
+- Only clicks against clicks
+- No waves on the event board
+- What produces a click is not known
+- Nature's numbers enter the board only as clicks
+- One sentence
+- One thing, two faces.
+- The points of the lattice are the Node and the Event
+- What a body does, in the words of the clicks
+- The fork, decided
+- What is checked first.
+- The second level's amplitude is a count of its own
+- The sign holder rotates the two-part record
+- A static sign row is the electric potential in the temporal gauge
+- The odd line's source is the sign's own current
+- The Lorentz form on the sign holder's four lines
+- The 2 Larmor fork under the Lorentz form
+- The off-diagonal parts where declared
+- No record reads its own write of the sign
+- The nucleon is a compact body of its family
+- No dispersion force and no Casimir force
+- The lattice's frame is read by gravity alone, and its carrier is a pair of Links
+- The strong force
+- The nuclear holder
+- The nucleus
+- Spin, closed for the paper as a route
+- Only a click moves a quantum between families
+- The record's parts are its particles
+- The two-mode line's pair
+- The pair of two bound records
+- The pixel's representation
+- The rotation's first-order line
+- The board's interval is no observable
+- The board is a torus
+- The mean's velocity is the content's
+- The motion of gravity's row is a hill at the symmetry's weight
+- The carried momentum
+- The hill's weight is the write's mix
+- The form's own clock
+- The factor carried
+- The stress's trace is the time line's
+- The symmetric hill
+- The carried momentum
+- The stress's trace is the time line's
+- The shear's momentum is carried at the volume's wall
+- The swap at the top
+- Dark matter in kind is a theorem of the lines
+- The floor
+- The horizon
+- The board reads itself
+- What the law declares and does not derive
+- The forces as the law holds them
+- Every act of the engine, derived from the law's lines where it can be, declared with its reason where it cannot
+- The properties of the lattice
+- The calibration series
+- The law's alpha is a coefficient of the file
+- The law's alpha is the ratio of the file's E_h T num to Gamma den, carried in the sign holder's write
+- The charge written is the Wronskian over T div 2 for every reader
+- The law's alpha is the ratio of the file's E_h T to Gamma, one per holder with any pairs under it
+- The sign holder's static rest is the lattice Green's function
+- The fine-structure number is the write weight times the read weight
+- A body and the light it reads keep one energy
+- The units are the electron's and the share's ceiling is the highest photon energy
+- No free number but the mass
+- The measured speed
+- The clock family on the Ports
+- The live ledger
+- The three roots of the gaps
+
+## 3. The law's sub-heads, the bullets of the former clauses and the lists (14)
+
+- SR-S1 to SR-S4, the spinor row of shape 8
+- The three shapes before the spinor row
+- The seed in three forms and no fourth
+- The constants before the owner's word of 08:2x UTC GitHub's clock
+- The bound body is one Node
+- No record reads its own write of the sign
+- The orientation of the birth
+- The digit sets of the one-Link read
+- The remainder's former clauses
+- The riding line's rounds
+- The pump of 4.0
+- The former closings of the click
+- The engine's departures found on the owner's "no if"
+- The measures of the day's derivations, by name
+
+## 4. ENGINE.md's table rows, the first column (86)
+
+- Property
+- The Node is the board's centre (the calibration)
+- Rule3 at the Node and its inverse
+- The clock is the Node's, the tension is the Link's
+- One Link (Locality is never broken)
+- The held write and its inverse
+- The sign's row is the Wronskian (the engine's form, one row per record and no record reading its own; the law since 19:0x UTC the one row read whole, this row to be re-cut with the code)
+- The phase act: the clocked potential and the counts along the orbit
+- The swap at the top and at the floor (the time's reversal)
+- The frozen clock
+- The click's read: one Link and one number, the three refusals, the 48
+- The take at two quanta: the walls paid, the pair laid, stop and lay refused
+- The body's closing: the beat and the credit
+- Constant 1, the count of integers
+- Constant 2, the list of acts
+- Constant 3, 128 bits
+- The fold on the one-Node torus
+- The 48 at the Node
+- The Links lengthening
+- The Links shortening
+- The clock
+- The time's reversal as its own row
+- The Link birth oriented by the current (the sentence (1))
+- The body's emission (W-S1, the sentence (3))
+- The gap's binding
+- The annihilation and the split (The decay is the click forward; the annihilation and the split are the click backward)
+- The cone of a click (Locality is never broken, act by act)
+- The draw and the quantum taken are the Node's (Locality, act by act)
+- The arrow and the correlation are local (Locality, act by act)
+- The black hole, the horizon (one Node)
+- The black hole, the turn (one Node)
+- The loader's refusals by name (The constants of the universe)
+- The conservations at the Node (The way to a solution, step 4)
+- Every wall and unit of the Node a named primitive of its clause, no literal (the owner's word of 2026-10-25, 12:2x UTC, through the Boss, #2187 comment 6397592982: the walls are algebra, not code)
+- The merger, the birth read at -1 (SL-S2, by the criterion, the owner's word owed)
+- The equilibrium at the body's click (EQ-S1 in cs7's letter, the owner's word of 17:57 through the Boss)
+- Module
+- decoder.py
+- gates.py
+- clicks.py
+- board.py
+- predicates.py
+- events.py
+- circle.py
+- tools/page.py
+- tools/bangs_page.py
+- Name
+- den
+- Gamma, the Node's clock
+- T, the quantum of action
+- G, the Link unit
+- The rows' pairs [num, den] and shapes
+- K, the trace's weight
+- The world's numbers: the board's shape, the intervals, the seed's lays (their rows, quanta, centres, widths, waves and tops)
+- AXES
+- SIDES
+- PORTS
+- port_of(axis, side)
+- The three shapes, CARRIER and POTENTIAL and PLANE, and the struck QUARTET
+- PLANES (the fold's name for quartet.HALF)
+- amplitude, the phase line's scale
+- The amplitude's floor
+- POWER_TIME
+- POWER_AXIS
+- HELD_WRITE_WEIGHT
+- UNIT_WEIGHT
+- link_wall(gamma)
+- share_weight(gamma, unit)
+- HALF_WIDTHS
+- The arithmetic's own: half's 2, odd's 2, the root's second neighbour
+- MIL and HUNDRED and THOUSAND
+- FEW, SPANS
+- MARKS, EARLY
+- The Reader's fold (reader-5 e41f8fb75, 90 literals to 23, to the merge; the names the Reader's, one line per constant): HALF and PAIR and MAX
+- THIRDS and QUARTERS and LIFTS
+- LISTED, SHORT_LIST, FOUR_LISTED
+- LEVELS_BACK
+- LINK_WALL_GAMMAS, KICK_WEIGHT, REACH
+- WIDTH (the decoder's copy)
+- BIRTHS, PULL
+- SETTINGS
+- EVEN, GAUSS
+- ROWS, OPTION_WORDS
+- MEBIBYTE and BOUND and the page's LEVELS
+- The table's row labels
+- The page's drawing exponent
+
+The ledger's columns (UNIVERSE24.md section 4: the item, its state, who decides, the links) and the gates' row names (section 2, the Reader's table, regenerated by his tool) are named here for the Reader and the Boss; the Scribe renames no row of the Reader's table.
