@@ -68,6 +68,7 @@ class Tick:
         self.driven = [r for r in clock.trains_ if r.teeth is None and r is not self.regulator]
         self.hands = clock.hands()
         self.hand_couplings = [(r, coupling_of(r)) for r in self.hands]
+        self.fields = [r for r in clock.trains_ if r.weight is not None]
         self.out: list[list[Gear]] = [[] for _ in self.trains]
         self.hand_starts: list[list[Gear]] = []
         self.before_turnover: list[list[Gear]] = []
@@ -91,7 +92,7 @@ class Tick:
         self.pulls()
 
     def rate_readings(self) -> None:
-        """The clock's rate at the start: its load and rates, the stopped mask, the dial, the mesh factors, the pawls, the clocked offset and the regulator's notch."""
+        """The clock's rate at the start: its load and rates, the stopped mask, the dial, the mesh factors, the pawls, the clocked offset and the regulator's notch; the held load, the load with every held field's notch at its weight (clock.start_held), at which every train's spring is read and no mesh."""
         clock = self.clock
         self.load = np.asarray(
             stretch.load_of(clock.full_rate, self.at(self.regulator.gears[0])), dtype=object
@@ -102,6 +103,8 @@ class Tick:
         if self.stopped is None:
             self.stopped = readings.stopped_of(clock, self.load)
             self.still = self.top | self.stopped
+        self.held_load = self.load + sum((r.weight * self.at(r.gears[0]) for r in self.fields), start=0)
+        clock.start_held = self.held_load
         clock.dial = clock.dial + self.going * np.where(self.stopped, 0, self.rate)
         self.factors = factors(
             clock, [self.at(gear) for gear in self.regulator.gears[1 : 1 + AXES]], self.stopped
@@ -154,6 +157,7 @@ class Tick:
         self.starts: dict[int, list[Any]] = {}
         self.pull: dict[int, list[Any]] = {}
         self.train_teeth: dict[int, Any] = {}
+        self.train_spring: dict[int, Any] = {}
         for r in self.driven:
             gearing = readings.gearing_of(clock, r, self.load, self.factors)
             turn = None
@@ -162,7 +166,7 @@ class Tick:
                 rotation = coupling_of(r) * rest_rate_of(clock, r.ratio)
                 turn = skewed(self.meshes_at[coupling_of(r)], rotation, self.flow_gears, clock.full_rate)
             k = self.where[id(r)]
-            self.train_teeth[k] = gearing.teeth
+            self.train_teeth[k], self.train_spring[k] = gearing.teeth, gearing.spring
             self.starts[k] = [self.at(gear) for gear in self.gears(r)]
             pulls = clock.pulls(self.starts[k], gearing, turn)
             self.pull[k] = [
@@ -197,7 +201,7 @@ class Tick:
                     self.pull[k][i] = self.pull[k][i] + q
 
     def impulse(self) -> None:
-        """(2) The impulse (the former `kicks`): every driven gear's stride at the start read at the mean teeth of the regulator's two notches as the trains hold them, P = W (a_now - a_before) + r - W div 2, and impelled by stretch_now F in the going; the offset train's time gear impelled besides by the hands' sweep read at the impulse and its three odd gears by their lead at the start alike (PL-S1 on all four gears, David's DAVID-LEAD-AT-THE-KICK.md, the owner's word of 2026-10-27, 18:5x UTC, through the Boss's recommendation: the lead's carried quotient lands as the momentum kick w X_now q before the gear's one carry, where the former write of the lead as a count after the division was read the next tick at the mean wall and a jump of the stretch carried it into a huge wall, kept by name; PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the sprung hands of N.J.u_in + N.J.u_out, N the notches at the start and u the odd rounding of 2 P + 1 over 2 w stretch_now, the hand's -(three u_twelve - twelve u_three) in and out, the same integers forward and backward and its own image under the exchange and the reflection; one carry at the gear's drive teeth T with the carry kept in its drive fine tooth, the carries landing as the impulse w stretch_now q before the gear's one carry; the sweep summed over the hands before the offset train is met, which rests on trains.order_key, H-Confirm-Build-11; the former notch drive of 2 W of the hands after the step kept by name: a source pinned to the step's end, whose image under the exchange is a start, so the fall drove 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the regulator's source from every driven train alike, gear by gear u_in u_out + (-a F) div w, w the train's teeth; and every hand's stress, one outer product of its start notches' gradients and its velocity u_in + u_out (regulation.stress_of)."""
+        """(2) The impulse (the former `kicks`): every driven gear's stride at the start read at the mean teeth of the regulator's two notches as the trains hold them, P = W (a_now - a_before) + r - W div 2, and impelled by stretch_now F in the going; the offset train's time gear impelled besides by the hands' sweep read at the impulse and its three odd gears by their lead at the start alike (PL-S1 on all four gears, David's DAVID-LEAD-AT-THE-KICK.md, the owner's word of 2026-10-27, 18:5x UTC, through the Boss's recommendation: the lead's carried quotient lands as the momentum kick w X_now q before the gear's one carry, where the former write of the lead as a count after the division was read the next tick at the mean wall and a jump of the stretch carried it into a huge wall, kept by name; PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the sprung hands of N.J.u_in + N.J.u_out, N the notches at the start and u the odd rounding of 2 P + 1 over 2 w stretch_now, the hand's -(three u_twelve - twelve u_three) in and out, the same integers forward and backward and its own image under the exchange and the reflection; one carry at the gear's drive teeth T with the carry kept in its drive fine tooth, the carries landing as the impulse w stretch_now q before the gear's one carry; the sweep summed over the hands before the offset train is met, which rests on trains.order_key, H-Confirm-Build-11; the former notch drive of 2 W of the hands after the step kept by name: a source pinned to the step's end, whose image under the exchange is a start, so the fall drove 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the regulator's source from every driven train alike, gear by gear u_in u_out + (-a F) div w, w the train's teeth; and every hand's stress, one outer product of its start notches' gradients and its velocity u_in + u_out (regulation.stress_of); and every held field kicked as the offset's time gear by the masses of the trains met before it, w X_now q with q the carry of its weight times SUM over those trains of D |a|^2 div w (each train's spring and teeth at the clock: the mass density, so a train with no spring sources nothing; DAVID-MEDIATOR.md)."""
         clock = self.clock
         self.forms = zeros(clock.size)
         self.impelled: dict[int, list[Any]] = {}
@@ -205,6 +209,7 @@ class Tick:
         w_side = readings.mean_teeth(self.clock, self.regulator.gears[0])
         sweep = zeros(clock.size)
         self.stress = [zeros(clock.size) for _ in range(REGULATOR - 1)]
+        self.masses = zeros(clock.size)
         for r in self.driven:
             k = self.where[id(r)]
             p_side = [
@@ -214,9 +219,15 @@ class Tick:
                 p + self.going * self.stretch_now * f for p, f in zip(p_side, self.pull[k], strict=True)
             ]
             if r is self.offset:
+                clock.start_kicks = []
                 for a, (gear, n) in enumerate(zip(self.trains[k], [sweep, *self.lead], strict=True)):
                     q, gear.dfine = carry(n, gear.dteeth, gear.dfine, self.going)
                     p_other[a] = p_other[a] + self.going * clock.teeth * self.stretch_now * q
+                    clock.start_kicks.append(q)
+            if r.weight is not None:
+                gear = self.trains[k][0]
+                q, gear.dfine = carry(r.weight * self.masses, gear.dteeth, gear.dfine, self.going)
+                p_other[0] = p_other[0] + self.going * clock.teeth * self.stretch_now * q
             u_in = [rates.rounded(p + p + 1, d) for p in p_side]
             u_out = [rates.rounded(p + p + 1, d) for p in p_other]
             if r in self.hands:
@@ -225,6 +236,8 @@ class Tick:
                 assert r.ratio is not None
                 found = stress_of(self.starts[k], velocity)
                 self.stress = [s + r.ratio[0] * t for s, t in zip(self.stress, found, strict=True)]
+            mass = self.train_spring[k] * hands.dot(self.starts[k], self.starts[k])
+            self.masses = self.masses + carries(mass, self.train_teeth[k])
             pulls = hands.products(self.starts[k], self.pull[k])
             for product, pull in zip(hands.products(u_in, u_out), pulls, strict=True):
                 self.forms = self.forms + product + carries(-pull, self.train_teeth[k])
