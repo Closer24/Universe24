@@ -213,3 +213,22 @@ The Boss's head (ledger row 261) read whole: the 8 files of src it moved (assemb
 - **New, David's (row 262):** the cube's 24 hold at 3 of 24 in the strike on nature and the hole, the draw's digits mirroring about their origin; the one mirror, F48-S1's letter, is the owner's word.
 
 **Asked of the owner, as in section 13, and one more:** R12 with R1; the coupling's general form K / Gamma (Y-S1); the third bound; and the remainder's one mirror about its origin (F48-S1).
+
+## 15. The register at e41c51e6b, row 74 read at the clock (2026-10-27, 23:2x UTC)
+
+The Boss's head (ledger row 264) read whole: the two files of src it moved (phenomena.py, 326 lines, 22 added and 16 taken; run.py, 397 lines, 2 added and 1 taken), the tests (the bang's test at the weight 2, the committed charts' SHOWN sets gaining 74, the bang test's room 26 lines, tests/worlds/universe_bang.json) and the three records; the counts by `tools/engine_gates.py` against 6a853217f and the Scribe's lister and AST scan. Sections 10 to 14 stand; files the head did not touch keep their lines.
+
+**The counts, unchanged from 6a853217f:** numbers beyond 0 and 1, 24 in 7 files; identity reads of the unsprung hand 28 in 8 files; branches by `is`, 13 in 5 files; family-name strings 0, floats 0, true divisions 0, no import of math or trigonometry. Src 6,857 lines in 23 top-level modules (7 more than at 6a853217f); the tests 6 files and 61 functions; the full check 115 passed (178 s on the merged tree).
+
+**Standing, with what the head changes:**
+
+- **R1, the roles (a line more):** run.py:294's `odd` reads the offset's odd gears by role (`clock.train(OFFSET).gears[1:]`), the chart writer's second line of the kind beside `kick` at :293; the rest as in section 14.
+- **The readers:** phenomena.py names the light by its number at :35, :227 and :258 (the lines :35, :221 and :252 of section 14, moved by six lines); its second difference a - 2 b + c is spelt with two b's (:140) and the span's two ticks as `t - 1 - 1` (:133), the gate counting no number in either; the reader exempt whole.
+- **The weight 2, a setting by trial:** the universe file's weight is chosen among 3, 2 and none on the polarization's tally (the commit gives no derivation); with no field the polarization already reads on all three axes (144 of 570, 69 of 584 and 114 of 538 kicks read, the Scribe's run of the same bang) and row 9 reads NOT SHOWN, which at the weight 3 reads SHOWN: the weight serves the binding alone, and at the weight 3 it spoils the polarization's third axis (48 against 50).
+- **Row 74's definition:** the own-axis tally's net agreement is 15, 14 and 14 percent of the kicks read at the weight 2 (25, 12 and 21 percent with no field); whether the kick's carry on its gear is the light or the kick's own landing is for David (DAVID-FOUR-PHENOMENA.md section 1).
+- **The test's sample:** the bang test reads binding on 6 of 14 pairs at one tick (22 of 66 at the weight 3), above twice the board's own share; the 250-tick figures carry more (52 of 144 and 32 of 68).
+- **R12, R2, R3, R5 and the others:** as section 14.
+
+**Verified by the Scribe's run:** the one big bang at 250 ticks at the weight 2, at the weight 3 and with no field, from tests/worlds/world_bang.json with the universe file's field edited, reads the Boss's tallies, fittings (410, 318 and 356), chimes (11,497, 11,548 and 12,564) and rows integer for integer.
+
+**Asked of the owner, as in section 14:** R12 with R1; the coupling's general form K / Gamma (Y-S1); the third bound's tick resolution; and the remainder's one mirror about its origin (F48-S1).
