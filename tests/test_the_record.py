@@ -9,20 +9,18 @@ from typing import Any
 import pytest
 
 from event_universe import great_clock, strikes, swings, symmetries
+from event_universe.clock import Clock
 from event_universe.core import rates, rule3
 from event_universe.core.spokes import AXES
 from event_universe.events import NAMES
 from event_universe.gates import gates
 from event_universe.reckoner import Chart
 from event_universe.run import chart
-from tests.laws import ROOT, load_file, world_of
+from event_universe.trains import HAND
+from tests.laws import ROOT, load_file, state_of, world_of
 
 RECORDS = ROOT / "examples" / "records"
-CIRCLES = {
-    "bodies": (8, 2),
-    "chiral": (26, 3),
-    "hole": (26, 3),
-}  # den's circle: its points, the typed  # den's circle: its points, the typed
+CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # den's circle: its points, the typed
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Boss's count in Universe24
     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the Links lengthening in the clicks, under GP-S1's lay) and gains 47 (the exact take, the excess kept as the remainder, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 kept by the decoder's read of the remainder, 17 lost by the engine's bug at a merger's tie end (H-Children-Charge-Bug-1: the light laid as the charged child's lay, the children's own charges -36,000 over the births; SHOWN again at the fix); the bodies gain 8 and 16 with the credits the remainder pays; the hole under PL-S1 before: 9 and 22 among them under the former write of 2 W after the step
     "hole": {
@@ -399,3 +397,29 @@ def test_the_page_of_the_bangs_is_one_html_from_the_records_and_the_readings(tmp
     assert text.count("<tr><td>") == len(rows) and "It brings:" in text and "Together:" in text
     source = (ROOT / "tools" / "bangs_page.py").read_text(encoding="utf-8")
     assert str(run["den"]) not in source and "electron" not in source and "light" not in source
+
+
+def test_a_train_of_four_gears_at_a_spring_is_two_partner_hands_and_keeps_the_spin() -> None:
+    """Spin one half on two hands (David's DAVID-SPIN-SOLVED.md, toys-5 67f2ff192, the owner's words of 2026-10-27, 12:02 UTC): the node world's calibre with every sprung hand's train named as four gears is two partner hands per family, read from the count and the ratio; at 20 ticks every fitting lays its - child and its + child in partner hands, every unspringing takes across them, and the 20 ticks rewind exactly (a fitting group of two children at one clock undone by its one take once)."""
+    calibre, piece = world_of("world_node.json")
+    den = int(calibre["integers"]["den"])
+    four = [
+        dict(t, shape=HAND + HAND) if t.get("pair") and t["shape"] == HAND and t["pair"][0] < den else t
+        for t in calibre["rows"]
+    ]
+    clock = Clock(dict(calibre, rows=four), piece)
+    hands = clock.hands()
+    partner = {k: hands.index(r.partner) for k, r in enumerate(hands) if r.partner is not None}
+    assert partner and all(partner[b] == a and hands[a].size == HAND for a, b in partner.items())
+    kept = []
+    for _ in range(20):
+        kept.append(state_of(clock))
+        clock.tick()
+    fittings = [e for e in clock.log if e["event"] == "birth"]
+    assert [e for e in fittings if "takes" not in e] and all(
+        partner[e["line_pair"]] == e["plus_line"] for e in fittings if "takes" not in e
+    )
+    for e in (e for e in fittings if "takes" in e):
+        ends = [take.get("plane", e["taken_row"]) for take in e["takes"]]
+        assert partner[ends[0]] == ends[1]
+    assert sum(state_of(clock) == kept[19 - k] for k in range(20) if not clock.tick(-1)) == 20

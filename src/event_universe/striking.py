@@ -56,6 +56,7 @@ def engage(
     sh: Any,
     rules: list[tuple[Gear, rule3.Gearing]],
     frozen: Any,
+    other: tuple[int, Any, list[Gear]] | None = None,
 ) -> list[Fitting]:
     """The Link close of one record, the same for every record (SL-S1, the generic close): every Link once from its +a end; a meeting where both ends hold a whole quantum of the record at the interval's start and neither end is frozen (counted as `met`); the + child at the end the record's own current flows into where the twist of its transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); a record with a gap meets as the conjugate pair alone, the two ends' charges of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; refused by name `sense` where not), and at rest, no current across the Link, as the pair at rest (MG-S1: the + child at the end whose charge is positive, the birth's orientation read at -1, the twist not read, its number read after the stop in `births`); the Link's one number read at the current's end names the children's record (`list_of`; one read per Node and record in a close). Returns the births as (the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room, the taken record)."""
     born: list[Fitting] = []
@@ -64,14 +65,27 @@ def engage(
     currents = [node.rim * train_lead(start, spoke_of(axis, 0)) for axis in range(AXES)]
     twists = [train_twist(start, axis) for axis in range(AXES)]
     charges = hands.sweep(row.size, start) if row is not node.unsprung() else None
+    far, far_charges = standing, charges
+    if other is not None:
+        q, q_sh, q_start = other
+        far = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(q_sh) & ~frozen
+        currents = [
+            c + node.rim * train_lead(q_start, spoke_of(axis, 0)) for axis, c in enumerate(currents)
+        ]
+        twists = [t + train_twist(q_start, axis) for axis, t in enumerate(twists)]
+        far_charges = hands.sweep(row.size, q_start)
     for axis in range(AXES):
-        both = standing & across(standing, spoke_of(axis, 0))
+        both = standing & across(far, spoke_of(axis, 0))
         for where in zip(*np.nonzero(both), strict=True):
             at = tuple(int(x) for x in where)
             j = neighbour(node, at, spoke_of(axis, 0))
             node.counts["met"] += 1
             flow, h = int(currents[axis][at]), int(twists[axis][at])
-            w = [0, 0] if charges is None else [int(charges[at]), int(charges[j])]
+            w = (
+                [0, 0]
+                if charges is None or far_charges is None
+                else [int(charges[at]), int(far_charges[j])]
+            )
             rest = flow == 0 and w[0] * w[1] < 0
             if (flow == 0 or h == 0) and not rest:
                 jammed(node, at, "orientation" if flow == 0 else "twist", link=list(j), row=rec)
@@ -84,6 +98,9 @@ def engage(
             else:
                 into, outof = (j, at) if flow > 0 else (at, j)
             plus, minus = (into, outof) if rest or h > 0 else (outof, into)
+            if other is not None:
+                planes = {at: rec, j: other[0]}
+                node.end_hands[(rec, minus, plus)] = (planes[minus], planes[plus])
             if rest:
                 born.append(Fitting(into, list_of(node, rec, 0), minus, plus, 0, rec))
                 continue
@@ -97,26 +114,46 @@ def engage(
     return born
 
 
+def partner_of(
+    node: Clock, rec: int, owns: list[Any], plane_starts: list[list[Gear]]
+) -> tuple[int, Any, list[Gear]] | None:
+    """The record's partner plane with its standing share and its start, where its row is two planes."""
+    partner = node.hands()[rec].partner
+    if partner is None:
+        return None
+    q = node.hands().index(partner)
+    return q, owns[q], plane_starts[q]
+
+
 def jam(node: Clock, born: list[Fitting], owns: list[Any]) -> list[Fitting]:
     """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) pass both and read their bound on their own quantum at the take, the light's unit at the end as MG-S1's share reads it, the light a sea the merger pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the birth read at -1, MG-S1). Returns the births kept."""
     records = node.hands()
     inverse = [k for k in born if records[k.gear_ratio] is node.unsprung() is not records[k.rec]]
     kept = []
     for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
-        if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
+        if int(owns[s][minus]) > 0 or int(owns[hands.plus_hand(records, s)][plus]) > 0:
             jammed(node, at, "lay", standing=int(owns[s][minus]), unit=node.windings[s], row=rec)
             continue
         kept.append(Fitting(at, s, minus, plus, room, rec))
     landing: dict[tuple[int, tuple[int, ...]], int] = {}
     for _at, s, minus, plus, _room, _rec in kept:
         landing[(s, minus)] = landing.get((s, minus), 0) + 1
-        landing[(s, plus)] = landing.get((s, plus), 0) + 1
+        landing[(hands.plus_hand(records, s), plus)] = (
+            landing.get((hands.plus_hand(records, s), plus), 0) + 1
+        )
     crowded = [
-        k for k in kept if landing[(k.gear_ratio, k.minus)] > 1 or landing[(k.gear_ratio, k.plus)] > 1
+        k
+        for k in kept
+        if landing[(k.gear_ratio, k.minus)] > 1
+        or landing[(hands.plus_hand(records, k.gear_ratio), k.plus)] > 1
     ]
     for at, s, minus, plus, _room, rec in crowded:
         jammed(
-            node, at, "lay", children_at_one_node=max(landing[(s, minus)], landing[(s, plus)]), row=rec
+            node,
+            at,
+            "lay",
+            children_at_one_node=max(landing[(s, minus)], landing[(hands.plus_hand(records, s), plus)]),
+            row=rec,
         )
     return [k for k in kept if k not in crowded] + inverse
 
@@ -151,6 +188,7 @@ def fittings(
         if row is not node.unsprung():
             for kid in kids:
                 ends = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
+                planes = node.end_hands.get((rec, kid.minus, kid.plus))
                 drawn: list[Any] = []
 
                 def draw(
@@ -159,7 +197,7 @@ def fittings(
                     into.append(vernier(node, at, reads, unit))
                     return into[-1]
 
-                got = unwinds(node, ends, rule, 1, rec, draw, shares, at)
+                got = unwinds(node, ends, rule, 1, rec, draw, shares, at, planes)
                 if got is None:
                     continue
                 taken.append((at, rec, [kid._replace(room=drawn[-1][1])], summed(got)))
@@ -238,7 +276,8 @@ def undo(node: Clock, frame: dict[str, Any]) -> None:
             exact = entry.get("exact_lay", [None, None])
             for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
                 if laid is None:
-                    advance(node, s, tuple(where), fitted_notches(node.hands()[s], sense, a, b), -1)
+                    p = s if sense < 0 else hands.plus_hand(node.hands(), s)
+                    advance(node, p, tuple(where), fitted_notches(node.hands()[p], sense, a, b), -1)
                 else:
                     move(node, s, laid[0], tuple(where), -laid[1])
             if "cross" in entry:
@@ -248,12 +287,15 @@ def undo(node: Clock, frame: dict[str, Any]) -> None:
             row = entry.get("taken_row", rec0)
             for take in entry.get("takes", [entry]):
                 where = tuple(take["node"])
-                if entry["event"] == "credit" or (where, row, at) not in unbooked:
+                first = entry["event"] == "credit" or (where, row, at) not in unbooked
+                if first:
                     unbooked.add((where, row, at))
                     recoil(node, where, take["dP_take"], take["clock"], -1)
                 if "taken_levels" in take:
-                    advance(node, row, where, tuple(take["taken_levels"]))
+                    advance(node, take.get("plane", row), where, tuple(take["taken_levels"]))
                     node.strikes[where] += 1
+                    continue
+                if not first:
                     continue
                 toward = 1 if take["taker"][1] > take["taker"][0] else -1
                 count = 0 if "laid_back" in take else toward * take["levels"]
@@ -278,7 +320,7 @@ def strike(
         return
     c = node.start_load
     node.start_gears = plane_starts
-    node.pitches, node.vernier_read = {}, {}
+    node.pitches, node.vernier_read, node.end_hands = {}, {}, {}
     frozen = readings.stopped_of(node, c)
     read = factors(node, None, frozen)
     r_emitter = readings.gearing_of(node, node.unsprung(), c, read)
@@ -290,7 +332,15 @@ def strike(
     born = [
         b
         for rec in range(len(node.hands()))
-        for b in engage(node, rec, plane_starts[rec], owns[rec], rules, frozen)
+        for b in engage(
+            node,
+            rec,
+            plane_starts[rec],
+            owns[rec],
+            rules,
+            frozen,
+            partner_of(node, rec, owns, plane_starts),
+        )
     ]
     born_nodes = fittings(node, jam(node, born, owns), c, read, rules)
     bobs(node, plane_starts, owns, born_nodes, frozen, r_emitter)

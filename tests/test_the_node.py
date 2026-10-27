@@ -205,7 +205,7 @@ def test_the_files_are_refused_by_name() -> None:
             ),
         ),
         (
-            "the shape-4 row stands at",
+            "one shape-4 row",
             dict(universe, rows=[dict(r, pair=[1, den]) if r["shape"] == 4 else r for r in rows]),
         ),
     ):

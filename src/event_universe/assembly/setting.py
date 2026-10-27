@@ -24,9 +24,9 @@ HALF_SPANS = (
     3,
 )  # the envelope's half spans the raised cosine knows (the lay's `width`; 1 the one Node, a born pair's own form)
 FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
-    "sea": frozenset({"lay", "row", "quanta", "sense"}),
+    "sea": frozenset({"lay", "row", "quanta", "sense", "plane"}),
     "hole": frozenset({"lay", "at"}),
-    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top"}),
+    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top", "plane"}),
     "wave": frozenset({"lay", "row", "quanta", "p1", "cz", "mirror"}),
 }
 Ratio = tuple[Any, Any]
@@ -43,6 +43,10 @@ def set_piece(node: Clock, lays: list[dict[str, Any]]) -> None:
         if beyond:
             raise ValueError(f"a field of no form of the law in the lay {form!r}: {', '.join(beyond)}")
         row = node.by_index[int(lay["row"])] if "row" in lay else None
+        if "plane" in lay:
+            if row is None or row.partner is None or int(lay["plane"]) not in (0, 1):
+                raise ValueError("a lay names a plane of a row of two planes: 0 or 1")
+            row = row if int(lay["plane"]) == 0 else row.partner
         if row is not None and row not in node.hands():
             raise ValueError("a lay is onto a record (a plane)")
         if form == "sea" and "quanta" not in lay:

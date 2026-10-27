@@ -11,7 +11,7 @@ import numpy as np
 from event_universe.core.rule3 import carries, half, signed_carries, wind_weight
 from event_universe.core.spokes import AXES, SPOKES, across, spoke_of
 from event_universe.readings import standard_angle
-from event_universe.trains import HAND, Gear, zeros
+from event_universe.trains import HAND, Gear, Train, zeros
 from event_universe.unwind import neighbour
 
 if TYPE_CHECKING:
@@ -170,3 +170,9 @@ def cosine_count(node: Clock, p: int, d: int) -> int:
         else:
             high = middle
     return high
+
+
+def plus_hand(records: list[Train], s: int) -> int:
+    """The + child's plane: the partner of the - child's plane where its row is two planes (the pair's spin kept), the same plane otherwise."""
+    partner = records[s].partner
+    return s if partner is None else records.index(partner)
