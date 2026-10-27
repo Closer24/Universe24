@@ -10,7 +10,7 @@ from event_universe.core import paces, rule3
 from event_universe.core.ports import PORTS
 from event_universe.core.rule3 import half, remainder
 from event_universe.features import phase, volume
-from event_universe.rows import CARRIER, QUARTET, Line, Row
+from event_universe.rows import CARRIER, Line, Row
 
 if TYPE_CHECKING:
     from event_universe.node import Node
@@ -55,7 +55,7 @@ def pair_angle(node: Node, n: Any) -> tuple[int, int]:
 
 def scale(shape: int, gamma: Any) -> Any:
     """The row's scale on the rule and the walls (the former gram.scale kept by name, a reading of the row's shape alone): 2 x 6 Gamma for the quartet, so that the term's coefficient R / (2 Gamma) summed over the six Ports enters as the integer SUM_j R_j (SR-S3, sr1's form); 1 for every other shape."""
-    return (PORTS + PORTS) * gamma if shape == QUARTET else 1
+    return 1
 
 
 def rule(node: Node, pair: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Rule:

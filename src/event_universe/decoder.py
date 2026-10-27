@@ -10,7 +10,7 @@ from event_universe.circle import circle_of
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
 from event_universe.links import cross, turn_pair
-from event_universe.rows import PLANE, QUARTET
+from event_universe.rows import PLANE
 
 MIL = 1000000  # readings in parts per million
 HUNDRED = 100  # readings in hundredths
@@ -85,9 +85,7 @@ class Record:
         self.gamma, self.G, self.T = int(run["gamma"]), int(run["G"]), int(run["T"])
         rows = run["universe"]["rows"]
         planes = {
-            tuple(int(x) for x in r["pair"])
-            for r in rows
-            if int(r["shape"]) in (PLANE, QUARTET) and r.get("pair")
+            tuple(int(x) for x in r["pair"]) for r in rows if int(r["shape"]) == PLANE and r.get("pair")
         }
         gapped = sorted((sine_den(num, self.den), num) for num, den in planes if num != den)
         self.NL = len(gapped)
@@ -97,7 +95,7 @@ class Record:
         self.NAMES[self.den] = ("gap 0", 0)
         self.line_num = [int(num) for num in run["planes"]]
         records = sorted(
-            (r for r in rows if r.get("pair") and int(r["shape"]) in (PLANE, QUARTET)),
+            (r for r in rows if r.get("pair") and int(r["shape"]) == PLANE),
             key=lambda r: int(r["pair"][0]) == int(r["pair"][1]),
         )
         shapes = [int(r["shape"]) for r in records]

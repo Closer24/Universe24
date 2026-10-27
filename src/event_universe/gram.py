@@ -11,9 +11,8 @@ import numpy as np
 from event_universe.core.ports import AXES, PORTS, across, port_of, transverse
 from event_universe.core.rule3 import half, quotient, share_weight, signed_quotient
 from event_universe.links import gradient
-from event_universe.loader.quartet import quartet
 from event_universe.readings import pair_angle
-from event_universe.rows import PLANE, QUARTET, Line, zeros
+from event_universe.rows import PLANE, Line, zeros
 from event_universe.take import neighbour
 
 if TYPE_CHECKING:
@@ -29,14 +28,12 @@ def identity(n: int) -> Matrix:
 
 
 def gram(shape: int) -> Matrix:
-    """The row's Gram matrix G: the identity for every shape but the quartet's derived trace form."""
-    return quartet().G if shape == QUARTET else identity(shape)
+    """The row's Gram matrix G: the identity for every shape (the quartet's derived trace form struck with the spinor row, 2026-10-27: no universe of nature carries a shape-8 row; the owner's word of 06:2x UTC)."""
+    return identity(shape)
 
 
 def rotation(shape: int) -> Matrix:
-    """The row's rotation J, the quarter turn of each plane (re, im) -> (-im, re): the quartet's derived J, the standard blocks for a plane."""
-    if shape == QUARTET:
-        return quartet().J
+    """The row's rotation J, the quarter turn of each plane (re, im) -> (-im, re), the standard blocks."""
     found = [[0] * shape for _ in range(shape)]
     for p in range(quotient(shape, PLANE)):
         found[PLANE * p][PLANE * p + 1], found[PLANE * p + 1][PLANE * p] = -1, 1
@@ -44,9 +41,7 @@ def rotation(shape: int) -> Matrix:
 
 
 def conjugation(shape: int) -> Matrix:
-    """The row's conjugation K, the frame's and the swap's: the quartet's derived K0; for a plane the im line negated; the identity for a row of another shape (a line of one level is its own conjugate)."""
-    if shape == QUARTET:
-        return quartet().K0
+    """The row's conjugation K, the frame's and the swap's: for a plane the im line negated; the identity for a row of another shape (a line of one level is its own conjugate)."""
     found = [list(row) for row in identity(shape)]
     if shape == PLANE:
         found[1][1] = -1
@@ -54,8 +49,8 @@ def conjugation(shape: int) -> Matrix:
 
 
 def axes(shape: int) -> list[Matrix]:
-    """The row's axis matrices Gamma_a, the coupling's: the quartet's three, none for another shape."""
-    return quartet().gamma if shape == QUARTET else []
+    """The row's axis matrices Gamma_a, the coupling's: none (the quartet's three struck with the spinor row)."""
+    return []
 
 
 def matvec(m: Matrix, xs: list[Any]) -> list[Any]:

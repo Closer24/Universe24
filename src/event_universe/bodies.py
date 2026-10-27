@@ -66,11 +66,7 @@ def bodies(
             (take,) = got
             levels, now, k = take["levels"], take["taken_now_was"], take["taken_line"]
             node.counts["body_clicks"] += 1
-            frame = (
-                frame_of(node, rec, at, plane_starts)
-                if row.shape == PLANE
-                else bilinears_of(node, rec, at)
-            )
+            frame = frame_of(node, rec, at, plane_starts)
             entry = credit(node, rec, at, take, frame, plane_starts[rec])
             if int(net[at]) == 0:
                 move(node, rec0, k, at, now - int(node.records()[rec0].lines[k].now[at]))
@@ -110,22 +106,4 @@ def frame_of(
         ],
         "X": node.X,
         "factors": [int(f[at]) for f in node.start_factors],
-    }
-
-
-def bilinears_of(node: Node, rec: int, at: tuple[int, ...]) -> dict[str, Any]:
-    """A quartet's credit frame: its levels at the Node, its charge W, its spin density (the record's axial vector, signed per axis) and its axial Wronskians B.GJ Gamma_a.N (SR-S2)."""
-    row = node.records()[rec]
-    nows, befores = [line.now for line in row.lines], [line.before for line in row.lines]
-    gj = gram.matmul(gram.gram(row.shape), gram.rotation(row.shape))
-    axial = [int(s[at]) for s in gram.density(row.shape, nows)]
-    return {
-        "levels_now": [int(n[at]) for n in nows],
-        "levels_before": [int(b[at]) for b in befores],
-        "W": int(gram.charge(row.shape, row.lines)[at]),
-        "axial": axial,
-        "axial_sign": [(s > 0) - (s < 0) for s in axial],
-        "axial_wronskian": [
-            int(gram.form(gj, befores, gram.matvec(ga, nows))[at]) for ga in gram.axes(row.shape)
-        ],
     }

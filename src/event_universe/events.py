@@ -7,7 +7,6 @@ from typing import Any
 
 from event_universe.decoder import HALF, LISTED, PAIR, Record, quot, shown
 from event_universe.predicates import unread
-from event_universe.rows import QUARTET
 
 NAMES = {
     "1": ("a bang recurs", "the recurring bang"),
@@ -184,8 +183,7 @@ def no_wave(record: Record) -> str:
 
 def no_field(record: Record) -> str:
     """Why the spinor's two beats are not read: a quartet's universe has no held field, the others no shape-8 row."""
-    quartet = any(int(r["shape"]) == QUARTET for r in record.run["universe"]["rows"])
-    return "no held field in the world" if quartet else "no shape-8 row in the record's universe"
+    return "no row carries an axis: the spinor row is no row of the law (2026-10-27)"
 
 
 def no_conversion(record: Record) -> str:

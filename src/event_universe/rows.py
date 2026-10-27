@@ -11,8 +11,7 @@ from event_universe.core.rule3 import held_wall, quotient
 
 CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
 POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
-PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
-QUARTET = 8
+PLANE = 2  # the shape of a conjugate pair of records
 POWER_TIME = 4  # the held wall's power of Gamma on the carrier's time line, POWER_AXIS the nine axis lines' (K-S1 to K-S3, Y-S1)
 POWER_AXIS = 2
 
@@ -108,6 +107,10 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
         shape = int(r["shape"])
         pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
         wall = None if r.get("wall") is None else int(r["wall"])
+        if shape not in (1, PLANE, POTENTIAL, CARRIER):
+            raise ValueError(
+                f"a row of shape {shape} is no row of the law: the rows are the walled row, the planes, the shape-4 row and the shape-10 row"
+            )
         if shape == 1 and wall is None:
             raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
         walls = write_walls(shape, pair, den, gamma, action, trace)
@@ -147,5 +150,5 @@ def walled_of(rows: list[Row]) -> Row:
 
 
 def records_of(rows: list[Row]) -> list[Row]:
-    """The record rows in the acts' order, the planes (the emitter among them) and the quartets."""
-    return [r for r in rows if r.shape in (PLANE, QUARTET)]
+    """The record rows in the acts' order, the planes (the emitter among them)."""
+    return [r for r in rows if r.shape == PLANE]

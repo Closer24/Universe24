@@ -117,7 +117,6 @@ FILE_INTEGERS = {
     "seed.py": frozenset({2, 3}),
     "wave.py": frozenset({4}),
     "run.py": frozenset({12, 24, 60}),
-    "quartet.py": frozenset({2, 3, 4}),
     "acts.py": frozenset(
         {2}
     ),  # the birth at the half wall by the division act on 2 (core/acts.born, the halving's own 2 as rule3.half's)

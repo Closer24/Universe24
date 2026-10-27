@@ -12,7 +12,7 @@ from event_universe.core.ports import AXES, wrap
 from event_universe.core.rule3 import half, largest_below, least_at, odd, quotient
 from event_universe.links import factors, turn_pair
 from event_universe.loader.wave import lay_cycle
-from event_universe.rows import CARRIER, PLANE, Line, Row, zeros
+from event_universe.rows import CARRIER, Line, Row, zeros
 from event_universe.run import logged
 
 if TYPE_CHECKING:
@@ -77,8 +77,8 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
                 take.lay(node, node.records().index(row), at, (n * node.drift, 0, 0, 0))
             else:
                 vector = lay.get("vector")
-                if (vector is None) != (row.shape == PLANE):
-                    raise ValueError("a quartet's lay names its vector, a plane's names none")
+                if vector is not None:
+                    raise ValueError("a plane's lay names no vector")
                 packets.append(
                     (
                         node.records().index(row),
