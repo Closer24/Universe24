@@ -18,11 +18,11 @@ def rounded(numerator: Any, wall: Any) -> Any:
     signed = np.asarray(numerator)
     kind, below = signed.dtype, signed < 0
     negative = below.astype(kind) if below.ndim else int(below)
-    carry = wall + negative * (acts.mirror(wall, wall + wall, 1) - wall)
-    return acts.divide(numerator + numerator, wall + wall, carry)[0]
+    carry = wall + negative * (acts.flip(wall, wall + wall, 1) - wall)
+    return acts.carry(numerator + numerator, wall + wall, carry)[0]
 
 
-def sine_den(num: int, den: int, scale: int = 1) -> int:
+def sine_rim(num: int, den: int, scale: int = 1) -> int:
     """The integer sine of a pair at a scale, scale den sin omega to the unit: the largest x with x^2 <= scale^2 (den^2 - num^2), one search on the whole product (`rule3.largest_below`), no root and no division before the search; 0 at |num| = den, a pair at the gap 0."""
     return largest_below(scale * scale * (den * den - num * num))
 
@@ -32,29 +32,29 @@ class Side:
     """One side of the clock's table at one Gamma, the hollows or the hills: the clocks and the Links' paces found so far by the content's size |c|, and the carried division's state at the next content, N at the resolution Gamma^2 with its remainder, the numerator's factor and the wall."""
 
     factor: int
-    wall: int
+    teeth: int
     scaled: int
     carry: int
-    clocks: list[int] = field(default_factory=list)
-    links: list[int] = field(default_factory=list)
+    rates: list[int] = field(default_factory=list)
+    meshes: list[int] = field(default_factory=list)
 
-    def reach(self, gamma: int, size: int) -> None:
+    def fill_to(self, gamma: int, size: int) -> None:
         """The side filled through the size |c|: the pace rounded(N, Gamma^2) half up, the Link's pace from it, p_0^2 over Gamma rounded once, then one carried division per content."""
-        while len(self.clocks) <= size:
+        while len(self.rates) <= size:
             pace = int(rounded(self.scaled, gamma * gamma))
-            self.clocks.append(pace)
-            self.links.append(int(rounded(pace * pace, gamma)))
-            scaled, carry = acts.divide(self.scaled * self.factor, self.wall, self.carry)
+            self.rates.append(pace)
+            self.meshes.append(int(rounded(pace * pace, gamma)))
+            scaled, carry = acts.carry(self.scaled * self.factor, self.teeth, self.carry)
             self.scaled, self.carry = int(scaled), int(carry)
 
     def undecided(self, gamma: int, size: int) -> list[int]:
         """The contents through the size where the half lies within one of N, rounded(N - 1) != rounded(N + 1) at the resolution Gamma^2: none at a certified Gamma."""
-        self.reach(gamma, size)
-        found, scaled, carry = [], gamma * gamma * gamma, int(half(self.wall))
+        self.fill_to(gamma, size)
+        found, scaled, carry = [], gamma * gamma * gamma, int(half(self.teeth))
         for content in range(size + 1):
             if rounded(scaled - 1, gamma * gamma) != rounded(scaled + 1, gamma * gamma):
                 found.append(content)
-            scaled, carry = (int(x) for x in acts.divide(scaled * self.factor, self.wall, carry))
+            scaled, carry = (int(x) for x in acts.carry(scaled * self.factor, self.teeth, carry))
         return found
 
 
@@ -70,7 +70,7 @@ def sides(gamma: int) -> tuple[Side, Side]:
 @cache
 def certified(gamma: int) -> int:
     """The loader's certificate once per Gamma: one pass to the frozen content on the hollows' side, refused by name where a content is undecided (the half within one of N); the frozen content returned."""
-    frozen = frozen_content(gamma)
+    frozen = stopped_load(gamma)
     undecided = sides(gamma)[0].undecided(gamma, frozen)
     if undecided:
         raise ValueError(
@@ -83,27 +83,27 @@ def side_of(gamma: int, content: int) -> Side:
     """The side of the table the content falls on, the hollows' at or above 0 and the hills' below, filled through the content's size."""
     hollows, hills = sides(gamma)
     side = hills if content < 0 else hollows
-    side.reach(gamma, abs(content))
+    side.fill_to(gamma, abs(content))
     return side
 
 
-def clock(gamma: int, content: int) -> int:
+def rate(gamma: int, content: int) -> int:
     """The clock's pace at a Node of content c, p_0 = Gamma (1 - 1 / Gamma)^c to the unit by the carried division (`Side.reach`)."""
-    return side_of(gamma, content).clocks[abs(content)]
+    return side_of(gamma, content).rates[abs(content)]
 
 
-def link_pace(gamma: int, content: int) -> int:
+def mesh_rate(gamma: int, content: int) -> int:
     """The Link's pace at the content c, the clock twice: p_a = p_0^2 div Gamma rounded once from the clock's integer, Gamma at the vacuum; the pace of every Link of a Node from the Node's own content, before the Link's own tension enters."""
-    return side_of(gamma, content).links[abs(content)]
+    return side_of(gamma, content).meshes[abs(content)]
 
 
-def frozen_content(gamma: int) -> int:
+def stopped_load(gamma: int) -> int:
     """The least content at which the Link's pace rounds to 0 at Gamma, p_0^2 below Gamma div 2 (the horizon's content, about (Gamma div 2) ln(2 Gamma)): the table walked from the vacuum to the first 0."""
     hollows = sides(gamma)[0]
     content = 0
     while True:
-        hollows.reach(gamma, content)
-        if hollows.links[content] == 0:
+        hollows.fill_to(gamma, content)
+        if hollows.meshes[content] == 0:
             return content
         content += 1
 
@@ -118,8 +118,8 @@ def looked_up(found: Callable[[Side], list[int]], gamma: int, contents: Any) -> 
     low, high = int(values.min()), int(values.max())
     if high - low < values.size:
         hollows, hills = sides(gamma)
-        hollows.reach(gamma, max(high, 0))
-        hills.reach(gamma, max(-low, 0))
+        hollows.fill_to(gamma, max(high, 0))
+        hills.fill_to(gamma, max(-low, 0))
         below = found(hills)[-low : max(-high - 1, 0) : -1] if low < 0 else []
         table = below + found(hollows)[max(low, 0) : high + 1]
         return np.array(table, dtype=values.dtype)[(values - low).astype(int)]
@@ -128,11 +128,11 @@ def looked_up(found: Callable[[Side], list[int]], gamma: int, contents: Any) -> 
     return np.array(table, dtype=values.dtype)[np.asarray(inverse).reshape(values.shape)]
 
 
-def clock_of(gamma: int, contents: Any) -> Any:
+def rate_of(gamma: int, contents: Any) -> Any:
     """The clock's pace at every Node from the Node's content (`clock` through the table)."""
-    return looked_up(lambda side: side.clocks, gamma, contents)
+    return looked_up(lambda side: side.rates, gamma, contents)
 
 
-def link_pace_of(gamma: int, contents: Any) -> Any:
+def mesh_rate_of(gamma: int, contents: Any) -> Any:
     """The Link's pace at every Node from the content read on the Link (`link_pace` through the table)."""
-    return looked_up(lambda side: side.links, gamma, contents)
+    return looked_up(lambda side: side.meshes, gamma, contents)

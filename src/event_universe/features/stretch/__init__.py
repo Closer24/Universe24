@@ -7,9 +7,9 @@ from typing import Any
 
 import numpy as np
 
-from event_universe.core import paces
-from event_universe.core.ports import AXES
-from event_universe.core.rule3 import half, quotient
+from event_universe.core import rates
+from event_universe.core.rule3 import carries, half
+from event_universe.core.spokes import AXES
 
 EXPONENT = (
     AXES + 1
@@ -20,63 +20,63 @@ LOW = (
 
 
 @cache
-def clock_zero(gamma: int) -> int:
+def rate_zero(gamma: int) -> int:
     """The least content at which the clock's pace rounds to 0 at Gamma, about Gamma ln(2 Gamma) (56,352 at 6,000; paces.frozen_content finds the Link's zero before it): the top of the level reading's search, the clock's last pace, found by doubling and halving on the carried clock (`paces.clock`), and kept per Gamma (the one search per run, as the loader's constants are)."""
     low, high = 0, 1
-    while paces.clock(gamma, high) > 0:
+    while rates.rate(gamma, high) > 0:
         high += high
     while high - low > 1:
         middle = int(half(low + high))
-        if paces.clock(gamma, middle) > 0:
+        if rates.rate(gamma, middle) > 0:
             low = middle
         else:
             high = middle
     return high
 
 
-def volume_of(gamma: int, levels: Any) -> Any:
+def stretch_of(gamma: int, levels: Any) -> Any:
     """The volume's level of a level at every Node, X(a) = ceil(Gamma^(d + 2) / p_0(a)^(d + 1)), the least X whose level reading is a (one division per Node, the start's conversion; Gamma at the vacuum's content)."""
     found = np.asarray(levels)
-    clocks = np.asarray(paces.clock_of(gamma, found), dtype=object).reshape(-1)
+    clocks = np.asarray(rates.rate_of(gamma, found), dtype=object).reshape(-1)
     target = gamma ** (EXPONENT + 1)
-    volumes = [quotient(target + int(p) ** EXPONENT - 1, int(p) ** EXPONENT) for p in clocks]
+    volumes = [carries(target + int(p) ** EXPONENT - 1, int(p) ** EXPONENT) for p in clocks]
     return np.array([int(x) for x in volumes], dtype=object).reshape(found.shape)
 
 
-LEVELS: dict[
+LOADS: dict[
     int, dict[int, int]
 ] = {}  # the level reading's memo per Gamma, the level a found at each volume X so far (`level_of`), a pure function of (Gamma, X), kept for the run
 
 
-def level_of(gamma: int, volume: Any) -> Any:
+def load_of(gamma: int, volume: Any) -> Any:
     """The level a of the volume X at every Node, the largest a with Gamma^(d + 2) <= X p_0(a)^(d + 1), found by a search by comparisons on the paces the Node holds (kind S), no logarithm and no root (`searched_levels`); the level is one function of the one volume, so the search runs once per distinct volume of the run (the memo `LEVELS`, filled on the volumes the memo lacks and read back at every Node that holds a read volume): the same integers Node by Node as the search at every Node gave (the architect's round of 2026-10-24: the reading re-read many times per interval, the vacuum's one volume on most Nodes of a large board), refused by name where X is at most 0 at a Node."""
     volumes = np.asarray(volume, dtype=object).reshape(-1)
     if (volumes <= 0).any():
         raise ValueError(
             "the volume X is at most 0 at a Node: the level has no reading, refused by name"
         )
-    found = LEVELS.setdefault(gamma, {})
+    found = LOADS.setdefault(gamma, {})
     distinct, inverse = np.unique(volumes, return_inverse=True)
     unread = [int(x) for x in distinct.tolist() if int(x) not in found]
     if unread:
-        levels = searched_levels(gamma, np.array(unread, dtype=object))
+        levels = searched_loads(gamma, np.array(unread, dtype=object))
         found.update(zip(unread, (int(a) for a in levels.reshape(-1)), strict=True))
     table = np.array([found[int(x)] for x in distinct.tolist()], dtype=object)
     return table[np.asarray(inverse).reshape(-1)].reshape(np.asarray(volume).shape)
 
 
-def searched_levels(gamma: int, volumes: Any) -> Any:
+def searched_loads(gamma: int, volumes: Any) -> Any:
     """The level a of each volume X of `volumes` (every X above 0), the largest a with Gamma^(d + 2) <= X p_0(a)^(d + 1), found by a search by comparisons on the paces the Node holds (kind S), no logarithm and no root: from the deepest hill -Gamma upward by doubling steps while the volume is reached (the probes within twice the level's distance from -Gamma, so the clocks' memo fills only as deep as the records stand and never to the clock's last pace for a shallow board), then halving between the last probe reached and the first not (the halving the division act on a count as `rule3.largest_below` has it), never beyond the clock's last pace, each volume's search its own (the probes per volume the same whatever the other volumes beside it); refused by name where X lies below the deepest hill's volume; at the clock's last pace the reading rests while the record grows (the pole never reached by a finite record)."""
     target = gamma ** (EXPONENT + 1)
 
     def reached(levels: Any) -> Any:
-        clocks = np.asarray(paces.clock_of(gamma, levels), dtype=object).reshape(-1)
+        clocks = np.asarray(rates.rate_of(gamma, levels), dtype=object).reshape(-1)
         return np.array(
             [int(x) * int(p) ** EXPONENT >= target for x, p in zip(volumes, clocks, strict=True)]
         )
 
     low = np.full(volumes.shape, LOW * gamma, dtype=object)
-    top = np.full(volumes.shape, clock_zero(gamma), dtype=object)
+    top = np.full(volumes.shape, rate_zero(gamma), dtype=object)
     if not reached(low).all():
         raise ValueError(
             f"a volume's level lies below {LOW * gamma}: the level reading is refused by name"

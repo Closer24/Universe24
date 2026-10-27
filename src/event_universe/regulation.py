@@ -4,13 +4,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from event_universe import gram
-from event_universe.core.ports import AXES, transverse
-from event_universe.links import gradient
-from event_universe.rows import zeros
+from event_universe import hands
+from event_universe.core.spokes import AXES, transverse
+from event_universe.meshes import gradient
+from event_universe.trains import zeros
 
 if TYPE_CHECKING:
-    from event_universe.node import Node
+    from event_universe.clock import Clock
 
 Sources = list[tuple[list[Any], int]]
 
@@ -21,7 +21,7 @@ def stress_parts(rows: Sources, shape: tuple[int, ...]) -> list[Any]:
     for levels, num in rows:
         for a in range(AXES):
             d = [gradient(x, a) for x in levels]
-            parts[a] = parts[a] + num * gram.dot(d, d)
+            parts[a] = parts[a] + num * hands.dot(d, d)
     return parts
 
 
@@ -32,7 +32,7 @@ def shear_parts(rows: Sources, shape: tuple[int, ...]) -> list[Any]:
         d = [[gradient(x, a) for x in levels] for a in range(AXES)]
         for a in range(AXES):
             b = transverse(a)[0]
-            parts[a] = parts[a] + num * gram.dot(d[a], d[b])
+            parts[a] = parts[a] + num * hands.dot(d[a], d[b])
     return parts
 
 
@@ -42,13 +42,13 @@ def tensor_parts(parts: list[Any]) -> tuple[Any, list[Any]]:
     return trace, [AXES * part - trace for part in parts]
 
 
-def net_flux(nows: list[Any], velocities: list[Any], axis: int) -> Any:
+def net_flow(nows: list[Any], velocities: list[Any], axis: int) -> Any:
     """A record's count flux on an axis at every Node (Y-S1, Y-S3): u.D_a N, the record's own velocity against the centred gradient of its levels at the start through the axis's two Links (the momentum density, the continuum's T_0a; summed over the board the lattice momentum, SUM_i F(i, i + a) with F_ij = u_i N_j - N_i u_j), odd under the axis's inversion (T_1u), one Link's reach, no division; the flux lines' source."""
-    return gram.dot(velocities, [gradient(n, axis) for n in nows])
+    return hands.dot(velocities, [gradient(n, axis) for n in nows])
 
 
-def rotation_of(node: Node, pair: tuple[int, int]) -> int:
+def rest_rate_of(node: Clock, pair: tuple[int, int]) -> int:
     """The record's rest rotation to the unit, K = omega_0 Gamma with cos omega_0 = num / den (Y-S2, The clock family on the Ports): the count along the law's orbit at the step 1 / Gamma at which the orbit's cosine first falls to num / den (gram.cosine_count, a search by comparisons and no root), found once per pair and kept on the Node."""
-    if pair not in node.rotations:
-        node.rotations[pair] = gram.cosine_count(node, pair[0], pair[1])
-    return node.rotations[pair]
+    if pair not in node.rest_rates:
+        node.rest_rates[pair] = hands.cosine_count(node, pair[0], pair[1])
+    return node.rest_rates[pair]

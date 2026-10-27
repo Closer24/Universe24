@@ -11,41 +11,41 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram, readings
-from event_universe.core import paces
-from event_universe.core.paces import sine_den
-from event_universe.core.ports import AXES, SIDES, port_of
-from event_universe.decoder import THOUSAND
-from event_universe.links import factors, link_current
-from event_universe.loader.world import load_world
-from event_universe.rows import CARRIER, POTENTIAL, Line, zeros
+from event_universe import hands, readings
+from event_universe.assembly.piece import read_piece
+from event_universe.core import rates
+from event_universe.core.rates import sine_rim
+from event_universe.core.spokes import AXES, SIDES, spoke_of
+from event_universe.meshes import factors, mesh_lead
+from event_universe.reckoner import THOUSAND
+from event_universe.trains import OFFSET, REGULATOR, Gear, zeros
 
 if TYPE_CHECKING:
-    from event_universe.node import Node
+    from event_universe.clock import Clock
 
 MARKS = 12  # the reader's rows: one at every twelfth of the run
 EARLY = (60, 24)  # and two early marks, at the sixtieth and the twenty-fourth
 
 
-def entry(node: Node, event: str, at: Any, **fields: Any) -> dict[str, Any]:
+def entry(node: Clock, event: str, at: Any, **fields: Any) -> dict[str, Any]:
     """The one spelling of a log entry: the event, the interval, the Node (None for a lay over the board), then the event's fields in the order given."""
-    return {"event": event, "i": node.interval, "node": None if at is None else list(at), **fields}
+    return {"event": event, "i": node.ticks, "node": None if at is None else list(at), **fields}
 
 
-def logged(node: Node, event: str, at: Any, **fields: Any) -> dict[str, Any]:
+def logged(node: Clock, event: str, at: Any, **fields: Any) -> dict[str, Any]:
     """An entry appended to the log and returned."""
     node.log.append(entry(node, event, at, **fields))
     return node.log[-1]
 
 
-def refused(node: Node, at: tuple[int, ...], cause: str, **numbers: Any) -> None:
+def jammed(node: Clock, at: tuple[int, ...], cause: str, **numbers: Any) -> None:
     """A refusal by name, counted and logged."""
     node.counts["refused_" + cause] += 1
     logged(node, "refused", at, cause=cause, **numbers)
 
 
-def birth(
-    node: Node,
+def fitting(
+    node: Clock,
     at: Any,
     s: int,
     ends: Any,
@@ -75,8 +75,8 @@ def birth(
         taker=take["taker"],
         taken_row=rec,
         taken_line=take["taken_line"],
-        proper=int(node.proper[at]),
-        content=int(node.start_content[at]),
+        proper=int(node.dial[at]),
+        content=int(node.start_load[at]),
         amplitude=[node.A, node.B],
         stood=stood,
         children_at_node=kids,
@@ -95,17 +95,17 @@ def birth(
     )
 
 
-def credit(
-    node: Node,
+def chime(
+    node: Clock,
     rec: int,
     at: tuple[int, ...],
     take: dict[str, Any],
     frame: dict[str, Any],
-    start: list[Line],
+    start: list[Gear],
 ) -> dict[str, Any]:
     """A body's credit with its frame (the plane's frame_of, the bodies' own readings of the record), its sense the sign of its charge at the Node read at the interval's start (`start`, the record's lines as the interval began, CL-S2; the former read on the board after the close's own writes kept by name), its beat, the take's numbers (the take act's dict), momentum and booking, the unit the close booked and what it owed; returned, not appended (the bodies append it after the lay-back)."""
-    row = node.records()[rec]
-    w = int(gram.charge(row.shape, start)[at])
+    row = node.hands()[rec]
+    w = int(hands.sweep(row.size, start)[at])
     fall, levels, taken_was, line = (
         take["taken"],
         take["levels"],
@@ -117,33 +117,33 @@ def credit(
         node,
         "credit",
         at,
-        proper=int(node.proper[at]),
-        closes=int(node.closes[at]),
-        content=int(node.start_content[at]),
+        proper=int(node.dial[at]),
+        closes=int(node.strikes[at]),
+        content=int(node.start_load[at]),
         line=rec,
         sense=1 if w > 0 else -1 if w < 0 else 0,
         beat=int(node.beats[rec][at]),
         frame=frame,
         taken=fall,
-        booked=node.units[rec],
+        booked=node.windings[rec],
         levels=levels,
         taken_now_was=taken_was,
         remainder_was=rem_was,
         remainder=rem,
-        owed=node.units[rec] - rem_was,
+        owed=node.windings[rec] - rem_was,
         taker=[taken_was, taken_before, levels],
-        dP_take=node.last_dp,
+        dP_take=node.last_push,
         **node.last_recoil,
         taken_line=line,
-        sign_level=int(node.row(POTENTIAL).lines[0].now[at]),
-        turned=bool(node.turned[at]),
+        sign_level=int(node.train(OFFSET).gears[0].now[at]),
+        turned=bool(node.turned_over[at]),
     )
 
 
-def frame(node: Node, top: Any, log_from: int, frozen: Any, bookings: Any) -> dict[str, Any]:
+def rewind_note(node: Clock, top: Any, log_from: int, frozen: Any, bookings: Any) -> dict[str, Any]:
     """The frame pushed at the close for the run back: the turned Nodes, the counters as they stood before the click (the swap changes none), the log's length, the frozen mask and the emission's bookings."""
     counters = (
-        [a.copy() for a in node.standing],
+        [a.copy() for a in node.wound],
         [a.copy() for a in node.crossed],
         [a.copy() for a in node.beats],
     )
@@ -161,33 +161,33 @@ def bits_of(a: Any) -> int:
     return int(np.max(np.vectorize(lambda v: abs(int(v)).bit_length(), otypes=[object])(a)))
 
 
-def arrays(node: Node) -> list[Any]:
+def arrays(node: Clock) -> list[Any]:
     """Every level and remainder of the state, the lines' arrays in the acts' order."""
-    lines = node.all_lines()
-    found = [a for line in lines for a in (line.now, line.before, line.rem)]
-    return found + [line.wr for line in lines if line.wr is not None]
+    lines = node.all_gears()
+    found = [a for line in lines for a in (line.now, line.before, line.fine)]
+    return found + [line.dfine for line in lines if line.dfine is not None]
 
 
-def state(node: Node) -> list[Any]:
+def state(node: Clock) -> list[Any]:
     """Every integer array of the Node's state: the lines' levels and remainders, the records' standing, crossings and beats, the proper count, the closes and the take's remainder (the one list the census counts and the run back compares; the former comparison of the lines and the take's remainder alone, which left the five counters the bodies' closing reads unchecked, kept by name, the Boss's 6421253357 item 4, 2026-10-26)."""
-    found = arrays(node) + node.standing + node.crossed + node.beats + [node.proper, node.closes]
-    return [*found, node.take_rem]
+    found = arrays(node) + node.wound + node.crossed + node.beats + [node.dial, node.strikes]
+    return [*found, node.slack]
 
 
-def census(node: Node) -> tuple[int, int]:
+def census(node: Clock) -> tuple[int, int]:
     """The count of integer arrays the Node holds and the largest bit length among their values."""
     found = state(node)
     return len(found), max(bits_of(a) for a in found)
 
 
-def state_text(node: Node) -> str:
+def state_text(node: Clock) -> str:
     """Every integer of the state as text (`state`), the run back's comparison bit for bit."""
     return " ".join(str(int(v)) for a in state(node) for v in a.reshape(-1))
 
 
-def state_hash(node: Node) -> str:
+def state_hash(node: Clock) -> str:
     """The state's hash with the interval."""
-    return hashlib.sha256(state_text(node).encode() + str(node.interval).encode()).hexdigest()
+    return hashlib.sha256(state_text(node).encode() + str(node.ticks).encode()).hexdigest()
 
 
 def ints(a: Any) -> list[int]:
@@ -195,21 +195,21 @@ def ints(a: Any) -> list[int]:
     return [int(x) for x in a.reshape(-1)]
 
 
-def packets_of(node: Node) -> dict[str, Any]:
+def packets_of(node: Clock) -> dict[str, Any]:
     """The reader's view of every plane with a gap: its weight's centroid in thousandths of a Link, its Nodes with levels, its energy's bits."""
     found = {}
-    for rec, row in enumerate(node.records()):
-        if row is node.emitter():
+    for rec, row in enumerate(node.hands()):
+        if row is node.unsprung():
             continue
-        nows = [line.now for line in row.lines]
-        weight = gram.dot(nows, nows)
+        nows = [line.now for line in row.gears]
+        weight = hands.dot(nows, nows)
         total = sum(ints(weight))
         if total == 0:
             continue
-        idx = np.indices(node.shape)
+        idx = np.indices(node.size)
         centre = [
             sum(w * x for w, x in zip(ints(weight), ints(idx[a]), strict=True)) * THOUSAND // total
-            for a in range(len(node.shape))
+            for a in range(len(node.size))
         ]
         found[f"plane {rec}"] = {
             "centroid (thousandths of a Link)": centre,
@@ -219,23 +219,23 @@ def packets_of(node: Node) -> dict[str, Any]:
     return found
 
 
-def reading(node: Node, maxbits: int) -> dict[str, Any]:
+def reading(node: Clock, maxbits: int) -> dict[str, Any]:
     """The reader's row at an interval: the board's numbers read from outside (no Node reads them)."""
-    metric, potential, emitter = node.row(CARRIER), node.row(POTENTIAL), node.emitter().lines[0]
-    records = node.records()
-    cs, vs = ints(readings.content(node)), ints(metric.lines[0].now)
-    energy = sum(x * x for r in records for line in r.lines for x in ints(line.now))
-    odd_max = max(abs(x) for line in potential.lines[1:] for x in ints(line.now))
+    metric, potential, emitter = node.train(REGULATOR), node.train(OFFSET), node.unsprung().gears[0]
+    records = node.hands()
+    cs, vs = ints(readings.load(node)), ints(metric.gears[0].now)
+    energy = sum(x * x for r in records for line in r.gears for x in ints(line.now))
+    odd_max = max(abs(x) for line in potential.gears[1:] for x in ints(line.now))
     emitter_v = max(abs(a - b) for a, b in zip(ints(emitter.now), ints(emitter.before), strict=True))
-    total = zeros(node.shape)
-    charges = [gram.charge(r.shape, r.lines) for r in records]
+    total = zeros(node.size)
+    charges = [hands.sweep(r.size, r.gears) for r in records]
     for w in charges:
         total = total + w
     n, _bits = census(node)
-    tens = [x for line in metric.lines[1:] for x in ints(line.now)]
+    tens = [x for line in metric.gears[1:] for x in ints(line.now)]
     counts = node.counts
     return {
-        "i": node.interval,
+        "i": node.ticks,
         "packets (reader)": packets_of(node),
         "content min/mean/max": [min(cs), sum(cs) // len(cs), max(cs)],
         "volume mean": sum(vs) // len(vs),
@@ -248,52 +248,52 @@ def reading(node: Node, maxbits: int) -> dict[str, Any]:
         "integers": n,
         "max bits": maxbits,
         "max transient bits": node.max_transient,
-        "sign level max": max(abs(x) for x in ints(potential.lines[0].now)),
+        "sign level max": max(abs(x) for x in ints(potential.gears[0].now)),
         "planes energy bits": energy.bit_length(),
         "links at the wall": sum(1 for f in factors(node)[0::SIDES] for x in ints(f) if x == 0),
         "tension min/max": [min(tens), max(tens)],
         "odd max bits": odd_max.bit_length(),
         "link count max": node.count_max,
-        "orbit table": len(node.orbit),
-        "gap-0 W abs max": max(abs(x) for x in ints(charges[records.index(node.emitter())])),
+        "orbit table": len(node.circuit),
+        "gap-0 W abs max": max(abs(x) for x in ints(charges[records.index(node.unsprung())])),
         "W total": sum(ints(total)),
         "W abs sum": sum(abs(x) for w in charges for x in ints(w)),
         "gap-0 velocity max": emitter_v,
     }
 
 
-def node_lines(node: Node) -> dict[str, Any]:
+def clock_lines(node: Clock) -> dict[str, Any]:
     """The record's Node and Link line at an interval, every Node by its index in the board's order: the carrier's level X, the content, the turned Nodes, the frozen Nodes (the Link pace 0), the Links held at the wall (the factor 0) as [Node, axis] pairs, and every Link's current of the gap-0 line, F_ij from the Node along each axis (the sign the direction, the size the flow); the page draws the board from these and nothing else."""
-    carrier = node.row(CARRIER).lines[0]
-    content = readings.content(node)
-    pace = paces.link_pace_of(node.gamma, content)
-    read = factors(node, None, readings.frozen_of(node, content))
+    carrier = node.train(REGULATOR).gears[0]
+    content = readings.load(node)
+    pace = rates.mesh_rate_of(node.full_rate, content)
+    read = factors(node, None, readings.stopped_of(node, content))
     held = [
-        [i, axis] for axis in range(AXES) for i, f in enumerate(ints(read[port_of(axis, 0)])) if f == 0
+        [i, axis] for axis in range(AXES) for i, f in enumerate(ints(read[spoke_of(axis, 0)])) if f == 0
     ]
-    emitter = node.emitter().lines[0]
+    emitter = node.unsprung().gears[0]
     return {
-        "i": node.interval,
+        "i": node.ticks,
         "X": ints(carrier.now),
         "content": ints(content),
-        "turned": [i for i, t in enumerate(node.turned.reshape(-1).tolist()) if t],
+        "turned": [i for i, t in enumerate(node.turned_over.reshape(-1).tolist()) if t],
         "frozen": [i for i, p in enumerate(ints(pace)) if p == 0],
         "held": held,
-        "current": [ints(link_current(emitter, port_of(axis, 0))) for axis in range(AXES)],
+        "current": [ints(mesh_lead(emitter, spoke_of(axis, 0))) for axis in range(AXES)],
     }
 
 
-def run_back(node: Node, hashes: list[str]) -> dict[str, int]:
+def rewind(node: Clock, hashes: list[str]) -> dict[str, int]:
     """The run back: as many intervals back as states were kept, each compared with the kept state's hash."""
     exact = 0
     for k in range(len(hashes)):
-        node.step(-1)
+        node.tick(-1)
         exact += state_hash(node) == hashes[len(hashes) - 1 - k]
     return {"intervals": len(hashes), "exact": exact}
 
 
 def forward(
-    node: Node, intervals: int, back: int, out: Callable[[str], Any]
+    node: Clock, intervals: int, back: int, out: Callable[[str], Any]
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[str]]:
     """The intervals run forward: the reader's rows at the marks written as they come, a Node line at every interval, the last `back` states' hashes kept for the run back."""
     t0 = time.monotonic_ns()
@@ -309,10 +309,10 @@ def forward(
     for t in range(intervals):
         if back and t >= intervals - back:
             hashes.append(state_hash(node))
-        node.step()
+        node.tick()
         maxbits = max(maxbits, census(node)[1])
-        nodes.append(node_lines(node))
-        if node.interval in marks:
+        nodes.append(clock_lines(node))
+        if node.ticks in marks:
             rows.append(
                 dict(
                     reading(node, maxbits),
@@ -323,7 +323,7 @@ def forward(
     return rows, nodes, hashes
 
 
-def record(
+def chart(
     universe: dict[str, Any],
     world: dict[str, Any],
     back: int = 0,
@@ -331,13 +331,15 @@ def record(
     node_of: Callable[..., Any] | None = None,
 ) -> dict[str, Any]:
     """The world's intervals run (`forward`), then `back` intervals run back and compared by the state's hash (`run_back`); the record returned; `node_of` the Node's class (the engine's unless a toy names its own)."""
-    from event_universe.node import Node  # the writer stands below the Node, which reads the frame here
+    from event_universe.clock import (
+        Clock,  # the writer stands below the Node, which reads the frame here
+    )
 
-    node = (Node if node_of is None else node_of)(universe, world)
+    node = (Clock if node_of is None else node_of)(universe, world)
     intervals = int(world["intervals"])
     rows, nodes, hashes = forward(node, intervals, back, out)
     kept_log = list(node.log)
-    returned = run_back(node, hashes) if back else None
+    returned = rewind(node, hashes) if back else None
     if returned:
         out(json.dumps({"run back": returned}))
     counts = {k: str(v) for k, v in node.counts.items()}
@@ -345,16 +347,18 @@ def record(
     return {
         "world": world,
         "universe": universe,
-        "den": node.den,
+        "den": node.rim,
         "cube": node.cube,
         "intervals": intervals,
-        "gapped": [(str(r.pair[0]), str(sine_den(r.pair[0], node.den))) for r in node.gapped if r.pair],
-        "planes": [str(r.pair[0]) for r in node.records() if r.pair],
-        "T": node.T,
-        "gamma": node.gamma,
+        "gapped": [
+            (str(r.ratio[0]), str(sine_rim(r.ratio[0], node.rim))) for r in node.sprung if r.ratio
+        ],
+        "planes": [str(r.ratio[0]) for r in node.hands() if r.ratio],
+        "T": node.key,
+        "gamma": node.full_rate,
         "G": node.G,
         "counts": counts,
-        "turns": node.turns,
+        "turns": node.turnovers,
         "rows": rows,
         "nodes": nodes,
         "run_back": returned,
@@ -366,9 +370,9 @@ def main(argv: list[str]) -> None:
     """The writer from the command line: the world file, the output file, `back N` for the run back."""
     sys.set_int_max_str_digits(0)
     _, world_path, out_path, *_rest = argv
-    universe, world = load_world(world_path)
+    universe, world = read_piece(world_path)
     back = int(argv[argv.index("back") + 1]) if "back" in argv else 0
-    found = record(universe, world, back, lambda line: print(line, flush=True))
+    found = chart(universe, world, back, lambda line: print(line, flush=True))
     with open(out_path, "w", encoding="utf-8") as out:
         json.dump(found, out)
 

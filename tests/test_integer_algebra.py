@@ -13,7 +13,7 @@ SRC = ROOT / "src" / "event_universe"
 PHYSICAL_MODULES = tuple(  # every module of the package, of core/ and of loader/ but the package markers, read from the tree so that no module escapes the gate unnamed (2026-10-24: the hand list and its own test folded here)
     sorted(
         path.relative_to(SRC).as_posix()
-        for folder in (SRC, SRC / "core", SRC / "loader")
+        for folder in (SRC, SRC / "core", SRC / "assembly")
         for path in folder.glob("*.py")
         if path.name != "__init__.py"
     )
@@ -139,9 +139,9 @@ CORE, DIVISIONS = "core/acts.py", {ast.FloorDiv, ast.Mod}  # core/rule3.py befor
 
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
 INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the function, its responsibility
-    ("core/ports.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
+    ("core/spokes.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
     (
-        "core/ports.py",
+        "core/spokes.py",
         ast.Mod,
         "wrap",
         "the periodic wrap of a Node's index or an axis, the torus's own",
@@ -149,7 +149,8 @@ INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the func
 )
 # the record's writer and readers, no act of the Node: their quotients are readings at a named scale
 READERS = tuple(
-    f"{n}.py" for n in "run decoder gates events circle board bangs clicks predicates symmetries".split()
+    f"{n}.py"
+    for n in "run reckoner gates events rim great_clock swings strikes predicates symmetries".split()
 )
 
 

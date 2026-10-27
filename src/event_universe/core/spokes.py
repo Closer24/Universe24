@@ -6,8 +6,8 @@ from typing import Any
 
 AXES = 3  # the lattice's three axes
 SIDES = 2  # the two Ports of one axis, +a and -a
-PORTS = AXES * SIDES  # a Node's six Ports, the one definition of Rule3's 6
-PORT_SIDES = tuple((axis, side) for axis in range(AXES) for side in (1, -1))  # [+X, -X, +Y, -Y, +Z, -Z]
+SPOKES = AXES * SIDES  # a Node's six Ports, the one definition of Rule3's 6
+SPOKE_SIDES = tuple((axis, side) for axis in range(AXES) for side in (1, -1))  # [+X, -X, +Y, -Y, +Z, -Z]
 
 
 def shifted(a: Any, axis: int, sigma: int) -> Any:
@@ -16,10 +16,10 @@ def shifted(a: Any, axis: int, sigma: int) -> Any:
     return a if extent == 1 else a.take([(index + sigma) % extent for index in range(extent)], axis=axis)
 
 
-arrival = shifted
+pull = shifted
 
 
-def port_of(axis: int, side: int) -> int:
+def spoke_of(axis: int, side: int) -> int:
     """The Port of an axis and a side (0 the + side, 1 the - side), SIDES * axis + side: the inverse of PORT_SIDES, the one spelling of a Port's index."""
     return SIDES * axis + side
 
@@ -36,5 +36,5 @@ def wrap(index: int, extent: int) -> int:
 
 def across(a: Any, port: int) -> Any:
     """The one read across a Link: the array's value at the Node beyond the Port (`arrival` through the Port's axis and side), the torus wrapped; every Link read of the Node passes here (the owner's word of 2026-10-25: the Link's act in one place)."""
-    axis, side = PORT_SIDES[port]
-    return arrival(a, axis, side)
+    axis, side = SPOKE_SIDES[port]
+    return pull(a, axis, side)

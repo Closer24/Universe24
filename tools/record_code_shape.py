@@ -36,9 +36,9 @@ sys.path.insert(0, str(ROOT / "tools"))
 from merge_base import base_ref, carried, tree_at  # noqa: E402
 
 PACKAGE = Path("src/event_universe")
-LOOP = PACKAGE / "node.py"
-LOOP_MODULE = "event_universe.node"
-LOOP_PUBLIC = frozenset({"Node"})
+LOOP = PACKAGE / "clock.py"
+LOOP_MODULE = "event_universe.clock"
+LOOP_PUBLIC = frozenset({"Clock"})
 NEW_FILE_LINES = 400
 DUPLICATE_MIN_STATEMENTS = 2
 RECORD_REFERENCE = re.compile(r"\b(?:record|records|decision|decisions)\s+\d+", re.IGNORECASE)
@@ -53,7 +53,7 @@ RULE_ARITHMETIC = (
 )
 RULE_HOME = PACKAGE / "core" / "rule3.py"
 LEVEL_SHIFT = re.compile(r"np\.roll\(|self\._shift\(|\.take\(")
-SHIFT_HOME = PACKAGE / "core" / "ports.py"
+SHIFT_HOME = PACKAGE / "core" / "spokes.py"
 LEVELS = frozenset({"now", "before", "remainder"})
 COUNTS = (
     "lines",
