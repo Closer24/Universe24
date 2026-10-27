@@ -1,24 +1,30 @@
-DAVID-BORN-ON-THE-WAVE_CHECKS.txt: the checks of DAVID-BORN-ON-THE-WAVE.md (David, 2026-10-27, 18:5x UTC), on the head 5f8680de2 (engine-5.0-test); no src touched.
-What they show: (1) the clock works: every run is the engine's own chart (run.chart) with its rewind of 10 ticks compared bit for bit, the pair's counters in the state and the rewind note: 10 of 10 in every run; (2) the phenomenon: on the wave, with the pair's own beat, the exact turn and the light's sea laid four times, the split chimes pick up in the Born shares along six Gaussian axes.
+DAVID-BORN-ON-THE-WAVE_CHECKS.txt: the checks of DAVID-BORN-ON-THE-WAVE.md (David, 2026-10-27, 19:0x UTC), on the head 9e1f1a8be (engine-5.0-test, the wave as built); no src touched.
+What they show: (1) the clock works: every run is the engine's own chart (run.chart) with its rewind of 10 ticks compared bit for bit, the pair's counters in the state and the rewind note: 10 of 10 in every run; (2) the phenomenon: on the head's wave, with the pair's own beat, the exact turn and the light's sea laid four times, the split chimes pick up in the Born shares along six Gaussian axes.
 
-== 1. The pair's own beat (split_chime.py, PAIR_BEAT: the reference at the first tick the pair stands split, the crossing on the dot over its four gears)
-        if PAIR_BEAT[0]:
-            gears = clock.hands()[u].gears + clock.hands()[d].gears
-            ref, crossed, beats = pair_counters(clock, u)
-            unset = np.vectorize(lambda *v: 1 if all(int(x) == 0 for x in v) else 0, otypes=[object])(*ref)
-            starting = (split == 1) & ((sw == 0) | (unset == 1))
-            for k, g in enumerate(gears):
-                ref[k][...] = np.where(starting, g.now, ref[k])
-            crossed[...] = np.where(starting, 0, crossed)
-            d_before = sum((r * g.before for r, g in zip(ref, gears, strict=True)), start=0)
-            d_now = sum((r * g.now for r, g in zip(ref, gears, strict=True)), start=0)
-            crossing = np.vectorize(lambda b, n: 1 if (int(b) * int(n) < 0 or (int(b) == 0) != (int(n) == 0)) else 0, otypes=[object])(d_before, d_now)
-            timed = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(crossed)
-            beats[...] = np.where((crossing == 1) & (timed == 1), crossed, beats)
-            crossed[...] = np.where(crossing == 1, 1, np.where(timed == 1, crossed + 1, 0))
-        sw[...] = np.where(split == 1, sw + 1, 0)
+== 1. The pair's own beat (born_g7.py: the head's splits() with its one beat line replaced by pair_beat, every other line as built)
+def pair_beat(clock, pair, split):
+    """The pair's own beat, updated at this tick; returns its beats array."""
+    if not hasattr(clock, "pair_beat"):
+        clock.pair_beat = {}
+    u, d = pair
+    z = lambda: np.zeros(clock.size, dtype=object)
+    ref, crossed, beats = clock.pair_beat.setdefault(u, ([z(), z(), z(), z()], z(), z()))
+    gears = clock.hands()[u].gears + clock.hands()[d].gears
+    unset = np.vectorize(lambda *v: 1 if all(int(x) == 0 for x in v) else 0, otypes=[object])(*ref)
+    starting = (split == 1) | ((split > 0) & (unset == 1))
+    for i, g in enumerate(gears):
+        ref[i][...] = np.where(starting, g.now, ref[i])
+    crossed[...] = np.where(starting, 0, crossed)
+    was = sum((x * g.before for x, g in zip(ref, gears, strict=True)), start=0)
+    read = sum((x * g.now for x, g in zip(ref, gears, strict=True)), start=0)
+    crossing = (was * read < 0) | ((was == 0) != (read == 0))
+    timed = crossed > 0
+    beats[...] = np.where(crossing & timed, crossed, beats)
+    crossed[...] = np.where(crossing, 1, np.where(timed, crossed + 1, 0))
+    STAGES["split"] += int(np.count_nonzero(split > 0))
+    return beats
 
-== 2. The exact turn (born_wave.py)
+== 2. The exact turn (born_g7.py)
 def up_to(v):
     v = int(v)
     m = -((-abs(v)) // r) * r
@@ -28,10 +34,11 @@ def up_to(v):
 class Turned(Clock):
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
-        for u, d in split_chime.pairs(self):
-            if self.hands()[u].ratio != heavy:
+        hs = self.hands()
+        for u, d in twin_pairs(hs):
+            if hs[u].ratio != heavy:
                 continue
-            for gu, gd in zip(self.hands()[u].gears, self.hands()[d].gears, strict=True):
+            for gu, gd in zip(hs[u].gears, hs[d].gears, strict=True):
                 for name in ("now", "before"):
                     z = getattr(gu, name)
                     if exact:
@@ -39,22 +46,30 @@ class Turned(Clock):
                     setattr(gd, name, np.vectorize(lambda v: (b * int(v)) // r, otypes=[object])(z))
                     setattr(gu, name, np.vectorize(lambda v: (a * int(v)) // r, otypes=[object])(z))
 
-== 3. The gates without the pair's beat (born_wave.py a b r 40 EXACT K, PAIR_BEAT off)
+== 3. The head as built, and the gates (PAIR_BEAT 0 and 1; born_g7.py a b r 40 EXACT K)
+9e1f1a8be, axis (3, 4, 5), the pair's beat 0, the exact turn 0, the light's sea x1, 40 ticks: split chimes 2, up 1, the shares summed 0.7 +- 0.7; chimes 3, fittings 1, stops 205, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 0, 'due': 0, 'paid': 0}
+9e1f1a8be, axis (3, 4, 5), the pair's beat 0, the exact turn 1, the light's sea x4, 40 ticks: split chimes 3, up 1, the shares summed 1.5 +- 0.9; chimes 1887, fittings 33, stops 11875, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 0, 'due': 0, 'paid': 0}
+9e1f1a8be, axis (3, 4, 5), the pair's beat 1, the exact turn 1, the light's sea x1, 40 ticks: split chimes 45, up 15, the shares summed 16.8 +- 3.2; chimes 52, fittings 0, stops 977, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 1874, 'due': 760, 'paid': 45}
+9e1f1a8be, axis (3, 4, 5), the pair's beat 1, the exact turn 1, the light's sea x4, 40 ticks: split chimes 127, up 43, the shares summed 47.5 +- 5.3; chimes 1968, fittings 33, stops 12032, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 846, 'due': 190, 'paid': 127}
+
+== 4. Born along six axes on the head (PAIR_BEAT=1, the exact turn, the light laid four times)
+9e1f1a8be, axis (12, 5, 13), the pair's beat 1, the exact turn 1, the light's sea x4, 40 ticks: split chimes 44, up 37, the shares summed 37.3 +- 2.4; chimes 1886, fittings 43, stops 12298, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 962, 'due': 109, 'paid': 44}
+9e1f1a8be, axis (5, 12, 13), the pair's beat 1, the exact turn 1, the light's sea x4, 40 ticks: split chimes 46, up 8, the shares summed 7.3 +- 2.4; chimes 1947, fittings 49, stops 11852, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 1075, 'due': 110, 'paid': 46}
+9e1f1a8be, axis (4, 3, 5), the pair's beat 1, the exact turn 1, the light's sea x4, 40 ticks: split chimes 122, up 78, the shares summed 75.6 +- 5.2; chimes 1874, fittings 41, stops 11790, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 840, 'due': 169, 'paid': 122}
+9e1f1a8be, axis (20, 21, 29), the pair's beat 1, the exact turn 1, the light's sea x4, 40 ticks: split chimes 133, up 64, the shares summed 66.3 +- 5.6; chimes 1896, fittings 41, stops 12257, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 975, 'due': 204, 'paid': 133}
+9e1f1a8be, axis (8, 15, 17), the pair's beat 1, the exact turn 1, the light's sea x4, 40 ticks: split chimes 117, up 21, the shares summed 26.6 +- 4.5; chimes 1531, fittings 34, stops 11926, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 778, 'due': 158, 'paid': 117}
+9e1f1a8be, axis (3, 4, 5), the pair's beat 1, the exact turn 1, the light's sea x4, 40 ticks: split chimes 127, up 43, the shares summed 47.5 +- 5.3; chimes 1968, fittings 33, stops 12032, the rewind {'intervals': 10, 'exact': 10}; the stages {'split': 846, 'due': 190, 'paid': 127}
+
+== 5. Before, on 5f8680de2 with the harness's wave (the gates without the pair's beat, with it, and the six axes)
 axis (3, 4, 5), the exact turn 1, the light's sea x1, 40 ticks: split chimes 0, up 0, the shares summed 0.0 +- 0.0; chimes 1831, fittings 3, stops 8725, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 2439, 'beat': 35, 'light': 35, 'drawn': 35, 'paid': 0}
 axis (3, 4, 5), the exact turn 1, the light's sea x2, 40 ticks: split chimes 4, up 2, the shares summed 2.1 +- 0.8; chimes 2723, fittings 16, stops 10229, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 1815, 'beat': 18, 'light': 18, 'drawn': 18, 'paid': 4}
 axis (3, 4, 5), the exact turn 1, the light's sea x4, 40 ticks: split chimes 6, up 5, the shares summed 3.5 +- 0.9; chimes 1817, fittings 47, stops 11494, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 1034, 'beat': 15, 'light': 15, 'drawn': 15, 'paid': 6}
 axis (3, 4, 5), the exact turn 0, the light's sea x1, 40 ticks: split chimes 1, up 0, the shares summed 0.4 +- 0.5; chimes 1611, fittings 2, stops 7635, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 1902, 'beat': 26, 'light': 26, 'drawn': 26, 'paid': 1}
-
-== 4. With the pair's beat (PAIR_BEAT=1): the light laid 1, 2, 4 times, the exact turn and the floored
 axis (3, 4, 5), the exact turn 1, the light's sea x1, 40 ticks: split chimes 45, up 14, the shares summed 16.6 +- 3.2; chimes 50, fittings 1, stops 1045, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 1924, 'beat': 836, 'light': 836, 'drawn': 836, 'paid': 45}
 axis (3, 4, 5), the exact turn 1, the light's sea x2, 40 ticks: split chimes 115, up 53, the shares summed 42.3 +- 5.0; chimes 2901, fittings 15, stops 10826, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 1040, 'beat': 233, 'light': 233, 'drawn': 233, 'paid': 115}
 axis (3, 4, 5), the exact turn 1, the light's sea x4, 40 ticks: split chimes 143, up 62, the shares summed 58.6 +- 5.5; chimes 1904, fittings 47, stops 11571, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 862, 'beat': 159, 'light': 159, 'drawn': 159, 'paid': 143}
-axis (3, 4, 5), the exact turn 0, the light's sea x1, 40 ticks: split chimes 32, up 11, the shares summed 11.7 +- 2.6; chimes 34, fittings 1, stops 801, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 1715, 'beat': 683, 'light': 683, 'drawn': 683, 'paid': 32}
-
-== 5. Born along six axes, the pair's beat, the exact turn, the light laid four times
 axis (12, 5, 13), the exact turn 1, the light's sea x4, 40 ticks: split chimes 119, up 98, the shares summed 96.6 +- 3.9; chimes 2299, fittings 50, stops 11311, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 1212, 'beat': 143, 'light': 143, 'drawn': 143, 'paid': 119}
 axis (5, 12, 13), the exact turn 1, the light's sea x4, 40 ticks: split chimes 121, up 23, the shares summed 20.9 +- 3.9; chimes 2291, fittings 50, stops 11469, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 1244, 'beat': 150, 'light': 150, 'drawn': 150, 'paid': 121}
 axis (4, 3, 5), the exact turn 1, the light's sea x4, 40 ticks: split chimes 141, up 85, the shares summed 86.6 +- 5.4; chimes 1920, fittings 47, stops 11564, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 863, 'beat': 160, 'light': 160, 'drawn': 160, 'paid': 141}
 axis (20, 21, 29), the exact turn 1, the light's sea x4, 40 ticks: split chimes 158, up 77, the shares summed 81.1 +- 5.8; chimes 1239, fittings 49, stops 11199, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 995, 'beat': 171, 'light': 171, 'drawn': 171, 'paid': 158}
 axis (8, 15, 17), the exact turn 1, the light's sea x4, 40 ticks: split chimes 137, up 43, the shares summed 38.4 +- 4.7; chimes 1714, fittings 39, stops 11539, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 803, 'beat': 139, 'light': 139, 'drawn': 139, 'paid': 137}
-axis (3, 4, 5), the exact turn 1, the light's sea x4, 40 ticks: split chimes 143, up 62, the shares summed 58.6 +- 5.5; chimes 1904, fittings 47, stops 11571, the rewind {'intervals': 10, 'exact': 10}; the split pass's stages (clock-ticks, the rewind's ticks in) {'split': 862, 'beat': 159, 'light': 159, 'drawn': 159, 'paid': 143}
