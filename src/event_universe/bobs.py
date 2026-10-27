@@ -7,12 +7,15 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core import rule3
+from event_universe.core.rule3 import carries, largest_below
 from event_universe.core.spokes import AXES, SPOKE_SIDES, SPOKES
+from event_universe.draw import vernier
+from event_universe.hands import dot, sweep, twin_pairs, wind
 from event_universe.meshes import train_lead
-from event_universe.run import chime
+from event_universe.run import chime, logged
 from event_universe.trains import Gear
 from event_universe.unspring import unwinds
-from event_universe.unwind import move, recoil, window_clocks
+from event_universe.unwind import advance, move, recoil, window_clocks
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
@@ -26,15 +29,19 @@ def bobs(
     stopped: Any,
     r_unsprung: rule3.Gearing,
 ) -> None:
-    """The bobs' chiming: a hand wound to a whole winding of its own through one period of its beat strikes (one unwind of its winding at the clock, the chime logged), a clock of a fitting this tick or a stopped clock apart; EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352): where nothing arrives at the clock, the unwound hand's lead across its six meshes summed 0 at the tick's start (meshes.train_lead as striking.engage reads it; what flows in flows out), the unwind is returned to the unwound gear (the gear the unwind moved, logged as `taken_line`: CS4-S2) by the one advance act in the same striking, the chime written with laid_back the notches and its push tallied 0, so a great clock alike at every clock returns to the full rate exactly with a bob chimed at every clock in every cycle, and where the unsprung windings accumulate the unwind stands (the former closing, the take alone, kept by name; eq2's reading, every one of the six currents 0, kept by name); the unsprung hand is never chimed as a bob (the unsprung hand no bob, cs4's sentence through the Boss, 6402358120: light at rest is no body in nature, its windings unwound at an engagement and by a bob's strike alone; the former closing of the standing light, credited at every interval where its beat stood at 1, kept by name); the beat a hand's by its three gear's zero crossings counted in either direction (CK-S1: the crossing read even under the negation of the gear, the two notches' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike, so the chiming is covariant under the reflection and the colour exchange alike; the beat the half period; the former upward crossing, and the form `b < 0 <= n or n < 0 <= b` odd where exactly one level is 0, kept by name)."""
-    rec0 = clock.hands().index(clock.unsprung())
-    net = sum((train_lead(hand_starts[rec0], spoke) for spoke in range(SPOKES)), start=0)
+    """The bobs' chiming: a hand wound to a whole winding of its own through one period of its beat strikes (one unwind of its winding at the clock, the chime logged), a clock of a fitting this tick or a stopped clock apart; EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352): where nothing arrives at the clock, the unwound hand's lead across its six meshes summed 0 at the tick's start (meshes.train_lead as striking.engage reads it; what flows in flows out), the unwind is returned to the unwound gear (the gear the unwind moved, logged as `taken_line`: CS4-S2) by the one advance act in the same striking, the chime written with laid_back the notches and its push tallied 0, so a great clock alike at every clock returns to the full rate exactly with a bob chimed at every clock in every cycle, and where the unsprung windings accumulate the unwind stands (the former closing, the take alone, kept by name; eq2's reading, every one of the six currents 0, kept by name); the unsprung hand is never chimed as a bob (the unsprung hand no bob, cs4's sentence through the Boss, 6402358120: light at rest is no body in nature, its windings unwound at an engagement and by a bob's strike alone; the former closing of the standing light, credited at every interval where its beat stood at 1, kept by name); the beat a hand's own (the owner's word of 2026-10-27, 15:5x UTC, through the Boss's recommendation: the beat read free of the phase; DAVID-OWN-BEAT.md): at the first tick of a winding the hand's notch now is kept at the clock as its reference (where that notch is 0, the next tick's), the crossings' timer restarted there, and the beat is read on the dot of the reference with the hand's notch, before and now, so a turn of the hand by any Gaussian g multiplies the reading by |g|^2 and keeps its sign, and a hand swinging on its twelve gear alone chimes as one on its three gear (the former reading on the three gear's notches, which a quarter turn of the hand moved and a hand on the twelve gear never crossed, kept by name), its zero crossings counted in either direction (CK-S1: the crossing read even under the negation of the gear, the two notches' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike, so the chiming is covariant under the reflection and the colour exchange alike; the beat the half period; the former upward crossing, and the form `b < 0 <= n or n < 0 <= b` odd where exactly one level is 0, kept by name)."""
+    rec0, net = light_lead(clock, hand_starts)
     for rec, hand in enumerate(clock.hands()):
         if hand is clock.unsprung():
             continue
-        clock.wound[rec] = np.where(winds[rec] >= clock.windings[rec], clock.wound[rec] + 1, 0)
-        three = hand.gears[0]
-        crossing = (three.before * three.now < 0) | ((three.before == 0) != (three.now == 0))
+        wound, reference = winds[rec] >= clock.windings[rec], clock.reference[rec]
+        starting = wound & ((clock.wound[rec] == 0) | (dot(reference, reference) == 0))
+        reference = [np.where(starting, g.now, r) for g, r in zip(hand.gears, reference, strict=True)]
+        clock.reference[rec], clock.crossed[rec] = reference, np.where(starting, 0, clock.crossed[rec])
+        clock.wound[rec] = np.where(wound, clock.wound[rec] + 1, 0)
+        was = dot(reference, [g.before for g in hand.gears])
+        read = dot(reference, [g.now for g in hand.gears])
+        crossing = (was * read < 0) | ((was == 0) != (read == 0))
         timed = clock.crossed[rec] > 0
         clock.beats[rec] = np.where(crossing & timed, clock.crossed[rec], clock.beats[rec])
         clock.crossed[rec] = np.where(crossing, 1, np.where(timed, clock.crossed[rec] + 1, 0))
@@ -54,11 +61,93 @@ def bobs(
             entry = chime(clock, rec, at, unwind, face, hand_starts[rec])
             if int(net[at]) == 0:
                 move(clock, rec0, k, at, now - int(clock.hands()[rec0].gears[k].now[at]))
+                clock.slack[at] = unwind["remainder_was"]
                 entry["laid_back"], entry["dP_take"] = notches, [0] * AXES
                 back = recoil(clock, at, [-x for x in clock.last_push], entry["clock"], 1)
                 entry["recoil"], entry["carry"] = [0] * AXES, back["carry"]
                 clock.counts["laid_back"] += 1
             clock.log.append(entry)
+
+
+def splits(
+    clock: Clock,
+    hand_starts: list[list[Gear]],
+    reads: tuple[list[Any], list[rule3.Gearing], list[tuple[Gear, rule3.Gearing]]],
+    fitted_clocks: set[tuple[int, ...]],
+    stopped: Any,
+    r_unsprung: rule3.Gearing,
+) -> None:
+    """The split hand's chime, the measurement's law at one clock (the owner's word of 2026-10-27, 15:5x UTC, through the Boss's recommendation: the split hand's chime derived by David first; DAVID-SPLIT-CHIME.md, toys-5 dd8d3283b), run before the bobs' chiming for each twin pair: where neither twin's wind at the tick's start reaches the winding W and their sum does, the pair's split ticks counted (reset where not); where they reach the pair's beat (the up twin's, else the down's) at a clock neither fitted nor stopped and light arrives (the unsprung hand's lead over the six meshes not 0), the vernier's draw c in [0, room) picks the up twin where c (|W_up| + |W_down|) < room |W_up|, else the down, against the sweeps at the tick's start; the picked twin's every notch v goes to the largest n with n^2 |W_picked| <= v^2 (|W_up| + |W_down|), its sign kept, the other twin's to 0, both by the one advance act, the window's wind before less after into the slack (EX-S1, signed), and the pair strikes as one hand, one unwind of W from the unsprung hand (the bobs' chime act) credited to the picked twin; a refused unwind leaves nothing of the act standing; the split logged with its moves for the undo (a quantum shared between places, and the pair's one pick across a fitting that Bell's 2.828 needs, wait on the owner's word)."""
+    winds, gearings, gears_read = reads
+    hands, (_, net) = clock.hands(), light_lead(clock, hand_starts)
+    for pair in twin_pairs(hands):
+        u, w = pair[0], clock.windings[pair[0]]
+        up, down = winds[u], winds[pair[1]]
+        clock.split[u] = np.where((up < w) & (down < w) & (up + down >= w), clock.split[u] + 1, 0)
+        beat = np.where(clock.beats[u] > 0, clock.beats[u], clock.beats[pair[1]])
+        due = (beat > 0) & (clock.split[u] >= beat) & ~stopped & (net != 0)
+        swept = [abs(sweep(hand_starts[r])) for r in pair]
+        for where in zip(*np.nonzero(due), strict=True):
+            at = tuple(int(x) for x in where)
+            if at in fitted_clocks:
+                continue
+            clock.split[u][at] = 0
+            sweeps, drawn = [int(s[at]) for s in swept], vernier(clock, at, gears_read, w)
+            if drawn is None or sum(sweeps) == 0:
+                continue
+            picked = pair[0] if drawn[0] * sum(sweeps) < drawn[1] * sweeps[0] else pair[1]
+            moved: list[list[int]] = []
+            before, picked_sweep = window_wind(clock, pair, gearings, at), sweeps[pair.index(picked)]
+            for r in pair:
+                was = [int(slot[at]) for g in hands[r].gears for slot in (g.now, g.before)]
+                to = [largest_below(int(carries(v * v * sum(sweeps), picked_sweep))) for v in was]
+                kept = [(n if v >= 0 else -n) - v for n, v in zip(to, was, strict=True)]
+                moved.append(kept if r == picked else [-v for v in was])
+                advance(clock, r, at, tuple(moved[-1]))
+            carried = before - window_wind(clock, pair, gearings, at)
+            clock.slack[at] += carried
+            got = unwinds(clock, [(at, w)], r_unsprung, 1)
+            if got is None:
+                for r, m in zip(pair, moved, strict=True):
+                    advance(clock, r, at, tuple(m), -1)
+                clock.slack[at] -= carried
+                continue
+            clock.counts["body_clicks"] += 1
+            logged(
+                clock,
+                "split",
+                at,
+                pair=list(pair),
+                sweeps=sweeps,
+                draw=list(drawn),
+                picked=picked,
+                moved=moved,
+                carried=carried,
+            )
+            clock.log.append(
+                chime(
+                    clock,
+                    picked,
+                    at,
+                    got[0],
+                    face_of(clock, picked, at, hand_starts),
+                    hand_starts[picked],
+                )
+            )
+
+
+def light_lead(clock: Clock, hand_starts: list[list[Gear]]) -> tuple[int, Any]:
+    """The unsprung hand's place among the hands and its lead across its six meshes summed at the tick's start (meshes.train_lead as striking.engage reads it): what arrives at each clock."""
+    rec0 = clock.hands().index(clock.unsprung())
+    return rec0, sum((train_lead(hand_starts[rec0], spoke) for spoke in range(SPOKES)), start=0)
+
+
+def window_wind(
+    clock: Clock, recs: tuple[int, ...], gearings: list[rule3.Gearing], at: tuple[int, ...]
+) -> int:
+    """The window's wind of the hands named, at the clock and its six neighbours, each hand at its own gearing (hands.wind)."""
+    window = window_clocks(clock, at)
+    return sum(int(v) for r in recs for v in wind(clock, clock.hands()[r].gears, gearings[r], window))
 
 
 def face_of(

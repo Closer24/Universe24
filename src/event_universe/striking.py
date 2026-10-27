@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, NamedTuple
 import numpy as np
 
 from event_universe import hands, readings
-from event_universe.bobs import bobs
+from event_universe.bobs import bobs, splits
 from event_universe.core import rule3
 from event_universe.core.rule3 import carries, remainder
 from event_universe.core.spokes import AXES, across, spoke_of
@@ -264,6 +264,10 @@ def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
     untallied: set[tuple[Any, ...]] = set()
     for entry in reversed(clock.log[rewind_note["log_from"] :]):
         at = tuple(entry["node"])
+        if entry["event"] == "split":
+            for r, moved in zip(entry["pair"], entry["moved"], strict=True):
+                advance(clock, r, at, tuple(moved), -1)
+            clock.slack[at] -= entry["carried"]
         if entry["event"] == "birth":
             s, (a, b) = entry["line_pair"], entry["amplitude"]
             for where, push, rate in zip(
@@ -280,6 +284,7 @@ def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
                     advance(clock, p, tuple(where), fitted_notches(clock.hands()[p], sense, a, b), -1)
                 else:
                     move(clock, s, moved[0], tuple(where), -moved[1])
+                    clock.slack[tuple(where)] = moved[-1]
             if "cross" in entry:
                 cross = entry["cross"]
                 recoil(clock, tuple(cross["node"]), cross["dP"], cross["clock"], -1)
@@ -294,6 +299,7 @@ def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
                 if "taken_levels" in unwind:
                     advance(clock, unwind.get("hand", rec), where, tuple(unwind["taken_levels"]))
                     clock.strikes[where] += 1
+                    clock.slack[where] = unwind["remainder_was"]
                     continue
                 if not first:
                     continue
@@ -303,7 +309,7 @@ def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
                 clock.slack[where] = unwind["remainder_was"]
             clock.strikes[at] -= 1
     del clock.log[rewind_note["log_from"] :]
-    clock.wound, clock.crossed, clock.beats = rewind_note["counters"]
+    clock.wound, clock.crossed, clock.beats, clock.reference, clock.split = rewind_note["counters"]
 
 
 def strike(
@@ -326,10 +332,11 @@ def strike(
     read = factors(clock, None, stopped)
     r_unsprung = readings.gearing_of(clock, clock.unsprung(), c, read)
     gearings = clock.read_gears(held, c, read)
-    winds = []
+    winds, hand_gearings = [], []
     for rec, r in enumerate(clock.hands()):
         assert r.ratio is not None
-        winds.append(hands.wind(clock, hand_starts[rec], readings.gearing(clock, r.ratio, c, read)))
+        hand_gearings.append(readings.gearing(clock, r.ratio, c, read))
+        winds.append(hands.wind(clock, hand_starts[rec], hand_gearings[rec]))
     fits = [
         b
         for rec in range(len(clock.hands()))
@@ -344,4 +351,5 @@ def strike(
         )
     ]
     fitted_clocks = fittings(clock, jam(clock, fits, winds), c, read, gearings)
+    splits(clock, hand_starts, (winds, hand_gearings, gearings), fitted_clocks, stopped, r_unsprung)
     bobs(clock, hand_starts, winds, fitted_clocks, stopped, r_unsprung)

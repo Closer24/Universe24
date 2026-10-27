@@ -8,6 +8,7 @@ import numpy as np
 
 from event_universe import hands, readings, unwind
 from event_universe.assembly.cycle import set_cycle
+from event_universe.core.acts import carry, mid
 from event_universe.core.rates import rounded, sine_rim
 from event_universe.core.rule3 import carries, half, largest_below, least_at, odd
 from event_universe.core.spokes import AXES, wrap
@@ -93,6 +94,12 @@ def set_piece(clock: Clock, setting: list[dict[str, Any]]) -> None:
                 )
     for rec, at, h, n, sense, stride, top in packets:
         set_packet(clock, rec, at, h, n, sense, stride, top)
+    quantum = half(clock.key)
+    for hand in (h for h in clock.hands() if h.twin is not None):
+        if any(abs(int(w)) >= quantum + quantum for w in hands.sweep(hand.gears).flat):
+            raise ValueError(
+                "Pauli at the setting: a twin hand sweeps two quanta at a clock, refused by name"
+            )
 
 
 def raised_cosine(h: int) -> tuple[int, ...]:
@@ -199,6 +206,30 @@ def rest_hand(
     return hands.moving(base, pairs[0], pairs[1], clock.rim, sense)
 
 
+def carried_rest(clock: Clock, rec: int, lays: list[tuple[list[Gear], list[Any]]]) -> None:
+    """The rest lay carried (DAVID-AMPLITUDES.md section 3, the owner's word of 2026-10-27, 15:5x UTC): at the clocks the rest lays touched, each gear's before and fine tooth from one carry of the lays' own rest numerator N (base pinion on the three gear, sense base s on the twelve), V = teeth now - (teeth div rim) N + mid(teeth), before = now - V div teeth, fine = V mod teeth, so the lay's push is the rest push exactly, counted in the fine wheel's teeth (the former before laid toward zero beside a mid tooth ran a slow hand off at up to one notch a tick)."""
+    shifts = []
+    for k, gear in enumerate(clock.hands()[rec].gears):
+        now = sum(gears[k].now for gears, _ in lays)
+        before = sum(gears[k].before for gears, _ in lays)
+        numerator = sum(numerators[k] for _, numerators in lays)
+        total = gear.teeth * now - carries(gear.teeth, clock.rim) * numerator
+        carried, fine = carry(total, gear.teeth, mid(gear.teeth))
+        touched = (np.asarray(now) != 0) | (np.asarray(numerator) != 0)
+        shifts += [0 * now, np.where(touched, now - carried - before, 0)]
+        gear.fine = np.where(touched, fine, gear.fine)
+    unwind.advance(clock, rec, Ellipsis, tuple(shifts))
+
+
+def rest_numerators(
+    clock: Clock, train: Train, envelope: Any, w0: int, hand_length: int, sense: int
+) -> list[Any]:
+    """A rest lay's own numerators per gear, the rest turn's before over the rim before its carry: base pinion on the three gear, sense base s on the twelve (the carried lay's N)."""
+    assert train.ratio is not None
+    base = carries(hand_length * envelope, w0)
+    return [base * train.ratio[0], sense * base * sine_rim(train.ratio[0], clock.rim)]
+
+
 def even_notches(clock: Clock, train: Train, hand_length: int, sense: int) -> list[Gear]:
     """The fourth form's notches at a hand length (MA-S1, ma2's spelling): one hand at rest at every clock (rest_hand with the envelope 1 and the centre's weight 1) at the sense -1 or 1, or the conjugate pair at 0 (both senses summed, the twelve gears cancelling)."""
     if sense == 0:
@@ -213,18 +244,46 @@ def wind_at_clock(clock: Clock, train: Train, gears: list[Gear], gearing: Any) -
     return int(hands.wind(clock, gears, gearing).reshape(-1)[0])
 
 
+def swept(clock: Clock, train: Train, hand_length: int, sense: int) -> int:
+    """An even lay's sweep at the clock of the great clock's first index, each sense laid its own |W| (the conjugate pair's two senses summed, never cancelled): the count a sweeping hand's n quanta name (DAVID-AMPLITUDES.md section 7, the owner's word of 2026-10-27, 15:5x UTC), the setting's count, the sweep and Pauli's count one count."""
+    senses = (1, -1) if sense == 0 else (sense,)
+    return sum(abs(int(hands.sweep(even_notches(clock, train, hand_length, s)).flat[0])) for s in senses)
+
+
 def set_even(clock: Clock, rec: int, n: int, sense: int) -> None:
     """The fourth form set: the sprung hand at every clock alike at the least hand length whose wind at the vacuum's weight is at or above n windings at every clock (ma2's fitted_uniform: the search by comparisons, doubling then halving, its answer plus one), at the sense -1 or 1 or the conjugate pair at 0; the setting logged."""
     train = clock.hands()[rec]
     assert train.ratio is not None
     clock.start_load, clock.start_stretch = readings.load(clock), clock.train(REGULATOR).gears[0].now
     gearing = readings.gearing(clock, train.ratio, clock.start_load, factors(clock))
-    target = n * clock.windings[rec]
+    target, e, s = n * clock.windings[rec], half(clock.key), sine_rim(train.ratio[0], clock.rim)
     hand_length = least_at(
-        lambda a: wind_at_clock(clock, train, even_notches(clock, train, a, sense), gearing) > target
+        lambda a: (
+            wind_at_clock(clock, train, even_notches(clock, train, a, sense), gearing) > target
+            if s == 0
+            else swept(clock, train, a, sense) >= n * e
+        )
     )
     gears = even_notches(clock, train, hand_length, sense)
     unwind.advance(clock, rec, Ellipsis, tuple(x for gear in gears for x in (gear.now, gear.before)))
+    one = zeros(clock.size) + 1
+    senses = (1, -1) if sense == 0 else (sense,)
+    carried_rest(
+        clock,
+        rec,
+        [
+            (
+                gears,
+                [
+                    sum(x)
+                    for x in zip(
+                        *(rest_numerators(clock, train, one, 1, hand_length, s) for s in senses),
+                        strict=True,
+                    )
+                ],
+            )
+        ],
+    )
     logged(
         clock,
         "lay",
@@ -255,12 +314,15 @@ def fitted(
     """The largest hand length at which the hand's wind at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
     assert train.ratio is not None
     gearing = readings.gearing(clock, train.ratio, readings.load(clock), factors(clock))
+    sine = sine_rim(train.ratio[0], clock.rim)
 
-    def wind_of(hand_length: int) -> int:
+    def count_of(hand_length: int) -> int:
         gears = rest_hand(clock, train, envelope, w0, hand_length, 1, pairs)
-        return packet_wind(clock, train, gears, gearing)
+        if sine == 0:
+            return packet_wind(clock, train, gears, gearing)
+        return sum(abs(int(w)) for w in hands.sweep(gears).flat)
 
-    return least_at(lambda hand_length: wind_of(hand_length) > target) - 1
+    return least_at(lambda hand_length: count_of(hand_length) > target) - 1
 
 
 def stride_of(
@@ -298,19 +360,26 @@ def set_packet(
     assert train.ratio is not None
     named: dict[str, Any] = {"sense": int(one_sense or 0)}
     half_tops: tuple[int, ...] = (0,) * AXES
-    pairs = None
+    pairs, moving = None, stride is not None and any(int(x) != 0 for x in stride)
     if stride is not None:
         half_tops, points, rotation = stride_of(clock, train, h, stride, top)
         named |= {"wave": [int(x) for x in stride], "top": int(top)}
     envelope, w0 = envelope_of(clock, at, h, half_tops)
-    if stride is not None:
+    if moving:
         angles = angles_of(clock, at, h, half_tops, points)
         pairs = (angles, offset_pair(angles[0], angles[1], rotation[0], rotation[1], clock.rim))
     clock.start_load, clock.start_stretch = readings.load(clock), clock.train(REGULATOR).gears[0].now
-    hand_length = fitted(clock, train, envelope, w0, n * clock.windings[rec], pairs)
+    sweeping = sine_rim(train.ratio[0], clock.rim) != 0
+    hand_length = fitted(
+        clock, train, envelope, w0, n * (half(clock.key) if sweeping else clock.windings[rec]), pairs
+    )
+    lays = []
     for sense in (-1, 1) if not one_sense else (int(one_sense),):
         gears = rest_hand(clock, train, envelope, w0, hand_length, sense, pairs)
         unwind.advance(clock, rec, Ellipsis, tuple(x for gear in gears for x in (gear.now, gear.before)))
+        lays.append((gears, rest_numerators(clock, train, envelope, w0, hand_length, sense)))
+    if pairs is None:
+        carried_rest(clock, rec, lays)
     gears = rest_hand(clock, train, envelope, w0, hand_length, 1, pairs)
     gearing = readings.gearing(clock, train.ratio, clock.start_load, factors(clock))
     logged(

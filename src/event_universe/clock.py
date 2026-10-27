@@ -15,15 +15,7 @@ from event_universe.core.spokes import AXES, across
 from event_universe.features import standard
 from event_universe.meshes import Mesh, through_mesh
 from event_universe.run import bits_of
-from event_universe.trains import (
-    REGULATOR,
-    Gear,
-    Train,
-    hands_of,
-    train_of,
-    trains_of,
-    zeros,
-)
+from event_universe.trains import REGULATOR, Gear, Train, hands_of, train_of, trains_of, zeros
 
 COUNTS = {  # the run's counts, every one 0 at the start
     "births": 0,
@@ -73,11 +65,13 @@ class Clock:
         setting.set_piece(self, piece.get("seed", []))
 
     def start_state(self) -> None:
-        """The clock's state before the setting: the hands' wound ticks, crossings and beats, the dial, the strikes, the slack (EX-S1, set at 0), the ticks, the log, the turnovers, the rewind notes' stack, the run's counts; the regulator's time gear at the full rate, the drift the largest integer whose square is at most the key, the advance's two notches (A, B) with A B = key div 2 (MS-S1), the standard's first pair at the standard length derived from the rim, X = Gamma rim (clock.standard_length, carried above the shortest hand derived from the full rate, standard.carried; DAVID-AMPLITUDES.md section 4, the former length declared from outside by the owner's words of 2026-10-27, 04:0x and 04:4x UTC, the declaration struck by his rule of 11:3x UTC)."""
+        """The clock's state before the setting: the hands' wound ticks, crossings and beats, each beat's reference (the hand's notch where its winding began, DAVID-OWN-BEAT.md) and each twin pair's split ticks (DAVID-SPLIT-CHIME.md), the dial, the strikes, the slack (EX-S1, set at 0), the ticks, the log, the turnovers, the rewind notes' stack, the run's counts; the regulator's time gear at the full rate, the drift the largest integer whose square is at most the key, the advance's two notches (A, B) with A B = key div 2 (MS-S1), the standard's first pair at the standard length derived from the rim, X = Gamma rim (clock.standard_length, carried above the shortest hand derived from the full rate, standard.carried; DAVID-AMPLITUDES.md section 4, the former length declared from outside by the owner's words of 2026-10-27, 04:0x and 04:4x UTC, the declaration struck by his rule of 11:3x UTC)."""
         size, nr = self.size, len(self.hands())
         self.wound = [zeros(size) for _ in range(nr)]
         self.crossed = [zeros(size) for _ in range(nr)]
         self.beats = [zeros(size) for _ in range(nr)]
+        self.reference = [[zeros(size), zeros(size)] for _ in range(nr)]
+        self.split = {up: zeros(size) for up, _down in hands.twin_pairs(self.hands())}
         self.dial, self.strikes, self.ticks, self.slack = zeros(size), zeros(size), 0, zeros(size)
         self.log: list[dict[str, Any]] = []
         self.turnovers: list[tuple[int, int]] = []
