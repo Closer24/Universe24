@@ -195,3 +195,21 @@ The Boss answered the register on #2187 (comment 6454163264, 21:35 UTC; ledger r
 **The order of what stands, the Boss's:** R12 with R1 (the owner's word first), then R3, then R5.
 
 **Asked of the owner (the Scribe, through the Boss's list):** R12 with R1 (one act for both takes, the light's pick of the fitted hands' hand and the seas: the charts move), the coupling's general form K / Gamma (Y-S1), the third bound (the stretch's tick resolution).
+
+## 14. The register at 6a853217f, the held field built (2026-10-27, 22:5x UTC)
+
+The Boss's head (ledger row 261) read whole: the 8 files of src it moved (assembly/piece.py, clock.py, events.py, gates.py, readings.py, run.py, tick.py, trains.py) and the new phenomena.py (320 lines), the tests, the new universe tests/worlds/universe_bang.json and the three records; the counts by `tools/engine_gates.py` and the Scribe's lister and AST scan. The Boss's answers of section 13 stand; files the head did not touch keep the lines of sections 10 to 13.
+
+**The counts, unchanged from 0a3b16bc1:** numbers beyond 0 and 1, 24 in 7 files (section 13's lines; core/spokes.py:8 alone in the engine proper); identity reads of the unsprung hand 28 in 8 files (setting.py 49 55 62 64 76; bobs.py 161; clock.py 60 61; run.py 205 227 261 283 369; striking.py 46 47 131 188 263 333; tick.py 67 292 303; trains.py 68; unspring.py 160 162 249 255 273); branches by `is`, 13 in 5 files (setting.py 49 55 64 76; clock.py 60; run.py 205; striking.py 46 131 188; unspring.py 160 162 249 255); family-name strings 0, floats 0, true divisions 0, no import of math or trigonometry. Src 6,850 lines in 23 top-level modules; the tests 6 files and 61 functions; the full check 115 passed (185 s on the merged tree).
+
+**Standing, with what the head changes:**
+
+- **R1, a sixth kind of train by role (grows):** the held field is told from the rest by its `weight` (trains.py:34 and :123, `Train.weight`; tick.py:71, :106 and :227-229; run.py:284 and :297) and by the shape 1 with a ratio (trains.py:66; assembly/piece.py:40-44); the four fixed trains built by trains.rows_of (93-102) as in section 13.
+- **R3:** the loader now admits the shapes 1, HAND and HAND + HAND (assembly/piece.py:40-44), the shape 1 meaning two things by the ratio (the ratchet by its teeth, the field by its ratio and weight); AXES = 3 and the rest as in section 13.
+- **R5 and R16 (d), a formula beside Rule3's one (grows):** the field's source, the mass density SUM D |a|^2 div w (tick.py:239-240, the carry at :227-229), and the spring's rate read at the held load (readings.py:60-63); the owner's 15:5x word allows Rule3 on tensors (`hands.dot`), so the question is whether the source is Rule3's one act; for David and the Boss.
+- **R11, the shears:** David's reading of the draw (22:08, row 262) is that the shears carry no mirror of their own and striking them only changed which draws the polarization's run met; the Boss's blocker, the polarization's mirror, is open against it.
+- **The readers (new):** phenomena.py, a tenth reader, names the light by its number (phenomena.py:35, 221 and 252), copies the clock's winding formula (`windings_of`) and stands exempt from the integer and the word gates with the nine (tests/test_rule3.py:116-119).
+- **R12, R2, R4, R6, R13 to R15:** as section 13; R12 with R1 first in the Boss's order.
+- **New, David's (row 262):** the cube's 24 hold at 3 of 24 in the strike on nature and the hole, the draw's digits mirroring about their origin; the one mirror, F48-S1's letter, is the owner's word.
+
+**Asked of the owner, as in section 13, and one more:** R12 with R1; the coupling's general form K / Gamma (Y-S1); the third bound; and the remainder's one mirror about its origin (F48-S1).
