@@ -1,16 +1,23 @@
 """The reviewer's recurring findings as gates (issue #1198, item 4 (a); the model owner, 2026-09-27).
 
-Four gates, selected on every pull request by `tools/check.py`:
+Five gates, selected on every pull request by `tools/check.py`:
 
-1. Numbers. A numeric literal beyond 0, 1, 2, 3, 4, 6 and 8, outside a docstring, is counted
-   per file (the count of issue #1197). No file's count may stand above the same file's at the
-   merge base (CHECK_BASE, else origin/main), read from git; a new file has none.
+1. Numbers. A numeric literal beyond 0 and 1, outside a docstring, is counted per file (the count
+   of issue #1197; the owner's word of 2026-10-27, 11:3x UTC: the only numbers are the world
+   file's and the universe file's, so 2, 3, 4, 6 and 8 are counted as well). No file's count may
+   stand above the same file's at the merge base (CHECK_BASE, else origin/main), read from git; a
+   new file has none.
 2. Family names. A string literal equal to the name of a family declared in a world file under
    `examples/` is counted per file, on the same ratchet.
 3. Rule3's arithmetic by hand. A floor division, a remainder (`//`, `%`, `divmod`) in
    `features/`, in `clock.py` or in `lattice.py` is counted per file, on the same
    ratchet: a division belongs in `core/rule3.py`, and the count may only fall.
-4. A new module of `core/`. A Python file under `src/event_universe/core/` that the merge base
+4. The engine's reads of the unsprung hand (the same word: the engine generic, unaware of the
+   families). A read of `unsprung`, `winding_unsprung` or `sprung` (the hand at the ratio
+   (rim, rim) known by its identity) and a comparison with a pair of one name, `(den, den)`,
+   are counted per file as `identity_reads`, and a comparison by `is` or `is not` with the
+   unsprung hand as `identity_branches`, each on the same ratchet: the counts only fall.
+5. A new module of `core/`. A Python file under `src/event_universe/core/` that the merge base
    does not hold needs a line in the pull request's body that starts with `APPROVED-CORE` and
    names the Boss's approval. CI passes the body as the `PR_BODY` environment variable; the
    check runs on a pull request (or locally with PR_BODY set), never on a push to main.
@@ -38,9 +45,11 @@ from merge_base import base_ref, carried, on_pull_request, resolved, tree_at  # 
 PACKAGE = Path("src/event_universe")
 CORE = PACKAGE / "core"
 WORLDS = Path("examples")
-FREE_NUMBERS = frozenset({0, 1, 2, 3, 4, 6, 8})
+FREE_NUMBERS = frozenset({0, 1})
 APPROVAL = "APPROVED-CORE"
-COUNTS = ("numbers", "family_names", "hand_divisions")
+COUNTS = ("numbers", "family_names", "hand_divisions", "identity_reads", "identity_branches")
+# the names by which the engine knows the unsprung hand by its identity (gate 4)
+IDENTITY = frozenset({"unsprung", "winding_unsprung", "sprung"})
 # the places where a division by hand is Rule3's arithmetic written again
 DIVISION_SCOPES = (PACKAGE / "features",)
 DIVISION_FILES = (PACKAGE / "clock.py", PACKAGE / "lattice.py")
@@ -157,7 +166,37 @@ def counts_of(path: Path, families: frozenset[str], divisions: bool = True) -> d
                 and node.func.id == "divmod"
             ):
                 hand += 1
-    return {"numbers": numbers, "family_names": names, "hand_divisions": hand}
+    reads, branches = identity_of(tree)
+    return {
+        "numbers": numbers,
+        "family_names": names,
+        "hand_divisions": hand,
+        "identity_reads": reads,
+        "identity_branches": branches,
+    }
+
+
+def identity_of(tree: ast.AST) -> tuple[int, int]:
+    """The reads of the unsprung hand by its identity in one file (an attribute named in IDENTITY,
+    read; a comparison with a pair of one name) and the comparisons by `is` or `is not` with it."""
+    reads = branches = 0
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Attribute) and node.attr in IDENTITY and isinstance(node.ctx, ast.Load):
+            reads += 1
+        elif isinstance(node, ast.Compare):
+            sides = [node.left, *node.comparators]
+            reads += any(
+                isinstance(s, ast.Tuple)
+                and len(s.elts) > 1
+                and all(isinstance(e, ast.Name) for e in s.elts)
+                and len({e.id for e in s.elts if isinstance(e, ast.Name)}) == 1
+                for s in sides
+            )
+            unsprung = any(
+                isinstance(n, ast.Attribute) and n.attr in IDENTITY for s in sides for n in ast.walk(s)
+            )
+            branches += unsprung and any(isinstance(op, ast.Is | ast.IsNot) for op in node.ops)
+    return reads, branches
 
 
 def present(root: Path) -> dict[str, dict[str, int]]:
