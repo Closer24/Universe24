@@ -160,3 +160,24 @@ The script DAVID-CLOCKS_CHECK.txt beside this file is a Python file stored as te
 In line 6 the ratio of the angles departs from p_0 / Gamma for the heavier family because the exact law is on the half-angle sine, not on the angle. The floats appear in the reader's print only, never in an act.
 
 A document alone: no code and no test change.
+
+## 6. The sync of 09:2x: a ready mend for boss-clocks-1's step 1
+
+The owner's word of 2026-10-27, 09:0x UTC: "sync with the Boss." The thread holds no line from the Boss since 07:59, and both his branches are unmoved (boss-clocks-1 4b5c3d834, boss-toy-1 5427577aa). His step 1 of the clocks line stood red on one gate: the code ratchet, with rows.py grown from 151 to 154 lines.
+
+The mend beside this file, DAVID-CLOCKS-STEP-1_MEND.txt, is a git diff (8 files, +15 -12) that applies cleanly on boss-clocks-1 4b5c3d834:
+
+- **The shape refusal moved.** The refusal of a row of a shape the law does not name leaves rows.rows_of and joins the file's other refusals by name in loader/world.read_world, before the pair-or-wall check. rows.py is then 150 lines, one under the head's.
+- **One line of test.** test_the_files_are_refused_by_name refuses a universe whose one row is of shape 8, by the name "no row of the law". The file stands at 600 lines; tests/ stays 145 lines under the merge base.
+- **The stale docstrings re-cut.** The ones that named the quartet as present: node.records, run.credit, the bodies module, readings.scale and readings.rule_of.
+- **ENGINE.md.**
+  - The two path slips mended: "loader/seed.py" in the modules paragraph, and the struck module named "loader/quartet.py" in the new paragraph.
+  - The double-cover sentence re-cut to what the algebra gives (section 4): the cover leaves with the row and spin is open. The Boss's dihedral centre is kept as he derived it and named as no cover of the cube's rotations.
+
+Measured on the mended tree, with its own src on the path:
+
+- the full check exits 0: 106 passed, and ruff, mypy, the engine gates, the code ratchet, the tests' shape and the documents' six gates hold against origin/engine-5.0-test;
+- the three records regenerate SAME, key by key with the committed ones but the milliseconds (hole 60, chiral 60, bodies 120);
+- the run back is exact 20 of 20 on each.
+
+Whether to apply the mend, change it or leave it is the Boss's call.
