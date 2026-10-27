@@ -228,6 +228,8 @@ The Boss's head (ledger row 264) read whole: the two files of src it moved (phen
 - **Row 74's definition:** the own-axis tally's net agreement is 15, 14 and 14 percent of the kicks read at the weight 2 (25, 12 and 21 percent with no field); whether the kick's carry on its gear is the light or the kick's own landing is for David (DAVID-FOUR-PHENOMENA.md section 1).
 - **The test's sample:** the bang test reads binding on 6 of 14 pairs at one tick (22 of 66 at the weight 3), above twice the board's own share; the 250-tick figures carry more (52 of 144 and 32 of 68).
 - **R12, R2, R3, R5 and the others:** as section 14.
+- **Lines moved by the head:** run.py after :294 by one line (the identity reads stand at 205, 227, 261, 283 and 370; the held field's `field` line at :298), phenomena.py after :133 by six (`windings_of` at 216-223); no other file.
+- **reader-5 at 6ec4828c0 (23:13, 6a853217f and e41c51e6b merged), read at the same hour:** its src beyond the engine's is the Reader's readers (great_clock.py, reckoner.py, strikes.py and symmetries.py, 84 lines added and 43 taken since 0a3b16bc1, read at 22:1x) and one line of phenomena.py (the bound families' lines in row 76); the counts on that tree are the head's (24 numbers in 7 files, 28 reads in 8 files, 13 branches in 5, 0 floats, 0 true divisions; src 6,899 lines); not merged into engine-5.0-test.
 
 **Verified by the Scribe's run:** the one big bang at 250 ticks at the weight 2, at the weight 3 and with no field, from tests/worlds/world_bang.json with the universe file's field edited, reads the Boss's tallies, fittings (410, 318 and 356), chimes (11,497, 11,548 and 12,564) and rows integer for integer.
 
