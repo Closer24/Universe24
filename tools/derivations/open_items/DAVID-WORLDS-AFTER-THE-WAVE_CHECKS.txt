@@ -1,0 +1,198 @@
+DAVID-WORLDS-AFTER-THE-WAVE_CHECKS.txt: the checks of DAVID-WORLDS-AFTER-THE-WAVE.md (David, 2026-10-27, 16:5x UTC), on the head 5f8680de2 (engine-5.0-test) and before it 0d59ff812, the same numbers; no src touched.
+What they show: (1) the clock works: every run is the engine's own chart (run.chart) with its rewind of 20 ticks compared bit for bit, 20 of 20 in every run, the wave's harness in place; (2) the phenomenon: matter formed from light (fittings with no takes) with the take read from the wind's own fall, at the counts named.
+
+== 1. The wave: items 1, 3 and 4 are fixes.py's wind_fall, back_mesh and one_moment, printed in DAVID-CLOSE-LAW_CHECKS.txt; item 2 and the four at once:
+def merger_carried():
+    """Item 2: the unspringing carries its excess in EX-S1's one remainder, signed: at each end of a merger the clock's remainder gains the sprung take's fall less the light's rise there (fall - wall less rise - wall), logged on the birth as `slack_carried`; the undo made additive in the remainder (every take's restore the remainder less its own fall - booked) and each carried excess taken back at its own entry, so the order is free."""
+    import event_universe.striking as sk
+    from event_universe import hands
+    from event_universe.unwind import advance, move, recoil
+    from event_universe.unspring import fitted_notches
+    real_fitted = sk.fitted
+
+    def fitted(node, at, kids, take, rec, c, factors):
+        before = len(node.log)
+        touched = real_fitted(node, at, kids, take, rec, c, factors)
+        for entry in node.log[before:]:
+            if entry.get("event") == "birth" and "takes" in entry and "exact_lay" in entry:
+                carried = []
+                for t in entry["takes"]:
+                    end = tuple(t["node"])
+                    lay = entry["exact_lay"][0] if list(end) == list(entry["minus"]) else entry["exact_lay"][1]
+                    if lay is None:
+                        continue
+                    delta = int(t["taken"]) - int(lay[2])
+                    node.slack[end] += delta
+                    carried.append([list(end), delta])
+                entry["slack_carried"] = carried
+        return touched
+
+    def undo(node, frame):
+        rec0 = node.hands().index(node.unsprung())
+        unbooked = set()
+        for entry in reversed(node.log[frame["log_from"]:]):
+            at = tuple(entry["node"])
+            for end, delta in entry.get("slack_carried", []):
+                node.slack[tuple(end)] -= delta
+            if entry["event"] == "birth":
+                s, (a, b) = entry["line_pair"], entry["amplitude"]
+                for where, dp, clock in zip((entry["plus"], entry["minus"]), entry["dP_lay_ends"][::-1], entry["clock_ends"][::-1], strict=True):
+                    recoil(node, tuple(where), dp, clock, -1)
+                exact = entry.get("exact_lay", [None, None])
+                for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
+                    if laid is None:
+                        p = s if sense < 0 else hands.twin_of(node.hands(), s)
+                        advance(node, p, tuple(where), fitted_notches(node.hands()[p], sense, a, b), -1)
+                    else:
+                        move(node, s, laid[0], tuple(where), -laid[1])
+                if "cross" in entry:
+                    cross = entry["cross"]
+                    recoil(node, tuple(cross["node"]), cross["dP"], cross["clock"], -1)
+            if entry["event"] in ("birth", "credit"):
+                row = entry.get("taken_row", rec0)
+                for take in entry.get("takes", [entry]):
+                    where = tuple(take["node"])
+                    first = entry["event"] == "credit" or (where, row, at) not in unbooked
+                    if first:
+                        unbooked.add((where, row, at))
+                        recoil(node, where, take["dP_take"], take["clock"], -1)
+                    if "taken_levels" in take:
+                        advance(node, take.get("hand", row), where, tuple(take["taken_levels"]))
+                        node.strikes[where] += 1
+                        continue
+                    if not first:
+                        continue
+                    toward = 1 if take["taker"][1] > take["taker"][0] else -1
+                    count = 0 if "laid_back" in take else toward * take["levels"]
+                    move(node, row, take["taken_line"], where, -count)
+                    node.slack[where] -= int(take["taken"]) - int(take["booked"])
+                node.strikes[at] -= 1
+        del node.log[frame["log_from"]:]
+        node.wound, node.crossed, node.beats = frame["counters"]
+
+    sk.fitted, sk.undo = fitted, undo
+    import event_universe.clock as ck
+    if hasattr(ck, "undo"):
+        ck.undo = undo
+
+
+def wave():
+    """Items 1 to 4 of the close's law at once: the take by the wind's own fall, the merger's excess carried, the vernier's R_ji, one moment."""
+    wind_fall()
+    merger_carried()
+    back_mesh()
+    one_moment()
+
+== 2. The seeds raised (run_seed.py: the hole's and the chiral's light packets set to n quanta, SPREAD=1 adding the six neighbours' packets; the bodies' packet of n at each bob's centre; the bang's wave lay at n)
+seed = world["seed"]
+spread = os.environ.get("SPREAD") == "1"
+if which in ("hole", "chiral"):
+    extra = []
+    for lay in seed:
+        if lay.get("lay") == "at" and lay.get("row") == 0:
+            lay["quanta"] = n
+            if spread:
+                c0 = lay["centre"]
+                side = world["shape"][0]
+                for a in range(3):
+                    for sgn in (1, -1):
+                        cc = list(c0)
+                        cc[a] = (cc[a] + sgn) % side
+                        extra.append({"lay": "at", "row": 0, "centre": cc, "quanta": n})
+    seed.extend(extra)
+elif which == "bodies" and n > 0:
+    for lay in [l for l in seed if l.get("lay") == "at"]:
+        seed.append({"lay": "at", "row": 0, "centre": lay["centre"], "quanta": n})
+else:
+    for lay in seed:
+        if lay.get("lay") == "wave":
+            lay["quanta"] = n
+
+== 3. The runs on 5f8680de2 (venv314/bin/python run_seed.py WORLD n FIX; fittings (mergers = unspringings), chimes, stops, the rewind, the readings' rows SHOWN, seconds)
+hole light 1 none: fittings 18 (mergers 0), chimes 2262, stops 9138, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 35; 16 s
+hole light 1 wave: fittings 0 (mergers 0), chimes 0, stops 30, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 4 s
+hole light 2 wave: fittings 0 (mergers 0), chimes 0, stops 6, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 5 s
+hole light 4 wave: fittings 0 (mergers 0), chimes 0, stops 22, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 6 s
+hole light 8 wave: fittings 0 (mergers 0), chimes 0, stops 12, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 6 s
+hole light 16 wave: fittings 0 (mergers 0), chimes 0, stops 64, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 9 s
+hole light 32 wave: fittings 0 (mergers 0), chimes 0, stops 64, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 4; 8 s
+hole light 64 wave: fittings 0 (mergers 0), chimes 0, stops 32, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 10 s
+hole light 128 wave: fittings 0 (mergers 0), chimes 0, stops 48, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 10 s
+hole light 256 wave: fittings 0 (mergers 0), chimes 0, stops 72, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 8; 8 s
+hole spread light 16 wave: fittings 0 (mergers 0), chimes 0, stops 52, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 4; 11 s
+hole spread light 32 wave: fittings 0 (mergers 0), chimes 0, stops 28, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 14 s
+hole spread light 48 wave: fittings 3 (mergers 0), chimes 49, stops 90, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 31; 13 s
+hole spread light 56 wave: fittings 6 (mergers 2), chimes 18, stops 87, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 31; 13 s
+hole spread light 64 wave: fittings 4 (mergers 0), chimes 145, stops 92, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 26; 12 s
+hole spread light 72 wave: fittings 3 (mergers 0), chimes 6, stops 53, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 26; 11 s
+hole spread light 80 wave: fittings 0 (mergers 0), chimes 0, stops 38, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 4; 12 s
+hole spread light 96 wave: fittings 0 (mergers 0), chimes 0, stops 72, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 4; 10 s
+hole spread light 128 wave: fittings 0 (mergers 0), chimes 0, stops 50, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 7 s
+chiral light 1 none: fittings 16 (mergers 1), chimes 3003, stops 9353, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 35; 18 s
+chiral light 1 wave: fittings 2 (mergers 0), chimes 2460, stops 8365, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 32; 28 s
+chiral light 2 wave: fittings 4 (mergers 0), chimes 3954, stops 9029, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 34; 29 s
+chiral light 4 wave: fittings 3 (mergers 1), chimes 3016, stops 8830, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 33; 32 s
+chiral light 8 wave: fittings 6 (mergers 0), chimes 2691, stops 8747, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 32; 33 s
+chiral light 16 wave: fittings 1 (mergers 0), chimes 13, stops 134, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 28; 17 s
+chiral light 32 wave: fittings 1 (mergers 0), chimes 4, stops 158, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 24; 19 s
+bodies light 0 none: fittings 23 (mergers 15), chimes 17944, stops 51337, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 31; 490 s
+bodies light 0 wave: fittings 0 (mergers 0), chimes 83, stops 1868, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 15; 14 s
+bodies light 1 wave: fittings 8 (mergers 8), chimes 91, stops 2195, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 26; 14 s
+bodies light 2 wave: fittings 8 (mergers 8), chimes 96, stops 2001, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 22; 15 s
+bodies light 4 wave: fittings 12 (mergers 10), chimes 7924, stops 15662, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 28; 75 s
+bodies light 8 wave: fittings 12 (mergers 12), chimes 260, stops 2107, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 24; 31 s
+bodies light 16 wave: fittings 0 (mergers 0), chimes 89, stops 881, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 17; 15 s
+world_onebigbang.json light 5000000 none: fittings 92 (mergers 40), chimes 404, stops 214, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 38; 4 s
+world_onebigbang.json light 5000000 wave: fittings 74 (mergers 26), chimes 378, stops 204, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 37; 1001 s
+
+== 4. The two kinds told apart (births.py: a birth with 'takes' is an unspringing, its child the light; one with none is a fitting from light); the chiral at 1 and the bodies at 4, on 0d59ff812
+fitting from light: tick 10 clock [4, 0, 3] child hand 0 taken_row 3 takes (row, booked, taken in light quanta) [] carried None
+fitting from light: tick 12 clock [4, 4, 4] child hand 0 taken_row 3 takes (row, booked, taken in light quanta) [] carried None
+unspringing (matter to light): tick 4 clock [2, 3, 2] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 1.3, 19.67), (None, 1.22, 5.2)] carried [[[2, 3, 2], 3282920689810305]
+unspringing (matter to light): tick 4 clock [2, 3, 5] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 1.22, 5.2), (None, 1.3, 19.67)] carried [[[2, 2, 5], 711244654968417],
+unspringing (matter to light): tick 4 clock [3, 2, 2] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 1.3, 19.1), (None, 1.22, 5.2)] carried [[[3, 2, 2], 3179946307095110],
+unspringing (matter to light): tick 4 clock [3, 2, 5] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 1.22, 5.2), (None, 1.3, 19.1)] carried [[[4, 2, 5], 711244654968416], 
+unspringing (matter to light): tick 4 clock [3, 4, 2] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 1.3, 19.67), (None, 1.22, 4.62)] carried [[[3, 4, 2], 3282920689810304
+unspringing (matter to light): tick 4 clock [3, 4, 5] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 1.22, 4.62), (None, 1.3, 19.67)] carried [[[2, 4, 5], 608270272253225]
+unspringing (matter to light): tick 4 clock [4, 3, 2] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 1.3, 19.1), (None, 1.22, 4.62)] carried [[[4, 3, 2], 3179946307095110]
+unspringing (matter to light): tick 4 clock [4, 3, 5] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 1.22, 4.62), (None, 1.3, 19.1)] carried [[[4, 4, 5], 608270272253224],
+fitting from light: tick 11 clock [2, 5, 2] child hand 0 taken_row 2 takes (row, booked, taken in light quanta) [] carried None
+fitting from light: tick 14 clock [4, 3, 2] child hand 0 taken_row 2 takes (row, booked, taken in light quanta) [] carried None
+unspringing (matter to light): tick 20 clock [3, 3, 2] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 4.95, 23.32), (None, 4.12, 26.87)] carried [[[3, 3, 2], 3282483839419
+unspringing (matter to light): tick 21 clock [3, 3, 5] child hand 2 taken_row 1 takes (row, booked, taken in light quanta) [(None, 4.19, 25.93), (None, 5.64, 21.55)] carried [[[3, 3, 4], 3882688607071
+
+== 5. The same runs on 0d59ff812 (the stage-1b names and X = Gamma rim), the numbers the same
+hole light 1 wave: fittings 0 (mergers 0), chimes 0, stops 30, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 4 s
+hole light 2 wave: fittings 0 (mergers 0), chimes 0, stops 6, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 4 s
+hole light 4 wave: fittings 0 (mergers 0), chimes 0, stops 22, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 3 s
+hole light 8 wave: fittings 0 (mergers 0), chimes 0, stops 12, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 4 s
+hole light 16 wave: fittings 0 (mergers 0), chimes 0, stops 64, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 6 s
+chiral light 1 wave: fittings 2 (mergers 0), chimes 2460, stops 8365, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 32; 20 s
+chiral light 2 wave: fittings 4 (mergers 0), chimes 3954, stops 9029, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 34; 22 s
+chiral light 4 wave: fittings 3 (mergers 1), chimes 3016, stops 8830, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 33; 25 s
+chiral light 8 wave: fittings 6 (mergers 0), chimes 2691, stops 8747, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 32; 23 s
+chiral light 1 none: fittings 16 (mergers 1), chimes 3003, stops 9353, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 35; 24 s
+hole spread light 16 wave: fittings 0 (mergers 0), chimes 0, stops 52, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 4; 7 s
+hole spread light 32 wave: fittings 0 (mergers 0), chimes 0, stops 28, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 9 s
+hole spread light 64 wave: fittings 4 (mergers 0), chimes 145, stops 92, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 26; 8 s
+hole spread light 128 wave: fittings 0 (mergers 0), chimes 0, stops 50, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 6 s
+bodies light 0 none: fittings 23 (mergers 15), chimes 17944, stops 51337, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 31; 119 s
+bodies light 1 wave: fittings 8 (mergers 8), chimes 91, stops 2195, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 26; 15 s
+bodies light 2 wave: fittings 8 (mergers 8), chimes 96, stops 2001, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 22; 16 s
+bodies light 4 wave: fittings 12 (mergers 10), chimes 7924, stops 15662, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 28; 72 s
+bodies light 8 wave: fittings 12 (mergers 12), chimes 260, stops 2107, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 24; 24 s
+bodies light 16 wave: fittings 0 (mergers 0), chimes 89, stops 881, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 17; 17 s
+bodies light 0 wave: fittings 0 (mergers 0), chimes 83, stops 1868, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 15; 17 s
+hole light 32 wave: fittings 0 (mergers 0), chimes 0, stops 64, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 4; 6 s
+hole light 64 wave: fittings 0 (mergers 0), chimes 0, stops 32, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 9 s
+hole light 128 wave: fittings 0 (mergers 0), chimes 0, stops 48, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 5; 7 s
+hole light 256 wave: fittings 0 (mergers 0), chimes 0, stops 72, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 8; 6 s
+hole spread light 48 wave: fittings 3 (mergers 0), chimes 49, stops 90, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 31; 12 s
+hole spread light 56 wave: fittings 6 (mergers 2), chimes 18, stops 87, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 31; 8 s
+hole spread light 72 wave: fittings 3 (mergers 0), chimes 6, stops 53, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 26; 7 s
+hole spread light 80 wave: fittings 0 (mergers 0), chimes 0, stops 38, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 4; 8 s
+hole spread light 96 wave: fittings 0 (mergers 0), chimes 0, stops 72, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 4; 8 s
+chiral light 16 wave: fittings 1 (mergers 0), chimes 13, stops 134, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 28; 10 s
+chiral light 32 wave: fittings 1 (mergers 0), chimes 4, stops 158, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 24; 12 s
+world_onebigbang.json light 5000000 none: fittings 92 (mergers 40), chimes 404, stops 214, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 38; 4 s
+world_onebigbang.json light 5000000 wave: fittings 74 (mergers 26), chimes 378, stops 204, the rewind {'intervals': 20, 'exact': 20}, rows SHOWN 37; 520 s
