@@ -85,3 +85,16 @@ with open(out + ".reading.jsonl", "w", encoding="utf-8") as f, contextlib.redire
 ## Appendix B: the comparison
 
 For each k against the width's choice: the record's `log` (the births and their intervals, the credits), `counts` (turns among them), `turns`, `run_back`, `rows` (the widest integer); the reading's 79 rows, each row's `verdict` and every other field. Then the record key by key with the amplitude's own fields stripped: on both worlds, at every k from the floor up, `nodes`, `turns`, `counts` and `run_back` are equal and the `log` differs only in the credit entries' `frame`, at its keys `X` and `phases` (the pair [X, 0] itself at the six Links), 6 of 3,433 entries on the bang's world and 3,003 of 23,655 on the chiral seed; `rows` differ in `milliseconds` alone.
+
+## 8. The owner's word and the one number owed (2026-10-27, 04:5x UTC)
+
+The clause of section 6 was built at d7fd32957 (the floor from Gamma, 23 Gamma at Gamma 1,000; the amplitude the engine's; the width's one role the refusal), with one course change owned there: the engine gates' numbers ratchet admits no new non-free number in any file of src (the free ones 0, 1, 2, 3, 4, 6 and 8), so the room stayed derived from the width as the largest it carries, half(WIDTH - 1) = 63, and X still reads 128 through it.
+
+The owner, asked what the amplitude does and told the three ways to part it from the width in full (a literal of its own under the gate's room; a key of the universe file, which moves every record; or the room left derived), gave his word for the first, in the session, 04:5x UTC: X declared on its own, so that nothing of the physics reads a number of bits; the 128 to remain at most as the engine's refusal where the machine cannot carry the act's room.
+
+What the build needs, the Boss's to give, either way one line of code and no record moving (X stays 288,230,376,000):
+
+- (a) the gate's room for one number: `AMPLITUDE = 288_230_376_000` declared in features/phase (or rows.py) as the engine's scale, ROOM struck, node.py:109 reading the declared number and passing WIDTH to the refusal as now; tools/engine_gates.py's ratchet to admit the one number (its FREE_NUMBERS or an exemption by file), and tests/test_rule3.py's FILE_INTEGERS with it;
+- (b) no gate change: the width's refusal struck with it, WIDTH = 128 leaving src (rows.py then holds the declared amplitude in the place of ROOM, its count of numbers unchanged at two), the machine's capacity unspoken (Python's integers carry every width), the refusal below the floor kept.
+
+Under both the physics reads no width anywhere; under (a) the engine keeps the one refusal the Boss named; under (b) the number 128 is gone from the engine altogether. The code for each is ready in David's scratch and lands on the Boss's word with the full check first.
