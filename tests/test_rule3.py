@@ -112,7 +112,7 @@ LAW_INTEGERS, TOOL_INTEGERS = frozenset({0, 1}), frozenset({0, 1, 2, 3, 4, 6})
 FILE_INTEGERS = {
     "ports.py": frozenset({2, 3}),
     "rule3.py": frozenset({2, 3, 4}),
-    "rows.py": frozenset({2, 4, 8, 10, 128}),
+    "rows.py": frozenset({2, 4, 8, 10}),
     "links.py": frozenset({4}),
     "seed.py": frozenset({2, 3}),
     "wave.py": frozenset({4}),

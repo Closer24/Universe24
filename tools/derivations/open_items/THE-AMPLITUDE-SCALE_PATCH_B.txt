@@ -1,0 +1,180 @@
+diff --git a/docs/ENGINE.md b/docs/ENGINE.md
+index a000ce1b5..32ac19011 100644
+--- a/docs/ENGINE.md
++++ b/docs/ENGINE.md
+@@ -121,8 +121,7 @@ The owner's question of 2026-10-26, 00:29 UTC, through the Boss (#2187 comment 6
+ | port_of(axis, side) | the Port's index, SIDES times the axis plus the side | core/ports.py (the fold's spec, item 1) | a count of the lattice, derived | the inverse of PORT_SIDES; replaces 23 sites of `2 * axis` |
+ | The four shapes, CARRIER and POTENTIAL and PLANE and QUARTET | 10, 4, 2, 8 | rows.py | the law's shapes with their clauses (U-S1, SR-S1) | the file's shapes named once for the refusals and the lookups; the acts' order an ordered tuple after the fold |
+ | PLANES (the fold's name for quartet.HALF) | 4, derived as QUARTET div PLANE | loader/quartet.py | a count of the lattice, derived | the planes of the spinor row on the orbit lattice |
+-| WIDTH | 128 | rows.py; decoder.py on this head (the engine reads it, a reader must not own it) | the machine's width, no clause of the law (the owner's ruling of 2026-10-26, 22:1x UTC: the physics may not be tied to the bits of the run; the former clause, every integer within 128 bits, struck) | declared by the owner's word of 18:1x UTC, 2026-10-25; its one role since 2026-10-27, 04:0x UTC the engine's refusal where the machine cannot carry the phase act's room (phase.carried), never a verdict, never a phenomenon, never a row |
+-| ROOM | 63, derived as half(WIDTH - 1), the largest room the width carries through the pair's product | rows.py (the former HALF_WIDTH - 1 by value, so every record stands bit for bit) | the engine's room of the phase act in bits, a choice of resolution and not of physics (THE-AMPLITUDE-SCALE.md: the state bit for bit at every scale above the floor, measured from 100,000 Gamma on the chiral seed and 1,000 Gamma on the bang's world to 10^14 Gamma; the records at 288,230,376 Gamma) | the owner's word of 2026-10-27, 04:0x UTC, the amplitude separated from the 128 bits: phase.amplitude reads the room and nothing of the width, the width's one role the refusal; a room of its own literal is barred by the engine gates' numbers ratchet, so the room stands derived as the width's largest |
++| AMPLITUDE | 288,230,376,000 at the shipped universes | rows.py | the engine's declared scale of the phase line, a choice of resolution and not of physics (THE-AMPLITUDE-SCALE.md: the state bit for bit at every scale above the floor, measured from 100,000 Gamma on the chiral seed and 1,000 Gamma on the bang's world to 10^14 Gamma) | declared by the owner's words of 2026-10-27, 04:0x and 04:5x UTC, the amplitude separated from the 128 bits and declared on its own; the former WIDTH 128 (the owner's word of 18:1x UTC, 2026-10-25) and ROOM 63 struck with the machine's width refusal, no number of bits read anywhere in the engine, its integers unbounded |
+ | The amplitude's floor | 23,000 at Gamma 1,000, derived as 23 Gamma | features/phase.floor | an integer of the engine, derived from Gamma alone the way G is: the least multiple of Gamma at which the orbit's rounding over the half turn stays under one of the orbit's own steps X div Gamma, a search by comparisons from k = 1 (the departure 23 levels against the step 22 at k = 22; 20 against 23 at k = 23) | derived (2026-10-27, 04:0x UTC); below it the engine refuses the scale by name (phase.carried), the world's own floor for the state's invariance measured above it |
+ | POWER_TIME | 4 | rows.py write_walls (the held walls' powers) | the law's literal with its clause (K-S1 to K-S3: the time line's wall at Gamma^4) | typed; to derive from the lattice, H-Law-Literals-1 and -2 after the trace |
+ | POWER_AXIS | 2 | rows.py write_walls | the law's literal with its clause (the axis lines' wall at Gamma^2) | typed; to derive, the same hands |
+diff --git a/src/event_universe/features/phase/__init__.py b/src/event_universe/features/phase/__init__.py
+index 819aa1359..d67a1613d 100644
+--- a/src/event_universe/features/phase/__init__.py
++++ b/src/event_universe/features/phase/__init__.py
+@@ -8,7 +8,7 @@ import numpy as np
+ 
+ from event_universe.core.acts import born, divide
+ from event_universe.core.paces import rounded
+-from event_universe.core.rule3 import half, quotient, rule3
++from event_universe.core.rule3 import quotient, rule3
+ 
+ # a line of the phase, (now, before, remainder), each an integer or an integer array over the Links
+ Line = tuple[Any, Any, Any]
+@@ -69,19 +69,6 @@ def act(line: Line, gamma: Any, direction: int = 1) -> Line:
+     return before, previous, carried
+ 
+ 
+-def amplitude(gamma: Any, width: int) -> int:
+-    """The phase line's amplitude X, the engine's declared scale and never written (the owner's word of 2026-10-27, 04:0x UTC, through the Boss, "the amplitude, so separate the 128 bits and it will not be tied"; THE-AMPLITUDE-SCALE.md: a free scale of the law above the floor, the state bit for bit at every scale from the measured floor to 10^14, so the room is a choice of resolution and not of physics, and the machine's width enters nowhere here, its one role the refusal in `carried`; the room rows.ROOM, the largest the width carries through the pair's product, the former half width less one by value): half of the act's room at the room of `width` bits (the two hands' item (i): X of 2^35's size at the room 63, 2 K_0 X + D below 2^63), (2^width - 1) div (2 D) div 2, the half the walk's room (the pair's magnitude within 1.42 N + 2.3 Gamma levels of X over N acts), rounded down to a multiple of Gamma (the half-wall birth cancels the resonance at a multiple of Gamma alone, `seed`): 32,025,594,000 at Gamma 6,000 and width 63 (2^34.9; the hands' 2^35 div Gamma times Gamma is 34,359,738,000, 35 being no literal of the law); refused by name where the width leaves no multiple of Gamma."""
+-    largest = (1 << width) - 1
+-    room = quotient(largest, D(gamma) + D(gamma))
+-    found = quotient(half(room), gamma) * gamma
+-    if int(found) < int(gamma):
+-        raise ValueError(
+-            f"the width {width} leaves no multiple of Gamma = {gamma} inside the phase act's room "
+-            f"2 K_0 X + D < 2^{width}: the phase line's amplitude is refused"
+-        )
+-    return int(found)
+-
+-
+ def deviation(amplitude: Any, gamma: Any) -> int:
+     """The orbit's own rounding over the half turn at the amplitude X: the pair built from the seed by the act until the cosine first rises above its lowest (the half turn, pi Gamma counts to the integer; readings.pair_angle builds the Node's orbit to the same turn), the magnitude's departure from X at every count in levels, |c^2 + s^2 - X^2| div 2 X, the largest of them (20 levels at X = 23,000 and 36,022 at the records' 288,230,376,000 at Gamma 1,000: the departure about X / D at a large X, the resonance's residue past the half-wall birth)."""
+     cosine, sine = seed(amplitude, gamma)
+@@ -110,18 +97,12 @@ def floor(gamma: Any) -> int:
+     return FLOORS[key]
+ 
+ 
+-def carried(amplitude: Any, gamma: Any, width: int) -> Any:
+-    """The engine's two refusals of a scale by name, never a verdict of the law and never a phenomenon (the owner's ruling of 2026-10-26, 22:1x UTC, and his word of 2026-10-27, 04:0x): the amplitude below the floor, where the turn's rounding is coarser than the orbit's own step, and the act's room 2 K_0 X + D past the machine's width, the one role the width keeps (rows.WIDTH, passed in by the Node and read nowhere else of the physics); the amplitude returned carried."""
++def carried(amplitude: Any, gamma: Any) -> Any:
++    """The engine's one refusal of a scale by name, never a verdict of the law and never a phenomenon (the owner's ruling of 2026-10-26, 22:1x UTC, and his words of 2026-10-27, 04:0x and 04:5x: the amplitude declared on its own, rows.AMPLITUDE, no width read by the physics; the former `amplitude` from the half width less one and the machine's width refusal struck, the value kept): the amplitude below the floor, where the turn's rounding is coarser than the orbit's own step; the amplitude returned carried."""
+     least = floor(gamma)
+     if int(amplitude) < least:
+         raise ValueError(
+             f"the engine cannot carry the phase line at the amplitude {amplitude}: below the floor "
+             f"{least} ({quotient(least, gamma)} Gamma) at which the orbit's rounding resolves one step"
+         )
+-    room = K0(gamma) * amplitude + K0(gamma) * amplitude + D(gamma)
+-    if int(room) >= 1 << width:
+-        raise ValueError(
+-            f"the machine's width {width} cannot carry the phase act's room 2 K_0 X + D at the "
+-            f"amplitude {amplitude}: the scale is refused by the engine"
+-        )
+     return amplitude
+diff --git a/src/event_universe/node.py b/src/event_universe/node.py
+index 7f055b1ea..629a0f238 100644
+--- a/src/event_universe/node.py
++++ b/src/event_universe/node.py
+@@ -15,11 +15,10 @@ from event_universe.features import phase
+ from event_universe.links import Link, turned
+ from event_universe.loader import seed
+ from event_universe.rows import (
++    AMPLITUDE,
+     CARRIER,
+     PLANE,
+     POTENTIAL,
+-    ROOM,
+-    WIDTH,
+     Line,
+     Row,
+     records_of,
+@@ -78,7 +77,7 @@ class Node:
+         seed.lay_world(self, world.get("seed", []))
+ 
+     def start_state(self) -> None:
+-        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the take's remainder (EX-S1, born at 0), the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude at the engine's declared room, carried above the floor derived from Gamma and within the machine's width (phase.amplitude, phase.carried; the owner's word of 2026-10-27, 04:0x UTC: the amplitude separated from the 128 bits), and the orbit's seed."""
++        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the take's remainder (EX-S1, born at 0), the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude the engine's declared scale carried above the floor derived from Gamma (rows.AMPLITUDE, phase.carried; the owner's words of 2026-10-27, 04:0x and 04:5x UTC: the amplitude separated from the 128 bits, declared on its own, no width read by the physics), and the orbit's seed."""
+         shape, nr = self.shape, len(self.records())
+         self.standing = [zeros(shape) for _ in range(nr)]
+         self.crossed = [zeros(shape) for _ in range(nr)]
+@@ -106,7 +105,7 @@ class Node:
+             line.now[:], line.before[:] = self.gamma, self.gamma
+         self.drift = rule3.largest_below(self.T)
+         self.A, self.B = rule3.balanced_pair(half(self.T))
+-        self.X = phase.carried(phase.amplitude(phase.unit(self.gamma), ROOM), self.gamma, WIDTH)
++        self.X = phase.carried(AMPLITUDE, self.gamma)
+         seed_pair = phase.seed(self.X, self.gamma)
+         self.orbit_lines, self.orbit = [seed_pair], [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
+         self.orbit_half: int | None = None
+diff --git a/src/event_universe/rows.py b/src/event_universe/rows.py
+index 72d2c9a20..ab7097bba 100644
+--- a/src/event_universe/rows.py
++++ b/src/event_universe/rows.py
+@@ -1,4 +1,4 @@
+-"""The rows of the Node as the universe file names them, no name and no role (the owner's word of 2026-10-25, there is no if): a row is a shape (its count of lines) with a pair (num, den) for Rule3's rule or a wall of its own for a row with no Links; its lines are built here with their walls by shape, the rows ordered for the acts and the universe's shapes refused by name; the lookups choose a row by its numbers alone. ROOM is the room of the phase act in bits, the largest the machine's width carries through the pair's product, (WIDTH - 1) div 2, the engine's resolution and nothing of the law (the owner's word of 2026-10-27, 04:0x UTC, "the amplitude, so separate the 128 bits and it will not be tied"; THE-AMPLITUDE-SCALE.md: the physics a free scale above the floor derived from Gamma, phase.floor, so the room is a choice of resolution; the former HALF_WIDTH - 1 by value, every record bit for bit); WIDTH the machine's width, whose one role in the physics is the engine's refusal in phase.carried."""
++"""The rows of the Node as the universe file names them, no name and no role (the owner's word of 2026-10-25, there is no if): a row is a shape (its count of lines) with a pair (num, den) for Rule3's rule or a wall of its own for a row with no Links; its lines are built here with their walls by shape, the rows ordered for the acts and the universe's shapes refused by name; the lookups choose a row by its numbers alone. AMPLITUDE is the engine's declared scale of the phase line (the owner's word of 2026-10-27, 04:5x UTC; THE-AMPLITUDE-SCALE.md: the physics a free scale above the floor derived from Gamma, phase.floor, so the number is a resolution and no clause of the law; the former WIDTH 128 and the room 63 derived from it struck, the value kept so that every record stands bit for bit); no width of the machine stands in the engine, its integers unbounded."""
+ 
+ from __future__ import annotations
+ 
+@@ -7,14 +7,13 @@ from typing import Any
+ import numpy as np
+ 
+ from event_universe.core.acts import born
+-from event_universe.core.rule3 import half, held_wall, quotient
++from event_universe.core.rule3 import held_wall, quotient
+ 
+ CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
+ POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
+ PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
+ QUARTET = 8
+-WIDTH = 128  # the machine's width in bits: the engine's one refusal where it cannot carry the scale (phase.carried), never a verdict of the law (the owner's ruling of 2026-10-26, 22:1x UTC; the former clause "every integer within 128 bits" struck)
+-ROOM = half(WIDTH - 1)
++AMPLITUDE = 288_230_376_000  # the engine's declared scale of the phase line, its amplitude X, a choice of resolution and nothing of the law (the owner's word of 2026-10-27, 04:5x UTC: X declared on its own, so that nothing of the physics reads a number of bits; the former WIDTH 128 and ROOM 63 struck, the value kept so every record stands bit for bit)
+ POWER_TIME = 4  # the held wall's power of Gamma on the carrier's time line, POWER_AXIS the nine axis lines' (K-S1 to K-S3, Y-S1)
+ POWER_AXIS = 2
+ 
+diff --git a/tests/test_rule3.py b/tests/test_rule3.py
+index 1ba60c58d..4b0440907 100644
+--- a/tests/test_rule3.py
++++ b/tests/test_rule3.py
+@@ -112,7 +112,7 @@ LAW_INTEGERS, TOOL_INTEGERS = frozenset({0, 1}), frozenset({0, 1, 2, 3, 4, 6})
+ FILE_INTEGERS = {
+     "ports.py": frozenset({2, 3}),
+     "rule3.py": frozenset({2, 3, 4}),
+-    "rows.py": frozenset({2, 4, 8, 10, 128}),
++    "rows.py": frozenset({2, 4, 8, 10, 288230376000}),
+     "links.py": frozenset({4}),
+     "seed.py": frozenset({2, 3}),
+     "wave.py": frozenset({4}),
+diff --git a/tests/test_the_phase_line.py b/tests/test_the_phase_line.py
+index 5724947e2..f4abd97ba 100644
+--- a/tests/test_the_phase_line.py
++++ b/tests/test_the_phase_line.py
+@@ -10,7 +10,6 @@ from event_universe.features.phase import (
+     K0,
+     D,
+     act,
+-    amplitude,
+     carried,
+     deviation,
+     floor,
+@@ -96,18 +95,17 @@ def test_the_reversal_is_bit_exact_over_ten_thousand_acts():
+     )
+ 
+ 
+-def test_the_floor_is_derived_from_gamma_and_the_engine_refuses_a_scale_below_it_or_past_the_width():
+-    """The amplitude separated from the width (the owner's word of 2026-10-27, 04:0x UTC; THE-AMPLITUDE-SCALE.md): the floor from Gamma alone, 23 Gamma at Gamma 1,000 (the orbit's departure 23 levels against the step 22 at k = 22, 20 against 23 at k = 23), below the records' scale 288,230,376,000 (the room 63 bits, the largest the width 128 carries through the pair's product, half the act's room at it, a multiple of 2 Gamma); the engine refuses by name a scale below the floor and a room past the machine's width, and says so as the engine's, never as nature's."""
++def test_the_floor_is_derived_from_gamma_and_the_engine_refuses_a_scale_below_it():
++    """The amplitude separated from the width (the owner's word of 2026-10-27, 04:0x UTC; THE-AMPLITUDE-SCALE.md): the floor from Gamma alone, 23 Gamma at Gamma 1,000 (the orbit's departure 23 levels against the step 22 at k = 22, 20 against 23 at k = 23), below the engine's declared scale 288,230,376,000 (rows.AMPLITUDE, a multiple of 2 Gamma; the owner's word of 04:5x UTC, no width read by the physics); the engine refuses by name a scale below the floor and says so as the engine's, never as nature's."""
+     gamma = 1_000
+     least = floor(gamma)
+     assert least == 23 * gamma and deviation(22 * gamma, gamma) >= 22 > deviation(least, gamma)
+-    scale = amplitude(unit(gamma), rows.ROOM)
++    scale = rows.AMPLITUDE
+     assert scale == 288_230_376_000 and scale % unit(gamma) == 0 and least < scale
+-    assert carried(scale, gamma, rows.WIDTH) == scale
+-    refused("engine cannot carry", carried, least - gamma, gamma, rows.WIDTH)
+-    refused("machine's width", carried, scale, gamma, rows.ROOM // 2)
++    assert carried(scale, gamma) == scale
++    refused("engine cannot carry", carried, least - gamma, gamma)
+     for words in ("nature", "law"):
+         with pytest.raises(ValueError) as caught:
+-            carried(gamma, gamma, rows.WIDTH)
++            carried(gamma, gamma)
+         assert words not in str(caught.value)
+     print(f"the floor {least} = {least // gamma} Gamma at Gamma {gamma}; the records' scale {scale}")
