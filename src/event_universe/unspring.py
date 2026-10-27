@@ -282,5 +282,5 @@ def stood_at(row: Any, minus: tuple[int, ...], plus: tuple[int, ...]) -> list[li
 
 def senses_at(row: Any, minus: tuple[int, ...], plus: tuple[int, ...]) -> list[int]:
     """The record's charge at the two ends after the lay (gram.charge, the plane's Wronskian re_now im_before - im_now re_before; generic in the lines), the children's W as the log names it."""
-    charge = hands.sweep(row.size, row.gears)
+    charge = hands.sweep(row.gears)
     return [int(charge[w_]) for w_ in (minus, plus)]

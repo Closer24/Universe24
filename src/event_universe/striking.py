@@ -63,7 +63,7 @@ def engage(
     standing = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(sh) & ~frozen
     currents = [node.rim * train_lead(start, spoke_of(axis, 0)) for axis in range(AXES)]
     twists = [train_twist(start, axis) for axis in range(AXES)]
-    charges = hands.sweep(row.size, start) if row is not node.unsprung() else None
+    charges = hands.sweep(start) if row is not node.unsprung() else None
     for axis in range(AXES):
         both = standing & across(standing, spoke_of(axis, 0))
         for where in zip(*np.nonzero(both), strict=True):
