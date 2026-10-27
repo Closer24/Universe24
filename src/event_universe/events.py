@@ -37,7 +37,7 @@ NAMES = {
     "23": ("the recoil passed", "the momentum across the click"),
     "24": ("a pair into light", "the merger of a pair into light"),
     "25": ("the entropy rises", "the entropy rising"),
-    "26": ("three lifts, the beats ordered", "the three lifts and their masses"),
+    "26": ("the lifts born, the beats ordered", "the lifts the universe names and their masses"),
     "27": ("no third alone", "confinement, no third alone"),
     "28": ("a conversion", "the neutron's conversion"),
     "29": ("light's period longer where deeper", "the redshift of light"),

@@ -21,7 +21,6 @@ HALF = 2  # a half: a count div 2, and a majority as a count times 2 above the w
 PAIR = 2  # two of a kind: the two ends of a Link, the two parts of a plane's pair, two bodies, two beats, two marks
 THIRDS = 3  # the thirds of a run (its last third), of the half charge (T div 2 div 3)
 QUARTERS = 4  # the quarters of a run (a body standing into the last quarter)
-LIFTS = 3  # the three lifts of den's circle, the families forming when all three are born
 LISTED = 8  # the most entries a row prints of a course (its first eight) and the eighths a course is sampled at
 SHORT_LIST = 6  # the most falls and steps a row prints
 FOUR_LISTED = 4  # the most returns the rows' reading prints
@@ -180,6 +179,11 @@ class Record:
     def born_of(self) -> Counter[str]:
         """The births by the species born (the plane's name)."""
         return Counter(self.line_name[b["line_pair"]] for b in self.births)
+
+    def lifts_born(self) -> list[str]:
+        """The lifts born: the distinct gapped planes with a birth, the plane at the gap 0 (light, no lift) left out; the lifts the universe names are its gapped planes, the typed points of den's circle (self.NL), the former constant 3 the toy universe's count of them (the Boss's task of 2026-10-27, 10:1x UTC: the number read from the record and no file of src)."""
+        light = self.NAMES[self.den][0]
+        return sorted(name for name in self.born_of() if name != light)
 
     def laid_at_nothing(self) -> list[int]:
         """The magnitude |W| of every child laid where its plane stood at nothing, in the births' order."""

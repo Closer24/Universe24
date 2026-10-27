@@ -12,7 +12,6 @@ from event_universe.decoder import (
     FEW,
     HALF,
     HUNDRED,
-    LIFTS,
     MIL,
     PAIR,
     SPANS,
@@ -76,13 +75,13 @@ def species_track(record: Record) -> dict[str, Any]:
 
 
 def families(record: Record) -> dict[str, Any]:
-    """Gate 8: the species from the frame of every credit (the whole view), every credit within the one-click floor and every track read right, three or more species born."""
+    """Gate 8: the species from the frame of every credit (the whole view), every credit within the one-click floor and every track read right, every lift the universe names born (its gapped planes, the typed points of den's circle; the former constant 3 the toy universe's count)."""
     decoded, right, within, _floors = solved(record)
     tracks, track_right, _confusion = tracks_of(record)
     born = record.born_of()
     if not decoded:
         verdict = "NOT READ: no credit in the record"
-    elif within == len(decoded) and track_right == len(tracks) and len(born) >= LIFTS:
+    elif within == len(decoded) and track_right == len(tracks) and len(record.lifts_born()) >= record.NL:
         verdict = "SHOWN (every credit within the one-click floor, every track read right)"
     elif within == len(decoded):
         verdict = (
