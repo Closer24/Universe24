@@ -1,4 +1,4 @@
-"""The bodies' closing, the close's last act (ALGEBRA.md, One point and one beat): a record standing at a whole quantum of its own unit through one period of its beat clicks, one take of its unit at the Node from the gap-0 row (`bodies`), the credit logged with its frame (`credit`: a plane's levels, neighbours, phases and factors at the start, `frame_of`)."""
+"""The bobs' chiming, the striking's last act (ALGEBRA.md, One point and one beat): a hand wound to a whole winding of its own through one period of its beat strikes, one unwind of its winding at the clock from the unsprung hand (`bobs`), the chime logged with its face (`chime`: a hand's notches, neighbours, offsets and factors at the start, `face_of`)."""
 
 from __future__ import annotations
 
@@ -19,83 +19,75 @@ if TYPE_CHECKING:
 
 
 def bobs(
-    node: Clock,
-    plane_starts: list[list[Gear]],
-    owns: list[Any],
-    born_nodes: set[tuple[int, ...]],
-    frozen: Any,
-    r_emitter: rule3.Gearing,
+    clock: Clock,
+    hand_starts: list[list[Gear]],
+    winds: list[Any],
+    fitted_clocks: set[tuple[int, ...]],
+    stopped: Any,
+    r_unsprung: rule3.Gearing,
 ) -> None:
-    """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352): where nothing arrives at the Node, the taken row's current across its six Links summed 0 at the interval's start (links.row_current as close.meet reads it; what flows in flows out), the take is laid back on the taken line (the line the take moved, logged as `taken_line`: CS4-S2) by the one lay act in the same close, the credit written with laid_back the levels and its momentum booked 0, so a board alike at every Node returns to Gamma exactly with a body credited at every Node in every cycle, and where light accumulates the take stands (the former closing, the take alone, kept by name; eq2's reading, every one of the six currents 0, kept by name); the plane at the gap 0 is never credited as a body (the light no body, cs4's sentence through the Boss, 6402358120: light at rest is no body in nature, its quanta taken at a meeting and by a body's click alone; the former closing of the standing light, credited at every interval where its beat stood at 1, kept by name); the beat a plane's by its re line's zero crossings counted in either direction (CK-S1: the crossing read even under the negation of the line, the two levels' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike, so the closing is covariant under the conjugation and the colour exchange alike; the beat the half period; the former upward crossing, and the form `b < 0 <= n or n < 0 <= b` odd where exactly one level is 0, kept by name)."""
-    rec0 = node.hands().index(node.unsprung())
-    net = sum((train_lead(plane_starts[rec0], port) for port in range(SPOKES)), start=0)
-    for rec, row in enumerate(node.hands()):
-        if row is node.unsprung():
+    """The bobs' chiming: a hand wound to a whole winding of its own through one period of its beat strikes (one unwind of its winding at the clock, the chime logged), a clock of a fitting this tick or a stopped clock apart; EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352): where nothing arrives at the clock, the unwound hand's lead across its six meshes summed 0 at the tick's start (meshes.train_lead as striking.engage reads it; what flows in flows out), the unwind is returned to the unwound gear (the gear the unwind moved, logged as `taken_line`: CS4-S2) by the one advance act in the same striking, the chime written with laid_back the notches and its push tallied 0, so a great clock alike at every clock returns to the full rate exactly with a bob chimed at every clock in every cycle, and where the unsprung windings accumulate the unwind stands (the former closing, the take alone, kept by name; eq2's reading, every one of the six currents 0, kept by name); the unsprung hand is never chimed as a bob (the unsprung hand no bob, cs4's sentence through the Boss, 6402358120: light at rest is no body in nature, its windings unwound at an engagement and by a bob's strike alone; the former closing of the standing light, credited at every interval where its beat stood at 1, kept by name); the beat a hand's by its three gear's zero crossings counted in either direction (CK-S1: the crossing read even under the negation of the gear, the two notches' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike, so the chiming is covariant under the reflection and the colour exchange alike; the beat the half period; the former upward crossing, and the form `b < 0 <= n or n < 0 <= b` odd where exactly one level is 0, kept by name)."""
+    rec0 = clock.hands().index(clock.unsprung())
+    net = sum((train_lead(hand_starts[rec0], spoke) for spoke in range(SPOKES)), start=0)
+    for rec, hand in enumerate(clock.hands()):
+        if hand is clock.unsprung():
             continue
-        standing_now = np.vectorize(
-            lambda v, unit=node.windings[rec]: 1 if int(v) >= unit else 0, otypes=[object]
-        )(owns[rec])
-        node.wound[rec] = np.where(standing_now == 1, node.wound[rec] + 1, 0)
-        re = row.gears[0]
-        crossing = np.vectorize(
-            lambda b, n: 1 if (int(b) * int(n) < 0 or (int(b) == 0) != (int(n) == 0)) else 0,
-            otypes=[object],
-        )(re.before, re.now)
-        counting = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(node.crossed[rec])
-        node.beats[rec] = np.where((crossing == 1) & (counting == 1), node.crossed[rec], node.beats[rec])
-        node.crossed[rec] = np.where(crossing == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0))
-        closing = np.vectorize(
-            lambda st, bt: 1 if (int(bt) > 0 and int(st) >= int(bt)) else 0, otypes=[object]
-        )(node.wound[rec], node.beats[rec])
-        for where in zip(*np.nonzero(closing == 1), strict=True):
+        clock.wound[rec] = np.where(winds[rec] >= clock.windings[rec], clock.wound[rec] + 1, 0)
+        three = hand.gears[0]
+        crossing = (three.before * three.now < 0) | ((three.before == 0) != (three.now == 0))
+        timed = clock.crossed[rec] > 0
+        clock.beats[rec] = np.where(crossing & timed, clock.crossed[rec], clock.beats[rec])
+        clock.crossed[rec] = np.where(crossing, 1, np.where(timed, clock.crossed[rec] + 1, 0))
+        chiming = (clock.beats[rec] > 0) & (clock.wound[rec] >= clock.beats[rec])
+        for where in zip(*np.nonzero(chiming), strict=True):
             at = tuple(int(x) for x in where)
-            if at in born_nodes or frozen[at]:
+            if at in fitted_clocks or stopped[at]:
                 continue
-            got = unwinds(node, [(at, node.windings[rec])], r_emitter, 1)
-            node.wound[rec][at] = 0
+            got = unwinds(clock, [(at, clock.windings[rec])], r_unsprung, 1)
+            clock.wound[rec][at] = 0
             if got is None:
                 continue
-            (take,) = got
-            levels, now, k = take["levels"], take["taken_now_was"], take["taken_line"]
-            node.counts["body_clicks"] += 1
-            frame = face_of(node, rec, at, plane_starts)
-            entry = chime(node, rec, at, take, frame, plane_starts[rec])
+            (unwind,) = got
+            notches, now, k = unwind["levels"], unwind["taken_now_was"], unwind["taken_line"]
+            clock.counts["body_clicks"] += 1
+            face = face_of(clock, rec, at, hand_starts)
+            entry = chime(clock, rec, at, unwind, face, hand_starts[rec])
             if int(net[at]) == 0:
-                move(node, rec0, k, at, now - int(node.hands()[rec0].gears[k].now[at]))
-                entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
-                back = recoil(node, at, [-x for x in node.last_push], entry["clock"], 1)
+                move(clock, rec0, k, at, now - int(clock.hands()[rec0].gears[k].now[at]))
+                entry["laid_back"], entry["dP_take"] = notches, [0] * AXES
+                back = recoil(clock, at, [-x for x in clock.last_push], entry["clock"], 1)
                 entry["recoil"], entry["carry"] = [0] * AXES, back["carry"]
-                node.counts["laid_back"] += 1
-            node.log.append(entry)
+                clock.counts["laid_back"] += 1
+            clock.log.append(entry)
 
 
 def face_of(
-    node: Clock, rec: int, at: tuple[int, ...], plane_starts: list[list[Gear]]
+    clock: Clock, rec: int, at: tuple[int, ...], hand_starts: list[list[Gear]]
 ) -> dict[str, Any]:
-    """A credit's frame: the record's levels at the Node now, before the swap (the state the swap replaced at a turned Node, the levels now elsewhere; CL-S2: no second moment of the close, the former `stepped` kept by name) and at the start, its neighbours' at the start, the Link phases, frames, odd lines and factors the Node read at the start."""
-    re, im = node.hands()[rec].gears
-    re0, im0 = plane_starts[rec]
-    nodes = window_clocks(node, at)[1:]
-    sre, sim = node.before_turnover[rec]
+    """A chime's face: the hand's notches at the clock now, before the turnover (the state the turnover replaced at a turned-over clock, the notches now elsewhere; CL-S2: no second moment of the striking, the former `stepped` kept by name) and at the start, its neighbours' at the start, the mesh offsets, pawls, odd gears and factors the clock read at the start."""
+    three, twelve = clock.hands()[rec].gears
+    three0, twelve0 = hand_starts[rec]
+    clocks = window_clocks(clock, at)[1:]
+    three_was, twelve_was = clock.before_turnover[rec]
     return {
-        "re_now": int(re.now[at]),
-        "im_now": int(im.now[at]),
-        "re_before": int(re.before[at]),
-        "im_before": int(im.before[at]),
-        "re_before_swap": int(sre.now[at]),
-        "im_before_swap": int(sim.now[at]),
-        "re_start_now": int(re0.now[at]),
-        "re_start_before": int(re0.before[at]),
-        "im_start_now": int(im0.now[at]),
-        "im_start_before": int(im0.before[at]),
-        "re_neighbours_start": [int(re0.now[n]) for n in nodes],
-        "im_neighbours_start": [int(im0.now[n]) for n in nodes],
-        "phases": [[int(c[at]), int(sn[at])] for c, sn in node.start_offsets],
-        "frames": [int(f[at]) for f in node.start_pawls],
+        "re_now": int(three.now[at]),
+        "im_now": int(twelve.now[at]),
+        "re_before": int(three.before[at]),
+        "im_before": int(twelve.before[at]),
+        "re_before_swap": int(three_was.now[at]),
+        "im_before_swap": int(twelve_was.now[at]),
+        "re_start_now": int(three0.now[at]),
+        "re_start_before": int(three0.before[at]),
+        "im_start_now": int(twelve0.now[at]),
+        "im_start_before": int(twelve0.before[at]),
+        "re_neighbours_start": [int(three0.now[n]) for n in clocks],
+        "im_neighbours_start": [int(twelve0.now[n]) for n in clocks],
+        "phases": [[int(c[at]), int(sn[at])] for c, sn in clock.start_offsets],
+        "frames": [int(f[at]) for f in clock.start_pawls],
         "odd": [
-            int(side * (node.start_odd[axis][at] + node.start_odd[axis][n]))
-            for (axis, side), n in zip(SPOKE_SIDES, nodes, strict=True)
+            int(side * (clock.start_odd[axis][at] + clock.start_odd[axis][n]))
+            for (axis, side), n in zip(SPOKE_SIDES, clocks, strict=True)
         ],
-        "X": node.standard_length,
-        "factors": [int(f[at]) for f in node.start_factors],
+        "X": clock.standard_length,
+        "factors": [int(f[at]) for f in clock.start_factors],
     }

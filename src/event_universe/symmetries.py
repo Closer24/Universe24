@@ -1,4 +1,4 @@
-"""The rows of the kinds and the symmetries in the clicks, rows 63 to 73 (the owner's word of 2026-10-26, 07:24 UTC, "enter 61 to 65", through the Boss, The-Laws-Of-Nature-Missing_COMPARISON.md section 3 item 2; the ledger's row 164), each one function of the reading in the one shape: the uniformity in the clicks (the credits spread over the board's eight regions alike), dark matter in kind (a body credited in its own well whose Nodes lay no light, the law's theorem of the lines), the lepton number (every gapped species' senses summing to 0 over its births, the record's count of each species conserved at the click), the energy in the clicks (a body's beat per proper interval before and after its click equal within one level, the taken light's beat the difference), and CPT as one row (on every credit's frame the charge W odd under the conjugation C, even under the reflection P of the Node's six Links, odd under the slot exchange T of CA-S1, so even under the three together); and the owner's word of 2026-10-27, 13:3x UTC ("OK" to the Reader's list of the laws of nature still unread, the angular momentum and E = mc^2 first): the angular momentum booked on the Link (row 72, every move's moment closed by the moment written on the Link's record at the move's own Node) and the mass to light at the merger (row 73, the pair's share taken against the light's quantum booked)."""
+"""The rows of the kinds and the symmetries in the strikes, rows 63 to 73 (the owner's word of 2026-10-26, 07:24 UTC, "enter 61 to 65", through the Boss, The-Laws-Of-Nature-Missing_COMPARISON.md section 3 item 2; the ledger's row 164), each one function of the reading in the one shape: the uniformity in the strikes (the chimes spread over the great clock's eight regions alike), dark matter in kind (a bob chimed in its own well whose clocks advance no light, the law's theorem of the gears), the lepton number (every sprung species' senses summing to 0 over its fittings, the hand's count of each species conserved at the strike), the energy in the strikes (a bob's beat per proper tick before and after its strike equal within one notch, the unwound light's beat the difference), and CPT as one row (on every chime's face the sweep odd under the conjugation C, even under the reflection P of the clock's six meshes, odd under the slot reverse T of CA-S1, so even under the three together); and the owner's word of 2026-10-27, 13:3x UTC ("OK" to the Reader's list of the laws of nature still unread, the angular momentum and E = mc^2 first): the angular momentum tallied on the mesh (row 72, every move's moment closed by the moment written on the mesh at the move's own clock) and the mass to light at the unspringing (row 73, the pair's wind unwound against the light's quantum tallied)."""
 
 from __future__ import annotations
 
@@ -7,42 +7,34 @@ from functools import cmp_to_key
 from typing import Any
 
 from event_universe.core import rule3
-from event_universe.core.spokes import AXES
-from event_universe.reckoner import (
-    HALF,
-    PAIR,
-    THOUSAND,
-    Chart,
-    carries,
-    cmp_rat,
-    sign,
-    unread_words,
-)
+from event_universe.core.spokes import AXES, transverse
+from event_universe.meshes import cross
+from event_universe.reckoner import HALF, PAIR, THOUSAND, Chart, carries, cmp_rat, sign, unread_words
 from event_universe.trains import REGULATOR, drive_teeth
 
-REGIONS = PAIR**AXES  # the board's regions, each axis split at the cube's half
-BOOKED = ("clock", "recoil", "carry_was", "carry")  # a booking's keys after its momentum (LT-S1)
+REGIONS = PAIR**AXES  # the great clock's regions, each axis split at the cube's half
+TALLIED = ("clock", "recoil", "carry_was", "carry")  # a tally's keys after its push (LT-S1)
 
 
-def region(record: Chart, node: list[int] | tuple[int, ...]) -> int:
-    """A Node's region of the board, one of eight: each axis split at the cube's half."""
-    half = int(rule3.carries(record.cube, HALF))
-    return sum((int(x) >= half) << a for a, x in enumerate(node))
+def region(chart: Chart, clock: list[int] | tuple[int, ...]) -> int:
+    """A clock's region of the great clock, one of eight: each axis split at the cube's half."""
+    half = int(rule3.carries(chart.cube, HALF))
+    return sum((int(x) >= half) << a for a, x in enumerate(clock))
 
 
-def region_nodes(cube: int, half: int, r: int) -> int:
-    """The Nodes of one region of the board: per axis the half below the cut or the rest above it, multiplied."""
+def region_clocks(cube: int, half: int, r: int) -> int:
+    """The clocks of one region of the great clock: per axis the half below the cut or the rest above it, multiplied."""
     found = 1
     for a in range(AXES):
         found *= cube - half if r >> a & 1 else half
     return found
 
 
-def uniformity(record: Chart) -> dict[str, Any]:
-    """Row 63: the uniformity in the clicks, the credits counted per region of the board (eight, each axis at its half) and read per Node of the region, the regions of an odd side holding unlike counts of Nodes: SHOWN where every region is credited and the least credits per Node hold at least half the largest, compared by cross multiplication (the former read of the raw counts failed every odd side, where a board credited alike at every Node gives regions of 8 and 27 Nodes on the side 5, kept by name)."""
-    counts = Counter(region(record, c["node"]) for c in record.chimes)
-    half = int(rule3.carries(record.cube, HALF))
-    sizes = [region_nodes(record.cube, half, r) for r in range(REGIONS)]
+def uniformity(chart: Chart) -> dict[str, Any]:
+    """Row 63: the uniformity in the strikes, the chimes counted per region of the great clock (eight, each axis at its half) and read per clock of the region, the regions of an odd side holding unlike counts of clocks: SHOWN where every region is chimed and the least chimes per clock hold at least half the largest, compared by cross multiplication (the former read of the raw counts failed every odd side, where a great clock chimed alike at every clock gives regions of 8 and 27 clocks on the side 5, kept by name)."""
+    counts = Counter(region(chart, c["node"]) for c in chart.chimes)
+    half = int(rule3.carries(chart.cube, HALF))
+    sizes = [region_clocks(chart.cube, half, r) for r in range(REGIONS)]
     per = [(counts.get(r, 0), sizes[r]) for r in range(REGIONS)]
     least, largest = min(per, key=cmp_to_key(cmp_rat)), max(per, key=cmp_to_key(cmp_rat))
     return {
@@ -60,41 +52,41 @@ def uniformity(record: Chart) -> dict[str, Any]:
     }
 
 
-def dark_matter(record: Chart) -> dict[str, Any]:
-    """Row 64: dark matter in kind (the law's theorem of the lines): a body credited in its own well whose Nodes lay no light, a credit track at a Node where no birth took and no child was laid through the run."""
-    lit = {record.index(b["node"]) for b in record.fittings}
-    lit |= {record.index(b["minus"]) for b in record.fittings}
-    lit |= {record.index(b["plus"]) for b in record.fittings}
-    bodies = record.bobs_of()
-    dark = [key for key in bodies if record.index(key[0]) not in lit]
+def dark_matter(chart: Chart) -> dict[str, Any]:
+    """Row 64: dark matter in kind (the law's theorem of the gears): a bob chimed in its own well whose clocks advance no light, a chime track at a clock where no fitting unwound and no fitted hand was advanced through the run."""
+    lit = {chart.index(b["node"]) for b in chart.fittings}
+    lit |= {chart.index(b["minus"]) for b in chart.fittings}
+    lit |= {chart.index(b["plus"]) for b in chart.fittings}
+    bobs = chart.bobs_of()
+    dark = [key for key in bobs if chart.index(key[0]) not in lit]
     return {
         "64 dark matter in kind": {
             "bodies (credit tracks) / of them at a Node where no light was laid": [
-                len(bodies),
+                len(bobs),
                 len(dark),
             ],
             "at": list(dark[0][0]) if dark else None,
             "verdict": unread_words(
                 "no body", "a body credited in its own well whose Nodes lay no light"
             )
-            if not bodies
-            else f"SHOWN: {len(dark)} of {len(bodies)} bodies credited at a Node where no light was laid"
+            if not bobs
+            else f"SHOWN: {len(dark)} of {len(bobs)} bodies credited at a Node where no light was laid"
             if dark
             else "NOT SHOWN: every body's Node laid light",
         }
     }
 
 
-def lepton_number(record: Chart) -> dict[str, Any]:
-    """Row 65: the lepton number (the record's parts are its particles, the record's count conserved at the click): for every species born, the children's own senses summed over its births is 0, each birth a pair of opposite senses, so the number of each species less its anti-species is conserved."""
+def lepton_number(chart: Chart) -> dict[str, Any]:
+    """Row 65: the lepton number (the hand's parts are its particles, the hand's count conserved at the strike): for every species fitted, the fitted hands' own senses summed over its fittings is 0, each fitting a pair of opposite senses, so the number of each species less its anti-species is conserved."""
     sums: Counter[str] = Counter()
-    for b, (a, c) in zip(record.fittings, record.sweeps_of(), strict=True):
-        sums[record.gear_name[b["line_pair"]]] += sign(a) + sign(c)
+    for b, (a, c) in zip(chart.fittings, chart.sweeps_of(), strict=True):
+        sums[chart.gear_name[b["line_pair"]]] += sign(a) + sign(c)
     return {
         "65 the lepton number": {
             "the senses summed per species born": dict(sums),
             "verdict": unread_words("no birth", "every species' senses sum to 0 over its births")
-            if not record.fittings
+            if not chart.fittings
             else "SHOWN: every species' senses sum to 0 over its births, its number conserved at the click"
             if all(s == 0 for s in sums.values())
             else f"NOT SHOWN: {sum(1 for s in sums.values() if s)} species with a sum not 0",
@@ -102,11 +94,11 @@ def lepton_number(record: Chart) -> dict[str, Any]:
     }
 
 
-def energy(record: Chart) -> dict[str, Any]:
-    """Row 66: the energy in the clicks (one point and one beat, D-S2): a body's beat per proper interval before and after its click equal within one level, the taken light's beat the difference, on every pair of a body's consecutive credits."""
+def energy(chart: Chart) -> dict[str, Any]:
+    """Row 66: the energy in the strikes (one point and one beat, D-S2): a bob's beat per proper tick before and after its strike equal within one notch, the unwound light's beat the difference, on every pair of a bob's consecutive chimes."""
     pairs = [
         (b1, b2)
-        for cs in ([(c["proper"], c["beat"]) for c in body] for body in record.bobs_of().values())
+        for cs in ([(c["proper"], c["beat"]) for c in bob] for bob in chart.bobs_of().values())
         for (_p1, b1), (_p2, b2) in zip(sorted(cs), sorted(cs)[1:], strict=False)
         if b1 > 0 and b2 > 0
     ]
@@ -127,13 +119,13 @@ def energy(record: Chart) -> dict[str, Any]:
     }
 
 
-def cpt(record: Chart) -> dict[str, Any]:
-    """Row 67: CPT as one row, on every credit's frame: the charge W = re_now im_before - im_now re_before is odd under the conjugation C (the im line negated), even under the reflection P (the Node's own levels unmoved, the six Links exchanged in pairs), odd under the slot exchange T (CA-S1, now for before), so even under the three together; counted over the frames whose W is not 0."""
-    frames = [c["frame"] for c in record.chimes if "frame" in c]
-    w = [f["re_now"] * f["im_before"] - f["im_now"] * f["re_before"] for f in frames]
-    c = [f["re_now"] * -f["im_before"] - -f["im_now"] * f["re_before"] for f in frames]
-    t = [f["re_before"] * f["im_now"] - f["im_before"] * f["re_now"] for f in frames]
-    cpt_w = [f["re_before"] * -f["im_now"] - -f["im_before"] * f["re_now"] for f in frames]
+def cpt(chart: Chart) -> dict[str, Any]:
+    """Row 67: CPT as one row, on every chime's face: the sweep = three_now twelve_before - twelve_now three_before is odd under the conjugation C (the twelve gear negated), even under the reflection P (the clock's own notches unmoved, the six meshes exchanged in pairs), odd under the slot reverse T (CA-S1, now for before), so even under the three together; counted over the faces whose sweep is not 0."""
+    faces = [c["frame"] for c in chart.chimes if "frame" in c]
+    w = [f["re_now"] * f["im_before"] - f["im_now"] * f["re_before"] for f in faces]
+    c = [f["re_now"] * -f["im_before"] - -f["im_now"] * f["re_before"] for f in faces]
+    t = [f["re_before"] * f["im_now"] - f["im_before"] * f["re_now"] for f in faces]
+    cpt_w = [f["re_before"] * -f["im_now"] - -f["im_before"] * f["re_now"] for f in faces]
     nonzero = sum(1 for x in w if x)
     odd_c = sum(1 for x, y in zip(w, c, strict=True) if x and y == -x)
     odd_t = sum(1 for x, y in zip(w, t, strict=True) if x and y == -x)
@@ -157,60 +149,60 @@ def cpt(record: Chart) -> dict[str, Any]:
     }
 
 
-def twists_of(record: Chart) -> tuple[int, int, int]:
-    """The moving births' hands (the births of a pair; a merger lays its light at both ends and carries no hand): the + child at the take's Node, at the other end, and the mergers beside."""
-    moving = [b for b in record.fittings if "takes" not in b]
-    at_node = sum(1 for b in moving if list(b["plus"]) == list(b["node"]))
-    return at_node, len(moving) - at_node, len(record.fittings) - len(moving)
+def twists_of(chart: Chart) -> tuple[int, int, int]:
+    """The moving fittings' twists (the fittings of a pair; an unspringing advances its light at both ends and carries no twist): the + fitted hand at the unwind's clock, at the other end, and the unspringings beside."""
+    moving = [b for b in chart.fittings if "takes" not in b]
+    at_clock = sum(1 for b in moving if list(b["plus"]) == list(b["node"]))
+    return at_clock, len(moving) - at_clock, len(chart.fittings) - len(moving)
 
 
-def matter_against_antimatter(record: Chart) -> dict[str, Any]:
-    """Row 68: matter against antimatter (HD-S1, the Boss's 6412271828 and 6413689341): the hand enters the law in one act, the + child laid at the end the current flows into where the twist is right-handed, so over the moving births the + child stands at the take's Node on some and at the other end on the rest (the twist's sign at each click, P-odd and C-even, kept by the bijection), the mergers named beside; counted, the hand's choice read at every moving birth."""
-    at_node, other, mergers = twists_of(record)
+def matter_against_antimatter(chart: Chart) -> dict[str, Any]:
+    """Row 68: matter against antimatter (HD-S1, the Boss's 6412271828 and 6413689341): the twist enters the law in one act, the + fitted hand advanced at the end the lead flows into where the twist is right-handed, so over the moving fittings the + fitted hand stands at the unwind's clock on some and at the other end on the rest (the twist's sign at each strike, P-odd and C-even, kept by the bijection), the unspringings named beside; counted, the twist's choice read at every moving fitting."""
+    at_clock, other, unspringings = twists_of(chart)
     return {
         "68 matter against antimatter": {
-            "moving births with the + child at the take's Node / at the other end": [at_node, other],
-            "mergers beside (the light at both ends, no hand)": mergers,
+            "moving births with the + child at the take's Node / at the other end": [at_clock, other],
+            "mergers beside (the light at both ends, no hand)": unspringings,
             "verdict": unread_words(
                 "no moving birth", "the + child's end chosen by the twist's hand at every moving birth"
             )
-            if not at_node + other
-            else f"SHOWN: the + child at the take's Node on {at_node} moving births and at the other end on {other}, the hand's choice at every one; {mergers} mergers beside",
+            if not at_clock + other
+            else f"SHOWN: the + child at the take's Node on {at_clock} moving births and at the other end on {other}, the hand's choice at every one; {unspringings} mergers beside",
         }
     }
 
 
-def one_twist(record: Chart) -> dict[str, Any]:
-    """Row 69: the neutrino's one hand (the Boss's 6412773403, the helicity pair's reading): the hand of every moving birth, the end the + child is laid at (the take's Node or the other end, by the twist at the click), all one over the record where nature's neutrino shows one hand alone; NOT SHOWN with its cause where both hands stand (no conversion on the records, the births' hands split), NOT READ where no moving birth."""
-    at_node, other, mergers = twists_of(record)
+def one_twist(chart: Chart) -> dict[str, Any]:
+    """Row 69: the neutrino's one hand (the Boss's 6412773403, the helicity pair's reading): the twist of every moving fitting, the end the + fitted hand is advanced at (the unwind's clock or the other end, by the twist at the strike), all one over the chart where nature's neutrino shows one hand alone; NOT SHOWN with its cause where both twists stand (no conversion on the hands, the fittings' twists split), NOT READ where no moving fitting."""
+    at_clock, other, unspringings = twists_of(chart)
     return {
         "69 the neutrino's one hand": {
             "moving births by hand (the + child at the take's Node / at the other end)": [
-                at_node,
+                at_clock,
                 other,
             ],
-            "mergers beside (no hand)": mergers,
+            "mergers beside (no hand)": unspringings,
             "verdict": unread_words("no moving birth", "one hand at every moving birth of the record")
-            if not at_node + other
+            if not at_clock + other
             else "SHOWN: one hand at every moving birth of the record"
-            if not at_node or not other
-            else f"NOT SHOWN: both hands stand, {at_node} and {other} moving births (no conversion on the record, the hands split by the twist at each click)",
+            if not at_clock or not other
+            else f"NOT SHOWN: both hands stand, {at_clock} and {other} moving births (no conversion on the record, the hands split by the twist at each click)",
         }
     }
 
 
-def baryon_number(record: Chart) -> dict[str, Any]:
-    """Row 70: the baryon number, the C-odd count (the Boss's 6413689341, the floor pair's reading): the children's own charges summed over each birth's two children, 0 at every birth (a pair at opposite senses, a merger's light at 0 and 0: no matter-making act in the law, the count conserved at the click); the record's Wronskian at the children's Nodes summed beside it, apart from 0 where a child was laid on a standing level (the residue, the Node's W) and over the mergers' light (W of one sign on both until merger.py's fix); SHOWN where the own charges sum to 0 at every birth."""
-    own = [a + c for a, c in record.sweeps_of()]
-    pairs = [sum(b["W_children"]) for b in record.fittings if "takes" not in b]
-    mergers = [sum(b["W_children"]) for b in record.fittings if "takes" in b]
+def baryon_number(chart: Chart) -> dict[str, Any]:
+    """Row 70: the baryon number, the C-odd count (the Boss's 6413689341, the floor pair's reading): the fitted hands' own sweeps summed over each fitting's two fitted hands, 0 at every fitting (a pair at opposite senses, an unspringing's light at 0 and 0: no matter-making act in the law, the count conserved at the strike); the hand's sweep at the fitted hands' clocks summed beside it, apart from 0 where a fitted hand was advanced on a standing notch (the residue, the clock's sweep) and over the unspringings' light (a sweep of one sign on both until unspring.py's fix); SHOWN where the own sweeps sum to 0 at every fitting."""
+    own = [a + c for a, c in chart.sweeps_of()]
+    pairs = [sum(b["W_children"]) for b in chart.fittings if "takes" not in b]
+    unspringings = [sum(b["W_children"]) for b in chart.fittings if "takes" in b]
     return {
         "70 the baryon number": {
             "births whose children's own charges sum to 0 / in all": [own.count(0), len(own)],
             "births of a pair whose record W at the children's Nodes sums apart from 0 (the standing level's residue)": sum(
                 1 for w in pairs if w
             ),
-            "the mergers' light children's record W summed (0 by the letter)": sum(mergers),
+            "the mergers' light children's record W summed (0 by the letter)": sum(unspringings),
             "verdict": unread_words(
                 "no birth",
                 "the children's own charges summing to 0 at every birth, no matter made by a click",
@@ -223,52 +215,52 @@ def baryon_number(record: Chart) -> dict[str, Any]:
     }
 
 
-def tallies_of(record: Chart) -> list[tuple[Any, ...]]:
-    """Every booking a move wrote on the Link's record (LT-S1, take.recoil), with its interval and the Node it was written at: the momentum's change per axis the move books (dP_take at a take, each of a merger's two takes under `takes`; dP at a merger's cross term, written at the meeting's Node, CL-S2; dP_lay at each end of a birth's or a merger's lay), the clock the Node read at the interval's start, the levels laid per axis on the carrier's flux lines, and their carry before and after; a line without the keys (a record run before LT-S1) is no booking (the former reading took the line's own keys alone and left every merger's six bookings unread)."""
+def tallies_of(chart: Chart) -> list[tuple[Any, ...]]:
+    """Every tally a move wrote on the mesh (LT-S1, unwind.recoil), with its tick and the clock it was written at: the push per axis the move tallies (push_unwind at an unwind, each of an unspringing's two unwinds under `unwinds`; the push at an unspringing's cross term, written at the engagement's clock, CL-S2; push_advance at each end of a fitting's or an unspringing's advance), the rate the clock read at the tick's start, the notches advanced per axis on the regulator's flow gears, and their carry before and after; a line without the keys (a chart run before LT-S1) is no tally (the former reading took the line's own keys alone and left every unspringing's six tallies unread)."""
     found: list[tuple[Any, ...]] = []
-    for entry in record.unwinds:
-        for take in entry.get("takes", [entry]):
-            if "recoil" in take:
-                found.append((entry["i"], *(take[k] for k in ("node", "dP_take", *BOOKED))))
+    for entry in chart.unwinds:
+        for unwind in entry.get("takes", [entry]):
+            if "recoil" in unwind:
+                found.append((entry["i"], *(unwind[k] for k in ("node", "dP_take", *TALLIED))))
         if "cross" in entry:
-            found.append((entry["i"], *(entry["cross"][k] for k in ("node", "dP", *BOOKED))))
+            found.append((entry["i"], *(entry["cross"][k] for k in ("node", "dP", *TALLIED))))
         if "recoil_ends" in entry:
             for k, where in enumerate((entry["minus"], entry["plus"])):
-                ends = (entry[key + "_ends"][k] for key in ("dP_lay", *BOOKED))
+                ends = (entry[key + "_ends"][k] for key in ("dP_lay", *TALLIED))
                 found.append((entry["i"], where, *ends))
     return found
 
 
-def write_wall(record: Chart) -> int:
-    """The write wall of the carrier's flux lines a booking writes on, the engine's own (trains.drive_teeth at the carrier's shape, the first axis line after the time line, as take.recoil writes): trace den Gamma^2 T with the universe file's trace (6 in nature's files, 54 in ga2's); the former 6 den Gamma^2 T typed the trace 6 and failed every booking that laid a level at another trace."""
+def flow_teeth(record: Chart) -> int:
+    """The drive teeth of the regulator's flow gears a tally writes on, the engine's own (trains.drive_teeth at the regulator's shape, the first axis gear after the time gear, as unwind.recoil writes): trace rim full_rate^2 key with the calibre file's trace (6 in nature's files, 54 in ga2's); the former 6 rim full_rate^2 key typed the trace 6 and failed every tally that advanced a notch at another trace."""
     trace = int(record.run["universe"]["integers"]["trace"])
     return int(
         drive_teeth(REGULATOR, None, record.rim, record.full_rate, record.action, trace)[1 + AXES]
     )
 
 
-def momentum_booked(record: Chart) -> dict[str, Any]:
-    """Row 71: the momentum booked on the Link (LT-S1, H-Lay-As-The-Take-Reversed-1's derivation, line 19 as the Boss corrected its sign): at every move the momentum the quantum lost is written on the carrier's flux line of each axis at the Node by the one write act, -dP_a p_0^2 + the carry before - the carry after = the levels laid times the write wall trace den Gamma^2 T (`write_wall`, the universe file's trace), the clock p_0 the Node's at the interval's start; so the records' and the lattice's momentum sum to what they were at every click, an identity on every booking of the record, a merger's two takes, its cross term and its two lays among them; NOT READ on a record without the bookings' keys."""
-    wall = write_wall(record)
-    held = laid = failed = 0
-    for _i, _node, dp, clock, recoil, was, after in tallies_of(record):
+def momentum_booked(chart: Chart) -> dict[str, Any]:
+    """Row 71: the momentum tallied on the mesh (LT-S1, H-Lay-As-The-Take-Reversed-1's derivation, line 19 as the Boss corrected its sign): at every move the momentum the quantum lost is written on the regulator's flow gear of each axis at the clock by the one drive act, -push_a rate^2 + the carry before - the carry after = the notches advanced times the drive teeth trace rim full_rate^2 key (`drive_teeth`, the calibre file's trace), the rate the clock's at the tick's start; so the hands' and the lattice's momentum sum to what they were at every strike, an identity on every tally of the chart, an unspringing's two unwinds, its cross term and its two advances among them; NOT READ on a chart without the tallies' keys."""
+    teeth = flow_teeth(chart)
+    held = advanced = failed = 0
+    for _i, _clock, push, rate, recoil, was, after in tallies_of(chart):
         for a in range(AXES):
-            if -dp[a] * clock * clock + was[a] - after[a] == recoil[a] * wall:
+            if -push[a] * rate * rate + was[a] - after[a] == recoil[a] * teeth:
                 held += 1
-                laid += recoil[a] != 0
+                advanced += recoil[a] != 0
             else:
                 failed += 1
     return {
         "71 the momentum booked on the Link": {
             "axis bookings holding the identity / in all": [held, held + failed],
-            "of them laying a level on the carrier's flux line (the rest kept in the carry)": laid,
-            "the write wall trace den Gamma^2 T (the universe file's trace)": wall,
+            "of them laying a level on the carrier's flux line (the rest kept in the carry)": advanced,
+            "the write wall trace den Gamma^2 T (the universe file's trace)": teeth,
             "verdict": unread_words(
                 "no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
                 "-dP p_0^2 + the carry before - the carry after = the levels laid times the write wall at every move",
             )
             if not held + failed
-            else f"SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on {held} of {held} axis bookings, {laid} laying a level"
+            else f"SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on {held} of {held} axis bookings, {advanced} laying a level"
             if not failed
             else f"NOT SHOWN: the identity fails on {failed} of {held + failed} axis bookings",
         }
@@ -276,24 +268,24 @@ def momentum_booked(record: Chart) -> dict[str, Any]:
 
 
 def moment(arm: list[int], push: list[int]) -> list[int]:
-    """The moment arm x push of two integer vectors of three, per axis the other two's cross product."""
-    return [arm[a - HALF] * push[a - 1] - arm[a - 1] * push[a - HALF] for a in range(AXES)]
+    """The moment arm x push of two integer vectors of three, per axis the cross on its transverse pair (b, c), the antisymmetric tensor arm_b push_c - arm_c push_b (spokes.transverse, the cube's hand read once)."""
+    return [cross(arm[b], arm[c], push[b], push[c]) for b, c in map(transverse, range(AXES))]
 
 
-def angular_momentum(record: Chart) -> dict[str, Any]:
-    """Row 72: the angular momentum booked on the Link (the conservation of angular momentum in the clicks, the hands' first missing law; AJ-S1 to AJ-S3, the one-Node theorem: a move at one Node changes the momentum on that Node's six Links alone, each along its own axis, so its moment about any centre is the Node's arm times the momentum it books): every booking of row 71 is written at its move's own Node, so the move's moment and the moment written on the Link's record sum to 0 about the board's centre, arm x (dP p_0^2 + the levels laid times the write wall + the carry after - the carry before) = 0, the arm the Node's place doubled from the centre (2 r - (cube - 1), integers); summed per close the records' moment and the lattice's sum to 0, the records' own moment changing at a birth's or a merger's take (the transverse recoil, AJ-S2) and the lattice carrying it; a merger's cross term with a part off the Link's own axis, written at the meeting's Node as the log names it, counted beside; NOT READ on a record without the bookings' keys."""
-    wall = write_wall(record)
+def angular_momentum(chart: Chart) -> dict[str, Any]:
+    """Row 72: the angular momentum tallied on the mesh (the conservation of angular momentum in the strikes, the hands' first missing law; AJ-S1 to AJ-S3, the one-clock theorem: a move at one clock changes the momentum on that clock's six meshes alone, each along its own axis, so its moment about any centre is the clock's arm times the momentum it tallies): every tally of row 71 is written at its move's own clock, so the move's moment and the moment written on the mesh sum to 0 about the great clock's centre, arm x (push rate^2 + the notches advanced times the drive teeth + the carry after - the carry before) = 0, the arm the clock's place doubled from the centre (2 r - (cube - 1), integers); summed per striking the hands' moment and the lattice's sum to 0, the hands' own moment changing at a fitting's or an unspringing's unwind (the transverse recoil, AJ-S2) and the lattice carrying it; an unspringing's cross term with a part off the mesh's own axis, written at the engagement's clock as the log names it, counted beside; NOT READ on a chart without the tallies' keys."""
+    teeth = flow_teeth(chart)
     closed = 0
     walk: dict[int, list[int]] = {}
-    tallies = tallies_of(record)
-    for i, node, dp, clock, recoil, was, after in tallies:
-        arm = [HALF * int(x) - record.cube + 1 for x in node]
-        written = [dp[a] * clock * clock + recoil[a] * wall + after[a] - was[a] for a in range(AXES)]
+    tallies = tallies_of(chart)
+    for i, clock, push, rate, recoil, was, after in tallies:
+        arm = [HALF * int(x) - chart.cube + 1 for x in clock]
+        written = [push[a] * rate * rate + recoil[a] * teeth + after[a] - was[a] for a in range(AXES)]
         closed += not any(moment(arm, written))
         walk[int(i)] = [
-            j + m for j, m in zip(walk.get(int(i), [0] * AXES), moment(arm, dp), strict=True)
+            j + m for j, m in zip(walk.get(int(i), [0] * AXES), moment(arm, push), strict=True)
         ]
-    crosses = [b for b in record.fittings if "cross" in b]
+    crosses = [b for b in chart.fittings if "cross" in b]
     off = sum(
         1
         for b in crosses
@@ -325,18 +317,18 @@ def angular_momentum(record: Chart) -> dict[str, Any]:
     }
 
 
-def mass_to_light(record: Chart) -> dict[str, Any]:
-    """Row 73: E = mc^2 at the merger (MG-S1, a pair at rest into light; the hands' row to add beside 24): at each end of a merger the pair's levels taken whole lose the share `taken`, the pair's energy at rest in the carrier's unit, the one weight of every row; the light laid there is booked one quantum (`booked`, the wall a lay at the unit holds alone at the Node, the same two integers for every row at one content) and laid by the least count of levels at which its share rises by it (the exact lay's rise); so the mass becomes light where the share taken is the quantum booked, the light's rise above it the least count's excess named in thousandths; NOT SHOWN where the share taken exceeds the quantum booked, the excess booked nowhere (the stop refuses an end below it); NOT READ with no merger."""
+def mass_to_light(chart: Chart) -> dict[str, Any]:
+    """Row 73: E = mc^2 at the unspringing (MG-S1, a pair at rest into light; the hands' row to add beside 24): at each end of an unspringing the pair's notches unwound whole lose the wind `unwound`, the pair's energy at rest in the regulator's winding, the one weight of every train; the light advanced there is tallied one quantum (`tallied`, the teeth an advance at the winding holds alone at the clock, the same two integers for every train at one load) and advanced by the least count of notches at which its wind rises by it (the exact advance's rise); so the mass becomes light where the wind unwound is the quantum tallied, the light's rise above it the least count's excess named in thousandths; NOT SHOWN where the wind unwound exceeds the quantum tallied, the excess tallied nowhere (the stop jams an end below it); NOT READ with no unspringing."""
     ends = [
-        (int(t["taken"]), int(t["booked"]), int(lay[-1]))
-        for b in record.fittings
-        for where, lay in zip((b["minus"], b["plus"]), b.get("exact_lay", []), strict=False)
+        (int(t["taken"]), int(t["booked"]), int(advance[-1]))
+        for b in chart.fittings
+        for where, advance in zip((b["minus"], b["plus"]), b.get("exact_lay", []), strict=False)
         for t in b.get("takes", [])
         if t["node"] == where
     ]
-    paid = sum(1 for taken, booked, _up in ends if taken == booked)
-    over = max((int(carries(taken, booked, THOUSAND) or 0) for taken, booked, _up in ends), default=0)
-    rise = max((int(carries(up, taken, THOUSAND) or 0) for taken, _booked, up in ends), default=0)
+    paid = sum(1 for unwound, tally, _up in ends if unwound == tally)
+    over = max((int(carries(unwound, tally, THOUSAND) or 0) for unwound, tally, _up in ends), default=0)
+    rise = max((int(carries(up, unwound, THOUSAND) or 0) for unwound, _tally, up in ends), default=0)
     return {
         "73 E = mc^2 at the merger": {
             "merger ends / of them with the pair's share taken equal to the light's quantum booked": [

@@ -1,4 +1,4 @@
-"""The decoder's reads of the record, integers only (the owner's word: no float anywhere, every reading a quotient with its remainder or a count over a span): the record as read from the run's log alone (credits, births, refusals; the rows of the board's course; the Node lines), cut to an interval for a gate read as it first shows (`Record.to`), its own names for the planes (never the Node's), the species solved from a credit's frame and the nearest name; the verdicts' kinds and their one reader (kind_of, shown); the gates themselves are the table of gates.py, the rows read from the clicks clicks.py, the board's board.py and the widened rows predicates.py."""
+"""The reckoner's reads of the chart, integers only (the owner's word: no float anywhere, every reading a quotient with its remainder or a count over a span): the chart as read from the run's log alone (chimes, fittings, jams; the rows of the great clock's course; the clock lines), cut to a tick for a gate read as it first shows (`Chart.to`), its own names for the hands (never the Clock's), the species reckoned from a chime's face and the nearest name; the verdicts' kinds and their one reader (kind_of, shown); the gates themselves are the table of gates.py, the rows read from the strikes strikes.py, the great clock's great_clock.py and the widened rows predicates.py."""
 
 from __future__ import annotations
 
@@ -15,12 +15,12 @@ from event_universe.trains import HAND
 MIL = 1000000  # readings in parts per million
 HUNDRED = 100  # readings in hundredths
 THOUSAND = 1000  # readings in thousandths
-FEW = 10  # the fewest decoded credits for the dilation's two halves
+FEW = 10  # the fewest reckoned chimes for the dilation's two halves
 SPANS = 20  # the fewest spans for the lengthening's two halves
 HALF = 2  # a half: a count div 2, and a majority as a count times 2 above the whole
-PAIR = 2  # two of a kind: the two ends of a Link, the two parts of a plane's pair, two bodies, two beats, two marks
-THIRDS = 3  # the thirds of a run (its last third), of the half charge (T div 2 div 3)
-QUARTERS = 4  # the quarters of a run (a body standing into the last quarter)
+PAIR = 2  # two of a kind: the two ends of a mesh, the two parts of a hand's ratio, two bobs, two beats, two marks
+THIRDS = 3  # the thirds of a run (its last third), of the half sweep (T div 2 div 3)
+QUARTERS = 4  # the quarters of a run (a bob wound into the last quarter)
 LISTED = 8  # the most entries a row prints of a course (its first eight) and the eighths a course is sampled at
 SHORT_LIST = 6  # the most falls and steps a row prints
 FOUR_LISTED = 4  # the most returns the rows' reading prints
@@ -29,7 +29,7 @@ NOTCHES_BACK = (
     2,
     1,
     0,
-)  # the carrier's three levels read from the Node lines: before the interval, at its start, after it, as lines behind the interval's own
+)  # the regulator's three notches read from the clock lines: before the tick, at its start, after it, as lines behind the tick's own
 Rational = tuple[int, int]
 NOT = "NOT"  # the word a verdict begins with where the gate is not shown, read or reached
 KINDS = (
@@ -60,7 +60,7 @@ def cause_of(verdict: str) -> str:
 
 
 def unread_words(why: str, predicate: str) -> str:
-    """The verdict of a row the record cannot carry: NOT READ, why, and the predicate it would be read by; the one form of the words."""
+    """The verdict of a row the chart cannot carry: NOT READ, why, and the predicate it would be read by; the one form of the words."""
     return f"{NOT} READ: {why}; the predicate: {predicate}"
 
 
@@ -70,33 +70,33 @@ def shown(verdict: str) -> bool:
 
 
 class Chart:
-    """The record as the decoder reads it: the two files' integers, the planes with a gap by their legs under the decoder's names, the log's credits and births, the rows of the board's course."""
+    """The chart as the reckoner reads it: the two files' integers, the sprung hands by their legs under the reckoner's names, the log's chimes and fittings, the rows of the great clock's course."""
 
     def __init__(self, run: dict[str, Any]) -> None:
         self.run = run
         self.rim = int(run["den"])
         self.action = int(run["universe"]["integers"]["quantum_action"])
         self.full_rate, self.G, self.key = int(run["gamma"]), int(run["G"]), int(run["T"])
-        rows = run["universe"]["rows"]
-        planes = {
-            tuple(int(x) for x in r["pair"]) for r in rows if int(r["shape"]) == HAND and r.get("pair")
+        trains = run["universe"]["rows"]
+        ratios = {
+            tuple(int(x) for x in r["pair"]) for r in trains if int(r["shape"]) == HAND and r.get("pair")
         }
-        gapped = sorted((sine_rim(num, self.rim), num) for num, den in planes if num != den)
-        self.NL = len(gapped)
+        sprung = sorted((sine_rim(pinion, self.rim), pinion) for pinion, rim in ratios if pinion != rim)
+        self.NL = len(sprung)
         self.NAMES: dict[int, tuple[str, int]] = {
-            num: (f"gapped {k}", leg) for k, (leg, num) in enumerate(gapped)
+            pinion: (f"gapped {k}", leg) for k, (leg, pinion) in enumerate(sprung)
         }
         self.NAMES[self.rim] = ("gap 0", 0)
-        self.gear_pinion = [int(num) for num in run["planes"]]
-        records = sorted(
-            (r for r in rows if r.get("pair") and int(r["shape"]) == HAND),
+        self.gear_pinion = [int(pinion) for pinion in run["planes"]]
+        hands = sorted(
+            (r for r in trains if r.get("pair") and int(r["shape"]) == HAND),
             key=lambda r: int(r["pair"][0]) == int(r["pair"][1]),
         )
-        shapes = [int(r["shape"]) for r in records]
-        assert [int(r["pair"][0]) for r in records] == self.gear_pinion
+        sizes = [int(r["shape"]) for r in hands]
+        assert [int(r["pair"][0]) for r in hands] == self.gear_pinion
         self.gear_name = [
-            self.NAMES[num][0] if shape == HAND else f"shape-{shape} at {self.NAMES[num][0]}"
-            for num, shape in zip(self.gear_pinion, shapes, strict=True)
+            self.NAMES[pinion][0] if size == HAND else f"shape-{size} at {self.NAMES[pinion][0]}"
+            for pinion, size in zip(self.gear_pinion, sizes, strict=True)
         ]
         self.log = run["log"]
         self.chimes = [entry for entry in self.log if entry["event"] == "credit"]
@@ -110,7 +110,7 @@ class Chart:
         self.memo: dict[str, Any] = {}
 
     def to(self, i: int) -> Chart:
-        """The record cut to the intervals 1 to i (its log, its rows and its Node lines, each in the run's order, cut by a search on the interval), for a gate read as it first shows; the solves and the run back stay the whole record's."""
+        """The chart cut to the ticks 1 to i (its log, its rows and its clock lines, each in the run's order, cut by a search on the tick), for a gate read as it first shows; the reckonings and the rewind stay the whole chart's."""
         cuts: dict[int, Chart] = self.memo.setdefault("cuts", {})
         if i in cuts:
             return cuts[i]
@@ -125,34 +125,34 @@ class Chart:
         cuts[i] = found
         return found
 
-    def index(self, node: list[int] | tuple[int, ...]) -> int:
-        """A Node's index in the Node lines from its (x, y, z)."""
-        x, y, z = (int(n) for n in node)
+    def index(self, clock: list[int] | tuple[int, ...]) -> int:
+        """A clock's index in the clock lines from its (x, y, z)."""
+        x, y, z = (int(n) for n in clock)
         return x * self.cube * self.cube + y * self.cube + z
 
     def clock(self, index: int) -> list[int]:
-        """A Node's (x, y, z) from its index in the Node lines."""
+        """A clock's (x, y, z) from its index in the clock lines."""
         x = int(rule3.carries(index, self.cube * self.cube))
         y = int(rule3.carries(index - x * self.cube * self.cube, self.cube))
         return [x, y, index - (x * self.cube + y) * self.cube]
 
     def distance(self, a: tuple[int, ...], b: tuple[int, ...]) -> int:
-        """The Link distance between two Nodes on the torus, the shorter way on every axis."""
+        """The mesh distance between two clocks on the torus, the shorter way on every axis."""
         return sum(min(abs(x - y), self.cube - abs(x - y)) for x, y in zip(a, b, strict=True))
 
     def bobs_of(self) -> dict[tuple[tuple[int, ...], int], list[dict[str, Any]]]:
-        """The credits grouped by (Node, line), a body's track, in the log's order; read once per cut."""
+        """The chimes grouped by (clock, gear), a bob's track, in the log's order; read once per cut."""
         key = f"bodies to {self.ticks}"
         if key not in self.memo:
             found: dict[tuple[tuple[int, ...], int], list[dict[str, Any]]] = {}
             for c in self.chimes:
                 found.setdefault((tuple(c["node"]), c["line"]), []).append(c)
             self.memo[key] = found
-        bodies: dict[tuple[tuple[int, ...], int], list[dict[str, Any]]] = self.memo[key]
-        return bodies
+        bobs: dict[tuple[tuple[int, ...], int], list[dict[str, Any]]] = self.memo[key]
+        return bobs
 
     def first_stopped(self) -> dict[int, int]:
-        """The first frozen interval of every Node that freezes (the Link pace 0, BH-S1's mask on the Node lines), the Node's index to the interval; the one reader of the horizon's Nodes for rows 14, 34 and 61."""
+        """The first stopped tick of every clock that stops (the mesh rate 0, BH-S1's mask on the clock lines), the clock's index to the tick; the one reader of the standstill's clocks for rows 14, 34 and 61."""
         first: dict[int, int] = {}
         for line in self.clocks:
             for at in line["frozen"]:
@@ -170,7 +170,7 @@ class Chart:
         return masks
 
     def sweeps_of(self) -> list[tuple[int, int]]:
-        """The two children's own charges at every birth, in the births' order (H-Children-Charge-Bug-1, the Boss's 6410696786): a child laid by the child's lay carries its sense times half the quantum of action (the Wronskian of its own two levels), a child laid as the exact take at -1 (a merger's light, the line's `exact_lay` at its end) carries 0; the log's W_children is the record's Wronskian at the Node after the lay (the standing level's and the cross term in it) and is read for the residue by name, never for the sign."""
+        """The two fitted hands' own sweeps at every fitting, in the fittings' order (H-Children-Charge-Bug-1, the Boss's 6410696786): a fitted hand advanced by the fitted hand's advance carries its sense times half the key (the sweep of its own two notches), a fitted hand advanced as the exact unwind at -1 (an unspringing's unsprung hand, the gear's `exact_lay` at its end) carries 0; the log's W_children is the chart's sweep at the clock after the advance (the standing notch's and the cross term in it) and is read for the residue by name, never for the sign."""
 
         def own(b: dict[str, Any], k: int) -> int:
             exact = b.get("exact_lay", [None, None])[k] is not None
@@ -179,24 +179,24 @@ class Chart:
         return [(own(b, 0), own(b, 1)) for b in self.fittings]
 
     def signs_of(self) -> list[int]:
-        """The births' children's senses as the signs of their own charges, in the births' order (0 for a child laid as light)."""
+        """The fittings' fitted hands' senses as the signs of their own sweeps, in the fittings' order (0 for a fitted hand advanced as unsprung)."""
         return [sign(w) for pair in self.sweeps_of() for w in pair]
 
     def unwinds_of(self) -> tuple[int, int]:
-        """The sums over the births of what the takes took and what they booked."""
+        """The sums over the fittings of what the unwinds unwound and what they tallied."""
         return sum(b["taken"] for b in self.fittings), sum(b["booked"] for b in self.fittings)
 
     def fitted_of(self) -> Counter[str]:
-        """The births by the species born (the plane's name)."""
+        """The fittings by the species fitted (the hand's name)."""
         return Counter(self.gear_name[b["line_pair"]] for b in self.fittings)
 
     def lifts_fitted(self) -> list[str]:
-        """The lifts born: the distinct gapped planes with a birth, the plane at the gap 0 (light, no lift) left out; the lifts the universe names are its gapped planes, the typed points of den's circle (self.NL), the former constant 3 the toy universe's count of them (the Boss's task of 2026-10-27, 10:1x UTC: the number read from the record and no file of src)."""
-        light = self.NAMES[self.rim][0]
-        return sorted(name for name in self.fitted_of() if name != light)
+        """The lifts fitted: the distinct sprung hands with a fitting, the unsprung hand (light, no lift) left out; the lifts the calibre names are its sprung hands, the rim's typed points (self.NL), the former constant 3 the toy calibre's count of them (the Boss's task of 2026-10-27, 10:1x UTC: the number read from the chart and no file of src)."""
+        unsprung = self.NAMES[self.rim][0]
+        return sorted(name for name in self.fitted_of() if name != unsprung)
 
     def advanced_at_nothing(self) -> list[int]:
-        """The magnitude |W| of every child laid where its plane stood at nothing, in the births' order."""
+        """The magnitude |W| of every fitted hand advanced where its hand stood at nothing, in the fittings' order."""
         return [
             abs(w)
             for b in self.fittings
@@ -205,13 +205,13 @@ class Chart:
         ]
 
     def rim_points(self) -> list[tuple[int, int]]:
-        """den's circle, read once per record (circle.circle_of)."""
+        """The rim's points, read once per chart (rim.rim_of)."""
         found: list[tuple[int, int]] = self.memo.setdefault("circle", rim_of(self.rim))
         return found
 
 
 def carries(a: int, b: int, scale: int = 1) -> int | None:
-    """The integer reading of a / b: the quotient of the scaled numerator (the remainder dropped)."""
+    """The integer reading of a / b: the carries of the scaled numerator (the fine tooth dropped)."""
     return None if b == 0 else int(rule3.carries(a * scale, b))
 
 
@@ -225,60 +225,60 @@ def cmp_rat(p: Rational, q: Rational) -> int:
     return sign(int(cross(p[0], p[1], q[0], q[1])))
 
 
-def regulator_notches(record: Chart, credit: dict[str, Any]) -> tuple[int, int, int]:
-    """The carrier's three levels at the credit's Node from the record's Node lines: before the interval, at its start and after it (Gamma before the first interval)."""
-    index, i = record.index(credit["node"]), int(credit["i"])
-    lines = record.run["nodes"]
+def regulator_notches(chart: Chart, chime: dict[str, Any]) -> tuple[int, int, int]:
+    """The regulator's three notches at the chime's clock from the chart's clock lines: before the tick, at its start and after it (the full rate before the first tick)."""
+    index, i = chart.index(chime["node"]), int(chime["i"])
+    lines = chart.run["nodes"]
     found = [
-        lines[i - 1 - back]["X"][index] if i - 1 - back >= 0 else record.full_rate
+        lines[i - 1 - back]["X"][index] if i - 1 - back >= 0 else chart.full_rate
         for back in NOTCHES_BACK
     ]
     before, start, after = found
     return int(before), int(start), int(after)
 
 
-def reckon(record: Chart, credit: dict[str, Any]) -> Rational | None:
-    """The species from the frame in exact integers under the symmetric ride (interval.py's form), the plane's frame: a riding line's momentum P_in = W_in (a_now - a_before) + r - W_in div 2 at the mean wall W_in = (w div 2)(X_before + X_now), the kick P_out = P_in + X_now F with F = SUM_j R_j (m_j - z) - D z, the one division a_next = a_now + (P_out + W_out div 2) div W_out at W_out = (w div 2)(X_now + X_next); from the record's levels v = a_next - a_now gives X_now F to the remainders' width, E = v W_out - W_in (a_now - a_before), and F is linear in num: num = (E + 12 den p_0^2 G^2 z X_now) / ((A + 12 p_0^2 G^2 z) X_now) with A = SUM_j 2 p_i^2 Q_j G^2 (m_j - z) over the turned arrivals; x = num / den as the rational (N, D), D > 0."""
-    f, content = credit["frame"], credit["content"]
+def reckon(chart: Chart, chime: dict[str, Any]) -> Rational | None:
+    """The species from the face in exact integers under the driven gears' symmetric form (tick.py's), the hand's face: a driven gear's momentum P_in = W_in (a_now - a_before) + fine - W_in div 2 at the mean teeth W_in = (teeth div 2)(stretch_before + stretch_now), the impulse P_out = P_in + stretch_now F with F = SUM_j R_j (m_j - z) - D z, the one carry a_next = a_now + (P_out + W_out div 2) div W_out at W_out = (teeth div 2)(stretch_now + stretch_next); from the chart's notches v = a_next - a_now gives stretch_now F to the fine teeth's width, E = v W_out - W_in (a_now - a_before), and F is linear in pinion: pinion = (E + 12 rim rate^2 G^2 z stretch_now) / ((A + 12 rate^2 G^2 z) stretch_now) with A = SUM_j 2 mesh_rate^2 Q_j G^2 (m_j - z) over the turned pulls; x = pinion / rim as the rational (N, D), D > 0."""
+    f, load = chime["frame"], chime["content"]
     if "re_now" not in f:
         return None
-    gamma, den, unit = record.full_rate, record.rim, record.G
-    p0, pi = rates.rate(gamma, content), rates.mesh_rate(gamma, content)
-    w = record.teeth
-    x_b, x_n, x_x = regulator_notches(record, credit)
+    full_rate, rim, unit = chart.full_rate, chart.rim, chart.G
+    rate, mesh_rate = rates.rate(full_rate, load), rates.mesh_rate(full_rate, load)
+    w = chart.teeth
+    x_b, x_n, x_x = regulator_notches(chart, chime)
     w_in, w_out = rule3.mean_teeth_of(w, x_b, x_n), rule3.mean_teeth_of(w, x_n, x_x)
     zb = (f["re_start_before"], f["im_start_before"])
     zn = (f["re_start_now"], f["im_start_now"])
     zx = (
         f["re_now"],
         f["im_now"],
-    )  # the state after the step is the levels now (CL-S2, the Boss's 6417815695 and David's e03b70401: the former `stepped` field was the state the swap replaced, equal to the levels now at every credit of a Node that did not turn, and is struck; the reader reads what the algebra fixes)
+    )  # the state after the step is the notches now (CL-S2, the Boss's 6417815695 and David's e03b70401: the former `stepped` field was the state the turnover replaced, equal to the notches now at every chime of a clock that did not turn over, and is struck; the reader reads what the algebra fixes)
     if zn == (0, 0):
         return None
-    scale, phases, odd, frames = f["X"], f["phases"], f["odd"], f["frames"]
+    scale, offsets, odd, pawls = f["X"], f["phases"], f["odd"], f["frames"]
     e = tuple((zx[k] - zn[k]) * w_out - w_in * (zn[k] - zb[k]) for k in range(PAIR))
-    weight = rule3.spring(0, 1, p0, unit)
-    reaches = rule3.gearing(1, den, gamma, p0, pi, tuple(f["factors"]), unit).grips
+    weight = rule3.spring(0, 1, rate, unit)
+    grips = rule3.gearing(1, rim, full_rate, rate, mesh_rate, tuple(f["factors"]), unit).grips
     a_re = a_im = 0
-    for port, (a, b) in enumerate(zip(f["re_neighbours_start"], f["im_neighbours_start"], strict=True)):
-        at = Mesh(None, frames[port], phases[port][0], phases[port][1], odd[port])
-        m = through_mesh([a, frames[port] * b], at, scale, gamma)
-        a_re, a_im = a_re + reaches[port] * (m[0] - zn[0]), a_im + reaches[port] * (m[1] - zn[1])
-    p = (e[0] + weight * den * zn[0] * x_n, e[1] + weight * den * zn[1] * x_n)
+    for spoke, (a, b) in enumerate(zip(f["re_neighbours_start"], f["im_neighbours_start"], strict=True)):
+        at = Mesh(None, pawls[spoke], offsets[spoke][0], offsets[spoke][1], odd[spoke])
+        m = through_mesh([a, pawls[spoke] * b], at, scale, full_rate)
+        a_re, a_im = a_re + grips[spoke] * (m[0] - zn[0]), a_im + grips[spoke] * (m[1] - zn[1])
+    p = (e[0] + weight * rim * zn[0] * x_n, e[1] + weight * rim * zn[1] * x_n)
     q = ((a_re + weight * zn[0]) * x_n, (a_im + weight * zn[1]) * x_n)
     qq = q[0] * q[0] + q[1] * q[1]
     if qq == 0:
         return None
-    return (p[0] * q[0] + p[1] * q[1], qq * den)
+    return (p[0] * q[0] + p[1] * q[1], qq * rim)
 
 
-def nearest(record: Chart, x: Rational, beat: int = 0) -> str:
-    """The name whose num / den lies nearest the rational x = (N, D): the smallest |N den - num D|, all integers; a credit with a rest beat is a body's and never the gap-0 plane's (pm1's reader item: light has no credit line), so the gap-0 name is left out where the beat is above 0."""
+def nearest(chart: Chart, x: Rational, beat: int = 0) -> str:
+    """The name whose pinion / rim lies nearest the rational x = (N, D): the smallest |N rim - pinion D|, all integers; a chime with a rest beat is a bob's and never the unsprung hand's (pm1's reader item: light has no chime line), so the unsprung hand's name is left out where the beat is above 0."""
     n, d = x
     named = [
-        (num, name) for num, (name, leg) in record.NAMES.items() if not (beat > 0 and num == record.rim)
+        (num, name) for num, (name, leg) in chart.NAMES.items() if not (beat > 0 and num == chart.rim)
     ]
-    return min(named, key=lambda kv: abs(cross(n, d, kv[0], record.rim)))[1]
+    return min(named, key=lambda kv: abs(cross(n, d, kv[0], chart.rim)))[1]
 
 
 def middle(xs: list[Rational]) -> Rational:
@@ -291,39 +291,39 @@ def middle(xs: list[Rational]) -> Rational:
 
 
 def reckoned_chimes(
-    record: Chart,
+    chart: Chart,
 ) -> tuple[list[tuple[dict[str, Any], str, Rational]], int, int, list[int | None]]:
-    """Every credit's species solved from its frame: the decoded (credit, name, x), the count read right, the count within the one-click floor, and each credit's floor on x in parts per million."""
-    den, line_num = record.rim, record.gear_pinion
-    decoded = []
+    """Every chime's species reckoned from its face: the reckoned (chime, name, x), the count read right, the count within the one-strike floor, and each chime's floor on x in parts per million."""
+    rim, gear_pinion = chart.rim, chart.gear_pinion
+    reckoned = []
     right = within = 0
     floors: list[int | None] = []
-    solved = record.memo.setdefault("solve", {})
-    for c in sorted(record.chimes, key=lambda c: int(c["i"])):
-        if id(c) not in solved:
-            solved[id(c)] = reckon(record, c)
-        x = solved[id(c)]
+    reckonings = chart.memo.setdefault("solve", {})
+    for c in sorted(chart.chimes, key=lambda c: int(c["i"])):
+        if id(c) not in reckonings:
+            reckonings[id(c)] = reckon(chart, c)
+        x = reckonings[id(c)]
         if x is None:
             continue
-        name = nearest(record, x, int(c["beat"]))
-        right += name == record.gear_name[c["line"]]
-        decoded.append((c, name, x))
+        name = nearest(chart, x, int(c["beat"]))
+        right += name == chart.gear_name[c["line"]]
+        reckoned.append((c, name, x))
         n, d = x
-        num = line_num[c["line"]]
-        within += (n * den - num * d) ** PAIR <= PAIR * (record.teeth * den) ** PAIR * d
+        pinion = gear_pinion[c["line"]]
+        within += (n * rim - pinion * d) ** PAIR <= PAIR * (chart.teeth * rim) ** PAIR * d
         floors.append(
             rule3.largest_below(
-                (PAIR * record.teeth * record.teeth * den * den * MIL * MIL) // (d * num * num)
+                (PAIR * chart.teeth * chart.teeth * rim * rim * MIL * MIL) // (d * pinion * pinion)
             )
-            if num
+            if pinion
             else None
         )
-    return decoded, right, within, floors
+    return reckoned, right, within, floors
 
 
 if (
     __name__ == "__main__"
-):  # the kit's documented command (the Boss's 6416894866: the decoder owed a main entry): the gates of a record file, one line each, as `python -m event_universe.gates`
+):  # the kit's documented command (the Boss's 6416894866: the reckoner owed a main entry): the gates of a chart file, one line each, as `python -m event_universe.gates`
     import sys
 
     from event_universe.gates import main

@@ -1,4 +1,4 @@
-"""den's circle, a reader's derivation from den alone (MS-S2, the owner's word of 2026-10-25 through the Boss, 6399410929): den's primes by Pollard's rho with the gcd rule3's lattice, each prime 1 mod 4 as a^2 + b^2 by a search by comparisons, every point (num, s) with num^2 + s^2 = den^2 by the Gaussian products (3^k - 1 points for k distinct primes 1 mod 4); the finite spectrum the pairs are drawn from, printed by gate 19 and refused off by the Node at the load."""
+"""The rim's points, a reader's derivation from the rim alone (MS-S2, the owner's word of 2026-10-25 through the Boss, 6399410929): the rim's primes by Pollard's rho with the gcd rule3's pitch, each prime 1 mod 4 as a^2 + b^2 by a search by comparisons, every point (pinion, s) with pinion^2 + s^2 = rim^2 by the Gaussian products (3^k - 1 points for k distinct primes 1 mod 4); the finite spectrum the ratios are drawn from, printed by gate 19 and jammed off by the Clock at the assembly."""
 
 from __future__ import annotations
 
@@ -38,7 +38,7 @@ def is_prime(n: int) -> bool:
 
 
 def divisor_of(n: int) -> int:
-    """A proper divisor of a composite n by Pollard's rho (Brent's cycle), the gcd rule3's lattice; the constant stepped where the walk closes."""
+    """A proper divisor of a composite n by Pollard's rho (Brent's cycle), the gcd rule3's pitch; the constant stepped where the walk closes."""
     if n % EVEN == 0:
         return EVEN
     c = 1
@@ -67,10 +67,10 @@ def divisor_of(n: int) -> int:
         c += 1
 
 
-def rim_of(den: int) -> list[tuple[int, int]]:
-    """den's circle (MS-S2): den's primes (rho), each prime 1 mod 4 as a^2 + b^2 by a search by comparisons, every point (num, s) with num^2 + s^2 = den^2, num > 0 and s > 0, by the Gaussian products (3^k - 1 points for k distinct primes 1 mod 4), sorted by num."""
+def rim_of(rim: int) -> list[tuple[int, int]]:
+    """The rim's points (MS-S2): the rim's primes (rho), each prime 1 mod 4 as a^2 + b^2 by a search by comparisons, every point (pinion, s) with pinion^2 + s^2 = rim^2, pinion > 0 and s > 0, by the Gaussian products (3^k - 1 points for k distinct primes 1 mod 4), sorted by pinion."""
     primes: list[int] = []
-    stack = [den]
+    stack = [rim]
     while stack:
         n = stack.pop()
         if n == 1:

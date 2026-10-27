@@ -1,8 +1,9 @@
-"""The record rows' bilinears, one act on every record alike: a record is a plane, its two lines a clock's hand (re, im), with the plain products line by line (`products`, `dot`), a rotation J (the quarter turn (re, im) -> (-im, re)) and a conjugation K (the im line's negation): the charge B.J.N (the plane's Wronskian), the current, the frame's conjugation of a neighbour's lines, the lay at rest by rule3's signed quotient and the rotation's angle read along the law's own orbit (`cosine_count`; the spinor row's Gram form, axis matrices, spin density, curl term and scale struck with the row, 2026-10-27)."""
+"""The hand trains' bilinears, one act on every hand alike: a hand is a train of two gears, its three and its twelve (the hand's three-o'clock and twelve-o'clock shadows), with the plain products gear by gear (`products`, `dot`), a quarter turn J ((three, twelve) -> (-twelve, three)) and a reflection K (the twelve gear's negation): the sweep B.J.N (the hand's Wronskian), the lead, the pawl's reflection of a neighbour's gears, the setting at rest by rule3's signed carries and the rotation's angle read along the law's own circuit (`cosine_count`; the spinor train's Gram form, axis matrices, spin density, curl term and scale struck with the train, 2026-10-27)."""
 
 from __future__ import annotations
 
 from collections.abc import Callable
+from functools import cache
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -11,16 +12,15 @@ from event_universe.core.rule3 import carries, half, signed_carries, wind_weight
 from event_universe.core.spokes import AXES, SPOKES, across, spoke_of
 from event_universe.meshes import cross
 from event_universe.readings import standard_angle
-from event_universe.trains import HAND, Gear, zeros
-from event_universe.unwind import neighbour
+from event_universe.trains import HAND, Gear, Train, zeros
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
 
 
-def signs(shape: int) -> list[int]:
+def signs(size: int) -> list[int]:
     """The train's conjugation K as signs, the pawl's and the turnover's: a hand's twelve gear turned over, every gear of another train its own conjugate."""
-    return [1, -1] if shape == HAND else [1] * shape
+    return [1, -1] if size == HAND else [1] * size
 
 
 def seen(z: list[Any], pawl: Any) -> list[Any]:
@@ -30,18 +30,18 @@ def seen(z: list[Any], pawl: Any) -> list[Any]:
 
 
 def products(xs: list[Any], ys: list[Any]) -> list[Any]:
-    """The plain products x_k y_k line by line, so that a division per line stays one per line."""
+    """The plain products x_k y_k gear by gear, so that a carry per gear stays one per gear."""
     return [x * y for x, y in zip(xs, ys, strict=True)]
 
 
 def dot(xs: list[Any], ys: list[Any]) -> Any:
-    """The plain products x_k y_k summed over the lines."""
+    """The plain products x_k y_k summed over the gears."""
     return sum(products(xs, ys), start=0)
 
 
-def sweep(lines: list[Gear]) -> Any:
-    """The hand's sweep W = Im(conj(z_now) z_before) at every clock, three_now twelve_before - twelve_now three_before (meshes.cross, the plane's Wronskian)."""
-    three, twelve = lines
+def sweep(gears: list[Gear]) -> Any:
+    """The hand's sweep W = Im(conj(z_now) z_before) at every clock, three_now twelve_before - twelve_now three_before (meshes.cross, the hand's Wronskian)."""
+    three, twelve = gears
     return cross(three.now, twelve.now, three.before, twelve.before)
 
 
@@ -55,34 +55,38 @@ def lead(nows: list[Any], pawls: list[Any]) -> list[Any]:
     return found
 
 
-def wind(node: Clock, lines: list[Gear], r: Any, window: list[tuple[int, ...]] | None = None) -> Any:
-    """The conserved form's share of a record at the Node in the carrier's unit (PM-S1: every count of the Node read in the carrier's unit, the one weight for every read and every row alike), one division per line: for the line k, [w (n_k n_k + b_k b_k) - S n_k b_k - n_k (SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (n + n_j)_k, times X the carrier's level at the interval's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the plane's share line by line, at the row's rule. At a window of Nodes (`window`, a take's Node and its six neighbours, merger.walls_of and share_fall) the same integers read at those Nodes alone, each neighbour gathered by its place through take.neighbour, returned in the window's order (the former merger.share_at, gram.share's form re-spelt at one Node, folded 2026-10-26 as R3 of the readings' map: one spelling, the vectorised form inside it)."""
+@cache
+def spoke_places(size: tuple[int, ...]) -> Any:
+    """The six spokes' neighbour places stacked, [spoke][axis] at every clock: the great clock's own coordinates read across each spoke (`across`), unwind.neighbour at every clock at once."""
+    return np.array([[across(g, spoke) for g in np.indices(size)] for spoke in range(SPOKES)])
+
+
+def wind(clock: Clock, gears: list[Gear], r: Any, window: list[tuple[int, ...]] | None = None) -> Any:
+    """The conserved form's wind of a hand at the clock in the regulator's unit (PM-S1: every count of the clock read in the regulator's unit, the one weight for every read and every train alike), one carry per gear: for the gear k, [w (n_k n_k + b_k b_k) - S n_k b_k - n_k (SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (n + n_j)_k, times X the regulator's notch at the tick's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the hand's wind gear by gear, at the train's gearing. At a window of clocks (`window`, an unwind's clock and its six neighbours, unspring.fitted_windings_of and wind_fall) the same integers read at those clocks alone, each neighbour gathered by its place from the six spokes' stacked places (`spoke_places`), returned in the window's order (the former merger.share_at, gram.share's form re-spelt at one clock, folded 2026-10-26 as R3 of the readings' map: one spelling, the vectorised form inside it)."""
     at: Callable[[Any], Any]
     beyond: Callable[[Any, int], Any]
     if window is None:
-        at, beyond, x = (lambda a: a), across, node.start_stretch
+        at, beyond, x = (lambda a: a), across, clock.start_stretch
     else:
         places = [tuple(np.array(w) for w in zip(*window, strict=True))]
-        for port in range(SPOKES):
-            around = [neighbour(node, where, port) for where in window]
-            places.append(tuple(np.array(w) for w in zip(*around, strict=True)))
+        places += [tuple(table[(slice(None), *places[0])]) for table in spoke_places(clock.size)]
 
         def at(a: Any) -> Any:
             return a[places[0]] if np.ndim(a) else a
 
-        def beyond(a: Any, port: int) -> Any:
-            return a[places[1 + port]]
+        def beyond(a: Any, spoke: int) -> Any:
+            return a[places[1 + spoke]]
 
-        x = node.start_stretch[places[0]]
-    full_n, full_b = [line.now for line in lines], [line.before for line in lines]
+        x = clock.start_stretch[places[0]]
+    full_n, full_b = [gear.now for gear in gears], [gear.before for gear in gears]
     nows, befores = [at(n) for n in full_n], [at(b) for b in full_b]
-    reached = [at(zeros(node.size)) for _ in lines]
-    shared = [at(zeros(node.size)) for _ in lines]
-    for port, reach in enumerate(r.grips):
-        b_j = [beyond(b, port) for b in full_b]
-        n_j = [beyond(n, port) for n in full_n]
-        here = at(reach)
-        reached = [v + here * bj for v, bj in zip(reached, b_j, strict=True)]
+    gripped = [at(zeros(clock.size)) for _ in gears]
+    shared = [at(zeros(clock.size)) for _ in gears]
+    for spoke, grip in enumerate(r.grips):
+        b_j = [beyond(b, spoke) for b in full_b]
+        n_j = [beyond(n, spoke) for n in full_n]
+        here = at(grip)
+        gripped = [v + here * bj for v, bj in zip(gripped, b_j, strict=True)]
         parts = products(
             [b - bj for b, bj in zip(befores, b_j, strict=True)],
             [n + nj for n, nj in zip(nows, n_j, strict=True)],
@@ -94,46 +98,52 @@ def wind(node: Clock, lines: list[Gear], r: Any, window: list[tuple[int, ...]] |
             products(nows, nows),
             products(befores, befores),
             products(nows, befores),
-            products(nows, reached),
+            products(nows, gripped),
             strict=True,
         )
     ]
-    wall = wind_weight(node.full_rate, node.G) + wind_weight(node.full_rate, node.G)
-    found = at(zeros(node.size))
+    teeth = wind_weight(clock.full_rate, clock.G) + wind_weight(clock.full_rate, clock.G)
+    found = at(zeros(clock.size))
     for o, s in zip(own, shared, strict=True):
-        found = found + np.asarray(carries((o + o - s) * x, wall))
+        found = found + np.asarray(carries((o + o - s) * x, teeth))
     return found
 
 
 def moving(
-    base: Any, now_pair: tuple[Any, Any], before_pair: tuple[Any, Any], den: int, sense: int
+    base: Any, now_pair: tuple[Any, Any], before_pair: tuple[Any, Any], rim: int, sense: int
 ) -> list[Gear]:
-    """A plane laid at a phase over the envelope (MV-S1), a clock's hand at the angle (C, S): now = (base C, sense base S) over den at the Node's phase pair (C, S) and before the same at the pair (C', S') turned by the band's rotation, each product's quotient toward zero line by line (rule3.signed_quotient), so the two senses' im lines cancel exactly and the lay at the conjugate pair is the conjugate lay; the rest lay the case (den, 0) and (num, s) (the former lay's vector, (1, 0) on every plane, struck with the spinor row, 2026-10-27)."""
+    """A hand set at an angle over the envelope (MV-S1), its two shadows at the angle (C, S): now = (base C, sense base S) over the rim at the clock's angle pair (C, S) and before the same at the pair (C', S') turned by the band's rotation, each product's carries toward zero gear by gear (rule3.signed_carries), so the two senses' twelve gears cancel exactly and the setting at the conjugate pair is the conjugate setting; the rest setting the case (rim, 0) and (pinion, s) (the former lay's vector, (1, 0) on every hand, struck with the spinor train, 2026-10-27)."""
 
-    def levels(c: Any, s: Any) -> list[Any]:
-        return [signed_carries(base * c, den), sense * signed_carries(base * s, den)]
+    def hand(c: Any, s: Any) -> list[Any]:
+        return [signed_carries(base * c, rim), sense * signed_carries(base * s, rim)]
 
-    return [Gear(n, b, None, None) for n, b in zip(levels(*now_pair), levels(*before_pair), strict=True)]
-
-
-def rest(re_now: Any, num: int, den: int, sine: int, sense: int) -> list[Gear]:
-    """A plane at rest over the envelope (`moving` at the pair (den, 0) now and the row's (num, s) before): re_now = re_now, im_now = 0, re_before = re_now num div den, im_before = sense re_now s div den, each quotient toward zero."""
-    return moving(re_now, (den, 0), (num, sine), den, sense)
+    return [Gear(n, b, None, None) for n, b in zip(hand(*now_pair), hand(*before_pair), strict=True)]
 
 
-def cosine_count(node: Clock, p: int, d: int) -> int:
-    """The count n along the law's orbit (features/phase, the step 1 / Gamma) at which the orbit's cosine first falls to p / d, the rotation's angle in the orbit's units: a search by comparisons, cos_n d <= p X, bounded by the orbit's half turn where the table reaches it (the deepest cosine the orbit holds)."""
+def rest(three_now: Any, pinion: int, rim: int, sine: int, sense: int) -> list[Gear]:
+    """A hand at rest over the envelope (`moving` at the pair (rim, 0) now and the train's (pinion, s) before): three_now = three_now, twelve_now = 0, three_before = three_now pinion div rim, twelve_before = sense three_now s div rim, the carries taken toward zero."""
+    return moving(three_now, (rim, 0), (pinion, sine), rim, sense)
+
+
+def cosine_count(clock: Clock, p: int, d: int) -> int:
+    """The count n along the law's circuit (features/standard, the step 1 / Gamma) at which the circuit's cosine first falls to p / d, the rotation's angle in the circuit's units: a search by comparisons, cos_n d <= p X, bounded by the circuit's half turn where the table reaches it (the deepest cosine the circuit holds)."""
     high = 1
-    while standard_angle(node, high)[0] * d > p * node.standard_length and (
-        node.circuit_half is None or high < node.circuit_half
+    while standard_angle(clock, high)[0] * d > p * clock.standard_length and (
+        clock.circuit_half is None or high < clock.circuit_half
     ):
         high = high + high
-    high = high if node.circuit_half is None else min(high, node.circuit_half)
+    high = high if clock.circuit_half is None else min(high, clock.circuit_half)
     low = 0
     while high - low > 1:
         middle = half(low + high)
-        if standard_angle(node, middle)[0] * d > p * node.standard_length:
+        if standard_angle(clock, middle)[0] * d > p * clock.standard_length:
             low = middle
         else:
             high = middle
     return high
+
+
+def twin_of(hands: list[Train], s: int) -> int:
+    """The + fitted hand's hand: the twin of the - fitted hand's hand where its train is twin hands (the pair's spin kept), the same hand otherwise."""
+    twin = hands[s].twin
+    return s if twin is None else hands.index(twin)
