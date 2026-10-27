@@ -121,7 +121,7 @@ def skewed(meshes: list[Mesh], rest_rate: int, flow_gears: list[Any], full_rate:
 
 def mesh_teeth(full_rate: Any) -> Any:
     """The mesh's teeth 4 Gamma, the turn's unit of the pull (twice the standard rate 2 Gamma; the law's, typed once here)."""
-    return 4 * full_rate
+    return SIDES * (SIDES * full_rate)
 
 
 def through_mesh(xs: list[Any], at: Mesh, scale: Any, full_rate: Any) -> list[Any]:

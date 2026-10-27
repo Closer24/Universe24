@@ -12,7 +12,7 @@ from event_universe.core import rule3
 from event_universe.core.rule3 import carries, remainder
 from event_universe.core.spokes import AXES, across, spoke_of
 from event_universe.draw import kept_pitch, vernier
-from event_universe.meshes import train_lead, train_twists
+from event_universe.meshes import coupling_of, train_lead, train_twists
 from event_universe.run import fitting, jammed
 from event_universe.trains import HAND, Gear, Train
 from event_universe.unspring import (
@@ -58,13 +58,14 @@ def engage(
     stopped: Any,
     other: tuple[int, Any, list[Gear]] | None = None,
 ) -> list[Fitting]:
-    """The meshes' engagement of one hand, the same for every hand (SL-S1, the generic striking): every mesh once from its +a end; an engagement where both ends hold a whole winding of the hand at the tick's start and neither end is stopped (counted as `met`); the + fitted hand at the end the hand's own lead flows into where the twist of its transverse leads is right, at the other end where left (F = 0 and h = 0 jammed by name); a sprung hand engages as the conjugate pair alone, the two ends' sweeps of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; jammed by name `sense` where not), and at rest, no lead across the mesh, as the pair at rest (MG-S1: the + fitted hand at the end whose sweep is positive, the fitting's orientation read at -1, the twist not read, its number read after the stop in `fittings`); the mesh's one number read at the lead's end names the fitted hands' hand (`list_of`; one read per clock and hand in a striking). Returns the fittings as (the unwind's clock, the fitted hands' hand, the - fitted hand's clock, the + fitted hand's clock, the vernier's room, the unwound hand)."""
+    """The meshes' engagement of one hand, the same for every hand (SL-S1, the generic striking): every mesh once from its +a end; an engagement where both ends hold a whole winding of the hand at the tick's start and neither end is stopped (counted as `met`); the + fitted hand at the end the hand's own lead flows into where the twist of its transverse leads is right, at the other end where left (F = 0 and h = 0 jammed by name); a sprung hand engages as the conjugate pair alone, the two ends' sweeps of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; jammed by name `sense` where not), every sweep and the sense's refusal weighted by the hand's coupling (meshes.coupling_of, min(spring, 1): the unsprung hand's sweeps 0 and its meetings never refused by the sense, the branch on its identity a product, David's DAVID-GENERIC-ENGINE.md part B), and at rest, no lead across the mesh, as the pair at rest (MG-S1: the + fitted hand at the end whose sweep is positive, the fitting's orientation read at -1, the twist not read, its number read after the stop in `fittings`); the mesh's one number read at the lead's end names the fitted hands' hand (`list_of`; one read per clock and hand in a striking). Returns the fittings as (the unwind's clock, the fitted hands' hand, the - fitted hand's clock, the + fitted hand's clock, the vernier's room, the unwound hand)."""
     fits: list[Fitting] = []
     hand, winding = clock.hands()[rec], clock.windings[rec]
     wound = (wind >= winding) & ~stopped
     axis_leads = [clock.rim * train_lead(start, spoke_of(axis, 0)) for axis in range(AXES)]
     twists = train_twists(start)
-    hand_sweeps = hands.sweep(start) if hand is not clock.unsprung() else None
+    coupling = coupling_of(hand)
+    hand_sweeps = coupling * hands.sweep(start)
     far, far_sweeps = wound, hand_sweeps
     if other is not None:
         q, q_wind, q_start = other
@@ -84,16 +85,12 @@ def engage(
                 jammed(clock, at, "disengaged", link=list(j), row=rec)
                 continue
             lead, h = int(axis_leads[axis][at]), int(twists[axis][at])
-            w = (
-                [0, 0]
-                if hand_sweeps is None or far_sweeps is None
-                else [int(hand_sweeps[at]), int(far_sweeps[j])]
-            )
+            w = [int(hand_sweeps[at]), int(far_sweeps[j])]
             rest = lead == 0 and w[0] * w[1] < 0
             if (lead == 0 or h == 0) and not rest:
                 jammed(clock, at, "orientation" if lead == 0 else "twist", link=list(j), row=rec)
                 continue
-            if hand_sweeps is not None and w[0] * w[1] >= 0:
+            if coupling * (w[0] * w[1] >= 0):
                 jammed(clock, at, "sense", link=list(j), row=rec, charges=w)
                 continue
             if rest:

@@ -107,21 +107,10 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
 
 
 LAW_INTEGERS, TOOL_INTEGERS = frozenset({0, 1}), frozenset({0, 1, 2, 3, 4, 6})
-# what the fold leaves by file (H-No-Numbers-In-Code-1 item 17, 2026-10-26): the spokes and the axes; Rule3's own gear;
-# the gear counts, the powers and the width (the trace's 54 the file's key); the mesh teeth's 4; the half widths; the quarters;
-# the writer's marks; quartet.py's item 7 (the NamedTuples) deferred, its three as they stand
-FILE_INTEGERS = {
-    "spokes.py": frozenset({2, 3}),
-    "rule3.py": frozenset({2, 3, 4}),
-    "trains.py": frozenset({2, 4, 8, 10}),
-    "meshes.py": frozenset({4}),
-    "setting.py": frozenset({2, 3}),
-    "cycle.py": frozenset({4}),
-    "run.py": frozenset({12, 24, 60}),
-    "acts.py": frozenset(
-        {2}
-    ),  # the mid tooth at the half teeth by the carry on 2 (core/acts.mid, the halving's own 2 as rule3.half's)
-}
+# what the fold leaves by file (H-No-Numbers-In-Code-1 item 17, 2026-10-26; the generic folds of David's DAVID-GENERIC-ENGINE.md
+# part A, 2026-10-27: every two the signs' count, the hand and the halving SIDES, the time gear's power AXES + 1, the quarters
+# the order of i, the half spans the half turn's closure): the dimension alone, and the writer's marks
+FILE_INTEGERS = {"spokes.py": frozenset({3}), "run.py": frozenset({12, 24, 60})}
 # the chart's readers, Animate's since 00:42 UTC (their constants named at the module's top on reader-5), no act of the clock;
 # the writer run.py reads the inventory and not the names gate (its chart keys are the files' words)
 READERS = tuple(

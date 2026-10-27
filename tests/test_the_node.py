@@ -16,7 +16,7 @@ from event_universe.core.rule3 import carries
 from event_universe.core.spokes import SPOKES
 from event_universe.meshes import factors
 from event_universe.tick import Tick
-from event_universe.trains import HAND, OFFSET, REGULATOR, zeros
+from event_universe.trains import HAND, OFFSET, REGULATOR, rows_of, zeros
 from event_universe.unspring import fall_of, unwinds
 from event_universe.unwind import advance, move, window_clocks
 from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of, wronskian
@@ -181,38 +181,21 @@ def test_the_step_reaches_one_link_forward_and_none_back() -> None:
 
 def test_the_files_are_refused_by_name() -> None:
     universe, piece = world_of("world_node.json")
-    rim = universe["integers"]["den"]
+    rim, rows = universe["integers"]["den"], universe["rows"]
     refused("keys of no law: control", check_piece, dict(piece, control={"ride": "symmetric"}), universe)
     refused("keys of no law: detectors", check_piece, dict(piece, detectors=[[0, 0, 0]]), universe)
-    refused(
-        "a pair or a wall", check_piece, piece, dict(universe, rows=universe["rows"] + [{"shape": 1}])
-    )
-    refused("no row of the law", check_piece, piece, dict(universe, rows=[{"shape": 8}]))
     ints = {**universe["integers"], "link_unit": 16}
     refused("keys of no law: link_unit", check_piece, piece, dict(universe, integers=ints))
     assert node_of("world_node.json").G == 16  # derived from Gamma 1,000 (K-S1), no key of the file
-    trains = universe["rows"]
-    for match, change in (
-        ("the gap-0 row is the plane", dict(universe, rows=trains + [{"shape": 1, "pair": [1, 2]}])),
-        ("one shape-10 row", dict(universe, rows=[r for r in trains if r["shape"] != 10])),
-        (
-            "off den's circle",
-            dict(
-                universe,
-                rows=[
-                    dict(r, pair=[r["pair"][0] - 1, rim])
-                    if r["shape"] == 2 and r["pair"][0] != rim
-                    else r
-                    for r in trains
-                ],
-            ),
-        ),
-        (
-            "one shape-4 row",
-            dict(universe, rows=[dict(r, pair=[1, rim]) if r["shape"] == 4 else r for r in trains]),
-        ),
-    ):
-        refused(match, Clock, change, piece)
+    # the file holds the matter alone: a row the clock builds (trains.rows_of: the light at the rim, the regulator, the offset at the rim), a shape of no gapped row (the former gap-0 plane, shape 1 with a pair, among them) and a row with no pair each refused by name as no gapped row; the ratchet's wall a key of no law; a file of none refused
+    light, *_, regulator, offset, ratchet = rows_of(universe)
+    shapes = [{"shape": 1}, {"shape": 1, "pair": [1, 2]}, {"shape": 8}, {"shape": 2}]
+    for row in (light, regulator, offset, *shapes):
+        refused("is no gapped row", check_piece, piece, dict(universe, rows=[*rows, row]))
+    refused("keys of no law: wall", check_piece, piece, dict(universe, rows=[*rows, ratchet]))
+    refused("names no gapped row", check_piece, piece, dict(universe, rows=[]))
+    off = [dict(r, pair=[r["pair"][0] - 1, rim]) for r in rows]  # every row of the file gapped
+    refused("off den's circle", Clock, dict(universe, rows=off), piece)
     for match, change in (
         ("a cube", {"shape": [3, 3, 4]}),
         ("off the board", {"seed": [{"lay": "hole", "at": [3, 0, 0]}]}),
@@ -225,6 +208,7 @@ def test_the_files_are_refused_by_name() -> None:
         ),
     ):
         refused(match, Clock, universe, dict(piece, **change))
+    # the trains the clock builds beside the file's three gapped hands: the ratchet, the light, the offset and the regulator
     assert [r.size for r in node_of("world_node.json").trains_] == [1, 2, 2, 2, 2, 4, 10]
 
 
@@ -334,8 +318,8 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
         clock.tick()
     fittings = [e for e in clock.log if e["event"] == "birth"]
     pairs = [b for b in fittings if b["line_pair"] != clock.hands().index(clock.unsprung())]
-    # 7 fittings, every one a pair, under the great clock's bounds (5 and 5 at the wave); 6 fittings and 5 pairs on the 3-cube before the wave and before LT-S1 as at -dP; 6 pairs at 54
-    assert len(fittings) == 7 and len(pairs) == 7 and clock.counts["met"] > len(fittings)
+    # 6 fittings, every one a pair, with the lead at the kick (7 under the great clock's bounds, 5 and 5 at the wave); 6 fittings and 5 pairs on the 3-cube before the wave and before LT-S1 as at -dP; 6 pairs at 54
+    assert len(fittings) == 6 and len(pairs) == 6 and clock.counts["met"] > len(fittings)
     for b in pairs:
         mesh = {tuple(b["minus"]), tuple(b["plus"])}
         # the advance's or the orientation's jam under 4ad484eb9's bound; the stop again, MG-S1's own

@@ -10,7 +10,7 @@ from event_universe.core import rates, rule3
 from event_universe.core.rates import sine_rim
 from event_universe.meshes import Mesh, cross, through_mesh
 from event_universe.rim import rim_of
-from event_universe.trains import HAND
+from event_universe.trains import HAND, rows_of
 
 MIL = 1000000  # readings in parts per million
 HUNDRED = 100  # readings in hundredths
@@ -77,7 +77,7 @@ class Chart:
         self.rim = int(run["den"])
         self.action = int(run["universe"]["integers"]["quantum_action"])
         self.full_rate, self.G, self.key = int(run["gamma"]), int(run["G"]), int(run["T"])
-        trains = run["universe"]["rows"]
+        trains = rows_of(run["universe"])
         ratios = {
             tuple(int(x) for x in r["pair"]) for r in trains if int(r["shape"]) == HAND and r.get("pair")
         }

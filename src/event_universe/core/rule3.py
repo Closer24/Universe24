@@ -6,7 +6,7 @@ from collections.abc import Callable
 from typing import Any, NamedTuple
 
 from event_universe.core.acts import carry
-from event_universe.core.spokes import AXES, SPOKES
+from event_universe.core.spokes import AXES, SIDES, SPOKES
 
 # a clock's grips, one per spoke in spoke order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 pinion p_i^2 Q_ij G^2
 # on the mesh to that neighbour; integers or the loop's integer arrays
@@ -123,7 +123,7 @@ def signed_carries(numerator: Any, teeth: Any) -> Any:
 
 def half(teeth: Any) -> Any:
     """The half teeth by the carry on 2, the fine tooth's start and the mean teeth's factor (the halving's own 2)."""
-    return carry(teeth, 2, 0)[0]
+    return carry(teeth, SIDES, 0)[0]
 
 
 def mean_teeth_of(teeth: Any, before: Any, now: Any) -> Any:
@@ -133,7 +133,7 @@ def mean_teeth_of(teeth: Any, before: Any, now: Any) -> Any:
 
 def odd(count: Any) -> Any:
     """The parity of a count by the carry on 2, 1 where odd (the parity's own 2): the reversals' count, a gear's odd part."""
-    return carry(count, 2, 0)[1]
+    return carry(count, SIDES, 0)[1]
 
 
 def wind_weight(full_rate: Any, mesh_unit: Any) -> Any:
