@@ -10,13 +10,14 @@ from event_universe import hands, readings
 from event_universe.core import rates
 from event_universe.core.acts import carry, mid
 from event_universe.core.rule3 import carries, held_numerator
-from event_universe.core.spokes import AXES, SPOKES, across
+from event_universe.core.spokes import AXES, SPOKES, across, transverse
 from event_universe.features import stretch
 from event_universe.meshes import (
     centred_count,
     coupling_of,
     cross,
     factors,
+    gradient,
     meshes_of,
     offsets,
     pawls,
@@ -171,11 +172,32 @@ class Tick:
                 m - (rule.teeth + rule.teeth - rule.hold) * a
                 for a, m in zip(self.starts[k], arrivals, strict=True)
             ]
+        self.twin_pulls()
         self.release = zeros(node.size)
         for r, cpl in self.hand_couplings:
             k = self.where[id(r)]
             flow = cpl * cross(*self.starts[k], *self.pull[k])
             self.release = self.release + self.stretch_now * flow
+
+    def twin_pulls(self) -> None:
+        """The twins' gearing to the offset (SR-S3 on twin hands): the offset's one-mesh curl Phi at the tick's start turns a train of twin hands through the Pauli gearing on its four gears (three_up, twelve_up, three_down, twelve_down): sigma_x swaps the twins, sigma_y = i sigma_x sigma_z, sigma_z reverses the down twin; per gear the numerator SUM_j grip_j SUM_a Phi_a (sigma_a x), one carry at the gear's drive teeth SPOKES (full rate + full rate), the carries added to the gear's pull (the coefficient grip / (2 full rate) per spoke, g = 2), the fine tooth kept on the gear's drive wheel."""
+        node = self.clock
+        cx, cy, cz = offset_curl(self.odd)
+        for r in self.hands:
+            if r.twin is None or self.hands.index(r) > self.hands.index(r.twin):
+                continue
+            ku, kd = self.where[id(r)], self.where[id(r.twin)]
+            up, dn = self.starts[ku], self.starts[kd]
+            grip = sum(readings.gearing_of(node, r, self.load, self.factors).grips)
+            pauli = (
+                (r, ku, dn, (dn[1], -dn[0]), up),
+                (r.twin, kd, up, (-up[1], up[0]), [-g for g in dn]),
+            )
+            for hand, k, sx, sy, sz in pauli:
+                for i, gear in enumerate(self.gears(hand)):
+                    numerator = grip * (cx * sx[i] + cy * sy[i] + cz * sz[i])
+                    q, gear.dfine = carry(numerator, gear.dteeth, gear.dfine, self.going)
+                    self.pull[k][i] = self.pull[k][i] + q
 
     def impulse(self) -> None:
         """(2) The kick (the former `kicks`): every riding line's momentum at the start read at the mean wall of the carrier's two levels as the rows hold them, P = W (a_now - a_before) + r - W div 2, and kicked by X_now F in the direction; the shape-4 row's time line kicked besides by the records' charge read at the kick (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the records with a gap of N.J.u_in + N.J.u_out, N the levels at the start and u the odd rounding of 2 P + 1 over 2 w X_now, the plane's -(re u_im - im u_re) in and out, the same integers in either direction and its own mirror under the exchange and the conjugation; one carried division at the line's write wall T with the carry kept in its write remainder, the quotient landing as the kick w X_now q before the line's one division; the charge summed over the records before the shape-4 row is met, which rests on rows.order_of, H-Confirm-Build-11; the former level write of 2 W of the records after the step kept by name: a source pinned to the step's end, whose mirror under the exchange is a start, so the fall wrote 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the carrier's source from every riding row alike, line by line u_in u_out + (-a F) div w, w the row's wall."""
@@ -290,6 +312,15 @@ class Tick:
         kept = rewind_note(node, self.top, log_from, self.stopped, self.tallies)
         node.strike(self.hand_starts, self.held)
         node.stack.append(kept)
+
+
+def offset_curl(odd: list[Any]) -> list[Any]:
+    """The offset's one-mesh curl at every clock, Phi_a = d_b A_c - d_c A_b from its odd gears, d_b the centred difference through the axis b's two spokes (the struck hands.curl, 6501cd679)."""
+    found = []
+    for a in range(AXES):
+        b, c = transverse(a)
+        found.append(gradient(odd[c], b) - gradient(odd[b], c))
+    return found
 
 
 def run(node: Clock, direction: int) -> None:

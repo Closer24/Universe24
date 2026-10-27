@@ -41,6 +41,10 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_record.py::test_a_train_of_four_gears_at_a_spring_is_twin_hands_and_keeps_the_spin": (
+        24,
+        "Spin one half on two hands (David's DAVID-SPIN-SOLVED.md, toys-5 67f2ff192, on the owner's words of 2026-10-27, 12:02 UTC, built by the Boss on the clock engine): a train of four gears at a spring read as twin hands, every fitting's two children in twin hands, every unspringing across them, the rewind exact over 20 ticks of the node world (a fitting group of two children at one clock undone by its one take once); a law of the engine never roomed before, the Boss's room by name.",
+    ),
     "tests/test_the_phase_line.py::test_the_amplitude_is_the_universes_and_the_engine_refuses_a_scale_below_the_floor_from_gamma": (
         19,
         "The amplitude declared from outside and the width gone from the engine (the owner's words of 2026-10-27, 04:0x and 04:4x UTC, through the Boss; David's e48273be8): the universe file's amplitude read, the floor 23 Gamma derived from Gamma alone below it, the Node's X the file's, the refusal below the floor by name and never nature's; the Boss's room by name at the merge of toys-5 e48273be8 (2026-10-27): the test as the merged tree holds it",
