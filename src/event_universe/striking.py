@@ -1,4 +1,4 @@
-"""The close, the Node's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every row's rule, the gap-0 plane's share and each record's standing share at the vacuum's weight, the frozen Nodes), the Link close (`meet`: every Link once from its +a end, both ends holding a whole quantum of the record, the + child at the end the record's current flows into where the twist is right-handed, the conjugate pair's selector for a record with a gap, the one-Link read of a number at that end), the lays refused by name (`refuse`), the births taken and laid (`births`: the birth's one take per Node from the gap-0 row, the merger's one take per end from the taken row, SL-S2, every take the one act at a list of ends, merger.takes, CR-S2), the bodies' closing (bodies.py); the lay, the exact take and the momentum they book; the close undone from the log at the direction -1 (`click`). The close's one moment (CL-S2, the owner's word of 2026-10-26, 22:0x UTC by the Boss's clock, the two blind hands' cut): every reading of a record the close LOGS is read at the record's levels at the interval's start (`plane_starts`, kept on the Node as `start_lines`), the sense a credit carries, the levels a credit's frame shows and the momentum a take books at each of its ends, with the cross term of a merger's two moves booked once at the meeting's own Node; the readings the close ACTS on keep their own moment by name, the share's fall and the exact count at a take and the levels a merger takes whole, read on the board the take writes, since a take sized on a level the board no longer holds breaks the law's width; the frame's level before the swap is the one record of the state the swap replaced, read at the turned Nodes alone."""
+"""The striking, the clock's fourth act (ALGEBRA.md, The strike writes on the lattice): the readings at the start (every train's gearing, the unsprung hand's wind and each hand's wind at the vacuum's weight, the stopped clocks), the meshes' engagement (`engage`: every mesh once from its +a end, both ends holding a whole winding of the hand, the + fitted hand at the end the hand's lead flows into where the twist is right, the conjugate pair's selector for a sprung hand, the one-mesh read of a number at that end), the advances jammed by name (`jam`), the fittings unwound and advanced (`fittings`: the fitting's one unwind per clock from the unsprung hand, the unspringing's one unwind per end from the unwound hand, SL-S2, every unwind the one act at a list of ends, unspring.unwinds, CR-S2), the bobs' chiming (bobs.py); the advance, the exact unwind and the push they tally; the striking undone from the log at the going -1 (`strike`). The striking's one moment (CL-S2, the owner's word of 2026-10-26, 22:0x UTC by the Boss's clock, the two blind hands' cut): every reading of a hand the striking LOGS is read at the hand's notches at the tick's start (`hand_starts`, kept on the clock as `start_gears`), the sense a chime carries, the notches a chime's face shows and the push an unwind tallies at each of its ends, with the cross term of an unspringing's two moves tallied once at the engagement's own clock; the readings the striking ACTS on keep their own moment by name, the wind's fall and the exact count at an unwind and the notches an unspringing unwinds whole, read on the great clock the unwind writes, since an unwind sized on a notch the great clock no longer holds breaks the law's width; the face's notch before the turnover is the one copy of the state the turnover replaced, read at the turned-over clocks alone."""
 
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ if TYPE_CHECKING:
 
 
 class Fitting(NamedTuple):
-    """A birth read at the Link close: the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room and the taken record."""
+    """A fitting read at the meshes' engagement: the unwind's clock, the fitted hands' hand, the - fitted hand's clock, the + fitted hand's clock, the vernier's room and the unwound hand."""
 
     at: tuple[int, ...]
     gear_ratio: int
@@ -40,307 +40,307 @@ class Fitting(NamedTuple):
     rec: int
 
 
-def list_of(node: Clock, rec: int, number: int) -> int:
-    """The children's record of a meeting of the record `rec` by the pairs: where the taken row is the emitter the draw's pick among the planes (the number over the unit, modulo their count); where it is another record, the row whose pair is the product (den, den), the emitter (SL-S1: two gapped quanta meeting give light)."""
-    records = node.hands()
-    if records[rec] is not node.unsprung():
-        return records.index(node.unsprung())
-    planes = [k for k, r in enumerate(records) if r.size == HAND]
-    return planes[int(remainder(carries(number, node.windings[rec]), len(planes)))]
+def list_of(clock: Clock, rec: int, number: int) -> int:
+    """The fitted hands' hand of an engagement of the hand `rec` by the ratios: where the unwound hand is the unsprung hand the vernier's pick among the hands (the number over the winding, modulo their count); where it is another hand, the train whose ratio is the product (rim, rim), the unsprung hand (SL-S1: two sprung windings engaging give unsprung windings)."""
+    all_hands = clock.hands()
+    if all_hands[rec] is not clock.unsprung():
+        return all_hands.index(clock.unsprung())
+    recs = [k for k, r in enumerate(all_hands) if r.size == HAND]
+    return recs[int(remainder(carries(number, clock.windings[rec]), len(recs)))]
 
 
 def engage(
-    node: Clock,
+    clock: Clock,
     rec: int,
     start: list[Gear],
-    sh: Any,
-    rules: list[tuple[Gear, rule3.Gearing]],
-    frozen: Any,
+    wind: Any,
+    gearings: list[tuple[Gear, rule3.Gearing]],
+    stopped: Any,
     other: tuple[int, Any, list[Gear]] | None = None,
 ) -> list[Fitting]:
-    """The Link close of one record, the same for every record (SL-S1, the generic close): every Link once from its +a end; a meeting where both ends hold a whole quantum of the record at the interval's start and neither end is frozen (counted as `met`); the + child at the end the record's own current flows into where the twist of its transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); a record with a gap meets as the conjugate pair alone, the two ends' charges of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; refused by name `sense` where not), and at rest, no current across the Link, as the pair at rest (MG-S1: the + child at the end whose charge is positive, the birth's orientation read at -1, the twist not read, its number read after the stop in `births`); the Link's one number read at the current's end names the children's record (`list_of`; one read per Node and record in a close). Returns the births as (the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room, the taken record)."""
-    born: list[Fitting] = []
-    row, unit = node.hands()[rec], node.windings[rec]
-    standing = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(sh) & ~frozen
-    currents = [node.rim * train_lead(start, spoke_of(axis, 0)) for axis in range(AXES)]
+    """The meshes' engagement of one hand, the same for every hand (SL-S1, the generic striking): every mesh once from its +a end; an engagement where both ends hold a whole winding of the hand at the tick's start and neither end is stopped (counted as `met`); the + fitted hand at the end the hand's own lead flows into where the twist of its transverse leads is right, at the other end where left (F = 0 and h = 0 jammed by name); a sprung hand engages as the conjugate pair alone, the two ends' sweeps of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; jammed by name `sense` where not), and at rest, no lead across the mesh, as the pair at rest (MG-S1: the + fitted hand at the end whose sweep is positive, the fitting's orientation read at -1, the twist not read, its number read after the stop in `fittings`); the mesh's one number read at the lead's end names the fitted hands' hand (`list_of`; one read per clock and hand in a striking). Returns the fittings as (the unwind's clock, the fitted hands' hand, the - fitted hand's clock, the + fitted hand's clock, the vernier's room, the unwound hand)."""
+    fits: list[Fitting] = []
+    hand, winding = clock.hands()[rec], clock.windings[rec]
+    wound = np.vectorize(lambda v: int(v) >= winding, otypes=[bool])(wind) & ~stopped
+    axis_leads = [clock.rim * train_lead(start, spoke_of(axis, 0)) for axis in range(AXES)]
     twists = [train_twist(start, axis) for axis in range(AXES)]
-    charges = hands.sweep(start) if row is not node.unsprung() else None
-    far, far_charges = standing, charges
+    hand_sweeps = hands.sweep(start) if hand is not clock.unsprung() else None
+    far, far_sweeps = wound, hand_sweeps
     if other is not None:
-        q, q_sh, q_start = other
-        far = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(q_sh) & ~frozen
-        currents = [
-            c + node.rim * train_lead(q_start, spoke_of(axis, 0)) for axis, c in enumerate(currents)
+        q, q_wind, q_start = other
+        far = np.vectorize(lambda v: int(v) >= winding, otypes=[bool])(q_wind) & ~stopped
+        axis_leads = [
+            c + clock.rim * train_lead(q_start, spoke_of(axis, 0)) for axis, c in enumerate(axis_leads)
         ]
         twists = [t + train_twist(q_start, axis) for axis, t in enumerate(twists)]
-        far_charges = hands.sweep(q_start)
+        far_sweeps = hands.sweep(q_start)
     for axis in range(AXES):
-        both = standing & across(far, spoke_of(axis, 0))
+        both = wound & across(far, spoke_of(axis, 0))
         for where in zip(*np.nonzero(both), strict=True):
             at = tuple(int(x) for x in where)
-            j = neighbour(node, at, spoke_of(axis, 0))
-            node.counts["met"] += 1
-            flow, h = int(currents[axis][at]), int(twists[axis][at])
+            j = neighbour(clock, at, spoke_of(axis, 0))
+            clock.counts["met"] += 1
+            lead, h = int(axis_leads[axis][at]), int(twists[axis][at])
             w = (
                 [0, 0]
-                if charges is None or far_charges is None
-                else [int(charges[at]), int(far_charges[j])]
+                if hand_sweeps is None or far_sweeps is None
+                else [int(hand_sweeps[at]), int(far_sweeps[j])]
             )
-            rest = flow == 0 and w[0] * w[1] < 0
-            if (flow == 0 or h == 0) and not rest:
-                jammed(node, at, "orientation" if flow == 0 else "twist", link=list(j), row=rec)
+            rest = lead == 0 and w[0] * w[1] < 0
+            if (lead == 0 or h == 0) and not rest:
+                jammed(clock, at, "orientation" if lead == 0 else "twist", link=list(j), row=rec)
                 continue
-            if charges is not None and w[0] * w[1] >= 0:
-                jammed(node, at, "sense", link=list(j), row=rec, charges=w)
+            if hand_sweeps is not None and w[0] * w[1] >= 0:
+                jammed(clock, at, "sense", link=list(j), row=rec, charges=w)
                 continue
             if rest:
                 into, outof = (at, j) if w[0] > 0 else (j, at)
             else:
-                into, outof = (j, at) if flow > 0 else (at, j)
+                into, outof = (j, at) if lead > 0 else (at, j)
             plus, minus = (into, outof) if rest or h > 0 else (outof, into)
             if other is not None:
-                planes = {at: rec, j: other[0]}
-                node.twin_ends[(rec, minus, plus)] = (planes[minus], planes[plus])
+                twins = {at: rec, j: other[0]}
+                clock.twin_ends[(rec, minus, plus)] = (twins[minus], twins[plus])
             if rest:
-                born.append(Fitting(into, list_of(node, rec, 0), minus, plus, 0, rec))
+                fits.append(Fitting(into, list_of(clock, rec, 0), minus, plus, 0, rec))
                 continue
-            if (into, rec) not in node.vernier_read:
-                node.vernier_read[(into, rec)] = vernier(node, into, rules, unit)
-            drawn = node.vernier_read[(into, rec)]
+            if (into, rec) not in clock.vernier_read:
+                clock.vernier_read[(into, rec)] = vernier(clock, into, gearings, winding)
+            drawn = clock.vernier_read[(into, rec)]
             if drawn is None:
                 continue
             number, room = drawn
-            born.append(Fitting(into, list_of(node, rec, number), minus, plus, room, rec))
-    return born
+            fits.append(Fitting(into, list_of(clock, rec, number), minus, plus, room, rec))
+    return fits
 
 
 def twin_at(
-    node: Clock, rec: int, owns: list[Any], plane_starts: list[list[Gear]]
+    clock: Clock, rec: int, winds: list[Any], hand_starts: list[list[Gear]]
 ) -> tuple[int, Any, list[Gear]] | None:
     """The hand's twin with its wind and its gears at the tick's start, where its train is twin hands."""
-    twin = node.hands()[rec].twin
+    twin = clock.hands()[rec].twin
     if twin is None:
         return None
-    q = node.hands().index(twin)
-    return q, owns[q], plane_starts[q]
+    q = clock.hands().index(twin)
+    return q, winds[q], hand_starts[q]
 
 
-def jam(node: Clock, born: list[Fitting], owns: list[Any]) -> list[Fitting]:
-    """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) pass both and read their bound on their own quantum at the take, the light's unit at the end as MG-S1's share reads it, the light a sea the merger pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the birth read at -1, MG-S1). Returns the births kept."""
-    records = node.hands()
-    inverse = [k for k in born if records[k.gear_ratio] is node.unsprung() is not records[k.rec]]
+def jam(clock: Clock, fits: list[Fitting], winds: list[Any]) -> list[Fitting]:
+    """The advance jammed by name: where any of the fitted hand's hand already stands at its clock, and where two fitted hands of one hand would land at one clock in one striking (the sweep made at a crowded advance); an unspringing's unsprung fitted hands (the unwound hand sprung, the fitted hands on the unsprung hand) pass both and read their bound on their own quantum at the unwind, the unsprung hand's winding at the end as MG-S1's wind reads it, the unsprung hand a sea the unspringing pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the fitting read at -1, MG-S1). Returns the fittings kept."""
+    all_hands = clock.hands()
+    inverse = [k for k in fits if all_hands[k.gear_ratio] is clock.unsprung() is not all_hands[k.rec]]
     kept = []
-    for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
-        if int(owns[s][minus]) > 0 or int(owns[hands.twin_of(records, s)][plus]) > 0:
-            jammed(node, at, "lay", standing=int(owns[s][minus]), unit=node.windings[s], row=rec)
+    for at, s, minus, plus, room, rec in [k for k in fits if k not in inverse]:
+        if int(winds[s][minus]) > 0 or int(winds[hands.twin_of(all_hands, s)][plus]) > 0:
+            jammed(clock, at, "lay", standing=int(winds[s][minus]), unit=clock.windings[s], row=rec)
             continue
         kept.append(Fitting(at, s, minus, plus, room, rec))
     landing: dict[tuple[int, tuple[int, ...]], int] = {}
     for _at, s, minus, plus, _room, _rec in kept:
         landing[(s, minus)] = landing.get((s, minus), 0) + 1
-        landing[(hands.twin_of(records, s), plus)] = (
-            landing.get((hands.twin_of(records, s), plus), 0) + 1
+        landing[(hands.twin_of(all_hands, s), plus)] = (
+            landing.get((hands.twin_of(all_hands, s), plus), 0) + 1
         )
     crowded = [
         k
         for k in kept
         if landing[(k.gear_ratio, k.minus)] > 1
-        or landing[(hands.twin_of(records, k.gear_ratio), k.plus)] > 1
+        or landing[(hands.twin_of(all_hands, k.gear_ratio), k.plus)] > 1
     ]
     for at, s, minus, plus, _room, rec in crowded:
         jammed(
-            node,
+            clock,
             at,
             "lay",
-            children_at_one_node=max(landing[(s, minus)], landing[(hands.twin_of(records, s), plus)]),
+            children_at_one_node=max(landing[(s, minus)], landing[(hands.twin_of(all_hands, s), plus)]),
             row=rec,
         )
     return [k for k in kept if k not in crowded] + inverse
 
 
 def fittings(
-    node: Clock,
+    clock: Clock,
     kept: list[Fitting],
     c: Any,
     factors: tuple[Any, ...],
     reads: list[tuple[Gear, rule3.Gearing]],
 ) -> set[tuple[int, ...]]:
-    """The births kept, every face read before any write: every child's wall first (`walls_of`, MS-S1: what is taken is what the lay books and nothing made; the rules once per record), then the takes by the taken pair's case, the taken row's line by the fall's sign paying at its rule (take.fall_of's choice, CS4-S2; the former first line kept by name): at the gap 0 one exact take per Node and taken record of its children's walls summed (the birth's case, kept by name); with a gap each child's wall paid at its own end by the record's levels taken whole (MG-S1: the birth read at -1, the share's fall read at the end's Node and its six neighbours, where alone the lay changes it, the standing shares kept per close until a merger writes; the Link's number read at the take's Node after the stop, the draw's refusal counted there); every take the close's one act at a list of ends, read whole before any write (merger.read_ends, write_ends, takes; CR-S2, the owner's word of 2026-10-26, 06:1x UTC; the former take_at, take_line and merger_take kept by name); then each child laid at the charge T div 2 (`children`). Returns every Node a taken birth touched."""
-    by_node: dict[tuple[tuple[int, ...], int], list[Fitting]] = {}
+    """The fittings kept, every face read before any write: every fitted hand's winding first (`fitted_windings_of`, MS-S1: what is unwound is what the advance tallies and nothing made; the gearings once per hand), then the unwinds by the case of the unwound hand's ratio, the unwound hand's gear by the fall's sign paying at its gearing (unwind.fall_of's choice, CS4-S2; the former first line kept by name): at the spring 0 one exact unwind per clock and unwound hand of its fitted hands' windings summed (the birth's case, kept by name); with a spring each fitted hand's winding paid at its own end by the hand's notches unwound whole (MG-S1: the fitting read at -1, the wind's fall read at the end's clock and its six neighbours, where alone the advance changes it, the winds read kept per striking until an unspringing writes; the mesh's number read at the unwind's clock after the stop, the vernier's jam counted there); every unwind the striking's one act at a list of ends, read whole before any write (unspring.read_ends, unwind_ends, unwinds; CR-S2, the owner's word of 2026-10-26, 06:1x UTC; the former take_at, take_line and merger_take kept by name); then each fitted hand advanced at the sweep key div 2 (`fitted`). Returns every clock an unwound fitting touched."""
+    by_clock: dict[tuple[tuple[int, ...], int], list[Fitting]] = {}
     for k in kept:
-        by_node.setdefault((k.at, k.rec), []).append(k)
-    records = node.hands()
-    rules = {}
+        by_clock.setdefault((k.at, k.rec), []).append(k)
+    all_hands = clock.hands()
+    gearings = {}
     for r in {k.gear_ratio for k in kept} | {k.rec for k in kept}:
-        pair = records[r].ratio
-        assert pair is not None
-        rules[r] = readings.gearing(node, pair, c, factors)
+        ratio = all_hands[r].ratio
+        assert ratio is not None
+        gearings[r] = readings.gearing(clock, ratio, c, factors)
     own: dict[tuple[int, int, tuple[int, ...]], int] = {}
-    walls = {
-        k: fitted_windings_of(node, k.gear_ratio, k.minus, k.plus, rules[k.gear_ratio], own)
+    windings = {
+        k: fitted_windings_of(clock, k.gear_ratio, k.minus, k.plus, gearings[k.gear_ratio], own)
         for k in kept
     }
-    taken: list[tuple[tuple[int, ...], int, list[Fitting], dict[str, Any]]] = []
-    shares: dict[tuple[int, tuple[int, ...]], int] = {}
-    for at, rec in sorted(by_node):
-        kids = by_node[(at, rec)]
-        row, rule = records[rec], rules[rec]
-        if row is not node.unsprung():
-            for kid in kids:
-                ends = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
-                planes = node.twin_ends.get((rec, kid.minus, kid.plus))
+    unwound: list[tuple[tuple[int, ...], int, list[Fitting], dict[str, Any]]] = []
+    winds: dict[tuple[int, tuple[int, ...]], int] = {}
+    for at, rec in sorted(by_clock):
+        fits = by_clock[(at, rec)]
+        hand, gearing = all_hands[rec], gearings[rec]
+        if hand is not clock.unsprung():
+            for fit in fits:
+                ends = list(zip((fit.minus, fit.plus), windings[fit], strict=True))
+                twins = clock.twin_ends.get((rec, fit.minus, fit.plus))
                 drawn: list[Any] = []
 
                 def draw(
-                    at: tuple[int, ...] = at, unit: int = node.windings[rec], into: list[Any] = drawn
+                    at: tuple[int, ...] = at, winding: int = clock.windings[rec], into: list[Any] = drawn
                 ) -> Any:
-                    into.append(vernier(node, at, reads, unit))
+                    into.append(vernier(clock, at, reads, winding))
                     return into[-1]
 
-                got = unwinds(node, ends, rule, 1, rec, draw, shares, at, planes)
+                got = unwinds(clock, ends, gearing, 1, rec, draw, winds, at, twins)
                 if got is None:
                     continue
-                taken.append((at, rec, [kid._replace(room=drawn[-1][1])], summed(got)))
-                shares.clear()
+                unwound.append((at, rec, [fit._replace(room=drawn[-1][1])], summed(got)))
+                winds.clear()
             continue
-        got = unwinds(node, [(at, sum(sum(walls[kid]) for kid in kids))], rule, len(kids), rec)
+        got = unwinds(clock, [(at, sum(sum(windings[fit]) for fit in fits))], gearing, len(fits), rec)
         if got is None:
             continue
-        node.strikes[at] -= 1
-        taken.append((at, rec, kids, summed(got)))
+        clock.strikes[at] -= 1
+        unwound.append((at, rec, fits, summed(got)))
     touched: set[tuple[int, ...]] = set()
-    for at, rec, kids, take in taken:
-        touched |= fitted(node, at, kids, take, rec, c, factors)
-        node.counts["taken"] += take["taken"]
-        node.counts["booked"] += take["booked"]
+    for at, rec, fits, unwind in unwound:
+        touched |= fitted(clock, at, fits, unwind, rec, c, factors)
+        clock.counts["taken"] += unwind["taken"]
+        clock.counts["booked"] += unwind["booked"]
     return touched
 
 
 def fitted(
-    node: Clock,
+    clock: Clock,
     at: tuple[int, ...],
-    kids: list[Fitting],
-    take: dict[str, Any],
+    fits: list[Fitting],
+    unwind: dict[str, Any],
     rec: int,
     c: Any,
     factors: tuple[Any, ...],
 ) -> set[tuple[int, ...]]:
-    """One take's children laid by the one lay act (merger.children_laid: the charged children at the charge T div 2, a merger's light children as the exact take at -1, merger.light_levels, MG-S1, each end's wall found by its Node and not by its place in the take's list, so the lay is order-free under the ends' naming, the comparison's bug of close.py:166-169, CL-S2), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last), a merger's two ends' takes under `takes` and its lays under `exact_lay`. Returns the Nodes touched."""
+    """One unwind's fitted hands advanced by the one advance act (unspring.fitted_advanced: the sweeping fitted hands at the sweep key div 2, an unspringing's unsprung fitted hands as the exact unwind at -1, unspring.unsprung_notches, MG-S1, each end's winding found by its clock and not by its place in the unwind's list, so the advance is order-free under the ends' naming, the comparison's bug of close.py:166-169, CL-S2), each fitting logged with its numbers, its unwind's own push among them (the Boss's 6399718139: every unwind's dP on its gear, not the striking's last), an unspringing's two ends' unwinds under `takes` and its advances under `exact_lay`. Returns the clocks touched."""
     touched = {at}
-    for _at, s, minus, plus, room, _rec in kids:
+    for _at, s, minus, plus, room, _rec in fits:
         exact: list[list[int] | None] = []
-        row = node.hands()[s]
-        assert row.ratio is not None
-        if "takes" in take:
-            walls = {
+        hand = clock.hands()[s]
+        assert hand.ratio is not None
+        if "takes" in unwind:
+            windings = {
                 sense: t["booked"]
-                for t in take["takes"]
+                for t in unwind["takes"]
                 for sense, where in ((-1, minus), (1, plus))
                 if t["node"] == list(where)
             }
-            levels_of = unsprung_notches(
-                node, s, walls, readings.gearing(node, row.ratio, c, factors), exact
+            notches_of = unsprung_notches(
+                clock, s, windings, readings.gearing(clock, hand.ratio, c, factors), exact
             )
         else:
 
-            def levels_of(_where: tuple[int, ...], sense: int, row: Train = row) -> tuple[int, ...]:
-                return fitted_notches(row, sense, node.A, node.B)
+            def notches_of(_where: tuple[int, ...], sense: int, hand: Train = hand) -> tuple[int, ...]:
+                return fitted_notches(hand, sense, clock.A, clock.B)
 
-        laid = fitted_advanced(node, s, minus, plus, levels_of)
+        advanced = fitted_advanced(clock, s, minus, plus, notches_of)
         touched |= {minus, plus}
-        written = [
-            recoil(node, where, dp, int(node.start_rate[where]), 1)
-            for where, dp in zip((minus, plus), laid[-1], strict=True)
+        tallies = [
+            recoil(clock, where, push, int(clock.start_rate[where]), 1)
+            for where, push in zip((minus, plus), advanced[-1], strict=True)
         ]
-        node.counts["births"] += 1
-        node.strikes[at] += 1
-        fitting(node, at, s, (minus, plus), take, rec, laid, written, len(kids), room, exact)
+        clock.counts["births"] += 1
+        clock.strikes[at] += 1
+        fitting(clock, at, s, (minus, plus), unwind, rec, advanced, tallies, len(fits), room, exact)
     return touched
 
 
-def undo(node: Clock, frame: dict[str, Any]) -> None:
-    """The click at -1 (X2): the log since the interval's frame read backward, every birth's recoils and lays and every take undone by the same acts at -1, the log cut back and the counters set to the frame's."""
-    rec0 = node.hands().index(node.unsprung())
-    unbooked: set[tuple[Any, ...]] = set()
-    for entry in reversed(node.log[frame["log_from"] :]):
+def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
+    """The strike at -1 (X2): the log since the tick's rewind note read backward, every fitting's recoils and advances and every unwind undone by the same acts at -1, the log cut back and the counters set to the rewind note's."""
+    rec0 = clock.hands().index(clock.unsprung())
+    untallied: set[tuple[Any, ...]] = set()
+    for entry in reversed(clock.log[rewind_note["log_from"] :]):
         at = tuple(entry["node"])
         if entry["event"] == "birth":
             s, (a, b) = entry["line_pair"], entry["amplitude"]
-            for where, dp, clock in zip(
+            for where, push, rate in zip(
                 (entry["plus"], entry["minus"]),
                 entry["dP_lay_ends"][::-1],
                 entry["clock_ends"][::-1],
                 strict=True,
             ):
-                recoil(node, tuple(where), dp, clock, -1)
+                recoil(clock, tuple(where), push, rate, -1)
             exact = entry.get("exact_lay", [None, None])
-            for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
-                if laid is None:
-                    p = s if sense < 0 else hands.twin_of(node.hands(), s)
-                    advance(node, p, tuple(where), fitted_notches(node.hands()[p], sense, a, b), -1)
+            for where, sense, moved in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
+                if moved is None:
+                    p = s if sense < 0 else hands.twin_of(clock.hands(), s)
+                    advance(clock, p, tuple(where), fitted_notches(clock.hands()[p], sense, a, b), -1)
                 else:
-                    move(node, s, laid[0], tuple(where), -laid[1])
+                    move(clock, s, moved[0], tuple(where), -moved[1])
             if "cross" in entry:
                 cross = entry["cross"]
-                recoil(node, tuple(cross["node"]), cross["dP"], cross["clock"], -1)
+                recoil(clock, tuple(cross["node"]), cross["dP"], cross["clock"], -1)
         if entry["event"] in ("birth", "credit"):
-            row = entry.get("taken_row", rec0)
-            for take in entry.get("takes", [entry]):
-                where = tuple(take["node"])
-                first = entry["event"] == "credit" or (where, row, at) not in unbooked
+            rec = entry.get("taken_row", rec0)
+            for unwind in entry.get("takes", [entry]):
+                where = tuple(unwind["node"])
+                first = entry["event"] == "credit" or (where, rec, at) not in untallied
                 if first:
-                    unbooked.add((where, row, at))
-                    recoil(node, where, take["dP_take"], take["clock"], -1)
-                if "taken_levels" in take:
-                    advance(node, take.get("hand", row), where, tuple(take["taken_levels"]))
-                    node.strikes[where] += 1
+                    untallied.add((where, rec, at))
+                    recoil(clock, where, unwind["dP_take"], unwind["clock"], -1)
+                if "taken_levels" in unwind:
+                    advance(clock, unwind.get("hand", rec), where, tuple(unwind["taken_levels"]))
+                    clock.strikes[where] += 1
                     continue
                 if not first:
                     continue
-                toward = 1 if take["taker"][1] > take["taker"][0] else -1
-                count = 0 if "laid_back" in take else toward * take["levels"]
-                move(node, row, take["taken_line"], where, -count)
-                node.slack[where] = take["remainder_was"]
-            node.strikes[at] -= 1
-    del node.log[frame["log_from"] :]
-    node.wound, node.crossed, node.beats = frame["counters"]
+                toward = 1 if unwind["taker"][1] > unwind["taker"][0] else -1
+                count = 0 if "laid_back" in unwind else toward * unwind["levels"]
+                move(clock, rec, unwind["taken_line"], where, -count)
+                clock.slack[where] = unwind["remainder_was"]
+            clock.strikes[at] -= 1
+    del clock.log[rewind_note["log_from"] :]
+    clock.wound, clock.crossed, clock.beats = rewind_note["counters"]
 
 
 def strike(
-    node: Clock,
-    plane_starts: list[list[Gear]],
+    clock: Clock,
+    hand_starts: list[list[Gear]],
     held: list[list[Gear]],
-    direction: int = 1,
-    frame: dict[str, Any] | None = None,
+    going: int = 1,
+    rewind_note: dict[str, Any] | None = None,
 ) -> None:
-    """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule in the carrier's unit, PM-S1), the Link close of every record alike (SL-S1), the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame in the reverse order of its lines: the lays removed, a merger's cross term unbooked at the meeting's Node, the taken line moved back by the take's own count at every take's Node (`taken_line`, CS4-S2; the former restore to the level that was, which read a line another lay of the same close had moved and undid that lay twice, struck 2026-10-26 under CL-S2's run back on the fed horizon world; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed), the take's remainder, the closes at every end and the readings' counters restored (a merger's ends count their close back, left uncounted by the former undo and met by the run back once the state's counters are compared, 2026-10-26) (RW-S1: one function with the direction, the former `unclick` kept by name). `plane_starts` the records' lines at the interval's start, `held` every row's."""
-    if direction == -1:
-        assert frame is not None
-        undo(node, frame)
+    """The strike in the going (X2: the undo is the strike at -1): forward the readings at the start (each hand's wind at its unscaled gearing in the regulator's winding, PM-S1), the meshes' engagement of every hand alike (SL-S1), the advances jammed by name, the fittings unwound and advanced, the bobs' chiming; backward the striking undone from the log's rewind note in the reverse order of its lines: the advances removed, an unspringing's cross term untallied at the engagement's clock, the unwound gear moved back by the unwind's own count at every unwind's clock (`taken_line`, CS4-S2; the former restore to the notch that was, which read a gear another advance of the same striking had moved and undid that advance twice, struck 2026-10-26 under CL-S2's rewind on the fed horizon piece; an unspringing's two ends under `takes`, their notches returned whole, MG-S1, and its exact advances removed), the slack, the strikes at every end and the readings' counters restored (an unspringing's ends count their strike back, left uncounted by the former undo and met by the rewind once the state's counters are compared, 2026-10-26) (RW-S1: one function with the going, the former `unclick` kept by name). `hand_starts` the hands' gears at the tick's start, `held` every train's."""
+    if going == -1:
+        assert rewind_note is not None
+        undo(clock, rewind_note)
         return
-    c = node.start_load
-    node.start_gears = plane_starts
-    node.pitches, node.vernier_read, node.twin_ends = {}, {}, {}
-    frozen = readings.stopped_of(node, c)
-    read = factors(node, None, frozen)
-    r_emitter = readings.gearing_of(node, node.unsprung(), c, read)
-    rules = node.read_gears(held, c, read)
-    owns = []
-    for rec, r in enumerate(node.hands()):
+    c = clock.start_load
+    clock.start_gears = hand_starts
+    clock.pitches, clock.vernier_read, clock.twin_ends = {}, {}, {}
+    stopped = readings.stopped_of(clock, c)
+    read = factors(clock, None, stopped)
+    r_unsprung = readings.gearing_of(clock, clock.unsprung(), c, read)
+    gearings = clock.read_gears(held, c, read)
+    winds = []
+    for rec, r in enumerate(clock.hands()):
         assert r.ratio is not None
-        owns.append(hands.wind(node, plane_starts[rec], readings.gearing(node, r.ratio, c, read)))
-    born = [
+        winds.append(hands.wind(clock, hand_starts[rec], readings.gearing(clock, r.ratio, c, read)))
+    fits = [
         b
-        for rec in range(len(node.hands()))
+        for rec in range(len(clock.hands()))
         for b in engage(
-            node,
+            clock,
             rec,
-            plane_starts[rec],
-            owns[rec],
-            rules,
-            frozen,
-            twin_at(node, rec, owns, plane_starts),
+            hand_starts[rec],
+            winds[rec],
+            gearings,
+            stopped,
+            twin_at(clock, rec, winds, hand_starts),
         )
     ]
-    born_nodes = fittings(node, jam(node, born, owns), c, read, rules)
-    bobs(node, plane_starts, owns, born_nodes, frozen, r_emitter)
+    fitted_clocks = fittings(clock, jam(clock, fits, winds), c, read, gearings)
+    bobs(clock, hand_starts, winds, fitted_clocks, stopped, r_unsprung)
