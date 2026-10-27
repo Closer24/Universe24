@@ -164,7 +164,7 @@ Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int]
 
 def merger_end(node: Node, rec: int, read: Read) -> tuple[dict[str, Any], list[int]]:
     """One end of a merger's take written: its whole levels laid at -1, the end's entry with the momentum the start books and its recoil, and the live board's momentum less the start's (the cross term's share)."""
-    where, wall, levels, fall = read[:4]
+    where, wall, levels, fall, _k, _rem_was, _owed = read
     row = node.records()[rec]
     assert row.pair is not None
     live = momentum_per_line(node, row.lines, row.pair[0], where, tuple(levels), -1)
