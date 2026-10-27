@@ -29,7 +29,7 @@ def fitted_advanced(
     levels_of: Callable[[tuple[int, ...], int], tuple[int, ...]],
 ) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:
     """The two children laid by the one lay act, the - child at the - end and the + child at the + end, each end's levels by `levels_of` at the end and its sense (the charged child's child_levels at the charge T div 2 with the charge's sign on the re line, GP-S1, the owner's word of 2026-10-26, 04:3x UTC; a merger's light the exact take at -1, `light_levels`, MG-S1), each lay's momentum booked per line of the row at its Node before it is laid (momentum_per_line, the Boss's 6413599502 (b)), the second end read on the board the first lay changed (the sum exact); the former child_at, close.child_laid and light_children one function (NL-S1's stroke 4, 2026-10-26). Returns the lays' momentum summed and per end (dP_lay_ends, the J hands' key, AJ-S2), each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the record's levels at each Node before the lay (the residue)."""
-    planes = (s, hands.plus_hand(node.hands(), s))
+    planes = (s, hands.twin_of(node.hands(), s))
     row = node.hands()[s]
     assert row.ratio is not None
     stood = [stood_at(node.hands()[p], minus, plus)[k] for k, p in enumerate(planes)]
@@ -183,7 +183,7 @@ def unspring_end(node: Clock, rec: int, read: Read) -> tuple[dict[str, Any], lis
         booked=wall,
         levels=size,
         taken_levels=list(levels),
-        **({} if r == rec else {"plane": r}),
+        **({} if r == rec else {"hand": r}),
         dP_take=moment,
         **recoil(node, where, moment, int(node.start_rate[where]), 1),
     )

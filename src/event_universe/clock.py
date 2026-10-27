@@ -94,7 +94,7 @@ class Clock:
         self.start_gears: list[list[Gear]] = []
         self.pitches: dict[tuple[int, int, tuple[int, ...]], int] = {}
         self.vernier_read: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
-        self.end_hands: dict[tuple[int, tuple[int, ...], tuple[int, ...]], tuple[int, int]] = {}
+        self.twin_ends: dict[tuple[int, tuple[int, ...], tuple[int, ...]], tuple[int, int]] = {}
         self.rest_rates: dict[tuple[int, int], int] = {}
 
         for line in self.train(REGULATOR).gears[:1]:

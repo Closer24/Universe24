@@ -100,7 +100,7 @@ def engage(
             plus, minus = (into, outof) if rest or h > 0 else (outof, into)
             if other is not None:
                 planes = {at: rec, j: other[0]}
-                node.end_hands[(rec, minus, plus)] = (planes[minus], planes[plus])
+                node.twin_ends[(rec, minus, plus)] = (planes[minus], planes[plus])
             if rest:
                 born.append(Fitting(into, list_of(node, rec, 0), minus, plus, 0, rec))
                 continue
@@ -114,14 +114,14 @@ def engage(
     return born
 
 
-def partner_of(
+def twin_at(
     node: Clock, rec: int, owns: list[Any], plane_starts: list[list[Gear]]
 ) -> tuple[int, Any, list[Gear]] | None:
-    """The record's partner plane with its standing share and its start, where its row is two planes."""
-    partner = node.hands()[rec].partner
-    if partner is None:
+    """The hand's twin with its wind and its gears at the tick's start, where its train is twin hands."""
+    twin = node.hands()[rec].twin
+    if twin is None:
         return None
-    q = node.hands().index(partner)
+    q = node.hands().index(twin)
     return q, owns[q], plane_starts[q]
 
 
@@ -131,28 +131,28 @@ def jam(node: Clock, born: list[Fitting], owns: list[Any]) -> list[Fitting]:
     inverse = [k for k in born if records[k.gear_ratio] is node.unsprung() is not records[k.rec]]
     kept = []
     for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
-        if int(owns[s][minus]) > 0 or int(owns[hands.plus_hand(records, s)][plus]) > 0:
+        if int(owns[s][minus]) > 0 or int(owns[hands.twin_of(records, s)][plus]) > 0:
             jammed(node, at, "lay", standing=int(owns[s][minus]), unit=node.windings[s], row=rec)
             continue
         kept.append(Fitting(at, s, minus, plus, room, rec))
     landing: dict[tuple[int, tuple[int, ...]], int] = {}
     for _at, s, minus, plus, _room, _rec in kept:
         landing[(s, minus)] = landing.get((s, minus), 0) + 1
-        landing[(hands.plus_hand(records, s), plus)] = (
-            landing.get((hands.plus_hand(records, s), plus), 0) + 1
+        landing[(hands.twin_of(records, s), plus)] = (
+            landing.get((hands.twin_of(records, s), plus), 0) + 1
         )
     crowded = [
         k
         for k in kept
         if landing[(k.gear_ratio, k.minus)] > 1
-        or landing[(hands.plus_hand(records, k.gear_ratio), k.plus)] > 1
+        or landing[(hands.twin_of(records, k.gear_ratio), k.plus)] > 1
     ]
     for at, s, minus, plus, _room, rec in crowded:
         jammed(
             node,
             at,
             "lay",
-            children_at_one_node=max(landing[(s, minus)], landing[(hands.plus_hand(records, s), plus)]),
+            children_at_one_node=max(landing[(s, minus)], landing[(hands.twin_of(records, s), plus)]),
             row=rec,
         )
     return [k for k in kept if k not in crowded] + inverse
@@ -188,7 +188,7 @@ def fittings(
         if row is not node.unsprung():
             for kid in kids:
                 ends = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
-                planes = node.end_hands.get((rec, kid.minus, kid.plus))
+                planes = node.twin_ends.get((rec, kid.minus, kid.plus))
                 drawn: list[Any] = []
 
                 def draw(
@@ -276,7 +276,7 @@ def undo(node: Clock, frame: dict[str, Any]) -> None:
             exact = entry.get("exact_lay", [None, None])
             for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
                 if laid is None:
-                    p = s if sense < 0 else hands.plus_hand(node.hands(), s)
+                    p = s if sense < 0 else hands.twin_of(node.hands(), s)
                     advance(node, p, tuple(where), fitted_notches(node.hands()[p], sense, a, b), -1)
                 else:
                     move(node, s, laid[0], tuple(where), -laid[1])
@@ -292,7 +292,7 @@ def undo(node: Clock, frame: dict[str, Any]) -> None:
                     unbooked.add((where, row, at))
                     recoil(node, where, take["dP_take"], take["clock"], -1)
                 if "taken_levels" in take:
-                    advance(node, take.get("plane", row), where, tuple(take["taken_levels"]))
+                    advance(node, take.get("hand", row), where, tuple(take["taken_levels"]))
                     node.strikes[where] += 1
                     continue
                 if not first:
@@ -320,7 +320,7 @@ def strike(
         return
     c = node.start_load
     node.start_gears = plane_starts
-    node.pitches, node.vernier_read, node.end_hands = {}, {}, {}
+    node.pitches, node.vernier_read, node.twin_ends = {}, {}, {}
     frozen = readings.stopped_of(node, c)
     read = factors(node, None, frozen)
     r_emitter = readings.gearing_of(node, node.unsprung(), c, read)
@@ -339,7 +339,7 @@ def strike(
             owns[rec],
             rules,
             frozen,
-            partner_of(node, rec, owns, plane_starts),
+            twin_at(node, rec, owns, plane_starts),
         )
     ]
     born_nodes = fittings(node, jam(node, born, owns), c, read, rules)

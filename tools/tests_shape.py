@@ -41,9 +41,9 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
-    "tests/test_the_record.py::test_a_train_of_four_gears_at_a_spring_is_two_partner_hands_and_keeps_the_spin": (
+    "tests/test_the_record.py::test_a_train_of_four_gears_at_a_spring_is_twin_hands_and_keeps_the_spin": (
         24,
-        "Spin one half on two hands (David's DAVID-SPIN-SOLVED.md, toys-5 67f2ff192, on the owner's words of 2026-10-27, 12:02 UTC, built by the Boss on the clock engine): a train of four gears at a spring read as two partner hands, every fitting's two children in partner hands, every unspringing across them, the rewind exact over 20 ticks of the node world (a fitting group of two children at one clock undone by its one take once); a law of the engine never roomed before, the Boss's room by name.",
+        "Spin one half on two hands (David's DAVID-SPIN-SOLVED.md, toys-5 67f2ff192, on the owner's words of 2026-10-27, 12:02 UTC, built by the Boss on the clock engine): a train of four gears at a spring read as twin hands, every fitting's two children in twin hands, every unspringing across them, the rewind exact over 20 ticks of the node world (a fitting group of two children at one clock undone by its one take once); a law of the engine never roomed before, the Boss's room by name.",
     ),
     "tests/test_the_phase_line.py::test_the_amplitude_is_the_universes_and_the_engine_refuses_a_scale_below_the_floor_from_gamma": (
         19,

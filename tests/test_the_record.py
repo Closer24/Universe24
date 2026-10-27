@@ -399,8 +399,8 @@ def test_the_page_of_the_bangs_is_one_html_from_the_records_and_the_readings(tmp
     assert str(run["den"]) not in source and "electron" not in source and "light" not in source
 
 
-def test_a_train_of_four_gears_at_a_spring_is_two_partner_hands_and_keeps_the_spin() -> None:
-    """Spin one half on two hands (David's DAVID-SPIN-SOLVED.md, toys-5 67f2ff192, the owner's words of 2026-10-27, 12:02 UTC): the node world's calibre with every sprung hand's train named as four gears is two partner hands per family, read from the count and the ratio; at 20 ticks every fitting lays its - child and its + child in partner hands, every unspringing takes across them, and the 20 ticks rewind exactly (a fitting group of two children at one clock undone by its one take once)."""
+def test_a_train_of_four_gears_at_a_spring_is_twin_hands_and_keeps_the_spin() -> None:
+    """Spin one half on two hands (David's DAVID-SPIN-SOLVED.md, toys-5 67f2ff192, the owner's words of 2026-10-27, 12:02 UTC): the node world's calibre with every sprung hand's train named as four gears is twin hands per family, read from the count and the ratio; at 20 ticks every fitting lays its - child and its + child in twin hands, every unspringing takes across them, and the 20 ticks rewind exactly (a fitting group of two children at one clock undone by its one take once)."""
     calibre, piece = world_of("world_node.json")
     den = int(calibre["integers"]["den"])
     four = [
@@ -409,17 +409,17 @@ def test_a_train_of_four_gears_at_a_spring_is_two_partner_hands_and_keeps_the_sp
     ]
     clock = Clock(dict(calibre, rows=four), piece)
     hands = clock.hands()
-    partner = {k: hands.index(r.partner) for k, r in enumerate(hands) if r.partner is not None}
-    assert partner and all(partner[b] == a and hands[a].size == HAND for a, b in partner.items())
+    twin = {k: hands.index(r.twin) for k, r in enumerate(hands) if r.twin is not None}
+    assert twin and all(twin[b] == a and hands[a].size == HAND for a, b in twin.items())
     kept = []
     for _ in range(20):
         kept.append(state_of(clock))
         clock.tick()
     fittings = [e for e in clock.log if e["event"] == "birth"]
     assert [e for e in fittings if "takes" not in e] and all(
-        partner[e["line_pair"]] == e["plus_line"] for e in fittings if "takes" not in e
+        twin[e["line_pair"]] == e["plus_hand"] for e in fittings if "takes" not in e
     )
     for e in (e for e in fittings if "takes" in e):
-        ends = [take.get("plane", e["taken_row"]) for take in e["takes"]]
-        assert partner[ends[0]] == ends[1]
+        ends = [take.get("hand", e["taken_row"]) for take in e["takes"]]
+        assert twin[ends[0]] == ends[1]
     assert sum(state_of(clock) == kept[19 - k] for k in range(20) if not clock.tick(-1)) == 20

@@ -172,7 +172,7 @@ def cosine_count(node: Clock, p: int, d: int) -> int:
     return high
 
 
-def plus_hand(records: list[Train], s: int) -> int:
-    """The + child's plane: the partner of the - child's plane where its row is two planes (the pair's spin kept), the same plane otherwise."""
-    partner = records[s].partner
-    return s if partner is None else records.index(partner)
+def twin_of(records: list[Train], s: int) -> int:
+    """The + fitted hand's hand: the twin of the - fitted hand's hand where its train is twin hands (the pair's spin kept), the same hand otherwise."""
+    twin = records[s].twin
+    return s if twin is None else records.index(twin)

@@ -64,11 +64,7 @@ def fitting(
         "birth",
         at,
         line_pair=s,
-        **(
-            {}
-            if hands.plus_hand(node.hands(), s) == s
-            else {"plus_line": hands.plus_hand(node.hands(), s)}
-        ),
+        **({} if hands.twin_of(node.hands(), s) == s else {"plus_hand": hands.twin_of(node.hands(), s)}),
         senses=[-1, 1],
         W_children=w_children,
         minus=list(ends[0]),

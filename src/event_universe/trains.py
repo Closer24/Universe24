@@ -26,11 +26,11 @@ def zeros(shape: tuple[int, ...]) -> Any:
 class Train:
     """One row of the Node as the universe file names it: a shape (its count of lines), a pair (num, den) for Rule3's rule, or a wall of its own for a row with no Links (the phase row); its lines."""
 
-    __slots__ = ("size", "ratio", "teeth", "gears", "partner")
+    __slots__ = ("size", "ratio", "teeth", "gears", "twin")
 
     def __init__(self, shape: int, pair: Ratio | None, wall: int | None, lines: list[Gear]) -> None:
         self.size, self.ratio, self.teeth, self.gears = shape, pair, wall, lines
-        self.partner: Train | None = None
+        self.twin: Train | None = None
 
     @property
     def spring(self) -> int | None:
@@ -85,7 +85,7 @@ def gears_of(
 def order_key(row: Train) -> tuple[bool, int]:
     """The acts' order as a key compared and never tested: the row with its own wall first, then every row by the count of lines it writes, a row whose write reads other rows after them (the records writing nothing, the emitter its one line, the shape-4 row its four, the carrier its ten), the ties in the file's order."""
     written = sum(1 for line in row.gears if line.dteeth is not None)
-    return row.teeth is None, 0 if row.partner is not None else written
+    return row.teeth is None, 0 if row.twin is not None else written
 
 
 def trains_of(calibre: dict[str, Any], size: tuple[int, ...], w: int) -> tuple[list[Train], list[Train]]:
@@ -105,12 +105,12 @@ def trains_of(calibre: dict[str, Any], size: tuple[int, ...], w: int) -> tuple[l
             spin = [SPOKES * (gamma + gamma)] * HAND
             up = Train(HAND, pair, wall, gears_of(size, HAND, pair, wall, w, spin))
             down = Train(HAND, pair, wall, gears_of(size, HAND, pair, wall, w, spin))
-            up.partner, down.partner = down, up
+            up.twin, down.twin = down, up
             by_index.append(up)
             continue
         walls = drive_teeth(shape, pair, den, gamma, action, trace)
         by_index.append(Train(shape, pair, wall, gears_of(size, shape, pair, wall, w, walls)))
-    everything = [t for r in by_index for t in ((r,) if r.partner is None else (r, r.partner))]
+    everything = [t for r in by_index for t in ((r,) if r.twin is None else (r, r.twin))]
     rows = sorted(everything, key=order_key)
     walled = [r for r in rows if r.teeth is not None]
     planes = [r for r in rows if r.size == HAND]
