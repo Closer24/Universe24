@@ -33,10 +33,10 @@ def read_world(world: dict[str, Any], universe: dict[str, Any]) -> tuple[dict[st
         raise ValueError(f"the universe file names no {', '.join(missing)}: refused by name")
     for row in universe["rows"]:
         refused_keys(row, ROW_KEYS, "universe's row")
-        if ("pair" in row) == ("wall" in row):
-            raise ValueError("a row has a pair or a wall of its own, one of the two")
         if int(row["shape"]) not in (1, PLANE, POTENTIAL, CARRIER):
             raise ValueError(f"a row of shape {row['shape']} is no row of the law: refused by name")
+        if ("pair" in row) == ("wall" in row):
+            raise ValueError("a row has a pair or a wall of its own, one of the two")
     return universe, world
 
 
