@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from event_universe import great_clock, strikes, swings, symmetries
+from event_universe import great_clock, meshes, strikes, swings, symmetries, tick
 from event_universe.clock import Clock
 from event_universe.core import rates
 from event_universe.core.spokes import AXES
@@ -346,10 +346,17 @@ def test_a_train_of_four_gears_at_a_spring_is_twin_hands_and_keeps_the_spin() ->
     hands = clock.hands()
     twin = {k: hands.index(r.twin) for k, r in enumerate(hands) if r.twin is not None}
     assert twin and all(twin[b] == a and hands[a].size == HAND for a, b in twin.items())
-    kept = []
+    kept, quantum = [], clock.A * clock.B
     for _ in range(20):
         kept.append(state_of(clock))
         clock.tick()
+        twins = [r.gears for r in clock.hands() if r.twin]
+        sweeps = [
+            abs(int(w))
+            for g in twins
+            for w in meshes.cross(*(x.now for x in g), *(x.before for x in g)).flat
+        ]
+        assert max(sweeps) < quantum + quantum  # Pauli: one fitted quantum's sweep per hand per clock
     fittings = [e for e in clock.log if e["event"] == "birth"]
     assert [e for e in fittings if "takes" not in e] and all(
         twin[e["line_pair"]] == e["plus_hand"] for e in fittings if "takes" not in e
@@ -358,3 +365,37 @@ def test_a_train_of_four_gears_at_a_spring_is_twin_hands_and_keeps_the_spin() ->
         ends = [unwind.get("hand", e["taken_row"]) for unwind in e["takes"]]
         assert twin[ends[0]] == ends[1]
     assert sum(state_of(clock) == kept[19 - k] for k in range(20) if not clock.tick(-1)) == 20
+
+
+def test_spin_one_half_reads_minus_one_after_one_turn_and_comes_home_after_two(monkeypatch: Any) -> None:
+    """Spin one half seen on the great clock (the owner's rule of 2026-10-27, 14:5x UTC: a push's test sees what it was pushed for; David's DAVID-SPIN-IN-CLOCKS full turn): the toy calibre's sprung hands as twin hands, one mode on the heavy lift's up twin of a 5-cube, a held curl turning the twins, the offset's turn of the twins off; beside it the free run, the twins' pulls off. After one turn of the spin (tick 15) S_z is home and the hands read -1 (the overlap with the free run below -1/2); after two turns (tick 36) above +1/2."""
+    calibre, _ = world_of("world_node.json")
+    rim = calibre["integers"]["den"]
+    four = [
+        dict(r, shape=HAND + HAND) if r["shape"] == HAND and r["pair"][0] < rim else r
+        for r in calibre["rows"]
+    ]
+    piece = {
+        "shape": [5] * 3,
+        "intervals": 36,
+        "seed": [{"lay": "sea", "row": 2, "hand": 0, "quanta": 1, "sense": 1}],
+    }
+    held = [16000, 0, 0]
+    monkeypatch.setattr(tick, "offset_curl", lambda odd: [odd[0] * 0 + c for c in held])
+    monkeypatch.setattr(
+        tick, "coupling_of", lambda r: 0 if r.twin is not None else meshes.coupling_of(r)
+    )
+    runs = []
+    for pulls in (tick.Tick.twin_pulls, lambda self: None):
+        monkeypatch.setattr(tick.Tick, "twin_pulls", pulls)
+        clock, kept = Clock(dict(calibre, rows=four), piece), {}
+        up = next(k for k, r in enumerate(clock.hands()) if r.ratio == tuple(four[2]["pair"]) and r.twin)
+        for t in range(36):
+            clock.tick()
+            kept[t + 1] = [g.now for r in (clock.hands()[up], clock.hands()[up].twin) for g in r.gears]
+        runs.append(kept)
+    for t, sign in ((15, -1), (36, 1)):
+        dot = sum(int((a * b).sum()) for a, b in zip(runs[0][t], runs[1][t], strict=True))
+        assert sign * (dot + dot) > sum(int((b * b).sum()) for b in runs[1][t])
+    s_z = [sum(int((g * g).sum()) for g in runs[0][15][k : k + HAND]) for k in (0, HAND)]
+    assert s_z[0] > s_z[1]
