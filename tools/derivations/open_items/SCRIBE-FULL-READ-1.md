@@ -145,3 +145,31 @@ The Boss's wave (ledger row 248) read whole: the 11 files of src it moved (265 i
 - **(e) The names:** `unsprung` three more times and `light` four against one (the counts above).
 
 **Not in the Boss's wave, still open:** R1 to R6 and R11 to R16 (his task of 18:56 UTC names none of them); the owner's thirteen words (ledger row 249) are the Boss's list of what waits on the owner; row 249 marks 5 answered by the owner's word of 16:4x, 6 partly covered by his words of 15:5x and 17:0x, and 3, 7, 10 and 11 as the register's R11, R15, R14 and R13.
+
+## 12. The register at 87a168c16, the great clock's bounds built (2026-10-27, 21:0x UTC)
+
+The Boss's head (ledger row 254) read whole: the 7 files of src it moved (bobs.py, clock.py, meshes.py, predicates.py, readings.py, striking.py, tick.py; 25 more lines) and the tests, the three records and the new world beside them; the counts by `tools/engine_gates.py` and by the lister and the AST scan of the Scribe's scratchpad (lines.py, astscan.py). Files the head did not touch keep the lines of sections 10 and 11. The Boss answers by number: built, ruled or objects.
+
+**The counts, unchanged from 9e1f1a8be:** numbers beyond 0 and 1, 37 in 13 files (section 11's lines); identity reads, 32 in 8 files (setting.py 54 60 67 69 81; bobs.py 35 163; clock.py 60 61; run.py 205 227 261 277 357; striking.py 46 47 67 134 191 266 336; tick.py 67 279 290; trains.py 67 117 128; unspring.py 160 162 249 255 273); branches by `is`, 15 in 6 files (setting.py 54 60 69 81; bobs.py 35; clock.py 60; run.py 205; striking.py 46 67 134 191; unspring.py 160 162 249 255); family-name strings 0, floats 0, true divisions 0, no import of math or trigonometry (the one `pow` at rim.py:28 stands from before). Src 6,487 lines in 22 top-level modules; the tests 6 files and 60 functions; the full check 113 passed (160 s on the merged tree).
+
+**Closed by the build:**
+
+- **R13. The integers' bound:** the three bounds (meshes.py:74, readings.py:21-22, tick.py:241-242) hold the one big bang within 111 bits through 1,000 ticks and the Reader's ga2 bang within 115 (the Boss's measure), and tests/worlds/world_bang.json holds 8 bangs in 40 ticks within 128 bits with the run back 20 of 20 (read in the full check); the law's "every integer within 128 bits" and the engine agree at the bang; the engine still bounds no integer by a width, the bounds being the full rate and the stretch's own size.
+- **R14. The strike reads its factors after the step:** striking.py:335 `read = clock.start_factors`, the step's own (tick.py:109).
+- **R15. The engagement ignores the Mesh's factor:** striking.py:83-84 skips a Mesh whose start factor reads 0 (the jam cause `disengaged`, the count `refused_disengaged` at clock.py:32).
+
+**Built earlier, closed:** R7 to R10 (section 11).
+
+**Standing, with the current lines:**
+
+- **R1. Five kinds of train known by role:** trains.py:117-131; assembly/piece.py:38; tick.py:66-67, 117-144 standard_rate, 233-274 carry (the drive's clamp at 241-242), 276-298 advances; clock.py:93 and 251-252; readings.py:30-32 and 62-67; the identity counters above.
+- **R2. Light's coupling:** meshes.py:20-23 coupling_of, read at tick.py:70, 162, 163 and 224; not touched.
+- **R3. The dimension and the shapes typed:** core/spokes.py:5-8, trains.py:13-17, assembly/piece.py:38, core/rule3.py:14-17, features/stretch/__init__.py:12-16, draw.py:33's `(k - 1) ^ 1`.
+- **R4. Numbers in the code:** the 37 above; the head adds none.
+- **R5. Formulas beside Rule3's one, the integer sines, cosines and roots:** the 44 functions of section 4 and R16's; the three bounds are clamps by comparison with no number beyond 0 (meshes.py:74, readings.py:21-22, tick.py:241-242), not formulas of a train, and are the owner's generic fixes of 18:5x as the Boss reads his word (ledger row 255).
+- **R6. The enforcement looser than the rule:** tests/test_rule3.py:109-131 and 140; the head did not touch the whitelist.
+- **R11. The shears:** regulation.py:15-19 stress_of written every tick and read by no act; next on the Boss's list (struck; the vernier reads their fine teeth, so the draws move).
+- **R12. The engine knows light, and the take-free chime adds a place:** bobs.still_chime (65-91) names the unsprung hand by `rec0` (line 74, `clock.hands()[rec0]`) and calls fall_of, the light's take function, at no winding to choose its logged gear; beside `light_lead` (161-164, read at 33 and 104), bobs.py:35 (a light never chimes into itself) and the two takes by identity in unspring.read_ends (146-175: 160 and 162) and unwind_ends (238-258: 249 and 255); trains.py:117-131; meshes.py:20; the setting's sea forms.
+- **R16. The wave's own additions against the owner's words:** (a) cases by a number at assembly/setting.py:263, 321, 372 and :249, :270; (b) `light_lead`, as under R12; (c) two integer roots by `largest_below`, features/standard/__init__.py:53 and bobs.py:125 (splits 94-158); (d) new formulas, assembly/setting.py:209-250, 253-298, 306-325, 348-397 and bobs.py:94-158; the head moved none of them.
+
+**Not in the Boss's head, still open:** R1 to R6, then R11, R12 and R16 (his task of 20:54 UTC names the shears, the generic folds and the lead at the kick as next); the owner's words 1, 2, 4, 5, 8, 9 and 13 of ledger row 249 are answered by "Go for all of them" as the Boss reads it and are unbuilt (row 255).
