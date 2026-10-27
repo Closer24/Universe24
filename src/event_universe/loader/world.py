@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from event_universe.rows import CARRIER, PLANE, POTENTIAL
+
 WORLD_KEYS = frozenset({"universe", "shape", "intervals", "seed"})
 UNIVERSE_KEYS = frozenset({"integers", "rows"})
 INTEGERS = frozenset(
@@ -22,7 +24,7 @@ def refused_keys(found: dict[str, Any], allowed: frozenset[str], name: str) -> N
 
 
 def read_world(world: dict[str, Any], universe: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
-    """The two files' dictionaries with their keys checked: the world's four keys, the universe's two, the universe's five integers each named (a missing one refused by name), every row's shape with a pair or a wall."""
+    """The two files' dictionaries with their keys checked: the world's four keys, the universe's two, the universe's five integers each named (a missing one refused by name), every row's shape one the law names (the walled row, the plane, the shape-4 row, the shape-10 row) with a pair or a wall."""
     refused_keys(world, WORLD_KEYS, "world")
     refused_keys(universe, UNIVERSE_KEYS, "universe")
     refused_keys(universe["integers"], INTEGERS, "universe's integers")
@@ -31,6 +33,8 @@ def read_world(world: dict[str, Any], universe: dict[str, Any]) -> tuple[dict[st
         raise ValueError(f"the universe file names no {', '.join(missing)}: refused by name")
     for row in universe["rows"]:
         refused_keys(row, ROW_KEYS, "universe's row")
+        if int(row["shape"]) not in (1, PLANE, POTENTIAL, CARRIER):
+            raise ValueError(f"a row of shape {row['shape']} is no row of the law: refused by name")
         if ("pair" in row) == ("wall" in row):
             raise ValueError("a row has a pair or a wall of its own, one of the two")
     return universe, world

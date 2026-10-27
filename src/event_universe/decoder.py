@@ -9,8 +9,8 @@ from typing import Any
 from event_universe.circle import circle_of
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
-from event_universe.links import cross, turn_pair
-from event_universe.rows import PLANE, QUARTET
+from event_universe.links import cross, link_wall, turn_pair
+from event_universe.rows import PLANE
 
 MIL = 1000000  # readings in parts per million
 HUNDRED = 100  # readings in hundredths
@@ -21,7 +21,6 @@ HALF = 2  # a half: a count div 2, and a majority as a count times 2 above the w
 PAIR = 2  # two of a kind: the two ends of a Link, the two parts of a plane's pair, two bodies, two beats, two marks
 THIRDS = 3  # the thirds of a run (its last third), of the half charge (T div 2 div 3)
 QUARTERS = 4  # the quarters of a run (a body standing into the last quarter)
-LIFTS = 3  # the three lifts of den's circle, the families forming when all three are born
 LISTED = 8  # the most entries a row prints of a course (its first eight) and the eighths a course is sampled at
 SHORT_LIST = 6  # the most falls and steps a row prints
 FOUR_LISTED = 4  # the most returns the rows' reading prints
@@ -31,11 +30,6 @@ LEVELS_BACK = (
     1,
     0,
 )  # the carrier's three levels read from the Node lines: before the interval, at its start, after it, as lines behind the interval's own
-LINK_WALL_GAMMAS = 4  # the Link's wall in Gammas, links.py's wl = 4 gamma, mirrored here for the solve
-KICK_WEIGHT = (
-    12  # the law's weight of the kick, 12 p_0^2 G^2 (interval.py's form), mirrored here for the solve
-)
-REACH = 2  # the reach's weight, R_j = 2 p_i^2 Q_j G^2 (the law's form), mirrored here for the solve
 Rational = tuple[int, int]
 NOT = "NOT"  # the word a verdict begins with where the gate is not shown, read or reached
 KINDS = (
@@ -85,9 +79,7 @@ class Record:
         self.gamma, self.G, self.T = int(run["gamma"]), int(run["G"]), int(run["T"])
         rows = run["universe"]["rows"]
         planes = {
-            tuple(int(x) for x in r["pair"])
-            for r in rows
-            if int(r["shape"]) in (PLANE, QUARTET) and r.get("pair")
+            tuple(int(x) for x in r["pair"]) for r in rows if int(r["shape"]) == PLANE and r.get("pair")
         }
         gapped = sorted((sine_den(num, self.den), num) for num, den in planes if num != den)
         self.NL = len(gapped)
@@ -97,7 +89,7 @@ class Record:
         self.NAMES[self.den] = ("gap 0", 0)
         self.line_num = [int(num) for num in run["planes"]]
         records = sorted(
-            (r for r in rows if r.get("pair") and int(r["shape"]) in (PLANE, QUARTET)),
+            (r for r in rows if r.get("pair") and int(r["shape"]) == PLANE),
             key=lambda r: int(r["pair"][0]) == int(r["pair"][1]),
         )
         shapes = [int(r["shape"]) for r in records]
@@ -188,6 +180,11 @@ class Record:
         """The births by the species born (the plane's name)."""
         return Counter(self.line_name[b["line_pair"]] for b in self.births)
 
+    def lifts_born(self) -> list[str]:
+        """The lifts born: the distinct gapped planes with a birth, the plane at the gap 0 (light, no lift) left out; the lifts the universe names are its gapped planes, the typed points of den's circle (self.NL), the former constant 3 the toy universe's count of them (the Boss's task of 2026-10-27, 10:1x UTC: the number read from the record and no file of src)."""
+        light = self.NAMES[self.den][0]
+        return sorted(name for name in self.born_of() if name != light)
+
     def laid_at_nothing(self) -> list[int]:
         """The magnitude |W| of every child laid where its plane stood at nothing, in the births' order."""
         return [
@@ -226,7 +223,7 @@ def carrier_levels(record: Record, credit: dict[str, Any]) -> tuple[int, int, in
 
 
 def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
-    """The species from the frame in exact integers under the symmetric ride (interval.py's form), a plane's frame alone (a quartet's credit carries its bilinears, its species owed by name): a riding line's momentum P_in = W_in (a_now - a_before) + r - W_in div 2 at the mean wall W_in = (w div 2)(X_before + X_now), the kick P_out = P_in + X_now F with F = SUM_j R_j (m_j - z) - D z, the one division a_next = a_now + (P_out + W_out div 2) div W_out at W_out = (w div 2)(X_now + X_next); from the record's levels v = a_next - a_now gives X_now F to the remainders' width, E = v W_out - W_in (a_now - a_before), and F is linear in num: num = (E + 12 den p_0^2 G^2 z X_now) / ((A + 12 p_0^2 G^2 z) X_now) with A = SUM_j 2 p_i^2 Q_j G^2 (m_j - z) over the turned arrivals; x = num / den as the rational (N, D), D > 0."""
+    """The species from the frame in exact integers under the symmetric ride (interval.py's form), the plane's frame: a riding line's momentum P_in = W_in (a_now - a_before) + r - W_in div 2 at the mean wall W_in = (w div 2)(X_before + X_now), the kick P_out = P_in + X_now F with F = SUM_j R_j (m_j - z) - D z, the one division a_next = a_now + (P_out + W_out div 2) div W_out at W_out = (w div 2)(X_now + X_next); from the record's levels v = a_next - a_now gives X_now F to the remainders' width, E = v W_out - W_in (a_now - a_before), and F is linear in num: num = (E + 12 den p_0^2 G^2 z X_now) / ((A + 12 p_0^2 G^2 z) X_now) with A = SUM_j 2 p_i^2 Q_j G^2 (m_j - z) over the turned arrivals; x = num / den as the rational (N, D), D > 0."""
     f, content = credit["frame"], credit["content"]
     if "re_now" not in f:
         return None
@@ -244,17 +241,17 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
     if zn == (0, 0):
         return None
     scale, phases, odd, frames = f["X"], f["phases"], f["odd"], f["frames"]
-    wl = LINK_WALL_GAMMAS * gamma
+    wl = link_wall(gamma)
     e = tuple((zx[k] - zn[k]) * w_out - w_in * (zn[k] - zb[k]) for k in range(PAIR))
-    weight = KICK_WEIGHT * p0 * p0 * unit * unit
+    weight = rule3.mass(0, 1, p0, unit)
+    reaches = rule3.rule_integers(1, den, gamma, p0, pi, tuple(f["factors"]), unit).reaches
     a_re = a_im = 0
     for port, (a, b) in enumerate(zip(f["re_neighbours_start"], f["im_neighbours_start"], strict=True)):
         m: Rational = (a, frames[port] * b)
         m = turn_pair(m[0], m[1], phases[port][0], phases[port][1], scale)
         n = odd[port]
         m = turn_pair(m[0], m[1], wl * wl - n * n, PAIR * wl * n, wl * wl + n * n)
-        reach = REACH * pi * pi * f["factors"][port]
-        a_re, a_im = a_re + reach * (m[0] - zn[0]), a_im + reach * (m[1] - zn[1])
+        a_re, a_im = a_re + reaches[port] * (m[0] - zn[0]), a_im + reaches[port] * (m[1] - zn[1])
     p = (e[0] + weight * den * zn[0] * x_n, e[1] + weight * den * zn[1] * x_n)
     q = ((a_re + weight * zn[0]) * x_n, (a_im + weight * zn[1]) * x_n)
     qq = q[0] * q[0] + q[1] * q[1]
