@@ -18,7 +18,7 @@ from event_universe.core.rule3 import gearing, mesh_factor, rule3, spring
 from event_universe.core.spokes import AXES, SPOKES
 from event_universe.meshes import factors
 from event_universe.trains import REGULATOR
-from tests.laws import arrivals_rule3, node_of
+from tests.laws import arrivals_rule3, node_of, world_of
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE, GAMMA = ROOT / "src" / "event_universe", 10_000
@@ -246,10 +246,8 @@ def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd()
     assert (half, mirrored(half, 1_000, 1)) == (500, 499)
 
 
-def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_s1(
-    monkeypatch: Any,
-) -> None:
-    """TC-S1 as the wave amends it (the owner's word of 2026-10-27, 15:5x UTC, "yes to all, by your recommendation": the take's fall is the wind's own fall; David's DAVID-CLOSE-LAW.md item 1; the closed form's price, which carried the pull's sign reversed against the wind's fall at 47 of 47 takes on the head, the Reader's finding 1, struck and kept by name): at every chime of the chiral setting over 14 ticks (101) the light's gear moves by the least count at which the window's wind falls by what is owed, the windings less the slack the earlier takes left (57 owe nothing and move no notch), the fall booked is the window's wind before less after to the integer, one count fewer falls short, and the excess stands in the slack (EX-S1)."""
+def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_s1(monkeypatch) -> None:
+    """TC-S1 as the wave amends it (the owner's word of 2026-10-27, 15:5x UTC, "yes to all, by your recommendation": the take's fall is the wind's own fall; David's DAVID-CLOSE-LAW.md item 1; the closed form's price, which carried the pull's sign reversed against the wind's fall at 47 of 47 takes on the head, the Reader's finding 1, struck and kept by name): at every chime of the chiral setting over 14 ticks (31 under the great clock's bounds, 101 at the wave, each one a take: light arrives at every one, so none is a still chime, bobs.still_chime, which takes nothing) the light's gear moves by the least count at which the window's wind falls by what is owed, the windings less the slack the earlier takes left (17 owe nothing and move no notch, 57 at the wave), the fall booked is the window's wind before less after to the integer, one count fewer falls short, and the excess stands in the slack (EX-S1)."""
     clock, seen = node_of("world_nature.json", intervals=14), []
     real = bobs.unwinds
 
@@ -274,7 +272,8 @@ def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_
     monkeypatch.setattr(bobs, "unwinds", wrapped)
     for _ in range(14):
         clock.tick()
-    assert len(seen) == 101 and sum(take["levels"] == 0 for _f, _s, take, _w in seen) == 57
+    chimes = (len(seen), clock.counts["body_clicks"], clock.counts["laid_back"])  # takes, chimes, still
+    assert chimes == (31, 31, 0) and sum(take["levels"] == 0 for _f, _s, take, _w in seen) == 17
     for fall, short, take, windings in seen:
         assert fall == take["taken"] >= take["owed"] and take["booked"] == windings
         assert take["levels"] == 0 or short < take["owed"]  # the least count: one fewer falls short
@@ -282,11 +281,12 @@ def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_
 
 
 def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_identity_lt_s1():
-    """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-clock test): on the chiral setting (the hole's first fittings stand at its tick 53 under the wave's light) every move of the striking drives its tally into the regulator's flow gear of its axis at its clock by the clock's one drive act, so at every strike the mesh's chart identity holds per axis at every end, -dP p_0^2 + carry before - carry after = advanced x (K rim Gamma^2 T), the gear gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the clock's own gears and not the log alone; the clock's carry after the tick is the last tally's at that clock; the rewind exact through 14 ticks with the tallies undone. Under 15 s."""
-    clock = node_of("world_nature.json", intervals=14)
+    """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-clock test): on the chiral setting with its three bobs at 6 quanta (the hole's first fittings stand at its tick 53 under the wave's light; at the world file's 2 quanta no booking of the 14 ticks advances a notch under the great clock's bounds, 4 did at the wave) every move of the striking drives its tally into the regulator's flow gear of its axis at its clock by the clock's one drive act, so at every strike the mesh's chart identity holds per axis at every end, -dP p_0^2 + carry before - carry after = advanced x (K rim Gamma^2 T), seen in both of its cases, the carry below one level of the line and an advance of the gear's notch, the gear gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the clock's own gears and not the log alone; the clock's carry after the tick is the last tally's at that clock; the rewind exact through 14 ticks with the tallies undone. Under 15 s."""
+    seed = [s | {"quanta": 6} if "quanta" in s else s for s in world_of("world_nature.json")[1]["seed"]]
+    clock = node_of("world_nature.json", intervals=14, seed=seed)
     teeth = clock.trace * clock.rim * clock.full_rate * clock.full_rate * clock.key
     flow = slice(1 + AXES, 1 + AXES + AXES)
-    hashes, checked = [], 0
+    hashes, checked, pushed, advanced = [], 0, 0, 0
     for _ in range(14):
         hashes.append(record.state_hash(clock))
         from_log = len(clock.log)
@@ -308,15 +308,15 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
                     )
                 ]
             for where, push, t in tallies:
-                for a in range(AXES):
-                    assert (
-                        t["carry_was"][a] - t["carry"][a] - push[a] * t["clock"] ** 2
-                        == t["recoil"][a] * teeth
-                    )
+                for was, now, p, q in zip(t["carry_was"], t["carry"], push, t["recoil"], strict=True):
+                    assert was - now - p * t["clock"] ** 2 == q * teeth  # per axis, every booking
                 last[where], checked = t["carry"], checked + 1
+                pushed, advanced = pushed + any(push), advanced + any(t["recoil"])
         gears = clock.train(REGULATOR).gears[flow]
         assert all(carry == [int(gear.dfine[at]) for gear in gears] for at, carry in last.items())
-    assert checked == 116  # the chiral setting's 14 ticks; 193 on the hole's under the head's books
+    # every booking, those with a push, those advancing the flow gear's notch, the still chimes (push 0),
+    # under the great clock's bounds (116, 49, 4 and 0 at the wave at 2 quanta)
+    assert (checked, pushed, advanced, clock.counts["laid_back"]) == (142, 58, 2, 0)
     for h in reversed(hashes):
         clock.tick(-1)
         assert record.state_hash(clock) == h

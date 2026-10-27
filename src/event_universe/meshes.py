@@ -62,7 +62,7 @@ class Mesh:
 
 
 def factors(clock: Clock, axis_notches: list[Any] | None = None, stopped: Any = None) -> tuple[Any, ...]:
-    """The mesh factor at each spoke from the two ends' axis parts of the regulator (the former readings.link_factors and node.link_factors kept by name): the tension the mean of the two ends' notches rounded half up, the carry's carries of their even sum plus one at the two sides (the one rounding not reached by the fine tooth's rule, so not rates.rounded: fd1 measured the odd rounding here parts the 48's reflections), a tension at or past Gamma read at the teeth, the factor 0 (the standstill); and 0 where either end is stopped, the mesh rate 0 at the tick's start (BH-S1: every mesh with a stopped end is at the teeth, from both ends)."""
+    """The mesh factor at each spoke from the two ends' axis parts of the regulator (the former readings.link_factors and node.link_factors kept by name): the tension the mean of the two ends' notches rounded half up, the carry's carries of their even sum plus one at the two sides (the one rounding not reached by the fine tooth's rule, so not rates.rounded: fd1 measured the odd rounding here parts the 48's reflections), a tension at or past Gamma read at the teeth, the factor 0 (the standstill), and a tension below 0 read at 0 (no mesh turns faster than the full rate, the great clock's); and 0 where either end is stopped, the mesh rate 0 at the tick's start (BH-S1: every mesh with a stopped end is at the teeth, from both ends)."""
     notches = (
         [gear.now for gear in clock.train(REGULATOR).gears[1 : 1 + AXES]]
         if axis_notches is None
@@ -71,7 +71,7 @@ def factors(clock: Clock, axis_notches: list[Any] | None = None, stopped: Any = 
     found = []
     for spoke, (axis, _side) in enumerate(SPOKE_SIDES):
         t = carries(even(notches[axis], spoke) + 1, SIDES)
-        factor = mesh_factor(clock.full_rate, clock.G, np.minimum(t, clock.full_rate))
+        factor = mesh_factor(clock.full_rate, clock.G, np.minimum(np.maximum(t, 0), clock.full_rate))
         at_teeth = None if stopped is None else stopped | across(stopped, spoke)
         found.append(factor if at_teeth is None else np.where(at_teeth, 0, factor))
     return tuple(found)

@@ -10,7 +10,7 @@ from event_universe import hands, readings, striking, tick
 from event_universe.assembly import setting
 from event_universe.core import acts, rates, rule3
 from event_universe.core.rates import sine_rim
-from event_universe.core.rule3 import half, mesh_unit_of, teeth_of, winding_of
+from event_universe.core.rule3 import carries, half, mesh_unit_of, teeth_of, winding_of
 from event_universe.core.spokes import AXES, across
 from event_universe.features import standard
 from event_universe.meshes import Mesh, through_mesh
@@ -29,6 +29,7 @@ COUNTS = {  # the run's counts, every one 0 at the start
     "refused_orientation": 0,
     "refused_twist": 0,
     "refused_sense": 0,
+    "refused_disengaged": 0,
     "turns": 0,
     "met": 0,
     "laid": 0,
@@ -55,9 +56,7 @@ class Clock:
         pinions, rim = [r.ratio[0] for r in self.hands() if r.ratio], self.rim
         if any(p * p + sine_rim(p, rim) * sine_rim(p, rim) != rim * rim for p in pinions):
             raise ValueError("a gapped pair off den's circle: num^2 + s^2 is not den^2 (MS-S2)")
-        self.windings = [
-            winding_of(sine_rim(p, rim) + rim * rule3.carries(p, rim), self.key) for p in pinions
-        ]
+        self.windings = [winding_of(sine_rim(p, rim) + rim * carries(p, rim), self.key) for p in pinions]
         self.sprung = [r for r in self.hands() if r is not self.unsprung()]
         self.winding_unsprung = self.windings[self.hands().index(self.unsprung())]
         self.start_state()
