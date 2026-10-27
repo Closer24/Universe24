@@ -1,0 +1,169 @@
+DAVID-SPLIT-CHIME_CHECKS.txt: the checks of DAVID-SPLIT-CHIME.md (David, 2026-10-27, 17:1x UTC), on the head 5f8680de2 (engine-5.0-test); no src touched.
+What they show: (1) the clock works: every run is the engine's own chart (run.chart) with its rewind of 20 ticks compared bit for bit, the pair's counter in the state and the rewind note, each split chime undone from its log entry and its chime by the head's undo: 20 of 20 in every run; (2) the phenomenon: a spin turned off the twins' axis chimes, up or down, in the Born shares along six Gaussian axes; with no light it is never read; the head's spin one half setting reads as at the head with the act installed.
+
+== 1. The act (split_chime.py, the harness as installed at import)
+def sweep(gears, at):
+    """|Im(conj(z_now) z_before)| of a hand at a clock."""
+    three, twelve = gears
+    return abs(int(three.now[at]) * int(twelve.before[at]) - int(twelve.now[at]) * int(three.before[at]))
+
+
+def pairs(clock):
+    hs = clock.hands()
+    return [(u, hs.index(h.twin)) for u, h in enumerate(hs) if h.twin is not None and hs.index(h.twin) > u]
+
+
+def counter(clock, u):
+    if not hasattr(clock, "split_wound"):
+        clock.split_wound = {}
+    if u not in clock.split_wound:
+        clock.split_wound[u] = np.zeros(clock.size, dtype=object)
+    return clock.split_wound[u]
+
+
+real_read = Clock.read_gears
+
+
+def read_gears(self, held, c, factors):
+    found = real_read(self, held, c, factors)
+    self.split_read = (found, held)
+    return found
+
+
+Clock.read_gears = read_gears
+
+
+def gearing_of(clock, rec):
+    found, held = clock.split_read
+    k = clock.trains_.index(clock.hands()[rec])
+    return found[sum(len(h) for h in held[:k])][1]
+
+
+def window_wind(clock, recs, at):
+    window = window_clocks(clock, at)
+    return sum(int(v) for rec in recs for v in hands.wind(clock, clock.hands()[rec].gears, gearing_of(clock, rec), window))
+
+
+real_bobs = SK.bobs
+
+
+def bobs(clock, hand_starts, winds, fitted_clocks, stopped, r_unsprung):
+    rec0 = clock.hands().index(clock.unsprung())
+    net = sum((train_lead(hand_starts[rec0], spoke) for spoke in range(SPOKES)), start=0)
+    for u, d in pairs(clock):
+        w = clock.windings[u]
+        sw = counter(clock, u)
+        split = np.vectorize(lambda x, y: 1 if int(x) < w and int(y) < w and int(x) + int(y) >= w else 0, otypes=[object])(winds[u], winds[d])
+        sw[...] = np.where(split == 1, sw + 1, 0)
+        for where in zip(*np.nonzero(split == 1), strict=True):
+            at = tuple(int(x) for x in where)
+            beat = int(clock.beats[u][at]) or int(clock.beats[d][at])
+            if beat <= 0 or int(sw[at]) < beat or at in fitted_clocks or stopped[at] or int(net[at]) == 0:
+                continue
+            sw[at] = 0
+            wu, wd = sweep(hand_starts[u], at), sweep(hand_starts[d], at)
+            drawn = vernier(clock, at, clock.split_read[0], w)
+            if drawn is None or wu + wd == 0:
+                continue
+            c, room = drawn
+            p, o, wp = (u, d, wu) if c * (wu + wd) < room * wu else (d, u, wd)
+            was = [[int(g.now[at]), int(g.before[at])] for rec in (u, d) for g in clock.hands()[rec].gears]
+            before = window_wind(clock, (u, d), at)
+            for g in clock.hands()[p].gears:
+                for arr in (g.now, g.before):
+                    v = int(arr[at])
+                    n = largest_below(v * v * (wu + wd) // wp)
+                    arr[at] = n if v >= 0 else -n
+            for g in clock.hands()[o].gears:
+                g.now[at], g.before[at] = 0, 0
+            carried = before - window_wind(clock, (u, d), at)
+            clock.slack[at] += carried
+            got = unwinds(clock, [(at, w)], r_unsprung, 1)
+            if got is None:
+                for g, (n, bf) in zip([g for rec in (u, d) for g in clock.hands()[rec].gears], was, strict=True):
+                    g.now[at], g.before[at] = n, bf
+                clock.slack[at] -= carried
+                continue
+            (taken,) = got
+            clock.counts["split_chimes"] = clock.counts.get("split_chimes", 0) + 1
+            clock.log.append({"event": "split", "i": clock.ticks, "node": list(at), "pair": [u, d], "sweeps": [wu, wd], "draw": [c, room], "picked": p, "was": was, "carried": carried})
+            clock.counts["body_clicks"] += 1
+            clock.log.append(run_chime(clock, p, at, taken, face_of(clock, p, at, hand_starts), hand_starts[p]))
+    real_bobs(clock, hand_starts, winds, fitted_clocks, stopped, r_unsprung)
+
+
+SK.bobs = bobs
+real_note, real_undo, real_state = RUN.rewind_note, SK.undo, RUN.state
+
+
+def rewind_note(clock, *args):
+    note = real_note(clock, *args)
+    note["counters"] = (*note["counters"], {u: counter(clock, u).copy() for u, _ in pairs(clock)})
+    return note
+
+
+def undo(clock, note):
+    splits = [e for e in clock.log[note["log_from"]:] if e.get("event") == "split"]
+    real_undo(clock, dict(note, counters=note["counters"][:3]))
+    for e in reversed(splits):
+        at = tuple(e["node"])
+        gears = [g for rec in e["pair"] for g in clock.hands()[rec].gears]
+        for g, (n, bf) in zip(gears, e["was"], strict=True):
+            g.now[at], g.before[at] = n, bf
+        clock.slack[at] -= e["carried"]
+    clock.split_wound = {u: x.copy() for u, x in note["counters"][3].items()}
+
+
+def state(clock):
+    return real_state(clock) + [counter(clock, u) for u, _ in pairs(clock)]
+
+
+TK.rewind_note = RUN.rewind_note = rewind_note
+SK.undo = undo
+RUN.state = state
+
+== 2. The seed's turn (split_chime.py's run)
+    class Turned(Clock):
+        """The spin turned at the seed: the up twin's notches at every clock split into a / r up and b / r down (one floor each)."""
+
+        def __init__(self, *args, **kw):
+            super().__init__(*args, **kw)
+            for u, d in pairs(self):
+                if self.hands()[u].ratio != tuple(calibre["rows"][2]["pair"]):
+                    continue
+                for gu, gd in zip(self.hands()[u].gears, self.hands()[d].gears, strict=True):
+                    for name in ("now", "before"):
+                        up = getattr(gu, name)
+                        setattr(gd, name, np.vectorize(lambda v: (b * int(v)) // r, otypes=[object])(up))
+                        setattr(gu, name, np.vectorize(lambda v: (a * int(v)) // r, otypes=[object])(up))
+
+== 3. The reading on the chiral world (venv314/bin/python split_chime.py a b r 40 20 LIGHT world_nature.json)
+world_nature.json axis (3, 4, 5), light 1, 40 ticks: split chimes 127, up 40, down 87; the shares summed 44.6 +- 4.8 (a^2 / r^2 = 0.3600); at the first tick of splits (5): 27, up 7, a^2 / r^2 of them 9.7; chimes 4319, fittings 23, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json axis (12, 5, 13), light 1, 40 ticks: split chimes 116, up 96, down 20; the shares summed 91.9 +- 3.7 (a^2 / r^2 = 0.8521); at the first tick of splits (5): 34, up 32, a^2 / r^2 of them 29.0; chimes 5336, fittings 21, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json axis (20, 21, 29), light 1, 40 ticks: split chimes 144, up 72, down 72; the shares summed 68.2 +- 5.2 (a^2 / r^2 = 0.4756); at the first tick of splits (5): 38, up 20, a^2 / r^2 of them 18.1; chimes 4873, fittings 19, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json axis (1, 0, 1), light 1, 40 ticks: split chimes 7, up 4, down 3; the shares summed 3.0 +- 0.7 (a^2 / r^2 = 1.0000); at the first tick of splits (11): 1, up 1, a^2 / r^2 of them 1.0; chimes 5361, fittings 21, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json axis (3, 4, 5), light 0, 40 ticks: split chimes 0, up 0, down 0; the shares summed 0.0 +- 0.0 (a^2 / r^2 = 0.3600); at the first tick of splits (0): 0, up 0, a^2 / r^2 of them 0.0; chimes 0, fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json axis (4, 3, 5), light 1, 40 ticks: split chimes 123, up 66, down 57; the shares summed 73.5 +- 4.8 (a^2 / r^2 = 0.6400); at the first tick of splits (5): 27, up 14, a^2 / r^2 of them 17.3; chimes 4443, fittings 23, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json axis (5, 12, 13), light 1, 40 ticks: split chimes 112, up 20, down 92; the shares summed 23.6 +- 3.6 (a^2 / r^2 = 0.1479); at the first tick of splits (5): 34, up 1, a^2 / r^2 of them 5.0; chimes 5357, fittings 18, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json axis (8, 15, 17), light 1, 40 ticks: split chimes 130, up 35, down 95; the shares summed 34.5 +- 4.4 (a^2 / r^2 = 0.2215); at the first tick of splits (5): 32, up 8, a^2 / r^2 of them 7.1; chimes 4588, fittings 17, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json axis (0, 1, 1), light 1, 40 ticks: split chimes 6, up 2, down 4; the shares summed 3.0 +- 0.7 (a^2 / r^2 = 0.0000); at the first tick of splits (11): 1, up 0, a^2 / r^2 of them 0.0; chimes 5351, fittings 21, the rewind {'intervals': 20, 'exact': 20}
+
+== 4. The hole world, mirror-symmetric (the hole at the origin, the packet on the x axis): identical clocks draw alike, so the picks cluster (split_log.py on the act without step 5: at tick 5, 102 splits in orbits of up to 8)
+world_hole.json axis (12, 5, 13), light 1, 40 ticks: split chimes 141, up 106, down 35; the shares summed 115.2 +- 4.0 (a^2 / r^2 = 0.8521); at the first tick of splits (5): 88, up 64, a^2 / r^2 of them 75.0; chimes 2548, fittings 21, the rewind {'intervals': 20, 'exact': 20}
+
+== 5. The head's spin one half setting with the act installed (spin_untouched.py; the head's test reads -1.007 and +1.006)
+tick 15: the overlap with the free run -1.007
+tick 36: the overlap with the free run +1.006
+S_z at tick 15: up 1972000 > down 58250: True; split chimes in the two runs [0, 0]
+
+== 6. The books (split_books.py 3 4 5 40 0 1 world_nature.json)
+carried in W over 127 split chimes: least -0.1008, median +0.0081, largest +0.2057; summed +1.794
+
+== 7. The collapse alone, without step 5 (split_chime_v1.py; split_whole.py and split_then.py 3 4 5 40 0 1 world_nature.json): the picked twin short of whole at its clock
+split chimes 172: the picked twin's wind right after, in W: least 0.621, median 0.966, largest 3.373; at or above 1: 36; chimed later at its clock: 71
+split chimes 172: the picked twin chimes at its clock after {1: 22, 2: 13, 3: 6, 4: 4, 5: 2, 6: 10, 7: 4, 8: 1, 9: 1, 10: 3, 11: 2, 12: 2, 19: 1} ticks; never within the run 101 (of them split in the last 5 ticks: 0)
+
+== 8. Bell at the Gaussian axes, exact (bell.py)
+"""CHSH at the axes of the Gaussian (12 + 5 i) / 13, exact: theta the turn whose half has the cosine 12 / 13 (cos theta = 119 / 169), alpha = 0, alpha' = 2 theta, beta = theta, beta' = 3 theta; nature's singlet E = -cos(alpha - beta) against the clock's pair laid opposite and read one clock each, E = -cos alpha cos beta."""
+nature's singlet: |S| = 13651918/4826809 = 2.8284
+the clock's pair: |S| = 195782113198/137858491849 = 1.4202
