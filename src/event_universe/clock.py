@@ -15,7 +15,7 @@ from event_universe.core.spokes import AXES, across
 from event_universe.features import standard
 from event_universe.meshes import Mesh, through_mesh
 from event_universe.run import bits_of
-from event_universe.trains import REGULATOR, Gear, Train, hands_of, train_of, trains_of, zeros
+from event_universe.trains import HAND, REGULATOR, Gear, Train, train_of, trains_of, zeros
 
 COUNTS = {  # the run's counts, every one 0 at the start
     "births": 0,
@@ -124,8 +124,8 @@ class Clock:
         return next(r for r in self.hands() if r.ratio is not None and r.ratio[0] == r.ratio[1])
 
     def hands(self) -> list[Train]:
-        """The hand trains in the acts' order, the hands (trains.hands_of)."""
-        return hands_of(self.trains_)
+        """The hand trains in the acts' order, every train of a hand's size (the unsprung hand among them; the former trains.hands_of kept by name)."""
+        return [r for r in self.trains_ if r.size == HAND]
 
     def offset_pull(self, pulls: list[Any], spoke: int, meshes: list[Mesh] | None) -> list[Any]:
         """The pulls of a train's gears at one spoke, read by the clock's pawl (the train's reflection where the pawl is -1, hands.seen) and turned hand by hand by the mesh (meshes.through_mesh); a train of one gear is turned by the identity; `meshes` None is the identity for every size."""

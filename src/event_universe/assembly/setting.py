@@ -11,7 +11,7 @@ from event_universe.assembly.cycle import set_cycle
 from event_universe.core.acts import carry, mid
 from event_universe.core.rates import rounded, sine_rim
 from event_universe.core.rule3 import carries, half, largest_below, least_at, odd
-from event_universe.core.spokes import AXES, wrap
+from event_universe.core.spokes import AXES, SIDES, wrap
 from event_universe.meshes import factors, offset_pair
 from event_universe.run import logged
 from event_universe.trains import REGULATOR, Gear, Train, zeros
@@ -19,11 +19,6 @@ from event_universe.trains import REGULATOR, Gear, Train, zeros
 if TYPE_CHECKING:
     from event_universe.clock import Clock
 
-HALF_SPANS = (
-    1,
-    2,
-    3,
-)  # the envelope's half spans the raised cosine knows (the setting's `width`; 1 the one clock, a fitted pair's own form)
 FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
     "sea": frozenset({"lay", "row", "quanta", "sense", "hand"}),
     "hole": frozenset({"lay", "at"}),
@@ -103,16 +98,16 @@ def set_piece(clock: Clock, setting: list[dict[str, Any]]) -> None:
 
 
 def raised_cosine(h: int) -> tuple[int, ...]:
-    """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer, at h = 1 (-2, the one clock at the crest's weight 4: a fitted pair's own form set from a file, the Boss's 6414464356), h = 2 (0) and h = 3 (1) and at no other width: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 (the weights 2, 1 and 4, 3, 1); another width refused by name."""
-    if h not in HALF_SPANS:
+    """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 and t_1 = h - 2, a width whose recurrence does not close the half turn (t_h = -2) refused by name, the one clock (h = 1, the crest's weight 4: a fitted pair's own form set from a file, the Boss's 6414464356) apart; so h = 1, 2 (0) and 3 (1) and no other (the weights 4; 4, 2; 4, 3, 1), the half spans derived and no list of them typed."""
+    doubled = [SIDES, h - SIDES]
+    while len(doubled) <= h:
+        *_, before, last = doubled
+        doubled.append(doubled[1] * last - before)
+    if h < 1 or (h > 1 and doubled[h] != -SIDES):
         raise ValueError(
             "a packet has the half-width 1 (the one Node), 2 or 3: a body is laid over its packet"
         )
-    doubled = [1 + 1, h - 1 - 1]
-    while len(doubled) < h:
-        *_, before, last = doubled
-        doubled.append(doubled[1] * last - before)
-    return tuple(1 + 1 + t for t in doubled[:h])
+    return tuple(SIDES + t for t in doubled[:h])
 
 
 def places(h: int, half_tops: tuple[int, ...]) -> list[tuple[int, ...]]:

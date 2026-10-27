@@ -20,6 +20,7 @@ from event_universe.reckoner import (
     sign,
     unread_words,
 )
+from event_universe.trains import rows_of
 
 
 def unread(key: str, why: str, predicate: str) -> dict[str, Any]:
@@ -248,7 +249,7 @@ def decay(chart: Chart) -> dict[str, Any]:
 
 def two_slits(chart: Chart) -> dict[str, Any]:
     """Row 55: the two slits (QG-S2), two unsprung settings at one centre with one stride mirrored on one axis, read from the setting; the fringe (the unsprung train's engagements at the dark offsets 4 C_d^2 < rim^2 none and at the bright many over the beams' overlap) is counted by the hand's reader alone (H-Quantum-Gates-2/predicates_qg.py), the count owed to the reckoner where a setting carries the beams."""
-    trains, setting = chart.run["universe"]["rows"], chart.run["world"].get("seed", [])
+    trains, setting = rows_of(chart.run["universe"]), chart.run["world"].get("seed", [])
     settings = [s for s in setting if s.get("wave") and int(trains[s["row"]]["pair"][0]) == chart.rim]
     beams = [(a, b) for a in settings for b in settings if a is not b and a["centre"] == b["centre"]]
     mirrored = [

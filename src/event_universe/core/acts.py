@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from event_universe.core.spokes import SIDES
+
 
 def flip(fine: Any, teeth: Any, reversals: int) -> Any:
     """The one rule of the fine tooth's flip (fd1's form, the owner's word of 2026-10-25): a fine tooth born at the half teeth of its carry (`mid`) is flipped to teeth - 1 - r once for every reversal of its gear (time's reverse, the sign's negation), two reversals leaving it; the identity for an even count. A fine tooth has two flips and this is the going's (The-48-Holds_COMPARISON.md, 2026-10-26, F48-S1 derived and not built): the flip of a negated gear, a reflection or a sweep's negation, is the two's complement (teeth - r) mod teeth, one apart at every nonzero fine tooth, whose fixed point at even teeth is the mid tooth; the acts spell the going's alone until F48-S1 is built."""
@@ -12,7 +14,7 @@ def flip(fine: Any, teeth: Any, reversals: int) -> Any:
 
 def mid(teeth: Any) -> Any:
     """The fine tooth every gear is born with, the half teeth by the carry on 2 (the engine's one mid tooth, spelt once; the former half(wall) at the trains' gears, the driven teeth, the driven carry, the standard and the vernier's origin kept by name): the fixed point of the negated gear's flip, (teeth - r) mod teeth = r, at even teeth, which the going's flip teeth - 1 - r sends to the half teeth less one; so the mid tooth fits the negation's flip and not the going's, the third spelling the 48's pair named (The-48-Holds_COMPARISON.md section 5, 2026-10-26)."""
-    return carry(teeth, 2, 0)[0]
+    return carry(teeth, SIDES, 0)[0]
 
 
 def carry(total: Any, teeth: Any, fine: Any, going: int = 1) -> tuple[Any, Any]:

@@ -197,7 +197,7 @@ class Tick:
                     self.pull[k][i] = self.pull[k][i] + q
 
     def impulse(self) -> None:
-        """(2) The impulse (the former `kicks`): every driven gear's stride at the start read at the mean teeth of the regulator's two notches as the trains hold them, P = W (a_now - a_before) + r - W div 2, and impelled by stretch_now F in the going; the offset train's time gear impelled besides by the hands' sweep read at the impulse (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the sprung hands of N.J.u_in + N.J.u_out, N the notches at the start and u the odd rounding of 2 P + 1 over 2 w stretch_now, the hand's -(three u_twelve - twelve u_three) in and out, the same integers forward and backward and its own image under the exchange and the reflection; one carry at the gear's drive teeth T with the carry kept in its drive fine tooth, the carries landing as the impulse w stretch_now q before the gear's one carry; the sweep summed over the hands before the offset train is met, which rests on trains.order_key, H-Confirm-Build-11; the former notch drive of 2 W of the hands after the step kept by name: a source pinned to the step's end, whose image under the exchange is a start, so the fall drove 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the regulator's source from every driven train alike, gear by gear u_in u_out + (-a F) div w, w the train's teeth; and every hand's stress, one outer product of its start notches' gradients and its velocity u_in + u_out (regulation.stress_of)."""
+        """(2) The impulse (the former `kicks`): every driven gear's stride at the start read at the mean teeth of the regulator's two notches as the trains hold them, P = W (a_now - a_before) + r - W div 2, and impelled by stretch_now F in the going; the offset train's time gear impelled besides by the hands' sweep read at the impulse and its three odd gears by their lead at the start alike (PL-S1 on all four gears, David's DAVID-LEAD-AT-THE-KICK.md, the owner's word of 2026-10-27, 18:5x UTC, through the Boss's recommendation: the lead's carried quotient lands as the momentum kick w X_now q before the gear's one carry, where the former write of the lead as a count after the division was read the next tick at the mean wall and a jump of the stretch carried it into a huge wall, kept by name; PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the sprung hands of N.J.u_in + N.J.u_out, N the notches at the start and u the odd rounding of 2 P + 1 over 2 w stretch_now, the hand's -(three u_twelve - twelve u_three) in and out, the same integers forward and backward and its own image under the exchange and the reflection; one carry at the gear's drive teeth T with the carry kept in its drive fine tooth, the carries landing as the impulse w stretch_now q before the gear's one carry; the sweep summed over the hands before the offset train is met, which rests on trains.order_key, H-Confirm-Build-11; the former notch drive of 2 W of the hands after the step kept by name: a source pinned to the step's end, whose image under the exchange is a start, so the fall drove 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the regulator's source from every driven train alike, gear by gear u_in u_out + (-a F) div w, w the train's teeth; and every hand's stress, one outer product of its start notches' gradients and its velocity u_in + u_out (regulation.stress_of)."""
         clock = self.clock
         self.forms = zeros(clock.size)
         self.impelled: dict[int, list[Any]] = {}
@@ -214,9 +214,9 @@ class Tick:
                 p + self.going * self.stretch_now * f for p, f in zip(p_side, self.pull[k], strict=True)
             ]
             if r is self.offset:
-                gear = self.trains[k][0]
-                q, gear.dfine = carry(sweep, gear.dteeth, gear.dfine, self.going)
-                p_other[0] = p_other[0] + self.going * clock.teeth * self.stretch_now * q
+                for a, (gear, n) in enumerate(zip(self.trains[k], [sweep, *self.lead], strict=True)):
+                    q, gear.dfine = carry(n, gear.dteeth, gear.dfine, self.going)
+                    p_other[a] = p_other[a] + self.going * clock.teeth * self.stretch_now * q
             u_in = [rates.rounded(p + p + 1, d) for p in p_side]
             u_out = [rates.rounded(p + p + 1, d) for p in p_other]
             if r in self.hands:
@@ -274,7 +274,7 @@ class Tick:
         )
 
     def advances(self) -> None:
-        """The advances among the carries (the former `writes` and `unwrite`), each one carry at the gear's drive teeth T with the carry kept in its drive fine tooth (clock.drive), on the trains as the clock holds them at the end: the unsprung gear's W-S1 advance, the release over the regulator's mean teeth at the end, its carries rounded odd (EM-S1's odd rounding, rates.rounded: the advance exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`advanced_on`), its tally per advanced clock driven on the regulator's flow gears by the clock's drive act (unwind.recoil, LT-S1: the release's advance taken into the clause), its tallies kept in the tick's rewind note for the rewind and undone at -1 by the same act, the last first, after the turnover's undoing and before the drives come off, at no still clock (turned over or stopped), where the turnover or the restore wiped the forward's tally with the advance; the offset train's lead at the start on its three odd gears, its time gear's numerator None (its sweep landed at the impulse, PL-S1); forward after every gear's carry, backward the first act to come off."""
+        """The advances among the carries (the former `writes` and `unwrite`), each one carry at the gear's drive teeth T with the carry kept in its drive fine tooth (clock.drive), on the trains as the clock holds them at the end: the unsprung gear's W-S1 advance, the release over the regulator's mean teeth at the end, its carries rounded odd (EM-S1's odd rounding, rates.rounded: the advance exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`advanced_on`), its tally per advanced clock driven on the regulator's flow gears by the clock's drive act (unwind.recoil, LT-S1: the release's advance taken into the clause), its tallies kept in the tick's rewind note for the rewind and undone at -1 by the same act, the last first, after the turnover's undoing and before the drives come off, at no still clock (turned over or stopped), where the turnover or the restore wiped the forward's tally with the advance; the offset train's four gears kicked at the impulse and driven by no advance (PL-S1); forward after every gear's carry, backward the first act to come off."""
         clock = self.clock
         gear, time_gear = clock.unsprung().gears[0], clock.train(REGULATOR).gears[0]
         notches = gear.now
@@ -293,9 +293,6 @@ class Tick:
                 push = push_of(clock, [gear], at, (int(advanced[at]), 0), ratio[0])
                 self.tallies.append((at, push, int(clock.start_rate[at])))
                 recoil(clock, at, push, int(clock.start_rate[at]), 1)
-        for gear, n in zip(clock.train(OFFSET).gears, [None, *self.lead], strict=True):
-            if n is not None:
-                clock.drive(gear, n, self.going)
 
     def turnover(self) -> None:
         """(4) The turnover at the top and the bottom (clock.turnover; the stopped clock released by its own trigger, FR-S1): the weak maximum of the regulator's three notches, the held before, the held now and the now after the advances, or an outer one below the bottom; the turned-over clock ends the tick at its held pre-state, exchanged and complemented."""

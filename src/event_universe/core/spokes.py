@@ -4,10 +4,13 @@ from __future__ import annotations
 
 from typing import Any
 
-AXES = 3  # the lattice's three axes
-SIDES = 2  # the two spokes of one axis, +a and -a
+AXES = (
+    3  # the lattice's three axes (the dimension, the engine's one typed number; R3: the world's shape)
+)
+SIGNS = (1, -1)  # an axis's two senses, +a and -a
+SIDES = len(SIGNS)  # the two spokes of one axis, one per sense
 SPOKES = AXES * SIDES  # a clock's six spokes, the one definition of Rule3's 6
-SPOKE_SIDES = tuple((axis, side) for axis in range(AXES) for side in (1, -1))  # [+X, -X, +Y, -Y, +Z, -Z]
+SPOKE_SIDES = tuple((axis, side) for axis in range(AXES) for side in SIGNS)  # [+X, -X, +Y, -Y, +Z, -Z]
 
 
 def shifted(a: Any, axis: int, sigma: int) -> Any:
