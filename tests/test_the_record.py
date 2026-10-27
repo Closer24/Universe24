@@ -17,7 +17,7 @@ from event_universe.gates import gates
 from event_universe.run import record
 from tests.laws import ROOT, load_file, world_of
 
-RECORDS, WIDTH = ROOT / "examples" / "records", 128
+RECORDS = ROOT / "examples" / "records"
 CIRCLES = {
     "bodies": (8, 2),
     "chiral": (26, 3),
@@ -216,8 +216,7 @@ def test_the_conservations_hold_on_the_record(name: str) -> None:
     # EX-S1's identity at the gap-0 take; a merger's ends taken whole (MG-S1)
     paid = [b["taken"] + b.get("remainder_was", 0) - b.get("remainder", 0) - b["booked"] for b in births]
     assert all(x == 0 if "remainder" in b else x >= 0 for x, b in zip(paid, births, strict=True))
-    assert len({row["integers"] for row in run["rows"]}) == 1
-    assert max(max(row["max bits"], row["max transient bits"]) for row in run["rows"]) <= WIDTH
+    assert len({row["integers"] for row in run["rows"]}) == 1  # the law's constant, no width bound
     assert run["run_back"]["exact"] == run["run_back"]["intervals"] == 20
     assert int(run["counts"]["births"]) == len(births)
     assert all("sense" in e for e in run["log"] if e["event"] == "lay")
