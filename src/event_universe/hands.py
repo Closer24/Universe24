@@ -11,7 +11,7 @@ from event_universe.core.rule3 import carries, half, signed_carries, wind_weight
 from event_universe.core.spokes import AXES, SPOKES, across, spoke_of
 from event_universe.meshes import cross
 from event_universe.readings import standard_angle
-from event_universe.trains import HAND, Gear, zeros
+from event_universe.trains import HAND, Gear, Train, zeros
 from event_universe.unwind import neighbour
 
 if TYPE_CHECKING:
@@ -137,3 +137,9 @@ def cosine_count(node: Clock, p: int, d: int) -> int:
         else:
             high = middle
     return high
+
+
+def twin_of(records: list[Train], s: int) -> int:
+    """The + fitted hand's hand: the twin of the - fitted hand's hand where its train is twin hands (the pair's spin kept), the same hand otherwise."""
+    twin = records[s].twin
+    return s if twin is None else records.index(twin)

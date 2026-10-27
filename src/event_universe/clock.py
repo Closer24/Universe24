@@ -78,8 +78,7 @@ class Clock:
         self.wound = [zeros(shape) for _ in range(nr)]
         self.crossed = [zeros(shape) for _ in range(nr)]
         self.beats = [zeros(shape) for _ in range(nr)]
-        self.dial, self.strikes, self.ticks = zeros(shape), zeros(shape), 0
-        self.slack = zeros(shape)
+        self.dial, self.strikes, self.ticks, self.slack = zeros(shape), zeros(shape), 0, zeros(shape)
         self.log: list[dict[str, Any]] = []
         self.turnovers: list[tuple[int, int]] = []
         self.stack: list[dict[str, Any]] = []
@@ -95,6 +94,7 @@ class Clock:
         self.start_gears: list[list[Gear]] = []
         self.pitches: dict[tuple[int, int, tuple[int, ...]], int] = {}
         self.vernier_read: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
+        self.twin_ends: dict[tuple[int, tuple[int, ...], tuple[int, ...]], tuple[int, int]] = {}
         self.rest_rates: dict[tuple[int, int], int] = {}
 
         for line in self.train(REGULATOR).gears[:1]:
