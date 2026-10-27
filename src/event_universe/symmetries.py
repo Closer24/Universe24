@@ -1,4 +1,4 @@
-"""The rows of the kinds and the symmetries in the clicks, rows 63 to 71 (the owner's word of 2026-10-26, 07:24 UTC, "enter 61 to 65", through the Boss, The-Laws-Of-Nature-Missing_COMPARISON.md section 3 item 2; the ledger's row 164), each one function of the reading in the one shape: the uniformity in the clicks (the credits spread over the board's eight regions alike), dark matter in kind (a body credited in its own well whose Nodes lay no light, the law's theorem of the lines), the lepton number (every gapped species' senses summing to 0 over its births, the record's count of each species conserved at the click), the energy in the clicks (a body's beat per proper interval before and after its click equal within one level, the taken light's beat the difference), and CPT as one row (on every credit's frame the charge W odd under the conjugation C, even under the reflection P of the Node's six Links, odd under the slot exchange T of CA-S1, so even under the three together)."""
+"""The rows of the kinds and the symmetries in the clicks, rows 63 to 73 (the owner's word of 2026-10-26, 07:24 UTC, "enter 61 to 65", through the Boss, The-Laws-Of-Nature-Missing_COMPARISON.md section 3 item 2; the ledger's row 164), each one function of the reading in the one shape: the uniformity in the clicks (the credits spread over the board's eight regions alike), dark matter in kind (a body credited in its own well whose Nodes lay no light, the law's theorem of the lines), the lepton number (every gapped species' senses summing to 0 over its births, the record's count of each species conserved at the click), the energy in the clicks (a body's beat per proper interval before and after its click equal within one level, the taken light's beat the difference), and CPT as one row (on every credit's frame the charge W odd under the conjugation C, even under the reflection P of the Node's six Links, odd under the slot exchange T of CA-S1, so even under the three together); and the owner's word of 2026-10-27, 13:3x UTC ("OK" to the Reader's list of the laws of nature still unread, the angular momentum and E = mc^2 first): the angular momentum booked on the Link (row 72, every move's moment closed by the moment written on the Link's record at the move's own Node) and the mass to light at the merger (row 73, the pair's share taken against the light's quantum booked)."""
 
 from __future__ import annotations
 
@@ -7,9 +7,11 @@ from typing import Any
 
 from event_universe.core import rule3
 from event_universe.core.spokes import AXES
-from event_universe.reckoner import HALF, PAIR, Chart, sign, unread_words
+from event_universe.reckoner import HALF, PAIR, THOUSAND, Chart, carries, sign, unread_words
+from event_universe.trains import REGULATOR, drive_teeth
 
 REGIONS = PAIR**AXES  # the board's regions, each axis split at the cube's half
+BOOKED = ("clock", "recoil", "carry_was", "carry")  # a booking's keys after its momentum (LT-S1)
 
 
 def region(record: Chart, node: list[int] | tuple[int, ...]) -> int:
@@ -202,33 +204,34 @@ def baryon_number(record: Chart) -> dict[str, Any]:
 
 
 def tallies_of(record: Chart) -> list[tuple[Any, ...]]:
-    """Every booking a move wrote on the Link's record (LT-S1, take.recoil): the momentum's change per axis the move books (dP_take at a take, dP_lay at a birth's end), the clock the Node read at the interval's start, the levels laid per axis on the carrier's flux lines, and their carry before and after; a line without the keys (a record run before LT-S1) is no booking."""
+    """Every booking a move wrote on the Link's record (LT-S1, take.recoil), with its interval and the Node it was written at: the momentum's change per axis the move books (dP_take at a take, each of a merger's two takes under `takes`; dP at a merger's cross term, written at the meeting's Node, CL-S2; dP_lay at each end of a birth's or a merger's lay), the clock the Node read at the interval's start, the levels laid per axis on the carrier's flux lines, and their carry before and after; a line without the keys (a record run before LT-S1) is no booking (the former reading took the line's own keys alone and left every merger's six bookings unread)."""
     found: list[tuple[Any, ...]] = []
     for entry in record.unwinds:
-        if "recoil" not in entry:
-            continue
-        found.append(
-            (entry["dP_take"], entry["clock"], entry["recoil"], entry["carry_was"], entry["carry"])
-        )
-        for k in range(PAIR):
-            if "recoil_ends" in entry:
-                found.append(
-                    (
-                        entry["dP_lay_ends"][k],
-                        entry["clock_ends"][k],
-                        entry["recoil_ends"][k],
-                        entry["carry_was_ends"][k],
-                        entry["carry_ends"][k],
-                    )
-                )
+        for take in entry.get("takes", [entry]):
+            if "recoil" in take:
+                found.append((entry["i"], *(take[k] for k in ("node", "dP_take", *BOOKED))))
+        if "cross" in entry:
+            found.append((entry["i"], *(entry["cross"][k] for k in ("node", "dP", *BOOKED))))
+        if "recoil_ends" in entry:
+            for k, where in enumerate((entry["minus"], entry["plus"])):
+                ends = (entry[key + "_ends"][k] for key in ("dP_lay", *BOOKED))
+                found.append((entry["i"], where, *ends))
     return found
 
 
+def write_wall(record: Chart) -> int:
+    """The write wall of the carrier's flux lines a booking writes on, the engine's own (trains.drive_teeth at the carrier's shape, the first axis line after the time line, as take.recoil writes): trace den Gamma^2 T with the universe file's trace (6 in nature's files, 54 in ga2's); the former 6 den Gamma^2 T typed the trace 6 and failed every booking that laid a level at another trace."""
+    trace = int(record.run["universe"]["integers"]["trace"])
+    return int(
+        drive_teeth(REGULATOR, None, record.rim, record.full_rate, record.action, trace)[1 + AXES]
+    )
+
+
 def momentum_booked(record: Chart) -> dict[str, Any]:
-    """Row 71: the momentum booked on the Link (LT-S1, H-Lay-As-The-Take-Reversed-1's derivation, line 19 as the Boss corrected its sign): at every move the momentum the quantum lost is written on the carrier's flux line of each axis at the Node by the one write act, -dP_a p_0^2 + the carry before - the carry after = the levels laid times the write wall 6 den Gamma^2 T, the clock p_0 the Node's at the interval's start; so the records' and the lattice's momentum sum to what they were at every click, an identity on every booking of the record; NOT READ on a record without the bookings' keys."""
-    wall = rule3.teeth_of(record.rim, record.full_rate) * record.key
+    """Row 71: the momentum booked on the Link (LT-S1, H-Lay-As-The-Take-Reversed-1's derivation, line 19 as the Boss corrected its sign): at every move the momentum the quantum lost is written on the carrier's flux line of each axis at the Node by the one write act, -dP_a p_0^2 + the carry before - the carry after = the levels laid times the write wall trace den Gamma^2 T (`write_wall`, the universe file's trace), the clock p_0 the Node's at the interval's start; so the records' and the lattice's momentum sum to what they were at every click, an identity on every booking of the record, a merger's two takes, its cross term and its two lays among them; NOT READ on a record without the bookings' keys."""
+    wall = write_wall(record)
     held = laid = failed = 0
-    for dp, clock, recoil, was, after in tallies_of(record):
+    for _i, _node, dp, clock, recoil, was, after in tallies_of(record):
         for a in range(AXES):
             if -dp[a] * clock * clock + was[a] - after[a] == recoil[a] * wall:
                 held += 1
@@ -239,7 +242,7 @@ def momentum_booked(record: Chart) -> dict[str, Any]:
         "71 the momentum booked on the Link": {
             "axis bookings holding the identity / in all": [held, held + failed],
             "of them laying a level on the carrier's flux line (the rest kept in the carry)": laid,
-            "the write wall 6 den Gamma^2 T": wall,
+            "the write wall trace den Gamma^2 T (the universe file's trace)": wall,
             "verdict": unread_words(
                 "no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
                 "-dP p_0^2 + the carry before - the carry after = the levels laid times the write wall at every move",
@@ -248,5 +251,89 @@ def momentum_booked(record: Chart) -> dict[str, Any]:
             else f"SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on {held} of {held} axis bookings, {laid} laying a level"
             if not failed
             else f"NOT SHOWN: the identity fails on {failed} of {held + failed} axis bookings",
+        }
+    }
+
+
+def moment(arm: list[int], push: list[int]) -> list[int]:
+    """The moment arm x push of two integer vectors of three, per axis the other two's cross product."""
+    return [arm[a - HALF] * push[a - 1] - arm[a - 1] * push[a - HALF] for a in range(AXES)]
+
+
+def angular_momentum(record: Chart) -> dict[str, Any]:
+    """Row 72: the angular momentum booked on the Link (the conservation of angular momentum in the clicks, the hands' first missing law; AJ-S1 to AJ-S3, the one-Node theorem: a move at one Node changes the momentum on that Node's six Links alone, each along its own axis, so its moment about any centre is the Node's arm times the momentum it books): every booking of row 71 is written at its move's own Node, so the move's moment and the moment written on the Link's record sum to 0 about the board's centre, arm x (dP p_0^2 + the levels laid times the write wall + the carry after - the carry before) = 0, the arm the Node's place doubled from the centre (2 r - (cube - 1), integers); summed per close the records' moment and the lattice's sum to 0, the records' own moment changing at a birth's or a merger's take (the transverse recoil, AJ-S2) and the lattice carrying it; a merger's cross term with a part off the Link's own axis, written at the meeting's Node as the log names it, counted beside; NOT READ on a record without the bookings' keys."""
+    wall = write_wall(record)
+    closed = 0
+    walk: dict[int, list[int]] = {}
+    tallies = tallies_of(record)
+    for i, node, dp, clock, recoil, was, after in tallies:
+        arm = [HALF * int(x) - record.cube + 1 for x in node]
+        written = [dp[a] * clock * clock + recoil[a] * wall + after[a] - was[a] for a in range(AXES)]
+        closed += not any(moment(arm, written))
+        walk[int(i)] = [
+            j + m for j, m in zip(walk.get(int(i), [0] * AXES), moment(arm, dp), strict=True)
+        ]
+    crosses = [b for b in record.fittings if "cross" in b]
+    off = sum(
+        1
+        for b in crosses
+        if any(d for d, x, y in zip(b["cross"]["dP"], b["minus"], b["plus"], strict=True) if x == y)
+    )
+    return {
+        "72 the angular momentum booked on the Link": {
+            "bookings whose move's moment and the Link record's sum to 0 / in all": [
+                closed,
+                len(tallies),
+            ],
+            "closes with a booking / of them changing the records' own moment": [
+                len(walk),
+                sum(1 for j in walk.values() if any(j)),
+            ],
+            "mergers whose cross term carries a part off the Link's own axis / with a cross term": [
+                off,
+                len(crosses),
+            ],
+            "verdict": unread_words(
+                "no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent)",
+                "the move's moment and the moment written on the Link's record sum to 0 at every booking",
+            )
+            if not tallies
+            else f"SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at {closed} of {closed} bookings, the records' own moment changing at {sum(1 for j in walk.values() if any(j))} of {len(walk)} closes and the lattice carrying it"
+            if closed == len(tallies)
+            else f"NOT SHOWN: the moment does not close at {len(tallies) - closed} of {len(tallies)} bookings",
+        }
+    }
+
+
+def mass_to_light(record: Chart) -> dict[str, Any]:
+    """Row 73: E = mc^2 at the merger (MG-S1, a pair at rest into light; the hands' row to add beside 24): at each end of a merger the pair's levels taken whole lose the share `taken`, the pair's energy at rest in the carrier's unit, the one weight of every row; the light laid there is booked one quantum (`booked`, the wall a lay at the unit holds alone at the Node, the same two integers for every row at one content) and laid by the least count of levels at which its share rises by it (the exact lay's rise); so the mass becomes light where the share taken is the quantum booked, the light's rise above it the least count's excess named in thousandths; NOT SHOWN where the share taken exceeds the quantum booked, the excess booked nowhere (the stop refuses an end below it); NOT READ with no merger."""
+    ends = [
+        (int(t["taken"]), int(t["booked"]), int(lay[-1]))
+        for b in record.fittings
+        for where, lay in zip((b["minus"], b["plus"]), b.get("exact_lay", []), strict=False)
+        for t in b.get("takes", [])
+        if t["node"] == where
+    ]
+    paid = sum(1 for taken, booked, _up in ends if taken == booked)
+    over = max((int(carries(taken, booked, THOUSAND) or 0) for taken, booked, _up in ends), default=0)
+    rise = max((int(carries(up, taken, THOUSAND) or 0) for taken, _booked, up in ends), default=0)
+    return {
+        "73 E = mc^2 at the merger": {
+            "merger ends / of them with the pair's share taken equal to the light's quantum booked": [
+                len(ends),
+                paid,
+            ],
+            "the share taken over the quantum booked, most, in thousandths": over,
+            "the light's rise over the share taken, most, in thousandths": rise,
+            "verdict": unread_words(
+                "no merger in the record",
+                "at every merger end the pair's share taken equal to the light's quantum booked, the light laid rising by it to its least count",
+            )
+            if not ends
+            else f"SHOWN: at every one of {len(ends)} merger ends the pair's share taken is the light's quantum booked, the light laid rising by it to its least count, at most {rise - THOUSAND} thousandths above"
+            if paid == len(ends)
+            else f"SHOWN in part: at {paid} of {len(ends)} merger ends the pair's share taken is the light's quantum booked; at the rest it exceeds it, up to {over} thousandths of the quantum, the excess booked nowhere"
+            if paid * HALF > len(ends)
+            else f"NOT SHOWN: at {len(ends) - paid} of {len(ends)} merger ends the pair's share taken exceeds the light's quantum booked, up to {over} thousandths of it, the excess booked nowhere",
         }
     }

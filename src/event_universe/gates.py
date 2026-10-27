@@ -337,6 +337,8 @@ TABLE: tuple[Train, ...] = (
     symmetries.one_twist,
     symmetries.baryon_number,
     symmetries.momentum_booked,
+    symmetries.angular_momentum,
+    symmetries.mass_to_light,
     conservations,
     constants,
 )

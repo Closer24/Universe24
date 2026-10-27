@@ -92,6 +92,14 @@ NAMES = {
         "the momentum booked on the Link",
         "the momentum across the click booked on the Link's record, an identity at every move",
     ),
+    "72": (
+        "the angular momentum on the Link",
+        "the angular momentum across the click, the move's moment closed by the Link's record at every move",
+    ),
+    "73": (
+        "the mass becomes light",
+        "E = mc^2 at the merger, the pair's share taken as the light's quantum",
+    ),
     "the conservations in the clicks": ("the clicks conserve", "the conservations in the clicks"),
     "the three constants": ("the three constants hold", "the three constants"),
 }  # every row by its number (the key's first word) or its key: its label of three to six words for the page, and the phenomenon in plain words for the table
