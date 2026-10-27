@@ -75,3 +75,30 @@ The engine head moved from 608d97134 to 0d59ff812 (stage 1b of the clock-name re
 ## 9. Re-read at 5f8680de2 (2026-10-27, 16:4x UTC)
 
 The engine head moved from 0d59ff812 to 5f8680de2 (the Boss's tensors in the clock; the suite 110 passed). The whole src diff read (10 files, +68 -96): whole numbers hold (no float, no true division, no math or trig import); the counts of sections 2 to 4 unchanged (numbers beyond 0 and 1 37 in 13 files, reads of the unsprung hand by identity 32 in 8 files, branches on it 15 in 6, no new literal, no new branch); the file is 6,297 lines under src. New: regulation.stress_of (the regulator's nine axis sources one outer product, Rule3 on a tensor), meshes.train_twists, hands.spoke_places and draw.kept_pitch (pure memos by integers, the latter cleared at every strike), unspring's store of the hands' winds (filled by one read of the whole great clock at the first miss, kept across the reads of one unwinding and cleared after its write, striking.py:204). Section 4's list stands with stress_parts, shear_parts, net_flow, train_twist and net_lead replaced by the two functions above; `coupling_of` (meshes.py:20, read at tick.py) still stands against the owner's strike of 15:5x. The Reader's finding that the close's coordinate order breaks the torus's invariance in the strikes (reader-5 12a3db05e, ledger row 238) is a departure from the generic clause that this read did not find and adds to section 2.
+
+## 10. The register of breaches at 5f8680de2, for the Boss (2026-10-27, 16:5x UTC)
+
+On the owner's order ("Make sure the Boss is aware of the breaches."): every breach named so far, with its lines at the head 5f8680de2 (the lines of sections 2 to 4 are those of 608d97134 and 0d59ff812; tick.py, unspring.py, striking.py, bobs.py, meshes.py, hands.py and regulation.py shifted by a few lines at the tensors push, and these are the current ones). The Boss answers by number: built, ruled or objects.
+
+**A. Against the owner's rules for the engine** (his words of 11:3x, 14:5x, 15:1x and 15:5x):
+
+- **R1. Five kinds of train known by role** (the generic clause; "the engine generic"): trains.py:118-131 refuses a universe without exactly one walled row, one plane at (den, den), one shape-10 row, one shape-4 row and a gapped plane (124 and 128 fix the pairs), assembly/piece.py:38 admits their shapes alone, trains.py:62-69 drive_teeth by shape and :104 twin hands; tick.py:66-67 the roles, 117-144 standard_rate (the walled row's act), 233-274 carry (the regulator's write), 276-298 advances (the emitter's lay, the offset's drive); clock.py:100 and 258-259, readings.py:30-32 and 62-67 (the walled row's own rule); the identity counters, 32 reads in 8 files and 15 branches in 6 (setting.py 53 59 68 80; bobs.py 33; clock.py 69; run.py 202; striking.py 46 67 131 188; unspring.py 127 129 211 217), and the role words outside them (REGULATOR 31 places in 11 files, HAND 31 in 9, OFFSET 11 in 4).
+- **R2. Light's coupling** ("there is no such thing as light's coupling"): meshes.py:20-23 coupling_of read at tick.py:70, 162, 163 (a table indexed by it) and 224; it stands in the tensors push; wave item 7 covers it only if it removes the case by number.
+- **R3. The dimension and the shapes typed** ("a row's, only in the universe file"): core/spokes.py:7-8 AXES and SIDES (AXES read in 58 places, SPOKES in 13), trains.py:13-17, assembly/piece.py:38, core/rule3.py:14-17, features/stretch/__init__.py:14.
+- **R4. Numbers in the code** ("forbidden altogether"): the 37 literals of section 3 (13 files; cycle.py:21, setting.py:23 24 104 108, acts.py:15, rule3.py:126 136, spokes.py:7 8, meshes.py:124, trains.py:15-17, run.py:26-27, and the Reader's modules), the typed constants, the 40 doubled operands, the gate's free 0 and 1.
+- **R5. Formulas beside Rule3's one, sines and cosines** ("only Rule3 on integers"): the 44 functions of section 4; the integer sines and cosines among them: core/rates.py:25 sine_rim, core/rule3.py:88 mesh_unit_of (the root by the search at :173), assembly/setting.py:98 raised_cosine, 132 rim_point, 153 angle_of, 161 angles_of, 178 running_rotation, assembly/cycle.py:25 cycle_angles, readings.py:35 standard_angle, hands.py:128 cosine_count.
+- **R6. The enforcement looser than the rule:** tests/test_rule3.py:110-132 and 141 allow integers by file and exempt nine reader modules whole.
+
+**B. Against the law's letter** (David's close law, approved by the owner at 15:5x as items 1 to 4 of the wave, none built at 5f8680de2):
+
+- **R7. The take's fall has the wrong sign:** unwind.py:35-74 fall_of (the closed form and its price) and TC-S1's sentence; the charts' matter booked from nothing (David; the Reader's second hand at 47 of 47 and 154 of 154 takes).
+- **R8. The unspringing drops its excess:** unspring.py:148-168 unspring_end (181.9 walls on the bodies).
+- **R9. The vernier reads grips[p], not R_ji:** draw.py:20-35.
+- **R10. The light's take reads the live great clock where CL-S2 names the tick's start:** unspring.py:171-197 unsprung_end.
+- **R11. The shears are written every tick and read by no act:** regulation.py:15-19 stress_of (DAVID-TENSORS.md); the owner's word asked.
+
+**C. Two proposals read against the owner's words** (ledger row 236): David's (B) and the picture's row 10, the coupling min(spring, 1) in the code; his (C) and row 6, four named trains built in the engine from d and den; his (A) and row 7, small formulas of d.
+
+**Withdrawn:** the close's coordinate order against the torus (the owner's word of 16:4x, "The result does not need to be a torus..."; ledger row 239).
+
+**Not in the Boss's wave:** R1 to R6 and R11; the wave is the seven law changes of the law's last paragraph (R7 to R10 among them).
