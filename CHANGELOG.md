@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's words of 2026-10-27, 05:1x, 05:4x and 06:0x UTC (the consultation of David on the generic engine, the way of working, Pauli as a declared symmetry of each family's amplitude) in the law (Pauli at the lay without a weight, The horizon's radiation), HIGHLIGHTS and the ledger (rows 220 and 221, the head); no merge, the head unmoved at 70ac3b30c.
 - The engine head 70ac3b30c merged (dd60c2f2b, mended at d00f7bd9d): the amplitude declared from outside as the universe file's key and the width gone from the engine by the owner's words of 2026-10-27, 04:0x to 04:5x UTC (The width is derived, The one universe file, ENGINE.md's amplitude and floor rows, README's line); David's counsel on the runaway of the bang's world under The horizon's radiation and OS-S1; rows 164, 207, 215, 218 and 219; the words in HIGHLIGHTS and the ledger head.
 - A quiet hour (no merge, no comment): the kit's reading in row 170; The click's 4.0 detector block named for the re-cut's next move.
 - The engine head 0d14245ac merged (436bda429; the width's two documents, no src and no test): their landing on the head under The width is derived, rows 207 and 218.
