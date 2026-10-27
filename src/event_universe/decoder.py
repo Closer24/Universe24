@@ -9,7 +9,7 @@ from typing import Any
 from event_universe.circle import circle_of
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
-from event_universe.links import cross, link_wall, turn_pair
+from event_universe.links import Link, cross, turned
 from event_universe.rows import PLANE
 
 MIL = 1000000  # readings in parts per million
@@ -233,9 +233,9 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
         return None
     gamma, den, unit = record.gamma, record.den, record.G
     p0, pi = paces.clock(gamma, content), paces.link_pace(gamma, content)
-    w = rule3.wall_of(den, gamma, unit)
+    w = record.w
     x_b, x_n, x_x = carrier_levels(record, credit)
-    w_in, w_out = (w // HALF) * (x_b + x_n), (w // HALF) * (x_n + x_x)
+    w_in, w_out = rule3.mean_wall_of(w, x_b, x_n), rule3.mean_wall_of(w, x_n, x_x)
     zb = (f["re_start_before"], f["im_start_before"])
     zn = (f["re_start_now"], f["im_start_now"])
     zx = (
@@ -245,16 +245,13 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
     if zn == (0, 0):
         return None
     scale, phases, odd, frames = f["X"], f["phases"], f["odd"], f["frames"]
-    wl = link_wall(gamma)
     e = tuple((zx[k] - zn[k]) * w_out - w_in * (zn[k] - zb[k]) for k in range(PAIR))
     weight = rule3.mass(0, 1, p0, unit)
     reaches = rule3.rule_integers(1, den, gamma, p0, pi, tuple(f["factors"]), unit).reaches
     a_re = a_im = 0
     for port, (a, b) in enumerate(zip(f["re_neighbours_start"], f["im_neighbours_start"], strict=True)):
-        m: Rational = (a, frames[port] * b)
-        m = turn_pair(m[0], m[1], phases[port][0], phases[port][1], scale)
-        n = odd[port]
-        m = turn_pair(m[0], m[1], wl * wl - n * n, PAIR * wl * n, wl * wl + n * n)
+        at = Link(None, frames[port], phases[port][0], phases[port][1], odd[port])
+        m = turned([a, frames[port] * b], at, scale, gamma)
         a_re, a_im = a_re + reaches[port] * (m[0] - zn[0]), a_im + reaches[port] * (m[1] - zn[1])
     p = (e[0] + weight * den * zn[0] * x_n, e[1] + weight * den * zn[1] * x_n)
     q = ((a_re + weight * zn[0]) * x_n, (a_im + weight * zn[1]) * x_n)

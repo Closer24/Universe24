@@ -112,7 +112,7 @@ class Node:
     def ride_walls(self) -> None:
         """The riding lines' remainders at the start: a riding line's remainder lives at the mean wall (w div 2)(X_before + X_now) of the carrier's two levels at its Node, half of it at the seed."""
         carrier = self.row(CARRIER).lines[0]
-        wall = half(self.w) * (carrier.before + carrier.now)
+        wall = readings.mean_wall(self, carrier)
         for r in self.rows_:
             if r.wall is None and r.shape != CARRIER:
                 for line in r.lines:

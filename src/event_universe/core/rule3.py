@@ -126,6 +126,11 @@ def half(wall: Any) -> Any:
     return divide(wall, 2, 0)[0]
 
 
+def mean_wall_of(wall: Any, before: Any, now: Any) -> Any:
+    """The mean wall (w div 2)(X_before + X_now) of the carrier's two levels, a riding line's wall: the one spelling for the interval, the seed's walls and the reader's solve."""
+    return half(wall) * (before + now)
+
+
 def odd(count: Any) -> Any:
     """The parity of a count by the division act on 2, 1 where odd (the parity's own 2): the reversals' count, a line's odd part."""
     return divide(count, 2, 0)[1]

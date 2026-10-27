@@ -8,7 +8,7 @@ import numpy as np
 
 from event_universe.core import paces, rule3
 from event_universe.core.ports import PORTS
-from event_universe.core.rule3 import half, remainder
+from event_universe.core.rule3 import remainder
 from event_universe.features import phase, volume
 from event_universe.rows import CARRIER, Line, Row
 
@@ -69,7 +69,7 @@ def rule_of(node: Node, r: Row, c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
 
 def mean_wall(node: Node, line: Line) -> Any:
     """The mean wall (w div 2)(X_before + X_now) of the carrier's time line as given: the rows' own before the carrier's act for the kick and the lays, the act's at its end for the riding lines' divisions."""
-    return half(node.w) * (line.before + line.now)
+    return rule3.mean_wall_of(node.w, line.before, line.now)
 
 
 def floor(node: Node) -> int:
