@@ -10,40 +10,40 @@ A line is a gear: a coarse wheel (the notch, the level of the former words) and 
 
 | the former word | the clock word | what it is | places renamed |
 | --- | --- | --- | --- |
-| Node | Clock | one small clock of the great clock: its trains, its rate, its dial | 4,586 |
-| Link | Mesh | the meshing of two neighbouring clocks | 2,165 |
+| Node | Clock | one small clock of the great clock: its trains, its rate, its dial | 4,578 |
+| Link | Mesh | the meshing of two neighbouring clocks | 2,159 |
 | Port | Spoke | one of a clock's six meshing sides | 325 |
-| board | great clock | the whole lattice of clocks | 1,514 |
+| board | great clock | the whole lattice of clocks | 1,507 |
 | interval | tick | the great clock's one tick | 2,046 |
-| pace | rate | the clock's beats per tick | 954 |
+| pace | rate | the clock's beats per tick | 952 |
 | the Node clock (Gamma) | full rate | the rate at the vacuum | 11 |
 | the Link's pace | mesh rate | the rate twice: the ruler | 66 |
 | proper count | dial | the clock's own dial: its rate summed over the ticks | 6 |
-| click | strike | the striking's act, and any event it makes | 3,173 |
+| click | strike | the striking's act, and any event it makes | 3,134 |
 | run back | rewind | every gear run backward | 265 |
 | universe file | calibre | the clock's design: its integers and trains | 168 |
 | world file | piece | one built clock: its calibre, size, ticks and setting | 73 |
-| seed | setting | the hands set at the start | 672 |
-| lay (noun) | setting | the act or result of setting a state | 1,346 |
-| lay, laid (verb) | set | to place quanta, levels or rows into the state | 809 |
-| line | gear | one number on two wheels: the coarse wheel's notch and the fine wheel's teeth | 1,626 |
-| level | notch | the coarse wheel's position | 1,795 |
+| seed | setting | the hands set at the start | 673 |
+| lay (noun) | setting | the act or result of setting a state | 1,349 |
+| lay, laid (verb) | set | to place quanta, levels or rows into the state | 818 |
+| line | gear | one number on two wheels: the coarse wheel's notch and the fine wheel's teeth | 1,843 |
+| level | notch | the coarse wheel's position | 1,796 |
 | remainder | remainder (open) | the fine tooth: the ruling asked on 2026-10-27 is open | 0 |
-| wall (the line's division) | teeth count | the fine wheel's teeth per notch, David's teeth written as the teeth count where the noun stands alone | 638 |
+| wall (the line's division) | teeth count | the fine wheel's teeth per notch, David's teeth written as the teeth count where the noun stands alone | 636 |
 | carried division | carry | the one carried division of Rule3 | 108 |
-| write (noun) | drive | a source carried into a gear through its own drive wheel | 1,215 |
-| row | train | one family's gears at every clock, stepped by one gearing | 1,881 |
-| family (the engine's) | train | the law's word for a row's kind | 1,430 |
-| record (a family's data at a clock) | hand | the two shadows of a plane, a train's hand | 2,320 |
-| record (a run's output) | chart | what the run writes | 839 |
-| share | wind | the hand's stored energy, counted in windings | 1,025 |
-| content | load | the count of slowings on the clock's rate | 693 |
-| body | bob | a sprung hand standing at a clock | 2,182 |
-| birth | fitting | two new hands fitted at a mesh's two ends | 936 |
-| child | fitted hand | a hand fitted at a fitting | 422 |
-| merger | unspringing | two sprung hands at rest into unsprung windings | 212 |
-| carrier (shape 10) | regulator | the train whose time gear counts the clock's own ticks and rulers | 153 |
-| bang | swing | every clock's stretch at its top at once; nature's Big Bang kept | 474 |
+| write (noun) | drive | a source carried into a gear through its own drive wheel | 1,232 |
+| row | train | one family's gears at every clock, stepped by one gearing | 1,898 |
+| family (the engine's) | train | the law's word for a row's kind | 1,434 |
+| record (a family's data at a clock) | hand | the two shadows of a plane, a train's hand | 2,358 |
+| record (a run's output) | chart | what the run writes | 884 |
+| share | wind | the hand's stored energy, counted in windings | 1,033 |
+| content | load | the count of slowings on the clock's rate | 711 |
+| body | bob | a sprung hand standing at a clock | 2,185 |
+| birth | fitting | two new hands fitted at a mesh's two ends | 905 |
+| child | fitted hand | a hand fitted at a fitting | 408 |
+| merger | unspringing | two sprung hands at rest into unsprung windings | 207 |
+| carrier (shape 10) | regulator | the train whose time gear counts the clock's own ticks and rulers | 151 |
+| bang | swing | every clock's stretch at its top at once; nature's Big Bang kept | 465 |
 | decoder | reckoner | the reader of a strike's face | 214 |
 | phase line | standard | the reference clock: a hand turning 1 / full rate per act | 39 |
 | the swap at the top | the turnover | a clock's gears reversed at its stretch's top | 56 |
@@ -58,13 +58,14 @@ Nature's names for the phenomena stay (light, charge, mass, energy, momentum, fo
 
 - The owner's words in quotes, verbatim.
 - The former clauses of the law and the former list of the ledger, kept as written and dated.
-- HIGHLIGHTS.md and the CHANGELOG entries before 2026-10-27, which record what was said and done in the words of the day.
+- The CHANGELOG entries before 2026-10-27, which record what was said and done in the words of the day.
 - The Reader's table of the gates in UNIVERSE24.md section 2 and the Reader's section of README.md, which his tool writes.
-- Code names in backticks and file names, until the Boss renames src (stage 1) and the Reader the chart's and the files' keys (stage 2).
+- The names of hypotheses (the H- names), of their comparison files and of branches: they name files and branches that stand in the repository as written. The first table of fifteen clock names in the law's decision list and in its ledger copy stands as David proposed it, its left words the former words by the nature of a dictionary.
+- The chart's and the files' keys, until the Reader renames them (stage 2). The code names in backticks follow the renamed tree of the Boss's stage 1a (67a7633d5) by David's tables 3.1 to 3.6.
 
 ## Open rulings
 
-Asked of the Boss and David at #2187 comment 6441413852: the plural and possessive titles the dictionary missed, the one title that renamed a line of text, the setting that stands for both the seed and the lay, and whether credit, draw, take, frozen, current, remainder and frame take clock words in prose.
+Asked of the Boss and David at #2187 comment 6441413852: the plural and possessive titles the dictionary missed, the one title that renamed a line of text, the setting that stands for both the seed and the lay, and whether credit, draw, take, frozen, current, remainder and frame take clock words in prose. Named by the Scribe beside them: the word hand now names a family's data (the former record) and the documents also call the project's workers hands; the plain word clock stands beside the Clock and the great clock; wind carries both the energy share and Born's share; teeth count is a noun of two words that the possessive and the compound forms bend (the teeth count's, half-teeth-count).
 
 ## The renamed clause titles
 
@@ -359,7 +360,8 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The moving body | The moving bob |
 | The seed is the lay of the massless point at every Node of the torus but one | The setting is the setting of the massless point at every Clock of the torus but one |
 | The packet lay | The packet setting |
-|  f)_i = (S f_i + SUM over the six Ports of R f_j) / (2 w), whose eigenvalue on e^(i q x) is cos omega(q) (the line's dispersion, 2 w cos omega = S + 2 SUM_a R_a cos q_a), the record one interval earlier is z_(-1) = ( |  f)_i = (S f_i + SUM over the six Spokes of R f_j) / (2 w), whose eigenvalue on e^(i q x) is cos omega(q) (the line's dispersion, 2 w cos omega = S + 2 SUM_a R_a cos q_a), the hand one tick earlier is z_(-1) = ( |
+|  the line's own read, ( |  the gear's own read, ( |
+|  f)_i = (S f_i + SUM over the six Ports of R f_j) / (2 w), whose eigenvalue on e^(i q x) is cos omega(q) (the line's dispersion, 2 w cos omega = S + 2 SUM_a R_a cos q_a), the record one interval earlier is z_(-1) = ( |  f)_i = (S f_i + SUM over the six Spokes of R f_j) / (2 w), whose eigenvalue on e^(i q x) is cos omega(q) (the gear's dispersion, 2 w cos omega = S + 2 SUM_a R_a cos q_a), the hand one tick earlier is z_(-1) = ( |
 | The lay's before level is the band's own | The setting's before notch is the band's own |
 | The source is a row's static rest. | The source is a train's static rest. |
 | The bridge to nature is a body's clicks and nothing else. | The bridge to nature is a bob's strikes and nothing else. |
@@ -376,6 +378,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 |  and two regions credits a quantum by the shares (1 +/-  |  and two regions credits a quantum by the winds (1 +/-  |
 | Spin, reopened on the board: two axial vectors in the law's integers | Spin, reopened on the great clock: two axial vectors in the law's integers |
 | Only a click moves a quantum between families | Only a strike moves a quantum between trains |
+| The two-mode line's pair | The two-mode gear's pair |
 | The rotation's first-order line | The rotation's first-order gear |
 | The pressure's write in the time line | The pressure's drive in the time gear |
 | The count carried at the Node | The count carried at the Clock |
@@ -476,6 +479,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The count of a massless record read in the write's units: the candidate measured, not recommended and not law | The count of a massless hand read in the drive's units: the candidate measured, not recommended and not law |
 | The atom is out of the board's reach, by number | The atom is out of the great clock's reach, by number |
 | The swap's complement and the digits' lattice disagree by one unit at a fired Node | The swap's complement and the digits' lattice disagree by one unit at a fired Clock |
+| The neutron's lifetime needs a row, not a number. | The neutron's lifetime needs a train, not a number. |
 | The mass ratio read at the birth's content is 2054, nature's 1836 | The mass ratio read at the fitting's load is 2054, nature's 1836 |
 | The structured board's cycle as read: drifting, not closed | The structured great clock's cycle as read: drifting, not closed |
 | The contraction read as acceleration by a one-way clock, on single clicks | The contraction read as acceleration by a one-way clock, on single strikes |
