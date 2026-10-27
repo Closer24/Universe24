@@ -139,31 +139,19 @@ def share(node: Node, lines: list[Line], r: Any, window: list[tuple[int, ...]] |
 
 
 def moving(
-    shape: int,
-    base: Any,
-    vector: list[int],
-    now_pair: tuple[Any, Any],
-    before_pair: tuple[Any, Any],
-    den: int,
-    sense: int,
+    base: Any, now_pair: tuple[Any, Any], before_pair: tuple[Any, Any], den: int, sense: int
 ) -> list[Line]:
-    """A record laid at a phase over the envelope (MV-S1): now = base (C v + sense S (J v)) over den at the Node's phase pair (C, S) and before the same at the pair (C', S') turned by the band's rotation, each product's quotient toward zero line by line (rule3.signed_quotient), so the two senses' J lines cancel exactly and the lay at the conjugate pair is the conjugate lay; the rest lay the case (den, 0) and (num, s)."""
-    turned = matvec(rotation(shape), list(vector))
+    """A plane laid at a phase over the envelope (MV-S1), a clock's hand at the angle (C, S): now = (base C, sense base S) over den at the Node's phase pair (C, S) and before the same at the pair (C', S') turned by the band's rotation, each product's quotient toward zero line by line (rule3.signed_quotient), so the two senses' im lines cancel exactly and the lay at the conjugate pair is the conjugate lay; the rest lay the case (den, 0) and (num, s) (the former lay's vector, (1, 0) on every plane, struck with the spinor row, 2026-10-27)."""
 
     def levels(c: Any, s: Any) -> list[Any]:
-        return [
-            signed_quotient(base * c * v, den) + sense * signed_quotient(base * s * j, den)
-            for v, j in zip(vector, turned, strict=True)
-        ]
+        return [signed_quotient(base * c, den), sense * signed_quotient(base * s, den)]
 
     return [Line(n, b, None, None) for n, b in zip(levels(*now_pair), levels(*before_pair), strict=True)]
 
 
-def rest(
-    shape: int, re_now: Any, vector: list[int], num: int, den: int, sine: int, sense: int
-) -> list[Line]:
-    """A record at rest over the envelope (`moving` at the pair (den, 0) now and the row's (num, s) before): now = re_now v (v the lay's vector, (1, 0) for a plane), before = num now div den + sense sine (J now) div den, each quotient toward zero (the plane's re_before = re_now num div den, im_before = sense re_now s div den as the case v = (1, 0))."""
-    return moving(shape, re_now, vector, (den, 0), (num, sine), den, sense)
+def rest(re_now: Any, num: int, den: int, sine: int, sense: int) -> list[Line]:
+    """A plane at rest over the envelope (`moving` at the pair (den, 0) now and the row's (num, s) before): re_now = re_now, im_now = 0, re_before = re_now num div den, im_before = sense re_now s div den, each quotient toward zero."""
+    return moving(re_now, (den, 0), (num, sine), den, sense)
 
 
 def cosine_count(node: Node, p: int, d: int) -> int:

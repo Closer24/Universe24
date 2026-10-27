@@ -17,8 +17,7 @@ if TYPE_CHECKING:
 
 def child_levels(row: Any, sense: int, a: int, b: int) -> tuple[int, ...]:
     """A child's levels at one end, now and before per line of the row's shape: the one lay of the law laid at the unit (gram.moving, MV-S1's form; the seed's rest lay the same lay at the row's own pair), the now pair (sense A, 0) and the before pair (0, sense B) at the quarter turn along the vector (1, 0, ...), so re_now sense A and im_before B (GP-S1's two integers, A B = T div 2) and 0 on every other level; the former plane-typed four and the child's own spelling kept by name (the Boss's 6414464356: the rest lay and child_at one lay)."""
-    vector = [1] + [0] * (len(row.lines) - 1)
-    lines = gram.moving(row.shape, 1, vector, (sense * a, 0), (0, sense * b), 1, sense)
+    lines = gram.moving(1, (sense * a, 0), (0, sense * b), 1, sense)
     return tuple(int(x) for line in lines for x in (line.now, line.before))
 
 

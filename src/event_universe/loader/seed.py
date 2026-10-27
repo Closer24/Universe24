@@ -1,4 +1,4 @@
-"""The seed as the world file lays it: a list of lays in the five forms of the law (the owner's word of 2026-10-25; the fourth, the uniform lay, by his word of 17:57 UTC; the fifth, the light's cycle lay, by his word of 22:50 UTC, CS5-S2): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in den's unit (h_a = den sin(k_a / 2)), moving at the band's rotation at that wave number with the optional flat `top` along the wave's axis (MV-S1 to MV-S3, 2026-10-25; one path for every record row, the plane at the gap 0 with a wave among them, with none the drift by name); `wave` lays the light's cycle pattern at every Node (CS5-S2's world, the owner's word of 2026-10-25, 22:50 UTC: cs3's cycle form in cs5's and cs7's spelling, `row` the plane at the gap 0, `quanta` n, `p1` sixteen digits of Z_4 and `cz` one, the phase p(x, y, z) = (p1[4 (x mod 4) + (y mod 4)] + cz z) mod 4, `mirror` 0 or 1 for the negated lines' remainders). Refused by name: a form beyond these, a field of no form (an interval key among them), a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a plane's lay naming a vector, a wave number beyond the band's edge (|h| above den), a massless packet at the wave 0, a top not fitting the board, a cycle lay off the plane at the gap 0 or on a cube whose extent is not a multiple of 4, its digits off Z_4, its mirror off 0 and 1."""
+"""The seed as the world file lays it: a list of lays in the five forms of the law (the owner's word of 2026-10-25; the fourth, the uniform lay, by his word of 17:57 UTC; the fifth, the light's cycle lay, by his word of 22:50 UTC, CS5-S2): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in den's unit (h_a = den sin(k_a / 2)), moving at the band's rotation at that wave number with the optional flat `top` along the wave's axis (MV-S1 to MV-S3, 2026-10-25; one path for every record row, the plane at the gap 0 with a wave among them, with none the drift by name); `wave` lays the light's cycle pattern at every Node (CS5-S2's world, the owner's word of 2026-10-25, 22:50 UTC: cs3's cycle form in cs5's and cs7's spelling, `row` the plane at the gap 0, `quanta` n, `p1` sixteen digits of Z_4 and `cz` one, the phase p(x, y, z) = (p1[4 (x mod 4) + (y mod 4)] + cz z) mod 4, `mirror` 0 or 1 for the negated lines' remainders). Refused by name: a form beyond these, a field of no form (an interval key among them), a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a wave number beyond the band's edge (|h| above den), a massless packet at the wave 0, a top not fitting the board, a cycle lay off the plane at the gap 0 or on a cube whose extent is not a multiple of 4, its digits off Z_4, its mirror off 0 and 1."""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ HALF_SPANS = (
 FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
     "sea": frozenset({"lay", "row", "quanta", "sense"}),
     "hole": frozenset({"lay", "at"}),
-    "at": frozenset({"lay", "row", "centre", "quanta", "width", "vector", "sense", "wave", "top"}),
+    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top"}),
     "wave": frozenset({"lay", "row", "quanta", "p1", "cz", "mirror"}),
 }
 Pair = tuple[Any, Any]
@@ -76,23 +76,19 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
             if row is node.emitter() and wave is None:
                 take.lay(node, node.records().index(row), at, (n * node.drift, 0, 0, 0))
             else:
-                vector = lay.get("vector")
-                if vector is not None:
-                    raise ValueError("a plane's lay names no vector")
                 packets.append(
                     (
                         node.records().index(row),
                         at,
                         int(lay.get("width", 0)),
                         n,
-                        vector,
                         lay.get("sense"),
                         wave,
                         int(lay.get("top", 1)),
                     )
                 )
-    for rec, at, h, n, vector, sense, wave, top in packets:
-        lay_packet(node, rec, at, h, n, vector, sense, wave, top)
+    for rec, at, h, n, sense, wave, top in packets:
+        lay_packet(node, rec, at, h, n, sense, wave, top)
 
 
 def raised_cosine(h: int) -> tuple[int, ...]:
@@ -188,16 +184,15 @@ def rest_record(
     w0: int,
     amplitude: int,
     sense: int,
-    vector: list[int],
     pairs: tuple[Pair, Pair] | None = None,
 ) -> list[Line]:
-    """A record over the envelope at an amplitude, base = A w_i div w_0 along the lay's vector: at rest (gram.rest) the plane's re_now = base, re_before = base num div den, im_now = 0, im_before = sense base s div den with s the pair's sine; at a wave number (gram.moving) the base at the Node's phase pair now and at that pair turned by the band's rotation before."""
+    """A record over the envelope at an amplitude, base = A w_i div w_0: at rest (gram.rest) the plane's re_now = base, re_before = base num div den, im_now = 0, im_before = sense base s div den with s the pair's sine; at a wave number (gram.moving) the base at the Node's phase pair now and at that pair turned by the band's rotation before."""
     assert row.pair is not None
     num = row.pair[0]
     base = quotient(amplitude * envelope, w0)
     if pairs is None:
-        return gram.rest(row.shape, base, vector, num, node.den, sine_den(num, node.den), sense)
-    return gram.moving(row.shape, base, vector, pairs[0], pairs[1], node.den, sense)
+        return gram.rest(base, num, node.den, sine_den(num, node.den), sense)
+    return gram.moving(base, pairs[0], pairs[1], node.den, sense)
 
 
 def uniform_levels(node: Node, row: Row, amplitude: int, sense: int) -> list[Line]:
@@ -206,7 +201,7 @@ def uniform_levels(node: Node, row: Row, amplitude: int, sense: int) -> list[Lin
         a = uniform_levels(node, row, amplitude, 1)
         b = uniform_levels(node, row, amplitude, -1)
         return [Line(x.now + y.now, x.before + y.before, None, None) for x, y in zip(a, b, strict=True)]
-    return rest_record(node, row, zeros(node.shape) + 1, 1, amplitude, sense, [1, 0])
+    return rest_record(node, row, zeros(node.shape) + 1, 1, amplitude, sense)
 
 
 def share_at_node(node: Node, row: Row, lines: list[Line], rule: Any) -> int:
@@ -251,7 +246,6 @@ def fitted(
     envelope: Any,
     w0: int,
     target: int,
-    vector: list[int],
     pairs: tuple[Pair, Pair] | None = None,
 ) -> int:
     """The largest amplitude at which the record's share at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
@@ -259,7 +253,7 @@ def fitted(
     rule = readings.rule(node, row.pair, readings.content(node), factors(node))
 
     def share_of(amplitude: int) -> int:
-        lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
+        lines = rest_record(node, row, envelope, w0, amplitude, 1, pairs)
         return packet_share(node, row, lines, rule)
 
     return least_at(lambda amplitude: share_of(amplitude) > target) - 1
@@ -291,18 +285,14 @@ def lay_packet(
     at: tuple[int, ...],
     h: int,
     n: int,
-    vector: list[int] | None = None,
     one_sense: int | None = None,
     wave: tuple[int, ...] | None = None,
     top: int = 1,
 ) -> None:
-    """The `at` lay of a record with a gap (or of the plane at the gap 0 at a wave number): the conjugate pair (the two records at the senses -1 and 1 where the lay names no sense or the sense 0, EM-S2; the one record at the sense -1 or 1 named) laid over the envelope along the vector (a plane's (1, 0)), at rest where the lay names no wave (`rest_record`, the former lay by name) or at the wave number (MV-S1: the phase pair composed one Link at a time from the circle's point per axis, the level before at the band's rotation, `wave_of`, `phases_of`; the wave 0 the rest lay bit for bit) with the flat `top` (1 the former envelope), each record at the largest amplitude whose share, summed over the packet, is at most n quanta of its unit (`fitted`); a record refused by state where the standing row and the child agree at the centre in their full state, the sense (the charges' product above 0) and the spin (the spin densities' dot above 0; SR-S4: the exclusion the lay's rule per full state), laid whole where either opposes or nothing stands; the lay logged."""
+    """The `at` lay of a record with a gap (or of the plane at the gap 0 at a wave number): the conjugate pair (the two records at the senses -1 and 1 where the lay names no sense or the sense 0, EM-S2; the one record at the sense -1 or 1 named) laid over the envelope, at rest where the lay names no wave (`rest_record`, the former lay by name) or at the wave number (MV-S1: the phase pair composed one Link at a time from the circle's point per axis, the level before at the band's rotation, `wave_of`, `phases_of`; the wave 0 the rest lay bit for bit) with the flat `top` (1 the former envelope), each record at the largest amplitude whose share, summed over the packet, is at most n quanta of its unit (`fitted`); the lay logged."""
     row = node.records()[rec]
     assert row.pair is not None
-    named = {"sense": int(one_sense or 0)} | (
-        {} if vector is None else {"vector": [int(v) for v in vector]}
-    )
-    vector = [1, 0] if vector is None else [int(v) for v in vector]
+    named: dict[str, Any] = {"sense": int(one_sense or 0)}
     half_tops: tuple[int, ...] = (0,) * AXES
     pairs = None
     if wave is not None:
@@ -313,11 +303,11 @@ def lay_packet(
         phases = phases_of(node, at, h, half_tops, points)
         pairs = (phases, turn_pair(phases[0], phases[1], rotation[0], rotation[1], node.den))
     node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
-    amplitude = fitted(node, row, envelope, w0, n * node.units[rec], vector, pairs)
+    amplitude = fitted(node, row, envelope, w0, n * node.units[rec], pairs)
     for sense in (-1, 1) if not one_sense else (int(one_sense),):
-        lines = rest_record(node, row, envelope, w0, amplitude, sense, vector, pairs)
+        lines = rest_record(node, row, envelope, w0, amplitude, sense, pairs)
         take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
-    lines = rest_record(node, row, envelope, w0, amplitude, 1, vector, pairs)
+    lines = rest_record(node, row, envelope, w0, amplitude, 1, pairs)
     rule = readings.rule(node, row.pair, node.start_content, factors(node))
     logged(
         node,
