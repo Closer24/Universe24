@@ -231,7 +231,7 @@ UNREAD: tuple[tuple[str, str | Callable[[Record], str], str], ...] = (
     (
         "41 the spinor's two beats",
         no_field,
-        "two beats of one quantum at rest in a held uniform field (the Zeeman doublet, tests/test_the_quartet.py)",
+        "two beats of one quantum at rest in a held uniform field (the Zeeman doublet)",
     ),
     (
         "42 the split along the gradient (Stern-Gerlach)",

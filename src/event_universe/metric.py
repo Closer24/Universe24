@@ -12,29 +12,27 @@ from event_universe.rows import zeros
 if TYPE_CHECKING:
     from event_universe.node import Node
 
-Sources = list[tuple[list[Any], int, list[list[int]]]]
+Sources = list[tuple[list[Any], int]]
 
 
 def stress_parts(rows: Sources, shape: tuple[int, ...]) -> list[Any]:
-    """The stress tensor's three diagonal parts from the records' levels, one act on every record alike: SUM over records of num x d.G.d with d the gradient of the lines along the axis and G the row's Gram matrix (the sum of the lines' squared gradients at G = I); `rows` holds (levels, num, G) triples."""
+    """The stress tensor's three diagonal parts from the records' levels, one act on every record alike: SUM over records of num x d.d with d the gradient of the lines along the axis (the sum of the lines' squared gradients); `rows` holds (levels, num) pairs."""
     parts = [zeros(shape) for _ in range(AXES)]
-    for levels, num, g in rows:
+    for levels, num in rows:
         for a in range(AXES):
             d = [gradient(x, a) for x in levels]
-            pairs = ((k, m) for k in range(len(d)) for m in range(len(d)) if g[k][m])
-            parts[a] = parts[a] + num * sum((g[k][m] * d[k] * d[m] for k, m in pairs), start=0)
+            parts[a] = parts[a] + num * gram.dot(d, d)
     return parts
 
 
 def shear_parts(rows: Sources, shape: tuple[int, ...]) -> list[Any]:
-    """The stress tensor's three off-diagonal parts on the axis pairs (a, a + 1): xy, yz, zx, the shears' source (Y-S1): SUM over records of num x d_a.G.d_b, the Node's product of its two centred gradients, T_2g under the cube's 48 (the sign the product of the two axes' signs), one Link's reach, the same act on every record as the diagonal parts; 0 at a Node where one body stands alone, the two-body tidal term between two."""
+    """The stress tensor's three off-diagonal parts on the axis pairs (a, a + 1): xy, yz, zx, the shears' source (Y-S1): SUM over records of num x d_a.d_b, the Node's product of its two centred gradients, T_2g under the cube's 48 (the sign the product of the two axes' signs), one Link's reach, the same act on every record as the diagonal parts; 0 at a Node where one body stands alone, the two-body tidal term between two."""
     parts = [zeros(shape) for _ in range(AXES)]
-    for levels, num, g in rows:
+    for levels, num in rows:
         d = [[gradient(x, a) for x in levels] for a in range(AXES)]
         for a in range(AXES):
             b = transverse(a)[0]
-            pairs = ((k, m) for k in range(len(levels)) for m in range(len(levels)) if g[k][m])
-            parts[a] = parts[a] + num * sum((g[k][m] * d[a][k] * d[b][m] for k, m in pairs), start=0)
+            parts[a] = parts[a] + num * gram.dot(d[a], d[b])
     return parts
 
 
@@ -44,11 +42,9 @@ def tensor_parts(parts: list[Any]) -> tuple[Any, list[Any]]:
     return trace, [AXES * part - trace for part in parts]
 
 
-def net_flux(g: list[list[int]], nows: list[Any], velocities: list[Any], axis: int) -> Any:
-    """A record's count flux on an axis at every Node (Y-S1, Y-S3): u.G.D_a N, the record's own velocity against the centred gradient of its levels at the start through the axis's two Links (the momentum density, the continuum's T_0a; summed over the board the lattice momentum, SUM_i F(i, i + a) with F_ij = u_i N_j - N_i u_j), odd under the axis's inversion (T_1u), one Link's reach, no division; the flux lines' source."""
-    d = [gradient(n, axis) for n in nows]
-    pairs = [(k, m) for k in range(len(nows)) for m in range(len(nows)) if g[k][m]]
-    return sum((g[k][m] * velocities[k] * d[m] for k, m in pairs), start=0)
+def net_flux(nows: list[Any], velocities: list[Any], axis: int) -> Any:
+    """A record's count flux on an axis at every Node (Y-S1, Y-S3): u.D_a N, the record's own velocity against the centred gradient of its levels at the start through the axis's two Links (the momentum density, the continuum's T_0a; summed over the board the lattice momentum, SUM_i F(i, i + a) with F_ij = u_i N_j - N_i u_j), odd under the axis's inversion (T_1u), one Link's reach, no division; the flux lines' source."""
+    return gram.dot(velocities, [gradient(n, axis) for n in nows])
 
 
 def rotation_of(node: Node, pair: tuple[int, int]) -> int:

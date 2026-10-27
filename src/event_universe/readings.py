@@ -53,11 +53,6 @@ def pair_angle(node: Node, n: Any) -> tuple[int, int]:
     return c_, s * sn_
 
 
-def scale(shape: int, gamma: Any) -> Any:
-    """The row's scale on the rule and the walls (the former gram.scale kept by name, a reading of the row's shape alone): 2 x 6 Gamma for the quartet, so that the term's coefficient R / (2 Gamma) summed over the six Ports enters as the integer SUM_j R_j (SR-S3, sr1's form); 1 for every other shape."""
-    return 1
-
-
 def rule(node: Node, pair: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
     """Rule3's integers of a pair at the Node's paces from the content, in the carrier's unit (PM-S1)."""
     clock, pace = paces_of(node, c)
@@ -65,11 +60,11 @@ def rule(node: Node, pair: tuple[int, int], c: Any, factors: tuple[Any, ...]) ->
 
 
 def rule_of(node: Node, r: Row, c: Any, factors: tuple[Any, ...]) -> rule3.Rule:
-    """A row's rule: Rule3's integers at its pair and the Node's paces scaled by the row's scale (gram.scale: 1 but for the quartet), or, for the row with its own wall, no Links and the own weight 2 w (next = 2 now - before + the write inside the division)."""
+    """A row's rule: Rule3's integers at its pair and the Node's paces, or, for the row with its own wall, no Links and the own weight 2 w (next = 2 now - before + the write inside the division)."""
     if r.wall is not None:
         return rule3.Rule(tuple(0 for _ in range(PORTS)), r.wall + r.wall, r.wall, 0)
     assert r.pair is not None
-    return rule3.scaled(rule(node, r.pair, c, factors), scale(r.shape, node.gamma))
+    return rule(node, r.pair, c, factors)
 
 
 def mean_wall(node: Node, line: Line) -> Any:

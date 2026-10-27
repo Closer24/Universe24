@@ -61,18 +61,6 @@ def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
     return divide(unit * unit * pace * pace, wall, half(wall))[0]
 
 
-def scaled(rule: Rule, scale: Any) -> Rule:
-    """A rule's four names scaled alike (the reaches, the own weight, the wall, the mass): the line's units a multiple, its quotients unchanged, a term the scale carries exact inside the division (SR-S3); the identity at 1."""
-    if scale == 1:
-        return rule
-    return Rule(
-        tuple(scale * x for x in rule.reaches),
-        scale * rule.self_coefficient,
-        scale * rule.wall,
-        scale * rule.mass,
-    )
-
-
 def least_at(above: Callable[[int], bool]) -> int:
     """The least positive count at which `above` holds, by comparisons alone (the one search of the lays' amplitudes and the merger's rise; its four spellings kept by name): the bound doubled from 1 until it holds, then halved between the last count below and the first above."""
     high = 1

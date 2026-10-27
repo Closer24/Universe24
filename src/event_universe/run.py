@@ -202,7 +202,7 @@ def packets_of(node: Node) -> dict[str, Any]:
         if row is node.emitter():
             continue
         nows = [line.now for line in row.lines]
-        weight = gram.form(gram.gram(row.shape), nows, nows)
+        weight = gram.dot(nows, nows)
         total = sum(ints(weight))
         if total == 0:
             continue
