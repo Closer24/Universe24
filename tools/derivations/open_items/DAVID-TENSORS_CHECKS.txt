@@ -1,0 +1,57 @@
+DAVID-TENSORS_CHECKS.txt: the scans behind DAVID-TENSORS.md (David, 2026-10-27), on the head 608d97134.
+
+====================================================================================================
+Every read of the regulator's gears in src, and the tensions' sum through the hole's 60 ticks
+---------------------------------------- tensor_scan.py
+"""The tensor picture's checks on the head: (1) every read of the regulator's gears in src by slice (which of the ten gears any act reads); (2) the three tensions' sum over the board through a chart (the traceless source keeps it near 0)."""
+import os, re, sys, json
+WT = os.environ.get("WT", "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/wt_g4")
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, WT + "/src")
+src = WT + "/src/event_universe"
+reads = []
+for root, _, files in os.walk(src):
+    for f in files:
+        if f.endswith(".py"):
+            for i, line in enumerate(open(os.path.join(root, f)), 1):
+                if re.search(r"(REGULATOR\)|regulator|metric|carrier)\.gears\[", line):
+                    reads.append(f"{os.path.relpath(os.path.join(root, f), src)}:{i}: {line.strip()[:110]}")
+print("every slice read of the regulator's gears:")
+for r in reads:
+    print("  " + r)
+from event_universe.clock import Clock
+from event_universe.trains import REGULATOR
+from event_universe.core.spokes import AXES
+c = json.load(open(WT + "/examples/records/hole.json"))
+node = Clock(c["universe"], dict(c["world"], intervals=60))
+worst, largest = 0, 0
+for _ in range(60):
+    node.tick()
+    g = node.train(REGULATOR).gears
+    total = sum(g[1 + a].now for a in range(AXES))
+    worst = max(worst, max(abs(int(x)) for x in total.reshape(-1)))
+    largest = max(largest, max(abs(int(x)) for a in range(AXES) for x in g[1 + a].now.reshape(-1)))
+print(f"the hole through 60 ticks: the largest |tension| {largest}, the largest |sum of the three tensions| at a clock {worst}")
+---------------------------------------- output: out_tensor.txt
+every slice read of the regulator's gears:
+  clock.py:100: for line in self.train(REGULATOR).gears[:1]:
+  clock.py:107: self.start_load, self.start_stretch = readings.load(self), self.train(REGULATOR).gears[0].now
+  clock.py:112: wall = readings.mean_teeth(self, self.train(REGULATOR).gears[0])
+  clock.py:259: x0, x1, x2 = held[k][0].before, held[k][0].now, self.train(REGULATOR).gears[0].now
+  meshes.py:67: [line.now for line in node.train(REGULATOR).gears[1 : 1 + AXES]]
+  unwind.py:112: lines = node.train(REGULATOR).gears[1 + AXES : 1 + AXES + AXES]
+  tick.py:97: stretch.load_of(node.full_rate, self.at(self.regulator.gears[0])), dtype=object
+  tick.py:107: node, [self.at(line) for line in self.regulator.gears[1 : 1 + AXES]], self.stopped
+  tick.py:113: self.stretch_now = self.at(self.regulator.gears[0])
+  tick.py:118: self.flow_gears = [self.at(line) for line in self.regulator.gears[1 + AXES : 1 + AXES + AXES]]
+  tick.py:208: w_side = readings.mean_teeth(self.clock, self.regulator.gears[0])
+  tick.py:283: line, carrier = node.unsprung().gears[0], node.train(REGULATOR).gears[0]
+  run.py:226: cs, vs = ints(readings.load(node)), ints(metric.gears[0].now)
+  run.py:235: tens = [x for line in metric.gears[1:] for x in ints(line.now)]
+  run.py:267: carrier = node.train(REGULATOR).gears[0]
+  readings.py:32: return np.asarray(stretch.load_of(node.full_rate, node.train(REGULATOR).gears[0].now), dtype=object)
+  assembly/cycle.py:54: node.start_load, node.start_stretch = readings.load(node), node.train(REGULATOR).gears[0].now
+  assembly/setting.py:220: node.start_load, node.start_stretch = readings.load(node), node.train(REGULATOR).gears[0].now
+  assembly/setting.py:309: node.start_load, node.start_stretch = readings.load(node), node.train(REGULATOR).gears[0].now
+the hole through 60 ticks: the largest |tension| 45, the largest |sum of the three tensions| at a clock 61
+
