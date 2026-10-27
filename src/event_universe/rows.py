@@ -7,12 +7,13 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.acts import born
+from event_universe.core.ports import AXES
 from event_universe.core.rule3 import held_wall, quotient
 
-CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
-POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
+CARRIER = 1 + AXES + AXES + AXES  # the wall's row: the time line, then AXES tensions, fluxes and shears
+POTENTIAL = AXES + 1  # the shape of the row at (den, den): its time line and its AXES odd lines
 PLANE = 2  # the shape of a conjugate pair of records
-POWER_TIME = 4  # the held wall's power of Gamma on the carrier's time line, POWER_AXIS the nine axis lines' (K-S1 to K-S3, Y-S1)
+POWER_TIME = 4  # the vacuum's balance: X, the bracket and the clock; POWER_AXIS the clock's square
 POWER_AXIS = 2
 
 

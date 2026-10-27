@@ -6,12 +6,11 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram
 from event_universe.core import rule3
 from event_universe.core.ports import AXES, PORT_SIDES, PORTS
 from event_universe.links import row_current
 from event_universe.merger import takes
-from event_universe.rows import PLANE, Line
+from event_universe.rows import Line
 from event_universe.run import credit
 from event_universe.take import frame_nodes, move, recoil
 
@@ -37,21 +36,14 @@ def bodies(
             lambda v, unit=node.units[rec]: 1 if int(v) >= unit else 0, otypes=[object]
         )(owns[rec])
         node.standing[rec] = np.where(standing_now == 1, node.standing[rec] + 1, 0)
-        if row.shape == PLANE:
-            re = row.lines[0]
-            crossing = np.vectorize(
-                lambda b, n: 1 if (int(b) * int(n) < 0 or (int(b) == 0) != (int(n) == 0)) else 0,
-                otypes=[object],
-            )(re.before, re.now)
-            counting = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(node.crossed[rec])
-            node.beats[rec] = np.where(
-                (crossing == 1) & (counting == 1), node.crossed[rec], node.beats[rec]
-            )
-            node.crossed[rec] = np.where(
-                crossing == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0)
-            )
-        else:
-            node.beats[rec] = gram.period(node, row.lines, standing_now)
+        re = row.lines[0]
+        crossing = np.vectorize(
+            lambda b, n: 1 if (int(b) * int(n) < 0 or (int(b) == 0) != (int(n) == 0)) else 0,
+            otypes=[object],
+        )(re.before, re.now)
+        counting = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(node.crossed[rec])
+        node.beats[rec] = np.where((crossing == 1) & (counting == 1), node.crossed[rec], node.beats[rec])
+        node.crossed[rec] = np.where(crossing == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0))
         closing = np.vectorize(
             lambda st, bt: 1 if (int(bt) > 0 and int(st) >= int(bt)) else 0, otypes=[object]
         )(node.standing[rec], node.beats[rec])

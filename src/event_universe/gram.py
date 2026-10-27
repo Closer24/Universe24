@@ -1,4 +1,4 @@
-"""The record rows' bilinears, one act on every record alike: a record is a plane, its two lines a clock's hand (re, im), with the plain products line by line (`products`, `dot`), a rotation J (the quarter turn (re, im) -> (-im, re)) and a conjugation K (the im line's negation): the charge B.J.N (the plane's Wronskian), the current, the frame's conjugation of a neighbour's lines, the lay at rest by rule3's signed quotient and the period from the rotation's cosine N.B / N.N read along the law's own orbit (the spinor row's Gram form, axis matrices, spin density, curl term and scale struck with the row, 2026-10-27)."""
+"""The record rows' bilinears, one act on every record alike: a record is a plane, its two lines a clock's hand (re, im), with the plain products line by line (`products`, `dot`), a rotation J (the quarter turn (re, im) -> (-im, re)) and a conjugation K (the im line's negation): the charge B.J.N (the plane's Wronskian), the current, the frame's conjugation of a neighbour's lines, the lay at rest by rule3's signed quotient and the rotation's angle read along the law's own orbit (`cosine_count`; the spinor row's Gram form, axis matrices, spin density, curl term and scale struck with the row, 2026-10-27)."""
 
 from __future__ import annotations
 
@@ -170,24 +170,3 @@ def cosine_count(node: Node, p: int, d: int) -> int:
         else:
             high = middle
     return high
-
-
-def period(node: Node, lines: list[Line], standing: Any) -> Any:
-    """The record's beat at the Nodes where it stands, from the invariant ratio cos omega = N.B / N.N: the angle's count n along the law's orbit (`cosine_count`), then the first k >= 2 at which the orbit's cosine at k n is a maximum against k - 1 and k + 1, the first return; 0 where the ratio is degenerate."""
-    nn = dot([line.now for line in lines], [line.now for line in lines])
-    nb = dot([line.now for line in lines], [line.before for line in lines])
-    found = zeros(node.shape)
-    for where in zip(*np.nonzero(np.asarray(standing, dtype=object) == 1), strict=True):
-        at = tuple(int(x) for x in where)
-        d, p = int(nn[at]), int(nb[at])
-        if d == 0 or p >= d or p <= -d:
-            continue
-        n = cosine_count(node, p, d)
-        k = 1
-        while not (
-            pair_angle(node, k * n)[0] >= pair_angle(node, (k - 1) * n)[0]
-            and pair_angle(node, k * n)[0] >= pair_angle(node, (k + 1) * n)[0]
-        ):
-            k += 1
-        found[at] = k
-    return found

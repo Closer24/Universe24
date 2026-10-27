@@ -6,15 +6,15 @@ from collections.abc import Callable
 from typing import Any, NamedTuple
 
 from event_universe.core.acts import divide
-from event_universe.core.ports import PORTS
+from event_universe.core.ports import AXES, PORTS
 
 # the Node's reaches, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij G^2 on
 # the Link to that neighbour; integers or the loop's integer arrays
 Reads = tuple[Any, ...]
 HELD_WRITE_WEIGHT = (
-    4  # the held write's 4 X (...) p_0 (the hypothesis The stress's trace is the time line's, d + 1)
-)
-UNIT_WEIGHT = 3  # the plane's unit 3 T s (the conventions' row 12)
+    AXES + 1
+)  # the held write's (d + 1) X (...) p_0: X = Gamma (Gamma / p_0)^(d + 1), dX/dU = (d + 1) X
+UNIT_WEIGHT = AXES  # the plane's unit (PORTS / 2) T s: a rest mode's share PORTS s |W| at one quantum |W| = T div 2
 
 
 class Rule(NamedTuple):
