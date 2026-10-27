@@ -2,6 +2,8 @@
 
 David, 2026-10-27, 12:0x UTC, for the Boss (his tasks of 11:0x and 11:3x UTC), on the owner's words of 11:0x, 11:20 and 11:3x UTC.
 
+**Corrected by DAVID-SPIN-SOLVED.md, section 6 (2026-10-27, 13:0x UTC).** Section 4 counted Pauli by the energy (share div unit), which is no count of quanta. The count is the charge per sense, and by it the born matter keeps one quantum per plane per Node at every click on the head. G0 (section 5) is withdrawn: the head's lay is right.
+
 ## The words
 
 - **11:0x UTC, relayed in the Boss's task, in translation:** "Spin as a pair of planes for matter ... the engine tells no family from another, only the universe file ... every row the same act ... are the 10, 4 and 2 in the code for families?"
