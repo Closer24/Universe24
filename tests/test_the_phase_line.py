@@ -3,22 +3,22 @@
 import numpy as np
 import pytest
 
-from event_universe import rows
-from event_universe.core.paces import rounded, sine_den
+from event_universe import trains
+from event_universe.assembly.piece import check_piece
+from event_universe.clock import Clock
+from event_universe.core.rates import rounded, sine_rim
 from event_universe.core.rule3 import largest_below
-from event_universe.features.phase import (
-    K0,
-    D,
+from event_universe.features.standard import (
     act,
     carried,
     deviation,
-    floor,
-    half_wall,
-    seed,
-    unit,
+    first_pair,
+    shortest_hand,
+    standard_mid,
+    standard_pinion,
+    standard_rate,
+    standard_teeth,
 )
-from event_universe.loader.world import read_world
-from event_universe.node import Node
 from tests.laws import refused, world_of
 
 
@@ -30,7 +30,7 @@ def iterate(pair, count, gamma, direction=1):
 
 
 GAMMA = 6_000
-WALL, COEFFICIENT, X175 = D(GAMMA), K0(GAMMA), 175 * GAMMA
+WALL, COEFFICIENT, X175 = standard_teeth(GAMMA), standard_pinion(GAMMA), 175 * GAMMA
 X35 = (2**35 // GAMMA) * GAMMA  # 2^35's size, the largest multiple of Gamma below it: 34,359,738,000
 TENTH, ROOM = 10**10, 10**10 + 26  # the angle's relative unit, and (1 + 2.6 x 10^-9) 10^10
 
@@ -58,28 +58,28 @@ def test_the_seed_stands_on_the_circle_at_the_half_wall_and_refuses_an_amplitude
     assert (WALL, COEFFICIENT) == (2 * GAMMA**2, WALL - 1) == (72_000_000, 71_999_999)
     assert 2 * COEFFICIENT * GAMMA**2 == (2 * GAMMA**2 - 1) * WALL  # 2 K_0 / D = 2 - 1 / Gamma^2
     margin = 12 * GAMMA**2 * (ROOM**2 * TENTH**2 - TENTH**4) - ROOM**4
-    assert margin >= 0 and half_wall(GAMMA) == GAMMA**2 == WALL // 2
+    assert margin >= 0 and standard_mid(GAMMA) == GAMMA**2 == WALL // 2
     for x in (X35, X175):
-        cosine, sine = pair = seed(x, GAMMA)
+        cosine, sine = pair = first_pair(x, GAMMA)
         assert cosine == (x, rounded(x * COEFFICIENT, WALL), WALL // 2)
         assert sine == (0, -(x // GAMMA), WALL // 2)
         assert 2 * abs(WALL * int(cosine[1]) - x * COEFFICIENT) <= WALL
         scaled = -int(sine[1]) * WALL  # (X div Gamma) D against floor(X D sin theta_0)
-        assert scaled - WALL <= sine_den(COEFFICIENT, WALL, x) < scaled + WALL
+        assert scaled - WALL <= sine_rim(COEFFICIENT, WALL, x) < scaled + WALL
         assert within(pair, x, bound(0)) and within(pair, x, bound(0), 1)
         assert within(turned := iterate(pair, 10, GAMMA), x, bound(10))
         print(
             f"seed X = {x}: now off {off(pair, x)} levels (floor, the square's excess), before off {off(pair, x, 1)}, after 10 acts {off(turned, x)} (bound {bound(10)})"
         )
-    refused("not a multiple of Gamma", seed, 2**35, GAMMA)
-    refused("not a multiple of Gamma", seed, 2**35 + 1, GAMMA)
-    refused("not a multiple", seed, np.array([X35, X35 + 1], dtype=np.int64), GAMMA)
+    refused("not a multiple of Gamma", first_pair, 2**35, GAMMA)
+    refused("not a multiple of Gamma", first_pair, 2**35 + 1, GAMMA)
+    refused("not a multiple", first_pair, np.array([X35, X35 + 1], dtype=np.int64), GAMMA)
     print(f"theta_0 Gamma - 1 <= {ROOM - TENTH} / 10^10, margin {margin}")
 
 
 def test_the_reversal_is_bit_exact_over_ten_thousand_acts():
     """10^4 acts forward then 10^4 inverse acts (direction -1): both lines, levels and remainders, bit for bit the seed; the same through `iterate` at direction -1 and through the signed count."""
-    pair = seed(X35, GAMMA)
+    pair = first_pair(X35, GAMMA)
     cosine, sine = pair
     acts = 10**4
     for _ in range(acts):
@@ -101,18 +101,18 @@ def test_the_amplitude_is_the_universes_and_the_engine_refuses_a_scale_below_the
     """The amplitude declared from outside (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; THE-AMPLITUDE-SCALE.md): the universe file names it beside den, Gamma and T (288,230,376,000 in the shipped universes, a multiple of 2 Gamma), the loader refuses a file naming none, and the engine carries it above the floor derived from Gamma alone, 23 Gamma at Gamma 1,000 (the orbit's departure 23 levels against the step 22 at k = 22, 20 against 23 at k = 23), refusing a scale below it by name as the engine's, never as nature's; no width and no room stands in the engine."""
     universe, world = world_of("world_hole.json")
     gamma, scale = int(universe["integers"]["node_clock"]), int(universe["integers"]["amplitude"])
-    least = floor(gamma)
+    least = shortest_hand(gamma)
     assert least == 23 * gamma and deviation(22 * gamma, gamma) >= 22 > deviation(least, gamma)
-    assert scale == 288_230_376_000 and scale % unit(gamma) == 0 and least < scale
-    assert carried(scale, gamma) == scale and Node(universe, world).X == scale
+    assert scale == 288_230_376_000 and scale % standard_rate(gamma) == 0 and least < scale
+    assert carried(scale, gamma) == scale and Clock(universe, world).standard_length == scale
     refused("engine cannot carry", carried, least - gamma, gamma)
     for words in ("nature", "law"):
         with pytest.raises(ValueError) as caught:
             carried(gamma, gamma)
         assert words not in str(caught.value)
     kept = {k: v for k, v in universe["integers"].items() if k != "amplitude"}
-    refused("names no amplitude", read_world, world, {**universe, "integers": kept})
-    assert not any(hasattr(rows, name) for name in ("WIDTH", "HALF_WIDTH", "ROOM"))
+    refused("names no amplitude", check_piece, world, {**universe, "integers": kept})
+    assert not any(hasattr(trains, name) for name in ("WIDTH", "HALF_WIDTH", "ROOM"))
     print(
         f"the floor {least} = {least // gamma} Gamma at Gamma {gamma}; the universe's amplitude {scale}"
     )

@@ -6,21 +6,21 @@ from collections import Counter
 from typing import Any
 
 from event_universe.core import rule3
-from event_universe.core.ports import AXES
-from event_universe.decoder import HALF, PAIR, Record, unread_words
+from event_universe.core.spokes import AXES
+from event_universe.reckoner import HALF, PAIR, Chart, sign, unread_words
 
 REGIONS = PAIR**AXES  # the board's regions, each axis split at the cube's half
 
 
-def region(record: Record, node: list[int] | tuple[int, ...]) -> int:
+def region(record: Chart, node: list[int] | tuple[int, ...]) -> int:
     """A Node's region of the board, one of eight: each axis split at the cube's half."""
-    half = int(rule3.quotient(record.cube, HALF))
+    half = int(rule3.carries(record.cube, HALF))
     return sum((int(x) >= half) << a for a, x in enumerate(node))
 
 
-def uniformity(record: Record) -> dict[str, Any]:
+def uniformity(record: Chart) -> dict[str, Any]:
     """Row 63: the uniformity in the clicks, the credits counted per region of the board (eight, each axis at its half): SHOWN where every region is credited and the least holds at least half the largest."""
-    counts = Counter(region(record, c["node"]) for c in record.credits)
+    counts = Counter(region(record, c["node"]) for c in record.chimes)
     least, largest = min(counts.values(), default=0), max(counts.values(), default=0)
     return {
         "63 the uniformity in the clicks": {
@@ -38,12 +38,12 @@ def uniformity(record: Record) -> dict[str, Any]:
     }
 
 
-def dark_matter(record: Record) -> dict[str, Any]:
+def dark_matter(record: Chart) -> dict[str, Any]:
     """Row 64: dark matter in kind (the law's theorem of the lines): a body credited in its own well whose Nodes lay no light, a credit track at a Node where no birth took and no child was laid through the run."""
-    lit = {record.index(b["node"]) for b in record.births}
-    lit |= {record.index(b["minus"]) for b in record.births}
-    lit |= {record.index(b["plus"]) for b in record.births}
-    bodies = record.bodies_of()
+    lit = {record.index(b["node"]) for b in record.fittings}
+    lit |= {record.index(b["minus"]) for b in record.fittings}
+    lit |= {record.index(b["plus"]) for b in record.fittings}
+    bodies = record.bobs_of()
     dark = [key for key in bodies if record.index(key[0]) not in lit]
     return {
         "64 dark matter in kind": {
@@ -63,16 +63,16 @@ def dark_matter(record: Record) -> dict[str, Any]:
     }
 
 
-def lepton_number(record: Record) -> dict[str, Any]:
+def lepton_number(record: Chart) -> dict[str, Any]:
     """Row 65: the lepton number (the record's parts are its particles, the record's count conserved at the click): for every species born, the children's own senses summed over its births is 0, each birth a pair of opposite senses, so the number of each species less its anti-species is conserved."""
     sums: Counter[str] = Counter()
-    for b, (a, c) in zip(record.births, record.charges_of(), strict=True):
-        sums[record.line_name[b["line_pair"]]] += (a > 0) - (a < 0) + (c > 0) - (c < 0)
+    for b, (a, c) in zip(record.fittings, record.sweeps_of(), strict=True):
+        sums[record.gear_name[b["line_pair"]]] += sign(a) + sign(c)
     return {
         "65 the lepton number": {
             "the senses summed per species born": dict(sums),
             "verdict": unread_words("no birth", "every species' senses sum to 0 over its births")
-            if not record.births
+            if not record.fittings
             else "SHOWN: every species' senses sum to 0 over its births, its number conserved at the click"
             if all(s == 0 for s in sums.values())
             else f"NOT SHOWN: {sum(1 for s in sums.values() if s)} species with a sum not 0",
@@ -80,11 +80,11 @@ def lepton_number(record: Record) -> dict[str, Any]:
     }
 
 
-def energy(record: Record) -> dict[str, Any]:
+def energy(record: Chart) -> dict[str, Any]:
     """Row 66: the energy in the clicks (one point and one beat, D-S2): a body's beat per proper interval before and after its click equal within one level, the taken light's beat the difference, on every pair of a body's consecutive credits."""
     pairs = [
         (b1, b2)
-        for cs in ([(c["proper"], c["beat"]) for c in body] for body in record.bodies_of().values())
+        for cs in ([(c["proper"], c["beat"]) for c in body] for body in record.bobs_of().values())
         for (_p1, b1), (_p2, b2) in zip(sorted(cs), sorted(cs)[1:], strict=False)
         if b1 > 0 and b2 > 0
     ]
@@ -105,9 +105,9 @@ def energy(record: Record) -> dict[str, Any]:
     }
 
 
-def cpt(record: Record) -> dict[str, Any]:
+def cpt(record: Chart) -> dict[str, Any]:
     """Row 67: CPT as one row, on every credit's frame: the charge W = re_now im_before - im_now re_before is odd under the conjugation C (the im line negated), even under the reflection P (the Node's own levels unmoved, the six Links exchanged in pairs), odd under the slot exchange T (CA-S1, now for before), so even under the three together; counted over the frames whose W is not 0."""
-    frames = [c["frame"] for c in record.credits if "frame" in c]
+    frames = [c["frame"] for c in record.chimes if "frame" in c]
     w = [f["re_now"] * f["im_before"] - f["im_now"] * f["re_before"] for f in frames]
     c = [f["re_now"] * -f["im_before"] - -f["im_now"] * f["re_before"] for f in frames]
     t = [f["re_before"] * f["im_now"] - f["im_before"] * f["re_now"] for f in frames]
@@ -135,16 +135,16 @@ def cpt(record: Record) -> dict[str, Any]:
     }
 
 
-def hands_of(record: Record) -> tuple[int, int, int]:
+def twists_of(record: Chart) -> tuple[int, int, int]:
     """The moving births' hands (the births of a pair; a merger lays its light at both ends and carries no hand): the + child at the take's Node, at the other end, and the mergers beside."""
-    moving = [b for b in record.births if "takes" not in b]
+    moving = [b for b in record.fittings if "takes" not in b]
     at_node = sum(1 for b in moving if list(b["plus"]) == list(b["node"]))
-    return at_node, len(moving) - at_node, len(record.births) - len(moving)
+    return at_node, len(moving) - at_node, len(record.fittings) - len(moving)
 
 
-def matter_against_antimatter(record: Record) -> dict[str, Any]:
+def matter_against_antimatter(record: Chart) -> dict[str, Any]:
     """Row 68: matter against antimatter (HD-S1, the Boss's 6412271828 and 6413689341): the hand enters the law in one act, the + child laid at the end the current flows into where the twist is right-handed, so over the moving births the + child stands at the take's Node on some and at the other end on the rest (the twist's sign at each click, P-odd and C-even, kept by the bijection), the mergers named beside; counted, the hand's choice read at every moving birth."""
-    at_node, other, mergers = hands_of(record)
+    at_node, other, mergers = twists_of(record)
     return {
         "68 matter against antimatter": {
             "moving births with the + child at the take's Node / at the other end": [at_node, other],
@@ -158,9 +158,9 @@ def matter_against_antimatter(record: Record) -> dict[str, Any]:
     }
 
 
-def one_hand(record: Record) -> dict[str, Any]:
+def one_twist(record: Chart) -> dict[str, Any]:
     """Row 69: the neutrino's one hand (the Boss's 6412773403, the helicity pair's reading): the hand of every moving birth, the end the + child is laid at (the take's Node or the other end, by the twist at the click), all one over the record where nature's neutrino shows one hand alone; NOT SHOWN with its cause where both hands stand (no conversion on the records, the births' hands split), NOT READ where no moving birth."""
-    at_node, other, mergers = hands_of(record)
+    at_node, other, mergers = twists_of(record)
     return {
         "69 the neutrino's one hand": {
             "moving births by hand (the + child at the take's Node / at the other end)": [
@@ -177,11 +177,11 @@ def one_hand(record: Record) -> dict[str, Any]:
     }
 
 
-def baryon_number(record: Record) -> dict[str, Any]:
+def baryon_number(record: Chart) -> dict[str, Any]:
     """Row 70: the baryon number, the C-odd count (the Boss's 6413689341, the floor pair's reading): the children's own charges summed over each birth's two children, 0 at every birth (a pair at opposite senses, a merger's light at 0 and 0: no matter-making act in the law, the count conserved at the click); the record's Wronskian at the children's Nodes summed beside it, apart from 0 where a child was laid on a standing level (the residue, the Node's W) and over the mergers' light (W of one sign on both until merger.py's fix); SHOWN where the own charges sum to 0 at every birth."""
-    own = [a + c for a, c in record.charges_of()]
-    pairs = [sum(b["W_children"]) for b in record.births if "takes" not in b]
-    mergers = [sum(b["W_children"]) for b in record.births if "takes" in b]
+    own = [a + c for a, c in record.sweeps_of()]
+    pairs = [sum(b["W_children"]) for b in record.fittings if "takes" not in b]
+    mergers = [sum(b["W_children"]) for b in record.fittings if "takes" in b]
     return {
         "70 the baryon number": {
             "births whose children's own charges sum to 0 / in all": [own.count(0), len(own)],
@@ -201,10 +201,10 @@ def baryon_number(record: Record) -> dict[str, Any]:
     }
 
 
-def bookings_of(record: Record) -> list[tuple[Any, ...]]:
+def tallies_of(record: Chart) -> list[tuple[Any, ...]]:
     """Every booking a move wrote on the Link's record (LT-S1, take.recoil): the momentum's change per axis the move books (dP_take at a take, dP_lay at a birth's end), the clock the Node read at the interval's start, the levels laid per axis on the carrier's flux lines, and their carry before and after; a line without the keys (a record run before LT-S1) is no booking."""
     found: list[tuple[Any, ...]] = []
-    for entry in record.takes:
+    for entry in record.unwinds:
         if "recoil" not in entry:
             continue
         found.append(
@@ -224,11 +224,11 @@ def bookings_of(record: Record) -> list[tuple[Any, ...]]:
     return found
 
 
-def momentum_booked(record: Record) -> dict[str, Any]:
+def momentum_booked(record: Chart) -> dict[str, Any]:
     """Row 71: the momentum booked on the Link (LT-S1, H-Lay-As-The-Take-Reversed-1's derivation, line 19 as the Boss corrected its sign): at every move the momentum the quantum lost is written on the carrier's flux line of each axis at the Node by the one write act, -dP_a p_0^2 + the carry before - the carry after = the levels laid times the write wall 6 den Gamma^2 T, the clock p_0 the Node's at the interval's start; so the records' and the lattice's momentum sum to what they were at every click, an identity on every booking of the record; NOT READ on a record without the bookings' keys."""
-    wall = rule3.wall_of(record.den, record.gamma) * record.T
+    wall = rule3.teeth_of(record.rim, record.full_rate) * record.key
     held = laid = failed = 0
-    for dp, clock, recoil, was, after in bookings_of(record):
+    for dp, clock, recoil, was, after in tallies_of(record):
         for a in range(AXES):
             if -dp[a] * clock * clock + was[a] - after[a] == recoil[a] * wall:
                 held += 1

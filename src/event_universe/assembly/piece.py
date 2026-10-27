@@ -6,14 +6,14 @@ import json
 from pathlib import Path
 from typing import Any
 
-from event_universe.rows import CARRIER, PLANE, POTENTIAL
+from event_universe.trains import HAND, OFFSET, REGULATOR
 
-WORLD_KEYS = frozenset({"universe", "shape", "intervals", "seed"})
-UNIVERSE_KEYS = frozenset({"integers", "rows"})
+PIECE_KEYS = frozenset({"universe", "shape", "intervals", "seed"})
+CALIBRE_KEYS = frozenset({"integers", "rows"})
 INTEGERS = frozenset(
     {"den", "node_clock", "quantum_action", "trace", "amplitude"}
 )  # the Link unit G is derived from Gamma (K-S1), no key; the trace the held write's weight (ALGEBRA.md, the held write); the amplitude the phase line's scale declared from outside, carried above the floor derived from Gamma (phase.carried; the owner's words of 2026-10-27, 04:0x and 04:4x UTC)
-ROW_KEYS = frozenset({"shape", "pair", "wall"})
+TRAIN_KEYS = frozenset({"shape", "pair", "wall"})
 
 
 def refused_keys(found: dict[str, Any], allowed: frozenset[str], name: str) -> None:
@@ -23,26 +23,28 @@ def refused_keys(found: dict[str, Any], allowed: frozenset[str], name: str) -> N
         raise ValueError(f"the {name} file holds keys of no law: {', '.join(beyond)}")
 
 
-def read_world(world: dict[str, Any], universe: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+def check_piece(
+    world: dict[str, Any], universe: dict[str, Any]
+) -> tuple[dict[str, Any], dict[str, Any]]:
     """The two files' dictionaries with their keys checked: the world's four keys, the universe's two, the universe's five integers each named (a missing one refused by name), every row's shape one the law names (the walled row, the plane, the shape-4 row, the shape-10 row) with a pair or a wall."""
-    refused_keys(world, WORLD_KEYS, "world")
-    refused_keys(universe, UNIVERSE_KEYS, "universe")
+    refused_keys(world, PIECE_KEYS, "world")
+    refused_keys(universe, CALIBRE_KEYS, "universe")
     refused_keys(universe["integers"], INTEGERS, "universe's integers")
     missing = sorted(INTEGERS - set(universe["integers"]))
     if missing:
         raise ValueError(f"the universe file names no {', '.join(missing)}: refused by name")
     for row in universe["rows"]:
-        refused_keys(row, ROW_KEYS, "universe's row")
-        if int(row["shape"]) not in (1, PLANE, POTENTIAL, CARRIER):
+        refused_keys(row, TRAIN_KEYS, "universe's row")
+        if int(row["shape"]) not in (1, HAND, OFFSET, REGULATOR):
             raise ValueError(f"a row of shape {row['shape']} is no row of the law: refused by name")
         if ("pair" in row) == ("wall" in row):
             raise ValueError("a row has a pair or a wall of its own, one of the two")
     return universe, world
 
 
-def load_world(path: str | Path) -> tuple[dict[str, Any], dict[str, Any]]:
+def read_piece(path: str | Path) -> tuple[dict[str, Any], dict[str, Any]]:
     """The universe and the world from the world file's path."""
     where = Path(path)
     world = json.loads(where.read_text(encoding="utf-8"))
     universe = json.loads(where.parent.joinpath(world["universe"]).read_text(encoding="utf-8"))
-    return read_world(world, universe)
+    return check_piece(world, universe)
