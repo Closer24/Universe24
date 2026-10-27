@@ -100,6 +100,22 @@ NAMES = {
         "the mass becomes light",
         "E = mc^2 at the merger, the pair's share taken as the light's quantum",
     ),
+    "74": (
+        "the light polarized by its current",
+        "the polarization of light, the light kicked by a current lit along it",
+    ),
+    "75": (
+        "the modes share one temperature",
+        "temperature and the equipartition of energy, the families' wind per mode at one common mean",
+    ),
+    "76": (
+        "matter bound in the held field",
+        "nuclear binding, a family's chimes bound one mesh apart in the held field's well",
+    ),
+    "77": (
+        "the baryon as a shape",
+        "the baryon as a shape, three hands of the three colours bound as one",
+    ),
     "the conservations in the clicks": ("the clicks conserve", "the conservations in the clicks"),
     "the three constants": ("the three constants hold", "the three constants"),
 }  # every row by its number (the key's first word) or its key: its label of three to six words for the page, and the phenomenon in plain words for the table
