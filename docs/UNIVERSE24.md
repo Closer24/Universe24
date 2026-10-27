@@ -123,7 +123,7 @@ The owner's word, verbatim in translation: "all the time make sure the things ar
 
 ### The gates of the phenomena (the head 67a7633d; written by tools/phenomena.py from the readings, the verdict of every row the decoder's)
 
-SHOWN in Universe24: 41 of 71 on 67a7633d. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3, sea_50000, nature_bang, matter_bang, matter_horizon, sea_3600. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
+SHOWN in Universe24: 43 of 73 on 67a7633d. The records read from the seed alone: nature, ga2, collapse_800, bodies, hole, universe, plasma, sea, plasma_3, universe_3, sea_50000, nature_bang, matter_bang, matter_horizon, sea_3600. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.
 
 | the phenomenon | gate | the verdict per record | the cause where not SHOWN | since the table before |
 | --- | --- | --- | --- | --- |
@@ -198,6 +198,8 @@ SHOWN in Universe24: 41 of 71 on 67a7633d. The records read from the seed alone:
 | the neutrino's one hand, the births' hand all one | 69 | NOT SHOWN on nature, ga2, bodies, hole, nature_bang, matter_bang, matter_horizon; NOT READ on collapse_800, universe, plasma, sea, plasma_3, universe_3, sea_50000, sea_3600 | both hands stand, 8 and 13 moving births (no conversion on the record, the hands split by the twist at each click) | unchanged |
 | the baryon number, the C-odd count 0 at every birth | 70 | SHOWN on nature, ga2, bodies, hole, nature_bang, matter_bang, matter_horizon; NOT READ on collapse_800, universe, plasma, sea, plasma_3, universe_3, sea_50000, sea_3600 | no birth | unchanged |
 | the momentum across the click booked on the Link's record, an identity at every move | 71 | SHOWN on nature, ga2, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3, nature_bang, matter_bang, matter_horizon; NOT READ on sea, sea_50000, sea_3600 | no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent) | unchanged |
+| the angular momentum across the click, the move's moment closed by the Link's record at every move | 72 | SHOWN on nature, ga2, collapse_800, bodies, hole, universe, plasma, plasma_3, universe_3, nature_bang, matter_bang, matter_horizon; NOT READ on sea, sea_50000, sea_3600 | no booking on the record (a record run before LT-S1, the keys recoil, carry_was and carry absent) | the first table |
+| E = mc^2 at the merger, the pair's share taken as the light's quantum | 73 | SHOWN on ga2, nature_bang, matter_bang; NOT SHOWN on nature, bodies; NOT READ on collapse_800, hole, universe, plasma, sea, plasma_3, universe_3, sea_50000, matter_horizon, sea_3600 | at 6 of 6 merger ends the pair's share taken exceeds the light's quantum booked, up to 1103 thousandths of it, the excess booked nowhere | the first table |
 
 ### The gates widened to everything derived, read on any bang of the same seed and at one Node where one Node can show it (2026-10-25, 11:0x UTC)
 
