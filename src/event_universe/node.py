@@ -16,8 +16,6 @@ from event_universe.links import Link, turned
 from event_universe.loader import seed
 from event_universe.rows import (
     CARRIER,
-    PLANE,
-    POTENTIAL,
     Line,
     Row,
     records_of,
@@ -62,6 +60,7 @@ class Node:
         self.w = wall_of(self.den, self.gamma, self.G)
         paces.certified(self.gamma)
         self.rows_, self.by_index = rows_of(universe, shape, self.w)
+        self.light: Row | None = None
         for r in self.records():
             num, den = (r.pair[0] if r.pair else 0), self.den
             if r.pair and num * num + sine_den(num, den) * sine_den(num, den) != den * den:
@@ -133,8 +132,10 @@ class Node:
         return row_of(self.rows_, shape)
 
     def emitter(self) -> Row:
-        """The plane of the potential's pair (rows.row_of, a lookup by the shape and the pair's values): the row the Wronskian's change is laid on and whose quanta the close takes."""
-        return row_of(self.rows_, PLANE, self.row(POTENTIAL).pair)
+        """The plane with no pendulum of its own, the light: the record whose rule's mass D = 2 PORTS (den - num) p_0^2 G^2 is 0 at every clock, its pair's num equal to its den (a property of the row's own numbers, no role; the loader admits exactly one; found once per Node): the row the Wronskian's change is laid on and whose quanta the close takes."""
+        if self.light is None:
+            self.light = next(r for r in self.records() if r.pair is not None and r.pair[0] == r.pair[1])
+        return self.light
 
     def records(self) -> list[Row]:
         """The record rows in the acts' order, the planes and the quartets (rows.records_of)."""
