@@ -1,4 +1,4 @@
-"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate); and the one division act Rule3's, no raw floor division or modulo outside core/rule3.py but the named index wraps and shape divisions. PHYSICAL_MODULES is every module of the package, of core/ and of loader/, read from the tree (the hand list, the checkers' self-tests, the composed literals' gate, the conventions table and the import-cycle check struck or folded 2026-10-24 with the tests' audit: the composed literals tools/engine_gates.py's numbers ratchet, the rule's arithmetic sites tools/record_code_shape.py's)."""
+"""The physical modules hold integer mathematics only: no float, no `/`, no non-integer import, dtype or numpy function; the root left everywhere (tests/test_rule3.py holds that gate); and the one carry Rule3's, no raw floor division or modulo outside core/rule3.py but the named index wraps and shape divisions. PHYSICAL_MODULES is every module of the package, of core/ and of assembly/, read from the tree (the handwritten list, the checkers' self-tests, the composed literals' gate, the conventions table and the import-cycle check struck or folded 2026-10-24 with the tests' audit: the composed literals tools/engine_gates.py's numbers ratchet, the rule's arithmetic sites tools/record_code_shape.py's)."""
 
 import ast
 import io
@@ -10,7 +10,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "event_universe"
 
-PHYSICAL_MODULES = tuple(  # every module of the package, of core/ and of loader/ but the package markers, read from the tree so that no module escapes the gate unnamed (2026-10-24: the hand list and its own test folded here)
+PHYSICAL_MODULES = tuple(  # every module of the package, of core/ and of assembly/ but the package markers, read from the tree so that no module escapes the gate unnamed (2026-10-24: the handwritten list and its own test folded here)
     sorted(
         path.relative_to(SRC).as_posix()
         for folder in (SRC, SRC / "core", SRC / "assembly")
@@ -25,7 +25,7 @@ FLOATS = "complex128 complex64 complex_ complexfloating float128 float16 float32
 NUMPY_DTYPES_FORBIDDEN = {*FLOATS.split(), *"int16 int32 int8 uint16 uint32 uint64 uint8".split()}
 NUMPY_FORBIDDEN = set("arctan2 average cbrt cos divide exp float hypot log log10 log2 mean".split())
 NUMPY_FORBIDDEN |= set("power sin sqrt std tan true_divide var".split())
-BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int", "kind"}  # kind: the loader's choice by the width
+BUILTIN_DTYPES_ALLOWED = {"bool", "object", "int", "kind"}  # kind: the assembly's choice by the width
 ROOT_NAMES = {"isqrt", "integer_root"}
 
 
@@ -147,7 +147,7 @@ INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the func
         "the periodic wrap of a Node's index or an axis, the torus's own",
     ),
 )
-# the record's writer and readers, no act of the Node: their quotients are readings at a named scale
+# the chart's writer and readers, no act of the clock: their quotients are readings at a named scale
 READERS = tuple(
     f"{n}.py"
     for n in "run reckoner gates events rim great_clock swings strikes predicates symmetries".split()
@@ -172,7 +172,7 @@ def divisions(tree: ast.AST) -> list[tuple[int, type[ast.AST], str]]:
 
 
 def test_floor_division_and_modulo_are_refused_outside_core_rule3() -> None:
-    """The arithmetic of the engine is Rule3's division act (core/acts.divide, the one carried division, and the quotient and remainder readings on it in core/rule3.py; ALGEBRA.md #the-four-acts): a raw floor division or modulo on a number of the law is refused in every other module of the engine (`//`, `%`, their augmented forms, `divmod`, numpy's floor division and remainder), and the index wraps and the row's shape divisions are the named exceptions (INDEX_ARITHMETIC, each by module, operator and function, no level, share, count or pace among them), refused in turn when one no longer stands in the code."""
+    """The arithmetic of the engine is Rule3's carry (core/acts.carry, the one carry, and the carries and remainder readings on it in core/rule3.py; ALGEBRA.md #the-four-acts): a raw floor division or modulo on a number of the law is refused in every other module of the engine (`//`, `%`, their augmented forms, `divmod`, numpy's floor division and remainder), and the index wraps and the train's shape divisions are the named exceptions (INDEX_ARITHMETIC, each by module, operator and function, no notch, wind, count or rate among them), refused in turn when one no longer stands in the code."""
     allowed = {(name, kind, function) for name, kind, function, _reason in INDEX_ARITHMETIC}
     standing, offenders = set(), []
     for path in sorted(p for p in SRC.rglob("*.py") if p.relative_to(SRC).as_posix() != CORE):

@@ -1,4 +1,4 @@
-"""Rule3 in one place, written as the law writes it, the flux line (ALGEBRA.md #the-line, #the-direction, #the-interval): w (a_next - 2 a_now + a_before) + r' - r = SUM over the Node's six Links of R_ij (m_ij - a_now) - D_i a_now, the reach R_ij = 2 num p_i^2 Q_ij G^2 of each Link read from the Node's end (the Node's pace squared times the Link's factor), the mass D_i = 12 (den - num) p_0^2 G^2 of the Node (the clock's alone, 0 for light), the wall w = 6 den Gamma^2 G^2, the remainder r kept in [0, w). One function steps every plain line at every Node in either direction (`rule3`), the sum over the Links gathered by the step's module (flux.py) and handed in as one array; the one carried division under it is the core's act (core/acts.divide, NL-S1; the former carried_division and division_forward, the same act by two names, kept by name), which the quotient and the remainder readings call on a numerator. The own weight S_i = 2 w - D_i - SUM_j R_ij is derived here for the readings that name it, the form's Node term; the click's face reads the flux line's total (`flux_total`) with the face's arrival 0 (features/click `presented`); the law's first form, SUM R_ij m_ij + S a_now - w a_before + r, the same integers by the identity, is written in no file of src/ (tools/step_oracle.py keeps it as the step's oracle). The largest integer whose square is at most a count is found by a bisection on the share reading and no root (`largest_below`); the rule's integers from the paces stand beside (`coefficients`, `mass`), the paces themselves the composed clock's two functions of the content (core/paces.py; ALGEBRA.md #the-paces)."""
+"""Rule3 in one place, written as the law writes it, the flux form (ALGEBRA.md #the-line, #the-direction, #the-tick): w (a_next - 2 a_now + a_before) + r' - r = SUM over the clock's six meshes of R_ij (m_ij - a_now) - D_i a_now, the grip R_ij = 2 pinion p_i^2 Q_ij G^2 of each mesh read from the clock's end (the mesh rate squared times the mesh's factor), the spring D_i = 12 (rim - pinion) p_0^2 G^2 of the clock (the rate's alone, 0 for the unsprung hand), the teeth w = 6 rim Gamma^2 G^2, the fine tooth r kept in [0, w). One function steps every plain gear at every clock going either way (`rule3`), the sum over the meshes gathered by the step's module (flux.py) and handed in as one array; the one carry under it is the core's act (core/acts.carry, NL-S1; the former carried_division and division_forward, the same act by two names, kept by name), which the carries and the remainder readings call on a numerator. The hold S_i = 2 w - D_i - SUM_j R_ij is derived here for the readings that name it, the form's clock term; the strike's face reads the flux form's total (`pull_total`) with the face's pull 0 (features/click `presented`); the law's first form, SUM R_ij m_ij + S a_now - w a_before + r, the same integers by the identity, is written in no file of src/ (tools/step_oracle.py keeps it as the step's oracle). The largest integer whose square is at most a count is found by a bisection on the wind reading and no root (`largest_below`); the gearing's integers from the rates stand beside (`gearing`, `spring`), the rates themselves the composed rates' two functions of the load (core/rates.py; ALGEBRA.md #the-rates)."""
 
 from __future__ import annotations
 
@@ -8,17 +8,17 @@ from typing import Any, NamedTuple
 from event_universe.core.acts import carry
 from event_universe.core.spokes import AXES, SPOKES
 
-# the Node's reaches, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij G^2 on
-# the Link to that neighbour; integers or the loop's integer arrays
+# a clock's grips, one per spoke in spoke order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 pinion p_i^2 Q_ij G^2
+# on the mesh to that neighbour; integers or the loop's integer arrays
 Grips = tuple[Any, ...]
 HELD_DRIVE_WEIGHT = (
     AXES + 1
-)  # the held write's (d + 1) X (...) p_0: X = Gamma (Gamma / p_0)^(d + 1), dX/dU = (d + 1) X
-WINDING_WEIGHT = AXES  # the plane's unit (PORTS / 2) T s: a rest mode's share PORTS s |W| at one quantum |W| = T div 2
+)  # the held drive's (d + 1) X (...) p_0: X = Gamma (Gamma / p_0)^(d + 1), dX/dU = (d + 1) X
+WINDING_WEIGHT = AXES  # a hand's winding (SPOKES / 2) T s: a rest mode's wind SPOKES s |W| at a winding, |W| = T div 2
 
 
 class Gearing(NamedTuple):
-    """Rule3's integers at a Node, the law's four names: the six reaches R_ij in Port order, the own weight S_i of the first form (2 w - D_i - SUM_j R_ij, named by the form's Node term and the click's face), the wall w and the mass D_i (`rule_integers`, `node.rule_of`)."""
+    """Rule3's integers at a clock, the law's four names: the six grips R_ij in spoke order, the hold S_i of the first form (2 w - D_i - SUM_j R_ij, named by the form's clock term and the strike's face), the teeth w and the spring D_i (`gearing`, `readings.gearing_of`)."""
 
     grips: Grips
     hold: Any
@@ -26,43 +26,43 @@ class Gearing(NamedTuple):
     spring: Any
 
 
-def teeth_of(den: Any, gamma: Any, unit: Any = 1) -> Any:
-    """The wall w = 6 den Gamma^2 G^2, the family's one divisor at every Node and every content (ALGEBRA.md #the-line)."""
-    return SPOKES * den * gamma * gamma * unit * unit
+def teeth_of(rim: Any, full_rate: Any, mesh_unit: Any = 1) -> Any:
+    """The teeth w = 6 rim Gamma^2 G^2, the train's one divisor at every clock and every load (ALGEBRA.md #the-line)."""
+    return SPOKES * rim * full_rate * full_rate * mesh_unit * mesh_unit
 
 
-def spring(num: Any, den: Any, clock: Any, unit: Any = 1) -> Any:
-    """The Node's mass D_i = 12 (den - num) p_0^2 G^2 (ALGEBRA.md #the-line, the flux form): the shortfall of the six reaches and the own weight under twice the wall, 2 w - S_i - SUM_j R_ij, the clock's alone, 0 for every family with num = den (light), the one term of Rule3's line that is the Node's own and not a Link's."""
-    return (SPOKES + SPOKES) * (den - num) * clock * clock * unit * unit
+def spring(pinion: Any, rim: Any, rate: Any, mesh_unit: Any = 1) -> Any:
+    """The clock's spring D_i = 12 (rim - pinion) p_0^2 G^2 (ALGEBRA.md #the-line, the flux form): the shortfall of the six grips and the hold under twice the teeth, 2 w - S_i - SUM_j R_ij, the rate's alone, 0 for every train with pinion = rim (unsprung), the one term of Rule3's gear that is the clock's own and not a mesh's."""
+    return (SPOKES + SPOKES) * (rim - pinion) * rate * rate * mesh_unit * mesh_unit
 
 
 def gearing(
-    num: Any,
-    den: Any,
-    gamma: Any,
-    clock: Any,
-    pace: Any,
+    pinion: Any,
+    rim: Any,
+    full_rate: Any,
+    rate: Any,
+    mesh_rate: Any,
     factors: tuple[Any, ...] | None = None,
-    unit: Any = 1,
+    mesh_unit: Any = 1,
 ) -> Gearing:
-    """The rule's integers at a Node from its paces, the Rule (the six reaches, S, w, D), the clock the Node's and the tension the Link's (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; The paces compose): the clock p_0 = Gamma (1 - 1 / Gamma)^c to the unit from the Node's content c, the reading row's own level among it, the primary number whose square enters the mass (`paces.clock_of`); the Node's pace p_i = p_0^2 / Gamma, the clock twice, on every one of its six Links (`paces.link_pace_of`); each Link's factor Q_ij, one integer per Link in the unit G^2 of the run's Link unit G (`link_factor`, read the same from both ends; None: no tension, G^2 on every Link); the reach R_ij = 2 num p_i^2 Q_ij per Port, the product and not the sum; the wall w (`wall_of`); the mass D (`mass`); the own weight S = 2 w - D - SUM over the six Ports of R_ij, 12 (den Gamma^2 - (den - num) p_0^2) G^2 - SUM R_ij as the law's first form writes it, the same integer; at the vacuum's paces p_0 = p_i = Gamma the plain rule of the pair."""
-    square = unit * unit
-    node_squared = pace * pace
-    links = (square,) * SPOKES if factors is None else factors
-    reaches = tuple((node_squared + node_squared) * factor * num for factor in links)
-    wall, own = teeth_of(den, gamma, unit), spring(num, den, clock, unit)
-    return Gearing(reaches, wall + wall - own - sum(reaches), wall, own)
+    """The gearing's integers at a clock from its rates, the Gearing (the six grips, S, w, D), the rate the clock's and the tension the mesh's (ALGEBRA.md #the-rates, The clock is the Clock's, the tension is the Mesh's; The rates compose): the rate p_0 = Gamma (1 - 1 / Gamma)^c to the unit from the clock's load c, the reading train's own notch among it, the primary number whose square enters the spring (`rates.rate_of`); the mesh rate p_i = p_0^2 / Gamma, the rate twice, on every one of its six meshes (`rates.mesh_rate_of`); each mesh's factor Q_ij, one integer per mesh in the unit G^2 of the run's mesh unit G (`mesh_factor`, read the same from both ends; None: no tension, G^2 on every mesh); the grip R_ij = 2 pinion p_i^2 Q_ij per spoke, the product and not the sum; the teeth w (`teeth_of`); the spring D (`spring`); the hold S = 2 w - D - SUM over the six spokes of R_ij, 12 (rim Gamma^2 - (rim - pinion) p_0^2) G^2 - SUM R_ij as the law's first form writes it, the same integer; at the vacuum's rates p_0 = p_i = Gamma the plain gearing of the ratio."""
+    square = mesh_unit * mesh_unit
+    mesh_rate_squared = mesh_rate * mesh_rate
+    meshes = (square,) * SPOKES if factors is None else factors
+    grips = tuple((mesh_rate_squared + mesh_rate_squared) * factor * pinion for factor in meshes)
+    teeth, own = teeth_of(rim, full_rate, mesh_unit), spring(pinion, rim, rate, mesh_unit)
+    return Gearing(grips, teeth + teeth - own - sum(grips), teeth, own)
 
 
-def mesh_factor(gamma: Any, unit: Any, tension: Any) -> Any:
-    """The Link's factor Q_ij, the one place of its form (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; the Boss's booking): q_ij^2 / Gamma^2 = (Gamma - t_a(i, j))^2 / Gamma^2 booked squared as one integer per Link in the unit G^2 of the run's Link unit G, Q_ij = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2 by the division act, rounded once to the nearest from the Link's tension t and read the same from both ends; the step's coefficient matrix M is symmetric at uniform paces alone, and D M is symmetric at every pace with D = diag(1 / p_i^2), so the weighted form is exact at paces fixed in time; G^2 with no tension, 0 where the tension reaches Gamma (the Link's coefficient 0), the tension resolved to Gamma / (2 G^2)."""
-    pace = gamma - tension
-    wall = gamma * gamma
-    return carry(unit * unit * pace * pace, wall, half(wall))[0]
+def mesh_factor(full_rate: Any, mesh_unit: Any, tension: Any) -> Any:
+    """The mesh's factor Q_ij, the one place of its form (ALGEBRA.md #the-rates, The clock is the Clock's, the tension is the Mesh's; the Boss's tally): q_ij^2 / Gamma^2 = (Gamma - t_a(i, j))^2 / Gamma^2 tallied squared as one integer per mesh in the unit G^2 of the run's mesh unit G, Q_ij = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2 by the carry, rounded once to the nearest from the mesh's tension t and read the same from both ends; the step's coefficient matrix M is symmetric at uniform rates alone, and D M is symmetric at every rate with D = diag(1 / p_i^2), so the weighted form is exact at rates fixed in time; G^2 with no tension, 0 where the tension reaches Gamma (the mesh's coefficient 0), the tension resolved to Gamma / (2 G^2)."""
+    rate = full_rate - tension
+    teeth = full_rate * full_rate
+    return carry(mesh_unit * mesh_unit * rate * rate, teeth, half(teeth))[0]
 
 
 def least_at(above: Callable[[int], bool]) -> int:
-    """The least positive count at which `above` holds, by comparisons alone (the one search of the lays' amplitudes and the merger's rise; its four spellings kept by name): the bound doubled from 1 until it holds, then halved between the last count below and the first above."""
+    """The least positive count at which `above` holds, by comparisons alone (the one search of the settings' amplitudes and the unspringing's rise; its four spellings kept by name): the bound doubled from 1 until it holds, then halved between the last count below and the first above."""
     high = 1
     while not above(high):
         high += high
@@ -73,86 +73,86 @@ def least_at(above: Callable[[int], bool]) -> int:
     return high
 
 
-def pull_total(flux: Any, mass: Any, wall: Any, now: Any, other: Any) -> Any:
-    """The flux line's total before the remainder and the division, in the order the amplitude bound is derived for (ENGINE.md, The amplitude bound): w (2 a_now - a_before) - D a_now + SUM over the six Links of R_ij (m_ij - a_now); `rule3` divides it, the click's face reads it (features/click `presented`)."""
-    return wall * (now + now - other) - mass * now + flux
+def pull_total(pull: Any, hairspring: Any, teeth: Any, now: Any, other: Any) -> Any:
+    """The flux form's total before the fine tooth and the carry, in the order the amplitude bound is derived for (ENGINE.md, The amplitude bound): w (2 a_now - a_before) - D a_now + SUM over the six meshes of R_ij (m_ij - a_now); `rule3` carries it, the strike's face reads it (features/click `presented`)."""
+    return teeth * (now + now - other) - hairspring * now + pull
 
 
 def rule3(
-    flux: Any, mass: Any, wall: Any, now: Any, other: Any, remainder: Any, direction: int = 1
+    pull: Any, hairspring: Any, teeth: Any, now: Any, other: Any, fine: Any, going: int = 1
 ) -> tuple[Any, Any]:
-    """Rule3's line in the law's flux form, one interval in `direction` sigma (ALGEBRA.md #the-line, #the-direction): w a_next + r' = w (2 a_now - a_before) - D a_now + SUM over the six Links of R_ij (m_ij - a_now) + r (`flux_total`), the sum over the Links `flux` gathered Link by Link by the step's module (flux.py, one difference per Link, each end's own reach), the Node's mass `mass` (D_i), the division the carried one (core/acts.divide, the former carried_division kept by name); +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r), the same flux read from the same level. A line with no Links and the mass 2 w - 2 K on the wall w is the rotation act a_next = (2 K a_now + r) div w - a_before (features/phase, the phase line; features/click `rotated`)."""
-    return carry(pull_total(flux, mass, wall, now, other), wall, remainder, direction)
+    """Rule3's gear in the law's flux form, one tick in `going` sigma (ALGEBRA.md #the-line, #the-direction): w a_next + r' = w (2 a_now - a_before) - D a_now + SUM over the six meshes of R_ij (m_ij - a_now) + r (`pull_total`), the sum over the meshes `pull` gathered mesh by mesh by the step's module (flux.py, one difference per mesh, each end's own grip), the clock's spring `hairspring` (D_i), the carry the core's act (core/acts.carry, the former carried_division kept by name); +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r), the same pull read from the same notch. A gear with no meshes and the spring 2 w - 2 K on the teeth w is the rotation act a_next = (2 K a_now + r) div w - a_before (features/standard, the standard; features/click `rotated`)."""
+    return carry(pull_total(pull, hairspring, teeth, now, other), teeth, fine, going)
 
 
-def mesh_unit_of(gamma: Any) -> int:
-    """The Link's unit G derived from Gamma (K-S1, the owner's word of 2026-10-25: the conditions in the laws and the code enforces them; no key of the file): the least G at which one level of tension at the vacuum resolves in the Link's factor, Q(1) < Q(0) in `link_factor`, 2 G^2 (2 Gamma - 1) > Gamma^2, found by a search by comparisons (16 at Gamma 1,000)."""
-    unit = 1
-    while (unit + unit) * unit * (gamma + gamma - 1) <= gamma * gamma:
-        unit += 1
-    return unit
+def mesh_unit_of(full_rate: Any) -> int:
+    """The mesh unit G derived from Gamma (K-S1, the owner's word of 2026-10-25: the conditions in the laws and the code enforces them; no key of the file): the least G at which one notch of tension at the vacuum resolves in the mesh's factor, Q(1) < Q(0) in `mesh_factor`, 2 G^2 (2 Gamma - 1) > Gamma^2, found by a search by comparisons (16 at Gamma 1,000)."""
+    mesh_unit = 1
+    while (mesh_unit + mesh_unit) * mesh_unit * (full_rate + full_rate - 1) <= full_rate * full_rate:
+        mesh_unit += 1
+    return mesh_unit
 
 
-def held_teeth(weight: Any, den: Any, gamma: Any, action: Any, power: int) -> Any:
-    """A held row's write wall (K-S1 to K-S3, Y-S1): weight den Gamma^power T with the trace's weight the universe file's `trace` key, the time line's at the power 4 and the nine lines' at 2."""
-    return weight * den * gamma**power * action
+def held_teeth(weight: Any, rim: Any, full_rate: Any, key: Any, power: int) -> Any:
+    """A held train's drive teeth (K-S1 to K-S3, Y-S1): weight rim Gamma^power T with the trace's weight the calibre's `trace` key, the time gear's at the power 4 and the nine gears' at 2."""
+    return weight * rim * full_rate**power * key
 
 
 def held_numerator(
-    weight: Any, level: Any, forms: Any, trace: Any, clock: Any, den: Any, gamma: Any
+    weight: Any, stretch: Any, forms: Any, trace: Any, rate: Any, rim: Any, full_rate: Any
 ) -> Any:
-    """The carrier's time line's write numerator (the metric time line, the held write): 4 X (forms weight den Gamma^2 - trace p_0^2) p_0 with the trace's weight the universe file's `trace` key."""
+    """The regulator's time gear's drive numerator (the regulation's time gear, the held drive): 4 X (forms weight rim Gamma^2 - trace p_0^2) p_0 with the trace's weight the calibre's `trace` key."""
     return (
         HELD_DRIVE_WEIGHT
-        * level
-        * (forms * weight * den * gamma * gamma - trace * clock * clock)
-        * clock
+        * stretch
+        * (forms * weight * rim * full_rate * full_rate - trace * rate * rate)
+        * rate
     )
 
 
-def winding_of(sine: Any, action: Any) -> Any:
-    """A plane's quantum, its unit 3 T s (the conventions' row 12: W_c sin omega_0 to the unit), s the pair's sine or den at the gap 0."""
-    return WINDING_WEIGHT * action * sine
+def winding_of(sine: Any, key: Any) -> Any:
+    """A hand's winding, 3 T s (the conventions' row 12: W_c sin omega_0 to the unit), s the ratio's sine or the rim at the spring 0."""
+    return WINDING_WEIGHT * key * sine
 
 
-def signed_carries(numerator: Any, wall: Any) -> Any:
-    """The quotient of the magnitude with the sign after, sign(x) (|x| div w): the lay's rounding of a signed level at rest (the one rule's mirror by the numerator's sign at a remainder born at 0), so the negated vector's lay is the lay negated."""
+def signed_carries(numerator: Any, teeth: Any) -> Any:
+    """The carries of the magnitude with the sign after, sign(x) (|x| div w): the setting's rounding of a signed notch at rest (the one rule's flip by the numerator's sign at a fine tooth born at 0), so the negated vector's setting is the setting negated."""
     sign = (numerator >= 0) * 1 - (numerator < 0) * 1
-    return sign * carries(sign * numerator, wall)
+    return sign * carries(sign * numerator, teeth)
 
 
-def half(wall: Any) -> Any:
-    """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor (the halving's own 2)."""
-    return carry(wall, 2, 0)[0]
+def half(teeth: Any) -> Any:
+    """The half teeth by the carry on 2, the fine tooth's start and the mean teeth's factor (the halving's own 2)."""
+    return carry(teeth, 2, 0)[0]
 
 
-def mean_teeth_of(wall: Any, before: Any, now: Any) -> Any:
-    """The mean wall (w div 2)(X_before + X_now) of the carrier's two levels, a riding line's wall: the one spelling for the interval, the seed's walls and the reader's solve."""
-    return half(wall) * (before + now)
+def mean_teeth_of(teeth: Any, before: Any, now: Any) -> Any:
+    """The mean teeth (w div 2)(X_before + X_now) of the regulator's two notches, a driven gear's teeth: the one spelling for the tick, the setting's teeth and the reader's reckoning."""
+    return half(teeth) * (before + now)
 
 
 def odd(count: Any) -> Any:
-    """The parity of a count by the division act on 2, 1 where odd (the parity's own 2): the reversals' count, a line's odd part."""
+    """The parity of a count by the carry on 2, 1 where odd (the parity's own 2): the reversals' count, a gear's odd part."""
     return carry(count, 2, 0)[1]
 
 
-def wind_weight(gamma: Any, unit: Any) -> Any:
-    """The share's weight 2 Gamma^3 G^2, the exact take's scale (the fall f(s) over it; gram's wall its double)."""
-    return (gamma + gamma) * gamma * gamma * unit * unit
+def wind_weight(full_rate: Any, mesh_unit: Any) -> Any:
+    """The wind's weight 2 Gamma^3 G^2, the exact unwind's scale (the fall f(s) over it; hands.py's teeth its double)."""
+    return (full_rate + full_rate) * full_rate * full_rate * mesh_unit * mesh_unit
 
 
-def carries(numerator: Any, wall: Any) -> Any:
-    """The division act's quotient alone, numerator div wall with no carry (the digit on a lattice, the amplitude's share, the root's candidate)."""
-    return carry(numerator, wall, 0)[0]
+def carries(numerator: Any, teeth: Any) -> Any:
+    """The carry act's carries alone, numerator div teeth with no fine tooth carried in (the digit on a pitch, the amplitude's wind, the root's candidate)."""
+    return carry(numerator, teeth, 0)[0]
 
 
-def remainder(numerator: Any, wall: Any) -> Any:
-    """The division act's remainder alone, numerator mod wall in [0, wall) (the draw composed modulo the planes' count times the unit)."""
-    return carry(numerator, wall, 0)[1]
+def remainder(numerator: Any, teeth: Any) -> Any:
+    """The carry act's fine tooth alone, numerator mod teeth in [0, teeth) (the vernier composed modulo the hands' count times the winding)."""
+    return carry(numerator, teeth, 0)[1]
 
 
 def pitch(*values: Any) -> Any:
-    """The greatest common divisor of integers by Euclid's division act (the remainder alone), the lattice of a line's remainders at a Node: gcd(w, D, R_1..R_6) on the Node's own lattice, gcd(w, R_ji) on a Link's."""
+    """The greatest common divisor of integers by Euclid's carry act (the remainder alone), the pitch of a gear's fine teeth at a clock: gcd(w, D, R_1..R_6) on the clock's own pitch, gcd(w, R_ji) on a mesh's."""
     found = 0
     for value in values:
         a, b = abs(found), abs(value)
@@ -163,7 +163,7 @@ def pitch(*values: Any) -> Any:
 
 
 def balanced_notches(product: int) -> tuple[int, int]:
-    """The pair (a, b) with a b = product exactly and a the largest divisor at most largest_below(product), found by a search by comparisons down from the root's floor (MS-S1: the lay's two levels with A B = T div 2 for every row, the same two integers from T alone; 125 and 144 at T 36,000)."""
+    """The pair (a, b) with a b = product exactly and a the largest divisor at most largest_below(product), found by a search by comparisons down from the root's floor (MS-S1: the setting's two notches with A B = T div 2 for every train, the same two integers from T alone; 125 and 144 at T 36,000)."""
     a = largest_below(product)
     while remainder(product, a):
         a -= 1
@@ -171,7 +171,7 @@ def balanced_notches(product: int) -> tuple[int, int]:
 
 
 def largest_below(square: int) -> int:
-    """The largest x with x^2 <= square, found by a bisection on the share reading x * x against square: products and comparisons of integers, no division on the count and no root (the hands' prescription for the rotation unit, `paces.rotation_unit`, applied to a count: a search by comparisons, issue #1793 comment 6077053307, "no root anywhere"). The upper end is the smallest power of two whose square exceeds square, found by doubling; the halving of the span of candidates is the division act on a count, `half(low + high)`, kind D in the acts table (tests/test_the_acts_table.py), its remainder discarded; 0 at 0; a negative square is refused by name (ALGEBRA.md #the-four-acts, #the-guard)."""
+    """The largest x with x^2 <= square, found by a bisection on the wind reading x * x against square: products and comparisons of integers, no division on the count and no root (the hands' prescription for the rotation unit, `paces.rotation_unit`, applied to a count: a search by comparisons, issue #1793 comment 6077053307, "no root anywhere"). The upper end is the smallest power of two whose square exceeds square, found by doubling; the halving of the span of candidates is the carry on a count, `half(low + high)`, kind D in the acts table (tests/test_the_acts_table.py), its fine tooth discarded; 0 at 0; a negative square is refused by name (ALGEBRA.md #the-four-acts, #the-guard)."""
     if square < 0:
         raise ValueError(f"no integer has a square at most {square}: the search is refused")
     high = 1

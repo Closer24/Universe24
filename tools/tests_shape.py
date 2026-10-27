@@ -41,13 +41,21 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_record.py::test_spin_one_half_reads_minus_one_after_one_turn_and_comes_home_after_two": (
+        32,
+        "Spin one half seen on the great clock (the owner's rule of 2026-10-27, 14:5x UTC: a push's test sees what it was pushed for; David's DAVID-SPIN-IN-CLOCKS full turn, toys-5 e22420aee): the twins' overlap with the free run below -1/2 after one turn of the spin and above +1/2 after two, S_z home after one; the twin-hands test above it given 7 lines more for Pauli by the sweep (one fitted quantum's sweep per hand per clock at every tick); the Boss's room by name.",
+    ),
     "tests/test_the_record.py::test_a_train_of_four_gears_at_a_spring_is_twin_hands_and_keeps_the_spin": (
-        24,
+        31,
         "Spin one half on two hands (David's DAVID-SPIN-SOLVED.md, toys-5 67f2ff192, on the owner's words of 2026-10-27, 12:02 UTC, built by the Boss on the clock engine): a train of four gears at a spring read as twin hands, every fitting's two children in twin hands, every unspringing across them, the rewind exact over 20 ticks of the node world (a fitting group of two children at one clock undone by its one take once); a law of the engine never roomed before, the Boss's room by name.",
     ),
-    "tests/test_the_phase_line.py::test_the_amplitude_is_the_universes_and_the_engine_refuses_a_scale_below_the_floor_from_gamma": (
-        19,
-        "The amplitude declared from outside and the width gone from the engine (the owner's words of 2026-10-27, 04:0x and 04:4x UTC, through the Boss; David's e48273be8): the universe file's amplitude read, the floor 23 Gamma derived from Gamma alone below it, the Node's X the file's, the refusal below the floor by name and never nature's; the Boss's room by name at the merge of toys-5 e48273be8 (2026-10-27): the test as the merged tree holds it",
+    "tests/test_the_phase_line.py::test_the_standard_length_is_the_rims_and_the_engine_refuses_a_scale_below_the_floor_from_gamma": (
+        20,
+        "The standard's length derived from the rim, X = Gamma rim, and the declared amplitude refused by name (David's DAVID-AMPLITUDES.md section 4, toys-5 6415deeb0, on the owner's word of 2026-10-27, 12:4x UTC, and his rule of 11:3x UTC, no declarations; the former test of the amplitude declared from outside, 19 lines, re-cut): the floor 23 Gamma derived from Gamma alone, the refusal below it by name and never nature's; the Boss's room by name",
+    ),
+    "tests/test_rule3.py::test_a_hands_wind_is_a_gaussian_norm_and_its_quanta_are_its_sweep": (
+        21,
+        "The amplitudes as the hand's norms (David's DAVID-AMPLITUDES.md sections 1 and 5, on the owner's word of 2026-10-27, 12:4x UTC, and his rule of 14:5x UTC that a push's test sees what it was pushed for): every sprung hand's even rest wind is the Gaussian form exactly and SPOKES s |W| plus the lay's two remainders, its quanta its sweep in e, the winding 3 T s; the Boss's room by name",
     ),
     "tests/test_the_phase_line.py::test_the_reversal_is_bit_exact_over_ten_thousand_acts": (
         18,
