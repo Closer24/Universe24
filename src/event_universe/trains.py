@@ -91,7 +91,8 @@ def order_key(row: Train) -> tuple[bool, int]:
 def trains_of(calibre: dict[str, Any], size: tuple[int, ...], w: int) -> tuple[list[Train], list[Train]]:
     """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the emitter is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the emitter or the walled row other than one, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den), no plane at another pair; a pair named in several rows is admitted as written, each row a record of its own with the same numbers (CS5-S2, the owner's word of 2026-10-25, 22:50 UTC, through the Boss: no row refused for its pair's repetition)."""
     ints = calibre["integers"]
-    den, gamma, action, trace = (int(ints[k]) for k in ("den", "node_clock", "quantum_action", "trace"))
+    den, gamma, action = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
+    trace = int(ints["trace"])
     by_index: list[Train] = []
     clock = (den - carries(den, gamma), den)
     for r in calibre["rows"]:
