@@ -5,6 +5,8 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
 
+import numpy as np
+
 from event_universe import hands, unwind
 from event_universe.core import rule3
 from event_universe.core.spokes import AXES
@@ -91,11 +93,11 @@ def wind_fall(
     notches: tuple[int, ...],
     cache: dict[tuple[int, tuple[int, ...]], int],
 ) -> int:
-    """The wind the great clock loses by an advance at -1 of the notches at the clock (advanced and returned): the advance changes the wind at the clock and its six neighbours alone, so the fall is their winds' difference, bit for bit the great clock's (the former read of the whole board's share, kept by name); the winds as read kept in `cache` per hand and clock for the striking until an unwind writes."""
+    """The wind the great clock loses by an advance at -1 of the notches at the clock (advanced and returned): the advance changes the wind at the clock and its six neighbours alone, so the fall is their winds' difference, bit for bit the great clock's (the former read of the whole board's share, kept by name); the winds as read kept in `cache` per hand and clock for the striking until an unwind writes, read on the whole great clock at once where the window holds a clock not yet read."""
     hand, window = clock.hands()[rec], sorted(set(window_clocks(clock, where)))
-    new = [at for at in window if (rec, at) not in cache]
-    for at, v in zip(new, hands.wind(clock, hand.gears, gearing, new) if new else [], strict=True):
-        cache[(rec, at)] = int(v)
+    if any((rec, at) not in cache for at in window):
+        whole = hands.wind(clock, hand.gears, gearing)
+        cache.update({(rec, at): int(v) for at, v in np.ndenumerate(whole)})
     before = sum(cache[(rec, at)] for at in window)
     advance(clock, rec, where, notches, -1)
     after = sum(int(v) for v in hands.wind(clock, hand.gears, gearing, window))
@@ -126,7 +128,7 @@ def read_ends(
         due = tallied - slack_was
         if hand is not clock.unsprung():
             notches: Any = notches_at(hand, where)
-            fall, k = wind_fall(clock, r, gearing, where, notches, cache or {}), None
+            fall, k = wind_fall(clock, r, gearing, where, notches, {} if cache is None else cache), None
             short = fall < tallied
         else:
             notches, fall, k = unwind.fall_of(clock, where, due, gearing, hand)

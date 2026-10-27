@@ -6,7 +6,8 @@ from collections import Counter
 from typing import Any
 
 from event_universe.core import rule3
-from event_universe.core.spokes import AXES
+from event_universe.core.spokes import AXES, transverse
+from event_universe.meshes import cross
 from event_universe.reckoner import HALF, PAIR, THOUSAND, Chart, carries, sign, unread_words
 from event_universe.trains import REGULATOR, drive_teeth
 
@@ -256,8 +257,8 @@ def momentum_booked(chart: Chart) -> dict[str, Any]:
 
 
 def moment(arm: list[int], push: list[int]) -> list[int]:
-    """The moment arm x push of two integer vectors of three, per axis the other two's cross product."""
-    return [arm[a - HALF] * push[a - 1] - arm[a - 1] * push[a - HALF] for a in range(AXES)]
+    """The moment arm x push of two integer vectors of three, per axis the cross on its transverse pair (b, c), the antisymmetric tensor arm_b push_c - arm_c push_b (spokes.transverse, the cube's hand read once)."""
+    return [cross(arm[b], arm[c], push[b], push[c]) for b, c in map(transverse, range(AXES))]
 
 
 def angular_momentum(chart: Chart) -> dict[str, Any]:

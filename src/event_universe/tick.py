@@ -23,7 +23,7 @@ from event_universe.meshes import (
     pawls,
     skewed,
 )
-from event_universe.regulation import net_flow, rest_rate_of, shear_parts, stress_parts, tensor_parts
+from event_universe.regulation import rest_rate_of, stress_of, tensor_parts
 from event_universe.run import rewind_note
 from event_universe.trains import OFFSET, REGULATOR, Gear, Train, ratchet_of, zeros
 from event_universe.unwind import push_of, recoil
@@ -85,13 +85,13 @@ class Tick:
         return self.top, None if self.kept is None else self.kept[self.where[id(train)]]
 
     def readings(self) -> None:
-        """(1) The readings at the start (the former `readings`, `walled_act` and `forces`): the load and the rate, the stopped mask (BH-S1), the dial resting at a stopped clock, the mesh factors with a stopped end at the teeth, the pawls, the clocked offset, the regulator's notch and the stress of the hands; the ratchet's act, one carry with the flow 2 c Phi inside it (its start the meshes' count K = 2 (Phi_now - Phi_before) + c, backward recovered by the inverse carry alone), the six meshes read once per coupling present among the hands (meshes.coupling_of; the pawl, the count and the odd part at the coupling, so the turn at the coupling 0 is the identity by arithmetic); the hands' lead at this end, each at its coupling; every driven gear's pull, SUM_j grip_j (m_j - a) - D a, every hand turned by the meshes at its coupling and by the flow gears' skew at its rest rate (meshes.skewed, Y-S3; the unsprung train by nothing); and the release, stretch_now SUM over the sprung hands of F.J.N (the hand's three F_twelve - twelve F_three)."""
+        """(1) The readings at the start (the former `readings`, `walled_act` and `forces`): the load and the rate, the stopped mask (BH-S1), the dial resting at a stopped clock, the mesh factors with a stopped end at the teeth, the pawls, the clocked offset and the regulator's notch; the ratchet's act, one carry with the flow 2 c Phi inside it (its start the meshes' count K = 2 (Phi_now - Phi_before) + c, backward recovered by the inverse carry alone), the six meshes read once per coupling present among the hands (meshes.coupling_of; the pawl, the count and the odd part at the coupling, so the turn at the coupling 0 is the identity by arithmetic); the hands' lead at this end, each at its coupling; every driven gear's pull, SUM_j grip_j (m_j - a) - D a, every hand turned by the meshes at its coupling and by the flow gears' skew at its rest rate (meshes.skewed, Y-S3; the unsprung train by nothing); and the release, stretch_now SUM over the sprung hands of F.J.N (the hand's three F_twelve - twelve F_three)."""
         self.rate_readings()
         self.standard_rate()
         self.pulls()
 
     def rate_readings(self) -> None:
-        """The clock's rate at the start: its load and rates, the stopped mask, the dial, the mesh factors, the pawls, the clocked offset, the regulator's notch and the hands' stress."""
+        """The clock's rate at the start: its load and rates, the stopped mask, the dial, the mesh factors, the pawls, the clocked offset and the regulator's notch."""
         clock = self.clock
         self.load = np.asarray(
             stretch.load_of(clock.full_rate, self.at(self.regulator.gears[0])), dtype=object
@@ -112,9 +112,6 @@ class Tick:
         self.clocked_offset = rates.rounded(self.at(self.offset.gears[0]) * self.rate, clock.full_rate)
         self.stretch_now = self.at(self.regulator.gears[0])
         clock.start_stretch = self.stretch_now
-        sources = [([self.at(gear) for gear in r.gears], r.ratio[0]) for r in self.hands if r.ratio]
-        self.trace, self.traceless = tensor_parts(stress_parts(sources, clock.size))
-        self.shear = shear_parts(sources, clock.size)
         self.flow_gears = [self.at(gear) for gear in self.regulator.gears[1 + AXES : 1 + AXES + AXES]]
 
     def standard_rate(self) -> None:
@@ -200,14 +197,14 @@ class Tick:
                     self.pull[k][i] = self.pull[k][i] + q
 
     def impulse(self) -> None:
-        """(2) The impulse (the former `kicks`): every driven gear's stride at the start read at the mean teeth of the regulator's two notches as the trains hold them, P = W (a_now - a_before) + r - W div 2, and impelled by stretch_now F in the going; the offset train's time gear impelled besides by the hands' sweep read at the impulse (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the sprung hands of N.J.u_in + N.J.u_out, N the notches at the start and u the odd rounding of 2 P + 1 over 2 w stretch_now, the hand's -(three u_twelve - twelve u_three) in and out, the same integers forward and backward and its own image under the exchange and the reflection; one carry at the gear's drive teeth T with the carry kept in its drive fine tooth, the carries landing as the impulse w stretch_now q before the gear's one carry; the sweep summed over the hands before the offset train is met, which rests on trains.order_key, H-Confirm-Build-11; the former notch drive of 2 W of the hands after the step kept by name: a source pinned to the step's end, whose image under the exchange is a start, so the fall drove 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the regulator's source from every driven train alike, gear by gear u_in u_out + (-a F) div w, w the train's teeth."""
+        """(2) The impulse (the former `kicks`): every driven gear's stride at the start read at the mean teeth of the regulator's two notches as the trains hold them, P = W (a_now - a_before) + r - W div 2, and impelled by stretch_now F in the going; the offset train's time gear impelled besides by the hands' sweep read at the impulse (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the sprung hands of N.J.u_in + N.J.u_out, N the notches at the start and u the odd rounding of 2 P + 1 over 2 w stretch_now, the hand's -(three u_twelve - twelve u_three) in and out, the same integers forward and backward and its own image under the exchange and the reflection; one carry at the gear's drive teeth T with the carry kept in its drive fine tooth, the carries landing as the impulse w stretch_now q before the gear's one carry; the sweep summed over the hands before the offset train is met, which rests on trains.order_key, H-Confirm-Build-11; the former notch drive of 2 W of the hands after the step kept by name: a source pinned to the step's end, whose image under the exchange is a start, so the fall drove 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the regulator's source from every driven train alike, gear by gear u_in u_out + (-a F) div w, w the train's teeth; and every hand's stress, one outer product of its start notches' gradients and its velocity u_in + u_out (regulation.stress_of)."""
         clock = self.clock
         self.forms = zeros(clock.size)
         self.impelled: dict[int, list[Any]] = {}
         d = (clock.teeth + clock.teeth) * self.stretch_now
         w_side = readings.mean_teeth(self.clock, self.regulator.gears[0])
         sweep = zeros(clock.size)
-        self.flow = [zeros(clock.size) for _ in range(AXES)]
+        self.stress = [zeros(clock.size) for _ in range(REGULATOR - 1)]
         for r in self.driven:
             k = self.where[id(r)]
             p_side = [
@@ -223,12 +220,11 @@ class Tick:
             u_in = [rates.rounded(p + p + 1, d) for p in p_side]
             u_out = [rates.rounded(p + p + 1, d) for p in p_other]
             if r in self.hands:
-                forms = cross(*u_in, *self.starts[k]) + cross(*u_out, *self.starts[k])
-                sweep = sweep + coupling_of(r) * forms
+                velocity = [x + y for x, y in zip(u_in, u_out, strict=True)]
+                sweep = sweep + coupling_of(r) * cross(*velocity, *self.starts[k])
                 assert r.ratio is not None
-                for u in (u_in, u_out):
-                    for a in range(AXES):
-                        self.flow[a] = self.flow[a] + r.ratio[0] * net_flow(self.starts[k], u, a)
+                found = stress_of(self.starts[k], velocity)
+                self.stress = [s + r.ratio[0] * t for s, t in zip(self.stress, found, strict=True)]
             pulls = hands.products(self.starts[k], self.pull[k])
             for product, pull in zip(hands.products(u_in, u_out), pulls, strict=True):
                 self.forms = self.forms + product + carries(-pull, self.train_teeth[k])
@@ -238,13 +234,13 @@ class Tick:
         """(3) The carry (the former `carrier_act`, `divisions`, `writes` and `rest`): the regulator's one carry with the drive sourced by the driven trains' strides, 4 stretch_now (forms (the file's trace weight) rim full_rate^2 - trace rate^2) rate on its time gear and, times rate^2 on its nine axis gears by the position of their reading, the traceless stress, the hands' count flow and the shears (Y-S1, Y-S3; the regulator's act clock.act, the former `carried` by this name); every driven gear's one carry at the mean teeth of the regulator's two notches at its end, its fine tooth kept in [0, W) there, backward the turned-over clocks set to their kept pre-state; the hands' gears at the start and before the turnover kept for the striking (the latter the state the turnover replaces at the turned-over clocks, the notches now elsewhere, CL-S2; the former `stepped` kept by name); the trains set; forward the advances among the carries after them (`advances`; backward they came off first); then every gear at a stopped clock restored to its held gear, its notches, its fine teeth and its teeth by the clock's one restore (BH-S1, the former `rest`), so no act but the turnover changes any integer of a stopped clock's state forward or backward; backward a clock both stopped and turned over is restored to the pre-state the reverse returned (FR-S1)."""
         clk, regulator = self.clock, self.regulator
         k = self.where[id(regulator)]
-        p02 = self.rate * self.rate
+        p02, (trace, traceless) = self.rate * self.rate, tensor_parts(self.stress[:AXES])
         numerators = [
             held_numerator(
-                clk.trace, self.stretch_now, self.forms, self.trace, self.rate, clk.rim, clk.full_rate
+                clk.trace, self.stretch_now, self.forms, trace, self.rate, clk.rim, clk.full_rate
             )
         ]
-        numerators += [part * p02 for part in (*self.traceless, *self.flow, *self.shear)]
+        numerators += [part * p02 for part in (*traceless, *self.stress[AXES:])]
         gearing = readings.gearing_of(clk, regulator, self.load, self.factors)
         self.out[k] = clk.act(
             self.trains[k], gearing, None, numerators, self.going, None, *self.ends(regulator)

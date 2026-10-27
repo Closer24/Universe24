@@ -71,12 +71,9 @@ def factors(clock: Clock, axis_notches: list[Any] | None = None, stopped: Any = 
     found = []
     for spoke, (axis, _side) in enumerate(SPOKE_SIDES):
         t = carries(even(notches[axis], spoke) + 1, SIDES)
-        factor = np.vectorize(
-            lambda tt: int(mesh_factor(clock.full_rate, clock.G, min(int(tt), clock.full_rate))),
-            otypes=[object],
-        )
+        factor = mesh_factor(clock.full_rate, clock.G, np.minimum(t, clock.full_rate))
         at_teeth = None if stopped is None else stopped | across(stopped, spoke)
-        found.append(factor(t) if at_teeth is None else np.where(at_teeth, 0, factor(t)))
+        found.append(factor if at_teeth is None else np.where(at_teeth, 0, factor))
     return tuple(found)
 
 
@@ -150,14 +147,12 @@ def train_lead(gears: list[Gear], spoke: int) -> Any:
     return sum((mesh_lead(gear, spoke) for gear in gears), start=0)
 
 
-def train_twist(gears: list[Gear], axis: int) -> Any:
-    """The twist of a hand's transverse leads along the +axis mesh (the gears' net leads summed per axis, then the cross of the two ends')."""
-    a, (b, c) = axis, transverse(axis)
-    ub = sum((net_lead(gear, b) for gear in gears), start=0)
-    uc = sum((net_lead(gear, c) for gear in gears), start=0)
-    return cross(ub, uc, across(ub, spoke_of(a, 0)), across(uc, spoke_of(a, 0)))
-
-
-def net_lead(gear: Gear, axis: int) -> Any:
-    """A gear's net transverse lead at every clock along an axis, u_b(k) = F(k, k - b) - F(k, k + b): the lead into the clock from the -b mesh less the lead out along the +b mesh, read from the clock's own two meshes of that axis."""
-    return mesh_lead(gear, spoke_of(axis, 1)) - mesh_lead(gear, spoke_of(axis, 0))
+def train_twists(gears: list[Gear]) -> list[Any]:
+    """A hand's twist on every axis from its six spokes' leads read once (`train_lead`): the net transverse lead u_b = F(-b) - F(+b) on each axis (the lead into the clock from the -b mesh less the lead out along the +b mesh), then per axis a the cross of the two ends' (u_b, u_c) along the +a mesh, (b, c) the transverse pair."""
+    leads = [train_lead(gears, spoke) for spoke in range(SPOKES)]
+    net = [leads[spoke_of(b, 1)] - leads[spoke_of(b, 0)] for b in range(AXES)]
+    found = []
+    for a, (b, c) in enumerate(map(transverse, range(AXES))):
+        far = [across(n, spoke_of(a, 0)) for n in (net[b], net[c])]
+        found.append(cross(net[b], net[c], *far))
+    return found
