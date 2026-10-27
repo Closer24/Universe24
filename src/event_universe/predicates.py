@@ -12,7 +12,6 @@ from event_universe.core.rule3 import largest_below
 from event_universe.decoder import (
     HALF,
     HUNDRED,
-    LIFTS,
     LISTED,
     PAIR,
     QUARTERS,
@@ -102,8 +101,8 @@ def coulomb(record: Record) -> dict[str, Any]:
 
 
 def lifts(record: Record) -> dict[str, Any]:
-    """Row 26: the three lifts born and their beats' ratios: three or more distinct planes born, and the credited planes' mean beats (intervals per period) ordered against their legs, the heavier the faster."""
-    born = record.born_of()
+    """Row 26: the lifts born and their beats' ratios: every lift the universe names born (its gapped planes, the typed points of den's circle, record.NL; the former constant 3 the toy universe's count; the plane at the gap 0 is light and no lift), and the credited planes' mean beats (intervals per period) ordered against their legs, the heavier the faster."""
+    born, lifts = record.born_of(), record.lifts_born()
     beats: dict[int, tuple[int, int]] = {}
     for c in record.credits:
         s, n = beats.get(c["line"], (0, 0))
@@ -115,29 +114,29 @@ def lifts(record: Record) -> dict[str, Any]:
         for a, b in zip(order, order[1:], strict=False)
     )
     return {
-        "26 the three lifts born and their beats' ratios": {
+        "26 the lifts born and their beats' ratios": {
             "planes born": dict(born),
             "mean beat per credited plane (hundredths), by the leg": [
                 [record.line_name[line], quot(*beats[line], HUNDRED)] for line in order
             ],
             "verdict": unread_words(
                 "no birth and fewer than two planes credited",
-                "three lifts born, the beats ordered as the legs",
+                "every lift the universe names born, the beats ordered as the legs",
             )
             if not born and len(beats) < PAIR
-            else "SHOWN: three lifts born, the beats ordered as the legs (the heavier the faster)"
-            if len(born) >= LIFTS and len(beats) >= PAIR and ordered
+            else f"SHOWN: {len(lifts)} of {record.NL} lifts born, the beats ordered as the legs (the heavier the faster)"
+            if len(lifts) >= record.NL and len(beats) >= PAIR and ordered
             else "SHOWN in part: "
             + ", ".join(
                 p
                 for p, ok in (
-                    (f"{len(born)} lifts born", len(born) >= LIFTS),
+                    (f"{len(lifts)} of {record.NL} lifts born", len(lifts) >= record.NL),
                     ("the beats ordered as the legs", len(beats) >= PAIR and ordered),
                 )
                 if ok
             )
-            if (len(born) >= LIFTS) or (len(beats) >= PAIR and ordered)
-            else f"NOT SHOWN: {len(born)} lifts born, the beats of {len(beats)} planes not ordered as the legs",
+            if (len(lifts) >= record.NL) or (len(beats) >= PAIR and ordered)
+            else f"NOT SHOWN: {len(lifts)} of {record.NL} lifts born, the beats of {len(beats)} planes not ordered as the legs",
         }
     }
 
