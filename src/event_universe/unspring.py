@@ -66,16 +66,8 @@ def push_per_gear(
 ) -> list[int]:
     """The momentum a lay of `levels` (now, before per line) at the Node books, summed over the record's lines as given, `lines` the board the reading is at (the live board for a lay, the interval's start for a take's end, CL-S2) and `num` the record's pair (take.momentum_of per line; the form generic in the lines)."""
     found = [0] * AXES
-    for j, line in enumerate(lines):
-        dj = push_of(
-            node,
-            line.now,
-            line.before,
-            where,
-            sign * levels[HAND * j],
-            sign * levels[HAND * j + 1],
-            num,
-        )
+    for line, d_now, d_before in zip(lines, levels[0::HAND], levels[1::HAND], strict=True):
+        dj = push_of(node, line.now, line.before, where, sign * d_now, sign * d_before, num)
         found = [a + b for a, b in zip(found, dj, strict=True)]
     return found
 
