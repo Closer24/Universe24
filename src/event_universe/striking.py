@@ -23,7 +23,7 @@ from event_universe.unspring import (
     unsprung_notches,
     unwinds,
 )
-from event_universe.unwind import advance, move, neighbour, recoil
+from event_universe.unwind import advance, move, neighbour, recoil, window_clocks
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
@@ -227,6 +227,8 @@ def fitted(
 ) -> set[tuple[int, ...]]:
     """One unwind's fitted hands advanced by the one advance act (unspring.fitted_advanced: the sweeping fitted hands at the sweep key div 2, an unspringing's unsprung fitted hands as the exact unwind at -1, unspring.unsprung_notches, MG-S1, each end's winding found by its clock and not by its place in the unwind's list, so the advance is order-free under the ends' naming, the comparison's bug of close.py:166-169, CL-S2), each fitting logged with its numbers, its unwind's own push among them (the Boss's 6399718139: every unwind's dP on its gear, not the striking's last), an unspringing's two ends' unwinds under `takes` and its advances under `exact_lay`. Returns the clocks touched."""
     touched = {at}
+    laid = lay_window(clock, fits)
+    gain = -lay_wind(clock, laid, c, factors)
     for _at, s, minus, plus, room, _rec in fits:
         exact: list[list[int] | None] = []
         hand = clock.hands()[s]
@@ -255,7 +257,39 @@ def fitted(
         clock.counts["births"] += 1
         clock.strikes[at] += 1
         fitting(clock, at, s, (minus, plus), unwind, rec, advanced, tallies, len(fits), room, exact)
+    if "takes" not in unwind:
+        cross = gain + lay_wind(clock, laid, c, factors) - unwind["booked"]
+        clock.slack[at] -= cross
+        clock.log[-1]["lay_cross"] = cross
     return touched
+
+
+def lay_window(clock: Clock, fits: list[Fitting]) -> list[tuple[int, list[tuple[int, ...]]]]:
+    """The fitted hands of a clock's fittings and the clocks their advances change: every fitting's two fitted hands (twin hands at their own) and the two ends' windows, the clock and its six neighbours."""
+    found: dict[int, set[tuple[int, ...]]] = {}
+    for _at, s, minus, plus, _room, _rec in fits:
+        for p in {s, hands.twin_of(clock.hands(), s)}:
+            found.setdefault(p, set()).update(
+                c for end in (minus, plus) for c in window_clocks(clock, end)
+            )
+    return [(p, sorted(clocks)) for p, clocks in sorted(found.items())]
+
+
+def lay_wind(
+    clock: Clock, laid: list[tuple[int, list[tuple[int, ...]]]], c: Any, factors: tuple[Any, ...]
+) -> int:
+    """The fitted hands' wind over the clocks their advances change, at their gearings at the tick's start (the pair's lay read on the board: its own quanta, the windings paid, read on no gear of the great clock, so the lay's cross terms with the residue and between its two ends on one mesh are the board's wind less the windings, the take's remainder carrying them signed, EX-S1)."""
+    total = 0
+    for p, window in laid:
+        hand = clock.hands()[p]
+        assert hand.ratio is not None
+        total += sum(
+            int(v)
+            for v in hands.wind(
+                clock, hand.gears, readings.gearing(clock, hand.ratio, c, factors), window
+            )
+        )
+    return total
 
 
 def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:

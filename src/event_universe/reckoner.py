@@ -151,6 +151,10 @@ class Chart:
         bobs: dict[tuple[tuple[int, ...], int], list[dict[str, Any]]] = self.memo[key]
         return bobs
 
+    def ends(self) -> list[dict[str, Any]]:
+        """Every merger's ends, the takes of the fittings that carry them, in the log's order."""
+        return [t for b in self.fittings for t in b.get("takes", [])]
+
     def first_stopped(self) -> dict[int, int]:
         """The first stopped tick of every clock that stops (the mesh rate 0, BH-S1's mask on the clock lines), the clock's index to the tick; the one reader of the standstill's clocks for rows 14, 34 and 61."""
         first: dict[int, int] = {}
