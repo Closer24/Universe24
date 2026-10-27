@@ -1,0 +1,69 @@
+DAVID-THE-24-IN-THE-CLOSE checks, 2026-10-27, 21:5x UTC, on the head 87a168c16 (no src touched).
+rot24.py: a world and its image under each of the cube's 24 rotations (about the origin, the board wrapped) run in lockstep; every scalar gear
+(the regulator's time gear, the offset's time gear, every hand's gears) compared through the image before and after each strike.
+VSCALAR=1 the draw's digits from the scalar gears alone; 2 the odd gears' digits folded about (w - 1) / 2; 3 as 1 with the origin and coarse tests on every gear.
+
+   nature,14,VSCALAR=2: alike 3 of 24 ; the first: parts at tick 5 in the strike: [('hand0', 0, (1, 0, 0)), ('hand0', 1, (1, 0, 0)), ('hand2', 0, (1, 0, 0))]
+   nature,14,VSCALAR=3: alike 24 of 24
+   hole,20,VSCALAR=0: alike 3 of 24 ; the first: parts at tick 14 in the strike: [('hand0', 0, (2, 1, 3)), ('hand0', 1, (2, 1, 3)), ('hand3', 0, (2, 1, 3))
+   hole,20,VSCALAR=1: alike 24 of 24
+   hole,20,VSCALAR=3: alike 24 of 24
+   bodies,20,VSCALAR=0: alike 24 of 24
+   bodies,20,VSCALAR=1: alike 24 of 24
+   nature,14,VSCALAR=0 (the run of 21:3x, printed): alike 3 of 24 ; the first: parts at tick 5 in the strike: [('hand0', 0, (0, 2, 0)), ('hand0', 1, (0, 2, 0)), ('hand1', 0, (1, 0, 0))]
+   nature,14,VSCALAR=1 (the run of 21:3x, printed): alike 24 of 24
+
+odd_map.py (nature, the turn about x): the odd gears' notches and fine teeth through the image, with VSCALAR=1:
+   tick 4:
+      ('offset odd', 1, 1, 'equal', 'f') 125
+      ('offset odd', 2, -1, 'equal', 'f') 125
+      ('offset odd', 3, -1, 'equal', 'f') 125
+      ('regulator flows', 4, 1, 'equal', 'f') 125
+      ('regulator flows', 5, -1, 'equal', 'f') 102
+      ('regulator flows', 5, -1, 'equal', 'other') 23
+      ('regulator flows', 6, -1, 'equal', 'f') 101
+      ('regulator flows', 6, -1, 'equal', 'other') 23
+      ('regulator flows', 6, -1, 'equal', 'w-f') 1
+   tick 14:
+      ('offset odd', 1, 1, 'equal', 'f') 125
+      ('offset odd', 2, -1, 'equal', 'f') 125
+      ('offset odd', 3, -1, 'equal', 'f') 125
+      ('regulator flows', 4, 1, 'equal', 'f') 125
+      ('regulator flows', 5, -1, 'equal', 'other') 61
+      ('regulator flows', 5, -1, 'equal', 'w-f') 64
+      ('regulator flows', 6, -1, 'equal', 'other') 61
+      ('regulator flows', 6, -1, 'equal', 'w-f') 64
+   tick 40:
+      ('offset odd', 1, 1, 'equal', 'f') 125
+      ('offset odd', 2, -1, 'equal', 'f') 93
+      ('offset odd', 2, -1, 'equal', 'other') 31
+      ('offset odd', 2, -1, 'equal', 'w-f') 1
+      ('offset odd', 3, -1, 'equal', 'f') 125
+      ('regulator flows', 4, 1, 'equal', 'f') 125
+      ('regulator flows', 5, -1, 'equal', 'other') 64
+      ('regulator flows', 5, -1, 'equal', 'w-f') 61
+      ('regulator flows', 6, -1, 'equal', 'other') 64
+      ('regulator flows', 6, -1, 'equal', 'w-f') 61
+   (relations: 'f' the same fine tooth, 'w-f' f + f' = w, 'other' f + f' = w - 2 at tick 4, as the printed cases show)
+
+The charts and the bang on 87a168c16 with the lead at the kick, as built (VSCALAR=0) and with the draw on the scalars (chart_clamp.py, bang_clamp.py):
+   as built (VSCALAR=0):
+   hole, CLAMP=0: fittings 17 (unspringings 3), chimes 920, rows SHOWN 35, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 0, 
+   chiral, CLAMP=0: fittings 2 (unspringings 0), chimes 2849, rows SHOWN 32, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 0
+   bodies, CLAMP=0: fittings 8 (unspringings 8), chimes 716, rows SHOWN 26, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 0,
+   the draw on the scalars (VSCALAR=1):
+   hole, CLAMP=0: fittings 0 (unspringings 0), chimes 0, rows SHOWN 5, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 0, cloc
+   chiral, CLAMP=0: fittings 2 (unspringings 0), chimes 0, rows SHOWN 17, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 0, c
+   bodies, CLAMP=0: fittings 8 (unspringings 8), chimes 716, rows SHOWN 26, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 0,
+   the draw on the scalars, the origin on every gear (VSCALAR=3):
+   hole, CLAMP=0: fittings 0 (unspringings 0), chimes 0, rows SHOWN 5, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 0, cloc
+   chiral, CLAMP=0: fittings 2 (unspringings 0), chimes 0, rows SHOWN 17, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 0, c
+   bodies, CLAMP=0: fittings 8 (unspringings 8), chimes 716, rows SHOWN 26, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 0,
+   the bang (world_bang.json, 250 ticks): VSCALAR=0: CLAMP=0: fittings 356, chimes 12564, the rewind {'intervals': 10, 'exact': 10}; VSCALAR=1: CLAMP=0: fittings 401, chimes 10165, the rewind {'intervals': 10, 'exact': 10}
+
+
+On 0a3b16bc1 (rot24.py with WT on its worktree):
+   rot_nature_0: alike 3 of 24 ; the first: parts at tick 5 in the strike: [('hand0', 0, (0, 2, 0)), ('hand0', 1, (0, 2, 0)), ('hand1', 0, (1, 0, 0))]; bi
+   rot_nature_1: alike 24 of 24
+   rot_hole_0: alike 3 of 24 ; the first: parts at tick 14 in the strike: [('hand0', 0, (2, 1, 3)), ('hand0', 1, (2, 1, 3)), ('hand3', 0, (2, 1, 3))]; b
+   rot_hole_1: alike 24 of 24
