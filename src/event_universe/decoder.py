@@ -9,7 +9,7 @@ from typing import Any
 from event_universe.circle import circle_of
 from event_universe.core import paces, rule3
 from event_universe.core.paces import sine_den
-from event_universe.links import cross, turn_pair
+from event_universe.links import cross, link_wall, turn_pair
 from event_universe.rows import PLANE
 
 MIL = 1000000  # readings in parts per million
@@ -31,11 +31,6 @@ LEVELS_BACK = (
     1,
     0,
 )  # the carrier's three levels read from the Node lines: before the interval, at its start, after it, as lines behind the interval's own
-LINK_WALL_GAMMAS = 4  # the Link's wall in Gammas, links.py's wl = 4 gamma, mirrored here for the solve
-KICK_WEIGHT = (
-    12  # the law's weight of the kick, 12 p_0^2 G^2 (interval.py's form), mirrored here for the solve
-)
-REACH = 2  # the reach's weight, R_j = 2 p_i^2 Q_j G^2 (the law's form), mirrored here for the solve
 Rational = tuple[int, int]
 NOT = "NOT"  # the word a verdict begins with where the gate is not shown, read or reached
 KINDS = (
@@ -242,17 +237,17 @@ def solve(record: Record, credit: dict[str, Any]) -> Rational | None:
     if zn == (0, 0):
         return None
     scale, phases, odd, frames = f["X"], f["phases"], f["odd"], f["frames"]
-    wl = LINK_WALL_GAMMAS * gamma
+    wl = link_wall(gamma)
     e = tuple((zx[k] - zn[k]) * w_out - w_in * (zn[k] - zb[k]) for k in range(PAIR))
-    weight = KICK_WEIGHT * p0 * p0 * unit * unit
+    weight = rule3.mass(0, 1, p0, unit)
+    reaches = rule3.rule_integers(1, den, gamma, p0, pi, tuple(f["factors"]), unit).reaches
     a_re = a_im = 0
     for port, (a, b) in enumerate(zip(f["re_neighbours_start"], f["im_neighbours_start"], strict=True)):
         m: Rational = (a, frames[port] * b)
         m = turn_pair(m[0], m[1], phases[port][0], phases[port][1], scale)
         n = odd[port]
         m = turn_pair(m[0], m[1], wl * wl - n * n, PAIR * wl * n, wl * wl + n * n)
-        reach = REACH * pi * pi * f["factors"][port]
-        a_re, a_im = a_re + reach * (m[0] - zn[0]), a_im + reach * (m[1] - zn[1])
+        a_re, a_im = a_re + reaches[port] * (m[0] - zn[0]), a_im + reaches[port] * (m[1] - zn[1])
     p = (e[0] + weight * den * zn[0] * x_n, e[1] + weight * den * zn[1] * x_n)
     q = ((a_re + weight * zn[0]) * x_n, (a_im + weight * zn[1]) * x_n)
     qq = q[0] * q[0] + q[1] * q[1]
