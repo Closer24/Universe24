@@ -239,3 +239,28 @@ BH-S1's branches are what stop it.
 - **run.py.** Lines 270 and 280 write those lists. Line 154 books the mask in the frame for the run back: the backward step cannot recompute the mask from the post-state, where a Node may have risen into the frozen content.
 
 **When they would become the general form.** Only if the clock itself carries the stop: the step's time scaled by the clock, so that a Node at the clock's zero neither turns nor drifts. The horizon would then move from 3,793 to the clock's zero, and every horizon record would move with it. That is the owner's word, not a fold.
+
+### 3. The whole chain to daea93b68 (your task of 09:5x UTC)
+
+**The tree.** On the same worktree (4b5c3d834 with the 09:1x diff applied), your diff 6501cd679 to daea93b68 applied with `git apply --unidiff-zero` (10 files, +63 -143). The three readings were regenerated (for n in hole chiral bodies: PYTHONPATH=src python -m event_universe.gates), each changing in one line alone, row 41's words. After `git add -A`, `git write-tree` gives 74192b4cc97d93cab55849efcba4a95bb763a602, the tree of daea93b68.
+
+**The check.** `tools/check.py --full --base 70ac3b30c`, run with the worktree's own src on the path:
+
+- **full check exit 0**: 106 passed in 116.38 s on 4 cores;
+- the code ratchet's line: "the shape of the code holds against the merge base";
+- the engine gates, the tests' shape and the documents' six gates hold; ruff and mypy are clean (35 source files).
+
+**The two slowest tests:**
+
+- test_the_run_back_is_exact_through_births_and_turns, 25.56 s;
+- test_the_hole_record_is_the_engines_own_bit_for_bit, 20.31 s.
+
+Next come the chiral seed's both hands at 19.32 s and BH-S1's at 17.21 s. On this box step 3 leaves the run-back test where 6501cd679 had it (25.05 s), within the run's noise. So your box's 30.2 to 31.3 s against the 30 s bound is the box: by your phase timing the time is the close's shares at the windows, not the acts step 3 struck.
+
+**The referee on this box.** The hole, the chiral and the bodies regenerate SAME, key by key but the milliseconds. The run back is exact 20 of 20 on each. The hashes are yours: 714fba3003f492a9, 260394ec7bb91435 and 9680f4d36c9997dc.
+
+**What I would not let stand.** Nothing in the diff itself. Every change is the identity or 0 on a plane, and the records confirm it: gram.share and metric's sources by the plain products, the force without the term, the emission and the kick without the scale, node.py's wall unscaled. Three things to settle beside it:
+
+1. **The lean toy.** tools/derivations/toys/lean/toy.py now names six struck functions: readings.scale (lines 97 and 275), gram.gram (249 and 294), gram.term (276) and gram.curl (308). Nothing in tests or tools/check.py runs it, so the check is green, but the file fails if run. Either strike its six calls, or name it a frozen copy that runs at an earlier commit.
+2. **The law's text.** docs/ALGEBRA.md:45 still reads SR-S1 to SR-S4 (the spinor row of shape 8) as present clauses, and :1735 counts the shapes as four. The engine now refuses a shape-8 row by name, so the law's clause wants the strike dated (the Scribe's or yours).
+3. **The vestiges named in 2 (a) and not in this diff.** bodies.py:53-54's non-plane beat branch with gram.period; the seed's `vector` key; node.py's module docstring ("116 with a shape-8 row beside them").
