@@ -1,4 +1,4 @@
-"""The rows of the Node as the universe file names them, no name and no role (the owner's word of 2026-10-25, there is no if): a row is a shape (its count of lines) with a pair (num, den) for Rule3's rule or a wall of its own for a row with no Links; its lines are built here with their walls by shape, the rows ordered for the acts and the universe's shapes refused by name; the lookups choose a row by its numbers alone."""
+"""The rows of the Node as the universe file names them, no name and no role (the owner's word of 2026-10-25, there is no if): a row is a shape (its count of lines) with a pair (num, den) for Rule3's rule or a wall of its own for a row with no Links; its lines are built here with their walls by shape, the rows ordered for the acts and the universe's shapes refused by name; the lookups choose a row by its numbers alone. ROOM is the room of the phase act in bits, the largest the machine's width carries through the pair's product, (WIDTH - 1) div 2, the engine's resolution and nothing of the law (the owner's word of 2026-10-27, 04:0x UTC, "the amplitude, so separate the 128 bits and it will not be tied"; THE-AMPLITUDE-SCALE.md: the physics a free scale above the floor derived from Gamma, phase.floor, so the room is a choice of resolution; the former HALF_WIDTH - 1 by value, every record bit for bit); WIDTH the machine's width, whose one role in the physics is the engine's refusal in phase.carried."""
 
 from __future__ import annotations
 
@@ -13,8 +13,8 @@ CARRIER = 10  # the shape of the row that carries the wall (the metric's row): i
 POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
 PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
 QUARTET = 8
-WIDTH = 128  # the law's width in bits (ALGEBRA.md, The Node): the phase pair's room is its half
-HALF_WIDTH = half(WIDTH)
+WIDTH = 128  # the machine's width in bits: the engine's one refusal where it cannot carry the scale (phase.carried), never a verdict of the law (the owner's ruling of 2026-10-26, 22:1x UTC; the former clause "every integer within 128 bits" struck)
+ROOM = half(WIDTH - 1)
 POWER_TIME = 4  # the held wall's power of Gamma on the carrier's time line, POWER_AXIS the nine axis lines' (K-S1 to K-S3, Y-S1)
 POWER_AXIS = 2
 

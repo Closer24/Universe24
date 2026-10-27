@@ -16,9 +16,10 @@ from event_universe.links import Link, turned
 from event_universe.loader import seed
 from event_universe.rows import (
     CARRIER,
-    HALF_WIDTH,
     PLANE,
     POTENTIAL,
+    ROOM,
+    WIDTH,
     Line,
     Row,
     records_of,
@@ -77,7 +78,7 @@ class Node:
         seed.lay_world(self, world.get("seed", []))
 
     def start_state(self) -> None:
-        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the take's remainder (EX-S1, born at 0), the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude from half the width less one and the orbit's seed."""
+        """The Node's state before the seed: the records' standing, crossings and beats, the proper count, the closes, the take's remainder (EX-S1, born at 0), the interval, the log, the turns, the frames' stack, the run's counts; the carrier's time line at Gamma, the drift the largest integer whose square is at most T, the lay's two levels (A, B) with A B = T div 2 (MS-S1), the phase pair's amplitude at the engine's declared room, carried above the floor derived from Gamma and within the machine's width (phase.amplitude, phase.carried; the owner's word of 2026-10-27, 04:0x UTC: the amplitude separated from the 128 bits), and the orbit's seed."""
         shape, nr = self.shape, len(self.records())
         self.standing = [zeros(shape) for _ in range(nr)]
         self.crossed = [zeros(shape) for _ in range(nr)]
@@ -89,8 +90,7 @@ class Node:
         self.stack: list[dict[str, Any]] = []
         self.turned = np.zeros(shape, dtype=bool)
         self.counts: dict[str, int] = dict(COUNTS)
-        self.max_transient = self.count_max = 0
-        self.last_dp = [0, 0, 0]
+        self.max_transient, self.count_max, self.last_dp = 0, 0, [0, 0, 0]
         self.last_recoil: dict[str, Any] = {}
         self.start_factors: tuple[Any, ...] = ()
         self.start_frames: list[Any] = []
@@ -106,7 +106,7 @@ class Node:
             line.now[:], line.before[:] = self.gamma, self.gamma
         self.drift = rule3.largest_below(self.T)
         self.A, self.B = rule3.balanced_pair(half(self.T))
-        self.X = phase.amplitude(phase.unit(self.gamma), HALF_WIDTH - 1)
+        self.X = phase.carried(phase.amplitude(phase.unit(self.gamma), ROOM), self.gamma, WIDTH)
         seed_pair = phase.seed(self.X, self.gamma)
         self.orbit_lines, self.orbit = [seed_pair], [(int(seed_pair[0][0]), int(seed_pair[1][0]))]
         self.orbit_half: int | None = None
