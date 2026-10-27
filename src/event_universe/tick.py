@@ -12,7 +12,16 @@ from event_universe.core.acts import carry, mid
 from event_universe.core.rule3 import carries, held_numerator
 from event_universe.core.spokes import AXES, SPOKES, across
 from event_universe.features import stretch
-from event_universe.meshes import centred_count, coupling_of, factors, meshes_of, offsets, pawls, skewed
+from event_universe.meshes import (
+    centred_count,
+    coupling_of,
+    cross,
+    factors,
+    meshes_of,
+    offsets,
+    pawls,
+    skewed,
+)
 from event_universe.regulation import net_flow, rest_rate_of, shear_parts, stress_parts, tensor_parts
 from event_universe.run import rewind_note
 from event_universe.trains import OFFSET, REGULATOR, Gear, Train, ratchet_of, zeros
@@ -142,7 +151,7 @@ class Tick:
         self.lead = [zeros(node.size) for _ in range(AXES)]
         for r, cpl in self.hand_couplings:
             nows = [self.at(line) for line in self.gears(r)]
-            for a, j_a in enumerate(hands.lead(r.size, nows, self.pawls)):
+            for a, j_a in enumerate(hands.lead(nows, self.pawls)):
                 self.lead[a] = self.lead[a] + cpl * j_a
         self.starts: dict[int, list[Any]] = {}
         self.pull: dict[int, list[Any]] = {}
@@ -165,7 +174,7 @@ class Tick:
         self.release = zeros(node.size)
         for r, cpl in self.hand_couplings:
             k = self.where[id(r)]
-            flow = cpl * hands.form(hands.quarter(r.size), self.pull[k], self.starts[k])
+            flow = cpl * cross(*self.starts[k], *self.pull[k])
             self.release = self.release + self.stretch_now * flow
 
     def impulse(self) -> None:
@@ -192,8 +201,7 @@ class Tick:
             u_in = [rates.rounded(p + p + 1, d) for p in p_side]
             u_out = [rates.rounded(p + p + 1, d) for p in p_other]
             if r in self.hands:
-                gj = hands.quarter(r.size)
-                forms = hands.form(gj, self.starts[k], u_in) + hands.form(gj, self.starts[k], u_out)
+                forms = cross(*u_in, *self.starts[k]) + cross(*u_out, *self.starts[k])
                 charge = charge + coupling_of(r) * forms
                 assert r.ratio is not None
                 for u in (u_in, u_out):
