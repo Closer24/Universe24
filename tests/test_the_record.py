@@ -9,7 +9,17 @@ from typing import Any
 
 import pytest
 
-from event_universe import great_clock, meshes, strikes, swings, symmetries, tick
+from event_universe import (
+    great_clock,
+    hands,
+    meshes,
+    readings,
+    strikes,
+    striking,
+    swings,
+    symmetries,
+    tick,
+)
 from event_universe.assembly.piece import check_piece
 from event_universe.clock import Clock
 from event_universe.core import rates
@@ -85,20 +95,20 @@ VERDICTS = {  # the verdicts' words by name
     },
     "bodies": {
         "64 dark matter in kind": "SHOWN: 43 of 51 bodies credited at a Node where no light was laid",
-        "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 577 of 577 frames",
+        "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 573 of 573 frames",
         "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link per interval",
         "55 the two slits": "NOT READ: no two gap-0 packets at one centre with one wave mirrored on one axis in the seed; the predicate: the gap-0 ro",
         "56 Bell": "NOT READ: 8 births, 0 of the four setting cells filled by pairs clicked at both ends; the predicate: S from the pairs' t",
         "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four, no three ends with one root in the record; the pred",
         "61 the horizon radiates": "NOT READ: no frozen Node in the record",
-        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 577 of 577 frames",
+        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 573 of 573 frames",
         "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero and above the next",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
         "68 matter against antimatter": "NOT READ: no moving birth; the predicate: the + child's end chosen by the twist's hand at every moving birth",
         "69 the neutrino's one hand": "NOT READ: no moving birth; the predicate: one hand at every moving birth of the record",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
-        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 2268 of 2268 axis ",
-        "72 the angular momentum booked on the Link": "SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 756 of 756 bookings, the records'",
+        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 2256 of 2256 axis ",
+        "72 the angular momentum booked on the Link": "SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 752 of 752 bookings, the records'",
         "73 E = mc^2 at the merger": "SHOWN: at every one of 16 merger ends the pair's share taken is the light's quantum booked, at 0 exactly and at 16 with ",
     },
 }
@@ -478,16 +488,44 @@ def test_one_big_bang_recurs_within_its_integers_and_binds_its_heavy_matter() ->
 
 
 def test_the_bangs_heavy_matter_stays_silent_without_the_held_field() -> None:
-    """The control of the nuclear binding: the same bang on the toy universe, with no held field, chimes on the near-light family alone through its 100 ticks (4,026 chimes, 245 fittings), so no heavy family's chime stands to be bound; a weight on a hand and a held field with no weight are refused by name."""
+    """The control of the nuclear binding: the same bang on the toy universe, with no held field, chimes on the near-light family alone through its 100 ticks (4,041 chimes, 232 fittings), so no heavy family's chime stands to be bound; a weight on a hand and a held field with no weight are refused by name."""
     calibre, piece = world_of("world_bang.json")
     clock = Clock(dict(calibre, rows=[r for r in calibre["rows"] if "weight" not in r]), piece)
     for _ in range(piece["intervals"]):
         clock.tick()
     credits = [e["line"] for e in clock.log if e["event"] == "credit"]
-    assert (set(credits), len(credits), clock.counts["births"]) == ({0}, 4026, 245)
+    assert (set(credits), len(credits), clock.counts["births"]) == ({0}, 4041, 232)
     for row in (
         dict(calibre["rows"][0], weight=1),
         {k: v for k, v in calibre["rows"][-1].items() if k != "weight"},
     ):
         with pytest.raises(ValueError, match="is no gapped row"):
             check_piece(piece, dict(calibre, rows=[row]))
+
+
+def test_the_books_close_at_every_striking_mergers_and_lays_alike(monkeypatch: Any) -> None:
+    """The close's books (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off): on the one big bang's first 20 ticks, at every striking the board's wind lost (every hand's wind at the striking's start gearings, before less after) is the chimes' booked plus the remainder's rise, the mergers' two-ended cross terms and the lays' cross terms carried by the remainder; mergers among them."""
+    calibre, piece = world_of("world_bang.json")
+    books, strike = [], striking.strike
+
+    def board(clock: Clock) -> int:
+        reads = [
+            readings.gearing_of(clock, r, clock.start_load, clock.start_factors) for r in clock.hands()
+        ]
+        return sum(
+            int(hands.wind(clock, r.gears, g).sum()) for r, g in zip(clock.hands(), reads, strict=True)
+        )
+
+    def booked(clock: Clock, starts: Any, held: Any, going: int = 1, note: Any = None) -> None:
+        wind, slack, log_from = board(clock), int(clock.slack.sum()), len(clock.log)
+        strike(clock, starts, held, going, note)
+        new = clock.log[log_from:]
+        chimes = sum(int(e["booked"]) for e in new if e["event"] == "credit")
+        merged = sum(1 for e in new if e["event"] == "birth" and "takes" in e)
+        books.append((wind - board(clock) == chimes + int(clock.slack.sum()) - slack, merged))
+
+    monkeypatch.setattr(striking, "strike", booked)
+    clock = Clock(calibre, piece)
+    for _ in range(20):
+        clock.tick()
+    assert all(closed for closed, _merged in books) and sum(m for _c, m in books) > 0

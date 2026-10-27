@@ -274,7 +274,28 @@ def unwinds(
     reads = read_ends(clock, ends, gearing, cause, unwound, cache, twins)
     if reads is None or (draw is not None and draw() is None):
         return None
-    return unwind_ends(clock, reads, unwound, at)
+    found = unwind_ends(clock, reads, unwound, at)
+    if cache is not None and len(reads) > 1:
+        cross = wind_cross(clock, reads, gearing, cache)
+        first = reads[0][0]
+        clock.slack[first] += cross
+        found[0]["taken"], found[0]["remainder"] = found[0]["taken"] + cross, int(clock.slack[first])
+    return found
+
+
+def wind_cross(
+    clock: Clock,
+    reads: list[Read],
+    gearing: rule3.Gearing,
+    cache: dict[tuple[int, tuple[int, ...]], int],
+) -> int:
+    """The wind's cross term of a two-ended unwind, the unspringing's two ends on one mesh, each end's fall read with the other end in place: the board's fall over the two ends' windows (every hand's wind there before the writes, as read, less after) less the two ends' falls, the first end's take (EX-S1's one signed remainder carrying the unspringing's excess, the owner's word of 2026-10-27, 15:5x UTC), as the push's cross term is tallied once at the engagement's clock; two hands' winds do not cross, so twin ends cross at 0; its undo the first end's remainder restored."""
+    window = sorted({c for read in reads for c in window_clocks(clock, read[0])})
+    fall = 0
+    for r in sorted({read[-1] for read in reads}):
+        after = hands.wind(clock, clock.hands()[r].gears, gearing, window)
+        fall += sum(cache[(r, c)] for c in window) - sum(int(v) for v in after)
+    return fall - sum(read_fall for _where, _tallied, _notches, read_fall, *_rest in reads)
 
 
 def summed(found: list[dict[str, Any]]) -> dict[str, Any]:
