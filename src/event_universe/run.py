@@ -158,7 +158,7 @@ def rewind_note(clock: Clock, top: Any, log_from: int, stopped: Any, tallies: An
 
 def bits_of(a: Any) -> int:
     """The largest bit length of an integer array's values."""
-    return int(np.max(np.vectorize(lambda v: abs(int(v)).bit_length(), otypes=[object])(a)))
+    return int(np.max(np.abs(a))).bit_length()
 
 
 def arrays(clock: Clock) -> list[Any]:
