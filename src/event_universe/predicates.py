@@ -142,7 +142,7 @@ def lifts(chart: Chart) -> dict[str, Any]:
 
 
 def confinement(chart: Chart) -> dict[str, Any]:
-    """Row 27: confinement, no third alone: every fitted hand advanced where its hand stood at nothing carries the whole charge key div 2 and none a third of it; every unwind whole notches."""
+    """Row 27: confinement, no third alone: every fitted hand advanced where its hand stood at nothing carries the whole charge key div 2 and none a third of it; every unwind whole notches; NOT READ where no fitted hand advanced at nothing (a chart of unspringings alone fits no child; the former test on the fittings counted the unspringings and named a third where there was no child)."""
     half, third = chart.key // HALF, chart.key // (HALF * THIRDS)
     advanced = chart.advanced_at_nothing()
     whole, thirds = sum(w == half for w in advanced), sum(w == third for w in advanced)
@@ -152,9 +152,9 @@ def confinement(chart: Chart) -> dict[str, Any]:
             "children at the whole charge / at a third": [whole, thirds],
             "takes, every one whole levels": len(unwinds),
             "verdict": unread_words(
-                "no birth", "no child carries a third of the charge, every take whole"
+                "no fitted child", "no child carries a third of the charge, every take whole"
             )
-            if not chart.fittings
+            if not advanced
             else "SHOWN: every child the whole charge, no third alone, every take whole"
             if thirds == 0 and whole
             else "NOT SHOWN: a child at a third of the charge",

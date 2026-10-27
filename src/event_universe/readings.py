@@ -17,8 +17,9 @@ if TYPE_CHECKING:
 
 
 def rates_of(clock: Clock, c: Any) -> tuple[Any, Any]:
-    """The clock's two rates from its load, the rate p_0 and the mesh rate p_i (X2: rates(load)), one reading."""
-    return rates.rate_of(clock.full_rate, c), rates.mesh_rate_of(clock.full_rate, c)
+    """The clock's two rates from its load, the rate p_0 and the mesh rate p_i (X2: rates(load)), one reading; a load below 0 (a hill) read at 0, so no clock runs faster than the full rate, the great clock's (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks)."""
+    held = np.maximum(np.asarray(c, dtype=object), 0)
+    return rates.rate_of(clock.full_rate, held), rates.mesh_rate_of(clock.full_rate, held)
 
 
 def stopped_of(clock: Clock, c: Any) -> Any:
