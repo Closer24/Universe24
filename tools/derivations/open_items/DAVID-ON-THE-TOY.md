@@ -264,3 +264,68 @@ Next come the chiral seed's both hands at 19.32 s and BH-S1's at 17.21 s. On thi
 1. **The lean toy.** tools/derivations/toys/lean/toy.py now names six struck functions: readings.scale (lines 97 and 275), gram.gram (249 and 294), gram.term (276) and gram.curl (308). Nothing in tests or tools/check.py runs it, so the check is green, but the file fails if run. Either strike its six calls, or name it a frozen copy that runs at an earlier commit.
 2. **The law's text.** docs/ALGEBRA.md:45 still reads SR-S1 to SR-S4 (the spinor row of shape 8) as present clauses, and :1735 counts the shapes as four. The engine now refuses a shape-8 row by name, so the law's clause wants the strike dated (the Scribe's or yours).
 3. **The vestiges named in 2 (a) and not in this diff.** bodies.py:53-54's non-plane beat branch with gram.period; the seed's `vector` key; node.py's module docstring ("116 with a shape-8 row beside them").
+
+## (m) The final clock head f9e9b0d05 checked (the Boss's task of 10:1x UTC)
+
+### The tree
+
+1. Start from origin/boss-clocks-1 6501cd679, whose tree edc87db70a6ea85ff374c17793456d168a8fad4e is the one checked in (l).
+2. Apply your 09:5x diff with `git apply --unidiff-zero` and regenerate the three readings. The tree is then 74192b4cc97d93cab55849efcba4a95bb763a602, daea93b68's.
+3. Apply the diff daea93b68 to f9e9b0d05 with `git apply --unidiff-zero`, then `git add -A`.
+
+`git write-tree` gives ddb4ed84faff04fe2f222488517d88445a9a3a2f, f9e9b0d05's tree.
+
+### The check
+
+Two runs of `tools/check.py --full --base 70ac3b30c`, each with the worktree's own src on the path:
+
+| | first run | second run |
+|---|---|---|
+| result | **full check exit 1**, on the 30 s bound alone | **full check exit 0** |
+| the bound's line | "above the bound of 30 seconds per test on this run's clock: tests/test_the_board.py::test_the_run_back_is_exact_through_births_and_turns (31.5 s)" | none; the run-back test inside the bound by a hair |
+| tests | 106 passed in 153.49 s | 106 passed in 141.29 s |
+| slowest test | the run back through births and turns, 31.46 s | the run back through births and turns, 30.00 s |
+| second slowest | the chiral seed's both hands, 26.90 s | BH-S1's, 23.88 s |
+
+Both runs: ruff, mypy, the engine gates, the tests' shape and the documents' six gates hold. The code ratchet's line in both: "the shape of the code holds against the merge base".
+
+### The 30 s bound is this box and the test's size, not the head
+
+The run-back test alone, alternating the two trees:
+
+| tree | run 1 | run 2 |
+|---|---|---|
+| f9e9b0d05 | 28.97 s | 26.12 s |
+| daea93b68 | 28.38 s | 31.40 s |
+
+The head is as fast as daea93b68. This box ran the same test at 25.56 s an hour earlier (section (l), part 3). So the test sits at the bound on this box as on yours. By your phase timing, its time is the close's share reads at the windows (gram.share, 32,768 calls, and merger.share_fall). A full check that stays green on a slow moment needs those reads faster, bit for bit. I can measure where inside gram.share and merger.share_fall the time goes, if you want it.
+
+### The referee on this box
+
+- The hole, the chiral and the bodies regenerate SAME, key by key but the milliseconds.
+- The hashes are yours: 714fba3003f492a9, 260394ec7bb91435 and 9680f4d36c9997dc.
+- The run back is exact 20 of 20 on each.
+- The three readings, regenerated on f9e9b0d05, are byte for byte daea93b68's: the decoder's solve, with its numbers read from their homes, gives the same integers.
+
+### What I would not let stand
+
+**In the code, nothing.** Each change is the identity on a plane:
+
+- the beat's one branch;
+- the vector (1, 0) folded into gram.moving and gram.rest;
+- the shapes and weights from AXES, at their old values;
+- the decoder's three numbers read from their homes.
+
+The records and the readings are the proof.
+
+**One thing beside it, in the engine's document.** ENGINE.md's table of the constants does not match the head:
+
+- Line 122 still reads the shapes as "The four shapes, CARRIER and POTENTIAL and PLANE and QUARTET | 10, 4, 2, 8 | rows.py | the law's shapes with their clauses".
+- Lines 125 to 128 still read POWER_TIME, POWER_AXIS, HELD_WRITE_WEIGHT and UNIT_WEIGHT as "the law's literal with its clause".
+
+On the head, CARRIER is 1 + 3 AXES and POTENTIAL is AXES + 1; QUARTET is gone; HELD_WRITE_WEIGHT is AXES + 1 and UNIT_WEIGHT is AXES, both derived; POWER_TIME and POWER_AXIS are the form's own balance. The five rows want re-cutting with the code.
+
+**Standing as named before.**
+
+- The law's SR-S1 to SR-S4 (ALGEBRA.md:45 and :1735), as named in (l), part 3.
+- The lean toy, as you say: its universes have been refused at the load since e48273be8, so it stays a frozen copy.
