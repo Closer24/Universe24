@@ -67,3 +67,17 @@ On 0a3b16bc1 (rot24.py with WT on its worktree):
    rot_nature_1: alike 24 of 24
    rot_hole_0: alike 3 of 24 ; the first: parts at tick 14 in the strike: [('hand0', 0, (2, 1, 3)), ('hand0', 1, (2, 1, 3)), ('hand3', 0, (2, 1, 3))]; b
    rot_hole_1: alike 24 of 24
+
+The polarization's mirror on 0a3b16bc1 (polar_pair.py, polar_draws.py, polar_digits.py; the source along x against along y through the swap of x and y):
+   VSCALAR=0: along x [64, 4, 42], along y [4, 64, 42]; exact images through the swap
+   VSCALAR=1: along x [583, 31, 150], along y [34, 473, 134]; part at tick 8 (regulator at (1, 0, 2))
+   VSCALAR=0: draws along x 153, along y 153, differing through the swap 0; the first: []
+   VSCALAR=1: draws along x 307, along y 321, differing through the swap 294; the first: [((7, (0, 0, 2), 178838187228000), (182716844000458, 536514561684000), (247103247639424, 536514561684000)), ((7, (0, 4, 2), 178838187228000), (247103247639424, 536514561684000), (182716844000458, 536514561684000))]
+   the first parted draw (tick 7, (0, 0, 2), VSCALAR=1), the scalar digits that part:
+      scalar digits only in x: [((7158197379997, 21021459200001), (1, (1, 0, 2))), ((766907961693625, 2534587366400001), (1, (0, 1, 2))), ((9440808915840, 21021459200001), (2, (1, 0, 2))), ((1141369133769804, 2534587366400001), (2, (0, 
+      scalar digits only in y: [((1767679404706375, 2534587366400001), (1, (1, 0, 2))), ((13863261820002, 21021459200001), (1, (0, 1, 2))), ((1393218232630196, 2534587366400001), (2, (1, 0, 2))), ((11580650284159, 21021459200001), (2, (
+      gear position 1 window clock (0, 1, 2) x run (fine, digit, base) (974310550854048945000, 766907961693625, 2534587366400001) y run at the swap (2245730622915167055000, 1767679404706375, 2534587366400001)
+      gear position 1 window clock (1, 0, 2) x run (fine, digit, base) (1094318586959828790000, 7158197379997, 21021459200001) y run at the swap (2119363895707947210000, 13863261820002, 21021459200001)
+      gear position 2 window clock (0, 1, 2) x run (fine, digit, base) (1450041002306509793760, 1141369133769804, 2534587366400001) y run at the swap (1770000171462706206240, 1393218232630196, 2534587366400001)
+      gear position 2 window clock (1, 0, 2) x run (fine, digit, base) (1443275747244462438720, 9440808915840, 21021459200001) y run at the swap (1770406735423313561280, 11580650284159, 21021459200001)
+   the sums of the parted remainders: 1094318586959828790000 + 2119363895707947210000 = 1443275747244462438720 + 1770406735423313561280 = 3213682482667776000000

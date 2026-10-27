@@ -47,6 +47,19 @@ Keeping the origin's refusal on every gear moves nothing: the hole and the chira
 2. It moves every remainder of the step, so every chart moves. Unmeasured.
 3. The folds tried short of it fail: the fold about (w - 1) / 2 reads 3 of 24, since the two origins part it.
 
+## The polarization's mirror (the Boss's question of 21:3x UTC)
+
+**The source along x and along y are images by the swap of x and y**, a mirror of the cube. Measured on 0a3b16bc1:
+
+| the draw | the test's sums at the detector, along x and along y | through the swap |
+|---|---|---|
+| as built | 64, 4, 42 and 4, 64, 42 | exact images, 12 ticks, all 153 draws equal |
+| on the scalar gears | 583, 31, 150 and 34, 473, 134 | parted at tick 7 |
+
+At the first parted draw the differing digits are a matter hand's two gears at the swapped neighbours (1, 0, 2) and (0, 1, 2). Their remainders sum to the teeth, f + f' = 3,213,682,482,667,776,000,000 in both gears: the mirror negates the hand there, and its remainders mirror about the half teeth.
+
+**So the draw is covariant on no fixed set of gears.** A rotation with an axis flip negates the odd gears, and this mirror negates the hands. Which gears a draw reads decides only which images a given run keeps. The shears carry no mirror of their own: striking them changed the draws, and the polarization's run then met a mirrored remainder. The one mirror about the origin is the letter for every image.
+
 ## For the Boss
 
 1. **The close reads as order-free already.** Act 5's 24 sit in the draw's digits.
