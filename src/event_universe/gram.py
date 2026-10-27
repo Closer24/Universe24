@@ -66,7 +66,7 @@ def matmul(a: Matrix, b: Matrix) -> Matrix:
 
 
 def weighted(m: Matrix, xs: list[Any], ys: list[Any]) -> list[Any]:
-    """The bilinear x.m.y line by line, x_k (m y)_k, so that a division per line stays one per line; at the identity (every shape but the quartet's) the plain products x_k y_k."""
+    """The bilinear x.m.y line by line, x_k (m y)_k, so that a division per line stays one per line; at the identity (every row) the plain products x_k y_k."""
     if m == identity(len(xs)):
         return [x * y for x, y in zip(xs, ys, strict=True)]
     return [x * my for x, my in zip(xs, matvec(m, ys), strict=True)]
@@ -224,7 +224,7 @@ def cosine_count(node: Node, p: int, d: int) -> int:
 
 
 def period(node: Node, lines: list[Line], standing: Any) -> Any:
-    """The record's beat at the Nodes where it stands, from the invariant ratio cos omega = N.G.B / N.G.N (no line of a quartet is a scalar under the 48, so no crossing line is covariant): the angle's count n along the law's orbit (`cosine_count`), then the first k >= 2 at which the orbit's cosine at k n is a maximum against k - 1 and k + 1, the first return; 0 where the ratio is degenerate."""
+    """The record's beat at the Nodes where it stands, from the invariant ratio cos omega = N.G.B / N.G.N: the angle's count n along the law's orbit (`cosine_count`), then the first k >= 2 at which the orbit's cosine at k n is a maximum against k - 1 and k + 1, the first return; 0 where the ratio is degenerate."""
     g = gram(len(lines))
     nn = form(g, [line.now for line in lines], [line.now for line in lines])
     nb = form(g, [line.now for line in lines], [line.before for line in lines])

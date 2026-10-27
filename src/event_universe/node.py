@@ -60,7 +60,6 @@ class Node:
         self.w = wall_of(self.den, self.gamma, self.G)
         paces.certified(self.gamma)
         self.rows_, self.by_index = rows_of(universe, shape, self.w)
-        self.light: Row | None = None
         for r in self.records():
             num, den = (r.pair[0] if r.pair else 0), self.den
             if r.pair and num * num + sine_den(num, den) * sine_den(num, den) != den * den:
@@ -132,13 +131,11 @@ class Node:
         return row_of(self.rows_, shape)
 
     def emitter(self) -> Row:
-        """The plane with no pendulum of its own, the light: the record whose rule's mass D = 2 PORTS (den - num) p_0^2 G^2 is 0 at every clock, its pair's num equal to its den (a property of the row's own numbers, no role; the loader admits exactly one; found once per Node): the row the Wronskian's change is laid on and whose quanta the close takes."""
-        if self.light is None:
-            self.light = next(r for r in self.records() if r.pair is not None and r.pair[0] == r.pair[1])
-        return self.light
+        """The plane with no pendulum of its own, the light: the record whose rule's mass D = 2 PORTS (den - num) p_0^2 G^2 is 0 at every clock, its pair's num equal to its den (a property of the row's own numbers, no role; the loader admits exactly one): the row the Wronskian's change is laid on and whose quanta the close takes."""
+        return next(r for r in self.records() if r.pair is not None and r.pair[0] == r.pair[1])
 
     def records(self) -> list[Row]:
-        """The record rows in the acts' order, the planes and the quartets (rows.records_of)."""
+        """The record rows in the acts' order, the planes (rows.records_of)."""
         return records_of(self.rows_)
 
     def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
@@ -239,7 +236,7 @@ class Node:
         return [line for row in self.rows() for line in row]
 
     def exchange(self, top: Any, held: list[list[Line]]) -> None:
-        """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the quartet's K0, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves; the rows set at the top by the Node's one restore."""
+        """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves; the rows set at the top by the Node's one restore."""
         for r, row, hrow in zip(self.rows_, self.rows(), held, strict=True):
             nows, befores, rems = acts.exchange(
                 [h.now for h in hrow],

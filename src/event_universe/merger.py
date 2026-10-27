@@ -65,7 +65,7 @@ def momentum_per_line(
     levels: tuple[int, ...],
     sign: int = 1,
 ) -> list[int]:
-    """The momentum a lay of `levels` (now, before per line) at the Node books, summed over the record's lines as given, `lines` the board the reading is at (the live board for a lay, the interval's start for a take's end, CL-S2) and `num` the record's pair (take.momentum_of per line; the form generic in the lines, the quartet pair's replacement 17)."""
+    """The momentum a lay of `levels` (now, before per line) at the Node books, summed over the record's lines as given, `lines` the board the reading is at (the live board for a lay, the interval's start for a take's end, CL-S2) and `num` the record's pair (take.momentum_of per line; the form generic in the lines)."""
     found = [0] * AXES
     for j, line in enumerate(lines):
         dj = momentum_of(

@@ -103,7 +103,7 @@ def credit(
     frame: dict[str, Any],
     start: list[Line],
 ) -> dict[str, Any]:
-    """A body's credit with its frame (a plane's frame_of, a quartet's bilinears_of, the bodies' own readings of the record), its sense the sign of its charge at the Node read at the interval's start (`start`, the record's lines as the interval began, CL-S2; the former read on the board after the close's own writes kept by name), its beat, the take's numbers (the take act's dict), momentum and booking, the unit the close booked and what it owed; returned, not appended (the bodies append it after the lay-back)."""
+    """A body's credit with its frame (the plane's frame_of, the bodies' own readings of the record), its sense the sign of its charge at the Node read at the interval's start (`start`, the record's lines as the interval began, CL-S2; the former read on the board after the close's own writes kept by name), its beat, the take's numbers (the take act's dict), momentum and booking, the unit the close booked and what it owed; returned, not appended (the bodies append it after the lay-back)."""
     row = node.records()[rec]
     w = int(gram.charge(row.shape, start)[at])
     fall, levels, taken_was, line = (

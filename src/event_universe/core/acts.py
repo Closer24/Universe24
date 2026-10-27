@@ -25,7 +25,7 @@ def divide(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[A
 def exchange(
     nows: list[Any], befores: list[Any], remainders: list[Any], walls: list[Any], k: Any
 ) -> tuple[list[Any], list[Any], list[Any]]:
-    """The slot exchange of a row at the top with the mirror (X2, the swap; node.exchange): the two slots exchanged through the row's conjugation K (the plane's im line negated, the quartet's K0), the remainder mirrored once for time's exchange and once more where its own K entry negates the line; an involution."""
+    """The slot exchange of a row at the top with the mirror (X2, the swap; node.exchange): the two slots exchanged through the row's conjugation K (the plane's im line negated), the remainder mirrored once for time's exchange and once more where its own K entry negates the line; an involution."""
     lines = range(len(nows))
     new_nows = [sum((k[r][c] * befores[c] for c in lines if k[r][c]), start=0) for r in lines]
     new_befores = [sum((k[r][c] * nows[c] for c in lines if k[r][c]), start=0) for r in lines]

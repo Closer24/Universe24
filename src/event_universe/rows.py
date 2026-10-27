@@ -1,4 +1,4 @@
-"""The rows of the Node as the universe file names them, no name and no role (the owner's word of 2026-10-25, there is no if): a row is a shape (its count of lines) with a pair (num, den) for Rule3's rule or a wall of its own for a row with no Links; its lines are built here with their walls by shape, the rows ordered for the acts and the universe's shapes refused by name; the lookups choose a row by its numbers alone. The phase line's amplitude is the universe file's `amplitude`, declared from outside and read at the load (loader/world, node.X), carried above the floor derived from Gamma (phase.floor); no width and no room of the machine stands in the engine (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; the former width constant and the room cut from it struck, the value kept in the file so that every record stands bit for bit)."""
+"""The rows of the Node as the universe file names them, no name and no role (the owner's word of 2026-10-25, there is no if): a row is a shape (its count of lines) with a pair (num, den) for Rule3's rule or a wall of its own for a row with no Links; its lines are built here with their walls by shape, the rows ordered for the acts (a shape the law does not name refused by name at the loader, loader/world); the lookups choose a row by its numbers alone. The phase line's amplitude is the universe file's `amplitude`, declared from outside and read at the load (loader/world, node.X), carried above the floor derived from Gamma (phase.floor); no width and no room of the machine stands in the engine (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; the former width constant and the room cut from it struck, the value kept in the file so that every record stands bit for bit)."""
 
 from __future__ import annotations
 
@@ -107,10 +107,6 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
         shape = int(r["shape"])
         pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
         wall = None if r.get("wall") is None else int(r["wall"])
-        if shape not in (1, PLANE, POTENTIAL, CARRIER):
-            raise ValueError(
-                f"a row of shape {shape} is no row of the law: the rows are the walled row, the planes, the shape-4 row and the shape-10 row"
-            )
         if shape == 1 and wall is None:
             raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
         walls = write_walls(shape, pair, den, gamma, action, trace)

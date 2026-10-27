@@ -182,7 +182,7 @@ def no_wave(record: Record) -> str:
 
 
 def no_field(record: Record) -> str:
-    """Why the spinor's two beats are not read: a quartet's universe has no held field, the others no shape-8 row."""
+    """Why the spinor's two beats are not read: the spinor row is no row of the law."""
     return "no row carries an axis: the spinor row is no row of the law (2026-10-27)"
 
 
