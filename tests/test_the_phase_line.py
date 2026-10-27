@@ -10,7 +10,6 @@ from event_universe.features.phase import (
     K0,
     D,
     act,
-    amplitude,
     carried,
     deviation,
     floor,
@@ -18,7 +17,9 @@ from event_universe.features.phase import (
     seed,
     unit,
 )
-from tests.laws import refused
+from event_universe.loader.world import read_world
+from event_universe.node import Node
+from tests.laws import refused, world_of
 
 
 def iterate(pair, count, gamma, direction=1):
@@ -96,18 +97,22 @@ def test_the_reversal_is_bit_exact_over_ten_thousand_acts():
     )
 
 
-def test_the_floor_is_derived_from_gamma_and_the_engine_refuses_a_scale_below_it_or_past_the_width():
-    """The amplitude separated from the width (the owner's word of 2026-10-27, 04:0x UTC; THE-AMPLITUDE-SCALE.md): the floor from Gamma alone, 23 Gamma at Gamma 1,000 (the orbit's departure 23 levels against the step 22 at k = 22, 20 against 23 at k = 23), below the records' scale 288,230,376,000 (the room 63 bits, the largest the width 128 carries through the pair's product, half the act's room at it, a multiple of 2 Gamma); the engine refuses by name a scale below the floor and a room past the machine's width, and says so as the engine's, never as nature's."""
-    gamma = 1_000
+def test_the_amplitude_is_the_universes_and_the_engine_refuses_a_scale_below_the_floor_from_gamma():
+    """The amplitude declared from outside (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; THE-AMPLITUDE-SCALE.md): the universe file names it beside den, Gamma and T (288,230,376,000 in the shipped universes, a multiple of 2 Gamma), the loader refuses a file naming none, and the engine carries it above the floor derived from Gamma alone, 23 Gamma at Gamma 1,000 (the orbit's departure 23 levels against the step 22 at k = 22, 20 against 23 at k = 23), refusing a scale below it by name as the engine's, never as nature's; no width and no room stands in the engine."""
+    universe, world = world_of("world_hole.json")
+    gamma, scale = int(universe["integers"]["node_clock"]), int(universe["integers"]["amplitude"])
     least = floor(gamma)
     assert least == 23 * gamma and deviation(22 * gamma, gamma) >= 22 > deviation(least, gamma)
-    scale = amplitude(unit(gamma), rows.ROOM)
     assert scale == 288_230_376_000 and scale % unit(gamma) == 0 and least < scale
-    assert carried(scale, gamma, rows.WIDTH) == scale
-    refused("engine cannot carry", carried, least - gamma, gamma, rows.WIDTH)
-    refused("machine's width", carried, scale, gamma, rows.ROOM // 2)
+    assert carried(scale, gamma) == scale and Node(universe, world).X == scale
+    refused("engine cannot carry", carried, least - gamma, gamma)
     for words in ("nature", "law"):
         with pytest.raises(ValueError) as caught:
-            carried(gamma, gamma, rows.WIDTH)
+            carried(gamma, gamma)
         assert words not in str(caught.value)
-    print(f"the floor {least} = {least // gamma} Gamma at Gamma {gamma}; the records' scale {scale}")
+    kept = {k: v for k, v in universe["integers"].items() if k != "amplitude"}
+    refused("names no amplitude", read_world, world, {**universe, "integers": kept})
+    assert not any(hasattr(rows, name) for name in ("WIDTH", "HALF_WIDTH", "ROOM"))
+    print(
+        f"the floor {least} = {least // gamma} Gamma at Gamma {gamma}; the universe's amplitude {scale}"
+    )
