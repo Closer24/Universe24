@@ -159,64 +159,77 @@ def read_ends(
     return found
 
 
+Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int]
+
+
+def merger_end(node: Node, rec: int, read: Read) -> tuple[dict[str, Any], list[int]]:
+    """One end of a merger's take written: its whole levels laid at -1, the end's entry with the momentum the start books and its recoil, and the live board's momentum less the start's (the cross term's share)."""
+    where, wall, levels, fall = read[:4]
+    row = node.records()[rec]
+    assert row.pair is not None
+    live = momentum_per_line(node, row.lines, row.pair[0], where, tuple(levels), -1)
+    moment = momentum_per_line(node, node.start_lines[rec], row.pair[0], where, tuple(levels), -1)
+    lay(node, rec, where, levels, -1)
+    node.closes[where] -= 1
+    size = sum(abs(x) for x in levels)
+    entry = dict(
+        node=list(where),
+        taken=fall,
+        booked=wall,
+        levels=size,
+        taken_levels=list(levels),
+        dP_take=moment,
+        **recoil(node, where, moment, int(node.start_clock[where]), 1),
+    )
+    return entry, [a - b for a, b in zip(live, moment, strict=True)]
+
+
+def light_end(node: Node, rec: int, read: Read) -> dict[str, Any]:
+    """One end of the light's take written: the taken line moved toward its before by the count (take.move, CR-S1), the fall above what was owed its new remainder (EX-S1), the momentum booked and its recoil."""
+    where, wall, levels, fall, k, rem_was, owed = read
+    row = node.records()[rec]
+    assert row.pair is not None and k is not None
+    z = row.lines[k]
+    now, before = int(z.now[where]), int(z.before[where])
+    toward = 1 if before > now else -1
+    move(node, rec, k, where, toward * levels)
+    node.closes[where] += 1
+    node.take_rem[where] = fall - owed
+    node.last_dp = momentum_of(node, z.now, z.before, where, d_now=toward * levels, num=row.pair[0])
+    node.last_recoil = recoil(node, where, node.last_dp, int(node.start_clock[where]), 1)
+    return {
+        "node": list(where),
+        "taken": fall,
+        "booked": wall,
+        "levels": levels,
+        "taken_now_was": now,
+        "taker": [now, before, levels],
+        "dP_take": node.last_dp,
+        "taken_line": k,
+        "remainder_was": rem_was,
+        "remainder": fall - owed,
+        "owed": owed,
+        **node.last_recoil,
+    }
+
+
 def write_ends(
     node: Node,
-    reads: list[tuple[tuple[int, ...], int, Any, int, int | None, int, int]],
+    reads: list[Read],
     rec: int,
     at: tuple[int, ...] | None = None,
 ) -> list[dict[str, Any]]:
     """The take act's writes after its reads (CR-S2): at the gap-0 row the end's line moved toward its before by the count (take.move, CR-S1), the fall above what was owed its new remainder (EX-S1), the momentum booked; at a record with a gap the end's levels taken whole by the lay act at -1, the momentum each end books read at the record's levels at the interval's start (node.start_lines, CL-S2: so the two ends of one Link commute and the per-Node attribution does not depend on the order the meeting named them) and the cross term of the two moves, the live board's sum less the start's, nonzero on the Link's own axis alone, booked once at the meeting's own Node `at` after both ends (the levels taken whole keep their moment, the board the take writes, MG-S1). Returns each end's take as the log carries it, the cross under the last end's `cross` for `summed` to lift; the former take_line and merger_take kept by name."""
     row = node.records()[rec]
-    assert row.pair is not None
     found: list[dict[str, Any]] = []
     cross = [0] * AXES
-    for where, wall, levels, fall, k, rem_was, owed in reads:
+    for read in reads:
         if row is not node.emitter():
-            live = momentum_per_line(node, row.lines, row.pair[0], where, tuple(levels), -1)
-            moment = momentum_per_line(
-                node, node.start_lines[rec], row.pair[0], where, tuple(levels), -1
-            )
-            cross = [c + a - b for c, a, b in zip(cross, live, moment, strict=True)]
-            lay(node, rec, where, levels, -1)
-            node.closes[where] -= 1
-            size = sum(abs(x) for x in levels)
-            found.append(
-                dict(
-                    node=list(where),
-                    taken=fall,
-                    booked=wall,
-                    levels=size,
-                    taken_levels=list(levels),
-                    dP_take=moment,
-                    **recoil(node, where, moment, int(node.start_clock[where]), 1),
-                )
-            )
+            entry, moved = merger_end(node, rec, read)
+            cross = [c + m for c, m in zip(cross, moved, strict=True)]
+            found.append(entry)
             continue
-        assert k is not None
-        z = row.lines[k]
-        now, before = int(z.now[where]), int(z.before[where])
-        toward = 1 if before > now else -1
-        move(node, rec, k, where, toward * levels)
-        node.closes[where] += 1
-        node.take_rem[where] = fall - owed
-        node.last_dp = momentum_of(node, z.now, z.before, where, d_now=toward * levels, num=row.pair[0])
-        node.last_recoil = recoil(node, where, node.last_dp, int(node.start_clock[where]), 1)
-        found.append(
-            {
-                "node": list(where),
-                "taken": fall,
-                "booked": wall,
-                "levels": levels,
-                "taken_now_was": now,
-                "taker": [now, before, levels],
-                "dP_take": node.last_dp,
-                "taken_line": k,
-                "remainder_was": rem_was,
-                "remainder": fall - owed,
-                "owed": owed,
-                **node.last_recoil,
-            }
-        )
+        found.append(light_end(node, rec, read))
     if at is not None and len(found) > 1 and row is not node.emitter():
         booked = recoil(node, at, cross, int(node.start_clock[at]), 1)
         found[-1]["cross"] = {"node": list(at), "dP": cross, **booked}
