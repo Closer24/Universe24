@@ -58,7 +58,7 @@ Nature's names for the phenomena stay (light, charge, mass, energy, momentum, fo
 
 - The owner's words in quotes, verbatim.
 - The former clauses of the law and the former list of the ledger, kept as written and dated.
-- The CHANGELOG entries before 2026-10-27, which record what was said and done in the words of the day.
+- The CHANGELOG entries before 2026-10-27, which record what was said and done in the words of the day. The owner's word of 14:5x UTC, "the past is not interesting": the Scribe keeps in clock words the branch's documents as they stand and takes no further effort over the past (the former clauses, the former list, the changelog); a restoring of the past documents the two passes renamed is one commit on his word.
 - The Reader's table of the gates in UNIVERSE24.md section 2 and the Reader's section of README.md, which his tool writes.
 - The names of hypotheses (the H- names), of their comparison files and of branches: they name files and branches that stand in the repository as written. The first table of fifteen clock names in the law's decision list and in its ledger copy stands as David proposed it, its left words the former words by the nature of a dictionary.
 - The chart's and the files' keys, until the Reader renames them (stage 2). The code names in backticks follow the renamed tree of the Boss's stage 1a (67a7633d5) by David's tables 3.1 to 3.6.
