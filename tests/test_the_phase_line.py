@@ -1,11 +1,25 @@
 """The phase line as a standalone module (features/phase; ALGEBRA.md #the-four-acts (b), #the-direction; the two hands' item (i)): a Rule3 pair at the one fixed angle theta_0 = 1 / Gamma (K_0 = 2 Gamma^2 - 1 over D = 2 Gamma^2), seeded on the half wall at an amplitude a multiple of Gamma, iterated by a level with the angle signed, read as the hop's two integers and folded into the Link's one coefficient rounding. Integers throughout, the owner's word (no float anywhere in the system, the tests inside it): a magnitude within B levels of X is the inequality (X - B)^2 <= c^2 + s^2 <= (X + B)^2; the cosine is the exact rational K_0 / D by cross multiplication; the sine is the module's own integer sine (`core/paces.sine_den`, the largest integer whose square is at most the product, no root); the angle is bracketed by the cosine's Taylor bounds as one integer inequality. The bound used throughout (item (i), both hands): the pair's magnitude within Gamma / 2 levels of X standing plus the walk's proved 1.42 N + 2.3 Gamma levels over the test's N acts, taken at the integer ceiling (`bound`), never a count. Every test under 15 seconds; each prints its numbers (the clock's seconds, a float, taken out 2026-10-25 by the owner's rule)."""
 
 import numpy as np
+import pytest
 
+from event_universe import rows
 from event_universe.core.paces import rounded, sine_den
 from event_universe.core.rule3 import largest_below
-from event_universe.features.phase import K0, D, act, half_wall, seed
-from tests.laws import refused
+from event_universe.features.phase import (
+    K0,
+    D,
+    act,
+    carried,
+    deviation,
+    floor,
+    half_wall,
+    seed,
+    unit,
+)
+from event_universe.loader.world import read_world
+from event_universe.node import Node
+from tests.laws import refused, world_of
 
 
 def iterate(pair, count, gamma, direction=1):
@@ -80,4 +94,25 @@ def test_the_reversal_is_bit_exact_over_ten_thousand_acts():
     refused("direction is 1 or -1", act, pair[0], GAMMA, 0)
     print(
         f"10^4 acts forward and back: bit for bit, remainders {forward[0][2]}, {forward[1][2]} on the way"
+    )
+
+
+def test_the_amplitude_is_the_universes_and_the_engine_refuses_a_scale_below_the_floor_from_gamma():
+    """The amplitude declared from outside (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; THE-AMPLITUDE-SCALE.md): the universe file names it beside den, Gamma and T (288,230,376,000 in the shipped universes, a multiple of 2 Gamma), the loader refuses a file naming none, and the engine carries it above the floor derived from Gamma alone, 23 Gamma at Gamma 1,000 (the orbit's departure 23 levels against the step 22 at k = 22, 20 against 23 at k = 23), refusing a scale below it by name as the engine's, never as nature's; no width and no room stands in the engine."""
+    universe, world = world_of("world_hole.json")
+    gamma, scale = int(universe["integers"]["node_clock"]), int(universe["integers"]["amplitude"])
+    least = floor(gamma)
+    assert least == 23 * gamma and deviation(22 * gamma, gamma) >= 22 > deviation(least, gamma)
+    assert scale == 288_230_376_000 and scale % unit(gamma) == 0 and least < scale
+    assert carried(scale, gamma) == scale and Node(universe, world).X == scale
+    refused("engine cannot carry", carried, least - gamma, gamma)
+    for words in ("nature", "law"):
+        with pytest.raises(ValueError) as caught:
+            carried(gamma, gamma)
+        assert words not in str(caught.value)
+    kept = {k: v for k, v in universe["integers"].items() if k != "amplitude"}
+    refused("names no amplitude", read_world, world, {**universe, "integers": kept})
+    assert not any(hasattr(rows, name) for name in ("WIDTH", "HALF_WIDTH", "ROOM"))
+    print(
+        f"the floor {least} = {least // gamma} Gamma at Gamma {gamma}; the universe's amplitude {scale}"
     )

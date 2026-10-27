@@ -8,7 +8,7 @@ import numpy as np
 
 from event_universe.core.acts import born, divide
 from event_universe.core.paces import rounded
-from event_universe.core.rule3 import half, quotient, rule3
+from event_universe.core.rule3 import quotient, rule3
 
 # a line of the phase, (now, before, remainder), each an integer or an integer array over the Links
 Line = tuple[Any, Any, Any]
@@ -69,14 +69,40 @@ def act(line: Line, gamma: Any, direction: int = 1) -> Line:
     return before, previous, carried
 
 
-def amplitude(gamma: Any, width: int) -> int:
-    """The phase line's amplitude X, derived from the width and never written (the two hands' item (i): X of 2^35's size at width 63, 2 K_0 X + D below 2^width): half of the act's room, (2^width - 1) div (2 D) div 2, the half the walk's room (the pair's magnitude within 1.42 N + 2.3 Gamma levels of X over N acts), rounded down to a multiple of Gamma (the half-wall birth cancels the resonance at a multiple of Gamma alone, `seed`): 32,025,594,000 at Gamma 6,000 and width 63 (2^34.9; the hands' 2^35 div Gamma times Gamma is 34,359,738,000, 35 being no literal of the law); refused by name where the width leaves no multiple of Gamma."""
-    largest = (1 << width) - 1
-    room = quotient(largest, D(gamma) + D(gamma))
-    found = quotient(half(room), gamma) * gamma
-    if int(found) < int(gamma):
+def deviation(amplitude: Any, gamma: Any) -> int:
+    """The orbit's own rounding over the half turn at the amplitude X: the pair built from the seed by the act until the cosine first rises above its lowest (the half turn, pi Gamma counts to the integer; readings.pair_angle builds the Node's orbit to the same turn), the magnitude's departure from X at every count in levels, |c^2 + s^2 - X^2| div 2 X, the largest of them (20 levels at X = 23,000 and 36,022 at the records' 288,230,376,000 at Gamma 1,000: the departure about X / D at a large X, the resonance's residue past the half-wall birth)."""
+    cosine, sine = seed(amplitude, gamma)
+    worst, lowest = 0, int(cosine[0])
+    while True:
+        cosine, sine = act(cosine, gamma), act(sine, gamma)
+        c, s = int(cosine[0]), int(sine[0])
+        if c > lowest:
+            return worst
+        lowest = c
+        off = abs(c * c + s * s - amplitude * amplitude)
+        worst = max(worst, int(quotient(off, amplitude + amplitude)))
+
+
+FLOORS: dict[int, int] = {}  # the floor once per Gamma
+
+
+def floor(gamma: Any) -> int:
+    """The floor of the phase line's amplitude, derived from Gamma alone the way G is (rule3.link_unit_of; the owner's word of 2026-10-27, 04:0x UTC): the least multiple of Gamma at which the orbit's rounding resolves one of its own steps over the half turn, `deviation(k Gamma)` below k, the orbit's one step X div Gamma, found by a search by comparisons from k = 1 (23 Gamma at Gamma 1,000: the departure 23 levels against the step 22 at k = 22, 20 against 23 at k = 23, and no k from 23 to 1,000 fails); below it the turn's rounding is coarser than the orbit's step and the engine refuses the scale (`carried`); a world's own floor for the state's invariance lies above it and is measured (THE-AMPLITUDE-SCALE.md: 1,000 Gamma on the bang's world, 100,000 Gamma on the chiral seed, the records' scale 288,230,376 Gamma)."""
+    key = int(gamma)
+    if key not in FLOORS:
+        k = 1
+        while deviation(k * key, key) >= k:
+            k += 1
+        FLOORS[key] = k * key
+    return FLOORS[key]
+
+
+def carried(amplitude: Any, gamma: Any) -> Any:
+    """The engine's one refusal of a scale by name, never a verdict of the law and never a phenomenon (the owner's ruling of 2026-10-26, 22:1x UTC, and his words of 2026-10-27, 04:0x and 04:4x: the amplitude declared from outside in the universe file and read at the load, node.X, no width read by the physics; the former `amplitude` cut from the half width less one and the machine's width refusal struck, the value kept in the file): the amplitude below the floor, where the turn's rounding is coarser than the orbit's own step; the amplitude returned carried."""
+    least = floor(gamma)
+    if int(amplitude) < least:
         raise ValueError(
-            f"the width {width} leaves no multiple of Gamma = {gamma} inside the phase act's room "
-            f"2 K_0 X + D < 2^{width}: the phase line's amplitude is refused"
+            f"the engine cannot carry the phase line at the amplitude {amplitude}: below the floor "
+            f"{least} ({quotient(least, gamma)} Gamma) at which the orbit's rounding resolves one step"
         )
-    return int(found)
+    return amplitude
