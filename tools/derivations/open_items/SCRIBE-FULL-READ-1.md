@@ -234,3 +234,21 @@ The Boss's head (ledger row 264) read whole: the two files of src it moved (phen
 **Verified by the Scribe's run:** the one big bang at 250 ticks at the weight 2, at the weight 3 and with no field, from tests/worlds/world_bang.json with the universe file's field edited, reads the Boss's tallies, fittings (410, 318 and 356), chimes (11,497, 11,548 and 12,564) and rows integer for integer.
 
 **Asked of the owner, as in section 14:** R12 with R1; the coupling's general form K / Gamma (Y-S1); the third bound's tick resolution; and the remainder's one mirror about its origin (F48-S1).
+
+## 16. The register at 13f58bb25, the close's books (2026-10-27, 23:4x UTC)
+
+The Boss's head (ledger row 265) read whole: the four files of src it moved (striking.py 389 lines, +34; unspring.py 330, +21; reckoner.py 325, +4; strikes.py 399, unchanged in length), the tests (the books test, the control's counts, the committed charts' verdicts) and the three records; the counts by `tools/engine_gates.py` against e41c51e6b and the Scribe's lister and AST scan. Sections 10 to 15 stand; files the head did not touch keep their lines.
+
+**The counts, unchanged from e41c51e6b:** numbers beyond 0 and 1, 24 in 7 files; identity reads of the unsprung hand 28 in 8 files (striking.py 46 47 131 188 297 367, the last two moved from 263 and 333); branches by `is`, 13 in 5 files; family-name strings 0, floats 0, true divisions 0, no import of math or trigonometry. Src 6,916 lines in 23 top-level modules; the tests 6 files and 62 functions; the full check 116 passed.
+
+**Standing, with what the head changes:**
+
+- **Two acts of the cross term (R1 and R12, the goal line's one act for every hand):** a merger's unspring.wind_cross (unspring.py:286) and a pair's striking.lay_window and lay_wind (striking.py:267 and :278) are two readings of one thing, the board's wind over the windows before less after less what was paid; the engine tells the two kinds of unwind by a test of the log, `"takes" not in unwind` (striking.py:260, beside the standing :236) and `len(reads) > 1` (unspring.py:278).
+- **The log's `taken` (a reader's input changed):** the first end's logged `taken` carries the cross term (unspring.py:282, the slack at :281); row 73's reader (symmetries.py:307-338) reads that `taken` as the pair's share and its cause text says the excess is booked nowhere (:336 and :338), where gate 15 reads the same ends exact with the excess in the remainder; the decoder's rows 15 and 73 disagree on the same merger ends (378 of 482 ends exceed at 250 ticks), the Reader's table having read 73 SHOWN by the slack at 22:1x.
+- **Measured, not derived (R5):** both cross terms are the board's wind read before and after over the windows (unspring.py:286-300, striking.py:278-292); the books close on the measure and the test's whole-board reading shows no wind moves outside the windows; whether one Rule3 act gives the term without the second read is for David.
+- **The cross term's clock (the cube's 24):** the term lands at the first end's clock, `first = reads[0][0]` (unspring.py:280-281), by the list's order, and the remainders are what the draw reads; whether the same end is first under each of the cube's 24 is for David's harness to re-measure (3 of 24 as built, row 262).
+- **R12, R2, R3, R5 and the others:** as section 14; the held field's lines as section 15.
+
+**Verified by the Scribe's run:** the test's own identity (the board's wind lost against the chimes' booked plus the slack's rise at every striking) on the bang's first 100 ticks from tests/worlds/world_bang.json: 100 of 100 strikings close on 13f58bb25, 78 of 100 on e41c51e6b (22 open: 15 with a merger and 7 with a pair birth and no merger), 210 fittings and 3,131 chimes at both; the bang at 250 ticks on 13f58bb25 reads the Boss's 382 fittings, 11,592 chimes, 31 numbered rows SHOWN and 6 in part, 15 SHOWN exact, 74 SHOWN (95, 160 and 61) and 76 SHOWN (35 of 145 and 26 of 26 pairs one mesh apart), with 73 and 75 NOT SHOWN.
+
+**Asked of the owner, as in section 14:** R12 with R1; the coupling's general form K / Gamma (Y-S1); the third bound's tick resolution; and the remainder's one mirror about its origin (F48-S1).
