@@ -141,11 +141,13 @@ def chime(
 
 
 def rewind_note(clock: Clock, top: Any, log_from: int, stopped: Any, tallies: Any) -> dict[str, Any]:
-    """The rewind note pushed at the striking for the rewind: the turned-over clocks, the counters as they stood before the strike (the turnover changes none), the log's length, the stopped mask and the release's tallies."""
+    """The rewind note pushed at the striking for the rewind: the turned-over clocks, the counters as they stood before the strike, the beats' references among them (the turnover changes none), the log's length, the stopped mask and the release's tallies."""
     counters = (
         [a.copy() for a in clock.wound],
         [a.copy() for a in clock.crossed],
         [a.copy() for a in clock.beats],
+        [[a.copy() for a in pair] for pair in clock.reference],
+        {up: a.copy() for up, a in clock.split.items()},
     )
     return {
         "turned": top,
@@ -169,8 +171,9 @@ def arrays(clock: Clock) -> list[Any]:
 
 
 def state(clock: Clock) -> list[Any]:
-    """Every integer array of the clock's state: the gears' notches and fine teeth, the hands' wound ticks, crossings and beats, the dial, the strikes and the slack (the one list the census counts and the rewind compares; the former comparison of the gears and the slack alone, which left the five counters the bobs' striking reads unchecked, kept by name, the Boss's 6421253357 item 4, 2026-10-26)."""
+    """Every integer array of the clock's state: the gears' notches and fine teeth, the hands' wound ticks, crossings and beats, the beats' references and the twins' split ticks, the dial, the strikes and the slack (the one list the census counts and the rewind compares; the former comparison of the gears and the slack alone, which left the five counters the bobs' striking reads unchecked, kept by name, the Boss's 6421253357 item 4, 2026-10-26)."""
     found = arrays(clock) + clock.wound + clock.crossed + clock.beats + [clock.dial, clock.strikes]
+    found += [a for pair in clock.reference for a in pair] + list(clock.split.values())
     return [*found, clock.slack]
 
 
@@ -232,7 +235,7 @@ def reading(clock: Clock, maxbits: int) -> dict[str, Any]:
     for w in sweeps:
         total = total + w
     n, _bits = census(clock)
-    tens = [x for gear in regulator.gears[1:] for x in ints(gear.now)]
+    tens = [x for gear in regulator.gears[1 : 1 + AXES] for x in ints(gear.now)]
     counts = clock.counts
     return {
         "i": clock.ticks,

@@ -529,7 +529,8 @@ def page_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> str:
 
 
 def write_page(record_path: str | Path, reading_path: str | Path, out_path: str | Path) -> None:
-    """The page written from the record file and the reading file (one JSON per line, the gates' output)."""
+    """The page written from the record file and the reading file (one JSON per line, the gates' output); a record's integers read whole however long, as the writer and the gates read them."""
+    sys.set_int_max_str_digits(0)
     record = json.loads(Path(record_path).read_text(encoding="utf-8"))
     Path(out_path).write_text(page_of(record, reading_lines(reading_path)), encoding="utf-8")
 

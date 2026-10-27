@@ -30,7 +30,7 @@ def vernier(
                 clock.pitches[key] = (
                     kept_pitch(teeth, at_clock(r.spring, n), *[at_clock(x, n) for x in r.grips])
                     if k == 0
-                    else kept_pitch(teeth, at_clock(r.grips[k - 1], n))
+                    else kept_pitch(teeth, at_clock(r.grips[(k - 1) ^ 1], n))
                 )
             fine, values = int(gear.fine[n]), carries(teeth, f := clock.pitches[key])
             origin = origin and fine in (mid, acts.flip(mid, clock.teeth, 1))

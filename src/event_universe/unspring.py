@@ -1,4 +1,4 @@
-"""The unspringing at rest, MG-S1 (H-Merger-At-Rest-1, 2026-10-26, the Boss's order under the owner's delegation; the former CS8-S1 and CS8-S2 as one letter): a fitted hand's winding is its own quantum, the wind its notches (A, 0 | 0, +-B) hold alone at the clock under its train's gearing, the same two integers for every train (`fitted_windings_of`; the former board's increment kept by name, equal to it on an empty hand); a sprung hand whose two ends hold a whole winding each of opposite sweep with no lead across the mesh engages as the conjugate pair (striking.engage's rest branch); each fitted hand's winding is paid at its own end by the unwound hand's notches at that clock unwound whole by the one advance act at -1, the fall the wind the great clock loses, both ends read before either is written, jammed by name `stop` where an end's fall is below the winding (`merger_falls`, `merger_take`; the mesh's number read after the stop, so a stopped pair reads nothing on the vernier); the unsprung hand is advanced at each end as the exact unwind at -1, on the gear the unwind names, by the least count of notches at which the wind rises by the winding (unwind.fall_of at -1; the former rise_of kept by name), the notches of that advance `unsprung_notches`, the two fitted hands' advance one act for the unsprung and the sweeping fitted hand alike (`fitted_advanced`). The striking's one unwind act for every letter (CR-S1 and CR-S2, the owner's word of 2026-10-26, 06:1x UTC): the ends read before any is written (`read_ends`), then written (`unwind_ends`), the fitting's one end, the bob's one end and the unspringing's two alike (`unwinds`, `summed`)."""
+"""The unspringing at rest, MG-S1 (H-Merger-At-Rest-1, 2026-10-26, the Boss's order under the owner's delegation; the former CS8-S1 and CS8-S2 as one letter): a fitted hand's winding is its own quantum, the wind its notches (A, 0 | 0, +-B) hold alone at the clock under its train's gearing, the same two integers for every train (`fitted_windings_of`; the former board's increment kept by name, equal to it on an empty hand); a sprung hand whose two ends hold a whole winding each of opposite sweep with no lead across the mesh engages as the conjugate pair (striking.engage's rest branch); each fitted hand's winding is paid at its own end by the unwound hand's notches at that clock unwound whole by the one advance act at -1, the fall the wind the great clock loses, both ends read before either is written, jammed by name `stop` where an end's fall is below the winding (`merger_falls`, `merger_take`; the mesh's number read after the stop, so a stopped pair reads nothing on the vernier); the unsprung hand is advanced at each end as the exact unwind at -1, on the gear the unwind names, by the least count of notches at which the wind rises by the winding (fall_of at -1; the former rise_of kept by name), the notches of that advance `unsprung_notches`, the two fitted hands' advance one act for the unsprung and the sweeping fitted hand alike (`fitted_advanced`). The striking's one unwind act for every letter (CR-S1 and CR-S2, the owner's word of 2026-10-26, 06:1x UTC): the ends read before any is written (`read_ends`), then written (`unwind_ends`), the fitting's one end, the bob's one end and the unspringing's two alike (`unwinds`, `summed`)."""
 
 from __future__ import annotations
 
@@ -7,10 +7,10 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import hands, unwind
+from event_universe import hands
 from event_universe.core import rule3
 from event_universe.core.spokes import AXES
-from event_universe.trains import HAND, Gear, zeros
+from event_universe.trains import HAND, Gear, Train, zeros
 from event_universe.unwind import advance, move, push_of, recoil, window_clocks
 
 if TYPE_CHECKING:
@@ -44,18 +44,51 @@ def fitted_advanced(
     return [a + b for a, b in zip(*ends, strict=True)], senses, stood, ends
 
 
+def fall_of(
+    clock: Clock, at: tuple[int, ...], windings: int, r: rule3.Gearing, hand: Train, going: int = 1
+) -> tuple[int | None, int, int]:
+    """The exact unwind at the clock in the regulator's winding (PM-S1) on the gear the fall's sign chooses (CS4-S2: the unwound hand's gear whose notch now stands farthest from its before, the largest now^2 - before^2, the first gear where equal, covariant under the hand's quarter turn): the unwound gear's now moved toward its before by the least count of notches, by comparisons alone (rule3.least_at), at which the wind the clock and its six neighbours hold falls by the windings due (EX-S1, the owner's word of 2026-10-27, 15:5x UTC: the wind's own fall, as the sprung unwind reads it, where TC-S1's closed form carried the pull's sign reversed and booked a fall the great clock never lost; the closed form struck); 0 where nothing is due; (None, the full fall) where the full move pays less; at -1 the gear's now moved away from its before by the least count at which the wind rises by the windings, the unspringing's unsprung windings (MG-S1)."""
+    gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in hand.gears)]
+    k = gaps.index(max(gaps))
+    gear = hand.gears[k]
+    now, before = int(gear.now[at]), int(gear.before[at])
+    if windings <= 0 and going == 1:
+        return 0, 0, k
+    if now == before and going == 1:
+        return None, 0, k
+    t = (1 if before > now else -1) if going == 1 else (1 if now > before else -1)
+    window = window_clocks(clock, at)
+    base = sum(int(v) for v in hands.wind(clock, hand.gears, r, window))
+
+    def fall(s: int) -> int:
+        moved = gear.now.copy()
+        moved[at] = now + t * s
+        trial = [Gear(moved, g.before, g.fine, g.teeth) if g is gear else g for g in hand.gears]
+        return going * (base - sum(int(v) for v in hands.wind(clock, trial, r, window)))
+
+    if going == -1:
+        s = rule3.least_at(lambda c: fall(c) >= windings)
+        return s, fall(s), k
+    dist = abs(now - before)
+    if fall(dist) < windings:
+        return None, fall(dist), k
+    s = rule3.least_at(lambda c: c >= dist or fall(c) >= windings)
+    return s, fall(s), k
+
+
 def unsprung_notches(
     clock: Clock, s: int, windings: dict[int, int], gearing: rule3.Gearing, exact: list[list[int] | None]
 ) -> Callable[[tuple[int, ...], int], tuple[int, ...]]:
-    """An unspringing's unsprung windings at an end (MG-S1), the notches its advance names: the exact unwind at -1 (unwind.fall_of at -1; the former rise_of kept by name) on the gear the unwind names, the count of notches at which the wind rises by the fitted hand's winding at that end (`windings` by the sense), advanced on that gear's now alone, at both ends (the unsprung advance is never the fitted hand's advance, which carries the sweep; the former `d == 0` branch the bug of H-Children-Charge-Bug-1, struck 2026-10-26), the exact advance [gear, count, rise] appended to `exact`; the end's sense enters no notch of the unsprung windings (H-Matter-From-The-Floor's bug (a), open: the unspringing's orientation reaching the great clock)."""
+    """An unspringing's unsprung windings at an end (MG-S1), the notches its advance names: the exact unwind at -1 (fall_of at -1; the former rise_of kept by name) on the gear the unwind names, the count of notches at which the wind rises by the fitted hand's winding at that end (`windings` by the sense), advanced on that gear's now alone, at both ends (the unsprung advance is never the fitted hand's advance, which carries the sweep; the former `d == 0` branch the bug of H-Children-Charge-Bug-1, struck 2026-10-26), the exact advance [gear, count, rise] appended to `exact`; the end's sense enters no notch of the unsprung windings (H-Matter-From-The-Floor's bug (a), open: the unspringing's orientation reaching the great clock)."""
     hand = clock.hands()[s]
 
     def notches_of(where: tuple[int, ...], sense: int) -> tuple[int, ...]:
-        count, rise, k = unwind.fall_of(clock, where, windings[sense], gearing, hand, -1)
+        count, rise, k = fall_of(clock, where, windings[sense], gearing, hand, -1)
         assert count is not None
-        z = hand.gears[k]
+        z, slack_was = hand.gears[k], int(clock.slack[where])
         d = count * (1 if int(z.now[where]) > int(z.before[where]) else -1)
-        exact.append([k, d, rise])
+        clock.slack[where] = slack_was - (rise - windings[sense])
+        exact.append([k, d, rise, slack_was])
         return tuple(d if j == HAND * k else 0 for j in range(HAND * len(hand.gears)))
 
     return notches_of
@@ -119,7 +152,7 @@ def read_ends(
     cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
     twins: tuple[int, int] | None = None,
 ) -> list[Read] | None:
-    """The unwind act's reads (CR-S2, the owner's word of 2026-10-26, 06:1x UTC: every end read before any is written, jammed by name `stop` at the first that cannot pay, the first end's jam sparing the second's read): at the unsprung hand the end owes the windings tallied less the slack there (EX-S1) and its gear by the fall's sign is read for the least count paying it (unwind.fall_of); at a sprung hand the end's notches are read whole with the wind the great clock loses by their advance at -1 (`wind_fall`, MG-S1, the fitting read at -1), owing the winding. Returns per end (the clock, the windings tallied, the notches or the count, the fall, the gear or None, the slack before, the due), or None; the former merger_falls kept by name."""
+    """The unwind act's reads (CR-S2, the owner's word of 2026-10-26, 06:1x UTC: every end read before any is written, jammed by name `stop` at the first that cannot pay, the first end's jam sparing the second's read): at the unsprung hand the end owes the windings tallied less the slack there (EX-S1) and its gear by the fall's sign is read for the least count paying it (`fall_of`); at a sprung hand the end's notches are read whole with the wind the great clock loses by their advance at -1 (`wind_fall`, MG-S1, the fitting read at -1), owing the winding. Returns per end (the clock, the windings tallied, the notches or the count, the fall, the gear or None, the slack before, the due), or None; the former merger_falls kept by name."""
     found = []
     for end, (where, tallied) in enumerate(ends):
         r = rec if twins is None else twins[end]
@@ -131,7 +164,7 @@ def read_ends(
             fall, k = wind_fall(clock, r, gearing, where, notches, {} if cache is None else cache), None
             short = fall < tallied
         else:
-            notches, fall, k = unwind.fall_of(clock, where, due, gearing, hand)
+            notches, fall, k = fall_of(clock, where, due, gearing, hand)
             short = notches is None
         if short:
             clock.counts["refused_stop"] += cause
@@ -154,13 +187,16 @@ def unspring_end(clock: Clock, rec: int, read: Read) -> tuple[dict[str, Any], li
     push = push_of(clock, clock.start_gears[r], where, notches, hand.ratio[0], -1)
     advance(clock, r, where, notches, -1)
     clock.strikes[where] -= 1
-    size = sum(abs(x) for x in notches)
+    size, slack_was = sum(abs(x) for x in notches), int(clock.slack[where])
+    clock.slack[where] = slack_was + fall - tallied
     entry = dict(
         node=list(where),
         taken=fall,
         booked=tallied,
         levels=size,
         taken_levels=list(notches),
+        remainder_was=slack_was,
+        remainder=int(clock.slack[where]),
         **({} if r == rec else {"hand": r}),
         dP_take=push,
         **recoil(clock, where, push, int(clock.start_rate[where]), 1),
@@ -169,7 +205,7 @@ def unspring_end(clock: Clock, rec: int, read: Read) -> tuple[dict[str, Any], li
 
 
 def unsprung_end(clock: Clock, rec: int, read: Read) -> dict[str, Any]:
-    """One end of the unsprung hand's unwind written: the unwound gear moved toward its before by the count (unwind.move, CR-S1), the fall above what was due its new slack (EX-S1), the push tallied and its recoil."""
+    """One end of the unsprung hand's unwind written: the unwound gear moved toward its before by the count (unwind.move, CR-S1), the fall above what was due its new slack (EX-S1), the push tallied at the gears of the tick's start (CL-S2, the one moment of every unwind, the owner's word of 2026-10-27, 15:5x UTC) and its recoil."""
     where, tallied, notches, fall, k, slack_was, due, _r = read
     hand = clock.hands()[rec]
     assert hand.ratio is not None and k is not None
@@ -179,7 +215,9 @@ def unsprung_end(clock: Clock, rec: int, read: Read) -> dict[str, Any]:
     move(clock, rec, k, where, toward * notches)
     clock.strikes[where] += 1
     clock.slack[where] = fall - due
-    clock.last_push = push_of(clock, [z], where, (toward * notches, 0), hand.ratio[0])
+    clock.last_push = push_of(
+        clock, [clock.start_gears[rec][k]], where, (toward * notches, 0), hand.ratio[0]
+    )
     clock.last_recoil = recoil(clock, where, clock.last_push, int(clock.start_rate[where]), 1)
     return {
         "node": list(where),

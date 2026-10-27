@@ -143,6 +143,11 @@ def cosine_count(clock: Clock, p: int, d: int) -> int:
     return high
 
 
+def twin_pairs(hands: list[Train]) -> list[tuple[int, int]]:
+    """The twin hands' pairs as (up, down), the up twin the first of its train's two hands."""
+    return [(u, twin_of(hands, u)) for u in range(len(hands)) if twin_of(hands, u) > u]
+
+
 def twin_of(hands: list[Train], s: int) -> int:
     """The + fitted hand's hand: the twin of the - fitted hand's hand where its train is twin hands (the pair's spin kept), the same hand otherwise."""
     twin = hands[s].twin

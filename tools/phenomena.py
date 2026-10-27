@@ -165,7 +165,8 @@ def write(document_path: Path, sha: str, readings: dict[str, dict[int, dict[str,
 
 
 def main(argv: list[str]) -> None:
-    """The table from the arguments: the head's sha, name=reading pairs, and the document to write."""
+    """The table from the arguments: the head's sha, name=reading pairs, and the document to write; a reading's integers read whole however long."""
+    sys.set_int_max_str_digits(0)
     document = None
     if "--document" in argv:
         at = argv.index("--document")

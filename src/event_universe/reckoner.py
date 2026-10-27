@@ -169,6 +169,14 @@ class Chart:
         masks: dict[int, set[int]] = self.memo[key]
         return masks
 
+    @staticmethod
+    def slack_of(fitting: dict[str, Any]) -> bool | None:
+        """Whether every end of a fitting closes by its signed slack (EX-S1 under the wave: unwound + the slack before - the slack after = tallied, an unspringing's two ends in its `takes`), None where an end carries no slack."""
+        ends = fitting.get("takes", [fitting])
+        if any("remainder" not in end for end in ends):
+            return None
+        return all(e["taken"] + e["remainder_was"] - e["remainder"] == e["booked"] for e in ends)
+
     def sweeps_of(self) -> list[tuple[int, int]]:
         """The two fitted hands' own sweeps at every fitting, in the fittings' order (H-Children-Charge-Bug-1, the Boss's 6410696786): a fitted hand advanced by the fitted hand's advance carries its sense times half the key (the sweep of its own two notches), a fitted hand advanced as the exact unwind at -1 (an unspringing's unsprung hand, the gear's `exact_lay` at its end) carries 0; the log's W_children is the chart's sweep at the clock after the advance (the standing notch's and the cross term in it) and is read for the residue by name, never for the sign."""
 
