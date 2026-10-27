@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The engine head c6279863c merged (4809d4bf3; the tests' four width bounds struck, tests alone): David's amplitude measure (X a free scale above a resolution floor, bit for bit from k 100,000 to 10^14) and his clause for the owner's word under The width is derived; rows 207 and 218.
 - David's width measure on the head and the tests' four width bounds struck (toys-5 760725b30) under The width is derived, ENGINE.md's Constant 3 row noted, row 207; no merge, the head unmoved at 8363981de.
 - The law's lettered clauses under The rows against nature (a) to (z) numbered by the gates' rows that read them, the ten with no row named as such; no merge, the head unmoved at 8363981de.
 - The engine head 8363981de merged (f8b3f86ca; the Reader's Bell row at the law's own bound and the folders, the section 2 table his): the law's two bound paragraphs (Rule3's The bound and the click's) re-read under the owner's ruling of 22:1x, the width the engine's representation; rows 164 and 218.
