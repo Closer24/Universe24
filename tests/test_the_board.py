@@ -108,9 +108,7 @@ def images_hold(group: int) -> None:
 def test_the_run_back_is_exact_through_births_and_turns() -> None:
     node = node_of("world_hole.json")
     assert run_back_exact(node, 40) == 40
-    for _ in range(40):
-        node.step()
-    assert node.counts["births"] > 0 and node.counts["turns"] > 0
+    assert node.counts["births"] > 0 and node.counts["turns"] > 0  # the forward run's tallies
 
 
 def test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero() -> None:

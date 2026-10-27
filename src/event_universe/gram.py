@@ -1,4 +1,4 @@
-"""The record rows' bilinears by shape, one act on every record alike (SR-S1 to SR-S4): a record of 2k lines is k planes on one lattice with a Gram matrix G (the identity for a plane, the derived trace form for a quartet, quartet.py), a rotation J (the quarter turn per plane), a conjugation K (the im line's negation for a plane, the lattice's K0 for a quartet) and axis matrices (none for a plane, the three Gamma_a for a quartet): the charge B.GJ.N (the plane's Wronskian), the current, the spin density N.G Gamma_a.N (the record's axial vector), the frame's conjugation of a neighbour's lines, the Node term from the curl of the odd lines (the coupling by shape, SR-S3), the row's scale 2 x 6 Gamma that carries the term's coefficient R / (2 Gamma) inside the one division, the lay at rest by rule3's signed quotient and the period from the rotation's cosine N.G.B / N.G.N read along the law's own orbit."""
+"""The record rows' bilinears, one act on every record alike: a record is a plane, its two lines a clock's hand (re, im), with the plain products line by line (`products`, `dot`), a rotation J (the quarter turn (re, im) -> (-im, re)) and a conjugation K (the im line's negation): the charge B.J.N (the plane's Wronskian), the current, the frame's conjugation of a neighbour's lines, the lay at rest by rule3's signed quotient and the rotation's angle read along the law's own orbit (`cosine_count`; the spinor row's Gram form, axis matrices, spin density, curl term and scale struck with the row, 2026-10-27)."""
 
 from __future__ import annotations
 
@@ -8,12 +8,10 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core.ports import AXES, PORTS, across, port_of, transverse
+from event_universe.core.ports import AXES, PORTS, across, port_of
 from event_universe.core.rule3 import half, quotient, share_weight, signed_quotient
-from event_universe.links import gradient
-from event_universe.loader.quartet import quartet
 from event_universe.readings import pair_angle
-from event_universe.rows import PLANE, QUARTET, Line, zeros
+from event_universe.rows import PLANE, Line, zeros
 from event_universe.take import neighbour
 
 if TYPE_CHECKING:
@@ -28,15 +26,8 @@ def identity(n: int) -> Matrix:
     return [[int(r == c) for c in range(n)] for r in range(n)]
 
 
-def gram(shape: int) -> Matrix:
-    """The row's Gram matrix G: the identity for every shape but the quartet's derived trace form."""
-    return quartet().G if shape == QUARTET else identity(shape)
-
-
 def rotation(shape: int) -> Matrix:
-    """The row's rotation J, the quarter turn of each plane (re, im) -> (-im, re): the quartet's derived J, the standard blocks for a plane."""
-    if shape == QUARTET:
-        return quartet().J
+    """The row's rotation J, the quarter turn of each plane (re, im) -> (-im, re), the standard blocks."""
     found = [[0] * shape for _ in range(shape)]
     for p in range(quotient(shape, PLANE)):
         found[PLANE * p][PLANE * p + 1], found[PLANE * p + 1][PLANE * p] = -1, 1
@@ -44,18 +35,11 @@ def rotation(shape: int) -> Matrix:
 
 
 def conjugation(shape: int) -> Matrix:
-    """The row's conjugation K, the frame's and the swap's: the quartet's derived K0; for a plane the im line negated; the identity for a row of another shape (a line of one level is its own conjugate)."""
-    if shape == QUARTET:
-        return quartet().K0
+    """The row's conjugation K, the frame's and the swap's: for a plane the im line negated; the identity for a row of another shape (a line of one level is its own conjugate)."""
     found = [list(row) for row in identity(shape)]
     if shape == PLANE:
         found[1][1] = -1
     return found
-
-
-def axes(shape: int) -> list[Matrix]:
-    """The row's axis matrices Gamma_a, the coupling's: the quartet's three, none for another shape."""
-    return quartet().gamma if shape == QUARTET else []
 
 
 def matvec(m: Matrix, xs: list[Any]) -> list[Any]:
@@ -63,17 +47,18 @@ def matvec(m: Matrix, xs: list[Any]) -> list[Any]:
     return [sum((m[r][c] * xs[c] for c in range(len(xs)) if m[r][c]), start=0) for r in range(len(m))]
 
 
-def matmul(a: Matrix, b: Matrix) -> Matrix:
-    """The product of two integer matrices."""
-    return [
-        [sum(a[r][k] * b[k][c] for k in range(len(b))) for c in range(len(b[0]))] for r in range(len(a))
-    ]
+def products(xs: list[Any], ys: list[Any]) -> list[Any]:
+    """The plain products x_k y_k line by line, so that a division per line stays one per line."""
+    return [x * y for x, y in zip(xs, ys, strict=True)]
+
+
+def dot(xs: list[Any], ys: list[Any]) -> Any:
+    """The plain products x_k y_k summed over the lines."""
+    return sum(products(xs, ys), start=0)
 
 
 def weighted(m: Matrix, xs: list[Any], ys: list[Any]) -> list[Any]:
-    """The bilinear x.m.y line by line, x_k (m y)_k, so that a division per line stays one per line; at the identity (every shape but the quartet's) the plain products x_k y_k."""
-    if m == identity(len(xs)):
-        return [x * y for x, y in zip(xs, ys, strict=True)]
+    """The bilinear x.m.y line by line, x_k (m y)_k, so that a division per line stays one per line."""
     return [x * my for x, my in zip(xs, matvec(m, ys), strict=True)]
 
 
@@ -83,12 +68,8 @@ def form(m: Matrix, xs: list[Any], ys: list[Any]) -> Any:
 
 
 def charge(shape: int, lines: list[Line]) -> Any:
-    """The record's charge density W = B.GJ.N at every Node, the plane's Wronskian re_now im_before - im_now re_before as the case G = I."""
-    return form(
-        matmul(gram(shape), rotation(shape)),
-        [line.before for line in lines],
-        [line.now for line in lines],
-    )
+    """The record's charge density W = B.J.N at every Node, the plane's Wronskian re_now im_before - im_now re_before."""
+    return form(rotation(shape), [line.before for line in lines], [line.now for line in lines])
 
 
 def conjugated(shape: int, xs: list[Any], frame: Any) -> list[Any]:
@@ -97,8 +78,8 @@ def conjugated(shape: int, xs: list[Any], frame: Any) -> list[Any]:
 
 
 def current(shape: int, nows: list[Any], frames: list[Any]) -> list[Any]:
-    """The record's sign current on each axis, J_a = dN_a.GJ.N with dN_a the centred difference of the levels now, the neighbours' lines read in the Node's frame; the plane's re dim - im dre as the case G = I."""
-    gj = matmul(gram(shape), rotation(shape))
+    """The record's sign current on each axis, J_a = dN_a.J.N with dN_a the centred difference of the levels now, the neighbours' lines read in the Node's frame; the plane's re dim - im dre."""
+    gj = rotation(shape)
     found = []
     for a in range(AXES):
         up = conjugated(shape, [across(n, port_of(a, 0)) for n in nows], frames[port_of(a, 0)])
@@ -107,32 +88,8 @@ def current(shape: int, nows: list[Any], frames: list[Any]) -> list[Any]:
     return found
 
 
-def density(shape: int, nows: list[Any]) -> list[Any]:
-    """The record's spin density on each axis, s_a = N.G Gamma_a.N, the axial vector no line carries (SR-S2); none for a plane."""
-    g = gram(shape)
-    return [form(matmul(g, ga), nows, nows) for ga in axes(shape)]
-
-
-def curl(odd: list[Any]) -> list[Any]:
-    """The one-Link curl of the shape-4 row's odd lines at the Node, Phi_a = d_b A_c - d_c A_b with d_b the centred difference through the two Ports of the axis b."""
-    found = []
-    for a in range(AXES):
-        b, c = transverse(a)
-        found.append(gradient(odd[c], b) - gradient(odd[b], c))
-    return found
-
-
-def term(shape: int, coefficient: Any, phi: list[Any], xs: list[Any]) -> list[Any]:
-    """The Node term of the coupling by shape, SUM_a coefficient Phi_a (Gamma_a x) per line (SR-S3), 0 for a row with no axis matrices; the coefficient the unscaled reaches' sum, the row's scale carrying R / (2 Gamma)."""
-    found: list[Any] = [0] * len(xs)
-    for a, ga in enumerate(axes(shape)):
-        found = [f + coefficient * phi[a] * g for f, g in zip(found, matvec(ga, xs), strict=True)]
-    return found
-
-
 def share(node: Node, lines: list[Line], r: Any, window: list[tuple[int, ...]] | None = None) -> Any:
-    """The conserved form's share of a record at the Node in the carrier's unit (PM-S1: every count of the Node read in the carrier's unit, the one weight for every read and every row alike), one division per line: for the line k, [w (n_k (G n)_k + b_k (G b)_k) - S n_k (G b)_k - n_k (G SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (G (n + n_j))_k, times X the carrier's level at the interval's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the plane's share line by line as the case G = I; at the row's unscaled rule. At a window of Nodes (`window`, a take's Node and its six neighbours, merger.walls_of and share_fall) the same integers read at those Nodes alone, each neighbour gathered by its place through take.neighbour, returned in the window's order (the former merger.share_at, gram.share's form re-spelt at one Node, folded 2026-10-26 as R3 of the readings' map: one spelling, the vectorised form inside it)."""
-    g = gram(len(lines))
+    """The conserved form's share of a record at the Node in the carrier's unit (PM-S1: every count of the Node read in the carrier's unit, the one weight for every read and every row alike), one division per line: for the line k, [w (n_k n_k + b_k b_k) - S n_k b_k - n_k (SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (n + n_j)_k, times X the carrier's level at the interval's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the plane's share line by line, at the row's rule. At a window of Nodes (`window`, a take's Node and its six neighbours, merger.walls_of and share_fall) the same integers read at those Nodes alone, each neighbour gathered by its place through take.neighbour, returned in the window's order (the former merger.share_at, gram.share's form re-spelt at one Node, folded 2026-10-26 as R3 of the readings' map: one spelling, the vectorised form inside it)."""
     at: Callable[[Any], Any]
     beyond: Callable[[Any, int], Any]
     if window is None:
@@ -159,8 +116,7 @@ def share(node: Node, lines: list[Line], r: Any, window: list[tuple[int, ...]] |
         n_j = [beyond(n, port) for n in full_n]
         here = at(reach)
         reached = [v + here * bj for v, bj in zip(reached, b_j, strict=True)]
-        parts = weighted(
-            g,
+        parts = products(
             [b - bj for b, bj in zip(befores, b_j, strict=True)],
             [n + nj for n, nj in zip(nows, n_j, strict=True)],
         )
@@ -168,10 +124,10 @@ def share(node: Node, lines: list[Line], r: Any, window: list[tuple[int, ...]] |
     own = [
         at(r.wall) * (nn + bb) - at(r.self_coefficient) * nb - nr
         for nn, bb, nb, nr in zip(
-            weighted(g, nows, nows),
-            weighted(g, befores, befores),
-            weighted(g, nows, befores),
-            weighted(g, nows, reached),
+            products(nows, nows),
+            products(befores, befores),
+            products(nows, befores),
+            products(nows, reached),
             strict=True,
         )
     ]
@@ -183,31 +139,19 @@ def share(node: Node, lines: list[Line], r: Any, window: list[tuple[int, ...]] |
 
 
 def moving(
-    shape: int,
-    base: Any,
-    vector: list[int],
-    now_pair: tuple[Any, Any],
-    before_pair: tuple[Any, Any],
-    den: int,
-    sense: int,
+    base: Any, now_pair: tuple[Any, Any], before_pair: tuple[Any, Any], den: int, sense: int
 ) -> list[Line]:
-    """A record laid at a phase over the envelope (MV-S1): now = base (C v + sense S (J v)) over den at the Node's phase pair (C, S) and before the same at the pair (C', S') turned by the band's rotation, each product's quotient toward zero line by line (rule3.signed_quotient), so the two senses' J lines cancel exactly and the lay at the conjugate pair is the conjugate lay; the rest lay the case (den, 0) and (num, s)."""
-    turned = matvec(rotation(shape), list(vector))
+    """A plane laid at a phase over the envelope (MV-S1), a clock's hand at the angle (C, S): now = (base C, sense base S) over den at the Node's phase pair (C, S) and before the same at the pair (C', S') turned by the band's rotation, each product's quotient toward zero line by line (rule3.signed_quotient), so the two senses' im lines cancel exactly and the lay at the conjugate pair is the conjugate lay; the rest lay the case (den, 0) and (num, s) (the former lay's vector, (1, 0) on every plane, struck with the spinor row, 2026-10-27)."""
 
     def levels(c: Any, s: Any) -> list[Any]:
-        return [
-            signed_quotient(base * c * v, den) + sense * signed_quotient(base * s * j, den)
-            for v, j in zip(vector, turned, strict=True)
-        ]
+        return [signed_quotient(base * c, den), sense * signed_quotient(base * s, den)]
 
     return [Line(n, b, None, None) for n, b in zip(levels(*now_pair), levels(*before_pair), strict=True)]
 
 
-def rest(
-    shape: int, re_now: Any, vector: list[int], num: int, den: int, sine: int, sense: int
-) -> list[Line]:
-    """A record at rest over the envelope (`moving` at the pair (den, 0) now and the row's (num, s) before): now = re_now v (v the lay's vector, (1, 0) for a plane), before = num now div den + sense sine (J now) div den, each quotient toward zero (the plane's re_before = re_now num div den, im_before = sense re_now s div den as the case v = (1, 0))."""
-    return moving(shape, re_now, vector, (den, 0), (num, sine), den, sense)
+def rest(re_now: Any, num: int, den: int, sine: int, sense: int) -> list[Line]:
+    """A plane at rest over the envelope (`moving` at the pair (den, 0) now and the row's (num, s) before): re_now = re_now, im_now = 0, re_before = re_now num div den, im_before = sense re_now s div den, each quotient toward zero."""
+    return moving(re_now, (den, 0), (num, sine), den, sense)
 
 
 def cosine_count(node: Node, p: int, d: int) -> int:
@@ -226,25 +170,3 @@ def cosine_count(node: Node, p: int, d: int) -> int:
         else:
             high = middle
     return high
-
-
-def period(node: Node, lines: list[Line], standing: Any) -> Any:
-    """The record's beat at the Nodes where it stands, from the invariant ratio cos omega = N.G.B / N.G.N (no line of a quartet is a scalar under the 48, so no crossing line is covariant): the angle's count n along the law's orbit (`cosine_count`), then the first k >= 2 at which the orbit's cosine at k n is a maximum against k - 1 and k + 1, the first return; 0 where the ratio is degenerate."""
-    g = gram(len(lines))
-    nn = form(g, [line.now for line in lines], [line.now for line in lines])
-    nb = form(g, [line.now for line in lines], [line.before for line in lines])
-    found = zeros(node.shape)
-    for where in zip(*np.nonzero(np.asarray(standing, dtype=object) == 1), strict=True):
-        at = tuple(int(x) for x in where)
-        d, p = int(nn[at]), int(nb[at])
-        if d == 0 or p >= d or p <= -d:
-            continue
-        n = cosine_count(node, p, d)
-        k = 1
-        while not (
-            pair_angle(node, k * n)[0] >= pair_angle(node, (k - 1) * n)[0]
-            and pair_angle(node, k * n)[0] >= pair_angle(node, (k + 1) * n)[0]
-        ):
-            k += 1
-        found[at] = k
-    return found

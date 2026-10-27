@@ -41,6 +41,14 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_phase_line.py::test_the_amplitude_is_the_universes_and_the_engine_refuses_a_scale_below_the_floor_from_gamma": (
+        19,
+        "The amplitude declared from outside and the width gone from the engine (the owner's words of 2026-10-27, 04:0x and 04:4x UTC, through the Boss; David's e48273be8): the universe file's amplitude read, the floor 23 Gamma derived from Gamma alone below it, the Node's X the file's, the refusal below the floor by name and never nature's; the Boss's room by name at the merge of toys-5 e48273be8 (2026-10-27): the test as the merged tree holds it",
+    ),
+    "tests/test_the_phase_line.py::test_the_reversal_is_bit_exact_over_ten_thousand_acts": (
+        18,
+        "The phase act's reversal bit exact over ten thousand acts (the law's own time reversal on the phase line, CA-S1's direction as the slot; a test of the law never roomed, standing since the phase line entered): the Boss's room by name at the merge of toys-5 e48273be8 (2026-10-27), the test as the merged tree holds it",
+    ),
     "tests/test_the_record.py::test_the_exact_return_is_the_seeds_first_state_and_the_horizon_standing": (
         26,
         "The exact return read as the seed's own first pair of states, with a released horizon standing while frozen (2026-10-26, the owner's words of 19:4x and 21:3x UTC through the Boss, the Reader's reading on reader-5 daecb7deb): the returns numbered on the bang records and the horizon's silence read from the Node lines; the Boss's room by name at the merge of reader-5 f0c47f489 carrying toys-5 9c2198f34 (2026-10-26): the test as the merged tree holds it",

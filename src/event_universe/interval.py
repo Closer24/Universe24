@@ -58,8 +58,6 @@ class Interval:
         self.riders = [r for r in node.rows_ if r.wall is None and r is not self.carrier]
         self.records = node.records()
         self.planes = [(r, coupling_of(r)) for r in self.records]
-        self.scales = {self.where[id(r)]: readings.scale(r.shape, node.gamma) for r in self.riders}
-        self.common = max(self.scales.values())
         self.out: list[list[Line]] = [[] for _ in self.rows]
         self.plane_starts: list[list[Line]] = []
         self.before_swap: list[list[Line]] = []
@@ -77,7 +75,13 @@ class Interval:
         return self.top, None if self.kept is None else self.kept[self.where[id(row)]]
 
     def readings(self) -> None:
-        """(1) The readings at the start (the former `readings`, `walled_act` and `forces`): the content and the clock, the frozen mask (BH-S1), the proper count resting at a frozen Node, the Link factors with a frozen end at the wall, the frames, the clocked potential, the carrier's level and the stress of the planes; the walled row's act, one carried division with the flux 2 c Phi inside it (its start the Links' count K = 2 (Phi_now - Phi_before) + c, backward recovered by the inverse division alone), the six Links' records read once per coupling present among the records (links.coupling_of; the frame sign, the count and the odd part at the coupling, so the turn at the coupling 0 is the identity by arithmetic), the curl of the odd lines; the records' current at this end, each at its coupling; every riding line's force, SUM_j R_j (m_j - a) - D a plus the row's Node term by shape (gram.term), every record turned by the Links at its coupling and by the flux lines' fold at its rest rotation (links.folded, Y-S3; the row at the gap 0 by nothing); and the emission, X_now SUM over the records with a gap of F.GJ.N (the plane's re F_im - im F_re), each over its scale against the common one."""
+        """(1) The readings at the start (the former `readings`, `walled_act` and `forces`): the content and the clock, the frozen mask (BH-S1), the proper count resting at a frozen Node, the Link factors with a frozen end at the wall, the frames, the clocked potential, the carrier's level and the stress of the planes; the walled row's act, one carried division with the flux 2 c Phi inside it (its start the Links' count K = 2 (Phi_now - Phi_before) + c, backward recovered by the inverse division alone), the six Links' records read once per coupling present among the records (links.coupling_of; the frame sign, the count and the odd part at the coupling, so the turn at the coupling 0 is the identity by arithmetic); the records' current at this end, each at its coupling; every riding line's force, SUM_j R_j (m_j - a) - D a, every record turned by the Links at its coupling and by the flux lines' fold at its rest rotation (links.folded, Y-S3; the row at the gap 0 by nothing); and the emission, X_now SUM over the records with a gap of F.J.N (the plane's re F_im - im F_re)."""
+        self.clock_readings()
+        self.phase_clock()
+        self.forces()
+
+    def clock_readings(self) -> None:
+        """The Node's clock at the start: its content and paces, the frozen mask, the proper count, the Link factors, the frames, the clocked potential, the carrier's level and the planes' stress."""
         node = self.node
         self.c = np.asarray(volume.level_of(node.gamma, self.at(self.carrier.lines[0])), dtype=object)
         node.start_content = self.c
@@ -96,14 +100,14 @@ class Interval:
         self.cphi = paces.rounded(self.at(self.potential.lines[0]) * self.p0, node.gamma)
         self.x_now = self.at(self.carrier.lines[0])
         node.start_x = self.x_now
-        sources = [
-            ([self.at(line) for line in r.lines], r.pair[0], gram.gram(r.shape))
-            for r in self.records
-            if r.pair
-        ]
+        sources = [([self.at(line) for line in r.lines], r.pair[0]) for r in self.records if r.pair]
         self.trace, self.traceless = tensor_parts(stress_parts(sources, node.shape))
         self.shear = shear_parts(sources, node.shape)
         self.flux_lines = [self.at(line) for line in self.carrier.lines[1 + AXES : 1 + AXES + AXES]]
+
+    def phase_clock(self) -> None:
+        """The walled row's act, the Node's phase clock (one carried division with the flux 2 c Phi inside it), and the six Links read once per coupling present among the records."""
+        node = self.node
         k, flux = self.where[id(self.walled)], [self.cphi + self.cphi]
         rule, ends = readings.rule_of(node, self.walled, self.c, self.factors), self.ends(self.walled)
         act = node.act(self.rows[k], rule, None, [None], self.direction, flux, *ends)
@@ -126,7 +130,10 @@ class Interval:
             )
             for c in sorted({c for _r, c in self.planes})
         }
-        self.curl = gram.curl(self.odd)
+
+    def forces(self) -> None:
+        """The records' current at this end, every riding line's force SUM_j R_j (m_j - a) - D a with each record turned by its Links and the flux lines' fold, and the emission."""
+        node = self.node
         self.current = [zeros(node.shape) for _ in range(AXES)]
         for r, cpl in self.planes:
             nows = [self.at(line) for line in self.lines(r)]
@@ -146,21 +153,18 @@ class Interval:
             self.walls[k] = rule.wall
             self.starts[k] = [self.at(line) for line in self.lines(r)]
             arrivals = node.arrivals(self.starts[k], rule, turn)
-            coefficient = quotient(sum(rule.reaches), self.scales[k])
-            added = gram.term(r.shape, coefficient, self.curl, self.starts[k])
             self.force[k] = [
-                m + t - (rule.wall + rule.wall - rule.self_coefficient) * a
-                for a, m, t in zip(self.starts[k], arrivals, added, strict=True)
+                m - (rule.wall + rule.wall - rule.self_coefficient) * a
+                for a, m in zip(self.starts[k], arrivals, strict=True)
             ]
         self.emission = zeros(node.shape)
         for r, cpl in self.planes:
             k = self.where[id(r)]
-            gj = gram.matmul(gram.gram(r.shape), gram.rotation(r.shape))
-            flow = cpl * gram.form(gj, self.force[k], self.starts[k])
-            self.emission = self.emission + self.x_now * flow * quotient(self.common, self.scales[k])
+            flow = cpl * gram.form(gram.rotation(r.shape), self.force[k], self.starts[k])
+            self.emission = self.emission + self.x_now * flow
 
     def kick(self) -> None:
-        """(2) The kick (the former `kicks`): every riding line's momentum at the start read at the mean wall of the carrier's two levels as the rows hold them times the row's scale, P = W (a_now - a_before) + r - W div 2, and kicked by X_now F in the direction; the shape-4 row's time line kicked besides by the records' charge read at the kick (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the records with a gap of N.GJ.u_in + N.GJ.u_out, N the levels at the start and u the odd rounding of 2 P + 1 over 2 w X_now at the scale, the plane's -(re u_im - im u_re) in and out, the same integers in either direction and its own mirror under the exchange and the conjugation; one carried division at the line's write wall T with the carry kept in its write remainder, the quotient landing as the kick w X_now q before the line's one division; the charge summed over the records before the shape-4 row is met, which rests on rows.order_of, H-Confirm-Build-11; the former level write of 2 W of the records after the step kept by name: a source pinned to the step's end, whose mirror under the exchange is a start, so the fall wrote 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the carrier's source from every riding row alike with its G, line by line u_in (G u_out) + (-a (G F)) div w, w the row's wall."""
+        """(2) The kick (the former `kicks`): every riding line's momentum at the start read at the mean wall of the carrier's two levels as the rows hold them, P = W (a_now - a_before) + r - W div 2, and kicked by X_now F in the direction; the shape-4 row's time line kicked besides by the records' charge read at the kick (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the records with a gap of N.J.u_in + N.J.u_out, N the levels at the start and u the odd rounding of 2 P + 1 over 2 w X_now, the plane's -(re u_im - im u_re) in and out, the same integers in either direction and its own mirror under the exchange and the conjugation; one carried division at the line's write wall T with the carry kept in its write remainder, the quotient landing as the kick w X_now q before the line's one division; the charge summed over the records before the shape-4 row is met, which rests on rows.order_of, H-Confirm-Build-11; the former level write of 2 W of the records after the step kept by name: a source pinned to the step's end, whose mirror under the exchange is a start, so the fall wrote 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the carrier's source from every riding row alike, line by line u_in u_out + (-a F) div w, w the row's wall."""
         node = self.node
         self.forms = zeros(node.shape)
         self.kicked: dict[int, list[Any]] = {}
@@ -170,8 +174,9 @@ class Interval:
         self.flux = [zeros(node.shape) for _ in range(AXES)]
         for r in self.riders:
             k = self.where[id(r)]
-            ws, ds, g = self.scales[k] * w_side, self.scales[k] * d, gram.gram(r.shape)
-            p_side = [ws * (line.now - line.before) + line.rem - born(ws) for line in self.rows[k]]
+            p_side = [
+                w_side * (line.now - line.before) + line.rem - born(w_side) for line in self.rows[k]
+            ]
             p_other = [
                 p + self.direction * self.x_now * f for p, f in zip(p_side, self.force[k], strict=True)
             ]
@@ -179,23 +184,23 @@ class Interval:
                 line = self.rows[k][0]
                 q, line.wr = divide(charge, line.wwall, line.wr, self.direction)
                 p_other[0] = p_other[0] + self.direction * node.w * self.x_now * q
-            u_in = [paces.rounded(p + p + 1, ds) for p in p_side]
-            u_out = [paces.rounded(p + p + 1, ds) for p in p_other]
+            u_in = [paces.rounded(p + p + 1, d) for p in p_side]
+            u_out = [paces.rounded(p + p + 1, d) for p in p_other]
             if r in self.records:
-                gj = gram.matmul(g, gram.rotation(r.shape))
+                gj = gram.rotation(r.shape)
                 forms = gram.form(gj, self.starts[k], u_in) + gram.form(gj, self.starts[k], u_out)
                 charge = charge + coupling_of(r) * forms
                 assert r.pair is not None
                 for u in (u_in, u_out):
                     for a in range(AXES):
-                        self.flux[a] = self.flux[a] + r.pair[0] * net_flux(g, self.starts[k], u, a)
-            pulls = gram.weighted(g, self.starts[k], self.force[k])
-            for product, pull in zip(gram.weighted(g, u_in, u_out), pulls, strict=True):
+                        self.flux[a] = self.flux[a] + r.pair[0] * net_flux(self.starts[k], u, a)
+            pulls = gram.products(self.starts[k], self.force[k])
+            for product, pull in zip(gram.products(u_in, u_out), pulls, strict=True):
                 self.forms = self.forms + product + quotient(-pull, self.walls[k])
             self.kicked[k] = p_other
 
     def division(self) -> None:
-        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms (the file's trace weight) den Gamma^2 - trace p_0^2) p_0 on its time line and, times p_0^2 on its nine axis lines by the position of their reading, the traceless stress, the records' count flux and the shears (Y-S1, Y-S3; the carrier's act node.act, the former `carried` by this name); every riding line's one carried division at the mean wall of the carrier's two levels at its end times the row's scale, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and before the swap kept for the close (the latter the state the swap replaces at the turned Nodes, the levels now elsewhere, CL-S2; the former `stepped` kept by name); the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act but the swap changes any integer of a frozen Node's state in either direction; backward a Node both frozen and turned is restored to the pre-state the exchange returned (FR-S1)."""
+        """(3) The division (the former `carrier_act`, `divisions`, `writes` and `rest`): the carrier's one division with the write sourced by the riding rows' momenta, 4 X (forms (the file's trace weight) den Gamma^2 - trace p_0^2) p_0 on its time line and, times p_0^2 on its nine axis lines by the position of their reading, the traceless stress, the records' count flux and the shears (Y-S1, Y-S3; the carrier's act node.act, the former `carried` by this name); every riding line's one carried division at the mean wall of the carrier's two levels at its end, its remainder kept in [0, W) there, backward the turned Nodes set to their kept pre-state; the records' lines at the start and before the swap kept for the close (the latter the state the swap replaces at the turned Nodes, the levels now elsewhere, CL-S2; the former `stepped` kept by name); the rows set; forward the lays among the divisions after them (`lays`; backward they came off first); then every line at a frozen Node restored to its held line, its levels, its remainders and its wall by the Node's one restore (BH-S1, the former `rest`), so no act but the swap changes any integer of a frozen Node's state in either direction; backward a Node both frozen and turned is restored to the pre-state the exchange returned (FR-S1)."""
         node, carrier = self.node, self.carrier
         k = self.where[id(carrier)]
         p02 = self.p0 * self.p0
@@ -210,12 +215,11 @@ class Interval:
         w_div = readings.mean_wall(self.node, self.out[k][0])
         for r in self.riders:
             k = self.where[id(r)]
-            ws = self.scales[k] * w_div
             new = []
             for a, p, line in zip(self.starts[k], self.kicked[k], self.rows[k], strict=True):
-                v, rem = divide(p, ws, born(ws))
+                v, rem = divide(p, w_div, born(w_div))
                 now, before = (a + self.direction * v, a)[:: self.direction]
-                new.append(Line(now, before, rem, ws, line.wr, line.wwall))
+                new.append(Line(now, before, rem, w_div, line.wr, line.wwall))
             if self.direction == -1 and self.kept is not None:
                 node.restore(new, self.kept[k], self.top)
             self.out[k] = new
@@ -237,11 +241,11 @@ class Interval:
         )
 
     def lays(self) -> None:
-        """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end at the common scale, its quotient rounded odd (EM-S1's odd rounding, paces.rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`), its booking per Node laid written on the carrier's flux lines by the Node's write act (take.recoil, LT-S1: the emission's lay taken into the clause), its bookings kept in the interval's frame for the run back and undone at -1 by the same act, the last first, after the swap's undoing and before the writes come off, at no still Node (turned or frozen), where the swap or the restore wiped the forward's booking with the lay; the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
+        """The lays among the divisions (the former `writes` and `unwrite`), each one carried division at the line's write wall T with the carry kept in its write remainder (node.write), on the rows as the Node holds them at the end: the emitter's line's W-S1 lay, the emission over the carrier's mean wall at the end, its quotient rounded odd (EM-S1's odd rounding, paces.rounded: the lay exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`laid_on`), its booking per Node laid written on the carrier's flux lines by the Node's write act (take.recoil, LT-S1: the emission's lay taken into the clause), its bookings kept in the interval's frame for the run back and undone at -1 by the same act, the last first, after the swap's undoing and before the writes come off, at no still Node (turned or frozen), where the swap or the restore wiped the forward's booking with the lay; the shape-4 row's current at the start on its three odd lines, its time line's numerator None (its charge landed at the kick, PL-S1); forward after every line's division, backward the first act to come off."""
         node = self.node
         line, carrier = node.emitter().lines[0], node.row(CARRIER).lines[0]
         levels = line.now
-        wall = self.common * readings.mean_wall(self.node, carrier)
+        wall = readings.mean_wall(self.node, carrier)
         node.write(line, paces.rounded(self.emission, wall), self.direction)
         if self.direction == 1:
             laid_on(node, line, levels)

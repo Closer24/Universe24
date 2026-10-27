@@ -1,4 +1,4 @@
-"""The generic Node (the owner's word of 2026-10-25: the Node knows nothing, there is no if): its state is the rows the universe file names on the board the world file names, 98 integers at every Node with the toy universe's seven rows, 116 with a shape-8 row beside them; its readings at an interval's start (the content, the paces, the Link factors, the frames, the Links' counts and phases, the conserved form's share); its acts on a row, each one act on every row alike in either direction (Rule3's rotate with the arrivals turned as the row's shape turns them, the write by one carried division, the exchange at the turned Nodes); the interval's program is interval.run and the close is close.click, each a function of the Node."""
+"""The generic Node (the owner's word of 2026-10-25: the Node knows nothing, there is no if): its state is the rows the universe file names on the board the world file names, 98 integers at every Node with the toy universe's seven rows; its readings at an interval's start (the content, the paces, the Link factors, the frames, the Links' counts and phases, the conserved form's share); its acts on a row, each one act on every row alike in either direction (Rule3's rotate with the arrivals turned as the row's shape turns them, the write by one carried division, the exchange at the turned Nodes); the interval's program is interval.run and the close is close.click, each a function of the Node."""
 
 from __future__ import annotations
 
@@ -16,8 +16,6 @@ from event_universe.links import Link, turned
 from event_universe.loader import seed
 from event_universe.rows import (
     CARRIER,
-    PLANE,
-    POTENTIAL,
     Line,
     Row,
     records_of,
@@ -114,12 +112,11 @@ class Node:
     def ride_walls(self) -> None:
         """The riding lines' remainders at the start: a riding line's remainder lives at the mean wall (w div 2)(X_before + X_now) of the carrier's two levels at its Node, half of it at the seed."""
         carrier = self.row(CARRIER).lines[0]
-        wall = half(self.w) * (carrier.before + carrier.now)
+        wall = readings.mean_wall(self, carrier)
         for r in self.rows_:
             if r.wall is None and r.shape != CARRIER:
-                scaled = wall * readings.scale(r.shape, self.gamma)
                 for line in r.lines:
-                    line.wall, line.rem = scaled, acts.born(scaled)
+                    line.wall, line.rem = wall, acts.born(wall)
 
     def node_of(self, xyz: Any) -> tuple[int, ...]:
         """A Node named by the world file: three integers on the board; a Node off the board is refused by name."""
@@ -133,11 +130,11 @@ class Node:
         return row_of(self.rows_, shape)
 
     def emitter(self) -> Row:
-        """The plane of the potential's pair (rows.row_of, a lookup by the shape and the pair's values): the row the Wronskian's change is laid on and whose quanta the close takes."""
-        return row_of(self.rows_, PLANE, self.row(POTENTIAL).pair)
+        """The plane with no pendulum of its own, the light: the record whose rule's mass D = 2 PORTS (den - num) p_0^2 G^2 is 0 at every clock, its pair's num equal to its den (a property of the row's own numbers, no role; the loader admits exactly one): the row the Wronskian's change is laid on and whose quanta the close takes."""
+        return next(r for r in self.records() if r.pair is not None and r.pair[0] == r.pair[1])
 
     def records(self) -> list[Row]:
-        """The record rows in the acts' order, the planes and the quartets (rows.records_of)."""
+        """The record rows in the acts' order, the planes (rows.records_of)."""
         return records_of(self.rows_)
 
     def turned_arrival(self, arrivals: list[Any], port: int, turn: list[Link] | None) -> list[Any]:
@@ -238,7 +235,7 @@ class Node:
         return [line for row in self.rows() for line in row]
 
     def exchange(self, top: Any, held: list[list[Line]]) -> None:
-        """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the quartet's K0, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves; the rows set at the top by the Node's one restore."""
+        """The swap's act at the Nodes `top`: every row set to its held row exchanged and conjugated by the row's K (gram.conjugation: a plane's im line negated, the identity on another row), every remainder mirrored once per reversal of its line by the one rule: once for time's exchange, twice where the conjugation negates the line (its own entry of K), so an im line's rotation remainder is left; the write remainders and the frame bit once; an involution with the state it leaves; the rows set at the top by the Node's one restore."""
         for r, row, hrow in zip(self.rows_, self.rows(), held, strict=True):
             nows, befores, rems = acts.exchange(
                 [h.now for h in hrow],

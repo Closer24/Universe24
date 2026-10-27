@@ -117,7 +117,6 @@ FILE_INTEGERS = {
     "seed.py": frozenset({2, 3}),
     "wave.py": frozenset({4}),
     "run.py": frozenset({12, 24, 60}),
-    "quartet.py": frozenset({2, 3, 4}),
     "acts.py": frozenset(
         {2}
     ),  # the birth at the half wall by the division act on 2 (core/acts.born, the halving's own 2 as rule3.half's)
@@ -156,7 +155,9 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     for path in sorted([*SOURCE.rglob("*.py"), *(ROOT / "tools").glob("*.py")]):
         for item in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
             importing = isinstance(item, ast.Import | ast.ImportFrom)
-            imported = [a.name for a in item.names] if importing else []
+            imported = (
+                [a.name for a in item.names] + [getattr(item, "module", None) or ""] if importing else []
+            )
             callee = item.func if isinstance(item, ast.Call) else None
             called = callee.id if isinstance(callee, ast.Name) else getattr(callee, "attr", "")
             if "math" in imported or any("sqrt" in name for name in imported) or "sqrt" in called:

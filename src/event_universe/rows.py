@@ -1,4 +1,4 @@
-"""The rows of the Node as the universe file names them, no name and no role (the owner's word of 2026-10-25, there is no if): a row is a shape (its count of lines) with a pair (num, den) for Rule3's rule or a wall of its own for a row with no Links; its lines are built here with their walls by shape, the rows ordered for the acts and the universe's shapes refused by name; the lookups choose a row by its numbers alone. The phase line's amplitude is the universe file's `amplitude`, declared from outside and read at the load (loader/world, node.X), carried above the floor derived from Gamma (phase.floor); no width and no room of the machine stands in the engine (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; the former width constant and the room cut from it struck, the value kept in the file so that every record stands bit for bit)."""
+"""The rows of the Node as the universe file names them, no name and no role (the owner's word of 2026-10-25, there is no if): a row is a shape (its count of lines) with a pair (num, den) for Rule3's rule or a wall of its own for a row with no Links; its lines are built here with their walls by shape, the rows ordered for the acts (a shape the law does not name refused by name at the loader, loader/world); the lookups choose a row by its numbers alone. The phase line's amplitude is the universe file's `amplitude`, declared from outside and read at the load (loader/world, node.X), carried above the floor derived from Gamma (phase.floor); no width and no room of the machine stands in the engine (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; the former width constant and the room cut from it struck, the value kept in the file so that every record stands bit for bit)."""
 
 from __future__ import annotations
 
@@ -7,13 +7,13 @@ from typing import Any
 import numpy as np
 
 from event_universe.core.acts import born
+from event_universe.core.ports import AXES
 from event_universe.core.rule3 import held_wall, quotient
 
-CARRIER = 10  # the shape of the row that carries the wall (the metric's row): its time line and three axis lines
-POTENTIAL = 4  # the shape of the row at (den, den) with a time line and three odd lines
-PLANE = 2  # the shape of a conjugate pair of records; a quartet is four such planes on one lattice (quartet.py)
-QUARTET = 8
-POWER_TIME = 4  # the held wall's power of Gamma on the carrier's time line, POWER_AXIS the nine axis lines' (K-S1 to K-S3, Y-S1)
+CARRIER = 1 + AXES + AXES + AXES  # the wall's row: the time line, then AXES tensions, fluxes and shears
+POTENTIAL = AXES + 1  # the shape of the row at (den, den): its time line and its AXES odd lines
+PLANE = 2  # the shape of a conjugate pair of records
+POWER_TIME = 4  # the vacuum's balance: X, the bracket and the clock; POWER_AXIS the clock's square
 POWER_AXIS = 2
 
 
@@ -147,5 +147,5 @@ def walled_of(rows: list[Row]) -> Row:
 
 
 def records_of(rows: list[Row]) -> list[Row]:
-    """The record rows in the acts' order, the planes (the emitter among them) and the quartets."""
-    return [r for r in rows if r.shape in (PLANE, QUARTET)]
+    """The record rows in the acts' order, the planes (the emitter among them)."""
+    return [r for r in rows if r.shape == PLANE]

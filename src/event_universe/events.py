@@ -7,7 +7,6 @@ from typing import Any
 
 from event_universe.decoder import HALF, LISTED, PAIR, Record, quot, shown
 from event_universe.predicates import unread
-from event_universe.rows import QUARTET
 
 NAMES = {
     "1": ("a bang recurs", "the recurring bang"),
@@ -38,7 +37,7 @@ NAMES = {
     "23": ("the recoil passed", "the momentum across the click"),
     "24": ("a pair into light", "the merger of a pair into light"),
     "25": ("the entropy rises", "the entropy rising"),
-    "26": ("three lifts, the beats ordered", "the three lifts and their masses"),
+    "26": ("the lifts born, the beats ordered", "the lifts the universe names and their masses"),
     "27": ("no third alone", "confinement, no third alone"),
     "28": ("a conversion", "the neutron's conversion"),
     "29": ("light's period longer where deeper", "the redshift of light"),
@@ -183,9 +182,8 @@ def no_wave(record: Record) -> str:
 
 
 def no_field(record: Record) -> str:
-    """Why the spinor's two beats are not read: a quartet's universe has no held field, the others no shape-8 row."""
-    quartet = any(int(r["shape"]) == QUARTET for r in record.run["universe"]["rows"])
-    return "no held field in the world" if quartet else "no shape-8 row in the record's universe"
+    """Why the spinor's two beats are not read: the spinor row is no row of the law."""
+    return "no row carries an axis: the spinor row is no row of the law (2026-10-27)"
 
 
 def no_conversion(record: Record) -> str:
@@ -233,7 +231,7 @@ UNREAD: tuple[tuple[str, str | Callable[[Record], str], str], ...] = (
     (
         "41 the spinor's two beats",
         no_field,
-        "two beats of one quantum at rest in a held uniform field (the Zeeman doublet, tests/test_the_quartet.py)",
+        "two beats of one quantum at rest in a held uniform field (the Zeeman doublet)",
     ),
     (
         "42 the split along the gradient (Stern-Gerlach)",
