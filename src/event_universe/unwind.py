@@ -10,7 +10,7 @@ from event_universe.core import acts, rule3
 from event_universe.core.rule3 import carries
 from event_universe.core.spokes import AXES, SPOKE_SIDES, SPOKES, spoke_of, wrap
 from event_universe.meshes import cross
-from event_universe.trains import HAND, REGULATOR, Train, zeros
+from event_universe.trains import HAND, REGULATOR, Gear, Train, zeros
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
@@ -83,20 +83,17 @@ def advance(node: Clock, rec: int, where: Any, levels: Any, sign: int = 1) -> No
 
 
 def push_of(
-    node: Clock,
-    line_now: Any,
-    line_before: Any,
-    at: tuple[int, ...],
-    d_now: int = 0,
-    d_before: int = 0,
-    num: int = 1,
+    node: Clock, gears: list[Gear], at: tuple[int, ...], notches: Any, pinion: int, sign: int = 1
 ) -> list[int]:
-    """The change of the lattice momentum P_a = 2 num SUM_i (now_(i+a) before_i - now_i before_(i+a)) when a line's level now at the Node moves by d_now and its level before by d_before: 2 num [d_now (before_(i-a) - before_(i+a)) + d_before (now_(i+a) - now_(i-a))] per axis."""
+    """The push a lay books at the clock `at`, the change of P_a = 2 pinion SUM_i (now_(i+a) . before_i - now_i . before_(i+a)), the dot over the hand's gears (Re conj(a) b of the Gaussian hand), when the gears' notches now and before move by the lay's `notches` (now, before per gear) times `sign`: 2 pinion SUM over the gears [d_now (before_(i-a) - before_(i+a)) + d_before (now_(i+a) - now_(i-a))] per axis; a one-gear lay is its gear with the before notch 0."""
     found = []
     for a in range(AXES):
         up, down = neighbour(node, at, spoke_of(a, 0)), neighbour(node, at, spoke_of(a, 1))
-        dn, db = int(line_now[down]) - int(line_now[up]), int(line_before[down]) - int(line_before[up])
-        found.append((num + num) * cross(d_now, d_before, dn, db))
+        dots = (
+            cross(dn, db, int(g.now[down]) - int(g.now[up]), int(g.before[down]) - int(g.before[up]))
+            for g, dn, db in zip(gears, notches[0::HAND], notches[1::HAND], strict=True)
+        )
+        found.append(sign * (pinion + pinion) * sum(dots))
     return found
 
 
