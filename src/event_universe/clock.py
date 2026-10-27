@@ -139,7 +139,7 @@ class Clock:
         if turn is None or len(arrivals) == 1:
             return arrivals
         at = turn[port]
-        reflected = hands.reflected(len(arrivals), arrivals, at.pawl)
+        reflected = hands.seen(arrivals, at.pawl)
         return through_mesh(reflected, at, self.standard_length, self.full_rate)
 
     def pulls(self, at: list[Any], r: rule3.Gearing, turn: list[Mesh] | None) -> list[Any]:
@@ -240,7 +240,7 @@ class Clock:
                 [h.before for h in hrow],
                 [h.fine for h in hrow],
                 [h.teeth for h in hrow],
-                hands.reflection(r.size),
+                hands.signs(r.size),
             )
             drives = [None if h.dfine is None else acts.flip(h.dfine, h.dteeth, 1) for h in hrow]
             exchanged = [

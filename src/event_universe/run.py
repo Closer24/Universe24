@@ -105,8 +105,7 @@ def chime(
     start: list[Gear],
 ) -> dict[str, Any]:
     """A body's credit with its frame (the plane's frame_of, the bodies' own readings of the record), its sense the sign of its charge at the Node read at the interval's start (`start`, the record's lines as the interval began, CL-S2; the former read on the board after the close's own writes kept by name), its beat, the take's numbers (the take act's dict), momentum and booking, the unit the close booked and what it owed; returned, not appended (the bodies append it after the lay-back)."""
-    row = node.hands()[rec]
-    w = int(hands.sweep(row.size, start)[at])
+    w = int(hands.sweep(start)[at])
     fall, levels, taken_was, line = (
         take["taken"],
         take["levels"],
@@ -229,7 +228,7 @@ def reading(node: Clock, maxbits: int) -> dict[str, Any]:
     odd_max = max(abs(x) for line in potential.gears[1:] for x in ints(line.now))
     emitter_v = max(abs(a - b) for a, b in zip(ints(emitter.now), ints(emitter.before), strict=True))
     total = zeros(node.size)
-    charges = [hands.sweep(r.size, r.gears) for r in records]
+    charges = [hands.sweep(r.gears) for r in records]
     for w in charges:
         total = total + w
     n, _bits = census(node)

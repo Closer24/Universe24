@@ -23,13 +23,16 @@ def carry(total: Any, wall: Any, remainder: Any, direction: int = 1) -> tuple[An
 
 
 def reverse(
-    nows: list[Any], befores: list[Any], remainders: list[Any], walls: list[Any], k: Any
+    nows: list[Any], befores: list[Any], remainders: list[Any], walls: list[Any], signs: list[int]
 ) -> tuple[list[Any], list[Any], list[Any]]:
     """The slot exchange of a row at the top with the mirror (X2, the swap; node.exchange): the two slots exchanged through the row's conjugation K (the plane's im line negated), the remainder mirrored once for time's exchange and once more where its own K entry negates the line; an involution."""
-    lines = range(len(nows))
-    new_nows = [sum((k[r][c] * befores[c] for c in lines if k[r][c]), start=0) for r in lines]
-    new_befores = [sum((k[r][c] * nows[c] for c in lines if k[r][c]), start=0) for r in lines]
-    return new_nows, new_befores, [flip(remainders[r], walls[r], 1 + (k[r][r] < 0)) for r in lines]
+    new_nows = [s * b for s, b in zip(signs, befores, strict=True)]
+    new_befores = [s * n for s, n in zip(signs, nows, strict=True)]
+    return (
+        new_nows,
+        new_befores,
+        [flip(f, w, 1 + (s < 0)) for f, w, s in zip(remainders, walls, signs, strict=True)],
+    )
 
 
 def advance(slot: Any, count: Any, direction: int = 1) -> Any:

@@ -64,7 +64,7 @@ def engage(
     standing = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(sh) & ~frozen
     currents = [node.rim * train_lead(start, spoke_of(axis, 0)) for axis in range(AXES)]
     twists = [train_twist(start, axis) for axis in range(AXES)]
-    charges = hands.sweep(row.size, start) if row is not node.unsprung() else None
+    charges = hands.sweep(start) if row is not node.unsprung() else None
     far, far_charges = standing, charges
     if other is not None:
         q, q_sh, q_start = other
@@ -73,7 +73,7 @@ def engage(
             c + node.rim * train_lead(q_start, spoke_of(axis, 0)) for axis, c in enumerate(currents)
         ]
         twists = [t + train_twist(q_start, axis) for axis, t in enumerate(twists)]
-        far_charges = hands.sweep(row.size, q_start)
+        far_charges = hands.sweep(q_start)
     for axis in range(AXES):
         both = standing & across(far, spoke_of(axis, 0))
         for where in zip(*np.nonzero(both), strict=True):

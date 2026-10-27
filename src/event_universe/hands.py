@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from functools import lru_cache
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
 from event_universe.core.rule3 import carries, half, signed_carries, wind_weight
 from event_universe.core.spokes import AXES, SPOKES, across, spoke_of
+from event_universe.meshes import cross
 from event_universe.readings import standard_angle
 from event_universe.trains import HAND, Gear, Train, zeros
 from event_universe.unwind import neighbour
@@ -17,34 +17,16 @@ from event_universe.unwind import neighbour
 if TYPE_CHECKING:
     from event_universe.clock import Clock
 
-Matrix = list[list[int]]
+
+def signs(shape: int) -> list[int]:
+    """The train's conjugation K as signs, the pawl's and the turnover's: a hand's twelve gear turned over, every gear of another train its own conjugate."""
+    return [1, -1] if shape == HAND else [1] * shape
 
 
-@lru_cache
-def identity(n: int) -> Matrix:
-    """The identity on n lines."""
-    return [[int(r == c) for c in range(n)] for r in range(n)]
-
-
-def quarter(shape: int) -> Matrix:
-    """The row's rotation J, the quarter turn of each plane (re, im) -> (-im, re), the standard blocks."""
-    found = [[0] * shape for _ in range(shape)]
-    for p in range(carries(shape, HAND)):
-        found[HAND * p][HAND * p + 1], found[HAND * p + 1][HAND * p] = -1, 1
-    return found
-
-
-def reflection(shape: int) -> Matrix:
-    """The row's conjugation K, the frame's and the swap's: for a plane the im line negated; the identity for a row of another shape (a line of one level is its own conjugate)."""
-    found = [list(row) for row in identity(shape)]
-    if shape == HAND:
-        found[1][1] = -1
-    return found
-
-
-def matvec(m: Matrix, xs: list[Any]) -> list[Any]:
-    """A matrix on a list of arrays, the zero entries skipped."""
-    return [sum((m[r][c] * xs[c] for c in range(len(xs)) if m[r][c]), start=0) for r in range(len(m))]
+def seen(z: list[Any], pawl: Any) -> list[Any]:
+    """A neighbour's hand read in the clock's frame, the conjugate where the pawl is -1: its twelve shadow times the pawl (a pawl is 1 or -1)."""
+    three, twelve = z
+    return [three, pawl * twelve]
 
 
 def products(xs: list[Any], ys: list[Any]) -> list[Any]:
@@ -57,34 +39,19 @@ def dot(xs: list[Any], ys: list[Any]) -> Any:
     return sum(products(xs, ys), start=0)
 
 
-def weighted(m: Matrix, xs: list[Any], ys: list[Any]) -> list[Any]:
-    """The bilinear x.m.y line by line, x_k (m y)_k, so that a division per line stays one per line."""
-    return [x * my for x, my in zip(xs, matvec(m, ys), strict=True)]
+def sweep(lines: list[Gear]) -> Any:
+    """The hand's sweep W = Im(conj(z_now) z_before) at every clock, three_now twelve_before - twelve_now three_before (meshes.cross, the plane's Wronskian)."""
+    three, twelve = lines
+    return cross(three.now, twelve.now, three.before, twelve.before)
 
 
-def form(m: Matrix, xs: list[Any], ys: list[Any]) -> Any:
-    """The bilinear x.m.y summed over the lines."""
-    return sum(weighted(m, xs, ys), start=0)
-
-
-def sweep(shape: int, lines: list[Gear]) -> Any:
-    """The record's charge density W = B.J.N at every Node, the plane's Wronskian re_now im_before - im_now re_before."""
-    return form(quarter(shape), [line.before for line in lines], [line.now for line in lines])
-
-
-def reflected(shape: int, xs: list[Any], frame: Any) -> list[Any]:
-    """A neighbour's lines read in the Node's frame: conjugated by the row's K where the frame sign is -1, the plane's im line negated there."""
-    return [np.where(frame == -1, k, x) for k, x in zip(matvec(reflection(shape), xs), xs, strict=True)]
-
-
-def lead(shape: int, nows: list[Any], frames: list[Any]) -> list[Any]:
-    """The record's sign current on each axis, J_a = dN_a.J.N with dN_a the centred difference of the levels now, the neighbours' lines read in the Node's frame; the plane's re dim - im dre."""
-    gj = quarter(shape)
+def lead(nows: list[Any], pawls: list[Any]) -> list[Any]:
+    """The hand's lead on each axis, J_a = Im(conj(z) (z_up - z_down)) with the neighbours read in the clock's frame (`seen`): three dtwelve - twelve dthree."""
     found = []
     for a in range(AXES):
-        up = reflected(shape, [across(n, spoke_of(a, 0)) for n in nows], frames[spoke_of(a, 0)])
-        down = reflected(shape, [across(n, spoke_of(a, 1)) for n in nows], frames[spoke_of(a, 1)])
-        found.append(form(gj, [u - d for u, d in zip(up, down, strict=True)], nows))
+        up = seen([across(n, spoke_of(a, 0)) for n in nows], pawls[spoke_of(a, 0)])
+        down = seen([across(n, spoke_of(a, 1)) for n in nows], pawls[spoke_of(a, 1)])
+        found.append(cross(*nows, *(u - d for u, d in zip(up, down, strict=True))))
     return found
 
 
