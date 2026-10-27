@@ -14,8 +14,8 @@ from event_universe.hands import dot, sweep, twin_pairs, wind
 from event_universe.meshes import train_lead
 from event_universe.run import chime, logged
 from event_universe.trains import Gear
-from event_universe.unspring import unwinds
-from event_universe.unwind import advance, move, recoil, window_clocks
+from event_universe.unspring import fall_of, unwinds
+from event_universe.unwind import advance, recoil, window_clocks
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
@@ -50,23 +50,45 @@ def bobs(
             at = tuple(int(x) for x in where)
             if at in fitted_clocks or stopped[at]:
                 continue
-            got = unwinds(clock, [(at, clock.windings[rec])], r_unsprung, 1)
             clock.wound[rec][at] = 0
+            if int(net[at]) == 0:
+                still_chime(clock, rec, rec0, at, hand_starts, r_unsprung)
+                continue
+            got = unwinds(clock, [(at, clock.windings[rec])], r_unsprung, 1)
             if got is None:
                 continue
-            (unwind,) = got
-            notches, now, k = unwind["levels"], unwind["taken_now_was"], unwind["taken_line"]
             clock.counts["body_clicks"] += 1
             face = face_of(clock, rec, at, hand_starts)
-            entry = chime(clock, rec, at, unwind, face, hand_starts[rec])
-            if int(net[at]) == 0:
-                move(clock, rec0, k, at, now - int(clock.hands()[rec0].gears[k].now[at]))
-                clock.slack[at] = unwind["remainder_was"]
-                entry["laid_back"], entry["dP_take"] = notches, [0] * AXES
-                back = recoil(clock, at, [-x for x in clock.last_push], entry["clock"], 1)
-                entry["recoil"], entry["carry"] = [0] * AXES, back["carry"]
-                clock.counts["laid_back"] += 1
-            clock.log.append(entry)
+            clock.log.append(chime(clock, rec, at, got[0], face, hand_starts[rec]))
+
+
+def still_chime(
+    clock: Clock,
+    rec: int,
+    rec0: int,
+    at: tuple[int, ...],
+    hand_starts: list[list[Gear]],
+    r_unsprung: rule3.Gearing,
+) -> None:
+    """A chime where nothing arrives (CS7-S1's letter, the owner's word of 2026-10-27, 18:5x UTC, through the Boss's recommendation; David's DAVID-WORLDS-EVERY-TEST.md): credited laid back with no take, nothing taken, nothing booked, the slack unwritten, the push 0 tallied on the mesh, logged on the gear a take would move (CS4-S2's choice, unspring.fall_of at no winding, so a turn of the hand moves the logged gear with it); the former take of the whole winding laid back after it, which the honest books refused as a stop on every uniform world, kept by name."""
+    hand, slack = clock.hands()[rec0], int(clock.slack[at])
+    _none, _fall, k = fall_of(clock, at, 0, r_unsprung, hand)
+    now, before = int(hand.gears[k].now[at]), int(hand.gears[k].before[at])
+    take = {"taken": 0, "levels": 0, "taken_now_was": now, "taken_line": k, "taker": [now, before, 0]}
+    clock.last_push = [0] * AXES
+    clock.last_recoil = recoil(clock, at, clock.last_push, int(clock.start_rate[at]), 1)
+    clock.strikes[at] += 1
+    clock.counts["body_clicks"] += 1
+    clock.counts["laid_back"] += 1
+    found = chime(
+        clock,
+        rec,
+        at,
+        take | {"remainder_was": slack, "remainder": slack},
+        face_of(clock, rec, at, hand_starts),
+        hand_starts[rec],
+    )
+    clock.log.append(found | {"laid_back": 0, "dP_take": [0] * AXES, "booked": 0, "recoil": [0] * AXES})
 
 
 def splits(

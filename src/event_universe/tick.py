@@ -231,15 +231,15 @@ class Tick:
             self.impelled[k] = p_other
 
     def carry(self) -> None:
-        """(3) The carry (the former `carrier_act`, `divisions`, `writes` and `rest`): the regulator's one carry with the drive sourced by the driven trains' strides, 4 stretch_now (forms (the file's trace weight) rim full_rate^2 - trace rate^2) rate on its time gear and, times rate^2 on its nine axis gears by the position of their reading, the traceless stress, the hands' count flow and the shears (Y-S1, Y-S3; the regulator's act clock.act, the former `carried` by this name); every driven gear's one carry at the mean teeth of the regulator's two notches at its end, its fine tooth kept in [0, W) there, backward the turned-over clocks set to their kept pre-state; the hands' gears at the start and before the turnover kept for the striking (the latter the state the turnover replaces at the turned-over clocks, the notches now elsewhere, CL-S2; the former `stepped` kept by name); the trains set; forward the advances among the carries after them (`advances`; backward they came off first); then every gear at a stopped clock restored to its held gear, its notches, its fine teeth and its teeth by the clock's one restore (BH-S1, the former `rest`), so no act but the turnover changes any integer of a stopped clock's state forward or backward; backward a clock both stopped and turned over is restored to the pre-state the reverse returned (FR-S1)."""
+        """(3) The carry (the former `carrier_act`, `divisions`, `writes` and `rest`): the regulator's one carry with the drive sourced by the driven trains' strides, 4 stretch_now (forms (the file's trace weight) rim full_rate^2 - trace rate^2) rate on its time gear read within its hold, stretch_now times the time gear's drive teeth (no clock's stretch moves by more than itself in one tick: the great clock runs the small clocks, the owner's word of 2026-10-27, 18:5x UTC) and, times rate^2 on its nine axis gears by the position of their reading, the traceless stress, the hands' count flow and the shears (Y-S1, Y-S3; the regulator's act clock.act, the former `carried` by this name); every driven gear's one carry at the mean teeth of the regulator's two notches at its end, its fine tooth kept in [0, W) there, backward the turned-over clocks set to their kept pre-state; the hands' gears at the start and before the turnover kept for the striking (the latter the state the turnover replaces at the turned-over clocks, the notches now elsewhere, CL-S2; the former `stepped` kept by name); the trains set; forward the advances among the carries after them (`advances`; backward they came off first); then every gear at a stopped clock restored to its held gear, its notches, its fine teeth and its teeth by the clock's one restore (BH-S1, the former `rest`), so no act but the turnover changes any integer of a stopped clock's state forward or backward; backward a clock both stopped and turned over is restored to the pre-state the reverse returned (FR-S1)."""
         clk, regulator = self.clock, self.regulator
         k = self.where[id(regulator)]
         p02, (trace, traceless) = self.rate * self.rate, tensor_parts(self.stress[:AXES])
-        numerators = [
-            held_numerator(
-                clk.trace, self.stretch_now, self.forms, trace, self.rate, clk.rim, clk.full_rate
-            )
-        ]
+        drive = held_numerator(
+            clk.trace, self.stretch_now, self.forms, trace, self.rate, clk.rim, clk.full_rate
+        )
+        hold = self.stretch_now * self.trains[k][0].dteeth
+        numerators = [np.minimum(np.maximum(drive, -hold), hold)]
         numerators += [part * p02 for part in (*traceless, *self.stress[AXES:])]
         gearing = readings.gearing_of(clk, regulator, self.load, self.factors)
         self.out[k] = clk.act(
