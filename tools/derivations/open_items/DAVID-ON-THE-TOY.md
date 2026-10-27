@@ -133,3 +133,109 @@ Sections (h) and (i) above hold the owner's Pauli word and its measurement, so t
 Under step 3 no credit on the bang world lands on a turned Node, so the flag changes nothing there. Bell by your BOSS-TOY-READERS/bell2.py (the outcome the take's remainder's side of half its unit, the setting the proper clock's parity): S = +2 on the toy (15 pairs), +1 with the flag (12 pairs), +2 with step 3 and the flag (16 pairs), +2 under step 3 (17 pairs); every cell E = +1 but one at 0: within the bound, as a local outcome must be (item 7), and too few pairs to read a fraction; the ensemble of 32 is the place for S.
 
 **The two lines.** The clocks line folds the engine head bit for bit; the toy line carries the physics (the carries, the trace 6, the click direction, my steps 2 and 3). DAVID-STEP-3_DIFF.txt applies cleanly on boss-toy-1 at c389d5580 and at 5427577aa; it does not apply on boss-clocks-1 (no carries there, and both touch rows.Row and readings.py). The order I would keep: the clocks folds first on the engine head, the committed records the referee; then each of the toy's laws re-cut on top on the owner's word for it (the carried paces, the exchange rule, the account lay, the click direction), each with its record measured.
+
+## (l) The Boss's fourth consultation (his task of 09:1x UTC, read at 09:3x): 6501cd679 checked on this box, and the next folds read
+
+### 1. The full check of 6501cd679
+
+**The tree.** In a scratch worktree at origin/boss-clocks-1 (4b5c3d834), your diff was applied by its 22 changed fragments, each found exactly once. After `git add -A`, `git write-tree` gives edc87db70a6ea85ff374c17793456d168a8fad4e, your local head's tree.
+
+**The check.** `tools/check.py --full --base 70ac3b30c`, run with the worktree's own src on the path:
+
+- **full check exit 0**: 106 passed in 110.29 s on 4 cores;
+- the code ratchet's line: "the shape of the code holds against the merge base";
+- the engine gates, the tests' shape and the documents' six gates hold; ruff and mypy are clean (35 source files).
+
+**The two slowest tests**, both under the 30 s bound:
+
+- test_the_run_back_is_exact_through_births_and_turns, 25.05 s;
+- test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero, 21.17 s.
+
+Next come the hole record's own test at 20.19 s and BH-S1's at 18.32 s.
+
+**The referee on this box.**
+
+- The hole, the chiral and the bodies regenerate SAME, key by key but the milliseconds.
+- The run back is exact 20 of 20 on each.
+- Your three hashes are reproduced: 714fba3003f492a9, 260394ec7bb91435 and 9680f4d36c9997dc. Each is the first 16 digits of the sha256 of the record without the milliseconds, its keys sorted.
+
+### 2 (a). The quartet's vestiges
+
+Nothing on your list is live in src, and four more vestiges go with them. Read at every caller in src, tests and tools (tools/derivations/open_items aside):
+
+- **gram.gram.** It is the identity at every shape. Its callers multiply by I: gram.charge, current, density, share and period; interval.py:100, :158, :173 and :185-193; run.py:205. Struck, each becomes the plain products, bit for bit, and gram.weighted's identity test then serves no caller that passes I.
+- **gram.axes.** Its [] makes gram.density [] and gram.term 0.
+  - The seed's refusal by state (loader/seed.py:319-325) sums an empty zip, so dot is 0 and the refusal never fires.
+  - interval.py:129's curl and the coefficient at :149 feed only gram.term at :150, so they go with it.
+- **readings.scale.** At 1, everything that reads it is the identity: interval.py:61-62 (the scales and their common max), :149, :160, :173 and :213; node.py:118; readings.py:72, where rule3.scaled at 1 returns the rule itself. rule3.scaled has no other caller in src, tests or tools.
+- **Four more you did not list.**
+  1. bodies.py:53-54, the beat's non-plane branch (gram.period). Every record is a plane, so it is never taken, and gram.period goes with it. gram.cosine_count stays: metric.rotation_of reads it.
+  2. The seed's `vector`. The "at" form still allows the `vector` key (loader/seed.py:29), while every plane's lay naming it is refused (about line 79). So `vector` reaches fitted, rest_record and gram.moving only as None, read as (1, 0). The key and the parameter can go; a lay naming it is then refused as a field of no form, only the message changing. `sense` is no vestige: the sea, uniform and packet lays of a plane name it.
+  3. Docstrings still naming the quartet as present: gram.py's module docstring (G, K0 and the axis matrices "for a quartet"), node.py's module docstring ("116 with a shape-8 row beside them"), and readings.py:57 and :68, which go with readings.scale.
+  4. events.py:234's row 41 names tests/test_the_quartet.py. It is re-cut with the three readings regenerated, as you say.
+- **One path outside src.** tools/derivations/toys/lean/toy.py:276 and :308 call gram.term and gram.curl. Nothing in tests or tools/check.py runs the lean toy, so the check stays green, but the toy would fail if run. Either strike its two calls with the term, or name it a frozen copy.
+
+### 2 (b). The numbers from d
+
+**CARRIER.** (d + 1)(d + 2)/2 is the count of a symmetric (d + 1)-tensor. But the carrier's lines in the code are 1 + 3d: the time line, d diagonal lines, d flux lines, and the shears on the d cyclic pairs (a, transverse(a)[0]) of metric.shear_parts. The two counts agree only at d = 3 (and 0). Two ways to make them one:
+
+- derive CARRIER as 1 + 3 AXES from the code's own lines; or
+- put the shears on every pair, d (d - 1)/2 of them, so the tensor's count is the code's.
+
+At d = 3 both give 10, bit for bit.
+
+**POTENTIAL = d + 1.** Right: the time line and the d odd lines (potential.lines[1 : 1 + AXES]).
+
+**HELD_WRITE_WEIGHT = d + 1.** Right, and derived rather than a hypothesis: it is the volume form's chain rule. X = Gamma (Gamma / p_0)^(d + 1), so dX/dU = (d + 1) X; this is the ((d + 1) X_now c + r) write of features/volume.
+
+**UNIT_WEIGHT 3 = PORTS / 2 = d.** Derived.
+
+- *The derivation.* The share of a rest mode of a gapped plane at its own rest rotation is PORTS s |W|. Per line it is w A^2 sin^2 omega_0 X over 2 Gamma^3 G^2, with w = PORTS den Gamma^2 G^2 and X = Gamma at the vacuum. There are two lines, |W| = A^2 sin omega_0 and s = den sin omega_0. So one quantum, |W| = T div 2, holds (PORTS / 2) T s.
+- *Measured.* The engine's share of that mode, laid alike on world_node, against PORTS s |W| at three pairs and two amplitudes: the ratio 1.000000000 every time. The engine's unit equals (PORTS / 2) T s to the digit at each pair (878,848,879,465,440,000 at the near-massless plane).
+- *At the gap 0* the same holds with den for s: 3 den T.
+
+**POWER_TIME 4 and POWER_AXIS 2: the form's own numbers, not d's.** They balance the carrier's numerators at the vacuum:
+
+- the time line's 4 X (forms trace den Gamma^2 - trace p_0^2) p_0 holds Gamma^4 there: one from X (the resolution Gamma, at every d), two from the bracket and one from the clock;
+- the axis lines' parts times p_0^2 hold Gamma^2: the clock's square.
+
+X = Gamma at the vacuum whatever d is, so POWER_TIME equals d + 1 at d = 3 by coincidence. I would name POWER_TIME the time line's balance (1 + 2 + 1) and POWER_AXIS the clock's square.
+
+**The decoder's three copies.** Right:
+
+- LINK_WALL_GAMMAS 4 is links.link_wall(gamma) div gamma;
+- KICK_WEIGHT 12 is rule3.mass(0, 1, p_0, unit) over p_0^2 unit^2, the mass per unit gap, 2 PORTS;
+- REACH 2 is rule3.rule_integers(1, den, gamma, p_0, p_i, factors, unit).reaches[port] over p_i^2 Q_j, the reach per unit num. The frame's factors are the interval's Q_j in the G^2 unit, as rule_integers takes them.
+
+Read from their homes, the solve gives the same integers and the readings stand.
+
+### 2 (c). The frozen Node's branches
+
+Measured: one is removable on the suite's worlds, and none is given by the general form in general.
+
+**The root.** The frozen mask is the zero of the Link's pace, not of the clock: p_0^2 falls below Gamma / 2 at the content 3,793 at Gamma 1,000, where the clock still reads 22; the clock's own zero is at 7,598. At a frozen Node the general form therefore still:
+
+- turns every gapped plane at its slowed rate (D goes as p_0^2);
+- lets light drift at its carried velocity;
+- couples the neighbours through the tension's factor.
+
+BH-S1's branches are what stop it.
+
+**The measurement.** Each engine branch was removed alone and the three frozen-Node worlds of the suite run: BH-S1's rest (100 intervals), the light of test_the_frozen_node_is_not_read_and_never_clicks (100) and FR-S1's release (40). The state's hash was compared at every interval:
+
+| branch removed | rest | light | release |
+|---|---|---|---|
+| bodies.py:60, no credit at a frozen Node | SAME | SAME | SAME |
+| interval.py:89, the proper count rests | parts at 1 | parts at 1 | parts at 1 |
+| interval.py:91 and close.py:259, a frozen end at the wall | parts at 1 (credits 1,043 to 0, births 4 to 0) | parts at 1 (1,171 to 0, 5 to 0) | parts at 1 |
+| interval.py:236, the frozen Node's lines restored | the run refused: the volume X falls to 0, "the volume X is at most 0 at a Node" | not reached | not reached |
+| close.py:51, no meeting at a frozen Node | SAME | parts at 14 (births 5 to 6, credits 1,171 to 1,045) | SAME |
+
+**Reading it.**
+
+- **bodies.py:60.** Only this branch is bit for bit on these worlds, and only because a Node frozen from the seed never beats: its beat stays 0, so the closing never reaches it. A Node that freezes after it has beaten keeps its last beat while its standing count grows, and nothing but this branch keeps the closing off it. I would keep it until a world with such a freeze is measured.
+- **The other four are load-bearing.** So are close.py's two branches, which the count of ten leaves out.
+- **board.py's seven reads** (gate 14, row 34, row 45) read the record's frozen lists and touch no act. They stand while the horizon is a gate.
+- **run.py.** Lines 270 and 280 write those lists. Line 154 books the mask in the frame for the run back: the backward step cannot recompute the mask from the post-state, where a Node may have risen into the frozen content.
+
+**When they would become the general form.** Only if the clock itself carries the stop: the step's time scaled by the clock, so that a Node at the clock's zero neither turns nor drifts. The horizon would then move from 3,793 to the clock's zero, and every horizon record would move with it. That is the owner's word, not a fold.
