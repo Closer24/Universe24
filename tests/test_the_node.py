@@ -77,7 +77,7 @@ def test_the_frozen_node_is_not_read_and_never_clicks() -> None:
 
 def exchanged(node: Clock, held: list[list[Any]], at: tuple[int, ...]) -> bool:
     flat = [line for row in held for line in row]
-    ims = [hands.reflection(r.size)[k][k] < 0 for r in node.trains_ for k in range(r.size)]
+    ims = [hands.signs(r.size)[k] < 0 for r in node.trains_ for k in range(r.size)]
     for line, h, im in zip(node.all_gears(), flat, ims, strict=True):
         sign = -1 if im else 1
         wall = int(np.asarray(line.teeth)[at]) if np.ndim(line.teeth) else int(line.teeth)
