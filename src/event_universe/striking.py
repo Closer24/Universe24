@@ -11,8 +11,8 @@ from event_universe.bobs import bobs
 from event_universe.core import rule3
 from event_universe.core.rule3 import carries, remainder
 from event_universe.core.spokes import AXES, across, spoke_of
-from event_universe.draw import vernier
-from event_universe.meshes import factors, train_lead, train_twist
+from event_universe.draw import kept_pitch, vernier
+from event_universe.meshes import factors, train_lead, train_twists
 from event_universe.run import fitting, jammed
 from event_universe.trains import HAND, Gear, Train
 from event_universe.unspring import (
@@ -61,18 +61,18 @@ def engage(
     """The meshes' engagement of one hand, the same for every hand (SL-S1, the generic striking): every mesh once from its +a end; an engagement where both ends hold a whole winding of the hand at the tick's start and neither end is stopped (counted as `met`); the + fitted hand at the end the hand's own lead flows into where the twist of its transverse leads is right, at the other end where left (F = 0 and h = 0 jammed by name); a sprung hand engages as the conjugate pair alone, the two ends' sweeps of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; jammed by name `sense` where not), and at rest, no lead across the mesh, as the pair at rest (MG-S1: the + fitted hand at the end whose sweep is positive, the fitting's orientation read at -1, the twist not read, its number read after the stop in `fittings`); the mesh's one number read at the lead's end names the fitted hands' hand (`list_of`; one read per clock and hand in a striking). Returns the fittings as (the unwind's clock, the fitted hands' hand, the - fitted hand's clock, the + fitted hand's clock, the vernier's room, the unwound hand)."""
     fits: list[Fitting] = []
     hand, winding = clock.hands()[rec], clock.windings[rec]
-    wound = np.vectorize(lambda v: int(v) >= winding, otypes=[bool])(wind) & ~stopped
+    wound = (wind >= winding) & ~stopped
     axis_leads = [clock.rim * train_lead(start, spoke_of(axis, 0)) for axis in range(AXES)]
-    twists = [train_twist(start, axis) for axis in range(AXES)]
+    twists = train_twists(start)
     hand_sweeps = hands.sweep(start) if hand is not clock.unsprung() else None
     far, far_sweeps = wound, hand_sweeps
     if other is not None:
         q, q_wind, q_start = other
-        far = np.vectorize(lambda v: int(v) >= winding, otypes=[bool])(q_wind) & ~stopped
+        far = (q_wind >= winding) & ~stopped
         axis_leads = [
             c + clock.rim * train_lead(q_start, spoke_of(axis, 0)) for axis, c in enumerate(axis_leads)
         ]
-        twists = [t + train_twist(q_start, axis) for axis, t in enumerate(twists)]
+        twists = [t + u for t, u in zip(twists, train_twists(q_start), strict=True)]
         far_sweeps = hands.sweep(q_start)
     for axis in range(AXES):
         both = wound & across(far, spoke_of(axis, 0))
@@ -321,6 +321,7 @@ def strike(
     c = clock.start_load
     clock.start_gears = hand_starts
     clock.pitches, clock.vernier_read, clock.twin_ends = {}, {}, {}
+    kept_pitch.cache_clear()
     stopped = readings.stopped_of(clock, c)
     read = factors(clock, None, stopped)
     r_unsprung = readings.gearing_of(clock, clock.unsprung(), c, read)

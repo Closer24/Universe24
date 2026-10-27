@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from functools import cache
 from typing import TYPE_CHECKING
 
 from event_universe.core import acts, rule3
@@ -12,6 +13,8 @@ from event_universe.unwind import at_clock, window_clocks
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
+
+kept_pitch = cache(pitch)  # the pitch kept by its integers within a strike, cleared at every strike
 
 
 def vernier(
@@ -25,9 +28,9 @@ def vernier(
             teeth, key = at_clock(gear.teeth, n), (id(r), k, n)
             if key not in clock.pitches:
                 clock.pitches[key] = (
-                    pitch(teeth, at_clock(r.spring, n), *[at_clock(x, n) for x in r.grips])
+                    kept_pitch(teeth, at_clock(r.spring, n), *[at_clock(x, n) for x in r.grips])
                     if k == 0
-                    else pitch(teeth, at_clock(r.grips[k - 1], n))
+                    else kept_pitch(teeth, at_clock(r.grips[k - 1], n))
                 )
             fine, values = int(gear.fine[n]), carries(teeth, f := clock.pitches[key])
             origin = origin and fine in (mid, acts.flip(mid, clock.teeth, 1))

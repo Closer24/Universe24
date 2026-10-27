@@ -32,22 +32,14 @@ def bobs(
     for rec, hand in enumerate(clock.hands()):
         if hand is clock.unsprung():
             continue
-        wound_now = np.vectorize(
-            lambda v, winding=clock.windings[rec]: 1 if int(v) >= winding else 0, otypes=[object]
-        )(winds[rec])
-        clock.wound[rec] = np.where(wound_now == 1, clock.wound[rec] + 1, 0)
+        clock.wound[rec] = np.where(winds[rec] >= clock.windings[rec], clock.wound[rec] + 1, 0)
         three = hand.gears[0]
-        crossing = np.vectorize(
-            lambda b, n: 1 if (int(b) * int(n) < 0 or (int(b) == 0) != (int(n) == 0)) else 0,
-            otypes=[object],
-        )(three.before, three.now)
-        timed = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(clock.crossed[rec])
-        clock.beats[rec] = np.where((crossing == 1) & (timed == 1), clock.crossed[rec], clock.beats[rec])
-        clock.crossed[rec] = np.where(crossing == 1, 1, np.where(timed == 1, clock.crossed[rec] + 1, 0))
-        chiming = np.vectorize(
-            lambda st, bt: 1 if (int(bt) > 0 and int(st) >= int(bt)) else 0, otypes=[object]
-        )(clock.wound[rec], clock.beats[rec])
-        for where in zip(*np.nonzero(chiming == 1), strict=True):
+        crossing = (three.before * three.now < 0) | ((three.before == 0) != (three.now == 0))
+        timed = clock.crossed[rec] > 0
+        clock.beats[rec] = np.where(crossing & timed, clock.crossed[rec], clock.beats[rec])
+        clock.crossed[rec] = np.where(crossing, 1, np.where(timed, clock.crossed[rec] + 1, 0))
+        chiming = (clock.beats[rec] > 0) & (clock.wound[rec] >= clock.beats[rec])
+        for where in zip(*np.nonzero(chiming), strict=True):
             at = tuple(int(x) for x in where)
             if at in fitted_clocks or stopped[at]:
                 continue

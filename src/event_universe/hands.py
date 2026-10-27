@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from functools import cache
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -12,7 +13,6 @@ from event_universe.core.spokes import AXES, SPOKES, across, spoke_of
 from event_universe.meshes import cross
 from event_universe.readings import standard_angle
 from event_universe.trains import HAND, Gear, Train, zeros
-from event_universe.unwind import neighbour
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
@@ -55,17 +55,21 @@ def lead(nows: list[Any], pawls: list[Any]) -> list[Any]:
     return found
 
 
+@cache
+def spoke_places(size: tuple[int, ...]) -> Any:
+    """The six spokes' neighbour places stacked, [spoke][axis] at every clock: the great clock's own coordinates read across each spoke (`across`), unwind.neighbour at every clock at once."""
+    return np.array([[across(g, spoke) for g in np.indices(size)] for spoke in range(SPOKES)])
+
+
 def wind(clock: Clock, gears: list[Gear], r: Any, window: list[tuple[int, ...]] | None = None) -> Any:
-    """The conserved form's wind of a hand at the clock in the regulator's unit (PM-S1: every count of the clock read in the regulator's unit, the one weight for every read and every train alike), one carry per gear: for the gear k, [w (n_k n_k + b_k b_k) - S n_k b_k - n_k (SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (n + n_j)_k, times X the regulator's notch at the tick's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the hand's wind gear by gear, at the train's gearing. At a window of clocks (`window`, an unwind's clock and its six neighbours, unspring.fitted_windings_of and wind_fall) the same integers read at those clocks alone, each neighbour gathered by its place through unwind.neighbour, returned in the window's order (the former merger.share_at, gram.share's form re-spelt at one clock, folded 2026-10-26 as R3 of the readings' map: one spelling, the vectorised form inside it)."""
+    """The conserved form's wind of a hand at the clock in the regulator's unit (PM-S1: every count of the clock read in the regulator's unit, the one weight for every read and every train alike), one carry per gear: for the gear k, [w (n_k n_k + b_k b_k) - S n_k b_k - n_k (SUM_j R_j b_j)_k], doubled, less SUM_j R_j (b - b_j)_k (n + n_j)_k, times X the regulator's notch at the tick's start, over 4 Gamma^3 G^2 ((Gamma / p_i)^2 = X / Gamma to the unit; at the vacuum X = Gamma and the weight is the former vacuum's 4 Gamma^2 G^2 bit for bit); the hand's wind gear by gear, at the train's gearing. At a window of clocks (`window`, an unwind's clock and its six neighbours, unspring.fitted_windings_of and wind_fall) the same integers read at those clocks alone, each neighbour gathered by its place from the six spokes' stacked places (`spoke_places`), returned in the window's order (the former merger.share_at, gram.share's form re-spelt at one clock, folded 2026-10-26 as R3 of the readings' map: one spelling, the vectorised form inside it)."""
     at: Callable[[Any], Any]
     beyond: Callable[[Any, int], Any]
     if window is None:
         at, beyond, x = (lambda a: a), across, clock.start_stretch
     else:
         places = [tuple(np.array(w) for w in zip(*window, strict=True))]
-        for spoke in range(SPOKES):
-            around = [neighbour(clock, where, spoke) for where in window]
-            places.append(tuple(np.array(w) for w in zip(*around, strict=True)))
+        places += [tuple(table[(slice(None), *places[0])]) for table in spoke_places(clock.size)]
 
         def at(a: Any) -> Any:
             return a[places[0]] if np.ndim(a) else a
