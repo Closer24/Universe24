@@ -3,17 +3,16 @@
 import ast
 import random
 import re
-import sys
 from fractions import Fraction
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 
-from event_universe import readings, unspring, unwind
+from event_universe import bobs, hands, readings, unwind
 from event_universe import run as record
 from event_universe.assembly import setting
 from event_universe.core import rates
-from event_universe.core import rule3 as core
 from event_universe.core.acts import flip as mirrored
 from event_universe.core.rule3 import gearing, mesh_factor, rule3, spring
 from event_universe.core.spokes import AXES, SPOKES
@@ -247,55 +246,44 @@ def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd()
     assert (half, mirrored(half, 1_000, 1)) == (500, 499)
 
 
-def test_the_take_count_is_one_carried_division_of_the_walls_by_the_price_tc_s1():
-    """TC-S1 (the owner's word of 2026-10-26, 08:3x UTC, "approved"; both hands' one finding, The-Take-Count-As-Rule3-Division_COMPARISON.md section 3, H-Take-Count-As-Rule3-Division-1's one-clock test): on the hole setting's first unwinds the fall is the count times a price linear in the count, f(s) = s (price - X w s) over the wind's weight with the price X times Rule3's backward numerator read at the now slot, -t (2 w now + pull), exactly to the carry's fine tooth; the count unwound is the least count paying the windings due, the carry of the windings due by the price at the start lies at most one below it and below it exactly where the fall at those carries is short of the windings due by the moved notches' own square: one carry iterated from below, no root. Under 15 s."""
-    clock, seen = node_of("world_hole.json", intervals=12), []
-    orig = unwind.fall_of
+def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_s1(
+    monkeypatch: Any,
+) -> None:
+    """TC-S1 as the wave amends it (the owner's word of 2026-10-27, 15:5x UTC, "yes to all, by your recommendation": the take's fall is the wind's own fall; David's DAVID-CLOSE-LAW.md item 1; the closed form's price, which carried the pull's sign reversed against the wind's fall at 47 of 47 takes on the head, the Reader's finding 1, struck and kept by name): at every chime of the chiral setting over 14 ticks (101) the light's gear moves by the least count at which the window's wind falls by what is owed, the windings less the slack the earlier takes left (57 owe nothing and move no notch), the fall booked is the window's wind before less after to the integer, one count fewer falls short, and the excess stands in the slack (EX-S1)."""
+    clock, seen = node_of("world_nature.json", intervals=14), []
+    real = bobs.unwinds
 
-    def wrapped(clock_, at, windings, r, train):
-        got = orig(clock_, at, windings, r, train)
-        if sys._getframe(1).f_code.co_name == "read_ends" and got[0]:
-            s, _fall, k = got
-            gear = train.gears[k]
-            now, before = int(gear.now[at]), int(gear.before[at])
-            w, gripped = int(r.teeth), 0
-            for spoke, grip in enumerate(r.grips):
-                gripped += unwind.at_clock(grip, at) * int(
-                    gear.before[unwind.neighbour(clock_, at, spoke)]
-                )
-            pull = unwind.at_clock(r.hold, at) * before + gripped
-            t = 1 if before > now else -1
-            x, weight = int(clock_.start_stretch[at]), core.wind_weight(clock_.full_rate, clock_.G)
-            seen.append((now, t, w, pull, x, weight, windings, s, -t * ((w + w) * now + pull) * x))
+    def wrapped(clock_: Any, ends: Any, gearing_: Any, cause: int, *args: Any, **keys: Any) -> Any:
+        (at, windings), light = ends[0], clock_.unsprung()
+        window = unwind.window_clocks(clock_, at)
+
+        def wind() -> int:
+            return sum(int(v) for v in hands.wind(clock_, light.gears, gearing_, window))
+
+        before, got = wind(), real(clock_, ends, gearing_, cause, *args, **keys)
+        if got is not None:
+            (take,) = got
+            gear, (now, was, _s) = light.gears[take["taken_line"]], take["taker"]
+            after, back = wind(), 1 if was > now else -1
+            gear.now[at] -= back
+            short = wind()
+            gear.now[at] += back
+            seen.append((before - after, before - short, take, windings))
         return got
 
-    unwind.fall_of = wrapped
-    try:
-        for _ in range(12):
-            clock.tick()
-    finally:
-        unwind.fall_of = orig
-    assert unspring.unwind.fall_of is orig and len(seen) == 47
-    below = short = 0
-    for now, t, w, pull, x, weight, windings, s, price in seen:
-        moved = now + t * s
-        fall = x * (w * (now * now - moved * moved) - t * s * pull)
-        assert fall == s * (price - x * w * s) and price > 0
-        assert (
-            core.carries(fall, weight)
-            >= windings
-            > core.carries((s - 1) * (price - x * w * (s - 1)), weight)
-        )
-        first = -core.carries(-windings * weight, price)
-        assert first <= s <= first + 1
-        below += first < s
-        short += core.carries(first * (price - x * w * first), weight) < windings
-    assert below == short > 0
+    monkeypatch.setattr(bobs, "unwinds", wrapped)
+    for _ in range(14):
+        clock.tick()
+    assert len(seen) == 101 and sum(take["levels"] == 0 for _f, _s, take, _w in seen) == 57
+    for fall, short, take, windings in seen:
+        assert fall == take["taken"] >= take["owed"] and take["booked"] == windings
+        assert take["levels"] == 0 or short < take["owed"]  # the least count: one fewer falls short
+        assert take["taken"] + take["remainder_was"] - take["remainder"] == windings  # EX-S1
 
 
 def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_identity_lt_s1():
-    """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-clock test): on the hole setting every move of the striking drives its tally into the regulator's flow gear of its axis at its clock by the clock's one drive act, so at every strike the mesh's chart identity holds per axis at every end, -dP p_0^2 + carry before - carry after = advanced x (K rim Gamma^2 T), the gear gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the clock's own gears and not the log alone; the clock's carry after the tick is the last tally's at that clock; the rewind exact through 14 ticks with the tallies undone. Under 15 s."""
-    clock = node_of("world_hole.json", intervals=14)
+    """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-clock test): on the chiral setting (the hole's first fittings stand at its tick 53 under the wave's light) every move of the striking drives its tally into the regulator's flow gear of its axis at its clock by the clock's one drive act, so at every strike the mesh's chart identity holds per axis at every end, -dP p_0^2 + carry before - carry after = advanced x (K rim Gamma^2 T), the gear gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the clock's own gears and not the log alone; the clock's carry after the tick is the last tally's at that clock; the rewind exact through 14 ticks with the tallies undone. Under 15 s."""
+    clock = node_of("world_nature.json", intervals=14)
     teeth = clock.trace * clock.rim * clock.full_rate * clock.full_rate * clock.key
     flow = slice(1 + AXES, 1 + AXES + AXES)
     hashes, checked = [], 0
@@ -328,7 +316,7 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
                 last[where], checked = t["carry"], checked + 1
         gears = clock.train(REGULATOR).gears[flow]
         assert all(carry == [int(gear.dfine[at]) for gear in gears] for at, carry in last.items())
-    assert checked == 193
+    assert checked == 116  # the chiral setting's 14 ticks; 193 on the hole's under the head's books
     for h in reversed(hashes):
         clock.tick(-1)
         assert record.state_hash(clock) == h

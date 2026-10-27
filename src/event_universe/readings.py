@@ -33,14 +33,14 @@ def load(clk: Clock) -> Any:
 
 
 def standard_angle(clock: Clock, n: Any) -> tuple[int, int]:
-    """The integer (cos, sin) pair at the count n along the one circuit from the first pair (features/standard): the circuit a table built as far as the counts reach and stored to the half turn H alone, the first count where the cosine stops falling (3,142 at the full rate 1,000, pi times the full rate to the integer; 254,469, the deepest cosine over 400,000 counts, the former docstring's number, H-Confirm-Build-25), every count beyond read by the circuit's own symmetry, the pair at 2 H - n with the sine negated, modulo the full turn 2 H (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372, under the owner's delegation of 08:3x: the table of the heavy quartet legs' beat reached 12,581,080 pairs and killed the run; the walked circuit beyond H kept by name, the symmetry's read differing from it by the rounding of each step alone)."""
+    """The integer (cos, sin) pair at the count n along the one circuit from the first pair (features/standard): the circuit a table built as far as the counts reach and stored to the half turn H alone, the first count where the cosine rises, the floor's one tie rule (standard.deviation's; the former rule where it stops falling struck, DAVID-CLOSE-LAW item 6) (3,142 at the full rate 1,000, pi times the full rate to the integer; 254,469, the deepest cosine over 400,000 counts, the former docstring's number, H-Confirm-Build-25), every count beyond read by the circuit's own symmetry, the pair at 2 H - n with the sine negated, modulo the full turn 2 H (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372, under the owner's delegation of 08:3x: the table of the heavy quartet legs' beat reached 12,581,080 pairs and killed the run; the walked circuit beyond H kept by name, the symmetry's read differing from it by the rounding of each step alone)."""
     n = int(n)
     s = 1 if n >= 0 else -1
     n = abs(n)
     while clock.circuit_half is None and len(clock.circuit) <= n:
         c, sn = clock.circuit_gears[-1]
         c, sn = standard.act(c, clock.full_rate, 1), standard.act(sn, clock.full_rate, 1)
-        if int(c[0]) >= clock.circuit[-1][0] and len(clock.circuit) > 1:
+        if int(c[0]) > clock.circuit[-1][0] and len(clock.circuit) > 1:
             clock.circuit_half = len(clock.circuit) - 1
             break
         clock.circuit_gears = [(c, sn)]

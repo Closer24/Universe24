@@ -41,6 +41,14 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_record.py::test_the_light_is_polarized_along_its_sources_current_at_the_detectors_chimes": (
+        21,
+        "The polarization of light seen at the chimes (the owner's words of 2026-10-27, 14:32 and 14:5x UTC, the four phenomena on the board after the chimes, and his rule of 14:5x UTC that a push's test sees what it was pushed for; David's DAVID-FOUR-PHENOMENA.md section 1, toys-5 96caee2d8): the offset's transverse odd gears at a neutral bob's chimes follow the current of a charged source two clocks away, along x and, turned a quarter about the line of sight, along y, and stand equal at rest; the world as written runs back exactly; the Boss's room by name.",
+    ),
+    "tests/test_the_record.py::test_the_beat_is_the_hands_own_and_a_quarter_turn_of_the_hand_moves_no_chime": (
+        16,
+        "The beat read free of the phase (the owner's word of 2026-10-27, 15:5x UTC, through the Boss's recommendation; David's DAVID-OWN-BEAT.md, toys-5 ce1d65fce; the owner's rule of 14:5x UTC that a push's test sees what it was pushed for): a quarter turn of the chiming hand at the setting moves no chime on the plasma, the pair and the two hands of the 3-cube, the pair turned onto its twelve gear chiming as on its three gear, the rewind exact with the beats' references in the state; the Boss's room by name.",
+    ),
     "tests/test_the_record.py::test_spin_one_half_reads_minus_one_after_one_turn_and_comes_home_after_two": (
         32,
         "Spin one half seen on the great clock (the owner's rule of 2026-10-27, 14:5x UTC: a push's test sees what it was pushed for; David's DAVID-SPIN-IN-CLOCKS full turn, toys-5 e22420aee): the twins' overlap with the free run below -1/2 after one turn of the spin and above +1/2 after two, S_z home after one; the twin-hands test above it given 7 lines more for Pauli by the sweep (one fitted quantum's sweep per hand per clock at every tick); the Boss's room by name.",

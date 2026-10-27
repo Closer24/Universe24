@@ -1,4 +1,4 @@
-"""The striking's reads and writes at one clock: the exact unwind of the unwound hand's notches by the wind's fall on the gear the fall's sign chooses (`fall_of`; the unwind act at a list of ends is unspring.unwinds, CR-S2), the one advance act (`advance`) and the unwind's move as the drive's form (`move`, CR-S1), the lattice push a move tallies (`push_of`) and the jam by name (`jammed`)."""
+"""The striking's reads and writes at one clock: the exact unwind's count read at unspring.fall_of by the wind's own fall (the unwind act at a list of ends is unspring.unwinds, CR-S2), the one advance act (`advance`) and the unwind's move as the drive's form (`move`, CR-S1), the lattice push a move tallies (`push_of`) and the jam by name (`jammed`)."""
 
 from __future__ import annotations
 
@@ -6,11 +6,10 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe.core import acts, rule3
-from event_universe.core.rule3 import carries
+from event_universe.core import acts
 from event_universe.core.spokes import AXES, SPOKE_SIDES, SPOKES, spoke_of, wrap
 from event_universe.meshes import cross
-from event_universe.trains import HAND, REGULATOR, Gear, Train, zeros
+from event_universe.trains import HAND, REGULATOR, Gear, zeros
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
@@ -30,48 +29,6 @@ def window_clocks(clock: Clock, at: tuple[int, ...]) -> list[tuple[int, ...]]:
 def at_clock(x: Any, at: tuple[int, ...]) -> int:
     """A gearing's integer at a clock (a ratchet's grips are the one integer 0)."""
     return int(np.asarray(x)[at]) if np.ndim(x) else int(x)
-
-
-def fall_of(
-    clock: Clock, at: tuple[int, ...], windings: int, r: rule3.Gearing, hand: Train, going: int = 1
-) -> tuple[int | None, int, int]:
-    """The exact unwind at the clock in the regulator's winding (PM-S1) on the gear the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the unwound hand's gear whose notch now stands farthest from its before, the largest now^2 - before^2, the first gear where equal, so the unwind is covariant under the hand's quarter turn; the former first line kept by name): the unwound gear's now moved toward its before by the least count of notches at which the clock's wind falls by the windings (0 where nothing is due, EX-S1); the fall f(s) = s (price - stretch teeth s) over the wind's weight 2 full_rate^3 G^2, the price the stretch times Rule3's own numerator with the slots exchanged, -t (2 teeth now + pull); the count one carry of the windings due over the price, rounded up as the floor's flip, and where the moved notches' own square leaves the fall short, the same carry of the shortfall over the next notch's price, price - 2 stretch teeth s, iterated from below to its fixed count (TC-S1, the owner's word of 2026-10-26, 08:3x UTC, "approved", both hands' one finding, H-Take-Count-As-Rule3-Division-1: the count Rule3's own kind of act, no root; the former least root by largest_below, least_root, kept by name); (None, the full fall) where no count within the full move pays, the carry's fixed count passing the move or the next notch's price falling to 0 before it; at -1 the exact unwind reversed, the unspringing's unsprung windings (MG-S1; the former merger.rise_of kept by name, folded 2026-10-26 on the Boss's 6413888338): the gear's now moved away from its before (the tie resolved as away at -1, cc1) by the least count at which the wind rises by the windings, the rise the same quadratic with the going's sign on the square term, s (price + stretch teeth s), convex, so the same carry is iterated from above, the first carries paying and each step the excess carried over the next notch's price, to its fixed count, never jammed (the former jam read the fall at the full move alone, the parabola's far side, and jammed an unwind a lesser count paid: the bug struck 2026-10-26 under the owner's priority, the Boss's 6411031946)."""
-    gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in hand.gears)]
-    k = gaps.index(max(gaps))
-    gear = hand.gears[k]
-    now, before = int(gear.now[at]), int(gear.before[at])
-    if windings <= 0 and going == 1:
-        return 0, 0, k
-    if now == before and going == 1:
-        return None, 0, k
-    t = (1 if before > now else -1) if going == 1 else (1 if now > before else -1)
-    hold, w, gripped = int(np.asarray(r.hold)[at]), int(r.teeth), 0
-    for spoke, grip in enumerate(r.grips):
-        gripped += int(np.asarray(grip)[at]) * int(gear.before[neighbour(clock, at, spoke)])
-    pull = hold * before + gripped
-    x, weight = int(clock.start_stretch[at]), rule3.wind_weight(clock.full_rate, clock.G)
-
-    def fall(s: int) -> int:
-        moved = now + t * s
-        return int(carries(going * x * (w * (now * now - moved * moved) - t * s * pull), weight))
-
-    price, dist = -t * going * ((w + w) * now + pull) * x, abs(now - before)
-    if going == -1:
-        s = (
-            -carries(-windings * weight, price)
-            if price > 0
-            else -carries(price, x * w) - carries(-windings * weight, x * w)
-        )
-        while s > 1 and fall(s - 1) >= windings:
-            s -= max(1, carries(s * (price + x * w * s) - windings * weight, price + x * w * (s + s)))
-        return s, fall(s), k
-    s = -carries(-windings * weight, price) if price > 0 else dist + 1
-    while s <= dist and fall(s) < windings:
-        slope = price - x * w * (s + s)
-        s = s - carries(-(windings * weight - s * (price - x * w * s)), slope) if slope > 0 else dist + 1
-    if s > dist:
-        return None, fall(dist), k
-    return s, fall(s), k
 
 
 def advance(clock: Clock, rec: int, where: Any, notches: Any, sign: int = 1) -> None:
