@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The Boss's clocks branch (the spinor row out on the owner's words of 06:2x and 07:5x through him, the light by its own numbers, David's mends and checks) under The four shapes with the strike of SR-S1 to SR-S4 dated at its merge, in HIGHLIGHTS and row 222; no merge, the head unmoved at 70ac3b30c.
 - The owner's words of 2026-10-27, 08:4x and 09:0x UTC and David's reading of the engine as clocks with his ready mend for the Boss's clocks branch, under Time is a count of a record's turns, in HIGHLIGHTS and row 222; no merge, the head unmoved at 70ac3b30c.
 - The owner's words of 2026-10-27, 06:4x, 07:4x and 08:1x UTC and David's steps 2 and 3 for the Boss's toy (the symmetric lay law built in scratch, the bang world bounded) under Spin and Pauli, The horizon's radiation and F48-S1, in HIGHLIGHTS and the ledger (row 222, the head); no merge, the head unmoved at 70ac3b30c.
 - David's measure of the owner's Pauli law (the missing law of N identical quanta at one Node named) under Spin and Pauli and in row 221; the Reader's merge of the head read bit for bit in row 164; no merge, the head unmoved at 70ac3b30c.
