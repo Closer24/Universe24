@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- A quiet hour (no merge, no comment): the kit's reading in row 170; The click's 4.0 detector block named for the re-cut's next move.
 - The engine head 0d14245ac merged (436bda429; the width's two documents, no src and no test): their landing on the head under The width is derived, rows 207 and 218.
 - David's two documents on toys-5 (the amplitude scale with its clause verbatim at its landing, the wall at the bang) under The width is derived and in row 207; no merge, the head unmoved at c6279863c.
 - The Reader's confirmation that the head's source changes no course on the ten records (bit for bit with reader/059d6248) under F48-S1 and in row 164; no merge, the head unmoved at c6279863c.
