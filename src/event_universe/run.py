@@ -265,8 +265,14 @@ def reading(clock: Clock, maxbits: int) -> dict[str, Any]:
     }
 
 
+def start_winds(clock: Clock) -> list[Any]:
+    """Every hand's wind at every clock at the tick's start, the striking's own reading (hands.wind of the hands' start gears at their gearing at the start load, PM-S1's unit), read again by the writer from what the striking keeps; none before the first strike."""
+    read = [readings.gearing_of(clock, r, clock.start_load, clock.start_factors) for r in clock.hands()]
+    return [hands.wind(clock, gears, g) for gears, g in zip(clock.start_gears, read, strict=False)]
+
+
 def clock_lines(clock: Clock) -> dict[str, Any]:
-    """The chart's clock and mesh line at a tick, every clock by its index in the great clock's order: the regulator's notch (the stretch), the load, the turned-over clocks, the stopped clocks (the mesh rate 0), the meshes held disengaged (the factor 0) as [clock, axis] pairs, and every mesh's lead of the unsprung gear, F_ij from the clock along each axis (the sign the direction, the size the flow); the page draws the great clock from these and nothing else."""
+    """The chart's clock and mesh line at a tick, every clock by its index in the great clock's order: the regulator's notch (the stretch), the load, the turned-over clocks, the stopped clocks (the mesh rate 0), the meshes held disengaged (the factor 0) as [clock, axis] pairs, and every mesh's lead of the unsprung gear, F_ij from the clock along each axis (the sign the direction, the size the flow); the light's kicks, the carries of the hands' lead at the key on the offset's odd gears at the tick's impulse, per axis (row 74; at a turned-over or stopped clock the tick's kick is returned with its pre-state), every hand's wind at every clock at the tick's start in the hands' order (the striking's own reading, PM-S1's unit, row 75), and where the calibre holds a held field, its notch at every clock at its weight (the well the springs read beside the load, row 76); the page draws the great clock from these and nothing else."""
     regulator = clock.train(REGULATOR).gears[0]
     load = readings.load(clock)
     mesh_rate = rates.mesh_rate_of(clock.full_rate, load)
@@ -275,7 +281,8 @@ def clock_lines(clock: Clock) -> dict[str, Any]:
         [i, axis] for axis in range(AXES) for i, f in enumerate(ints(read[spoke_of(axis, 0)])) if f == 0
     ]
     unsprung = clock.unsprung().gears[0]
-    return {
+    fields = [r for r in clock.trains_ if r.weight is not None]
+    found = {
         "i": clock.ticks,
         "X": ints(regulator.now),
         "content": ints(load),
@@ -283,7 +290,12 @@ def clock_lines(clock: Clock) -> dict[str, Any]:
         "frozen": [i for i, p in enumerate(ints(mesh_rate)) if p == 0],
         "held": held,
         "current": [ints(mesh_lead(unsprung, spoke_of(axis, 0))) for axis in range(AXES)],
+        "kick": [ints(q) for q in clock.start_kicks[1:]],
+        "winds": [ints(w) for w in start_winds(clock)],
     }
+    if fields:
+        found["field"] = ints(sum((r.weight * r.gears[0].now for r in fields), start=zeros(clock.size)))
+    return found
 
 
 def rewind(clock: Clock, hashes: list[str]) -> dict[str, int]:

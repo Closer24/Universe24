@@ -54,18 +54,23 @@ def standard_angle(clock: Clock, n: Any) -> tuple[int, int]:
     return c_, s * sn_
 
 
-def gearing(clock: Clock, ratio: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Gearing:
-    """Rule3's integers of a ratio at the clock's rates from the load, in the regulator's unit (PM-S1)."""
-    rate, mesh_rate = rates_of(clock, c)
-    return rule3.gearing(ratio[0], ratio[1], clock.full_rate, rate, mesh_rate, factors, clock.G)
+def gearing(
+    clock: Clock, ratio: tuple[int, int], c: Any, factors: tuple[Any, ...], held: Any = None
+) -> rule3.Gearing:
+    """Rule3's integers of a ratio at the clock's rates from the load, in the regulator's unit (PM-S1); the spring's rate read at the held load (the load with the held fields' notches at their weights, the tick's start reading clock.start_held unless given: a held field moves the mass and not the meshes, the step and the strike reading one spring)."""
+    mesh_rate = rates_of(clock, c)[1]
+    spring_rate = rates_of(clock, clock.start_held if held is None else held)[0]
+    return rule3.gearing(ratio[0], ratio[1], clock.full_rate, spring_rate, mesh_rate, factors, clock.G)
 
 
-def gearing_of(clock: Clock, r: Train, c: Any, factors: tuple[Any, ...]) -> rule3.Gearing:
+def gearing_of(
+    clock: Clock, r: Train, c: Any, factors: tuple[Any, ...], held: Any = None
+) -> rule3.Gearing:
     """A train's gearing: Rule3's integers at its ratio and the clock's rates, or, for the train with its own teeth, no meshes and the own hold 2 teeth (next = 2 now - before + the drive inside the carry)."""
     if r.teeth is not None:
         return rule3.Gearing(tuple(0 for _ in range(SPOKES)), r.teeth + r.teeth, r.teeth, 0)
     assert r.ratio is not None
-    return gearing(clock, r.ratio, c, factors)
+    return gearing(clock, r.ratio, c, factors, held)
 
 
 def mean_teeth(clock: Clock, gear: Gear) -> Any:

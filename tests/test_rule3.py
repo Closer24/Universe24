@@ -115,7 +115,7 @@ FILE_INTEGERS = {"spokes.py": frozenset({3}), "run.py": frozenset({12, 24, 60})}
 # the writer run.py reads the inventory and not the names gate (its chart keys are the files' words)
 READERS = tuple(
     f"{n}.py"
-    for n in "reckoner gates events rim great_clock swings strikes predicates symmetries".split()
+    for n in "reckoner gates events rim great_clock swings strikes predicates symmetries phenomena".split()
 )
 WRITER = ("run.py",)
 NAMED_CALLS = {

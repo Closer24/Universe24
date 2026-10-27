@@ -83,6 +83,7 @@ class Clock:
         self.start_pawls: list[Any] = []
         self.start_offsets: list[tuple[Any, Any]] = []
         self.start_odd: list[Any] = []
+        self.start_kicks: list[Any] = []
         self.before_turnover: list[list[Gear]] = []
         self.start_gears: list[list[Gear]] = []
         self.pitches: dict[tuple[int, int, tuple[int, ...]], int] = {}
@@ -98,6 +99,7 @@ class Clock:
         self.circuit_gears, self.circuit = [first_pair], [(int(first_pair[0][0]), int(first_pair[1][0]))]
         self.circuit_half: int | None = None
         self.start_load, self.start_stretch = readings.load(self), self.train(REGULATOR).gears[0].now
+        self.start_held = self.start_load
         self.start_rate = readings.rates_of(self, self.start_load)[0]
 
     def driven_teeth(self) -> None:
@@ -267,14 +269,10 @@ class Clock:
         return [(gear, gearing) for gearing, gears in zip(gearings, held, strict=True) for gear in gears]
 
     def strike(
-        self,
-        hand_starts: list[list[Gear]],
-        held: list[list[Gear]],
-        going: int = 1,
-        rewind_note: dict[str, Any] | None = None,
+        self, starts: list[list[Gear]], held: list[list[Gear]], going: int = 1, note: Any = None
     ) -> None:
-        """The striking (striking.strike), the clock's fourth act, in the going: backward the striking undone from the log's rewind note."""
-        striking.strike(self, hand_starts, held, going, rewind_note)
+        """The striking (striking.strike), the clock's fourth act, in the going, `starts` the hands' gears at the tick's start: backward the striking undone from the log's rewind note."""
+        striking.strike(self, starts, held, going, note)
 
     def tick(self, going: int = 1) -> None:
         """One tick of the clock's program forward, or back at -1 (tick.run; the former step_back and run kept by name)."""
