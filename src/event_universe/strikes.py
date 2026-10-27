@@ -238,12 +238,12 @@ def charge(chart: Chart) -> dict[str, Any]:
 
 
 def conservation_at_strike(chart: Chart) -> dict[str, Any]:
-    """Gate 15: the conservation at the strike, unwound against tallied over the fittings: where the fitting carries the unwind's slack (EX-S1, the slack kept at the clock) the identity unwound + the slack before - the slack after = tallied on every fitting, else the former identity unwound >= tallied (the exact form is row 47)."""
+    """Gate 15: the conservation at the strike, unwound against tallied over the fittings: where the fitting carries the unwind's slack (EX-S1, the slack kept at the clock) the identity unwound + the slack before - the slack after = tallied on every fitting and on every merger's end (its take carrying the two ends' cross term in the signed slack), else the former identity unwound >= tallied (the exact form is row 47)."""
     fittings, (unwound, tallied) = chart.fittings, chart.unwinds_of()
     paid = [b for b in fittings if "remainder" in b]
     identity = all(
-        b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] for b in paid
-    ) and all(b["taken"] >= b["booked"] for b in fittings if "remainder" not in b)
+        t["taken"] + t["remainder_was"] - t["remainder"] == t["booked"] for t in paid + chart.ends()
+    ) and all(b["taken"] >= b["booked"] for b in fittings if "remainder" not in b and "takes" not in b)
     return {
         "15 conservation at the click": {
             "births": len(fittings),
@@ -252,8 +252,8 @@ def conservation_at_strike(chart: Chart) -> dict[str, Any]:
             "verdict": "NOT READ: no birth in the record"
             if not fittings
             else "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth (EX-S1)"
-            if identity and len(paid) == len(fittings)
-            else "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder (EX-S1), taken >= booked on the rest (the mergers' ends)"
+            if identity and len(paid) + sum(1 for b in fittings if "takes" in b) == len(fittings)
+            else "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder (EX-S1), the mergers' ends exact on their own takes"
             if identity and paid
             else "SHOWN as the identity taken >= booked on every birth; NOT SHOWN exact (the excess below one level of light)"
             if identity

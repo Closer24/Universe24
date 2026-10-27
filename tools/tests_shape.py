@@ -42,8 +42,12 @@ HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_binds_its_heavy_matter": (
-        30,
+        26,
         "The one big bang on the great clock with nuclear binding (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his yes to the nuclear family through the Boss's recommendation, David's DAVID-MEDIATOR.md; his rule of 14:5x UTC that a push's test sees what it was pushed for): 20 bangs in 100 ticks within 128 bits under the three bounds, and a heavy family's chimes bound one mesh apart in the held field above twice the board's own share; the run back exact; the Boss's room by name.",
+    ),
+    "tests/test_the_record.py::test_the_books_close_at_every_striking_mergers_and_lays_alike": (
+        26,
+        "The close's books at every striking (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off; his rule of 14:5x UTC that a push's test sees what it was pushed for): on the one big bang's first 20 ticks the board's wind lost is the chimes' booked plus the remainder's rise at every striking, mergers among them; the Boss's room by name.",
     ),
     "tests/test_the_record.py::test_the_bangs_heavy_matter_stays_silent_without_the_held_field": (
         14,

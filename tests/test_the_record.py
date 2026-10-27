@@ -9,7 +9,17 @@ from typing import Any
 
 import pytest
 
-from event_universe import great_clock, meshes, strikes, swings, symmetries, tick
+from event_universe import (
+    great_clock,
+    hands,
+    meshes,
+    readings,
+    strikes,
+    striking,
+    swings,
+    symmetries,
+    tick,
+)
 from event_universe.assembly.piece import check_piece
 from event_universe.clock import Clock
 from event_universe.core import rates
@@ -27,17 +37,18 @@ CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # the rim: its
 # the horizon rows reached: none under the great clock's bounds (the hole's 14 and 34 at the wave)
 HORIZON = {"hole": set(), "chiral": set(), "bodies": set()}
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per chart, the Boss's count in Universe24
-    # under the great clock's bounds (its three bounds, acts 7, 10 and 12): the hole 33 (24 at the wave), losing 9 (the collisions, receding), 14 and 34 (the horizon, no clock frozen), all three SHOWN at the wave, and gaining 4, 26 and 45 (the era of matter, the lifts, 3 of 3 born, the bodies' well); with the lead at the kick 34, gaining 19 (the mass ratios within the one-click floor) and 22 whole (unlike senses approach and like senses part), NOT SHOWN at the wave, and 10 and 30 (the dilation), 22 (Coulomb's sign, in part), 56 (Bell, in part: the law's own bound met), 58, 59 and 60 (the expansion, its slowing, its speeding), 62 and 67 (the arrow of time, CPT in the clicks), NOT READ at the wave; the chiral 31 (32), losing 22 (Coulomb's sign, SHOWN in part at the wave) and 26 (the lifts, 2 of 3 born, SHOWN at the wave) and gaining 58 (the fast expansion, NOT SHOWN at the wave); the bodies 25 (28), no pair fitted, its 8 births all unspringings (3 fittings and 10 at the wave), losing 21, 47 and 68 (the C of the birth, the exact take, matter against antimatter: NOT READ with no fitting), 27 (confinement: NOT SHOWN with no fitted child, its counts 0 and 0 under words that name a third) and 58 (the fast expansion), all five SHOWN at the wave, and 26 (the lifts, 0 of 2 born, SHOWN in part at the wave), and gaining 2, 9 and 22 (the Links lengthening, the collisions, Coulomb's sign in part), NOT SHOWN at the wave; on the wave's charts (the take by the wind's own fall and the wave's fixes, the light raised by David's part B): the hole 24 with the horizon reached (14 and 34), the chiral 32, the bodies 28 (34, 34 and 30 on the head's books); on the charts of 3dc12e307 (the five sentences built on toys-5, the slack and the unspringing among them): the hole loses 2 (the meshes lengthening in the strikes, under GP-S1's setting) and gains 47 (the exact unwind, the excess kept as the slack, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 kept by the reckoner's read of the slack, 17 lost by the engine's bug at an unspringing's tie end (H-Children-Charge-Bug-1: the unsprung hand advanced as the advance of a fitted hand with a sweep, the fitted hands' own sweeps -36,000 over the fittings; SHOWN again at the fix); the bodies gain 8 and 16 with the chimes the slack pays; the hole under PL-S1 before: 9 and 22 among them under the former drive of 2 W after the step
+    # with the four phenomena's rows: 74, the polarization of light read at the kicked clock beyond the board's own swing, SHOWN on all three charts (75 NOT SHOWN, 76 and 77 NOT READ, no held field and no colour); under the great clock's bounds (its three bounds, acts 7, 10 and 12): the hole 33 (24 at the wave), losing 9 (the collisions, receding), 14 and 34 (the horizon, no clock frozen), all three SHOWN at the wave, and gaining 4, 26 and 45 (the era of matter, the lifts, 3 of 3 born, the bodies' well); with the lead at the kick 34, gaining 19 (the mass ratios within the one-click floor) and 22 whole (unlike senses approach and like senses part), NOT SHOWN at the wave, and 10 and 30 (the dilation), 22 (Coulomb's sign, in part), 56 (Bell, in part: the law's own bound met), 58, 59 and 60 (the expansion, its slowing, its speeding), 62 and 67 (the arrow of time, CPT in the clicks), NOT READ at the wave; the chiral 31 (32), losing 22 (Coulomb's sign, SHOWN in part at the wave) and 26 (the lifts, 2 of 3 born, SHOWN at the wave) and gaining 58 (the fast expansion, NOT SHOWN at the wave); the bodies 25 (28), no pair fitted, its 8 births all unspringings (3 fittings and 10 at the wave), losing 21, 47 and 68 (the C of the birth, the exact take, matter against antimatter: NOT READ with no fitting), 27 (confinement: NOT SHOWN with no fitted child, its counts 0 and 0 under words that name a third) and 58 (the fast expansion), all five SHOWN at the wave, and 26 (the lifts, 0 of 2 born, SHOWN in part at the wave), and gaining 2, 9 and 22 (the Links lengthening, the collisions, Coulomb's sign in part), NOT SHOWN at the wave; on the wave's charts (the take by the wind's own fall and the wave's fixes, the light raised by David's part B): the hole 24 with the horizon reached (14 and 34), the chiral 32, the bodies 28 (34, 34 and 30 on the head's books); on the charts of 3dc12e307 (the five sentences built on toys-5, the slack and the unspringing among them): the hole loses 2 (the meshes lengthening in the strikes, under GP-S1's setting) and gains 47 (the exact unwind, the excess kept as the slack, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 kept by the reckoner's read of the slack, 17 lost by the engine's bug at an unspringing's tie end (H-Children-Charge-Bug-1: the unsprung hand advanced as the advance of a fitted hand with a sweep, the fitted hands' own sweeps -36,000 over the fittings; SHOWN again at the fix); the bodies gain 8 and 16 with the chimes the slack pays; the hole under PL-S1 before: 9 and 22 among them under the former drive of 2 W after the step
     "hole": {
         int(n)
-        for n in "4 5 7 8 10 15 16 17 18 19 21 22 24 25 26 27 30 37 43 45 47 56 58 59 60 62 64 65 66 67 68 70 71 72".split()
+        for n in "4 5 7 8 10 15 16 17 18 19 21 22 24 25 26 27 30 37 43 45 47 56 58 59 60 62 64 65 66 67 68 70 71 72 74".split()
     },
     "chiral": {
         int(n)
-        for n in "2 4 5 7 8 10 15 16 17 18 19 21 25 27 30 37 43 45 47 58 59 60 62 64 65 66 67 68 70 71 72".split()
+        for n in "2 4 5 7 8 10 15 16 17 18 19 21 25 27 30 37 43 45 47 58 59 60 62 64 65 66 67 68 70 71 72 74".split()
     },
     "bodies": {
-        int(n) for n in "2 4 7 9 10 15 17 18 22 24 25 30 37 43 45 59 60 62 64 65 66 67 70 71 72".split()
+        int(n)
+        for n in "2 4 7 9 10 15 17 18 22 24 25 30 37 43 45 59 60 62 64 65 66 67 70 71 72 74".split()
     },
 }
 VERDICTS = {  # the verdicts' words by name
@@ -52,7 +63,7 @@ VERDICTS = {  # the verdicts' words by name
         "58 the fast expansion after the bang": "SHOWN: the credits' spacing grows fastest in the first eighths (the eighth whose last credit is at 38)",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before (the eighth whose last credit is at 38)",
         "60 the acceleration in the clicks": "SHOWN: after a slowing, an eighth's growth of the spacing larger than the one before (the eighth whose last credit is at 53)",
-        "15 conservation at the click": "SHOWN: taken + the remainder before - the remainder after = booked on every birth carrying the remainder",
+        "15 conservation at the click": "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth (EX-S1)",
         "47 the exact take": "SHOWN: the take exact on every birth, its excess kept as the remainder at the Node",
         "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 756 of 756 frames",
         "68 matter against antimatter": "SHOWN: the + child at the take's Node on 7 moving births and at the other end on 7, the hand's choice at every one; 3 mergers beside",
@@ -84,20 +95,20 @@ VERDICTS = {  # the verdicts' words by name
     },
     "bodies": {
         "64 dark matter in kind": "SHOWN: 43 of 51 bodies credited at a Node where no light was laid",
-        "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 577 of 577 frames",
+        "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 573 of 573 frames",
         "37 Maxwell's one Link per interval": "SHOWN: the current's reach grows by one Link per interval",
         "55 the two slits": "NOT READ: no two gap-0 packets at one centre with one wave mirrored on one axis in the seed; the predicate: the gap-0 ro",
         "56 Bell": "NOT READ: 8 births, 0 of the four setting cells filled by pairs clicked at both ends; the predicate: S from the pairs' two ends under the",
         "57 GHZ": "NOT READ: a birth gives two ends at one Link and a shared take four, no three ends with one root in the record; the pred",
         "61 the horizon radiates": "NOT READ: no frozen Node in the record",
-        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 577 of 577 frames",
+        "62 the arrow of time in the clicks": "SHOWN: the charge odd under the slot exchange, 573 of 573 frames",
         "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero and above the next",
         "59 the deceleration in the clicks": "SHOWN: an eighth's growth of the spacing smaller than the one before",
         "68 matter against antimatter": "NOT READ: no moving birth; the predicate: the + child's end chosen by the twist's hand at every moving birth",
         "69 the neutrino's one hand": "NOT READ: no moving birth; the predicate: one hand at every moving birth",
         "70 the baryon number": "SHOWN: the children's own charges sum to 0 at every birth, no matter made by a click",
-        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 2268 of 2268 axis bookings, 58 laying a level",
-        "72 the angular momentum booked on the Link": "SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 756 of 756 bookings, the records' own moment changing at 10 of 90 closes",
+        "71 the momentum booked on the Link": "SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 2256 of 2256 axis bookings, 58 laying a level",
+        "72 the angular momentum booked on the Link": "SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 752 of 752 bookings, the records' own moment changing at 10 of 90 closes and the lattice carrying it",
         "73 E = mc^2 at the merger": "NOT SHOWN: at 16 of 16 merger ends the pair's share taken exceeds the light's quantum booked, up to 15538 thousandths of it, the excess",
     },
 }
@@ -448,7 +459,7 @@ def test_spin_one_half_reads_minus_one_after_one_turn_and_comes_home_after_two(m
 
 
 def test_one_big_bang_recurs_within_its_integers_and_binds_its_heavy_matter() -> None:
-    """The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for) with nuclear binding (the owner's yes to the nuclear family, David's DAVID-MEDIATOR.md): the 4-cube's one wave of 5,000,000 quanta under the three bounds returns to the full rate at every clock twice in every five ticks, 20 bangs in 100, every integer within 128 bits; its universe holds a held field (one gear at 99/100 of the rim, weight 3), and a heavy family's chimes stand bound one mesh apart, 22 of its 66 pairs chiming at one tick, above twice the board's own share (6 of 63); the run back exact."""
+    """The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for) with nuclear binding (the owner's yes to the nuclear family, David's DAVID-MEDIATOR.md): the 4-cube's one wave of 5,000,000 quanta under the three bounds returns to the full rate at every clock twice in every five ticks, 20 bangs in 100, every integer within 128 bits; its universe holds a held field (one gear at 99/100 of the rim, weight 2), and a heavy family's chimes stand bound one mesh apart, 6 of its 14 pairs chiming at one tick, above twice the board's own share (6 of 63); the run back exact."""
     calibre, piece = world_of("world_bang.json")
     clock, returns, widest = Clock(calibre, piece), [], 0
     for at in range(1, piece["intervals"] + 1):
@@ -456,7 +467,7 @@ def test_one_big_bang_recurs_within_its_integers_and_binds_its_heavy_matter() ->
         returns += [at] if (clock.train(REGULATOR).gears[0].now == clock.full_rate).all() else []
         widest = max(widest, census(clock)[1])
     assert returns == [k + d for k in range(4, 101, 5) for d in (0, 1)] and widest <= 128
-    assert (clock.counts["births"], clock.counts["body_clicks"]) == (170, 2968)
+    assert (clock.counts["births"], clock.counts["body_clicks"]) == (210, 3131)
     by_line: dict[int, dict[int, set[tuple[int, ...]]]] = {}
     for e in (e for e in clock.log if e["event"] == "credit"):
         by_line.setdefault(e["line"], {}).setdefault(e["i"], set()).add(tuple(e["node"]))
@@ -470,26 +481,50 @@ def test_one_big_bang_recurs_within_its_integers_and_binds_its_heavy_matter() ->
         ]
         for line, ticks in by_line.items()
     }
-    assert {line: (d.count(1), len(d)) for line, d in pairs.items()} == {
-        0: (5580, 58384),
-        1: (0, 2),
-        2: (22, 66),
-    }
-    assert 22 * 63 > 2 * 6 * 66 and 5580 * 63 < 2 * 6 * 58384
+    assert {line: (d.count(1), len(d)) for line, d in pairs.items()} == {0: (6110, 63412), 1: (6, 14)}
+    assert 6 * 63 > 2 * 6 * 14 and 6110 * 63 < 2 * 6 * 63412
     assert run_back_exact(Clock(calibre, piece), 20) == 20
 
 
 def test_the_bangs_heavy_matter_stays_silent_without_the_held_field() -> None:
-    """The control of the nuclear binding: the same bang on the toy universe, with no held field, chimes on the near-light family alone through its 100 ticks (4,026 chimes, 245 fittings), so no heavy family's chime stands to be bound; a weight on a hand and a held field with no weight are refused by name."""
+    """The control of the nuclear binding: the same bang on the toy universe, with no held field, chimes on the near-light family alone through its 100 ticks (4,041 chimes, 232 fittings), so no heavy family's chime stands to be bound; a weight on a hand and a held field with no weight are refused by name."""
     calibre, piece = world_of("world_bang.json")
     clock = Clock(dict(calibre, rows=[r for r in calibre["rows"] if "weight" not in r]), piece)
     for _ in range(piece["intervals"]):
         clock.tick()
     credits = [e["line"] for e in clock.log if e["event"] == "credit"]
-    assert (set(credits), len(credits), clock.counts["births"]) == ({0}, 4026, 245)
+    assert (set(credits), len(credits), clock.counts["births"]) == ({0}, 4041, 232)
     for row in (
         dict(calibre["rows"][0], weight=1),
         {k: v for k, v in calibre["rows"][-1].items() if k != "weight"},
     ):
         with pytest.raises(ValueError, match="is no gapped row"):
             check_piece(piece, dict(calibre, rows=[row]))
+
+
+def test_the_books_close_at_every_striking_mergers_and_lays_alike(monkeypatch: Any) -> None:
+    """The close's books (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off): on the one big bang's first 20 ticks, at every striking the board's wind lost (every hand's wind at the striking's start gearings, before less after) is the chimes' booked plus the remainder's rise, the mergers' two-ended cross terms and the lays' cross terms carried by the remainder; mergers among them."""
+    calibre, piece = world_of("world_bang.json")
+    books, strike = [], striking.strike
+
+    def board(clock: Clock) -> int:
+        reads = [
+            readings.gearing_of(clock, r, clock.start_load, clock.start_factors) for r in clock.hands()
+        ]
+        return sum(
+            int(hands.wind(clock, r.gears, g).sum()) for r, g in zip(clock.hands(), reads, strict=True)
+        )
+
+    def booked(clock: Clock, starts: Any, held: Any, going: int = 1, note: Any = None) -> None:
+        wind, slack, log_from = board(clock), int(clock.slack.sum()), len(clock.log)
+        strike(clock, starts, held, going, note)
+        new = clock.log[log_from:]
+        chimes = sum(int(e["booked"]) for e in new if e["event"] == "credit")
+        merged = sum(1 for e in new if e["event"] == "birth" and "takes" in e)
+        books.append((wind - board(clock) == chimes + int(clock.slack.sum()) - slack, merged))
+
+    monkeypatch.setattr(striking, "strike", booked)
+    clock = Clock(calibre, piece)
+    for _ in range(20):
+        clock.tick()
+    assert all(closed for closed, _merged in books) and sum(m for _c, m in books) > 0
