@@ -170,7 +170,7 @@ class Record:
 
     def signs_of(self) -> list[int]:
         """The births' children's senses as the signs of their own charges, in the births' order (0 for a child laid as light)."""
-        return [(w > 0) - (w < 0) for pair in self.charges_of() for w in pair]
+        return [sign(w) for pair in self.charges_of() for w in pair]
 
     def takes_of(self) -> tuple[int, int]:
         """The sums over the births of what the takes took and what they booked."""
@@ -205,10 +205,14 @@ def quot(a: int, b: int, scale: int = 1) -> int | None:
     return None if b == 0 else int(rule3.quotient(a * scale, b))
 
 
+def sign(x: int) -> int:
+    """The sign of an integer: -1, 0 or 1."""
+    return (x > 0) - (x < 0)
+
+
 def cmp_rat(p: Rational, q: Rational) -> int:
     """Order two rationals (n, d) with d > 0 by cross multiplication."""
-    s = int(cross(p[0], p[1], q[0], q[1]))
-    return (s > 0) - (s < 0)
+    return sign(int(cross(p[0], p[1], q[0], q[1])))
 
 
 def carrier_levels(record: Record, credit: dict[str, Any]) -> tuple[int, int, int]:

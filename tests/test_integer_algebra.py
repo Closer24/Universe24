@@ -20,7 +20,7 @@ PHYSICAL_MODULES = tuple(  # every module of the package, of core/ and of loader
 )
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
-MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
+MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = set[str](), {"int64"}
 FLOATS = "complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating"
 NUMPY_DTYPES_FORBIDDEN = {*FLOATS.split(), *"int16 int32 int8 uint16 uint32 uint64 uint8".split()}
 NUMPY_FORBIDDEN = set("arctan2 average cbrt cos divide exp float hypot log log10 log2 mean".split())

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from math import gcd
 from typing import Any
 
 from event_universe.core import rule3
@@ -18,6 +17,7 @@ from event_universe.decoder import (
     THIRDS,
     Record,
     quot,
+    sign,
     unread_words,
 )
 
@@ -246,14 +246,6 @@ def decay(record: Record) -> dict[str, Any]:
     }
 
 
-SETTINGS = (
-    (1, 0),
-    (1, 1),
-    (4, 3),
-    (3, 4),
-)  # Bell's (p, q), two per end, the outcome sign(p re + q im): the axis and the diagonal for one end, the 3-4-5 triple's two directions for the other (exact cosines 4/5 and 3/5), every integer among the law's free ones
-
-
 def two_slits(record: Record) -> dict[str, Any]:
     """Row 55: the two slits (QG-S2), two gap-0 lays at one centre with one wave mirrored on one axis, read from the seed; the fringe (the gap-0 row's meetings at the dark offsets 4 C_d^2 < den^2 none and at the bright many over the beams' overlap) is counted by the hand's reader alone (H-Quantum-Gates-2/predicates_qg.py), the count owed to the decoder where a seed carries the beams."""
     rows, seed = record.run["universe"]["rows"], record.run["world"].get("seed", [])
@@ -286,7 +278,7 @@ def bell(record: Record) -> dict[str, Any]:
         ends = [
             next(
                 (
-                    int(rule3.remainder(int(k["proper"]), PAIR))
+                    int(rule3.odd(int(k["proper"])))
                     for k in record.credits
                     if k["node"] == where and k["line"] == b["line_pair"] and int(k["i"]) > int(b["i"])
                 ),
@@ -295,7 +287,7 @@ def bell(record: Record) -> dict[str, Any]:
             for where in (b["minus"], b["plus"])
         ]
         if ends[0] is not None and ends[1] is not None:
-            cells.setdefault((ends[0], ends[1]), []).append((a > 0) - (a < 0) * ((c > 0) - (c < 0)))
+            cells.setdefault((ends[0], ends[1]), []).append(sign(a) * sign(c))
     if len(cells) < PAIR * PAIR:
         return unread(
             "56 Bell",
@@ -308,7 +300,7 @@ def bell(record: Record) -> dict[str, Any]:
     }
     den = 1
     for _n, d in e.values():
-        den = den * d // gcd(den, d)
+        den = den * d // rule3.lattice(den, d)
     s = sum((num * den // d) * (-1 if key == (0, 1) else 1) for key, (num, d) in e.items())
     n = den
     verdict = (

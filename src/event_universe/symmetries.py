@@ -7,7 +7,7 @@ from typing import Any
 
 from event_universe.core import rule3
 from event_universe.core.ports import AXES
-from event_universe.decoder import HALF, PAIR, Record, unread_words
+from event_universe.decoder import HALF, PAIR, Record, sign, unread_words
 
 REGIONS = PAIR**AXES  # the board's regions, each axis split at the cube's half
 
@@ -67,7 +67,7 @@ def lepton_number(record: Record) -> dict[str, Any]:
     """Row 65: the lepton number (the record's parts are its particles, the record's count conserved at the click): for every species born, the children's own senses summed over its births is 0, each birth a pair of opposite senses, so the number of each species less its anti-species is conserved."""
     sums: Counter[str] = Counter()
     for b, (a, c) in zip(record.births, record.charges_of(), strict=True):
-        sums[record.line_name[b["line_pair"]]] += (a > 0) - (a < 0) + (c > 0) - (c < 0)
+        sums[record.line_name[b["line_pair"]]] += sign(a) + sign(c)
     return {
         "65 the lepton number": {
             "the senses summed per species born": dict(sums),
