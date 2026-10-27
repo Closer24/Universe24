@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import os
+
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -58,6 +60,13 @@ def bodies(
         for where in zip(*np.nonzero(closing == 1), strict=True):
             at = tuple(int(x) for x in where)
             if at in born_nodes or frozen[at]:
+                continue
+            if os.environ.get("TOY_CLICK_DIRECTION") == "1" and bool(node.turned[at]):
+                # TOY (the owner's words of 2026-10-27, 07:2x UTC: the detector that does not click is the mechanism):
+                # the click is the close's act in the Node's own direction (CA-S1, the direction is the slot); at a Node
+                # whose time turned this interval the crossing runs at -1, and a click at -1 with no click to undo is the
+                # identity: no credit, nothing moved, the frame's turned mask making it the same backward
+                node.counts["refused_turned"] = node.counts.get("refused_turned", 0) + 1
                 continue
             got = takes(node, [(at, node.units[rec])], r_emitter, 1)
             node.standing[rec][at] = 0
