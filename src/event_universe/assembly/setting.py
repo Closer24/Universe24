@@ -1,4 +1,4 @@
-"""The seed as the world file lays it: a list of lays in the five forms of the law (the owner's word of 2026-10-25; the fourth, the uniform lay, by his word of 17:57 UTC; the fifth, the light's cycle lay, by his word of 22:50 UTC, CS5-S2): `sea` lays the plane at the gap 0's drift v, the largest integer with v^2 <= T, at every Node; `hole` takes it back at one Node; `at` lays a packet, on the plane at the gap 0 N drifts at the centre, on a record with a gap the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in den's unit (h_a = den sin(k_a / 2)), moving at the band's rotation at that wave number with the optional flat `top` along the wave's axis (MV-S1 to MV-S3, 2026-10-25; one path for every record row, the plane at the gap 0 with a wave among them, with none the drift by name); `wave` lays the light's cycle pattern at every Node (CS5-S2's world, the owner's word of 2026-10-25, 22:50 UTC: cs3's cycle form in cs5's and cs7's spelling, `row` the plane at the gap 0, `quanta` n, `p1` sixteen digits of Z_4 and `cz` one, the phase p(x, y, z) = (p1[4 (x mod 4) + (y mod 4)] + cz z) mod 4, `mirror` 0 or 1 for the negated lines' remainders). Refused by name: a form beyond these, a field of no form (an interval key among them), a lay onto a row of no record shape, a sea of a record with a gap, a Node off the board, a packet of another width, a wave number beyond the band's edge (|h| above den), a massless packet at the wave 0, a top not fitting the board, a cycle lay off the plane at the gap 0 or on a cube whose extent is not a multiple of 4, its digits off Z_4, its mirror off 0 and 1."""
+"""The setting as the piece's file sets it: a list of settings in the five forms of the law (the owner's word of 2026-10-25; the fourth, the even setting, by his word of 17:57 UTC; the fifth, the light's cycle setting, by his word of 22:50 UTC, CS5-S2): `sea` sets the unsprung hand's drift v, the largest integer with v^2 <= T, at every clock; `hole` takes it back at one clock; `at` sets a packet, on the unsprung hand N drifts at the centre, on a sprung hand the conjugate pair over the raised cosine's envelope of the half-width 2 or 3, at rest or, with the field `wave` [h_x, h_y, h_z] in the rim's unit (h_a = rim sin(k_a / 2)), moving at the band's rotation at that stride with the optional flat `top` along the stride's axis (MV-S1 to MV-S3, 2026-10-25; one path for every hand, the unsprung hand with a stride among them, with none the drift by name); `wave` sets the light's cycle pattern at every clock (CS5-S2's piece, the owner's word of 2026-10-25, 22:50 UTC: cs3's cycle form in cs5's and cs7's spelling, `row` the unsprung hand, `quanta` n, `p1` sixteen digits of Z_4 and `cz` one, the angle p(x, y, z) = (p1[4 (x mod 4) + (y mod 4)] + cz z) mod 4, `mirror` 0 or 1 for the negated gears' fine teeth). Refused by name: a form beyond these, a field of no form (an `interval` key among them), a setting onto a train that is no hand, a sea of a sprung hand, a clock off the great clock, a packet of another width, a stride beyond the band's edge (|h| above the rim), an unsprung packet at the stride 0, a top not fitting the great clock, a cycle setting off the unsprung hand or on a cube whose extent is not a multiple of 4, its digits off Z_4, its flip off 0 and 1."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ HALF_SPANS = (
     1,
     2,
     3,
-)  # the envelope's half spans the raised cosine knows (the lay's `width`; 1 the one Node, a born pair's own form)
+)  # the envelope's half spans the raised cosine knows (the setting's `width`; 1 the one clock, a fitted pair's own form)
 FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
     "sea": frozenset({"lay", "row", "quanta", "sense", "hand"}),
     "hole": frozenset({"lay", "at"}),
@@ -32,71 +32,71 @@ FIELDS = {  # the fields of each form of the law; a field of no form is refused 
 Ratio = tuple[Any, Any]
 
 
-def set_piece(node: Clock, lays: list[dict[str, Any]]) -> None:
-    """Every lay of the world file onto the Node's rows, the packets after the sea and the holes; a lay of no form and a field of no form refused by name (MV-S3: the loader lays the seed before the first interval and nothing after)."""
+def set_piece(clock: Clock, setting: list[dict[str, Any]]) -> None:
+    """Every setting of the piece's file onto the clock's trains, the packets after the sea and the holes; a setting of no form and a field of no form refused by name (MV-S3: the assembly sets the hands before the first tick and nothing after)."""
     packets = []
-    for lay in lays:
+    for lay in setting:
         form = lay.get("lay")
         if form not in FIELDS:
             raise ValueError(f"a lay of no form of the law: {form!r}")
         beyond = sorted(set(lay) - FIELDS[form])
         if beyond:
             raise ValueError(f"a field of no form of the law in the lay {form!r}: {', '.join(beyond)}")
-        row = node.by_index[int(lay["row"])] if "row" in lay else None
+        train = clock.by_index[int(lay["row"])] if "row" in lay else None
         if "hand" in lay:
-            if row is None or row.twin is None or int(lay["hand"]) not in (0, 1):
+            if train is None or train.twin is None or int(lay["hand"]) not in (0, 1):
                 raise ValueError("a lay names a hand of a train of twin hands: 0 or 1")
-            row = row if int(lay["hand"]) == 0 else row.twin
-        if row is not None and row not in node.hands():
+            train = train if int(lay["hand"]) == 0 else train.twin
+        if train is not None and train not in clock.hands():
             raise ValueError("a lay is onto a record (a plane)")
         if form == "sea" and "quanta" not in lay:
-            if row is None or row is not node.unsprung() or "sense" in lay:
+            if train is None or train is not clock.unsprung() or "sense" in lay:
                 raise ValueError(
                     "a sea without a count is the plane at the gap 0 alone (the drift, no sense); a plane with a gap names its quanta (the fourth form)"
                 )
-            unwind.advance(node, node.hands().index(row), Ellipsis, (node.drift, 0, 0, 0))
+            unwind.advance(clock, clock.hands().index(train), Ellipsis, (clock.drift, 0, 0, 0))
         elif form == "sea":
-            if row is None or row is node.unsprung():
+            if train is None or train is clock.unsprung():
                 raise ValueError(
                     "the fourth form lays a plane with a gap at a count: the plane at the gap 0 alone is the drift"
                 )
-            set_even(node, node.hands().index(row), int(lay["quanta"]), int(lay.get("sense", 0)))
+            set_even(clock, clock.hands().index(train), int(lay["quanta"]), int(lay.get("sense", 0)))
         elif form == "hole":
-            at = node.clock_of(lay["at"])
-            unwind.advance(node, node.hands().index(node.unsprung()), at, (-node.drift, 0, 0, 0))
+            at = clock.clock_of(lay["at"])
+            unwind.advance(clock, clock.hands().index(clock.unsprung()), at, (-clock.drift, 0, 0, 0))
         elif form == "wave":
-            if row is None or row is not node.unsprung() or "quanta" not in lay:
+            if train is None or train is not clock.unsprung() or "quanta" not in lay:
                 raise ValueError("the cycle lay is the light's: the plane at the gap 0 at its quanta")
             digits = [int(v) for v in lay.get("p1", [])] + [int(lay.get("cz", 1))]
             set_cycle(
-                node, node.hands().index(row), int(lay["quanta"]), digits, int(lay.get("mirror", 0))
+                clock, clock.hands().index(train), int(lay["quanta"]), digits, int(lay.get("mirror", 0))
             )
         else:
             n = int(lay["quanta"])
-            at = node.clock_of(lay["centre"])
-            if row is None:
+            at = clock.clock_of(lay["centre"])
+            if train is None:
                 raise ValueError("a packet names its row")
-            wave = None if lay.get("wave") is None else tuple(int(x) for x in lay["wave"])
-            if row is node.unsprung() and wave is None:
-                unwind.advance(node, node.hands().index(row), at, (n * node.drift, 0, 0, 0))
+            stride = None if lay.get("wave") is None else tuple(int(x) for x in lay["wave"])
+            if train is clock.unsprung() and stride is None:
+                unwind.advance(clock, clock.hands().index(train), at, (n * clock.drift, 0, 0, 0))
             else:
                 packets.append(
                     (
-                        node.hands().index(row),
+                        clock.hands().index(train),
                         at,
                         int(lay.get("width", 0)),
                         n,
                         lay.get("sense"),
-                        wave,
+                        stride,
                         int(lay.get("top", 1)),
                     )
                 )
-    for rec, at, h, n, sense, wave, top in packets:
-        set_packet(node, rec, at, h, n, sense, wave, top)
+    for rec, at, h, n, sense, stride, top in packets:
+        set_packet(clock, rec, at, h, n, sense, stride, top)
 
 
 def raised_cosine(h: int) -> tuple[int, ...]:
-    """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer, at h = 1 (-2, the one Node at the crest's weight 4: a born pair's own form laid from a file, the Boss's 6414464356), h = 2 (0) and h = 3 (1) and at no other width: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 (the weights 2, 1 and 4, 3, 1); another width refused by name."""
+    """The raised cosine's weights over the half-width h, w_k = 2 + 2 cos(pi k / h) for k = 0 .. h - 1, exact in integers where 2 cos(pi / h) is an integer, at h = 1 (-2, the one clock at the crest's weight 4: a fitted pair's own form set from a file, the Boss's 6414464356), h = 2 (0) and h = 3 (1) and at no other width: the doubled cosines by the Chebyshev recurrence t_(k+1) = t_1 t_k - t_(k-1) from t_0 = 2 (the weights 2, 1 and 4, 3, 1); another width refused by name."""
     if h not in HALF_SPANS:
         raise ValueError(
             "a packet has the half-width 1 (the one Node), 2 or 3: a body is laid over its packet"
@@ -109,19 +109,19 @@ def raised_cosine(h: int) -> tuple[int, ...]:
 
 
 def places(h: int, half_tops: tuple[int, ...]) -> list[tuple[int, ...]]:
-    """Every offset of the envelope about the centre, along each axis from -(h - 1 + its half top) to h - 1 + its half top."""
+    """Every place of the envelope about the centre, along each axis from -(h - 1 + its half top) to h - 1 + its half top."""
     reach = [h - 1 + t for t in half_tops]
     return [tuple(j[a] - reach[a] for a in range(AXES)) for j in np.ndindex(*(r + r + 1 for r in reach))]
 
 
 def envelope_of(
-    node: Clock, at: tuple[int, ...], h: int, half_tops: tuple[int, ...] = (0,) * AXES
+    clock: Clock, at: tuple[int, ...], h: int, half_tops: tuple[int, ...] = (0,) * AXES
 ) -> tuple[Any, int]:
-    """The raised cosine's envelope of the half-width h about the Node, the product of the weights over the three axes, flat at the centre's weight over the half top of each axis given one (MV-S1's `top`, 0 the former envelope), and the centre's weight."""
+    """The raised cosine's envelope of the half-width h about the clock, the product of the weights over the three axes, flat at the centre's weight over the half top of each axis given one (MV-S1's `top`, 0 the former envelope), and the centre's weight."""
     weights = raised_cosine(h)
-    envelope = zeros(node.size)
+    envelope = zeros(clock.size)
     for off in places(h, half_tops):
-        where = tuple(wrap(at[a] + off[a], node.cube) for a in range(AXES))
+        where = tuple(wrap(at[a] + off[a], clock.cube) for a in range(AXES))
         weight = 1
         for a in range(AXES):
             weight *= weights[max(abs(off[a]) - half_tops[a], 0)]
@@ -129,200 +129,200 @@ def envelope_of(
     return envelope, weights[0] ** AXES
 
 
-def rim_point(den: int, h: int) -> tuple[int, int]:
-    """The point of den's circle at the half-angle sine h (MV-S1, the wave number's unit): den cos k = (den^2 - 2 h^2) over den and den sin k = 2 h largest_below(den^2 - h^2) over den, each rounded once with the sign after (paces.rounded), so the point at -h is the conjugate; (den, 0) at h = 0, (-den, 0) at |h| = den, the band's edge (MV-S2); beyond it refused by name."""
-    if abs(h) > den:
-        raise ValueError(f"a wave number beyond the band's edge: |h| {abs(h)} above den {den}")
+def rim_point(rim: int, h: int) -> tuple[int, int]:
+    """The point of the rim at the half-angle sine h (MV-S1, the stride's unit): rim cos k = (rim^2 - 2 h^2) over rim and rim sin k = 2 h largest_below(rim^2 - h^2) over rim, each rounded once with the sign after (rates.rounded), so the point at -h is the conjugate; (rim, 0) at h = 0, (-rim, 0) at |h| = rim, the band's edge (MV-S2); beyond it refused by name."""
+    if abs(h) > rim:
+        raise ValueError(f"a wave number beyond the band's edge: |h| {abs(h)} above den {rim}")
     return (
-        int(rounded(den * den - (h + h) * h, den)),
-        int(rounded((h + h) * largest_below(den * den - h * h), den)),
+        int(rounded(rim * rim - (h + h) * h, rim)),
+        int(rounded((h + h) * largest_below(rim * rim - h * h), rim)),
     )
 
 
-def axis_pairs(den: int, point: tuple[int, int], reach: int) -> dict[int, tuple[int, int]]:
-    """The pair over den at every offset from -reach to reach along one axis: from (den, 0) at the centre, the axis's point composed one Link at a time (links.turn_pair, one odd rounding per part per Link), the conjugate point for a negative offset, so the pair at -n is the conjugate of the pair at n."""
-    found = {0: (den, 0)}
+def axis_pairs(rim: int, point: tuple[int, int], reach: int) -> dict[int, tuple[int, int]]:
+    """The pair over the rim at every place from -reach to reach along one axis: from (rim, 0) at the centre, the axis's point composed one mesh at a time (meshes.offset_pair, one odd rounding per part per mesh), the conjugate point for a negative place, so the pair at -n is the conjugate of the pair at n."""
+    found = {0: (rim, 0)}
     for side in (1, -1):
         for n in range(1, reach + 1):
-            re, im = found[side * (n - 1)]
-            pair = offset_pair(re, im, point[0], side * point[1], den)
+            three, twelve = found[side * (n - 1)]
+            pair = offset_pair(three, twelve, point[0], side * point[1], rim)
             found[side * n] = (int(pair[0]), int(pair[1]))
     return found
 
 
-def angle_of(den: int, pairs: list[tuple[int, int]]) -> tuple[int, int]:
-    """The pair over den at a Node from its three axes' pairs, composed in their sorted order (two turns, one odd rounding per part each): the same integers at every image of the Node under the 48, the axes' pairs permuted with the axes and each one even under its axis's reflection with the wave."""
+def angle_of(rim: int, pairs: list[tuple[int, int]]) -> tuple[int, int]:
+    """The pair over the rim at a clock from its three axes' pairs, composed in their sorted order (two turns, one odd rounding per part each): the same integers at every image of the clock under the 48, the axes' pairs permuted with the axes and each one even under its axis's reflection with the stride."""
     first, second, third = sorted(pairs)
-    re, im = offset_pair(first[0], first[1], second[0], second[1], den)
-    re, im = offset_pair(re, im, third[0], third[1], den)
-    return int(re), int(im)
+    three, twelve = offset_pair(first[0], first[1], second[0], second[1], rim)
+    three, twelve = offset_pair(three, twelve, third[0], third[1], rim)
+    return int(three), int(twelve)
 
 
 def angles_of(
-    node: Clock,
+    clock: Clock,
     at: tuple[int, ...],
     h: int,
     half_tops: tuple[int, ...],
     points: list[tuple[int, int]],
 ) -> Ratio:
-    """The phase pair (C, S) over den at every Node of the envelope, the three axes' pairs at the Node's offsets (axis_pairs) composed (phase_of); (den, 0) beyond the envelope and everywhere at the wave 0."""
-    den = node.rim
-    along = [axis_pairs(den, points[a], h - 1 + half_tops[a]) for a in range(AXES)]
-    cosine, sine = zeros(node.size) + den, zeros(node.size)
+    """The angle pair (C, S) over the rim at every clock of the envelope, the three axes' pairs at the clock's places (axis_pairs) composed (angle_of); (rim, 0) beyond the envelope and everywhere at the stride 0."""
+    rim = clock.rim
+    along = [axis_pairs(rim, points[a], h - 1 + half_tops[a]) for a in range(AXES)]
+    cosine, sine = zeros(clock.size) + rim, zeros(clock.size)
     for off in places(h, half_tops):
-        where = tuple(wrap(at[a] + off[a], node.cube) for a in range(AXES))
-        cosine[where], sine[where] = angle_of(den, [along[a][off[a]] for a in range(AXES)])
+        where = tuple(wrap(at[a] + off[a], clock.cube) for a in range(AXES))
+        cosine[where], sine[where] = angle_of(rim, [along[a][off[a]] for a in range(AXES)])
     return cosine, sine
 
 
-def running_rotation(num: int, den: int, points: list[tuple[int, int]]) -> tuple[int, int]:
-    """The band's rotation at the wave number (the kinetic clause): den cos omega(k) = (num SUM_a den cos k_a) div (3 den) and its sine by the one search (paces.sine_den's form); the row's own pair (num, s) at the wave 0, (den, 0) for the massless row there, the double root with no rotation."""
-    cosine = int(carries(num * sum(c for c, _s in points), AXES * den))
-    return cosine, sine_rim(cosine, den)
+def running_rotation(pinion: int, rim: int, points: list[tuple[int, int]]) -> tuple[int, int]:
+    """The band's rotation at the stride (the kinetic clause): rim cos omega(k) = (pinion SUM_a rim cos k_a) div (3 rim) and its sine by the one search (rates.sine_rim's form); the train's own pair (pinion, s) at the stride 0, (rim, 0) for the unsprung train there, the double root with no rotation."""
+    cosine = int(carries(pinion * sum(c for c, _s in points), AXES * rim))
+    return cosine, sine_rim(cosine, rim)
 
 
 def rest_hand(
-    node: Clock,
-    row: Train,
+    clock: Clock,
+    train: Train,
     envelope: Any,
     w0: int,
-    amplitude: int,
+    hand_length: int,
     sense: int,
     pairs: tuple[Ratio, Ratio] | None = None,
 ) -> list[Gear]:
-    """A record over the envelope at an amplitude, base = A w_i div w_0: at rest (gram.rest) the plane's re_now = base, re_before = base num div den, im_now = 0, im_before = sense base s div den with s the pair's sine; at a wave number (gram.moving) the base at the Node's phase pair now and at that pair turned by the band's rotation before."""
-    assert row.ratio is not None
-    num = row.ratio[0]
-    base = carries(amplitude * envelope, w0)
+    """A hand over the envelope at a hand length, base = A w_i div w_0: at rest (hands.rest) the hand's three_now = base, three_before = base pinion div rim, twelve_now = 0, twelve_before = sense base s div rim with s the ratio's sine; at a stride (hands.moving) the base at the clock's angle pair now and at that pair turned by the band's rotation before."""
+    assert train.ratio is not None
+    pinion = train.ratio[0]
+    base = carries(hand_length * envelope, w0)
     if pairs is None:
-        return hands.rest(base, num, node.rim, sine_rim(num, node.rim), sense)
-    return hands.moving(base, pairs[0], pairs[1], node.rim, sense)
+        return hands.rest(base, pinion, clock.rim, sine_rim(pinion, clock.rim), sense)
+    return hands.moving(base, pairs[0], pairs[1], clock.rim, sense)
 
 
-def even_notches(node: Clock, row: Train, amplitude: int, sense: int) -> list[Gear]:
-    """The fourth form's levels at an amplitude (MA-S1, ma2's spelling): one record at rest at every Node (rest_record with the envelope 1 and the centre's weight 1) at the sense -1 or 1, or the conjugate pair at 0 (both senses summed, the im lines cancelling)."""
+def even_notches(clock: Clock, train: Train, hand_length: int, sense: int) -> list[Gear]:
+    """The fourth form's notches at a hand length (MA-S1, ma2's spelling): one hand at rest at every clock (rest_hand with the envelope 1 and the centre's weight 1) at the sense -1 or 1, or the conjugate pair at 0 (both senses summed, the twelve gears cancelling)."""
     if sense == 0:
-        a = even_notches(node, row, amplitude, 1)
-        b = even_notches(node, row, amplitude, -1)
+        a = even_notches(clock, train, hand_length, 1)
+        b = even_notches(clock, train, hand_length, -1)
         return [Gear(x.now + y.now, x.before + y.before, None, None) for x, y in zip(a, b, strict=True)]
-    return rest_hand(node, row, zeros(node.size) + 1, 1, amplitude, sense)
+    return rest_hand(clock, train, zeros(clock.size) + 1, 1, hand_length, sense)
 
 
-def wind_at_clock(node: Clock, row: Train, lines: list[Gear], rule: Any) -> int:
-    """A record's share at the vacuum's weight at the Node of the board's first index, the uniform lay's share at every Node alike."""
-    return int(hands.wind(node, lines, rule).reshape(-1)[0])
+def wind_at_clock(clock: Clock, train: Train, gears: list[Gear], gearing: Any) -> int:
+    """A hand's wind at the vacuum's weight at the clock of the great clock's first index, the even setting's wind at every clock alike."""
+    return int(hands.wind(clock, gears, gearing).reshape(-1)[0])
 
 
-def set_even(node: Clock, rec: int, n: int, sense: int) -> None:
-    """The fourth form laid: the plane with a gap at every Node alike at the least amplitude whose share at the vacuum's weight is at or above n quanta of its unit at every Node (ma2's fitted_uniform: the search by comparisons, doubling then halving, its answer plus one), at the sense -1 or 1 or the conjugate pair at 0; the lay logged."""
-    row = node.hands()[rec]
-    assert row.ratio is not None
-    node.start_load, node.start_stretch = readings.load(node), node.train(REGULATOR).gears[0].now
-    rule = readings.gearing(node, row.ratio, node.start_load, factors(node))
-    target = n * node.windings[rec]
-    amplitude = least_at(
-        lambda a: wind_at_clock(node, row, even_notches(node, row, a, sense), rule) > target
+def set_even(clock: Clock, rec: int, n: int, sense: int) -> None:
+    """The fourth form set: the sprung hand at every clock alike at the least hand length whose wind at the vacuum's weight is at or above n windings at every clock (ma2's fitted_uniform: the search by comparisons, doubling then halving, its answer plus one), at the sense -1 or 1 or the conjugate pair at 0; the setting logged."""
+    train = clock.hands()[rec]
+    assert train.ratio is not None
+    clock.start_load, clock.start_stretch = readings.load(clock), clock.train(REGULATOR).gears[0].now
+    gearing = readings.gearing(clock, train.ratio, clock.start_load, factors(clock))
+    target = n * clock.windings[rec]
+    hand_length = least_at(
+        lambda a: wind_at_clock(clock, train, even_notches(clock, train, a, sense), gearing) > target
     )
-    lines = even_notches(node, row, amplitude, sense)
-    unwind.advance(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
+    gears = even_notches(clock, train, hand_length, sense)
+    unwind.advance(clock, rec, Ellipsis, tuple(x for gear in gears for x in (gear.now, gear.before)))
     logged(
-        node,
+        clock,
         "lay",
         None,
         line_pair=rec,
         quanta=n,
-        amplitude=amplitude,
-        share=wind_at_clock(node, row, lines, rule),
-        unit=node.windings[rec],
-        nodes=int(node.cube) ** AXES,
+        amplitude=hand_length,
+        share=wind_at_clock(clock, train, gears, gearing),
+        unit=clock.windings[rec],
+        nodes=int(clock.cube) ** AXES,
         sense=sense,
     )
 
 
-def packet_wind(node: Clock, row: Train, lines: list[Gear], rule: Any) -> int:
-    """A record's share at the vacuum's weight summed over the board."""
-    return int(sum(int(x) for x in hands.wind(node, lines, rule).reshape(-1)))
+def packet_wind(clock: Clock, train: Train, gears: list[Gear], gearing: Any) -> int:
+    """A hand's wind at the vacuum's weight summed over the great clock."""
+    return int(sum(int(x) for x in hands.wind(clock, gears, gearing).reshape(-1)))
 
 
 def fitted(
-    node: Clock,
-    row: Train,
+    clock: Clock,
+    train: Train,
     envelope: Any,
     w0: int,
     target: int,
     pairs: tuple[Ratio, Ratio] | None = None,
 ) -> int:
-    """The largest amplitude at which the record's share at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
-    assert row.ratio is not None
-    rule = readings.gearing(node, row.ratio, readings.load(node), factors(node))
+    """The largest hand length at which the hand's wind at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
+    assert train.ratio is not None
+    gearing = readings.gearing(clock, train.ratio, readings.load(clock), factors(clock))
 
-    def share_of(amplitude: int) -> int:
-        lines = rest_hand(node, row, envelope, w0, amplitude, 1, pairs)
-        return packet_wind(node, row, lines, rule)
+    def wind_of(hand_length: int) -> int:
+        gears = rest_hand(clock, train, envelope, w0, hand_length, 1, pairs)
+        return packet_wind(clock, train, gears, gearing)
 
-    return least_at(lambda amplitude: share_of(amplitude) > target) - 1
+    return least_at(lambda hand_length: wind_of(hand_length) > target) - 1
 
 
 def stride_of(
-    node: Clock, row: Train, h: int, wave: tuple[int, ...], top: int
+    clock: Clock, train: Train, h: int, stride: tuple[int, ...], top: int
 ) -> tuple[tuple[int, ...], list[tuple[int, int]], tuple[int, int]]:
-    """The moving lay's integers from its two fields: the half top per axis (the flat top of `top` Nodes along the axes of the wave's largest |h|, refused by name where the top is not an odd count or does not fit the board with the raised cosine's edges), the circle's point per axis (circle_point, |h| above den refused there) and the band's rotation (running_rotation, the row at the gap 0 at the wave 0 refused by name: its sine 0, the drift its lay)."""
-    assert row.ratio is not None
-    if len(wave) != AXES:
+    """The moving setting's integers from its two fields: the half top per axis (the flat top of `top` clocks along the axes of the stride's largest |h|, refused by name where the top is not an odd count or does not fit the great clock with the raised cosine's edges), the rim's point per axis (rim_point, |h| above the rim refused there) and the band's rotation (running_rotation, the unsprung train at the stride 0 refused by name: its sine 0, the drift its setting)."""
+    assert train.ratio is not None
+    if len(stride) != AXES:
         raise ValueError("a wave number is three integers, one per axis")
-    if top < 1 or not odd(top) or top + (h - 1) + (h - 1) > node.cube:
+    if top < 1 or not odd(top) or top + (h - 1) + (h - 1) > clock.cube:
         raise ValueError(
             "a top is an odd count of Nodes about the centre that fits the board with its edges"
         )
-    largest = max(abs(x) for x in wave)
-    half_tops = tuple(int(half(top - 1)) if abs(x) == largest else 0 for x in wave)
-    points = [rim_point(node.rim, int(x)) for x in wave]
-    rotation = running_rotation(row.ratio[0], node.rim, points)
+    largest = max(abs(x) for x in stride)
+    half_tops = tuple(int(half(top - 1)) if abs(x) == largest else 0 for x in stride)
+    points = [rim_point(clock.rim, int(x)) for x in stride]
+    rotation = running_rotation(train.ratio[0], clock.rim, points)
     if rotation[1] == 0:
         raise ValueError("a packet of the gap-0 row at the wave 0 has no rotation: the drift is its lay")
     return half_tops, points, rotation
 
 
 def set_packet(
-    node: Clock,
+    clock: Clock,
     rec: int,
     at: tuple[int, ...],
     h: int,
     n: int,
     one_sense: int | None = None,
-    wave: tuple[int, ...] | None = None,
+    stride: tuple[int, ...] | None = None,
     top: int = 1,
 ) -> None:
-    """The `at` lay of a record with a gap (or of the plane at the gap 0 at a wave number): the conjugate pair (the two records at the senses -1 and 1 where the lay names no sense or the sense 0, EM-S2; the one record at the sense -1 or 1 named) laid over the envelope, at rest where the lay names no wave (`rest_record`, the former lay by name) or at the wave number (MV-S1: the phase pair composed one Link at a time from the circle's point per axis, the level before at the band's rotation, `wave_of`, `phases_of`; the wave 0 the rest lay bit for bit) with the flat `top` (1 the former envelope), each record at the largest amplitude whose share, summed over the packet, is at most n quanta of its unit (`fitted`); the lay logged."""
-    row = node.hands()[rec]
-    assert row.ratio is not None
+    """The `at` setting of a sprung hand (or of the unsprung hand at a stride): the conjugate pair (the two hands at the senses -1 and 1 where the setting names no sense or the sense 0, EM-S2; the one hand at the sense -1 or 1 named) set over the envelope, at rest where the setting names no stride (`rest_hand`, the former setting by name) or at the stride (MV-S1: the angle pair composed one mesh at a time from the rim's point per axis, the notch before at the band's rotation, `stride_of`, `angles_of`; the stride 0 the rest setting bit for bit) with the flat `top` (1 the former envelope), each hand at the largest hand length whose wind, summed over the packet, is at most n windings (`fitted`); the setting logged."""
+    train = clock.hands()[rec]
+    assert train.ratio is not None
     named: dict[str, Any] = {"sense": int(one_sense or 0)}
     half_tops: tuple[int, ...] = (0,) * AXES
     pairs = None
-    if wave is not None:
-        half_tops, points, rotation = stride_of(node, row, h, wave, top)
-        named |= {"wave": [int(x) for x in wave], "top": int(top)}
-    envelope, w0 = envelope_of(node, at, h, half_tops)
-    if wave is not None:
-        phases = angles_of(node, at, h, half_tops, points)
-        pairs = (phases, offset_pair(phases[0], phases[1], rotation[0], rotation[1], node.rim))
-    node.start_load, node.start_stretch = readings.load(node), node.train(REGULATOR).gears[0].now
-    amplitude = fitted(node, row, envelope, w0, n * node.windings[rec], pairs)
+    if stride is not None:
+        half_tops, points, rotation = stride_of(clock, train, h, stride, top)
+        named |= {"wave": [int(x) for x in stride], "top": int(top)}
+    envelope, w0 = envelope_of(clock, at, h, half_tops)
+    if stride is not None:
+        angles = angles_of(clock, at, h, half_tops, points)
+        pairs = (angles, offset_pair(angles[0], angles[1], rotation[0], rotation[1], clock.rim))
+    clock.start_load, clock.start_stretch = readings.load(clock), clock.train(REGULATOR).gears[0].now
+    hand_length = fitted(clock, train, envelope, w0, n * clock.windings[rec], pairs)
     for sense in (-1, 1) if not one_sense else (int(one_sense),):
-        lines = rest_hand(node, row, envelope, w0, amplitude, sense, pairs)
-        unwind.advance(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
-    lines = rest_hand(node, row, envelope, w0, amplitude, 1, pairs)
-    rule = readings.gearing(node, row.ratio, node.start_load, factors(node))
+        gears = rest_hand(clock, train, envelope, w0, hand_length, sense, pairs)
+        unwind.advance(clock, rec, Ellipsis, tuple(x for gear in gears for x in (gear.now, gear.before)))
+    gears = rest_hand(clock, train, envelope, w0, hand_length, 1, pairs)
+    gearing = readings.gearing(clock, train.ratio, clock.start_load, factors(clock))
     logged(
-        node,
+        clock,
         "lay",
         at,
         line_pair=rec,
         width=h,
         quanta=n,
-        amplitude=amplitude,
-        share=packet_wind(node, row, lines, rule),
-        unit=node.windings[rec],
+        amplitude=hand_length,
+        share=packet_wind(clock, train, gears, gearing),
+        unit=clock.windings[rec],
         nodes=int(sum(1 for x in envelope.reshape(-1) if int(x) > 0)),
         **named,
     )

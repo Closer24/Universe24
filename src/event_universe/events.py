@@ -1,4 +1,4 @@
-"""The reading's event lines, the rows' names, the rows that are words alone and the eras in the clicks' view: the event lines (the owner's words of 2026-10-25: the record tells what it sees as it sees it; every gate has a label when it happens): one line per row of the table at the interval it first shows, found by reading the row on the record cut to each interval (a search on the cuts, the verdict read as standing from its first interval on), with its Node where the row names one (`at`) and its label in the gate's own words of three to six and its phenomenon in plain words (NAMES, the one table of the rows' names), for the page's labels and the bar's ticks; every line read from the record alone."""
+"""The reading's event lines, the rows' names, the rows that are words alone and the eras in the strikes' view: the event lines (the owner's words of 2026-10-25: the record tells what it sees as it sees it; every gate has a label when it happens): one line per row of the table at the tick it first shows, found by reading the row on the chart cut to each tick (a search on the cuts, the verdict read as standing from its first tick on), with its clock where the row names one (`at`) and its label in the gate's own words of three to six and its phenomenon in plain words (NAMES, the one table of the rows' names), for the page's labels and the bar's ticks; every line read from the chart alone."""
 
 from __future__ import annotations
 
@@ -120,32 +120,32 @@ def phenomenon_of(key: str) -> str:
     return names_of(key)[1]
 
 
-def eras_of(out: dict[str, Any], intervals: int, tops: list[int], returns: list[int]) -> dict[str, Any]:
-    """The eras row from the rows already read and the board's whole lists (the tops of row 1b and the exact returns of row 1c, every one, where the rows list the first eight alone): the bangs (the seed's and one at every exact return, the interval the board is back at the seed's first state, as gate 1 numbers them), the tops, and the spans from each bang, from the era of matter (4), the acceleration (5) and the bang recurring (46) at the interval each first shows, each span to the next's start."""
-    bangs = [1] + [int(i) for i in returns]
-    starts = [(b, "1", label_of("1")) for b in bangs] + [
+def eras_of(out: dict[str, Any], ticks: int, tops: list[int], returns: list[int]) -> dict[str, Any]:
+    """The eras row from the rows already read and the great clock's whole lists (the tops of row 1b and the exact returns of row 1c, every one, where the rows list the first eight alone): the swings (the setting's and one at every exact return, the tick the great clock is back at the setting's first state, as gate 1 numbers them), the tops, and the spans from each swing, from the era of matter (4), the acceleration (5) and the swing recurring (46) at the tick each first shows, each span to the next's start."""
+    swings = [1] + [int(i) for i in returns]
+    starts = [(b, "1", label_of("1")) for b in swings] + [
         (e["i"], e["gate"].split()[0], e["label"])
         for e in out["events"]
         if e["i"] is not None and e["gate"].split()[0] in ("4", "5", "46")
     ]
     starts.sort(key=lambda s: (s[0], s[1]))
     spans = [
-        [i, starts[k + 1][0] if k + 1 < len(starts) else intervals + 1, g, label]
+        [i, starts[k + 1][0] if k + 1 < len(starts) else ticks + 1, g, label]
         for k, (i, g, label) in enumerate(starts)
     ]
     return {
-        "bangs": bangs,
+        "bangs": swings,
         "tops": [int(i) for i in tops],
         "spans (from, to, the gate, its label)": spans,
     }
 
 
-def first_tick(record: Chart, row: Callable[[Chart], dict[str, Any]], key: str) -> int:
-    """The least interval at which the row shows on the record cut to it, by a search on the cuts (the verdict read as standing from its first interval on)."""
-    low, high = 1, record.ticks
+def first_tick(chart: Chart, row: Callable[[Chart], dict[str, Any]], key: str) -> int:
+    """The least tick at which the row shows on the chart cut to it, by a search on the cuts (the verdict read as standing from its first tick on)."""
+    low, high = 1, chart.ticks
     while low < high:
         mid = (low + high) // HALF
-        if shown(row(record.to(mid))[key]["verdict"]):
+        if shown(row(chart.to(mid))[key]["verdict"]):
             high = mid
         else:
             low = mid + 1
@@ -153,16 +153,16 @@ def first_tick(record: Chart, row: Callable[[Chart], dict[str, Any]], key: str) 
 
 
 def first_shown(
-    record: Chart, read: list[tuple[Callable[[Chart], dict[str, Any]], dict[str, Any]]]
+    chart: Chart, read: list[tuple[Callable[[Chart], dict[str, Any]], dict[str, Any]]]
 ) -> list[dict[str, Any]]:
-    """Every event line in the order of its interval: for every row of the table that shows on the whole record (the rows as read once, each with its reading), the interval it first shows, its Node where the row names one, its label and its verdict's first clause as its numbers."""
+    """Every event line in the order of its tick: for every row of the table that shows on the whole chart (the rows as read once, each with its reading), the tick it first shows, its clock where the row names one, its label and its verdict's first clause as its numbers."""
     found = []
     for row, rows in read:
         for key, out in rows.items():
             if not shown(out["verdict"]):
                 continue
-            i = first_tick(record, row, key)
-            at = row(record.to(i))[key].get("at")
+            i = first_tick(chart, row, key)
+            at = row(chart.to(i))[key].get("at")
             found.append(
                 {
                     "gate": key,
@@ -175,28 +175,28 @@ def first_shown(
     return sorted(found, key=lambda e: (int(e["i"]), e["gate"]))
 
 
-def cycle_setting(record: Chart) -> bool:
-    """Whether the world lays a packet with a wave number (the `wave` key of an `at` lay, MV-S1)."""
-    return any("wave" in lay for lay in record.run["world"].get("seed", []))
+def cycle_setting(chart: Chart) -> bool:
+    """Whether the piece sets a packet with a stride (the `wave` key of an `at` form, MV-S1)."""
+    return any("wave" in form for form in chart.run["world"].get("seed", []))
 
 
-def no_wave(record: Chart) -> str:
-    """Why a row of a packet's motion is not read: no wave lay in the world, else no position per close."""
+def no_wave(chart: Chart) -> str:
+    """Why a row of a packet's motion is not read: no packet with a stride in the piece, else no position per striking."""
     return (
         "no lay with a wave number in the world"
-        if not cycle_setting(record)
+        if not cycle_setting(chart)
         else "a position per close is not read"
     )
 
 
-def no_field(record: Chart) -> str:
-    """Why the spinor's two beats are not read: the spinor row is no row of the law."""
+def no_field(chart: Chart) -> str:
+    """Why the spinor's two beats are not read: the spinor train is no train of the law."""
     return "no row carries an axis: the spinor row is no row of the law (2026-10-27)"
 
 
-def no_conversion(record: Chart) -> str:
-    """Why the neutrino is not read: no conversion in the record, den's circle read whole."""
-    points = len(record.rim_points())
+def no_conversion(chart: Chart) -> str:
+    """Why the neutrino is not read: no conversion in the chart, the rim's points read whole."""
+    points = len(chart.rim_points())
     return f"no conversion in the record, den's circle read whole ({points} points)"
 
 
@@ -277,32 +277,32 @@ UNREAD: tuple[tuple[str, str | Callable[[Chart], str], str], ...] = (
         "two packets of one plane are not told apart by their line, and the momentum across the click is row 23",
         "the packets scatter, the momentum summed before and after",
     ),
-)  # the rows no record from the seed carries: the key, why (a sentence, or read from the record), the predicate
+)  # the rows no chart from the setting carries: the key, why (a sentence, or read on the chart), the predicate
 
 
 def stub(number: str) -> Callable[[Chart], dict[str, Any]]:
     """The row function of an UNREAD row by its number (the key's first word): NOT READ with its why and its predicate."""
     key, why, predicate = next(entry for entry in UNREAD if entry[0].split()[0] == number)
 
-    def row(record: Chart) -> dict[str, Any]:
-        return unread(key, why(record) if callable(why) else why, predicate)
+    def row(chart: Chart) -> dict[str, Any]:
+        return unread(key, why(chart) if callable(why) else why, predicate)
 
     row.__name__ = row.__qualname__ = f"row_{number}"
     return row
 
 
-def eighths_of(record: Chart) -> tuple[list[int | None], list[list[int]], list[tuple[int, list[int]]]]:
-    """The eras in the clicks' view (rows 58 to 60): the spacing of a line's credits at one Node in the Node's own proper count, its mean per eighth of the run (the whole run's eighths, so a cut reads the same eighths; an eighth read once complete), the growth of each eighth over the complete one before it as (the eighth, the growth), and the last credit of each eighth (its interval and Node)."""
+def eighths_of(chart: Chart) -> tuple[list[int | None], list[list[int]], list[tuple[int, list[int]]]]:
+    """The eras in the strikes' view (rows 58 to 60): the spacing of a gear's chimes at one clock in the clock's own dial, its mean per eighth of the run (the whole run's eighths, so a cut reads the same eighths; an eighth read once complete), the growth of each eighth over the complete one before it as (the eighth, the growth), and the last chime of each eighth (its tick and clock)."""
     eighths: list[list[int]] = [[] for _ in range(LISTED)]
     last: list[tuple[int, list[int]]] = [(0, []) for _ in range(LISTED)]
-    whole = int(record.run["intervals"])
-    for cs in record.bobs_of().values():
+    whole = int(chart.run["intervals"])
+    for cs in chart.bobs_of().values():
         for a, b in zip(cs, cs[1:], strict=False):
             k = int(carries((int(b["i"]) - 1) * LISTED, whole) or 0)
             eighths[k].append(int(b["proper"]) - int(a["proper"]))
             last[k] = max(last[k], (int(b["i"]), list(b["node"])), key=lambda p: p[0])
     means = [
-        carries(sum(s), len(s)) if s and k < int(carries(record.ticks * LISTED, whole) or 0) else None
+        carries(sum(s), len(s)) if s and k < int(carries(chart.ticks * LISTED, whole) or 0) else None
         for k, s in enumerate(eighths)
     ]
     growths: list[list[int]] = []
@@ -314,10 +314,10 @@ def eighths_of(record: Chart) -> tuple[list[int | None], list[list[int]], list[t
 
 
 def era_row(
-    record: Chart, key: str, found: Callable[[list[int]], int | None], words: str, cause: str
+    chart: Chart, key: str, found: Callable[[list[int]], int | None], words: str, cause: str
 ) -> dict[str, Any]:
-    """One era row: SHOWN at the growth found (the eighth completing the reading, its last credit's interval and Node), else NOT SHOWN with the cause, NOT READ with fewer than two growths."""
-    means, growths, last = eighths_of(record)
+    """One era row: SHOWN at the growth found (the eighth completing the reading, its last chime's tick and clock), else NOT SHOWN with the cause, NOT READ with fewer than two growths."""
+    means, growths, last = eighths_of(chart)
     numbers = {
         "mean spacing per eighth (proper count)": means,
         "growth per eighth over the one before (the eighth, the growth)": growths,
@@ -327,17 +327,17 @@ def era_row(
     at = found([g for _k, g in growths])
     if at is None:
         return {key: numbers | {"verdict": f"NOT SHOWN: {cause}"}}
-    i, node = last[growths[at][0]]
+    i, clock = last[growths[at][0]]
     return {
         key: numbers
-        | {"at": node, "verdict": f"SHOWN: {words} (the eighth whose last credit is at {i})"}
+        | {"at": clock, "verdict": f"SHOWN: {words} (the eighth whose last credit is at {i})"}
     }
 
 
-def fast_expansion(record: Chart) -> dict[str, Any]:
-    """Row 58: the fast expansion after the bang, the spacing's growth largest in the first eighths (the first growth above zero and above the next)."""
+def fast_expansion(chart: Chart) -> dict[str, Any]:
+    """Row 58: the fast expansion after the swing, the spacing's growth largest in the first eighths (the first growth above zero and above the next)."""
     return era_row(
-        record,
+        chart,
         "58 the fast expansion after the bang",
         lambda g: 1 if g[0] > 0 and g[0] > g[1] else None,
         "the credits' spacing grows fastest in the first eighths",
@@ -345,10 +345,10 @@ def fast_expansion(record: Chart) -> dict[str, Any]:
     )
 
 
-def deceleration(record: Chart) -> dict[str, Any]:
+def deceleration(chart: Chart) -> dict[str, Any]:
     """Row 59: the deceleration, a later eighth's growth of the spacing smaller than the one before."""
     return era_row(
-        record,
+        chart,
         "59 the deceleration in the clicks",
         lambda g: next((k for k in range(1, len(g)) if g[k] < g[k - 1]), None),
         "an eighth's growth of the spacing smaller than the one before",
@@ -356,15 +356,15 @@ def deceleration(record: Chart) -> dict[str, Any]:
     )
 
 
-def acceleration_in_strikes(record: Chart) -> dict[str, Any]:
-    """Row 60: the acceleration in the clicks, after a slowing an eighth's growth of the spacing larger than the one before."""
+def acceleration_in_strikes(chart: Chart) -> dict[str, Any]:
+    """Row 60: the acceleration in the strikes, after a slowing an eighth's growth of the spacing larger than the one before."""
 
     def quickens(g: list[int]) -> int | None:
         slow = next((k for k in range(1, len(g)) if g[k] < g[k - 1]), len(g))
         return next((j for j in range(slow + 1, len(g)) if g[j] > g[j - 1]), None)
 
     return era_row(
-        record,
+        chart,
         "60 the acceleration in the clicks",
         quickens,
         "after a slowing, an eighth's growth of the spacing larger than the one before",

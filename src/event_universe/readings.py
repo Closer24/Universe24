@@ -1,4 +1,4 @@
-"""The file's one reader (R6 of the readings' map, 2026-10-26, under the owner's word of 12:2x UTC): what the Node reads of the two files at its content before it adds, each a function of the Node's state at every Node alike: the content (the carrier's level), the two paces, the frozen mask, the (cos, sin) pair at a count along the one orbit, the swap's floor, Rule3's integers at a pair and at a row (the former node.rule, node.rule_of and node.content kept by name) and the mean wall of the carrier's two levels (the former Interval.mean_wall); the Link's readings are links.py's and the records' share is gram.share."""
+"""The file's one reader (R6 of the readings' map, 2026-10-26, under the owner's word of 12:2x UTC): what the clock reads of the two files at its load before it adds, each a function of the clock's state at every clock alike: the load (the regulator's notch), the two rates, the stopped mask, the (cos, sin) pair at a count along the one circuit, the turnover's bottom, Rule3's integers at a ratio and at a train (the former node.rule, node.rule_of and node.content kept by name) and the mean teeth of the regulator's two notches (the former Interval.mean_wall); the mesh's readings are meshes.py's and the hands' wind is hands.wind."""
 
 from __future__ import annotations
 
@@ -16,66 +16,66 @@ if TYPE_CHECKING:
     from event_universe.clock import Clock
 
 
-def rates_of(node: Clock, content: Any) -> tuple[Any, Any]:
-    """The Node's two paces from its content, the clock p_0 and the Link's pace p_i (X2: paces(content)), one reading."""
-    return rates.rate_of(node.full_rate, content), rates.mesh_rate_of(node.full_rate, content)
+def rates_of(clock: Clock, c: Any) -> tuple[Any, Any]:
+    """The clock's two rates from its load, the rate p_0 and the mesh rate p_i (X2: rates(load)), one reading."""
+    return rates.rate_of(clock.full_rate, c), rates.mesh_rate_of(clock.full_rate, c)
 
 
-def stopped_of(node: Clock, content: Any) -> Any:
-    """The frozen mask from the content (BH-S1): the Nodes whose Link pace reads 0 at the interval's start, one reading for the interval, the close and the writer."""
-    pace = np.asarray(rates_of(node, content)[1], dtype=object)
-    return pace == 0 if np.ndim(pace) else np.zeros(node.size, dtype=bool)
+def stopped_of(clock: Clock, c: Any) -> Any:
+    """The stopped mask from the load (BH-S1): the clocks whose mesh rate reads 0 at the tick's start, one reading for the tick, the striking and the writer."""
+    mesh_rate = np.asarray(rates_of(clock, c)[1], dtype=object)
+    return mesh_rate == 0 if np.ndim(mesh_rate) else np.zeros(clock.size, dtype=bool)
 
 
-def load(node: Clock) -> Any:
-    """The content at every Node, the level of the carrier's time line."""
-    return np.asarray(stretch.load_of(node.full_rate, node.train(REGULATOR).gears[0].now), dtype=object)
+def load(clk: Clock) -> Any:
+    """The load at every clock, the notch of the regulator's time gear."""
+    return np.asarray(stretch.load_of(clk.full_rate, clk.train(REGULATOR).gears[0].now), dtype=object)
 
 
-def standard_angle(node: Clock, n: Any) -> tuple[int, int]:
-    """The integer (cos, sin) pair at the count n along the one orbit from the seed (features/phase): the orbit a table built as far as the counts reach and stored to the half turn H alone, the first count where the cosine stops falling (3,142 at Gamma 1,000, pi Gamma to the integer; 254,469, the deepest cosine over 400,000 counts, the former docstring's number, H-Confirm-Build-25), every count beyond read by the orbit's own symmetry, the pair at 2 H - n with the sine negated, modulo the full turn 2 H (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372, under the owner's delegation of 08:3x: the table of the heavy quartet legs' beat reached 12,581,080 pairs and killed the run; the walked orbit beyond H kept by name, the mirror's read differing from it by the rounding of each step alone)."""
+def standard_angle(clock: Clock, n: Any) -> tuple[int, int]:
+    """The integer (cos, sin) pair at the count n along the one circuit from the first pair (features/standard): the circuit a table built as far as the counts reach and stored to the half turn H alone, the first count where the cosine stops falling (3,142 at the full rate 1,000, pi times the full rate to the integer; 254,469, the deepest cosine over 400,000 counts, the former docstring's number, H-Confirm-Build-25), every count beyond read by the circuit's own symmetry, the pair at 2 H - n with the sine negated, modulo the full turn 2 H (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372, under the owner's delegation of 08:3x: the table of the heavy quartet legs' beat reached 12,581,080 pairs and killed the run; the walked circuit beyond H kept by name, the symmetry's read differing from it by the rounding of each step alone)."""
     n = int(n)
     s = 1 if n >= 0 else -1
     n = abs(n)
-    while node.circuit_half is None and len(node.circuit) <= n:
-        c, sn = node.circuit_gears[-1]
-        c, sn = standard.act(c, node.full_rate, 1), standard.act(sn, node.full_rate, 1)
-        if int(c[0]) >= node.circuit[-1][0] and len(node.circuit) > 1:
-            node.circuit_half = len(node.circuit) - 1
+    while clock.circuit_half is None and len(clock.circuit) <= n:
+        c, sn = clock.circuit_gears[-1]
+        c, sn = standard.act(c, clock.full_rate, 1), standard.act(sn, clock.full_rate, 1)
+        if int(c[0]) >= clock.circuit[-1][0] and len(clock.circuit) > 1:
+            clock.circuit_half = len(clock.circuit) - 1
             break
-        node.circuit_gears = [(c, sn)]
-        node.circuit.append((int(c[0]), int(sn[0])))
-    if node.circuit_half is not None and n > node.circuit_half:
-        n = remainder(n, node.circuit_half + node.circuit_half)
-        if n > node.circuit_half:
-            n, s = node.circuit_half + node.circuit_half - n, -s
-    c_, sn_ = node.circuit[n]
+        clock.circuit_gears = [(c, sn)]
+        clock.circuit.append((int(c[0]), int(sn[0])))
+    if clock.circuit_half is not None and n > clock.circuit_half:
+        n = remainder(n, clock.circuit_half + clock.circuit_half)
+        if n > clock.circuit_half:
+            n, s = clock.circuit_half + clock.circuit_half - n, -s
+    c_, sn_ = clock.circuit[n]
     return c_, s * sn_
 
 
-def gearing(node: Clock, pair: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Gearing:
-    """Rule3's integers of a pair at the Node's paces from the content, in the carrier's unit (PM-S1)."""
-    clock, pace = rates_of(node, c)
-    return rule3.gearing(pair[0], pair[1], node.full_rate, clock, pace, factors, node.G)
+def gearing(clock: Clock, ratio: tuple[int, int], c: Any, factors: tuple[Any, ...]) -> rule3.Gearing:
+    """Rule3's integers of a ratio at the clock's rates from the load, in the regulator's unit (PM-S1)."""
+    rate, mesh_rate = rates_of(clock, c)
+    return rule3.gearing(ratio[0], ratio[1], clock.full_rate, rate, mesh_rate, factors, clock.G)
 
 
-def gearing_of(node: Clock, r: Train, c: Any, factors: tuple[Any, ...]) -> rule3.Gearing:
-    """A row's rule: Rule3's integers at its pair and the Node's paces, or, for the row with its own wall, no Links and the own weight 2 w (next = 2 now - before + the write inside the division)."""
+def gearing_of(clock: Clock, r: Train, c: Any, factors: tuple[Any, ...]) -> rule3.Gearing:
+    """A train's gearing: Rule3's integers at its ratio and the clock's rates, or, for the train with its own teeth, no meshes and the own hold 2 teeth (next = 2 now - before + the drive inside the carry)."""
     if r.teeth is not None:
         return rule3.Gearing(tuple(0 for _ in range(SPOKES)), r.teeth + r.teeth, r.teeth, 0)
     assert r.ratio is not None
-    return gearing(node, r.ratio, c, factors)
+    return gearing(clock, r.ratio, c, factors)
 
 
-def mean_teeth(node: Clock, line: Gear) -> Any:
-    """The mean wall (w div 2)(X_before + X_now) of the carrier's time line as given: the rows' own before the carrier's act for the kick and the lays, the act's at its end for the riding lines' divisions."""
-    return rule3.mean_teeth_of(node.teeth, line.before, line.now)
+def mean_teeth(clock: Clock, gear: Gear) -> Any:
+    """The mean teeth (teeth div 2)(stretch_before + stretch_now) of the regulator's time gear as given: the trains' own before the regulator's act for the impulse and the advances, the act's at its end for the driven gears' carries."""
+    return rule3.mean_teeth_of(clock.teeth, gear.before, gear.now)
 
 
-def bottom(node: Clock) -> int:
-    """The carrier's level at the content -Gamma, the swap's floor."""
+def bottom(clock: Clock) -> int:
+    """The regulator's notch at the load -full_rate, the turnover's bottom."""
     return int(
         np.asarray(
-            stretch.stretch_of(node.full_rate, np.array([-node.full_rate], dtype=object)), dtype=object
+            stretch.stretch_of(clock.full_rate, np.array([-clock.full_rate], dtype=object)), dtype=object
         ).reshape(-1)[0]
     )

@@ -1,4 +1,4 @@
-"""The helpers of the law's tests: the test worlds under tests/worlds (the toy's universe at den 15,162,856,759,112,389 and its seeds: the 3-cube at 20 intervals, the 5-cube hole seed at 60, the chiral seed at 60), a Node built from one (`node_of`), a module loaded by its path (`load_file`), the refusal by name (`refused`), the first form of Rule3 written by hand (`arrivals_rule3`, in no file of src/), the state's integers for the run back (`state_of`, `run_back_exact`)."""
+"""The helpers of the law's tests: the test pieces under tests/worlds (the toy's calibre at rim 15,162,856,759,112,389 and its settings: the 3-cube at 20 ticks, the 5-cube hole setting at 60, the chiral setting at 60), a clock built from one (`node_of`), a module loaded by its path (`load_file`), the refusal by name (`refused`), the first form of Rule3 written by hand (`arrivals_rule3`, in no file of src/), the state's integers for the rewind (`state_of`, `run_back_exact`)."""
 
 from __future__ import annotations
 
@@ -26,9 +26,9 @@ def world_of(name: str) -> tuple[dict[str, Any], dict[str, Any]]:
 
 
 def node_of(name: str, **changes: Any) -> Clock:
-    """A Node from a test world, the world's keys changed as given (a shape, a seed, an intervals count)."""
-    universe, world = world_of(name)
-    return Clock(universe, {**world, **changes})
+    """A clock from a test piece, the piece's keys changed as given (a size, a setting, a count of ticks)."""
+    calibre, piece = world_of(name)
+    return Clock(calibre, {**piece, **changes})
 
 
 def load_file(name: str, path: Path) -> Any:
@@ -47,36 +47,36 @@ def refused(match: str, call: Callable[..., Any], *args: Any, **keys: Any) -> No
 
 
 def arrivals_rule3(
-    reads: Any, arrivals: Any, self_coefficient: Any, wall: Any, now: Any, before: Any, remainder: Any
+    grips: Any, pulls: Any, hold: Any, teeth: Any, now: Any, before: Any, fine: Any
 ) -> tuple[Any, Any]:
-    """Rule3's first form by hand: w a_next + r' = SUM_j R_j m_j + S a_now - w a_before + r, the one carried division."""
-    total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
-    return carry(total + self_coefficient * now - wall * before, wall, remainder, 1)
+    """Rule3's first form by hand: w a_next + r' = SUM_j R_j m_j + S a_now - w a_before + r, the one carry."""
+    total = sum(grip * pull for grip, pull in zip(grips, pulls, strict=True))
+    return carry(total + hold * now - teeth * before, teeth, fine, 1)
 
 
-def state_of(node: Clock) -> str:
-    """Every level and remainder of the Node's state as one text, the run back's comparison bit for bit."""
-    return record.state_text(node) + f" {node.ticks}"
+def state_of(clock: Clock) -> str:
+    """Every notch and fine tooth of the clock's state as one text, the rewind's comparison bit for bit."""
+    return record.state_text(clock) + f" {clock.ticks}"
 
 
-def run_back_exact(node: Clock, n: int) -> int:
-    """The count of the n states returned exactly by n intervals forward and n back."""
+def run_back_exact(clock: Clock, n: int) -> int:
+    """The count of the n states returned exactly by n ticks forward and n back."""
     kept = []
     for _ in range(n):
-        kept.append(state_of(node))
-        node.tick()
-    return sum(state_of(node) == kept[n - 1 - k] for k in range(n) if not node.tick(-1))
+        kept.append(state_of(clock))
+        clock.tick()
+    return sum(state_of(clock) == kept[n - 1 - k] for k in range(n) if not clock.tick(-1))
 
 
-def level_at(node: Clock, content: int) -> int:
-    """The carrier's level at a content."""
+def level_at(clock: Clock, load: int) -> int:
+    """The regulator's notch at a load."""
     return int(
         np.asarray(
-            stretch.stretch_of(node.full_rate, np.array([content], dtype=object)), dtype=object
+            stretch.stretch_of(clock.full_rate, np.array([load], dtype=object)), dtype=object
         ).reshape(-1)[0]
     )
 
 
-def wronskian(re: Any, im: Any) -> Any:
-    """The plane's bilinear W = re_now im_before - im_now re_before at every Node (the former links.wronskian, read by the tests alone)."""
-    return cross(re.now, im.now, re.before, im.before)
+def wronskian(three: Any, twelve: Any) -> Any:
+    """The hand's bilinear W = three_now twelve_before - twelve_now three_before at every clock (the former links.wronskian, read by the tests alone)."""
+    return cross(three.now, twelve.now, three.before, twelve.before)

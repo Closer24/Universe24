@@ -1,4 +1,4 @@
-"""The rows of the Node as the universe file names them, no name and no role (the owner's word of 2026-10-25, there is no if): a row is a shape (its count of lines) with a pair (num, den) for Rule3's rule or a wall of its own for a row with no Links; its lines are built here with their walls by shape, the rows ordered for the acts (a shape the law does not name refused by name at the loader, loader/world); the lookups choose a row by its numbers alone. The phase line's amplitude is the universe file's `amplitude`, declared from outside and read at the load (loader/world, node.X), carried above the floor derived from Gamma (phase.floor); no width and no room of the machine stands in the engine (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; the former width constant and the room cut from it struck, the value kept in the file so that every record stands bit for bit)."""
+"""The trains of the clock as the calibre names them, no name and no role (the owner's word of 2026-10-25, there is no if): a train is a size (its count of gears) with a ratio (pinion, rim) for Rule3's gearing or teeth of its own for a train with no meshes; its gears are built here with their teeth by size, the trains ordered for the acts (a size the law does not name refused by name at the assembly, assembly/piece); the lookups choose a train by its numbers alone. The standard length is the calibre's `amplitude`, declared from outside and read at the assembly (assembly/piece, clock.standard_length), carried above the shortest hand derived from Gamma (standard.shortest_hand); no width and no room of the machine stands in the engine (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; the former width constant and the room cut from it struck, the value kept in the file so that every chart stands bit for bit)."""
 
 from __future__ import annotations
 
@@ -10,140 +10,140 @@ from event_universe.core.acts import mid
 from event_universe.core.rule3 import carries, held_teeth
 from event_universe.core.spokes import AXES, SPOKES
 
-REGULATOR = 1 + AXES + AXES + AXES  # the regulator: its time gear, AXES tensions, fluxes and shears
-OFFSET = AXES + 1  # the shape of the row at (den, den): its time line and its AXES odd lines
-HAND = 2  # the shape of a conjugate pair of records
-POWER_TIME = 4  # the vacuum's balance: X, the bracket and the clock; POWER_AXIS the clock's square
+REGULATOR = 1 + AXES + AXES + AXES  # the regulator: its time gear, AXES tensions, flows and shears
+OFFSET = AXES + 1  # the size of the train at (rim, rim): its time gear and its AXES odd gears
+HAND = 2  # the size of a hand: its two gears, a conjugate pair
+POWER_TIME = 4  # the vacuum's balance: X, the bracket and the rate; POWER_AXIS the rate's square
 POWER_AXIS = 2
 Ratio = tuple[int, int]
 
 
-def zeros(shape: tuple[int, ...]) -> Any:
-    """An integer array of the board's shape at 0 (Python integers, no width)."""
-    return np.zeros(shape, dtype=object)
+def zeros(size: tuple[int, ...]) -> Any:
+    """An integer array of the great clock's size at 0 (Python integers, no width)."""
+    return np.zeros(size, dtype=object)
 
 
 class Train:
-    """One row of the Node as the universe file names it: a shape (its count of lines), a pair (num, den) for Rule3's rule, or a wall of its own for a row with no Links (the phase row); its lines."""
+    """One train of the clock as the calibre names it: a size (its count of gears), a ratio (pinion, rim) for Rule3's gearing, or teeth of its own for a train with no meshes (the ratchet); its gears."""
 
     __slots__ = ("size", "ratio", "teeth", "gears", "twin")
 
-    def __init__(self, shape: int, pair: Ratio | None, wall: int | None, lines: list[Gear]) -> None:
-        self.size, self.ratio, self.teeth, self.gears = shape, pair, wall, lines
+    def __init__(self, size: int, ratio: Ratio | None, teeth: int | None, gears: list[Gear]) -> None:
+        self.size, self.ratio, self.teeth, self.gears = size, ratio, teeth, gears
         self.twin: Train | None = None
 
     @property
     def spring(self) -> int | None:
-        """The pair's gap den - num, None for the row with its own wall."""
+        """The ratio's spring rim - pinion, None for the train with its own teeth."""
         return None if self.ratio is None else self.ratio[1] - self.ratio[0]
 
 
 class Gear:
-    """One line of a row: its two levels, its rotation remainder at the rule's wall `wall`, and where the row writes it, its write remainder `wr` at the write wall `wwall`. A lay names a line's two levels, now and before, in that order (two per line, the plane's count PLANE at the slices)."""
+    """One gear of a train: its two notches, its fine tooth `fine` at the gearing's teeth `teeth`, and where the train drives it, its drive fine tooth `dfine` at the drive teeth `dteeth`. A setting names a gear's two notches, now and before, in that order (two per gear, the hand's count HAND at the slices)."""
 
     __slots__ = ("now", "before", "fine", "teeth", "dfine", "dteeth")
 
     def __init__(
-        self, now: Any, before: Any, rem: Any, wall: Any, wr: Any = None, wwall: Any = None
+        self, now: Any, before: Any, fine: Any, teeth: Any, dfine: Any = None, dteeth: Any = None
     ) -> None:
-        self.now, self.before, self.fine = now, before, rem
-        self.teeth, self.dfine, self.dteeth = wall, wr, wwall
+        self.now, self.before, self.fine = now, before, fine
+        self.teeth, self.dfine, self.dteeth = teeth, dfine, dteeth
 
     def copy(self) -> Gear:
-        """The line's arrays copied, its walls shared."""
-        wr = None if self.dfine is None else self.dfine.copy()
-        return Gear(self.now.copy(), self.before.copy(), self.fine.copy(), self.teeth, wr, self.dteeth)
+        """The gear's arrays copied, its teeth shared."""
+        d = None if self.dfine is None else self.dfine.copy()
+        return Gear(self.now.copy(), self.before.copy(), self.fine.copy(), self.teeth, d, self.dteeth)
 
 
 def drive_teeth(
-    shape: int, pair: Ratio | None, den: int, gamma: int, action: int, trace: int
+    size: int, ratio: Ratio | None, rim: int, full_rate: int, key: int, trace: int
 ) -> list[Any]:
-    """The write walls of a row's lines by its shape: the carrier's time line and its other lines the held walls at the file's trace weight (TW-S1, the owner's word of 2026-10-26, 07:5x UTC: the trace's weight is the universe file's integer, dimensionless, 6 in nature's files, the one value with a sentence in nature, light having no trace; 54 the records' value of 2026-10-25 kept by name, ga2's file at it until its re-lay; rule3.held_wall at the powers POWER_TIME 4 of the time line and POWER_AXIS 2 of the nine axis lines, K-S1 to K-S3, Y-S1), the shape-4 row's four lines T, the plane at the universe's own pair (den, den), the emitter, its first line T (the lay of W-S1), another plane none."""
-    if shape == REGULATOR:
-        powers = (POWER_TIME, *[POWER_AXIS] * (shape - 1))
-        return [held_teeth(trace, den, gamma, action, p) for p in powers]
-    if shape == OFFSET:
-        return [action] * shape
-    if shape == HAND and pair == (den, den):
-        return [action, None]
-    return [None] * shape
+    """The drive teeth of a train's gears by its size: the regulator's time gear and its other gears the held teeth at the file's trace weight (TW-S1, the owner's word of 2026-10-26, 07:5x UTC: the trace's weight is the calibre's integer, dimensionless, 6 in nature's files, the one value with a sentence in nature, light having no trace; 54 the charts' value of 2026-10-25 kept by name, ga2's file at it until its re-set; rule3.held_teeth at the powers POWER_TIME 4 of the time gear and POWER_AXIS 2 of the nine axis gears, K-S1 to K-S3, Y-S1), the offset train's four gears T, the hand at the calibre's own ratio (rim, rim), the unsprung hand, its first gear T (the advance of W-S1), another hand none."""
+    if size == REGULATOR:
+        powers = (POWER_TIME, *[POWER_AXIS] * (size - 1))
+        return [held_teeth(trace, rim, full_rate, key, p) for p in powers]
+    if size == OFFSET:
+        return [key] * size
+    if size == HAND and ratio == (rim, rim):
+        return [key, None]
+    return [None] * size
 
 
 def gears_of(
-    board: tuple[int, ...], shape: int, pair: Ratio | None, wall: int | None, w: int, walls: list[Any]
+    size: tuple[int, ...], gears: int, ratio: Ratio | None, teeth: int | None, w: int, dteeth: list[Any]
 ) -> list[Gear]:
-    """A row's lines at the start: every level 0, every remainder at half its wall (the rule's w, or the row's own wall), a write remainder at half the write wall where the line writes."""
-    if wall is not None:
-        return [Gear(zeros(board), zeros(board), zeros(board) + mid(wall), wall)]
-    drives = [None if ww is None else zeros(board) + mid(ww) for ww in walls]
+    """A train's gears at the start: every notch 0, every fine tooth at half its teeth (the gearing's w, or the train's own teeth), a drive fine tooth at half the drive teeth where the gear is driven."""
+    if teeth is not None:
+        return [Gear(zeros(size), zeros(size), zeros(size) + mid(teeth), teeth)]
+    drives = [None if dt is None else zeros(size) + mid(dt) for dt in dteeth]
     return [
-        Gear(zeros(board), zeros(board), zeros(board) + mid(w), w, d, ww)
-        for d, ww in zip(drives, walls, strict=True)
+        Gear(zeros(size), zeros(size), zeros(size) + mid(w), w, d, dt)
+        for d, dt in zip(drives, dteeth, strict=True)
     ]
 
 
-def order_key(row: Train) -> tuple[bool, int]:
-    """The acts' order as a key compared and never tested: the row with its own wall first, then every row by the count of lines it writes, a row whose write reads other rows after them (the records writing nothing, the emitter its one line, the shape-4 row its four, the carrier its ten), the ties in the file's order."""
-    written = sum(1 for line in row.gears if line.dteeth is not None)
-    return row.teeth is None, 0 if row.twin is not None else written
+def order_key(train: Train) -> tuple[bool, int]:
+    """The acts' order as a key compared and never tested: the train with its own teeth first, then every train by the count of its gears with a drive, a train whose drive reads other trains after them (the hands with no drive, the unsprung hand its one gear, the offset train its four, the regulator its ten), the ties in the file's order."""
+    written = sum(1 for gear in train.gears if gear.dteeth is not None)
+    return train.teeth is None, 0 if train.twin is not None else written
 
 
 def trains_of(calibre: dict[str, Any], size: tuple[int, ...], w: int) -> tuple[list[Train], list[Train]]:
-    """The rows from the universe file's list, each a shape with a pair or a wall of its own, in the acts' order, and the same rows in the file's order (a lay names a row by its index); the file's shapes refused by name: a shape-1 row with a pair (the emitter is the plane whose pair is (den, den)), a count of the carrier, the shape-4 row, the emitter or the walled row other than one, the carrier off (den - den div Gamma, den), the shape-4 row off (den, den), no plane at another pair; a pair named in several rows is admitted as written, each row a record of its own with the same numbers (CS5-S2, the owner's word of 2026-10-25, 22:50 UTC, through the Boss: no row refused for its pair's repetition)."""
+    """The trains from the calibre's list, each a size with a ratio or teeth of its own, in the acts' order, and the same trains in the file's order (a setting names a train by its index); the file's sizes refused by name: a size-1 train with a ratio (the unsprung hand is the hand whose ratio is (rim, rim)), a count of the regulator, the offset train, the unsprung hand or the ratchet other than one, the regulator off (rim - rim div Gamma, rim), the offset train off (rim, rim), no hand at another ratio; a ratio named in several trains is admitted as written, each train a hand of its own with the same numbers (CS5-S2, the owner's word of 2026-10-25, 22:50 UTC, through the Boss: no train refused for its ratio's repetition)."""
     ints = calibre["integers"]
-    den, gamma, action = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
+    rim, full_rate, key = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
     trace = int(ints["trace"])
     by_index: list[Train] = []
-    clock = (den - carries(den, gamma), den)
+    rate_ratio = (rim - carries(rim, full_rate), rim)
     for r in calibre["rows"]:
-        shape = int(r["shape"])
-        pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
-        wall = None if r.get("wall") is None else int(r["wall"])
-        if shape == 1 and wall is None:
+        gears = int(r["shape"])
+        ratio = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
+        teeth = None if r.get("wall") is None else int(r["wall"])
+        if gears == 1 and teeth is None:
             raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
-        if pair is not None and pair[0] < pair[1] and pair != clock and shape == HAND + HAND:
-            spin = [SPOKES * (gamma + gamma)] * HAND
-            up = Train(HAND, pair, wall, gears_of(size, HAND, pair, wall, w, spin))
-            down = Train(HAND, pair, wall, gears_of(size, HAND, pair, wall, w, spin))
+        if ratio is not None and ratio[0] < ratio[1] and ratio != rate_ratio and gears == HAND + HAND:
+            spin = [SPOKES * (full_rate + full_rate)] * HAND
+            up = Train(HAND, ratio, teeth, gears_of(size, HAND, ratio, teeth, w, spin))
+            down = Train(HAND, ratio, teeth, gears_of(size, HAND, ratio, teeth, w, spin))
             up.twin, down.twin = down, up
             by_index.append(up)
             continue
-        walls = drive_teeth(shape, pair, den, gamma, action, trace)
-        by_index.append(Train(shape, pair, wall, gears_of(size, shape, pair, wall, w, walls)))
+        dteeth = drive_teeth(gears, ratio, rim, full_rate, key, trace)
+        by_index.append(Train(gears, ratio, teeth, gears_of(size, gears, ratio, teeth, w, dteeth)))
     everything = [t for r in by_index for t in ((r,) if r.twin is None else (r, r.twin))]
-    rows = sorted(everything, key=order_key)
-    walled = [r for r in rows if r.teeth is not None]
-    planes = [r for r in rows if r.size == HAND]
-    emitters = [r for r in planes if r.ratio == (den, den)]
-    carriers = [r for r in rows if r.size == REGULATOR]
-    potentials = [r for r in rows if r.size == OFFSET]
-    if len(walled) != 1 or len(emitters) != 1 or len(carriers) != 1 or len(potentials) != 1:
+    trains = sorted(everything, key=order_key)
+    ratchets = [r for r in trains if r.teeth is not None]
+    hands = [r for r in trains if r.size == HAND]
+    unsprung = [r for r in hands if r.ratio == (rim, rim)]
+    regulators = [r for r in trains if r.size == REGULATOR]
+    offsets = [r for r in trains if r.size == OFFSET]
+    if len(ratchets) != 1 or len(unsprung) != 1 or len(regulators) != 1 or len(offsets) != 1:
         raise ValueError(
             "the universe names one row with its own wall, one plane at the gap 0, one shape-10 row and one shape-4 row"
         )
-    if carriers[0].ratio != clock:
+    if regulators[0].ratio != rate_ratio:
         raise ValueError(
             "the shape-10 row is the clock's one level: its pair (den - den div Gamma, den)"
         )
-    if potentials[0].ratio != (den, den):
+    if offsets[0].ratio != (rim, rim):
         raise ValueError("the shape-4 row stands at (den, den)")
-    if len(planes) == len(emitters):
+    if len(hands) == len(unsprung):
         raise ValueError("the universe names no plane row with a gap")
-    return rows, by_index
+    return trains, by_index
 
 
-def train_of(rows: list[Train], shape: int, pair: tuple[int, int] | None = None) -> Train:
-    """The one row of the shape with a pair, and of the pair where given, chosen by the numbers alone (the emitter: the plane of the potential's pair)."""
+def train_of(trains: list[Train], size: int, ratio: tuple[int, int] | None = None) -> Train:
+    """The one train of the size with a ratio, and of the ratio where given, chosen by the numbers alone (the unsprung hand: the hand of the offset's ratio)."""
     return next(
-        r for r in rows if r.size == shape and r.teeth is None and (pair is None or r.ratio == pair)
+        r for r in trains if r.size == size and r.teeth is None and (ratio is None or r.ratio == ratio)
     )
 
 
-def ratchet_of(rows: list[Train]) -> Train:
-    """The one row with a wall of its own and no Links."""
-    return next(r for r in rows if r.teeth is not None)
+def ratchet_of(trains: list[Train]) -> Train:
+    """The one train with teeth of its own and no meshes."""
+    return next(r for r in trains if r.teeth is not None)
 
 
-def hands_of(rows: list[Train]) -> list[Train]:
-    """The record rows in the acts' order, the planes (the emitter among them)."""
-    return [r for r in rows if r.size == HAND]
+def hands_of(trains: list[Train]) -> list[Train]:
+    """The hand trains in the acts' order, the hands (the unsprung hand among them)."""
+    return [r for r in trains if r.size == HAND]
