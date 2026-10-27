@@ -235,7 +235,7 @@ The Boss's head (ledger row 264) read whole: the two files of src it moved (phen
 
 **Asked of the owner, as in section 14:** R12 with R1; the coupling's general form K / Gamma (Y-S1); the third bound's tick resolution; and the remainder's one mirror about its origin (F48-S1).
 
-## 16. The register at 13f58bb25, the close's books (2026-10-27, 23:4x UTC)
+## 16. The register at 13f58bb25, the close's books (2026-10-27, 23:3x UTC)
 
 The Boss's head (ledger row 265) read whole: the four files of src it moved (striking.py 389 lines, +34; unspring.py 330, +21; reckoner.py 325, +4; strikes.py 399, unchanged in length), the tests (the books test, the control's counts, the committed charts' verdicts) and the three records; the counts by `tools/engine_gates.py` against e41c51e6b and the Scribe's lister and AST scan. Sections 10 to 15 stand; files the head did not touch keep their lines.
 
