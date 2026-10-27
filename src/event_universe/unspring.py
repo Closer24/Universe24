@@ -36,7 +36,7 @@ def fitted_advanced(
     ends = []
     for where, sense, p in ((minus, -1, planes[0]), (plus, 1, planes[1])):
         levels = levels_of(where, sense)
-        ends.append(push_per_gear(node, node.hands()[p].gears, row.ratio[0], where, levels))
+        ends.append(push_of(node, node.hands()[p].gears, where, levels, row.ratio[0]))
         advance(node, p, where, levels)
     senses = [senses_at(node.hands()[p], minus, plus)[k] for k, p in enumerate(planes)]
     return [a + b for a, b in zip(*ends, strict=True)], senses, stood, ends
@@ -57,22 +57,6 @@ def unsprung_notches(
         return tuple(d if j == HAND * k else 0 for j in range(HAND * len(row.gears)))
 
     return levels_of
-
-
-def push_per_gear(
-    node: Clock,
-    lines: list[Gear],
-    num: int,
-    where: tuple[int, ...],
-    levels: tuple[int, ...],
-    sign: int = 1,
-) -> list[int]:
-    """The momentum a lay of `levels` (now, before per line) at the Node books, summed over the record's lines as given, `lines` the board the reading is at (the live board for a lay, the interval's start for a take's end, CL-S2) and `num` the record's pair (take.momentum_of per line; the form generic in the lines)."""
-    found = [0] * AXES
-    for line, d_now, d_before in zip(lines, levels[0::HAND], levels[1::HAND], strict=True):
-        dj = push_of(node, line.now, line.before, where, sign * d_now, sign * d_before, num)
-        found = [a + b for a, b in zip(found, dj, strict=True)]
-    return found
 
 
 def fitted_windings_of(
@@ -164,8 +148,8 @@ def unspring_end(node: Clock, rec: int, read: Read) -> tuple[dict[str, Any], lis
     where, wall, levels, fall, _k, _rem_was, _owed, r = read
     row = node.hands()[r]
     assert row.ratio is not None
-    live = push_per_gear(node, row.gears, row.ratio[0], where, tuple(levels), -1)
-    moment = push_per_gear(node, node.start_gears[r], row.ratio[0], where, tuple(levels), -1)
+    live = push_of(node, row.gears, where, levels, row.ratio[0], -1)
+    moment = push_of(node, node.start_gears[r], where, levels, row.ratio[0], -1)
     advance(node, r, where, levels, -1)
     node.strikes[where] -= 1
     size = sum(abs(x) for x in levels)
@@ -193,7 +177,7 @@ def unsprung_end(node: Clock, rec: int, read: Read) -> dict[str, Any]:
     move(node, rec, k, where, toward * levels)
     node.strikes[where] += 1
     node.slack[where] = fall - owed
-    node.last_push = push_of(node, z.now, z.before, where, d_now=toward * levels, num=row.ratio[0])
+    node.last_push = push_of(node, [z], where, (toward * levels, 0), row.ratio[0])
     node.last_recoil = recoil(node, where, node.last_push, int(node.start_rate[where]), 1)
     return {
         "node": list(where),

@@ -294,7 +294,7 @@ class Tick:
             laid, pair = line.now - levels, node.unsprung().ratio
             assert pair is not None
             for at in (at for at in np.ndindex(node.size) if int(laid[at])):
-                dp = push_of(node, line.now, line.before, at, d_now=int(laid[at]), num=pair[0])
+                dp = push_of(node, [line], at, (int(laid[at]), 0), pair[0])
                 self.tallies.append((at, dp, int(node.start_rate[at])))
                 recoil(node, at, dp, int(node.start_rate[at]), 1)
         for line, n in zip(node.train(OFFSET).gears, [None, *self.lead], strict=True):
