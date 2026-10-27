@@ -9,14 +9,14 @@ from pathlib import Path
 
 import numpy as np
 
-from event_universe import merger, take
 from event_universe import run as record
-from event_universe.core import paces
+from event_universe import unspring, unwind
+from event_universe.core import rates
 from event_universe.core import rule3 as core
-from event_universe.core.acts import mirror as mirrored
-from event_universe.core.ports import AXES
-from event_universe.core.rule3 import link_factor, mass, rule3, rule_integers
-from event_universe.rows import CARRIER
+from event_universe.core.acts import flip as mirrored
+from event_universe.core.rule3 import gearing, mesh_factor, rule3, spring
+from event_universe.core.spokes import AXES
+from event_universe.trains import REGULATOR
 from tests.laws import arrivals_rule3, node_of
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,24 +37,24 @@ def test_the_coefficients_are_the_laws_line_and_the_isotropic_ones_at_zero_axis_
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, 100, GAMMA])
         content, unit = rng.randint(-gamma + 1, gamma - 1), rng.choice([1, 2, 16])
         factors = tuple(unit * unit + rng.randint(-50, 50) for _ in range(6))
-        clock, p = paces.clock(gamma, content), paces.link_pace(gamma, content)
-        assert rule_integers(num, den, gamma, clock, p)[:3] == law_line(num, den, gamma, clock, p)
-        found = rule_integers(num, den, gamma, clock, p, factors, unit)[:3]
+        clock, p = rates.rate(gamma, content), rates.mesh_rate(gamma, content)
+        assert gearing(num, den, gamma, clock, p)[:3] == law_line(num, den, gamma, clock, p)
+        found = gearing(num, den, gamma, clock, p, factors, unit)[:3]
         assert found == law_line(num, den, gamma, clock, p, factors, unit)
-        plain = rule_integers(num, den, gamma, clock, p, None, unit)[:3]
-        assert rule_integers(num, den, gamma, clock, p, (unit * unit,) * 6, unit)[:3] == plain
-        (read, *_), self_iso, wall = rule_integers(num, den, gamma, clock, p)[:3]
+        plain = gearing(num, den, gamma, clock, p, None, unit)[:3]
+        assert gearing(num, den, gamma, clock, p, (unit * unit,) * 6, unit)[:3] == plain
+        (read, *_), self_iso, wall = gearing(num, den, gamma, clock, p)[:3]
         assert plain == ((read * unit * unit,) * 6, self_iso * unit * unit, wall * unit * unit)
         vacuum = ((2 * gamma**2 * num,) * 6, 0, 6 * den * gamma**2)
-        assert rule_integers(num, den, gamma, gamma, gamma)[:3] == vacuum
+        assert gearing(num, den, gamma, gamma, gamma)[:3] == vacuum
         q = factors[0]
         along = (2 * q * p**2 * num,) + (read,) * 5, self_iso - 2 * num * p**2 * (q - 1), wall
-        assert rule_integers(num, den, gamma, clock, p, (q,) + (1,) * 5)[:3] == along
-    assert (link_factor(GAMMA, 16, 0), link_factor(GAMMA, 16, GAMMA)) == (256, 0)
-    assert link_factor(GAMMA, 16, -153) == 264 and link_factor(GAMMA, 16, GAMMA // 512) == 255
+        assert gearing(num, den, gamma, clock, p, (q,) + (1,) * 5)[:3] == along
+    assert (mesh_factor(GAMMA, 16, 0), mesh_factor(GAMMA, 16, GAMMA)) == (256, 0)
+    assert mesh_factor(GAMMA, 16, -153) == 264 and mesh_factor(GAMMA, 16, GAMMA // 512) == 255
     for num, den, c in ((800, 809, 500), (3200, 3227, 2000), (1, 1, 0), (1, 1, 2000)):
-        p_0, p_i = paces.clock(GAMMA, c), paces.link_pace(GAMMA, c)
-        (read, *_), self_coefficient, wall = rule_integers(num, den, GAMMA, p_0, p_i)[:3]
+        p_0, p_i = rates.rate(GAMMA, c), rates.mesh_rate(GAMMA, c)
+        (read, *_), self_coefficient, wall = gearing(num, den, GAMMA, p_0, p_i)[:3]
         clock, link = Fraction(p_0 * p_0, GAMMA**2), Fraction(p_i * p_i, GAMMA**2)
         assert Fraction(6 * read + self_coefficient, wall) == 2 - 2 * clock * (1 - Fraction(num, den))
         for cosine in (1, 0, -1):
@@ -69,14 +69,14 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
         num, den, gamma = rng.randint(1, 1000), rng.randint(1, 1000), rng.choice([1, GAMMA])
         content = rng.randint(-gamma + 1, gamma - 1)
         factors = tuple(16 * 16 - rng.randint(0, 30) for _ in range(6))
-        clock, pace = paces.clock(gamma, content), paces.link_pace(gamma, content)
-        reads, self_coefficient, wall = rule_integers(num, den, gamma, clock, pace, factors, 16)[:3]
+        clock, pace = rates.rate(gamma, content), rates.mesh_rate(gamma, content)
+        reads, self_coefficient, wall = gearing(num, den, gamma, clock, pace, factors, 16)[:3]
         *arrivals, now, before = (rng.randint(-(10**6), 10**6) for _ in range(8))
         remainder = rng.randint(0, wall - 1)
         total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
         total += self_coefficient * now - wall * before + remainder
         fluxes = sum(read * (arrival - now) for read, arrival in zip(reads, arrivals, strict=True))
-        own = mass(num, den, clock, 16)
+        own = spring(num, den, clock, 16)
         assert own == 2 * wall - self_coefficient - sum(reads)  # the mass, the identity of the two forms
         nxt, carried = rule3(fluxes, own, wall, now, before, remainder)
         assert (nxt, carried) == (total // wall, total % wall) and 0 <= carried < wall
@@ -91,8 +91,8 @@ def test_the_one_rule_steps_forward_and_back_exactly_on_integers_and_int64_array
     content = generator.integers(-3000, 3000, shape, dtype=np.int64)
     arrivals = tuple(generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(6))
     now, before = (generator.integers(-(10**6), 10**6, shape, dtype=np.int64) for _ in range(2))
-    reads, self_coefficient, wall = rule_integers(
-        num, den, GAMMA, paces.clock_of(GAMMA, content), paces.link_pace_of(GAMMA, content)
+    reads, self_coefficient, wall = gearing(
+        num, den, GAMMA, rates.rate_of(GAMMA, content), rates.mesh_rate_of(GAMMA, content)
     )[:3]
     remainder = generator.integers(0, 10**9, shape, dtype=np.int64) % wall
     fluxes = reads[0] * sum(arrival - now for arrival in arrivals)
@@ -110,12 +110,12 @@ LAW_INTEGERS, TOOL_INTEGERS = frozenset({0, 1}), frozenset({0, 1, 2, 3, 4, 6})
 # the shapes, the powers and the width (the trace's 54 the file's key); the Link wall's 4; the half widths; the turns;
 # the writer's marks; quartet.py's item 7 (the NamedTuples) deferred, its three as they stand
 FILE_INTEGERS = {
-    "ports.py": frozenset({2, 3}),
+    "spokes.py": frozenset({2, 3}),
     "rule3.py": frozenset({2, 3, 4}),
-    "rows.py": frozenset({2, 4, 8, 10}),
-    "links.py": frozenset({4}),
-    "seed.py": frozenset({2, 3}),
-    "wave.py": frozenset({4}),
+    "trains.py": frozenset({2, 4, 8, 10}),
+    "meshes.py": frozenset({4}),
+    "setting.py": frozenset({2, 3}),
+    "cycle.py": frozenset({4}),
     "run.py": frozenset({12, 24, 60}),
     "acts.py": frozenset(
         {2}
@@ -124,11 +124,12 @@ FILE_INTEGERS = {
 # the record's readers, Animate's since 00:42 UTC (their constants named at the module's top on reader-5), no act of the Node;
 # the writer run.py reads the inventory and not the names gate (its record keys are the files' words)
 READERS = tuple(
-    f"{n}.py" for n in "decoder gates events circle board bangs clicks predicates symmetries".split()
+    f"{n}.py"
+    for n in "reckoner gates events rim great_clock swings strikes predicates symmetries".split()
 )
 WRITER = ("run.py",)
 NAMED_CALLS = {
-    "refused",
+    "jammed",
     "logged",
     "get",
     "join",
@@ -166,7 +167,7 @@ def test_no_integer_beyond_the_laws_own_enters_the_engine_or_the_tools():
     found = []
     for path in sorted(SOURCE.rglob("*.py")):
         name = path.relative_to(SOURCE).as_posix()
-        if name.startswith("loader/") or name == "__init__.py" or name in READERS + WRITER:
+        if name.startswith("assembly/") or name == "__init__.py" or name in READERS + WRITER:
             continue
         tree = ast.parse(path.read_text(encoding="utf-8"))
         spoken = {id(item.value) for item in ast.walk(tree) if isinstance(item, ast.Expr)}
@@ -199,23 +200,23 @@ def test_the_composed_paces_are_the_laws_carried_division_at_gamma_squared_bit_f
     """PC-S1 (K-S4 in pc1's form, 2026-10-25): the clock by one carried division per content at the resolution Gamma^2, N_0 = Gamma^3 with the remainder Gamma div 2, N(c + 1) Gamma + r(c + 1) = N(c) (Gamma - 1) + r(c), the pace rounded(N, Gamma^2) half up, equal to the exact power Gamma (1 - 1 / Gamma)^c rounded half up at every content to the edge at Gamma 1,000 and 1,021 and on the hills -1 to -300; the Link's pace the clock's square over Gamma rounded once; the loader's certificate finds no undecided content; the frozen content 3,793 at Gamma 1,000 where the Link's pace first reads 0 and the clock 22; the table's largest integer below 2^60; the vectorised entries the table's own integers in the array's kind."""
     half = Fraction(1, 2)
     for gamma in (1_000, 1_021):
-        frozen = paces.certified(gamma)
-        assert paces.link_pace(gamma, frozen) == 0 and paces.link_pace(gamma, frozen - 1) > 0
+        frozen = rates.certified(gamma)
+        assert rates.mesh_rate(gamma, frozen) == 0 and rates.mesh_rate(gamma, frozen - 1) > 0
         for c in range(-300, 2 * frozen):
             exact = int(Fraction(gamma) * Fraction(gamma - 1, gamma) ** c + half)
-            assert paces.clock(gamma, c) == exact, (gamma, c)
-            assert paces.link_pace(gamma, c) == int(Fraction(exact * exact, gamma) + half)
-        sides = paces.sides(gamma)
+            assert rates.rate(gamma, c) == exact, (gamma, c)
+            assert rates.mesh_rate(gamma, c) == int(Fraction(exact * exact, gamma) + half)
+        sides = rates.sides(gamma)
         assert max(abs(side.scaled) for side in sides) < 2**60 and all(
-            0 <= side.carry < side.wall for side in sides
+            0 <= side.carry < side.teeth for side in sides
         )
     gamma = 1_000
     assert (
-        paces.frozen_content(gamma) == 3_793
-        and paces.clock(gamma, 3_793) == 22
-        and paces.clock(gamma, 0) == gamma
+        rates.stopped_load(gamma) == 3_793
+        and rates.rate(gamma, 3_793) == 22
+        and rates.rate(gamma, 0) == gamma
     )
-    plain, entries = (paces.clock, paces.link_pace), (paces.clock_of, paces.link_pace_of)
+    plain, entries = (rates.rate, rates.mesh_rate), (rates.rate_of, rates.mesh_rate_of)
     narrow, sparse = (
         np.arange(-7, 53).reshape(5, 4, 3),
         np.array(list(range(7_000, 7_600, 10))).reshape(5, 4, 3),
@@ -236,10 +237,10 @@ def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd()
         assert mirrored(r, wall, 2) == r and mirrored(r, wall, 0) == r
         x = rng.randint(-(10**9), 10**9)
         sign = (x > 0) - (x < 0)
-        assert paces.rounded(x, wall) == sign * ((2 * abs(x) + wall) // (2 * wall))
-        assert paces.rounded(-x, wall) == -paces.rounded(x, wall)
+        assert rates.rounded(x, wall) == sign * ((2 * abs(x) + wall) // (2 * wall))
+        assert rates.rounded(-x, wall) == -rates.rounded(x, wall)
         q, wx = 2 * rng.randint(-(10**6), 10**6) + 1, 2 * rng.randint(1, 10**6)
-        assert paces.rounded(q, wx) == (2 * q + wx) // (2 * wx)
+        assert rates.rounded(q, wx) == (2 * q + wx) // (2 * wx)
     half = 1_000 // 2
     assert (half, mirrored(half, 1_000, 1)) == (500, 499)
 
@@ -247,57 +248,59 @@ def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd()
 def test_the_take_count_is_one_carried_division_of_the_walls_by_the_price_tc_s1():
     """TC-S1 (the owner's word of 2026-10-26, 08:3x UTC, "approved"; both hands' one finding, The-Take-Count-As-Rule3-Division_COMPARISON.md section 3, H-Take-Count-As-Rule3-Division-1's one-Node test): on the hole seed's first takes the fall is the count times a price linear in the count, f(s) = s (price - X w s) over the share's weight with the price X times Rule3's backward numerator read at the now slot, -t (2 w now + pull), exactly to the division's remainder; the count taken is the least count paying the walls, the carried division of the walls by the price at the start lies at most one below it and below it exactly where that quotient's fall is short of the walls by the moved levels' own square: one carried division iterated from below, no root. Under 15 s."""
     node, seen = node_of("world_hole.json", intervals=12), []
-    orig = take.fall_of
+    orig = unwind.fall_of
 
     def wrapped(node_, at, walls, r, row):
         got = orig(node_, at, walls, r, row)
         if sys._getframe(1).f_code.co_name == "read_ends" and got[0]:
             s, _fall, k = got
-            line = row.lines[k]
+            line = row.gears[k]
             now, before = int(line.now[at]), int(line.before[at])
-            w, reached = int(r.wall), 0
-            for port, reach in enumerate(r.reaches):
-                reached += take.at_node(reach, at) * int(line.before[take.neighbour(node_, at, port)])
-            pull = take.at_node(r.self_coefficient, at) * before + reached
+            w, reached = int(r.teeth), 0
+            for port, reach in enumerate(r.grips):
+                reached += unwind.at_clock(reach, at) * int(
+                    line.before[unwind.neighbour(node_, at, port)]
+                )
+            pull = unwind.at_clock(r.hold, at) * before + reached
             t = 1 if before > now else -1
-            x, weight = int(node_.start_x[at]), core.share_weight(node_.gamma, node_.G)
+            x, weight = int(node_.start_stretch[at]), core.wind_weight(node_.full_rate, node_.G)
             seen.append((now, t, w, pull, x, weight, walls, s, -t * ((w + w) * now + pull) * x))
         return got
 
-    take.fall_of = wrapped
+    unwind.fall_of = wrapped
     try:
         for _ in range(12):
-            node.step()
+            node.tick()
     finally:
-        take.fall_of = orig
-    assert merger.take.fall_of is orig and len(seen) == 47
+        unwind.fall_of = orig
+    assert unspring.unwind.fall_of is orig and len(seen) == 47
     below = short = 0
     for now, t, w, pull, x, weight, walls, s, price in seen:
         moved = now + t * s
         fall = x * (w * (now * now - moved * moved) - t * s * pull)
         assert fall == s * (price - x * w * s) and price > 0
         assert (
-            core.quotient(fall, weight)
+            core.carries(fall, weight)
             >= walls
-            > core.quotient((s - 1) * (price - x * w * (s - 1)), weight)
+            > core.carries((s - 1) * (price - x * w * (s - 1)), weight)
         )
-        first = -core.quotient(-walls * weight, price)
+        first = -core.carries(-walls * weight, price)
         assert first <= s <= first + 1
         below += first < s
-        short += core.quotient(first * (price - x * w * first), weight) < walls
+        short += core.carries(first * (price - x * w * first), weight) < walls
     assert below == short > 0
 
 
 def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_identity_lt_s1():
     """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-Node test): on the hole seed every move of the close writes its booking on the carrier's flux line of its axis at its Node by the Node's one write act, so at every click the Link's record identity holds per axis at every end, -dP p_0^2 + carry before - carry after = laid x (K den Gamma^2 T), the line gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the Node's own lines and not the log alone; the Node's carry after the interval is the last booking's at that Node; the run back exact through 14 intervals with the bookings undone. Under 15 s."""
     node = node_of("world_hole.json", intervals=14)
-    wall = node.trace * node.den * node.gamma * node.gamma * node.T
+    wall = node.trace * node.rim * node.full_rate * node.full_rate * node.key
     flux = slice(1 + AXES, 1 + AXES + AXES)
     hashes, checked = [], 0
     for _ in range(14):
         hashes.append(record.state_hash(node))
         from_log = len(node.log)
-        node.step()
+        node.tick()
         last = {}
         for e in node.log[from_log:]:
             if e["event"] not in ("birth", "credit"):
@@ -321,9 +324,9 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
                         == t["recoil"][a] * wall
                     )
                 last[where], checked = t["carry"], checked + 1
-        lines = node.row(CARRIER).lines[flux]
-        assert all(carry == [int(line.wr[at]) for line in lines] for at, carry in last.items())
+        lines = node.train(REGULATOR).gears[flux]
+        assert all(carry == [int(line.dfine[at]) for line in lines] for at, carry in last.items())
     assert checked == 193
     for h in reversed(hashes):
-        node.step(-1)
+        node.tick(-1)
         assert record.state_hash(node) == h

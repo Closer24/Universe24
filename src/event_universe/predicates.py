@@ -6,17 +6,17 @@ from collections import Counter, defaultdict
 from typing import Any
 
 from event_universe.core import rule3
-from event_universe.core.ports import AXES
 from event_universe.core.rule3 import largest_below
-from event_universe.decoder import (
+from event_universe.core.spokes import AXES
+from event_universe.reckoner import (
     HALF,
     HUNDRED,
     LISTED,
     PAIR,
     QUARTERS,
     THIRDS,
-    Record,
-    quot,
+    Chart,
+    carries,
     sign,
     unread_words,
 )
@@ -27,15 +27,15 @@ def unread(key: str, why: str, predicate: str) -> dict[str, Any]:
     return {key: {"verdict": unread_words(why, predicate)}}
 
 
-def hand_of_birth(record: Record) -> dict[str, Any]:
+def twist_of_fitting(record: Chart) -> dict[str, Any]:
     """Row 21: the C of the birth, the births' hands: the + child laid at the take's Node (the current's end) or at the other end, read over the moving births alone (the births of a pair; a merger lays its light at both ends by the letter and carries no hand, counted beside: the Boss's 6413689341), births of both hands over the record."""
-    moving = [b for b in record.births if "takes" not in b]
+    moving = [b for b in record.fittings if "takes" not in b]
     right = sum(1 for b in moving if b["plus"] == b["node"])
     left = len(moving) - right
     return {
         "21 the C of the birth": {
             "moving births with the + child at the take's Node / at the other end": [right, left],
-            "mergers beside (the light at both ends, no hand)": len(record.births) - len(moving),
+            "mergers beside (the light at both ends, no hand)": len(record.fittings) - len(moving),
             "verdict": unread_words("no moving birth", "births of both hands over the record")
             if not moving
             else "SHOWN: births of both hands"
@@ -45,10 +45,10 @@ def hand_of_birth(record: Record) -> dict[str, Any]:
     }
 
 
-def coulomb(record: Record) -> dict[str, Any]:
+def coulomb(record: Chart) -> dict[str, Any]:
     """Row 22: Coulomb's sign from the credited Nodes' senses per interval: the mean distance between Nodes of unlike senses at the first and the last interval holding such a pair, and between Nodes of like senses; unlike approach, like part."""
     by_interval: dict[int, list[tuple[int, tuple[int, ...]]]] = defaultdict(list)
-    for c in record.credits:
+    for c in record.chimes:
         if c["sense"]:
             by_interval[int(c["i"])].append((c["sense"], tuple(c["node"])))
     distance = record.distance
@@ -79,10 +79,10 @@ def coulomb(record: Record) -> dict[str, Any]:
                 len(means[True]),
             ],
             "unlike senses: mean distance first / last (hundredths)": [
-                quot(s, n, HUNDRED) for s, n in (means[False][:1] + means[False][-1:])
+                carries(s, n, HUNDRED) for s, n in (means[False][:1] + means[False][-1:])
             ],
             "like senses: mean distance first / last (hundredths)": [
-                quot(s, n, HUNDRED) for s, n in (means[True][:1] + means[True][-1:])
+                carries(s, n, HUNDRED) for s, n in (means[True][:1] + means[True][-1:])
             ],
             "verdict": unread_words(
                 "no two intervals hold a pair of credited senses",
@@ -100,14 +100,14 @@ def coulomb(record: Record) -> dict[str, Any]:
     }
 
 
-def lifts(record: Record) -> dict[str, Any]:
+def lifts(record: Chart) -> dict[str, Any]:
     """Row 26: the lifts born and their beats' ratios: every lift the universe names born (its gapped planes, the typed points of den's circle, record.NL; the former constant 3 the toy universe's count; the plane at the gap 0 is light and no lift), and the credited planes' mean beats (intervals per period) ordered against their legs, the heavier the faster."""
-    born, lifts = record.born_of(), record.lifts_born()
+    born, lifts = record.fitted_of(), record.lifts_fitted()
     beats: dict[int, tuple[int, int]] = {}
-    for c in record.credits:
+    for c in record.chimes:
         s, n = beats.get(c["line"], (0, 0))
         beats[c["line"]] = (s + int(c["beat"]), n + 1)
-    legs = {line: record.NAMES[record.line_num[line]][1] for line in beats}
+    legs = {line: record.NAMES[record.gear_pinion[line]][1] for line in beats}
     order = sorted(beats, key=lambda line: legs[line])
     ordered = all(
         beats[a][0] * beats[b][1] >= beats[b][0] * beats[a][1]
@@ -117,7 +117,7 @@ def lifts(record: Record) -> dict[str, Any]:
         "26 the lifts born and their beats' ratios": {
             "planes born": dict(born),
             "mean beat per credited plane (hundredths), by the leg": [
-                [record.line_name[line], quot(*beats[line], HUNDRED)] for line in order
+                [record.gear_name[line], carries(*beats[line], HUNDRED)] for line in order
             ],
             "verdict": unread_words(
                 "no birth and fewer than two planes credited",
@@ -141,12 +141,12 @@ def lifts(record: Record) -> dict[str, Any]:
     }
 
 
-def confinement(record: Record) -> dict[str, Any]:
+def confinement(record: Chart) -> dict[str, Any]:
     """Row 27: confinement, no third alone: every child laid where its plane stood at nothing carries the whole charge T div 2 and none a third of it; every take whole levels."""
-    half, third = record.T // HALF, record.T // (HALF * THIRDS)
-    laid = record.laid_at_nothing()
+    half, third = record.key // HALF, record.key // (HALF * THIRDS)
+    laid = record.advanced_at_nothing()
     whole, thirds = sum(w == half for w in laid), sum(w == third for w in laid)
-    takes = [int(e["levels"]) for e in record.takes]
+    takes = [int(e["levels"]) for e in record.unwinds]
     return {
         "27 confinement (no third alone)": {
             "children at the whole charge / at a third": [whole, thirds],
@@ -154,7 +154,7 @@ def confinement(record: Record) -> dict[str, Any]:
             "verdict": unread_words(
                 "no birth", "no child carries a third of the charge, every take whole"
             )
-            if not record.births
+            if not record.fittings
             else "SHOWN: every child the whole charge, no third alone, every take whole"
             if thirds == 0 and whole
             else "NOT SHOWN: a child at a third of the charge",
@@ -162,10 +162,10 @@ def confinement(record: Record) -> dict[str, Any]:
     }
 
 
-def photoelectric(record: Record) -> dict[str, Any]:
+def photoelectric(record: Chart) -> dict[str, Any]:
     """Row 40: the photoelectric click, one whole quantum per click: the levels a credit takes against the quantum's levels (the drift, the largest integer whose square is at most T)."""
-    drift = largest_below(record.T)
-    takes = [int(c["levels"]) for c in record.credits]
+    drift = largest_below(record.key)
+    takes = [int(c["levels"]) for c in record.chimes]
     whole = sum(1 for t in takes if t % drift == 0)
     return {
         "40 the photoelectric click": {
@@ -180,7 +180,7 @@ def photoelectric(record: Record) -> dict[str, Any]:
     }
 
 
-def exclusion(record: Record) -> dict[str, Any]:
+def exclusion(record: Chart) -> dict[str, Any]:
     """Row 43: the exclusion, one quantum per full state at a Node: the close's lays refused where a quantum of the record stood at the Node (the refused lines with a standing and a unit)."""
     refused = [e for e in record.log if e["event"] == "refused" and "standing" in e]
     return {
@@ -193,10 +193,10 @@ def exclusion(record: Record) -> dict[str, Any]:
     }
 
 
-def exact_take(record: Record) -> dict[str, Any]:
+def exact_unwind(record: Chart) -> dict[str, Any]:
     """Row 47: the exact take, taken equal to booked on every birth of a pair (the excess 0), or, where the birth carries the take's remainder (EX-S1), the excess exactly the remainder's rise at the Node; a merger's birth (MG-S1, the line carrying its takes per end, the ends taken whole by the share fall) counted apart and read by row 24; the credits' leak unread (a credit carries no booked walls)."""
-    births = [b for b in record.births if "takes" not in b]
-    mergers = len(record.births) - len(births)
+    births = [b for b in record.fittings if "takes" not in b]
+    mergers = len(record.fittings) - len(births)
     taken, booked = sum(b["taken"] for b in births), sum(b["booked"] for b in births)
     exact = sum(
         1
@@ -209,7 +209,7 @@ def exact_take(record: Record) -> dict[str, Any]:
             "births taken exactly / in all": [exact, len(births)],
             "births with the excess kept as the remainder (EX-S1)": kept,
             "mergers apart (MG-S1, the ends taken whole by the share fall, row 24's reading)": mergers,
-            "taken per booked over the births (hundredths)": quot(taken, booked, HUNDRED),
+            "taken per booked over the births (hundredths)": carries(taken, booked, HUNDRED),
             "verdict": unread_words("no birth", "taken equals booked on every line")
             if not births
             else "SHOWN: taken equals booked on every birth"
@@ -221,10 +221,10 @@ def exact_take(record: Record) -> dict[str, Any]:
     }
 
 
-def decay(record: Record) -> dict[str, Any]:
+def decay(record: Chart) -> dict[str, Any]:
     """Row 49: the exponential decay, a body's credits' spacing in its proper count geometric: the spacings' counts falling from the least spacing; periodic where one spacing holds the majority."""
     spacings: Counter[int] = Counter()
-    for body in record.bodies_of().values():
+    for body in record.bobs_of().values():
         ps = sorted(int(c["proper"]) for c in body)
         spacings.update(b - a for a, b in zip(ps, ps[1:], strict=False) if b > a)
     counts = [spacings[s] for s in sorted(spacings)]
@@ -246,10 +246,10 @@ def decay(record: Record) -> dict[str, Any]:
     }
 
 
-def two_slits(record: Record) -> dict[str, Any]:
+def two_slits(record: Chart) -> dict[str, Any]:
     """Row 55: the two slits (QG-S2), two gap-0 lays at one centre with one wave mirrored on one axis, read from the seed; the fringe (the gap-0 row's meetings at the dark offsets 4 C_d^2 < den^2 none and at the bright many over the beams' overlap) is counted by the hand's reader alone (H-Quantum-Gates-2/predicates_qg.py), the count owed to the decoder where a seed carries the beams."""
     rows, seed = record.run["universe"]["rows"], record.run["world"].get("seed", [])
-    lays = [s for s in seed if s.get("wave") and int(rows[s["row"]]["pair"][0]) == record.den]
+    lays = [s for s in seed if s.get("wave") and int(rows[s["row"]]["pair"][0]) == record.rim]
     beams = [(a, b) for a in lays for b in lays if a is not b and a["centre"] == b["centre"]]
     mirrored = [
         (a, b)
@@ -269,17 +269,17 @@ def two_slits(record: Record) -> dict[str, Any]:
     )
 
 
-def bell(record: Record) -> dict[str, Any]:
+def bell(record: Chart) -> dict[str, Any]:
     """Row 56: Bell (QG-S3, BK-S1; the reading of The-Setting-From-The-Frame_COMPARISON.md section 3, the Boss's 6411759969): S as the count over the born pairs' four cells, the setting at each end the detector's own datum at its click (the proper clock's parity, two-valued) and the outcome the child's own sense from the birth line; nature's band 4 < S^2 <= 8 SHOWN as nature, else NOT SHOWN with the cause named: the outcome reads no datum of the detector, the child has no axis (BS-S1 owed), so every filled cell reads E = -1 and S^2 = 4."""
     cells: dict[tuple[int, int], list[int]] = {}
-    for b, (a, c) in zip(record.births, record.charges_of(), strict=True):
+    for b, (a, c) in zip(record.fittings, record.sweeps_of(), strict=True):
         if not a or not c:
             continue
         ends = [
             next(
                 (
                     int(rule3.odd(int(k["proper"])))
-                    for k in record.credits
+                    for k in record.chimes
                     if k["node"] == where and k["line"] == b["line_pair"] and int(k["i"]) > int(b["i"])
                 ),
                 None,
@@ -291,7 +291,7 @@ def bell(record: Record) -> dict[str, Any]:
     if len(cells) < PAIR * PAIR:
         return unread(
             "56 Bell",
-            f"{len(record.births)} births, {len(cells)} of the four setting cells filled by pairs clicked at both ends",
+            f"{len(record.fittings)} births, {len(cells)} of the four setting cells filled by pairs clicked at both ends",
             "S from the pairs' two ends under the detector's own setting at each (the proper clock's parity at its click), 4 < S^2 <= 8 as nature",
         )
     e = {
@@ -300,7 +300,7 @@ def bell(record: Record) -> dict[str, Any]:
     }
     den = 1
     for _n, d in e.values():
-        den = den * d // rule3.lattice(den, d)
+        den = den * d // rule3.pitch(den, d)
     s = sum((num * den // d) * (-1 if key == (0, 1) else 1) for key, (num, d) in e.items())
     n = den
     verdict = (
@@ -312,7 +312,7 @@ def bell(record: Record) -> dict[str, Any]:
     )
     return {
         "56 Bell": {
-            "births": len(record.births),
+            "births": len(record.fittings),
             "pairs clicked at both ends": sum(d for _num, d in e.values()),
             "E per cell of the detectors' settings (same - opposite, pairs)": {
                 f"{k[0]}{k[1]}": list(v) for k, v in sorted(e.items())
@@ -323,12 +323,12 @@ def bell(record: Record) -> dict[str, Any]:
     }
 
 
-def ghz(record: Record) -> dict[str, Any]:
+def ghz(record: Chart) -> dict[str, Any]:
     """Row 57: the GHZ gate (QG-S4), three ends with one root; a birth gives two children at one Link's ends and a shared take at one Node four, so no three-ended click is in the record."""
-    shared = dict(sorted(Counter(int(b.get("children_at_node", 1)) for b in record.births).items()))
+    shared = dict(sorted(Counter(int(b.get("children_at_node", 1)) for b in record.fittings).items()))
     return {
         "57 GHZ": {
-            "births": len(record.births),
+            "births": len(record.fittings),
             "births by the pairs taken at one Node in one close": shared,
             "verdict": unread_words(
                 "a birth gives two ends at one Link and a shared take four, no three ends with one root in the record",
@@ -338,9 +338,9 @@ def ghz(record: Record) -> dict[str, Any]:
     }
 
 
-def arrow_of_time(record: Record) -> dict[str, Any]:
+def arrow_of_time(record: Chart) -> dict[str, Any]:
     """Row 62: the arrow of time in the clicks (CA-S1, the owner's word of 2026-10-26, the direction is the slot): on every credit's frame the charge W = re_now im_before - im_now re_before is negated exactly by the exchange of the two slots (now for before), so the charge is the record of the direction, odd under the exchange; counted over the frames whose W is not 0, the frames at W = 0 named apart (a level on one slot alone carries no charge)."""
-    frames = [c["frame"] for c in record.credits if "frame" in c]
+    frames = [c["frame"] for c in record.chimes if "frame" in c]
     charges = [f["re_now"] * f["im_before"] - f["im_now"] * f["re_before"] for f in frames]
     exchanged = [f["re_before"] * f["im_now"] - f["im_before"] * f["re_now"] for f in frames]
     nonzero = sum(1 for w in charges if w)
