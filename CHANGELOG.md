@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The Reader's confirmation that the head's source changes no course on the ten records (bit for bit with reader/059d6248) under F48-S1 and in row 164; no merge, the head unmoved at c6279863c.
 - The engine head c6279863c merged (4809d4bf3; the tests' four width bounds struck, tests alone): David's amplitude measure (X a free scale above a resolution floor, bit for bit from k 100,000 to 10^14) and his clause for the owner's word under The width is derived; rows 207 and 218.
 - David's width measure on the head and the tests' four width bounds struck (toys-5 760725b30) under The width is derived, ENGINE.md's Constant 3 row noted, row 207; no merge, the head unmoved at 8363981de.
 - The law's lettered clauses under The rows against nature (a) to (z) numbered by the gates' rows that read them, the ten with no row named as such; no merge, the head unmoved at 8363981de.
