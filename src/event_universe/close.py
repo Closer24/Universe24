@@ -199,6 +199,50 @@ def children(
     return touched
 
 
+def undo(node: Node, frame: dict[str, Any]) -> None:
+    """The click at -1 (X2): the log since the interval's frame read backward, every birth's recoils and lays and every take undone by the same acts at -1, the log cut back and the counters set to the frame's."""
+    rec0 = node.records().index(node.emitter())
+    unbooked: set[tuple[Any, ...]] = set()
+    for entry in reversed(node.log[frame["log_from"] :]):
+        at = tuple(entry["node"])
+        if entry["event"] == "birth":
+            s, (a, b) = entry["line_pair"], entry["amplitude"]
+            for where, dp, clock in zip(
+                (entry["plus"], entry["minus"]),
+                entry["dP_lay_ends"][::-1],
+                entry["clock_ends"][::-1],
+                strict=True,
+            ):
+                recoil(node, tuple(where), dp, clock, -1)
+            exact = entry.get("exact_lay", [None, None])
+            for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
+                if laid is None:
+                    lay(node, s, tuple(where), child_levels(node.records()[s], sense, a, b), -1)
+                else:
+                    move(node, s, laid[0], tuple(where), -laid[1])
+            if "cross" in entry:
+                cross = entry["cross"]
+                recoil(node, tuple(cross["node"]), cross["dP"], cross["clock"], -1)
+        if entry["event"] in ("birth", "credit"):
+            row = entry.get("taken_row", rec0)
+            for take in entry.get("takes", [entry]):
+                where = tuple(take["node"])
+                if entry["event"] == "credit" or (where, row, at) not in unbooked:
+                    unbooked.add((where, row, at))
+                    recoil(node, where, take["dP_take"], take["clock"], -1)
+                if "taken_levels" in take:
+                    lay(node, row, where, tuple(take["taken_levels"]))
+                    node.closes[where] += 1
+                    continue
+                toward = 1 if take["taker"][1] > take["taker"][0] else -1
+                count = 0 if "laid_back" in take else toward * take["levels"]
+                move(node, row, take["taken_line"], where, -count)
+                node.take_rem[where] = take["remainder_was"]
+            node.closes[at] -= 1
+    del node.log[frame["log_from"] :]
+    node.standing, node.crossed, node.beats = frame["counters"]
+
+
 def click(
     node: Node,
     plane_starts: list[list[Line]],
@@ -209,48 +253,7 @@ def click(
     """The click in the direction (X2: the undo is the click at -1): forward the readings at the start (each record's standing share at its unscaled rule in the carrier's unit, PM-S1), the Link close of every record alike (SL-S1), the lays refused by name, the births taken and laid, the bodies' closing; backward the close undone from the log's frame in the reverse order of its lines: the lays removed, a merger's cross term unbooked at the meeting's Node, the taken line moved back by the take's own count at every take's Node (`taken_line`, CS4-S2; the former restore to the level that was, which read a line another lay of the same close had moved and undid that lay twice, struck 2026-10-26 under CL-S2's run back on the fed horizon world; a merger's two ends under `takes`, their levels laid back whole, MG-S1, and its exact lays removed), the take's remainder, the closes at every end and the readings' counters restored (a merger's ends count their close back, left uncounted by the former undo and met by the run back once the state's counters are compared, 2026-10-26) (RW-S1: one function with the direction, the former `unclick` kept by name). `plane_starts` the records' lines at the interval's start, `held` every row's."""
     if direction == -1:
         assert frame is not None
-        rec0 = node.records().index(node.emitter())
-        unbooked: set[tuple[Any, ...]] = set()
-        for entry in reversed(node.log[frame["log_from"] :]):
-            at = tuple(entry["node"])
-            if entry["event"] == "birth":
-                s, (a, b) = entry["line_pair"], entry["amplitude"]
-                for where, dp, clock in zip(
-                    (entry["plus"], entry["minus"]),
-                    entry["dP_lay_ends"][::-1],
-                    entry["clock_ends"][::-1],
-                    strict=True,
-                ):
-                    recoil(node, tuple(where), dp, clock, -1)
-                exact = entry.get("exact_lay", [None, None])
-                for where, sense, laid in zip(
-                    (entry["minus"], entry["plus"]), (-1, 1), exact, strict=True
-                ):
-                    if laid is None:
-                        lay(node, s, tuple(where), child_levels(node.records()[s], sense, a, b), -1)
-                    else:
-                        move(node, s, laid[0], tuple(where), -laid[1])
-                if "cross" in entry:
-                    cross = entry["cross"]
-                    recoil(node, tuple(cross["node"]), cross["dP"], cross["clock"], -1)
-            if entry["event"] in ("birth", "credit"):
-                row = entry.get("taken_row", rec0)
-                for take in entry.get("takes", [entry]):
-                    where = tuple(take["node"])
-                    if entry["event"] == "credit" or (where, row, at) not in unbooked:
-                        unbooked.add((where, row, at))
-                        recoil(node, where, take["dP_take"], take["clock"], -1)
-                    if "taken_levels" in take:
-                        lay(node, row, where, tuple(take["taken_levels"]))
-                        node.closes[where] += 1
-                        continue
-                    toward = 1 if take["taker"][1] > take["taker"][0] else -1
-                    count = 0 if "laid_back" in take else toward * take["levels"]
-                    move(node, row, take["taken_line"], where, -count)
-                    node.take_rem[where] = take["remainder_was"]
-                node.closes[at] -= 1
-        del node.log[frame["log_from"] :]
-        node.standing, node.crossed, node.beats = frame["counters"]
+        undo(node, frame)
         return
     c = node.start_content
     node.start_lines = plane_starts
