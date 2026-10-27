@@ -295,17 +295,21 @@ def maxwell(record: Chart) -> dict[str, Any]:
 
 
 def well(record: Chart) -> dict[str, Any]:
-    """Row 45: the bodies' well, binding and collapse: a body (a line at one Node) credited from the first half of the run into its last quarter stands in its own well; a frozen Node ends a collapse."""
+    """Row 45: the bodies' well, binding and collapse: a body (a line at one Node) credited from the first half of the run into its last quarter stands in its own well, every standing body listed with its first and last credit (the page draws its ring from them, the Boss's audit of 2026-10-27, 12:2x UTC); a frozen Node ends a collapse."""
     spans = {body: [int(c["i"]) for c in cs] for body, cs in record.bobs_of().items()}
     n = record.ticks
-    standing = sum(
-        1 for xs in spans.values() if min(xs) * HALF <= n and max(xs) * QUARTERS >= (QUARTERS - 1) * n
+    bodies = sorted(
+        [*node, line, min(xs), max(xs)]
+        for (node, line), xs in spans.items()
+        if min(xs) * HALF <= n and max(xs) * QUARTERS >= (QUARTERS - 1) * n
     )
+    standing = len(bodies)
     frozen = sum(len(line["frozen"]) for line in record.clocks)
     return {
         "45 the bodies' well, binding and collapse": {
             "bodies (Node, line) credited": len(spans),
             "of them standing from the first half into the last quarter": standing,
+            "the standing bodies (Node, line, first credit, last credit), every one": bodies,
             "frozen Node lines (a collapse's end)": frozen,
             "verdict": unread_words(
                 "no credit",
