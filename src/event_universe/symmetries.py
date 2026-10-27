@@ -3,11 +3,21 @@
 from __future__ import annotations
 
 from collections import Counter
+from functools import cmp_to_key
 from typing import Any
 
 from event_universe.core import rule3
 from event_universe.core.spokes import AXES
-from event_universe.reckoner import HALF, PAIR, THOUSAND, Chart, carries, sign, unread_words
+from event_universe.reckoner import (
+    HALF,
+    PAIR,
+    THOUSAND,
+    Chart,
+    carries,
+    cmp_rat,
+    sign,
+    unread_words,
+)
 from event_universe.trains import REGULATOR, drive_teeth
 
 REGIONS = PAIR**AXES  # the board's regions, each axis split at the cube's half
@@ -20,22 +30,32 @@ def region(record: Chart, node: list[int] | tuple[int, ...]) -> int:
     return sum((int(x) >= half) << a for a, x in enumerate(node))
 
 
+def region_nodes(cube: int, half: int, r: int) -> int:
+    """The Nodes of one region of the board: per axis the half below the cut or the rest above it, multiplied."""
+    found = 1
+    for a in range(AXES):
+        found *= cube - half if r >> a & 1 else half
+    return found
+
+
 def uniformity(record: Chart) -> dict[str, Any]:
-    """Row 63: the uniformity in the clicks, the credits counted per region of the board (eight, each axis at its half): SHOWN where every region is credited and the least holds at least half the largest."""
+    """Row 63: the uniformity in the clicks, the credits counted per region of the board (eight, each axis at its half) and read per Node of the region, the regions of an odd side holding unlike counts of Nodes: SHOWN where every region is credited and the least credits per Node hold at least half the largest, compared by cross multiplication (the former read of the raw counts failed every odd side, where a board credited alike at every Node gives regions of 8 and 27 Nodes on the side 5, kept by name)."""
     counts = Counter(region(record, c["node"]) for c in record.chimes)
-    least, largest = min(counts.values(), default=0), max(counts.values(), default=0)
+    half = int(rule3.carries(record.cube, HALF))
+    sizes = [region_nodes(record.cube, half, r) for r in range(REGIONS)]
+    per = [(counts.get(r, 0), sizes[r]) for r in range(REGIONS)]
+    least, largest = min(per, key=cmp_to_key(cmp_rat)), max(per, key=cmp_to_key(cmp_rat))
     return {
         "63 the uniformity in the clicks": {
-            "credits per region of the board (eight, each axis at its half)": [
-                counts.get(r, 0) for r in range(REGIONS)
-            ],
+            "credits per region of the board (eight, each axis at its half)": [c for c, _v in per],
+            "Nodes per region": sizes,
             "verdict": unread_words(
-                "no credit", "every region credited, the least at least half the largest"
+                "no credit", "every region credited, the least per Node at least half the largest"
             )
             if not counts
-            else "SHOWN: every region of the board credited, the least at least half the largest"
-            if len(counts) == REGIONS and least * HALF >= largest
-            else f"NOT SHOWN: {REGIONS - len(counts)} regions without a credit, the least {least} against the largest {largest}",
+            else "SHOWN: every region of the board credited, the least per Node at least half the largest"
+            if len(counts) == REGIONS and least[0] * largest[1] * HALF >= largest[0] * least[1]
+            else f"NOT SHOWN: {REGIONS - len(counts)} regions without a credit, the least {least[0]} credits on {least[1]} Nodes against the largest {largest[0]} on {largest[1]}",
         }
     }
 

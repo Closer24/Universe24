@@ -27,20 +27,20 @@ SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per record, the Bos
     # on the records of 3dc12e307 (the five sentences built on toys-5, the remainder and the merger among them): the hole loses 2 (the Links lengthening in the clicks, under GP-S1's lay) and gains 47 (the exact take, the excess kept as the remainder, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 kept by the decoder's read of the remainder, 17 lost by the engine's bug at a merger's tie end (H-Children-Charge-Bug-1: the light laid as the charged child's lay, the children's own charges -36,000 over the births; SHOWN again at the fix); the bodies gain 8 and 16 with the credits the remainder pays; the hole under PL-S1 before: 9 and 22 among them under the former write of 2 W after the step
     "hole": {
         int(n)
-        for n in "2 4 5 7 8 10 15 16 17 18 19 21 22 25 26 27 30 37 43 45 47 56 58 59 60 62 64 65 66 67 68 70 71 72".split()
+        for n in "2 4 5 7 8 10 15 16 17 18 19 21 22 25 26 27 30 37 43 45 47 56 58 59 60 62 63 64 65 66 67 68 70 71 72".split()
     },
     "chiral": {
         int(n)
-        for n in "2 4 5 7 8 9 10 15 16 17 18 19 21 24 25 26 27 30 37 43 45 47 56 59 60 62 64 65 66 67 68 70 71 72".split()
+        for n in "2 4 5 7 8 9 10 15 16 17 18 19 21 24 25 26 27 30 37 43 45 47 56 59 60 62 63 64 65 66 67 68 70 71 72".split()
     },
     "bodies": {
         int(n)
-        for n in "4 5 7 10 15 17 18 21 22 24 25 26 27 30 37 43 45 47 58 59 60 62 64 65 66 67 68 70 71 72".split()
+        for n in "4 5 7 10 15 17 18 21 22 24 25 26 27 30 37 43 45 47 58 59 60 62 63 64 65 66 67 68 70 71 72".split()
     },
 }
 VERDICTS = {  # the verdicts' words by name
     "hole": {
-        "63 the uniformity in the clicks": "NOT SHOWN: 0 regions without a credit, the least 154 against the largest 454",
+        "63 the uniformity in the clicks": "SHOWN: every region of the board credited, the least per Node at least half the largest",
         "65 the lepton number": "SHOWN: every species' senses sum to 0 over its births, its number conserved at the click",
         "67 CPT in the clicks": "SHOWN: the charge odd under C and under T and even under CPT on 2228 of 2228 frames",
         "9 collisions": "NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last",
@@ -233,11 +233,11 @@ def test_the_angular_momentum_closes_at_every_booking_and_the_mass_becomes_light
 
 
 def test_the_horizon_is_read_from_the_node_lines_not_the_rows() -> None:
-    """Gate 14 on the hole record with one Node frozen on one Node line by hand (the Boss's 6416277638): the rows, one at every twelfth interval, keep their maximum below the frozen content while the Node line carries it, and the gate reads the horizon as silence from the Node lines; NOT REACHED on the record as committed."""
+    """Gate 14 on the hole record with one Node frozen on one Node line by hand (the Boss's 6416277638): the rows, one at every twelfth interval, keep their maximum below the frozen content while the Node line carries it, and the gate reads the horizon as silence from the Node lines, the line's set the mask of the close after it; NOT REACHED on the record as committed."""
     run = loaded("hole")
     rec, frozen = Chart(run), rates.stopped_load(int(run["gamma"]))
     line = run["nodes"][len(run["nodes"]) // 2]
-    credited = {rec.index(c["node"]) for c in rec.chimes if int(c["i"]) == int(line["i"])}
+    credited = {rec.index(c["node"]) for c in rec.unwinds if int(c["i"]) == int(line["i"]) + 1}
     at = next(k for k in range(len(line["content"])) if k not in credited)
     line["content"][at], line["frozen"] = frozen, [at]
     found = great_clock.standstill(Chart(run))["14 the horizon"]
@@ -251,7 +251,7 @@ def test_the_horizon_is_read_from_the_node_lines_not_the_rows() -> None:
 
 
 def test_the_exact_return_is_the_seeds_first_state_and_the_horizon_standing() -> None:
-    """Rows 1, 1c and 61 on the hole record with its Node lines written by hand (the Boss's 6416499848 and 6416342006): a Node line equal to the first in X and content is an exact return and a bang, a bottom at Gamma is not; every Node frozen on one line and released on the next is a horizon that stands at that interval alone, so a credit after the release counts as beyond it, and a board frozen whole to the end lets no credit pass."""
+    """Rows 1, 1c and 61 on the hole record with its Node lines written by hand (the Boss's 6416499848 and 6416342006): a Node line equal to the first in X and content is an exact return and a bang, a bottom at Gamma is not; every Node frozen on one line and released on the next is a horizon that stands for the one close after that line, so a credit after the release counts as beyond it, and a board frozen whole to the end lets no credit pass."""
     run = loaded("hole")
     nodes = run["nodes"]
     k = len(nodes) // 2
@@ -267,7 +267,7 @@ def test_the_exact_return_is_the_seeds_first_state_and_the_horizon_standing() ->
     every = list(range(len(run["nodes"][0]["X"])))
     run["nodes"][k]["frozen"] = every
     found = strikes.horizon_radiates(Chart(run))["61 the horizon radiates"]
-    later = [c for c in run["log"] if c["event"] == "credit" and int(c["i"]) > run["nodes"][k]["i"]]
+    later = [c for c in run["log"] if c["event"] == "credit" and int(c["i"]) > run["nodes"][k]["i"] + 1]
     assert found["the whole board frozen at once"] and found[
         "of them after the whole board's release (no Node frozen at the interval)"
     ] == len(later)

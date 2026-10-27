@@ -357,7 +357,7 @@ def unspring(record: Chart) -> dict[str, Any]:
 
 
 def horizon_radiates(record: Chart) -> dict[str, Any]:
-    """Row 61: the horizon radiates (hp2's predicate, the Boss's 6408295798, the owner's word of 03:4x UTC: Hawking's radiation as nature looks in the clicks): after a Node's first freeze, a birth at that Node or at one of its six neighbours, and a credit two or more Links from every Node frozen at the credit's own interval, the horizon standing then (the Reader's form of 6416667138 for the board frozen at every Node, the Boss's 6416342006: no credit passes while the whole board is the horizon, and the credits after a release are beyond the horizon as it shrinks; the former read against every Node ever frozen); NOT READ with no frozen Node."""
+    """Row 61: the horizon radiates (hp2's predicate, the Boss's 6408295798, the owner's word of 03:4x UTC: Hawking's radiation as nature looks in the clicks): after a Node's first freeze, a birth at that Node or at one of its six neighbours, and a credit two or more Links from every Node frozen at the credit's own interval's start (the close's own mask, `stopped_masks`; the former read against the line of the credit's own interval, one interval late), the horizon standing then (the Reader's form of 6416667138 for the board frozen at every Node, the Boss's 6416342006: no credit passes while the whole board is the horizon, and the credits after a release are beyond the horizon as it shrinks; the former read against every Node ever frozen); NOT READ with no frozen Node."""
     first = record.first_stopped()
     if not first:
         return {
@@ -372,14 +372,14 @@ def horizon_radiates(record: Chart) -> dict[str, Any]:
         n: i for at, i in first.items() for n in neighbours(record, at)
     }
     births = [b for b in record.fittings if int(b["i"]) > near.get(record.index(b["node"]), int(b["i"]))]
-    standing = {int(line["i"]): [int(at) for at in line["frozen"]] for line in record.clocks}
+    standing = record.stopped_masks()
     far = [
         c
         for c in record.chimes
         if int(c["i"]) > min(first.values())
         and all(
             record.distance(tuple(c["node"]), tuple(record.clock(at))) >= PAIR
-            for at in standing.get(int(c["i"]), [])
+            for at in standing.get(int(c["i"]), set())
         )
     ]
     released = sum(1 for c in far if not standing.get(int(c["i"])))

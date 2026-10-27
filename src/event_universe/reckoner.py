@@ -159,6 +159,16 @@ class Chart:
                 first.setdefault(int(at), int(line["i"]))
         return first
 
+    def stopped_masks(self) -> dict[int, set[int]]:
+        """The frozen set every close reads, by the close's interval (BH-S1 with FR-S1): the Node line of the interval i carries the set at its end, which the close of i + 1 reads at its start, so a credit or a birth of the interval i stands against the line of i - 1 and never its own (the dial adds nothing at a Node in it, the one identity of every click line); the former read against the same interval's line, one interval late, kept by name; read once per cut."""
+        key = f"masks to {self.ticks}"
+        if key not in self.memo:
+            self.memo[key] = {
+                int(line["i"]) + 1: {int(at) for at in line["frozen"]} for line in self.clocks
+            }
+        masks: dict[int, set[int]] = self.memo[key]
+        return masks
+
     def sweeps_of(self) -> list[tuple[int, int]]:
         """The two children's own charges at every birth, in the births' order (H-Children-Charge-Bug-1, the Boss's 6410696786): a child laid by the child's lay carries its sense times half the quantum of action (the Wronskian of its own two levels), a child laid as the exact take at -1 (a merger's light, the line's `exact_lay` at its end) carries 0; the log's W_children is the record's Wronskian at the Node after the lay (the standing level's and the cross term in it) and is read for the residue by name, never for the sign."""
 

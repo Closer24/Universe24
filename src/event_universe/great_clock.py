@@ -156,15 +156,19 @@ def era(record: Chart) -> dict[str, Any]:
 
 
 def standstill(record: Chart) -> dict[str, Any]:
-    """Gate 14: the frozen content against the Node lines' max content (the Boss's 6416277638: the reader's rows stand one at every twelfth interval, so a horizon shorter than a twelfth of the run was blind to the rows' maximum while the freeze is in the Node lines; the rows' maximum named beside); a credit at a Node while it stands in the frozen set of the Node lines would deny the horizon (the former read, a credit at or above the frozen content, named beside)."""
+    """Gate 14: the frozen content against the Node lines' max content (the Boss's 6416277638: the reader's rows stand one at every twelfth interval, so a horizon shorter than a twelfth of the run was blind to the rows' maximum while the freeze is in the Node lines; the rows' maximum named beside); a credit or a birth at a Node frozen at its interval's start (the close's own mask, `stopped_masks`) would deny the horizon (the former read against the same interval's line, one interval late, and before it a credit at or above the frozen content, named beside)."""
     frozen = rates.stopped_load(record.full_rate)
-    frozen_at = {(int(line["i"]), int(at)) for line in record.clocks for at in line["frozen"]}
-    at_frozen = [c for c in record.chimes if (int(c["i"]), record.index(c["node"])) in frozen_at]
+    masks = record.stopped_masks()
+    at_frozen = [
+        e
+        for e in record.chimes + record.fittings
+        if record.index(e["node"]) in masks.get(int(e["i"]), set())
+    ]
     at_mark = sum(1 for c in record.chimes if c["content"] >= frozen)
     rows_max = max((int(r["content min/mean/max"][MAX]) for r in record.rows), default=0)
     cmax = max((int(x) for line in record.clocks for x in line["content"]), default=rows_max)
     verdict = (
-        "SHOWN as silence (no credit at a frozen Node)"
+        "SHOWN as silence (no credit and no birth at a Node frozen at the interval's start)"
         if cmax >= frozen and not at_frozen
         else ("NOT REACHED" if cmax < frozen else "NOT SHOWN")
     )
@@ -176,7 +180,9 @@ def standstill(record: Chart) -> dict[str, Any]:
             "max content in the Node lines": cmax,
             "max content in the rows (one row at every twelfth interval)": rows_max,
             "Nodes frozen": len(frozen_first),
-            "credits at a Node while it stands in the frozen set": len(at_frozen),
+            "credits and births at a Node frozen at the interval's start (the close's own mask)": len(
+                at_frozen
+            ),
             "credits at or above the frozen content (the former read)": at_mark,
             "at": first,
             "verdict": verdict,
@@ -185,7 +191,7 @@ def standstill(record: Chart) -> dict[str, Any]:
 
 
 def stopped_clock(record: Chart) -> dict[str, Any]:
-    """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent while it is frozen (no credit at it on any interval it stands in the frozen set) and its content standing at the content of its freeze on every line of that freeze, until its release (BH-S1's predicate, the Boss's 6407393577: the clock stops at the horizon; re-cut for a released horizon on the Boss's 6417313230: the former read every credit and every content from the first freeze on, which no released Node can hold)."""
+    """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent while it is frozen (no credit and no birth at it in the close that reads its line, the interval after it: `stopped_masks`; the former read against the line's own interval, one interval late, kept by name) and its content standing at the content of its freeze on every line of that freeze, until its release (BH-S1's predicate, the Boss's 6407393577: the clock stops at the horizon; re-cut for a released horizon on the Boss's 6417313230: the former read every credit and every content from the first freeze on, which no released Node can hold)."""
     first = record.first_stopped()
     frozen: list[tuple[int, int]] = []
     held: dict[int, int] = {}
@@ -203,19 +209,14 @@ def stopped_clock(record: Chart) -> dict[str, Any]:
             else:
                 held[at] = content
             frozen.append((i, at))
-    frozen_at = set(frozen)
-    credited = {
-        record.index(c["node"])
-        for c in record.chimes
-        if (int(c["i"]), record.index(c["node"])) in frozen_at
-    }
-    silent = sum(1 for _i, at in frozen if at not in credited)
+    clicked = {(int(e["i"]), record.index(e["node"])) for e in record.chimes + record.fittings}
+    silent = sum(1 for i, at in frozen if (i + 1, at) not in clicked)
     earliest = min(first.items(), key=lambda p: p[1])[0] if first else None
     return {
         "34 the horizon and the stopped clock": {
             "Nodes frozen": len(first),
             "frozen Node lines (interval, Node)": len(frozen),
-            "of them silent (no credit at the Node while it is frozen)": silent,
+            "of them silent (no credit and no birth at the Node in the close it stands frozen for)": silent,
             "lines standing at the content of their freeze / lines after a freeze's first": [
                 standing,
                 later,

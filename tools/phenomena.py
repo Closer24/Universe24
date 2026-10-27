@@ -14,6 +14,11 @@ GATE_COLUMN, VERDICT_COLUMN = (
     2,
 )  # the table's cells after the phenomenon: the gate's number, the verdict
 OPTION_WORDS = 2  # a --document option and its path, two words of the command line
+DERIVATIONS = "tools/derivations/open_items/READER-THE-GATES-DERIVED.md"
+DERIVED = {  # each row's derivation from the algebra alone (the owner's word of 2026-10-27, 15:12 UTC), by the page above
+    "an identity": "7 14 15 17 18 25 27 34 40 43 47 62 65 67 68 70 71 72",
+    "under a condition": "1 2 3 4 5 6 10 19 20 24 29 30 37 44 45 46 55 63 73",
+}
 NOT = "NOT"  # the word a verdict begins with where the gate is not shown, read or reached
 KINDS = (
     "SHOWN",
@@ -82,8 +87,13 @@ def rows_of(readings: dict[str, dict[int, dict[str, Any]]], before: dict[int, se
             + "; REGRESSED on "
             + ", ".join(sorted(was - shown))
         )
-        found.append(f"| {phenomenon} | {gate} | {verdict} | {cause} | {change} |")
+        found.append(f"| {phenomenon} | {gate} | {verdict} | {cause} | {change} | {derived_of(gate)} |")
     return found
+
+
+def derived_of(gate: int) -> str:
+    """A row's status from the algebra alone: an identity, under a condition, or not derived (DERIVATIONS)."""
+    return next((status for status, rows in DERIVED.items() if str(gate) in rows.split()), "not derived")
 
 
 def before_of(document: str) -> dict[int, set[str]]:
@@ -116,15 +126,23 @@ def table_of(
         if any(gate in rows and rows[gate]["kind"] == "SHOWN" for rows in readings.values())
     )
     head = f"SHOWN in Universe24: {shown} of {rows_in(readings)} on {sha}"
+    seen = [
+        gate
+        for gate in range(1, rows_in(readings) + 1)
+        if any(gate in rows and rows[gate]["kind"] == "SHOWN" for rows in readings.values())
+    ]
+    weighed = sum(1 for gate in seen if derived_of(gate) != "not derived")
+    tally = {status: len(rows.split()) for status, rows in DERIVED.items()}
+    derived = f"Derived from the algebra alone ({DERIVATIONS}): {tally['an identity']} rows as identities, {tally['under a condition']} under a condition, {rows_in(readings) - sum(tally.values())} not derived; SHOWN and derived, the rows that weigh: {weighed} of {rows_in(readings)}."
     records = ", ".join(readings)
     return "\n".join(
         [
             f"{HEADING} (the head {sha}; written by tools/phenomena.py from the readings, the verdict of every row the decoder's)",
             "",
-            f"{head}. The records read from the seed alone: {records}. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder.",
+            f"{head}. The records read from the seed alone: {records}. A row is SHOWN in Universe24 where the decoder's verdict reads SHOWN on at least one record; SHOWN in part is not counted; a row with no line in the decoder is NOT READ by the decoder. {derived}",
             "",
-            "| the phenomenon | gate | the verdict per record | the cause where not SHOWN | since the table before |",
-            "| --- | --- | --- | --- | --- |",
+            "| the phenomenon | gate | the verdict per record | the cause where not SHOWN | since the table before | derived from the algebra |",
+            "| --- | --- | --- | --- | --- | --- |",
             *rows_of(readings, before),
             "",
         ]
