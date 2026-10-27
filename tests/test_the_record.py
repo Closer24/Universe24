@@ -8,13 +8,13 @@ from typing import Any
 
 import pytest
 
-from event_universe import bangs, board, clicks, symmetries
-from event_universe.core import paces, rule3
-from event_universe.core.ports import AXES
-from event_universe.decoder import Record
+from event_universe import great_clock, strikes, swings, symmetries
+from event_universe.core import rates, rule3
+from event_universe.core.spokes import AXES
 from event_universe.events import NAMES
 from event_universe.gates import gates
-from event_universe.run import record
+from event_universe.reckoner import Chart
+from event_universe.run import chart
 from tests.laws import ROOT, load_file, world_of
 
 RECORDS = ROOT / "examples" / "records"
@@ -226,7 +226,7 @@ def test_the_hole_record_is_the_engines_own_bit_for_bit() -> None:
     universe, world = world_of("world_hole.json")
     committed = loaded("hole")
     assert committed["world"] == world and committed["universe"] == universe
-    found = json.loads(json.dumps(record(universe, world, 20, lambda line: None)))
+    found = json.loads(json.dumps(chart(universe, world, 20, lambda line: None)))
     assert found["log"] == committed["log"] and found["counts"] == committed["counts"]
     assert found["turns"] == committed["turns"] and found["run_back"] == {"intervals": 20, "exact": 20}
     timeless = [{k: v for k, v in row.items() if k != "milliseconds"} for row in found["rows"]]
@@ -281,38 +281,38 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
 def test_the_momentum_booked_on_the_link_is_an_identity_on_every_booking() -> None:
     """Row 71 on the hole record's own bookings (LT-S1's keys on every take and every birth's end): SHOWN exact on every axis booking at the write wall 6 den Gamma^2 T, NOT SHOWN once one carry is moved by one level, NOT READ with the keys struck (a record run before LT-S1)."""
     run = loaded("hole")
-    rec = Record(run)
+    rec = Chart(run)
     gate = "71 the momentum booked on the Link"
     found = symmetries.momentum_booked(rec)[gate]
     held, whole = found["axis bookings holding the identity / in all"]
-    assert held == whole == len(symmetries.bookings_of(rec)) * AXES and whole > 0
-    assert found["the write wall 6 den Gamma^2 T"] == rule3.wall_of(rec.den, rec.gamma) * rec.T
+    assert held == whole == len(symmetries.tallies_of(rec)) * AXES and whole > 0
+    assert found["the write wall 6 den Gamma^2 T"] == rule3.teeth_of(rec.rim, rec.full_rate) * rec.key
     assert found["verdict"].startswith("SHOWN exact")
-    rec.takes[-1]["carry"][0] += 1
-    assert symmetries.momentum_booked(Record(run))[gate]["verdict"].startswith(
+    rec.unwinds[-1]["carry"][0] += 1
+    assert symmetries.momentum_booked(Chart(run))[gate]["verdict"].startswith(
         "NOT SHOWN: the identity fails on 1 of"
     )
-    for entry in rec.takes:
+    for entry in rec.unwinds:
         del entry["recoil"]
-    assert symmetries.momentum_booked(Record(run))[gate]["verdict"].startswith("NOT READ")
+    assert symmetries.momentum_booked(Chart(run))[gate]["verdict"].startswith("NOT READ")
 
 
 def test_the_horizon_is_read_from_the_node_lines_not_the_rows() -> None:
     """Gate 14 on the hole record with one Node frozen on one Node line by hand (the Boss's 6416277638): the rows, one at every twelfth interval, keep their maximum below the frozen content while the Node line carries it, and the gate reads the horizon as silence from the Node lines; NOT REACHED on the record as committed."""
     run = loaded("hole")
-    rec, frozen = Record(run), paces.frozen_content(int(run["gamma"]))
+    rec, frozen = Chart(run), rates.stopped_load(int(run["gamma"]))
     line = run["nodes"][len(run["nodes"]) // 2]
-    credited = {rec.index(c["node"]) for c in rec.credits if int(c["i"]) == int(line["i"])}
+    credited = {rec.index(c["node"]) for c in rec.chimes if int(c["i"]) == int(line["i"])}
     at = next(k for k in range(len(line["content"])) if k not in credited)
     line["content"][at], line["frozen"] = frozen, [at]
-    found = board.horizon(Record(run))["14 the horizon"]
+    found = great_clock.standstill(Chart(run))["14 the horizon"]
     assert (
         found["max content in the rows (one row at every twelfth interval)"]
         < frozen
         <= found["max content in the Node lines"]
     )
     assert found["Nodes frozen"] == 1 and found["verdict"].startswith("SHOWN as silence")
-    assert board.horizon(Record(loaded("hole")))["14 the horizon"]["verdict"] == "NOT REACHED"
+    assert great_clock.standstill(Chart(loaded("hole")))["14 the horizon"]["verdict"] == "NOT REACHED"
 
 
 def test_the_exact_return_is_the_seeds_first_state_and_the_horizon_standing() -> None:
@@ -321,24 +321,24 @@ def test_the_exact_return_is_the_seeds_first_state_and_the_horizon_standing() ->
     nodes = run["nodes"]
     k = len(nodes) // 2
     nodes[k]["X"], nodes[k]["content"] = list(nodes[0]["X"]), list(nodes[0]["content"])
-    found = bangs.recurring_bang(Record(run))["1 recurring bangs"]
+    found = swings.recurring_swing(Chart(run))["1 recurring bangs"]
     assert found["exact returns to the seed's first state (interval)"] == [nodes[k]["i"]]
     assert found["bangs numbered (the interval each begins)"] == [1, nodes[k]["i"]]
-    assert bangs.returns(Record(run))["1c the board returns to the seed"]["verdict"].startswith(
+    assert swings.returns(Chart(run))["1c the board returns to the seed"]["verdict"].startswith(
         "SHOWN: 1 exact"
     )
-    assert bangs.exact_of(Record(loaded("hole"))) == []
+    assert swings.exact_of(Chart(loaded("hole"))) == []
     run = loaded("hole")
     every = list(range(len(run["nodes"][0]["X"])))
     run["nodes"][k]["frozen"] = every
-    found = clicks.horizon_radiates(Record(run))["61 the horizon radiates"]
+    found = strikes.horizon_radiates(Chart(run))["61 the horizon radiates"]
     later = [c for c in run["log"] if c["event"] == "credit" and int(c["i"]) > run["nodes"][k]["i"]]
     assert found["the whole board frozen at once"] and found[
         "of them after the whole board's release (no Node frozen at the interval)"
     ] == len(later)
     for line in run["nodes"][k:]:
         line["frozen"] = every
-    found = clicks.horizon_radiates(Record(run))["61 the horizon radiates"]
+    found = strikes.horizon_radiates(Chart(run))["61 the horizon radiates"]
     assert found["credits two or more Links from every Node frozen at the credit's interval"] == 0
     assert found["verdict"].startswith("NOT SHOWN")
 

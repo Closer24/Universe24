@@ -13,14 +13,14 @@ SRC = ROOT / "src" / "event_universe"
 PHYSICAL_MODULES = tuple(  # every module of the package, of core/ and of loader/ but the package markers, read from the tree so that no module escapes the gate unnamed (2026-10-24: the hand list and its own test folded here)
     sorted(
         path.relative_to(SRC).as_posix()
-        for folder in (SRC, SRC / "core", SRC / "loader")
+        for folder in (SRC, SRC / "core", SRC / "assembly")
         for path in folder.glob("*.py")
         if path.name != "__init__.py"
     )
 )
 
 FORBIDDEN_IMPORTS = {"random", "fractions", "decimal", "cmath", "statistics"}
-MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = {"gcd", "isqrt"}, {"int64"}
+MATH_ALLOWED, NUMPY_DTYPES_ALLOWED = set[str](), {"int64"}
 FLOATS = "complex128 complex64 complex_ complexfloating float128 float16 float32 float64 float_ floating"
 NUMPY_DTYPES_FORBIDDEN = {*FLOATS.split(), *"int16 int32 int8 uint16 uint32 uint64 uint8".split()}
 NUMPY_FORBIDDEN = set("arctan2 average cbrt cos divide exp float hypot log log10 log2 mean".split())
@@ -139,9 +139,9 @@ CORE, DIVISIONS = "core/acts.py", {ast.FloorDiv, ast.Mod}  # core/rule3.py befor
 
 DIVISION_CALLS = {"divmod", "np.floor_divide", "np.mod", "np.remainder", "np.fmod"}
 INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the function, its responsibility
-    ("core/ports.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
+    ("core/spokes.py", ast.Mod, "shifted", "the periodic wrap of a Node's index along the shifted axis"),
     (
-        "core/ports.py",
+        "core/spokes.py",
         ast.Mod,
         "wrap",
         "the periodic wrap of a Node's index or an axis, the torus's own",
@@ -149,7 +149,8 @@ INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the func
 )
 # the record's writer and readers, no act of the Node: their quotients are readings at a named scale
 READERS = tuple(
-    f"{n}.py" for n in "run decoder gates events circle board bangs clicks predicates symmetries".split()
+    f"{n}.py"
+    for n in "run reckoner gates events rim great_clock swings strikes predicates symmetries".split()
 )
 
 

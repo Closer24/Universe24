@@ -4,40 +4,42 @@ from __future__ import annotations
 
 from typing import Any
 
-from event_universe.bangs import (  # noqa: F401  (the bang rows' readers, the names kept for the hands' scripts)
-    bottoms_of,
-    exact_of,
-    marks,
-    recurring_bang,
-    tops_of,
-    volumes,
-)
-from event_universe.core import paces
-from event_universe.core.ports import AXES
-from event_universe.core.rule3 import largest_below, quotient
-from event_universe.decoder import (
+from event_universe.core import rates
+from event_universe.core.rule3 import carries, largest_below
+from event_universe.core.spokes import AXES
+from event_universe.reckoner import (
     HALF,
     LISTED,
     MAX,
     QUARTERS,
     SHORT_LIST,
     THIRDS,
-    Record,
+    Chart,
     unread_words,
 )
+from event_universe.swings import (  # noqa: F401  (the bang rows' readers, the names kept for the hands' scripts)
+    bottoms_of,
+    exact_of,
+    marks,
+    recurring_swing,
+    stretches,
+    tops_of,
+)
 
-PULL = 2  # the mass pull's weight, 2 sqrt(X / Gamma) per Node (BG-S1's form), against the Links' lift
+LOAD_PULL = (
+    2  # the mass pull's weight, 2 sqrt(X / Gamma) per Node (BG-S1's form), against the Links' lift
+)
 
 
-def contraction(record: Record) -> dict[str, Any]:
+def contraction(record: Chart) -> dict[str, Any]:
     """Gate 6: the contraction, a fall of the mean volume at some mark."""
     rows, steps = marks(record)
     falls = [i for i, d in steps if d < 0]
-    lines = volumes(record)
+    lines = stretches(record)
     at = None
     if falls and len(lines) >= falls[0]:
         before, after = lines[falls[0] - 1 - 1][1], lines[falls[0] - 1][1]
-        at = record.node(min(range(len(after)), key=lambda n: after[n] - before[n]))
+        at = record.clock(min(range(len(after)), key=lambda n: after[n] - before[n]))
     return {
         "6 contraction (the board, the reader's view)": {
             "at": at,
@@ -45,7 +47,7 @@ def contraction(record: Record) -> dict[str, Any]:
                 (i, v) for i, v, _b in rows[:: max(1, len(rows) // LISTED)]
             ],
             "intervals with the mean volume falling": falls[:SHORT_LIST],
-            "turns (Node swaps) total": sum(len(line["turned"]) for line in record.nodes),
+            "turns (Node swaps) total": sum(len(line["turned"]) for line in record.clocks),
             "verdict": "SHOWN at the board: the mean volume falls"
             if falls
             else "NOT SHOWN: the mean volume rises throughout",
@@ -53,7 +55,7 @@ def contraction(record: Record) -> dict[str, Any]:
     }
 
 
-def shortening(record: Record) -> dict[str, Any]:
+def shortening(record: Chart) -> dict[str, Any]:
     """Gate 3: shortening then lengthening, a falling run of the mean volume between rising runs."""
     _rows, steps = marks(record)
     falls = [i for i, d in steps if d < 0]
@@ -68,26 +70,26 @@ def shortening(record: Record) -> dict[str, Any]:
     }
 
 
-def lift_of(record: Record) -> tuple[list[int], list[int]]:
+def lift_of(record: Chart) -> tuple[list[int], list[int]]:
     """LC-S1's lift per interval from the Node lines (lc1's quotient form): L = SUM_i quotient(Gamma SUM_j (X_j - X_i), 3 X_i) over the Nodes and their six neighbours, and the mass pull SUM_i 2 largest_below(X_i div Gamma); each Node line's read once per record."""
     memo = record.memo.setdefault("lift", {})
     lifts, pulls = [], []
-    for line in record.nodes:
+    for line in record.clocks:
         if id(line) not in memo:
             xs = [int(x) for x in line["X"]]
             lift = pull = 0
             for at, x in enumerate(xs):
                 lift += int(
-                    quotient(record.gamma * sum(xs[n] - x for n in neighbours(record, at)), AXES * x)
+                    carries(record.full_rate * sum(xs[n] - x for n in neighbours(record, at)), AXES * x)
                 )
-                pull += PULL * largest_below(int(quotient(x, record.gamma)))
+                pull += LOAD_PULL * largest_below(int(carries(x, record.full_rate)))
             memo[id(line)] = (lift, pull)
         lifts.append(memo[id(line)][0])
         pulls.append(memo[id(line)][1])
     return lifts, pulls
 
 
-def acceleration(record: Record) -> dict[str, Any]:
+def acceleration(record: Chart) -> dict[str, Any]:
     """Gate 5: the acceleration, the rises of the mean volume growing from mark to mark within the last rising run; beside it LC-S1's lift line (the Boss's 6400767119): the Links' lift L against the mass pull over the run's last third, the lift SHOWN where L exceeds the pull."""
     _rows, steps = marks(record)
     last_run = []
@@ -126,13 +128,13 @@ def acceleration(record: Record) -> dict[str, Any]:
     }
 
 
-def era(record: Record) -> dict[str, Any]:
+def era(record: Chart) -> dict[str, Any]:
     """Gate 4: the era of matter in the Nodes' own clocks: at every Node with a birth and a body's credit, the credits go on past the last birth in that Node's proper count."""
     last_birth: dict[tuple[int, ...], int] = {}
     last_credit: dict[tuple[int, ...], int] = {}
-    for b in record.births:
+    for b in record.fittings:
         last_birth[tuple(b["node"])] = max(last_birth.get(tuple(b["node"]), 0), b["proper"])
-    for c in record.credits:
+    for c in record.chimes:
         last_credit[tuple(c["node"])] = max(last_credit.get(tuple(c["node"]), 0), c["proper"])
     both = [n for n in last_birth if n in last_credit]
     past = [n for n in both if last_credit[n] > last_birth[n]]
@@ -145,29 +147,29 @@ def era(record: Record) -> dict[str, Any]:
         "4 an era of matter": {
             "Nodes with a birth and a body credit": len(both),
             "of them with credits past the last birth in the Node's own clock": len(past),
-            "births": len(record.births),
-            "body credits": len(record.credits),
+            "births": len(record.fittings),
+            "body credits": len(record.chimes),
             "at": list(past[0]) if past else None,
             "verdict": verdict,
         }
     }
 
 
-def horizon(record: Record) -> dict[str, Any]:
+def standstill(record: Chart) -> dict[str, Any]:
     """Gate 14: the frozen content against the Node lines' max content (the Boss's 6416277638: the reader's rows stand one at every twelfth interval, so a horizon shorter than a twelfth of the run was blind to the rows' maximum while the freeze is in the Node lines; the rows' maximum named beside); a credit at a Node while it stands in the frozen set of the Node lines would deny the horizon (the former read, a credit at or above the frozen content, named beside)."""
-    frozen = paces.frozen_content(record.gamma)
-    frozen_at = {(int(line["i"]), int(at)) for line in record.nodes for at in line["frozen"]}
-    at_frozen = [c for c in record.credits if (int(c["i"]), record.index(c["node"])) in frozen_at]
-    at_mark = sum(1 for c in record.credits if c["content"] >= frozen)
+    frozen = rates.stopped_load(record.full_rate)
+    frozen_at = {(int(line["i"]), int(at)) for line in record.clocks for at in line["frozen"]}
+    at_frozen = [c for c in record.chimes if (int(c["i"]), record.index(c["node"])) in frozen_at]
+    at_mark = sum(1 for c in record.chimes if c["content"] >= frozen)
     rows_max = max((int(r["content min/mean/max"][MAX]) for r in record.rows), default=0)
-    cmax = max((int(x) for line in record.nodes for x in line["content"]), default=rows_max)
+    cmax = max((int(x) for line in record.clocks for x in line["content"]), default=rows_max)
     verdict = (
         "SHOWN as silence (no credit at a frozen Node)"
         if cmax >= frozen and not at_frozen
         else ("NOT REACHED" if cmax < frozen else "NOT SHOWN")
     )
-    frozen_first = record.first_frozen()
-    first = record.node(min(frozen_first, key=frozen_first.__getitem__)) if frozen_first else None
+    frozen_first = record.first_stopped()
+    first = record.clock(min(frozen_first, key=frozen_first.__getitem__)) if frozen_first else None
     return {
         "14 the horizon": {
             "frozen content": frozen,
@@ -182,13 +184,13 @@ def horizon(record: Record) -> dict[str, Any]:
     }
 
 
-def stopped_clock(record: Record) -> dict[str, Any]:
+def stopped_clock(record: Chart) -> dict[str, Any]:
     """Row 34: the horizon and the stopped clock from the Node lines: a frozen Node (the Link pace 0) silent while it is frozen (no credit at it on any interval it stands in the frozen set) and its content standing at the content of its freeze on every line of that freeze, until its release (BH-S1's predicate, the Boss's 6407393577: the clock stops at the horizon; re-cut for a released horizon on the Boss's 6417313230: the former read every credit and every content from the first freeze on, which no released Node can hold)."""
-    first = record.first_frozen()
+    first = record.first_stopped()
     frozen: list[tuple[int, int]] = []
     held: dict[int, int] = {}
     standing = later = 0
-    for line in record.nodes:
+    for line in record.clocks:
         i, ats = int(line["i"]), {int(at) for at in line["frozen"]}
         for at in list(held):
             if at not in ats:
@@ -204,7 +206,7 @@ def stopped_clock(record: Record) -> dict[str, Any]:
     frozen_at = set(frozen)
     credited = {
         record.index(c["node"])
-        for c in record.credits
+        for c in record.chimes
         if (int(c["i"]), record.index(c["node"])) in frozen_at
     }
     silent = sum(1 for _i, at in frozen if at not in credited)
@@ -218,7 +220,7 @@ def stopped_clock(record: Record) -> dict[str, Any]:
                 standing,
                 later,
             ],
-            "at": record.node(earliest) if earliest is not None else None,
+            "at": record.clock(earliest) if earliest is not None else None,
             "verdict": "SHOWN: every frozen Node silent with its content standing while frozen, the clock stopped at the horizon"
             if frozen and silent == len(frozen) and standing == later
             else "NOT SHOWN: a frozen Node credited while frozen or its content moving while frozen"
@@ -228,7 +230,7 @@ def stopped_clock(record: Record) -> dict[str, Any]:
     }
 
 
-def same_gates(record: Record) -> dict[str, Any]:
+def same_gates(record: Chart) -> dict[str, Any]:
     """Row 46 (the Boss's 6400767119): the repeating bang with credits: after the first exact return of gate 1 (every Node at Gamma), the later cycle births and credits bodies as the first did."""
     exact = exact_of(record)
     if not exact:
@@ -241,8 +243,8 @@ def same_gates(record: Record) -> dict[str, Any]:
             }
         }
     since = exact[0]
-    births = sum(1 for b in record.births if int(b["i"]) > since)
-    credits = sum(1 for c in record.credits if int(c["i"]) > since)
+    births = sum(1 for b in record.fittings if int(b["i"]) > since)
+    credits = sum(1 for c in record.chimes if int(c["i"]) > since)
     return {
         "46 the bangs recurring with the same gates": {
             "the first exact return's interval": since,
@@ -255,9 +257,9 @@ def same_gates(record: Record) -> dict[str, Any]:
     }
 
 
-def neighbours(record: Record, at: int) -> list[int]:
+def neighbours(record: Chart, at: int) -> list[int]:
     """The six Nodes one Link from a Node's index on the torus."""
-    x, y, z = record.node(at)
+    x, y, z = record.clock(at)
     cube = record.cube
     return [
         record.index(((x + dx) % cube, (y + dy) % cube, (z + dz) % cube))
@@ -265,10 +267,10 @@ def neighbours(record: Record, at: int) -> list[int]:
     ]
 
 
-def maxwell(record: Record) -> dict[str, Any]:
+def maxwell(record: Chart) -> dict[str, Any]:
     """Row 37: Maxwell's one Link per interval from the Node lines' gap-0 currents: a Node whose current turns on at an interval stood within one Link of a Node with a current the interval before; the violations counted."""
     lit = []
-    for line in record.nodes:
+    for line in record.clocks:
         on = {i for axis in line["current"] for i, c in enumerate(axis) if c}
         lit.append(on | {n for i in on for n in neighbours(record, i)})
     violations = grown = 0
@@ -278,7 +280,7 @@ def maxwell(record: Record) -> dict[str, Any]:
         violations += sum(1 for n in new if not (set(neighbours(record, n)) & before))
     return {
         "37 Maxwell's one Link per interval": {
-            "Node lines": len(record.nodes),
+            "Node lines": len(record.clocks),
             "intervals the current's reach grew": grown,
             "Nodes lit beyond one Link of the interval before": violations,
             "verdict": unread_words("no Node line with a current", "the signal of one Link per interval")
@@ -292,14 +294,14 @@ def maxwell(record: Record) -> dict[str, Any]:
     }
 
 
-def well(record: Record) -> dict[str, Any]:
+def well(record: Chart) -> dict[str, Any]:
     """Row 45: the bodies' well, binding and collapse: a body (a line at one Node) credited from the first half of the run into its last quarter stands in its own well; a frozen Node ends a collapse."""
-    spans = {body: [int(c["i"]) for c in cs] for body, cs in record.bodies_of().items()}
-    n = record.intervals
+    spans = {body: [int(c["i"]) for c in cs] for body, cs in record.bobs_of().items()}
+    n = record.ticks
     standing = sum(
         1 for xs in spans.values() if min(xs) * HALF <= n and max(xs) * QUARTERS >= (QUARTERS - 1) * n
     )
-    frozen = sum(len(line["frozen"]) for line in record.nodes)
+    frozen = sum(len(line["frozen"]) for line in record.clocks)
     return {
         "45 the bodies' well, binding and collapse": {
             "bodies (Node, line) credited": len(spans),

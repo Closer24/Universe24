@@ -5,38 +5,38 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any, NamedTuple
 
-from event_universe.core.acts import divide
-from event_universe.core.ports import AXES, PORTS
+from event_universe.core.acts import carry
+from event_universe.core.spokes import AXES, SPOKES
 
 # the Node's reaches, one per Port in Port order [+X, -X, +Y, -Y, +Z, -Z], R_ij = 2 num p_i^2 Q_ij G^2 on
 # the Link to that neighbour; integers or the loop's integer arrays
-Reads = tuple[Any, ...]
-HELD_WRITE_WEIGHT = (
+Grips = tuple[Any, ...]
+HELD_DRIVE_WEIGHT = (
     AXES + 1
 )  # the held write's (d + 1) X (...) p_0: X = Gamma (Gamma / p_0)^(d + 1), dX/dU = (d + 1) X
-UNIT_WEIGHT = AXES  # the plane's unit (PORTS / 2) T s: a rest mode's share PORTS s |W| at one quantum |W| = T div 2
+WINDING_WEIGHT = AXES  # the plane's unit (PORTS / 2) T s: a rest mode's share PORTS s |W| at one quantum |W| = T div 2
 
 
-class Rule(NamedTuple):
+class Gearing(NamedTuple):
     """Rule3's integers at a Node, the law's four names: the six reaches R_ij in Port order, the own weight S_i of the first form (2 w - D_i - SUM_j R_ij, named by the form's Node term and the click's face), the wall w and the mass D_i (`rule_integers`, `node.rule_of`)."""
 
-    reaches: Reads
-    self_coefficient: Any
-    wall: Any
-    mass: Any
+    grips: Grips
+    hold: Any
+    teeth: Any
+    spring: Any
 
 
-def wall_of(den: Any, gamma: Any, unit: Any = 1) -> Any:
+def teeth_of(den: Any, gamma: Any, unit: Any = 1) -> Any:
     """The wall w = 6 den Gamma^2 G^2, the family's one divisor at every Node and every content (ALGEBRA.md #the-line)."""
-    return PORTS * den * gamma * gamma * unit * unit
+    return SPOKES * den * gamma * gamma * unit * unit
 
 
-def mass(num: Any, den: Any, clock: Any, unit: Any = 1) -> Any:
+def spring(num: Any, den: Any, clock: Any, unit: Any = 1) -> Any:
     """The Node's mass D_i = 12 (den - num) p_0^2 G^2 (ALGEBRA.md #the-line, the flux form): the shortfall of the six reaches and the own weight under twice the wall, 2 w - S_i - SUM_j R_ij, the clock's alone, 0 for every family with num = den (light), the one term of Rule3's line that is the Node's own and not a Link's."""
-    return (PORTS + PORTS) * (den - num) * clock * clock * unit * unit
+    return (SPOKES + SPOKES) * (den - num) * clock * clock * unit * unit
 
 
-def rule_integers(
+def gearing(
     num: Any,
     den: Any,
     gamma: Any,
@@ -44,21 +44,21 @@ def rule_integers(
     pace: Any,
     factors: tuple[Any, ...] | None = None,
     unit: Any = 1,
-) -> Rule:
+) -> Gearing:
     """The rule's integers at a Node from its paces, the Rule (the six reaches, S, w, D), the clock the Node's and the tension the Link's (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; The paces compose): the clock p_0 = Gamma (1 - 1 / Gamma)^c to the unit from the Node's content c, the reading row's own level among it, the primary number whose square enters the mass (`paces.clock_of`); the Node's pace p_i = p_0^2 / Gamma, the clock twice, on every one of its six Links (`paces.link_pace_of`); each Link's factor Q_ij, one integer per Link in the unit G^2 of the run's Link unit G (`link_factor`, read the same from both ends; None: no tension, G^2 on every Link); the reach R_ij = 2 num p_i^2 Q_ij per Port, the product and not the sum; the wall w (`wall_of`); the mass D (`mass`); the own weight S = 2 w - D - SUM over the six Ports of R_ij, 12 (den Gamma^2 - (den - num) p_0^2) G^2 - SUM R_ij as the law's first form writes it, the same integer; at the vacuum's paces p_0 = p_i = Gamma the plain rule of the pair."""
     square = unit * unit
     node_squared = pace * pace
-    links = (square,) * PORTS if factors is None else factors
+    links = (square,) * SPOKES if factors is None else factors
     reaches = tuple((node_squared + node_squared) * factor * num for factor in links)
-    wall, own = wall_of(den, gamma, unit), mass(num, den, clock, unit)
-    return Rule(reaches, wall + wall - own - sum(reaches), wall, own)
+    wall, own = teeth_of(den, gamma, unit), spring(num, den, clock, unit)
+    return Gearing(reaches, wall + wall - own - sum(reaches), wall, own)
 
 
-def link_factor(gamma: Any, unit: Any, tension: Any) -> Any:
+def mesh_factor(gamma: Any, unit: Any, tension: Any) -> Any:
     """The Link's factor Q_ij, the one place of its form (ALGEBRA.md #the-paces, The clock is the Node's, the tension is the Link's; the Boss's booking): q_ij^2 / Gamma^2 = (Gamma - t_a(i, j))^2 / Gamma^2 booked squared as one integer per Link in the unit G^2 of the run's Link unit G, Q_ij = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2 by the division act, rounded once to the nearest from the Link's tension t and read the same from both ends; the step's coefficient matrix M is symmetric at uniform paces alone, and D M is symmetric at every pace with D = diag(1 / p_i^2), so the weighted form is exact at paces fixed in time; G^2 with no tension, 0 where the tension reaches Gamma (the Link's coefficient 0), the tension resolved to Gamma / (2 G^2)."""
     pace = gamma - tension
     wall = gamma * gamma
-    return divide(unit * unit * pace * pace, wall, half(wall))[0]
+    return carry(unit * unit * pace * pace, wall, half(wall))[0]
 
 
 def least_at(above: Callable[[int], bool]) -> int:
@@ -73,7 +73,7 @@ def least_at(above: Callable[[int], bool]) -> int:
     return high
 
 
-def flux_total(flux: Any, mass: Any, wall: Any, now: Any, other: Any) -> Any:
+def pull_total(flux: Any, mass: Any, wall: Any, now: Any, other: Any) -> Any:
     """The flux line's total before the remainder and the division, in the order the amplitude bound is derived for (ENGINE.md, The amplitude bound): w (2 a_now - a_before) - D a_now + SUM over the six Links of R_ij (m_ij - a_now); `rule3` divides it, the click's face reads it (features/click `presented`)."""
     return wall * (now + now - other) - mass * now + flux
 
@@ -82,10 +82,10 @@ def rule3(
     flux: Any, mass: Any, wall: Any, now: Any, other: Any, remainder: Any, direction: int = 1
 ) -> tuple[Any, Any]:
     """Rule3's line in the law's flux form, one interval in `direction` sigma (ALGEBRA.md #the-line, #the-direction): w a_next + r' = w (2 a_now - a_before) - D a_now + SUM over the six Links of R_ij (m_ij - a_now) + r (`flux_total`), the sum over the Links `flux` gathered Link by Link by the step's module (flux.py, one difference per Link, each end's own reach), the Node's mass `mass` (D_i), the division the carried one (core/acts.divide, the former carried_division kept by name); +1 from (a_now, a_before, r) to (a_next, r'), -1 from (a_now, a_next, r') back to (a_before, r), the same flux read from the same level. A line with no Links and the mass 2 w - 2 K on the wall w is the rotation act a_next = (2 K a_now + r) div w - a_before (features/phase, the phase line; features/click `rotated`)."""
-    return divide(flux_total(flux, mass, wall, now, other), wall, remainder, direction)
+    return carry(pull_total(flux, mass, wall, now, other), wall, remainder, direction)
 
 
-def link_unit_of(gamma: Any) -> int:
+def mesh_unit_of(gamma: Any) -> int:
     """The Link's unit G derived from Gamma (K-S1, the owner's word of 2026-10-25: the conditions in the laws and the code enforces them; no key of the file): the least G at which one level of tension at the vacuum resolves in the Link's factor, Q(1) < Q(0) in `link_factor`, 2 G^2 (2 Gamma - 1) > Gamma^2, found by a search by comparisons (16 at Gamma 1,000)."""
     unit = 1
     while (unit + unit) * unit * (gamma + gamma - 1) <= gamma * gamma:
@@ -93,7 +93,7 @@ def link_unit_of(gamma: Any) -> int:
     return unit
 
 
-def held_wall(weight: Any, den: Any, gamma: Any, action: Any, power: int) -> Any:
+def held_teeth(weight: Any, den: Any, gamma: Any, action: Any, power: int) -> Any:
     """A held row's write wall (K-S1 to K-S3, Y-S1): weight den Gamma^power T with the trace's weight the universe file's `trace` key, the time line's at the power 4 and the nine lines' at 2."""
     return weight * den * gamma**power * action
 
@@ -103,50 +103,55 @@ def held_numerator(
 ) -> Any:
     """The carrier's time line's write numerator (the metric time line, the held write): 4 X (forms weight den Gamma^2 - trace p_0^2) p_0 with the trace's weight the universe file's `trace` key."""
     return (
-        HELD_WRITE_WEIGHT
+        HELD_DRIVE_WEIGHT
         * level
         * (forms * weight * den * gamma * gamma - trace * clock * clock)
         * clock
     )
 
 
-def unit_of(sine: Any, action: Any) -> Any:
+def winding_of(sine: Any, action: Any) -> Any:
     """A plane's quantum, its unit 3 T s (the conventions' row 12: W_c sin omega_0 to the unit), s the pair's sine or den at the gap 0."""
-    return UNIT_WEIGHT * action * sine
+    return WINDING_WEIGHT * action * sine
 
 
-def signed_quotient(numerator: Any, wall: Any) -> Any:
+def signed_carries(numerator: Any, wall: Any) -> Any:
     """The quotient of the magnitude with the sign after, sign(x) (|x| div w): the lay's rounding of a signed level at rest (the one rule's mirror by the numerator's sign at a remainder born at 0), so the negated vector's lay is the lay negated."""
     sign = (numerator >= 0) * 1 - (numerator < 0) * 1
-    return sign * quotient(sign * numerator, wall)
+    return sign * carries(sign * numerator, wall)
 
 
 def half(wall: Any) -> Any:
     """The half of a wall by the division act on 2, the remainder's start and the mean wall's factor (the halving's own 2)."""
-    return divide(wall, 2, 0)[0]
+    return carry(wall, 2, 0)[0]
+
+
+def mean_teeth_of(wall: Any, before: Any, now: Any) -> Any:
+    """The mean wall (w div 2)(X_before + X_now) of the carrier's two levels, a riding line's wall: the one spelling for the interval, the seed's walls and the reader's solve."""
+    return half(wall) * (before + now)
 
 
 def odd(count: Any) -> Any:
     """The parity of a count by the division act on 2, 1 where odd (the parity's own 2): the reversals' count, a line's odd part."""
-    return divide(count, 2, 0)[1]
+    return carry(count, 2, 0)[1]
 
 
-def share_weight(gamma: Any, unit: Any) -> Any:
+def wind_weight(gamma: Any, unit: Any) -> Any:
     """The share's weight 2 Gamma^3 G^2, the exact take's scale (the fall f(s) over it; gram's wall its double)."""
     return (gamma + gamma) * gamma * gamma * unit * unit
 
 
-def quotient(numerator: Any, wall: Any) -> Any:
+def carries(numerator: Any, wall: Any) -> Any:
     """The division act's quotient alone, numerator div wall with no carry (the digit on a lattice, the amplitude's share, the root's candidate)."""
-    return divide(numerator, wall, 0)[0]
+    return carry(numerator, wall, 0)[0]
 
 
 def remainder(numerator: Any, wall: Any) -> Any:
     """The division act's remainder alone, numerator mod wall in [0, wall) (the draw composed modulo the planes' count times the unit)."""
-    return divide(numerator, wall, 0)[1]
+    return carry(numerator, wall, 0)[1]
 
 
-def lattice(*values: Any) -> Any:
+def pitch(*values: Any) -> Any:
     """The greatest common divisor of integers by Euclid's division act (the remainder alone), the lattice of a line's remainders at a Node: gcd(w, D, R_1..R_6) on the Node's own lattice, gcd(w, R_ji) on a Link's."""
     found = 0
     for value in values:
@@ -157,12 +162,12 @@ def lattice(*values: Any) -> Any:
     return found
 
 
-def balanced_pair(product: int) -> tuple[int, int]:
+def balanced_notches(product: int) -> tuple[int, int]:
     """The pair (a, b) with a b = product exactly and a the largest divisor at most largest_below(product), found by a search by comparisons down from the root's floor (MS-S1: the lay's two levels with A B = T div 2 for every row, the same two integers from T alone; 125 and 144 at T 36,000)."""
     a = largest_below(product)
     while remainder(product, a):
         a -= 1
-    return a, quotient(product, a)
+    return a, carries(product, a)
 
 
 def largest_below(square: int) -> int:

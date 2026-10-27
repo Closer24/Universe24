@@ -7,36 +7,36 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe.core import rule3
-from event_universe.core.ports import AXES, PORT_SIDES, PORTS
-from event_universe.links import row_current
-from event_universe.merger import takes
-from event_universe.rows import Line
-from event_universe.run import credit
-from event_universe.take import frame_nodes, move, recoil
+from event_universe.core.spokes import AXES, SPOKE_SIDES, SPOKES
+from event_universe.meshes import train_lead
+from event_universe.run import chime
+from event_universe.trains import Gear
+from event_universe.unspring import unwinds
+from event_universe.unwind import move, recoil, window_clocks
 
 if TYPE_CHECKING:
-    from event_universe.node import Node
+    from event_universe.clock import Clock
 
 
-def bodies(
-    node: Node,
-    plane_starts: list[list[Line]],
+def bobs(
+    node: Clock,
+    plane_starts: list[list[Gear]],
     owns: list[Any],
     born_nodes: set[tuple[int, ...]],
     frozen: Any,
-    r_emitter: rule3.Rule,
+    r_emitter: rule3.Gearing,
 ) -> None:
     """The bodies' closing: a record standing at a whole quantum of its own unit through one period of its beat clicks (one take of its unit at the Node, the credit logged), a Node of a birth this interval or a frozen Node apart; EQ-S1 in cs7's letter (CS7-S1; the owner's word of 2026-10-25, 17:57 UTC, through the Boss's recommendation, 6402908585 and 6403341352): where nothing arrives at the Node, the taken row's current across its six Links summed 0 at the interval's start (links.row_current as close.meet reads it; what flows in flows out), the take is laid back on the taken line (the line the take moved, logged as `taken_line`: CS4-S2) by the one lay act in the same close, the credit written with laid_back the levels and its momentum booked 0, so a board alike at every Node returns to Gamma exactly with a body credited at every Node in every cycle, and where light accumulates the take stands (the former closing, the take alone, kept by name; eq2's reading, every one of the six currents 0, kept by name); the plane at the gap 0 is never credited as a body (the light no body, cs4's sentence through the Boss, 6402358120: light at rest is no body in nature, its quanta taken at a meeting and by a body's click alone; the former closing of the standing light, credited at every interval where its beat stood at 1, kept by name); the beat a plane's by its re line's zero crossings counted in either direction (CK-S1: the crossing read even under the negation of the line, the two levels' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike, so the closing is covariant under the conjugation and the colour exchange alike; the beat the half period; the former upward crossing, and the form `b < 0 <= n or n < 0 <= b` odd where exactly one level is 0, kept by name)."""
-    rec0 = node.records().index(node.emitter())
-    net = sum((row_current(plane_starts[rec0], port) for port in range(PORTS)), start=0)
-    for rec, row in enumerate(node.records()):
-        if row is node.emitter():
+    rec0 = node.hands().index(node.unsprung())
+    net = sum((train_lead(plane_starts[rec0], port) for port in range(SPOKES)), start=0)
+    for rec, row in enumerate(node.hands()):
+        if row is node.unsprung():
             continue
         standing_now = np.vectorize(
-            lambda v, unit=node.units[rec]: 1 if int(v) >= unit else 0, otypes=[object]
+            lambda v, unit=node.windings[rec]: 1 if int(v) >= unit else 0, otypes=[object]
         )(owns[rec])
-        node.standing[rec] = np.where(standing_now == 1, node.standing[rec] + 1, 0)
-        re = row.lines[0]
+        node.wound[rec] = np.where(standing_now == 1, node.wound[rec] + 1, 0)
+        re = row.gears[0]
         crossing = np.vectorize(
             lambda b, n: 1 if (int(b) * int(n) < 0 or (int(b) == 0) != (int(n) == 0)) else 0,
             otypes=[object],
@@ -46,37 +46,37 @@ def bodies(
         node.crossed[rec] = np.where(crossing == 1, 1, np.where(counting == 1, node.crossed[rec] + 1, 0))
         closing = np.vectorize(
             lambda st, bt: 1 if (int(bt) > 0 and int(st) >= int(bt)) else 0, otypes=[object]
-        )(node.standing[rec], node.beats[rec])
+        )(node.wound[rec], node.beats[rec])
         for where in zip(*np.nonzero(closing == 1), strict=True):
             at = tuple(int(x) for x in where)
             if at in born_nodes or frozen[at]:
                 continue
-            got = takes(node, [(at, node.units[rec])], r_emitter, 1)
-            node.standing[rec][at] = 0
+            got = unwinds(node, [(at, node.windings[rec])], r_emitter, 1)
+            node.wound[rec][at] = 0
             if got is None:
                 continue
             (take,) = got
             levels, now, k = take["levels"], take["taken_now_was"], take["taken_line"]
             node.counts["body_clicks"] += 1
-            frame = frame_of(node, rec, at, plane_starts)
-            entry = credit(node, rec, at, take, frame, plane_starts[rec])
+            frame = face_of(node, rec, at, plane_starts)
+            entry = chime(node, rec, at, take, frame, plane_starts[rec])
             if int(net[at]) == 0:
-                move(node, rec0, k, at, now - int(node.records()[rec0].lines[k].now[at]))
+                move(node, rec0, k, at, now - int(node.hands()[rec0].gears[k].now[at]))
                 entry["laid_back"], entry["dP_take"] = levels, [0] * AXES
-                back = recoil(node, at, [-x for x in node.last_dp], entry["clock"], 1)
+                back = recoil(node, at, [-x for x in node.last_push], entry["clock"], 1)
                 entry["recoil"], entry["carry"] = [0] * AXES, back["carry"]
                 node.counts["laid_back"] += 1
             node.log.append(entry)
 
 
-def frame_of(
-    node: Node, rec: int, at: tuple[int, ...], plane_starts: list[list[Line]]
+def face_of(
+    node: Clock, rec: int, at: tuple[int, ...], plane_starts: list[list[Gear]]
 ) -> dict[str, Any]:
     """A credit's frame: the record's levels at the Node now, before the swap (the state the swap replaced at a turned Node, the levels now elsewhere; CL-S2: no second moment of the close, the former `stepped` kept by name) and at the start, its neighbours' at the start, the Link phases, frames, odd lines and factors the Node read at the start."""
-    re, im = node.records()[rec].lines
+    re, im = node.hands()[rec].gears
     re0, im0 = plane_starts[rec]
-    nodes = frame_nodes(node, at)[1:]
-    sre, sim = node.before_swap[rec]
+    nodes = window_clocks(node, at)[1:]
+    sre, sim = node.before_turnover[rec]
     return {
         "re_now": int(re.now[at]),
         "im_now": int(im.now[at]),
@@ -90,12 +90,12 @@ def frame_of(
         "im_start_before": int(im0.before[at]),
         "re_neighbours_start": [int(re0.now[n]) for n in nodes],
         "im_neighbours_start": [int(im0.now[n]) for n in nodes],
-        "phases": [[int(c[at]), int(sn[at])] for c, sn in node.start_phases],
-        "frames": [int(f[at]) for f in node.start_frames],
+        "phases": [[int(c[at]), int(sn[at])] for c, sn in node.start_offsets],
+        "frames": [int(f[at]) for f in node.start_pawls],
         "odd": [
             int(side * (node.start_odd[axis][at] + node.start_odd[axis][n]))
-            for (axis, side), n in zip(PORT_SIDES, nodes, strict=True)
+            for (axis, side), n in zip(SPOKE_SIDES, nodes, strict=True)
         ],
-        "X": node.X,
+        "X": node.standard_length,
         "factors": [int(f[at]) for f in node.start_factors],
     }

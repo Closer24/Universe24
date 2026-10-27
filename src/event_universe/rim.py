@@ -55,19 +55,19 @@ def divisor_of(n: int) -> int:
                 for _ in range(min(m, r - k)):
                     y = (y * y + c) % n
                     q = q * abs(x - y) % n
-                g, k = int(rule3.lattice(q, n)), k + m
+                g, k = int(rule3.pitch(q, n)), k + m
             r *= EVEN
         if g == n:
             g = 1
             while g == 1:
                 ys = (ys * ys + c) % n
-                g = int(rule3.lattice(abs(x - ys), n))
+                g = int(rule3.pitch(abs(x - ys), n))
         if g != n:
             return g
         c += 1
 
 
-def circle_of(den: int) -> list[tuple[int, int]]:
+def rim_of(den: int) -> list[tuple[int, int]]:
     """den's circle (MS-S2): den's primes (rho), each prime 1 mod 4 as a^2 + b^2 by a search by comparisons, every point (num, s) with num^2 + s^2 = den^2, num > 0 and s > 0, by the Gaussian products (3^k - 1 points for k distinct primes 1 mod 4), sorted by num."""
     primes: list[int] = []
     stack = [den]

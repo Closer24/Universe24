@@ -6,17 +6,17 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from event_universe import gram, readings, take
-from event_universe.core.paces import rounded, sine_den
-from event_universe.core.ports import AXES, wrap
-from event_universe.core.rule3 import half, largest_below, least_at, odd, quotient
-from event_universe.links import factors, turn_pair
-from event_universe.loader.wave import lay_cycle
-from event_universe.rows import CARRIER, Line, Row, zeros
+from event_universe import hands, readings, unwind
+from event_universe.assembly.cycle import set_cycle
+from event_universe.core.rates import rounded, sine_rim
+from event_universe.core.rule3 import carries, half, largest_below, least_at, odd
+from event_universe.core.spokes import AXES, wrap
+from event_universe.meshes import factors, offset_pair
 from event_universe.run import logged
+from event_universe.trains import REGULATOR, Gear, Train, zeros
 
 if TYPE_CHECKING:
-    from event_universe.node import Node
+    from event_universe.clock import Clock
 
 HALF_SPANS = (
     1,
@@ -29,10 +29,10 @@ FIELDS = {  # the fields of each form of the law; a field of no form is refused 
     "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top"}),
     "wave": frozenset({"lay", "row", "quanta", "p1", "cz", "mirror"}),
 }
-Pair = tuple[Any, Any]
+Ratio = tuple[Any, Any]
 
 
-def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
+def set_piece(node: Clock, lays: list[dict[str, Any]]) -> None:
     """Every lay of the world file onto the Node's rows, the packets after the sea and the holes; a lay of no form and a field of no form refused by name (MV-S3: the loader lays the seed before the first interval and nothing after)."""
     packets = []
     for lay in lays:
@@ -43,42 +43,42 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
         if beyond:
             raise ValueError(f"a field of no form of the law in the lay {form!r}: {', '.join(beyond)}")
         row = node.by_index[int(lay["row"])] if "row" in lay else None
-        if row is not None and row not in node.records():
+        if row is not None and row not in node.hands():
             raise ValueError("a lay is onto a record (a plane)")
         if form == "sea" and "quanta" not in lay:
-            if row is None or row is not node.emitter() or "sense" in lay:
+            if row is None or row is not node.unsprung() or "sense" in lay:
                 raise ValueError(
                     "a sea without a count is the plane at the gap 0 alone (the drift, no sense); a plane with a gap names its quanta (the fourth form)"
                 )
-            take.lay(node, node.records().index(row), Ellipsis, (node.drift, 0, 0, 0))
+            unwind.advance(node, node.hands().index(row), Ellipsis, (node.drift, 0, 0, 0))
         elif form == "sea":
-            if row is None or row is node.emitter():
+            if row is None or row is node.unsprung():
                 raise ValueError(
                     "the fourth form lays a plane with a gap at a count: the plane at the gap 0 alone is the drift"
                 )
-            lay_uniform(node, node.records().index(row), int(lay["quanta"]), int(lay.get("sense", 0)))
+            set_even(node, node.hands().index(row), int(lay["quanta"]), int(lay.get("sense", 0)))
         elif form == "hole":
-            at = node.node_of(lay["at"])
-            take.lay(node, node.records().index(node.emitter()), at, (-node.drift, 0, 0, 0))
+            at = node.clock_of(lay["at"])
+            unwind.advance(node, node.hands().index(node.unsprung()), at, (-node.drift, 0, 0, 0))
         elif form == "wave":
-            if row is None or row is not node.emitter() or "quanta" not in lay:
+            if row is None or row is not node.unsprung() or "quanta" not in lay:
                 raise ValueError("the cycle lay is the light's: the plane at the gap 0 at its quanta")
             digits = [int(v) for v in lay.get("p1", [])] + [int(lay.get("cz", 1))]
-            lay_cycle(
-                node, node.records().index(row), int(lay["quanta"]), digits, int(lay.get("mirror", 0))
+            set_cycle(
+                node, node.hands().index(row), int(lay["quanta"]), digits, int(lay.get("mirror", 0))
             )
         else:
             n = int(lay["quanta"])
-            at = node.node_of(lay["centre"])
+            at = node.clock_of(lay["centre"])
             if row is None:
                 raise ValueError("a packet names its row")
             wave = None if lay.get("wave") is None else tuple(int(x) for x in lay["wave"])
-            if row is node.emitter() and wave is None:
-                take.lay(node, node.records().index(row), at, (n * node.drift, 0, 0, 0))
+            if row is node.unsprung() and wave is None:
+                unwind.advance(node, node.hands().index(row), at, (n * node.drift, 0, 0, 0))
             else:
                 packets.append(
                     (
-                        node.records().index(row),
+                        node.hands().index(row),
                         at,
                         int(lay.get("width", 0)),
                         n,
@@ -88,7 +88,7 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
                     )
                 )
     for rec, at, h, n, sense, wave, top in packets:
-        lay_packet(node, rec, at, h, n, sense, wave, top)
+        set_packet(node, rec, at, h, n, sense, wave, top)
 
 
 def raised_cosine(h: int) -> tuple[int, ...]:
@@ -104,19 +104,19 @@ def raised_cosine(h: int) -> tuple[int, ...]:
     return tuple(1 + 1 + t for t in doubled[:h])
 
 
-def offsets(h: int, half_tops: tuple[int, ...]) -> list[tuple[int, ...]]:
+def places(h: int, half_tops: tuple[int, ...]) -> list[tuple[int, ...]]:
     """Every offset of the envelope about the centre, along each axis from -(h - 1 + its half top) to h - 1 + its half top."""
     reach = [h - 1 + t for t in half_tops]
     return [tuple(j[a] - reach[a] for a in range(AXES)) for j in np.ndindex(*(r + r + 1 for r in reach))]
 
 
 def envelope_of(
-    node: Node, at: tuple[int, ...], h: int, half_tops: tuple[int, ...] = (0,) * AXES
+    node: Clock, at: tuple[int, ...], h: int, half_tops: tuple[int, ...] = (0,) * AXES
 ) -> tuple[Any, int]:
     """The raised cosine's envelope of the half-width h about the Node, the product of the weights over the three axes, flat at the centre's weight over the half top of each axis given one (MV-S1's `top`, 0 the former envelope), and the centre's weight."""
     weights = raised_cosine(h)
-    envelope = zeros(node.shape)
-    for off in offsets(h, half_tops):
+    envelope = zeros(node.size)
+    for off in places(h, half_tops):
         where = tuple(wrap(at[a] + off[a], node.cube) for a in range(AXES))
         weight = 1
         for a in range(AXES):
@@ -125,7 +125,7 @@ def envelope_of(
     return envelope, weights[0] ** AXES
 
 
-def circle_point(den: int, h: int) -> tuple[int, int]:
+def rim_point(den: int, h: int) -> tuple[int, int]:
     """The point of den's circle at the half-angle sine h (MV-S1, the wave number's unit): den cos k = (den^2 - 2 h^2) over den and den sin k = 2 h largest_below(den^2 - h^2) over den, each rounded once with the sign after (paces.rounded), so the point at -h is the conjugate; (den, 0) at h = 0, (-den, 0) at |h| = den, the band's edge (MV-S2); beyond it refused by name."""
     if abs(h) > den:
         raise ValueError(f"a wave number beyond the band's edge: |h| {abs(h)} above den {den}")
@@ -141,86 +141,86 @@ def axis_pairs(den: int, point: tuple[int, int], reach: int) -> dict[int, tuple[
     for side in (1, -1):
         for n in range(1, reach + 1):
             re, im = found[side * (n - 1)]
-            pair = turn_pair(re, im, point[0], side * point[1], den)
+            pair = offset_pair(re, im, point[0], side * point[1], den)
             found[side * n] = (int(pair[0]), int(pair[1]))
     return found
 
 
-def phase_of(den: int, pairs: list[tuple[int, int]]) -> tuple[int, int]:
+def angle_of(den: int, pairs: list[tuple[int, int]]) -> tuple[int, int]:
     """The pair over den at a Node from its three axes' pairs, composed in their sorted order (two turns, one odd rounding per part each): the same integers at every image of the Node under the 48, the axes' pairs permuted with the axes and each one even under its axis's reflection with the wave."""
     first, second, third = sorted(pairs)
-    re, im = turn_pair(first[0], first[1], second[0], second[1], den)
-    re, im = turn_pair(re, im, third[0], third[1], den)
+    re, im = offset_pair(first[0], first[1], second[0], second[1], den)
+    re, im = offset_pair(re, im, third[0], third[1], den)
     return int(re), int(im)
 
 
-def phases_of(
-    node: Node,
+def angles_of(
+    node: Clock,
     at: tuple[int, ...],
     h: int,
     half_tops: tuple[int, ...],
     points: list[tuple[int, int]],
-) -> Pair:
+) -> Ratio:
     """The phase pair (C, S) over den at every Node of the envelope, the three axes' pairs at the Node's offsets (axis_pairs) composed (phase_of); (den, 0) beyond the envelope and everywhere at the wave 0."""
-    den = node.den
+    den = node.rim
     along = [axis_pairs(den, points[a], h - 1 + half_tops[a]) for a in range(AXES)]
-    cosine, sine = zeros(node.shape) + den, zeros(node.shape)
-    for off in offsets(h, half_tops):
+    cosine, sine = zeros(node.size) + den, zeros(node.size)
+    for off in places(h, half_tops):
         where = tuple(wrap(at[a] + off[a], node.cube) for a in range(AXES))
-        cosine[where], sine[where] = phase_of(den, [along[a][off[a]] for a in range(AXES)])
+        cosine[where], sine[where] = angle_of(den, [along[a][off[a]] for a in range(AXES)])
     return cosine, sine
 
 
 def running_rotation(num: int, den: int, points: list[tuple[int, int]]) -> tuple[int, int]:
     """The band's rotation at the wave number (the kinetic clause): den cos omega(k) = (num SUM_a den cos k_a) div (3 den) and its sine by the one search (paces.sine_den's form); the row's own pair (num, s) at the wave 0, (den, 0) for the massless row there, the double root with no rotation."""
-    cosine = int(quotient(num * sum(c for c, _s in points), AXES * den))
-    return cosine, sine_den(cosine, den)
+    cosine = int(carries(num * sum(c for c, _s in points), AXES * den))
+    return cosine, sine_rim(cosine, den)
 
 
-def rest_record(
-    node: Node,
-    row: Row,
+def rest_hand(
+    node: Clock,
+    row: Train,
     envelope: Any,
     w0: int,
     amplitude: int,
     sense: int,
-    pairs: tuple[Pair, Pair] | None = None,
-) -> list[Line]:
+    pairs: tuple[Ratio, Ratio] | None = None,
+) -> list[Gear]:
     """A record over the envelope at an amplitude, base = A w_i div w_0: at rest (gram.rest) the plane's re_now = base, re_before = base num div den, im_now = 0, im_before = sense base s div den with s the pair's sine; at a wave number (gram.moving) the base at the Node's phase pair now and at that pair turned by the band's rotation before."""
-    assert row.pair is not None
-    num = row.pair[0]
-    base = quotient(amplitude * envelope, w0)
+    assert row.ratio is not None
+    num = row.ratio[0]
+    base = carries(amplitude * envelope, w0)
     if pairs is None:
-        return gram.rest(base, num, node.den, sine_den(num, node.den), sense)
-    return gram.moving(base, pairs[0], pairs[1], node.den, sense)
+        return hands.rest(base, num, node.rim, sine_rim(num, node.rim), sense)
+    return hands.moving(base, pairs[0], pairs[1], node.rim, sense)
 
 
-def uniform_levels(node: Node, row: Row, amplitude: int, sense: int) -> list[Line]:
+def even_notches(node: Clock, row: Train, amplitude: int, sense: int) -> list[Gear]:
     """The fourth form's levels at an amplitude (MA-S1, ma2's spelling): one record at rest at every Node (rest_record with the envelope 1 and the centre's weight 1) at the sense -1 or 1, or the conjugate pair at 0 (both senses summed, the im lines cancelling)."""
     if sense == 0:
-        a = uniform_levels(node, row, amplitude, 1)
-        b = uniform_levels(node, row, amplitude, -1)
-        return [Line(x.now + y.now, x.before + y.before, None, None) for x, y in zip(a, b, strict=True)]
-    return rest_record(node, row, zeros(node.shape) + 1, 1, amplitude, sense)
+        a = even_notches(node, row, amplitude, 1)
+        b = even_notches(node, row, amplitude, -1)
+        return [Gear(x.now + y.now, x.before + y.before, None, None) for x, y in zip(a, b, strict=True)]
+    return rest_hand(node, row, zeros(node.size) + 1, 1, amplitude, sense)
 
 
-def share_at_node(node: Node, row: Row, lines: list[Line], rule: Any) -> int:
+def wind_at_clock(node: Clock, row: Train, lines: list[Gear], rule: Any) -> int:
     """A record's share at the vacuum's weight at the Node of the board's first index, the uniform lay's share at every Node alike."""
-    return int(gram.share(node, lines, rule).reshape(-1)[0])
+    return int(hands.wind(node, lines, rule).reshape(-1)[0])
 
 
-def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
+def set_even(node: Clock, rec: int, n: int, sense: int) -> None:
     """The fourth form laid: the plane with a gap at every Node alike at the least amplitude whose share at the vacuum's weight is at or above n quanta of its unit at every Node (ma2's fitted_uniform: the search by comparisons, doubling then halving, its answer plus one), at the sense -1 or 1 or the conjugate pair at 0; the lay logged."""
-    row = node.records()[rec]
-    assert row.pair is not None
-    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
-    rule = readings.rule(node, row.pair, node.start_content, factors(node))
-    target = n * node.units[rec]
+    row = node.hands()[rec]
+    assert row.ratio is not None
+    node.start_load, node.start_stretch = readings.load(node), node.train(REGULATOR).gears[0].now
+    rule = readings.gearing(node, row.ratio, node.start_load, factors(node))
+    target = n * node.windings[rec]
     amplitude = least_at(
-        lambda a: share_at_node(node, row, uniform_levels(node, row, a, sense), rule) > target
+        lambda a: wind_at_clock(node, row, even_notches(node, row, a, sense), rule) > target
     )
-    lines = uniform_levels(node, row, amplitude, sense)
-    take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
+    lines = even_notches(node, row, amplitude, sense)
+    unwind.advance(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
     logged(
         node,
         "lay",
@@ -228,42 +228,42 @@ def lay_uniform(node: Node, rec: int, n: int, sense: int) -> None:
         line_pair=rec,
         quanta=n,
         amplitude=amplitude,
-        share=share_at_node(node, row, lines, rule),
-        unit=node.units[rec],
+        share=wind_at_clock(node, row, lines, rule),
+        unit=node.windings[rec],
         nodes=int(node.cube) ** AXES,
         sense=sense,
     )
 
 
-def packet_share(node: Node, row: Row, lines: list[Line], rule: Any) -> int:
+def packet_wind(node: Clock, row: Train, lines: list[Gear], rule: Any) -> int:
     """A record's share at the vacuum's weight summed over the board."""
-    return int(sum(int(x) for x in gram.share(node, lines, rule).reshape(-1)))
+    return int(sum(int(x) for x in hands.wind(node, lines, rule).reshape(-1)))
 
 
 def fitted(
-    node: Node,
-    row: Row,
+    node: Clock,
+    row: Train,
     envelope: Any,
     w0: int,
     target: int,
-    pairs: tuple[Pair, Pair] | None = None,
+    pairs: tuple[Ratio, Ratio] | None = None,
 ) -> int:
     """The largest amplitude at which the record's share at the vacuum's weight, summed over the packet, is at most the target (a search by comparisons, doubling then halving)."""
-    assert row.pair is not None
-    rule = readings.rule(node, row.pair, readings.content(node), factors(node))
+    assert row.ratio is not None
+    rule = readings.gearing(node, row.ratio, readings.load(node), factors(node))
 
     def share_of(amplitude: int) -> int:
-        lines = rest_record(node, row, envelope, w0, amplitude, 1, pairs)
-        return packet_share(node, row, lines, rule)
+        lines = rest_hand(node, row, envelope, w0, amplitude, 1, pairs)
+        return packet_wind(node, row, lines, rule)
 
     return least_at(lambda amplitude: share_of(amplitude) > target) - 1
 
 
-def wave_of(
-    node: Node, row: Row, h: int, wave: tuple[int, ...], top: int
+def stride_of(
+    node: Clock, row: Train, h: int, wave: tuple[int, ...], top: int
 ) -> tuple[tuple[int, ...], list[tuple[int, int]], tuple[int, int]]:
     """The moving lay's integers from its two fields: the half top per axis (the flat top of `top` Nodes along the axes of the wave's largest |h|, refused by name where the top is not an odd count or does not fit the board with the raised cosine's edges), the circle's point per axis (circle_point, |h| above den refused there) and the band's rotation (running_rotation, the row at the gap 0 at the wave 0 refused by name: its sine 0, the drift its lay)."""
-    assert row.pair is not None
+    assert row.ratio is not None
     if len(wave) != AXES:
         raise ValueError("a wave number is three integers, one per axis")
     if top < 1 or not odd(top) or top + (h - 1) + (h - 1) > node.cube:
@@ -272,15 +272,15 @@ def wave_of(
         )
     largest = max(abs(x) for x in wave)
     half_tops = tuple(int(half(top - 1)) if abs(x) == largest else 0 for x in wave)
-    points = [circle_point(node.den, int(x)) for x in wave]
-    rotation = running_rotation(row.pair[0], node.den, points)
+    points = [rim_point(node.rim, int(x)) for x in wave]
+    rotation = running_rotation(row.ratio[0], node.rim, points)
     if rotation[1] == 0:
         raise ValueError("a packet of the gap-0 row at the wave 0 has no rotation: the drift is its lay")
     return half_tops, points, rotation
 
 
-def lay_packet(
-    node: Node,
+def set_packet(
+    node: Clock,
     rec: int,
     at: tuple[int, ...],
     h: int,
@@ -290,25 +290,25 @@ def lay_packet(
     top: int = 1,
 ) -> None:
     """The `at` lay of a record with a gap (or of the plane at the gap 0 at a wave number): the conjugate pair (the two records at the senses -1 and 1 where the lay names no sense or the sense 0, EM-S2; the one record at the sense -1 or 1 named) laid over the envelope, at rest where the lay names no wave (`rest_record`, the former lay by name) or at the wave number (MV-S1: the phase pair composed one Link at a time from the circle's point per axis, the level before at the band's rotation, `wave_of`, `phases_of`; the wave 0 the rest lay bit for bit) with the flat `top` (1 the former envelope), each record at the largest amplitude whose share, summed over the packet, is at most n quanta of its unit (`fitted`); the lay logged."""
-    row = node.records()[rec]
-    assert row.pair is not None
+    row = node.hands()[rec]
+    assert row.ratio is not None
     named: dict[str, Any] = {"sense": int(one_sense or 0)}
     half_tops: tuple[int, ...] = (0,) * AXES
     pairs = None
     if wave is not None:
-        half_tops, points, rotation = wave_of(node, row, h, wave, top)
+        half_tops, points, rotation = stride_of(node, row, h, wave, top)
         named |= {"wave": [int(x) for x in wave], "top": int(top)}
     envelope, w0 = envelope_of(node, at, h, half_tops)
     if wave is not None:
-        phases = phases_of(node, at, h, half_tops, points)
-        pairs = (phases, turn_pair(phases[0], phases[1], rotation[0], rotation[1], node.den))
-    node.start_content, node.start_x = readings.content(node), node.row(CARRIER).lines[0].now
-    amplitude = fitted(node, row, envelope, w0, n * node.units[rec], pairs)
+        phases = angles_of(node, at, h, half_tops, points)
+        pairs = (phases, offset_pair(phases[0], phases[1], rotation[0], rotation[1], node.rim))
+    node.start_load, node.start_stretch = readings.load(node), node.train(REGULATOR).gears[0].now
+    amplitude = fitted(node, row, envelope, w0, n * node.windings[rec], pairs)
     for sense in (-1, 1) if not one_sense else (int(one_sense),):
-        lines = rest_record(node, row, envelope, w0, amplitude, sense, pairs)
-        take.lay(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
-    lines = rest_record(node, row, envelope, w0, amplitude, 1, pairs)
-    rule = readings.rule(node, row.pair, node.start_content, factors(node))
+        lines = rest_hand(node, row, envelope, w0, amplitude, sense, pairs)
+        unwind.advance(node, rec, Ellipsis, tuple(x for line in lines for x in (line.now, line.before)))
+    lines = rest_hand(node, row, envelope, w0, amplitude, 1, pairs)
+    rule = readings.gearing(node, row.ratio, node.start_load, factors(node))
     logged(
         node,
         "lay",
@@ -317,8 +317,8 @@ def lay_packet(
         width=h,
         quanta=n,
         amplitude=amplitude,
-        share=packet_share(node, row, lines, rule),
-        unit=node.units[rec],
+        share=packet_wind(node, row, lines, rule),
+        unit=node.windings[rec],
         nodes=int(sum(1 for x in envelope.reshape(-1) if int(x) > 0)),
         **named,
     )

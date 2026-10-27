@@ -12,23 +12,23 @@ import numpy as np
 import pytest
 
 from event_universe import run as record
-from event_universe.core.acts import divide
-from event_universe.features import volume
-from event_universe.links import cross
-from event_universe.loader.world import load_world
-from event_universe.node import Node
+from event_universe.assembly.piece import read_piece
+from event_universe.clock import Clock
+from event_universe.core.acts import carry
+from event_universe.features import stretch
+from event_universe.meshes import cross
 
 WORLDS = (ROOT := Path(__file__).resolve().parents[1]) / "tests" / "worlds"
 
 
 def world_of(name: str) -> tuple[dict[str, Any], dict[str, Any]]:
-    return load_world(WORLDS / name)
+    return read_piece(WORLDS / name)
 
 
-def node_of(name: str, **changes: Any) -> Node:
+def node_of(name: str, **changes: Any) -> Clock:
     """A Node from a test world, the world's keys changed as given (a shape, a seed, an intervals count)."""
     universe, world = world_of(name)
-    return Node(universe, {**world, **changes})
+    return Clock(universe, {**world, **changes})
 
 
 def load_file(name: str, path: Path) -> Any:
@@ -51,28 +51,28 @@ def arrivals_rule3(
 ) -> tuple[Any, Any]:
     """Rule3's first form by hand: w a_next + r' = SUM_j R_j m_j + S a_now - w a_before + r, the one carried division."""
     total = sum(read * arrival for read, arrival in zip(reads, arrivals, strict=True))
-    return divide(total + self_coefficient * now - wall * before, wall, remainder, 1)
+    return carry(total + self_coefficient * now - wall * before, wall, remainder, 1)
 
 
-def state_of(node: Node) -> str:
+def state_of(node: Clock) -> str:
     """Every level and remainder of the Node's state as one text, the run back's comparison bit for bit."""
-    return record.state_text(node) + f" {node.interval}"
+    return record.state_text(node) + f" {node.ticks}"
 
 
-def run_back_exact(node: Node, n: int) -> int:
+def run_back_exact(node: Clock, n: int) -> int:
     """The count of the n states returned exactly by n intervals forward and n back."""
     kept = []
     for _ in range(n):
         kept.append(state_of(node))
-        node.step()
-    return sum(state_of(node) == kept[n - 1 - k] for k in range(n) if not node.step(-1))
+        node.tick()
+    return sum(state_of(node) == kept[n - 1 - k] for k in range(n) if not node.tick(-1))
 
 
-def level_at(node: Node, content: int) -> int:
+def level_at(node: Clock, content: int) -> int:
     """The carrier's level at a content."""
     return int(
         np.asarray(
-            volume.volume_of(node.gamma, np.array([content], dtype=object)), dtype=object
+            stretch.stretch_of(node.full_rate, np.array([content], dtype=object)), dtype=object
         ).reshape(-1)[0]
     )
 

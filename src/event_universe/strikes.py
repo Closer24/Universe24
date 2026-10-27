@@ -6,9 +6,9 @@ from collections import Counter, defaultdict
 from functools import cmp_to_key
 from typing import Any
 
-from event_universe.board import neighbours
-from event_universe.core.paces import sine_den
-from event_universe.decoder import (
+from event_universe.core.rates import sine_rim
+from event_universe.great_clock import neighbours
+from event_universe.reckoner import (
     FEW,
     HALF,
     HUNDRED,
@@ -16,46 +16,46 @@ from event_universe.decoder import (
     PAIR,
     SPANS,
     THOUSAND,
+    Chart,
     Rational,
-    Record,
+    carries,
     cmp_rat,
-    decoded_credits,
     middle,
     nearest,
-    quot,
+    reckoned_chimes,
     unread_words,
 )
 
-Decoded = list[tuple[dict[str, Any], str, Rational]]
+Reckoned = list[tuple[dict[str, Any], str, Rational]]
 
 
-def solved(record: Record) -> tuple[Decoded, int, int, list[int | None]]:
+def reckoned(record: Chart) -> tuple[Reckoned, int, int, list[int | None]]:
     """The record's credits solved once per cut: the decoded (credit, name, x), the count read right, the count within the floor, each credit's floor."""
-    key = f"solved {record.intervals} {len(record.credits)}"
+    key = f"solved {record.ticks} {len(record.chimes)}"
     if key not in record.memo:
-        record.memo[key] = decoded_credits(record)
-    found: tuple[Decoded, int, int, list[int | None]] = record.memo[key]
+        record.memo[key] = reckoned_chimes(record)
+    found: tuple[Reckoned, int, int, list[int | None]] = record.memo[key]
     return found
 
 
 def tracks_of(
-    record: Record,
+    record: Chart,
 ) -> tuple[dict[tuple[Any, int], list[Rational]], int, Counter[tuple[str, str]]]:
     """A body's track, its decoded rationals by (Node, line), the tracks read right by the middle solve, and the confusion truth -> decoded per credit."""
-    decoded = solved(record)[0]
+    decoded = reckoned(record)[0]
     tracks: dict[tuple[Any, int], list[Rational]] = defaultdict(list)
     confusion: Counter[tuple[str, str]] = Counter()
     for c, name, x in decoded:
         tracks[(tuple(c["node"]), c["line"])].append(x)
-        confusion[(record.line_name[c["line"]], name)] += 1
+        confusion[(record.gear_name[c["line"]], name)] += 1
     right = 0
     for (_node, line), xs in tracks.items():
         xs.sort(key=cmp_to_key(cmp_rat))
-        right += nearest(record, middle(xs), 1) == record.line_name[line]
+        right += nearest(record, middle(xs), 1) == record.gear_name[line]
     return tracks, right, confusion
 
 
-def species_track(record: Record) -> dict[str, Any]:
+def species_track(record: Chart) -> dict[str, Any]:
     """Row 8b: the species over a body's track (the one-place view: the middle solve of the track's rationals)."""
     tracks, right, confusion = tracks_of(record)
     return {
@@ -74,14 +74,16 @@ def species_track(record: Record) -> dict[str, Any]:
     }
 
 
-def families(record: Record) -> dict[str, Any]:
+def families(record: Chart) -> dict[str, Any]:
     """Gate 8: the species from the frame of every credit (the whole view), every credit within the one-click floor and every track read right, every lift the universe names born (its gapped planes, the typed points of den's circle; the former constant 3 the toy universe's count)."""
-    decoded, right, within, _floors = solved(record)
+    decoded, right, within, _floors = reckoned(record)
     tracks, track_right, _confusion = tracks_of(record)
-    born = record.born_of()
+    born = record.fitted_of()
     if not decoded:
         verdict = "NOT READ: no credit in the record"
-    elif within == len(decoded) and track_right == len(tracks) and len(record.lifts_born()) >= record.NL:
+    elif (
+        within == len(decoded) and track_right == len(tracks) and len(record.lifts_fitted()) >= record.NL
+    ):
         verdict = "SHOWN (every credit within the one-click floor, every track read right)"
     elif within == len(decoded):
         verdict = (
@@ -91,43 +93,43 @@ def families(record: Record) -> dict[str, Any]:
         verdict = f"NOT SHOWN: {len(decoded) - within} credits beyond the floor"
     return {
         "8 families forming (whole view)": {
-            "credits": len(record.credits),
+            "credits": len(record.chimes),
             "species readable": len(decoded),
             "decoded right per credit": right,
             "credits within the one-click floor": within,
             "tracks right": [track_right, len(tracks)],
             "births by species (decoder)": dict(born),
-            "at": min(record.credits, key=lambda c: int(c["i"]))["node"] if record.credits else None,
+            "at": min(record.chimes, key=lambda c: int(c["i"]))["node"] if record.chimes else None,
             "verdict": verdict,
         }
     }
 
 
-def leg_of(record: Record, x: Rational) -> int:
+def leg_of(record: Chart, x: Rational) -> int:
     """The leg of a decoded rational x = num / den on den's circle, sine_den at the nearest integer num, 0 off the circle (|num| at or past den)."""
-    num = abs(quot(x[0] * record.den, x[1]) or 0)
-    return sine_den(num, record.den) if num < record.den else 0
+    num = abs(carries(x[0] * record.rim, x[1]) or 0)
+    return sine_rim(num, record.rim) if num < record.rim else 0
 
 
-def mass_ratios(record: Record) -> dict[str, Any]:
+def mass_ratios(record: Chart) -> dict[str, Any]:
     """Gate 19: the mass ratios in the clicks (MS-S1's predicate: per credited plane the middle solve of its tracks' middles, its leg against the header's, the ratio of the two heaviest credited planes' legs read right within the one-click floor; NOT SHOWN where one plane alone is credited) beside den's typed legs and den's circle."""
-    decoded, _right, _within, floor_mil = solved(record)
+    decoded, _right, _within, floor_mil = reckoned(record)
     tracks, _track_right, _confusion = tracks_of(record)
-    names, line_num = record.NAMES, record.line_num
+    names, line_num = record.NAMES, record.gear_pinion
     legs = sorted(((name, leg) for name, leg in names.values() if leg), key=lambda kv: kv[1])
-    found: dict[str, Any] = {f"{nm}/{legs[0][0]}": quot(leg, legs[0][1], MIL) for nm, leg in legs[1:]}
+    found: dict[str, Any] = {f"{nm}/{legs[0][0]}": carries(leg, legs[0][1], MIL) for nm, leg in legs[1:]}
     by_plane: dict[int, list[Rational]] = defaultdict(list)
     for (_node, line), xs in tracks.items():
         by_plane[line_num[line]].append(middle(xs))
     credited = sorted(
-        (num for num in by_plane if num != record.den), key=lambda num: sine_den(num, record.den)
+        (num for num in by_plane if num != record.rim), key=lambda num: sine_rim(num, record.rim)
     )
     read_legs = {
         num: leg_of(record, middle(sorted(by_plane[num], key=cmp_to_key(cmp_rat)))) for num in credited
     }
     for num in credited:
-        found[f"{names[num][0]} leg in the clicks / header (parts per million)"] = quot(
-            read_legs[num], sine_den(num, record.den) or 1, MIL
+        found[f"{names[num][0]} leg in the clicks / header (parts per million)"] = carries(
+            read_legs[num], sine_rim(num, record.rim) or 1, MIL
         )
     if len(credited) < PAIR:
         read = (
@@ -137,8 +139,8 @@ def mass_ratios(record: Record) -> dict[str, Any]:
         )
     else:
         heavy, light = credited[-1], credited[-PAIR]
-        clicks = quot(read_legs[heavy], read_legs[light], MIL) if read_legs[light] else None
-        header = quot(sine_den(heavy, record.den), sine_den(light, record.den), MIL)
+        clicks = carries(read_legs[heavy], read_legs[light], MIL) if read_legs[light] else None
+        header = carries(sine_rim(heavy, record.rim), sine_rim(light, record.rim), MIL)
         floors = [f for f in floor_mil if f is not None]
         found["the two heaviest credited planes' legs: clicks / header (parts per million)"] = [
             clicks,
@@ -151,23 +153,23 @@ def mass_ratios(record: Record) -> dict[str, Any]:
             if clicks is None
             else "NOT SHOWN: the ratio in the clicks is off the header's beyond the floor"
         )
-    circle = record.circle()
+    circle = record.rim_points()
     least = min((s for _num, s in circle), default=0)
     found[
         "den's circle: the points' legs over the least (parts per million), the typed among them marked"
-    ] = [[quot(s, least, MIL), num in record.NAMES] for num, s in sorted(circle, key=lambda p: p[1])]
+    ] = [[carries(s, least, MIL), num in record.NAMES] for num, s in sorted(circle, key=lambda p: p[1])]
     return {"19 mass ratios (parts per million)": found | {"verdict": read}}
 
 
-def one_click_floor(record: Record) -> dict[str, Any]:
+def one_strike_floor(record: Chart) -> dict[str, Any]:
     """Gate 16: the one-click floor on x per credit (the uncertainty floor), no credit reading beyond it."""
-    decoded, _right, within, floor_mil = solved(record)
+    decoded, _right, within, floor_mil = reckoned(record)
     fl = sorted(f for f in floor_mil if f is not None)
     if not fl:
         return {"16 uncertainty floor (one click)": {"verdict": "NOT READ: no credit decoded"}}
     names = record.NAMES
     legs = sorted(((num, leg) for num, (_name, leg) in names.items() if leg), key=lambda kv: kv[1])
-    spacing = quot(abs(legs[-1][0] - legs[-PAIR][0]), legs[-1][0], MIL) if len(legs) >= PAIR else None
+    spacing = carries(abs(legs[-1][0] - legs[-PAIR][0]), legs[-1][0], MIL) if len(legs) >= PAIR else None
     return {
         "16 uncertainty floor (one click)": {
             "floor on x per credit, parts per million: min / middle / max": [
@@ -184,24 +186,24 @@ def one_click_floor(record: Record) -> dict[str, Any]:
     }
 
 
-def charge(record: Record) -> dict[str, Any]:
+def charge(record: Chart) -> dict[str, Any]:
     """Gate 17: the charge (each child's own charge, its sense times half the quantum of action at a child's lay and 0 at an exact lay, Record.charges_of, summed over every birth, each pair opposite, a merger's two children 0 and 0 by MG-S1 and read by name; its magnitude one |W| on every child laid where its plane stood at nothing, MS-S1, the children laid on a residue counted by name; a merger's birth (MG-S1, a pair at rest into light, the line carrying its takes per end) counted apart, the light's charge 0 and its reading row 24's)."""
-    mergers = [b for b in record.births if "takes" in b]
-    births = [b for b in record.births if "takes" not in b]
-    charges, signs = record.charges_of(), record.signs_of()
+    mergers = [b for b in record.fittings if "takes" in b]
+    births = [b for b in record.fittings if "takes" not in b]
+    charges, signs = record.sweeps_of(), record.signs_of()
     pair_signs = [
-        s for b, pair in zip(record.births, charges, strict=True) if "takes" not in b for s in pair
+        s for b, pair in zip(record.fittings, charges, strict=True) if "takes" not in b for s in pair
     ]
-    sizes = sorted(record.laid_at_nothing())
+    sizes = sorted(record.advanced_at_nothing())
     residue = sum(1 for b in births for stood in b.get("stood", [[0], [0]]) if any(stood))
     sense_sum, summed = sum(signs), sum(a + c for a, c in charges)
     opposite = sum(1 for a, c in charges if a * c < 0)
     light = sum(
-        1 for b, pair in zip(record.births, charges, strict=True) if "takes" in b and pair == (0, 0)
+        1 for b, pair in zip(record.fittings, charges, strict=True) if "takes" in b and pair == (0, 0)
     )
     verdict = (
         "NOT READ: no birth in the record"
-        if not record.births
+        if not record.fittings
         else "SHOWN: the senses sum to 0 over every birth, each pair opposite, each merger's children 0 and 0"
         if sense_sum == 0 and 0 not in pair_signs and light == len(mergers)
         else f"NOT SHOWN: the children's own charges sum to {summed} over the births, {len(mergers) - light} mergers with a charged child"
@@ -235,9 +237,9 @@ def charge(record: Record) -> dict[str, Any]:
     }
 
 
-def conservation_at_click(record: Record) -> dict[str, Any]:
+def conservation_at_strike(record: Chart) -> dict[str, Any]:
     """Gate 15: the conservation at the click, taken against booked over the births: where the birth carries the take's remainder (EX-S1, the remainder kept at the Node) the identity taken + the remainder before - the remainder after = booked on every birth, else the former identity taken >= booked (the exact form is row 47)."""
-    births, (taken, booked) = record.births, record.takes_of()
+    births, (taken, booked) = record.fittings, record.unwinds_of()
     paid = [b for b in births if "remainder" in b]
     identity = all(
         b["taken"] + b["remainder_was"] - b["remainder"] == b["booked"] for b in paid
@@ -246,7 +248,7 @@ def conservation_at_click(record: Record) -> dict[str, Any]:
         "15 conservation at the click": {
             "births": len(births),
             "births carrying the take's remainder (EX-S1)": len(paid),
-            "taken per booked at the births (hundredths)": quot(taken, booked, HUNDRED),
+            "taken per booked at the births (hundredths)": carries(taken, booked, HUNDRED),
             "verdict": "NOT READ: no birth in the record"
             if not births
             else "SHOWN exact: taken + the remainder before - the remainder after = booked on every birth (EX-S1)"
@@ -266,9 +268,9 @@ def halves(pairs: list[tuple[int, Any]]) -> tuple[list[Any], list[Any]]:
     return [p[1] for p in pairs if p[0] <= med], [p[1] for p in pairs if p[0] > med]
 
 
-def dilation(record: Record) -> dict[str, Any]:
+def dilation(record: Chart) -> dict[str, Any]:
     """Gate 10: a body's proper count against the intervals it stood, deep against shallow (the reader's view)."""
-    decoded = solved(record)[0]
+    decoded = reckoned(record)[0]
     if len(decoded) <= FEW:
         return {"10 gravitational time dilation": {"verdict": "NOT READ: too few credits decoded"}}
     deepest = max(decoded, key=lambda d: int(d[0]["content"]))[0]["node"]
@@ -283,8 +285,8 @@ def dilation(record: Record) -> dict[str, Any]:
     return {
         "10 gravitational time dilation": {
             "reader's view: proper per thousand intervals, shallow / deep": [
-                quot(*rate_lo, THOUSAND),
-                quot(*rate_hi, THOUSAND),
+                carries(*rate_lo, THOUSAND),
+                carries(*rate_hi, THOUSAND),
             ],
             "at": deepest,
             "verdict": shown
@@ -293,10 +295,10 @@ def dilation(record: Record) -> dict[str, Any]:
     }
 
 
-def lengthening(record: Record) -> dict[str, Any]:
+def lengthening(record: Chart) -> dict[str, Any]:
     """Gate 2: the spacing of a body's credits longer where the content is deeper (the reader's view)."""
     by_node: dict[tuple[int, ...], list[dict[str, Any]]] = defaultdict(list)
-    for c in record.credits:
+    for c in record.chimes:
         by_node[tuple(c["node"])].append(c)
     spans = []
     longest: tuple[int, Any] = (0, [])
@@ -313,7 +315,7 @@ def lengthening(record: Record) -> dict[str, Any]:
     if len(spans) <= SPANS:
         return {key: {"verdict": "NOT READ: too few spans between a Node's credits"}}
     lo, hi = halves(spans)
-    shallow, deep = quot(sum(lo), len(lo), HUNDRED), quot(sum(hi), len(hi), HUNDRED)
+    shallow, deep = carries(sum(lo), len(lo), HUNDRED), carries(sum(hi), len(hi), HUNDRED)
     shown = (
         "SHOWN in the reader's view"
         if deep is not None and shallow is not None and deep > shallow
@@ -330,10 +332,10 @@ def lengthening(record: Record) -> dict[str, Any]:
     }
 
 
-def merger(record: Record) -> dict[str, Any]:
+def unspring(record: Chart) -> dict[str, Any]:
     """Row 24 (the Boss's 6400767119, the premise reader): the merger, a pair into light, from the log: a gapped record's meeting (SL-S1: both ends whole, the current's end, the twist) births the gap-0 record's children from the gapped record's take, so a birth whose taken row is a gapped record is a merger; the gapped meetings refused by name counted per cause (the orientation F = 0, the twist h = 0, the sense where the ends' charges are not opposite (SL-S2), the lay where the gap-0 record stands, the stop where an end cannot pay)."""
-    gap0 = record.line_num.index(record.den)
-    mergers = [b for b in record.births if int(b.get("taken_row", gap0)) != gap0]
+    gap0 = record.gear_pinion.index(record.rim)
+    mergers = [b for b in record.fittings if int(b.get("taken_row", gap0)) != gap0]
     refusals: Counter[str] = Counter(
         e["cause"] for e in record.log if e["event"] == "refused" and int(e.get("row", gap0)) != gap0
     )
@@ -354,9 +356,9 @@ def merger(record: Record) -> dict[str, Any]:
     }
 
 
-def horizon_radiates(record: Record) -> dict[str, Any]:
+def horizon_radiates(record: Chart) -> dict[str, Any]:
     """Row 61: the horizon radiates (hp2's predicate, the Boss's 6408295798, the owner's word of 03:4x UTC: Hawking's radiation as nature looks in the clicks): after a Node's first freeze, a birth at that Node or at one of its six neighbours, and a credit two or more Links from every Node frozen at the credit's own interval, the horizon standing then (the Reader's form of 6416667138 for the board frozen at every Node, the Boss's 6416342006: no credit passes while the whole board is the horizon, and the credits after a release are beyond the horizon as it shrinks; the former read against every Node ever frozen); NOT READ with no frozen Node."""
-    first = record.first_frozen()
+    first = record.first_stopped()
     if not first:
         return {
             "61 the horizon radiates": {
@@ -369,19 +371,19 @@ def horizon_radiates(record: Record) -> dict[str, Any]:
     near = {at: i for at, i in first.items()} | {
         n: i for at, i in first.items() for n in neighbours(record, at)
     }
-    births = [b for b in record.births if int(b["i"]) > near.get(record.index(b["node"]), int(b["i"]))]
-    standing = {int(line["i"]): [int(at) for at in line["frozen"]] for line in record.nodes}
+    births = [b for b in record.fittings if int(b["i"]) > near.get(record.index(b["node"]), int(b["i"]))]
+    standing = {int(line["i"]): [int(at) for at in line["frozen"]] for line in record.clocks}
     far = [
         c
-        for c in record.credits
+        for c in record.chimes
         if int(c["i"]) > min(first.values())
         and all(
-            record.distance(tuple(c["node"]), tuple(record.node(at))) >= PAIR
+            record.distance(tuple(c["node"]), tuple(record.clock(at))) >= PAIR
             for at in standing.get(int(c["i"]), [])
         )
     ]
     released = sum(1 for c in far if not standing.get(int(c["i"])))
-    whole = any(len(ats) == len(record.nodes[0]["X"]) for ats in standing.values())
+    whole = any(len(ats) == len(record.clocks[0]["X"]) for ats in standing.values())
     return {
         "61 the horizon radiates": {
             "Nodes frozen": len(first),
