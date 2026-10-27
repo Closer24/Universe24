@@ -61,8 +61,9 @@ def facts_of(
 ) -> dict[str, Any]:
     """The record's own numbers, read from its lines and its rows."""
     nodes = record.get("nodes", [])
-    bang = next((v for k, v in raw.items() if k.startswith("1 ")), {})
-    tops = next((v for k, v in raw.items() if k.startswith("1b ")), {})
+    eras = raw.get(
+        "the eras", {}
+    )  # every bang and every top, where rows 1 and 1b list their first eight
     freezes = [(int(line["i"]), len(line["frozen"])) for line in nodes if line["frozen"]]
     shown = sorted(n for n, r in rows.items() if r["kind"] == "SHOWN")
     part = sorted(n for n, r in rows.items() if r["kind"] == "SHOWN in part")
@@ -71,9 +72,9 @@ def facts_of(
         "nodes": len(nodes[0]["X"]) if nodes else 0,
         "births": int(record["counts"]["births"]),
         "credits": int(record["counts"].get("body_clicks", 0)),
-        "bangs": bang.get("bangs numbered (the interval each begins)", []),
-        "returns": bang.get("exact returns to the seed's first state (interval)", []),
-        "tops": tops.get("tops (interval)", []),
+        "bangs": eras.get("bangs", []),
+        "returns": eras.get("bangs", [])[1:],  # a bang at every exact return after the seed's
+        "tops": eras.get("tops", []),
         "freezes": freezes,
         "run back": record.get("run_back"),
         "shown": shown,
