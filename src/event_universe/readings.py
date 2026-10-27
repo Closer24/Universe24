@@ -17,8 +17,22 @@ if TYPE_CHECKING:
 
 
 def paces_of(node: Node, content: Any) -> tuple[Any, Any]:
-    """The Node's two paces from its content, the clock p_0 and the Link's pace p_i (X2: paces(content)), one reading."""
+    """The Node's two paces from its content, the clock p_0 and the Link's pace p_i (X2: paces(content)), one reading; the carried pair of the interval where one stands (the blind build)."""
+    found = getattr(node, "paces_now", None)
+    if found is not None:
+        return found
     return paces.clock_of(node.gamma, content), paces.link_pace_of(node.gamma, content)
+
+
+def carried_paces(node: Node, content: Any, direction: int) -> tuple[Any, Any]:
+    """The blind build of the toy's carried paces: the clock N(c) = q_0 Gamma^2 + r_0 and the Link pace p_0^2 = q Gamma + r, each one carried division of the Node with its remainder kept per Node across intervals, advanced once per interval forward and inverted once backward (acts.divide at -1 with the same numerator)."""
+    from event_universe.core import acts
+    g = node.gamma
+    numerator = np.asarray(paces.numerator_of(g, content), dtype=object)
+    p0, node.carry0 = acts.divide(numerator, g * g, node.carry0, direction)
+    pi, node.carry1 = acts.divide(p0 * p0, g, node.carry1, direction)
+    node.paces_now = (p0, pi)
+    return node.paces_now
 
 
 def frozen_of(node: Node, content: Any) -> Any:

@@ -81,7 +81,7 @@ class Interval:
         node = self.node
         self.c = np.asarray(volume.level_of(node.gamma, self.at(self.carrier.lines[0])), dtype=object)
         node.start_content = self.c
-        self.p0, self.pi = readings.paces_of(node, self.c)
+        self.p0, self.pi = readings.carried_paces(node, self.c, self.direction)
         node.start_clock = self.p0
         if self.frozen is None:
             self.frozen = readings.frozen_of(node, self.c)

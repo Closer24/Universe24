@@ -84,6 +84,9 @@ class Node:
         self.beats = [zeros(shape) for _ in range(nr)]
         self.proper, self.closes, self.interval = zeros(shape), zeros(shape), 0
         self.take_rem = zeros(shape)
+        self.carry0 = zeros(shape) + acts.born(self.gamma * self.gamma)
+        self.carry1 = zeros(shape) + acts.born(self.gamma)
+        self.paces_now = None
         self.log: list[dict[str, Any]] = []
         self.turns: list[tuple[int, int]] = []
         self.stack: list[dict[str, Any]] = []

@@ -171,7 +171,7 @@ def arrays(node: Node) -> list[Any]:
 def state(node: Node) -> list[Any]:
     """Every integer array of the Node's state: the lines' levels and remainders, the records' standing, crossings and beats, the proper count, the closes and the take's remainder (the one list the census counts and the run back compares; the former comparison of the lines and the take's remainder alone, which left the five counters the bodies' closing reads unchecked, kept by name, the Boss's 6421253357 item 4, 2026-10-26)."""
     found = arrays(node) + node.standing + node.crossed + node.beats + [node.proper, node.closes]
-    return [*found, node.take_rem]
+    return [*found, node.take_rem, node.carry0, node.carry1]
 
 
 def census(node: Node) -> tuple[int, int]:

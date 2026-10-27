@@ -37,10 +37,12 @@ class Side:
     carry: int
     clocks: list[int] = field(default_factory=list)
     links: list[int] = field(default_factory=list)
+    numerators: list[int] = field(default_factory=list)
 
     def reach(self, gamma: int, size: int) -> None:
         """The side filled through the size |c|: the pace rounded(N, Gamma^2) half up, the Link's pace from it, p_0^2 over Gamma rounded once, then one carried division per content."""
         while len(self.clocks) <= size:
+            self.numerators.append(int(self.scaled))
             pace = int(rounded(self.scaled, gamma * gamma))
             self.clocks.append(pace)
             self.links.append(int(rounded(pace * pace, gamma)))
@@ -136,3 +138,8 @@ def clock_of(gamma: int, contents: Any) -> Any:
 def link_pace_of(gamma: int, contents: Any) -> Any:
     """The Link's pace at every Node from the content read on the Link (`link_pace` through the table)."""
     return looked_up(lambda side: side.links, gamma, contents)
+
+
+def numerator_of(gamma: int, contents: Any) -> Any:
+    """The clock's numerator N(c) at every Node (the blind build of the carried paces): the table's scaled power before its rounding."""
+    return looked_up(lambda side: side.numerators, gamma, contents)
