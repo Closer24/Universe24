@@ -9,13 +9,15 @@ from pathlib import Path
 
 import numpy as np
 
+from event_universe import readings, unspring, unwind
 from event_universe import run as record
-from event_universe import unspring, unwind
+from event_universe.assembly import setting
 from event_universe.core import rates
 from event_universe.core import rule3 as core
 from event_universe.core.acts import flip as mirrored
 from event_universe.core.rule3 import gearing, mesh_factor, rule3, spring
-from event_universe.core.spokes import AXES
+from event_universe.core.spokes import AXES, SPOKES
+from event_universe.meshes import factors
 from event_universe.trains import REGULATOR
 from tests.laws import arrivals_rule3, node_of
 
@@ -330,3 +332,26 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
     for h in reversed(hashes):
         clock.tick(-1)
         assert record.state_hash(clock) == h
+
+
+def test_a_hands_wind_is_a_gaussian_norm_and_its_quanta_are_its_sweep() -> None:
+    """The amplitudes on the great clock as the hand's norms (David's DAVID-AMPLITUDES.md sections 1 and 5, toys-5 6415deeb0, on the owner's word of 2026-10-27, 12:4x UTC; the owner's rule of 14:5x UTC, a push's test sees what it was pushed for): on every sprung hand of the toy and the middle calibres laid even at rest on an empty 3-cube at the vacuum, the wind is the Gaussian form 3 [rim (|z_now|^2 + |z_before|^2) - 2 pinion Re(conj(z_now) z_before)] exactly; at rest it is SPOKES s |W| + 3 (r1^2 + r2^2) div rim, so a rest hand's quanta are its sweep in e; and the winding is 3 T s."""
+    for name in ("world_node.json", "world_bodies.json"):
+        clock = node_of(name, shape=[3] * 3, seed=[])
+        clock.start_load, clock.start_stretch = readings.load(clock), clock.train(REGULATOR).gears[0].now
+        for k, train in enumerate(clock.hands()):
+            if train is clock.unsprung() or train.ratio is None:
+                continue
+            pinion, rim = train.ratio
+            s = rates.sine_rim(pinion, rim)
+            assert clock.windings[k] == AXES * clock.key * s
+            gearing_ = readings.gearing(clock, train.ratio, clock.start_load, factors(clock))
+            for sense, a in ((1, 1), (-1, 7), (1, 135), (-1, 5690), (1, 10**6 + 7)):
+                gears = setting.even_notches(clock, train, a, sense)
+                wind = setting.wind_at_clock(clock, train, gears, gearing_)
+                (n0, b0), (n1, b1) = ((int(g.now.flat[0]), int(g.before.flat[0])) for g in gears)
+                assert wind == 3 * (
+                    rim * (n0 * n0 + n1 * n1 + b0 * b0 + b1 * b1) - 2 * pinion * (n0 * b0 + n1 * b1)
+                )
+                r1, r2 = a * pinion % rim, a * s % rim
+                assert wind == SPOKES * s * abs(n0 * b1 - n1 * b0) + AXES * (r1 * r1 + r2 * r2) // rim

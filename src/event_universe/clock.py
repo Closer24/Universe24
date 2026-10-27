@@ -52,7 +52,7 @@ class Clock:
         self.rim, self.full_rate = int(ints["den"]), int(ints["node_clock"])
         self.key, self.G = int(ints["quantum_action"]), mesh_unit_of(self.full_rate)
         self.trace = int(ints["trace"])
-        self.standard_length = standard.carried(int(ints["amplitude"]), self.full_rate)
+        self.standard_length = standard.carried(self.full_rate * self.rim, self.full_rate)
         size = tuple(int(x) for x in piece["shape"])
         if len(size) != AXES or len(set(size)) != 1:
             raise ValueError("the board is a cube: the shape is [c, c, c]")
@@ -73,7 +73,7 @@ class Clock:
         setting.set_piece(self, piece.get("seed", []))
 
     def start_state(self) -> None:
-        """The clock's state before the setting: the hands' wound ticks, crossings and beats, the dial, the strikes, the slack (EX-S1, set at 0), the ticks, the log, the turnovers, the rewind notes' stack, the run's counts; the regulator's time gear at the full rate, the drift the largest integer whose square is at most the key, the advance's two notches (A, B) with A B = key div 2 (MS-S1), the standard's first pair at the standard length the calibre declares (clock.standard_length, read at the assembly and carried above the shortest hand derived from the full rate, standard.carried; the owner's words of 2026-10-27, 04:0x and 04:4x UTC: the standard length separated from the former width and declared from outside)."""
+        """The clock's state before the setting: the hands' wound ticks, crossings and beats, the dial, the strikes, the slack (EX-S1, set at 0), the ticks, the log, the turnovers, the rewind notes' stack, the run's counts; the regulator's time gear at the full rate, the drift the largest integer whose square is at most the key, the advance's two notches (A, B) with A B = key div 2 (MS-S1), the standard's first pair at the standard length derived from the rim, X = Gamma rim (clock.standard_length, carried above the shortest hand derived from the full rate, standard.carried; DAVID-AMPLITUDES.md section 4, the former length declared from outside by the owner's words of 2026-10-27, 04:0x and 04:4x UTC, the declaration struck by his rule of 11:3x UTC)."""
         size, nr = self.size, len(self.hands())
         self.wound = [zeros(size) for _ in range(nr)]
         self.crossed = [zeros(size) for _ in range(nr)]

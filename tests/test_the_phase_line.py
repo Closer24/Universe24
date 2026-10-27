@@ -16,7 +16,6 @@ from event_universe.features.standard import (
     shortest_hand,
     standard_mid,
     standard_pinion,
-    standard_rate,
     standard_teeth,
 )
 from tests.laws import refused, world_of
@@ -97,22 +96,23 @@ def test_the_reversal_is_bit_exact_over_ten_thousand_acts():
     )
 
 
-def test_the_amplitude_is_the_universes_and_the_engine_refuses_a_scale_below_the_floor_from_gamma():
-    """The standard length declared from outside (the owner's words of 2026-10-27, 04:0x and 04:4x UTC; THE-AMPLITUDE-SCALE.md): the calibre file names it beside rim, Gamma and T (288,230,376,000 in the shipped calibres, a multiple of 2 Gamma), the assembly refuses a file naming none, and the engine carries it above the shortest hand derived from Gamma alone, 23 Gamma at Gamma 1,000 (the circuit's departure 23 notches against the step 22 at k = 22, 20 against 23 at k = 23), refusing a scale below it by name as the engine's, never as nature's; no width and no room stands in the engine."""
+def test_the_standard_length_is_the_rims_and_the_engine_refuses_a_scale_below_the_floor_from_gamma():
+    """The standard's length derived from the rim, X = Gamma rim (David's DAVID-AMPLITUDES.md section 4, toys-5 6415deeb0, on the owner's word of 2026-10-27, 12:4x UTC, and his rule of 11:3x UTC, no declarations): the standard's first step X div Gamma is the rim itself, so the meshes' turning hand and the rates' circle are measured by one length; a universe file declaring an amplitude is refused by name; the engine carries the length above the floor derived from Gamma alone, 23 Gamma at Gamma 1,000 (the orbit's departure 23 levels against the step 22 at k = 22, 20 against 23 at k = 23), refusing a scale below it by name as the engine's, never as nature's; no width and no room stands in the engine."""
     calibre, piece = world_of("world_hole.json")
-    full, length = int(calibre["integers"]["node_clock"]), int(calibre["integers"]["amplitude"])
+    full, rim = int(calibre["integers"]["node_clock"]), int(calibre["integers"]["den"])
     least = shortest_hand(full)
     assert least == 23 * full and deviation(22 * full, full) >= 22 > deviation(least, full)
-    assert length == 288_230_376_000 and length % standard_rate(full) == 0 and least < length
-    assert carried(length, full) == length and Clock(calibre, piece).standard_length == length
+    length = Clock(calibre, piece).standard_length
+    assert length == full * rim and least < length and carried(length, full) == length
+    first_pair(length, full)  # a multiple of the full rate, as the standard's first pair needs
     refused("engine cannot carry", carried, least - full, full)
     for words in ("nature", "law"):
         with pytest.raises(ValueError) as caught:
             carried(full, full)
         assert words not in str(caught.value)
-    kept = {k: v for k, v in calibre["integers"].items() if k != "amplitude"}
-    refused("names no amplitude", check_piece, piece, {**calibre, "integers": kept})
+    declared = {**calibre["integers"], "amplitude": length}
+    refused("keys of no law: amplitude", check_piece, piece, {**calibre, "integers": declared})
     assert not any(hasattr(trains, name) for name in ("WIDTH", "HALF_WIDTH", "ROOM"))
     print(
-        f"the floor {least} = {least // full} Gamma at Gamma {full}; the universe's amplitude {length}"
+        f"the floor {least} = {least // full} Gamma at Gamma {full}; the standard's length {length} = Gamma rim"
     )

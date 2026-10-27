@@ -11,8 +11,8 @@ from event_universe.trains import HAND, OFFSET, REGULATOR
 PIECE_KEYS = frozenset({"universe", "shape", "intervals", "seed"})
 CALIBRE_KEYS = frozenset({"integers", "rows"})
 INTEGERS = frozenset(
-    {"den", "node_clock", "quantum_action", "trace", "amplitude"}
-)  # the mesh unit G is derived from Gamma (K-S1), no key; the trace the held drive's weight (ALGEBRA.md, the held drive); the amplitude the standard length declared from outside, carried above the floor derived from Gamma (standard.carried; the owner's words of 2026-10-27, 04:0x and 04:4x UTC)
+    {"den", "node_clock", "quantum_action", "trace"}
+)  # the mesh unit G is derived from Gamma (K-S1), no key; the trace the held drive's weight (ALGEBRA.md, the held drive); the standard's length derived from the rim, X = Gamma rim, no key (a declared amplitude refused by name; DAVID-AMPLITUDES.md section 4, the owner's rule of 2026-10-27, 11:3x UTC: no declarations)
 TRAIN_KEYS = frozenset({"shape", "pair", "wall"})
 
 
@@ -26,7 +26,7 @@ def refused_keys(found: dict[str, Any], allowed: frozenset[str], name: str) -> N
 def check_piece(
     piece_file: dict[str, Any], calibre_file: dict[str, Any]
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    """The two files' dictionaries with their keys checked: the piece's four keys, the calibre's two, the calibre's five integers each named (a missing one refused by name), every train's gears a count the law names (the ratchet, the hand, the offset and the regulator) with a ratio or teeth."""
+    """The two files' dictionaries with their keys checked: the piece's four keys, the calibre's two, the calibre's four integers each named (a missing one refused by name), every train's gears a count the law names (the ratchet, the hand, the offset and the regulator) with a ratio or teeth."""
     refused_keys(piece_file, PIECE_KEYS, "world")
     refused_keys(calibre_file, CALIBRE_KEYS, "universe")
     refused_keys(calibre_file["integers"], INTEGERS, "universe's integers")

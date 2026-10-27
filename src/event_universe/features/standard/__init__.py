@@ -98,7 +98,7 @@ def shortest_hand(gamma: Any) -> int:
 
 
 def carried(length: Any, gamma: Any) -> Any:
-    """The engine's one refusal of a scale by name, never a verdict of the law and never a phenomenon (the owner's ruling of 2026-10-26, 22:1x UTC, and his words of 2026-10-27, 04:0x and 04:4x: the standard length declared from outside in the calibre and read at the assembly, clock.standard_length, no width read by the physics; the former `amplitude` cut from the half width less one and the machine's width refusal struck, the value kept in the file): the standard length below the floor, where the turn's rounding is coarser than the circuit's own step; the standard length returned carried."""
+    """The engine's one refusal of a scale by name, never a verdict of the law and never a phenomenon (the owner's ruling of 2026-10-26, 22:1x UTC, and his words of 2026-10-27, 04:0x and 04:4x: the standard length derived from the rim at the clock, X = Gamma rim, clock.standard_length (DAVID-AMPLITUDES.md section 4; the length declared from outside before it), no width read by the physics; the former `amplitude` cut from the half width less one and the machine's width refusal struck, the value kept in the file): the standard length below the floor, where the turn's rounding is coarser than the circuit's own step; the standard length returned carried."""
     least = shortest_hand(gamma)
     if int(length) < least:
         raise ValueError(
