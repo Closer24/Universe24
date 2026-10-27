@@ -18,8 +18,13 @@ from event_universe.unwind import advance
 if TYPE_CHECKING:
     from event_universe.clock import Clock
 
-QUARTERS = 4  # the quarter turns of Z_4, the cycle setting's digits and the side of its 4 by 4 pattern
-QUARTER = ((1, 0), (0, 1), (-1, 0), (0, -1))  # i^q as (three, twelve) for q in Z_4
+QUARTER = (
+    (1, 0),
+    (0, 1),
+    (-1, 0),
+    (0, -1),
+)  # i^q as (three, twelve) for q in Z_4, the quarter turns of the hand
+QUARTERS = len(QUARTER)  # the order of i, the cycle setting's digits and the side of its pattern
 
 
 def cycle_angles(clock: Clock, digits: list[int]) -> Any:
