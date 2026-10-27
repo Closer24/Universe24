@@ -41,9 +41,13 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
-    "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_fits_matter": (
-        11,
-        "The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): the 4-cube's one wave of 5,000,000 quanta under the three bounds returns to the full rate at every clock twice in every five ticks, every integer within 128 bits, matter fitted and chiming, the run back exact.",
+    "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_binds_its_heavy_matter": (
+        30,
+        "The one big bang on the great clock with nuclear binding (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his yes to the nuclear family through the Boss's recommendation, David's DAVID-MEDIATOR.md; his rule of 14:5x UTC that a push's test sees what it was pushed for): 20 bangs in 100 ticks within 128 bits under the three bounds, and a heavy family's chimes bound one mesh apart in the held field above twice the board's own share; the run back exact; the Boss's room by name.",
+    ),
+    "tests/test_the_record.py::test_the_bangs_heavy_matter_stays_silent_without_the_held_field": (
+        14,
+        "The control of the nuclear binding (the owner's rule of 2026-10-27, 14:5x UTC that a push's test sees what it was pushed for): the same bang with no held field chimes on the near-light family alone, and a weight on a hand and a held field with no weight are refused by name; the Boss's room by name.",
     ),
     "tests/test_the_record.py::test_the_light_is_polarized_along_its_sources_current_at_the_detectors_chimes": (
         21,

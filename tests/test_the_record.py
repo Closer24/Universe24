@@ -10,6 +10,7 @@ from typing import Any
 import pytest
 
 from event_universe import great_clock, meshes, strikes, swings, symmetries, tick
+from event_universe.assembly.piece import check_piece
 from event_universe.clock import Clock
 from event_universe.core import rates
 from event_universe.core.acts import flip as mirrored
@@ -448,14 +449,49 @@ def test_spin_one_half_reads_minus_one_after_one_turn_and_comes_home_after_two(m
     assert s_z[0] > s_z[1]
 
 
-def test_one_big_bang_recurs_within_its_integers_and_fits_matter() -> None:
-    """The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): the 4-cube's one wave of 5,000,000 quanta under the three bounds (no mesh and no clock faster than the full rate, no stretch moving by more than itself in a tick) returns to the full rate at every clock twice in every five ticks, eight bangs in 40, every integer within 128 bits, matter fitted and chiming, the run back exact."""
+def test_one_big_bang_recurs_within_its_integers_and_binds_its_heavy_matter() -> None:
+    """The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for) with nuclear binding (the owner's yes to the nuclear family, David's DAVID-MEDIATOR.md): the 4-cube's one wave of 5,000,000 quanta under the three bounds returns to the full rate at every clock twice in every five ticks, 20 bangs in 100, every integer within 128 bits; its universe holds a held field (one gear at 99/100 of the rim, weight 3), and a heavy family's chimes stand bound one mesh apart, 22 of its 66 pairs chiming at one tick, above twice the board's own share (6 of 63); the run back exact."""
     calibre, piece = world_of("world_bang.json")
     clock, returns, widest = Clock(calibre, piece), [], 0
     for at in range(1, piece["intervals"] + 1):
         clock.tick()
         returns += [at] if (clock.train(REGULATOR).gears[0].now == clock.full_rate).all() else []
         widest = max(widest, census(clock)[1])
-    assert returns == [k + d for k in range(4, 41, 5) for d in (0, 1)] and widest <= 128
-    assert (clock.counts["births"], clock.counts["body_clicks"]) == (224, 1009)
+    assert returns == [k + d for k in range(4, 101, 5) for d in (0, 1)] and widest <= 128
+    assert (clock.counts["births"], clock.counts["body_clicks"]) == (170, 2968)
+    by_line: dict[int, dict[int, set[tuple[int, ...]]]] = {}
+    for e in (e for e in clock.log if e["event"] == "credit"):
+        by_line.setdefault(e["line"], {}).setdefault(e["i"], set()).add(tuple(e["node"]))
+    pairs = {
+        line: [
+            sum(min(abs(x - y), clock.cube - abs(x - y)) for x, y in zip(a, b, strict=True))
+            for t in ticks.values()
+            for a in t
+            for b in t
+            if a < b
+        ]
+        for line, ticks in by_line.items()
+    }
+    assert {line: (d.count(1), len(d)) for line, d in pairs.items()} == {
+        0: (5580, 58384),
+        1: (0, 2),
+        2: (22, 66),
+    }
+    assert 22 * 63 > 2 * 6 * 66 and 5580 * 63 < 2 * 6 * 58384
     assert run_back_exact(Clock(calibre, piece), 20) == 20
+
+
+def test_the_bangs_heavy_matter_stays_silent_without_the_held_field() -> None:
+    """The control of the nuclear binding: the same bang on the toy universe, with no held field, chimes on the near-light family alone through its 100 ticks (4,026 chimes, 245 fittings), so no heavy family's chime stands to be bound; a weight on a hand and a held field with no weight are refused by name."""
+    calibre, piece = world_of("world_bang.json")
+    clock = Clock(dict(calibre, rows=[r for r in calibre["rows"] if "weight" not in r]), piece)
+    for _ in range(piece["intervals"]):
+        clock.tick()
+    credits = [e["line"] for e in clock.log if e["event"] == "credit"]
+    assert (set(credits), len(credits), clock.counts["births"]) == ({0}, 4026, 245)
+    for row in (
+        dict(calibre["rows"][0], weight=1),
+        {k: v for k, v in calibre["rows"][-1].items() if k != "weight"},
+    ):
+        with pytest.raises(ValueError, match="is no gapped row"):
+            check_piece(piece, dict(calibre, rows=[row]))

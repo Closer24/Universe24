@@ -1,4 +1,4 @@
-"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes stand a hand apart as a tight lattice), the board's size a quarter and three quarters of the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view and its Nodes stay apart, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a flash (a glow at the board's centre with a widening front and rays, fading over sixteen intervals) with its label numbered among the record's bangs at the first interval and at every exact return the reading's row 1c names, the Nodes small and sharp, a turned Node filled in the turn's colour for its interval, the turned Nodes marked and a frozen Node drawn as a black disc in a white ring with a dark halo (the horizon, the label at the first frozen Node), a Node leaving the frozen set marked by a dashed cyan ring widening and fading over eight intervals (the release), the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row as the decoder finds it among the planes, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading's eras row names (each bang, the era of matter, the acceleration), the bangs and the tops read from that row too and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body standing in its well as a steady ring at its Node from its first credit to its last, the standing bodies read from row 45 of the reading and not ruled by the page, the play holding a second on every new label and then running at a quarter pace for four seconds, a big round play button at the centre under the bar (the space key too) and the page's look its tokens' (the board a card at the left, the controls pills, the labels glass), the list of the gates of the phenomena beside the board (every row of the reading in two groups, the rows read from the Node lines (the board's view) and the rows read from the log (the clicks' view), as the decoder's line names them, each row with the gate's glyph as its icon, its verdict's kind, the SHOWN rows with the interval they first show at, each lit as the play passes its interval and brightest for the intervals after it, the count of the numbered rows SHOWN at its head), a strip under the bar naming the bang and the latest labels, the bar carrying the ticks of the gates and the births and the bands of the eras with no names on it, the two files' lines and the legend out of the viewer's sight behind one info button at the top right, the reading's event lines (the gates of the phenomena, one per gate at its first SHOWN) as labels at their interval and at their Node set outside the lattice's edge with a dashed leader to the Node and a glyph per gate beside the label in its family's colour (the cosmos amber, matter pink, the gap-0 row's gates cyan, gravity and time orange, the conservations green, the quantum violet, the constants blue; a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node of its own (its row's at) at the board's foot, no click guessed, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines and the clicks pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, the clicks of the kept intervals alone, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
+"""The page, the third tool of the standard (the owner's words of 2026-10-25 through the Boss, 6397241917 and 6397272516): it reads the record and the reading and writes one HTML, dark by its tokens and generic, with nothing of a universe or a world typed in it. The animation is the page: the torus from the record's Node lines (every Node by its X and content, each Node placed along every axis by the lengths of the Links before it on its line, so a line through matter bulges where its Links are longer, every Link's drawn length its stretch above the rest (e^U - 1, zero at X = Gamma, where the Nodes stand a hand apart as a tight lattice), the board's size a quarter and three quarters of the square root of the interval's mean stretch against the record's largest so that a run whose late lengths dwarf its early ones stays in view and its Nodes stay apart, every Link at its own length within the interval, so the board's return to its zero is seen as the Nodes closing on each other, and a Big Bang drawn as a flash (a glow at the board's centre with a widening front and rays, fading over sixteen intervals) with its label numbered among the record's bangs at the first interval and at every exact return the reading's row 1c names, the Nodes small and sharp, a turned Node filled in the turn's colour for its interval, the turned Nodes marked and a frozen Node drawn as a black disc in a white ring with a dark halo (the horizon, the label at the first frozen Node), a Node leaving the frozen set marked by a dashed cyan ring widening and fading over eight intervals (the release), the Links from the world's shape alone, every Link's thickness and brightness its own length against the interval's shortest and longest, so the wells around matter are seen beside the whole board's rise, a Link held at the wall drawn thick, the passage through the Links as a directed mark along each Link from the gap-0 line's current, its size the flow and its direction the sign), the clicks as marks by row with the take's source inside (the levels taken, blue from the gap-0 row as the decoder finds it among the planes, else the taken row's colour) and a birth's two children joined to the take's Node with their signs, a turned Node marked by an arc with an arrowhead fading over eight intervals (its clock reversed at the top), a turn of the whole board at once as one dashed ring with its label, the bar banded by the eras the reading's eras row names (each bang, the era of matter, the acceleration), the bangs and the tops read from that row too and the readout naming how many clocks' volumes rise and fall at the interval, matter at a Node as a halo in its row's colour from the clicks of the last intervals, a body standing in its well as a steady ring at its Node from its first credit to its last, the standing bodies read from row 45 of the reading and not ruled by the page, where the universe holds a held field its well as a violet glow under every Node whose field's notch stands above the board's mean at the interval, the deeper the brighter, and the chimes of the families row 76 of the reading names bound joined by a violet bond where two Nodes chime one such family one Link apart at one interval (a short stub at each where the pair meets across the board's wrap), the bound families read from the reading and not ruled by the page, the play holding a second on every new label and then running at a quarter pace for four seconds, a big round play button at the centre under the bar (the space key too) and the page's look its tokens' (the board a card at the left, the controls pills, the labels glass), the list of the gates of the phenomena beside the board (every row of the reading in two groups, the rows read from the Node lines (the board's view) and the rows read from the log (the clicks' view), as the decoder's line names them, each row with the gate's glyph as its icon, its verdict's kind, the SHOWN rows with the interval they first show at, each lit as the play passes its interval and brightest for the intervals after it, the count of the numbered rows SHOWN at its head), a strip under the bar naming the bang and the latest labels, the bar carrying the ticks of the gates and the births and the bands of the eras with no names on it, the two files' lines and the legend out of the viewer's sight behind one info button at the top right, the reading's event lines (the gates of the phenomena, one per gate at its first SHOWN) as labels at their interval and at their Node set outside the lattice's edge with a dashed leader to the Node and a glyph per gate beside the label in its family's colour (the cosmos amber, matter pink, the gap-0 row's gates cyan, gravity and time orange, the conservations green, the quantum violet, the constants blue; a burst for the bang, a pair for the birth, rings for the click, a black disc for the horizon, a clock for the dilation, arrows for the lengthening and the contraction, and so on by the gate's number), a line with no Node of its own (its row's at) at the board's foot, no click guessed, and as ticks with their labels on the bar; one header line from the two files as they are, the seed's lays alike but for their centre folded with their count. The Node lines are carried in the page as words of base 36 (X and the content, and the field's notch where one stands) and one letter per Link for the current's level and sign, so that a long record's page stays within the branch's file bound; where even so the lines and the clicks pass the bound, every k-th interval is kept with the first, the last and the gates' own intervals, the clicks of the kept intervals alone, k named on the page. Usage: `python tools/page.py <record.json> <reading.jsonl> <out.html>`."""
 
 from __future__ import annotations
 
@@ -77,8 +77,8 @@ SCRIPT = """
 const D = JSON.parse(document.getElementById("data").textContent);
 const MS = 1000, BASE = 36;  // a second in milliseconds (the ticks' pace); the base of the Node lines' words
 const FAMILIES = [  // the gates' families and their colours: the cosmos, matter, the gap-0 row, gravity and time, the conservations, the quantum, the constants
-  [[1, 3, 5, 6, 46, 58, 59, 60, 63], "#fbbf24"], [[4, 8, 9, 13, 19, 26, 33, 45, 64, 68], "#f472b6"], [[7, 11, 12, 29, 31, 48, 50, 55], "#22d3ee"],
-  [[10, 14, 30, 32, 34, 35, 36, 61, 62], "#fb923c"], [[15, 16, 17, 18, 21, 22, 23, 25, 27, 43, 47, 65, 66, 70, 71, 72, 73], "#a3e635"], [[2, 37, 20, 24, 28, 38, 39, 40, 41, 42, 44, 49, 51, 52, 53, 54, 56, 57, 67, 69], "#c084fc"]];
+  [[1, 3, 5, 6, 46, 58, 59, 60, 63], "#fbbf24"], [[4, 8, 9, 13, 19, 26, 33, 45, 64, 68, 76, 77], "#f472b6"], [[7, 11, 12, 29, 31, 48, 50, 55, 74], "#22d3ee"],
+  [[10, 14, 30, 32, 34, 35, 36, 61, 62], "#fb923c"], [[15, 16, 17, 18, 21, 22, 23, 25, 27, 43, 47, 65, 66, 70, 71, 72, 73, 75], "#a3e635"], [[2, 37, 20, 24, 28, 38, 39, 40, 41, 42, 44, 49, 51, 52, 53, 54, 56, 57, 67, 69], "#c084fc"]];
 function colour(gate) { const g = parseInt(gate); for (const [gs, c] of FAMILIES) if (gs.includes(g)) return c; return "#38bdf8"; }
 const c = D.cube, G = D.gamma, N = D.intervals;
 const canvas = document.getElementById("board"), ctx = canvas.getContext("2d");
@@ -92,7 +92,7 @@ function words(s) { return s.split(" ").map(w => parseInt(w, BASE)); }
 function levels(s) { return Array.from(s, ch => ch === "." ? 0 : (ch >= "a" ? ch.charCodeAt(0) - 96 : 64 - ch.charCodeAt(0))); }
 const unravel = i => [Math.floor(i / (c * c)), Math.floor(i / c) % c, i % c];
 D.clicks = D.clicks.map(k => ({i: k[0], at: k[1], node: unravel(k[1]), line: k[2], levels: k[3], from: k[4] < 0 ? null : k[4], children: k[5] ? k[5] : null}));
-const lines = D.nodes.map(l => ({i: l.i, X: words(l.X), content: words(l.content), turned: l.turned, frozen: l.frozen, held: l.held, current: l.current.map(levels)}));
+const lines = D.nodes.map(l => ({i: l.i, X: words(l.X), content: words(l.content), turned: l.turned, frozen: l.frozen, held: l.held, current: l.current.map(levels), field: l.field ? words(l.field) : null}));
 const n = lines.length;
 let t = 1, playing = true, speed = 6;
 const yaw = 0.62, pitch = 0.42;
@@ -201,6 +201,10 @@ function glyph(gate, x, y, on, scale) {
   else if (g === 58) { for (const a of [0, 2, 4]) arrow(0, 0, 11 * Math.cos(a * Math.PI / 3 - Math.PI / 2), 11 * Math.sin(a * Math.PI / 3 - Math.PI / 2)); dot(0, 0, 2, true); }
   else if (g === 59) { arrow(-11, 0, 4, 0); line(8, -7, 8, 7); }
   else if (g === 60) { arrow(-11, 4, 2, 4); arrow(-11, -4, 11, -4); }
+  else if (g === 74) { wave(-12, 2, 0, 4, 0.9); arrow(8, 0, 8, -11); arrow(8, 0, 8, 11); }
+  else if (g === 75) { cx2.beginPath(); cx2.moveTo(-3, 3); cx2.lineTo(-3, -8); cx2.arc(0, -8, 3, Math.PI, 0); cx2.lineTo(3, 3); cx2.stroke(); dot(0, 7, 4, true); line(0, 4, 0, -5); }
+  else if (g === 76) { cx2.beginPath(); cx2.moveTo(-11, -8); cx2.lineTo(-11, 2); cx2.quadraticCurveTo(0, 13, 11, 2); cx2.lineTo(11, -8); cx2.stroke(); line(-4, 2, 4, 2); dot(-4, 2, 3, true); dot(4, 2, 3, true); }
+  else if (g === 77) { dot(0, 0, 11, false); for (const a of [0, 2, 4]) dot(6 * Math.cos(a * Math.PI / 3 - Math.PI / 2), 6 * Math.sin(a * Math.PI / 3 - Math.PI / 2), 2.5, true); }
   else if (g === 57) { dot(0, 7, 2, true); for (const dx of [-8, 0, 8]) { line(0, 7, dx, -6); dot(dx, -6, 3, false); } }
   else { cx2.beginPath(); cx2.moveTo(0, -r); cx2.lineTo(r, 0); cx2.lineTo(0, r); cx2.lineTo(-r, 0); cx2.closePath(); cx2.stroke(); }
   cx2.restore();
@@ -270,6 +274,14 @@ function draw() {
   for (const [at, l, from, to] of D.standing) if (line.i >= from && line.i <= to) {
     const s = spots[at]; ctx.strokeStyle = tone(l); ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(s[0], s[1], 10 + 2 * l, 0, 2 * Math.PI); ctx.stroke();
   }
+  let deep = 0;
+  if (line.field) {  // the held field's well: a glow under every Node whose notch stands above the board's mean, the deeper the brighter
+    const m = line.field.length, total = line.field.reduce((a, b) => a + b, 0), deepest = Math.max(...line.field.map(f => f * m - total));
+    for (let i = 0; i < m; i++) { const depth = line.field[i] * m - total; if (depth <= 0) continue; deep++;
+      const k = depth / deepest, s = spots[i], rr = 14 + 20 * k, glow = ctx.createRadialGradient(s[0], s[1], 0, s[0], s[1], rr);
+      glow.addColorStop(0, "rgba(167,139,250," + (0.45 + 0.5 * k) + ")"); glow.addColorStop(1, "rgba(167,139,250,0)");
+      ctx.globalCompositeOperation = "screen"; ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(s[0], s[1], rr, 0, 2 * Math.PI); ctx.fill(); ctx.globalCompositeOperation = "source-over"; }
+  }
   for (const k of D.clicks) if (k.i <= line.i && k.i > line.i - 4 * step) {
     const s = spots[k.at], age = (line.i - k.i) / step, fade = 1 - age / 4;
     ctx.globalAlpha = fade;
@@ -284,6 +296,15 @@ function draw() {
       ctx.beginPath(); ctx.arc(sq[0], sq[1], 7, 0, 2 * Math.PI); ctx.stroke();
       ctx.fillStyle = tone(k.line); ctx.font = "bold 11px monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(h === 0 ? "-" : "+", sq[0], sq[1]);
     }
+    ctx.globalAlpha = 1;
+  }
+  for (const [bi, a, b, l] of D.bonds) if (bi <= line.i && bi > line.i - 4 * step) {  // a bond: two Nodes chiming one bound family one Link apart at one interval
+    const p = spots[a], q = spots[b], ua = unravel(a), ub = unravel(b), fade = 1 - (line.i - bi) / step / 4;
+    ctx.globalAlpha = fade; ctx.strokeStyle = "#ddd6fe"; ctx.lineWidth = 8; ctx.shadowColor = "#a78bfa"; ctx.shadowBlur = 18;
+    if (ua.reduce((sum, x, k) => sum + Math.abs(x - ub[k]), 0) === 1) { ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke(); }
+    else for (const [s, o] of [[p, q], [q, p]]) { const dx = s[0] - o[0], dy = s[1] - o[1], d = Math.hypot(dx, dy) || 1; ctx.beginPath(); ctx.moveTo(s[0], s[1]); ctx.lineTo(s[0] + 14 * dx / d, s[1] + 14 * dy / d); ctx.stroke(); }
+    ctx.lineWidth = 2.5; ctx.strokeStyle = "#a78bfa"; for (const s of [p, q]) { ctx.beginPath(); ctx.arc(s[0], s[1], 12, 0, 2 * Math.PI); ctx.stroke(); }
+    ctx.shadowBlur = 0; ctx.fillStyle = tone(l); ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 1.5; for (const s of [p, q]) { ctx.beginPath(); ctx.arc(s[0], s[1], 6, 0, 2 * Math.PI); ctx.fill(); ctx.stroke(); }
     ctx.globalAlpha = 1;
   }
   if (wholeTurn !== null) {
@@ -333,7 +354,7 @@ function draw() {
   for (const e of D.events.filter(e => e.i !== null && e.i <= line.i && e.i > line.i - 60 * step).slice(-5)) { const s = document.createElement("span"); s.style.setProperty("--c", colour(e.gate)); s.textContent = e.label + " (" + e.i + ")"; now.appendChild(s); }
   let up = 0, down = 0; for (let i = 0; i < line.X.length; i++) { if (line.X[i] > before.X[i]) up++; else if (line.X[i] < before.X[i]) down++; }
   const course = t === 1 ? "the seed" : up === line.X.length ? "every clock's volume rising" : down === line.X.length ? "every clock's volume falling" : up + " rising, " + down + " falling, " + (line.X.length - up - down) + " at rest";
-  where.textContent = "interval " + line.i + " of " + N + (D.stride > 1 ? " (1 of every " + D.stride + " intervals kept)" : "") + "; " + course;
+  where.textContent = "interval " + line.i + " of " + N + (D.stride > 1 ? " (1 of every " + D.stride + " intervals kept)" : "") + "; " + course + (line.field ? "; the field's well at " + deep + " Nodes" : "");
 }
 let hold = 0, slow = 0, beat = 0;
 function tick() {
@@ -409,7 +430,7 @@ def letters(current: list[Any]) -> str:
 
 
 def line_of(line: dict[str, Any]) -> dict[str, Any]:
-    """A Node line as the page carries it: X and the content as words of base 36, the current as letters, the turned, the frozen and the held as they are."""
+    """A Node line as the page carries it: X and the content as words of base 36, the current as letters, the turned, the frozen and the held as they are, and the held field's notch as words where the line carries one."""
     return {
         "i": int(line["i"]),
         "X": " ".join(word(int(x)) for x in line["X"]),
@@ -418,7 +439,7 @@ def line_of(line: dict[str, Any]) -> dict[str, Any]:
         "frozen": line["frozen"],
         "held": line["held"],
         "current": [letters(axis) for axis in line["current"]],
-    }
+    } | ({"field": " ".join(word(int(x)) for x in line["field"])} if "field" in line else {})
 
 
 def kept(
@@ -434,6 +455,27 @@ def kept(
         line["i"] for line in lines if line["i"] % stride == 1 or line["i"] in named or line["i"] == last
     }
     return [line for line in lines if line["i"] in keep], [c for c in clicks if c[0] in keep], stride
+
+
+def index_of(node: Any, cube: int) -> int:
+    """A Node's index in the great clock's order, from its three coordinates."""
+    return int(node[0]) * cube * cube + int(node[1]) * cube + int(node[2])
+
+
+def bonds_of(record: dict[str, Any], bound: list[int]) -> list[list[int]]:
+    """The bonds of the families the reading names bound (row 76): every pair of Nodes chiming one such family at one interval one Link apart on the torus, as [the interval, the two Nodes' indices, the family's line]."""
+    cube = int(record["cube"])
+    by: dict[tuple[int, int], set[tuple[int, ...]]] = {}
+    for e in record["log"]:
+        if e["event"] == "credit" and int(e["line"]) in bound:
+            by.setdefault((int(e["i"]), int(e["line"])), set()).add(tuple(int(x) for x in e["node"]))
+    return [
+        [i, index_of(a, cube), index_of(b, cube), line]
+        for (i, line), nodes in sorted(by.items())
+        for a in sorted(nodes)
+        for b in sorted(nodes)
+        if a < b and sum(min(abs(x - y), cube - abs(x - y)) for x, y in zip(a, b, strict=True)) == 1
+    ]
 
 
 CLASSES = {
@@ -455,26 +497,24 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
     decoder = next((line["the decoder"] for line in reading if "the decoder" in line), {})
     board = next((v for k, v in decoder.items() if k.startswith("rows read from the Node lines")), [])
     cube = int(record["cube"])
-
-    def index(node: list[int]) -> int:
-        return int(node[0]) * cube * cube + int(node[1]) * cube + int(node[2])
-
     well = next((v for line in reading for k, v in line.items() if k.startswith("45 ")), {})
     dims = len(record["world"]["shape"])  # a Node's coordinates, one per axis of the board
     standing = [
-        [index(b[:dims]), *b[dims:]]
+        [index_of(b[:dims], cube), *b[dims:]]
         for b in next((v for k, v in well.items() if k.startswith("the standing bodies")), [])
     ]
+    binding = next((v for line in reading for k, v in line.items() if k.startswith("76 ")), {})
+    bonds = bonds_of(record, [int(n) for n in binding.get("the bound families' lines", [])])
     planes, den = [int(p) for p in record["planes"]], int(record["den"])
     gap0 = planes.index(den) if den in planes else -1  # the gap-0 row, as the decoder finds it
     clicks = [
         [
             e["i"],
-            index(e["node"]),
+            index_of(e["node"], cube),
             e.get("line", e.get("line_pair", 0)),
             int(e.get("levels", 0)),
             -1 if int(e.get("taken_row", gap0)) == gap0 else int(e["taken_row"]),
-            [index(e["minus"]), index(e["plus"])] if e["event"] == "birth" else 0,
+            [index_of(e["minus"], cube), index_of(e["plus"], cube)] if e["event"] == "birth" else 0,
         ]
         for e in record["log"]
         if e["event"] in ("birth", "credit")
@@ -485,6 +525,7 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
     if held is not None:
         named.add(held)
     lines, clicks, stride = kept([line_of(line) for line in record["nodes"]], clicks, named)
+    shown = {line["i"] for line in lines}
     return {
         "cube": int(record["cube"]),
         "gamma": int(record["gamma"]),
@@ -493,6 +534,7 @@ def data_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> dict[str, 
         "stride": stride,
         "nodes": lines,
         "clicks": clicks,
+        "bonds": [b for b in bonds if b[0] in shown],
         "births": births,
         "events": events,
         "standing": standing,
@@ -515,7 +557,7 @@ def page_of(record: dict[str, Any], reading: list[dict[str, Any]]) -> str:
         + title
         + '<small>the record and its reading, from the seed alone</small></div><button id="info" title="the two files and the marks">i</button></div>\n'
         '<div id="card"><h3>the two files</h3><pre>' + header_of(record) + "</pre><h3>the marks</h3>"
-        "green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; a black disc in a white ring with a dark halo: the Node frozen, the horizon; a dashed cyan ring widening: the Node released from the frozen set; thick white Link: at the wall; yellow: a gate of the phenomena as it first shows, lit in the list at its interval; the bands of the bar: the spans from each bang, from the era of matter and from the acceleration, as the reading names them; the verdicts in the reading file beside the record</div>\n"
+        "green dot: a Node, its size the content; blue arrow: the gap-0 current along the Link (the gap-0 row); coloured halo: matter clicking at the Node, the colour its row; coloured ring: a body bound at its Node; a click: the ring in the colour of its row, the dot inside the levels taken, blue from the gap-0 row, else in the colour of the taken row; a birth: the Node of the take joined to its two children, - and +; orange arc with an arrowhead: the Node turned, its clock reversed at the top; a black disc in a white ring with a dark halo: the Node frozen, the horizon; a dashed cyan ring widening: the Node released from the frozen set; violet glow: the held field's well, its notch above the board's mean at the Node, the deeper the brighter; violet bond with a violet ring at each end: two Nodes chiming one family the reading's row 76 names bound, one Link apart at one interval (a short stub at each where they meet across the wrap); thick white Link: at the wall; yellow: a gate of the phenomena as it first shows, lit in the list at its interval; the bands of the bar: the spans from each bang, from the era of matter and from the acceleration, as the reading names them; the verdicts in the reading file beside the record</div>\n"
         '<div id="main"><div id="stage"><canvas id="board" width="320" height="320"></canvas><div id="labels"></div></div>\n'
         '<div id="side"><h2><span>the gates of the phenomena</span><b id="count"></b></h2><div id="gates"></div></div></div>\n'
         '<div id="bar"><div id="cursor"></div></div>\n<div id="now"></div>\n'

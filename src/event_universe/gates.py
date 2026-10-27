@@ -8,7 +8,7 @@ from collections import Counter, defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe import events, great_clock, predicates, strikes, swings, symmetries
+from event_universe import events, great_clock, phenomena, predicates, strikes, swings, symmetries
 from event_universe.core.spokes import AXES
 from event_universe.reckoner import (
     HALF,
@@ -339,6 +339,10 @@ TABLE: tuple[Row, ...] = (
     symmetries.momentum_booked,
     symmetries.angular_momentum,
     symmetries.mass_to_light,
+    phenomena.polarization,
+    phenomena.temperature,
+    phenomena.nuclear_binding,
+    phenomena.baryon_shape,
     conservations,
     constants,
 )
