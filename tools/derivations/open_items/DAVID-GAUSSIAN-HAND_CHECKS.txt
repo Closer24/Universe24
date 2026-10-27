@@ -1,0 +1,406 @@
+DAVID-GAUSSIAN-HAND_CHECKS.txt: the scripts and outputs behind DAVID-GAUSSIAN-HAND.md (David, 2026-10-27).
+Run with the repository's venv314 Python; WT names the engine tree (default: a worktree of edaf5b35c).
+
+====================================================================================================
+1. The Boss's folds 1 to 3 verified: each committed chart regenerated on edaf5b35c
+---------------------------------------- verify_head.py
+"""A pushed head verified the same way: each committed chart regenerated from its world on the head's own src, every part and the reading against the committed chart (argv: the tree, the chart's name)."""
+import json, sys, time, hashlib
+sys.set_int_max_str_digits(0)
+tree, name = sys.argv[1], sys.argv[2]
+sys.path.insert(0, tree + "/src")
+from event_universe.run import chart
+from event_universe.gates import gates
+R = tree + "/examples/records/"
+committed = json.load(open(R + name + ".json"))
+reading = [json.loads(l) for l in open(R + name + ".reading.jsonl") if l.strip()]
+back = int((committed.get("run_back") or {}).get("intervals", 0))
+t = time.time()
+found = json.loads(json.dumps(chart(committed["universe"], committed["world"], back, lambda line: None)))
+timeless = lambda rows: [{k: v for k, v in r.items() if k != "milliseconds"} for r in rows]
+same = {k: found[k] == committed[k] for k in ("nodes", "counts", "turns", "run_back", "log", "world", "universe")}
+same["rows"] = timeless(found["rows"]) == timeless(committed["rows"])
+new_reading = [{k: v} for k, v in json.loads(json.dumps(gates(found))).items()]
+same["the reading, line for line"] = new_reading == reading
+print(tree.split("/")[-1], name, found["run_back"], same, f"{time.time() - t:.0f}s", flush=True)
+---------------------------------------- output: out_verify.txt
+wt_g3 hole {'intervals': 20, 'exact': 20} {'nodes': True, 'counts': True, 'turns': True, 'run_back': True, 'log': True, 'world': True, 'universe': True, 'rows': True, 'the reading, line for line': True} 25s
+wt_g3 chiral {'intervals': 20, 'exact': 20} {'nodes': True, 'counts': True, 'turns': True, 'run_back': True, 'log': True, 'world': True, 'universe': True, 'rows': True, 'the reading, line for line': True} 26s
+wt_g3 bodies {'intervals': 20, 'exact': 20} {'nodes': True, 'counts': True, 'turns': True, 'run_back': True, 'log': True, 'world': True, 'universe': True, 'rows': True, 'the reading, line for line': True} 129s
+DONE
+
+====================================================================================================
+1. The same on 608d97134 (fold 4, the spin merged), with the circuit's spot check on the hole
+---------------------------------------- output: out_verify_g4.txt
+wt_g4 hole {'intervals': 20, 'exact': 20} {'nodes': True, 'counts': True, 'turns': True, 'run_back': True, 'log': True, 'world': True, 'universe': True, 'rows': True, 'the reading, line for line': True} 23s
+wt_g4 chiral {'intervals': 20, 'exact': 20} {'nodes': True, 'counts': True, 'turns': True, 'run_back': True, 'log': True, 'world': True, 'universe': True, 'rows': True, 'the reading, line for line': True} 24s
+wt_g4 bodies {'intervals': 20, 'exact': 20} {'nodes': True, 'counts': True, 'turns': True, 'run_back': True, 'log': True, 'world': True, 'universe': True, 'rows': True, 'the reading, line for line': True} 142s
+hole power_circuit {'nodes': True, 'rows': False, 'counts': True, 'turns': True, 'run_back': True, 'log': False, 'the reading, line for line': True} first log entry off 270 counts {'births': '18', 'body_clicks': '2262', 'turns': '537'} committed {'births': '18', 'body_clicks': '2262', 'turns': '537'} reading rows moved [] 27s
+DONE
+
+====================================================================================================
+3 and 4. The two candidates as harnesses (no engine file changed)
+---------------------------------------- gauss.py
+"""The Gaussian hand's two candidate changes as harnesses on the engine (no engine file changed), each a replacement of one engine function:
+- `per_hand`: hands.wind divides each hand's form once (the two gears' numerators summed) in place of once per gear;
+- `power_circuit`: readings.standard_angle reads the standard's pair at a count as the exact Gaussian power X (2 Gamma + i)^(2n) / (4 Gamma^2 + 1)^n, one rounding per gear at the read, in place of the walked orbit's table (the step's half-angle tangent 1 / (2 Gamma): a Pythagorean step, exactly on the circle)."""
+import sys
+import numpy as np
+import os
+WT = os.environ.get("WT", "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/wt_g3")
+sys.path.insert(0, WT + "/src")
+sys.set_int_max_str_digits(0)
+
+
+def per_hand():
+    """hands.wind with one division per hand (its two gears' numerators summed) in place of one per gear."""
+    from event_universe import hands
+    from event_universe.core.rule3 import carries, wind_weight
+    from event_universe.core.spokes import SPOKES, across
+    from event_universe.trains import zeros
+    from event_universe.unwind import neighbour
+
+    def wind(node, lines, r, window=None):
+        if window is None:
+            at, beyond, x = (lambda a: a), across, node.start_stretch
+        else:
+            places = [tuple(np.array(w) for w in zip(*window, strict=True))]
+            for port in range(SPOKES):
+                around = [neighbour(node, where, port) for where in window]
+                places.append(tuple(np.array(w) for w in zip(*around, strict=True)))
+
+            def at(a):
+                return a[places[0]] if np.ndim(a) else a
+
+            def beyond(a, port):
+                return a[places[1 + port]]
+
+            x = node.start_stretch[places[0]]
+        full_n, full_b = [line.now for line in lines], [line.before for line in lines]
+        nows, befores = [at(n) for n in full_n], [at(b) for b in full_b]
+        reached = [at(zeros(node.size)) for _ in lines]
+        shared = [at(zeros(node.size)) for _ in lines]
+        for port, reach in enumerate(r.grips):
+            b_j = [beyond(b, port) for b in full_b]
+            n_j = [beyond(n, port) for n in full_n]
+            here = at(reach)
+            reached = [v + here * bj for v, bj in zip(reached, b_j, strict=True)]
+            parts = hands.products([b - bj for b, bj in zip(befores, b_j, strict=True)], [n + nj for n, nj in zip(nows, n_j, strict=True)])
+            shared = [s_ + here * part for s_, part in zip(shared, parts, strict=True)]
+        own = [
+            at(r.teeth) * (nn + bb) - at(r.hold) * nb - nr
+            for nn, bb, nb, nr in zip(hands.products(nows, nows), hands.products(befores, befores), hands.products(nows, befores), hands.products(nows, reached), strict=True)
+        ]
+        wall = wind_weight(node.full_rate, node.G) + wind_weight(node.full_rate, node.G)
+        numerators = [(o + o - s_) * x for o, s_ in zip(own, shared, strict=True)]
+        found = at(zeros(node.size))
+        for k in range(0, len(numerators) - 1, 2):
+            found = found + np.asarray(carries(numerators[k] + numerators[k + 1], wall))
+        if len(numerators) % 2:
+            found = found + np.asarray(carries(numerators[-1], wall))
+        return found
+
+    hands.wind = wind
+
+
+CACHE = {}
+
+
+PAIRS = {}
+
+
+def power_pair(X, gamma, n):
+    if (X, gamma, n) in PAIRS:
+        return PAIRS[(X, gamma, n)]
+    PAIRS[(X, gamma, n)] = found = _power_pair(X, gamma, n)
+    return found
+
+
+def _power_pair(X, gamma, n):
+    key = (X, gamma)
+    if key not in CACHE:
+        CACHE[key] = [(1, 0)]
+    table = CACHE[key]
+    zr, zi = (2 * gamma) * (2 * gamma) - 1, 4 * gamma  # (2 Gamma + i)^2
+    while len(table) <= n:
+        a, b = table[-1]
+        table.append((a * zr - b * zi, a * zi + b * zr))
+    a, b = table[n]
+    m = (4 * gamma * gamma + 1) ** n
+    from event_universe.core.rates import rounded
+    return int(rounded(X * a, m)), int(rounded(X * b, m))
+
+
+def power_circuit():
+    from event_universe import readings, hands
+    from event_universe.core.rule3 import remainder
+
+    def standard_angle(node, n):
+        n = int(n)
+        s = 1 if n >= 0 else -1
+        n = abs(n)
+        if node.circuit_half is None:
+            # the half turn: the first count where the cosine stops falling
+            k = 1
+            while power_pair(node.standard_length, node.full_rate, k + 1)[0] < power_pair(node.standard_length, node.full_rate, k)[0]:
+                k += 1
+            node.circuit_half = k
+        H = node.circuit_half
+        if n > H:
+            n = remainder(n, H + H)
+            if n > H:
+                n, s = H + H - n, -s
+        c, sn = power_pair(node.standard_length, node.full_rate, n)
+        return c, s * sn
+
+    import event_universe.meshes as meshes
+    readings.standard_angle = standard_angle
+    hands.standard_angle = standard_angle
+    meshes.standard_angle = standard_angle
+
+====================================================================================================
+3 and 4. Each committed chart under a candidate, against the committed chart
+---------------------------------------- gauss_run.py
+"""A committed chart regenerated under one Gaussian-hand candidate (argv: the chart's name, the candidate per_hand | power_circuit): the Node lines, rows, counts, turns, run back, log and reading against the committed chart."""
+import json, sys, time
+import gauss
+from gauss import WT
+name, mode = sys.argv[1], sys.argv[2]
+getattr(gauss, mode)()
+from event_universe.run import chart
+from event_universe.gates import gates
+R = WT + "/examples/records/"
+committed = json.load(open(R + name + ".json"))
+reading = [json.loads(l) for l in open(R + name + ".reading.jsonl") if l.strip()]
+back = int((committed.get("run_back") or {}).get("intervals", 0))
+t = time.time()
+found = json.loads(json.dumps(chart(committed["universe"], committed["world"], back, lambda line: None)))
+timeless = lambda rows: [{k: v for k, v in r.items() if k != "milliseconds"} for r in rows]
+same = {
+    "nodes": found["nodes"] == committed["nodes"],
+    "rows": timeless(found["rows"]) == timeless(committed["rows"]),
+    "counts": found["counts"] == committed["counts"],
+    "turns": found["turns"] == committed["turns"],
+    "run_back": found["run_back"] == committed["run_back"],
+    "log": found["log"] == committed["log"],
+}
+first = next((i for i, (a, b) in enumerate(zip(found["log"], committed["log"])) if a != b), None)
+new_reading = [{k: v} for k, v in json.loads(json.dumps(gates(found))).items()]
+same["the reading, line for line"] = new_reading == reading
+moved = [list(r)[0] for r, c in zip(new_reading, reading) if r != c]
+print(name, mode, same, "first log entry off", first, "counts", {k: found["counts"][k] for k in ("births", "body_clicks", "turns")},
+      "committed", {k: committed["counts"][k] for k in ("births", "body_clicks", "turns")}, "reading rows moved", moved[:8], f"{time.time() - t:.0f}s", flush=True)
+---------------------------------------- output: out_gauss.txt
+hole per_hand {'nodes': True, 'rows': True, 'counts': False, 'turns': True, 'run_back': True, 'log': False, 'the reading, line for line': True} first log entry off 94 counts {'births': '18', 'body_clicks': '2262', 'turns': '537'} committed {'births': '18', 'body_clicks': '2262', 'turns': '537'} reading rows moved [] 24s
+chiral per_hand {'nodes': True, 'rows': True, 'counts': False, 'turns': True, 'run_back': True, 'log': False, 'the reading, line for line': True} first log entry off 24 counts {'births': '16', 'body_clicks': '3003', 'turns': '614'} committed {'births': '16', 'body_clicks': '3003', 'turns': '614'} reading rows moved [] 23s
+bodies per_hand {'nodes': True, 'rows': True, 'counts': False, 'turns': True, 'run_back': True, 'log': False, 'the reading, line for line': True} first log entry off 855 counts {'births': '23', 'body_clicks': '17944', 'turns': '2270'} committed {'births': '23', 'body_clicks': '17944', 'turns': '2270'} reading rows moved [] 114s
+hole power_circuit {'nodes': True, 'rows': False, 'counts': True, 'turns': True, 'run_back': True, 'log': False, 'the reading, line for line': True} first log entry off 270 counts {'births': '18', 'body_clicks': '2262', 'turns': '537'} committed {'births': '18', 'body_clicks': '2262', 'turns': '537'} reading rows moved [] 25s
+chiral power_circuit {'nodes': True, 'rows': False, 'counts': True, 'turns': True, 'run_back': True, 'log': False, 'the reading, line for line': True} first log entry off 117 counts {'births': '16', 'body_clicks': '3003', 'turns': '614'} committed {'births': '16', 'body_clicks': '3003', 'turns': '614'} reading rows moved [] 27s
+bodies power_circuit {'nodes': True, 'rows': False, 'counts': True, 'turns': True, 'run_back': True, 'log': False, 'the reading, line for line': True} first log entry off 1404 counts {'births': '23', 'body_clicks': '17944', 'turns': '2270'} committed {'births': '23', 'body_clicks': '17944', 'turns': '2270'} reading rows moved [] 118s
+DONE
+
+====================================================================================================
+3. One division per hand: which counts and log keys move (the hole)
+---------------------------------------- per_hand_diff.py
+"""Under one division per hand: which counts and which log keys move on a chart, and by how much."""
+import json, sys, collections
+import gauss
+from gauss import WT
+name = sys.argv[1]
+gauss.per_hand()
+from event_universe.run import chart
+R = WT + "/examples/records/"
+committed = json.load(open(R + name + ".json"))
+found = json.loads(json.dumps(chart(committed["universe"], committed["world"], 0, lambda line: None)))
+print({k: (committed["counts"][k], found["counts"][k]) for k in committed["counts"] if committed["counts"][k] != found["counts"][k]})
+keys = collections.Counter()
+ex = {}
+for a, b in zip(found["log"], committed["log"]):
+    for k in set(a) | set(b):
+        if a.get(k) != b.get(k):
+            keys[(a.get("event"), k)] += 1
+            if (a.get("event"), k) not in ex:
+                ex[(a.get("event"), k)] = (a.get(k), b.get(k))
+print(len(found["log"]), len(committed["log"]), dict(keys))
+for k, v in ex.items():
+    print(k, str(v)[:240])
+---------------------------------------- output: out_perhand_hole.txt
+{'booked': ('99589590320968651927074', '99589590320968651927088')}
+21712 21712 {('birth', 'remainder'): 14, ('birth', 'booked'): 14, ('birth', 'owed'): 14, ('refused', 'walls'): 3938, ('refused', 'owed'): 3951, ('refused', 'fall'): 7105, ('credit', 'remainder'): 273, ('credit', 'remainder_was'): 273, ('credit', 'owed'): 273, ('refused', 'standing'): 142}
+('birth', 'remainder') (210293825061209012704, 210293825061209012705)
+('birth', 'booked') (3309673817612367715303, 3309673817612367715302)
+('birth', 'owed') (3309673817612367715303, 3309673817612367715302)
+('refused', 'walls') (1873993221066872874282, 1873993221066872874281)
+('refused', 'owed') (1873993221066872874282, 1873993221066872874281)
+('refused', 'fall') (1543991565523482867583, 1543991565523482867582)
+('credit', 'remainder') (209414976181743572704, 209414976181743572705)
+('credit', 'remainder_was') (210293825061209012704, 210293825061209012705)
+('credit', 'owed') (-209414976181743572704, -209414976181743572705)
+('refused', 'standing') (9660712586964791090, 9660712586964791089)
+
+====================================================================================================
+4. The walked orbit against the exact Gaussian power, count by count to the half turn
+---------------------------------------- gauss_pairs.py
+"""The walked orbit's table against the Gaussian power, count by count to the half turn, at the records' X and at X = Gamma rim."""
+import gauss
+from gauss import WT
+import json
+from event_universe.clock import Clock
+from event_universe import readings
+u = json.load(open(WT + "/tests/worlds/universe_toy.json"))
+for X in (int(u["integers"]["amplitude"]), 1000 * int(u["integers"]["den"])):
+    u["integers"]["amplitude"] = X
+    node = Clock(u, {"shape": [3, 3, 3], "seed": []})
+    readings.standard_angle(node, 10**6)  # the walked table to its half turn
+    H = node.circuit_half
+    worst, at = 0, None
+    for n in range(H + 1):
+        c, s = node.circuit[n]
+        gc, gs = gauss.power_pair(X, node.full_rate, n)
+        d = max(abs(c - gc), abs(s - gs))
+        if d > worst:
+            worst, at = d, n
+    k = 1
+    while gauss.power_pair(X, node.full_rate, k + 1)[0] < gauss.power_pair(X, node.full_rate, k)[0]:
+        k += 1
+    print(f"X {X}: the walked half turn H {H}, the power's {k}; the largest difference of a pair's part to H, {worst} notches of X at the count {at} ({worst / X:.3e} of X)")
+---------------------------------------- output: out_pairs.txt
+X 288230376000: the walked half turn H 3142, the power's 3142; the largest difference of a pair's part to H, 113214 notches of X at the count 3142 (3.928e-07 of X)
+X 15162856759112389000: the walked half turn H 3142, the power's 3142; the largest difference of a pair's part to H, 5955983441205 notches of X at the count 3142 (3.928e-07 of X)
+PAIRS_DONE
+
+====================================================================================================
+4. The circuit as the power: the state hash, the log keys and the row fields that move (the hole)
+---------------------------------------- circuit_diff.py
+"""Under the circuit as the exact Gaussian power: which row fields and which log keys move on a chart, and the state hash against the walked circuit's."""
+import json, sys, collections
+import gauss
+from gauss import WT
+name, n = sys.argv[1], int(sys.argv[2])
+from event_universe.run import chart, state_hash
+from event_universe.clock import Clock
+R = WT + "/examples/records/"
+committed = json.load(open(R + name + ".json"))
+def run():
+    node = Clock(committed["universe"], dict(committed["world"], intervals=n))
+    for _ in range(n):
+        node.tick()
+    return node
+walked = run()
+gauss.power_circuit()
+power = run()
+print("the state hash after", n, "ticks: walked", state_hash(walked)[:16], "power", state_hash(power)[:16])
+keys = collections.Counter(); ex = {}
+for a, b in zip(power.log, walked.log):
+    for k in set(a) | set(b):
+        if a.get(k) != b.get(k):
+            if k == "frame":
+                for kk in set(a[k]) | set(b[k]):
+                    if a[k].get(kk) != b[k].get(kk):
+                        keys[("frame", kk)] += 1
+            else:
+                keys[(a.get("event"), k)] += 1
+                ex.setdefault((a.get("event"), k), (a.get(k), b.get(k)))
+print("log keys moved:", dict(keys))
+for k, v in ex.items():
+    print(k, str(v)[:200])
+found = json.loads(json.dumps(chart(committed["universe"], committed["world"], 0, lambda line: None)))
+rk = collections.Counter()
+for a, b in zip(found["rows"], committed["rows"]):
+    for k in set(a) | set(b):
+        if k != "milliseconds" and a.get(k) != b.get(k):
+            rk[k] += 1
+print("row fields moved:", dict(rk))
+---------------------------------------- output: out_circ_hole.txt
+the state hash after 60 ticks: walked 478aeb245a987204 power 478aeb245a987204
+log keys moved: {('frame', 'phases'): 2135}
+row fields moved: {'orbit table': 14}
+
+====================================================================================================
+4. The same on the chiral
+---------------------------------------- output: out_circ_chiral.txt
+the state hash after 60 ticks: walked 5f34155e2c2e1d6d power 5f34155e2c2e1d6d
+log keys moved: {('frame', 'phases'): 2781}
+row fields moved: {'orbit table': 14}
+
+====================================================================================================
+4. The same on the bodies
+---------------------------------------- output: out_circ_bodies.txt
+the state hash after 120 ticks: walked 32a4218e47ee05c2 power 32a4218e47ee05c2
+log keys moved: {('frame', 'phases'): 14771}
+row fields moved: {'orbit table': 15}
+DONE
+
+====================================================================================================
+6. Twin hands as one quaternion: the lifts, Kramers and the 4 pi
+---------------------------------------- quaternion.py
+"""Twin hands as one quaternion q = z_up + z_down j on the four gears (three_up, twelve_up, three_down, twelve_down), all in whole numbers: the Pauli gearing of the twin build (sigma_x swaps the twins, sigma_z turns the down twin over, sigma_y = i sigma_x sigma_z) against the quaternion units, the half turns' lifts U_a = -i sigma_a, Kramers' T, and the 4 pi."""
+import itertools
+
+def mul(p, q):
+    """Quaternion product of p = (a, b, c, d) = a + b i + c j + d k."""
+    a1, b1, c1, d1 = p
+    a2, b2, c2, d2 = q
+    return (a1*a2 - b1*b2 - c1*c2 - d1*d2, a1*b2 + b1*a2 + c1*d2 - d1*c2, a1*c2 - b1*d2 + c1*a2 + d1*b2, a1*d2 + b1*c2 - c1*b2 + d1*a2)
+
+def as_quaternion(g):
+    """(three_up, twelve_up, three_down, twelve_down) -> z_up + z_down j, with z_down j = (x + i y) j = x j + y k."""
+    tu, wu, td, wd = g
+    return (tu, wu, td, wd)
+
+def gears_of(q):
+    return q
+
+# the twin build's gearing on the four gears (DAVID-SPIN-IN-CLOCKS, tick.twin_pulls): up -> (sx, sy, sz)
+def sigma(a, g):
+    tu, wu, td, wd = g
+    up, dn = (tu, wu), (td, wd)
+    if a == "x":   # swaps the twins
+        nu, nd = dn, up
+    elif a == "z":  # turns the down twin over
+        nu, nd = up, (-dn[0], -dn[1])
+    else:           # sigma_y = i sigma_x sigma_z: up -> (dn[1], -dn[0]) ... as the build spells it
+        nu, nd = (dn[1], -dn[0]), (-up[1], up[0])
+    return (*nu, *nd)
+
+def times_i(g):
+    """i on each twin (the quarter turn of both hands): (three, twelve) -> (-twelve, three)."""
+    tu, wu, td, wd = g
+    return (-wu, tu, -wd, td)
+
+def U(a, g):
+    """The half turn's lift -i sigma_a."""
+    s = sigma(a, g)
+    return tuple(-x for x in times_i(s))
+
+units = {"i": (0, 1, 0, 0), "j": (0, 0, 1, 0), "k": (0, 0, 0, 1)}
+basis = [tuple(int(r == c) for c in range(4)) for r in range(4)]
+rng = list(itertools.product(range(-2, 3), repeat=4))
+found = {}
+for a in "xyz":
+    for side in ("left", "right"):
+        for name, u in units.items():
+            for sign in (1, -1):
+                uu = tuple(sign * x for x in u)
+                ok = all(U(a, g) == (mul(uu, as_quaternion(g)) if side == "left" else mul(as_quaternion(g), uu)) for g in rng)
+                if ok:
+                    found[a] = f"{'-' if sign < 0 else ''}{name} on the {side}"
+print("the lifts U_a = -i sigma_a as quaternion units:", found)
+# Q8 closure and -1 = U_a^2
+for a in "xyz":
+    assert all(U(a, U(a, g)) == tuple(-x for x in g) for g in rng)
+print("U_a U_a = -1 on every gear set in [-2, 2]^4: two half turns read -1 (the 4 pi)")
+# Kramers: T = (i sigma_y) K, K the twelve gears turned over (the conjugation of both twins)
+def K(g):
+    tu, wu, td, wd = g
+    return (tu, -wu, td, -wd)
+def T(g):
+    return times_i(sigma("y", K(g)))
+assert all(T(T(g)) == tuple(-x for x in g) for g in rng)
+print("Kramers T = (i sigma_y) K: T T = -1 on every gear set; T q = K(q) times, on the right:",
+      [("-" if sgn < 0 else "") + name for name, u in units.items() for sgn in (1, -1) if all(T(g) == mul(as_quaternion(K(g)), tuple(sgn * x for x in u)) for g in rng)])
+---------------------------------------- output: out_quat.txt
+the lifts U_a = -i sigma_a as quaternion units: {'x': '-k on the right', 'y': 'j on the right', 'z': '-i on the right'}
+U_a U_a = -1 on every gear set in [-2, 2]^4: two half turns read -1 (the 4 pi)
+Kramers T = (i sigma_y) K: T T = -1 on every gear set; T q = K(q) times, on the right: ['-j']
+
