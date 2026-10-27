@@ -181,7 +181,7 @@ def one_strike_floor(chart: Chart) -> dict[str, Any]:
             "credits beyond the floor": len(reckoning) - within,
             "verdict": "SHOWN as the law's floor: no credit reads beyond it"
             if within == len(reckoning)
-            else "NOT SHOWN",
+            else f"NOT SHOWN: {len(reckoning) - within} of the credits read beyond the floor",
         }
     }
 

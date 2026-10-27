@@ -250,7 +250,7 @@ def test_the_horizon_is_read_from_the_node_lines_not_the_rows() -> None:
         <= found["max content in the Node lines"]
     )
     assert found["Nodes frozen"] == 1 and found["verdict"].startswith("SHOWN as silence")
-    assert great_clock.standstill(Chart(loaded("chiral")))["14 the horizon"]["verdict"] == "NOT REACHED"
+    assert "NOT REACHED" in great_clock.standstill(Chart(loaded("chiral")))["14 the horizon"]["verdict"]
 
 
 def test_the_exact_return_is_the_seeds_first_state_and_the_horizon_standing() -> None:

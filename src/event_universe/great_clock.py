@@ -141,7 +141,11 @@ def era(chart: Chart) -> dict[str, Any]:
     verdict = (
         "SHOWN"
         if both and len(past) == len(both)
-        else (f"SHOWN in part: {len(past)} of {len(both)}" if past else "NOT SHOWN")
+        else f"SHOWN in part: {len(past)} of {len(both)}"
+        if past
+        else "NOT SHOWN: no Node credited past its last birth in its own clock"
+        if both
+        else "NOT SHOWN: no Node with a birth and a body credit"
     )
     return {
         "4 an era of matter": {
@@ -170,7 +174,9 @@ def standstill(chart: Chart) -> dict[str, Any]:
     verdict = (
         "SHOWN as silence (no credit and no birth at a Node frozen at the interval's start)"
         if load_max >= stopped and not at_stopped
-        else ("NOT REACHED" if load_max < stopped else "NOT SHOWN")
+        else "NOT REACHED: no Node loaded to the stopped load"
+        if load_max < stopped
+        else f"NOT SHOWN: {len(at_stopped)} credits or births at a Node frozen at the interval's start"
     )
     stopped_first = chart.first_stopped()
     first = chart.clock(min(stopped_first, key=stopped_first.__getitem__)) if stopped_first else None
