@@ -148,7 +148,15 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "BRANCH": (
         "WARN",
-        "a branch (if, a conditional expression, match) in an engine module: the law says there is no if on a train (The Node-clock and the Mesh are generic; there is no if) and a whether is the indicator 1 - 1 div (q + 1) of a carry's quotient; a branch the formula does not hold is a declaration (the count per file may not rise)",
+        "a branch (if, a conditional expression, match) in an engine module: the law says there is no if on a train (The Node-clock and the Mesh are generic; there is no if) and a whether is Rule3's quotient (n < d exactly where the quotient of n by d is 0; the sign test [x >= 0] = 1 + x div (x x + 1)); a branch the formula does not hold is a declaration (the count per file may not rise)",
+    ),
+    "INDICATOR": (
+        "WARN",
+        "a quotient spelt as a mask or a cap (the quotient of a bit, 1 div x; 1 minus a quotient; the sign test x div (x x + 1)): an indicator that zeroes a term above a bound is a bound spelt as a quotient, and a floor or a bound is an if (law: A floor or a bound is an if, and the Node-clock has none); read each note for a mask (the count per file may not rise)",
+    ),
+    "BOUND": (
+        "WARN",
+        "a name that holds a floor, a bound, a clamp or a cap (floor, ceiling, cap, clamp, clip, limit, bound, saturate): no act, tool or reading of the system holds one (law: A floor or a bound is an if, and the Node-clock has none); a reader may name one to report; read each note (the count per file may not rise)",
     ),
 }
 
@@ -167,6 +175,13 @@ ROOTS = frozenset("largest_below isqrt integer_root sqrt cbrt sine_rim".split())
 CLAMPS = frozenset(
     "min max abs clip where minimum maximum absolute fmin fmax sign select piecewise choose heaviside copysign".split()
 )
+QUOTIENT_CALLS = frozenset(
+    "carry carries signed_carries quotient div floordiv floor_divide".split()
+)  # the carry's quotient under a function's name (the indicator is made of one)
+BOUND_WORDS = frozenset(
+    "floor floors ceiling cap capped clamp clamped clip clipped limit limits limited bound bounds bounded "
+    "saturate saturated saturation".split()
+)  # the words of a name that holds a floor or a bound
 ORDERING = (ast.Lt, ast.LtE, ast.Gt, ast.GtE)
 FOREIGN_OPERATORS = {ast.Pow: "**", ast.LShift: "<<", ast.RShift: ">>", ast.BitXor: "^"}
 OPERATION_CALLS = frozenset(
@@ -314,6 +329,57 @@ def callee_name(call: ast.Call) -> str:
     return f.id if isinstance(f, ast.Name) else f.attr if isinstance(f, ast.Attribute) else ""
 
 
+def is_bit(node: ast.AST) -> bool:
+    return (
+        isinstance(node, ast.Constant)
+        and isinstance(node.value, int)
+        and not isinstance(node.value, bool)
+        and node.value in (0, 1)
+    )
+
+
+def quotient_parts(node: ast.AST) -> tuple[ast.AST, ast.AST] | None:
+    """The dividend and the divisor of a quotient (a floor division, or a call of the carry's quotient with both)."""
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.FloorDiv):
+        return node.left, node.right
+    if isinstance(node, ast.Call) and callee_name(node) in QUOTIENT_CALLS and len(node.args) >= 2:
+        return node.args[0], node.args[1]
+    return None
+
+
+def sign_test(node: ast.AST) -> bool:
+    """x div (x x + 1): the quotient that reads a sign."""
+    parts = quotient_parts(node)
+    divisor = parts[1] if parts else None
+    return (
+        isinstance(divisor, ast.BinOp)
+        and isinstance(divisor.op, ast.Add)
+        and any(
+            is_bit(one)
+            and isinstance(square, ast.BinOp)
+            and isinstance(square.op, ast.Mult)
+            and ast.dump(square.left) == ast.dump(square.right)
+            for one, square in ((divisor.left, divisor.right), (divisor.right, divisor.left))
+        )
+    )
+
+
+def indicator(node: ast.AST) -> str:
+    """What makes a quotient a mask or a cap: the quotient of a bit, the sign test, 1 minus a quotient; '' where it is none."""
+    parts = quotient_parts(node)
+    if parts is not None:
+        return "bit div" if is_bit(parts[0]) else "sign test" if sign_test(node) else ""
+    if (
+        isinstance(node, ast.BinOp)
+        and isinstance(node.op, ast.Sub)
+        and isinstance(node.left, ast.Constant)
+        and node.left.value == 1
+        and quotient_parts(node.right) is not None
+    ):
+        return "1 - quotient"
+    return ""
+
+
 def imported_names(rel: str, node: ast.Import | ast.ImportFrom) -> list[str]:
     """The full dotted names an import brings in; a relative import is resolved from the module's own folder."""
     if isinstance(node, ast.Import):
@@ -458,6 +524,9 @@ def scan(rel: str, source: str) -> list[Hit]:
             add("STATE", stmt, f"module-level container {name}")
 
     for node in ast.walk(tree):
+        found_indicator = indicator(node)
+        if found_indicator and not exempt(rel, "INDICATOR"):
+            add("INDICATOR", node, found_indicator)
         if isinstance(node, ast.Import):
             for alias in node.names:
                 if alias.name.split(".")[0] in BAD_IMPORTS:
@@ -648,6 +717,8 @@ def scan(rel: str, source: str) -> list[Hit]:
             if token.type == tokenize.NAME and not keyword.iskeyword(token.string):
                 if any(w in CIRCULAR_WORDS for w in words_of(token.string)):
                     hits.append(Hit("WORD", rel, token.start[0], token.string))
+                if not exempt(rel, "BOUND") and any(w in BOUND_WORDS for w in words_of(token.string)):
+                    hits.append(Hit("BOUND", rel, token.start[0], token.string))
             elif token.type in TEXT_TOKENS:
                 found_words = sorted({w for w in words_of(token.string) if w in CIRCULAR_WORDS})
                 if BORN.search(token.string):
