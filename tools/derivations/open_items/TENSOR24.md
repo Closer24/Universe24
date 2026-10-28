@@ -6,12 +6,12 @@ The owner's words of 2026-10-28, 06:0x to 06:4x UTC (Hebrew, translated):
 - "Understand how the click enters the plan, its kinds, all the families and what they are, the family you wanted to add included. Reach the main formula of the Node-clock, just as general relativity has a tensor equation, but that one is not for the node."
 - "Only when everyone agrees on the plan, present it to me. It must bring the whole engine to work as an integer tensor machine that represents the clocks and everything the system has now: clicks, time reversal, everything. There is no problem that the tensor has complex numbers, is there? Maybe it simplifies, but the acts are on the complex numbers' coefficients, so they are integers. Call them by the names they have now."
 
-The plan's owner: the Boss. Its base: engine-5.0-test at 526a5666d. Its status: a plan, with nothing built under it.
+The plan's owner: the Boss. The names are the ones the owner sees in his app: Boss, Sofer, David and Animate (the owner's word through Animate, 06:3x UTC, #2187 6462416209). Its base: engine-5.0-test at 526a5666d. Its status: a plan, with nothing built under it.
 
-- **This file is the one plan.** The Scribe's record of the program (the state of the cuts, the owner's list with his recommendations, the ledger) stands on scribe-5 and points here.
+- **This file is the one plan.** Sofer's record of the program (the state of the cuts, the owner's list with his recommendations, the ledger) stands on scribe-5 and points here.
 - **Its words** are the clock words of docs/CLOCK_WORDS.md (scribe-5): the great clock, the Node-clock, the Mesh, the Spoke, the tick, the train, the hand, the gear, the notch, the teeth count, the carry, the drive, the wind, the load, the bob, the fitting, the fitted hand, the unspringing, the regulator, the swing, the turnover, the rewind, the calibre, the piece, the setting, the chart, and the code names chime, vernier, unwind, stopped and lead.
-- **The law's sentence is entered** as decided and not built: "The Node-clock is one act" (docs/ALGEBRA.md, scribe-5 8c0a0cd01), on the owner's "Yes and yes" to the Scribe at 06:0x UTC.
-- **What it takes in whole:** the Reader's proposal of 05:49 UTC (#2187, 6461767760) and the Scribe's SCRIBE-THE-NODE-AS-ONE-ACT-1.md (scribe-5 d2d78b945, #2187, 6461843937).
+- **The law's sentence is entered** as decided and not built: "The Node-clock is one act" (docs/ALGEBRA.md, scribe-5 8c0a0cd01), on the owner's "Yes and yes" to Sofer at 06:0x UTC.
+- **What it takes in whole:** Animate's proposal of 05:49 UTC (#2187, 6461767760) and Sofer's SCRIBE-THE-NODE-AS-ONE-ACT-1.md (scribe-5 d2d78b945, #2187, 6461843937).
 - **What it adds:**
   - the main formula, read from the head's code;
   - the click's two kinds;
@@ -19,7 +19,7 @@ The plan's owner: the Boss. Its base: engine-5.0-test at 526a5666d. Its status: 
   - the hand as a Gaussian integer;
   - everything the engine does on the head, with its form here (section 8);
   - the Boss's check;
-  - David's derivations of 06:0x UTC (6462024199) and the Reader's reading of the mirror of 06:2x UTC (6462233147);
+  - David's derivations of 06:0x UTC (6462024199) and Animate's reading of the mirror of 06:2x UTC (6462233147);
   - who does what.
 
 ## 1. The end state
@@ -65,7 +65,7 @@ then the carry: the quotient goes to the notch and the remainder stays in the fi
 **The work:**
 - David derives the formula exactly: each term's integers, where each carry's remainder goes, and the drive's teeth count.
 - The Boss checks it bit for bit against the head's step on the committed charts, with a probe and no engine change.
-- The Scribe proposes it as the law's formula for the owner.
+- Sofer proposes it as the law's formula for the owner.
 
 ## 3. The hand as a Gaussian integer
 
@@ -94,8 +94,8 @@ Beside the two kinds stands **the clock's own click, the turnover:** the time ge
 
 **Four points:**
 - **The fitting's train.** On the head it is drawn evenly among the trains it may set (click.list_of, the vernier), not by the parts' sizes. Tensor24 makes every draw the one draw by sizes (cut 5, by David's derivation).
-- **The detector** is no typed object. It is a bob, a sprung hand standing at a Node-clock that counts its swings, and its reading is its click. Where its winding is shared, that click is the click of a split (the Scribe, 6461915413).
-- **The click shows the hand; it does not decide it** (the Reader, 6462233147). The draw stays fair, by the parts' sizes alone, under the 24. A one-hand coupling (one row of the calibre's couplings, open item 11 b) sets the sizes, and the fair click then comes out on one side.
+- **The detector** is no typed object. It is a bob, a sprung hand standing at a Node-clock that counts its swings, and its reading is its click. Where its winding is shared, that click is the click of a split (Sofer, 6461915413).
+- **The click shows the hand; it does not decide it** (Animate, 6462233147). The draw stays fair, by the parts' sizes alone, under the 24. A one-hand coupling (one row of the calibre's couplings, open item 11 b) sets the sizes, and the fair click then comes out on one side.
 - **The one big bang has no twin hands.** Its calibre (universe_bang.json) holds no twin train, so no click of a split happens there, and neither Born nor Bell can be seen in the one big bang until the calibre holds one (open item 11 e).
 
 ## 5. What the Node-clock takes and what it gives
@@ -173,11 +173,11 @@ The twist the engagement reads is kept by every turn and reversed by every mirro
 
 ## 9. The head as it is (526a5666d)
 
-- **The step.** The Scribe's table of 26 acts (SCRIBE-THE-NODE-AS-ONE-ACT-1.md, read on 97e5b3fd6) stands on 526a5666d by kind: 9 contractions, 8 pointwise maps of one gear, 5 acts of bookkeeping, 2 gates and 2 global reductions. Since 97e5b3fd6:
+- **The step.** Sofer's table of 26 acts (SCRIBE-THE-NODE-AS-ONE-ACT-1.md, read on 97e5b3fd6) stands on 526a5666d by kind: 9 contractions, 8 pointwise maps of one gear, 5 acts of bookkeeping, 2 gates and 2 global reductions. Since 97e5b3fd6:
   - the stress's shear products are struck (d09f1a8a5);
   - the click's phase is order-free (phase.py, 42d5448b7);
   - the turnover mirrors (42d5448b7).
-- **The Scribe's scan** (scribe_scan.py, scribe-5 abfbd6ee9) on 526a5666d, counting its blocking rules only:
+- **Sofer's scan** (scribe_scan.py, scribe-5 abfbd6ee9) on 526a5666d, counting its blocking rules only:
   - the engine's modules: 95 hits (circular words in names 62, root searches 14, state beyond the Node-clock 14, log reads 3, a typed table 1, a number 1);
   - the readers' modules: 57 hits (numbers 23, circular words 13, root searches 11, state 7, typed tables 2, a float 1).
 - **The unsprung hand** is read by identity at 18 places in 7 files (the Boss's count).
@@ -187,15 +187,15 @@ The twist the engagement reads is kept by every turn and reversed by every mirro
 Every cut goes the same way:
 1. David derives it and confirms it on toys-5 before it is built; he writes no engine code.
 2. The Boss builds it in his toy and measures it.
-3. The Reader benches it.
-4. The Scribe's scan passes, with every count falling or equal.
+3. Animate benches it.
+4. Sofer's scan passes, with every count falling or equal.
 5. The full check exits 0, and the Boss pushes on the owner's go.
 
 The cuts, in order:
 
-0. **The main formula.** David derives it (section 2); the Boss checks it bit for bit against the head; the Scribe proposes it as the law's formula. Every later cut builds toward it.
-1. **The fair draw.** Built in the Boss's toy and measured: the 24 on nature and the hole, the rewind 20 of 20, the suite 118. The owner's go came through the Scribe at 06:0x UTC; it is held by his later word to the Boss at 06:1x UTC ("for now only close the plans, implementing nothing") until he confirms. Before the push: the Scribe's scan against 526a5666d, and the Reader's bench within the hour.
-2. **The gate.** The Scribe's scan goes into tools/check.py's ratchets and the push hook, so it holds every later cut.
+0. **The main formula.** David derives it (section 2); the Boss checks it bit for bit against the head; Sofer proposes it as the law's formula. Every later cut builds toward it.
+1. **The fair draw.** Built in the Boss's toy and measured: the 24 on nature and the hole, the rewind 20 of 20, the suite 118. The owner's go came through Sofer at 06:0x UTC; it is held by his later word to the Boss at 06:1x UTC ("for now only close the plans, implementing nothing") until he confirms. Before the push: Sofer's scan against 526a5666d, and Animate's bench within the hour.
+2. **The gate.** Sofer's scan goes into tools/check.py's ratchets and the push hook, so it holds every later cut.
 3. **The pure contractions, bit for bit:** regulation.stress_of; the hands' products (dot, lead, sweep, products) as complex products; the Meshes' cross and gradient; the offset's curl; Pauli's numerator. They become J, one contraction over the Node-clock and its neighbours, its weights from the kinds' product table.
 4. **The pointwise maps:** the rate table and its inverse by search (stretch.load_of, readings.rates_of), the mesh factor, rest_rate_of, the clamps, rounded(p + p + 1, d) and the end teeth count's selection. Each becomes a chain of carries or integers in the calibre.
    - David has derived three already (6462024199):
@@ -214,8 +214,8 @@ The cuts, in order:
 | --- | --- |
 | the Boss | owns the plan and this file; writes every line of code; checks the formula against the head; builds each cut in his toy, measures it and pushes it on the owner's go |
 | David | derives the main formula and every cut before it is built (the contraction table from the Spokes, the pointwise maps, the twin hands, the gate and its one draw, the composite, the detector's reading) and confirms or refutes each build; writes no engine code |
-| the Reader | benches each cut: the 77 rows on the 16 charts and the 3 committed charts, the head against the cut, within the hour of each push; clears the readers' own modules under the scan; takes the reductions into the readers |
-| the Scribe | the gate on every push; the law's sentence (entered, scribe-5 8c0a0cd01) and the formula (proposed, entered on the owner's word); the program's record on scribe-5, pointing here; the documents after each cut; the ledger |
+| Animate | benches each cut: the 77 rows on the 16 charts and the 3 committed charts, the head against the cut, within the hour of each push; clears the readers' own modules under the scan; takes the reductions into the readers |
+| Sofer | the gate on every push; the law's sentence (entered, scribe-5 8c0a0cd01) and the formula (proposed, entered on the owner's word); the program's record on scribe-5, pointing here; the documents after each cut; the ledger |
 | the owner | the formula as law; the 24 with one coupling, or the 48; the Bell click's form; the one big bang's setting; a twin train in its calibre; the fair draw's push |
 
 ## 11. Open, by name
@@ -225,7 +225,7 @@ The cuts, in order:
   - the twin hands read only through their bilinears (the density, A1, and the spin, T1), with the 24 asked of those.
 
   Until then the 24 is asked of the five kinds and of the twin hands' bilinears.
-- **(b) The 24 with one coupling, or the 48.** With the reflections, every kind splits in two, giving ten kinds. The Reader's reading (6462233147), which the Boss recommends:
+- **(b) The 24 with one coupling, or the 48.** With the reflections, every kind splits in two, giving ten kinds. Animate's reading (6462233147), which the Boss recommends:
   - the law is the 24 exactly; under the 24 alone a vector and a mirror vector are one kind;
   - the mirror's break, nature's one hand (row 69), enters at one place only: a one-hand coupling, one row of the calibre's couplings, with no act of its own;
   - the test: the 24 rotations alike bit for bit always; the reflections part only through that coupling, where it acts; a parting anywhere else is a bug;
@@ -233,13 +233,13 @@ The cuts, in order:
 
   This is the owner's word at 08:30 UTC.
 - **(c) The composite train.** Fusion: a bound pair as one larger clock, its kind the product of its parts' kinds and its integers derived from theirs, with no new number. It waits on David's derivation. It is not seen on the head: row 76 reads NOT SHOWN on the one big bang.
-- **(d) The Bell click.** Its form is the owner's word: a detector hand's gear by the carry (the Scribe's recommendation), or another. The twin hands' state holds the correlation; the detector's reading is David's, after the owner's word.
+- **(d) The Bell click.** Its form is the owner's word: a detector hand's gear by the carry (Sofer's recommendation), or another. The twin hands' state holds the correlation; the detector's reading is David's, after the owner's word.
 - **(e) Detectors in the one big bang.** Its calibre has no twin train, so it has no click of a split, and neither Born nor Bell is seen there. Adding one is the owner's word on that calibre.
 
 ## 12. The end check
 
 - **No numbers:** no number beyond 0 and 1 in src; every integer in the calibre, the piece and its setting. The scan's number and table rules stand at 0.
-- **No circularity:** no sine, cosine, root search, angle or closed form of a phenomenon in src, so the scan's circle, root, word and mix rules stand at 0. The Scribe's audit items E1 to E19 are cleared one by one. The click's draw by the parts' sizes is the one chance.
+- **No circularity:** no sine, cosine, root search, angle or closed form of a phenomenon in src, so the scan's circle, root, word and mix rules stand at 0. Sofer's audit items E1 to E19 are cleared one by one. The click's draw by the parts' sizes is the one chance.
 - **Locality:** no state beyond the Node-clock, and no act reads the log. The state and log rules stand at 0.
 - **No circular test:**
   - every test compares two runs or reads what the engine wrote;
@@ -247,11 +247,11 @@ The cuts, in order:
   - the 24 is read by the images' test on every chart.
 - **The step:** the one formula for every gear, and the gate as one act for every train.
 - **Everything of section 8 stands,** the rewind 20 of 20 on every chart among it.
-- **The counts to bring to 0,** from 526a5666d: the engine's 95 hits (the Boss) and the readers' 57 (the Reader).
+- **The counts to bring to 0,** from 526a5666d: the engine's 95 hits (the Boss) and the readers' 57 (Animate).
 
 ## 13. After every cut
 
-- the Reader's per-row diff (77 rows, 16 charts, 3 committed charts);
+- Animate's per-row diff (77 rows, 16 charts, 3 committed charts);
 - the rewind 20 of 20;
 - the books closed at every click;
 - the 24 on nature and the hole, and the 48 on nature while the reflections hold;
