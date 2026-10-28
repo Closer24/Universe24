@@ -17,7 +17,7 @@ The owner's order of 2026-10-28, 04:3x UTC: "Read all the code, make sure there 
 
 The readers read a finished chart and produce nothing, yet several verdicts cannot fail or are typed:
 
-- run.py:68 logs `senses=[-1, 1]` in every birth line and reckoner.py:166-173 computes the charge as `senses[k] * (key // 2)` from that constant, not from the state; rows 17, 65, 70, the conservations row and the Bell row's E = -1 follow from it (**checked** at run.py:68).
+- run.py:68 logs `senses=[-1, 1]` in every birth line and reckoner.py:166-173 computes the charge as `senses[k] * (key // 2)` from that constant, not from the state; rows 17, 65, 70 and the conservations row follow from it (**checked** at run.py:68); the Bell row 56 no longer does since the Boss's push 123256cd5 (05:12 UTC), which reads each end's own detector click.
 - gates.py:368 asserts `"floats used": 0` (**checked**): asserted, not measured.
 - predicates.py:296-309, row 56, takes nature's band 4 < S^2 <= 8 as the criterion for SHOWN (**checked**).
 - symmetries.py rows 71, 72 and 73, strikes.py and predicates.py rows 15 and 47 test identities that hold by the algebra of the books' slack (`taken + remainder_was - remainder == booked`), so they cannot fail; the CPT row holds identically (read).

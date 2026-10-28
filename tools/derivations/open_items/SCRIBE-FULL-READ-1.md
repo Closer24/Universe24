@@ -440,7 +440,7 @@ The owner's direct words of 04:5x UTC to the Scribe (ledger row 294): the recomm
 
 ## 35. The Scribe's scan becomes a gate (2026-10-28, 05:0x UTC)
 
-The owner's direct words of 05:0x UTC (ledger row 295): the correlation from the twins' state, and the laws in scripts that refuse a push, so that a session that brings in circles, numbers, cosines or formulas is shouted at before it reaches the Scribe, logical and smart. The scan of row 294 is now tools/derivations/open_items/scribe_scan.py as a gate: a ratchet against the push's merge base (a hit keyed by rule, file and detail, a moved line no new hit, a renamed module carrying its counts), thirteen rules in two tiers (eleven refusals, two notes), the owner's allowed list empty and read from origin/scribe-5, the baseline of 209 hits the Scribe's audit of the whole. It runs at the push by git (--install), at the push by Claude Code (a PreToolUse hook on `git push` and a SessionStart hook that installs the git hook) and at the merge (a one-line patch of tools/check.py's RATCHETS); the last two files are the Boss's to adopt (SCRIBE-GATE-1.md, scribe_gate_check_py.patch, scribe_gate_claude_settings.json). Replayed over the last 40 pushes to engine-5.0-test it refuses 10, each a real hit under today's rules. The law's clause **No circularity that makes a phenomenon happen** names the gate at the push and at the merge.
+The owner's direct words of 05:0x UTC (ledger row 295): the correlation from the twins' state, and the laws in scripts that refuse a push, so that a session that brings in circles, numbers, cosines or formulas is shouted at before it reaches the Scribe, logical and smart. The scan of row 294 is now tools/derivations/open_items/scribe_scan.py as a gate: a ratchet against the push's merge base (a hit keyed by rule, file and detail, a moved line no new hit, a renamed module carrying its counts), thirteen rules in two tiers (eleven refusals, two notes), the owner's allowed list empty and read from origin/scribe-5, the baseline of 209 hits the Scribe's audit of the whole. It runs at the push by git (--install), at the push by Claude Code (a PreToolUse hook on `git push` and a SessionStart hook that installs the git hook) and at the merge (a one-line patch of tools/check.py's RATCHETS); the last two files are the Boss's to adopt (SCRIBE-GATE-1.md, scribe_gate_check_py.patch, scribe_gate_claude_settings.json). Replayed over the last 40 pushes to engine-5.0-test it refuses 9, each a real hit under today's rules. The law's clause **No circularity that makes a phenomenon happen** names the gate at the push and at the merge.
 
 **Asked of the Boss:** the adoption (a patch, a settings file). **Asked of the owner:** whether the server should refuse too (a required status check on engine-5.0-test).
 
@@ -461,3 +461,21 @@ DAVID-THE-BELL-LOCAL.md and its patch (ledger row 297): the marks on the Node-cl
 The owner's order of 04:3x UTC (ledger rows 292 and 298; tools/derivations/open_items/SCRIBE-AUDIT-97E5B3F-1.md): a subagent read the 36 modules of 97e5b3fd6 whole and the Scribe checked every count against the tree (24 literals in 7 files, no float or true division, the one pow, `**` with a name 10 and 5 times, 19 id() keys, six module-level caches, the readers' hard-coded verdicts at run.py:68, gates.py:368 and predicates.py:296-309). The read lists nineteen places where a formula holds the phenomenon it makes (E1 to E19) and the reads beyond one Mesh. No postulate or law is changed by it.
 
 **Departures and questions to name for the Boss:** the register's R5 and the list E1 to E19 against the clause **No circularity that makes a phenomenon happen**. **Asked of the owner:** his word on removing R5 and on the formulas E1, E3, E5, E8 and E19.
+
+## 39. The Boss's shears struck (2026-10-28, 05:04 UTC push, read at 05:3x UTC)
+
+The head d09f1a8a5 (ledger row 299): the regulator holds its time gear, its three tensions and its three flows, 12 integers fewer at every Node-clock, and the images gate asserts all 48 images alike on the nature setting over 20 ticks, reflections included; the hole 22 fittings and 529 chimes. The gate: no refusal, no note. The law asks the 24 and allows the reflections; the great clock is no longer chiral on this setting.
+
+**Departures and questions to name for the Boss:** the gate of the images on every chart. **Asked of the owner:** the reflections parted (a chiral click, nature's parity violation) or held.
+
+## 40. Rows 76 and 56 read anew (2026-10-28, 05:12 UTC push)
+
+The head 123256cd5 (ledger row 300): row 76 by distinct pairs with a fitting's own two children left out; row 56's Bell at each end's own detector click, a click of the second kind, no longer the fitted child's typed sense. The verdict stays the local bound. The gate: no refusal, no note.
+
+**Asked:** nothing new; the Bell click from the twins' state (row 297) is what would move row 56.
+
+## 41. The click's name in the code (2026-10-28, 05:21 UTC push)
+
+The head 526a5666d (ledger row 301): striking.py and strikes.py are click.py and clicks.py, clock.strikes clock.clicks, no strike stands in src. The gate carries the renamed modules' counts: no refusal, no note. The merge of the three pushes at 7acf9d1dd, the suite 118 passed. docs/ENGINE.md and docs/CLOCK_WORDS.md follow.
+
+**Asked of the Boss:** the node's code spelling (the class Clock) and the Reader's keys.

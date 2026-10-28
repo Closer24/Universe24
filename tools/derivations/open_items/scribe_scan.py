@@ -143,8 +143,8 @@ MUTATORS = frozenset(
 MEMOS = frozenset({"cache", "lru_cache", "cached_property"})
 # the modules that read a finished chart and run no step (the Scribe's audit of 2026-10-28): they may read the log
 READERS = frozenset(
-    "run.py gates.py predicates.py reckoner.py rim.py swings.py great_clock.py strikes.py events.py symmetries.py "
-    "phenomena.py".split()
+    "run.py gates.py predicates.py reckoner.py rim.py swings.py great_clock.py strikes.py clicks.py events.py "
+    "symmetries.py phenomena.py".split()
 )
 TEXT_TOKENS = {tokenize.STRING, tokenize.COMMENT}
 if hasattr(tokenize, "FSTRING_MIDDLE"):
@@ -772,7 +772,8 @@ def main(argv: list[str]) -> int:
         return guarded(claude_hook, args.base)
     if args.patch:
         return check_patch(REPO, args.patch, args.base)
-    if args.tree and not Path(args.tree).is_dir() and resolve(REPO, args.tree):
+    by_rev = bool(args.tree and not Path(args.tree).is_dir() and resolve(REPO, args.tree))
+    if by_rev:
         repo, rev, sources, label = REPO, args.tree, sources_at(REPO, args.tree), args.tree
     else:
         root = Path(args.tree or REPO).resolve()
@@ -802,7 +803,8 @@ def main(argv: list[str]) -> int:
             f"the list that stands ({Path(args.baseline).name})",
         )
     name, mb = merge_base(repo, args.base, rev)
-    new = above(found, stood(hits_of(sources_at(repo, mb)), moved(repo, mb)))
+    moves = moved(repo, mb, rev) if by_rev else moved(repo, mb)
+    new = above(found, stood(hits_of(sources_at(repo, mb)), moves))
     return (
         report(label, new, f"its merge base {mb[:9]} with {name}")
         if new
