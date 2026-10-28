@@ -1,0 +1,9 @@
+full rate              as_written     sync counts(min,max)=(30, 30)  async runs equal to sync at count T: 40/40
+full rate              by_difference  sync counts(min,max)=(30, 30)  async runs equal to sync at count T: 40/40
+full rate              ruled          sync counts(min,max)=(30, 30)  async runs equal to sync at count T: 40/40
+rates part             as_written     sync counts(min,max)=(30, 30)  async runs equal to sync at count T: 40/40
+rates part             by_difference  sync counts(min,max)=(30, 30)  async runs equal to sync at count T: 0/40
+rates part             ruled          sync counts(min,max)=(30, 30)  async runs equal to sync at count T: 40/40
+one stopped (rate 0)   as_written     sync counts(min,max)=(0, 5)  async runs equal to sync at count T: 40/40
+one stopped (rate 0)   by_difference  sync counts(min,max)=(30, 30)  async runs equal to sync at count T: 0/40
+one stopped (rate 0)   ruled          sync counts(min,max)=(30, 30)  async runs equal to sync at count T: 40/40
