@@ -1,0 +1,4 @@
+{"mode": "et3pair", "form": "double", "world": "world_hole.json", "ticks": 60, "ticks whose state differs (plain vs mutated)": 0, "log entries differing (plain vs mutated)": 10, "keys": {"frame": 10}, "laid plain/mutated": [0, 0]}
+{"mode": "et3pair", "form": "plus1", "world": "world_hole.json", "ticks": 60, "ticks whose state differs (plain vs mutated)": 0, "log entries differing (plain vs mutated)": 0, "keys": {}, "laid plain/mutated": [0, 0]}
+{"mode": "et3pair", "form": "flip", "world": "world_hole.json", "ticks": 60, "ticks whose state differs (plain vs mutated)": 0, "log entries differing (plain vs mutated)": 10, "keys": {"frame": 10}, "laid plain/mutated": [0, 0]}
+{"mode": "held", "Gamma": 1000, "key": 36000, "w": 2, "load: [p0, p0(c+w), q, r, den]": {"0": [1000, 998, 35, 3856000, 4000000], "10": [990, 988, 36, 1281600, 3920400], "100": [905, 903, 39, 2408100, 3276100], "1000": [368, 367, 48, 458592, 541696], "3000": [50, 50, 0, 0, 10000]}}

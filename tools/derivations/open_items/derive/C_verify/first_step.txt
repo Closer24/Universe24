@@ -1,0 +1,20 @@
+n        1: G0 36450 (n key 36000) V0 0 K0 0 forms 36450 | derived X1 1004 want 1004 ok | head X1 1000 vs (4/3) 1001 ok
+n        2: G0 72200 (n key 72000) V0 0 K0 0 forms 72200 | derived X1 1008 want 1008 ok | head X1 1001 vs (4/3) 1002 ok
+n        3: G0 108578 (n key 108000) V0 0 K0 0 forms 108578 | derived X1 1012 want 1012 ok | head X1 1002 vs (4/3) 1004 DIFF
+n        7: G0 252050 (n key 252000) V0 0 K0 0 forms 252050 | derived X1 1028 want 1028 ok | head X1 1007 vs (4/3) 1009 DIFF
+n       11: G0 396050 (n key 396000) V0 0 K0 0 forms 396050 | derived X1 1044 want 1044 ok | head X1 1013 vs (4/3) 1014 ok
+n       50: G0 1801202 (n key 1800000) V0 0 K0 0 forms 1801202 | derived X1 1200 want 1200 ok | head X1 1065 vs (4/3) 1066 ok
+n       99: G0 3564450 (n key 3564000) V0 0 K0 0 forms 3564450 | derived X1 1396 want 1396 ok | head X1 1130 vs (4/3) 1132 DIFF
+n      250: G0 9005768 (n key 9000000) V0 0 K0 0 forms 9005768 | derived X1 2001 want 2000 DIFF | head X1 1332 vs (4/3) 1333 ok
+n      333: G0 11995202 (n key 11988000) V0 0 K0 0 forms 11995202 | derived X1 2333 want 2332 DIFF | head X1 1442 vs (4/3) 1444 DIFF
+n      500: G0 18000000 (n key 18000000) V0 0 K0 0 forms 18000000 | derived X1 3000 want 3000 ok | head X1 1665 vs (4/3) 1666 ok
+n      501: G0 18036018 (n key 18036000) V0 0 K0 0 forms 18036018 | derived X1 3004 want 3004 ok | head X1 1666 vs (4/3) 1668 DIFF
+n      749: G0 26967168 (n key 26964000) V0 0 K0 0 forms 26967168 | derived X1 3996 want 3996 ok | head X1 1997 vs (4/3) 1998 ok
+n      750: G0 27011250 (n key 27000000) V0 0 K0 0 forms 27011250 | derived X1 4001 want 4000 DIFF | head X1 1998 vs (4/3) 2000 DIFF
+n      751: G0 27040658 (n key 27036000) V0 0 K0 0 forms 27040658 | derived X1 4005 want 4004 DIFF | head X1 1998 vs (4/3) 2001 DIFF
+n     1000: G0 36006098 (n key 36000000) V0 0 K0 0 forms 36006098 | derived X1 5001 want 5000 DIFF | head X1 1998 vs (4/3) 2333 DIFF
+n     5000: G0 180006338 (n key 180000000) V0 0 K0 0 forms 180006338 | derived X1 21001 want 21000 DIFF | head X1 1998 vs (4/3) 7666 DIFF
+n    50000: G0 1800000000 (n key 1800000000) V0 0 K0 0 forms 1800000000 | derived X1 201000 want 201000 ok | head X1 1998 vs (4/3) 67666 DIFF
+n   500000: G0 18000254322 (n key 18000000000) V0 0 K0 0 forms 18000254322 | derived X1 2001028 want 2001000 DIFF | head X1 1998 vs (4/3) 667666 DIFF
+n  5000000: G0 180000000000 (n key 180000000000) V0 0 K0 0 forms 180000000000 | derived X1 20001000 want 20001000 ok | head X1 1998 vs (4/3) 6667666 DIFF
+derived first steps off X0 (1 + 4 n / Gamma): 7

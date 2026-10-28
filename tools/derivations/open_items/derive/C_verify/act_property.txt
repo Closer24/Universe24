@@ -1,0 +1,4 @@
+D_R = 0, N >= 0 (the lemma): the first difference held in 20000 of 20000 draws
+mutation: N negated: the first difference held in 5096 of 20000 draws
+D_R = 0, N < 0: the first difference held in 4820 of 20000 draws
+mutation: the head's spring D_R, N = 0: the first difference held in 3461 of 20000 draws

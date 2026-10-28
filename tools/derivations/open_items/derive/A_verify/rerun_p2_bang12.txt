@@ -1,0 +1,10 @@
+world_bang.json 12 ticks; births 64
+  engagements engage() orients (uncoupled giver (fittings)), before the lay jam and the stop: 768
+    [uncoupled giver (fittings)] F1's senses equal to the head's (+ at plus, - at minus): 768
+    [uncoupled giver (fittings)] sigma_x + sigma_y = 0: 768
+    [uncoupled giver (fittings)] the same-time Im(conj(z_x) z_y) (the charge current) is 0: 0
+    [uncoupled giver (fittings)] sgn(Im(conj(z_x) z_y)) = sgn(F): 0
+  jams by name `orientation` or `twist`: 1344
+    of them F1 gives sigma = 0 (h F = 0): 1344
+  rest-branch engagements (R2, lead 0): F1 gives sigma 0 there: 1408
+  the sign lemma: sgn(n) = n div (n n + 1) - (-n) div (n n + 1) off at 0 of 200008 integers

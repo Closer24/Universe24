@@ -1,0 +1,58 @@
+12c12
+< from event_universe.core.rule3 import carries, held_numerator
+---
+> from event_universe.core.rule3 import Gearing, carries, held_numerator
+33a34,36
+> # VERIFIER'S SWITCHES (derive/C_verify, not the head): the time gear's drive, its mutations, the regulator's spring, BH-S1's restore
+> VERIFY: dict[str, Any] = {"mode": "head", "sign": 1, "gw": AXES + 1, "vw": SPOKES, "spring": True, "restore": True, "log": None}
+> 
+212a216
+>         self.v_pot, self.v_spr, self.v_kin = zeros(clock.size), zeros(clock.size), zeros(clock.size)
+241a246,249
+>             for a_, ap_, ui_, uo_ in zip(self.starts[k], pulls, u_in, u_out, strict=True):
+>                 self.v_pot = self.v_pot - ap_
+>                 self.v_spr = self.v_spr + self.train_spring[k] * a_ * a_
+>                 self.v_kin = self.v_kin + ui_ * uo_
+251,255c259,275
+<         drive = held_numerator(
+<             clk.trace, self.stretch_now, self.forms, trace, self.rate, clk.rim, clk.full_rate
+<         )
+<         hold = self.stretch_now * self.trains[k][0].dteeth
+<         numerators = [np.minimum(np.maximum(drive, -hold), hold)]
+---
+>         if VERIFY["mode"] == "head":
+>             drive = held_numerator(
+>                 clk.trace, self.stretch_now, self.forms, trace, self.rate, clk.rim, clk.full_rate
+>             )
+>             hold = self.stretch_now * self.trains[k][0].dteeth
+>             numerators = [np.minimum(np.maximum(drive, -hold), hold)]
+>         elif VERIFY["mode"] == "R":  # GR's 00 equation (Raychaudhuri) in X: X'' = X'^2/(2X) - (kappa/3) X (F + S), F + S = 4K - 2V
+>             xb = self.regulator.gears[0].before
+>             v_wind = carries(self.v_spr, clk.teeth)
+>             scale = clk.trace * clk.rim * clk.full_rate * clk.full_rate * clk.full_rate
+>             vel = carries(clk.full_rate * clk.key * (self.stretch_now - xb) * (self.stretch_now - xb), self.stretch_now + self.stretch_now)
+>             numerators = [(vel - self.stretch_now * (4 * self.v_kin - 2 * v_wind)) * scale]
+>         else:  # the derived push, written by the verifier from the draft's formula alone
+>             g_wind = carries(self.v_pot - self.v_spr, clk.teeth)
+>             v_wind = carries(self.v_spr, clk.teeth)
+>             scale = clk.trace * clk.rim * clk.full_rate * clk.full_rate * clk.full_rate
+>             numerators = [VERIFY["sign"] * self.stretch_now * (VERIFY["gw"] * g_wind + VERIFY["vw"] * v_wind) * scale]
+257a278,286
+>         if not VERIFY["spring"]:
+>             gearing = Gearing(gearing.grips, gearing.teeth + gearing.teeth - sum(gearing.grips), gearing.teeth, 0)
+>         if VERIFY["log"] is not None and self.going == 1:
+>             at0 = (0,) * len(clk.size)
+>             VERIFY["log"].append({"tick": clk.ticks, "X": int(np.asarray(self.stretch_now)[at0]),
+>                 "Xb": int(np.asarray(self.regulator.gears[0].before)[at0]), "forms": int(np.asarray(self.forms)[at0]),
+>                 "pot": int(np.asarray(self.v_pot)[at0]), "spr": int(np.asarray(self.v_spr)[at0]),
+>                 "kin": int(np.asarray(self.v_kin)[at0]), "N": int(np.asarray(numerators[0])[at0]),
+>                 "rate": int(np.asarray(self.rate)[at0])})
+285,287c314,317
+<         clk.restore(
+<             clk.all_gears(), [gear for train in self.held for gear in train], self.stopped & ~self.top
+<         )
+---
+>         if VERIFY["restore"]:
+>             clk.restore(
+>                 clk.all_gears(), [gear for train in self.held for gear in train], self.stopped & ~self.top
+>             )

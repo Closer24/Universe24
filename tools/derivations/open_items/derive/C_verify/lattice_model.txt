@@ -1,0 +1,25 @@
+a spring alone at cos w0 = 0.162 (the bang's heavy row), lam = 0:
+   cG 4 cV 6.000: X 1000 -> 5.22e+04;  E / E_seed-scale: early -0.9935, late +1.0221 (late (k/2) X^2 F on the same scale 24.530; E's drift / that +0.0822)
+   cG 4 cV 4.324: X 1000 -> 4e+04;  E / E_seed-scale: early -1.0000, late -4.9901 (late (k/2) X^2 F on the same scale 19.995; E's drift / that -0.1996)
+   cG 4 cV 3.000: X 1000 -> 2.97e+04;  E / E_seed-scale: early -1.0026, late -7.6419 (late (k/2) X^2 F on the same scale 15.904; E's drift / that -0.4174)
+   cG 4 cV 9.000: X 1000 -> 7.26e+04;  E / E_seed-scale: early -0.9728, late +17.7029 (late (k/2) X^2 F on the same scale 31.559; E's drift / that +0.5918)
+a spring alone at cos w0 = 0.9:
+   cG 4 cV 6.000: X 1000 -> 9.97e+03;  E / E_seed-scale: early -0.9999, late -0.9196 (late (k/2) X^2 F on the same scale 5.667; E's drift / that +0.0142)
+   cG 4 cV 5.800: X 1000 -> 9.7e+03;  E / E_seed-scale: early -1.0000, late -1.0752 (late (k/2) X^2 F on the same scale 5.551; E's drift / that -0.0135)
+   cG 4 cV 3.000: X 1000 -> 5.77e+03;  E / E_seed-scale: early -1.0004, late -2.3467 (late (k/2) X^2 F on the same scale 3.750; E's drift / that -0.3590)
+a spring alone at cos w0 = 0.999 (near the continuum):
+   cG 4 cV 6.000: X 1000 -> 1.01e+03;  E / E_seed-scale: early -1.0000, late -1.0000 (late (k/2) X^2 F on the same scale 1.005; E's drift / that +0.0000)
+   cG 4 cV 5.998: X 1000 -> 1.01e+03;  E / E_seed-scale: early -1.0000, late -1.0000 (late (k/2) X^2 F on the same scale 1.005; E's drift / that -0.0000)
+   cG 4 cV 3.000: X 1000 -> 1e+03;  E / E_seed-scale: early -1.0000, late -1.0012 (late (k/2) X^2 F on the same scale 1.002; E's drift / that -0.0012)
+a Mesh's term alone (light) at lam = 6 (the quarter turn), cos w0 = 1:
+   cG 4 cV 6.000: X 1000 -> 3.07e+04;  E / E_seed-scale: early -1.0000, late -1.0000 (late (k/2) X^2 F on the same scale 7.738; E's drift / that -0.0000)
+   cG 3 cV 6.000: X 1000 -> 2.5e+04;  E / E_seed-scale: early -1.0027, late -2.4910 (late (k/2) X^2 F on the same scale 6.964; E's drift / that -0.2137)
+   cG 5 cV 6.000: X 1000 -> 3.61e+04;  E / E_seed-scale: early -0.9955, late +0.8484 (late (k/2) X^2 F on the same scale 8.394; E's drift / that +0.2197)
+a Mesh's term alone (light) at lam = 1:
+   cG 4 cV 6.000: X 1000 -> 9.39e+03;  E / E_seed-scale: early -1.0000, late -1.0000 (late (k/2) X^2 F on the same scale 3.172; E's drift / that -0.0000)
+   cG 3 cV 6.000: X 1000 -> 7.61e+03;  E / E_seed-scale: early -1.0002, late -1.4628 (late (k/2) X^2 F on the same scale 2.851; E's drift / that -0.1622)
+   cG 5 cV 6.000: X 1000 -> 1.11e+04;  E / E_seed-scale: early -0.9996, late -0.3882 (late (k/2) X^2 F on the same scale 3.447; E's drift / that +0.1774)
+slow courses (X moves a few per cent, the lattice frequency nearly fixed): which cV keeps E
+   cos w0 0.162: the cV with the least drift 4.75 (drift / rise of (k/2) X^2 F +0.0258; X -> 2191); the verifier's adiabatic formula 2 (2 + cos w0) = 4.324; the draft 6
+   cos w0 0.5: the cV with the least drift 5.25 (drift / rise of (k/2) X^2 F +0.0213; X -> 1808); the verifier's adiabatic formula 2 (2 + cos w0) = 5.000; the draft 6
+   cos w0 0.9: the cV with the least drift 5.75 (drift / rise of (k/2) X^2 F -0.0100; X -> 1182); the verifier's adiabatic formula 2 (2 + cos w0) = 5.800; the draft 6

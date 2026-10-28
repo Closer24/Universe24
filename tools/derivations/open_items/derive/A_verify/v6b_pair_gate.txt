@@ -1,0 +1,5 @@
+tick 1: SUM W = 0 (kept exactly: True); the pair's own W_x + W_y = 0; W at x, y: 18000, -18000
+tick 2: SUM W = 0 (kept exactly: True); the pair's own W_x + W_y = 0; W at x, y: 19389.6, -19389.6
+tick 3: SUM W = 0 (kept exactly: True); the pair's own W_x + W_y = 0; W at x, y: 23294.3, -23294.3
+tick 4: SUM W = 0 (kept exactly: True); the pair's own W_x + W_y = 0; W at x, y: 30393.5, -30393.5
+tick 5: SUM W = 0 (kept exactly: True); the pair's own W_x + W_y = 0; W at x, y: 40804.7, -40804.7

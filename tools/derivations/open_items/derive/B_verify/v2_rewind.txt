@@ -1,0 +1,2 @@
+{"mode": "rewind", "variant": "floor", "world": "world_nature.json", "ticks": 40, "states returned exactly": 40, "turned clock-ticks crossed": 914}
+{"mode": "rewind", "variant": "floor", "world": "world_node.json", "ticks": 20, "states returned exactly": 20, "turned clock-ticks crossed": 135}

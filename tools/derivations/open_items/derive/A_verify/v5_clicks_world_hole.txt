@@ -1,0 +1,16 @@
+world_hole.json, 60 ticks
+  takes at going 1 with a due <= 0 (the head writes 0): 1002
+    of them F3's ladder writes a negative count (the payer wound up its slope): 301
+      the largest |count|: 70
+    of them F3's ladder writes 0: 672
+    of them F3's ladder cycles and never stops: 29
+  unspringings: 6
+    tick 17, hand 0: the ends' sweeps at the start (-18000, 18000) (sum 0); on the board unwound (-18000, 16000) (sum -2000); the hand's charge moved by the click 2000
+    tick 18, hand 0: the ends' sweeps at the start (-18000, 18000) (sum 0); on the board unwound (-17875, 18000) (sum 125); the hand's charge moved by the click -125
+    tick 19, hand 2: the ends' sweeps at the start (-18000, 18000) (sum 0); on the board unwound (-18000, 18000) (sum 0); the hand's charge moved by the click 0
+    tick 22, hand 0: the ends' sweeps at the start (-28519, 31457) (sum 2938); on the board unwound (-42847, 31457) (sum -11390); the hand's charge moved by the click 11390
+    tick 40, hand 1: the ends' sweeps at the start (17378, -22365) (sum -4987); on the board unwound (22759, -64278) (sum -41519); the hand's charge moved by the click 41519
+    tick 41, hand 0: the ends' sweeps at the start (164, -22046) (sum -21882); on the board unwound (-86, -35672) (sum -35758); the hand's charge moved by the click 35758
+  unspringings removing net charge (the board unwound): 5 of 6; by the start's sums: 3
+  fittings: 22; the ends' sweeps summing to 0 after: 22; laid on ends already standing (a sweep there before): 0
+  per tick and hand, the click's charge change: [(17, 0, 2000), (18, 0, -125), (22, 0, 11390), (40, 1, 41519), (41, 0, 35758)]

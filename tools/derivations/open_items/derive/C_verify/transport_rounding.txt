@@ -1,0 +1,1 @@
+200000 draws: the per-axis wind 2|z|^2 - z.U+z - z.U-z below 0 in 698 (of them with an offset count: 698); the most negative (-1539982264, ([-598184681, -941797583], -2, -5, 2))

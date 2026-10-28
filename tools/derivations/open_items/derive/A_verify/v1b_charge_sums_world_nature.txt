@@ -1,0 +1,51 @@
+world_nature.json, 60 ticks, e = A B = 18000; coupled hands [0, 1, 2]
+per tick: turned clocks, stopped clocks: [(1, 18, 0), (2, 4, 0), (3, 44, 0), (4, 50, 0), (5, 55, 0), (6, 41, 0), (7, 40, 0), (8, 51, 0), (9, 46, 0), (10, 43, 0), (11, 37, 0), (12, 43, 0)] ...
+ticks with turned clocks: 59  with stopped clocks: 0
+hand 0:
+  plain charge, ticks changed / largest |change| (sweep units):
+    step    :  55 / 24323
+    restore :   0 / 0
+    turn    :  51 / 21170
+    click   :   0 / 0
+    total   :  55 / 21792
+    the step on ticks with no turned and no stopped clock: 1 of 1, largest 51
+  frame charge SUM eps W, the step alone: 54 ticks changed, largest 2125
+  the step's exact identities: P' = w' v + rho' at 60 of 60 ticks; D' - D = X Im(conj a pull) + Im(conj v rho') at every live clock: 60 of 60
+  Q_star (eps, 1/(X mr^2), vacuum units), the step's own change: largest 323.0; its turn part 133.8, its carry part 272.8
+  the turn's part with no weights (plain, over w): largest 24403.5
+hand 1:
+  plain charge, ticks changed / largest |change| (sweep units):
+    step    :  51 / 4019
+    restore :   0 / 0
+    turn    :  27 / 2358
+    click   :   0 / 0
+    total   :  51 / 3783
+    the step on ticks with no turned and no stopped clock: 1 of 1, largest 16
+  frame charge SUM eps W, the step alone: 51 ticks changed, largest 5768
+  the step's exact identities: P' = w' v + rho' at 60 of 60 ticks; D' - D = X Im(conj a pull) + Im(conj v rho') at every live clock: 60 of 60
+  Q_star (eps, 1/(X mr^2), vacuum units), the step's own change: largest 386.9; its turn part 57.6, its carry part 398.4
+  the turn's part with no weights (plain, over w): largest 560.6
+hand 2:
+  plain charge, ticks changed / largest |change| (sweep units):
+    step    :  44 / 1430
+    restore :   0 / 0
+    turn    :  20 / 371
+    click   :   0 / 0
+    total   :  44 / 1430
+    the step on ticks with no turned and no stopped clock: 1 of 1, largest 67
+  frame charge SUM eps W, the step alone: 43 ticks changed, largest 1418
+  the step's exact identities: P' = w' v + rho' at 60 of 60 ticks; D' - D = X Im(conj a pull) + Im(conj v rho') at every live clock: 60 of 60
+  Q_star (eps, 1/(X mr^2), vacuum units), the step's own change: largest 448.2; its turn part 34.2, its carry part 459.2
+  the turn's part with no weights (plain, over w): largest 184.5
+hand 0: over the run the step's plain changes sum to 52297, the turnover's to -51612, the click's to 0; net 685
+hand 1: over the run the step's plain changes sum to 3886, the turnover's to -4292, the click's to 0; net -406
+hand 2: over the run the step's plain changes sum to -322, the turnover's to 244, the click's to 0; net -78
+first ticks, hand by hand (tick: step, restore, turn, click | star step = pull + carry):
+  1: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  2: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  3: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  4: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  5: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  6: h0: 2125, 0, 0, 0 | 67.1 = 0.0 + 67.1; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  7: h0: -622, 0, -21170, 0 | 190.7 = 0.0 + 190.7; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  8: h0: 24323, 0, -13767, 0 | 90.7 = 0.0 + 90.7; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
