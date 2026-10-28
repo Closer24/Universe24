@@ -13,7 +13,7 @@
 
 ## The one place of the 24
 
-The engine never turns anything: the step is made of invariants (a sum over the six Spokes with the signs of the kind), so the 24 holds by construction, and the group acts only on settings, in the tests' images. Today the group's action is spelled in many places (acts.mirror and acts.flip at the turnover, hands.signs and hands.seen, spokes.transverse, the vernier's frame, the setting's negated gear). In the plan it is written once: the table builder in core/spokes.py, which derives the five kinds' signs and exchanges from the vector kind (the six Spokes' signed permutations, the engine's one typed number AXES), and every contraction takes its table from it. The one test that goes with it: at a fixed point of a symmetric setting every gear of a non-scalar kind is 0.
+The engine never turns anything: the step is made of invariants (a sum over the six Spokes with the signs of the kind), so the 24 holds by construction, and the group acts only on settings, in the tests' images. Today the group's action is spelled in many places (acts.mirror and acts.flip at the turnover, hands.signs and hands.seen, spokes.transverse, the vernier's frame, the setting's negated gear). In the plan it is written once: the table builder in core/spokes.py, which derives the five kinds' signs and exchanges from the vector kind (the six Spokes' signed permutations, the engine's one typed number AXES), and every contraction takes its table from it. The one test that goes with it names its group: at a point the 48 fix (the 24 and the mirror), every gear of a non-scalar kind and the twist read 0; at a point only the 24 fix, the twist may stand (David).
 
 ## Who does what (the owner's condition of 02:2x UTC: only the Boss writes code)
 
@@ -24,12 +24,14 @@ The engine never turns anything: the step is made of invariants (a sum over the 
 | **the Reader** | benches every cut: the per-row diff of the 77 rows on the 16 records and the 3 committed charts, the head against the cut on the same seeds, the rewind and the scan beside it, within the hour of each push; moves the two global reductions with their cut |
 | **the Scribe** | documents (the ledger, the law's sentence on the owner's word, the module lines), keeps the gate, puts the questions to the owner and tells the thread his words |
 
+The owner's words of 06:0x UTC to the others (as they report them): to the Reader, "Talk only with the Boss; he manages the Tensor24 program."; to David, "Do nothing, just wait for instructions from the Boss." and "Sync on the tensors-clocks plan." The Reader and David take Tenzor24's word from the Boss alone; the Scribe passes the Boss the owner's words and keeps the documents.
+
 ## The cuts, in order
 
 0. **The fair draw** (the Boss's toy, built and measured, not pushed: the owner's go). The own digit is |r - o| div F on its half's base, the neighbours framed by the centre's sense; the 24 holds and the rewind is exact on every chart.
-1. **The one place of the 24** and the fixed-point test.
-2. **The pure contractions with no gate:** regulation.stress_of, the hands' products, the Meshes' cross and gradient (nine of the 26 acts).
-3. **The pointwise maps** (eight): the rate table and its inverse by search, the Mesh factor, the clamps, the selections, as chains of Rule3 carries or as data.
+1. **The one place of the 24** and the fixed-point test, which names its group: at a point a group fixes, every gear of a kind that group does not leave in place reads 0 (the 48: the twist too, a scalar of the 24 and the pseudoscalar of the 48).
+2. **The pure contractions with no gate:** regulation.stress_of, the hands' products, the Meshes' cross and gradient (nine of the 26 acts), products of trains of degree 2 and 3 (the release is of degree 3), each cut within the bits clock.max_transient reads now (David).
+3. **The pointwise maps** (eight at 97e5b3fd6): the rate table is one carry iterated over the load and kept, its inverse that chain read backward and the rest rate a constant of the setting kept on the clock (David, the code checked); the Mesh factor, the clamps and the selections as chains of Rule3 carries or as data, derived one by one by David before this cut.
 4. **The gate** as one act for every family: the click, the chime, the merger's ends and the turnover (two of the 26, with the books).
 5. **The two global reductions** (clock.count_max and clock.max_transient) out of the step into the readers.
 
@@ -56,8 +58,8 @@ The engine never turns anything: the step is made of invariants (a sum over the 
 ## For the owner at 10:30 Israel time (08:30 UTC), with the Scribe's recommendations (items 1 and 4 decided at 06:0x UTC)
 
 1. **The law's sentence "The Node-clock is one act", entered as decided and not yet built:** yes (06:0x UTC), entered in docs/ALGEBRA.md.
-2. **The reflections, parted or held.** Recommended: held as they are now (the law asks the 24 and allows more); parted only when he wants nature's parity violation as a phenomenon.
-3. **The Bell click:** bell_turn as a function, or a detector hand's gear by Rule3's carry. Recommended: the gear.
+2. **The reflections, parted or held.** Recommended: held as they are now (the law asks the 24 and allows more); parted only when he wants nature's parity violation as a phenomenon. David's check: the twist is kept by every turn and reversed by every mirror, a scalar of the 24 and the pseudoscalar of the 48. Held, the law's clause **The Node-clock is one act** says the 48 in its last line (the clock is what the 48 leave in place; the twist reads 0 at a point they fix) and names its second kind A2, the sign of x y z (the clause holds the word pseudoscalar for it, which is the twist's kind): one line and one word, with this item. Parted, the clause stands as written except that word.
+3. **The Bell click:** bell_turn as a function, or a detector hand's gear by Rule3's carry. Recommended: the gear. David's answer to his own patch is yes: the four turns were numbers he chose near 45 degrees, circular; DAVID-THE-BELL-LOCAL.patch is withdrawn as a cut, the carriage stays the specification, and he derives the detector's reading before cut 4, after this word.
 4. **The fair draw's push:** yes (06:0x UTC), the Boss's to push.
 5. **The bang's seed.**
 6. **The price of the 24:** the light's cycle setting fits nothing (CS5-S2), the hole's chimes fall.
@@ -76,3 +78,5 @@ The engine never turns anything: the step is made of invariants (a sum over the 
 - 06:0x this plan, passed to the Boss in the thread (6461915413).
 - 06:0x the owner names the program Tenzor24 and puts the Boss in charge of it.
 - 06:0x the owner, "Yes and yes.": the law's clause **The Node-clock is one act** entered as decided and not built; the fair draw's push approved.
+- 06:03 the Reader (6461973385): talks only with the Boss; the bench within the hour of each push; clears his modules under the gate at his next merge unless the Boss holds them for a cut.
+- 06:06 David (6462024199): takes his part as written; the Bell click answered yes and DAVID-THE-BELL-LOCAL.patch withdrawn as a cut; the derivations for cuts 1, 2 and 3 above (the twist a scalar of the 24 and the pseudoscalar of the 48; the contractions of degree 2 and 3; the rate table one carry kept).
