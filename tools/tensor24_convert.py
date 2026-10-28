@@ -1,23 +1,18 @@
-"""The converter: the head's records written in the record's schema version 1 (Animate's tool, outside src/tensor24;
-TENSOR24.md section 31; the schema as posted to the Boss in 6474766574, with its two corrections: a click's steps beside
-its dial, and a books line).
+"""The converter: the head's records written in the record's schema 1.0 (Animate's tool, outside src/tensor24).
 
-A head record is one JSON object: the world and the universe, the per-interval nodes (the sites turned and frozen, X) and
-the log (credit, birth, books, lay, refused). The schema is JSON Lines, one object a line, integers only, in the order
-(round, kind, site, train):
-  - the header: the record and its version, the engine, the runner, the files verbatim with their digests, the shape,
-    the trains (the head's planes, light the plane whose pinion is the rim) and the seed as laid;
-  - whole: a whole click; a credit is a chime at one Node-clock, a birth a fitting at two ends (a pair into light where
-    the train taken is not light, its books then per end, in ends);
-  - books: a remainder booked at a Node-clock, signed;
-  - turnover: a Node-clock turned over, with its time gear's reading X;
-  - rate: a Node-clock stops ticking (k 0) or is released (k 1);
-  - end: the rounds and the rewind.
-No refusal is written. A field the head lacks is left absent, so the decoder's rows that need it read not read, the cause
-named. The head ticks every Node-clock once a round, so a click's count is its round; its proper time, the head's
-`proper`, is the dial's whole turns and remainder by the Node-clock's full rate (Rule3).
-
-Beside the record it writes the ledger, <out>.ledger.jsonl: per round and train, the wind summed over every site.
+A head record is one JSON object: the world and the universe, the per-interval nodes (the sites turned and frozen, X and
+the winds) and the log (credit, birth, books, lay, refused). The schema 1.0 (src/tensor24/record/schema.py) is JSON Lines,
+one object a line, in the order (round, kind, site, train): the header, then per round the whole clicks, the turnovers,
+the rate lines and the books, and the end. A credit is a whole click at one Node-clock; a birth a fitting, its two
+sites its children's, its books at the click where one end takes and in its ends where both take (a pair into light). No
+refusal is written, and a field the head lacks is left out, so a reading that needs it reads not read, the cause named;
+the header's runner names the record as converted. The head ticks every Node-clock once a round, so a click's count is
+its round. Its proper time, `proper`, is its dial summed: the ticks are its whole turns by the full rate (Rule3) and the
+dial the remainder, and the rate lines are written so that they give exactly those ticks at each of its clicks (the head
+records no beat between clicks). Its books are written as holdings of the amounts it moved: the taken train's windings
+(amount, 0) and the laid train's (0, amount), the take's remainder as the taken holding's kept. Beside the record it
+writes the ledger, <out>.ledger.jsonl: per round and train, the wind summed over every site, at "clicks" alone, since
+the head writes its winds once a round, after the step and the clicks together.
 
 Usage: python -I tools/tensor24_convert.py <head record .json> <out .jsonl> [engine commit]
 """
@@ -26,27 +21,45 @@ import hashlib
 import json
 import sys
 
-RECORD = "tensor24.record"
-VERSION = [1, 0]
-KINDS = ("whole", "split", "books", "turnover", "rate")
+KINDS = ("whole", "split", "turnover", "rate", "books")  # the events' order within a round, the schema's
+SPOKES = (
+    (0, 1),
+    (0, -1),
+    (1, 1),
+    (1, -1),
+    (2, 1),
+    (2, -1),
+)  # the six Spokes' order: +x, -x, +y, -y, +z, -z
 
 
-def verbatim(obj):
-    """The file as the head holds it, with its digest."""
+def verbatim(name, obj):
+    """One of the files, verbatim as the head holds it, with its digest."""
     text = json.dumps(obj, sort_keys=True, separators=(",", ":"))
-    return {"text": text, "digest": hashlib.sha256(text.encode()).hexdigest()}
+    return {"name": name, "text": text, "digest": hashlib.sha256(text.encode()).hexdigest()}
 
 
-def present(**fields):
-    """The fields the head holds; one it lacks stays absent."""
-    return {k: v for k, v in fields.items() if v is not None}
+def holding(train, windings, kept=(0, 0)):
+    """One train's holding at a click: its windings and its kept, before and after."""
+    return {"train": train, "windings": list(windings), "kept": list(kept)}
 
 
-def remainder(e):
-    """The remainder before and after a click, where the head writes both."""
-    if "remainder_was" in e and "remainder" in e:
-        return {"before": e["remainder_was"], "after": e["remainder"]}
-    return None
+def kept(e):
+    """The take's remainder before and after a click, where the head writes both."""
+    return (e["remainder_was"], e["remainder"]) if "remainder_was" in e and "remainder" in e else (0, 0)
+
+
+def rate_lines(clicks):
+    """(count, k) lines that give exactly the ticks t at each click's count c: each stretch's ticks first, then its rest."""
+    lines, last, done_c, done_t = [], None, 0, 0
+    for c, t in sorted(set(clicks)):
+        ones, beats = t - done_t, c - done_c
+        assert 0 <= ones <= beats, (c, t, done_c, done_t)
+        for start, k, n in ((done_c + 1, 1, ones), (done_c + 1 + ones, 0, beats - ones)):
+            if n and k != last:
+                lines.append((start, k))
+                last = k
+        done_c, done_t = c, t
+    return lines
 
 
 def converted(head, engine):
@@ -54,138 +67,106 @@ def converted(head, engine):
     side = head["cube"]
     full = head["universe"]["integers"]["node_clock"]
     winding = head["T"]
-    planes = [int(p) for p in head["planes"]]
 
     def site(node):
         x, y, z = node
         return (x * side + y) * side + z
 
-    def coordinates(index):
-        rest, z = divmod(index, side)
-        x, y = divmod(rest, side)
-        return [x, y, z]
-
     def spoke(near, far):
-        """The axis and the sense from the near end to the far one, on the torus."""
+        """The Spoke's index in the six from the near end toward the far one, on the torus."""
         for axis, (a, b) in enumerate(zip(near, far, strict=True)):
             step = (b - a) % side
             if step:
-                return {"axis": axis, "sense": 1 if step == 1 else -1}
+                return SPOKES.index((axis, 1 if step == 1 else -1))
         return None
-
-    def proper(e, round_):
-        steps, dial = divmod(e["proper"], full)
-        return {"round": round_, "count": round_, "steps": steps, "dial": dial}
 
     header = {
         "kind": "header",
-        "record": RECORD,
-        "version": VERSION,
+        "record": "tensor24",
+        "major": 1,
+        "minor": 0,
         "engine": engine,
-        "runner": "synchronous",
-        "files": {"universe": verbatim(head["universe"]), "world": verbatim(head["world"])},
-        "shape": {
-            "sides": [side, side, side],
-            "wrap": "torus",
-            "sites": side * side * side,
-            "order": "xyz",
-        },
+        "runner": "converted from the head's record",
+        "files": [verbatim("universe", head["universe"]), verbatim("world", head["world"])],
+        "sides": [side, side, side],
+        "order": "xyz",
+        "classes": [],
+        "kinds": [],
         "trains": [
-            {
-                "index": k,
-                "label": f"plane {k}",
-                "pinion": p,
-                "winding": winding,
-                "light": p == int(head["den"]),
-            }
-            for k, p in enumerate(planes)
+            {"index": k, "label": f"plane {k}", "kinds": [], "part": 1, "winding": winding}
+            for k, _ in enumerate(head["planes"])
         ],
-        "seed": [e for e in head["log"] if e["event"] == "lay"],
+        "couplings": [],
     }
-    lines = []
+    lines, ticked = [], {}
     for e in head["log"]:
+        if e["event"] not in ("credit", "birth"):
+            continue
+        steps, dial = divmod(e["proper"], full)
+        ticked.setdefault(site(e["node"]), []).append((e["i"], steps))
+        line = {"kind": "whole", "round": e["i"], "site": site(e["node"]), "count": e["i"], "dial": dial}
         if e["event"] == "credit":
-            line = {"kind": "whole", "site": site(e["node"]), **proper(e, e["i"])}
             line.update(
-                present(
-                    train=e["line"],
-                    q=e.get("levels"),
-                    winding=winding,
-                    wind={"after": e["content"]},
-                    sweep=e.get("sense"),
-                    push=e.get("dP_take"),
-                    taken=[{"windings": e["taken"]}] if "taken" in e else None,
-                    laid=[{"train": e["line"], "windings": e["booked"]}] if "booked" in e else None,
-                    remainder=remainder(e),
-                )
+                train=e["line"],
+                q=e["levels"],
+                winding=winding,
+                sweep=e["sense"],
+                push=e["dP_take"],
+                taken=[holding(e["taken_line"], (e["taken"], 0), kept(e))],
+                laid=[holding(e["line"], (0, e["booked"]))],
+                ends=[],
+                children=[],
             )
-            lines.append(line)
-        elif e["event"] == "birth":
-            near, ends = e["node"], [e["minus"], e["plus"]]
-            far = ends[0] if ends[1] == near else ends[1]
-            line = {"kind": "whole", "site": site(near), **proper(e, e["i"])}
-            pushes = e.get("dP_lay_ends", [None for _ in ends])
+        else:
+            ends = [e["minus"], e["plus"]]
+            takes = e.get("takes", [])
+            pushes = e.get("dP_lay_ends", [[0, 0, 0] for _ in ends])
             line.update(
-                present(
-                    far=site(far),
-                    spoke=spoke(near, far),
-                    train=e["taken_row"],
-                    q=e.get("levels"),
-                    winding=winding,
-                    wind={"after": e["content"]},
-                    push=e.get("dP_take"),
-                    taken=[{"train": e["taken_row"], "windings": e["taken"]}] if "taken" in e else None,
-                    laid=[{"train": e["line_pair"], "windings": e["booked"]}] if "booked" in e else None,
-                    remainder=remainder(e),
-                    room=e.get("room"),
-                    ends=[
-                        present(
-                            site=site(t["node"]),
-                            taken=[{"train": e["taken_row"], "windings": t["taken"]}],
-                            laid=[{"train": e["line_pair"], "windings": t["booked"]}],
-                            remainder=remainder(t),
-                            push=t.get("dP_take"),
-                        )
-                        for t in e["takes"]
-                    ]
-                    if "takes" in e
-                    else None,
-                    children=[
-                        present(train=e["line_pair"], site=site(end), sweep=s, winding=w, push=p)
-                        for end, s, w, p in zip(ends, e["senses"], e["W_children"], pushes, strict=True)
-                    ],
-                )
+                train=e["taken_row"],
+                q=e["levels"],
+                winding=winding,
+                push=e["dP_take"],
+                taken=[] if takes else [holding(e["taken_row"], (e["taken"], 0), kept(e))],
+                laid=[] if takes else [holding(e["line_pair"], (0, e["booked"]))],
+                ends=[
+                    {
+                        "site": site(t["node"]),
+                        "spoke": spoke(t["node"], takes[1 - n]["node"]),
+                        "taken": [holding(e["taken_row"], (t["taken"], 0), kept(t))],
+                        "laid": [holding(e["line_pair"], (0, t["booked"]))],
+                        "push": t["dP_take"],
+                    }
+                    for n, t in enumerate(takes)
+                ],
+                children=[
+                    {"train": e["line_pair"], "site": site(end), "sweep": s, "push": p}
+                    for end, s, p in zip(ends, e["senses"], pushes, strict=True)
+                ],
             )
-            lines.append(line)
-        elif e["event"] == "books":
+        lines.append(line)
+    for e in head["log"]:
+        if e["event"] == "books":
             for x, y, z, sign in e["booked"]:
-                lines.append({"kind": "books", "round": e["i"], "site": site([x, y, z]), "left": sign})
-    stopped = set()
+                lines.append({"kind": "books", "round": e["i"], "site": site([x, y, z]), "kept": sign})
     for n in head["nodes"]:
         for s in n["turned"]:
             lines.append(
                 {"kind": "turnover", "round": n["i"], "site": s, "count": n["i"], "q": 1, "x": n["X"][s]}
             )
-        frozen = set(n["frozen"])
-        for s in sorted(frozen - stopped):
-            lines.append({"kind": "rate", "round": n["i"], "site": s, "count": n["i"], "k": 0})
-        for s in sorted(stopped - frozen):
-            lines.append({"kind": "rate", "round": n["i"], "site": s, "count": n["i"], "k": 1})
-        stopped = frozen
+    for s, clicks in ticked.items():
+        for count, k in rate_lines(clicks):
+            lines.append({"kind": "rate", "round": count, "site": s, "count": count, "k": k})
     lines.sort(key=lambda d: (d["round"], KINDS.index(d["kind"]), d["site"], d.get("train", 0)))
     back = head["run_back"]
-    end = {"kind": "end", "rounds": head["intervals"], "rewind": {"rounds": back["intervals"]}}
-    end["rewind"]["exact"] = back["exact"] == back["intervals"]
-    assert all(coordinates(site(c)) == c for c in ([0, 0, 0], [side - 1, 0, 1]))
+    end = {"kind": "end", "rounds": head["intervals"], "undone": back["intervals"]}
+    end["exact"] = 1 if back["exact"] == back["intervals"] else 0
     return [header, *lines, end]
 
 
 def ledger(head):
-    """The ledger beside the record: per round and train, the train's wind summed over every site (the head's nodes hold
-    each train's wind per site at the end of every interval). The head writes no sweep, push or moment there, so those
-    stay absent."""
+    """The ledger beside the record: per round and train, the wind summed over every site, at "clicks" alone."""
     return [
-        {"round": n["i"], "train": k, "wind": sum(int(w) for w in winds)}
+        {"round": n["i"], "at": "clicks", "train": k, "wind": sum(int(w) for w in winds)}
         for n in head["nodes"]
         for k, winds in enumerate(n["winds"])
     ]
