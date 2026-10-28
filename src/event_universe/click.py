@@ -193,7 +193,7 @@ def fittings(
                 drawn: list[Any] = []
 
                 def draw(at: tuple[int, ...] = at, rec: int = rec, into: list[Any] = drawn) -> Any:
-                    if (at, rec) not in clock.vernier_read:  # one read per clock-node and hand
+                    if (at, rec) not in clock.vernier_read:  # one read per node-clock and hand
                         clock.vernier_read[(at, rec)] = vernier(clock, at, reads, clock.windings[rec])
                     into.append(clock.vernier_read[(at, rec)])
                     return into[-1]

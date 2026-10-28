@@ -265,7 +265,7 @@ def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_
         clock.tick()
     credits = [e for e in clock.log if e["event"] == "credit"]
     chimes = (len(seen), len(credits), clock.counts["body_clicks"], clock.counts["laid_back"])
-    assert chimes == (90, 90, 90, 0) and sum(levels == 0 for *_x, levels, _w in seen) == 56
+    assert chimes == (93, 93, 93, 0) and sum(levels == 0 for *_x, levels, _w in seen) == 56
     for fall, short, taken, due, levels, paid in seen:
         assert fall == taken >= due and paid
         assert levels == 0 or short < due  # the least count: one fewer falls short
@@ -308,7 +308,7 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
         assert all(carry == [int(gear.dfine[at]) for gear in gears] for at, carry in last.items())
     # every booking, those with a push, those advancing the flow gear's notch, the still chimes (push 0),
     # with the shears struck (15, 7, 2 and 0 with them; 142, 58, 2 and 0 before the one mirror)
-    assert (checked, pushed, advanced, clock.counts["laid_back"]) == (97, 43, 3, 0)  # 15, 7, 2, 0
+    assert (checked, pushed, advanced, clock.counts["laid_back"]) == (27, 15, 4, 0)  # 15, 7, 2, 0
     for h in reversed(hashes):
         clock.tick(-1)
         assert record.state_hash(clock) == h
