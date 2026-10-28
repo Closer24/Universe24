@@ -57,8 +57,6 @@ class Clock:
         if any(p * p + sine_rim(p, rim) * sine_rim(p, rim) != rim * rim for p in pinions):
             raise ValueError("a gapped pair off den's circle: num^2 + s^2 is not den^2 (MS-S2)")
         self.windings = [winding_of(sine_rim(p, rim) + rim * carries(p, rim), self.key) for p in pinions]
-        self.sprung = [r for r in self.hands() if r is not self.unsprung()]
-        self.winding_unsprung = self.windings[self.hands().index(self.unsprung())]
         self.start_state()
         self.driven_teeth()
         setting.set_piece(self, piece.get("seed", []))
