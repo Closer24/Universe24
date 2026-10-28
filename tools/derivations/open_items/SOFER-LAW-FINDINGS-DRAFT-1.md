@@ -52,7 +52,7 @@ This file holds no law. It is Sofer's draft of what the reviews of Tensor24 (202
 
 - **F5, the floor at the full rate (draft B):** the owner ruled "no typed floor" (11:5x UTC, through Animate, 6468340318): the floor comes from the tensor and the clocks alone. Entered in **The floor** (docs/ALGEBRA.md 1608, a4b98f45e): the typed depth X_f = stretch_of(Gamma, -Gamma) is the code's departure, the Boss's to remove; the derived floor is David's (the plan's candidates: the full rate as the formula's own edge, Animate's; the top's mirror, the time gear's weak minimum with no floor value, the Boss's), and it moves the bottom and the course of six charts (hole fittings 28 to 30, ga2 32 to 48) only as derived.
 - **F2 above Gamma (draft B):** e = 1 div (1 + k) is bound (1)'s clamp spelt with a quotient that books nothing, a bound under **A floor or a bound is an if, and the Node-clock has none** (docs/ALGEBRA.md 106): derived as a carry from the symmetries, a variable of the files or struck, and no choice of the owner's (the Boss, 6468487676, on the owner's word of 12:2x).
-- **Bound (3) (draft C):** struck on the owner's "delete" (11:5x UTC, through Animate), entered in **The great clock's bounds** (docs/ALGEBRA.md 1909, a4b98f45e); the derived push needs no clamp.
+- **Bound (3) (draft C):** struck on the owner's "delete" (11:5x UTC, through Animate), entered at docs/ALGEBRA.md 1909 (a4b98f45e) and now under **Every bound is a clock's carry**; the derived push needs no clamp.
 
 ## 8. The charge the step keeps is the weighted sweep, and the plan's reading of it is not (draft A; against the plan, not the law)
 
