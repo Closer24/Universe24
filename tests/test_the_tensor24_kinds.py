@@ -159,14 +159,14 @@ def spokes(m):
 
 
 def channels(m):
-    """C is 0 exactly where the characters' product holds no channel, as David lists them, and each C not 0 is primitive."""
+    """C is 0 exactly where the characters' product holds no channel, as David lists them; each C not 0 primitive, its first entry positive."""
     x, order = chi(m), len(the24(m)[0])
     for i, k, n in itertools.product(LABELS, repeat=3):
         c = m.c[(LABELS.index(i), LABELS.index(k), LABELS.index(n))]
         wanted = n in product(i, k)
         if int((x[i] * x[k] * x[n]).sum()) != order * wanted or bool(c.any()) != wanted:
             return False
-        if wanted and common(c.flat) != 1:
+        if wanted and (common(c.flat) != 1 or next(x for x in c.flat if x) < 0):
             return False
     return True
 
@@ -242,6 +242,14 @@ def mutants():
         x.flat[1] += 1
         return x
 
+    def first_seed(m):
+        held = {}
+        for key, c in m.c.items():
+            p = kinds.projector(m.weight, m.kinds[key[-1]], m.inverse[key[0]], m.inverse[key[1]])
+            seeds = p.reshape(c.size, -1).T
+            held[key] = next((seed for seed in seeds if seed.any()), seeds[0]).reshape(c.shape)
+        return m._replace(c=held)
+
     def one_seed(m):
         sums = {
             key: kinds.projector(m.weight, m.kinds[key[-1]], m.inverse[key[0]], m.inverse[key[1]])
@@ -267,6 +275,8 @@ def mutants():
             "channels",
             lambda m: table(m, ("T1", "T1", "T1"), lambda x: x + x),
         ),
+        "the first seed's group sum, its content kept": ("channels", first_seed),
+        "the cross's sign turned": ("channels", lambda m: table(m, ("T1", "T1", "T1"), lambda x: -x)),
         "an entry of C changed": ("equivariant", lambda m: table(m, ("T1", "T1", "T1"), bumped)),
         "the dot negated": ("classical", lambda m: table(m, ("T1", "T1", "A1"), lambda x: -x)),
     }

@@ -483,7 +483,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_KINDS,
     ),
     "tests/test_the_tensor24_kinds.py::mutants": (
-        59,
+        69,
         TENSOR24_KINDS,
     ),
     "tests/test_the_tensor24_kinds.py::good": (

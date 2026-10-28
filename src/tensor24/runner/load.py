@@ -40,6 +40,15 @@ def common(values: Any) -> int:
     return g
 
 
+def primitive(c: Z) -> Z:
+    """A table over its entries' greatest common divisor, its first entry that is not 0 positive: the strength its one scale."""
+    g = common(c)
+    if not g:
+        return c
+    q, _ = carry(c, g, 0)
+    return q if next(x for x in q if x) > 0 else -q
+
+
 def tables(
     kinds: Sequence[Z], inverse: Sequence[Z], weight: Z, projector: Callable[..., Z]
 ) -> dict[Any, Z]:
@@ -49,9 +58,9 @@ def tables(
     for i, k, m in itertools.product(every, every, every):
         shape = tuple(kinds[n].shape[-1] for n in (m, i, k))
         seeds = projector(weight, kinds[m], inverse[i], inverse[k]).reshape(int(np.prod(shape)), -1).T
-        c = next((seed for seed in seeds if seed.any()), seeds[0])
-        g = common(c)
-        found[(i, k, m)] = (carry(c, g, 0)[0] if g else c).reshape(shape)
+        found[(i, k, m)] = primitive(next((seed for seed in seeds if seed.any()), seeds[0])).reshape(
+            shape
+        )
     return found
 
 
