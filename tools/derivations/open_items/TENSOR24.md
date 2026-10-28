@@ -56,6 +56,8 @@ The owner's words of 2026-10-28, 06:0x to 06:4x UTC (Hebrew, translated):
 
 - 11:2x and 11:3x UTC: "Answer me and the others... So Bell is solved, yes? Here there are no declarations and no announcements. Pauli likewise: it should come from the very definition of the families and the operations. Confirm that this makes sense." And: "For Bell there is a solution from Animate." (Section 30, items 1 and 2.)
 
+- 11:4x and 11:5x UTC: "All the removal must come from operations of the families, the tensor, the 24; understand how the clocks solve it and how it was solved in the past... from their symmetries." And: "How is Bell explained in clocks? That is the way of thinking... the solution through the tensors... no floor, no bound and no declaration... only integers and complex numbers." (Sections 17 and 18.)
+
 The plan's owner: the Boss. The names are the ones the owner sees in his app: Boss, Sofer, David and Animate (the owner's word through Animate, 06:3x UTC, #2187 6462416209). Its base: engine-5.0-test at 526a5666d. Its status: a plan; under it only cut 1, the order-free draw, is built, pushed as 834cfd72e on the owner's word under the name "the fair draw" (Sofer: it showed the 24 alike and the rewind exact, not a uniform number). The owner approved the route of a new engine (09:1x UTC), and nothing more is built before he approves this plan as it is presented to him.
 
 - **This file is the one plan.** Sofer's record of the program (the state of the cuts, the owner's list with his recommendations, the ledger) stands on scribe-5 and points here.
@@ -612,10 +614,24 @@ The law's text read whole (a reading agent's count, Sofer checking 14 by hand; 6
 | the rewind | the same step with a+ and a- exchanged |
 | the swing | the lapse's return everywhere at once |
 | the cube's 24 | the rotation group O, acting on the kinds |
+| the phase reversal | T: z to conj(z) on a one-hand train, (z1, z2) to (-conj z2, conj z1) on the twin hands; T T = -1 on matter |
+| the pair's joint dial | the A1 part of two twin pairs, det[u, v] = u1 v2 - u2 v1 |
+
+**The way of thinking** (the owner's words of 11:4x and 11:5x UTC): every derivation is told in the clocks beside its tensor, with integers and Gaussian integers alone, no floor, no bound and no declaration; and every removal of a contradiction comes from the operations of the families, the tensor and the 24, their symmetries, read against how the clocks solve it and how it was solved before (section 18; draft F).
+
+**Bell in the clocks and the tensors** (the Boss's account to the owner, 11:5x UTC; draft D and Animate's route):
+1. **A twin hand is a clock with two hands,** up and down, two Gaussian integers. Its size rho and its axis S are read from its hands by products and sums alone.
+2. **A detector is a second twin clock,** with its own axis m.
+3. **The click of a split:** the overlap <phi, psi>, a Gaussian integer, says how far the two clocks' hands agree, and its norm is the up part's size. The down part's size is the overlap with the detector reversed, T phi, its two hands exchanged and one turned over. By Lagrange's identity the two sizes share the whole exactly, N(<phi, psi>) + N(<T phi, psi>) = rho rho_d, with no remainder, and Rule3 draws which part takes the quantum.
+4. **The pair, in the tensor:** two twin clocks born together from light, which has no axis (A1). Their joint state is the A1 part of their product, det: the up hand of one times the down hand of the other, less the reverse. It is one dial that lives on the two clocks together and belongs to neither alone. It is 0 where the two clocks point alike (Pauli) and whole where they point opposite.
+5. **The pair's click:** the joint dial read against two detectors gives four sizes, N(det[phi_A^a, phi_B^b]), one per pair of answers. They share the whole exactly (Lagrange again), and one Rule3 draw picks the pair of answers. The correlation comes out as -m_A . m_B / (rho_A rho_B), the cosine of the detectors' angle with no cosine, from integer products alone; in CHSH it is -82/29 exactly.
+6. **Bell's problem in the clocks:** where each clock carries only its own hands and each detector reads only its own clock, the agreement stays within 2. The joint dial does not split into two dials of their own, so the draw must happen where the joint dial is: at the birth's Mesh, both clocks within one act's reach.
+7. **Animate's route in the clocks:** the detectors' axes are already at the birth's Mesh, since every clock shares the great clock's one past (one seed, an exact rewind). So the draw happens at the birth against both axes; each twin clock leaves with its hands set to its detector's axis, up or down, and at the detector the click is whole, the other part's size being 0. Integers and Gaussian integers, one draw, no floor, no bound and no declaration.
+8. **What is left to derive:** which clock (which train) brings a detector's axis to the birth, one Mesh a tick; and a detector that turns its axis after the birth, which the time reversal would bring back to the next bang's birth (section 30, item 2).
 
 ## 18. The contradictions with nature still standing
 
-**The roots** (the owner's ruling of 11:1x UTC: nature as close as possible, the list shrunk by big laws that stand generically by the laws). The 26 items below come from six roots. Each root is answered by one big law, or it is a theorem of the lattice and stays named:
+**The roots** (the owner's ruling of 11:1x UTC: nature as close as possible, the list shrunk by big laws that stand generically by the laws). The 26 items below come from six roots. Each root is answered by one big law, or it is a theorem of the lattice and stays named. Every removal comes from the operations of the families, the tensor and the 24, their symmetries, read in how the clocks solve it and in how it was solved before, in physics and in this project's earlier engines (the owner's word of 11:4x UTC; draft F maps roots II, III, V and VI):
 
 | the root | its items | the big law that could remove them | where it stands |
 | --- | --- | --- | --- |
