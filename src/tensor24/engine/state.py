@@ -22,7 +22,7 @@ class Layout(NamedTuple):
     """The board read once: the six neighbours, each Spoke's Mesh, each Mesh's grip once, the teeth, the rates and the full rate."""
 
     nb: Z  # (6, N): +x, -x, +y, -y, +z, -z, each the other's opposite (the load makes the relation symmetric)
-    meshes: Z  # (6, N): the Mesh each Spoke holds, its two ends paired where the board is built; a grip its own conjugate
+    meshes: Z  # (6, N): the Mesh each Spoke holds, its two ends paired by runner/board.py; a grip its own conjugate
     grip: Z  # one grip per Mesh
     w: Z
     rate: Z  # from 0 to the full rate, so the beat's k is a bit (the load refuses a rate above it)

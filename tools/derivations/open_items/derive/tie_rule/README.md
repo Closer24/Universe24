@@ -19,4 +19,4 @@ Sofer reproduced the going per gear, 200,000 of 200,000, and with the going left
 
 **What stays struck:** a rule that needs a parity (an odd rounding, every divisor odd, a tie sent to the even quotient). Odd teeth counts are allowed (the owner's word of 10:5x UTC, "Obviously allow odd teeth").
 
-**Words:** Sofer's on the law, passes (6474681064); David's on the formula, owed. In code: algebra/carry.py's home and flip, its law "odd" failing on a home that ignores the going.
+**Words:** Sofer's on the law, passes (6474681064); David's on the formula, yes (6478324607: on algebra/carry.py and engine/step.gear, 200,000 of 200,000, the tooth inside [0, W+), a home that ignores the going failing 50,059). In code: algebra/carry.py's home and flip, its law "odd" failing on a home that ignores the going.

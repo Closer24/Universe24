@@ -602,7 +602,7 @@ On the owner's word to David: "a generic solution for everything". This is David
       - **past** keeps the cone and breaks the reversal.
       - **lin** keeps the reversal, and reaches 318 of 372 Node-clocks faster than one Mesh per shortest tick.
     - **It cancels:** Postulate 3 against Postulate 2, in the teeth.
-    - **The recommendation:** lin, as David and Sofer recommended. The great clock's tick is nothing observed. Sofer's moved to past on the stage 3 finding below (#2187 6476698665, unless David gives a half-tick synchronous pass); David's word is owed, and the owner's on the change.
+    - **The recommendation:** lin, as David and Sofer recommended. The great clock's tick is nothing observed. Sofer's moved to past on the stage 3 finding below (#2187 6476698665), and David's too (6478324607): in the beat a neighbour as of c is one of its two slots, which past reads exactly. Its price: where the dials part, the gears' run back after the turnover is not the forward run's mirror, while the rewind stays exact through the outs. The owner's word on the change is asked.
     - **Found on the stage 3 engine (derive/asynchronous_read, CHECKED):** past keeps the order test, 40 of 40 random schedules equal to the synchronous pass; lin as one carry by tn - tb fails it, 0 of 40, since a neighbour one count ahead holds its next tick. Stage 3 reads by past, the ruling's line 5; lin's formula with the order test's form under it, or past kept, is David's word.
 22. **(v) The local turnover, at every Node-clock's top. WITHDRAWN (15:0x UTC):** the whole board is one bang, run synchronously.
     - **What it gave:** with the exact T, worlds where the clocks turn over at different ticks keep their clicks; only one-clock worlds copy themselves.
