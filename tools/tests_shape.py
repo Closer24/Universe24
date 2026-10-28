@@ -45,9 +45,9 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         26,
         "The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): 20 bangs in 100 ticks within 128 bits under the three bounds, the held field in its universe, and under the order-free click and the one mirror its seed's symmetry standing through the run, every family's chimes one mesh apart at the board's own share exactly (the heavy family bound above it before them, the order's reading); the Boss's room by name.",
     ),
-    "tests/test_the_record.py::test_the_books_close_at_every_striking_mergers_and_lays_alike": (
+    "tests/test_the_record.py::test_the_books_close_at_every_click_mergers_and_lays_alike": (
         26,
-        "The close's books at every striking (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off; his rule of 14:5x UTC that a push's test sees what it was pushed for): on the hole's first 30 ticks (the bang's merging nothing under the order-free click) the board's wind lost is the chimes' booked plus the remainder's rise at every striking, mergers among them; the Boss's room by name.",
+        "The close's books at every click (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 clicks with a merger off; his rule of 14:5x UTC that a push's test sees what it was pushed for): on the hole's first 30 ticks (the bang's merging nothing under the order-free click) the board's wind lost is the chimes' booked plus the remainder's rise at every click, mergers among them; the Boss's room by name.",
     ),
     "tests/test_the_record.py::test_the_hole_falls_through_its_bottom_and_runs_on_and_back": (
         17,

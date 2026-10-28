@@ -23,7 +23,7 @@ def rates_of(clock: Clock, c: Any) -> tuple[Any, Any]:
 
 
 def stopped_of(clock: Clock, c: Any) -> Any:
-    """The stopped mask from the load (BH-S1): the clocks whose mesh rate reads 0 at the tick's start, one reading for the tick, the striking and the writer."""
+    """The stopped mask from the load (BH-S1): the clocks whose mesh rate reads 0 at the tick's start, one reading for the tick, the click and the writer."""
     mesh_rate = np.asarray(rates_of(clock, c)[1], dtype=object)
     return mesh_rate == 0 if np.ndim(mesh_rate) else np.zeros(clock.size, dtype=bool)
 
@@ -57,7 +57,7 @@ def standard_angle(clock: Clock, n: Any) -> tuple[int, int]:
 def gearing(
     clock: Clock, ratio: tuple[int, int], c: Any, factors: tuple[Any, ...], held: Any = None
 ) -> rule3.Gearing:
-    """Rule3's integers of a ratio at the clock's rates from the load, in the regulator's unit (PM-S1); the spring's rate read at the held load (the load with the held fields' notches at their weights, the tick's start reading clock.start_held unless given: a held field moves the mass and not the meshes, the step and the strike reading one spring)."""
+    """Rule3's integers of a ratio at the clock's rates from the load, in the regulator's unit (PM-S1); the spring's rate read at the held load (the load with the held fields' notches at their weights, the tick's start reading clock.start_held unless given: a held field moves the mass and not the meshes, the step and the click reading one spring)."""
     mesh_rate = rates_of(clock, c)[1]
     spring_rate = rates_of(clock, clock.start_held if held is None else held)[0]
     return rule3.gearing(ratio[0], ratio[1], clock.full_rate, spring_rate, mesh_rate, factors, clock.G)

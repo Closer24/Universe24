@@ -1,4 +1,4 @@
-"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every hand in either going, the isotropic rule is the same call with equal rates, and no other file of src/ writes this arithmetic; and the generic clock is closed for building (HIGHLIGHTS.md): the clock's state is the gears and the drives' fine teeth alone, one shape for every train, one Rule3 carry per gear and one drive per held gear per tick, the readings drive nothing, the output strike and field only, ENGINE.md's table the code's."""
+"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every hand in either going, the isotropic rule is the same call with equal rates, and no other file of src/ writes this arithmetic; and the generic clock is closed for building (HIGHLIGHTS.md): the clock's state is the gears and the drives' fine teeth alone, one shape for every train, one Rule3 carry per gear and one drive per held gear per tick, the readings drive nothing, the output click and field only, ENGINE.md's table the code's."""
 
 import ast
 import random
@@ -115,7 +115,7 @@ FILE_INTEGERS = {"spokes.py": frozenset({3}), "run.py": frozenset({12, 24, 60})}
 # the writer run.py reads the inventory and not the names gate (its chart keys are the files' words)
 READERS = tuple(
     f"{n}.py"
-    for n in "reckoner gates events rim great_clock swings strikes predicates symmetries phenomena".split()
+    for n in "reckoner gates events rim great_clock swings clicks predicates symmetries phenomena".split()
 )
 WRITER = ("run.py",)
 NAMED_CALLS = {
@@ -273,7 +273,7 @@ def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_
 
 
 def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_identity_lt_s1():
-    """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-clock test): on the chiral setting with its three bobs at 6 quanta (the hole's first fittings stand at its tick 53 under the wave's light; at the world file's 2 quanta no booking of the 14 ticks advances a notch under the great clock's bounds, 4 did at the wave) every move of the striking drives its tally into the regulator's flow gear of its axis at its clock by the clock's one drive act, so at every strike the mesh's chart identity holds per axis at every end, -dP p_0^2 + carry before - carry after = advanced x (K rim Gamma^2 T), seen in both of its cases, the carry below one level of the line and an advance of the gear's notch, the gear gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the clock's own gears and not the log alone; the clock's carry after the tick is the last tally's at that clock; the rewind exact through 14 ticks with the tallies undone. Under 15 s."""
+    """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-clock test): on the chiral setting with its three bobs at 6 quanta (the hole's first fittings stand at its tick 53 under the wave's light; at the world file's 2 quanta no booking of the 14 ticks advances a notch under the great clock's bounds, 4 did at the wave) every move of the click drives its tally into the regulator's flow gear of its axis at its clock by the clock's one drive act, so at every click the mesh's chart identity holds per axis at every end, -dP p_0^2 + carry before - carry after = advanced x (K rim Gamma^2 T), seen in both of its cases, the carry below one level of the line and an advance of the gear's notch, the gear gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the clock's own gears and not the log alone; the clock's carry after the tick is the last tally's at that clock; the rewind exact through 14 ticks with the tallies undone. Under 15 s."""
     seed = [s | {"quanta": 6} if "quanta" in s else s for s in world_of("world_nature.json")[1]["seed"]]
     clock = node_of("world_nature.json", intervals=14, seed=seed)
     teeth = clock.trace * clock.rim * clock.full_rate * clock.full_rate * clock.key

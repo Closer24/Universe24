@@ -150,7 +150,7 @@ INDEX_ARITHMETIC = (  # the named exceptions: the module, the operator, the func
 # the chart's writer and readers, no act of the clock: their quotients are readings at a named scale
 READERS = tuple(
     f"{n}.py"
-    for n in "run reckoner gates events rim great_clock swings strikes predicates symmetries phenomena".split()
+    for n in "run reckoner gates events rim great_clock swings clicks predicates symmetries phenomena".split()
 )
 
 

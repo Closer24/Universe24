@@ -1,4 +1,4 @@
-"""The committed charts (examples/records: the hole setting at 60 on the 5-cube, the chiral setting at 60, the bodies' setting at 120 on the 7-cube, regenerated under PM-S1 on 2026-10-25, again under CK-S1 and the release's odd rounding the same day, again under the crossing read even and the unsprung hand no bob (the hand at the spring 0 never chimed as a bob), again under PL-S1 (the sweep read at the impulse in its push form, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423), again under the wave, and again under the great clock's bounds (the owner's word of 2026-10-27, 18:5x UTC: no mesh and no clock faster than the full rate, no stretch moved by more than itself in a tick, acts 7, 10 and 12 with them, a chime where nothing arrives taking nothing): the hole's 13 fittings, 4 unspringings and 885 chimes (4, 2 and 8 at the wave) with no clock frozen, so its horizon not reached (SHOWN at the wave, the one chart that carried it) and its species over the track NOT SHOWN, 77 tracks right of 80 (SHOWN at the wave); the chiral's 2 fittings and 2,849 chimes (5 and 3,323 at the wave); the bodies' 8 unspringings, no fitting and 716 chimes (10, 3 and 8,094 at the wave), its species over the track NOT SHOWN, 43 of 51 (SHOWN at the wave), its gate 8 NOT SHOWN by 73 chimes beyond the floor (279 at the wave), so the unwind's event stands for the strike; every numbered row that flips named beside the rows SHOWN) read by the reckoner's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, the rim's points under gate 19 by their count (MS-S2: 26 points at the toy's rim, 8 at the middle's, the typed ratios among them); the conservation check over every chart's log (the sweep, the count unwound against tallied, the integers' count constant, every integer within the width, the rewind exact); the hole chart re-run by the engine and compared with the committed one bit for bit."""
+"""The committed charts (examples/records: the hole setting at 60 on the 5-cube, the chiral setting at 60, the bodies' setting at 120 on the 7-cube, regenerated under PM-S1 on 2026-10-25, again under CK-S1 and the release's odd rounding the same day, again under the crossing read even and the unsprung hand no bob (the hand at the spring 0 never chimed as a bob), again under PL-S1 (the sweep read at the impulse in its push form, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423), again under the wave, and again under the great clock's bounds (the owner's word of 2026-10-27, 18:5x UTC: no mesh and no clock faster than the full rate, no stretch moved by more than itself in a tick, acts 7, 10 and 12 with them, a chime where nothing arrives taking nothing): the hole's 13 fittings, 4 unspringings and 885 chimes (4, 2 and 8 at the wave) with no clock frozen, so its horizon not reached (SHOWN at the wave, the one chart that carried it) and its species over the track NOT SHOWN, 77 tracks right of 80 (SHOWN at the wave); the chiral's 2 fittings and 2,849 chimes (5 and 3,323 at the wave); the bodies' 8 unspringings, no fitting and 716 chimes (10, 3 and 8,094 at the wave), its species over the track NOT SHOWN, 43 of 51 (SHOWN at the wave), its gate 8 NOT SHOWN by 73 chimes beyond the floor (279 at the wave), so the unwind's event stands for the click; every numbered row that flips named beside the rows SHOWN) read by the reckoner's gates, each verdict asserted by name so that a lost or a gained verdict fails by name, the rim's points under gate 19 by their count (MS-S2: 26 points at the toy's rim, 8 at the middle's, the typed ratios among them); the conservation check over every chart's log (the sweep, the count unwound against tallied, the integers' count constant, every integer within the width, the rewind exact); the hole chart re-run by the engine and compared with the committed one bit for bit."""
 
 from __future__ import annotations
 
@@ -10,12 +10,12 @@ from typing import Any
 import pytest
 
 from event_universe import (
+    click,
+    clicks,
     great_clock,
     hands,
     meshes,
     readings,
-    strikes,
-    striking,
     swings,
     symmetries,
     tick,
@@ -38,7 +38,7 @@ CIRCLES = {"bodies": (8, 2), "chiral": (26, 3), "hole": (26, 3)}  # the rim: its
 HORIZON = {"hole": set(), "chiral": set(), "bodies": set()}
 SHOWN_ROWS = {  # the numbered rows SHOWN (whole or in part) per chart, the Boss's count in Universe24
     # with the shears struck (R11): the hole 31, losing 5, 22, 58, 59 and 60 (the eighths' expansion read on 529 chimes), the chiral 30, losing 19, 21, 26, 58 and 74 and gaining 22 (in part) and 69; under the one mirror and the order-free click (the hole at its seed 57/58): the hole 36 as before, 4 and 22 in part; the chiral 33, gaining 26; the bodies 18, its seed its own image under 16 of the 48, so every merger competing with its image jams (no birth, Curie's principle), losing 4, 15, 17, 24, 25, 45, 65, 70 and 73;
-    # with the four phenomena's rows: 73, E = mc^2 read at every merger end by its signed remainder, SHOWN exact on the hole and the bodies; 74, the polarization of light read on the light's momentum at the kicked clock, SHOWN on all three charts (75 NOT SHOWN, 76 and 77 NOT READ, no held field and no colour); under the great clock's bounds (its three bounds, acts 7, 10 and 12): the hole 33 (24 at the wave), losing 9 (the collisions, receding), 14 and 34 (the horizon, no clock frozen), all three SHOWN at the wave, and gaining 4, 26 and 45 (the era of matter, the lifts, 3 of 3 born, the bodies' well); with the lead at the kick 34, gaining 19 (the mass ratios within the one-click floor) and 22 whole (unlike senses approach and like senses part), NOT SHOWN at the wave, and 10 and 30 (the dilation), 22 (Coulomb's sign, in part), 56 (Bell, in part: the law's own bound met), 58, 59 and 60 (the expansion, its slowing, its speeding), 62 and 67 (the arrow of time, CPT in the clicks), NOT READ at the wave; the chiral 31 (32), losing 22 (Coulomb's sign, SHOWN in part at the wave) and 26 (the lifts, 2 of 3 born, SHOWN at the wave) and gaining 58 (the fast expansion, NOT SHOWN at the wave); the bodies 25 (28), no pair fitted, its 8 births all unspringings (3 fittings and 10 at the wave), losing 21, 47 and 68 (the C of the birth, the exact take, matter against antimatter: NOT READ with no fitting), 27 (confinement: NOT SHOWN with no fitted child, its counts 0 and 0 under words that name a third) and 58 (the fast expansion), all five SHOWN at the wave, and 26 (the lifts, 0 of 2 born, SHOWN in part at the wave), and gaining 2, 9 and 22 (the Links lengthening, the collisions, Coulomb's sign in part), NOT SHOWN at the wave; on the wave's charts (the take by the wind's own fall and the wave's fixes, the light raised by David's part B): the hole 24 with the horizon reached (14 and 34), the chiral 32, the bodies 28 (34, 34 and 30 on the head's books); on the charts of 3dc12e307 (the five sentences built on toys-5, the slack and the unspringing among them): the hole loses 2 (the meshes lengthening in the strikes, under GP-S1's setting) and gains 47 (the exact unwind, the excess kept as the slack, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 kept by the reckoner's read of the slack, 17 lost by the engine's bug at an unspringing's tie end (H-Children-Charge-Bug-1: the unsprung hand advanced as the advance of a fitted hand with a sweep, the fitted hands' own sweeps -36,000 over the fittings; SHOWN again at the fix); the bodies gain 8 and 16 with the chimes the slack pays; the hole under PL-S1 before: 9 and 22 among them under the former drive of 2 W after the step
+    # with the four phenomena's rows: 73, E = mc^2 read at every merger end by its signed remainder, SHOWN exact on the hole and the bodies; 74, the polarization of light read on the light's momentum at the kicked clock, SHOWN on all three charts (75 NOT SHOWN, 76 and 77 NOT READ, no held field and no colour); under the great clock's bounds (its three bounds, acts 7, 10 and 12): the hole 33 (24 at the wave), losing 9 (the collisions, receding), 14 and 34 (the horizon, no clock frozen), all three SHOWN at the wave, and gaining 4, 26 and 45 (the era of matter, the lifts, 3 of 3 born, the bodies' well); with the lead at the kick 34, gaining 19 (the mass ratios within the one-click floor) and 22 whole (unlike senses approach and like senses part), NOT SHOWN at the wave, and 10 and 30 (the dilation), 22 (Coulomb's sign, in part), 56 (Bell, in part: the law's own bound met), 58, 59 and 60 (the expansion, its slowing, its speeding), 62 and 67 (the arrow of time, CPT in the clicks), NOT READ at the wave; the chiral 31 (32), losing 22 (Coulomb's sign, SHOWN in part at the wave) and 26 (the lifts, 2 of 3 born, SHOWN at the wave) and gaining 58 (the fast expansion, NOT SHOWN at the wave); the bodies 25 (28), no pair fitted, its 8 births all unspringings (3 fittings and 10 at the wave), losing 21, 47 and 68 (the C of the birth, the exact take, matter against antimatter: NOT READ with no fitting), 27 (confinement: NOT SHOWN with no fitted child, its counts 0 and 0 under words that name a third) and 58 (the fast expansion), all five SHOWN at the wave, and 26 (the lifts, 0 of 2 born, SHOWN in part at the wave), and gaining 2, 9 and 22 (the Links lengthening, the collisions, Coulomb's sign in part), NOT SHOWN at the wave; on the wave's charts (the take by the wind's own fall and the wave's fixes, the light raised by David's part B): the hole 24 with the horizon reached (14 and 34), the chiral 32, the bodies 28 (34, 34 and 30 on the head's books); on the charts of 3dc12e307 (the five sentences built on toys-5, the slack and the unspringing among them): the hole loses 2 (the meshes lengthening in the clicks, under GP-S1's setting) and gains 47 (the exact unwind, the excess kept as the slack, EX-S1); the chiral loses 58 and gains 24 (two pairs into light, MG-S1), 15 kept by the reckoner's read of the slack, 17 lost by the engine's bug at an unspringing's tie end (H-Children-Charge-Bug-1: the unsprung hand advanced as the advance of a fitted hand with a sweep, the fitted hands' own sweeps -36,000 over the fittings; SHOWN again at the fix); the bodies gain 8 and 16 with the chimes the slack pays; the hole under PL-S1 before: 9 and 22 among them under the former drive of 2 W after the step
     "hole": {
         int(n)
         for n in "4 7 8 10 15 16 17 18 19 21 24 25 26 27 30 37 43 45 47 56 62 64 65 66 67 68 70 71 72 73 74".split()
@@ -191,7 +191,7 @@ def test_the_record_carries_a_node_line_per_interval_and_the_reading_its_events(
         "a pair born",
         "a body clicks",
         "light absorbed at a take",
-    )  # gate 7's unwind is every strike's
+    )  # gate 7's unwind is every click's
     first = next((e for e in events if e["label"] in struck), None)
     assert first is not None and first["i"] == min(
         e["i"] for e in run["log"] if e["event"] in ("birth", "credit")
@@ -278,14 +278,14 @@ def test_the_exact_return_is_the_seeds_first_state_and_the_horizon_standing() ->
     run = loaded("chiral")
     every = list(range(len(run["nodes"][0]["X"])))
     run["nodes"][k]["frozen"] = every
-    found = strikes.horizon_radiates(Chart(run))["61 the horizon radiates"]
+    found = clicks.horizon_radiates(Chart(run))["61 the horizon radiates"]
     later = [c for c in run["log"] if c["event"] == "credit" and int(c["i"]) > run["nodes"][k]["i"]]
     assert found["the whole board frozen at once"] and found[
         "of them after the whole board's release (no Node frozen at the interval)"
     ] == len(later)
     for line in run["nodes"][k:]:
         line["frozen"] = every
-    found = strikes.horizon_radiates(Chart(run))["61 the horizon radiates"]
+    found = clicks.horizon_radiates(Chart(run))["61 the horizon radiates"]
     assert found["credits two or more Links from every Node frozen at the credit's interval"] == 0
     assert found["verdict"].startswith("NOT SHOWN")
 
@@ -475,7 +475,7 @@ def test_spin_one_half_reads_minus_one_after_one_turn_and_comes_home_after_two(m
 
 
 def test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike() -> None:
-    """The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): the 4-cube's one wave of 5,000,000 quanta under the three bounds returns to the full rate at every clock twice in every five ticks, 10 bangs in 50 (its first half, the test's time), every integer within 128 bits; its universe holds a held field (one gear at 99/100 of the rim, weight 2, David's DAVID-MEDIATOR.md); under the order-free click and the one mirror its seed's symmetry stands through the run (Curie's principle: 96 births, no merger, every merger competing with its image), so every family's chimes stand one mesh apart at the board's own share exactly (6 of 63; before them the order of the strike broke the symmetry, a heavy family's 6 of 14 pairs one mesh apart, the reading the order made, David's DAVID-THE-MIRRORS-FITTING.md); the run back exact."""
+    """The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): the 4-cube's one wave of 5,000,000 quanta under the three bounds returns to the full rate at every clock twice in every five ticks, 10 bangs in 50 (its first half, the test's time), every integer within 128 bits; its universe holds a held field (one gear at 99/100 of the rim, weight 2, David's DAVID-MEDIATOR.md); under the order-free click and the one mirror its seed's symmetry stands through the run (Curie's principle: 96 births, no merger, every merger competing with its image), so every family's chimes stand one mesh apart at the board's own share exactly (6 of 63; before them the order of the click broke the symmetry, a heavy family's 6 of 14 pairs one mesh apart, the reading the order made, David's DAVID-THE-MIRRORS-FITTING.md); the run back exact."""
     calibre, piece = world_of("world_bang.json")
     clock, returns, widest, ticks = Clock(calibre, piece), [], 0, piece["intervals"] // 2
     for at in range(1, ticks + 1):
@@ -535,10 +535,10 @@ def test_the_hole_falls_through_its_bottom_and_runs_on_and_back(monkeypatch: Any
     assert run_back_exact(clock, 15) == 15 and sum(fell) > 0
 
 
-def test_the_books_close_at_every_striking_mergers_and_lays_alike(monkeypatch: Any) -> None:
-    """The close's books (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off): on the hole's first 30 ticks (its lays from 12, its first mergers at 23 and 26 with the shears struck; the one big bang's first 20 ticks merge nothing under the order-free click, every merger there competing with its image), at every striking the board's wind lost (every hand's wind at the striking's start gearings, before less after) is the chimes' booked plus the remainder's rise, the mergers' two-ended cross terms and the lays' cross terms carried by the remainder; mergers among them."""
+def test_the_books_close_at_every_click_mergers_and_lays_alike(monkeypatch: Any) -> None:
+    """The close's books (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 clicks with a merger off): on the hole's first 30 ticks (its lays from 12, its first mergers at 23 and 26 with the shears struck; the one big bang's first 20 ticks merge nothing under the order-free click, every merger there competing with its image), at every click the board's wind lost (every hand's wind at the click's start gearings, before less after) is the chimes' booked plus the remainder's rise, the mergers' two-ended cross terms and the lays' cross terms carried by the remainder; mergers among them."""
     calibre, piece = world_of("world_hole.json")
-    books, strike = [], striking.strike
+    books, clicked = [], click.click
 
     def board(clock: Clock) -> int:
         reads = [
@@ -550,13 +550,13 @@ def test_the_books_close_at_every_striking_mergers_and_lays_alike(monkeypatch: A
 
     def booked(clock: Clock, starts: Any, held: Any, going: int = 1, note: Any = None) -> None:
         wind, slack, log_from = board(clock), int(clock.slack.sum()), len(clock.log)
-        strike(clock, starts, held, going, note)
+        clicked(clock, starts, held, going, note)
         new = clock.log[log_from:]
         chimes = sum(int(e["booked"]) for e in new if e["event"] == "credit")
         merged = sum(1 for e in new if e["event"] == "birth" and "takes" in e)
         books.append((wind - board(clock) == chimes + int(clock.slack.sum()) - slack, merged))
 
-    monkeypatch.setattr(striking, "strike", booked)
+    monkeypatch.setattr(click, "click", booked)
     clock = Clock(calibre, piece)
     for _ in range(30):
         clock.tick()

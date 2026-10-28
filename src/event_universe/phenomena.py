@@ -231,7 +231,7 @@ def exchanging(chart: Chart) -> list[int]:
 
 
 def temperature(chart: Chart) -> dict[str, Any]:
-    """Row 75: temperature and the equipartition of energy (David's DAVID-FOUR-PHENOMENA.md section 2: equipartition needs a conserved wind and an exchange between the modes; Rule3 is linear, so the close is the only exchange). Every hand is a family and its hand at every clock a mode. A family's wind per mode is its wind summed over the clocks at the tick's start over the count of clocks, from the clock lines' `winds` (the striking's own reading, PM-S1's unit). It is read per bang, the spans from the setting and from every exact return to the next (swings.exact_of; the whole run where there is none), in thousandths of the light's winding (rule3.winding_of at the rim: one unit for every family). The families in the balance are those exchanging at a click (`exchanging`). Equipartition is SHOWN where, at the last bang, every such family's wind per mode lies within a factor two of every other's, the temperature their common mean; SHOWN in part where the spread (the largest family's wind per mode over the least's) narrows from the first bang to the last; NOT SHOWN where it does not; NOT READ where no click exchanges wind (no birth, every chime laid back) or on a record without the winds. Beside it, the light's occupation in whole light windings at the credits' clocks by the credit's beat (row 48's predicate in David's words)."""
+    """Row 75: temperature and the equipartition of energy (David's DAVID-FOUR-PHENOMENA.md section 2: equipartition needs a conserved wind and an exchange between the modes; Rule3 is linear, so the close is the only exchange). Every hand is a family and its hand at every clock a mode. A family's wind per mode is its wind summed over the clocks at the tick's start over the count of clocks, from the clock lines' `winds` (the click's own reading, PM-S1's unit). It is read per bang, the spans from the setting and from every exact return to the next (swings.exact_of; the whole run where there is none), in thousandths of the light's winding (rule3.winding_of at the rim: one unit for every family). The families in the balance are those exchanging at a click (`exchanging`). Equipartition is SHOWN where, at the last bang, every such family's wind per mode lies within a factor two of every other's, the temperature their common mean; SHOWN in part where the spread (the largest family's wind per mode over the least's) narrows from the first bang to the last; NOT SHOWN where it does not; NOT READ where no click exchanges wind (no birth, every chime laid back) or on a record without the winds. Beside it, the light's occupation in whole light windings at the credits' clocks by the credit's beat (row 48's predicate in David's words)."""
     per_tick = {
         int(line["i"]): [sum(int(x) for x in w) for w in line["winds"]]
         for line in chart.clocks
@@ -240,7 +240,7 @@ def temperature(chart: Chart) -> dict[str, Any]:
     if not per_tick:
         return predicates.unread(
             TEMPERATURE,
-            "the record carries no wind of the modes (the clock lines' winds: the striking's wind of every hand at every clock at the tick's start)",
+            "the record carries no wind of the modes (the clock lines' winds: the click's wind of every hand at every clock at the tick's start)",
             BALANCE,
         )
     families = exchanging(chart)

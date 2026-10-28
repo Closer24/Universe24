@@ -163,7 +163,7 @@ def confinement(chart: Chart) -> dict[str, Any]:
 
 
 def photoelectric(chart: Chart) -> dict[str, Any]:
-    """Row 40: the photoelectric strike, one whole quantum per strike: the notches a chime unwinds against the quantum's notches (the drift, the largest integer whose square is at most the key)."""
+    """Row 40: the photoelectric click, one whole quantum per click: the notches a chime unwinds against the quantum's notches (the drift, the largest integer whose square is at most the key)."""
     drift = largest_below(chart.key)
     unwinds = [int(c["levels"]) for c in chart.chimes]
     whole = sum(1 for t in unwinds if t % drift == 0)
@@ -181,7 +181,7 @@ def photoelectric(chart: Chart) -> dict[str, Any]:
 
 
 def exclusion(chart: Chart) -> dict[str, Any]:
-    """Row 43: the exclusion, one quantum per full state at a clock: the striking's advances jammed where a quantum of the hand stood at the clock (the jammed lines with a wound and a winding)."""
+    """Row 43: the exclusion, one quantum per full state at a clock: the click's advances jammed where a quantum of the hand stood at the clock (the jammed lines with a wound and a winding)."""
     jammed = [e for e in chart.log if e["event"] == "refused" and "standing" in e]
     return {
         "43 the exclusion": {
@@ -324,7 +324,7 @@ def bell(chart: Chart) -> dict[str, Any]:
 
 
 def ghz(chart: Chart) -> dict[str, Any]:
-    """Row 57: the GHZ gate (QG-S4), three ends with one root; a fitting gives two fitted hands at one mesh's ends and a shared unwind at one clock four, so no three-ended strike is in the chart."""
+    """Row 57: the GHZ gate (QG-S4), three ends with one root; a fitting gives two fitted hands at one mesh's ends and a shared unwind at one clock four, so no three-ended click is in the chart."""
     shared = dict(sorted(Counter(int(b.get("children_at_node", 1)) for b in chart.fittings).items()))
     return {
         "57 GHZ": {
@@ -339,7 +339,7 @@ def ghz(chart: Chart) -> dict[str, Any]:
 
 
 def arrow_of_time(chart: Chart) -> dict[str, Any]:
-    """Row 62: the arrow of time in the strikes (CA-S1, the owner's word of 2026-10-26, the direction is the slot): on every chime's face the sweep = three_now twelve_before - twelve_now three_before is negated exactly by the reverse of the two slots (now for before), so the sweep records the going, odd under the reverse; counted over the faces whose sweep is not 0, the faces at sweep 0 named apart (a notch on one slot alone carries no sweep)."""
+    """Row 62: the arrow of time in the clicks (CA-S1, the owner's word of 2026-10-26, the direction is the slot): on every chime's face the sweep = three_now twelve_before - twelve_now three_before is negated exactly by the reverse of the two slots (now for before), so the sweep records the going, odd under the reverse; counted over the faces whose sweep is not 0, the faces at sweep 0 named apart (a notch on one slot alone carries no sweep)."""
     faces = [c["frame"] for c in chart.chimes if "frame" in c]
     sweeps = [f["re_now"] * f["im_before"] - f["im_now"] * f["re_before"] for f in faces]
     reverse = [f["re_before"] * f["im_now"] - f["im_before"] * f["re_now"] for f in faces]
