@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's question of 2026-10-28, 05:5x UTC (how everything converges to the clock, whether the 24 arranges it): the Scribe's reading in the ledger's row 305, HIGHLIGHTS.md's bullet and the report's section 45; no law changed.
 - The owner's question of 2026-10-28, 05:5x UTC (if the families are tensors and the engine so simple, is there a singularity to catch): the Scribe's reading in the ledger's row 304, HIGHLIGHTS.md's bullet and the report's section 44; no law changed.
 - The owner's question of 2026-10-28, 05:4x UTC (the whole system as a tensor machine, the Node-clock a simple one, the families kinds of tensor): the Scribe's reading in the ledger's row 303, HIGHLIGHTS.md's bullet and the report's section 43; no law changed.
 - The thread's items 1214 to 1217 (David's finding that the vernier's draw of the Boss's 42d5448b7 is unfair, the Boss's replies on the shears, rows 76 and 56, the names and the Bell click): the ledger's row 302 and the report's section 42; the class Clock stays the great clock; the routine's state.

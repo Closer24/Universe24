@@ -497,3 +497,9 @@ The owner asks whether the whole system works as tensors, the Node-clock a simpl
 The owner asks whether, the families being tensors and the engine so simple, a singularity can be caught (ledger row 304). The Scribe's answer: three singular points where the tensor degenerates: the light (the null element, the pair [1, 1], known by identity at 18 reads in 7 files), the points the cube's turns fix (the vernier's frame has no direction there, which is David's unfair draw, S = -3.018), and the frozen Node-clock (the metric's time gear 0); and one uniqueness: a train's kind is one of five representations of the cube's rotations (dimensions 1, 1, 2, 3 and 3), so the index logic is five integer tables and Rule3's carry. A reading and no proof.
 
 **Asked of the owner:** whether the symmetric points are passed first to the Boss and David.
+
+## 45. How everything converges to the clock (the owner's question, 2026-10-28, 05:5x UTC)
+
+The owner asks how everything converges to the clock and whether the 24 arranges it (ledger row 305). The Scribe's answer: yes, through the dial: every component of every tensor is a gear (an integer with a carried remainder) and the only dynamics is the dial's turning over; the 24 acts on gears by exchanging dials and by reflecting a dial about its mid tooth (the one mirror), so a kind is a way of doing so (five); the clock is the kind the 24 leaves in place (the scalar: time gear, rate, load, trace); the couplings follow from the group's product table (the stress, a product of two gradients, is the trace, E and the shears). The 24 does not arrange the pair, Rule3 and the Mesh factor, or handedness.
+
+**Asked of the owner:** whether the symmetric points and the trial in this wording are passed to the Boss and David.
