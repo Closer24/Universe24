@@ -41,6 +41,8 @@ So the closed list is complete for the logic the engine needs, and the gate need
 
 **The one promise the list needs: a divisor is a teeth count, at least 1.** The clock that makes the divisor keeps it (the rate dial's carry), the files' checker (outside the engine) shows it at load, and the engine writes no raise; on Python integers a zero divisor fails loudly and is never silent. Where the divisor is a state gear (F2's tension t = (Gamma a) div X) the domain is the rate dial's own (David's Theorem B3, CHECKED: X at least Gamma is the stable side); item (p) is the owner's. The click of a whole at the light, w_c = 0, is the same promise unkept: the architect's OPEN 2.
 
+**A second promise stands beside it: every rate is between 0 and the full rate.** The beat's k is read as a bit by choose, and it is 0 or 1 only while every rate is at most the full rate; with one clock at twice the full rate k takes the value 2 and the rewind is not exact (Sofer's probe on the stage 3 engine, 18:0x UTC). It is no departure from the law, since only relative rates count and the full rate is a normalization, the fastest clock's; the load refuses a rate above full_rate by name, with a test and its mutant (asked of the Boss in 6476698665).
+
 **Three closed levels, two already in the law.**
 1. The functions (line 88): the Node-clock is five functions and nothing else, rotate(train), drive(trains), swap(train), click(trains) and link(i, j).
 2. The act (line 90): one division with a carried remainder over one integer contraction.
@@ -167,7 +169,7 @@ It is built (scribe_scan.py): the self-test runs 695 cases, 0 parted; SCRIBE-GAT
 2. The gate as a closed list in the engine's folders, and the architect's new folder: yes (built at scribe-5 ab7e4b308; the report stands in SCRIBE-GATE-1.md).
 3. A Node-clock never writes into a neighbour; the word is a carry added at the receiving end; each Node-clock holds a beat count and its beat is due inside the engine, a stopped clock blocking no one (section 4): yes.
 4. The click law stands as the premise by name for the plan on its exactness; its derivation (or the exactness shown again) is due before stage 9: yes.
-5. Item (u), the neighbour read as "lin" (David and Sofer): your word; the ruling closes it before stage 3.
+5. Item (u), the neighbour read: stage 3 builds **past** (the neighbour's now slot where it was written at or before the reader's count, else its before slot), and the order test holds with it (40 of 40) where lin as one carry fails (0 of 40: the Boss's derive/asynchronous_read, reproduced by Sofer). My recommendation moves from lin to past unless David gives a half-tick synchronous pass; past keeps your picture of 15:0x (the synchronous run equal to the asynchronous at equal counts): your word.
 6. Law 10's sentence is corrected to your picture of 15:0x (one big bang, the main run synchronous, the asynchronous run an option; ALGEBRA.md line 106, no line moved), on the Boss's account of your word: please confirm it.
 
 **The Boss:**
