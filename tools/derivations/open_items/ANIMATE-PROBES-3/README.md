@@ -25,6 +25,15 @@ The page is ANIMATE-TWIN-TOY.md. These are toys that check whether a piece would
 - **Beside many_bangs.py:** `python -I tension_scale.py`. It runs the A1 course for 60 ticks (the `dial` variant read at the tick's start) and prints the stretch, the axis gears and their sum, every Spoke's tension, how many Mesh readings fall inside [0, Gamma], and t / X.
 - **The output** is a1_tension_scale_60.txt: 0 of 384 inside at every tick.
 
+## events_per_bang.py: the click events per bang
+
+- **Beside many_bangs.py:** `python -I events_per_bang.py`, its settings by environment variable (VARIANT, QUANTA, TICKS, TWIN, READ, TENSION, CONE). It counts the log's events in each bang, the refusals by their cause.
+- **The outputs** (ANIMATE-F2-CARRY.md, part 7):
+  - events_a1_head_tension_5M_250.txt: the A1 calibre, the head's tension;
+  - events_a1_tension_ratio_cone_5M_250.txt: the A1 calibre, the tension in the time gear's teeth;
+  - events_twins_head_tension_5M_494.txt: the twin calibre, the head's tension;
+  - events_twins_tension_ratio_cone_5M.txt: the twin calibre, the tension in the time gear's teeth: clicks 64, 96, 256, 1,152 a bang, refused at tick 157.
+
 ## ladder_pauli.py: the 24's ladder under Pauli's rule
 
 - **Pure integers, no engine:** `python ladder_pauli.py`. It reads the kinds of 2O from ANIMATE-PROBES-2/kinds_ladder.py.

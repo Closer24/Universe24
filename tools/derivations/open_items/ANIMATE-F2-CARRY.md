@@ -95,5 +95,35 @@ The owner's word (Hebrew, translated): "OK, pass it on for implementation in the
    - data for K: the twin hands are the one big bang's detectors' train;
    - on the twin calibre at 5,000,000 quanta, the clicks of the run after the turnover bring births at the 7th and 11th bangs, and the eleven bottoms' states are all distinct (ANIMATE-TWIN-TOY.md, 65d9c2ec).
 
+## 7. Law 10 with F2's carry: the clicks per bang (the owner's word of 2026-10-28, 15:0x UTC)
+
+The owner's word (Hebrew, translated): "So the missing part is solved for law 10? Think in clocks and the tensor." The toy events_per_bang.py counts the log's events in each bang, the refusals by their cause, at 5,000,000 quanta.
+
+| the calibre | the tension | clicks per bang (births and chimes), bang 2 on | the fittings' refusals | the detector's click (split) |
+|---|---|---|---|---|
+| A1 | the head's (F2 held) | 64, 32, then 0 | "disengaged" 8,576 to 11,456 a bang | 0 |
+| A1 | in the time gear's teeth (lower side held) | 0, 0, 64, 0, 32, then 0 | "disengaged" 0 | 0 |
+| twins, T = J K | the head's (F2 held) | 64, 32, 0, 64, 0, 96, 0, 64, 0, 160 | "disengaged" 8,256 to 16,512 a bang | 0 |
+| twins, T = J K | in the time gear's teeth (lower side held) | **64, 96, 256, 1,152**, then refused at tick 157 | "disengaged" 0; "orientation" 22,592, 8,448, 3,040 | 0 |
+
+CHECKED (the events_*.txt outputs).
+
+- **In clocks:**
+  - A fitting needs both ends of a Mesh engaged and a lead across it that names which end is which.
+  - F2's standstill disengages every Mesh along the stretched axis, a third of all engagements (the "disengaged" refusals). Read in the time gear's teeth, those Meshes couple again.
+  - The light's alike pattern gives no lead along some axes, so the fittings there have no orientation (the "orientation" refusals): that is the alike board's tie.
+  - With twin hands and every Mesh coupled, each bang's clicks break the board's sameness. The orientation ties fall, the next bang fits more, and the clicks rise at every bang: 64, 96, 256, 1,152. That is "every bang shows more" for four bangs in a row.
+- **In the tensor:**
+  - The alike board is A1, and A1 x A1 = A1, so on the A1 calibre no click can make a new kind and the births stop.
+  - The twin hands' clicks write non-A1 parts (the leads and the spins, T1), and the ladder's product table climbs from there (part 7 of ANIMATE-MANY-BANGS.md).
+- **What stops it:** at tick 157 a step carries the stretch past one turn of its dial, and the run is refused. That is the missing local tick, the light cone's carry, the same piece as in part 2.
+- **What is not seen:** the detector's click itself, the split chime, fires 0 times in every run.
+  - The fitting writes each twin pair definite along its Mesh (the head reads the light's lead there), so no pair holds its winding split between its twins, and there is nothing for a detector to decide.
+  - The singlet laid at the fitting would be axis-blind (E_verify v6: the fitting's spin write commuting with 2O), the A1 part of E1/2 x E1/2. Under it each child's winding is split between its twins, so every born pair's children would click at their detectors and write their axes.
+  - That is the owner's "detector's click", for draft K.
+- **So, for the plan:**
+  - Law 10's missing part has its clocks: F2's carry and the twin hands make the clicks rise at every bang, measured for four bangs.
+  - Two pieces are owed: the local tick, so that the course holds; and the singlet lay, so that the detector's click fires.
+
 ---
 Animate, reader-5.

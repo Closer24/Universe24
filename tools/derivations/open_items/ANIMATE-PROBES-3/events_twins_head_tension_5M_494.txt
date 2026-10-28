@@ -1,0 +1,14 @@
+quanta 5000000, ticks 494, bottoms at [0, 44, 89, 134, 179, 224, 269, 314, 359, 404, 449]
+  bang 0: {'lay': 1}
+  bang 1: {'refused:disengaged': 2752, 'refused:lay': 1280, 'refused:orientation': 2816, 'refused:stop': 1536, 'refused:twist': 64}
+  bang 2: {'birth': 64, 'refused:disengaged': 8256, 'refused:lay': 1952, 'refused:orientation': 14016, 'refused:stop': 1120, 'refused:twist': 128}
+  bang 3: {'birth': 32, 'refused:disengaged': 8256, 'refused:lay': 2080, 'refused:orientation': 14272, 'refused:stop': 1152, 'refused:twist': 128}
+  bang 4: {'refused:disengaged': 11008, 'refused:lay': 2336, 'refused:orientation': 19584, 'refused:stop': 928, 'refused:twist': 128}
+  bang 5: {'credit': 64, 'refused:disengaged': 8256, 'refused:lay': 2080, 'refused:orientation': 14272, 'refused:stop': 1184, 'refused:twist': 128}
+  bang 6: {'refused:disengaged': 11008, 'refused:lay': 2368, 'refused:orientation': 19584, 'refused:stop': 896, 'refused:twist': 128}
+  bang 7: {'birth': 32, 'credit': 64, 'refused:disengaged': 13760, 'refused:lay': 2848, 'refused:orientation': 25280, 'refused:stop': 512, 'refused:twist': 128}
+  bang 8: {'refused:disengaged': 16512, 'refused:lay': 3008, 'refused:orientation': 30976, 'refused:stop': 384, 'refused:twist': 128}
+  bang 9: {'credit': 64, 'refused:disengaged': 13760, 'refused:lay': 2880, 'refused:orientation': 25664, 'refused:stop': 512, 'refused:twist': 128}
+  bang 10: {'refused:disengaged': 16512, 'refused:lay': 3008, 'refused:orientation': 30976, 'refused:stop': 384, 'refused:twist': 128}
+  bang 11: {'birth': 32, 'books': 1, 'credit': 128, 'refused:disengaged': 13760, 'refused:lay': 2976, 'refused:orientation': 20928, 'refused:stop': 5120, 'refused:twist': 128}
+splits in all: 0 births: 160
