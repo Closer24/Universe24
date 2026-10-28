@@ -443,6 +443,18 @@ On the owner's word to David: "a generic solution for everything". This is David
     - the width: Python integers in numpy object arrays, exact at 112 bits and beyond, int64 refused;
     - **the twin hands:** in no basis of their four integer rows do the third turns act as signed permutations, so no ring alone, Z[zeta8] included, keeps the 24 bit for bit on them under element-wise carries. The departure stands until David's route (OPEN 3), and no twin train loads before it.
 
+12. **The standard of known engines** (the owner's word of 15:5x UTC: "in the standard of known engines in the world; everything generic; only simple operations in the Node-clock"). Each part of the design comes from engines the world already trusts (TENSOR24.md, section 31, the prior art):
+    - **lattice field codes (Grid, Chroma, openQCD, QUDA):** one shift primitive across a Mesh with everything else local to the site, the link U_j on every Mesh, neighbour tables, storage as a structure of arrays, halos between regions, and Wilson's term for the doublers (item (g));
+    - **reversible lattice automata (Toffoli and Margolus, 1987):** Fredkin's second-order form x+ = f(x) - x-, the two slots now and before, so the rewind is exact on integers;
+    - **the bit-reversible integrator (Levesque and Verlet, 1993):** a leapfrog on integers whose rounding inverts exactly, the step with the carry;
+    - **lifting (Calderbank, Daubechies, Sweldens and Yeo, 1998):** an integer shear that inverts exactly;
+    - **parallel discrete-event simulation (Chandy, Misra and Bryant) and Kahn's process networks:** the beat count and the due bit, so every order of the beats gives the same state at equal counts;
+    - **array programming (NumPy, in the pure-function style of JAX):** pure functions over the whole board's arrays, every input passed, no loop in the engine;
+    - **the point-group codes (Quantum ESPRESSO's integer symmetry matrices, the Bilbao tables) and e3nn's equivariance check:** the 24 as integer matrices, the kinds computed, and the images test;
+    - **event sourcing:** the record as immutable, versioned events, and the readings as pure folds over them;
+    - **Hypothesis and mutation testing:** properties, not values, and every test shown failing on a broken copy;
+    - **stricter than all of them:** the Node-clock's closed list. Only addition, multiplication and Rule3's carry on whole numbers, with no float, no if and no number beyond 0 and 1 (section 1).
+
 ## 12. Who builds and when
 
 1. **Nothing is built before the owner's approval.**

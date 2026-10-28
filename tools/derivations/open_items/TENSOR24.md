@@ -1714,6 +1714,8 @@ No refusal is logged. An added field is a minor version; a breaking change a maj
 - **e3nn's equivariance check** (turn the input, run, compare with the turned output) is the images test's form.
 - **Hypothesis**, with stateful tests that shrink to the smallest failing case, and metamorphic relations.
 - **Event sourcing:** immutable, versioned events with upcasters, readings as pure folds over the events, and no internal fields in an event.
+- **Parallel discrete-event simulation** (Chandy, Misra and Bryant) and **Kahn's process networks:** the one architect's beat count and due bit, every order of the beats giving the same state at equal counts (derive/architecture/RULING.md, section 4).
+- **The owner's word of 15:5x UTC:** "in the standard of known engines in the world; everything generic; only simple operations in the Node-clock". The design takes each of its parts from the engines above, and is stricter than all of them in one place, the Node-clock's closed list (TENSOR24_PLAN.md, section 11, item 12).
 
 **Generic, with no branch:**
 - **neutral elements instead of branches:** every coefficient exists for every train, at 0 or with the divisor 1 where absent (the light's spring 0; a gear with no drive has the drive teeth 1; a train with no Mesh has the grips 0);
