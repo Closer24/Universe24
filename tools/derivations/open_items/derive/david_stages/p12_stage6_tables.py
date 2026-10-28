@@ -13,6 +13,7 @@ Checks on the engine's own kinds and the load's own tables, exact integers:
   (7) the rule "the first nonzero entry positive" laid on top: which of the head's tables it turns over, and whether
       the tables of every order then agree.
 """
+import inspect
 import itertools
 import sys
 from fractions import Fraction
@@ -65,7 +66,17 @@ for i, k, m in itertools.product(names, repeat=3):
     held_channels[(i, k, m)] = n
 nonzero_ok = equi = prim = 0
 negative = []
-inv = K.kinds(K.inverse(matrix), axes)
+
+
+def kinds_of(matrices):
+    """The five kinds on each matrix, on either head: the unit passed where kinds takes it (to 91226e796), else made
+    inside (927071a14 on)."""
+    if len(inspect.signature(K.kinds).parameters) > 1:
+        return K.kinds(matrices, axes)
+    return K.kinds(matrices)
+
+
+inv = kinds_of(K.inverse(matrix))
 rng = np.random.default_rng(12)
 
 
