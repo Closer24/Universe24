@@ -25,6 +25,11 @@ ENGINE = "new_engine/step.py"
 CARRY = "core/acts.py"
 READER = "run.py"
 TESTS = "tests/test_step.py"
+NEW_STEP = "tensor24/engine/step.py"
+NEW_CARRY = "tensor24/engine/carry.py"
+NEW_RECORD = "tensor24/record/schema.py"
+NEW_RUNNER = "tensor24/runner/loop.py"
+NEW_DECODER = "tensor24/decoder/rows.py"
 
 CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a for loop", ENGINE, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
@@ -202,6 +207,179 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
         {},
     ),
     ("a loop in a test", TESTS, "def test_f(f):\n    for x in f():\n        assert x\n", {}),
+    # the new engine's folders (Tensor24's section 31), each by its own rules
+    ("the decoder imports numpy", NEW_DECODER, "import numpy as np\n", {"ISOLATE": 1}),
+    (
+        "the decoder imports the engine",
+        NEW_DECODER,
+        "from tensor24.engine import step\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the decoder imports the engine, relative",
+        NEW_DECODER,
+        "from ..engine import step\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the decoder imports the engine's package",
+        NEW_DECODER,
+        "from tensor24 import engine\n",
+        {"ISOLATE": 1},
+    ),
+    ("the decoder imports the runner", NEW_DECODER, "import tensor24.runner.loop\n", {"ISOLATE": 1}),
+    (
+        "the decoder imports the current engine",
+        NEW_DECODER,
+        "from event_universe import clock\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the decoder imports the standard library and the record",
+        NEW_DECODER,
+        "import json\nfrom tensor24.record import Row\n",
+        {},
+    ),
+    (
+        "the decoder imports the record, relative",
+        NEW_DECODER,
+        "from ..record import Row\nfrom . import helper\n",
+        {},
+    ),
+    ("the decoder imports the record's package", NEW_DECODER, "from tensor24 import record\n", {}),
+    ("the record imports numpy", NEW_RECORD, "import numpy as np\n", {"ISOLATE": 1}),
+    (
+        "the record imports the standard library",
+        NEW_RECORD,
+        "import json\nfrom dataclasses import dataclass\n",
+        {},
+    ),
+    ("the engine imports the decoder", NEW_STEP, "from tensor24.decoder import rows\n", {"ISOLATE": 1}),
+    ("the engine imports the runner, relative", NEW_STEP, "from ..runner import loop\n", {"ISOLATE": 1}),
+    (
+        "the engine imports the current engine",
+        NEW_STEP,
+        "from event_universe import clock\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the engine imports numpy and the record",
+        NEW_STEP,
+        "import numpy as np\nfrom tensor24.record import Row\nfrom .carry import carry\n",
+        {},
+    ),
+    (
+        "the runner imports the decoder",
+        NEW_RUNNER,
+        "from tensor24.decoder import rows\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the runner imports the engine and the record",
+        NEW_RUNNER,
+        "from tensor24.engine import step\nfrom tensor24.record import Row\n",
+        {},
+    ),
+    (
+        "the current engine imports numpy",
+        "tick.py",
+        "import numpy as np\nfrom event_universe import clock\n",
+        {},
+    ),
+    ("the carry's home divides", NEW_CARRY, "def f(a, b):\n    return a // b, a % b\n", {}),
+    (
+        "the new engine elsewhere divides",
+        NEW_STEP,
+        "def f(a, b):\n    return a // b, a % b\n",
+        {"OPERATION": 2},
+    ),
+    ("a loop in the runner", NEW_RUNNER, "def f(a):\n    for x in a:\n        pass\n", {}),
+    ("a loop in the decoder", NEW_DECODER, "def f(a):\n    return [x for x in a]\n", {}),
+    ("a loop in the new engine", NEW_STEP, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
+    (
+        "a branch in the decoder",
+        NEW_DECODER,
+        "def f(a):\n    if a:\n        return a\n    return a\n",
+        {},
+    ),
+    (
+        "a branch in the new engine",
+        NEW_STEP,
+        "def f(a):\n    if a:\n        return a\n    return a\n",
+        {"BRANCH": 1},
+    ),
+    (
+        "an ordering comparison in the new engine",
+        NEW_STEP,
+        "def f(a, b):\n    return a < b\n",
+        {"COMPARE": 1},
+    ),
+    ("sorted in the new engine", NEW_STEP, "def f(a):\n    return sorted(a)\n", {"COMPARE": 1}),
+    (
+        "operator.lt in the new engine",
+        NEW_STEP,
+        "import operator\n\n\ndef f(a, b):\n    return operator.lt(a, b)\n",
+        {"COMPARE": 1},
+    ),
+    (
+        "numpy's greater in the new engine",
+        NEW_STEP,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.greater(a, b)\n",
+        {"COMPARE": 1},
+    ),
+    ("sorted in the current engine", "tick.py", "def f(a):\n    return sorted(a)\n", {}),
+    ("sorted in the decoder", NEW_DECODER, "def f(a):\n    return sorted(a)\n", {}),
+    (
+        "an array with no dtype in the new engine",
+        NEW_STEP,
+        "import numpy as np\n\nX = np.array([1])\n",
+        {"DTYPE": 1},
+    ),
+    (
+        "arange with no dtype in the new engine",
+        NEW_STEP,
+        "import numpy as np\n\nX = np.arange(1)\n",
+        {"DTYPE": 1},
+    ),
+    (
+        "an array with its dtype in the new engine",
+        NEW_STEP,
+        "import numpy as np\n\nX = np.array([1], dtype=object)\n",
+        {},
+    ),
+    (
+        "an array with no dtype in the current engine",
+        "tick.py",
+        "import numpy as np\n\nX = np.array([1])\n",
+        {},
+    ),
+]
+
+# a note is a refusal in the new engine's strict folders (engine, record) and a note elsewhere
+TIERS: list[tuple[str, str, str, str, str]] = [
+    ("a comparison in the new engine", NEW_STEP, "def f(a, b):\n    return a < b\n", "COMPARE", "BLOCK"),
+    ("a branch in the new engine", NEW_STEP, "def f(a):\n    return a if a else a\n", "BRANCH", "BLOCK"),
+    (
+        "a cache in the new record",
+        NEW_RECORD,
+        "from functools import cache\n\n\n@cache\ndef f(a):\n    return a\n",
+        "MEMO",
+        "BLOCK",
+    ),
+    (
+        "a comparison in the current engine",
+        "tick.py",
+        "def f(a, b):\n    return a < b\n",
+        "COMPARE",
+        "WARN",
+    ),
+    (
+        "a branch in the current engine",
+        "tick.py",
+        "def f(a):\n    return a if a else a\n",
+        "BRANCH",
+        "WARN",
+    ),
 ]
 
 
@@ -229,6 +407,15 @@ def main() -> int:
         else:
             print(f"ok      {label}")
         del beside
+    tier_cases = 0
+    for label, rel, source, rule, tier in TIERS:
+        tier_cases += 1
+        got = {hit.tier for hit in gate.scan(rel, source) if hit.rule == rule}
+        if got != {tier}:
+            parted += 1
+            print(f"PARTED  {label}: wanted the tier {tier}, the gate gave {got}")
+        else:
+            print(f"ok      {label}: {rule} is a {tier}")
     # the ratchet: a hit above the base's count is new, one at the base's count is not
     hits = gate.scan(ENGINE, "def f(a):\n    for x in a:\n        pass\n    for y in a:\n        pass\n")
     stands = Counter({("LOOP", ENGINE, "for"): 1})
@@ -247,7 +434,7 @@ def main() -> int:
         print(f"PARTED  a new package: a clamp and a number gave {len(fresh)} new, not 2")
     else:
         print("ok      a new package: every hit in it is new")
-    print(f"selftest: {len(CASES) + 2} cases, {parted} parted")
+    print(f"selftest: {len(CASES) + tier_cases + 2} cases, {parted} parted")
     return 1 if parted else 0
 
 

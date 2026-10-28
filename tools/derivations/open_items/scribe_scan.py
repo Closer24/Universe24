@@ -142,6 +142,10 @@ RULES: dict[str, tuple[str, str]] = {
         "WARN",
         "an ordering comparison in an engine module: a threshold read by order and not as the quotient of a carry (the same word); the count may not rise",
     ),
+    "ISOLATE": (
+        "BLOCK",
+        "an import that crosses the new engine's folders: the decoder and the record import the standard library and the record alone (no numpy, no engine, no runner), the engine imports neither the decoder nor the runner nor the current engine, the runner neither the decoder nor the current engine; a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
+    ),
     "BRANCH": (
         "WARN",
         "a branch (if, a conditional expression, match) in an engine module: the law says there is no if on a train (The Node-clock and the Mesh are generic; there is no if) and a whether is the indicator 1 - 1 div (q + 1) of a carry's quotient; a branch the formula does not hold is a declaration (the count per file may not rise)",
@@ -178,9 +182,26 @@ ITERATING_MODULES = {
     "functools": frozenset({"reduce"}),
 }  # a loop under a function's name (the comprehension rule's dodges)
 ITERATING_NUMPY = frozenset("vectorize apply_along_axis apply_over_axes fromfunction frompyfunc".split())
+NEW_ENGINE = "tensor24"  # the new engine's package under src (Tensor24's section 31): four folders, each gated by its own rules
+STRICT = (
+    NEW_ENGINE + "/engine/",
+    NEW_ENGINE + "/record/",
+)  # a note of PROMOTED is a refusal here: it starts at 0 and stays
+PROMOTED = frozenset({"COMPARE", "BRANCH", "MEMO"})
+READER_FOLDERS = (
+    NEW_ENGINE + "/runner/",
+    NEW_ENGINE + "/decoder/",
+)  # the readers' exemptions, by folder
 CARRY_HOME = frozenset(
-    {"core/acts.py", "core/rule3.py"}
+    {"core/acts.py", "core/rule3.py", NEW_ENGINE + "/engine/carry.py"}
 )  # where Rule3's division and remainder are written
+COMPARE_CALLS = frozenset(
+    "lt le gt ge less greater less_equal greater_equal sorted sort argsort lexsort partition searchsorted isclose "
+    "bisect bisect_left bisect_right insort heappush heappop nlargest nsmallest".split()
+)  # a comparison under a function's name, in the new engine
+NEEDS_DTYPE_NEW = frozenset(
+    "array asarray arange fromiter".split()
+)  # an array of Python integers needs its dtype, in the new engine
 NEEDS_DTYPE = frozenset("zeros ones empty full eye identity linspace".split())
 CIRCULAR_WORDS = frozenset(
     "cos sin tan cosine sine tangent arccos arcsin arctan atan atan2 acos asin theta angle angles radian radians degree "
@@ -199,6 +220,13 @@ READERS = frozenset(
     "run.py gates.py predicates.py reckoner.py rim.py swings.py great_clock.py strikes.py clicks.py events.py "
     "symmetries.py phenomena.py".split()
 )
+
+
+def is_reader(rel: str) -> bool:
+    """A module that reads a finished chart or record and runs no step: by name in the current engine, by folder in the new."""
+    return rel in READERS or rel.startswith(READER_FOLDERS)
+
+
 TEXT_TOKENS = {tokenize.STRING, tokenize.COMMENT}
 if hasattr(tokenize, "FSTRING_MIDDLE"):
     TEXT_TOKENS.add(tokenize.FSTRING_MIDDLE)
@@ -221,7 +249,10 @@ class Hit:
 
     @property
     def tier(self) -> str:
-        return RULES[self.rule][0]
+        tier = RULES[self.rule][0]
+        return (
+            "BLOCK" if tier == "WARN" and self.rule in PROMOTED and self.rel.startswith(STRICT) else tier
+        )
 
 
 def words_of(text: str) -> list[str]:
@@ -261,6 +292,37 @@ def sums(node: ast.AST) -> bool:
 def callee_name(call: ast.Call) -> str:
     f = call.func
     return f.id if isinstance(f, ast.Name) else f.attr if isinstance(f, ast.Attribute) else ""
+
+
+def imported_names(rel: str, node: ast.Import | ast.ImportFrom) -> list[str]:
+    """The full dotted names an import brings in; a relative import is resolved from the module's own folder."""
+    if isinstance(node, ast.Import):
+        return [alias.name for alias in node.names]
+    parts = rel.split("/")[:-1]
+    base = (parts[: len(parts) - (node.level - 1)] if node.level else []) + (
+        node.module.split(".") if node.module else []
+    )
+    stem = ".".join(base)
+    return [stem if alias.name == "*" else f"{stem}.{alias.name}" for alias in node.names]
+
+
+def import_ok(rel: str, name: str) -> bool:
+    """Whether a module of the new engine may import `name` (the folders' walls; other modules import freely)."""
+    top = name.split(".")[0]
+    own = NEW_ENGINE + "."
+    if rel.startswith(NEW_ENGINE + "/decoder/"):
+        return (
+            top in sys.stdlib_module_names
+            or name == NEW_ENGINE + ".record"
+            or name.startswith((own + "record.", own + "decoder"))
+        )
+    if rel.startswith(NEW_ENGINE + "/record/"):
+        return top in sys.stdlib_module_names or name.startswith(own + "record")
+    if rel.startswith(NEW_ENGINE + "/engine/"):
+        return not (name.startswith((own + "decoder", own + "runner")) or top == "event_universe")
+    if rel.startswith(NEW_ENGINE + "/runner/"):
+        return not (name.startswith(own + "decoder") or top == "event_universe")
+    return True
 
 
 def scan(rel: str, source: str) -> list[Hit]:
@@ -307,6 +369,10 @@ def scan(rel: str, source: str) -> list[Hit]:
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             numpy |= {a.asname or a.name for a in node.names if a.name == "numpy"}
+        if isinstance(node, ast.Import | ast.ImportFrom):
+            for name in imported_names(rel, node):
+                if not import_ok(rel, name):
+                    add("ISOLATE", node, name)
     module_containers: dict[str, ast.stmt] = {}
     for stmt in tree.body:
         value = stmt.value if isinstance(stmt, ast.Assign | ast.AnnAssign) else None
@@ -397,7 +463,7 @@ def scan(rel: str, source: str) -> list[Hit]:
             add("FLOAT", node, "true division")
         elif (
             isinstance(node, ast.BinOp | ast.AugAssign)
-            and rel not in READERS
+            and not is_reader(rel)
             and (
                 type(node.op) in FOREIGN_OPERATORS
                 or (isinstance(node.op, ast.FloorDiv | ast.Mod) and rel not in CARRY_HOME)
@@ -408,13 +474,13 @@ def scan(rel: str, source: str) -> list[Hit]:
                 node,
                 FOREIGN_OPERATORS.get(type(node.op), "//" if isinstance(node.op, ast.FloorDiv) else "%"),
             )
-        elif isinstance(node, ast.Raise) and rel not in READERS:
+        elif isinstance(node, ast.Raise) and not is_reader(rel):
             add("REFUSE", node, "raise")
         elif isinstance(node, ast.Call):
             name = callee_name(node)
             if isinstance(node.func, ast.Name) and name in {"round", "complex", "pow"}:
                 add("FLOAT", node, f"{name}()")
-            if rel not in CARRY_HOME and rel not in READERS and name in OPERATION_CALLS:
+            if rel not in CARRY_HOME and not is_reader(rel) and name in OPERATION_CALLS:
                 spelt = (
                     isinstance(node.func, ast.Attribute)
                     and isinstance(node.func.value, ast.Name)
@@ -422,7 +488,7 @@ def scan(rel: str, source: str) -> list[Hit]:
                 )
                 if name == "divmod" or spelt:
                     add("OPERATION", node, name if name == "divmod" else f"{name}()")
-            if rel not in READERS:
+            if not is_reader(rel):
                 module = (
                     node.func.value.id
                     if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name)
@@ -450,12 +516,17 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add("STATE", node, "id()")
             if name in ROOTS:
                 add("ROOT", node, name)
-            if name in CLAMPS and rel not in READERS:
+            if name in CLAMPS and not is_reader(rel):
                 add("CLAMP", node, f"{name}()")
+            if rel.startswith(NEW_ENGINE + "/") and not is_reader(rel) and name in COMPARE_CALLS:
+                add("COMPARE", node, "call")
             if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name):
                 if (
                     node.func.value.id in numpy
-                    and name in NEEDS_DTYPE
+                    and (
+                        name in NEEDS_DTYPE
+                        or (name in NEEDS_DTYPE_NEW and rel.startswith(NEW_ENGINE + "/"))
+                    )
                     and not any(k.arg == "dtype" for k in node.keywords)
                 ):
                     add("DTYPE", node, f"np.{name}")
@@ -465,7 +536,7 @@ def scan(rel: str, source: str) -> list[Hit]:
                     add("FLOAT", node, f"np.{node.attr}")
                 if node.attr in CIRCULAR_FUNCTIONS or node.attr == "pi":
                     add("CIRCLE", node, f"np.{node.attr}")
-            if node.attr == "log" and isinstance(node.ctx, ast.Load) and rel not in READERS:
+            if node.attr == "log" and isinstance(node.ctx, ast.Load) and not is_reader(rel):
                 above = parents.get(node)
                 call = parents.get(above) if above is not None else None
                 appends = (
@@ -480,19 +551,16 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add("FLOAT", node, node.id)
             if node.id in CIRCULAR_FUNCTIONS or node.id == "pi":
                 add("CIRCLE", node, node.id)
-        elif (
-            isinstance(
-                node,
-                ast.For
-                | ast.AsyncFor
-                | ast.While
-                | ast.ListComp
-                | ast.SetComp
-                | ast.DictComp
-                | ast.GeneratorExp,
-            )
-            and rel not in READERS
-        ):
+        elif isinstance(
+            node,
+            ast.For
+            | ast.AsyncFor
+            | ast.While
+            | ast.ListComp
+            | ast.SetComp
+            | ast.DictComp
+            | ast.GeneratorExp,
+        ) and not is_reader(rel):
             add(
                 "LOOP",
                 node,
@@ -504,11 +572,11 @@ def scan(rel: str, source: str) -> list[Hit]:
             )
         elif (
             isinstance(node, ast.Compare)
-            and rel not in READERS
+            and not is_reader(rel)
             and any(isinstance(op, ORDERING) for op in node.ops)
         ):
             add("COMPARE", node, "ordering")
-        elif isinstance(node, ast.If | ast.IfExp | ast.Match) and rel not in READERS:
+        elif isinstance(node, ast.If | ast.IfExp | ast.Match) and not is_reader(rel):
             guard = (
                 isinstance(node, ast.If)
                 and isinstance(node.test, ast.Name)
