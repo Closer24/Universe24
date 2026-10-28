@@ -41,7 +41,7 @@ The plan's owner: the Boss. The names are the ones the owner sees in his app: Bo
 - **The 24.** The cube's 24 turns hold by construction. The kinds come from the six Spokes alone, so no act knows an axis.
 - **No numbers, no circularity.** There is no number beyond 0 and 1 in src, no circular function, no root search, no angle and no closed form of a phenomenon. Every integer of a train stands in the calibre, the piece and its setting.
 - **No fix put in.** Every act follows from the trains and the tensors; each formula that holds the phenomenon it makes, and each clamp, fallback and typed rule of the head, goes (section 16).
-- **Much shorter.** The physics of the head is about 2,600 lines: 552 generic, 1,386 of acts by hand, tick and clock on top (counted by Animate and Sofer). The target is under 1,000: the one formula, the gate and Rule3's carry.
+- **Much shorter.** The physics of the head is about 2,600 lines: 552 generic, 1,386 of acts by hand, tick and clock on top (counted by Animate and Sofer). The engine's 19 modules hold 2,990 lines in all, the readings, the features, the trains, the phase and the draw among them (the Boss's count). The target is under 1,000: the one formula, the gate and Rule3's carry.
 
 ## 2. The main formula of the Node-clock
 
@@ -203,7 +203,10 @@ The twist the engagement reads is kept by every turn and reversed by every mirro
 | the stopped Node-clock and the horizon | readings.stopped_of | a comparison of the gate |
 | the bottom (the stretch through 0) | Tick.end_teeth | a comparison of the gate, the start's teeth count read |
 | the held field, the offset's kick by the lead, Pauli's twin hands, the release's advance of the unsprung hand, the recoil on the Mesh | tick.py, clock.drive | terms of J, each a product from the table |
-| the fitting, the fitted hands' setting, the chime (the unwind), the unspringing | click.py, bobs.py, unspring.py, unwind.py | the gate: the click of a whole and the click of a split |
+| the fitting, the fitted hands' setting, the chime (the unwind), the unspringing, the unwind's fall and the stop, the ends' senses | click.py, bobs.py, unspring.py, unwind.py | the gate: the click of a whole and the click of a split |
+| the hand's own beat, its reference and its crossings (CK-S1), the still chime | bobs.py, the clock's wound, crossed, beats and reference | the gate's reads: the sign of a bilinear's crossing, read at the Node-clock |
+| the held load: the held field's notch at its weight in the load that sets the springs | Tick.rate_readings, readings.gearing | a term of D, the mediator's coupling to the masses |
+| the reads beyond one Mesh: hands.wind's window (7 call sites), the twist (2), the setting's window (up to 3 Meshes), the whole-lattice scans (6 sites) | hands.py, click.py, unspring.py, bobs.py, tick.py, clock.py | the stencil of seven alone (cut 7); a window of two Meshes is two ticks of one Mesh each, or the wind read at the Node-clock (David) |
 | the standard, the reference clock | features/standard | a train of the calibre |
 | the setting, the piece, the calibre | assembly/, the loader | data alone: every integer of a train |
 | the readers (the rows, the gates, the charts) | the reckoner, gates.py, run.py | outside the engine, reading the chart alone |
@@ -427,3 +430,4 @@ The plan's end has none. On the head these stand, each with its way out:
 9. **Born's root, the exclusion's refusals, the pair's typed senses, the books' plug** (E1, E16, E17, E18) are put in. The ways out: section 16.
 10. **The clamps** (the tension into [0, full rate], the regulator's drive at the hold) **and the bottom's fallback** are limits put in to keep the run finite. The way out: derived (David), or the gate's comparisons.
 11. **The one big bang's exact return asks a symmetric setting, and a symmetric setting makes almost no matter** (two orbits of fittings, no unspringing, the near-light train never fitted). Nature has the bang and the matter. Open: the setting (David; the owner's word).
+12. **Reads beyond one Mesh** (section 8): nature is local, and the head reads two and three Meshes at a few sites and the whole great clock at six. The way out: the stencil of seven alone (cut 7).
