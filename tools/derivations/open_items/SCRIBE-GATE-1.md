@@ -49,6 +49,8 @@ A patch (`--patch FILE --base REV`) and a push also print one line of counts by 
 
 The three are the Boss's to adopt (Sofer writes no tools/*.py and no .claude/ file): `git apply tools/derivations/open_items/scribe_gate_check_py.patch`, and copy scribe_gate_claude_settings.json to .claude/settings.json. A refusal at the server, so that even a push that goes round the hooks cannot land, is one setting of the repository (a required status check on engine-5.0-test), the owner's.
 
+**Adopting it in a clone whose branch lacks the files.** The gate's files stand on scribe-5 only (engine-5.0-test is 126 commits behind it at 10:0x UTC, 2026-10-28). In the clone: `git fetch origin scribe-5 && git checkout origin/scribe-5 -- tools/derivations/open_items/scribe_scan.py tools/derivations/open_items/scribe_scan_selftest.py tools/derivations/open_items/scribe_scan_baseline.json tools/derivations/open_items/scribe_scan_allowed.json tools/derivations/open_items/scribe_gate_check_py.patch tools/derivations/open_items/scribe_gate_claude_settings.json`; then `venv314/bin/python tools/derivations/open_items/scribe_scan_selftest.py` (67 of 67), `venv314/bin/python tools/derivations/open_items/scribe_scan.py --install`, `git apply tools/derivations/open_items/scribe_gate_check_py.patch` and the settings file copied to .claude/settings.json. Tried on engine-5.0-test 55a3483e1 in a scratch worktree with only those six files: the patch applies, the scan against the list gives 0 refusals and 0 notes, the self-test 67 of 67.
+
 ## Tested
 
 - The engine head 42d5448b7 against its merge base: no refusal, no note; the Boss's push of 04:39 against 97e5b3fd6: no refusal and one note (the module-level cache draw.kept_mid).
