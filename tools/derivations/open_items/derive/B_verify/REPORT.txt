@@ -1,0 +1,61 @@
+Verifier B on S/derive/B/DERIVATION.md. Probes in S/derive/B_verify/: v1_algebra.py (python3 -I, integers, no engine), v2_engine.py, .txt outputs. Engine runs: lock absent, two at most; src unchanged since 834cfd72e. Eight re-runs of its probes (b1 to b7) match its .txt.
+
+CLAIMS
+
+1. F5 as the floor at Gamma: CONFIRMED WITH CORRECTIONS.
+- My rate table: c >= 0 exactly where X >= Gamma (Gamma 1,000 and 6,000). A law-4 toy with adversarial X+: 0 slots below Gamma in 160,000 clock-ticks.
+- Slots below Gamma, head/floor: node 66/0, hole 224/0, chiral 192/0. First differing ticks and turnovers match.
+- No lay writes the time gear; the 500-quanta bang never drops below Gamma. Rewinds: chiral 40/40, node 20/20.
+- The clamp goes only at the tick-start load; rates_of also reads the held load (readings.py:62), OPEN.
+- Not David's threshold. The trigger is law 4's comparison (R9, a listed fake), and "X div Gamma = 0" misses the raw X+ <= 0 (19 times on the hole). No quotient leaves; no remainder stays.
+- It changes the law: scribe-5 1608 sets X_f = stretch_of(Gamma, -Gamma); 1909 bound (2) says "the turnover's bottom untouched". By David's criterion in 1909 (95573578a), the owner's call.
+- Unreported physics: hole at 900 ticks, the stop moves from tick 476 (397 stopped clock-ticks) to 680 (196). Clocks turned two ticks running ("pinned floor"): node 1 -> 19, chiral 0 -> 41 (hole 250 -> 243).
+
+2. The end teeth (ET3): CONFIRMED WITH CORRECTIONS.
+- Toy: W+ > 0 at 160,000 of 160,000; all 25,025 head fallbacks are discarded clocks.
+- Hole: state bit for bit (60/60 ticks), 10 log entries changed, 'laid' 4 -> 0 (not in its verdict table). Rewind 40/40.
+- W+ = end + f (start - end) is a where on law 4's comparison: Sofer's "fallback renamed".
+
+3. F2 above Gamma: identity CONFIRMED (223,297 exhaustive cases, 20,000 random to t = 10^40). As a threshold, REFUTED: a clamp renamed.
+- It books nothing; the law's horizon (scribe-5 1610) "is no act and needs no book".
+- Its event, the 'disengaged' jam, is a typed refusal on factor == 0 (click.py:85), a listed fake.
+- The cut is unpinned: t div (Gamma +/- d) passes for d <= 44; the factor is 0 on [956, 1044].
+
+4. F2 below 0: CONFIRMED WITH CORRECTIONS (OPEN right).
+- 6 Gamma^2 - 2 SUM (Gamma - t_a)^2 = -2 SUM t_a^2 holds at 641,600 of 641,600 traceless triples.
+- With the head's rounding, 4,713 nonzero triples keep S >= 0; (1, 1, -2) gives S > 0. "Any nonzero tension" is false on the integers.
+
+5. F1: formula CONFIRMED (20,000 of 20,000). Cap CONFIRMED WITH CORRECTIONS.
+- 749 does not bind at tick 1 (first at tick 39); 750 binds on 64 of 64 clocks.
+- But 3F div n is 108,045 at 750, not 3 key = 108,000 (its output agrees). With F = n key and the brake at 2/3, the drive would equal the hold at 750: idle.
+- Its "998 against 998 at 749" is 997 against 998.
+
+6. R10 and BH-S1: CONFIRMED. Grips 0 at p_i = 0; stopped load 3,793, rate 22, X 4,268,834,097.
+
+7. Held load: factor CONFIRMED. The calibre: key 36,000, Gamma 1,000, weight 2; key div Gamma = 36; ratios 35.964 to 48.846 and 0 reproduce. "No energy is kept" REFUTED.
+- The exact exponential gives 35.946 at every load: the rise is E8's rounding.
+- A constant factor is absorbed by counting the held energy key/Gamma times. Toy with source = reaction/36: the weighted energy holds to 1,883 ppm while 99.8% of it passes through the held field; unit weights drift 969,560 ppm. A control reverses this.
+- Still standing: the forms weigh the held field at 1; the rounding.
+
+8. Release: CONFIRMED WITH CORRECTIONS.
+- "div" is Rule3's floor quotient: 0 for 0 <= pinion < rim, 1 at the rim. I1 to I3 hold (45,450, 100,000 and 100,000; both goings).
+- The loader refuses only pinion >= rim (piece.py:43). At a negative pinion u = -1 and c = 2: I1 fails at all 45,150 such pairs.
+- u_h is coupling_of's step function, so R14 is renamed, not removed.
+- Twin remainders survive only because key >= 12 Gamma; no test calibre has twins.
+- Rewind with no tally: not re-run.
+
+MUTATIONS
+- Floor at Gamma - 1: caught by the toy and on the chiral (6 slots); not on node or the hole.
+- ET3: the toy catches a sign flip (47,933 W+ <= 0) and a changed factor (22,591). Engine: the state is blind to every changed divisor; the log misses +1.
+- F2, 1 div (2 + k): caught (956).
+- Lemma, one mesh per axis or a trace: caught (10,201; 199).
+- F1 brake at p0^2, I2 kick + 1, I3 remainder uncarried: all caught.
+
+PROTOCOL: NOT MET.
+- No mutation proof: no mutated runs, no failing outputs kept.
+- The cited .raw files are missing.
+- Line 432 uses the t24 copy's numbering (scribe-5: 448); 1909 uses scribe-5's.
+- "The floor" (1608) is quoted without its number, "The horizon" (1610) paraphrased; the words contradicting the move (1608's X_f, 1909's "bottom untouched") are not quoted.
+- The "threshold" labels for F5, ET3 and F2 are unproved.
+
+One slip: my scribe-5 copy was written to S/derive/ for an instant, then moved here.

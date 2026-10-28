@@ -1,0 +1,42 @@
+tree scratchpad/t24  drive pure  quanta 5000000  ticks 30
+seed X 1000..1000
+tick: X least..largest [turned over]
+  1: 1998..1998
+  2: 4991..4991
+  3: 1998..1998 [64]
+  4: 1000..1000
+  5: 1000..1000
+  6: 1998..1998
+  7: 4991..4991
+  8: 1998..1998 [64]
+  9: 1000..1000
+  10: 1000..1000
+  11: 1998..1998
+  12: 4992..4992
+  13: 1998..1998 [64]
+  14: 1000..1000
+  15: 1000..1000
+  16: 1998..1998
+  17: 4991..4991
+  18: 1998..1998 [64]
+  19: 1000..1000
+  20: 1000..1000
+  21: 1998..1998
+  22: 4992..4992
+  23: 1998..1998 [64]
+  24: 1000..1000
+  25: 1000..1000
+  26: 1998..1998
+  27: 4991..4991
+  28: 1998..1998 [64]
+  29: 1000..1000
+  30: 1000..1000
+whole-board turnovers (bangs): 6 at ticks [3, 8, 13, 18, 23, 28]
+local turnovers (Node-clocks): 0
+whole-board turnovers with every Node-clock stopped at the tick's start (the rate chain's zero): 0 at []; stopped Node-clock ticks 0
+the first difference fell (X+ - X < X - X-) at 0 of 1536 Node-clock ticks not turned over
+births (fittings and mergers): 64; chimes 1984
+books: closed at 30 of 30 clicks' phases, clicks among them 2048
+largest |X|: 4992
+state hash 76178462abcb68db
+seconds 11.7

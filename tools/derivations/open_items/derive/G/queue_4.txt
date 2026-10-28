@@ -1,0 +1,11 @@
+g1_pair3_400_head.txt exit 0 10s
+g1_pair3_400_even.txt exit 0 10s
+g1_pair3_400_down.txt exit 0 9s
+g1_pair3_400_up.txt exit 0 10s
+g1_pair3_400_even_exact.txt exit 0 10s
+g1_pair3_400_down_exact.txt exit 0 11s
+g1_polar12_head.txt exit 0 1s
+g1_polar12_head_ueven.txt exit 0 2s
+g1_polar12_head_udown.txt exit 0 1s
+g3_u_effect.txt exit 0 1s
+DONE

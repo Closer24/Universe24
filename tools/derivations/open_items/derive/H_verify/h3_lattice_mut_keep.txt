@@ -1,0 +1,8 @@
+MUT keep     TR 10, W = 2 (X- + X) even, DD 50000               weak top       ran 300 (circles 299), turnovers 27404: TMTM 300  CIRCLE 299  24 300  LAW1   0
+MUT keep     TR 10, W = 2 (X- + X) even, DD 50000               top or bottom  ran 300 (circles 300), turnovers 50924: TMTM 300  CIRCLE 300  24 300  LAW1   0
+MUT keep     TR 11, W = 5 (X- + X) of either parity, DD 49999   weak top       ran 300 (circles 294), turnovers  5319: TMTM 300  CIRCLE 294  24 300  LAW1   0
+MUT keep     TR 11, W = 5 (X- + X) of either parity, DD 49999   top or bottom  ran 300 (circles 299), turnovers 44673: TMTM 300  CIRCLE 299  24 300  LAW1   0
+MUT keep     TR 12, W = 3 (X- + X) of either parity, DD 50000   weak top       ran 300 (circles 300), turnovers 16971: TMTM 300  CIRCLE 300  24 300  LAW1   0
+MUT keep     TR 12, W = 3 (X- + X) of either parity, DD 50000   top or bottom  ran 300 (circles 300), turnovers 50824: TMTM 300  CIRCLE 300  24 300  LAW1   0
+MUT keep     TR 9, W = 3 (X- + X) of either parity, DD 49999    weak top       ran 300 (circles 300), turnovers 20579: TMTM 300  CIRCLE 300  24 300  LAW1   0
+MUT keep     TR 9, W = 3 (X- + X) of either parity, DD 49999    top or bottom  ran 300 (circles 300), turnovers 54626: TMTM 300  CIRCLE 300  24 300  LAW1   0

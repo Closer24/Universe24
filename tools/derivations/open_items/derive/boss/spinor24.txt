@@ -1,0 +1,9 @@
+the multiplication by zeta is a shift with one sign: (-13, 5, 7, 11) from (5, 7, 11, 13)
+4 quarter turns about z: diag = [(-1, 0, 0, 0), (-1, 0, 0, 0)]
+8 quarter turns about z: diag = [(1, 0, 0, 0), (1, 0, 0, 0)]
+sqrt 2 as (0, 1, 0, -1): (1.414213562373-0j)
+the norm of sqrt 2 in Z[zeta8]: (4-0j) -> not a unit, so 1/sqrt 2 is no integer of Z[zeta8]
+quarter about z            integer matrix over Z[i], exponent +1: unitary True  det (1+0j)
+quarter about x            integer matrix over Z[i], exponent +1: unitary True  det (1+0j)
+three-fold about (1,1,1)   integer matrix over Z[i], exponent +2: unitary True  det (1+0j)
+half about x               integer matrix over Z[i], exponent +0: unitary True  det (1+0j)

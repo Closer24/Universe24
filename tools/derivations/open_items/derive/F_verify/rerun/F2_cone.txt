@@ -1,0 +1,17 @@
+PASS A1 (|x|+|y|+|z|)^2 <= 3 |x|^2 on the box of side 13
+PASS A2 equality only on the 8 body diagonals : 8
+PASS A3 the L1 ball's inradius^2 is 1/3, light's c^2 at the edge : inradius^2 1/3 against c^2 1/3
+PASS B1 the support stays in the L1 ball |x|_1 <= t
+PASS B2 with the checkerboard's parity |x|_1 = t mod 2
+PASS B3 every point of the ball's surface |x|_1 = t is reached
+PASS B4 the axis tip carries exactly 3^-t of the pulse
+   pulse of 1000 notches: (tick, axis tip notch, farthest L1, farthest |x|^2), every fourth tick: [(4, 12, 4, 16), (8, 0, 8, 50), (12, 0, 12, 86), (16, 0, 16, 134), (20, 0, 20, 186), (24, 0, 24, 254)]
+   pulse of 1000000 notches: (tick, axis tip notch, farthest L1, farthest |x|^2), every fourth tick: [(4, 12346, 4, 16), (8, 152, 8, 64), (12, 2, 12, 144), (16, 0, 16, 200), (20, 0, 20, 294), (24, 0, 24, 400)]
+PASS C1 the axis tip carries the pulse's rounded thirds and goes dark after log3 of the notches : {1000: 6, 1000000: 13}
+PASS C2 yet nonzero notches stand on the act's L1 surface |x|_1 = t at every tick to 24 (near the body diagonals)
+PASS C3 at tick 24 the farthest nonzero notch stands beyond light's long-wave sphere (3|x|^2 > t^2), farther for more notches : 3|x|^2 - t^2 = 186 at 10^3 notches and 624 at 10^6
+PASS D1 the boost (t, x) -> (2t + 3x, t + 2x) keeps t^2 - 3 x^2 and has determinant 1
+PASS D2 its powers grow without bound (an infinite group of integer boosts) : [2, 7, 26, 97, 362, 1351, 5042, 18817]
+PASS D3 the boost maps the stencil off itself ((1;0,0,0) -> (2;1,0,0)) : (2, 1, 0, 0)
+PASS D4 the stencil's Q4 values: 1 on the two time steps, -3 on the six Spokes, so no map keeping both mixes them
+RESULT: ALL PASS

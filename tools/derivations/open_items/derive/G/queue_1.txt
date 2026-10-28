@@ -1,0 +1,8 @@
+g1_bang250_head.txt exit 0 78s
+g1_bang250_up.txt exit 0 82s
+g1_bang250_even.txt exit 0 77s
+g1_bang250_down.txt exit 0 74s
+g1_bang250_even_exact.txt exit 0 76s
+g1_bang250_down_exact.txt exit 0 78s
+g1_bang250_head_exact.txt exit 0 78s
+DONE

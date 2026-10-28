@@ -1,0 +1,13 @@
+head carry/mid = floor-divmod on 20,000 values: failures 0
+shape (14, 1, 1): rho at B over a fitted hand's x10^4 -- draft's way (every answer) / weighted by the answer's odds
+    Delta  6:     0 /     0
+    Delta  8:     9 /     6
+    Delta 12:   132 /    88
+    Delta 20:   344 /   229
+    Delta 36:   297 /   198
+shape (14, 3, 3): rho at B over a fitted hand's x10^4 -- draft's way (every answer) / weighted by the answer's odds
+    Delta  6:     0 /     0
+    Delta  8:     0 /     0
+    Delta 12:     0 /     0
+    Delta 20:   193 /   128
+    Delta 36:     8 /     5

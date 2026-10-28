@@ -1,0 +1,28 @@
+derived push (4 G + 6 V):  t1 X1200: -0.982  t2 X1566: -0.981  t3 X2065: -0.973  t5 X3372: -0.929  t10 X7869: -0.715  t20 X20001: -0.479  t40 X51625: -0.484  t80 X132952: -0.426  t120 X230587: -0.309  t160 X340413: +0.363  t200 X460224: -0.718  t300 X794901: -1.206  t399 X1165993: +0.023
+    t in [5, 30): E ratio mean -0.582, least -0.929, largest -0.448
+    t in [30, 60): E ratio mean -0.447, least -0.514, largest -0.314
+    t in [60, 90): E ratio mean -0.394, least -0.594, largest -0.218
+    t in [90, 120): E ratio mean -0.293, least -0.643, largest -0.002
+    t in [120, 200): E ratio mean -0.357, least -1.089, largest +0.507
+    t in [200, 400): E ratio mean -0.003, least -3.168, largest +4.117
+mutation: 3 G:  t1 X1150: -1.024  t2 X1429: -1.078  t3 X1816: -1.130  t5 X2841: -1.214  t10 X6419: -1.310  t20 X16182: -1.581  t40 X41856: -2.307  t80 X108346: -3.286  t120 X188448: -4.244  t160 X278788: -5.403  t200 X377627: -7.235  t300 X655012: -6.881  t399 X963990: -8.925
+    t in [5, 30): E ratio mean -1.506, least -1.954, largest -1.214
+    t in [30, 60): E ratio mean -2.395, least -2.856, largest -1.952
+    t in [60, 90): E ratio mean -3.207, least -3.640, largest -2.833
+    t in [90, 120): E ratio mean -4.054, least -4.472, largest -3.535
+    t in [120, 200): E ratio mean -5.482, least -7.175, largest -4.089
+    t in [200, 400): E ratio mean -8.010, least -11.119, largest -5.902
+mutation: 5 G:  t1 X1250: -0.917  t2 X1699: -0.841  t3 X2306: -0.744  t5 X3879: -0.531  t10 X9236: +0.047  t20 X23584: +0.891  t40 X60781: +1.736  t80 X156152: +3.100  t120 X270598: +4.203  t160 X399370: +6.080  t200 X539862: +6.305  t300 X933022: +8.212  t399 X1369916: +11.696
+    t in [5, 30): E ratio mean +0.579, least -0.531, largest +1.365
+    t in [30, 60): E ratio mean +1.864, least +1.290, largest +2.354
+    t in [60, 90): E ratio mean +2.923, least +2.429, largest +3.448
+    t in [90, 120): E ratio mean +3.722, least +3.034, largest +4.338
+    t in [120, 200): E ratio mean +5.064, least +3.823, largest +7.054
+    t in [200, 400): E ratio mean +8.128, least +4.489, largest +15.320
+head's typed form (E10, F1) with its spring:  t1 X1065: -1.038  t2 X1197: -1.108  t3 X1396: -1.189  t5 X1971: -1.357  t10 X3940: -1.842  t20 X7227: -2.918  t40 X6166: -2.547  t80 X7749: -3.115  t120 X2326: -1.447  t160 X3940: -1.842  t200 X8064: -3.225  t300 X5842: -2.439  t399 X1000: -0.997
+    t in [5, 30): E ratio mean -2.507, least -3.230, largest -1.357
+    t in [30, 60): E ratio mean -2.058, least -3.211, largest -0.997
+    t in [60, 90): E ratio mean -2.490, least -3.230, largest -1.189
+    t in [90, 120): E ratio mean -1.867, least -3.115, largest -0.997
+    t in [120, 200): E ratio mean -2.312, least -3.230, largest -0.997
+    t in [200, 400): E ratio mean -2.217, least -3.230, largest -0.997

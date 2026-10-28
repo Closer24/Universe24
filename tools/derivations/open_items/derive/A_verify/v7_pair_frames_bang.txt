@@ -1,0 +1,9 @@
+world_bang.json, 12 ticks: fittings 64
+  laid across a pawl wall (eps differs at the two ends): 0
+  plain charge of the pair 0: 64; Q* share of the pair 0: 64
+    tick 6, train 2: wall False, plain 0, Q* share 0.0 (0.000 e), lam at the ends 1.4925, 1.4925
+    tick 6, train 2: wall False, plain 0, Q* share 0.0 (0.000 e), lam at the ends 1.4925, 1.4925
+    tick 6, train 2: wall False, plain 0, Q* share 0.0 (0.000 e), lam at the ends 1.4925, 1.4925
+    tick 6, train 2: wall False, plain 0, Q* share 0.0 (0.000 e), lam at the ends 1.4925, 1.4925
+    tick 6, train 2: wall False, plain 0, Q* share 0.0 (0.000 e), lam at the ends 1.4925, 1.4925
+  the coupled hands' first tick with a nonzero notch now (before the click): 7

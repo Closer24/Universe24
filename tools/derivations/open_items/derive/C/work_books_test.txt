@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_the_books_close_at_every_click_mergers_and_lays_alike __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ffa8d704b00>
+
+    def test_the_books_close_at_every_click_mergers_and_lays_alike(monkeypatch: Any) -> None:
+        """The close's books (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 clicks with a merger off): on the hole's first 30 ticks (its lays from 12, its mergers at 17, 18, 19 and 22 under the fair draw, the first at 23 and 26 before it with the shears struck; the one big bang's first 20 ticks merge nothing under the order-free click, every merger there competing with its image), at every click the board's wind lost (every hand's wind at the click's start gearings, before less after) is the chimes' booked plus the remainder's rise, the mergers' two-ended cross terms and the lays' cross terms carried by the remainder; mergers among them."""
+        calibre, piece = world_of("world_hole.json")
+        books, clicked = [], click.click
+    
+        def board(clock: Clock) -> int:
+            reads = [
+                readings.gearing_of(clock, r, clock.start_load, clock.start_factors) for r in clock.hands()
+            ]
+            return sum(
+                int(hands.wind(clock, r.gears, g).sum()) for r, g in zip(clock.hands(), reads, strict=True)
+            )
+    
+        def booked(clock: Clock, starts: Any, held: Any, going: int = 1, note: Any = None) -> None:
+            wind, slack, log_from = board(clock), int(clock.slack.sum()), len(clock.log)
+            clicked(clock, starts, held, going, note)
+            new = clock.log[log_from:]
+            chimes = sum(int(e["booked"]) for e in new if e["event"] == "credit")
+            merged = sum(1 for e in new if e["event"] == "birth" and "takes" in e)
+            books.append((wind - board(clock) == chimes + int(clock.slack.sum()) - slack, merged))
+    
+        monkeypatch.setattr(click, "click", booked)
+        clock = Clock(calibre, piece)
+        for _ in range(30):
+            clock.tick()
+>       assert all(closed for closed, _merged in books) and sum(m for _c, m in books) > 0
+E       assert (True and 0 > 0)
+E        +  where True = all(<generator object test_the_books_close_at_every_click_mergers_and_lays_alike.<locals>.<genexpr> at 0x7ffa8e6e3e60>)
+E        +  and   0 = sum(<generator object test_the_books_close_at_every_click_mergers_and_lays_alike.<locals>.<genexpr> at 0x7ffa8e6e3ca0>)
+
+tests/test_the_record.py:566: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_the_record.py::test_the_books_close_at_every_click_mergers_and_lays_alike
+1 failed, 27 deselected in 8.94s

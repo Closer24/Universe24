@@ -1,0 +1,16 @@
+=== mutant lead_now
+FAIL T2 the charge Q and the current J: (R, P, C) = (-, +, -) and (+, -, -), so both CPT-odd as a four-vector's parts
+FAIL T4 the electromagnetic couplings Q A0, J A and the spin term S . B are even under R, P and C separately
+FAIL T7 the plan's coupling S . J breaks the mirror (P-odd) and is CPT-ODD on the engine : {'R': 0, 'P': -1, 'C': 1, 'PR': 0}
+FAIL T8 SW . J, S . Pm and S . E break the mirror and are CPT-even
+RESULT: FAILED T2 the charge Q and the current J: (R, P, C) = (-, +, -) and (+, -, -), so both CPT-odd as a four-vector's parts, T4 the electromagnetic couplings Q A0, J A and the spin term S . B are even under R, P and C separately, T7 the plan's coupling S . J breaks the mirror (P-odd) and is CPT-ODD on the engine, T8 SW . J, S . Pm and S . E break the mirror and are CPT-even
+=== mutant kramers
+FAIL T4 the electromagnetic couplings Q A0, J A and the spin term S . B are even under R, P and C separately
+FAIL T5 the middle-slot spin S is (+, +, -): the classical twin bilinear is C-odd (nature's spin density is C-even)
+FAIL F3 C C = -1 on every twin pair of the box, and no twin pair but 0 is its own conjugate (no Majorana twin train) : 48 fixed
+RESULT: FAILED T4 the electromagnetic couplings Q A0, J A and the spin term S . B are even under R, P and C separately, T5 the middle-slot spin S is (+, +, -): the classical twin bilinear is C-odd (nature's spin density is C-even), F3 C C = -1 on every twin pair of the box, and no twin pair but 0 is its own conjugate (no Majorana twin train)
+=== mutant a0
+FAIL T3 E and B: (-, -, -) and (+, +, -), both CPT-even as a rank-2 tensor's parts
+FAIL T4 the electromagnetic couplings Q A0, J A and the spin term S . B are even under R, P and C separately
+FAIL T8 SW . J, S . Pm and S . E break the mirror and are CPT-even
+RESULT: FAILED T3 E and B: (-, -, -) and (+, +, -), both CPT-even as a rank-2 tensor's parts, T4 the electromagnetic couplings Q A0, J A and the spin term S . B are even under R, P and C separately, T8 SW . J, S . Pm and S . E break the mirror and are CPT-even

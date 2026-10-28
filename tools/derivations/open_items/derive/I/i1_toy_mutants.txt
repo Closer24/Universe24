@@ -1,0 +1,49 @@
+=== mutant nopawl_seen
+I1 the exact toy, a 3^3 torus; mutant: nopawl_seen
+FAIL  C1 Mesh current antisymmetric, fixA: one frame, odd/skew: 0 of 254 Meshes not antisymmetric; pawl wall, odd/skew: 232 of 232 Meshes not antisymmetric
+FAIL  C1 Mesh current antisymmetric, fixB: one frame, identity triple: 0 of 2 Meshes not antisymmetric; one frame, odd/skew: 0 of 252 Meshes not antisymmetric; pawl wall, odd/skew: 232 of 232 Meshes not antisymmetric
+FAIL  C1 Mesh current antisymmetric, fixAB: one frame, odd/skew: 0 of 240 Meshes not antisymmetric; pawl wall, odd/skew: 245 of 246 Meshes not antisymmetric
+FAIL  C2 Q* kept to the last digit, fixAB: Q* moved at 40 of 40 exact ticks
+FAIL  C3 the pawl a pure gauge, fixA, the count framed, the odd gears framed, the flows framed: 80 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C3 the pawl a pure gauge, fixB, the count framed, the odd gears not framed, the flows not framed: 80 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows not framed: 81 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C5a moving rates: Q* kept by the step at the tick's own weights, and Q*' - Q* = B exactly: identity failures 24 of 24; Q* moved at 12 of 12 ticks (B is not 0)
+FAIL  C5b the momentum carried into the next tick's charge unit keeps Q*: Q* moved at 12 of 12 ticks
+FAIL  C6b the sweep turned with the pawl, mirrored about the held moment: Q*' - Q* = -(the turned clocks' inflow): identity failures 4 of 4; Q* moved at 4 of 4 (the inflow is not 0)
+FAIL  C6c the sweep turned with the pawl, mirrored on the stepped state: Q* kept: Q* moved at 4 of 4 turnovers
+21 of 32 checks PASS; FAIL: ['C1 Mesh current antisymmetric, fixA', 'C1 Mesh current antisymmetric, fixB', 'C1 Mesh current antisymmetric, fixAB', 'C2 Q* kept to the last digit, fixAB', 'C3 the pawl a pure gauge, fixA, the count framed, the odd gears framed, the flows framed', 'C3 the pawl a pure gauge, fixB, the count framed, the odd gears not framed, the flows not framed', 'C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows not framed', "C5a moving rates: Q* kept by the step at the tick's own weights, and Q*' - Q* = B exactly", "C5b the momentum carried into the next tick's charge unit keeps Q*", "C6b the sweep turned with the pawl, mirrored about the held moment: Q*' - Q* = -(the turned clocks' inflow)", 'C6c the sweep turned with the pawl, mirrored on the stepped state: Q* kept']
+=== mutant count_plain
+I1 the exact toy, a 3^3 torus; mutant: count_plain
+FAIL  C1 Mesh current antisymmetric, fixA: one frame, odd/skew: 0 of 254 Meshes not antisymmetric; pawl wall, odd/skew: 195 of 232 Meshes not antisymmetric
+FAIL  C1 Mesh current antisymmetric, fixB: one frame, identity triple: 0 of 2 Meshes not antisymmetric; one frame, odd/skew: 0 of 252 Meshes not antisymmetric; pawl wall, odd/skew: 194 of 232 Meshes not antisymmetric
+FAIL  C1 Mesh current antisymmetric, fixAB: one frame, odd/skew: 0 of 240 Meshes not antisymmetric; pawl wall, odd/skew: 216 of 246 Meshes not antisymmetric
+FAIL  C2 Q* kept to the last digit, fixAB: Q* moved at 40 of 40 exact ticks
+FAIL  C3 the pawl a pure gauge, fixA, the count framed, the odd gears framed, the flows framed: 80 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C3 the pawl a pure gauge, fixB, the count framed, the odd gears not framed, the flows not framed: 80 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows not framed: 80 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C5a moving rates: Q* kept by the step at the tick's own weights, and Q*' - Q* = B exactly: identity failures 24 of 24; Q* moved at 12 of 12 ticks (B is not 0)
+FAIL  C5b the momentum carried into the next tick's charge unit keeps Q*: Q* moved at 12 of 12 ticks
+FAIL  C6b the sweep turned with the pawl, mirrored about the held moment: Q*' - Q* = -(the turned clocks' inflow): identity failures 4 of 4; Q* moved at 4 of 4 (the inflow is not 0)
+FAIL  C6c the sweep turned with the pawl, mirrored on the stepped state: Q* kept: Q* moved at 4 of 4 turnovers
+21 of 32 checks PASS; FAIL: ['C1 Mesh current antisymmetric, fixA', 'C1 Mesh current antisymmetric, fixB', 'C1 Mesh current antisymmetric, fixAB', 'C2 Q* kept to the last digit, fixAB', 'C3 the pawl a pure gauge, fixA, the count framed, the odd gears framed, the flows framed', 'C3 the pawl a pure gauge, fixB, the count framed, the odd gears not framed, the flows not framed', 'C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows not framed', "C5a moving rates: Q* kept by the step at the tick's own weights, and Q*' - Q* = B exactly", "C5b the momentum carried into the next tick's charge unit keeps Q*", "C6b the sweep turned with the pawl, mirrored about the held moment: Q*' - Q* = -(the turned clocks' inflow)", 'C6c the sweep turned with the pawl, mirrored on the stepped state: Q* kept']
+=== mutant transverse
+I1 the exact toy, a 3^3 torus; mutant: transverse
+FAIL  C4 the 24 commute with the step, head: 24 rotations of determinant 1; 21 of 24 do not commute
+FAIL  C4 the 24 commute with the step, fixAB: 24 rotations of determinant 1; 21 of 24 do not commute
+30 of 32 checks PASS; FAIL: ['C4 the 24 commute with the step, head', 'C4 the 24 commute with the step, fixAB']
+=== mutant skew_far
+I1 the exact toy, a 3^3 torus; mutant: skew_far
+FAIL  C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows not framed: 81 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows framed (expected to fail): 0 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C8 run back, the sweep turned with the pawl, fixAB, count kept, flows negated: retraces exactly: False; Q* through the turnover: kept
+29 of 32 checks PASS; FAIL: ['C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows not framed', 'C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows framed (expected to fail)', 'C8 run back, the sweep turned with the pawl, fixAB, count kept, flows negated']
+=== mutant no_rescale
+I1 the exact toy, a 3^3 torus; mutant: no_rescale
+FAIL  C5b the momentum carried into the next tick's charge unit keeps Q*: Q* moved at 12 of 12 ticks
+31 of 32 checks PASS; FAIL: ["C5b the momentum carried into the next tick's charge unit keeps Q*"]
+=== mutant sweep_not_turned
+I1 the exact toy, a 3^3 torus; mutant: sweep_not_turned
+FAIL  C6b the sweep turned with the pawl, mirrored about the held moment: Q*' - Q* = -(the turned clocks' inflow): identity failures 4 of 4; Q* moved at 4 of 4 (the inflow is not 0)
+FAIL  C6c the sweep turned with the pawl, mirrored on the stepped state: Q* kept: Q* moved at 4 of 4 turnovers
+FAIL  C8 run back, the sweep turned with the pawl, fixAB, count kept, flows negated: retraces exactly: False; Q* through the turnover: reversed
+29 of 32 checks PASS; FAIL: ["C6b the sweep turned with the pawl, mirrored about the held moment: Q*' - Q* = -(the turned clocks' inflow)", 'C6c the sweep turned with the pawl, mirrored on the stepped state: Q* kept', 'C8 run back, the sweep turned with the pawl, fixAB, count kept, flows negated']

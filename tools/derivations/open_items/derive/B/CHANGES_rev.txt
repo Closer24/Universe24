@@ -1,0 +1,85 @@
+CHANGES: S/derive/B_rev/DERIVATION.md against the landed draft
+S/t24/tools/derivations/open_items/derive/B/DERIVATION.md (298 lines).
+
+Each change carries a tag [rev N] in the revision. Columns: tag | revision line | draft line | mark | the change | its source.
+Sources: V = the verifier (derive/B_verify/REPORT.txt and its outputs); Sofer = #2187 6467734998 as TENSOR24.md
+section 16's block for draft B carries it; L11 = law 11, scribe-5 line 106; H = derive/H/DERIVATION.md;
+HV = derive/H_verify (its outputs; derive/INDEX.md item H; TENSOR24.md section 30, item 11 (i), (p)); David = the HOLD notes.
+Law lines: scribe-5's docs/ALGEBRA.md (origin/scribe-5, abf8e61e6) alone. No probe was run; every count is cited
+from existing outputs.
+
+rev 1  | 3       | 3       | struck, quoted | "step 5 ... step 6 ... are owed" replaced: step 5 given (V), Sofer's check given, sign-off on HOLD; REFUTED and SUPERSEDED added to the marks | V, Sofer, David
+rev 2  | 6-7     | 5-6     | added | the law's version and numbering (scribe-5, abf8e61e6); law 11 quoted from line 106; "This revision runs no probe" | L11
+rev 3  | 14      | 13      | SUPERSEDED; REFUTED | F5 row: kind "threshold" struck (law 4's comparison, R9); status SUPERSEDED as replacement; invariant kept PROVED/CHECKED; survivor named; hole 900-tick stop moved 476 to 680 | V, Sofer, L11, H, HV, David
+rev 4  | 15      | 14      | SUPERSEDED; REFUTED | end-teeth row: "threshold" struck (Sofer's "fallback renamed"); SUPERSEDED; 'laid' 4 to 0 added | V, Sofer, L11, H
+rev 5  | 16      | 15      | REFUTED | F2 upper row: "threshold (the horizon)" and "OPEN as a threshold" struck; the clamp renamed stays; identity CHECKED 223,297 | V, Sofer, David
+rev 6  | 17      | 16      | REFUTED | F2 lower row: "S < 0 at any nonzero tension" refuted on the integers (4,713 of 641,600); "what it changes" limited to past the rounding's band | V, Sofer
+rev 7  | 18      | 17      | added | F1 row: the bound struck in the law (line 106) and by H (F-H6); the course's closure stays OPEN | L11, H
+rev 8  | 21      | 20      | REFUTED (toy only) | mass-source row: "no energy is kept" refuted on a toy only; on the head OPEN; the factor 36 CHECKED | V, Sofer, David
+rev 9  | 22      | 21      | REFUTED | release row: "R14 goes" refuted (renamed); I1 fails at a negative pinion; I1 to I3 kept PROVED on 0 <= pinion <= rim | V, Sofer, David
+rev 10 | 28      | 27      | SUPERSEDED; struck cite quoted | by-label floor row: "what goes" struck; law cites moved to lines 1608, 106, 1909 | L11, H, V
+rev 11 | 29      | 28      | SUPERSEDED; struck cite quoted | by-label end-teeth row: law cites moved to lines 1608, 1602, 106, 1909 | L11, H
+rev 12 | 30      | 29      | REFUTED; struck cite quoted | by-label F2 upper row: nothing goes; "The horizon" numbered (1610); departure at line 106 | V, Sofer
+rev 13 | 31      | 30      | wording; struck cite quoted | "nothing yet (OPEN)" to "nothing (OPEN)"; law cites to line 106 departures and 1909 | L11
+rev 14 | 32      | 31      | struck name quoted | "BH-S1, the frozen Clock" to "BH-S1, the frozen Node-clock" (line 132; named at line 106) | L11
+rev 15 | 33      | 32      | wording | R8's order "measured and left unchanged" (the draft's wording held a phrase this revision may not use) | -
+rev 16 | 34      | 33      | REFUTED | R14's clock.unsprung() refuted as a removal (renamed) | V, Sofer
+rev 17 | 40      | 39      | added | c >= 0 iff X >= Gamma CHECKED by V (Gamma 1,000 and 6,000) | V
+rev 18 | 41      | 40      | added | line 1608 records the typed floor as the code's departure; the bottom trigger withdrawn | L11 (line 1608)
+rev 19 | 42      | 41      | added | the step's edge cited at line 1909 | law line 1909
+rev 20 | 62-66   | 61      | SUPERSEDED; REFUTED; survivor | section 3 heading kind "(a threshold)" struck; SUPERSEDED paragraph; David's survivor (X = Gamma as the dial's zero, 8,702 cases) | L11, H, HV, David
+rev 21 | 68      | 63      | SUPERSEDED; REFUTED; struck quoted | the formula struck; "a quotient ... X div Gamma = 0" refuted (misses raw X+ <= 0, 19 on the hole) | L11, V, Sofer
+rev 22 | 70      | 65      | SUPERSEDED; struck quoted | "In the clocks" struck (an if renamed) | L11, HV
+rev 23 | 72      | 67      | corrected; struck quoted | "ALGEBRA.md line 432" to line 448; the paraphrase replaced by the law's words; "The floor keeps every clock off that load" struck | V, law line 448
+rev 24 | 77      | 72      | corrected; struck quoted | "the clamp is never reached and goes" struck: goes only at the tick-start load; readings.py:62 OPEN | V
+rev 25 | 84-88   | 78-82   | added | first differing ticks reproduced by V and by HV under F-H4 (node 3, hole 4, chiral 3; rewind 20 of 20) | V, HV
+rev 26 | 99      | 93      | added | unreported physics: hole 900 stop 476 to 680 (397 to 196); pinned clocks node 1 to 19, chiral 0 to 41, hole 250 to 243; the law-change question replaced by law 11 | V, Sofer, L11
+rev 27 | 103-105 | 97      | SUPERSEDED; REFUTED | section 4 heading kind struck; SUPERSEDED paragraph (line 106 departure; H's P7 strikes the fallback); "fallback renamed" | L11, H, V, Sofer
+rev 28 | 107, 139| 99, 127 | SUPERSEDED; struck quoted | "Law 4's floor clause ... (ALGEBRA.md, The floor)" struck: the floor replaced (line 1608), the discard's letter at the top (line 1602); "and the law's floor clause is its letter" struck | L11, law lines 1602, 1608
+rev 29 | 111     | 103     | SUPERSEDED; struck quoted | "The fallback's own test ... goes" struck (H strikes the fallback) | H
+rev 30 | 127-132 | 117-120 | corrected | the ET3 table gains 'laid' 4 to 0 | V
+rev 31 | 141     | 129     | corrected; struck cite quoted | David's 95573578a reading cited at line 1909, "The great clock's bounds" name struck | law line 1909
+rev 32 | 143     | 131     | SUPERSEDED; struck quoted | "What it replaces: tick.end_teeth's fallback" struck (H strikes it) | H
+rev 33 | 147     | 135     | REFUTED | 5.1 heading: "(a threshold)" replaced by the identity PROVED, the threshold REFUTED | V, Sofer
+rev 34 | 149     | 137     | REFUTED; struck quoted | "In the clocks ... (the horizon, ALGEBRA.md's ...)" struck; line 1610 quoted | V, Sofer, law line 1610
+rev 35 | 153     | 141     | added | identity CHECKED by V: 223,297 exhaustive, 20,000 random to 10^40 | V
+rev 36 | 155     | 143     | REFUTED; struck quoted | OPEN (a) struck: settled, a clamp renamed (click.py:85 jam; cut unpinned d = 1 to 45 / 1 to 44; factor 0 on [956, 1044]); stays (David); line 106 departure; (b) CHECKED by V | V, Sofer, L11, HV, David
+rev 37 | 165     | 151     | REFUTED; struck quoted | "above 6 Gamma^2 at any tension other than 0. So S < 0 ..." struck: S >= 0 at 4,713 of 641,600 triples; (1, 1, -2) gives S > 0; the clamp sentence CHECKED by V | V, Sofer, David
+rev 38 | 167     | 153     | added | lower side a departure (line 106); H's F-H5 no carry by HV; OPEN kept | L11, HV
+rev 39 | 175     | 161     | SUPERSEDED; struck quoted | "Section 3 removes (2) by the floor" struck; bound (2) a departure (line 106); line 1909 cites for David's two-ended cone and DAVID-THREE-BOUNDS.md | L11, H, TENSOR24.md s30 item 10
+rev 40 | 183     | 169     | added | F1's algebra CHECKED by V (20,000 of 20,000) | V
+rev 41 | 186     | 172     | REFUTED; struck quoted | "3 F div n = 3 key from 500 to 5,000,000" struck: the forms read 108,045 at 750, not 108,000 (3 key only at 500 and 5,000,000) | V, b3_drive.txt, David
+rev 42 | 187     | 173     | REFUTED; struck quoted | "998 against 998 at 749" struck: 997 against 998 | V, b3_drive.txt, David
+rev 43 | 188     | 174     | corrected; struck quoted | the cap's reason "exactly when (4/3) n >= Gamma" struck; with F = n key the clamp would be idle at 750; counts (750: 64 of 64; 749: tick 39) kept CHECKED | V
+rev 44 | 205     | 191     | added | the owner struck bound (3) (line 106); H's F-H6; DAVID-THREE-BOUNDS.md cited at line 1909 | L11, H
+rev 45 | 207     | 193     | added | verdict OPEN kept for the closure; the bound struck in the law | L11
+rev 46 | 211     | 195     | added | section 7 CONFIRMED by V; BH-S1 at line 132, named at line 106 | V, L11
+rev 47 | 255     | 239     | added | the factor 36 and the ratios CHECKED by V; exact exponential 35.946: the rise is E8's rounding | V
+rev 48 | 256     | 240     | REFUTED (toy only); struck quoted | "no energy over every train and the held field is kept ... the books cannot close on it" struck: refuted on a toy only (1,883 vs 969,560 ppm; control reversed); on the head OPEN | V, Sofer, David
+rev 49 | 263     | 247     | added | "div" is Rule3's floor quotient; u_h is coupling_of's step: R14 renamed, not removed | V, Sofer
+rev 50 | 272     | 256     | added | I1 fails at a negative pinion (45,150 pairs; piece.py:43) | V
+rev 51 | 276     | 260     | added; 2O | twin remainders survive only as key >= 12 Gamma, no test calibre has twins; the twin hands written as 2O's kind | V, TENSOR24.md s16
+rev 52 | 280     | 264     | added | I1 to I3 CHECKED by V (45,450; 100,000; 100,000) | V
+rev 53 | 284     | 266-267 | added | the rewind with no tally rests on B's runs alone (V did not re-run it) | V
+rev 54 | 287     | 270     | REFUTED in part; struck quoted | "clock.unsprung() at tick.advances (and at the push's pinion)" struck as a removal; H's F-H8 a declaration per train by HV | V, Sofer, H, HV
+rev 55 | 291     | 272     | added | the second hand's answers point to REPORT.txt and section 12 | V
+rev 56 | 299     | 280     | 2O | "the twin hands" marked as 2O's kind | TENSOR24.md s16
+rev 57 | 303     | 284     | added | the five .raw files named in the .txt headers are not kept | V
+rev 58 | 319-337 | (new)   | added | section 12: the verifier's mutants and their outputs, cited as given | V (v1_algebra.txt, v2_floor*.txt, v2_et3_*.txt)
+rev 59 | 339-348 | (new)   | added | section 13: the law's lines (106, 132, 448, 1602, 1608, 1610, 1909) and the verifier's protocol findings answered | V, law
+rev 60 | 60      | 59      | added | the verifier's eight re-runs match | V
+rev 61 | 74      | 69      | relabelled | the invariant marked a property of the superseded variant (H's P7) | H
+rev 62 | 78      | 72-73   | added | invariant CHECKED by V (toy 160,000; node 66/0, hole 224/0, chiral 192/0) | V
+rev 63 | 82      | 76      | added | rewind CHECKED by V (chiral 40/40, node 20/20) | V
+rev 64 | 99      | 93      | added | the 500-quanta bang never drops below Gamma | V
+rev 65 | 101     | 95      | added | readings.py:62; the held load below 0 a departure at line 106 | V, L11
+rev 66 | 113, 119| 105, 109| relabelled; added | ET3's proofs marked properties of the superseded variant; W+ > 0 at 160,000 of 160,000, 25,025 fallbacks discarded, rewind 40/40 | V
+rev 67 | 125     | 115     | added | 'laid' 4 to 0 cited to v2_et3_hole.txt | V
+rev 68 | 134     | 122     | added | HV counts 5 W+ <= 0 under F-H4, 0 at a clock not turned | HV
+rev 69 | 159, 163| 147-149 | relabelled; added | the lemma PROVED in exact arithmetic; identity CHECKED by V (641,600 of 641,600) | V
+rev 70 | 175     | 161     | corrected | the cone fails without a bound once the tensions pass the rounding's band | V
+rev 71 | 217     | 201     | added | own grips CHECKED by V (100,000 random) | V
+rev 72 | 231     | 215     | added | H takes the two-ended grip as F-H9 (P11) | H
+
+"The 48": the landed draft has no such phrase (its "48" are counts: 48%, 32 / 48, 48.8); 2O is written where the 24
+with the twin's sign is meant (rev 51, rev 56).

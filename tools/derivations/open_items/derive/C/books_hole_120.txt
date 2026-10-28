@@ -1,0 +1,2 @@
+world_hole.json quanta None ticks 120: books closed at 119 of 120 phases; mergers 8; births 31
+  open at tick 79 by -1: mergers 1 of births 1

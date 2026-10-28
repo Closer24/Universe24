@@ -1,0 +1,15 @@
+1. Fixed two-spinor states, by characters and by the solved fixed space
+  [ok] the 48 (48 lifts): 1 by characters, 1 solved
+  [ok] the 16 lifts of the Mesh's line (D4) (16 lifts): 1 by characters, 1 solved
+  [ok] the 8 quarter-turn lifts about the Mesh (C4) (8 lifts): 2 by characters, 2 solved
+  [ok] Q8 (8 lifts): 1 by characters, 1 solved
+  [ok] the singlet (0, 1, -1, 0) fixed by all 48: 48
+  [ok] the triplet along the Mesh (0, 1, 1, 0) fixed by the 8: 8
+  [ok] and reversed by the 8 end-exchanging half-turn lifts: 8
+2. Independence of the two premises
+    the one state fixed by the 48: ['0', '-1', '1', '0'], under the exchange of the two hands: odd
+  [ok] (a) an axis-blind write gives one state, the same for eps = +1 and eps = -1 (the fitted pair has no exchange term)
+  [ok] (b) a write that reads the Mesh's axis keeps two states (the singlet and the triplet along the Mesh), whatever eps: 2 states
+   so 'draft D's premise is therefore this draft's click law' does not follow: D's is a covariance of the fitting's
+   write, E's is the A1 of two equal quanta choosing eps; the head's fitting breaks D's and leaves E's untouched
+result: 0 failures

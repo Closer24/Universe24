@@ -1,0 +1,10 @@
+g1_pair3_400_head.txt world_pair_3.json 400 head 400 mod digest head
+g1_pair3_400_even.txt world_pair_3.json 400 even 400 mod digest head
+g1_pair3_400_down.txt world_pair_3.json 400 down 400 mod digest head
+g1_pair3_400_up.txt world_pair_3.json 400 up 400 mod digest head
+g1_pair3_400_even_exact.txt world_pair_3.json 400 even 400 exact digest head
+g1_pair3_400_down_exact.txt world_pair_3.json 400 down 400 exact digest head
+g1_polar12_head.txt world_polarization.json 12 head 12 mod digest head
+g1_polar12_head_ueven.txt world_polarization.json 12 head 12 mod digest even
+g1_polar12_head_udown.txt world_polarization.json 12 head 12 mod digest down
+g3_u_effect.txt g3_u_effect.py

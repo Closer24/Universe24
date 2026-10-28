@@ -40,7 +40,314 @@ DUPLICATE_LINES = 8
 DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
+TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality in the stencil form, purity across two worlds and across fresh interpreters at other hash seeds, rename with an inert train, the 24's images with the translations, the formula against a naive model, the run back by a fresh engine) for any engine, on a trivial engine at three seeds of Python integers whose every bit is drawn across 2**256 on a side of 5, each failing on every mutant it must catch; the Boss's room by name."
+TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, the integers and the sides at least 1, every reference whole, every integer within the width), and each of its rules refuses its own broken file by name; the Boss's room by name."
+TENSOR24_SCHEMA = "Tensor24's record schema, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: every field of every line the runner writes is a whole number of any width, a label or a row of them, and a float, a truth value, an absence or a mapping in a field is seen; the Boss's room by name."
+TENSOR24_ALGEBRA = "Tensor24's algebra, stage 1 of the build the owner approved at 16:0x UTC on 2026-10-28: Rule3's carry, the one whether, the choice, the fine tooth's home and its flip, each law failing on its own mutant, the tie rule's odd quotient at both parities among them; the Boss's room by name."
+TENSOR24_CLOCK = "Tensor24's one clock, stage 2 of the build the owner approved at 16:0x UTC on 2026-10-28: a gear's tick and its exact run back at teeth counts that change from tick to tick, the rate dial's beat, a stopped clock's beat, and the tie rule at the tick, each failing on its own mutant; the Boss's room by name."
+TENSOR24_MESH = "Tensor24's Mesh, stage 3 of the build the owner approved at 16:0x UTC on 2026-10-28: the due beat, the read as of the reader's count, forty random schedules equal to the synchronous pass, the rewind under a random schedule, a stopped clock keeping pace, and the frame's six properties on the tick against its naive model, each failing on its own mutant; the Boss's room by name."
+TENSOR24_RING = "Tensor24's Gaussian ring, stage 5 of the build the owner approved at 16:0x UTC on 2026-10-28: the hand's product, conjugate, norm and pair, and the twin hand's overlap, reverse and axis, exact at every size: T T +1 on a hand and -1 on a twin hand, Lagrange's identity for the split, S . S = rho rho, each law failing on its own mutant; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_tensor24_ring.py::hands": (
+        4,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::equal": (
+        3,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::ringed": (
+        15,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::conjugate": (
+        6,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::sized": (
+        4,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::paired": (
+        4,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::reversed_twice": (
+        14,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::lagrange": (
+        7,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::axial": (
+        5,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::mutants": (
+        13,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::test_each_law_of_the_ring_holds_and_fails_on_its_mutant": (
+        3,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_files.py::edits": (
+        158,
+        TENSOR24_FILES,
+    ),
+    "tests/test_the_tensor24_files.py::test_the_examples_hold_and_each_rule_refuses_its_own_broken_file_by_name": (
+        12,
+        TENSOR24_FILES,
+    ),
+    "tests/test_the_tensor24_schema.py::leaves": (
+        12,
+        TENSOR24_SCHEMA,
+    ),
+    "tests/test_the_tensor24_schema.py::test_every_line_holds_whole_numbers_and_labels_and_a_float_a_truth_an_absence_or_a_mapping_is_seen": (
+        7,
+        TENSOR24_SCHEMA,
+    ),
+    "tests/test_the_tensor24_algebra.py::numbers": (
+        13,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::exact": (
+        6,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::odd": (
+        9,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::whether": (
+        4,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::choice": (
+        4,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::back": (
+        5,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::involution": (
+        7,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::mutants": (
+        15,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::test_each_law_of_the_carry_holds_and_fails_on_its_mutant": (
+        11,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_clock.py::clock": (
+        10,
+        TENSOR24_CLOCK,
+    ),
+    "tests/test_the_tensor24_clock.py::run": (
+        21,
+        TENSOR24_CLOCK,
+    ),
+    "tests/test_the_tensor24_clock.py::rewind": (
+        3,
+        TENSOR24_CLOCK,
+    ),
+    "tests/test_the_tensor24_clock.py::stopped": (
+        5,
+        TENSOR24_CLOCK,
+    ),
+    "tests/test_the_tensor24_clock.py::negated": (
+        11,
+        TENSOR24_CLOCK,
+    ),
+    "tests/test_the_tensor24_clock.py::mutants": (
+        7,
+        TENSOR24_CLOCK,
+    ),
+    "tests/test_the_tensor24_clock.py::test_each_law_of_one_clock_holds_and_fails_on_its_mutant": (
+        4,
+        TENSOR24_CLOCK,
+    ),
+    "tests/test_the_tensor24_mesh.py::parted": (
+        14,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::until": (
+        10,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::order": (
+        5,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::back": (
+        5,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::stopped": (
+        5,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::world": (
+        13,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::naive": (
+        23,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::engine": (
+        12,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::mutants": (
+        28,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::law": (
+        4,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::test_each_law_of_the_mesh_holds_and_fails_on_its_mutant": (
+        5,
+        TENSOR24_MESH,
+    ),
+    "tests/test_the_tensor24_mesh.py::test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds": (
+        2,
+        TENSOR24_MESH,
+    ),
+    "tests/frame.py::board": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::near": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::flat": (
+        4,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::wide": (
+        4,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::same": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::local": (
+        14,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::pure": (
+        8,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::renamed": (
+        13,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::turns": (
+        9,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::turned": (
+        16,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::formula": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::bijective": (
+        9,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::answer": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::elsewhere": (
+        13,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::unseeded": (
+        4,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::holds": (
+        6,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::world": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::trivial": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::untrivial": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::naive": (
+        9,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::broken": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::hidden": (
+        13,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::logged": (
+        10,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::engine": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::cached": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::salted": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::two": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::mark": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::mutants": (
+        58,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_must_catch": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::test_the_images_fail_on_a_board_the_24_do_not_keep": (
+        2,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds": (
+        2,
+        TENSOR24_FRAME,
+    ),
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (
         26,
         "The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): 20 bangs in 100 ticks within 128 bits under the three bounds, the held field in its universe, and under the order-free click and the one mirror its seed's symmetry standing through the run, every family born chiming one mesh apart at the board's own share exactly (the heavy family bound above it before them, the order's reading); the Boss's room by name.",

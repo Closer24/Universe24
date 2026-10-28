@@ -1,0 +1,1 @@
+flip W-1-r, W and W+ of different parity: T S T != S^-1 in 100000 of 100000

@@ -1,0 +1,13 @@
+world_hole.json, 60 ticks: the weighted Mesh current's failure of antisymmetry |T| per Mesh-tick (vacuum sweep units)
+  hand 0, one frame, identity triple:   1427 Mesh-ticks, SUM |T|          0.0, max |T|        0.0
+  hand 0, one frame, odd/skew turn  :  11143 Mesh-ticks, SUM |T|       7397.9, max |T|      144.0
+  hand 0, pawl wall, identity triple:    316 Mesh-ticks, SUM |T|          0.0, max |T|        0.0
+  hand 0, pawl wall, odd/skew turn  :   9614 Mesh-ticks, SUM |T|     104850.9, max |T|    18404.7
+  hand 1, one frame, identity triple:   1427 Mesh-ticks, SUM |T|          0.0, max |T|        0.0
+  hand 1, one frame, odd/skew turn  :  11143 Mesh-ticks, SUM |T|       1442.4, max |T|       17.1
+  hand 1, pawl wall, identity triple:    316 Mesh-ticks, SUM |T|          0.0, max |T|        0.0
+  hand 1, pawl wall, odd/skew turn  :   9614 Mesh-ticks, SUM |T|      21020.0, max |T|     1329.2
+  hand 2, one frame, identity triple:   1427 Mesh-ticks, SUM |T|          0.0, max |T|        0.0
+  hand 2, one frame, odd/skew turn  :  11143 Mesh-ticks, SUM |T|       1005.4, max |T|       13.5
+  hand 2, pawl wall, identity triple:    316 Mesh-ticks, SUM |T|          0.0, max |T|        0.0
+  hand 2, pawl wall, odd/skew turn  :   9614 Mesh-ticks, SUM |T|      31499.5, max |T|     2062.1

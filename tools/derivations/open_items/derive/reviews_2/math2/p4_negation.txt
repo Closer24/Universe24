@@ -1,0 +1,4 @@
+flip W-1-r W+ = W S N != N S in 0 of 100000
+flip W-1-r W+ of the other parity S N != N S in 49754 of 49754
+mutant mirror 2mid-r W+ = W S N != N S in 8594 of 100000
+mutant mirror 2mid-r W+ of the other parity S N != N S in 8461 of 50164

@@ -1,0 +1,7 @@
+g1_bang250_head.txt world_bang.json 250 head 250 mod digest
+g1_bang250_up.txt world_bang.json 250 up 250 mod digest
+g1_bang250_even.txt world_bang.json 250 even 250 mod digest
+g1_bang250_down.txt world_bang.json 250 down 250 mod digest
+g1_bang250_even_exact.txt world_bang.json 250 even 250 exact digest
+g1_bang250_down_exact.txt world_bang.json 250 down 250 exact digest
+g1_bang250_head_exact.txt world_bang.json 250 head 250 exact digest

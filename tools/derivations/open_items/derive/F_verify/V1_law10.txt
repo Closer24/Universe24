@@ -1,0 +1,9 @@
+PASS A1 no reading rises at every bang of a closed cycle (n = 1..7, values 0..4, exhaustive) : 0 found
+PASS A2 readings that rise at every bang but one exist (the closing bang falls) : 80 found
+PASS A3 over a closed cycle the rises total exactly the falls (1000 random integer cycles)
+PASS B1 the two dials close a cycle of 12 bangs : 12
+PASS B2 the whole reading N rises by 1 at 11 bangs and falls by 11 at the closing bang, the top dial's carry : steps [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -11]
+PASS B3 the top's carry kept as a count rises at every closing, so the full state (dials, count) never returns : count 2 after 24 bangs
+PASS C1 a+ = 2 a - a- mod M is a bijection of (Z/M)^2 (M = 7), so every orbit on the dial closes
+PASS C2 the drift of one notch a tick closes after M ticks on the dial (one carry per closing) : [7]
+RESULT: ALL PASS

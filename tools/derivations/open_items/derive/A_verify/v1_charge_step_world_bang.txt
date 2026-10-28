@@ -1,0 +1,48 @@
+world_bang.json, 12 ticks, e = A B = 18000; coupled hands [0, 1, 2]
+per tick: turned clocks, stopped clocks: [(1, 0, 0), (2, 0, 0), (3, 64, 0), (4, 0, 0), (5, 0, 0), (6, 0, 0), (7, 0, 0), (8, 64, 0), (9, 0, 0), (10, 0, 0), (11, 0, 0), (12, 0, 0)] ...
+ticks with turned clocks: 2  with stopped clocks: 0
+hand 0:
+  plain charge, ticks changed / largest |change| (sweep units):
+    step    :   0 / 0
+    restore :   0 / 0
+    turn    :   0 / 0
+    click   :   0 / 0
+    total   :   0 / 0
+    the step on ticks with no turned and no stopped clock: 0 of 10, largest 0
+  frame charge SUM eps W, the step alone: 0 ticks changed, largest 0
+  the step's exact identities: P' = w' v + rho' at 12 of 12 ticks; D' - D = X Im(conj a pull) + Im(conj v rho') at every live clock: 12 of 12
+  Q_star (eps, 1/(X mr^2), vacuum units), the step's own change: largest 0.0; its turn part 0.0, its carry part 0.0
+  the turn's part with no weights (plain, over w): largest 0.0
+hand 1:
+  plain charge, ticks changed / largest |change| (sweep units):
+    step    :   0 / 0
+    restore :   0 / 0
+    turn    :   0 / 0
+    click   :   0 / 0
+    total   :   0 / 0
+    the step on ticks with no turned and no stopped clock: 0 of 10, largest 0
+  frame charge SUM eps W, the step alone: 0 ticks changed, largest 0
+  the step's exact identities: P' = w' v + rho' at 12 of 12 ticks; D' - D = X Im(conj a pull) + Im(conj v rho') at every live clock: 12 of 12
+  Q_star (eps, 1/(X mr^2), vacuum units), the step's own change: largest 0.0; its turn part 0.0, its carry part 0.0
+  the turn's part with no weights (plain, over w): largest 0.0
+hand 2:
+  plain charge, ticks changed / largest |change| (sweep units):
+    step    :   0 / 0
+    restore :   0 / 0
+    turn    :   0 / 0
+    click   :   0 / 0
+    total   :   0 / 0
+    the step on ticks with no turned and no stopped clock: 0 of 10, largest 0
+  frame charge SUM eps W, the step alone: 0 ticks changed, largest 0
+  the step's exact identities: P' = w' v + rho' at 12 of 12 ticks; D' - D = X Im(conj a pull) + Im(conj v rho') at every live clock: 12 of 12
+  Q_star (eps, 1/(X mr^2), vacuum units), the step's own change: largest 0.0; its turn part 0.0, its carry part 0.0
+  the turn's part with no weights (plain, over w): largest 0.0
+first ticks, hand by hand (tick: step, restore, turn, click | star step = pull + carry):
+  1: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  2: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  3: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  4: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  5: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  6: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  7: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0
+  8: h0: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h1: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0; h2: 0, 0, 0, 0 | 0.0 = 0.0 + 0.0

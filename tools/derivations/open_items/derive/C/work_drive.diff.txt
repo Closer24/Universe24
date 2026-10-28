@@ -1,0 +1,84 @@
+--- /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/t24/src/event_universe/core/rule3.py	2026-10-28 06:04:23.106807023 +0000
++++ work/src/event_universe/core/rule3.py	2026-10-28 10:27:29.427359268 +0000
+@@ -110,6 +110,24 @@
+     )
+ 
+ 
++def time_drive(stretch: Any, meshes_wind: Any, springs_wind: Any, weight: Any, rim: Any, full_rate: Any) -> Any:
++    """Draft C (derive/C/DERIVATION.md, not the head's): the regulator's time gear's drive numerator, J's metric half on
++    the A1 time gear, read as GR's volume equation in the clock's own gauge (the lapse p_0 / Gamma, the scale a = Gamma /
++    p_0, the stretch X = Gamma a^(d + 1)): X'' = kappa X (F - S / d), F the forms and S the stress's whole trace, so
++    F - S / d = ((d + 1) G + 2 d V) / d with G the Meshes' wind and V the springs' wind, kappa = d / (Gamma key); the
++    numerator X ((d + 1) G + 2 d V) weight rim Gamma^3 over the held teeth weight rim Gamma^4 key (the trace's weight
++    cancels). It replaces held_numerator (E10) and needs no clamp (F1): it is never below 0, so it never brakes."""
++    return (
++        stretch
++        * ((AXES + 1) * meshes_wind + SPOKES * springs_wind)
++        * weight
++        * rim
++        * full_rate
++        * full_rate
++        * full_rate
++    )
++
++
+ def winding_of(sine: Any, key: Any) -> Any:
+     """A hand's winding, 3 T s (the conventions' row 12: W_c sin omega_0 to the unit), s the ratio's sine or the rim at the spring 0."""
+     return WINDING_WEIGHT * key * sine
+--- /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/t24/src/event_universe/tick.py	2026-10-28 06:04:23.107923284 +0000
++++ work/src/event_universe/tick.py	2026-10-28 10:27:40.547359929 +0000
+@@ -9,7 +9,7 @@
+ from event_universe import hands, readings
+ from event_universe.core import rates
+ from event_universe.core.acts import carry, mid
+-from event_universe.core.rule3 import carries, held_numerator
++from event_universe.core.rule3 import Gearing, carries, time_drive
+ from event_universe.core.spokes import AXES, SPOKES, across, transverse
+ from event_universe.features import stretch
+ from event_universe.meshes import (
+@@ -210,6 +210,8 @@
+         sweep = zeros(clock.size)
+         self.stress = [zeros(clock.size) for _ in range(REGULATOR - 1)]
+         self.masses = zeros(clock.size)
++        self.meshes_wind = zeros(clock.size)
++        self.springs_wind = zeros(clock.size)
+         for r in self.driven:
+             k = self.where[id(r)]
+             p_side = [
+@@ -241,6 +243,10 @@
+             pulls = hands.products(self.starts[k], self.pull[k])
+             for product, pull in zip(hands.products(u_in, u_out), pulls, strict=True):
+                 self.forms = self.forms + product + carries(-pull, self.train_teeth[k])
++            for a, pull in zip(self.starts[k], pulls, strict=True):
++                own = self.train_spring[k] * a * a
++                self.meshes_wind = self.meshes_wind - pull - own
++                self.springs_wind = self.springs_wind + own
+             self.impelled[k] = p_other
+ 
+     def carry(self) -> None:
+@@ -248,13 +254,19 @@
+         clk, regulator = self.clock, self.regulator
+         k = self.where[id(regulator)]
+         p02, (trace, traceless) = self.rate * self.rate, tensor_parts(self.stress[:AXES])
+-        drive = held_numerator(
+-            clk.trace, self.stretch_now, self.forms, trace, self.rate, clk.rim, clk.full_rate
+-        )
+-        hold = self.stretch_now * self.trains[k][0].dteeth
+-        numerators = [np.minimum(np.maximum(drive, -hold), hold)]
++        numerators = [
++            time_drive(
++                self.stretch_now,
++                carries(self.meshes_wind, clk.teeth),
++                carries(self.springs_wind, clk.teeth),
++                clk.trace,
++                clk.rim,
++                clk.full_rate,
++            )
++        ]
+         numerators += [part * p02 for part in (*traceless, *self.stress[AXES:])]
+-        gearing = readings.gearing_of(clk, regulator, self.load, self.factors)
++        found = readings.gearing_of(clk, regulator, self.load, self.factors)
++        gearing = Gearing(found.grips, found.teeth + found.teeth - sum(found.grips), found.teeth, 0)
+         self.out[k] = clk.act(
+             self.trains[k], gearing, None, numerators, self.going, None, *self.ends(regulator)
+         )[-1]

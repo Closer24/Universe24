@@ -1,0 +1,13 @@
+summed over ticks 1..250: 93116497/1772457958 ; 5.25% < q < 5.26%: True
+ticks 13..250: 93115169/1118290052 True
+ticks 1..12 carry 2616671624 of 7089831832 ; ticks 1 and 2 alone 1769859200 (over 1/4 of the sum: False )
+tick 1: never-clicking share 0/1152000000, in thousandths 0
+tick 2: never-clicking share 0/617859200, in thousandths 0
+tick 5: never-clicking share 0/95020224, in thousandths 0
+tick 10: never-clicking share 896/40910208, in thousandths 0
+tick 20: never-clicking share 5616/122572400, in thousandths 0
+tick 50: never-clicking share 2222272/6054956, in thousandths 367
+tick 100: never-clicking share 1243188/1519316, in thousandths 818
+tick 200: never-clicking share 876104/893608, in thousandths 980
+tick 250: never-clicking share 2262184/2268564, in thousandths 997
+5M: summed share 1096/951980248999 below 2 in 10^9: True ; per tick at 10..60: True

@@ -1,0 +1,29 @@
+Reruns match: i1 32/32, i2 4/4, i3 6/6; i4 in full, 8 runs and 8 rewinds. Files: /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/derive/I_verify/.
+
+1. Two changes keep Q*: CONFIRMED WITH CORRECTIONS.
+- (i) Forced only relative to a framing premise. Each T1 gear may take the near pawl e_x or the far pawl f; all 4 placements keep Q* exactly (toy: 0 of 324 Meshes off, 0 of 20 ticks moved, each), and each commutes with the gauge flip for exactly one framing of (o, V): 0 of 54 against 53-54 of 54 (v1b). The draft's form belongs to o framed, V unframed, which the sources support (lead G-odd, flow K-even); the head's offset pulls and stress gradient follow neither (OPEN 4).
+- (ii) Forced once Q* must survive a turnover (the iff holds), but that reverses 1602's "every charge conjugated", and {fixB, head turnover} also retraces a global top exactly, Q* reversed (C8). P13's turnover signs (count kept, flows negated) are a third change, absent from the patches.
+- Twins: mod 4 is chosen. Pawl-only frames, T^(b_y - b_x) with T^-1 = -T, are antisymmetric (0 of 486); a mod-2 count keeps the charge (0 of 48 ticks moved) but leaves the physical twins at 42 of 48; the pawl plus a sign at every second turnover matches them 48 of 48 (v2). z2_frames reads T^-1 as T, no frame.
+
+2. Proofs: CONFIRMED (P1, P5 redone by hand).
+
+3. Rounding: CONFIRMED. Own recount 95,560 / 0 and 63,192 / 16,272; null space 1 at 3 further (w, X, c), even teeth included. The "line 785" quote is on line 795.
+
+4. Remaining moves: CONFIRMED (turnover identity 60/60 both worlds; P8 within site-weighted charges; P10 algebra, C9 0 of 400).
+
+5. Head: CONFIRMED WITH CORRECTIONS.
+- Patches touch only the named lines (v4 shadow runs, 0 deviations): odd sum changed only where f = -1 (3,716 and 7,983 spoke-sites), skew only where e = -1, reverse only the coupled twelve gear at turned clocks. Budget wrappers neutral, 21 ticks bit for bit (v6).
+- The budget closes for every variant, the unpatched head included: the tick identity telescopes, the click term is measured, not computed, B is linear on one state. What discriminates: A = 0 (0 of 60 against the head's 47, 53) and the proper term.
+- "3,732 and 2,511 Node-clock turnovers" count hands: 1,244 and 837.
+- Q* drifts more under fix12 than on the head (summed, floored): -2,768,320 against 288,911 (hole), 226,508 against 4,990 (nature).
+- Rewind 20/20, 4 variants, both worlds.
+
+6. OPEN 2: CONFIRMED as a conflict (805 quote checks); "needs a second carry" is asserted, not proved.
+
+7. Big law: coherent in the rationals as a space-time Mesh action, the pawls a pure {1, K} gauge field. It gives change 1 (given the parities) and the time-Mesh weight (at 805's price). It does not derive change 2: a one-clock turnover reverses one end's time, no symmetry of a Mesh-coupled action; "turnover = T" is an added axiom, from which change 2 follows (U(1) charge T-even). It closes neither OPEN 1 nor 3; on integers Noether holds only up to remainders (795).
+
+Mutants: the draft's 15 all fail. Mine all fail: skew without pawl (toy 236 of 246 walls; head 47/60, 53/60), odd gear without pawl (head 42/60, 49/60), T twice, plain or with K (4 of 4), transverse flow (21 of 24); the mod-2 twin count dies only to dynamics.
+
+Plan sentence: "Q* = -SUM e Im(conj(a) P) / (X mr^2) is kept exactly by the rational step at fixed rates once the triple is read in the frame and a coupled hand turns over without K; on the integer board it moves by booked local terms (remainders, turned clocks' lost inflow, rate reweighting, the click), and exact conservation would need a second carried integer per gear, which line 805 forbids."
+
+OPEN: 1 inflow (David's); 2 rates (owner's); 3 click (David's); 4 background covariance, P13 signs (the Boss's, David's); 5 twin count (draft E's; mod 4 optional); 6 turns' rounding (booked); 7 protocol (Sofer, David). Owner's: 1602's "every charge conjugated" and "(M z)* = M* z*"; 805; 721, 773, 803; the framing premise.

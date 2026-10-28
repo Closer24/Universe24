@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "S=\"${CLAUDE_PROJECT_DIR:-.}/tools/derivations/open_items/scribe_scan.py\"; [ -f \"$S\" ] || exit 0; input=$(cat); case \"$input\" in *push*) PY=\"${CLAUDE_PROJECT_DIR:-.}/venv314/bin/python\"; [ -x \"$PY\" ] || PY=python3; printf '%s' \"$input\" | \"$PY\" \"$S\" --claude-hook;; esac",
+            "timeout": 60,
+            "statusMessage": "Sofer's gate reads the push"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "S=\"${CLAUDE_PROJECT_DIR:-.}/tools/derivations/open_items/scribe_scan.py\"; [ -f \"$S\" ] || exit 0; PY=\"${CLAUDE_PROJECT_DIR:-.}/venv314/bin/python\"; [ -x \"$PY\" ] || PY=python3; \"$PY\" \"$S\" --install >/dev/null 2>&1 || true",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

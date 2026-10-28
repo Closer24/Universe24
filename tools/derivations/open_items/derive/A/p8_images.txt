@@ -1,0 +1,14 @@
+P8 world_nature.json, 14 ticks, the engine as on the head:
+  fittings 2, chimes 93, stops 477, takes True
+  rotations alike: 24 of 24; reflections alike with the fitted hands exchanged: 24 of 24
+
+real	0m59.329s
+user	0m58.677s
+sys	0m0.061s
+P8 world_nature.json, 14 ticks, the engine with F3:
+  fittings 2, chimes 173, stops 405, takes True
+  rotations alike: 24 of 24; reflections alike with the fitted hands exchanged: 24 of 24
+
+real	1m12.842s
+user	1m12.292s
+sys	0m0.065s

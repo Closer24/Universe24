@@ -1,0 +1,11 @@
+world_pair_3.json 400 ticks
+  meshes.py:49 offset_pair calls: 1036800
+  meshes.py:49 offset_pair ties: 0
+  tick.py:115 rate_readings calls: 10800
+  tick.py:115 rate_readings ties: 0
+  tick.py:231 impulse calls: 129600
+  tick.py:231 impulse ties: 0
+  tick.py:232 impulse calls: 129600
+  tick.py:232 impulse ties: 0
+  tick.py:301 advances calls: 10800
+  tick.py:301 advances ties: 0

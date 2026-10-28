@@ -1,0 +1,6 @@
+g7_collapse500_a.txt g7_antiworld.py world_collapse_500.json 600 up up three
+g7_collapse500_b.txt g7_antiworld.py world_collapse_500.json 600 even even three
+g7_collapse500_c.txt g7_antiworld.py world_collapse_500.json 600 down down three
+g7_collapse1200_a.txt g7_antiworld.py world_collapse_1200.json 600 up up three
+g7_collapse1200_b.txt g7_antiworld.py world_collapse_1200.json 600 even even three
+g7_collapse1200_c.txt g7_antiworld.py world_collapse_1200.json 600 down down three

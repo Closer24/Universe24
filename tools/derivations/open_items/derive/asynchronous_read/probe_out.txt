@@ -1,0 +1,2 @@
+past: the random schedules equal the synchronous pass in 40 of 40
+lin:  the random schedules equal the synchronous pass in 0 of 40

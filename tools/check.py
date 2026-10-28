@@ -42,6 +42,11 @@ RATCHETS = [
     ["tools/record_code_shape.py"],
     ["tools/tests_shape.py"],
     ["tools/documents_gates.py"],
+    # the owner's rules of 2026-10-28 (no circularity that makes a phenomenon happen, no state beyond the Node-clock,
+    # no typed table, no number, whole numbers only): Sofer's gate refuses a push that raises a count of its rules
+    ["tools/derivations/open_items/scribe_scan.py"],
+    # the gate tested on itself: a weakened scan would pass the check above without it
+    ["tools/derivations/open_items/scribe_scan_selftest.py"],
 ]
 
 

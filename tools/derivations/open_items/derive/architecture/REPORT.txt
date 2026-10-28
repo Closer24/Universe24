@@ -1,0 +1,30 @@
+REPORT (Tensor24, plan 8f012b9b2)
+
+VERDICT: APPROVED WITH CHANGES (the design: ARCHITECTURE.md).
+
+THE CHANGES
+1. A fifth folder, algebra/ (Rule3 and the Gaussian ring, standard library only), imported by engine, readings, runner and decoder; the carry's home moves to algebra/carry.py. Sofer amends the gate.
+2. The runner never imports the engine (ISOLATE); main.py passes its functions in.
+3. The state: nine arrays, 4G + H + 4 integers per Node-clock, fixed (line 98); section 31 names four.
+4. Each Mesh coefficient computed once, conjugated at the far end: M Hermitian by construction.
+5. tick emits the wind, sweep and push; the ledger sums them.
+6. Load loop-free: the runner reads the files into columns; the kind table is weighted group sums; searches become checked file integers.
+7. The main run synchronous, the bang whole-board; the asynchronous runner an option for huge boards, one barrier at the top.
+8. The record's turnover holds the top alone; the split's room no cap.
+
+SECTION 31 AGAINST THE LAWS, AND THE FIXES
+- "The rewind cannot read [the record]" against law 3 and item (o): an undo log beside the record, read by runner/rewind.py alone.
+- Readings and decoder "the standard library and the record alone" against line 39 (one function per meaning): changes 1 and 5.
+- "The derived exclusion" against law 7's PREMISE (m): reworded.
+- The coordinator's next-tick order leaves a stopped clock frozen for ever (Postulate 4): the beat replaces it.
+- A whole-board bang where the tops part needs a global read (line 92): OPEN 7, the owner's.
+
+THE BOSS MUST NOT
+- write a line before the gate's amendment, or a cut before its OPEN formulas stand in section 19;
+- type a table, a lift, a sign, X_c or any number beyond 0 and 1;
+- write an if, an ordering comparison, a clamp, a loop, a raise, a log read, a board-wide sum or a range-holding indicator in engine/, algebra/, readings/ or record/;
+- read a train's name or branch on a kind;
+- write a struck bound (F1, F2, F5, the floor, min(spring, 1), the room's cap) or a placeholder;
+- let the engine see a round, a mode, a region or the record;
+- make an array without dtype=object, or grow the state at run time;
+- write a meaning twice, compare free runs, or pin a value in a test.

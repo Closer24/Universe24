@@ -1,0 +1,16 @@
+head, 5000000 quanta, 60 ticks; whole-board turnovers at [3, 8, 13, 18, 23, 28, 33, 38, 43, 48, 53, 58]
+no exact repeat of the gears with a period up to half the run
+books at each bang (births, chimes, log entries, the click record's sum):
+  tick 3: (0, 0, 577, 0)
+  tick 8: (64, 0, 2113, 64)
+  tick 13: (64, 192, 5185, 256)
+  tick 18: (64, 512, 8193, 576)
+  tick 23: (64, 1152, 11713, 1216)
+  tick 28: (64, 1728, 14977, 1792)
+  tick 33: (64, 2368, 18497, 2432)
+  tick 38: (64, 2944, 21761, 3008)
+  tick 43: (64, 3584, 25281, 3648)
+  tick 48: (64, 4160, 28545, 4224)
+  tick 53: (64, 4800, 32065, 4864)
+  tick 58: (64, 5376, 35329, 5440)
+distinct gear states among the 61 read: 61

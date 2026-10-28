@@ -1,0 +1,124 @@
+Probes (python3 -I): /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/probes_review/
+
+ERRORS
+
+1. Time reversal (?23, laws 3-4). The plan says "the step is exactly invertible... the turnover is an involution. So the orbit... retraces... bit for bit." That does not follow.
+- A retrace needs the reversing symmetry T S T = S^-^1, and no law states it.
+- With the plan's mirror r->2mid-r and even teeth, T S T = S^-^1 fails whenever exactly one of r, r?_1 is 0. The teeth are always even: w = 6rimGamma^2G^2, and W = 3rimGamma^2G^2(X^-+X) at Gamma=1000. step.py: 300/300 failures with r=0 at one site.
+- The flip w-1-r is exact but leaves mid no rest tooth.
+- Negating a gear (the hand's K under the quarter turns) has the same dilemma, so "the 24 by construction" also fails at those states.
+- So a log-free rewind of the triggered turnover is not injective: with w=10, D=3, (a^-,a,r) = (0,1,0) (turned over) and (2,1,3) (stepped) both go to (1,0,0) (turnover.py).
+- Read literally, "mid+mid-r" sends r=0 to W, outside [0,W).
+- The triggers must be symmetric under X0<->X2. The code's "X0 or X2 < X_f" is; law 4's "its output falling below" is not.
+- Fix: odd teeth counts (mirror = flip, mid fixed), T S T = S^-^1 made a proved law, symmetric triggers.
+- Clicks and the draw need the same; the plan gives nothing, and the head undoes them from its stack (tick.py:54).
+
+2. Law 2 is undefined for W^+<=0 or s<=0, because Rule3 needs d>=1. The plan strikes Tick.end_teeth and F1 (the bound |DeltaX|<=X), and decides the turnover after the carry that divides by W^+=(w/2)(X+X^+). The head already hit this division by 0 (tick.py:290). Fix: derive X+X^+>0, or gate before the driven carry.
+
+3. The wind (?27, ?19) is not "the step's conserved quadratic form" of the integer machine.
+- Exact for the rational leapfrog (1 value in 30 ticks); under the carries, 200 values in 200 ticks, since W(a^+-2a+a^-) = sF-(r^+-r).
+- It also needs fixed rates and symmetric grips (they are read per end).
+- The local density can be negative (-3600 in my test), so q can be negative.
+- The plan omits hands.wind's floor over 4Gamma^3G^2.
+- Fix: an invariant that includes the remainders, or a proved drift bound.
+
+4. The draw's c is not uniform (laws 6, 9). The bracketing rule is right when c is uniform: exact if Sum divides room, else less than one count off (exhaustive). But the vernier composes digits sorted by value (draw.py:50), so the smallest digit becomes the most significant.
+
+| case | values of c reached | P(up), equal parts |
+| --- | --- | --- |
+| 3 digits base 10, M=1000, sorted | 220 of 1000 | 0.875 |
+| 4 digits base 6, sorted | | 0.9375 |
+| bases 5,7,9, M=100, unsorted, capped | | 0.524 (2.4 counts off) |
+
+- "room = the count of values it can take" is false after sorting.
+- Law 9's checks (the 24, the rewind) never test fairness.
+- Fix: a sort-free invariant composition, M dividing the base product (or reject and redraw), and a distribution test.
+
+5. Light's winding is 0. w_c = 3.key.s with pinion^2+s^2 = rim^2 gives s=0 for (rim, rim). That is a division by 0 in law 5, and M = windingxcount = 0 in law 9. The head patches it with s+rim.(p div rim) (clock.py:59), a step function like R4.
+
+6. Mass (?19, ?28). cos omega0 = pinion/rim holds only at load 0 with no held load. In general it is 1-(1-pinion/rim)(p0/Gamma)^2. The bang's heavy rows have omega0~1.40 rad, and three readings of their mass ratio disagree:
+
+| reading | ratio |
+| --- | --- |
+| sines (what the files were tuned to) | 1838.68 / 1836.15 |
+| rest beats | 2623 / 2608 |
+| dispersion cos omega = cos omega0(1-2/3Sumsin^2(k/2)), m* = 3 tan omega0 | ~11,000 |
+
+So "a ratio of two rest beats" contradicts the files, and E=h-baromega0=mc^2 is off by tan omega0/omega0 ~ 4.3.
+
+7. Stability. At the full rate lambda = sg/W = 1/3, and |v_g| <= sqrtlambda = 1/sqrt3 holds (max 0.577349).
+- But this is the CFL edge. The (pi,pi,pi) mode is a Jordan block (a^+ = -2a-a^-) and grows linearly, 2.9x10^4 -> 6.0x10^6 in 2000 ticks, while E = W(n+b)^2 stays flat.
+- With Q_j > G^2 (negative tension) or p_i > Gamma (negative load), it blows up: at lambdax1.005, 10^1^2^7 by tick 2000.
+- So F2's floor and F5 are the stability condition, not fakes.
+- "A front's Meshes per tick" reads 1 along the axes (the exact front is the L1 ball), not 1/sqrt3.
+
+8. Spinors (?3; the table in ?19).
+- "A half turn with e unchanged" is false for the six edge half turns: they need e+1.
+- "The three-fold turns ask 1/sqrt2" holds only in the standard basis. 2T acts integrally on a Z[i]-lattice: columns (1,0) and (-(1+i)/2, -(1+i)/2), form 2H = [[2,-1-i],[-1+i,2]]. So the twin hands can keep T, 12 rotations, not only the half turns.
+- The basis-free obstruction is the quarter turns' trace, +/-sqrt2, which is not in Q(i).
+- The twin hands' kind is the spinor E1/2 of 2O, not "A1 times two hands" (?20). The spin term needs E1/2(x)T1 = E1/2+G3/2, which is outside "O's integer product table".
+
+9. Bell closure (11d). S.S = rho^2 holds for every Gaussian spinor, so "S=0" forces psi=0. The first click is then always down (0<0), not half and half. A self-twin detector with psi1=0 gives Sum=0: no part drawn.
+
+10. Pauli (?16, law 7).
+- "psi+(-psi)=0" adds one-quantum amplitudes, but antisymmetry lives in the two-quantum product, psi(x)psi-psi(x)psi.
+- Zeroing the field destroys wind, against the books.
+- A full orbit of one quantum about another is the exchange squared, which is trivial in 3D.
+- Without relativistic locality the sign is a postulate: mark it declared.
+
+11. The operations (?26).
+- 1-1 div(q+1) divides by 0 at q=-1 and gives 2 for q<=-2.
+- No signed test is given. A valid one is [x>=0] = 1+x div(x^2+1) (checked on +/-10^5). With it, abs, min/max, sorting networks and the weak maximum are all expressible.
+- The gcd pitch, load_of, mesh_unit_of and largest_below have data-dependent iteration counts and cannot be built this way.
+- -1 cannot be built from {0,1}.
+- min(room.b, M) is a clamp inside laws 6 and 9.
+- The split needs multiplication too.
+- Law 8 is false for the coefficient carries: carries() and rounded() drop their remainders.
+
+GAPS
+
+12. Proofs table.
+- Law 2: formula0 re-reads the head's own F and K, so it cannot fail; N, U_j and J are undefined.
+- Law 3: unique for the smooth step (300/300) only given W, W^+ >= 1, the regulator rewound first and sources symmetric in (p, p^+), none stated; its check runs on the head's stack.
+- Laws 6 and 9: the odds are never tested.
+- Mass: the identity carries -(r^+-r) and literally fails in 999 of 1000 ticks.
+
+13. "Degree <=3" and "one division over one multilinear contraction" are false. The coefficients s, W^+, Q_j, p_i and U_j depend on the state, and the carries nest (u_in/u_out, drives, kicks, forms, masses).
+
+14. U_j: one Gaussian product is unitary only for +/-1 and +/-i (a Z4 gauge group), so there is no continuous phase (row 38). The grips are asymmetric.
+
+15. The split's trigger is undefined: N(<phi,psi>) is quartic, while the winding is quadratic. "Takes the whole winding" needs sqrt(Sum/sigma_k).
+
+16. Section 20 lacks:
+- N, the rates or lapse, and the mesh factors;
+- K's sources and the held field (its kick and the held load);
+- the ratchet, pawls and centred count; the standard;
+- the release and recoil; the spin term with the curl;
+- the click counters, slack and dial, and r_d in the state;
+- a backward gate and draw.
+
+None is in the 820 lines. Law 5's "q>=1" also drops the head's beat-period condition.
+
+WORDING
+
+17. Slips and overstatements:
+- The charge Im(conj(z^-)z) is minus the head's sweep.
+- s is both the stretch and the sine, so law 5 is ambiguous; S is both the hold and the spin in ?27; "W" stands where rho is meant in ?20.
+- w is the divisor only for the regulator; driven gears divide by W^+.
+- Q_j omits G^2.
+- Law 2's regulator equation omits r^+-r.
+- The quarter turn is diag(zetabar,zeta), not "multiplication by zeta".
+- "V-A follows" overstates it: O merely allows S.J (A1u).
+
+VERIFIED
+- O?S4 (24 permutations of the diagonals); classes 1+6+3+8+6; orthonormal character table.
+- V=T1, Sym^2=A1+E+T2, Lambda^2=T1, xyz=A2.
+- Vector and mirror vector are one kind under O; twist A1u; S.J allowed by O, forbidden by O_h.
+- The quarter turn needs sqrt2.
+- Fierz, Lagrange and S.S=rho^2: 0 failures in 20,000 exact draws.
+- The bracketing rule, given uniform c.
+- The smooth inverse is unique; the mirror is an involution.
+- w, D and g_j match core/rule3.py.
+- cos omega0 = pinion/rim at load 0.
+- The 1/sqrt3 bound.
+- ?29's one form (K = wq); the mass identity's algebra.

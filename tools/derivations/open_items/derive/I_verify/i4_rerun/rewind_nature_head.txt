@@ -1,0 +1,1 @@
+REWIND world_nature.json head: 20 ticks forward and back, the state equal to the forward run's at 20 of 20 ticks, the start bit for bit: True

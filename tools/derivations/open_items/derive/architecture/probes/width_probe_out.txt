@@ -1,0 +1,8 @@
+numpy 2.5.4
+carry exact on 112-bit object arrays: True
+int64 wraps silently: 0
+einsum on object arrays: True
+scatter-add (add.at) on object arrays: True object
+nonneg exact on -50..50: True
+plan's whether(q) = 1 - 1 div (q+1) on q = -3,-2,0,1,5: [(-3, 2), (-2, 2), (0, 0), (1, 1), (5, 1)]
+rank-count composition equals the sorted composition and is order-free (300 draws): True

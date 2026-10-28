@@ -1,0 +1,9 @@
+start FULL world_node.json 20 14:04:51
+end FULL world_node.json 20 14:04:53 rc=0
+start WMIN world_node.json 20 14:04:53
+end WMIN world_node.json 20 14:04:54 rc=0
+start NORM world_hole.json 10 14:04:54
+end NORM world_hole.json 10 14:04:59 rc=0
+start HEAD world_hole.json 10 14:04:59
+end HEAD world_hole.json 10 14:05:03 rc=0
+done

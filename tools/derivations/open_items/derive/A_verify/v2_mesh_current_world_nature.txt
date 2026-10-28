@@ -1,0 +1,13 @@
+world_nature.json, 60 ticks: the weighted Mesh current's failure of antisymmetry |T| per Mesh-tick (vacuum sweep units)
+  hand 0, one frame, identity triple:   2218 Mesh-ticks, SUM |T|         59.3, max |T|        8.0
+  hand 0, one frame, odd/skew turn  :   8962 Mesh-ticks, SUM |T|       3448.4, max |T|       11.0
+  hand 0, pawl wall, identity triple:   1449 Mesh-ticks, SUM |T|        168.7, max |T|        9.0
+  hand 0, pawl wall, odd/skew turn  :   9871 Mesh-ticks, SUM |T|       5752.8, max |T|       12.0
+  hand 1, one frame, identity triple:   2218 Mesh-ticks, SUM |T|          0.0, max |T|        0.0
+  hand 1, one frame, odd/skew turn  :   8962 Mesh-ticks, SUM |T|        204.8, max |T|        4.1
+  hand 1, pawl wall, identity triple:   1449 Mesh-ticks, SUM |T|          0.4, max |T|        0.4
+  hand 1, pawl wall, odd/skew turn  :   9871 Mesh-ticks, SUM |T|        856.9, max |T|       56.8
+  hand 2, one frame, identity triple:   2218 Mesh-ticks, SUM |T|          1.2, max |T|        0.5
+  hand 2, one frame, odd/skew turn  :   8962 Mesh-ticks, SUM |T|        158.1, max |T|        8.1
+  hand 2, pawl wall, identity triple:   1449 Mesh-ticks, SUM |T|          0.7, max |T|        0.2
+  hand 2, pawl wall, odd/skew turn  :   9871 Mesh-ticks, SUM |T|        644.4, max |T|       28.3

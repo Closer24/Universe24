@@ -1,0 +1,59 @@
+== 0. the fast count against every draw number ==
+  2987 random size lists and rooms: counts differ in 0
+== A. reproduction (own code) ==
+ settings real (draft D's): E = ['-21/29', '-21/29', '-20/29', '20/29']; singlet ['-21/29', '-21/29', '-20/29', '20/29']; equal True
+  route: S = -82/29 (-2.8276); |S|>2: True; in 4<S^2<=8: True
+  S^2 = 6724/841; 8 = 8 (as /841)
+  whole far clicks (draws): [(58, 58), (58, 58), (116, 116), (116, 116)]
+  marginals (A+, B+): [('1/2', '1/2'), ('1/2', '1/2'), ('1/2', '1/2'), ('1/2', '1/2')]
+ settings complex (y, z): E = ['-21/29', '-21/29', '-20/29', '20/29']; singlet ['-21/29', '-21/29', '-20/29', '20/29']; equal True
+  route: S = -82/29 (-2.8276); |S|>2: True; in 4<S^2<=8: True
+  S^2 = 6724/841; 8 = 8 (as /841)
+  whole far clicks (draws): [(58, 58), (58, 58), (116, 116), (116, 116)]
+  marginals (A+, B+): [('1/2', '1/2'), ('1/2', '1/2'), ('1/2', '1/2'), ('1/2', '1/2')]
+ random complex frames (300): singlet misses 0, marginal misses 0, non-whole 0
+== B. controls: frames at the fitting not the click frames ==
+  B saw the other B setting (probe's control): S = -82/24389 (-0.0034); |S|>2: False; in 4<S^2<=8: False; E = ['-861/24389', '-861/24389', '820/24389', '-820/24389']
+  A saw the other A setting: S = 0 (+0.0000); |S|>2: False; in 4<S^2<=8: False; E = ['0', '0', '0', '0']
+  both saw the other: S = 0 (+0.0000); |S|>2: False; in 4<S^2<=8: False; E = ['0', '0', '0', '0']
+  B's frame at the fitting = perp(B's click frame): S = -82/29 (-2.8276); |S|>2: True; in 4<S^2<=8: True
+  frames at the fitting one notch off the click frames (x10): S = -9255693484414/3286732169943 (-2.8161); |S|>2: True; in 4<S^2<=8: True
+  fixed fitting frames (independent of the settings), 2160 pairs: max |S| = 42/29 (1.4483) at (((-1, -1), (0, 0)), ((0, 0), (-1, -1)))
+  persistence p = 1: S = -82/29 (-2.8276)
+  persistence p = 9/10: S = -279333/121945 (-2.2906)
+  persistence p = 1/2: S = -17261/24389 (-0.7077)
+  persistence p = 0: S = 0 (+0.0000)
+  threshold p* (|S| = 2), both sides: 0.84093
+== C. mutants ==
+  perp without its sign (real): S = -18522/35989 (-0.5147); |S|>2: False; in 4<S^2<=8: False
+     marginals A+: ['1/2'], B+: ['1/2']
+  perp without the conjugates (real): S = -82/29 (-2.8276); |S|>2: True; in 4<S^2<=8: True
+     marginals A+: ['1/2'], B+: ['1/2']
+  perp without the conjugates (complex): S = -18522/35989 (-0.5147); |S|>2: False; in 4<S^2<=8: False
+     marginals A+: ['1/2'], B+: ['1/2']
+  det with the plus sign (real): S = -2/29 (-0.0690); |S|>2: False; in 4<S^2<=8: False
+     marginals A+: ['1/2'], B+: ['1/2']
+  children swapped: S = -34522/24389 (-1.4155); |S|>2: False; in 4<S^2<=8: False
+     marginals A+: ['1/2'], B+: ['1/2']
+  B's answer label negated: S = 82/29 (+2.8276); |S|>2: True; in 4<S^2<=8: True
+     marginals A+: ['1/2'], B+: ['1/2']
+  sizes N(det)^2 (no-signalling: A+ ['1/2']): S = -2998658/795481 (-3.7696); |S|>2: True; in 4<S^2<=8: False
+  sizes N(det)^3 (no-signalling: A+ ['1/2']): S = -126773722/32021249 (-3.9590); |S|>2: True; in 4<S^2<=8: False
+  sizes N(det)^4 (no-signalling: A+ ['1/2']): S = -4503747422018/1127957874961 (-3.9928); |S|>2: True; in 4<S^2<=8: False
+  sizes N(det)^8 (no-signalling: A+ ['1/2']): S = -104555521131952066556354/26138925367355726649793 (-4.0000); |S|>2: True; in 4<S^2<=8: False
+  law 6 on the pair state k eps, k = 1: S = -82/29 (-2.8276); |S|>2: True; in 4<S^2<=8: True
+  law 6 on the pair state k eps, k = 7 - 4i: S = -82/29 (-2.8276); |S|>2: True; in 4<S^2<=8: True
+  law 6 on the pair state product up x down: S = -42/29 (-1.4483); |S|>2: False; in 4<S^2<=8: False
+  law 6 on the pair state triplet ud + du: S = -2/29 (-0.0690); |S|>2: False; in 4<S^2<=8: False
+  law 6 on the pair state eps + uu (T1 admixed): S = -122/87 (-1.4023); |S|>2: False; in 4<S^2<=8: False
+  law 6 on the pair state 3 eps + uu: S = -1434/551 (-2.6025); |S|>2: True; in 4<S^2<=8: True
+  room 5800 (not the parts' sum): S = -82/29 (-2.82759), off the singlet by +0.00000
+  room 97 (not the parts' sum): S = -274/97 (-2.82474), off the singlet by +0.00284
+== C'. the 24's double cover acting on all frames (P-e) ==
+  48 elements (dets [(1, 0), (2, 0), (4, 0)]): E changed in 0; perp(Mu) != M perp(u) in 0
+== D. measurement dependence (Hall) ==
+  route, lambda = answer pair: M = 41/29; lambda = children's states: supports disjoint, M = 2
+  random mixtures 4000: S > 2 + 3M in 0 (max S - 2 - 3M = -2071/1260)
+  tight construction: S = 82/29, M = 8/29; 2 + 3M = 82/29: Hall's minimum for |S| = 82/29 is M = 8/29
+== E. the cone: A's frame leaves at t_F - d(A,F), B clicks at t_F + d(F,B) ==
+  18900 placements: A's setting event outside B's click's past cone in 0

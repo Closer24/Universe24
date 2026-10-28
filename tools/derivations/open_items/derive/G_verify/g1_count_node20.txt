@@ -1,0 +1,72 @@
+world_node.json, 20 ticks, rule head, mirror mod, back 20, the impulse rounding u at its tie: head
+hands (acts order): ['hand 0', 'hand 1', 'hand 2', 'hand 3 (light)']; couplings [1, 1, 1, 0]; teeth t = 23290147981996629504000000 (t even: True)
+setting: S5 carries 0, ties 0
+tick 0: plain charges [0, 0, 0, 0]; Q* (floor) [0, 0, 0, 0]
+  tick   1: X 4 values 1000..1013; turned 2; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick   2: X 6 values 1000..1015; turned 6; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick   3: X 8 values 988..1028; turned 8; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 44 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick   4: X 9 values 975..1080; turned 5; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 36 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick   5: X 9 values 988..1060; turned 14; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 84 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick   6: X 9 values 980..1096; turned 4; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 84 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick   7: X 9 values 929..1193; turned 9; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 58 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick   8: X 9 values 980..1235; turned 5; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 68 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick   9: X 9 values 1021..1236; turned 14; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 40 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  10: X 8 values 831..1331; turned 8; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 84 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  11: X 8 values 983..1597; turned 9; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 48 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  12: X 9 values 1032..1765; turned 4; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 68 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  13: X 9 values 1106..1597; turned 9; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 36 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  14: X 9 values 1183..1806; turned 0; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 20 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  15: X 9 values 1369..1745; turned 6; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 36 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  16: X 9 values 1331..1845; turned 0; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 36 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  17: X 9 values 1532..2016; turned 9; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 36 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  18: X 9 values 1633..2172; turned 0; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 20 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  19: X 9 values 1836..2461; turned 5; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 4 S4 0 S6 0; plain charges [0, 0, 0, 0]
+  tick  20: X 9 values 1915..2781; turned 0; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 36 S4 0 S6 0; plain charges [0, 0, 0, 0]
+forward done in 1 s; the final state hash 30c9c357029cded7e2ed344f8ee07673e785e890c516d4c6d13d264d5499175c
+S2 ties (tick, rounding, clock, p, the head's u): []
+counts:
+  S1 driven carries: 6480
+  S1 driven carries, odd teeth: 0
+  S1 ties: 0
+  S1 ties on hand 0: 0
+  S1 ties on hand 1: 0
+  S1 ties on hand 2: 0
+  S1 ties on hand 3 (light): 0
+  S1 ties on offset: 0
+  S2 u roundings: 12960
+  S2 u ties (2p = tX mod 2tX): 0
+  S3 tension means: 3240
+  S3 tension ties (n_i + n_j odd): 1232
+  S3 tension ties inside 0..Gamma: 838
+  S4 drive (tick.py) carries: 2160
+  S4 drive (tick.py) remainder at 0, even teeth: 0
+  S4 drive carries: 4320
+  S4 drive remainder at 0, even teeth: 0
+  S4 turn (the ratchet, two teeth: its pawl bit) carries: 540
+  S4 turn (the ratchet, two teeth: its pawl bit) remainder at 0, even teeth: 299
+  S4 turn carries: 3780
+  S4 turn remainder at 0, even teeth: 0
+  S6 turned drive fine teeth: 1404
+  S6 turned drive fine teeth at 0: 0
+  S6 turned driven gears (mirrored once): 936
+  S6 turned driven gears at fine 0 (the mirror misses -P by W): 0
+  S6 turned driven gears at fine W (a variant tie): 0
+  S6 turned regulator gears: 819
+  S6 turned regulator gears at fine 0: 0
+fittings: 0 pairs, 0 unspringings (mergers)
+  fitted hands by hand and sense: []
+  fittings per tick: []
+  unspringings per tick: []
+  unspringings by the unwound hand and the sign of the sweep they unwound (W_x + W_y): []
+  unspringings' ends by hand and the sign of the sweep unwound there: []; the net sweep unwound 0
+chimes by hand and sense: []
+plain charges at the end (the head's sweep summed per hand): [0, 0, 0, 0]; their total 0
+  coupled total SUM c_T Q_T: 0
+Q* at the end per hand (vacuum units, the floor of the exact rational): [0, 0, 0, 0]
+  coupled total SUM c_T Q*_T (floor): 0
+reckoner: {'68 matter against antimatter': {"moving births with the + child at the take's Node / at the other end": [0, 0], 'mergers beside (the light at both ends, no hand)': 0, 'verdict': "NOT READ: no moving birth; the predicate: the + child's end chosen by the twist's hand at every moving birth"}}
+reckoner: {"69 the neutrino's one hand": {"moving births by hand (the + child at the take's Node / at the other end)": [0, 0], 'mergers beside (no hand)': 0, 'verdict': 'NOT READ: no moving birth; the predicate: one hand at every moving birth of the record'}}
+reckoner: {'70 the baryon number': {"births whose children's own charges sum to 0 / in all": [0, 0], "births of a pair whose record W at the children's Nodes sums apart from 0 (the standing level's residue)": 0, "the mergers' light children's record W summed (0 by the letter)": 0, 'verdict': "NOT READ: no birth; the predicate: the children's own charges summing to 0 at every birth, no matter made by a click"}}
+counts of the clock: {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'laid_back': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 8, 'refused_orientation': 78, 'refused_twist': 109, 'refused_sense': 0, 'refused_disengaged': 0, 'turns': 117, 'met': 195, 'laid': 0, 'laid_nodes': 0}
+the rewind: 20 of 20 exact
+done in 1 s

@@ -1,0 +1,13 @@
+A: 8480 cases at even tX, 0 failures; mutant odd tX: 124 failures
+B: 133632 cases, 0 ties; mutant 2 m^2: 128 ties
+C: 360600 cases, 0 ties; mutant even rim: 24080 ties
+D odd force w 6: up: C 0 inv 0 TST 0 S(S^-1) 0 of 1014; even: C 0 inv 0 TST 0 S(S^-1) 0 of 1015; down: C 0 inv 0 TST 0 S(S^-1) 0 of 1014; Thm3 failures 0; carried mirror up: not involutive at 169 (states at r = 0: 169); even: 0
+D odd force w 8: up: C 0 inv 0 TST 0 S(S^-1) 0 of 1352; even: C 0 inv 0 TST 0 S(S^-1) 0 of 1353; down: C 0 inv 0 TST 0 S(S^-1) 0 of 1352; Thm3 failures 0; carried mirror up: not involutive at 169 (states at r = 0: 169); even: 0
+D odd force w 10: up: C 0 inv 0 TST 0 S(S^-1) 0 of 1690; even: C 0 inv 0 TST 0 S(S^-1) 0 of 1691; down: C 0 inv 0 TST 0 S(S^-1) 0 of 1690; Thm3 failures 0; carried mirror up: not involutive at 169 (states at r = 0: 169); even: 0
+D odd force w 12: up: C 0 inv 0 TST 0 S(S^-1) 0 of 2028; even: C 0 inv 0 TST 0 S(S^-1) 0 of 2029; down: C 0 inv 0 TST 0 S(S^-1) 0 of 2028; Thm3 failures 0; carried mirror up: not involutive at 169 (states at r = 0: 169); even: 0
+D odd force w 9: up: C 0 inv 0 TST 0 S(S^-1) 0 of 1521; even: C 104 inv 0 TST 104 S(S^-1) 0 of 1352; down: C 338 inv 0 TST 338 S(S^-1) 169 of 1521; Thm3 failures 169; carried mirror up: not involutive at 0 (states at r = 0: 0); even: 0
+D mutant even force w 6: up: C 936 inv 0 TST 0 S(S^-1) 0 of 1014; even: C 936 inv 0 TST 0 S(S^-1) 0 of 1015; down: C 936 inv 0 TST 0 S(S^-1) 0 of 1014; Thm3 failures 936; carried mirror up: not involutive at 169 (states at r = 0: 169); even: 0
+D mutant even force w 8: up: C 1248 inv 0 TST 0 S(S^-1) 0 of 1352; even: C 1248 inv 0 TST 0 S(S^-1) 0 of 1353; down: C 1248 inv 0 TST 0 S(S^-1) 0 of 1352; Thm3 failures 1248; carried mirror up: not involutive at 169 (states at r = 0: 169); even: 0
+D mutant even force w 10: up: C 1560 inv 0 TST 0 S(S^-1) 0 of 1690; even: C 1560 inv 0 TST 0 S(S^-1) 0 of 1691; down: C 1560 inv 0 TST 0 S(S^-1) 0 of 1690; Thm3 failures 1560; carried mirror up: not involutive at 169 (states at r = 0: 169); even: 0
+D mutant even force w 12: up: C 1872 inv 0 TST 0 S(S^-1) 0 of 2028; even: C 1872 inv 0 TST 0 S(S^-1) 0 of 2029; down: C 1872 inv 0 TST 0 S(S^-1) 0 of 2028; Thm3 failures 1872; carried mirror up: not involutive at 169 (states at r = 0: 169); even: 0
+D mutant even force w 9: up: C 1404 inv 0 TST 0 S(S^-1) 0 of 1521; even: C 1248 inv 0 TST 104 S(S^-1) 0 of 1352; down: C 1430 inv 0 TST 338 S(S^-1) 169 of 1521; Thm3 failures 1417; carried mirror up: not involutive at 0 (states at r = 0: 0); even: 0

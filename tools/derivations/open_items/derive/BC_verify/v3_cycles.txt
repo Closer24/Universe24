@@ -1,0 +1,16 @@
+== 1D one formula at the causal speed: T S^7 T S^7 = -1 failed in 0 of 200 random fields; a laid right-mover lost its shape in 0 of 2800 ticks
+  R1 exact rewind (notes) | choices repeat: S_1 = -42/29 (-1.4483); S_2 = -42/29 (-1.4483); cycle-2 marginals [('1/2', '1/2')]; rewind bit for bit 264 of 264 states
+  R1 exact rewind (notes) | choices independent: S_1 = -21/29 (-0.7241); S_2 = -42/29 (-1.4483); cycle-2 marginals [('1/2', '1/2')]; rewind bit for bit 1056 of 1056 states
+  R2 the account (forward rule after T) | choices repeat: S_1 = -42/29 (-1.4483); S_2 = -82/29 (-2.8276); cycle-2 marginals [('1/2', '1/2')]
+  R2 the account (forward rule after T) | choices independent: S_1 = -21/29 (-0.7241); S_2 = -17261/24389 (-0.7077); cycle-2 marginals [('1/2', '1/2')]
+  R2-law6 (cycle-2 birth: law 6 on the twins) | choices repeat: S_1 = -42/29 (-1.4483); S_2 = -42/29 (-1.4483); cycle-2 marginals [('1/2', '1/2')]
+  R2-law6 (cycle-2 birth: law 6 on the twins) | choices independent: S_1 = -21/29 (-0.7241); S_2 = -9261/24389 (-0.3797); cycle-2 marginals [('1/2', '1/2')]
+  R2-merge (A1 merger at the reversed birth) | choices repeat: S_1 = -42/29 (-1.4483); S_2 = -72/29 (-2.4828); cycle-2 marginals [('1/2', '1/2')]
+  R2-merge (A1 merger at the reversed birth) | choices independent: S_1 = -21/29 (-0.7241); S_2 = -76959705/82044596 (-0.9380); cycle-2 marginals [('1/2', '1/2')]
+  R2 | choices persist with p = 9/10 per side: S_2 = -2.2906; marginals [('1/2', '1/2')]
+  R2 | choices persist with p = 17/20 per side: S_2 = -2.0434; marginals [('1/2', '1/2')]
+  R2 | choices persist with p = 21/25 per side: S_2 = -1.9956; marginals [('1/2', '1/2')]
+  R2 | choices persist with p = 3/4 per side: S_2 = -1.5911; marginals [('1/2', '1/2')]
+  R1 exact rewind (notes): at the reversed birth tick, (equals T(X_birth), axes held): [(True, (('A', (0, 0, -13)), ('B', (0, 0, 13)))), (True, (('A', (0, 0, 13)), ('B', (0, 0, -13))))]
+  R2 the account (forward rule after T): at the reversed birth tick, (equals T(X_birth), axes held): [(False, (('A', (-104, 0, 0)), ('B', (-5466500, 0, -5739825)))), (False, (('A', (-104, 0, 0)), ('B', (-874640, 0, -918372)))), (False, (('A', (-104, 0, 0)), ('B', (874640, 0, 918372)))), (False, (('A', (-104, 0, 0)), ('B', (5466500, 0, 5739825)))), (False, (('A', (104, 0, 0)), ('B', (-5466500, 0, -5739825)))), (False, (('A', (104, 0, 0)), ('B', (-874640, 0, -918372)))), (False, (('A', (104, 0, 0)), ('B', (874640, 0, 918372)))), (False, (('A', (104, 0, 0)), ('B', (5466500, 0, 5739825))))]
+  late frames' axes: a' (2, 0, 0), b (20, 0, 21); birth frames z (0, 0, 1)

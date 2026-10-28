@@ -1,0 +1,33 @@
+1. The group of the 48: 48 unit quaternions with coordinates in Q(r2), closed, z = -1 central
+  [ok] order: 48
+  [ok] closed under the product (48 x 48 products): 2304
+  [ok] the full turn z = -1 is in the group and central
+  [ok] the image is the 24 signed permutation matrices of determinant 1 (each met twice): 24
+  [ok] q and -q give the same turn: 48
+2. The eight kinds: irreducible, orthogonal, and complete (1+1+4+9+9+4+4+16 = 48)
+  [ok] A1: (1/48) SUM chi chi = 1: SUM = 48 over 48
+  [ok] A2: (1/48) SUM chi chi = 1: SUM = 48 over 48
+  [ok] E: (1/48) SUM chi chi = 1: SUM = 48 over 48
+  [ok] T1: (1/48) SUM chi chi = 1: SUM = 48 over 48
+  [ok] T2: (1/48) SUM chi chi = 1: SUM = 48 over 48
+  [ok] E1/2: (1/48) SUM chi chi = 1: SUM = 48 over 48
+  [ok] E5/2: (1/48) SUM chi chi = 1: SUM = 48 over 48
+  [ok] G3/2: (1/48) SUM chi chi = 1: SUM = 48 over 48
+  [ok] distinct kinds orthogonal (28 pairs): 28
+  [ok] SUM dim^2 = 48
+3. The big law: the Frobenius-Schur indicator equals the full turn's sign on every kind
+  [ok] A1: nu = 1, chi(z)/dim = 1, A1 in Sym^2: 1, A1 in Alt^2: 0
+  [ok] A2: nu = 1, chi(z)/dim = 1, A1 in Sym^2: 1, A1 in Alt^2: 0
+  [ok] E: nu = 1, chi(z)/dim = 1, A1 in Sym^2: 1, A1 in Alt^2: 0
+  [ok] T1: nu = 1, chi(z)/dim = 1, A1 in Sym^2: 1, A1 in Alt^2: 0
+  [ok] T2: nu = 1, chi(z)/dim = 1, A1 in Sym^2: 1, A1 in Alt^2: 0
+  [ok] E1/2: nu = -1, chi(z)/dim = -1, A1 in Sym^2: 0, A1 in Alt^2: 1
+  [ok] E5/2: nu = -1, chi(z)/dim = -1, A1 in Sym^2: 0, A1 in Alt^2: 1
+  [ok] G3/2: nu = -1, chi(z)/dim = -1, A1 in Sym^2: 0, A1 in Alt^2: 1
+4. The half turns: every lift squares to the full turn; the face lifts anticommute; their turns commute
+  [ok] the half turns' lifts: 9 half turns, 18 lifts: 18
+  [ok] every half turn's lift squared is z (= -1): 18
+  [ok] the face half turns' lifts anticommute (i j = -j i ...), 24 ordered pairs
+  [ok] the face half turns commute as turns of the cube
+  [ok] on the 24's kinds a half turn squared is the identity (the turn matrix squared)
+result: 0 failures

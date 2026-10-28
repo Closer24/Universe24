@@ -1,0 +1,23 @@
+world_bang.json 12 ticks; births 64 chimes 128 stops 384
+  takes read (the head's fall_of at going 1, a due > 0): 64
+    the curvature a the same on both gears: 64
+    the head pays (no stop): 64
+    F3 pays (f_max >= the due): 64
+    both pay: 64
+    the head stops where F3 pays: 0
+    F3 stops where the head pays: 0
+    F3's unit on both gears (a tie): 0
+    F3's steepest gear equals the head's gear (R7's largest now^2 - before^2): 32
+    the head's gear has now = before (no direction: the stop by R7's choice): 0
+    the ladder's carries past the first: 0: 64
+    the ladder's fixed point pays the due on the exact numerator: 64
+    the ladder's fixed point is the least count on the exact numerator: 64
+    F3: the exact fall at its count >= the due (no debt): 64
+    F3: the remainder's change below one unit's fall (phi div M + 1): 64
+    F3: the remainder's change within its proved bound [-(a |u|^2 s^2 div M) - 2, phi div M + 2): 64
+    the ladder's fixed point: the exact fall (with the carries) >= the due: 64
+    same gear: the head's direction (toward before) = F3's (-sgn G): 32
+    same gear and direction: the head's least count = F3's linear count: 32
+    same gear and direction: the head's least count = the ladder's fixed point: 32
+  largest count of carries the ladder takes past the first: 0
+  largest F3 count s: 1

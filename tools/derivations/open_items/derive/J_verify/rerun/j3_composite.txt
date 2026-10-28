@@ -1,0 +1,44 @@
+1. The belt as a board process (fit beside, exchange, unspring), exact
+  [ok] twin hands E1/2 (z = -1): the process gives eps psi and the snake psi, for eps = +1 and -1: {1: (300, 300, 300), -1: (300, 300, 300)}
+  [ok] twin hands E1/2 (z = -1): 'the exchange path is the full turn of one' (process = z snake) holds only for eps = z = -1
+  [ok] vectors T1 (z = +1): the process gives eps psi and the snake psi, for eps = +1 and -1: {1: (300, 300, 300), -1: (300, 300, 300)}
+  [ok] vectors T1 (z = +1): 'the exchange path is the full turn of one' (process = z snake) holds only for eps = z = +1
+  [ok] a hand A1 (z = +1): the process gives eps psi and the snake psi, for eps = +1 and -1: {1: (300, 300, 300), -1: (300, 300, 300)}
+  [ok] a hand A1 (z = +1): 'the exchange path is the full turn of one' (process = z snake) holds only for eps = z = +1
+  [ok] the fitted pair's A1 state (the singlet, an array of determinant 1) is no product of two hands: every u x v has determinant 0: 6561 of 6561
+2. The composite clock of two equal clocks: the swap, the full turn of one part, the composite's own full turn
+    twin hands E1/2 (z = -1)   A1 (det)                  : swap sigma = -1; full turn of one part = -1; the composite's own full turn = +1
+  [ok] twin hands E1/2 (z = -1) / A1 (det): the swap is a sign (sigma = +-1) and the full turns act as z and z z = +1
+  [ok] twin hands E1/2 (z = -1): on the A1 composite 'swap = full turn of one part' holds by itself (Frobenius-Schur: nu = z)
+  [ok] twin hands: 'swap = the composite's own full turn' rejects the A1 singlet (Pauli's pair lost)
+    twin hands E1/2 (z = -1)   T1 (Sym^2)                : swap sigma = +1; full turn of one part = -1; the composite's own full turn = +1
+  [ok] twin hands E1/2 (z = -1) / T1 (Sym^2): the swap is a sign (sigma = +-1) and the full turns act as z and z z = +1
+  [ok] twin hands: 'swap = full turn of one part' rejects the T1 composite of two equal quanta (David's rule)
+    vectors T1 (z = +1)        A1 (dot)                  : swap sigma = +1; full turn of one part = +1; the composite's own full turn = +1
+  [ok] vectors T1 (z = +1) / A1 (dot): the swap is a sign (sigma = +-1) and the full turns act as z and z z = +1
+  [ok] vectors T1 (z = +1): on the A1 composite 'swap = full turn of one part' holds by itself (Frobenius-Schur: nu = z)
+    vectors T1 (z = +1)        T1 (cross)                : swap sigma = -1; full turn of one part = +1; the composite's own full turn = +1
+  [ok] vectors T1 (z = +1) / T1 (cross): the swap is a sign (sigma = +-1) and the full turns act as z and z z = +1
+    vectors T1 (z = +1)        E + T2 (Sym^2 traceless)  : swap sigma = +1; full turn of one part = +1; the composite's own full turn = +1
+  [ok] vectors T1 (z = +1) / E + T2 (Sym^2 traceless): the swap is a sign (sigma = +-1) and the full turns act as z and z z = +1
+    a hand A1 (z = +1)         A1 (product)              : swap sigma = +1; full turn of one part = +1; the composite's own full turn = +1
+  [ok] a hand A1 (z = +1) / A1 (product): the swap is a sign (sigma = +-1) and the full turns act as z and z z = +1
+  [ok] a hand A1 (z = +1): on the A1 composite 'swap = full turn of one part' holds by itself (Frobenius-Schur: nu = z)
+   the ladder as written (the whole product, no exchange sign): two equal twin quanta reach both composites
+  [ok] Lagrange: the A1 size N(det) and the T1 size 2 rho_u rho_v - N(det) (David's first rung), N(det) + N(<u,v>) = rho_u rho_v: 2000 of 2000
+  [ok] so without the exchange sign both composites form: equal quanta are read as distinguishable: 1997 of 2000 pairs reach both
+   with the two ways added by eps, the composite K survives iff eps = sigma_K
+    twin hands E1/2 (z = -1)   A1 (det)                  : nonzero for eps = +1 in 0 of 300, for eps = -1 in 300 of 300
+  [ok] twin hands E1/2 (z = -1): the A1 composite of two equal quanta survives only for eps = nu = z = -1
+    twin hands E1/2 (z = -1)   T1 (Sym^2)                : nonzero for eps = +1 in 300 of 300, for eps = -1 in 0 of 300
+    vectors T1 (z = +1)        A1 (dot)                  : nonzero for eps = +1 in 300 of 300, for eps = -1 in 0 of 300
+  [ok] vectors T1 (z = +1): the A1 composite of two equal quanta survives only for eps = nu = z = +1
+    vectors T1 (z = +1)        T1 (cross)                : nonzero for eps = +1 in 0 of 300, for eps = -1 in 300 of 300
+    vectors T1 (z = +1)        E + T2 (Sym^2 traceless)  : nonzero for eps = +1 in 300 of 300, for eps = -1 in 0 of 300
+    a hand A1 (z = +1)         A1 (product)              : nonzero for eps = +1 in 300 of 300, for eps = -1 in 0 of 300
+  [ok] a hand A1 (z = +1): the A1 composite of two equal quanta survives only for eps = nu = z = +1
+3. The fitting at a Mesh's two ends, the antiquantum admitted as an equal quantum: both signs stay open
+  [ok] eps = +1: a fitted pair state with the A1 (singlet) spin part and total exchange sign eps exists
+  [ok] eps = -1: a fitted pair state with the A1 (singlet) spin part and total exchange sign eps exists
+   so the fitting, read either way, leaves the exchange sign open (E_verify v2 part 6, extended)
+result: 0 failures
