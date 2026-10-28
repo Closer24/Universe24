@@ -24,7 +24,7 @@ Every probe runs on the head's engine code (834cfd72e; src unchanged through 55a
 - **The output:** draw_counts.txt (the hole and the chiral at 120 ticks, the one big bang at 250, each sorted and unsorted).
 - **compare_rows.py** compares the sixteen records' readings of two runs: `python compare_rows.py <old dir> <new dir> [record ...]`. Its output for the head against the unsorted draw is rows_moved_unsorted.txt.
 
-## 3. The teeth counts' parity (the owner's word of 2026-10-28, 11:0x UTC: teeth with no restriction of even or odd)
+## 3. The teeth counts' parity (the owner's word of 2026-10-28, 10:5x UTC: teeth with no restriction of even or odd)
 
 - **parity.py,** pure integers with no engine: `python parity.py`. For every teeth count from 8 to 15 it checks four things:
   - the engine's one mirror (acts.mirror: the fine tooth r to (mid + mid - r) mod w, the carry dropped, with the two slots exchanged) as an involution, and whether it turns the stride P = w (now - before) + r - mid to -P;
