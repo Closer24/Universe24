@@ -1,0 +1,2 @@
+8 half turns: 24 invariant states of 390624; every one a multiple of eps: True
+all 48: 24 invariant states of 390624; every one a multiple of eps: True
