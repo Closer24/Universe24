@@ -45,7 +45,7 @@ The readers read a finished chart and produce nothing, yet several verdicts cann
 
 ## The reads beyond one Mesh, and the step's other acts, read
 
-`hands.wind` over a window reaches two Meshes at 7 call sites (unspring.py:62, 68, 116, 137, 296; striking.py:288; bobs.py:170); train_twists reaches two (striking.py:65, 75); lay_window and lay_wind reach up to three (striking.py:266-290); whole-lattice scans stand at unspring.py:133-134, tick.py:131-135 and :311, striking.py:79, bobs.py:47 and clock.py:165. The tick's step holds 26 acts beyond Rule3's one carry (the loads, the readings and their clamps, the mesh factors, the Pauli drive, the sources, the regulator's clamp, the unwinds, the turnover, the striking), listed in the subagent's table of tick.py's lines 97 to 326.
+`hands.wind` over a window reaches two Meshes at 7 call sites (unspring.py:62, 68, 116, 137, 296; striking.py:288; bobs.py:170); train_twists reaches two (striking.py:65, 75); lay_window and lay_wind reach up to three (striking.py:266-290); whole-lattice scans stand at unspring.py:133-134, tick.py:131-135 and :311, striking.py:79, bobs.py:47 and clock.py:165. The tick's step holds 26 acts beyond Rule3's one carry (the loads, the readings and their clamps, the mesh factors, the Pauli drive, the sources, the regulator's clamp, the unwinds, the turnover, the striking), listed with their kinds in SCRIBE-THE-NODE-AS-ONE-ACT-1.md (nine contractions, eight pointwise maps, five of bookkeeping, two gate acts, two global reductions).
 
 ## For the Boss and the owner
 
