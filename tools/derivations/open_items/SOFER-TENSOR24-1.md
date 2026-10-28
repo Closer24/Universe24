@@ -8,7 +8,7 @@ The owner decided (09:1x UTC) on a new engine written beside the current one, an
 
 | part (the former cut) | state |
 | --- | --- |
-| the plan's text | bd2a3c9ac (09:20): 29 sections; Sofer approved at bd2a3c9ac with seven points (6465397115); David's approval not posted; Animate's at this head not posted; the Boss's next push (the proofs table, the clocks condition, the modules and lines) is awaited |
+| the plan's text | 55a3483e1 (09:35): 29 sections, with the proofs table, the clocks condition, the modules and lines and the derivation protocol; Sofer approved at bd2a3c9ac with seven points (6465397115, all taken) and read the table, the condition and the protocol with no law conflict (6465746442); Animate approved at bd2a3c9a on four conditions (6465411419, taken); David's approval not posted; two hostile reviewers read the plan now, their findings go into the Boss's next push, then the owner |
 | 0 the main formula | in the plan (sections 2 and 19, read from the head's code; the Boss's probe reads the step bit for bit on three charts); David's exact derivation not posted; then Sofer proposes the law's sentence to the owner |
 | 1 the fair draw | pushed at 06:42 as 834cfd72e; the only code built under the plan; Sofer's gate: no refusal, no note; Animate's bench of the sixteen records: confirmed (6463250257) |
 | 2 the gate | scribe-5 61b8b117b: the scan reads every package under src and the tests (PIN); the list that stands 1,153 hits at 526a5666d (652 refusing, 501 notes), the self-test scribe_scan_selftest.py; the Boss to install the pre-push hook in his toy before the first line, check.py's patch and the settings file with the push |
@@ -21,7 +21,8 @@ The owner decided (09:1x UTC) on a new engine written beside the current one, an
 - The process points, accepted by the Boss (item 1231): a module added or renamed is posted as a `MODULE:` line before the push and landed by Sofer in docs/ENGINE.md; the gate adopted with his next code push; kept_mid left as a note of the gate.
 - The names: Tensor24, and the four sessions' names the owner sees, Boss, Sofer, David and Animate (Animate's 6462416209).
 - A new engine (the owner, 09:1x UTC, row 333): written anew in its own files beside the current one, the Boss writing every line, David deriving each part's formula first; built whole (his word to Sofer, 09:0x, row 330), nothing before he approves the plan as presented; the gate reads every package under src from the first line (row 336).
-- The turnover's five places in ALGEBRA.md: brought to the built act, every fine tooth mirrored about its mid tooth, on the Boss's task line (6465081080), no law changed (scribe-5 410b87a81, row 336).
+- The turnover's words: brought to the built act, every fine tooth mirrored about its mid tooth, in ALGEBRA.md's five places (the Boss's task line 6465081080, scribe-5 410b87a81, row 336) and in ENGINE.md lines 40, 53 and 62 and README line 31 (the task line 6465462556, scribe-5 37cb197fc, row 341), no law changed.
+- The derivation protocol (the owner, 09:3x, row 340): every derivation of the owed list goes through six steps before it enters section 19, Sofer's law check the sixth, within 15 minutes of its post.
 - The group, on David's definitions for the owner's question of 07:1x: the 24 is O, the cube's rotation group (24 signed permutation matrices of determinant 1; classes 1, 6, 3, 8 and 6; the five kinds A1, A2, E, T1 and T2 of dimensions 1, 1, 2, 3 and 3); the 48 is O_h, those 24 rotations and their 24 mirror images; the double cover 2O, each rotation with its two signs, acts on the twin hands.
 
 ## The owner's list for 08:30 UTC (10:30 Israel time), with Sofer's recommendations
