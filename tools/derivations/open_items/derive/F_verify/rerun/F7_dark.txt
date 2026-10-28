@@ -1,0 +1,9 @@
+PASS A1 a one-gear train's sweep Im(conj(a-) a) is 0 at every Node-clock (20 random boards)
+PASS A2 its lead Im(conj(a) a_j) is 0 on every Mesh: it sources nothing in the offset and the light's couplings Q A0, J . A vanish on it
+PASS B1 of the hand's four exact turns only 1 and -1 keep a real gear real : [(1, 0), (-1, 0)]
+PASS C1 a sprung one-gear train's homogeneous beat: its Lagrangian (the homogeneous pressure) averages to 0 over each exact period (dust) : periods {'1/2': 6, '0': 4, '-1/2': 3}
+PASS C2 while its wind is constant and positive on the orbit
+PASS D1 E . B is kept by the 24 and reversed by every mirror (a pseudoscalar of the 48: the axion's coupling) : E . B = 92
+PASS D2 E . E - B . B is kept by all 48
+PASS E1 the twin pair's two-time density (its charge) is kept by the common quarter turn of both hands
+RESULT: ALL PASS

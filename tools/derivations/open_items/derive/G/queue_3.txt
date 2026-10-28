@@ -1,0 +1,16 @@
+g1_nature60_head_u.txt exit 0 14s
+g1_nature60_head_ueven.txt exit 0 14s
+g1_nature60_head_udown.txt exit 0 15s
+g1_nature60_even_ueven.txt exit 0 14s
+g1_nature60_down_udown.txt exit 0 14s
+g1_count_node20.txt exit 0 1s
+g1_count_polarization12.txt exit 0 1s
+g1_count_pair3_400.txt exit 0 6s
+g1_count_plasma3_400.txt exit 0 6s
+g1_count_sea3_240.txt exit 0 3s
+g1_count_universe3_400.txt exit 0 6s
+g1_count_ga2_230.txt exit 0 15s
+g1_count_plasma400.txt exit 0 14s
+g1_count_sea400.txt exit 0 11s
+g1_count_universe400.txt exit 0 13s
+DONE

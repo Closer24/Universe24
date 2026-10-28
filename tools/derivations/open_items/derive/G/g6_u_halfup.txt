@@ -1,0 +1,1 @@
+100000 cases (20000 exact ties): u = (p + tX div 2) div tX at 100000; the driven carry the same at 100000; u(-1 - p) = -u(p) at 100000; u(-p) = -u(p) fails at 20000 of the 20000 ties and at 0 of the 80000 other cases

@@ -1,0 +1,10 @@
+M1. The z Mesh's hop required to commute with the quarter turn about x (the wrong axis): H_z must drop out
+  H_z fails to commute with Q_x: 1 of 1 (must be above 0)
+M2. No staggering gauge (g = 1): the links must stop being scalar signs
+  links whose transport is not a scalar sign: 3 of 3 (must be above 0)
+M3. The half-turn hop with equal raw spins (s2 = s, not transported): the scalar relation must fail
+    (the transports to the junction are -H_x from j and -H_z from l; (H_x - H_z) s = 0 has no solution s != 0)
+  raw-equal spins that disagree once transported to the junction: 50 of 50 (must be above 0)
+M4. Commuting transports (diag(-i, i) on every axis): the one-quantum ratio must be +1, not -1
+  the ratio is not -1: 1 of 1 (must be above 0)
+result: every mutant fails as it must

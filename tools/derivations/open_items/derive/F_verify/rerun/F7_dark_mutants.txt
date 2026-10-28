@@ -1,0 +1,10 @@
+=== mutant complex
+FAIL A1 a one-gear train's sweep Im(conj(a-) a) is 0 at every Node-clock (20 random boards)
+FAIL A2 its lead Im(conj(a) a_j) is 0 on every Mesh: it sources nothing in the offset and the light's couplings Q A0, J . A vanish on it
+RESULT: FAILED A1 a one-gear train's sweep Im(conj(a-) a) is 0 at every Node-clock (20 random boards), A2 its lead Im(conj(a) a_j) is 0 on every Mesh: it sources nothing in the offset and the light's couplings Q A0, J . A vanish on it
+=== mutant pressure
+FAIL C1 a sprung one-gear train's homogeneous beat: its Lagrangian (the homogeneous pressure) averages to 0 over each exact period (dust) : periods {'1/2': 6, '0': 4, '-1/2': 3}
+RESULT: FAILED C1 a sprung one-gear train's homogeneous beat: its Lagrangian (the homogeneous pressure) averages to 0 over each exact period (dust)
+=== mutant axion
+FAIL D1 E . B is kept by the 24 and reversed by every mirror (a pseudoscalar of the 48: the axion's coupling) : E . B = 92
+RESULT: FAILED D1 E . B is kept by the 24 and reversed by every mirror (a pseudoscalar of the 48: the axion's coupling)

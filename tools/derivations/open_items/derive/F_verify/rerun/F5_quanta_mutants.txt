@@ -1,0 +1,13 @@
+=== mutant centred
+FAIL A2 [light at the edge] continuity at every Node-clock and tick, the flux the Mesh's lead at the middle slot
+FAIL A2 [a train below the edge] continuity at every Node-clock and tick, the flux the Mesh's lead at the middle slot
+RESULT: FAILED A2 [light at the edge] continuity at every Node-clock and tick, the flux the Mesh's lead at the middle slot, A2 [a train below the edge] continuity at every Node-clock and tick, the flux the Mesh's lead at the middle slot
+=== mutant permanent
+FAIL C1 two bosons, one per input: the two ways cancel (per M = 0), odds (1/2, 0, 1/2): Hong, Ou and Mandel's dip : per M = (2, 0)
+RESULT: FAILED C1 two bosons, one per input: the two ways cancel (per M = 0), odds (1/2, 0, 1/2): Hong, Ou and Mandel's dip
+=== mutant token
+FAIL D1 where every size is non-negative the token's law of position is carried exactly as the sweep (Born for position) : 3 ticks with non-negative sizes, 5 with a negative size or density
+RESULT: FAILED D1 where every size is non-negative the token's law of position is carried exactly as the sweep (Born for position)
+=== mutant hold
+FAIL E2 the massless uniform mode at the hold 0 drifts by one notch a tick for ever (a double root: no recurrence) : notch 5 .. 5
+RESULT: FAILED E2 the massless uniform mode at the hold 0 drifts by one notch a tick for ever (a double root: no recurrence)

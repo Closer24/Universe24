@@ -1,0 +1,8 @@
+g1_hole60_up.txt exit 0 13s
+g1_hole60_head.txt exit 0 13s
+g1_hole60_even.txt exit 0 14s
+g1_hole60_down.txt exit 0 14s
+g1_nature60_head.txt exit 0 15s
+g1_nature60_even.txt exit 0 17s
+g1_nature60_down.txt exit 0 16s
+DONE

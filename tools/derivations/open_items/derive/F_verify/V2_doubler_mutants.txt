@@ -1,0 +1,10 @@
+=== mutant hold
+FAIL A1 at the hold 0 a setting on one colour of space-time stays on it for 40 ticks (the step reads one colour)
+RESULT: FAILED A1 at the hold 0 a setting on one colour of space-time stays on it for 40 ticks (the step reads one colour)
+=== mutant shared
+FAIL B1 with a remainder slot per colour the staggered amplitude is not fed: its mean square at tick 1600 is under 1/1000 of the shared slot's : SUM S(1600)^2: 375202181643 per colour against 375202181643 shared
+RESULT: FAILED B1 with a remainder slot per colour the staggered amplitude is not fed: its mean square at tick 1600 is under 1/1000 of the shared slot's
+=== mutant sign
+FAIL D2 the corner sector holds both charges, each with the same positive wind
+FAIL D3 the corner mode with w in (0, pi) has the k = 0 particle's charge; SIGMA's image (w = w0 + pi) the other
+RESULT: FAILED D2 the corner sector holds both charges, each with the same positive wind, D3 the corner mode with w in (0, pi) has the k = 0 particle's charge; SIGMA's image (w = w0 + pi) the other

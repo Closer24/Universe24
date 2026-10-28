@@ -1,0 +1,4 @@
+MISS draft line 283 -> law line 1905: no setting form lays a wave on the offset itself
+MISS draft line 284 -> law line 458: what would solve everything
+MISS draft line 397 -> law line 458: transverse light (non-local)
+fragments found on their line: 69; not found: 3

@@ -1,0 +1,8 @@
+g1_count_bodies120.txt world_bodies.json 120 head 20 mod nodigest head
+g1_count_packet150.txt world_packet.json 150 head 20 mod nodigest head
+g1_count_emission_none300.txt world_emission_none.json 300 head 20 mod nodigest head
+g1_count_emission_one300.txt world_emission_one.json 300 head 20 mod nodigest head
+g1_count_emission300.txt world_emission.json 300 head 20 mod nodigest head
+g1_count_collapse500_600.txt world_collapse_500.json 600 head 20 mod nodigest head
+g1_count_collapse800_600.txt world_collapse_800.json 600 head 20 mod nodigest head
+g1_count_collapse1200_600.txt world_collapse_1200.json 600 head 20 mod nodigest head

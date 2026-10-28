@@ -1,0 +1,10 @@
+g7_polar12_b_noskew.txt g7_antiworld.py world_polarization.json 12 even even three noskew
+g7_polar12_a_noskew.txt g7_antiworld.py world_polarization.json 12 up up three noskew
+g7_polar12_c_noskew.txt g7_antiworld.py world_polarization.json 12 down down three noskew
+g7_hole60_b.txt g7_antiworld.py world_hole.json 60 even even three
+g7_hole60_b_noskew.txt g7_antiworld.py world_hole.json 60 even even three noskew
+g7_nature60_b_noskew.txt g7_antiworld.py world_nature.json 60 even even three noskew
+g7_bodies120_a.txt g7_antiworld.py world_bodies.json 120 up up three
+g7_bodies120_a_noskew.txt g7_antiworld.py world_bodies.json 120 up up three noskew
+g7_packet150_a_noskew.txt g7_antiworld.py world_packet.json 150 up up three noskew
+g7_emission_one300_a_noskew.txt g7_antiworld.py world_emission_one.json 300 up up three noskew

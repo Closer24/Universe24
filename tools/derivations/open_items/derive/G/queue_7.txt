@@ -1,0 +1,8 @@
+g7_bang250_a.txt exit 0 133s
+g7_hole60_a.txt exit 0 24s
+g7_nature60_a.txt exit 0 27s
+g7_pair3_400_a.txt exit 0 10s
+g7_polar12_a_three.txt exit 0 2s
+g7_polar12_c_three.txt exit 0 2s
+g7_bang250_b.txt exit 0 130s
+DONE

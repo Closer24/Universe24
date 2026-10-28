@@ -1,0 +1,19 @@
+(a) the weak top (law 4's top)                    : triples where tau(X0, X1, X2) != tau(X2, X1, X0): 0 of 2197
+(a) the weak bottom (the candidate)               : triples where tau(X0, X1, X2) != tau(X2, X1, X0): 0 of 2197
+(a) the top or the weak bottom                    : triples where tau(X0, X1, X2) != tau(X2, X1, X0): 0 of 2197
+(a) the strict bottom                             : triples where tau(X0, X1, X2) != tau(X2, X1, X0): 0 of 2197
+(a) the top or the strict bottom                  : triples where tau(X0, X1, X2) != tau(X2, X1, X0): 0 of 2197
+(a) the top or the law's floor (X_f = -3)         : triples where tau(X0, X1, X2) != tau(X2, X1, X0): 0 of 2197
+(a) the top or the full rate's bottom (Gamma = 3) : triples where tau(X0, X1, X2) != tau(X2, X1, X0): 0 of 2197
+(a) MUTANT: the asymmetric top X0 < X1 >= X2      : triples where tau(X0, X1, X2) != tau(X2, X1, X0): 156 of 2197
+(b) the one carry (1 + (-v1 v2) div (v1^2 v2^2 + 1)) (-((-s) div (s^2 + 1))) against the top or the weak bottom: 0 of 2197 differ
+(b) the one carry at the largest integers and the rests: 0 of 5 differ
+(c) pushed up by its spring (X0 = 60 above the setting)  the weak top alone (the head with no floor) : turnovers  11, pinned   0, period 38, returns to X = 40: 20; X over ticks 0-24: [40, 42, 46, 51, 57, 63, 70, 76, 81, 83, 81, 76, 70, 63, 57, 51, 46, 42, 40, 40, 42, 46, 51, 57, 63]
+(c) pushed up by its spring (X0 = 60 above the setting)  the top or the weak bottom                  : turnovers 200, pinned 199, period 2, returns to X = 40: 200; X over ticks 0-24: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40]
+(c) pushed up by its spring (X0 = 60 above the setting)  the top or the strict bottom                : turnovers  11, pinned   0, period 38, returns to X = 40: 20; X over ticks 0-24: [40, 42, 46, 51, 57, 63, 70, 76, 81, 83, 81, 76, 70, 63, 57, 51, 46, 42, 40, 40, 42, 46, 51, 57, 63]
+(c) pushed up by its spring (X0 = 60 above the setting)  the top or the full rate's bottom (X0 = 40) : turnovers  11, pinned   0, period 38, returns to X = 40: 20; X over ticks 0-24: [40, 42, 46, 51, 57, 63, 70, 76, 81, 83, 81, 76, 70, 63, 57, 51, 46, 42, 40, 40, 42, 46, 51, 57, 63]
+(c) pulled down by its spring (X0 = 20 below the setting) the weak top alone (the head with no floor) : turnovers 200, pinned 199, period 2, returns to X = 40: 200; X over ticks 0-24: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40]
+(c) pulled down by its spring (X0 = 20 below the setting) the top or the weak bottom                  : turnovers 200, pinned 199, period 2, returns to X = 40: 200; X over ticks 0-24: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40]
+(c) pulled down by its spring (X0 = 20 below the setting) the top or the strict bottom                : turnovers 200, pinned 199, period 2, returns to X = 40: 200; X over ticks 0-24: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40]
+(c) pulled down by its spring (X0 = 20 below the setting) the top or the full rate's bottom (X0 = 40) : turnovers 200, pinned 199, period 2, returns to X = 40: 200; X over ticks 0-24: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40]
+(c) the setting with the drive's fine tooth at 0 (no fixed point of T), the weak top alone: turnovers 11, period 38; X over ticks 0-40: [40, 42, 46, 51, 57, 63, 69, 74, 78, 80, 78, 74, 69, 63, 57, 51, 46, 42, 40, 40, 42, 47, 53, 60, 67, 73, 78, 81, 82, 81, 78, 73, 67, 60, 53, 47, 42, 40, 40, 42, 46]

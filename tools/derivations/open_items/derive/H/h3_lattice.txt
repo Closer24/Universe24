@@ -1,0 +1,16 @@
+MIRROR       TR 10, W = 2 (X- + X) even, DD 50000               weak top       ran 300 (circles 300), turnovers 27597: TMTM 298  CIRCLE 300  24 172  LAW1   0
+MIRROR       TR 10, W = 2 (X- + X) even, DD 50000               top or bottom  ran 300 (circles 300), turnovers 50723: TMTM 284  CIRCLE 300  24 115  LAW1   0
+MIRROR       TR 11, W = 5 (X- + X) of either parity, DD 49999   weak top       ran 300 (circles 300), turnovers  5398: TMTM  28  CIRCLE  73  24  53  LAW1   0
+MIRROR       TR 11, W = 5 (X- + X) of either parity, DD 49999   top or bottom  ran 300 (circles 299), turnovers 44542: TMTM  10  CIRCLE  52  24  25  LAW1   0
+MIRROR       TR 12, W = 3 (X- + X) of either parity, DD 50000   weak top       ran 300 (circles 300), turnovers 17124: TMTM 293  CIRCLE 300  24  83  LAW1   0
+MIRROR       TR 12, W = 3 (X- + X) of either parity, DD 50000   top or bottom  ran 300 (circles 300), turnovers 50921: TMTM 269  CIRCLE 300  24  42  LAW1   0
+MIRROR       TR 9, W = 3 (X- + X) of either parity, DD 49999    weak top       ran 300 (circles 300), turnovers 20723: TMTM  35  CIRCLE 143  24  70  LAW1   0
+MIRROR       TR 9, W = 3 (X- + X) of either parity, DD 49999    top or bottom  ran 300 (circles 300), turnovers 54683: TMTM  18  CIRCLE  92  24  41  LAW1   0
+FRAME        TR 10, W = 2 (X- + X) even, DD 50000               weak top       ran 300 (circles 299), turnovers 27588: TMTM   0  CIRCLE   0  24   0  LAW1   0
+FRAME        TR 10, W = 2 (X- + X) even, DD 50000               top or bottom  ran 300 (circles 300), turnovers 51263: TMTM   0  CIRCLE   0  24   0  LAW1   0
+FRAME        TR 11, W = 5 (X- + X) of either parity, DD 49999   weak top       ran 300 (circles 300), turnovers  5386: TMTM   0  CIRCLE   0  24   0  LAW1   0
+FRAME        TR 11, W = 5 (X- + X) of either parity, DD 49999   top or bottom  ran 300 (circles 300), turnovers 44309: TMTM   0  CIRCLE   0  24   0  LAW1   0
+FRAME        TR 12, W = 3 (X- + X) of either parity, DD 50000   weak top       ran 300 (circles 300), turnovers 16849: TMTM   0  CIRCLE   0  24   0  LAW1   0
+FRAME        TR 12, W = 3 (X- + X) of either parity, DD 50000   top or bottom  ran 300 (circles 300), turnovers 51710: TMTM   0  CIRCLE   0  24   0  LAW1   0
+FRAME        TR 9, W = 3 (X- + X) of either parity, DD 49999    weak top       ran 300 (circles 300), turnovers 20619: TMTM   0  CIRCLE   0  24   0  LAW1   0
+FRAME        TR 9, W = 3 (X- + X) of either parity, DD 49999    top or bottom  ran 300 (circles 300), turnovers 54611: TMTM   0  CIRCLE   0  24   0  LAW1   0

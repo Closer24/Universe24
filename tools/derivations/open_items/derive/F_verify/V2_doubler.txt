@@ -1,0 +1,15 @@
+PASS A1 at the hold 0 a setting on one colour of space-time stays on it for 40 ticks (the step reads one colour)
+PASS A2 on that colour e(x, t) = +1 at every place, so SIGMA is the identity on it: one colour alone has no doubler
+PASS A3 a hold of 1/5 couples the colours at the first tick
+   one shared remainder slot, S(t) at (100, 200, 400, 800, 1600) : {7: [-4547, -11247, -30256, -99332, -307712], 11: [-965, -5958, -31682, -63812, -211193], 13: [993, 6855, 35867, 152489, 485585], 17: [1130, 2151, -211, 8745, 10965]}
+   a slot per colour, S(t) at (100, 200, 400, 800, 1600) : {7: [-21, -77, 7, -120, -94], 11: [-28, -24, -12, -212, -128], 13: [-78, -4, -61, 28, 38], 17: [17, 49, 106, -16, -205]} largest |S| over 1600 ticks: {7: 128, 11: 232, 13: 114, 17: 294}
+PASS B1 with a remainder slot per colour the staggered amplitude is not fed: its mean square at tick 1600 is under 1/1000 of the shared slot's : SUM S(1600)^2: 68689 per colour against 375202181643 shared
+PASS B2 with the one shared slot it passes 10^4 notches by tick 1600 in every seed (the feed is the shared remainder)
+   C: SUM over 4 seeds of S(t)^2: {100: 23869383, 200: 213610599, 400: 3205660870, 800: 37268187714, 1600: 375202181643}
+   C: its ratio per doubling of t (8 for t^(3/2), 4 for t): ['71203533/7956461', '3205660870/213610599', '18634093857/1602830435', '125067393881/12422729238']
+PASS C1 the mean square grows by more than 4 and less than 16 per doubling from 400 to 1600 (between t and t^2 in S) : 894/100, 1500/100, 1162/100, 1006/100
+   D: sweeps {'k0': '-256/5', 'cA': '256/5', 'cB': '-256/5'} winds {'k0': '2048/25', 'cA': '2048/25', 'cB': '2048/25'}
+PASS D1 the three plane waves solve the one formula at the hold 0 exactly (r = 3/5, side 4)
+PASS D2 the corner sector holds both charges, each with the same positive wind
+PASS D3 the corner mode with w in (0, pi) has the k = 0 particle's charge; SIGMA's image (w = w0 + pi) the other
+RESULT: ALL PASS

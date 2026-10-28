@@ -1,0 +1,85 @@
+0. the time gear's floor carry with the kept tooth equals draft G's half-up 'up' step
+   states x pushes compared at w = 2..16: differences 0
+1. every rule, w = 2..16, b, n in [-2, 2], r in [0, w), N in [-3 w, 3 w]
+   w  rule           states  TT!=id  STS!=T  mirror's fails by (r=0, r'=0)
+    2  flip             650       0       0  
+    2  mirror           650       0     300  {(True, False): 150, (False, True): 150}; exactly-one-zero cases 300, both-zero cases 175
+    2  raw              650       0     325  
+    2  carried          650      25     325  
+    2  kept (mutant)    650       0     300  
+    3  flip            1425       0       0  
+    3  mirror          1425       0       0  {}; exactly-one-zero cases 600, both-zero cases 175
+    3  raw             1425       0       0  
+    3  carried         1425       0       0  
+    3  kept (mutant)   1425       0     900  
+    4  flip            2500       0       0  
+    4  mirror          2500       0     900  {(True, False): 450, (False, True): 450}; exactly-one-zero cases 900, both-zero cases 175
+    4  raw             2500       0     625  
+    4  carried         2500      25     625  
+    4  kept (mutant)   2500       0    1800  
+    5  flip            3875       0       0  
+    5  mirror          3875       0       0  {}; exactly-one-zero cases 1200, both-zero cases 175
+    5  raw             3875       0       0  
+    5  carried         3875       0       0  
+    5  kept (mutant)   3875       0    3000  
+    6  flip            5550       0       0  
+    6  mirror          5550       0    1500  {(True, False): 750, (False, True): 750}; exactly-one-zero cases 1500, both-zero cases 175
+    6  raw             5550       0     925  
+    6  carried         5550      25     925  
+    6  kept (mutant)   5550       0    4500  
+    7  flip            7525       0       0  
+    7  mirror          7525       0       0  {}; exactly-one-zero cases 1800, both-zero cases 175
+    7  raw             7525       0       0  
+    7  carried         7525       0       0  
+    7  kept (mutant)   7525       0    6300  
+    8  flip            9800       0       0  
+    8  mirror          9800       0    2100  {(True, False): 1050, (False, True): 1050}; exactly-one-zero cases 2100, both-zero cases 175
+    8  raw             9800       0    1225  
+    8  carried         9800      25    1225  
+    8  kept (mutant)   9800       0    8400  
+    9  flip           12375       0       0  
+    9  mirror         12375       0       0  {}; exactly-one-zero cases 2400, both-zero cases 175
+    9  raw            12375       0       0  
+    9  carried        12375       0       0  
+    9  kept (mutant)  12375       0   10800  
+   10  flip           15250       0       0  
+   10  mirror         15250       0    2700  {(True, False): 1350, (False, True): 1350}; exactly-one-zero cases 2700, both-zero cases 175
+   10  raw            15250       0    1525  
+   10  carried        15250      25    1525  
+   10  kept (mutant)  15250       0   13500  
+   11  flip           18425       0       0  
+   11  mirror         18425       0       0  {}; exactly-one-zero cases 3000, both-zero cases 175
+   11  raw            18425       0       0  
+   11  carried        18425       0       0  
+   11  kept (mutant)  18425       0   16500  
+   12  flip           21900       0       0  
+   12  mirror         21900       0    3300  {(True, False): 1650, (False, True): 1650}; exactly-one-zero cases 3300, both-zero cases 175
+   12  raw            21900       0    1825  
+   12  carried        21900      25    1825  
+   12  kept (mutant)  21900       0   19800  
+   13  flip           25675       0       0  
+   13  mirror         25675       0       0  {}; exactly-one-zero cases 3600, both-zero cases 175
+   13  raw            25675       0       0  
+   13  carried        25675       0       0  
+   13  kept (mutant)  25675       0   23400  
+   14  flip           29750       0       0  
+   14  mirror         29750       0    3900  {(True, False): 1950, (False, True): 1950}; exactly-one-zero cases 3900, both-zero cases 175
+   14  raw            29750       0    2125  
+   14  carried        29750      25    2125  
+   14  kept (mutant)  29750       0   27300  
+   15  flip           34125       0       0  
+   15  mirror         34125       0       0  {}; exactly-one-zero cases 4200, both-zero cases 175
+   15  raw            34125       0       0  
+   15  carried        34125       0       0  
+   15  kept (mutant)  34125       0   31500  
+   16  flip           38800       0       0  
+   16  mirror         38800       0    4500  {(True, False): 2250, (False, True): 2250}; exactly-one-zero cases 4500, both-zero cases 175
+   16  raw            38800       0    2425  
+   16  carried        38800      25    2425  
+   16  kept (mutant)  38800       0   36000  
+2. draft G's box: b, n in [-7, 7], r in [0, 8), w = 8 (1,800 states), force F(n) = -3 n
+   flip          states 1800  TT!=id 0  retrace S T S != T 0  T S T != S^-1 ((S T)^2 != id) 0
+   mirror        states 1800  TT!=id 0  retrace S T S != T 420  T S T != S^-1 ((S T)^2 != id) 420
+   raw           states 1800  TT!=id 0  retrace S T S != T 225  T S T != S^-1 ((S T)^2 != id) 0
+   carried       states 1800  TT!=id 225  retrace S T S != T 225  T S T != S^-1 ((S T)^2 != id) 0
+   kept (mutant) states 1800  TT!=id 0  retrace S T S != T 1680  T S T != S^-1 ((S T)^2 != id) 1680

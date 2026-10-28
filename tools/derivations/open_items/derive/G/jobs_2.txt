@@ -1,0 +1,7 @@
+g1_hole60_up.txt world_hole.json 60 up 20 mod digest
+g1_hole60_head.txt world_hole.json 60 head 20 mod digest
+g1_hole60_even.txt world_hole.json 60 even 20 mod digest
+g1_hole60_down.txt world_hole.json 60 down 20 mod digest
+g1_nature60_head.txt world_nature.json 60 head 20 mod digest
+g1_nature60_even.txt world_nature.json 60 even 20 mod digest
+g1_nature60_down.txt world_nature.json 60 down 20 mod digest

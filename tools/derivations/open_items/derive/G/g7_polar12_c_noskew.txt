@@ -1,0 +1,17 @@
+world_polarization.json, 12 ticks, the driven carry down, the impulse u down, the image three, the skew struck (a diagnosis); coupled hands [0, 1]
+  tick   1: world [0, 2877934]; antiworld [0, -2877934]; sum [0, 0]
+  tick   2: world [0, 2591366]; antiworld [0, -2591366]; sum [0, 0]
+  tick   3: world [0, 2399074]; antiworld [0, -2399074]; sum [0, 0]
+  tick   4: world [0, 2234052]; antiworld [0, -2234052]; sum [0, 0]
+  tick   5: world [0, 2147494]; antiworld [0, -2147494]; sum [0, 0]
+  tick   6: world [0, 2115866]; antiworld [0, -2115866]; sum [0, 0]
+  tick   7: world [0, 2023516]; antiworld [0, -2023688]; sum [0, -172]
+  tick   8: world [0, 1964155]; antiworld [0, -1964295]; sum [0, -140]
+  tick   9: world [0, 1855104]; antiworld [0, -1855244]; sum [0, -140]
+  tick  10: world [0, 1704627]; antiworld [0, -1704815]; sum [0, -188]
+  tick  11: world [0, 1554962]; antiworld [0, -1553755]; sum [0, 1207]
+  tick  12: world [0, 1433282]; antiworld [0, -1432154]; sum [0, 1128]
+the first tick where the antiworld is not the world negated: 7
+births (hand, tick): world []; antiworld []
+chimes (hand, sense): world [((1, -1), 3), ((1, 1), 19)]; antiworld [((1, -1), 19), ((1, 1), 3)]
+the coupled charge at the end: world 1433282, antiworld -1432154, their sum 1128

@@ -1,0 +1,12 @@
+PASS A1 (4 + 3i)^2 = 7 + 24i: w0_K = 2 w0_L, both in (0, pi/2)
+PASS A2 c_K^2 / c_L^2 = 1 exactly: one limiting speed for two trains of different rest beats : ratio 1
+PASS A3 both holds above 0 and both bands stable : holds 1 and 2/25
+   O(k^2) constants (A1 in Herm(K) x Sym2(T1)): {'A1': 1, 'A2': 1, 'E': 2, 'T1': 3, 'T2': 3, 'E1/2': 1, 'E5/2': 1, 'G3/2': 4}
+   O(k) terms of a real field (A1 in Lambda2(K) x T1): {'A1': 0, 'A2': 0, 'E': 0, 'T1': 1, 'T2': 1}
+   O(k) terms of a spinor field (A1 in Herm(K) x T1): {'E1/2': 1, 'E5/2': 1, 'G3/2': 2}
+PASS B1 complex fields of O's kinds: 1, 1, 2, 3, 3 constants (the draft's counts); E1/2 and E5/2: 1; G3/2: 4
+PASS B2 the 24 allow one O(k) helicity term for T1 and for T2 trains, none for A1, A2, E
+PASS B3 each spinor kind allows O(k) terms: E1/2 and E5/2 one (sigma . k), G3/2 two
+   C: ticks with a density <= 0: [1, 6]; with a density < 0: [1, 6]; with an outflow above the density: [0, 1, 3, 5, 6, 7]
+PASS C1 F5 D1's six failing ticks: counted by cause : [0, 1, 3, 5, 6, 7]
+RESULT: ALL PASS
