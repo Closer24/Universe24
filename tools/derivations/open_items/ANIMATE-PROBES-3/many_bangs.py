@@ -25,7 +25,10 @@ Variants (each changes one thing, named; everything else is the tree's own):
             the kind table (1 on an A1 hand, [[0, -1], [1, 0]] on the twin pair: the owner's word of 13:3x UTC,
             one formula for every family), TWIN_T=K for the head's K on the twins; backward T applied -q times;
             BH-S1 struck everywhere as in carry
-  dial_nof2 dial, with F2 struck as in carry_nof2
+  dial_nof2 dial, with F2 struck as in carry_nof2; TENSION=ratio reads the Mesh tension in the time gear's teeth,
+            t = (Gamma t_abs) div X_ij with X_ij the two ends' mean stretch at the tick's start (the axis gear's carry on
+            the stretch's own dial, the remainder kept), unclipped; CONE=held reads it at 0 below 0 (a diagnosis only:
+            the light cone's side of F2 kept, its upper side struck)
   notick    nofloor, and BH-S1's restore struck: no gear of a stopped clock is restored; law 4 reads the time gear
             of a clock with no tick (mesh rate 0 at the tick's start) as held, X2 = X1 (the clock has no tick on the
             board, the owner's asynchronous board), and nothing else
@@ -74,6 +77,8 @@ CARRIED = ("carry", "carry_nof2", "dial", "dial_nof2")
 READ = os.environ.get("READ", "step")
 TWIN_T = os.environ.get("TWIN_T", "JK")
 FORM = os.environ.get("FORM", "count")
+TENSION = os.environ.get("TENSION", "notches")
+TENSION_SEEN = {"below 0": 0, "above Gamma": 0, "least": 0, "largest": 0}
 # the rows of the kind table the turnover reads: J on the kind's hands (T = J K, K the hand's conjugation)
 J_OF = {"A1": ((1,),), "E1/2": ((0, -1), (1, 0)) if TWIN_T == "JK" else ((1, 0), (0, 1))}
 
@@ -298,8 +303,21 @@ def factors_audited(clock, axis_notches=None, stopped=None):
         stopped = None
     if variant in ("carry_nof2", "dial_nof2"):
         found = []
+        stretch = STRETCH_AT[0] if STRETCH_AT[0] is not None else clock.train(REGULATOR).gears[0].now
         for spoke, (axis, _side) in enumerate(SPOKE_SIDES):
             t = carries_act(M.even(notches[axis], spoke) + 1, M.SIDES)
+            if TENSION == "ratio":
+                # the axis gear read in the time gear's teeth: the tension's carry on the stretch's own dial,
+                # t = (Gamma t_abs) div X_ij, X_ij the two ends' mean stretch (the remainder stays), F2 struck
+                ends = carries_act(M.even(stretch, spoke) + 1, M.SIDES)
+                t = carries_act(clock.full_rate * t, ends)
+                if os.environ.get("CONE") == "held":
+                    # a diagnosis only, not the law's form: the lower side read at 0 (no Mesh above the full rate)
+                    t = np.maximum(t, 0)
+                TENSION_SEEN["below 0"] += int((np.asarray(t) < 0).sum())
+                TENSION_SEEN["above Gamma"] += int((np.asarray(t) > clock.full_rate).sum())
+                TENSION_SEEN["least"] = min(TENSION_SEEN["least"], int(np.min(t)))
+                TENSION_SEEN["largest"] = max(TENSION_SEEN["largest"], int(np.max(t)))
             found.append(M.mesh_factor(clock.full_rate, clock.G, t))
         return tuple(found)
     found = _factors(clock, axis_notches, stopped)
@@ -335,8 +353,13 @@ D.min = min_audited
 _rate_readings = T.Tick.rate_readings
 
 
+STRETCH_AT = [None]
+
+
 def rate_readings_audited(self):
+    STRETCH_AT[0] = self.at(self.regulator.gears[0])
     _rate_readings(self)
+    STRETCH_AT[0] = None
     if variant in CARRIED:
         self.clock.dial = self.clock.dial + self.going * np.where(self.stopped, self.rate, 0)
         self.stopped = np.zeros(self.clock.size, dtype=bool)
@@ -513,6 +536,8 @@ for s, e in zip(edges, edges[1:], strict=False):
     tops_in = [t for t in whole if s < t <= e]
     largest = max(X_at[t] for t in range(s, e + 1))
     print(f"  {s}..{e}: top {tops_in}, largest X {largest}, births {births_at[e] - births_at[s]}")
+if TENSION == "ratio":
+    print(f"the tension read in the time gear's teeth, unclipped: {TENSION_SEEN}")
 print("the bounds the engine still holds, values each changed in the run:")
 for name, n in AUDIT.items():
     print(f"  {name}: {n}")

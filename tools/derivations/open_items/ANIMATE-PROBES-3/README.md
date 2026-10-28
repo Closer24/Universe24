@@ -17,7 +17,13 @@ The page is ANIMATE-TWIN-TOY.md. These are toys that check whether a piece would
   - READ=step (the step's output, not written) or READ=start (the tick's start) is where q is read;
   - TWIN_T=K puts the head's K on the twins in place of J K;
   - FORM=hybrid is the stage-1 threshold, as a diagnosis only: the top's turn read at the tick's start at 1 or more, and the vacuum's borrow read at the step's output at -1 or less.
+- **The tension's reading** (ANIMATE-F2-CARRY.md): with `dial_nof2`, TENSION=ratio reads the Mesh tension in the time gear's teeth, t = (Gamma t_abs) div X_ij (X_ij the two ends' mean stretch at the tick's start), unclipped. CONE=held reads it at 0 below 0, as a diagnosis only.
 - **The earlier variants** (base, nofloor, notick, carry, carry_nof2, weakmin, fallmin) are ANIMATE-PROBES-2's, unchanged.
+
+## tension_scale.py: the Mesh tension F2 clamps
+
+- **Beside many_bangs.py:** `python -I tension_scale.py`. It runs the A1 course for 60 ticks (the `dial` variant read at the tick's start) and prints the stretch, the axis gears and their sum, every Spoke's tension, how many Mesh readings fall inside [0, Gamma], and t / X.
+- **The output** is a1_tension_scale_60.txt: 0 of 384 inside at every tick.
 
 ## ladder_pauli.py: the 24's ladder under Pauli's rule
 
@@ -37,6 +43,9 @@ Three outputs ran before the FORM setting was added, so their settings line name
 |---|---|---|---|---|---|
 | a1_count_start_5M_250.txt | A1 | count | the start | none | draft C bit for bit (640f11b7135fcbfc); carries 0 and 1; rewind 20 of 20 |
 | a1_count_step_5M_250.txt | A1 | count | the step | none | tops a tick earlier; a 28-turn step written at the fourth bang; rewind 20 of 20 |
+| a1_tension_scale_60.txt | A1 | count | the start | none | the tension inside [0, Gamma] at 0 of 384 Mesh readings at every tick; t / X a few percent |
+| a1_tension_ratio_nof2_5M_250.txt | A1 | count, the tension in the time gear's teeth, F2 struck | the start | none | the tension -42 to 83; refused at tick 87; rewind 20 of 20 |
+| a1_tension_ratio_cone_5M_250.txt | A1 | the same, the lower side read at 0 (diagnosis) | the start | none | 6 tops every 39 ticks; books 250 of 250; rewind 20 of 20 |
 | twins_JK_count_start_500k_600.txt | twins | count | the start | J K | refused at tick 346: the fall below the vacuum within one tick |
 | twins_JK_count_step_500k_600.txt | twins | count | the step | J K | refused at tick 432: even counts let the stretch leave the dial |
 | twins_K_count_step_500k_600.txt | twins | count | the step | K | refused at tick 432, as with J K |

@@ -1,0 +1,61 @@
+# F2's carry through the clocks and the tensor: a toy check for the plan (Animate)
+
+The owner's words to Animate, 2026-10-28, 14:3x UTC (Hebrew, translated): "When you say carry, is it a clock's carry?" and "Think through the clocks and the tensor what its carry is." F2 is the bound the A1 course stands on (ANIMATE-MANY-BANGS.md, part 4: struck, the course is refused at tick 15). The toys are in ANIMATE-PROBES-3. Every claim is marked CHECKED or OPEN.
+
+## 1. What F2 is on the head
+
+- **The reading:** the tension t of a Spoke is the mean of its two ends' axis gears (meshes.factors). The Mesh's factor is Q = (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2 (rule3.mesh_factor), the square of the Mesh rate (Gamma - t) / Gamma.
+- **F2 reads t into [0, Gamma]:** below 0 at 0 (no Mesh faster than the full rate) and above Gamma at Gamma (the Mesh at a standstill).
+- **On the A1 course, F2 acts on every Mesh at every tick** (a1_tension_scale_60.txt). CHECKED.
+  - The axis gears are traceless (their sum is 0 to 3) and run in the millions: -833,333 to 1,666,667 at tick 1, and -18,784,058 to 37,568,115 at the top.
+  - So the tension falls inside [0, Gamma] at 0 of the 384 Mesh readings, at every tick.
+  - F2 makes every Mesh binary: the full coupling along the two compressed axes, and a standstill along the stretched one.
+- **The tension over the stretch is small:** t / X runs from -0.042 to 0.083 at tick 1, and from -0.0046 to 0.0091 at the top. The light's anisotropy is a few percent.
+
+## 2. In the clocks
+
+- **The tension is a carry of one gear on another's dial.** The axis gears and the time gear are gears of one regulator: the axis gear counts the Link's stretch along its axis in notches, and the time gear counts the whole stretch X. What the Mesh's rate reads is the axis gear in the time gear's teeth, Rule3's carry: Gamma a = t X + r, so t = (Gamma a) div X, and the remainder r stays.
+- **The tension's whole turn** (t = Gamma) is the Link stretched by the whole stretch along its axis: the horizon along that axis, Rule3's own zero of the Mesh rate.
+- **The upper side goes.** Read this way, the tension on the course stays between -42 and 83 against Gamma = 1,000, so it never nears the horizon and no act holds it there. CHECKED.
+- **The lower side is the light cone.** A compressed axis (t below 0) asks for a Mesh faster than the full rate, up to 1.042 of it. Its carry is the Node-clock's own tick: a clock's time is the carry of its own dial (DAVID-TENSOR24-THE-LOCAL-TICK.md, toys-5 ac22caa8).
+  - Where light would cross more than one Mesh in a tick of the great clock, the clock's dial completes more than one turn, and the clock ticks again. Each local tick crosses at most one Mesh.
+  - Where the rate is 0 there is no tick: the horizon.
+  - Past it the dial runs back, a negative carry: the turnover, as at the time gear's top.
+
+  One dial and one carry on both sides, with no clamp. OPEN: the toy is synchronous and does not test the local tick itself.
+
+## 3. In the tensor
+
+- **The metric's spatial part** is X (delta_ab + h_ab). Its A1 part X is the time gear, its E part h_aa the axis gears (traceless), and its T2 part the shears. The axis gears hold X h_aa in notches, which is why they grow with the stretch.
+- **The Mesh rate along an axis** reads the light cone's slope along it, a function of h_aa alone: the E part over the A1 part, the carry above. Its weight (h or h / 2 at first order, against the square in Q) is David's to set (OPEN).
+- **The cone** is g(v, v) >= 0 for v = (one tick, one Mesh). The clamp holds the tick fixed and cuts g. The local tick keeps the cone exact and lets the tick follow.
+- **The 24** permute the axes, the E part's components and the cone's two sides together, so the reading and its carry are covariant. It is one formula for every Node-clock and every family.
+
+## 4. The toy (A1 calibre, 5,000,000 quanta, 250 ticks, the dial read at the tick's start, BH-S1 struck)
+
+| the tension | F2 | result |
+|---|---|---|
+| the head's, in absolute notches | held | draft C bit for bit: tops every 47 ticks; F2 acts at 91,776 values |
+| the head's | struck | refused at tick 15 (X = 27,218,198,742,186 at tick 2) |
+| in the time gear's teeth | struck | the tension -42 to 83; tops at 20, 59 and 83; refused at tick 87; the rewind 20 of 20 |
+| in the time gear's teeth | the lower side read at 0, a diagnosis only | 6 tops every 39 ticks; births 96; books 250 of 250; carries 0 and 1; the rewind 20 of 20; the end teeth's fallback 0 |
+
+CHECKED (a1_tension_ratio_nof2_5M_250.txt, a1_tension_ratio_cone_5M_250.txt). F2's upper side goes by the derived reading, and what stands is the light cone alone, whose carry is the local tick. The Meshes now couple along every axis, so the course is not draft C's: its tops come every 39 ticks.
+
+## 5. For the plan
+
+- **F2** (section 30, item 10 (1)):
+  - Its upper side is no bound: read in the time gear's teeth, the tension never reaches the horizon on the course.
+  - Its lower side is the light cone. Its carry is the local tick, David's asynchronous board.
+- **The same carry is what the twin calibre lacks** (ANIMATE-TWIN-TOY.md, part 3). A clock at rate 0 does not tick, so its stretch cannot run past the horizon. A fast region ticks finer, so no step carries more than one turn of the dial.
+- **A big law above both, for the owner's list:** every clock's time is the carry of its own dial, and light crosses one Mesh per local tick.
+- **How it was solved before:**
+  - in numerical relativity, the cone is held by local time steps: refined regions take more steps per coarse step (Berger and Oliger's subcycling, 1984);
+  - the asynchronous variational integrators (Lew, Marsden, Ortiz and West, 2003) give each element its own time step and keep the step variational.
+- **OPEN:**
+  - the weight of the reading;
+  - a toy of the local tick on the course;
+  - the twin calibre on this reading.
+
+---
+Animate, reader-5.
