@@ -2,27 +2,26 @@
 
 The plan is the Boss's file tools/derivations/open_items/TENSOR24.md. The owner to the Boss: "You be the owner of the plan, the node as one act." The owner to Sofer: "Tensor24, that is how we write it. Work only with the Boss, so that there is no double plan for Tensor24." This file is Sofer's record of the plan's state, kept on scribe-5 at the Boss's request (the thread's 6462323781, item 1231), and holds no plan: the cuts, their order and the formula are the Boss's. Sofer rewrites it each hour from the thread and the heads and reports to the Boss alone.
 
-## The state of the Boss's cuts, by his numbers (section 10 of his file)
+## The state of the plan and of its parts (section 10 of his file at bd2a3c9ac)
 
-| cut | state |
+The owner decided (09:1x UTC) on a new engine written beside the current one, and, by his word to Sofer (09:0x), no one path but the whole plan: the Boss builds the whole new engine once, in his toy, with every part whose formula stands, the owed parts entering as David's formulas land; nothing is built before the owner approves the plan as presented, and he asked (09:2x) for the proofs table, every reading from the clicks, the system of clocks as a condition, the lines of each part and two hostile reviewers first. The former cuts are the parts the whole holds.
+
+| part (the former cut) | state |
 | --- | --- |
-| the plan's text | 9b6d898e5: 25 sections, 657 lines, with the owner's seven decisions of 08:1x; Animate approved at 6cba85cb1 with corrections; Sofer approved at 08:20 on three text conditions (the thread's 6464153029); David's approval not posted |
-| 0 the main formula | in the plan (sections 2 and 19, read from the head's code; the Boss's probe reads the step bit for bit on three charts, two terms of J for the unsprung hand's release and recoil); David's exact derivation not posted; then Sofer proposes the law's sentence to the owner |
-| 1 the fair draw | pushed at 06:42 as 834cfd72e; Sofer's gate: no refusal, no note; the suite 118 passed on scribe-5; Animate's bench of the sixteen records: confirmed (6463250257) |
-| 2 the gate | the Boss's to adopt with his next code push (his word, item 1231): scribe_gate_check_py.patch and scribe_gate_claude_settings.json under tools/derivations/open_items/ on scribe-5 |
-| 3 the pure contractions | not begun |
-| 4 the pointwise maps | not begun (David has derived three: the rate table, its inverse, rest_rate_of) |
-| 5 the gate as one act | not begun |
-| 6 one path | not begun |
-| 7 the state beyond the node-clock out | not begun |
-| 8 the two global reductions | not begun |
-| 9 the end check | the counts to bring to 0 at 526a5666d: 95 in the engine's modules (the Boss), 57 in the readers' (Animate, 22 left in his modules under the gate); 152 blocking hits by the gate; the loops 367 (a note) |
+| the plan's text | bd2a3c9ac (09:20): 29 sections; Sofer approved at bd2a3c9ac with seven points (6465397115); David's approval not posted; Animate's at this head not posted; the Boss's next push (the proofs table, the clocks condition, the modules and lines) is awaited |
+| 0 the main formula | in the plan (sections 2 and 19, read from the head's code; the Boss's probe reads the step bit for bit on three charts); David's exact derivation not posted; then Sofer proposes the law's sentence to the owner |
+| 1 the fair draw | pushed at 06:42 as 834cfd72e; the only code built under the plan; Sofer's gate: no refusal, no note; Animate's bench of the sixteen records: confirmed (6463250257) |
+| 2 the gate | scribe-5 61b8b117b: the scan reads every package under src and the tests (PIN); the list that stands 932 hits at 526a5666d (647 refusing, 285 notes); the Boss to install the pre-push hook in his toy before the first line, check.py's patch and the settings file with the push |
+| 3 to 9, the core, the maps, the gate as one act, the state, the switch and the end check | not begun: built whole after the owner approves the plan; the end check is every count 0 and the list empty (the head's 806 engine hits and 126 pinned numbers in the tests at 526a5666d) |
+| the owed formulas | ten in section 19 (Pauli's act, what a click writes, the unspringing, the closure, the clamps' thresholds or zeros, the held load in D, the release and the recoil, the setting's lay, general relativity's six, Einstein from the clicks): David's dates asked by the Boss |
 
 ## What stands decided
 
 - The law's sentence **The Node-clock is one act**: decided and unbuilt, on the owner's "Yes and yes." (docs/ALGEBRA.md, scribe-5 8c0a0cd01).
 - The process points, accepted by the Boss (item 1231): a module added or renamed is posted as a `MODULE:` line before the push and landed by Sofer in docs/ENGINE.md; the gate adopted with his next code push; kept_mid left as a note of the gate.
 - The names: Tensor24, and the four sessions' names the owner sees, Boss, Sofer, David and Animate (Animate's 6462416209).
+- A new engine (the owner, 09:1x UTC, row 333): written anew in its own files beside the current one, the Boss writing every line, David deriving each part's formula first; built whole (his word to Sofer, 09:0x, row 330), nothing before he approves the plan as presented; the gate reads every package under src from the first line (row 336).
+- The turnover's five places in ALGEBRA.md: brought to the built act, every fine tooth mirrored about its mid tooth, on the Boss's task line (6465081080), no law changed (scribe-5 410b87a81, row 336).
 - The group, on David's definitions for the owner's question of 07:1x: the 24 is O, the cube's rotation group (24 signed permutation matrices of determinant 1; classes 1, 6, 3, 8 and 6; the five kinds A1, A2, E, T1 and T2 of dimensions 1, 1, 2, 3 and 3); the 48 is O_h, those 24 rotations and their 24 mirror images; the double cover 2O, each rotation with its two signs, acts on the twin hands.
 
 ## The owner's list for 08:30 UTC (10:30 Israel time), with Sofer's recommendations
