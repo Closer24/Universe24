@@ -18,6 +18,26 @@ GAMMA = 9
 obj = lambda x: np.asarray(x, dtype=object)  # noqa: E731
 
 
+
+def layout_of(nb, grips6, w, rate, gamma):
+    """The Layout of either head: one grip per Mesh read through the meshes table where the Layout holds it
+    (81521e0f4 on), else a grip per Spoke; grips6 is read the same from the Mesh's two ends."""
+    if "meshes" not in Layout._fields:
+        return Layout(nb, grips6, w, rate, gamma)
+    n = nb.shape[1]
+    meshes = np.empty((6, n), dtype=int)
+    grip = np.empty(3 * n, dtype=object)
+    for axis in range(3):
+        meshes[2 * axis] = axis * n + np.arange(n)
+        meshes[2 * axis + 1] = axis * n + nb[2 * axis + 1]
+        grip[axis * n + np.arange(n)] = grips6[2 * axis]
+    return Layout(nb, meshes, grip, w, rate, gamma)
+
+
+def grips(layout):
+    """Each Spoke's grip, (6, N), on either head."""
+    return layout.grip[layout.meshes] if "meshes" in Layout._fields else layout.grip
+
 def board(side):
     xyz = np.indices((side,) * 3).reshape(3, -1)
     steps = [sign * axis for axis in np.eye(3, dtype=int) for sign in (1, -1)]
@@ -25,7 +45,7 @@ def board(side):
 
 
 def lin_pull(layout, s):
-    nb, grip, _, _, _ = layout
+    nb, grip = layout.nb, grips(layout)
     a, b, _, _, _, c, tb, tn = s
     span = tn[:, nb] - tb[:, nb]
     line = b[:, nb] + carry((a[:, nb] - b[:, nb]) * (c[:, None, :] - tb[:, nb]), span, 0)[0]
@@ -42,7 +62,7 @@ def trial(read, rates, seed):
     nb, n = board(5), 125
     w = obj(rng.integers(1, 20, size=(2, n)))
     rate = obj(rng.integers(1, GAMMA + 1, size=(1, n))) if rates == "parted" else obj(np.full((1, n), GAMMA))
-    layout = Layout(nb, obj(np.ones((6, n), dtype=int)), w, rate, GAMMA)
+    layout = layout_of(nb, obj(np.ones((6, n), dtype=int)), w, rate, GAMMA)
     a, b = obj(rng.integers(-10**5, 10**5, size=(2, n))), obj(rng.integers(-10**5, 10**5, size=(2, n)))
     r = obj(rng.integers(0, 1 << 20, size=(2, n))) % w
     go, ph = obj(rng.integers(0, 2, size=(2, n))), obj(rng.integers(0, GAMMA, size=(1, n)))

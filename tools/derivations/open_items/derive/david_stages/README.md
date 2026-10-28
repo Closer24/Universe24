@@ -1,6 +1,6 @@
 # David's checks of tensor24-review (stages 0 to 5), the tie rule, item (u) and M1
 
-David, 2026-10-28, 19:1x UTC, for the Boss (Sofer and Animate copied), #2187, on the Boss's request of 18:28 UTC. The probes run the review branch's own functions (origin/tensor24-review at 4b39f234b) from a worktree and change no file of it. Run each as `python3 -I <probe> <worktree>/src`; p5 and p7 need no worktree. Exact integers throughout; each output file is the probe's own.
+David, 2026-10-28, 19:1x UTC, for the Boss (Sofer and Animate copied), #2187, on the Boss's request of 18:28 UTC. The probes run the review branch's own functions (origin/tensor24-review at 4b39f234b) from a worktree and change no file of it. At 20:2x UTC every output stands byte for byte at 0970b0deb too, where the Layout holds one grip per Mesh through its meshes table: p2, p3 and p8 build the Layout of either head (layout_of), and p9 reads the ring's three new laws there. Run each as `python3 -I <probe> <worktree>/src`; p5 and p7 need no worktree. Exact integers throughout; each output file is the probe's own.
 
 | probe | what it checks | result |
 | --- | --- | --- |
@@ -12,5 +12,7 @@ David, 2026-10-28, 19:1x UTC, for the Boss (Sofer and Animate copied), #2187, on
 | p6_odd_turnover.py | the turnover on a gear T negates; the course's zero | T-even (slots exchanged, tooth flipped, going advanced) and T-odd (exchanged and negated, tooth and going standing): T gear T = ungear in 200,000 of 200,000 each; the T-odd turnover with the tooth flipped fails 170,932 of 200,000; under a source that is a product with the gear's own notch, the notch and its next are both 0 exactly where the one before is (200,000 of 200,000) |
 | p7_lin_tie.py | lin's one rounding per read, its home the going's | under the reversal the read turns wrong in 1,024 cases at even tn - tb on each kind of gear, and in none at odd |
 | p8_lin_reversal.py | the board's reversal under the probe's lin and under past | T S T returns the start in 30 of 30 under each where every dial is at the full rate, and in 0 of 30 under each where the rates part: in the synchronous pass lin reads as past does |
+| p9_ring_new.py | the ring's three new laws at 81521e0f4 | the joint dial <T phi, psi> = phi_up psi_down - phi_down psi_up, the split's share 2 N<phi, psi> = rho rho' + S . S' (and its T partner with the minus), S's orientation, and the older pages' (i sigma_y) K turning S over as the plan's T does: 0 failures in 20,000 draws at 120 bits |
+| p10_grip_per_mesh.py | stage 7's grip, one per Mesh: which lattice coupling is general relativity's wave operator phi_tt = N d(N d phi) on a static lapse | the grip as the even sum of the two ends' rates, with each clock ticking at its own rate and its teeth carrying it: error 2.5e-2 at 64 sites to 9.9e-5 at 1,024, falling as h^2; the head's grip per end (p_i^2) and a per-Mesh grip on clocks at the full rate: 0.54 at every size (floats; a continuum statement, no engine run) |
 
 What follows from them is in the #2187 post that cites this folder.

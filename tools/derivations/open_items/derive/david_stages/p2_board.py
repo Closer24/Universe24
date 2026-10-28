@@ -23,6 +23,26 @@ from tensor24.engine.state import Layout, State  # noqa: E402
 GAMMA = 9
 
 
+
+def layout_of(nb, grips6, w, rate, gamma):
+    """The Layout of either head: one grip per Mesh read through the meshes table where the Layout holds it
+    (81521e0f4 on), else a grip per Spoke; grips6 is read the same from the Mesh's two ends."""
+    if "meshes" not in Layout._fields:
+        return Layout(nb, grips6, w, rate, gamma)
+    n = nb.shape[1]
+    meshes = np.empty((6, n), dtype=int)
+    grip = np.empty(3 * n, dtype=object)
+    for axis in range(3):
+        meshes[2 * axis] = axis * n + np.arange(n)
+        meshes[2 * axis + 1] = axis * n + nb[2 * axis + 1]
+        grip[axis * n + np.arange(n)] = grips6[2 * axis]
+    return Layout(nb, meshes, grip, w, rate, gamma)
+
+
+def grips(layout):
+    """Each Spoke's grip, (6, N), on either head."""
+    return layout.grip[layout.meshes] if "meshes" in Layout._fields else layout.grip
+
 def board(side):
     xyz = np.indices((side,) * 3).reshape(3, -1)
     steps = [sign * axis for axis in np.eye(3, dtype=int) for sign in (1, -1)]
@@ -44,7 +64,7 @@ def world(seed, side=5, rates="parted", gears=2):
     # the grip read the same from both ends: grip at (x, +j) equals grip at (x + j, -j)
     for j in (0, 2, 4):
         grip[j + 1] = grip[j][nb[j + 1]]
-    layout = Layout(nb, grip, w, rate, GAMMA)
+    layout = layout_of(nb, grip, w, rate, GAMMA)
     a = obj(rng.integers(-10**6, 10**6, size=(gears, n)))
     b = obj(rng.integers(-10**6, 10**6, size=(gears, n)))
     r = obj(rng.integers(0, 1 << 30, size=(gears, n))) % w

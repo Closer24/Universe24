@@ -169,6 +169,7 @@ The Node lines, the counts, the turns and the run back (20 of 20) are the same o
 
   - The hand's own rest turn is the left multiplication by a complex ratio, the same on each twin, so the spin and the phase commute.
   - Kramers' T = (i sigma_y) K is the conjugation of both twins followed by the right multiplication by -j, and T T = -1.
+  - The sign (2026-10-28, on the Boss's note in #2187 6478559511): the plan, derive/D and algebra/ring.reverse write T as (-conj z_down, conj z_up), the negative of the (i sigma_y) K above. Both square to -1 and turn S to -S, and N, rho and S do not see the sign; the joint dial <T phi, psi> = phi_up psi_down - phi_down psi_up does, and the plan's sign stands (derive/david_stages/p9_ring_new.py).
 - **The 4 pi.** A full turn of the twins' axis is the right multiplication by -1, and two full turns by +1. On the great clock this is the measured overlap cos(theta / 2) (DAVID-SPIN-IN-CLOCKS.md section 3).
 
 ## 7. The cost, and the order
