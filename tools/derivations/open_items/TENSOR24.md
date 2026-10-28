@@ -1,5 +1,7 @@
 # Tensor24: the Node-clock as one act
 
+**The plan in short, in English, for everyone:** TENSOR24_PLAN.md beside this file (the owner's word of 15:2x UTC). Where the two differ, this file stands.
+
 The owner's words of 2026-10-28, 06:0x to 06:4x UTC (Hebrew, translated):
 - "You be the owner of the plan, the node as one act."
 - "Call the plan Tensor24. Write it for me here and for everyone in such a file, make sure it stands, divide the work. At its end the whole engine is tensor arithmetic only: say of which order. Explain how the clock enters here, what the node takes and what it gives, and what all the families are. For now only close the plans with everyone, implementing nothing. Make sure that at its end there are no numbers in the code and no circular proofs."
@@ -73,6 +75,8 @@ The owner's words of 2026-10-28, 06:0x to 06:4x UTC (Hebrew, translated):
 - 13:0x UTC: "There is no 48 any more, is there?" (The group's definition, laws 4 and 7: the 24 with the twin's sign, 2O.) And: "What is this big law? It must be thought of from the clocks!" (Law 7; draft J.)
 
 - 14:30 to 14:37 UTC: "Do you need me?" And on David's big law ("the clock's turnover is the kind's phase reversal, on every gear; three different drafts each found part of it"): "What about this?" On the Boss's account (approve it with (o)'s way 2): "4 is a beautiful solution. How do the clicks just enter the next bang? Is it only the detectors' clicks?" And: "OK, approved. The missing part: try to solve it through the detector's click. Or we will solve it when the engine is already built in tensors. Confirm that you understood. ... The solution is in the detector's click." (Section 30, item 11 (o), (s) and (f); laws 3, 4 and 10; draft K.)
+
+- 15:2x UTC: "The plan in English, in a file, at once, that everyone can read." And: "In the engine there will be vector, tensor or scalar multiplication, or complex numbers, which solve many things here, yes or no? General functions. The node must do very, very simple operations. The code must be very short, no?" (TENSOR24_PLAN.md, its section 1: three general functions, the carry, the Gaussian product and the contraction of the 24; sections 20 and 31.)
 
 - Through Sofer (6469180767, 12:3x UTC, and 6469691067, 13:0x UTC), his direct words to Sofer: "Everything is solved from the big things; a solution that is a fake is confirmed with the owner." "A floor or a bound is an if, and the Node-clock has none." "Bounds and floors only for universe and world variables, to get nature." "Only generic laws are approved.. those that can be explained from the clocks and are realized by tensors and 24 operations." "This is an excellent law, enforce it! Never cross it. Put it as a postulate on the Node-clock: it has no if." "A clock's carry is Rule3 itself, and it settles by itself. It has no floor and no bound." (Sections 12, 19 and 31; the law's Postulate 5.)
 
@@ -986,7 +990,7 @@ Every input a function reads is passed to it: U_j from the offset's gears at the
 | the visualizer (the pages) | the clicks and the decoder's output drawn as they are, with no closed form and no typed caption (the current three hold 1,072 lines) | 300 |
 | the tests | the five tests that can fail (section 12), the rewind, the books, and each row's two readings | 400 |
 
-The current engine's 19 modules hold 2,990 lines; the new engine's nine were estimated at about 820, and the architect's estimate, with the gearing, the clicks' emission and the owed writes, is 1,000 to 1,100 (section 31).
+The current engine's 19 modules hold 2,990 lines; the new engine's nine were estimated at about 820, and the first architect's estimate, with the gearing, the clicks' emission and the owed writes, at 1,000 to 1,100. The approved design's is about 720 with algebra/, and about 850 with the formulas that close the OPEN items (section 31).
 
 ## 21. Who writes the code, and who approves it
 
