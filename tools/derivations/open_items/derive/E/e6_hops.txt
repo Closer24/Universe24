@@ -1,0 +1,14 @@
+1. The half turns' lifts as the transport: a pi flux through every plaquette; the T-junction ratio -1
+  [ok] H_a H_b H_a^-1 H_b^-1 = -1 in the three planes (the flux pi)
+  [ok] three hops along x, y, z: H_x H_y H_z = - H_z H_y H_x
+  [ok] on one quantum this is the transport's holonomy around a closed path, not an exchange of two quanta
+2. The pawls are a pure gauge: f_ij = s_i s_j, so every plaquette's product is +1
+  [ok] the 16 pawl settings of a plaquette's four corners: 16 of 16
+3. The second-order step with this transport, on the 4^3 torus (M = 6 + A, A from the half turns)
+  [ok] a uniform twin field: A psi = 0, so M psi = 6 psi (no zero mode at k = 0)
+  [ok] A A = SUM_a (2 - S_a^2 - S_a^-2): the anticommuting lifts cancel the cross terms: 6 of 6 fields
+  [ok] on the 4^3 torus, A^2 (A^2 - 4)(A^2 - 8)(A^2 - 12) = 0: the spectrum of M is 6 +- 2 (0, 1, r2, r3): 4 of 4
+  [ok] and A^2 (A^2 - 4)(A^2 - 8) is not 0: the top value 12 of A^2 is met: 4 of 4
+  [ok] at k = (pi/2, pi/2, pi/2), psi = i^(x + y + z) chi: A^2 psi = 12 psi, M = 6 +- 2 r3: the extreme modes there
+  [ok] the plain transport (U = 1): M psi = 0 for the uniform field: the long-wave branch starts at k = 0
+result: 0 failures

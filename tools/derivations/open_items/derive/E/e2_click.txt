@@ -1,0 +1,47 @@
+1. The exchange: a unit eps with N(eps) = 1 and eps eps = 1 (the double swap) is +1 or -1
+  [ok] the units with eps eps = 1: [(1, 0), (-1, 0)]
+2. eps_T read as the train's half turn applied twice, every act exact on integers
+  [ok] twin hands: H_x(H_x(psi)) = -psi: 5000 of 5000
+  [ok] twin hands: H_y(H_y(psi)) = -psi: 5000 of 5000
+  [ok] twin hands: H_z(H_z(psi)) = -psi: 5000 of 5000
+  [ok] twin hands: the half turns about two axes anticommute: 6 ordered pairs x 200
+  [ok] the 24's T1 gears (the offset's odd gears): every half turn squared is the identity: 6
+  [ok] a one-hand train (A1): the 24 act on its own part as 1, so its half turn squared is +1
+3. Pauli: sigma_aa = N((1 + eps) M_a1 M_a2): 0 for the twin hands, 4 N(M_a1 M_a2) for eps = +1
+  [ok] eps = -1: both parts' sigma_aa = 0: 20000 of 20000
+  [ok] eps = +1: sigma_aa = 4 N(M_a1 M_a2) (bunching): 20000 of 20000
+4. The books over a complete set of parts: SUM_(a,b) sigma_ab = 2 lam^2 (rho1 rho2 + eps N(<psi1, psi2>))
+  [ok] the occupant's frame (phi, T phi), lam = rho(phi): 10000 of 10000 (both eps)
+  [ok] the standard senses ((1,0), (0,1)), lam = 1: 10000 of 10000 (both eps)
+  [ok] a Gaussian frame [[a, -conj b], [b, conj a]], lam = N(a) + N(b): 10000 of 10000 (both eps)
+  [ok] any three parts: SUM sigma = 2 [(psi1 G psi1)(psi2 G psi2) + eps N(psi1 G psi2)], G = SUM phi phi^dagger: 10000 of 10000
+  [ok] Cauchy-Binet (eps = -1): SUM_(a<b) N(minor_ab) = det(M^dagger M): 10000 of 10000
+5. At one Node-clock (the parts its two senses): two twin quanta only in the singlet, of size N(det)
+  [ok] sigma_++ = sigma_-- = 0, sigma_+- = sigma_-+ = rho(phi)^2 N(det[psi1, psi2]): 10000 of 10000 pairs x 5 frames
+  [ok] the singlet's size is the same in every frame (it is the A1): 10000 of 10000
+6. A third twin quantum at one Node-clock has no state (the 3 x 3 Slater amplitude over two senses is 0)
+  [ok] eps = -1: all 8 assignments of three quanta to two senses have amplitude 0: 3000 of 3000
+  [ok] eps = +1 (control): some assignment is not 0: 3000 of 3000
+7. Law 5's q per state: the q-quantum amplitude in one part is PROD M times SUM_pi eps^inv(pi)
+  [ok] q = 2: SUM sgn = 0 (must be 0), SUM 1 = 2 (q!)
+  [ok] q = 3: SUM sgn = 0 (must be 0), SUM 1 = 6 (q!)
+  [ok] q = 4: SUM sgn = 0 (must be 0), SUM 1 = 24 (q!)
+  [ok] q = 5: SUM sgn = 0 (must be 0), SUM 1 = 120 (q!)
+  [ok] q = 6: SUM sgn = 0 (must be 0), SUM 1 = 720 (q!)
+  [ok] q = 7: SUM sgn = 0 (must be 0), SUM 1 = 5040 (q!)
+8. Bunching at a Mesh (a one-hand train, the parts the two ends): a balanced splitter gives no coincidence
+  [ok] eps = +1: sigma_xy = 0, sigma_xx = sigma_yy = 4: {(0, 0): 4, (0, 1): 0, (1, 0): 0, (1, 1): 4}
+  [ok] probabilities added (distinguishable): the coincidence 2; eps = -1: sigma_xy = 4, sigma_xx = 0: (2, {(0, 0): 0, (0, 1): 4, (1, 0): 4, (1, 1): 0})
+  [ok] coincidences: bosons <= distinguishable <= fermions = all, the totals 2 (N(a) + N(b))^2: 20000 of 20000 splitters
+  [ok] the bosons' coincidence is 0 exactly where the splitter is balanced, N(a) = N(b): 20000 of 20000
+9. Sofer's occupant frame is the same act: the pair's joint click with the occupant phi and the newcomer chi
+  [ok] 2Q free = 2 rho^2 N(<T phi, chi>), 2Q same = 0, deficit = 2 rho^2 N(<phi, chi>), room rho rho_chi: 3744 of 3744
+10. The occupation n = SUM_k psi_k psi_k^dagger = (rho + S . sigma) / 2: Sofer's sizes are the hole projector
+  [ok] chi^dagger n chi = (rho rho_chi + S . m) / 2, so free = (2u - rho) rho_chi - S . m = 2 chi^dagger (u - n) chi: 20000 of 20000
+  [ok] one quantum there (rho = u): free = 2 N(det[phi, chi]): 389376 of 389376
+  [ok] the filled orbital (phi and T phi, rho = 2u, S = 0): free = 0 for every newcomer: 389376 of 389376
+11. The bound: free >= 0 for every newcomer iff S . S <= (2u - rho)^2 (the larger eigenvalue at most u)
+  [ok] occupations inside S . S <= (2u - rho)^2 with a negative free size: 0
+  [ok] occupations inside Sofer's |S| <= rho <= 2u but outside it, with a negative free size in the box: 22384 of 22560 (Sofer's bound is not enough; e.g. (2u, (0, 0, 2u)))
+  [ok] blocked = rho rho_chi + S . m >= 0 for every newcomer wherever S . S <= rho^2: 0
+result: 0 failures

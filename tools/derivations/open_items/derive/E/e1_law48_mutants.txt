@@ -1,0 +1,19 @@
+M1. The 12 turns of the tetrahedron (2T) in place of the 24: the law must fail
+    2T kind 1: irreducible True, nu = 1, chi(z)/dim = 1: holds
+    2T kind 1': irreducible True, nu = 0, chi(z)/dim = 1: FAILS
+    2T kind 1'': irreducible True, nu = 0, chi(z)/dim = 1: FAILS
+    2T kind 3: irreducible True, nu = 1, chi(z)/dim = 1: holds
+    2T kind 2: irreducible True, nu = -1, chi(z)/dim = -1: holds
+    2T kind 2': irreducible True, nu = 0, chi(z)/dim = -1: FAILS
+    2T kind 2'': irreducible True, nu = 0, chi(z)/dim = -1: FAILS
+  kinds where nu != chi(z)/dim: 4 of 7 (must be above 0)
+M2. Commuting lifts (O x Z2, the full turn central but no half turn's lift of order 4): the law must fail
+    O x Z2, kind A1 x sgn: nu = 1, chi(z)/dim = -1: FAILS
+    O x Z2, kind A2 x sgn: nu = 1, chi(z)/dim = -1: FAILS
+    O x Z2, kind E x sgn: nu = 1, chi(z)/dim = -1: FAILS
+    O x Z2, kind T1 x sgn: nu = 1, chi(z)/dim = -1: FAILS
+    O x Z2, kind T2 x sgn: nu = 1, chi(z)/dim = -1: FAILS
+  odd kinds where nu != chi(z)/dim: 5 of 5 (must be above 0)
+M3. The sign flipped (nu compared with -chi(z)/dim): the law must fail
+  kinds where nu != -chi(z)/dim: 8 of 8 (must be above 0)
+result: every mutant fails as it must

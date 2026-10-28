@@ -1,0 +1,5 @@
+M1. The triplet along the Mesh in place of the singlet: it must fail to be fixed by the 48
+  lifts that move it: 40 of 48 (must be above 0)
+M2. The C4 count read as the singlet's: the count of fixed states under the 8 must not be 1
+  fixed states under the 8: 2 (must not be 1)
+result: every mutant fails as it must
