@@ -1,0 +1,93 @@
+DAVID-THE-UNIT-WEIGHT checks, 2026-10-28, 00:5x UTC, on the Boss's heads 42e9fb4af (worktree scratchpad/wt_g12) and e910698f9 (scratchpad/wt_g13), each worktree's own src on the path; no src touched. Harnesses under scratchpad/field: bang_w.py (the bang's universe with the held field's weight set, the chart with the rewind of 20), read_bang.py, kinds.py, windows.py (the chart cut at ticks).
+
+1. The bang at 250 ticks at each weight, on 42e9fb4af:
+   weight 1: bang250_w1.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 415, chimes 12117, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+   bang250_w1.json {'SHOWN': 34, 'SHOWN in part': 7, 'NOT READ': 27, 'NOT SHOWN': 12, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 446 of 578 merger ends the pair's share taken exceeds the light's quantum booked, up to 5470 thousandths of it, the excess booked nowhere
+       74 SHOWN in part: the light polarized along its kick on 2 of 3 axes read (90 of 684, 129 of 701, 107 of 575)
+       76 SHOWN: gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   weight 4: bang250_w4.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 319, chimes 8773, rows SHOWN 38, the rewind {'intervals': 20, 'exact': 20}
+   bang250_w4.json {'SHOWN': 32, 'SHOWN in part': 7, 'NOT READ': 27, 'NOT SHOWN': 14, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 328 of 436 merger ends the pair's share taken exceeds the light's quantum booked, up to 5455 thousandths of it, the excess booked nowhere
+       74 SHOWN in part: the light polarized along its kick on 2 of 3 axes read (67 of 519, 134 of 448, 72 of 329)
+       76 NOT SHOWN: no family chimes bound one mesh apart in the held field's well above twice the board's own share 6 of 63
+   weight 6: bang250_w6.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 329, chimes 11512, rows SHOWN 38, the rewind {'intervals': 20, 'exact': 20}
+   bang250_w6.json {'SHOWN': 34, 'SHOWN in part': 5, 'NOT READ': 27, 'NOT SHOWN': 14, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 5 Links at first and 6 at last
+       73 NOT SHOWN: at 362 of 458 merger ends the pair's share taken exceeds the light's quantum booked, up to 4576 thousandths of it, the excess booked nowhere
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its acceleration with the kick's sign on 68 of 612, 100 of 622, 101 of 511 k
+       76 NOT SHOWN: no family chimes bound one mesh apart in the held field's well above twice the board's own share 6 of 63
+   weight 2: bang250_g12.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 382, chimes 11592, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+   bang250_g11.json {'SHOWN': 35, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 12, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 378 of 482 merger ends the pair's share taken exceeds the light's quantum booked, up to 5470 thousandths of it, the excess booked nowhere
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its acceleration with the kick's sign on 95 of 617, 160 of 652, 61 of 554 ki
+       76 SHOWN: gapped 2, gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   weight 3 on 6a853217f (DAVID-THE-MERGERS-BOOK_CHECKS.txt): row 76 SHOWN, row 74 in part (33, 87, -11), 318 fittings.
+
+2. The bang at 1,000 ticks, the chart cut at 250, 500, 750 and 1,000:
+   13f58bb25, the weight 2 (DAVID-THE-BANG-AT-1000_CHECKS.txt):
+     250 74 SHOWN {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[95, -13, 15], [7, 160, 42], [-1, -26, 61]]}
+     250 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [27775, 290421, 4810, 11419], "gapped 2": [35, 145, 91, 119], "gapped 1": [26, 26, 31, 54]}}
+     500 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[159, -110, 35], [-72, 173, 71], [-5, -47, 35]]}
+     500 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [67499, 705334, 11545, 25878], "gapped 2": [284, 2234, 522, 981], "gapped 1": [76, 231, 142, 230]}}
+     750 74 NOT SHOWN {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[89, -216, 23], [-7, 128, 130], [-9, -56, -143]]}
+     750 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [111047, 1160464, 18704, 41060], "gapped 2": [508, 4230, 972, 1901], "gapped 1": [138, 576, 245, 443]}}
+     1000 74 NOT SHOWN {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[229, -211, 36], [96, 130, 211], [44, -8, -271]]}
+     1000 76 NOT SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [153778, 1607457, 25717, 56092], "gapped 2": [943, 8771, 1566, 3305], "gapped 1": [230, 1044, 340, 688]}}
+   42e9fb4af, the weight 1: bang1000_w1.json: returns 400 (first [4, 5, 9, 10]), widest X bits 13, fittings 883, chimes 59410, rows SHOWN 39, the rewind {'intervals': 20, 'exact': 20}
+     250 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[90, -52, 22], [-26, 129, 47], [23, 0, 107]]}
+     250 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [30823, 319670, 5587, 12017], "gapped 1": [36, 108, 52, 100]}}
+     500 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[113, -61, 31], [-34, 158, 57], [49, -56, 183]]}
+     500 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [74452, 775727, 13275, 27213], "gapped 1": [135, 405, 200, 299]}}
+     750 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[67, -133, 33], [-7, 189, 58], [24, -51, 202]]}
+     750 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [119740, 1250157, 21019, 42726], "gapped 2": [16, 70, 53, 106], "gapped 1": [186, 818, 364, 532]}}
+     1000 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[83, -226, 27], [-28, 166, 89], [13, -38, 229]]}
+     1000 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [165232, 1726767, 28726, 58274], "gapped 2": [101, 325, 178, 306], "gapped 1": [222, 1173, 522, 830]}}
+   e910698f9, the weight 2: bang1000_g13.json: returns 400 (first [4, 5, 9, 10]), widest X bits 13, fittings 1275, chimes 60381, rows SHOWN 41, the rewind {'intervals': 20, 'exact': 20}
+     250 74 SHOWN {"sign(kick on a) sign(the light's momentum change on b), [a][b]": [[291, 35, -13], [16, 330, 49], [-2, -21, 186]]}
+     250 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [28134, 293697, 4689, 11469], "gapped 2": [49, 173, 98, 156], "gapped 1": [12, 13, 25, 42]}}
+     500 74 SHOWN {"sign(kick on a) sign(the light's momentum change on b), [a][b]": [[494, 17, -6], [-13, 542, 73], [-1, -43, 311]]}
+     500 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [69437, 724924, 11459, 26224], "gapped 2": [243, 1674, 478, 908], "gapped 1": [62, 138, 108, 173]}}
+     750 74 SHOWN {"sign(kick on a) sign(the light's momentum change on b), [a][b]": [[544, 13, -14], [38, 699, 103], [-27, -89, 339]]}
+     750 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [113111, 1181628, 18244, 41434], "gapped 2": [362, 3401, 914, 1835], "gapped 1": [77, 333, 251, 373]}}
+     1000 74 SHOWN in part {"sign(kick on a) sign(the light's momentum change on b), [a][b]": [[650, 53, 84], [-93, 724, -36], [-122, -45, 228]]}
+     1000 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [158058, 1651862, 25155, 56872], "gapped 2": [612, 6170, 1418, 2936], "gapped 1": [127, 633, 401, 573]}}
+   e910698f9, the weight 1: bang1000_g13w1.json: returns 400 (first [4, 5, 9, 10]), widest X bits 13, fittings 875, chimes 59725, rows SHOWN 39, the rewind {'intervals': 20, 'exact': 20}
+     250 74 SHOWN {"sign(kick on a) sign(the light's momentum change on b), [a][b]": [[350, -20, 32], [9, 323, -9], [46, -22, 299]]}
+     250 76 NOT SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [31276, 323949, 4938, 12112], "gapped 1": [0, 34, 68, 68]}}
+     500 74 SHOWN {"sign(kick on a) sign(the light's momentum change on b), [a][b]": [[539, 0, -3], [24, 480, -7], [62, -38, 460]]}
+     500 76 NOT SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [75731, 788776, 11638, 27457], "gapped 1": [39, 442, 263, 302]}}
+     750 74 SHOWN {"sign(kick on a) sign(the light's momentum change on b), [a][b]": [[710, -3, 4], [37, 570, -41], [20, -30, 548]]}
+     750 76 NOT SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [121123, 1264128, 18394, 42982], "gapped 2": [0, 11, 40, 61], "gapped 1": [188, 1605, 554, 668]}}
+     1000 74 SHOWN {"sign(kick on a) sign(the light's momentum change on b), [a][b]": [[882, -36, -17], [64, 726, -93], [25, -21, 580]]}
+     1000 76 NOT SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [166965, 1744566, 25152, 58594], "gapped 2": [0, 61, 90, 161], "gapped 1": [275, 2395, 779, 970]}}
+
+3. e910698f9 verified (v10.py, read_bang.py, kinds.py, polar_pair.py, book3.py):
+   hole: fittings 17, chimes 920, rows SHOWN 37, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   chiral: fittings 2, chimes 2849, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   bodies: fittings 8, chimes 708, rows SHOWN 28, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   bang250_g13.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 450, chimes 11667, rows SHOWN 41, the rewind {'intervals': 20, 'exact': 20}
+   bang250_g13.json {'SHOWN': 36, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 11, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 SHOWN exact: at every one of 558 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 291 of 1053, 330 of 1061, 186 
+       76 SHOWN: gapped 2, gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   the swap: VSCALAR=0: along x [64, 4, 42], along y [4, 64, 42]; exact images through the swap
+   the whole book: field, 250 ticks: strikings whose whole book (wind + remainders + credits' windings) moves 0 of 250; largest 0.0; net 0.0 light windings; credits booked 201.47872687662084 light windings
+
+4. The harness (bang_w.py):
+   """The bang with the held field at a given weight (argv: weight, ticks, out json): the chart with the rewind of 20, saved."""
+   import os, sys, json
+   sys.set_int_max_str_digits(0)
+   WT = os.environ["WT"]
+   sys.path.insert(0, WT + "/src")
+   from event_universe.run import chart
+   weight, ticks, out = int(sys.argv[1]), int(sys.argv[2]), sys.argv[3]
+   world = json.load(open(WT + "/tests/worlds/world_bang.json"))
+   uni = json.load(open(WT + "/tests/worlds/" + world["universe"]))
+   uni = dict(uni, rows=[dict(r, weight=weight) if "weight" in r else r for r in uni["rows"]])
+   found = json.loads(json.dumps(chart(uni, dict(world, intervals=ticks), 20, lambda line: None)))
+   json.dump(found, open(out, "w"))
