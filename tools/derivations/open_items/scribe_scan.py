@@ -54,6 +54,7 @@ REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
 ALLOWED = HERE / "scribe_scan_allowed.json"
 BASES = ("origin/engine-5.0-test", "origin/main")
+FLOOR = "526a5666d"  # the engine head the list that stands was taken at: no base is older (a pull request into main is read against it)
 PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by Sofer alone
 # the gate's own files: a push that changes one needs the owner's word, and says so
 OWN = (
@@ -144,7 +145,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "ISOLATE": (
         "BLOCK",
-        "an import that crosses the new engine's folders (the architect's table, eaf07f596; the standard library is always allowed): algebra imports algebra alone (no numpy), engine algebra, record and numpy, record the record alone (no numpy), readings algebra, record and readings (no numpy), runner algebra, readings, record and numpy (never the engine or the decoder: the step is passed in), decoder algebra, readings and record (never the engine, the runner or numpy), tensor24/main.py the engine and the runner alone; nothing imports the current engine; a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
+        "an import that crosses the new engine's folders (the architect's table, eaf07f596; the standard library is always allowed): algebra imports algebra alone (no numpy), engine algebra, record and numpy, record the record alone (no numpy), readings algebra, record and readings (no numpy), runner algebra, readings, record and numpy (never the engine or the decoder: the step is passed in), decoder algebra, readings and record (never the engine, the runner or numpy), tensor24/main.py the engine and the runner alone, tensor24/__init__.py the standard library alone; a module at an unlisted path (directly under tensor24/ beside __init__.py and main.py, or in a folder the table does not name) has no wall written for it and is refused; nothing imports the current engine; a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
     ),
     "BRANCH": (
         "BLOCK",
@@ -231,6 +232,9 @@ WALLS = {
     "main.py": {"engine", "runner"},
 }  # the new engine's folders each may import (the standard library always); the architect's table, section 4 (eaf07f596)
 NUMPY_FOLDERS = frozenset({"engine", "runner"})  # the folders that may import numpy
+ROOT_MODULES = frozenset(
+    {"__init__.py", "main.py"}
+)  # the only modules directly under tensor24/: the package's own file (the standard library alone) and main.py; any other path is unlisted
 COMPARE_CALLS = frozenset(
     "lt le gt ge less greater less_equal greater_equal sorted sort argsort lexsort partition searchsorted isclose "
     "bisect bisect_left bisect_right insort heappush heappop nlargest nsmallest".split()
@@ -459,8 +463,10 @@ def import_ok(rel: str, name: str) -> bool:
     if not rel.startswith(NEW_ENGINE + "/"):
         return True
     folder = rel.split("/")[1]
+    if folder == "__init__.py":
+        return top in sys.stdlib_module_names  # the package's own file: the standard library alone
     if folder not in WALLS:
-        return True
+        return True  # an unlisted path crosses no wall written for it: scan() refuses the path itself
     if top in sys.stdlib_module_names:
         return True
     if top == "numpy":
@@ -818,6 +824,14 @@ def scan(rel: str, source: str) -> list[Hit]:
             )
         )
 
+    if rel.startswith(NEW_ENGINE + "/"):
+        parts = rel.split("/")
+        if (len(parts) == 2 and parts[1] not in ROOT_MODULES) or (
+            len(parts) > 2 and parts[1] not in WALLS
+        ):
+            add(
+                "ISOLATE", tree, f"unlisted path {rel}"
+            )  # the architect's table names the folders: no wall covers another
     numpy = set(NUMPY_NAMES)
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
@@ -1194,8 +1208,16 @@ def above(now: Iterable[Hit], stands: Counter[tuple[str, str, str]]) -> list[Hit
     return sorted(found, key=lambda h: (h.rel, h.line, h.rule))
 
 
+def floored(repo: Path, found: str, tree_rev: str) -> str:
+    """The merge base, or the floor where the merge base is older than it and the tree holds it (a pull request into main)."""
+    floor = resolve(repo, FLOOR)
+    if not floor or git(repo, "merge-base", "--is-ancestor", floor, found).returncode == 0:
+        return found
+    return floor if git(repo, "merge-base", "--is-ancestor", floor, tree_rev).returncode == 0 else found
+
+
 def merge_base(repo: Path, base: str | None, tree_rev: str) -> tuple[str, str]:
-    """The base ref (given, CHECK_BASE, else the first of BASES that resolves) and its merge base with the tree's revision."""
+    """The base ref (given, CHECK_BASE, else the first of BASES that resolves) and its merge base with the tree's revision, never older than FLOOR."""
     names = (
         [base] if base else [os.environ["CHECK_BASE"]] if os.environ.get("CHECK_BASE") else list(BASES)
     )
@@ -1204,7 +1226,9 @@ def merge_base(repo: Path, base: str | None, tree_rev: str) -> tuple[str, str]:
         if commit:
             found = git(repo, "merge-base", commit, tree_rev)
             if found.returncode == 0:
-                return name, found.stdout.decode().strip()
+                merged = found.stdout.decode().strip()
+                kept = floored(repo, merged, tree_rev)
+                return (name if kept == merged else f"{name}, floored at {FLOOR}"), kept
     raise SystemExit(
         f"the merge base of {tree_rev[:9]} with {names} cannot be found: fetch the base or set CHECK_BASE"
     )
