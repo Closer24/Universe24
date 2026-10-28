@@ -38,6 +38,17 @@ def grips(layout):
     """Each Spoke's grip, (6, N), on either head."""
     return layout.grip[layout.meshes] if "meshes" in Layout._fields else layout.grip
 
+
+def state_of(**fields):
+    """The State of either head: with the before slot's time tb where the State holds it (to 0970b0deb), else without
+    (13672be1e on, the out carrying the replaced now-slot time)."""
+    return State(**{key: value for key, value in fields.items() if key in State._fields})
+
+
+def times_of(s):
+    """The slots' times a State holds, to carry onto another of the same head."""
+    return {key: getattr(s, key) for key in ("tb", "tn") if key in State._fields}
+
 def board(side):
     xyz = np.indices((side,) * 3).reshape(3, -1)
     steps = [sign * axis for axis in np.eye(3, dtype=int) for sign in (1, -1)]
@@ -67,7 +78,7 @@ def trial(read, rates, seed):
     r = obj(rng.integers(0, 1 << 20, size=(2, n))) % w
     go, ph = obj(rng.integers(0, 2, size=(2, n))), obj(rng.integers(0, GAMMA, size=(1, n)))
     zero = obj(np.zeros((1, n), dtype=int))
-    s = State(a, b, r, go, ph, zero, zero - 1, zero)
+    s = state_of(a=a, b=b, r=r, go=go, ph=ph, c=zero, tb=zero - 1, tn=zero)
     ones = obj(np.ones((1, n), dtype=int))
     saved = step.pull
     step.pull = read
@@ -76,7 +87,7 @@ def trial(read, rates, seed):
             s, _ = step.tick(layout, s, ones)
         s1, _ = step.tick(layout, s, ones)
         # the reversed round at the same counts and slots' times, every dial's phase as at the start
-        t1, _ = step.tick(layout, T(layout, s1)._replace(c=s.c, tb=s.tb, tn=s.tn, ph=s.ph), ones)
+        t1, _ = step.tick(layout, T(layout, s1)._replace(c=s.c, ph=s.ph, **times_of(s)), ones)
         rev = T(layout, t1)
     finally:
         step.pull = saved
@@ -84,6 +95,9 @@ def trial(read, rates, seed):
 
 
 for name, read in (("past", step.pull), ("lin", lin_pull)):
+    if name == "lin" and "tb" not in State._fields:
+        print("lin : not run, the State holds no tb (13672be1e on), and lin reads it")
+        continue
     for rates in ("equal", "parted"):
         held = sum(trial(read, rates, 300 + k) for k in range(30))
         print(f"{name:4s}, dials {rates:6s}: T S T returns the start in {held} of 30")

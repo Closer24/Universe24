@@ -38,6 +38,17 @@ def grips(layout):
     """Each Spoke's grip, (6, N), on either head."""
     return layout.grip[layout.meshes] if "meshes" in Layout._fields else layout.grip
 
+
+def state_of(**fields):
+    """The State of either head: with the before slot's time tb where the State holds it (to 0970b0deb), else without
+    (13672be1e on, the out carrying the replaced now-slot time)."""
+    return State(**{key: value for key, value in fields.items() if key in State._fields})
+
+
+def times_of(s):
+    """The slots' times a State holds, to carry onto another of the same head."""
+    return {key: getattr(s, key) for key in ("tb", "tn") if key in State._fields}
+
 def board(side):
     xyz = np.indices((side,) * 3).reshape(3, -1)
     steps = [sign * axis for axis in np.eye(3, dtype=int) for sign in (1, -1)]
@@ -65,7 +76,7 @@ def run(read, seed, rounds=60):
     r = obj(rng.integers(0, 1 << 20, size=(1, n))) % w
     go, ph = obj(rng.integers(0, 2, size=(1, n))), obj(rng.integers(0, GAMMA, size=(1, n)))
     zero = obj(np.zeros((1, n), dtype=int))
-    u = State(a, b, r, go, ph, zero, zero - 1, zero)
+    u = state_of(a=a, b=b, r=r, go=go, ph=ph, c=zero, tb=zero - 1, tn=zero)
     a2 = a.copy()
     a2[0, 0] += 10**6
     v = u._replace(a=a2)
@@ -87,6 +98,9 @@ def run(read, seed, rounds=60):
 
 
 for name, read in (("past", step.pull), ("hybrid lin", lin_pull)):
+    if name == "hybrid lin" and "tb" not in State._fields:
+        print("hybrid lin: not run, the State holds no tb (13672be1e on), and lin reads it")
+        continue
     early = reached = 0
     for seed in range(20):
         e, rch = run(read, seed)
