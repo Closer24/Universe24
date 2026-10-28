@@ -250,8 +250,8 @@ ALLOW_UNARY = (ast.USub, ast.UAdd)
 ALLOW_NUMPY = frozenset(
     "einsum tensordot matmul dot sum add subtract multiply negative take take_along_axis roll moveaxis swapaxes transpose "
     "reshape stack concatenate broadcast_to expand_dims squeeze zeros ones zeros_like ones_like full full_like array asarray "
-    "arange eye identity diag trace outer kron tile repeat flip".split()
-)  # the tensor vocabulary: a sum, a product, a gather, a shape; any other call of numpy is refused
+    "arange eye identity diag trace outer kron tile repeat flip prod".split()
+)  # the tensor vocabulary: a sum, a product (prod: a product over an axis, as sum is a sum over one), a gather, a shape; any other call of numpy is refused
 # what an array may be asked to do, what it tells of itself, and the keywords of a call of numpy or of an array's method
 ALLOW_METHODS = frozenset("reshape transpose astype copy take sum swapaxes".split())
 ALLOW_ATTRIBUTES = frozenset("shape ndim T dtype size".split())
@@ -304,6 +304,12 @@ def exempt(rel: str, rule: str) -> bool:
     if rel.startswith(RUNNER):
         return rule != "LOGREAD" or rel == REWIND  # the undo log is read by the rewind check alone
     return False
+
+
+def own_choose(rel: str, name: str, node: ast.Call) -> bool:
+    """The new engine's own choose(k, x, y) = k x + (1 - k) y of algebra/ (the architect's design, section 2), called by its bare name:
+    numpy's choose, reached through an attribute, stays a clamp, and numpy's own name is no import there (the closed list)."""
+    return name == "choose" and isinstance(node.func, ast.Name) and rel.startswith(NEW_ENGINE + "/")
 
 
 def reduction(rel: str, name: str, node: ast.Call) -> bool:
@@ -966,7 +972,12 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add("STATE", node, "id()")
             if name in ROOTS:
                 add("ROOT", node, name)
-            if name in CLAMPS and not exempt(rel, "CLAMP") and not reduction(rel, name, node):
+            if (
+                name in CLAMPS
+                and not exempt(rel, "CLAMP")
+                and not reduction(rel, name, node)
+                and not own_choose(rel, name, node)
+            ):
                 add("CLAMP", node, f"{name}()")
             if rel.startswith(NEW_ENGINE + "/") and not exempt(rel, "COMPARE") and name in COMPARE_CALLS:
                 add("COMPARE", node, "call")

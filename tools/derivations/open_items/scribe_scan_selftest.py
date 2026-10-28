@@ -854,6 +854,34 @@ CASES += [
     ("a clamp in algebra", NEW_RING, fn("return min(a, b)", "a, b"), {"CLAMP": 1, "ALLOW": 1}),
     ("a raise in algebra", NEW_RING, fn("raise ValueError(a)"), {"REFUSE": 1, "ALLOW": 1}),
     ("a number beyond 0 and 1 in algebra", NEW_RING, "X = 5\n", {"NUMBER": 1, "ALLOW": 1}),
+    # the architect's own functions (design section 2): choose and nonneg of algebra/ called by their names, the due bit's product over the
+    # Spoke axis (np.prod); numpy's choose stays a clamp
+    (
+        "a lawful beat and due bit: the algebra's carry, nonneg and choose, np.prod over the Spoke axis",
+        NEW_STEP,
+        "import numpy as np\n"
+        "from tensor24.algebra.carry import carry, choose, nonneg\n\n\n"
+        "def due(counts, nb, here):\n"
+        "    seen = np.take(counts, nb, axis=1)\n"
+        "    return np.prod(nonneg(seen - here), axis=0)\n\n\n"
+        "def beat(ph, rate, gamma):\n"
+        "    return carry(rate, gamma, ph)\n\n\n"
+        "def turnover(q, moved, same):\n"
+        "    return choose(q, moved, same)\n",
+        {},
+    ),
+    (
+        "numpy's choose is still a clamp, and no list name",
+        NEW_STEP,
+        NP + fn("return np.choose(a, b)", "a, b"),
+        {"CLAMP": 1, "ALLOW": 1},
+    ),
+    (
+        "a bare choose in the current engine is still a clamp",
+        ENGINE,
+        "def f(a, b):\n    return choose(a, b)\n",
+        {"CLAMP": 1},
+    ),
     # the scattered sum of a contraction: np.add.at(out, index, values) as a statement of its own, on an array the function made
     (
         "a lawful scatter-add: np.add.at on a fresh array, a statement of its own",
