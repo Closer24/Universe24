@@ -1,0 +1,9 @@
+FRAME exhaustive box (w, w2 in 1..12; now, before in -3..3; every r, b; 3 forces, 3 odd forces):
+   {'states': 91728, 'TT': 0, 'TSTi': 0, 'NS': 0, 'rest': 0, 'range': 0, 'P to -P': 0}
+   class even->even {'states': 24696, 'fail': 0}
+   class even->odd {'states': 24696, 'fail': 0}
+   class odd->even {'states': 21168, 'fail': 0}
+   class odd->odd {'states': 21168, 'fail': 0}
+Animate (i) carried mirror, half up, even w, w2 in 2..12: {'states': 12348, 'tt_fail': 1764, 'tt_fail_at_r0': 1764, 'tsti_fail': 0, 'sts_fail': 5292}
+Animate (ii) / G: tie to even, unreduced mirror, even w, w2: {'even_canonical_states': 12384, 'even_steps': 37152, 'even_r_at_w': 3804, 'even_tt_fail': 0, 'even_tsti_fail': 0, 'even_noncanonical_sts_fail': 5184}
+retrace of 40 ticks at an even count, 1000 starts: carried mirror fails 924, frame fails 0

@@ -1,0 +1,8 @@
+MUT origin   TR 10, W = 2 (X- + X) even, DD 50000               weak top       ran 300 (circles 300), turnovers 27418: TMTM 300  CIRCLE 300  24 300  LAW1   0
+MUT origin   TR 10, W = 2 (X- + X) even, DD 50000               top or bottom  ran 300 (circles 300), turnovers 51038: TMTM 300  CIRCLE 300  24 300  LAW1   0
+MUT origin   TR 11, W = 5 (X- + X) of either parity, DD 49999   weak top       ran 300 (circles 296), turnovers  5319: TMTM 300  CIRCLE 296  24 300  LAW1   0
+MUT origin   TR 11, W = 5 (X- + X) of either parity, DD 49999   top or bottom  ran 300 (circles 299), turnovers 44655: TMTM 300  CIRCLE 299  24 300  LAW1   0
+MUT origin   TR 12, W = 3 (X- + X) of either parity, DD 50000   weak top       ran 300 (circles 300), turnovers 16974: TMTM 300  CIRCLE 300  24 300  LAW1   0
+MUT origin   TR 12, W = 3 (X- + X) of either parity, DD 50000   top or bottom  ran 300 (circles 300), turnovers 50872: TMTM 300  CIRCLE 300  24 300  LAW1   0
+MUT origin   TR 9, W = 3 (X- + X) of either parity, DD 49999    weak top       ran 300 (circles 300), turnovers 20633: TMTM 300  CIRCLE 300  24 300  LAW1   0
+MUT origin   TR 9, W = 3 (X- + X) of either parity, DD 49999    top or bottom  ran 300 (circles 300), turnovers 54641: TMTM 300  CIRCLE 300  24 300  LAW1   0

@@ -1,0 +1,4 @@
+MUT asym     TR 10, W = 2 (X- + X) even, DD 50000               asymmetric top ran 300 (circles 298), turnovers 16647: TMTM 264  CIRCLE 298  24   0  LAW1   0
+MUT asym     TR 11, W = 5 (X- + X) of either parity, DD 49999   asymmetric top ran 300 (circles 300), turnovers  4682: TMTM 197  CIRCLE 206  24   0  LAW1   0
+MUT asym     TR 12, W = 3 (X- + X) of either parity, DD 50000   asymmetric top ran 300 (circles 300), turnovers 15512: TMTM 229  CIRCLE 283  24   0  LAW1   0
+MUT asym     TR 9, W = 3 (X- + X) of either parity, DD 49999    asymmetric top ran 300 (circles 300), turnovers 18740: TMTM 249  CIRCLE 295  24   0  LAW1   0

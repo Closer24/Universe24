@@ -1,0 +1,34 @@
+I1 the exact toy, a 3^3 torus; mutant: count_plain
+PASS  C1 Mesh current antisymmetric, head (expected to fail: the head): one frame, odd/skew: 0 of 260 Meshes not antisymmetric; pawl wall, identity triple: 1 of 2 Meshes not antisymmetric; pawl wall, odd/skew: 224 of 224 Meshes not antisymmetric
+FAIL  C1 Mesh current antisymmetric, fixA: one frame, odd/skew: 0 of 254 Meshes not antisymmetric; pawl wall, odd/skew: 195 of 232 Meshes not antisymmetric
+FAIL  C1 Mesh current antisymmetric, fixB: one frame, identity triple: 0 of 2 Meshes not antisymmetric; one frame, odd/skew: 0 of 252 Meshes not antisymmetric; pawl wall, odd/skew: 194 of 232 Meshes not antisymmetric
+FAIL  C1 Mesh current antisymmetric, fixAB: one frame, odd/skew: 0 of 240 Meshes not antisymmetric; pawl wall, odd/skew: 216 of 246 Meshes not antisymmetric
+PASS  C2 Q* kept to the last digit, head (expected to fail): Q* moved at 40 of 40 exact ticks
+FAIL  C2 Q* kept to the last digit, fixAB: Q* moved at 40 of 40 exact ticks
+PASS  C3 the pawl a pure gauge, head, the count framed, the odd gears framed, the flows not framed (expected to fail): 81 of 81 Node-clocks differ between G-then-step and step-then-G
+PASS  C3 the pawl a pure gauge, head, the count framed, the odd gears not framed, the flows not framed (expected to fail): 79 of 81 Node-clocks differ between G-then-step and step-then-G
+PASS  C3 the pawl a pure gauge, head, the count framed, the odd gears framed, the flows framed (expected to fail): 81 of 81 Node-clocks differ between G-then-step and step-then-G
+PASS  C3 the pawl a pure gauge, fixA, the count framed, the odd gears framed, the flows not framed (expected to fail): 81 of 81 Node-clocks differ between G-then-step and step-then-G
+PASS  C3 the pawl a pure gauge, fixA, the count framed, the odd gears not framed, the flows not framed (expected to fail): 81 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C3 the pawl a pure gauge, fixA, the count framed, the odd gears framed, the flows framed: 80 of 81 Node-clocks differ between G-then-step and step-then-G
+PASS  C3 the pawl a pure gauge, fixB, the count framed, the odd gears framed, the flows not framed (expected to fail): 81 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C3 the pawl a pure gauge, fixB, the count framed, the odd gears not framed, the flows not framed: 80 of 81 Node-clocks differ between G-then-step and step-then-G
+PASS  C3 the pawl a pure gauge, fixB, the count framed, the odd gears framed, the flows framed (expected to fail): 81 of 81 Node-clocks differ between G-then-step and step-then-G
+FAIL  C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows not framed: 80 of 81 Node-clocks differ between G-then-step and step-then-G
+PASS  C3 the pawl a pure gauge, fixAB, the count framed, the odd gears not framed, the flows not framed (expected to fail): 80 of 81 Node-clocks differ between G-then-step and step-then-G
+PASS  C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows framed (expected to fail): 81 of 81 Node-clocks differ between G-then-step and step-then-G
+PASS  C4 the 24 commute with the step, head: 24 rotations of determinant 1; 0 of 24 do not commute
+PASS  C4 the 24 commute with the step, fixAB: 24 rotations of determinant 1; 0 of 24 do not commute
+FAIL  C5a moving rates: Q* kept by the step at the tick's own weights, and Q*' - Q* = B exactly: identity failures 24 of 24; Q* moved at 12 of 12 ticks (B is not 0)
+FAIL  C5b the momentum carried into the next tick's charge unit keeps Q*: Q* moved at 12 of 12 ticks
+PASS  C6a the head's turnover (K on the hand, the pawl flipped): Q* not kept (expected): the inflow identity fails at 4 of 4 turnovers
+FAIL  C6b the sweep turned with the pawl, mirrored about the held moment: Q*' - Q* = -(the turned clocks' inflow): identity failures 4 of 4; Q* moved at 4 of 4 (the inflow is not 0)
+FAIL  C6c the sweep turned with the pawl, mirrored on the stepped state: Q* kept: Q* moved at 4 of 4 turnovers
+PASS  C7 the top: the mirror about the held moment turns once; the stepped mirror turns at every tick after: held: turnovers at ticks [9]; stepped: at ticks [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+PASS  C8 run back, the head's turnover (K, count negated) with the head's triple (expected not to retrace): retraces exactly: False; Q* through the turnover: other
+PASS  C8 run back, the head's turnover with fixB (both T1 gears carry the near pawl): retraces exactly: True; Q* through the turnover: other
+PASS  C8 run back, the head's turnover with fixAB (expected not to retrace): retraces exactly: False; Q* through the turnover: other
+PASS  C8 run back, the sweep turned with the pawl, fixAB, count kept, flows negated: retraces exactly: True; Q* through the turnover: other
+PASS  C8 run back, the sweep turned with the pawl, fixAB, the head's signs (count negated, flows kept) (expected not to retrace): retraces exactly: False; Q* through the turnover: other
+PASS  C9 the fitting's pair: the framed sweep 0 when laid in the end's frame; the head's frame-blind lay is not 0 across a pawl wall: 400 pairs, 197 across a pawl wall: framed sweep 0 at 400 laid in the frame, at 203 laid as the head lays; Q* 0 at 0 (the two ends' charge units equal at 0)
+21 of 32 checks PASS; FAIL: ['C1 Mesh current antisymmetric, fixA', 'C1 Mesh current antisymmetric, fixB', 'C1 Mesh current antisymmetric, fixAB', 'C2 Q* kept to the last digit, fixAB', 'C3 the pawl a pure gauge, fixA, the count framed, the odd gears framed, the flows framed', 'C3 the pawl a pure gauge, fixB, the count framed, the odd gears not framed, the flows not framed', 'C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows not framed', "C5a moving rates: Q* kept by the step at the tick's own weights, and Q*' - Q* = B exactly", "C5b the momentum carried into the next tick's charge unit keeps Q*", "C6b the sweep turned with the pawl, mirrored about the held moment: Q*' - Q* = -(the turned clocks' inflow)", 'C6c the sweep turned with the pawl, mirrored on the stepped state: Q* kept']

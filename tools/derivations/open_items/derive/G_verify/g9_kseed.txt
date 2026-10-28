@@ -1,0 +1,21 @@
+world_bang.json: not K-fixed; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed', 'moved by K']; the offset at rest True
+world_bodies.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_collapse_1200.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_collapse_500.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_collapse_800.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_emission.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_emission_none.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_emission_one.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_ga2.json: not K-fixed; the hands (acts order) ['K-fixed', 'K-fixed', 'moved by K']; the offset at rest True
+world_hole.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_nature.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_node.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_packet.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_pair_3.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_plasma.json: not K-fixed; the hands (acts order) ['moved by K', 'moved by K', 'K-fixed', 'K-fixed']; the offset at rest True
+world_plasma_3.json: not K-fixed; the hands (acts order) ['moved by K', 'moved by K', 'K-fixed', 'K-fixed']; the offset at rest True
+world_polarization.json: not K-fixed; the hands (acts order) ['K-fixed', 'moved by K', 'K-fixed']; the offset at rest True
+world_sea.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_sea_3.json: its own antiworld; the hands (acts order) ['K-fixed', 'K-fixed', 'K-fixed', 'K-fixed']; the offset at rest True
+world_universe.json: not K-fixed; the hands (acts order) ['K-fixed', 'moved by K', 'moved by K', 'K-fixed']; the offset at rest True
+world_universe_3.json: not K-fixed; the hands (acts order) ['K-fixed', 'moved by K', 'moved by K', 'K-fixed']; the offset at rest True

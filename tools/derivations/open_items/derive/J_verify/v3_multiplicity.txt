@@ -1,0 +1,5 @@
+  [ok] E1/2 with a two-fold internal label: invariant bilinears of both symmetries (the dial exists for eps = +1 and -1): 4 total, 1 symmetric, 3 antisymmetric
+  [ok] T1 with a two-fold internal label: invariant bilinears of both symmetries (the dial exists for eps = +1 and -1): 4 total, 3 symmetric, 1 antisymmetric
+  [ok] A1 with a two-fold internal label: invariant bilinears of both symmetries (the dial exists for eps = +1 and -1): 4 total, 3 symmetric, 1 antisymmetric
+  [ok] G3/2 with a two-fold internal label: invariant bilinears of both symmetries (the dial exists for eps = +1 and -1): 4 total, 1 symmetric, 3 antisymmetric
+result: 0 failures

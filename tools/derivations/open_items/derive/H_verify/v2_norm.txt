@@ -1,0 +1,15 @@
+Gamma 1000, G 16, C = 6 G^2 = 1536
+vacuum                                   tensions [0, 0, 0, 0, 0, 0]: head [256, 256, 256, 256, 256, 256] (sum 1536), F-H5 [256, 256, 256, 256, 256, 256] (sum 1536)
+uniform t = 10 (pure trace)              tensions [10, 10, 10, 10, 10, 10]: head [251, 251, 251, 251, 251, 251] (sum 1506), F-H5 [256, 256, 256, 256, 256, 256] (sum 1536)
+uniform t = 100 (pure trace)             tensions [100, 100, 100, 100, 100, 100]: head [207, 207, 207, 207, 207, 207] (sum 1242), F-H5 [256, 256, 256, 256, 256, 256] (sum 1536)
+uniform t = 300 (pure trace)             tensions [300, 300, 300, 300, 300, 300]: head [125, 125, 125, 125, 125, 125] (sum 750), F-H5 [256, 256, 256, 256, 256, 256] (sum 1536)
+uniform t = 600 (pure trace)             tensions [600, 600, 600, 600, 600, 600]: head [41, 41, 41, 41, 41, 41] (sum 246), F-H5 [256, 256, 256, 256, 256, 256] (sum 1536)
+one Mesh at t = 100                      tensions [100, 0, 0, 0, 0, 0]: head [207, 256, 256, 256, 256, 256] (sum 1487), F-H5 [213, 264, 264, 264, 264, 264] (sum 1533)
+one axis at t = 100 (both sides)         tensions [100, 100, 0, 0, 0, 0]: head [207, 207, 256, 256, 256, 256] (sum 1438), F-H5 [221, 221, 273, 273, 273, 273] (sum 1534)
+traceless (100, 100, -100, -100, 0, 0)   tensions [100, 100, -100, -100, 0, 0]: head [207, 207, 310, 310, 256, 256] (sum 1546), F-H5 [205, 205, 307, 307, 254, 254] (sum 1532)
+traceless (10, 10, -10, -10, 0, 0)       tensions [10, 10, -10, -10, 0, 0]: head [251, 251, 261, 261, 256, 256] (sum 1536), F-H5 [251, 251, 261, 261, 256, 256] (sum 1536)
+five at the horizon band, one open       tensions [960, 960, 960, 960, 960, 0]: head [0, 0, 0, 0, 0, 256] (sum 256), F-H5 [0, 0, 0, 0, 0, 1536] (sum 1536)
+Q(t) = 0 exactly on t in [956, 1044] (89 tensions): S = 0 when all six lie there
+tensions in [0, 200] (the head's own range, no clamp acting), 2000 draws: the grip sum F-H5 minus head up to 473 of 1536
+rate p0 1000, mesh rate 1000: D + 2 SUM R - 4 w = -6 (<= 0 inside the cone)
+rate p0 1050, mesh rate 1102: D + 2 SUM R - 4 w = 1317298170 (<= 0 inside the cone)

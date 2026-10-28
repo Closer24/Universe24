@@ -1,0 +1,11 @@
+world_nature.json 60 ticks
+  meshes.py:49 offset_pair calls: 720000
+  meshes.py:49 offset_pair ties: 0
+  tick.py:115 rate_readings calls: 7500
+  tick.py:115 rate_readings ties: 16
+  tick.py:231 impulse calls: 90000
+  tick.py:231 impulse ties: 0
+  tick.py:232 impulse calls: 90000
+  tick.py:232 impulse ties: 0
+  tick.py:301 advances calls: 7500
+  tick.py:301 advances ties: 0
