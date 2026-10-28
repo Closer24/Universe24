@@ -307,34 +307,38 @@ def angular_momentum(chart: Chart) -> dict[str, Any]:
 
 
 def mass_to_light(chart: Chart) -> dict[str, Any]:
-    """Row 73: E = mc^2 at the unspringing (MG-S1, a pair at rest into light; the hands' row to add beside 24): at each end of an unspringing the pair's notches unwound whole lose the wind `unwound`, the pair's energy at rest in the regulator's winding, the one weight of every train; the light advanced there is tallied one quantum (`tallied`, the teeth an advance at the winding holds alone at the clock, the same two integers for every train at one load) and advanced by the least count of notches at which its wind rises by it (the exact advance's rise); so the mass becomes light where the wind unwound is the quantum tallied, the light's rise above it the least count's excess named in thousandths; NOT SHOWN where the wind unwound exceeds the quantum tallied, the excess tallied nowhere (the stop jams an end below it); NOT READ with no unspringing."""
+    """Row 73: E = mc^2 at the unspringing (MG-S1, a pair at rest into light; the hands' row to add beside 24): at each end of an unspringing the pair's notches unwound whole lose the wind `taken`, the pair's energy at rest in the regulator's winding, the one weight of every train; the light advanced there is tallied one quantum (`booked`, the teeth an advance at the winding holds alone at the clock, the same two integers for every train at one load) and advanced by the least count of notches at which its wind rises by it (the exact advance's rise, the lay's third integer, read over the quantum); the share above the quantum is booked in the end's signed remainder with the wind's cross terms (EX-S1, the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess; David's DAVID-THE-MERGERS-BOOK.md (b)), so the mass becomes light exactly where every end keeps taken + the remainder before - the remainder after = booked, the light's rise above the quantum the least count's excess named in thousandths; NOT SHOWN where an end does not, the excess there booked nowhere; NOT READ with no unspringing."""
     ends = [
-        (int(t["taken"]), int(t["booked"]), int(advance[-1]))
+        (int(t["taken"]), int(t["booked"]), int(rise), int(t["remainder_was"]) - int(t["remainder"]))
         for b in chart.fittings
-        for where, advance in zip((b["minus"], b["plus"]), b.get("exact_lay", []), strict=False)
+        for where, (_gear, _count, rise, *_slack) in zip(
+            (b["minus"], b["plus"]), b.get("exact_lay", []), strict=False
+        )
         for t in b.get("takes", [])
         if t["node"] == where
     ]
-    paid = sum(1 for unwound, tally, _up in ends if unwound == tally)
-    over = max((int(carries(unwound, tally, THOUSAND) or 0) for unwound, tally, _up in ends), default=0)
-    rise = max((int(carries(up, unwound, THOUSAND) or 0) for unwound, _tally, up in ends), default=0)
+    exact = sum(1 for taken, tally, _up, fell in ends if taken + fell == tally)
+    above = sum(1 for taken, tally, _up, _fell in ends if taken > tally)
+    over = max(
+        (int(carries(taken, tally, THOUSAND) or 0) for taken, tally, _up, _fell in ends), default=0
+    )
+    rise = max((int(carries(up, tally, THOUSAND) or 0) for _taken, tally, up, _fell in ends), default=0)
     return {
         "73 E = mc^2 at the merger": {
-            "merger ends / of them with the pair's share taken equal to the light's quantum booked": [
+            "merger ends / exact by the signed remainder / with the share taken above the quantum booked": [
                 len(ends),
-                paid,
+                exact,
+                above,
             ],
             "the share taken over the quantum booked, most, in thousandths": over,
-            "the light's rise over the share taken, most, in thousandths": rise,
+            "the light's rise over the quantum booked, most, in thousandths": rise,
             "verdict": unread_words(
                 "no merger in the record",
-                "at every merger end the pair's share taken equal to the light's quantum booked, the light laid rising by it to its least count",
+                "at every merger end the pair's share taken the light's quantum booked and the remainder's rise, the light laid rising by it to its least count",
             )
             if not ends
-            else f"SHOWN: at every one of {len(ends)} merger ends the pair's share taken is the light's quantum booked, the light laid rising by it to its least count, at most {rise - THOUSAND} thousandths above"
-            if paid == len(ends)
-            else f"SHOWN in part: at {paid} of {len(ends)} merger ends the pair's share taken is the light's quantum booked; at the rest it exceeds it, up to {over} thousandths of the quantum, the excess booked nowhere"
-            if paid * HALF > len(ends)
-            else f"NOT SHOWN: at {len(ends) - paid} of {len(ends)} merger ends the pair's share taken exceeds the light's quantum booked, up to {over} thousandths of it, the excess booked nowhere",
+            else f"SHOWN exact: at every one of {len(ends)} merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the remainder after = booked), above the quantum at {above} of them, up to {over} thousandths of it, the light laid rising by it to its least count, at most {rise - THOUSAND} thousandths above"
+            if exact == len(ends)
+            else f"NOT SHOWN: at {len(ends) - exact} of {len(ends)} merger ends the pair's share taken is not the light's quantum booked and the remainder's rise, the excess there booked nowhere",
         }
     }

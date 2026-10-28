@@ -125,23 +125,15 @@ def face_light(chart: Chart) -> dict[tuple[int, int], list[int]]:
 
 
 def kick_tally(chart: Chart) -> tuple[list[list[int]], list[int], list[int]]:
-    """The light's answer to the current's kicks at the kicked clock itself: every kick of the clock lines' `kick` (the hands' lead carried at the key on the offset's odd gear a at the tick's impulse) at a clock turned over and stopped at none of the tick and the two before it (the turnover and the stop return the tick's kick with the pre-state), read on the clock lines' `odd` (the light's three odd gears at every clock at the tick's end): sign(kick) times sign of the odd gear b's second difference at the clock over the three ticks less the board's mean, by cross multiplication (the count of clocks times the clock's less the board's sum: the board's own swing, which the bangs turn whole, read away). Returns the tally [a][b], the kicks per axis and the kicks read per axis."""
+    """The light's answer to the current's kicks at the kicked clock itself: every kick of the clock lines' `kick` (the hands' lead carried at the key on the offset's odd gear a at the tick's impulse) at a clock turned over and stopped at neither the tick nor the one before it (the turnover and the stop return the tick's kick with the pre-state), read on the clock lines' `odd` (the light's three odd gears' momentum at every clock at the tick's end, W (now - before) + fine - mid(W), the impulse's own reading of a stride, where the kick lands; the carry keeps it through the stretch's change, so the stride's rescaling by the wall, which ran against the kick on the axis the bang's wave runs along, is read away exactly, David's DAVID-THE-MERGERS-BOOK.md (a)): sign(kick) times the sign of the odd gear b's momentum change over the tick at the clock. Returns the tally [a][b], the kicks per axis and the kicks read per axis."""
     lines = {int(line["i"]): line for line in chart.clocks if "odd" in line}
     tally = [[0] * AXES for _ in range(AXES)]
     kicked, read = [0] * AXES, [0] * AXES
     for t, line in lines.items():
-        span = [lines.get(t - 1), lines.get(t - 1 - 1)]
-        if span[0] is None or span[1] is None:
+        before = lines.get(t - 1)
+        if before is None:
             continue
-        still = {int(k) for each in (line, *span) for k in (*each["turned"], *each["frozen"])}
-        acc = [
-            [
-                int(a) - int(b) - int(b) + int(c)
-                for a, b, c in zip(*(each["odd"][axis] for each in (line, *span)), strict=True)
-            ]
-            for axis in range(AXES)
-        ]
-        totals = [sum(x) for x in acc]
+        still = {int(k) for each in (line, before) for k in (*each["turned"], *each["frozen"])}
         for a, row in enumerate(line["kick"]):
             for k, q in enumerate(row):
                 if int(q) == 0:
@@ -151,12 +143,12 @@ def kick_tally(chart: Chart) -> tuple[list[list[int]], list[int], list[int]]:
                     continue
                 read[a] += 1
                 for b in range(AXES):
-                    tally[a][b] += sign(int(q)) * sign(len(acc[b]) * acc[b][k] - totals[b])
+                    tally[a][b] += sign(int(q)) * sign(int(line["odd"][b][k]) - int(before["odd"][b][k]))
     return tally, kicked, read
 
 
 def polarization(chart: Chart) -> dict[str, Any]:
-    """Row 74: the polarization of light (David's DAVID-FOUR-PHENOMENA.md section 1, no new law: the photon's polarization is on the offset, the direction of its transverse odd gears, which the hands' current drives): the light's three odd gears are kicked by the current on their own axis alone (the hands' lead carried at the key at the impulse, the clock lines' `kick`), so the light a current lights is polarized along it: at every kick (`kick_tally`) the light at the kicked clock itself accelerates on the kick's axis with the kick's sign beyond the board's own swing, and on the other two axes as often against as with it; SHOWN where on every axis with a kick read the own axis's tally is above 0 and above twice each cross tally in size, SHOWN in part where on some, NOT SHOWN where on none; NOT READ where the chart carries no kick or no light at the clocks (the writer's fields) or no kick falls at a clock running through the three ticks; beside it the light the chimes see, the faces' light summed per axis with its sign (the polarization seen, the named source's test read with the signs) and in size."""
+    """Row 74: the polarization of light (David's DAVID-FOUR-PHENOMENA.md section 1, no new law: the photon's polarization is on the offset, the direction of its transverse odd gears, which the hands' current drives): the light's three odd gears are kicked by the current on their own axis alone (the hands' lead carried at the key at the impulse, the clock lines' `kick`), so the light a current lights is polarized along it: at every kick (`kick_tally`) the light's momentum at the kicked clock itself changes on the kick's axis with the kick's sign, and on the other two axes as often against as with it; SHOWN where on every axis with a kick read the own axis's tally is above 0 and above twice each cross tally in size, SHOWN in part where on some, NOT SHOWN where on none; NOT READ where the chart carries no kick or no light at the clocks (the writer's fields) or no kick falls at a clock running through the tick and the one before; beside it the light the chimes see, the faces' light summed per axis with its sign (the polarization seen, the named source's test read with the signs) and in size."""
     lines = chart.clocks
     light = face_light(chart)
     seen = [sum(f[b] for f in light.values()) for b in range(AXES)]
@@ -176,7 +168,7 @@ def polarization(chart: Chart) -> dict[str, Any]:
             | {
                 "verdict": unread_words(
                     "the record carries no kick of the light or no light at the clocks (the clock lines' `kick`, the offset's carries of the hands' lead at the impulse, and `odd`, its odd gears)",
-                    "at every kick of the light by the current the light at the kicked clock accelerates on the kick's axis with its sign, the other axes not",
+                    "at every kick of the light by the current the light's momentum at the kicked clock changes on the kick's axis with its sign, the other axes not",
                 )
             }
         }
@@ -188,23 +180,23 @@ def polarization(chart: Chart) -> dict[str, Any]:
         if tally[a][a] > 0 and all(PAIR * abs(tally[a][b]) < tally[a][a] for b in range(AXES) if b != a)
     ]
     numbers |= {
-        "kicks per axis / read at clocks running through the three ticks": [kicked, read],
-        "sign(kick on a) sign(the light's acceleration on b), [a][b]": tally,
+        "kicks per axis / read at clocks running through the tick and the one before": [kicked, read],
+        "sign(kick on a) sign(the light's momentum change on b), [a][b]": tally,
     }
     words = ", ".join(f"{tally[a][a]} of {read[a]}" for a in axes)
     return {
         "74 the polarization of light": numbers
         | {
             "verdict": unread_words(
-                "no kick of the light at a clock running through the tick and the two before it",
-                "at every kick of the light by the current the light at the kicked clock accelerates on the kick's axis with its sign, the other axes not",
+                "no kick of the light at a clock running through the tick and the one before it",
+                "at every kick of the light by the current the light's momentum at the kicked clock changes on the kick's axis with its sign, the other axes not",
             )
             if not axes
-            else f"SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its acceleration with the kick's sign on {words} kicks read, the cross axes under half of it"
+            else f"SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on {words} kicks read, the cross axes under half of it"
             if len(along) == len(axes)
             else f"SHOWN in part: the light polarized along its kick on {len(along)} of {len(axes)} axes read ({words})"
             if along
-            else f"NOT SHOWN: the light's acceleration not along its kick on any axis read ({words})",
+            else f"NOT SHOWN: the light's momentum's change not along its kick on any axis read ({words})",
         }
     }
 

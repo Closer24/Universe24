@@ -13,7 +13,7 @@ import numpy as np
 
 from event_universe import hands, readings
 from event_universe.assembly.piece import read_piece
-from event_universe.core import rates
+from event_universe.core import acts, rates
 from event_universe.core.rates import sine_rim
 from event_universe.core.spokes import AXES, SIDES, spoke_of
 from event_universe.meshes import coupling_of, factors, mesh_lead
@@ -272,7 +272,7 @@ def start_winds(clock: Clock) -> list[Any]:
 
 
 def clock_lines(clock: Clock) -> dict[str, Any]:
-    """The chart's clock and mesh line at a tick, every clock by its index in the great clock's order: the regulator's notch (the stretch), the load, the turned-over clocks, the stopped clocks (the mesh rate 0), the meshes held disengaged (the factor 0) as [clock, axis] pairs, and every mesh's lead of the unsprung gear, F_ij from the clock along each axis (the sign the direction, the size the flow); the light's kicks, the carries of the hands' lead at the key on the offset's odd gears at the tick's impulse, per axis, and the light, those odd gears at the tick's end (row 74; at a turned-over or stopped clock the tick's kick is returned with its pre-state), every hand's wind at every clock at the tick's start in the hands' order (the striking's own reading, PM-S1's unit, row 75), and where the calibre holds a held field, its notch at every clock at its weight (the well the springs read beside the load, row 76); the page draws the great clock from these and nothing else."""
+    """The chart's clock and mesh line at a tick, every clock by its index in the great clock's order: the regulator's notch (the stretch), the load, the turned-over clocks, the stopped clocks (the mesh rate 0), the meshes held disengaged (the factor 0) as [clock, axis] pairs, and every mesh's lead of the unsprung gear, F_ij from the clock along each axis (the sign the direction, the size the flow); the light's kicks, the carries of the hands' lead at the key on the offset's odd gears at the tick's impulse, per axis, and the light, those odd gears' momentum at the tick's end, W (now - before) + fine - mid(W) at the gear's teeth (the impulse's own reading of a stride, which the carry keeps through the stretch's change; row 74; at a turned-over or stopped clock the tick's kick is returned with its pre-state), every hand's wind at every clock at the tick's start in the hands' order (the striking's own reading, PM-S1's unit, row 75), and where the calibre holds a held field, its notch at every clock at its weight (the well the springs read beside the load, row 76); the page draws the great clock from these and nothing else."""
     regulator = clock.train(REGULATOR).gears[0]
     load = readings.load(clock)
     mesh_rate = rates.mesh_rate_of(clock.full_rate, load)
@@ -280,7 +280,7 @@ def clock_lines(clock: Clock) -> dict[str, Any]:
     held = [
         [i, axis] for axis in range(AXES) for i, f in enumerate(ints(read[spoke_of(axis, 0)])) if f == 0
     ]
-    unsprung = clock.unsprung().gears[0]
+    unsprung, odd = clock.unsprung().gears[0], clock.train(OFFSET).gears[1:]
     fields = [r for r in clock.trains_ if r.weight is not None]
     found = {
         "i": clock.ticks,
@@ -291,7 +291,7 @@ def clock_lines(clock: Clock) -> dict[str, Any]:
         "held": held,
         "current": [ints(mesh_lead(unsprung, spoke_of(axis, 0))) for axis in range(AXES)],
         "kick": [ints(q) for q in clock.start_kicks[1:]],
-        "odd": [ints(gear.now) for gear in clock.train(OFFSET).gears[1:]],
+        "odd": [ints(g.teeth * (g.now - g.before) + g.fine - acts.mid(g.teeth)) for g in odd],
         "winds": [ints(w) for w in start_winds(clock)],
     }
     if fields:
