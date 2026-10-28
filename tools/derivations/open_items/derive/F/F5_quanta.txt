@@ -1,0 +1,18 @@
+PASS A1 [light at the edge] the sweep is the exact charge over 10 ticks : Q = 1637
+PASS A2 [light at the edge] continuity at every Node-clock and tick, the flux the Mesh's lead at the middle slot
+PASS A1 [a train below the edge] the sweep is the exact charge over 10 ticks : Q = 140
+PASS A2 [a train below the edge] continuity at every Node-clock and tick, the flux the Mesh's lead at the middle slot
+PASS B1 the two waves (k = 0, cos 3/5; k = (pi/2)^3, cos 0) solve the one formula exactly for the train r = 3/5
+   mode 0: wind 26624/25, sweep 3328/5, sin w 4/5; wind / (2 sin w) = 3328/5
+   mode 1: wind 2176, sweep 1088, sin w 1; wind / (2 sin w) = 1088
+PASS B2 for each one-signed mode the wind is 2 sin(w) times its sweep: the sweep is the action per mode
+PASS B3 the waves' winds and sweeps add (no cross terms over the torus): E = SUM 2 sin(w_m) Q_m, Q = SUM Q_m : E = 81024/25, Q = 8768/5
+PASS B4 no single frequency reads the sum: E != 2 sin(w) Q for either sin w
+PASS B5 a standing wave of one mode (both senses) has wind and no sweep: the sweep counts the senses' difference
+PASS C1 two bosons, one per input: the two ways cancel (per M = 0), odds (1/2, 0, 1/2): Hong, Ou and Mandel's dip : per M = (0, 0)
+PASS C2 two twin quanta: det M = 2, the coincidence certain (odds 1), never in one output
+PASS C3 one quantum: N(1) : N(i) = 1 : 1, the binomial partition
+PASS D1 where every size is non-negative the token's law of position is carried exactly as the sweep (Born for position) : 2 ticks with non-negative sizes, 6 with a negative size or density
+PASS E1 the integer one formula's orbit on a ring of 3 returns exactly to its setting (a bounded bijection's cycle) : period 6, largest notch 2
+PASS E2 the massless uniform mode at the hold 0 drifts by one notch a tick for ever (a double root: no recurrence) : notch 6 .. 45
+RESULT: ALL PASS
