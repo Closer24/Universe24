@@ -1,16 +1,16 @@
 # The clock words
 
-The owner's words of 2026-10-27, 10:5x and 11:0x UTC, through the Boss, and his direct word of 11:3x UTC to the Scribe: every name in clock words, the documents and the law's text included, the system one big clock with many gears, one dictionary for everything. His direct word of 2026-10-28, 02:4x UTC, to the Scribe (in Hebrew, verbatim in translation): "I asked the Boss that the name click stay, and also that a node be called clock-node and not only clock. Because everything is clocks of strange sizes.. sync": two rows of this dictionary change, the click kept (the pass of 2026-10-27 had named it strike) and the node the Clock-node (the pass had named it Clock); the documents' prose was renamed in one pass on 2026-10-28 (ledger row 282: 3,427 places strike to click and 4,728 places Clock to Clock-node), the code spans, paths, file, branch and hypothesis names, the former-name quotes and the Reader's generated blocks kept as written. The dictionary is David's DAVID-CLOCK-NAMES.md (toys-5, tools/derivations/open_items/); this page is the part the documents apply, with the number of places each word was renamed on 2026-10-27.
+The owner's words of 2026-10-27, 10:5x and 11:0x UTC, through the Boss, and his direct word of 11:3x UTC to the Scribe: every name in clock words, the documents and the law's text included, the system one big clock with many gears, one dictionary for everything. His direct word of 2026-10-28, 02:4x UTC, to the Scribe (in Hebrew, verbatim in translation, the name in the Hebrew's order node-clock, where the Scribe's first rendering had written clock-node): "I asked the Boss that the name click stay, and also that a node be called node-clock and not only clock. Because everything is clocks of strange sizes.. sync": two rows of this dictionary change, the click kept (the pass of 2026-10-27 had named it strike) and the node the Node-clock (the pass had named it Clock); the documents' prose was renamed in one pass on 2026-10-28 (ledger row 282: 3,427 places strike to click and 4,728 places Clock to Clock-node, the order of the first rendering). His direct word of 2026-10-28, 03:2x UTC, to the Scribe (in Hebrew, verbatim in translation): "node-clock. So they won't be confused with clock": the name is the Node-clock, the node first, and a second pass turned its 4,752 places from Clock-node to Node-clock (ledger row 285); in both passes the code spans, paths, file, branch and hypothesis names, the former-name quotes and the Reader's generated blocks were kept as written. The dictionary is David's DAVID-CLOCK-NAMES.md (toys-5, tools/derivations/open_items/); this page is the part the documents apply, with the number of places each word was renamed on 2026-10-27.
 
 ## The two levels
 
-A line is a gear: a coarse wheel (the notch, the level of the former words) and a fine wheel (the fine tooth, the remainder) of a number of teeth (the wall). A plane is a hand: two gears, its three-o'clock and twelve-o'clock shadows, and a row is a train, one family's gears at every clock stepped by one gearing. The lattice is the great clock, one point of it a clock-node, a meshing of two clock-nodes a mesh, one of a clock-node's six sides a spoke, and the great clock's one step a tick.
+A line is a gear: a coarse wheel (the notch, the level of the former words) and a fine wheel (the fine tooth, the remainder) of a number of teeth (the wall). A plane is a hand: two gears, its three-o'clock and twelve-o'clock shadows, and a row is a train, one family's gears at every clock stepped by one gearing. The lattice is the great clock, one point of it a node-clock, a meshing of two node-clocks a mesh, one of a node-clock's six sides a spoke, and the great clock's one step a tick.
 
 ## The renamed words
 
 | the former word | the clock word | what it is | places renamed |
 | --- | --- | --- | --- |
-| Node | Clock-node | one small clock of the great clock: its trains, its rate, its dial (named Clock by the pass of 2026-10-27, Clock-node by the owner's word of 2026-10-28) | 4,578, then 4,728 renamed again |
+| Node | Node-clock | one small clock of the great clock: its trains, its rate, its dial (named Clock by the pass of 2026-10-27, Clock-node by the pass of 2026-10-28, Node-clock by the owner's word of 2026-10-28, 03:2x UTC) | 4,578, then 4,728 renamed again, then 4,752 turned |
 | Link | Mesh | the meshing of two neighbouring clocks | 2,159 |
 | Port | Spoke | one of a clock's six meshing sides | 325 |
 | board | great clock | the whole lattice of clocks | 1,507 |
@@ -48,7 +48,7 @@ A line is a gear: a coarse wheel (the notch, the level of the former words) and 
 | phase line | standard | the reference clock: a hand turning 1 / full rate per act | 39 |
 | the swap at the top | the turnover | a clock's gears reversed at its stretch's top | 56 |
 
-A clause head keeps its former name by name: the head of every renamed clause opens with "the former" and the old title in quotes, dated 2026-10-27. Capitals keep the law's proper nouns (Clock-node, Mesh, Spoke); the older word clock (the pace of a clock, a clock's time) stays where it stood, so the Clock-node's clock reads as it did.
+A clause head keeps its former name by name: the head of every renamed clause opens with "the former" and the old title in quotes, dated 2026-10-27. Capitals keep the law's proper nouns (Node-clock, Mesh, Spoke); the older word clock (the pace of a clock, a clock's time) stays where it stood, so the Node-clock's clock reads as it did.
 
 ## The words kept
 
@@ -60,11 +60,11 @@ The owner's questions and words of 2026-10-28, 03:1x UTC, directly to the Scribe
 
 | the word | in clock words | the law's line |
 | --- | --- | --- |
-| the causal speed | one Mesh per tick: a Clock-node's word reaches its neighbour through one Mesh in one tick and no further, and no click and no hand goes faster | Postulate 3 |
-| c, light's speed | light's hand crosses a Mesh in the square root of 3 ticks: 1 / sqrt 3 of a Mesh per tick at the full rate, c squared 1 / 3; at a Clock-node whose clock runs at N of the full rate it crosses N squared times that, the Mesh being the clock twice; counted in the Clock-node's own ticks and Meshes it is the same everywhere | **The units are the electron's and the wind's ceiling is the highest photon energy**; **The same clock and the same ruler for every act** |
-| the length of a Mesh | the unit of length, one meshing of two Clock-nodes: the distance light covers in the square root of 3 ticks; in nature sqrt 3 omega_e times the electron's reduced Compton wavelength, 6.69 x 10^-13 m x omega_e, the one calibration the law does not derive | the same units clause; what is open, item 9 |
-| the ruler | the Mesh's rate, the Clock-node's rate twice, p_a = p_0^2 div Gamma: a length is a count of Meshes at that rate, and where the clock runs at N of the full rate a Mesh is 1 / N times its rest length (the ruler goes with the clock, h N = 1) | **The rates compose**; **The same clock and the same ruler for every act** |
-| the letter c | the law uses it for two things, light's speed (c squared 1 / 3, Lorentz's composition) and the load, the count of slowings on a Clock-node's rate (U = c / Gamma): the dictionary keeps both and names which in each place | the rates; **The measured speed** |
+| the causal speed | one Mesh per tick: a Node-clock's word reaches its neighbour through one Mesh in one tick and no further, and no click and no hand goes faster | Postulate 3 |
+| c, light's speed | light's hand crosses a Mesh in the square root of 3 ticks: 1 / sqrt 3 of a Mesh per tick at the full rate, c squared 1 / 3; at a Node-clock whose clock runs at N of the full rate it crosses N squared times that, the Mesh being the clock twice; counted in the Node-clock's own ticks and Meshes it is the same everywhere | **The units are the electron's and the wind's ceiling is the highest photon energy**; **The same clock and the same ruler for every act** |
+| the length of a Mesh | the unit of length, one meshing of two Node-clocks: the distance light covers in the square root of 3 ticks; in nature sqrt 3 omega_e times the electron's reduced Compton wavelength, 6.69 x 10^-13 m x omega_e, the one calibration the law does not derive | the same units clause; what is open, item 9 |
+| the ruler | the Mesh's rate, the Node-clock's rate twice, p_a = p_0^2 div Gamma: a length is a count of Meshes at that rate, and where the clock runs at N of the full rate a Mesh is 1 / N times its rest length (the ruler goes with the clock, h N = 1) | **The rates compose**; **The same clock and the same ruler for every act** |
+| the letter c | the law uses it for two things, light's speed (c squared 1 / 3, Lorentz's composition) and the load, the count of slowings on a Node-clock's rate (U = c / Gamma): the dictionary keeps both and names which in each place | the rates; **The measured speed** |
 | the click of a whole | one hand holds the whole winding; there is nothing to choose, and the wind decides where the click happens | **The two kinds of click** |
 | the click of a split | the winding is divided between two twins, upper and lower; neither holds a whole winding and together they do, so the great clock must choose who receives it, by a draw according to the size of the parts (Born); the detector's click, and the only place where a choice enters the world | **The two kinds of click** |
 
@@ -79,7 +79,7 @@ The owner's questions and words of 2026-10-28, 03:1x UTC, directly to the Scribe
 
 ## Open rulings
 
-Asked of the Boss and David at #2187 comment 6441413852: the plural and possessive titles the dictionary missed, the one title that renamed a line of text, the setting that stands for both the seed and the lay, and whether credit, draw, take, frozen, current, remainder and frame take clock words in prose. Named by the Scribe beside them: the word hand now names a family's data (the former record) and the documents also call the project's workers hands; the plain word clock stands beside the Clock-node and the great clock, and the lowercase clock that names a node in running text stands for the Boss's word or the owner's (ledger row 282); the code spelling of the two names (the class Clock, striking.py, strikes.py, the identifiers and the chart's keys named strike) is the Boss's; wind carries both the energy share and Born's share; teeth count is a noun of two words that the possessive and the compound forms bend (the teeth count's, half-teeth-count).
+Asked of the Boss and David at #2187 comment 6441413852: the plural and possessive titles the dictionary missed, the one title that renamed a line of text, the setting that stands for both the seed and the lay, and whether credit, draw, take, frozen, current, remainder and frame take clock words in prose. Named by the Scribe beside them: the word hand now names a family's data (the former record) and the documents also call the project's workers hands; the plain word clock stands beside the Node-clock and the great clock, and the lowercase clock that names a node in running text stands for the Boss's word or the owner's (ledger rows 282 and 285: the owner's reason for the name is that a node not be taken for a clock); the code spelling of the two names (the class Clock, striking.py, strikes.py, the identifiers and the chart's keys named strike) is the Boss's; wind carries both the energy share and Born's share; teeth count is a noun of two words that the possessive and the compound forms bend (the teeth count's, half-teeth-count).
 
 ## The renamed clause titles
 
@@ -87,22 +87,22 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 
 | the former title | the clock title |
 | --- | --- |
-| Postulate 1, the many Nodes and no centre, so locality | Postulate 1, the many Clock-nodes and no centre, so locality |
-| Postulate 3, the Nodes speak at the speed of light at most | Postulate 3, the Clock-nodes speak at the speed of light at most |
-| The Node | The Clock-node |
-| Every act of the Node is one act on every row alike | Every act of the Clock-node is one act on every train alike |
-| One function steps a line; the Node is five functions; the code is folded | One function steps a gear; the Clock-node is five functions; the code is folded |
+| Postulate 1, the many Nodes and no centre, so locality | Postulate 1, the many Node-clocks and no centre, so locality |
+| Postulate 3, the Nodes speak at the speed of light at most | Postulate 3, the Node-clocks speak at the speed of light at most |
+| The Node | The Node-clock |
+| Every act of the Node is one act on every row alike | Every act of the Node-clock is one act on every train alike |
+| One function steps a line; the Node is five functions; the code is folded | One function steps a gear; the Node-clock is five functions; the code is folded |
 | The interval's dependency radius is one Link | The tick's dependency radius is one Mesh |
 | The click's read of the board | The click's read of the great clock |
-| The Node and the Link are generic; there is no if | The Clock-node and the Mesh are generic; there is no if |
-| No act and no reading of the Node names a row: the shape and the pair decide everything; the one-Link read takes every line of every row at the start of the interval | No act and no reading of the Clock-node names a train: the shape and the pair decide everything; the one-Mesh read takes every gear of every train at the start of the tick |
+| The Node and the Link are generic; there is no if | The Node-clock and the Mesh are generic; there is no if |
+| No act and no reading of the Node names a row: the shape and the pair decide everything; the one-Link read takes every line of every row at the start of the interval | No act and no reading of the Node-clock names a train: the shape and the pair decide everything; the one-Mesh read takes every gear of every train at the start of the tick |
 | The row's name | The train's name |
-| The interval is one function of the Node | The tick is one function of the Clock-node |
-| The Node steps on its own clock; the board at equal ticks is one | The Clock-node steps on its own clock; the great clock at equal ticks is one |
+| The interval is one function of the Node | The tick is one function of the Node-clock |
+| The Node steps on its own clock; the board at equal ticks is one | The Node-clock steps on its own clock; the great clock at equal ticks is one |
 | The board's interval is no observable | The great clock's tick is no observable |
 | The interval | The tick |
 | RW-S1, the read is the write reversed | RW-S1, the read is the drive reversed |
-| NL-S1, the Node adds | NL-S1, the Clock-node adds |
+| NL-S1, the Node adds | NL-S1, the Node-clock adds |
 | The walls are algebra and not code | The teeth counts are algebra and not code |
 | A family's write is one act | A train's drive is one act |
 | the den of the record | the den of the hand |
@@ -110,14 +110,14 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The universe holds the lines' pairs | The universe holds the gears' pairs |
 | The click is the meeting | The click is the meeting |
 | The click's parity | The click's parity |
-| Y-S3, the six metric lines' write is the Node's own, and their run back is exact | Y-S3, the six metric gears' drive is the Clock-node's own, and their run back is exact |
+| Y-S3, the six metric lines' write is the Node's own, and their run back is exact | Y-S3, the six metric gears' drive is the Node-clock's own, and their run back is exact |
 | MS-S2, the rows are den's circle | MS-S2, the trains are den's circle |
 | The one universe file since the merge of 2026-10-24 | The one calibre since the merge of 2026-10-24 |
 | CS5-S2, one pair in several rows | CS5-S2, one pair in several trains |
 | The cycle lay as built | The cycle setting as built |
 | The seed is a list of lays | The setting is a list of settings |
 | OS-S1, no seed of the four lay forms both returns exactly and carries a hole | OS-S1, no setting of the four setting forms both returns exactly and carries a hole |
-| Every Node's remainder is born at the half wall | Every Clock-node's remainder is born at the half teeth count |
+| Every Node's remainder is born at the half wall | Every Node-clock's remainder is born at the half teeth count |
 | A48-S1, the one-Link read in the frame the line was laid in | A48-S1, the one-Mesh read in the frame the gear was set in |
 | The sign is one row, read whole | The sign is one train, read whole |
 | OL-S1, the odd lines under time's reversal | OL-S1, the odd gears under time's reversal |
@@ -127,8 +127,8 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The stress's trace is the time line's | The stress's trace is the time gear's |
 | Every line rides the volume | Every gear rides the volume |
 | The wall is one | The teeth count is one |
-| BH-S1, the frozen Node | BH-S1, the frozen Clock-node |
-| FR-S1, the frozen Node's release by the turn of its own time | FR-S1, the frozen Clock-node's release by the turn of its own time |
+| BH-S1, the frozen Node | BH-S1, the frozen Node-clock |
+| FR-S1, the frozen Node's release by the turn of its own time | FR-S1, the frozen Node-clock's release by the turn of its own time |
 | BG-S1, the birth at the horizon's gradient | BG-S1, the fitting at the horizon's gradient |
 | A bound body's write lights the massless line | A bound bob's drive lights the massless gear |
 | EM-S2, the seed's charge, and EM-S3, the emission's unit | EM-S2, the setting's charge, and EM-S3, the emission's unit |
@@ -137,7 +137,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The lay's refusal and the birth's threshold read the share at the vacuum's weight | The setting's refusal and the fitting's threshold read the wind at the vacuum's weight |
 | The birth on the Link is oriented by the light's current, and the + child by the twist | The fitting on the Mesh is oriented by the light's current, and the + fitted hand by the twist |
 | MS-S1, the charge is one e for every row | MS-S1, the charge is one e for every train |
-| EX-S1, the exact take is one carried division of the Node | EX-S1, the exact take is one carry of the Clock-node |
+| EX-S1, the exact take is one carried division of the Node | EX-S1, the exact take is one carry of the Node-clock |
 | MG-S1, the merger at rest and the child's own wall | MG-S1, the unspringing at rest and the fitted hand's own teeth count |
 | The merger's light at a tie end, a bug of the engine found and fixed | The unspringing's light at a tie end, a bug of the engine found and fixed |
 | The momentum across the click | The momentum across the click |
@@ -149,7 +149,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The meaning of the click | The meaning of the click |
 | Births at every bang, the theorem of the K div 2 bangs | Fittings at every swing, the theorem of the K div 2 swings |
 | Nature is read in the clicks alone | Nature is read in the clicks alone |
-| Node | Clock-node |
+| Node | Node-clock |
 | The unbounded board | The unbounded great clock |
 | Link | Mesh |
 | Ports | Spokes |
@@ -211,16 +211,16 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The presence effect of the click as defined | The presence effect of the click as defined |
 | The share rule | The wind rule |
 | One world, defined to the bit, compared clicks to clicks | One world, defined to the bit, compared clicks to clicks |
-| The bound body is one Node | The bound bob is one Clock-node |
+| The bound body is one Node | The bound bob is one Node-clock |
 | The compact pixel under the composed paces | The compact pixel under the composed rates |
 | Every body is bound; records may be free | Every bob is bound; hands may be free |
 | Dark matter in kind is a theorem of the lines | Dark matter in kind is a theorem of the gears |
 | The click joins and parts | The click joins and parts |
 | No quantum changes family at a crossing | No quantum changes train at a crossing |
-| The Node holds its record | The Clock-node holds its hand |
+| The Node holds its record | The Node-clock holds its hand |
 | The count is the record's form | The count is the hand's form |
 | The click is the pointer | The click is the pointer |
-| The levels at a Node are the nesting | The notches at a Clock-node are the nesting |
+| The levels at a Node are the nesting | The notches at a Node-clock are the nesting |
 | The two-mode line | The two-mode gear |
 | The board is a torus | The great clock is a torus |
 | The mean's velocity is the content's | The mean's velocity is the load's |
@@ -236,11 +236,11 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The three masses of a body | The three masses of a bob |
 | The count is the record's form over its period | The count is the hand's form over its period |
 | The share and the wall | The wind and the teeth count |
-| The frozen Node has no share | The frozen Clock-node has no wind |
+| The frozen Node has no share | The frozen Node-clock has no wind |
 | Only clicks against clicks | Only clicks against clicks |
-| Dark matter: one candidate the law has, as a hypothesis by name, the frozen Node | Dark matter: one candidate the law has, as a hypothesis by name, the frozen Clock-node |
+| Dark matter: one candidate the law has, as a hypothesis by name, the frozen Node | Dark matter: one candidate the law has, as a hypothesis by name, the frozen Node-clock |
 | The paces compose | The rates compose |
-| The bound states of a Node | The bound states of a Clock-node |
+| The bound states of a Node | The bound states of a Node-clock |
 | Only bound bodies on the board; the atom a bound body of bound bodies | Only bound bobs on the great clock; the atom a bound bob of bound bobs |
 | The turn per proper interval | The turn per proper tick |
 | The click's unit: the whole of a click is the detector's own transition | The click's unit: the whole of a click is the detector's own transition |
@@ -251,22 +251,22 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | No record reads its own write of the sign | No hand reads its own drive of the sign |
 | The nucleon is a compact body of its family | The nucleon is a compact bob of its train |
 | Pauli at the lay without a weight | Pauli at the setting without a weight |
-| At a Node there is Rule3 and nothing else; nothing on the board draws | At a Clock-node there is Rule3 and nothing else; nothing on the great clock draws |
+| At a Node there is Rule3 and nothing else; nothing on the board draws | At a Node-clock there is Rule3 and nothing else; nothing on the great clock draws |
 | A static sign row is the electric potential in the temporal gauge | A static sign train is the electric potential in the temporal gauge |
 | What nature splits is a body | What nature splits is a bob |
 | The nucleus's reading, the more generic: the law's five lines | The nucleus's reading, the more generic: the law's five gears |
-| No click names a Node | No click names a Clock-node |
-| The points of the lattice are the Node and the Event | The points of the lattice are the Clock-node and the Event |
+| No click names a Node | No click names a Node-clock |
+| The points of the lattice are the Node and the Event | The points of the lattice are the Node-clock and the Event |
 | The generator of the rule's universe writes bound bodies alone | The generator of the rule's universe writes bound bobs alone |
 | The dense record's absorption is read in the books | The dense hand's absorption is read in the books |
-| One function steps a line; the Node is five functions | One function steps a gear; the Clock-node is five functions |
-| The one Node | The one Clock-node |
+| One function steps a line; the Node is five functions | One function steps a gear; the Node-clock is five functions |
+| The one Node | The one Node-clock |
 | The shear's momentum is carried at the volume's wall | The shear's momentum is carried at the volume's teeth count |
 | The law's alpha is the ratio of the file's E_h T num to Gamma den, carried in the sign holder's write | The law's alpha is the ratio of the file's E_h T num to Gamma den, carried in the sign holder's drive |
 | The uniform seed is a lay of light | The uniform setting is a setting of light |
 | Clicks go only forward; the backward run is exact | Clicks go only forward; the backward run is exact |
 | The click's view: the readings on the credit line | The click's view: the readings on the credit line |
-| The clock is the Node's, the tension is the Link's | The clock is the Clock-node's, the tension is the Mesh's |
+| The clock is the Node's, the tension is the Link's | The clock is the Node-clock's, the tension is the Mesh's |
 | Time is a count of a record's turns | Time is a count of a hand's turns |
 | The units are the electron's and the share's ceiling is the highest photon energy | The units are the electron's and the wind's ceiling is the highest photon energy |
 | The click is the meeting of the future with the past | The click is the meeting of the future with the past |
@@ -275,7 +275,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The Link is twice | The Mesh is twice |
 | AJ-S1, the angular momentum read in the clicks | AJ-S1, the angular momentum read in the clicks |
 | AJ-S2, the angular momentum at the click | AJ-S2, the angular momentum at the click |
-| AJ-S3, the one-Node theorem of the moves | AJ-S3, the one-Clock-node theorem of the moves |
+| AJ-S3, the one-Node theorem of the moves | AJ-S3, the one-Node-clock theorem of the moves |
 | AJ-S4, the kick and the lay one act | AJ-S4, the kick and the setting one act |
 | AJ-S5, the child is a packet | AJ-S5, the fitted hand is a packet |
 | AJ-S6, the children as packets | AJ-S6, the fitted hands as packets |
@@ -283,9 +283,9 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | GP-S1, the gap-0 row's one parity | GP-S1, the gap-0 train's one parity |
 | The symmetric lay | The symmetric setting |
 | The quarter turn of a two-plane record | The quarter turn of a two-plane hand |
-| The one-Node step | The one-Clock-node step |
+| The one-Node step | The one-Node-clock step |
 | pace | rate |
-|  the Node's positive diagonal, D_i = (Gamma / p_i)^2, Gamma^2 / (Gamma - 2 c_i)^2 to first order, and  |  the Clock-node's positive diagonal, D_i = (Gamma / p_i)^2, Gamma^2 / (Gamma - 2 c_i)^2 to first order, and  |
+|  the Node's positive diagonal, D_i = (Gamma / p_i)^2, Gamma^2 / (Gamma - 2 c_i)^2 to first order, and  |  the Node-clock's positive diagonal, D_i = (Gamma / p_i)^2, Gamma^2 / (Gamma - 2 c_i)^2 to first order, and  |
 |  the Link's symmetric weights, W_ij = W_ji = 2 num q_ij^2 / w, the step x_(t + 1) + x_(t - 1) =  |  the Mesh's symmetric weights, W_ij = W_ji = 2 num q_ij^2 / w, the step x_(t + 1) + x_(t - 1) =  |
 | Nature's numbers enter the board only as clicks | Nature's numbers enter the great clock only as clicks |
 | Einstein lives in the clicks of bound bodies, and the board is never measured | Einstein lives in the clicks of bound bobs, and the great clock is never measured |
@@ -298,7 +298,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The push on a moving record | The push on a moving hand |
 | The band at a pace | The band at a rate |
 | The share's change is the currents | The wind's change is the currents |
-|  is symmetric where the Link's coefficient at the reading Node is the Node's factor times the Link's own factor, R_a(i -> j) = 2 num p_i^2 q_ij^2 / Gamma^2 with q_ij = q_ji = Gamma - t_a(i, j) from the Link's tension (the structure  |  is symmetric where the Mesh's coefficient at the reading Clock-node is the Clock-node's factor times the Mesh's own factor, R_a(i -> j) = 2 num p_i^2 q_ij^2 / Gamma^2 with q_ij = q_ji = Gamma - t_a(i, j) from the Mesh's tension (the structure  |
+|  is symmetric where the Link's coefficient at the reading Node is the Node's factor times the Link's own factor, R_a(i -> j) = 2 num p_i^2 q_ij^2 / Gamma^2 with q_ij = q_ji = Gamma - t_a(i, j) from the Link's tension (the structure  |  is symmetric where the Mesh's coefficient at the reading Node-clock is the Node-clock's factor times the Mesh's own factor, R_a(i -> j) = 2 num p_i^2 q_ij^2 / Gamma^2 with q_ij = q_ji = Gamma - t_a(i, j) from the Mesh's tension (the structure  |
 | The remainders' walk accumulates on a bounded board | The remainders' walk accumulates on a bounded great clock |
 | The click's algebraic definition | The click's algebraic definition |
 | The flux form on a turned or folded Link | The flux form on a turned or folded Mesh |
@@ -306,8 +306,8 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The emission of a bound record is the click's act of the taker | The emission of a bound hand is the click's act of the taker |
 | The count on the board | The count on the great clock |
 | CX-S1, what the click chooses beyond Rule3 | CX-S1, what the click chooses beyond Rule3 |
-| ): the record's weighted share at every Node,  | ): the hand's weighted wind at every Clock-node,  |
-|  (the owner's word of 07:3x UTC GitHub's clock through the Boss, #2187 comment 6394916321): stands as written; the count is since among what the Node reads at its close and the decoder's reading of the credit lines ( |  (the owner's word of 07:3x UTC GitHub's clock through the Boss, #2187 comment 6394916321): stands as written; the count is since among what the Clock-node reads at its close and the reckoner's reading of the credit lines ( |
+| ): the record's weighted share at every Node,  | ): the hand's weighted wind at every Node-clock,  |
+|  (the owner's word of 07:3x UTC GitHub's clock through the Boss, #2187 comment 6394916321): stands as written; the count is since among what the Node reads at its close and the decoder's reading of the credit lines ( |  (the owner's word of 07:3x UTC GitHub's clock through the Boss, #2187 comment 6394916321): stands as written; the count is since among what the Node-clock reads at its close and the reckoner's reading of the credit lines ( |
 | The paces' own change moves the share with no current | The rates' own change moves the wind with no current |
 | The sign's count is the record's own | The sign's count is the hand's own |
 | The share's sign and the credit's floor | The wind's sign and the credit's floor |
@@ -332,7 +332,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | Only a bound body clicks | Only a bound bob clicks |
 | A body is its clicks | A bob is its clicks |
 | The record's parts are its particles | The hand's parts are its particles |
-| The one click of a set of Nodes | The one click of a set of Clock-nodes |
+| The one click of a set of Nodes | The one click of a set of Node-clocks |
 | The click's read of the board, one Link and one number | The click's read of the great clock, one Mesh and one number |
 | The read at the interval's start | The read at the tick's start |
 | Every face before any write | Every face before any drive |
@@ -352,8 +352,8 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | HQ-S1, the children on the quartet row carry an axis | HQ-S1, the fitted hands on the quartet train carry an axis |
 | The click formulas | The click formulas |
 | The two slits' variants under the click's read | The two slits' variants under the click's read |
-| Everything at a Node that is not the generic Node leaves | Everything at a Clock-node that is not the generic Clock-node leaves |
-| No act and no reading of the Node names a row | No act and no reading of the Clock-node names a train |
+| Everything at a Node that is not the generic Node leaves | Everything at a Node-clock that is not the generic Node-clock leaves |
+| No act and no reading of the Node names a row | No act and no reading of the Node-clock names a train |
 | The well of a body with a record is its record's form | The well of a bob with a hand is its hand's form |
 | The stress is the Links' | The stress is the Meshes' |
 | The start's source is the form the held write writes | The start's source is the form the held drive writes |
@@ -372,7 +372,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The cooling's local trigger is the record's own current | The cooling's local trigger is the hand's own current |
 | The two levels and the amplitude from the count | The two notches and the amplitude from the count |
 | The moving body | The moving bob |
-| The seed is the lay of the massless point at every Node of the torus but one | The setting is the setting of the massless point at every Clock-node of the torus but one |
+| The seed is the lay of the massless point at every Node of the torus but one | The setting is the setting of the massless point at every Node-clock of the torus but one |
 | The packet lay | The packet setting |
 |  the line's own read, ( |  the gear's own read, ( |
 |  f)_i = (S f_i + SUM over the six Ports of R f_j) / (2 w), whose eigenvalue on e^(i q x) is cos omega(q) (the line's dispersion, 2 w cos omega = S + 2 SUM_a R_a cos q_a), the record one interval earlier is z_(-1) = ( |  f)_i = (S f_i + SUM over the six Spokes of R f_j) / (2 w), whose eigenvalue on e^(i q x) is cos omega(q) (the gear's dispersion, 2 w cos omega = S + 2 SUM_a R_a cos q_a), the hand one tick earlier is z_(-1) = ( |
@@ -395,13 +395,13 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The two-mode line's pair | The two-mode gear's pair |
 | The rotation's first-order line | The rotation's first-order gear |
 | The pressure's write in the time line | The pressure's drive in the time gear |
-| The count carried at the Node | The count carried at the Clock-node |
+| The count carried at the Node | The count carried at the Node-clock |
 | The plain charge drifts at moving paces | The plain charge drifts at moving rates |
-| The hole is the Node's own level before, twice: the quantum is the drift, the write stops it | The hole is the Clock-node's own notch before, twice: the quantum is the drift, the drive stops it |
+| The hole is the Node's own level before, twice: the quantum is the drift, the write stops it | The hole is the Node-clock's own notch before, twice: the quantum is the drift, the drive stops it |
 | The hole is the write that takes what the birth books and nothing else | The hole is the drive that takes what the fitting books and nothing else |
-| The bound body's click is the Node's act | The bound bob's click is the Clock-node's act |
+| The bound body's click is the Node's act | The bound bob's click is the Node-clock's act |
 | A family's declaration | A train's declaration |
-| The instrument body, declared at one Node | The instrument bob, declared at one Clock-node |
+| The instrument body, declared at one Node | The instrument bob, declared at one Node-clock |
 | The lay | The setting |
 | The two quanta each get a definition and a name; the electron is the quantum of its family; T is the unit of action; S.26 is rewritten and Gamma E_s = 28.33 is a finding by name at 1.2 percent | The two quanta each get a definition and a name; the electron is the quantum of its train; T is the unit of action; S.26 is rewritten and Gamma E_s = 28.33 is a finding by name at 1.2 percent |
 | The quantum of a family | The quantum of a train |
@@ -409,7 +409,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | A plane's plain read of the sign holder makes a body's self-level sense-odd, an open question by name; the line's scope | A plane's plain read of the sign holder makes a bob's self-notch sense-odd, an open question by name; the line's scope |
 | The magnetic force between parallel charges, Coulomb over gamma: not derived under the pace form, derived under the rotation with the odd line on the Link over the time line's wall | The magnetic force between parallel charges, Coulomb over gamma: not derived under the rate form, derived under the rotation with the odd gear on the Mesh over the time gear's teeth count |
 | One photon on two bodies: the anticoincidence | One photon on two bobs: the anticoincidence |
-| The quantum Zeno effect: the window writes at the instrument body's Node | The quantum Zeno effect: the window writes at the instrument bob's Clock-node |
+| The quantum Zeno effect: the window writes at the instrument body's Node | The quantum Zeno effect: the window writes at the instrument bob's Node-clock |
 | The form is the source, the held write is right and the start is wrong | The form is the source, the held drive is right and the start is wrong |
 | The content's index for every family | The load's index for every train |
 | The level, and T is physical | The notch, and T is physical |
@@ -419,7 +419,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The laid row's inverse | The set train's inverse |
 | The Link's two ends | The Mesh's two ends |
 | ; written as the three checks require and never as nature's error). The finding: the law's entangled object as built is one written record with two members, the pair family ( | ; written as the three checks require and never as nature's error). The finding: the law's entangled object as built is one written hand with two members, the pair train ( |
-| Every row reads the content; the clock is the Node's, the tension is the Link's | Every train reads the load; the clock is the Clock-node's, the tension is the Mesh's |
+| Every row reads the content; the clock is the Node's, the tension is the Link's | Every train reads the load; the clock is the Node-clock's, the tension is the Mesh's |
 | The same clock and the same ruler for every act, and the paces compose | The same clock and the same ruler for every act, and the rates compose |
 | The self-read of a bound record, a finding by name of the first rank | The self-read of a bound hand, a finding by name of the first rank |
 | The join between two bodies, two lines by name | The join between two bobs, two lines by name |
@@ -430,17 +430,17 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The resonance adds frequencies, the share adds sines | The resonance adds frequencies, the wind adds sines |
 | The sense-odd self-level of a charge under the plain read | The sense-odd self-notch of a charge under the plain read |
 | Two bodies of 50 on the chain of 48 fall together | Two bobs of 50 on the chain of 48 fall together |
-| The record's count one number of the record and never of a Node, and the erasing front from the click's Node, the law's line | The hand's count one number of the hand and never of a Clock-node, and the erasing front from the click's Clock-node, the law's line |
+| The record's count one number of the record and never of a Node, and the erasing front from the click's Node, the law's line | The hand's count one number of the hand and never of a Node-clock, and the erasing front from the click's Node-clock, the law's line |
 | Where a click happens is declared and not derived, the method's widest open gap by name | Where a click happens is declared and not derived, the method's widest open gap by name |
 | The click's write conserves no momentum; the recoil is the instrument's | The click's drive conserves no momentum; the recoil is the instrument's |
 | A single quantum travels as a beam on the integer board, the unit's rounding on a spreading quantum, a finding by name | A single quantum travels as a beam on the integer great clock, the unit's rounding on a spreading quantum, a finding by name |
 | The absorptions' uniform mode on a record of several quanta | The absorptions' uniform mode on a hand of several quanta |
 | The laid packet's backward component | The set packet's backward component |
-| The Node is five functions; the code is folded | The Clock-node is five functions; the code is folded |
-| The interval is one function of the Node, the kernel's form | The tick is one function of the Clock-node, the kernel's form |
-| The order of the checks is one: the Node, then the toy, then Universe24; everything not shown enters the gates | The order of the checks is one: the Clock-node, then the toy, then Universe24; everything not shown enters the gates |
+| The Node is five functions; the code is folded | The Node-clock is five functions; the code is folded |
+| The interval is one function of the Node, the kernel's form | The tick is one function of the Node-clock, the kernel's form |
+| The order of the checks is one: the Node, then the toy, then Universe24; everything not shown enters the gates | The order of the checks is one: the Node-clock, then the toy, then Universe24; everything not shown enters the gates |
 | The acts of one interval, in the code's order | The acts of one tick, in the code's order |
-| Every part of the system stands here with the Node | Every part of the system stands here with the Clock-node |
+| Every part of the system stands here with the Node | Every part of the system stands here with the Node-clock |
 | The spinor row struck (2026-10-27, the owner's word of 06:2x UTC, "close it", through the Boss; the first step of the engine's rewrite in clocks): | The spinor train struck (2026-10-27, the owner's word of 06:2x UTC, "close it", through the Boss; the first step of the engine's rewrite in clocks): |
 | The engine at bb9deff70 is his first priority from a world file: | The engine at bb9deff70 is his first priority from a piece: |
 | the recurring bang with everything built in it, seen: | the recurring swing with everything built in it, seen: |
@@ -451,10 +451,10 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The bang's return under the birth's selector at the PeV den | The swing's return under the fitting's selector at the PeV den |
 | 2026-10-27, 06:2x and 07:5x UTC (through the Boss, in his rendering): "close it"; "go for it"; and the engine knows no family, a row is a shape and a pair, the definitions from outside. | 2026-10-27, 06:2x and 07:5x UTC (through the Boss, in his rendering): "close it"; "go for it"; and the engine knows no train, a train is a shape and a pair, the definitions from outside. |
 | 2026-10-26, 16:1x UTC by the Boss's clock (through the Boss, 6415978129, his paraphrase): whether nature's seed is the cycle's | 2026-10-26, 16:1x UTC by the Boss's clock (through the Boss, 6415978129, his paraphrase): whether nature's setting is the cycle's |
-| 2026-10-26, 08:3x and 08:4x UTC by the Boss's clock (through the Boss, 6411236247): the meaning of the click, and the Node beneath Rule3. | 2026-10-26, 08:3x and 08:4x UTC by the Boss's clock (through the Boss, 6411236247): the meaning of the click, and the Clock-node beneath Rule3. |
+| 2026-10-26, 08:3x and 08:4x UTC by the Boss's clock (through the Boss, 6411236247): the meaning of the click, and the Node beneath Rule3. | 2026-10-26, 08:3x and 08:4x UTC by the Boss's clock (through the Boss, 6411236247): the meaning of the click, and the Node-clock beneath Rule3. |
 | 2026-10-26, 06:31 UTC (through the Boss, 6409854237): the click and Rule3 one algebra | 2026-10-26, 06:31 UTC (through the Boss, 6409854237): the click and Rule3 one algebra |
 | 2026-10-26, 06:1x UTC (to the Reader, 6409513946): the one seed | 2026-10-26, 06:1x UTC (to the Reader, 6409513946): the one setting |
-| The one Node and the local law. | The one Clock-node and the local law. |
+| The one Node and the local law. | The one Node-clock and the local law. |
 | The families emerge at the click. | The trains emerge at the click. |
 | The click's read of the board is one Link and one number. | The click's read of the great clock is one Mesh and one number. |
 | A-prime: the birth's selector is the lifts' draw within the energy. | A-prime: the fitting's selector is the lifts' draw within the energy. |
@@ -464,10 +464,10 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The owner's standing test of the click. | The owner's standing test of the click. |
 | The one decoder's tables. | The one reckoner's tables. |
 | The click's view. | The click's view. |
-| The aim of Universe24 is to represent reality as it is, inside its own simulator, the engine: a lattice of Nodes stepped by one rule in whole numbers and read through clicks, a world that shows what nature shows. | The aim of Universe24 is to represent reality as it is, inside its own simulator, the engine: a lattice of Clock-nodes stepped by one rule in whole numbers and read through clicks, a world that shows what nature shows. |
+| The aim of Universe24 is to represent reality as it is, inside its own simulator, the engine: a lattice of Nodes stepped by one rule in whole numbers and read through clicks, a world that shows what nature shows. | The aim of Universe24 is to represent reality as it is, inside its own simulator, the engine: a lattice of Node-clocks stepped by one rule in whole numbers and read through clicks, a world that shows what nature shows. |
 | The bang | The swing |
 | The records and their readings | The charts and their readings |
-| The Node. | The Clock-node. |
+| The Node. | The Node-clock. |
 | The click. | The click. |
 | The rows. | The trains. |
 | The seed in three forms and no fourth | The setting in three forms and no fourth |
@@ -483,16 +483,16 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | count, share | count, wind |
 | seed | setting |
 | bang, top, return | swing, top, return |
-| The generic Node: the engine holds 35 integers at a Node before the first birth and 52 more per record born, the remainders at the shipped den at 203 to 204 bits, the sign one row per record and the birth one Node's | The generic Clock-node: the engine holds 35 integers at a Clock-node before the first fitting and 52 more per hand born, the remainders at the shipped den at 203 to 204 bits, the sign one train per hand and the fitting one Clock-node's |
+| The generic Node: the engine holds 35 integers at a Node before the first birth and 52 more per record born, the remainders at the shipped den at 203 to 204 bits, the sign one row per record and the birth one Node's | The generic Node-clock: the engine holds 35 integers at a Node-clock before the first fitting and 52 more per hand born, the remainders at the shipped den at 203 to 204 bits, the sign one train per hand and the fitting one Node-clock's |
 | The covariance of the click's read under the cube's 48 holds through the turns: the divergence named at the holder's return was the test's carry at the lay's gauge alone | The covariance of the click's read under the cube's 48 holds through the turns: the divergence named at the holder's return was the test's carry at the setting's gauge alone |
 | The conservation at the click is not exact: the take's excess below one level's share | The conservation at the click is not exact: the take's excess below one notch's wind |
-| The bound body's click is the Node's act, landed | The bound bob's click is the Clock-node's act, landed |
+| The bound body's click is the Node's act, landed | The bound bob's click is the Node-clock's act, landed |
 | The once-only body click of PUSH 34's record: the cause found and fixed | The once-only bob click of PUSH 34's chart: the cause found and fixed |
-| No return on a board whose Nodes top apart | No return on a great clock whose Clock-nodes top apart |
+| No return on a board whose Nodes top apart | No return on a great clock whose Node-clocks top apart |
 | The lay lock, and the seed's share deepening with the content | The setting lock, and the setting's wind deepening with the load |
 | The count of a massless record read in the write's units: the candidate measured, not recommended and not law | The count of a massless hand read in the drive's units: the candidate measured, not recommended and not law |
 | The atom is out of the board's reach, by number | The atom is out of the great clock's reach, by number |
-| The swap's complement and the digits' lattice disagree by one unit at a fired Node | The swap's complement and the digits' lattice disagree by one unit at a fired Clock-node |
+| The swap's complement and the digits' lattice disagree by one unit at a fired Node | The swap's complement and the digits' lattice disagree by one unit at a fired Node-clock |
 | The neutron's lifetime needs a row, not a number. | The neutron's lifetime needs a train, not a number. |
 | The mass ratio read at the birth's content is 2054, nature's 1836 | The mass ratio read at the fitting's load is 2054, nature's 1836 |
 | The structured board's cycle as read: drifting, not closed | The structured great clock's cycle as read: drifting, not closed |
@@ -507,7 +507,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The family-less universe file: tier (i) built, tier (ii) to build | The train-less calibre: tier (i) built, tier (ii) to build |
 | The born bodies have no record of their own, most are never laid, and no born body clicks: tier (ii)'s face from the clicks and from the forces | The born bobs have no hand of their own, most are never set, and no born bob clicks: tier (ii)'s face from the clicks and from the forces |
 | The take's remainder into the line's remainder, and the lay that keeps the charge whole | The take's remainder into the gear's remainder, and the setting that keeps the charge whole |
-| Matter's birth from light: the meeting of two quanta at one Node | Matter's fitting from light: the meeting of two quanta at one Clock-node |
+| Matter's birth from light: the meeting of two quanta at one Node | Matter's fitting from light: the meeting of two quanta at one Node-clock |
 | The birth ladder's integers on the wave seeds, before any run | The fitting ladder's integers on the wave settings, before any run |
 | The phase act stops conserving the Wronskian where the holder's rows differ by more than about Gamma across a Link; no per-interval bound on the Link's phase in the law | The phase act stops conserving the Wronskian where the holder's trains differ by more than about Gamma across a Mesh; no per-tick bound on the Mesh's phase in the law |
 | The born list's selection for N, the cross term of a lay onto a standing record, and the neutral pair of one record | The born list's selection for N, the cross term of a setting onto a standing hand, and the neutral pair of one hand |
@@ -516,20 +516,20 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The neutron's point as a reading of den's integers, no click | The neutron's point as a reading of den's integers, no click |
 | The click reads the point lighter, never heavier at rest | The click reads the point lighter, never heavier at rest |
 | Only a bound body clicks: the lifetime sharpened, and the six readings the credit line lacks | Only a bound bob clicks: the lifetime sharpened, and the six readings the credit line lacks |
-| The pump: the start's rest and the step's write scale one factor at two Nodes' contents | The pump: the start's rest and the step's drive scale one factor at two Clock-nodes' contents |
-| Saturation absent at the Node by name | Saturation absent at the Clock-node by name |
+| The pump: the start's rest and the step's write scale one factor at two Nodes' contents | The pump: the start's rest and the step's drive scale one factor at two Node-clocks' contents |
+| Saturation absent at the Node by name | Saturation absent at the Node-clock by name |
 | The click's two non-local acts, found and removed | The click's two non-local acts, found and removed |
-| The clusters re-read in the law of one Node, and the click's economy as the clock skip | The clusters re-read in the law of one Clock-node, and the click's economy as the clock skip |
+| The clusters re-read in the law of one Node, and the click's economy as the clock skip | The clusters re-read in the law of one Node-clock, and the click's economy as the clock skip |
 | The two bodies' next step | The two bobs' next step |
 | Frame dragging on bodies | Frame dragging on bobs |
 | Gravitational waves and the Link's bound | Gravitational waves and the Mesh's bound |
 | The click-level reading of the lattice's light | The click-level reading of the lattice's light |
-| The expansion and the Big Bang from one Node | The expansion and the Big Bang from one Clock-node |
+| The expansion and the Big Bang from one Node | The expansion and the Big Bang from one Node-clock |
 | The Link's tension is no vacuum | The Mesh's tension is no vacuum |
 | The bounce at the seed, and the energy identity of the records under the quickening clock | The bounce at the setting, and the energy identity of the hands under the quickening clock |
 | The stress is the Links': what the reading leaves open | The stress is the Meshes': what the reading leaves open |
 | The clicks' currents of a charged record are read across a Link without the frame | The clicks' currents of a charged hand are read across a Mesh without the frame |
-| The one-Node seed's clumping and the structures' seed | The one-Clock-node setting's clumping and the structures' setting |
+| The one-Node seed's clumping and the structures' seed | The one-Node-clock setting's clumping and the structures' setting |
 | The shear of the tension lines | The shear of the tension gears |
 | The massless records' pumping under moving paces | The massless hands' pumping under moving rates |
 | The hill's run back on a board with a well | The hill's run back on a great clock with a well |
@@ -538,9 +538,9 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The mixed seed | The mixed setting |
 | The pace through zero refuted, and the gapped gravity row as massive gravity | The rate through zero refuted, and the gapped gravity train as massive gravity |
 | No curvature on any wrapped board | No curvature on any wrapped great clock |
-| The one Node: every act key gone from the loader's vocabulary | The one Clock-node: every act key gone from the loader's vocabulary |
+| The one Node: every act key gone from the loader's vocabulary | The one Node-clock: every act key gone from the loader's vocabulary |
 | The coasting mean of a massless row is a gauge, its velocity a first integral, and the cycle closes with light | The coasting mean of a massless train is a gauge, its velocity a first integral, and the cycle closes with light |
-| X at 0 is the empty Node's end, and not a bound body's | X at 0 is the empty Clock-node's end, and not a bound bob's |
+| X at 0 is the empty Node's end, and not a bound body's | X at 0 is the empty Node-clock's end, and not a bound bob's |
 | The floor of the Link's length inside a hollow | The floor of the Mesh's length inside a hollow |
 | The amplitude bound on a family's own well | The amplitude bound on a train's own well |
 | The standing lay's recipe | The standing setting's recipe |
@@ -552,7 +552,7 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The share rule and the click's momentum | The wind rule and the click's momentum |
 | The body's window and the board's wake | The bob's window and the great clock's wake |
 | The join between two bodies | The join between two bobs |
-| A one-Node body's digits do not carry its emission's draw | A one-Clock-node bob's digits do not carry its emission's draw |
+| A one-Node body's digits do not carry its emission's draw | A one-Node-clock bob's digits do not carry its emission's draw |
 | The click's resolution | The click's resolution |
 | The toy light's content | The toy light's load |
 | The toy universes without content under the centred booking are kept as the former course's record | The toy universes without load under the centred booking are kept as the former course's record |
@@ -566,9 +566,9 @@ Every bold title of the documents whose words changed on 2026-10-27, the former 
 | The absorber as an instrument body of its own transition | The absorber as an instrument bob of its own transition |
 | The pixel's emission as a conversion click | The pixel's emission as a conversion click |
 | The passage's close as the when of every click, and the free record | The passage's close as the when of every click, and the free hand |
-| The cut Link as the one-Node region | The cut Mesh as the one-Clock-node region |
+| The cut Link as the one-Node region | The cut Mesh as the one-Node-clock region |
 | The erasing front on a record of the body's own family | The erasing front on a hand of the bob's own train |
 | The dense-record case on the box | The dense-hand case on the box |
 | The long tests, to be re-posed small on structured boards | The long tests, to be re-posed small on structured great clocks |
 | The taker's standing lay under the centred count | The taker's standing setting under the centred count |
-| The one-Node step of an orbit under the cube's 48 | The one-Clock-node step of an orbit under the cube's 48 |
+| The one-Node step of an orbit under the cube's 48 | The one-Node-clock step of an orbit under the cube's 48 |

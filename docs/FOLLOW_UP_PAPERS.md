@@ -5,7 +5,7 @@ This file stands beside the project's four documents (the keeper's division of 2
 ## 1. Rule3 in flux form: the step, the Gauss law and the walk
 
 Question: what does one integer gear keep, and what moves it?
-Has: the step as the flux form, a Clock-node changing by what crosses its six Spokes less its mass term, zero for light, the remainder carried (theorem; residual 0 on the full engine, the engine's step this form from 2.1.0). The lattice Gauss law, the static flux minus the enclosed drive exactly, the moving flux above it by a sign-definite quadratic with no bound (no line). The walk 0.354 sqrt n notches per Clock-node, the lattice's one noise.
+Has: the step as the flux form, a Node-clock changing by what crosses its six Spokes less its mass term, zero for light, the remainder carried (theorem; residual 0 on the full engine, the engine's step this form from 2.1.0). The lattice Gauss law, the static flux minus the enclosed drive exactly, the moving flux above it by a sign-definite quadratic with no bound (no line). The walk 0.354 sqrt n notches per Node-clock, the lattice's one noise.
 Would show: the identities with the engine as oracle, long runs of the walk, the excess's bound.
 Careful: every number a checked identity; the one open thing a bound.
 
@@ -72,9 +72,9 @@ Has: the paper's Section 8.3, the marks of discreteness shrinking as Gamma^(-2/3
 Would run: one bob at a larger Gamma with one receding face, the vacuum load derived, every number above re-read there.
 Bold in reach: the first world beyond the rule's own universe, the test of whether the misses move with Gamma; nothing of it run.
 
-## 11. The cosmos from one Clock-node: the expansion, the black holes and the dark sector
+## 11. The cosmos from one Node-clock: the expansion, the black holes and the dark sector
 
 Question: what does a universe declared on the unbounded great clock read in clicks of the expansion, black holes and the dark sector?
-Has: **The clusters' cosmology**, q_0 = Omega_m / 2 = +0.15 against -0.55, a finding against nature by name with no mend (derived). The expansion no line, a kinematic recession (a declaration of the start) or **Gamma is not constant** (a hypothesis under its own name). **The unbounded great clock** (the law's line), a one-Clock-node setting crossing the horizon (the law's line). **Dark matter in kind is a theorem of the gears** (derived in kind; the amount open), no dark energy (its lines' finding). **A collapse ends in a frozen clock** and **The black hole's quanta**, the shadow 2 e m a prediction by name, the radiation open (a derived hypothesis by decision). ENGINE.md section 3's Big Bang world, nothing built, run or claimed.
+Has: **The clusters' cosmology**, q_0 = Omega_m / 2 = +0.15 against -0.55, a finding against nature by name with no mend (derived). The expansion no line, a kinematic recession (a declaration of the start) or **Gamma is not constant** (a hypothesis under its own name). **The unbounded great clock** (the law's line), a one-Node-clock setting crossing the horizon (the law's line). **Dark matter in kind is a theorem of the gears** (derived in kind; the amount open), no dark energy (its lines' finding). **A collapse ends in a frozen clock** and **The black hole's quanta**, the shadow 2 e m a prediction by name, the radiation open (a derived hypothesis by decision). ENGINE.md section 3's Big Bang world, nothing built, run or claimed.
 Would run: the thermal world, Planck's form first; the Big Bang world, the thermal box's setting with receding faces, blinds written first. A stepping Gamma as a look of its own, an engine change by pull request; a compact bob with a light packet past it, the blind 2 e m; a bob with a scalar-train transition.
-Bold: if it held, a universe would be a run of local clicks on a growing great clock of zeros; honest, a decelerating universe against nature's accelerating one, no number of cosmology derived, the one-Clock-node setting the law's counterexample.
+Bold: if it held, a universe would be a run of local clicks on a growing great clock of zeros; honest, a decelerating universe against nature's accelerating one, no number of cosmology derived, the one-Node-clock setting the law's counterexample.
