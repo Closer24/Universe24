@@ -1,0 +1,12 @@
+=== mutant hold
+FAIL A1 [light] SIGMA commutes with the step for 12 ticks at the vacuum's hold 0
+FAIL B1 [light] the doubler keeps the wind and reverses the sweep : wind 1417999/10, sweep -5002 -> 5002
+FAIL A1 [massive r = 3/5] SIGMA commutes with the step for 12 ticks at the vacuum's hold 0
+FAIL B1 [massive r = 3/5] the doubler keeps the wind and reverses the sweep : wind 734037/5, sweep 957 -> -957
+RESULT: FAILED A1 [light] SIGMA commutes with the step for 12 ticks at the vacuum's hold 0, B1 [light] the doubler keeps the wind and reverses the sweep, A1 [massive r = 3/5] SIGMA commutes with the step for 12 ticks at the vacuum's hold 0, B1 [massive r = 3/5] the doubler keeps the wind and reverses the sweep
+=== mutant neighbour
+FAIL C1 the neighbours' sum of SIGMA a is -e(x, t) times the neighbours' sum of a (every Spoke changes the colour)
+RESULT: FAILED C1 the neighbours' sum of SIGMA a is -e(x, t) times the neighbours' sum of a (every Spoke changes the colour)
+=== mutant head
+FAIL D2 at a load (p0 = 999, 900, 500) the hold is 12 G^2 (rim (Gamma^2 - p0^2) + pinion (p0^2 - pm^2))
+RESULT: FAILED D2 at a load (p0 = 999, 900, 500) the hold is 12 G^2 (rim (Gamma^2 - p0^2) + pinion (p0^2 - pm^2))
