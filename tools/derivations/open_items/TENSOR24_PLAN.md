@@ -19,7 +19,9 @@ After the approval only the Boss writes the engine. Animate writes the decoder.
 
 The owner's question (15:2x UTC): "In the engine there will be vector, tensor or scalar multiplication, or complex numbers, which solve many things here, yes or no? General functions. The node must do very, very simple operations. The code must be very short, no?" Yes, to all of it.
 
-1. **Three general functions do the work:**
+1. **The operations are three, on whole numbers: addition, multiplication and Rule3's carry** (the owner's word to Sofer, 15:0x UTC; Sofer's proposal for Postulate 5, for the owner's word). Nothing else is on the list, so nothing else needs forbidding. A whether is the bit nonneg(n) = 1 + n div (n n + 1), a choice is b x + (1 - b) y, and a bound is the remainder of a clock's carry.
+   **CHECKED** (the owner's word of 15:3x UTC, "make sure the engine can really be written with these"; derive/closed_list): the engine's 29 acts, written on a whole number that allows addition, multiplication and the carry alone, each match their plain reference with 0 failures; their code holds no if and no comparison; and 12 of 12 mutants fail. The one promise is that every divisor is a teeth count of at least 1; light's w_c = 0 (M2) and W+ <= 0 (M1) break it until they close, before the first cut.
+2. **On them stand three general functions:**
    - **the carry (Rule3):** n + r = q d + r', with 0 <= r' < d. Every "whether" in the engine is its quotient: a full winding, the side of the draw, the turnover. It is the one place a division is written.
    - **the Gaussian product (complex numbers with integer parts):** a hand is z = a + i b, two integer gears.
      - One product, conj(z) w, gives the dot as its real part and the cross as its imaginary part.
@@ -34,8 +36,8 @@ The owner's question (15:2x UTC): "In the engine there will be vector, tensor or
      - the tensor parts (T1 x T1 -> E + T2, the stress).
 
      A product the 24 forbid is 0 in the table, so no rule is written for it.
-2. **What a Node-clock does, for every gear:** it reads itself and its six neighbours, multiplies and adds (the formula of section 4, four lines), and carries. Nothing else. The same functions serve every family (light, matter, the twin hands, the regulator), so no family has code of its own.
-3. **The code is very short:**
+3. **What a Node-clock does, for every gear:** it reads itself and its six neighbours, multiplies and adds (the formula of section 4, four lines), and carries. Nothing else. The same functions serve every family (light, matter, the twin hands, the regulator), so no family has code of its own.
+4. **The code is very short:**
    - the head: 19 modules, 2,990 lines;
    - the new engine: about 720 lines with algebra/, about 850 with the formulas that close the open items inside the build (the architect's approved design, section 11);
    - every function pure, and every number in the universe file;
@@ -212,6 +214,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 
 **And more, from Sofer:**
 - **"The Node-clock has no if"** (Postulate 5).
+- **The closed list** (a proposal for the owner's word): a Node-clock's operations are addition, multiplication and Rule3's carry, on whole numbers, and nothing else. So it has no if (section 1).
 - **"Only generic laws are approved":** a sentence not explained from the clocks, and not realized by the tensors and the 24, is a premise by name.
 
 ## 6. The two clicks, and the big law
@@ -528,6 +531,7 @@ On the owner's word to David: "a generic solution for everything". This is David
     - **It gives:** Pauli and light's bunching from one law.
     - **It cancels:** the declaration per train (line 821).
     - **The recommendation:** approve. In its verifier's words: a premise, not derived from the clocks, equivalent to spin-statistics.
+    - **On its exactness** (the owner's word to Sofer, 15:0x UTC: "or that you manage to show that it works exactly"): it works exactly on the eight kinds of 2O, and the books close. So the plan stands on it, and its derivation from a big law above is OPEN, due before the clicks' cut (Sofer).
 15. **(n) A conjugate hand turns over without K.**
     - **It gives:** the charge survives the turnover.
     - **It cancels:** "every charge conjugated" (line 1602).
@@ -562,6 +566,7 @@ On the owner's word to David: "a generic solution for everything". This is David
       The ladder climbs only through the birth's unequal pair, and the eight kinds stand at the fourth bang. David: the composite clock is the big law above the click law.
     - **It cancels:** the click law's separate statement.
     - **The recommendation:** approve, as law 6's form for the composite clock. It gives no sign, so (m) stays.
+    - **Animate's kind-keeping click** (checked again on the owner's word of 15:2x UTC): the 24's kind projection of a two-point tensor, one act for the whole click, the detector's click and the fusion. A candidate, not law 10's solution. OPEN: the local tick, Bell at a distance, the exchange sign, the density step's locality, and the fusion's books. Its risk: a first burst that spends the light.
 21. **(u) The asynchronous read: past or lin.**
     - **It gives:** a read that keeps the time reversal must see the new state after half a tick (PROVED).
       - **past** keeps the cone and breaks the reversal.
