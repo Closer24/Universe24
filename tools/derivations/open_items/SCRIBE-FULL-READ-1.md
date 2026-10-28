@@ -491,3 +491,9 @@ The thread's items 1214 to 1217 (ledger row 302): David measured the Bell click 
 The owner asks whether the whole system works as tensors, the Node-clock a simple tensor machine and every family a kind of tensor (ledger row 303). The Scribe's answer: yes in the state (trains by kind: a scalar one gear, a plane two, a vector three, a tensor six; the metric of seven gears since the shears were struck, the potential of four, the plane of two), in the act (one division over the integer contraction of the Node-clock's and its six Meshes' gears: the quotient leaves, the remainder stays; acts.carry) and in the symmetry (all 48 images alike on the nature setting), and not yet in the form: the Node-clock is Rule3 and about 26 acts written by hand per phenomenon, the ranks constants in the code.
 
 **Asked of the owner:** whether David tries the Node-clock's step as one act and counts the acts that fall into it.
+
+## 44. The singular points of the tensor machine (the owner's question, 2026-10-28, 05:5x UTC)
+
+The owner asks whether, the families being tensors and the engine so simple, a singularity can be caught (ledger row 304). The Scribe's answer: three singular points where the tensor degenerates: the light (the null element, the pair [1, 1], known by identity at 18 reads in 7 files), the points the cube's turns fix (the vernier's frame has no direction there, which is David's unfair draw, S = -3.018), and the frozen Node-clock (the metric's time gear 0); and one uniqueness: a train's kind is one of five representations of the cube's rotations (dimensions 1, 1, 2, 3 and 3), so the index logic is five integer tables and Rule3's carry. A reading and no proof.
+
+**Asked of the owner:** whether the symmetric points are passed first to the Boss and David.

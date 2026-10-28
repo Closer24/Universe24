@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's question of 2026-10-28, 05:5x UTC (if the families are tensors and the engine so simple, is there a singularity to catch): the Scribe's reading in the ledger's row 304, HIGHLIGHTS.md's bullet and the report's section 44; no law changed.
 - The owner's question of 2026-10-28, 05:4x UTC (the whole system as a tensor machine, the Node-clock a simple one, the families kinds of tensor): the Scribe's reading in the ledger's row 303, HIGHLIGHTS.md's bullet and the report's section 43; no law changed.
 - The thread's items 1214 to 1217 (David's finding that the vernier's draw of the Boss's 42d5448b7 is unfair, the Boss's replies on the shears, rows 76 and 56, the names and the Bell click): the ledger's row 302 and the report's section 42; the class Clock stays the great clock; the routine's state.
 - The engine head 526a5666d (the Boss's shears struck, rows 76 and 56 read anew, the click's name in the code) merged into scribe-5 at 7acf9d1dd, the suite 118 passed: the 48 hold again on the nature setting; docs/ENGINE.md's file and act names read click.py, clicks.py, Tick.click and click.click and docs/CLOCK_WORDS.md says the click's code spelling is done; the law's sentences on the 24 read the state at d09f1a8a5; the ledger's rows 299 to 301 and the report's sections 39 to 41; the gate carries a renamed module's counts.
