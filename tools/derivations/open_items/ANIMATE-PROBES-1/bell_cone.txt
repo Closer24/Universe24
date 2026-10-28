@@ -18,3 +18,23 @@
    the frames off the real plane (y and z): the head's perp: S = -82/29
    the frames off the real plane: perp without the conjugates: S = -18522/35989
    the plus sign in det: S = -2/29 (fails as it must)
+6. line 102: the four parts are law 6 on the pair's composite state Psi laid at the fitting,
+   sigma_ab = N(<phi_A^a (x) phi_B^b, Psi>); the rule reads Psi, and the frames enter as in every click
+   6a. law 6 on one hand is the overlap's size, 2 N(<phi^+-, psi>) = rho_d rho +- m . S: 389376 of 389376 pairs (the components in [-2, 2] + [-2, 2] i)
+   6b. the two-spinors with M Psi M^T = det(M) Psi under the three generators: real dimension 2; epsilon among them: True; so the A1 part is k epsilon alone, and the symmetric part (T1) holds none
+       no T1 row is fixed by all three generators: True
+   6c. on Psi = k epsilon (k = 1 and k = 2 + i) the rule's parts equal N(k) N(det[phi_A^a, phi_B^b]): 32 of 32
+   6d. the same rule and the same frames, with other states laid at the fitting:
+       A1, k = 1 (the singlet): S = -82/29 (|S| above 2); every far click whole: True; no signalling: True
+       A1, k = 2 + i: S = -82/29 (|S| above 2); every far click whole: True; no signalling: True
+       T1 along x: S = 2/29 (|S| <= 2); every far click whole: True; no signalling: True
+       T1 along y: S = 82/29 (|S| above 2); every far click whole: True; no signalling: True
+       T1 along z (the closure's plus-sign mutant): S = -2/29 (|S| <= 2); every far click whole: True; no signalling: True
+       A1 beside T1 z (= 2 z+ (x) z-, a product): S = -42/29 (|S| <= 2); every far click whole: True; no signalling: True
+       a product, z+ (x) z-: S = -42/29 (|S| <= 2); every far click whole: True; no signalling: True
+       a product, x+ (x) x-: S = -40/29 (|S| <= 2); every far click whole: True; no signalling: True
+       a product, y+ (x) y-: S = 0 (|S| <= 2); every far click whole: True; no signalling: True
+       the six Spoke directions, chi(n) (x) chi(-n), each a sixth (the owner's 'from the twins' state', draft D's P10): S = -82/87
+   6e. no signalling for every state laid: A's odds move with B's frame in 0 of 3885 (state, A frame) cases, B over four frames
+   6f. the 24: A1's four odds stand with both frames turned, 12 of 12; a T1 state's stand when it turns too, 36 of 36; they move when it does not, 16 of 36
+   6g. mutant, the second index turned as a conjugate spinor (M Psi M^dagger): the fixed two-spinors have real dimension 2, the identity among them True; laid at the fitting it gives S = 82/29 (fails as it must)

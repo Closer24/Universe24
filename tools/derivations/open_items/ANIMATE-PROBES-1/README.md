@@ -35,5 +35,23 @@ Every probe runs on the head's engine code (834cfd72e; src unchanged through 55a
   - At every odd count both hold.
   - The two candidates hold at every count, even and odd.
 
+## 4. Bell through the cone (the owner's word of 2026-10-28, 11:3x UTC; ANIMATE-BELL-THROUGH-THE-CONE.md)
+
+- **bell_cone.py,** pure Gaussian integers and exact fractions with no engine: `python bell_cone.py`. Every draw number c in [0, room) is counted; nothing is sampled.
+- **Parts 1 to 5:** the fitting's click of a split against both detectors' frames (draft D's four parts), the far clicks of a whole, no signalling, the control with a setting changed after the fitting, and five mutants.
+- **Part 6 (line 102):** the four parts as law 6 on the pair's composite state laid at the fitting.
+  - law 6 on one hand checked as the overlap's size on 389,376 pairs;
+  - the two-spinors fixed by the 24's generators found by exact elimination;
+  - the same rule with A1, T1 and product states laid;
+  - no signalling on 1,295 states;
+  - the 24 on the composite;
+  - one more mutant.
+- **The output:** bell_cone.txt.
+  - S = -82/29 with the A1 state;
+  - 2/29, 82/29 and -2/29 with T1 states;
+  - |S| <= 2 with every product, and -82/87 over the six Spoke directions;
+  - -82/24389 for the control;
+  - every mutant failing.
+
 ---
 Animate, reader-5.
