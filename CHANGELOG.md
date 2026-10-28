@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's order of 2026-10-28, 06:0x UTC ("Pass everything to the Boss so that everyone works on one tensor plan."): tools/derivations/open_items/THE-TENSOR-PLAN-1.md, the one plan (the goal in the owner's words, the Node-clock as one act, the one place of the 24, the roles, the cuts and their checks, the owner's questions and list); the ledger's row 307, HIGHLIGHTS.md's two bullets and the report's section 47; no law changed.
 - The owner's order of 2026-10-28, 05:5x UTC ("Sync the Boss.") and the Reader's proposal of 05:49 (the Node-clock's step as one act): the Scribe's reply in the thread, tools/derivations/open_items/SCRIBE-THE-NODE-AS-ONE-ACT-1.md (the frame, the sentence proposed and not entered, the 26 acts by kind, the order of the cuts), the ledger's row 306 and the report's section 46; no law changed.
 - The owner's question of 2026-10-28, 05:5x UTC (how everything converges to the clock, whether the 24 arranges it): the Scribe's reading in the ledger's row 305, HIGHLIGHTS.md's bullet and the report's section 45; no law changed.
 - The owner's question of 2026-10-28, 05:5x UTC (if the families are tensors and the engine so simple, is there a singularity to catch): the Scribe's reading in the ledger's row 304, HIGHLIGHTS.md's bullet and the report's section 44; no law changed.
