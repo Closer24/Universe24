@@ -1,0 +1,119 @@
+DAVID-THE-STRIKES-ORDER checks, 2026-10-28, 01:2x UTC, on the Boss's head e910698f9 (worktree scratchpad/wt_g13, its own src on the path; no src touched). Harnesses under scratchpad/field.
+
+1. The bang at 250 ticks over six seeds (bang_seed.py: the wave's p1 transposed, shifted a column, cz 3, the mirror 1, the quanta 4,000,000; read_bang.py, kinds.py):
+   as committed: bang250_g13.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 450, chimes 11667, rows SHOWN 41, the rewind {'intervals': 20, 'exact': 20}
+   bang250_g13.json {'SHOWN': 36, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 11, 'NOT REACHED': 2}
+       73 SHOWN exact: at every one of 558 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 291 of 1053, 330 of 1061, 186 
+       76 SHOWN: gapped 2, gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   transposed: bang250_s_transposed.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 324, chimes 12218, rows SHOWN 41, the rewind {'intervals': 20, 'exact': 20}
+   bang250_s_transposed.json {'SHOWN': 36, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 11, 'NOT REACHED': 2}
+       73 SHOWN exact: at every one of 428 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 403 of 1045, 267 of 929, 265 o
+       76 SHOWN: gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   shifted: bang250_s_shifted.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 420, chimes 11496, rows SHOWN 41, the rewind {'intervals': 20, 'exact': 20}
+   bang250_s_shifted.json {'SHOWN': 36, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 11, 'NOT REACHED': 2}
+       73 SHOWN exact: at every one of 530 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 238 of 1036, 369 of 1042, 254 
+       76 SHOWN: gapped 2 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   cz3: bang250_s_cz3.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 398, chimes 12919, rows SHOWN 41, the rewind {'intervals': 20, 'exact': 20}
+   bang250_s_cz3.json {'SHOWN': 36, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 11, 'NOT REACHED': 2}
+       73 SHOWN exact: at every one of 566 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 211 of 1010, 253 of 971, 327 o
+       76 SHOWN: gapped 2 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   mirror: bang250_s_mirror.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 380, chimes 12004, rows SHOWN 39, the rewind {'intervals': 20, 'exact': 20}
+   bang250_s_mirror.json {'SHOWN': 34, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 13, 'NOT REACHED': 2}
+       73 SHOWN exact: at every one of 572 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 369 of 1166, 365 of 1120, 319 
+       76 NOT SHOWN: no family chimes bound one mesh apart in the held field's well above twice the board's own share 6 of 63
+   q4M: bang250_s_q4M.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 341, chimes 13508, rows SHOWN 43, the rewind {'intervals': 20, 'exact': 20}
+   bang250_s_q4M.json {'SHOWN': 38, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 9, 'NOT REACHED': 2}
+       73 SHOWN exact: at every one of 456 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 336 of 1077, 321 of 1070, 283 
+       76 SHOWN: gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+
+2. The bang and its seed shifted a column in lockstep (trans.py: the translation found at the setting; every hand's gears and the regulator's time gear through it, before and after each strike):
+   the translation that maps the setting: [(1, -1)]
+   tick 80: parted in the strike: ('hand0.0', [(3, 2, 3), (3, 3, 2)])
+      events x: [('birth', (0, 2, 1)), ('birth', (1, 1, 3)), ('birth', (2, 0, 1)), ('birth', (3, 0, 2)), ('credit', (0, 0, 0)), ('credit', (0, 0, 1)), ('credit', (0, 0, 3)), ('credit', (0, 1, 0)), ('credit', (0, 1, 1)), ('credit', (0, 1, 2))]
+      events shifted: [('birth', (0, 1, 1)), ('birth', (1, 0, 3)), ('birth', (2, 3, 1)), ('birth', (3, 2, 3)), ('credit', (0, 0, 0)), ('credit', (0, 0, 1)), ('credit', (0, 0, 2)), ('credit', (0, 0, 3)), ('credit', (0, 1, 0)), ('credit', (0, 1, 3))]
+   The strike's events at the parting clocks of tick 80 (trans80.py):
+   x at (3, 0, 2): [{'event': 'refused', 'cause': 'lay', 'node': [3, 0, 2], 'row': 3, 'standing': 2892989657780260429}, {'event': 'refused', 'cause': 'lay', 'node': [3, 0, 2], 'row': 3, 'standing': 2465444616044607116}, {'event': 'refused', 'cause': 'lay', 'node': [3, 0, 2], 'row': 3, 'standing': 2465444616044607116}, {'event': 'birth', 'node': [3, 0, 2], 'line_pair': 3, 'minus': [3, 0, 2], 'plus': [3, 0, 3], 'taken': 3825828871580262556705, 'booked': 3308019807708513458574}]
+   shifted at its image (3, 3, 2): [{'event': 'refused', 'cause': 'lay', 'node': [3, 3, 2], 'row': 3, 'standing': 2892989657780260429}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 2], 'row': 3, 'standing': 2465444616044607116}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 2], 'row': 3, 'standing': 2465444616044607116}, {'event': 'credit', 'node': [3, 3, 2], 'owed': -20440340630144055300834, 'taken': 0, 'booked': 878848879465440000, 'remainder_was': 20441219479023520740834, 'remainder': 20440340630144055300834}]
+   x at (3, 3, 3): [{'event': 'refused', 'cause': 'sense', 'node': [3, 3, 3], 'row': 0, 'link': [0, 3, 3]}, {'event': 'refused', 'cause': 'sense', 'node': [3, 3, 3], 'row': 0, 'link': [3, 3, 0]}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 3], 'row': 3, 'standing': 6511761708006727291890349358}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 3], 'row': 3, 'standing': 6337960119915199231520567856}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 3], 'row': 3, 'standing': 6511761708006727291890349358}]
+   shifted at its image (3, 2, 3): [{'event': 'refused', 'cause': 'sense', 'node': [3, 2, 3], 'row': 0, 'link': [0, 2, 3]}, {'event': 'refused', 'cause': 'sense', 'node': [3, 2, 3], 'row': 0, 'link': [3, 2, 0]}, {'event': 'refused', 'cause': 'lay', 'node': [3, 2, 3], 'row': 3, 'standing': 6511761708006727291890349358}, {'event': 'refused', 'cause': 'lay', 'node': [3, 2, 3], 'row': 3, 'standing': 6337960119915199231520567856}, {'event': 'refused', 'cause': 'lay', 'node': [3, 2, 3], 'row': 3, 'standing': 6511761708006727291890349358}, {'event': 'birth', 'node': [3, 2, 3], 'line_pair': 3, 'minus'
+   x at (3, 1, 2): [{'event': 'refused', 'cause': 'sense', 'node': [3, 1, 2], 'row': 0, 'link': [0, 1, 2]}, {'event': 'refused', 'cause': 'sense', 'node': [3, 1, 2], 'row': 0, 'link': [3, 2, 2]}, {'event': 'refused', 'cause': 'lay', 'node': [3, 1, 2], 'row': 3, 'standing': 2985316571668050578}, {'event': 'refused', 'cause': 'lay', 'node': [3, 1, 2], 'row': 3, 'standing': 2985316571668050578}, {'event': 'refused', 'cause': 'lay', 'node': [3, 1, 2], 'row': 3, 'standing': 10416997507149720131}, {'event': 'refused', 'cause': 'stop', 'node': [3, 1, 2], 'fall': 405134897442930723419, 'walls': 165400
+   shifted at its image (3, 0, 2): [{'event': 'refused', 'cause': 'sense', 'node': [3, 0, 2], 'row': 0, 'link': [0, 0, 2]}, {'event': 'refused', 'cause': 'sense', 'node': [3, 0, 2], 'row': 0, 'link': [3, 1, 2]}, {'event': 'refused', 'cause': 'lay', 'node': [3, 0, 2], 'row': 3, 'standing': 2985316571668050578}, {'event': 'refused', 'cause': 'lay', 'node': [3, 0, 2], 'row': 3, 'standing': 2985316571668050578}, {'event': 'refused', 'cause': 'lay', 'node': [3, 0, 2], 'row': 3, 'standing': 10416997507149720131}, {'event': 'refused', 'cause': 'stop', 'node': [3, 0, 2], 'fall': 298691658322721278199,
+   x at (3, 0, 3): [{'event': 'refused', 'cause': 'sense', 'node': [3, 0, 3], 'row': 0, 'link': [0, 0, 3]}, {'event': 'refused', 'cause': 'sense', 'node': [3, 0, 3], 'row': 0, 'link': [3, 0, 0]}, {'event': 'refused', 'cause': 'lay', 'node': [3, 0, 3], 'row': 3, 'standing': 1287088294590063754597}, {'event': 'refused', 'cause': 'lay', 'node': [3, 0, 3], 'row': 3, 'standing': 14530980664006999385}, {'event': 'refused', 'cause': 'lay', 'node': [3, 0, 3], 'row': 3, 'standing': 14530980664006999385}, {'event': 'refused', 'cause': 'stop', 'node': [3, 0, 3], 'fall': 0, 'walls': 1654009903854256729287
+   shifted at its image (3, 3, 3): [{'event': 'refused', 'cause': 'sense', 'node': [3, 3, 3], 'row': 0, 'link': [0, 3, 3]}, {'event': 'refused', 'cause': 'sense', 'node': [3, 3, 3], 'row': 0, 'link': [3, 3, 0]}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 3], 'row': 3, 'standing': 1287088294590063754597}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 3], 'row': 3, 'standing': 14530980664006999385}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 3], 'row': 3, 'standing': 14530980664006999385}, {'event': 'refused', 'cause': 'stop', 'node': [3, 3, 3], 'fall': 0, 'walls': 165400
+   x at (2, 0, 2): [{'event': 'refused', 'cause': 'sense', 'node': [2, 0, 2], 'row': 0, 'link': [3, 0, 2]}, {'event': 'refused', 'cause': 'sense', 'node': [2, 0, 2], 'row': 0, 'link': [2, 0, 3]}, {'event': 'refused', 'cause': 'lay', 'node': [2, 0, 2], 'row': 3, 'standing': 6441299261384783703384087543}, {'event': 'refused', 'cause': 'lay', 'node': [2, 0, 2], 'row': 3, 'standing': 6441299261384783703384087543}, {'event': 'refused', 'cause': 'lay', 'node': [2, 0, 2], 'row': 3, 'standing': 6441299261384783703384087543}]
+   shifted at its image (2, 3, 2): [{'event': 'refused', 'cause': 'sense', 'node': [2, 3, 2], 'row': 0, 'link': [3, 3, 2]}, {'event': 'refused', 'cause': 'sense', 'node': [2, 3, 2], 'row': 0, 'link': [2, 3, 3]}, {'event': 'refused', 'cause': 'lay', 'node': [2, 3, 2], 'row': 3, 'standing': 6441299261384783703384087543}, {'event': 'refused', 'cause': 'lay', 'node': [2, 3, 2], 'row': 3, 'standing': 6441299261384783703384087543}, {'event': 'refused', 'cause': 'lay', 'node': [2, 3, 2], 'row': 3, 'standing': 6441299261384783703384087543}]
+   x at (3, 3, 2): [{'event': 'refused', 'cause': 'sense', 'node': [3, 3, 2], 'row': 0, 'link': [3, 0, 2]}, {'event': 'refused', 'cause': 'sense', 'node': [3, 3, 2], 'row': 0, 'link': [3, 3, 3]}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 2], 'row': 3, 'standing': 853138400098149780127}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 2], 'row': 3, 'standing': 2073789666521529651832}, {'event': 'refused', 'cause': 'lay', 'node': [3, 3, 2], 'row': 3, 'standing': 853138400098149780127}, {'event': 'credit', 'node': [3, 3, 2], 'owed': -21769383293325173853434, 'taken': 0, 'booked': 87
+   shifted at its image (3, 2, 2): [{'event': 'refused', 'cause': 'sense', 'node': [3, 2, 2], 'row': 0, 'link': [3, 3, 2]}, {'event': 'refused', 'cause': 'sense', 'node': [3, 2, 2], 'row': 0, 'link': [3, 2, 3]}, {'event': 'refused', 'cause': 'lay', 'node': [3, 2, 2], 'row': 3, 'standing': 853138400098149780127}, {'event': 'refused', 'cause': 'lay', 'node': [3, 2, 2], 'row': 3, 'standing': 2073789666521529651832}, {'event': 'refused', 'cause': 'lay', 'node': [3, 2, 2], 'row': 3, 'standing': 853138400098149780127}, {'event': 'credit', 'node': [3, 2, 2], 'owed': -21769383293325173853434, 'taken':
+
+3. The whole state through the translation (trans_fits.py: every gear's notches, fine and drive fine teeth, and the remainders, with the fits the engagement passes):
+   as built: tick 3: fits alike True (224 and 224); the state after the tick parts at (7, 10, 6, 'dfine', [(0, 1, 2), (0, 3, 2), (1, 0, 0)])
+   the merger's push cross term from its own two ends (cross_push.py): tick 3: fits alike True (224 and 224); the state after the tick parts at ('slack', [(0, 3, 1), (0, 3, 3), (1, 2, 1)])
+   The strike's recoils at tick 3 through the translation (trans_recoil.py):
+   recoils at tick 3: 240 240 alike as multisets: False
+   x only (mapped): [(3, (0, 1, 2), (0, 0, -52753470950155326540), 670, 1, 'unwind_ends'), (3, (0, 3, 2), (0, 0, 52753470950155326540), 670, 1, 'unwind_ends'), (3, (1, 0, 0), (0, 0, 52753470950155326540), 670, 1, 'unwind_ends'), (3, (1, 2, 0), (0, 0, -52753470950155326540), 670, 1, 'unwind_ends'), (3, (2, 1, 2), (0, 0, 52753470950155326540), 670, 1, 'unwind_ends'), (3, (2, 3, 2), (0, 0, -52753470950155326540), 670, 1, 'unwind_ends')]
+   shifted only: [(3, (0, 1, 2), (0, 0, 0), 670, 1, 'unwind_ends'), (3, (0, 3, 2), (0, 0, 0), 670, 1, 'unwind_ends'), (3, (1, 0, 0), (0, 0, 0), 670, 1, 'unwind_ends'), (3, (1, 2, 0), (0, 0, 0), 670, 1, 'unwind_ends'), (3, (2, 1, 2), (0, 0, 0), 670, 1, 'unwind_ends'), (3, (2, 3, 2), (0, 0, 0), 670, 1, 'unwind_ends')]
+   callers x: Counter({'fitted': 96, 'unspring_end': 96, 'unwind_ends': 48}) shifted: Counter({'fitted': 96, 'unspring_end': 96, 'unwind_ends': 48})
+
+4. The harnesses (bang_seed.py, cross_push.py):
+   """The bang with its wave seed varied (argv: name, ticks, out json): the seed's p1 transposed (the swap's image), shifted by a column (a translation), cz 3, the mirror 1, or the quanta 4,000,000; the chart with the rewind of 20, saved."""
+   import os, sys, json
+   sys.set_int_max_str_digits(0)
+   WT = os.environ["WT"]
+   sys.path.insert(0, WT + "/src")
+   from event_universe.run import chart
+   name, ticks, out = sys.argv[1], int(sys.argv[2]), sys.argv[3]
+   world = json.load(open(WT + "/tests/worlds/world_bang.json"))
+   uni = json.load(open(WT + "/tests/worlds/" + world["universe"]))
+   seed = dict(world["seed"][0])
+   p = seed["p1"]
+   if name == "transposed":
+       seed["p1"] = [p[4 * j + i] for i in range(4) for j in range(4)]
+   elif name == "shifted":
+       seed["p1"] = [p[4 * i + (j + 1) % 4] for i in range(4) for j in range(4)]
+   elif name == "cz3":
+       seed["cz"] = 3
+   elif name == "mirror":
+       seed["mirror"] = 1
+   elif name == "q4M":
+       seed["quanta"] = 4000000
+   found = json.loads(json.dumps(chart(uni, dict(world, intervals=ticks, seed=[seed]), 20, lambda line: None)))
+   json.dump(found, open(out, "w"))
+   """The merger's push cross term from its own two ends (a harness): each end's live push read on the tick's start board with this merger's earlier ends unwound (a trial copy), not on the great clock other fittings of the striking have moved; so the cross term is the two ends' own, a function of the start and the merger alone."""
+   import os, sys, inspect, textwrap
+   sys.path.insert(0, os.environ["WT"] + "/src")
+   import event_universe.unspring as UN
+   import event_universe.striking as SK
+   from event_universe.unwind import advance as _advance
+   
+   def unwind_ends(clock, reads, rec, at=None):
+       hand = clock.hands()[rec]
+       found = []
+       cross = [0] * UN.AXES
+       trial = {}
+       for read in reads:
+           if hand is not clock.unsprung():
+               where, tallied, notches, fall, _k, _slack_was, _due, r = read
+               if r not in trial:
+                   trial[r] = [g.copy() for g in clock.start_gears[r]]
+               start = UN.push_of(clock, clock.start_gears[r], where, notches, clock.hands()[r].ratio[0], -1)
+               own = UN.push_of(clock, trial[r], where, notches, clock.hands()[r].ratio[0], -1)
+               entry, _moved = UN.unspring_end(clock, rec, read)
+               moved = [a - b for a, b in zip(own, start, strict=True)]
+               for gear, now, before in zip(trial[r], notches[0::UN.HAND], notches[1::UN.HAND], strict=True):
+                   gear.now[where] = gear.now[where] - now
+                   gear.before[where] = gear.before[where] - before
+               cross = [c + m for c, m in zip(cross, moved, strict=True)]
+               found.append(entry)
+               continue
+           found.append(UN.unsprung_end(clock, rec, read))
+       if at is not None and len(found) > 1:
+           tally = UN.recoil(clock, at, cross, int(clock.start_rate[at]), 1)
+           found[-1]["cross"] = {"node": list(at), "dP": cross, **tally}
+       return found
+   UN.unwind_ends = unwind_ends
