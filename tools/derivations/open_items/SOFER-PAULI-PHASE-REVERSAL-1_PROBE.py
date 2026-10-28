@@ -5,7 +5,10 @@
 Integers only (Gaussian integers as pairs, no float, no division). A hand of the force carriers is one Gaussian integer z; a
 hand of matter (the twin hands) is a spinor of two, phi = (z1, z2). The phase reversal T of a family: z to its conjugate for
 one Gaussian integer, (z1, z2) to (-conj(z2), conj(z1)) for the spinor. Each claim is run over an exhaustive box and over
-random integers, and then again on a mutated formula that must fail (the mutation proof).
+random integers, and then again on a mutated formula that must fail (the mutation proof). The owner's chain of 10:59 UTC
+(the video's four steps: the amplitudes of two paths add, the exchange twice is the identity so the sign is plus or minus,
+two identical hands give A - A = 0, the exchange is the full turn of one and the full turn of a spinor is minus one) is
+section 11.
 """
 
 from __future__ import annotations
@@ -73,6 +76,79 @@ def add3(a, b):
     return (a[0] + b[0], a[1] + b[1], a[2] + b[2])
 
 
+def matmul(a, b):
+    """The product of two square matrices of Gaussian integers (pairs)."""
+    n = len(a)
+    return tuple(
+        tuple(
+            (
+                sum(mul(a[i][k], b[k][j])[0] for k in range(n)),
+                sum(mul(a[i][k], b[k][j])[1] for k in range(n)),
+            )
+            for j in range(n)
+        )
+        for i in range(n)
+    )
+
+
+def matpow(m, k):
+    out = m
+    for _ in range(k - 1):
+        out = matmul(out, m)
+    return out
+
+
+def matvec(m, v):
+    return tuple(
+        (
+            sum(mul(m[i][j], v[j])[0] for j in range(len(v))),
+            sum(mul(m[i][j], v[j])[1] for j in range(len(v))),
+        )
+        for i in range(len(m))
+    )
+
+
+def scalar_matrix(n, s):
+    return tuple(tuple(s if i == j else (0, 0) for j in range(n)) for i in range(n))
+
+
+# The quarter turns, with their integer norm factor (the unit turn is the matrix over the root of the factor):
+# the twin hands (the double cover's spinor) take (1 - i, 1 + i) about z and the rows (1, -i), (-i, 1) about x, factor 2;
+# the three-component kind takes the integer rotations, factor 1.
+SPINOR_Z = (((1, -1), (0, 0)), ((0, 0), (1, 1)))
+SPINOR_X = (((1, 0), (0, -1)), ((0, -1), (1, 0)))
+VECTOR_Z = (((0, 0), (-1, 0), (0, 0)), ((1, 0), (0, 0), (0, 0)), ((0, 0), (0, 0), (1, 0)))
+VECTOR_X = (((1, 0), (0, 0), (0, 0)), ((0, 0), (0, 0), (-1, 0)), ((0, 0), (1, 0), (0, 0)))
+
+
+def turn_sign(quarter, n, factor):
+    """+1 if four quarter turns are the identity, -1 if minus the identity (the matrix over factor squared), else 0."""
+    full = matpow(quarter, 4)
+    if full == scalar_matrix(n, (factor * factor, 0)):
+        return 1
+    if full == scalar_matrix(n, (-factor * factor, 0)):
+        return -1
+    return 0
+
+
+def outer(phi, chi):
+    """The pair's amplitudes phi_i chi_j, one matrix of Gaussian integers (the two paths of the video)."""
+    return tuple(tuple(mul(phi[i], chi[j]) for j in range(2)) for i in range(2))
+
+
+def swap(m):
+    """The exchange of the two particles: the transpose of the pair's matrix."""
+    return tuple(tuple(m[j][i] for j in range(2)) for i in range(2))
+
+
+def madd(a, b):
+    return tuple(tuple(add(a[i][j], b[i][j]) for j in range(2)) for i in range(2))
+
+
+def msub(a, b):
+    return tuple(tuple(add(a[i][j], neg(b[i][j])) for j in range(2)) for i in range(2))
+
+
 def spinors(box):
     gaussians = [(a, b) for a in box for b in box]
     return [(x, y) for x in gaussians for y in gaussians]
@@ -93,6 +169,166 @@ def check(label, cases, holds):
     RESULTS.append((label, len(cases), failures))
     print(f"  {label}: {len(cases)} cases, {failures} failures")
     return failures
+
+
+def owner_chain(box, small_pairs, pairs) -> int:
+    """The owner's chain of 10:59 UTC (the video's four steps), step by step in integers."""
+    bad = 0
+    zero = (((0, 0), (0, 0)), ((0, 0), (0, 0)))
+    print(
+        "11. The owner's chain: amplitudes add, the exchange twice is the identity, the sign is the full turn's, A - A = 0"
+    )
+    print(
+        "  steps 1 to 3: the pair's two paths, the exchange twice, and the same hand at both detectors"
+    )
+    bad += check(
+        "swap(swap(M)) = M for the pair's amplitudes (the exchange twice is the identity)",
+        small_pairs,
+        lambda p, q: swap(swap(outer(p, q))) == outer(p, q),
+    )
+    bad += check(
+        "the sum of the two paths is even under the exchange, the difference odd (the two signs the video finds)",
+        small_pairs,
+        lambda p, q: (
+            swap(madd(outer(p, q), swap(outer(p, q)))) == madd(outer(p, q), swap(outer(p, q)))
+            and swap(msub(outer(p, q), swap(outer(p, q)))) == msub(swap(outer(p, q)), outer(p, q))
+        ),
+    )
+    bad += check(
+        "the difference of the two paths has one component, det(phi, chi), and is [[0, det], [-det, 0]]",
+        small_pairs,
+        lambda p, q: (
+            msub(outer(p, q), swap(outer(p, q))) == ((((0, 0)), det(p, q)), (neg(det(p, q)), (0, 0)))
+        ),
+    )
+    bad += check(
+        "A - A = 0: the two paths of one hand cancel as matrices, so the pair's amplitude is 0",
+        [(p,) for p in box],
+        lambda p: msub(outer(p, p), swap(outer(p, p))) == zero,
+    )
+    print("  step 4: the sign is the full turn's; four quarter turns, exactly")
+    kinds = (
+        ("the twin hands, about z", SPINOR_Z, 2, 2, -1),
+        ("the twin hands, about x", SPINOR_X, 2, 2, -1),
+        ("the three-component kind, about z", VECTOR_Z, 3, 1, 1),
+        ("the three-component kind, about x", VECTOR_X, 3, 1, 1),
+    )
+    for label, quarter, n, factor, want in kinds:
+        got = turn_sign(quarter, n, factor)
+        print(
+            f"  {label}: four quarter turns are {got:+d} times the identity (the factor {factor} to the fourth)"
+        )
+        if got != want:
+            bad += 1
+    print(
+        "  the scalar of the force carriers is the kind on which every turn acts as 1: its full turn is +1 by definition"
+    )
+    print(
+        "  the half turns about two axes: commute on the three-component kind, anticommute on the twin hands"
+    )
+    half = (
+        ("twin hands", matpow(SPINOR_Z, 2), matpow(SPINOR_X, 2), -1),
+        ("three-component kind", matpow(VECTOR_Z, 2), matpow(VECTOR_X, 2), 1),
+    )
+    for label, hz, hx, sign in half:
+        left, right = matmul(hz, hx), matmul(hx, hz)
+        flipped = tuple(tuple(neg(e) for e in row) for row in right)
+        ok = (left == right) if sign == 1 else (left == flipped and left != right)
+        print(f"  {label}: {'commute' if sign == 1 else 'anticommute'}: {ok}")
+        if not ok:
+            bad += 1
+    print(
+        "  the singlet of the pair is invariant under the turns, and its exchange sign is the full turn's"
+    )
+    bad += check(
+        "det(U phi, U chi) = 2 det(phi, chi) for the quarter turns about z and x (the factor 2, normalised 1)",
+        pairs,
+        lambda p, q: all(
+            det(matvec(u, p), matvec(u, q)) == scale(2, det(p, q)) for u in (SPINOR_Z, SPINOR_X)
+        ),
+    )
+    triples = [
+        ((a, b), (b, c), (c, a)) for a in range(-2, 3) for b in range(-2, 3) for c in range(-2, 3)
+    ]
+    pairs3 = [(v, w) for v in triples[::7] for w in triples[::11]]
+
+    def dot(v, w):
+        return (
+            sum(mul(v[i], w[i])[0] for i in range(3)),
+            sum(mul(v[i], w[i])[1] for i in range(3)),
+        )
+
+    bad += check(
+        "the three-component kind's singlet v . w is symmetric and invariant under both quarter turns",
+        pairs3,
+        lambda v, w: (
+            dot(v, w) == dot(w, v)
+            and all(dot(matvec(r, v), matvec(r, w)) == dot(v, w) for r in (VECTOR_Z, VECTOR_X))
+        ),
+    )
+    bad += check(
+        "the twin hands' singlet det is antisymmetric: det(chi, phi) = -det(phi, chi)",
+        pairs,
+        lambda p, q: det(q, p) == neg(det(p, q)),
+    )
+
+    def conj3(v):
+        return tuple(conj(c) for c in v)
+
+    def sign_of(image, items):
+        """+1 if image(x) = x for every item, -1 if image(x) = -x for every item, else 0."""
+        if all(image(x) == x for x in items):
+            return 1
+        if all(image(x) == tuple(neg(c) for c in x) for x in items):
+            return -1
+        return 0
+
+    t2_spinor = sign_of(lambda p: reverse(reverse(p)), box)
+    t2_vector = sign_of(lambda v: conj3(conj3(v)), [v for v, _ in pairs3])
+    t2_scalar = sign_of(
+        lambda z: (conj(conj(z[0])),), [((a, b),) for a in range(-6, 7) for b in range(-6, 7)]
+    )
+    turns = (
+        ("twin hands", t2_spinor, turn_sign(SPINOR_Z, 2, 2), turn_sign(SPINOR_X, 2, 2)),
+        ("three-component kind", t2_vector, turn_sign(VECTOR_Z, 3, 1), turn_sign(VECTOR_X, 3, 1)),
+        ("scalar", t2_scalar, 1, 1),
+    )
+    for label, t2, about_z, about_x in turns:
+        print(
+            f"  {label}: T squared is {t2:+d}, the full turn about z is {about_z:+d} and about x {about_x:+d}"
+        )
+        if not t2 == about_z == about_x:
+            bad += 1
+    print("  the mutation proof for the chain")
+    quarter_phase = (
+        ((1, 0), (0, 0)),
+        ((0, 0), (0, 1)),
+    )  # diag(1, i): a plain phase quarter turn, factor 1
+    got = turn_sign(quarter_phase, 2, 1)
+    print(f"  the spinor's quarter turn as diag(1, i): four quarter turns are {got:+d} (must not be -1)")
+    if got == -1:
+        bad += 1
+    sym_fail = sum(
+        1
+        for p, q in pairs
+        if add(
+            mul(matvec(SPINOR_X, p)[0], matvec(SPINOR_X, q)[1]),
+            mul(matvec(SPINOR_X, p)[1], matvec(SPINOR_X, q)[0]),
+        )
+        != scale(2, add(mul(p[0], q[1]), mul(p[1], q[0])))
+    )
+    print(
+        f"  the symmetric bilinear phi1 chi2 + phi2 chi1 as the pair's singlet: not invariant under the x turn in {sym_fail} of {len(pairs)} pairs (must be above 0)"
+    )
+    if sym_fail == 0:
+        bad += 1
+    plus = sum(1 for p in box if madd(outer(p, p), swap(outer(p, p))) != zero)
+    print(
+        f"  the sum of the two paths (the bosonic sign) of one hand is not 0 for {plus} of {len(box)} hands (must be above 0)"
+    )
+    if plus == 0:
+        bad += 1
+    return bad
 
 
 def main() -> int:
@@ -330,6 +566,7 @@ def main() -> int:
     )
     if bosonic != len(both):
         bad += 1
+    bad += owner_chain(box, small_pairs, pairs)
     print(f"result: {bad} failures of the claims (the mutants fail as they must)")
     return 1 if bad else 0
 

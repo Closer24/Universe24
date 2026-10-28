@@ -1,0 +1,44 @@
+1. The one mirror and the flip, at every teeth count from 2 to 40
+  the mirror is an involution at every count: ok
+  the flip is an involution at every count: ok
+  the mirror fixes the tooth 0 and the tooth w / 2 at an even w, the mid tooth alone at an odd w: ok
+  the flip fixes no tooth at an even w, the mid tooth alone at an odd w: ok
+  the mirror is the flip at every odd w and differs from it at every even w: ok
+2. The carry's rounding at the mid tooth
+  no tie at an odd w: q(-p) = -q(p) for every p in -4 w to 4 w: ok
+  at an even w the failures are exactly the ties p = w / 2 mod w: ok
+  failures in -4 w to 4 w at w = 8, 9, 10, 11: 8, 0, 8, 0
+3. The fold's digit classes min(r, w - 1 - r)
+  their number is (w + 1) div 2 at every count: ok
+  w div 2 is that number at an even w only: ok
+4. The stride P = w d + r - mid under the exchange of the two slots (d to -d)
+  the flip sends P to -P - 1 at an even w and to -P at an odd w: ok
+  the mirror, its carry dropped, sends P to -P at an odd w and misses by -w at the tooth 0 at an even w: ok
+5. The mean teeth count (w / 2)(X0 + X1) of the riders' ride
+  w (X0 + X1) is even for every pair of notches at an even w: ok
+  w (X0 + X1) is odd where the notches' sum is odd at an odd w: the half is no integer there: ok
+6. The one-gear retrace of a turnover at the weak top (the mathematician's toy, rewritten), w = 8 to 15
+  w  8 (even) D 3: images hit twice with the mirror  23, with the flip   0
+  w  8 (even) D 5: images hit twice with the mirror  22, with the flip   0
+  w  9 (odd ) D 3: images hit twice with the mirror   0, with the flip   0
+  w  9 (odd ) D 5: images hit twice with the mirror   0, with the flip   0
+  w 10 (even) D 3: images hit twice with the mirror  25, with the flip   0
+  w 10 (even) D 5: images hit twice with the mirror  13, with the flip   0
+  w 11 (odd ) D 3: images hit twice with the mirror   0, with the flip   0
+  w 11 (odd ) D 5: images hit twice with the mirror   0, with the flip   0
+  w 12 (even) D 3: images hit twice with the mirror  21, with the flip   0
+  w 12 (even) D 5: images hit twice with the mirror  24, with the flip   0
+  w 13 (odd ) D 3: images hit twice with the mirror   0, with the flip   0
+  w 13 (odd ) D 5: images hit twice with the mirror   0, with the flip   0
+  w 14 (even) D 3: images hit twice with the mirror  27, with the flip   0
+  w 14 (even) D 5: images hit twice with the mirror  25, with the flip   0
+  w 15 (odd ) D 3: images hit twice with the mirror   0, with the flip   0
+  w 15 (odd ) D 5: images hit twice with the mirror   0, with the flip   0
+  the mirror collides at every even w and at no odd w: ok
+  the flip collides at no count: ok
+  the Boss's reading, 25 images hit twice at w = 10 and none at w = 11: ok ({10: 25, 11: 0})
+7. The mutation proof: each formula with one term changed must fail
+  the other mirror w - r mod w for the mirror: equals the flip at every odd w: False (must be False)
+  w div 2 for the number of the fold's classes at every count: False (must be False)
+  the rounding at the tooth mid + 1 has no tie at every odd w: False (must be False)
+result: 0 failures of the claims (the mutants fail as they must)

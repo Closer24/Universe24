@@ -1,5 +1,3 @@
-Run: python3 -I tools/derivations/open_items/SOFER-PAULI-PHASE-REVERSAL-1_PROBE.py (Sofer, 2026-10-28, 10:5x UTC; integers only; about 1 second)
-
 1. The phase reversal of the twin hands squares to minus one (Kramers), and keeps the norm
   T(T(phi)) = -phi, exhaustive box: 2401 cases, 0 failures
   T(T(phi)) = -phi, random: 20000 cases, 0 failures
@@ -43,4 +41,30 @@ Run: python3 -I tools/derivations/open_items/SOFER-PAULI-PHASE-REVERSAL-1_PROBE.
   the capacity u instead of 2 u: 5952 negative free sizes with one quantum there (must be above 0)
   the capacity 3 u instead of 2 u: a third quantum free in 14976 of 15000 cases (must be above 0)
   the size with the plus sign (the bosonic exchange) beside itself is positive for 2304 of 2304 hands: no exclusion
+11. The owner's chain: amplitudes add, the exchange twice is the identity, the sign is the full turn's, A - A = 0
+  steps 1 to 3: the pair's two paths, the exchange twice, and the same hand at both detectors
+  swap(swap(M)) = M for the pair's amplitudes (the exchange twice is the identity): 6561 cases, 0 failures
+  the sum of the two paths is even under the exchange, the difference odd (the two signs the video finds): 6561 cases, 0 failures
+  the difference of the two paths has one component, det(phi, chi), and is [[0, det], [-det, 0]]: 6561 cases, 0 failures
+  A - A = 0: the two paths of one hand cancel as matrices, so the pair's amplitude is 0: 2401 cases, 0 failures
+  step 4: the sign is the full turn's; four quarter turns, exactly
+  the twin hands, about z: four quarter turns are -1 times the identity (the factor 2 to the fourth)
+  the twin hands, about x: four quarter turns are -1 times the identity (the factor 2 to the fourth)
+  the three-component kind, about z: four quarter turns are +1 times the identity (the factor 1 to the fourth)
+  the three-component kind, about x: four quarter turns are +1 times the identity (the factor 1 to the fourth)
+  the scalar of the force carriers is the kind on which every turn acts as 1: its full turn is +1 by definition
+  the half turns about two axes: commute on the three-component kind, anticommute on the twin hands
+  twin hands: anticommute: True
+  three-component kind: commute: True
+  the singlet of the pair is invariant under the turns, and its exchange sign is the full turn's
+  det(U phi, U chi) = 2 det(phi, chi) for the quarter turns about z and x (the factor 2, normalised 1): 20000 cases, 0 failures
+  the three-component kind's singlet v . w is symmetric and invariant under both quarter turns: 216 cases, 0 failures
+  the twin hands' singlet det is antisymmetric: det(chi, phi) = -det(phi, chi): 20000 cases, 0 failures
+  twin hands: T squared is -1, the full turn about z is -1 and about x -1
+  three-component kind: T squared is +1, the full turn about z is +1 and about x +1
+  scalar: T squared is +1, the full turn about z is +1 and about x +1
+  the mutation proof for the chain
+  the spinor's quarter turn as diag(1, i): four quarter turns are +1 (must not be -1)
+  the symmetric bilinear phi1 chi2 + phi2 chi1 as the pair's singlet: not invariant under the x turn in 20000 of 20000 pairs (must be above 0)
+  the sum of the two paths (the bosonic sign) of one hand is not 0 for 2400 of 2401 hands (must be above 0)
 result: 0 failures of the claims (the mutants fail as they must)
