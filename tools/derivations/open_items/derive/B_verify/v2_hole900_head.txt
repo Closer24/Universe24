@@ -1,0 +1,5 @@
+{"mode": "chart", "variant": "head", "world": "world_hole.json", "ticks": 900, "stopped clock-ticks": 397, "first tick with a stopped clock": 476, "stopped clock-ticks turned at that tick": 397, "turns": 4020, "births": 35, "X bits": 33}
+
+real	3m47.979s
+user	3m43.498s
+sys	0m0.832s

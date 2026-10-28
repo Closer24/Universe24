@@ -1,0 +1,9 @@
+world_hole.json, 60 ticks: fittings 22
+  laid across a pawl wall (eps differs at the two ends): 10
+  plain charge of the pair 0: 22; Q* share of the pair 0: 0
+    tick 31, train 1: wall True, plain 0, Q* share 954641.4 (53.036 e), lam at the ends 16.2940, 36.7416
+    tick 25, train 0: wall True, plain 0, Q* share -698927.8 (-38.829 e), lam at the ends 36.1710, 2.6583
+    tick 25, train 2: wall True, plain 0, Q* share -560397.9 (-31.133 e), lam at the ends 19.9587, 11.1745
+    tick 18, train 2: wall True, plain 0, Q* share -282829.0 (-15.713 e), lam at the ends 8.6224, 7.0904
+    tick 21, train 1: wall True, plain 0, Q* share -184858.1 (-10.270 e), lam at the ends 5.5007, 4.7692
+  the coupled hands' first tick with a nonzero notch now (before the click): 13

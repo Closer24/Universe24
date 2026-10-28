@@ -1,0 +1,2 @@
+{"mode": "rewind", "variant": "both", "world": "world_hole.json", "ticks": 40, "states returned exactly": 40, "turned clock-ticks crossed": 894}
+{"mode": "rewind", "variant": "et3", "world": "world_hole.json", "ticks": 40, "states returned exactly": 40, "turned clock-ticks crossed": 937}

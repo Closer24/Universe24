@@ -1,0 +1,2 @@
+A: A1 boards: 150 trials (0 refused by the engine {}); Node-clock ticks 9600; the first difference fell at 0 (0 trials); G < 0 at 0, 4 G + 6 V < 0 at 0 Node-clock ticks; the most negative (G, V, 4 G + 6 V, X): None
+B: boards not alike: 60 trials (0 refused by the engine {}); Node-clock ticks 3840; the first difference fell at 78 (25 trials); G < 0 at 102, 4 G + 6 V < 0 at 63 Node-clock ticks; the most negative (G, V, 4 G + 6 V, X): (-12767151753323, 0, -51068607013292, 866)

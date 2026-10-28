@@ -1,0 +1,23 @@
+world_bang.json 12 ticks; births 64 lay jams 1728 sense jams 0
+  fitting candidates at the jam (from the uncoupled giver): 768
+    [coupled fitted train] candidates: 576
+    [coupled fitted train] the head's lay jam by standing (wind above 0 at an end): 128
+    [coupled fitted train] both ends empty (no notch of the train at either end): 448
+    [coupled fitted train] F4's gate open: 576
+    [coupled fitted train] the head jams by standing and F4 writes (dQ = 0 with a hand standing): 128
+    [coupled fitted train] the head passes (no standing) and F4 refuses (dQ != 0): 0
+    [coupled fitted train] the head passes with a notch standing (wind 0, the hand not empty): 0
+  crowds: two or more coupled fitted hands of one hand at one Node-clock (the head jams them all): 320
+    their summed write's charge book closes (F4 open): 320
+    of them with opposite senses only (+, -): 320
+    [uncoupled fitted train (light into light, SL-S3)] candidates: 192
+    [uncoupled fitted train (light into light, SL-S3)] the head's lay jam by standing (wind above 0 at an end): 192
+    [uncoupled fitted train (light into light, SL-S3)] both ends empty (no notch of the train at either end): 0
+    [uncoupled fitted train (light into light, SL-S3)] F4's gate open: 192
+    [uncoupled fitted train (light into light, SL-S3)] the head jams by standing and F4 writes (dQ = 0 with a hand standing): 192
+    [uncoupled fitted train (light into light, SL-S3)] the head passes (no standing) and F4 refuses (dQ != 0): 0
+    [uncoupled fitted train (light into light, SL-S3)] the head passes with a notch standing (wind 0, the hand not empty): 0
+  unspringing candidates (a coupled pair into the light): 1408
+    their ends' sweeps of opposite sign (the head's R1 passes): 1408
+    dQ = -(W_x + W_y) = 0 (F4 writes): 1408
+  the indicator [dq = 0] = 1 + ((-dq dq) div (dq^4 + 1)) off at 0 of 100001 integers

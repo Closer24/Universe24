@@ -1,0 +1,12 @@
+root eng world bang mode derived quanta 500 ticks 250 opts {'every': '1000', 'rewind': '20'}
+  1: 3000..3000
+  2: 5900..5900
+  3: 9243..9243
+bangs (whole-board turnovers): 0 at []
+local turnovers: 0
+first difference fell at 0 of 16000 Node-clock ticks not turned over
+births 32; books closed 250 of 250
+largest X 4758664
+state hash 8cffcddb562c345c
+rewind from tick 0: 20 of 20
+seconds 42.8

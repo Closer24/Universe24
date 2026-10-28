@@ -1,0 +1,10 @@
+world_nature.json, 60 ticks
+  takes at going 1 with a due <= 0 (the head writes 0): 2556
+    of them F3's ladder writes 0: 1557
+    of them F3's ladder writes a negative count (the payer wound up its slope): 809
+      the largest |count|: 11
+    of them F3's ladder cycles and never stops: 190
+  unspringings: 0
+  unspringings removing net charge (the board unwound): 0 of 0; by the start's sums: 0
+  fittings: 3; the ends' sweeps summing to 0 after: 3; laid on ends already standing (a sweep there before): 0
+  per tick and hand, the click's charge change: []

@@ -1,0 +1,7 @@
+world_nature.json, 60 ticks: fittings 3
+  laid across a pawl wall (eps differs at the two ends): 0
+  plain charge of the pair 0: 3; Q* share of the pair 0: 0
+    tick 5, train 0: wall False, plain 0, Q* share -781.0 (-0.043 e), lam at the ends 1.0313, 1.0747
+    tick 9, train 1: wall False, plain 0, Q* share -470.1 (-0.026 e), lam at the ends 1.1032, 1.0771
+    tick 16, train 2: wall False, plain 0, Q* share -270.4 (-0.015 e), lam at the ends 1.4512, 1.4362
+  the coupled hands' first tick with a nonzero notch now (before the click): 6

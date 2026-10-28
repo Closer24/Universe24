@@ -1,0 +1,25 @@
+world_nature.json, 60 ticks, e = 18000: Q* (vacuum sweep units) per act, largest |change| and ticks changed
+hand 0: Q* at the first start 0.0, at the last start -11916.2
+  step                      : largest        323.0, ticks changed  55 of 60, summed       -345.8
+  turn (pawls flipped)      : largest      14684.5, ticks changed  53 of 60, summed     -10363.7
+  turn (pawls not flipped)  : largest      22436.1, ticks changed  53 of 60, summed      36131.2
+  click                     : largest        750.7, ticks changed   1 of 60, summed       -750.7
+  background                : largest       1064.0, ticks changed  55 of 59, summed       -491.5
+  tick                      : largest      14123.4, ticks changed  55 of 59, summed     -11916.2
+  plain tick                : largest      21792.0, ticks changed  55 of 60, summed        685.0
+hand 1: Q* at the first start 0.0, at the last start -31047.6
+  step                      : largest        386.9, ticks changed  51 of 60, summed        642.3
+  turn (pawls flipped)      : largest      40218.1, ticks changed  37 of 60, summed     -30796.4
+  turn (pawls not flipped)  : largest        551.2, ticks changed  37 of 60, summed       -814.0
+  click                     : largest        455.6, ticks changed   1 of 60, summed       -455.6
+  background                : largest        247.0, ticks changed  51 of 59, summed        199.7
+  tick                      : largest      40395.5, ticks changed  51 of 59, summed     -31047.6
+  plain tick                : largest       3783.0, ticks changed  51 of 60, summed       -406.0
+hand 2: Q* at the first start 0.0, at the last start 47118.5
+  step                      : largest        448.2, ticks changed  44 of 60, summed       1282.1
+  turn (pawls flipped)      : largest      52672.2, ticks changed  24 of 60, summed      46469.1
+  turn (pawls not flipped)  : largest        297.8, ticks changed  24 of 60, summed       -170.8
+  click                     : largest        355.7, ticks changed   1 of 60, summed       -355.7
+  background                : largest        254.0, ticks changed  44 of 59, summed         79.9
+  tick                      : largest      53020.6, ticks changed  44 of 59, summed      47118.5
+  plain tick                : largest       1430.0, ticks changed  44 of 60, summed        -78.0

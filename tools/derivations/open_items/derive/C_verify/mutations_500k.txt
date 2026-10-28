@@ -1,0 +1,36 @@
+=== bang derived 500000 250
+root eng world bang mode derived quanta 500000 ticks 250 opts {'every': '1000'}
+bangs (whole-board turnovers): 2 at [74, 221]
+local turnovers: 0
+first difference fell at 0 of 15872 Node-clock ticks not turned over
+births 32; books closed 250 of 250
+largest X 4396644616
+state hash e4694a9e7edbf68b
+seconds 27.2
+=== bang derived 500000 250 vw=3
+root eng world bang mode derived quanta 500000 ticks 250 opts {'vw': '3', 'every': '1000'}
+bangs (whole-board turnovers): 2 at [74, 221]
+local turnovers: 0
+first difference fell at 0 of 15872 Node-clock ticks not turned over
+births 32; books closed 250 of 250
+largest X 4394996760
+state hash aab30f4def668958
+seconds 27.4
+=== bang derived 500000 250 vw=0
+root eng world bang mode derived quanta 500000 ticks 250 opts {'vw': '0', 'every': '1000'}
+bangs (whole-board turnovers): 2 at [74, 221]
+local turnovers: 0
+first difference fell at 0 of 15872 Node-clock ticks not turned over
+births 32; books closed 250 of 250
+largest X 4393348906
+state hash 9e7573803ced93e4
+seconds 26.2
+=== light derived 500000 250
+root eng world light mode derived quanta 500000 ticks 250 opts {'every': '1000'}
+bangs (whole-board turnovers): 2 at [74, 221]
+local turnovers: 0
+first difference fell at 0 of 15872 Node-clock ticks not turned over
+births 0; books closed 250 of 250
+largest X 4393346240
+state hash 2efd878d843c1483
+seconds 12.4
