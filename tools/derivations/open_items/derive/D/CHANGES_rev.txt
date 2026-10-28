@@ -1,0 +1,95 @@
+D_rev/DERIVATION.md against the draft as landed (t24 tools/derivations/open_items/derive/D/DERIVATION.md).
+Each change: the landed line (L), the revised line (R), what changed, its source. Law lines are scribe-5's
+docs/ALGEBRA.md (origin/scribe-5, 3d6cd8a35) alone. No probe was run; every count is from an existing output.
+V = derive/D_verify (landed copy unless named). BC = derive/BC_verify/REPORT_draft.txt.
+
+ 1. L1 -> R1. Title marks the revision (D_rev).
+ 2. L3 -> R3. Header: revised on David's HOLD (INDEX.md line 31); the law cited as scribe-5 3d6cd8a35, lines 33, 35, 92,
+    102, 106 and 1173, one numbering only (was bcc1f006b, lines 33, 92, 102 and 1169); probes in derive/D, the verifier's in
+    derive/D_verify; no probe run; the STRUCK / REFUTED / SUPERSEDED convention stated.
+ 3. L7 -> R7. Claim 1: "in general" struck, REFUTED (V verify_closure.txt line 13; BC line 63); holds only under the one-Mesh
+    premise (OPEN 1); the verifier's confirmation of the identities cited (verify_closure.txt lines 5 to 8); the pick's
+    undefined points flagged (2.1, OPEN 7).
+ 4. L8 -> R8. Claim 2 kept; the verifier's count added: 48,961 runs, 0 failures (verify_closure.txt lines 2 and 3).
+ 5. L9 -> R9. Claim 3: "PROVED and CHECKED, under one premise left OPEN ..." struck, REFUTED (verify_closure.txt line 13: the
+    singlet's E from the settings alone in 8,000 of 8,000); its value is the one-Mesh premise's (OPEN 1).
+ 6. L10 -> R10. Claim 4 restricted to hands of many notches; the form for every hand struck, SUPERSEDED (V verify_linearity.txt
+    lines 3 to 13 and 31: at 2 notches the carries move the partner by 3 notches where the linear map gives 0); the
+    carriage's branch named (Postulate 5, law line 35); OPEN 6.
+ 7. L11 -> R11. Claim 5 kept; the bound now stands in the law (law lines 92 and 1173).
+ 8. new R40. 2.1: the sizes read the two detectors alone and no hand of the pair (OPEN 1; verify_closure.txt line 13).
+ 9. L40 -> R42 to R51. "Each comparison is Rule3's quotient (the plan's indicator 1 - 1 div (q + 1))." struck, SUPERSEDED
+    (SCRIBE-GATE-1.md lines 31 and 32 on scribe-5; law line 106; TENSOR24.md lines 1163 and 1491); the gate's whether put in
+    its place; the pick undefined at a running sum of 0 (parallel detectors, sigma_++ = 0) and at a detector of 0, PROVED by
+    P1 and P6 (the verifier's finding, TENSOR24.md line 390); OPEN 7; Postulate 5 (law line 35).
+10. L56 -> R67. 2.3, the pick: the gate's whether, undefined at a running sum of 0 and at a detector of 0.
+11. L62 -> R73. Part 3: the verifier's rerun (V rerun_algebra.txt identical to closure24_algebra.txt); P1 to P7, P10 and P11
+    hold (verify_closure.txt lines 2 to 12).
+12. L87 and L88 -> R98 and R99. P9: 2O named as the 24 with the twin's sign, the 48 kept for the mirrors alone; "its 48
+    elements are ..." struck, SUPERSEDED (TENSOR24.md line 750).
+13. L93 -> R104. P9's count: "(48 elements, 24 rotations)" struck, SUPERSEDED (TENSOR24.md line 750), written as 2O; the probe's
+    own line (closure24_algebra.txt line 11) kept as printed.
+14. L96 -> R107. P12: the verifier's rerun identical (V rerun_lattice.txt).
+15. L117 -> R128 to R135. 4.1: PROVED for the linear part; the carries as measured (verify_linearity.txt lines 3 to 13: at
+    most 1 notch on the ring, 6 on the torus, at 4,096 notches; line 31: 3 notches at 2 notches); 4.2 to 4.4 for hands of many
+    notches; OPEN 6.
+16. L126 -> R144. 4.2's PROVED restricted to hands of many notches; the form for every hand struck, SUPERSEDED
+    (verify_linearity.txt line 31).
+17. L133 -> R151. 4.3: the verifier's check of k <= 1/3 cited (verify_closure.txt line 12).
+18. L140 to L148 -> R158 to R166. 4.4's table: its rho at B named the mean over all 48 cases (closure24_lattice.txt [B']); the
+    verifier's maxima added (V verify_m2e.txt lines 3 to 13).
+19. L153 and L154 -> R171 to R175. The maxima corrected to 0.0688 (ring) and 0.0389 (torus), both at Delta 20; "at most 0.0344"
+    and "at most 0.0193" struck, REFUTED, as means given as maxima (verify_m2e.txt lines 6 and 12; verify_m2e_share.txt lines 6
+    and 12).
+20. L177 -> R197. 4.6 item 4: the write at the partner is a branch, which Postulate 5 forbids (law line 35); the carriage asked
+    of the owner holds it; Postulate 4 cited as law line 35; OPEN 2.
+21. L182 -> R202. 4.6's conclusion restricted to hands of many notches; the form for every hand struck, SUPERSEDED
+    (verify_linearity.txt line 31).
+22. L192 -> R212. Wording: the carried message "had not arrived", in place of the landed phrase, which the documents avoid.
+23. new R221. 5.2: the bound quoted where it now stands in the law (law lines 92 and 1173).
+24. L209 -> R231. M3's model note: its parts read the detectors alone; the value is the one-Mesh premise's (OPEN 1).
+25. L219 -> R241. 5.3 table, M3's row: the one-Mesh premise's value (OPEN 1).
+26. L229 to L231 -> R251 to R253. 5.4: (a) as the one-Mesh premise, the act reading no hand of the pair; (b) the carriage holds
+    a branch (law line 35).
+27. L234 -> R256. Postulate 3 cited as law line 33.
+28. L241 -> R263. 5.5 (1): the verifier's loophole count (verify_closure.txt line 11: S = 4 over pairs clicked at both ends,
+    1 with every pair counted).
+29. L247 -> R269. The probes' folder named (derive/D).
+30. L262 -> R284. [B'] noted as the mean over all 48 cases.
+31. new R292 to R304. The verifier's reruns and probes; the mutants kept as their outputs stand: the verifier's seven
+    (V verify_closure_mut_*.txt, each failing) and the draft's sixteen under V mutate.py (outputs in the verifier's working
+    folder derive/D_verify/mut/: algebra twotime_Sz_sign passes with 0 failures, lattice perp_no_conj leaves the output
+    identical, the other fourteen part).
+32. L272 -> R308. 11 (d): the split on its A1 part under the one-Mesh premise (OPEN 1).
+33. L274 -> R310. The carriage at L >= 2: as named it holds a branch (law line 35).
+34. L276 -> R312. Row 56: "SHOWN at L = 1 (the Mesh's act, under OPEN 1), and inside the cone with the carriage." struck,
+    REFUTED (verify_closure.txt line 13; law line 35).
+35. L280 -> R316. The law's line 1169 cited as line 1173; "The clause cannot be re-derived under the generic Node-clock as
+    worded." struck, SUPERSEDED (law lines 92 and 1173, the alignment of 2026-10-28).
+36. L286 -> R322. Part 8's heading: lines 33, 35, 92, 102 and 1173.
+37. L288 -> R324. The t24 worktree's numbering struck, SUPERSEDED (TEMPLATE.md part 6: one numbering only).
+38. new R331 to R334. Law line 35 (Postulate 5): the carriage's branch; the pick at 0 (OPEN 7).
+39. L298 -> R339. Line 92: "Under the line's last clause as written ... The line must choose between that and the closure."
+    struck, SUPERSEDED (law line 92 as now worded).
+40. L300 -> R341. Line 102: its words on a closed form of nature computing a correlation from a setting quoted.
+41. L303 -> R344. Line 102 and the L = 1 act: "The L = 1 act reads across the Mesh ... if the A1 premise is granted (OPEN 1)."
+    struck, REFUTED (verify_closure.txt line 13; BC line 63); a premise by name (law line 106).
+42. new R346. Line 1173: pointer to part 7.
+43. L309 -> R352 to R354. Proposed section 18 item 4: for hands of many notches; the carriage's branch (law line 35); "At the
+    two ends of one Mesh it is one act, exact and local (draft D, 2.1)." struck, REFUTED (verify_closure.txt line 13).
+44. L315 to L317 -> R360 to R362. Proposed 11 (d) and section 27: under the one-Mesh premise; for hands of many notches (OPEN 6
+    for few); the carriage holds a branch; "the A1 premise" written "the one-Mesh premise".
+45. L319 -> R364 to R366. Proposed section 24 item 3: "The decision holds for the formula (2.1, 2.2) and for the two ends of
+    one Mesh." struck, REFUTED (verify_closure.txt line 13); "The owner's word is asked again: allow the carriage, ..." struck,
+    SUPERSEDED (law line 35, Postulate 5, entered after the draft); the ask restated on the premise and a carriage with no branch.
+46. L323 -> R370. Proposed section 19 owed list: under the one-Mesh premise; OPEN 7; OPEN 2.
+47. L327 to L330 -> R374 to R379. OPEN 1 named the one-Mesh premise and stated once: "The one-Mesh premise is the singlet
+    itself, a premise." Its evidence (verify_closure.txt lines 13 and 14; BC line 63); law line 106; "It follows if the
+    fitting, whose source is the light's wind (A1), sets the pair as one A1 tensor." struck, SUPERSEDED (BC lines 65 to 70).
+48. L331 -> R380. OPEN 2: the carriage named in 4.6 holds a branch (law line 35).
+49. new R384. OPEN 6: the no-go at hands of few notches (verify_linearity.txt line 31).
+50. new R385. OPEN 7: the pick at a running sum of 0 and at a detector of 0 (law line 35).
+51. L335 -> R386. Protocol step 5 struck, SUPERSEDED: done (derive/D_verify; TENSOR24.md lines 390 to 393; INDEX.md line 10).
+52. L336 -> R387. Protocol step 6: Sofer's law check given (INDEX.md line 10); David's sign-off on HOLD (INDEX.md line 31).
+
+Total: 52 changes.

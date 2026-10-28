@@ -1,0 +1,55 @@
+C_rev: the changes from the landed draft C (derive/C/DERIVATION.md) to derive/C_rev/DERIVATION.md.
+Each entry: the landed line (L) -> the revision's line (R); the mark; the source; what changed.
+Sources: C_verify = derive/C_verify (its outputs, none rerun); B2 = derive/reviews_2/phys2/REPORT.md, B2;
+F 4.1 = derive/F/DERIVATION.md, section 4.1; HOLD = David's HOLD notes on C (6471140714);
+triggers = David's triggers helper (14:0x UTC). The law's lines are scribe-5's alone (35, 106, 132, 1602).
+No probe was run for this revision.
+
+ 1. L1 -> R1. Title names the revision C_rev.
+ 2. L5 -> R5-7. Added the revision's note (sources, no probe rerun, scribe-5's lines) and the marks REFUTED and SUPERSEDED, each with its source and its landed sentence quoted.
+ 3. L9 -> R11-12. REFUTED as the answer (C_verify R_sea_heavy.txt; HOLD). The headline now holds within (V) only (C1 to C4 CONFIRMED); the landed sentence quoted.
+ 4. L10 -> R13. The push CONFIRMED WITH CORRECTIONS (C_verify): d + 1 on G forced at every lattice frequency, 2 d on V a continuum value, kappa a chosen normalization.
+ 5. new -> R14-18. The 00 equation's closure and its standing (C_verify; B2; triggers): a closure by the seed's breach of the constraint, its "each top different" an artifact of the velocity term, its exact form in L a pure brake that repeats every swing (rewind 20 of 20).
+ 6. new -> R19. No GR closure on T^3 (B2; F 4.1): the cycle is law 4's postulate (scribe-5 line 1602), named against the observed acceleration.
+ 7. L11 -> R20. The missing piece restricted to a brake within (V).
+ 8. L12 -> R21. SUPERSEDED (B2): k > 0 is impossible on T^3; the landed sentence quoted.
+ 9. L13 -> R22. Lambda < 0: added that the head's own spring tops the pure A1 course at 500 quanta (C_verify).
+10. L14 -> R23. SUPERSEDED (B2): "Each is a declaration ..." quoted; Lambda < 0 a declaration, k > 0 impossible.
+11. L15 -> R24. REFUTED (C_verify R_plan_seed.txt, R_sea_heavy.txt): static at the plan's seed only; by (R) the residual closes the course on the heavy hand; the landed sentence quoted.
+12. L16 -> R25-26. SUPERSEDED (C_verify; HOLD): "What does close the course with no typed number is not a brake ..." quoted. The rate chain's zero stands on a mask and an if: BH-S1's restore (scribe-5 line 132) and law 4's weak maximum (line 1602); Postulate 5 (line 35); line 106.
+13. L17 -> R27. The rate chain's zero CONFIRMED (C_verify rate_zero.txt).
+14. L20 -> R30. The restore struck CONFIRMED (C_verify mutations_5M.txt, state hash f5bb4bfb4f2b203e).
+15. L50 -> R60-64. Corrected (C_verify e_mass_heavy.txt, lattice_model.txt, e_integral_*.txt): PROVED in the continuum only; the lattice's weight on V is 2 (2 + cos w0); d + 1 on G forced; the landed mark quoted.
+16. L82 -> R97 (added). E on the engine kept only nearly; the mutants 3 G and 5 G drift (C_verify e_integral_500.txt).
+17. L82 -> R98 (added). (R) in X carries the velocity term (rewind 0 of 20); in L, X = L L div Gamma, a pure brake with rewind 20 of 20, every swing repeating (triggers).
+18. L108 -> R124-125. Corrected (C_verify transport_rounding.txt, a1_adversarial.txt A): PROVED for the exact turn only (698 of 200,000 draws below 0 with the rounded turn); CHECKED on A1 boards, 0 of 9,600; the landed mark quoted.
+19. L111 -> R128. 0 falls of 16,000 CONFIRMED (C_verify derived_500_250.txt); off A1, G < 0 at 102 and the first difference falling at 78 of 3,840 (a1_adversarial.txt B).
+20. L116 -> R133-135. Corrected (C_verify first_step.txt): X1 = X0 + (4 X0 G0 + mid) div (Gamma key); X0 (1 + 4 n / Gamma) only where G0 = n key (3 of 19 quanta); off it at 7 of 19; the head's (4/3) step within 1 at 7 of 19, F1's cap from 750; the landed sentence quoted.
+21. L122 -> R141-143. Section 5's title "within (V)"; SUPERSEDED in scope (C_verify); the landed title quoted.
+22. L127 -> R148. Added B2: a seed breaking the Hamiltonian constraint solves no Einstein equation.
+23. L128 -> R150 (added). F 4.1's extension to every course on T^3; no GR closure; the cycle law 4's postulate (scribe-5 line 1602) against the observed acceleration (B2).
+24. L158 -> R180-182. REFUTED (C_verify light_volL_500_1500.txt, light_volL_energies.txt): "At the head's value it is too weak before the rate chain's zero." quoted; the spring tops the pure A1 course at 500 quanta (306, 917); the landed bang-world run kept as cited.
+25. L160 -> R184-186. C6's title "at the plan's seed"; SUPERSEDED as a verdict on the residual (C_verify R_sea_heavy.txt); static at the plan's seed CONFIRMED (R_plan_seed.txt); the landed title quoted.
+26. L181 -> R207-208. Table: "C5, too weak" marked REFUTED; the verifier's light-world row added.
+27. L183 -> R210-214. Table: volK2 a held breach (B2); rows added for (R) on the heavy hand (2 and 20 quanta), at the plan's seed, and written exactly in L (triggers).
+28. L185 -> R216-217. (a) CONFIRMED by the verifier; its standing: a mask and an if (HOLD; scribe-5 lines 132, 1602, 35, 106).
+29. L187 -> R219. Added scribe-5's lines for BH-S1 and FR-S1 (132) and the weak maximum (1602).
+30. L193 -> R225. The restore struck CONFIRMED (C_verify mutations_5M.txt).
+31. L196 -> R229 (added). (b) SUPERSEDED (B2): k > 0 impossible on T^3; volK2 holds half the seed's breach; its counts kept as cited.
+32. L203 -> R236. (c) REFUTED (C_verify light_volL_500_1500.txt): "At the head's pair it is too weak." quoted.
+33. L203 -> R238-249 (added). New (d): the 00 equation's closure on the heavy hand (C_verify R_sea_heavy.txt), static at the plan's seed (R_plan_seed.txt), and its standing (B2; triggers; scribe-5 line 1602).
+34. L209 -> R255. Corrected (C_verify first_step.txt): the first step's form; "X1 = X0 (1 + 4 n / Gamma)." quoted.
+35. L212 -> R258-261. REFUTED (C_verify; HOLD): "The only turn on the torus is the lattice's own last rate ..." quoted; two turns with no declared number, neither a curvature; no GR closure on T^3 (B2; scribe-5 line 1602).
+36. L226 -> R275. Rows 1 and 1c: the 00 equation's tops differ only by the velocity term's artifact; written exactly every swing repeats (triggers).
+37. L231 -> R280. The rate chain's zero stands on a mask and an if.
+38. new -> R281. No GR closure on T^3 (B2; F 4.1); the cycle law 4's postulate (scribe-5 line 1602) against the observed acceleration.
+39. L232 -> R282. SUPERSEDED (B2): "A declared k > 0 contradicts the torus." quoted; k > 0 impossible on T^3.
+40. L234 -> R284. The 00 equation's closure stands on the seed's breach, so it solves no Einstein equation (B2).
+41. L239 -> R289. Corrected (C_verify): "counts" -> "weights"; 2 d on V a continuum value; the landed line quoted.
+42. L252 -> R302. Twin hands named under 2O, the 24 with the twin's sign. "The 48" occurs nowhere in the landed draft, so no other line needed 2O.
+43. L257 -> R307-310. OPEN 1 REFUTED in part (C_verify; B2); the landed item quoted.
+44. L258 -> R311. OPEN 2: a mask and an if (scribe-5 lines 132, 1602, 35).
+45. L259 -> R312-314. OPEN 3: SUPERSEDED in part (triggers), the landed sentence quoted; left OPEN: the time gear's own step in L in the engine, and its tops' trigger.
+46. L273 -> R329-337 (added). The verifier's files listed as cited; the mutants' outputs kept as cited (monotone.txt, probe_vol0_free_5M.txt, act_property.txt, mutations_5M.txt, mutations_500k.txt, e_integral_*.txt, e_mass_heavy*.txt, gr_continuum.txt).
+
+Unchanged: every other line, and every count of the landed draft's own probes.
