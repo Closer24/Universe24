@@ -74,7 +74,7 @@ def set_cycle(clock: Clock, rec: int, n: int, digits: list[int], flip: int) -> N
     advance(clock, rec, Ellipsis, notches)
     for gear, now, before in zip(train.gears, notches[0::HAND], notches[1::HAND], strict=True):
         negated = np.vectorize(lambda a, b: int(a) < 0 or int(b) < 0, otypes=[bool])(now, before)
-        gear.fine = np.where(negated & (flip == 1), acts.flip(gear.fine, gear.teeth, 1), gear.fine)
+        gear.fine = np.where(negated & (flip == 1), acts.mirror(gear.fine, gear.teeth, 1), gear.fine)
     logged(
         clock,
         "lay",

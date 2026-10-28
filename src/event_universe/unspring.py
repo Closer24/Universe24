@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from event_universe import hands
-from event_universe.core import rule3
+from event_universe.core import acts, rule3
 from event_universe.core.spokes import AXES
 from event_universe.meshes import coupling_of
 from event_universe.trains import HAND, Gear, Train, zeros
@@ -179,17 +179,32 @@ def read_ends(
 Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int, int]
 
 
-def unspring_end(clock: Clock, rec: int, read: Read) -> tuple[dict[str, Any], list[int]]:
-    """One end of an unspringing's unwind written: its whole notches advanced at -1, the end's entry with the push the start tallies and its recoil, and the live great clock's push less the start's (the cross term's part)."""
+def unspring_end(
+    clock: Clock, rec: int, read: Read, own: list[Gear]
+) -> tuple[dict[str, Any], list[int]]:
+    """One end of an unspringing's unwind written: its whole notches advanced at -1, the end's entry with the push the start tallies and its recoil, and the push read on the tick's start board with the unwind's own earlier ends unwound (`own`) less the start's: the cross term of its own ends alone, no other unwind's move in it, so the click's order enters nothing (David's DAVID-THE-STRIKES-ORDER.md); the remainder raised by the fall above the tally, an increment, so two writes at one clock commute."""
     where, tallied, notches, fall, _k, _slack_was, _due, r = read
     hand = clock.hands()[r]
     assert hand.ratio is not None
-    live = push_of(clock, hand.gears, where, notches, hand.ratio[0], -1)
+    live = push_of(clock, own, where, notches, hand.ratio[0], -1)
     push = push_of(clock, clock.start_gears[r], where, notches, hand.ratio[0], -1)
+    at = zeros(clock.size) != 0
+    at[where] = True
+    own[:] = [
+        Gear(
+            np.where(at, acts.advance(g.now, now, -1), g.now),
+            np.where(at, acts.advance(g.before, before, -1), g.before),
+            g.fine,
+            g.teeth,
+            g.dfine,
+            g.dteeth,
+        )
+        for g, now, before in zip(own, notches[0::HAND], notches[1::HAND], strict=True)
+    ]
     advance(clock, r, where, notches, -1)
     clock.strikes[where] -= 1
     size, slack_was = sum(abs(x) for x in notches), int(clock.slack[where])
-    clock.slack[where] = slack_was + fall - tallied
+    clock.slack[where] += fall - tallied
     entry = dict(
         node=list(where),
         taken=fall,
@@ -207,7 +222,7 @@ def unspring_end(clock: Clock, rec: int, read: Read) -> tuple[dict[str, Any], li
 
 def unsprung_end(clock: Clock, rec: int, read: Read) -> dict[str, Any]:
     """One end of the unsprung hand's unwind written: the unwound gear moved toward its before by the count (unwind.move, CR-S1), the fall above what was due its new slack (EX-S1), the push tallied at the gears of the tick's start (CL-S2, the one moment of every unwind, the owner's word of 2026-10-27, 15:5x UTC) and its recoil."""
-    where, tallied, notches, fall, k, slack_was, due, _r = read
+    where, tallied, notches, fall, k, _slack_was, due, _r = read
     hand = clock.hands()[rec]
     assert hand.ratio is not None and k is not None
     z = hand.gears[k]
@@ -215,7 +230,8 @@ def unsprung_end(clock: Clock, rec: int, read: Read) -> dict[str, Any]:
     toward = 1 if before > now else -1
     move(clock, rec, k, where, toward * notches)
     clock.strikes[where] += 1
-    clock.slack[where] = fall - due
+    slack_was = int(clock.slack[where])
+    clock.slack[where] += fall - tallied
     clock.last_push = push_of(
         clock, [clock.start_gears[rec][k]], where, (toward * notches, 0), hand.ratio[0]
     )
@@ -230,7 +246,7 @@ def unsprung_end(clock: Clock, rec: int, read: Read) -> dict[str, Any]:
         "dP_take": clock.last_push,
         "taken_line": k,
         "remainder_was": slack_was,
-        "remainder": fall - due,
+        "remainder": int(clock.slack[where]),
         "owed": due,
         **clock.last_recoil,
     }
@@ -246,9 +262,10 @@ def unwind_ends(
     hand = clock.hands()[rec]
     found: list[dict[str, Any]] = []
     cross = [0] * AXES
+    own = {read[-1]: [gear.copy() for gear in clock.start_gears[read[-1]]] for read in reads}
     for read in reads:
         if hand is not clock.unsprung():
-            entry, moved = unspring_end(clock, rec, read)
+            entry, moved = unspring_end(clock, rec, read, own[read[-1]])
             cross = [c + m for c, m in zip(cross, moved, strict=True)]
             found.append(entry)
             continue
@@ -259,7 +276,7 @@ def unwind_ends(
     return found
 
 
-def unwinds(
+def read_unwinds(
     clock: Clock,
     ends: list[tuple[tuple[int, ...], int]],
     gearing: rule3.Gearing,
@@ -267,35 +284,26 @@ def unwinds(
     rec: int | None = None,
     draw: Callable[[], Any] | None = None,
     cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
-    at: tuple[int, ...] | None = None,
     twins: tuple[int, int] | None = None,
-) -> list[dict[str, Any]] | None:
-    """The striking's one unwind act for every letter alike (CR-S2): the windings tallied at each end paid by one exact unwind at that end from the unwound hand (the unsprung hand's where none is named: a bob's unwind), every end read before any is written (`read_ends`) and jammed by name at the first that cannot pay, the mesh's number read on the vernier between the reads and the writes where the letter reads one (`draw`, the unspringing's; None read jams the unwind), then every end written (`unwind_ends`); the fitting's list one end of its fitted hands' windings summed, the bob's one end of its winding, the unspringing's its two ends. Returns each end's unwind, or None."""
+) -> tuple[int, list[Read]] | None:
+    """The unwind's reads alone (CR-S2), the unwound hand (the unsprung hand's where none is named: a bob's unwind) with every end read before any is written (`read_ends`) and jammed by name at the first that cannot pay, the mesh's number read on the vernier after the reads where the letter reads one (`draw`, the unspringing's; None read jams the unwind); a click reads every unwind of its phase so before it writes any (the order-free click, David's DAVID-THE-STRIKES-ORDER.md: every take read on the one board the phase starts from). Returns the unwound hand and the reads, or None."""
     unwound = clock.hands().index(clock.unsprung()) if rec is None else rec
     reads = read_ends(clock, ends, gearing, cause, unwound, cache, twins)
     if reads is None or (draw is not None and draw() is None):
         return None
-    found = unwind_ends(clock, reads, unwound, at)
-    if cache is not None and at is not None and len(reads) > 1:
-        cross, k = wind_cross(clock, reads, gearing, cache), [read[0] for read in reads].index(at)
-        clock.slack[at] += cross
-        found[k]["taken"], found[k]["remainder"] = found[k]["taken"] + cross, int(clock.slack[at])
-    return found
+    return unwound, reads
 
 
-def wind_cross(
+def unwinds(
     clock: Clock,
-    reads: list[Read],
+    ends: list[tuple[tuple[int, ...], int]],
     gearing: rule3.Gearing,
-    cache: dict[tuple[int, tuple[int, ...]], int],
-) -> int:
-    """The wind's cross term of a two-ended unwind, the unspringing's two ends on one mesh, each end's fall read with the other end in place: the board's fall over the two ends' windows (every hand's wind there before the writes, as read, less after) less the two ends' falls, the take of the end at the fitting's own clock (EX-S1's one signed remainder carrying the unspringing's excess, the owner's word of 2026-10-27, 15:5x UTC), where the push's cross term is tallied once (CL-S2), so a mirror exchanging the two ends books it alike (the former first end by the list's order, the Scribe's 23:3x (d), parted the swap of x and y; David's DAVID-THE-ONE-MIRROR.md); two hands' winds do not cross, so twin ends cross at 0; its undo that end's remainder restored."""
-    window = sorted({c for read in reads for c in window_clocks(clock, read[0])})
-    fall = 0
-    for r in sorted({read[-1] for read in reads}):
-        after = hands.wind(clock, clock.hands()[r].gears, gearing, window)
-        fall += sum(cache[(r, c)] for c in window) - sum(int(v) for v in after)
-    return fall - sum(read_fall for _where, _tallied, _notches, read_fall, *_rest in reads)
+    cause: int,
+    rec: int | None = None,
+) -> list[dict[str, Any]] | None:
+    """The one unwind act read and written at once, for a click whose phase holds it alone (the split hand's chime): `read_unwinds`, then the writes (`unwind_ends`). Returns each end's unwind, or None."""
+    read = read_unwinds(clock, ends, gearing, cause, rec)
+    return None if read is None else unwind_ends(clock, read[1], read[0])
 
 
 def summed(found: list[dict[str, Any]]) -> dict[str, Any]:
