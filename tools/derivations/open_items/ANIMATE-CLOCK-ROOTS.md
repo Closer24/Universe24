@@ -87,7 +87,21 @@ This page is a toy check for the plan. Nothing here is engine code. The toys are
 - The spin's coupling to the current (S . J, the A1 contraction, decided as item 5) carries each written direction into the next bang's light. It is what passes the arrow from bang to bang.
 - With a vector light, its A1 contraction with the twins' current (T1 x T1 holds A1), its strength one integer of the file.
 
-## 6. What stays open
+## 6. The choice carried into the next bang (the owner's word of 2026-10-28, 15:4x UTC)
+
+The owner's word (Hebrew, translated): "And try to reach the part where the draw, if it chooses one direction, then in the next bang perhaps the other direction is chosen. Do you understand what I am trying to achieve? That the detector's choice influences its choice in the next bang, for some reason."
+
+- **In clocks, the reason is the turnover.**
+  - The turnover is T on every gear, the clock's film run backward, and a spinning top in a backward film spins the other way: T sends S to -S.
+  - What a click wrote stands through the reversed run (item 11 (o), way 2), so a direction chosen in one bang comes into the next bang reversed: chosen up, it reads down there, and up again in the bang after.
+- **On the board** (twin_flip.py, the twin calibre at 5,000,000 quanta, T = J K):
+  - at each clock the two twins hold almost equal wind, and which twin holds more, the sign of the spin's z part, flips at every bang: up, down, up, down at clock (0, 0, 0) through the 7th to the 10th bangs, and the opposite at its three neighbours (the pair's other ends);
+  - at the 11th bang the new births of down twins write over the flip, and it stays down. CHECKED.
+- **So the choice is remembered, reversed, from bang to bang.** By itself it is a period of two, the palindrome both reviewers found, and the new clicks of each bang are what break it (way 2).
+- **What the owner asks for further,** a fresh draw whose odds the last choice moves, needs the last choice to reach the next draw's frame. In clocks, the reversed spin bends the light's lead through the spin's coupling to the current (S . J, item 5). The next fitting then lays its vector pair along that lead (law C), and the next detector draws in the frame the last choice left. OPEN: the next toy reads it.
+- In this toy no detector's click wrote the spins (the split chime fires 0 times here): the births and the twins' own motion wrote them. The turnover's flip acts on any record alike.
+
+## 7. What stays open
 
 - Pauli's exchange sign: law 7's premise, draft J.
 - Bell at a distance: Bell's theorem leaves no local law that gives it; the cone route stands within the common past.

@@ -23,5 +23,11 @@ The page is ANIMATE-CLOCK-ROOTS.md. These are toys that check whether a law woul
   - the light A1 alone stays at A1, and the light T1 alone reaches the 24's five kinds by bang 3;
   - with the twin hands all eight kinds stand at bang 4 (A1 light) or 3 (T1 light).
 
+## twin_flip.py: the choice carried into the next bang
+
+- **Beside many_bangs.py,** on draft C's tree at 33d9ecaa (copied here at its version for this run): the twin calibre, the dial variant read at the step, T = J K.
+- **It prints** which twin holds more at four clocks at every top and bottom.
+- **The output (twin_flip.txt):** up, down, up, down at clock (0, 0, 0) through the 7th to the 10th bangs, the opposite at its neighbours, and the flip overwritten by the new births of the 11th bang.
+
 ---
 Animate, reader-5.
