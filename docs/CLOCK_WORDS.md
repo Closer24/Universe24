@@ -1,6 +1,6 @@
 # The clock words
 
-The owner's words of 2026-10-27, 10:5x and 11:0x UTC, through the Boss, and his direct word of 11:3x UTC to the Scribe: every name in clock words, the documents and the law's text included, the system one big clock with many gears, one dictionary for everything. His direct word of 2026-10-28, 02:4x UTC, to the Scribe (in Hebrew, verbatim in translation): "I asked the Boss that the name click stay, and also that a node be called clock-node and not only clock. Because everything is clocks of strange sizes.. sync": two rows of this dictionary change, the click kept (the pass of 2026-10-27 had named it strike) and the node the Clock-node (the pass had named it Clock); the documents' prose was renamed in one pass on 2026-10-28 (ledger row 282: 3,424 places strike to click and 4,728 places Clock to Clock-node), the code spans, paths, file, branch and hypothesis names, the former-name quotes and the Reader's generated blocks kept as written. The dictionary is David's DAVID-CLOCK-NAMES.md (toys-5, tools/derivations/open_items/); this page is the part the documents apply, with the number of places each word was renamed on 2026-10-27.
+The owner's words of 2026-10-27, 10:5x and 11:0x UTC, through the Boss, and his direct word of 11:3x UTC to the Scribe: every name in clock words, the documents and the law's text included, the system one big clock with many gears, one dictionary for everything. His direct word of 2026-10-28, 02:4x UTC, to the Scribe (in Hebrew, verbatim in translation): "I asked the Boss that the name click stay, and also that a node be called clock-node and not only clock. Because everything is clocks of strange sizes.. sync": two rows of this dictionary change, the click kept (the pass of 2026-10-27 had named it strike) and the node the Clock-node (the pass had named it Clock); the documents' prose was renamed in one pass on 2026-10-28 (ledger row 282: 3,427 places strike to click and 4,728 places Clock to Clock-node), the code spans, paths, file, branch and hypothesis names, the former-name quotes and the Reader's generated blocks kept as written. The dictionary is David's DAVID-CLOCK-NAMES.md (toys-5, tools/derivations/open_items/); this page is the part the documents apply, with the number of places each word was renamed on 2026-10-27.
 
 ## The two levels
 
@@ -19,7 +19,7 @@ A line is a gear: a coarse wheel (the notch, the level of the former words) and 
 | the Node clock (Gamma) | full rate | the rate at the vacuum | 11 |
 | the Link's pace | mesh rate | the rate twice: the ruler | 66 |
 | proper count | dial | the clock's own dial: its rate summed over the ticks | 6 |
-| click | click (kept) | the click's act, and any event it makes: the name stays by the owner's word of 2026-10-28 (the pass of 2026-10-27 had named it strike) | 3,134 renamed, then 3,424 returned |
+| click | click (kept) | the click's act, and any event it makes: the name stays by the owner's word of 2026-10-28 (the pass of 2026-10-27 had named it strike) | 3,134 renamed, then 3,427 returned |
 | run back | rewind | every gear run backward | 265 |
 | universe file | calibre | the clock's design: its integers and trains | 168 |
 | world file | piece | one built clock: its calibre, size, ticks and setting | 73 |

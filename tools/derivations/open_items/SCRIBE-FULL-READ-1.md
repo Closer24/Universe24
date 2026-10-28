@@ -352,7 +352,7 @@ The two comments since the sync of section 20: David's of 02:28 (toys-5 b666e038
 
 ## 22. The register at the owner's names, the click kept and the Clock-node (2026-10-28, 03:0x UTC)
 
-The owner's direct word of 02:4x UTC to the Scribe (ledger row 282): the name click stays and a node is called clock-node. The documents' prose was renamed in one pass (3,424 places strike to click, 4,728 places Clock to Clock-node), the dictionary page CLOCK_WORDS.md amended; the engine head 97e5b3fd6 unchanged, no push of the Boss since 01:03 UTC. Sections 10 to 21 stand but for the words below, which the pass renamed.
+The owner's direct word of 02:4x UTC to the Scribe (ledger row 282): the name click stays and a node is called clock-node. The documents' prose was renamed in one pass (3,427 places strike to click, 4,728 places Clock to Clock-node), the dictionary page CLOCK_WORDS.md amended; the engine head 97e5b3fd6 unchanged, no push of the Boss since 01:03 UTC. Sections 10 to 21 stand but for the words below, which the pass renamed.
 
 **Departures and questions to name for the Boss, new:** (a) the code spelling of the two names (the class Clock, striking.py, strikes.py, the identifiers and the chart's keys named strike) is the Boss's; the documents hold the tree's names in code spans until his push; (b) the lowercase word clock naming a node in running text stands, for the Boss's word or the owner's; (c) the prose spelling Clock-node follows the law's proper nouns Mesh and Spoke.
 
