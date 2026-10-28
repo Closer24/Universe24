@@ -520,6 +520,25 @@ def test_the_bangs_heavy_matter_stays_silent_without_the_held_field() -> None:
             check_piece(piece, dict(calibre, rows=[row]))
 
 
+def test_the_bang_at_forty_times_its_quanta_falls_through_its_bottom_and_runs_on_and_back(
+    monkeypatch: Any,
+) -> None:
+    """The great clock whole through the bottom (the owner's word of 2026-10-27, 18:5x UTC: a whole engine that runs one big bang): the bang's seed at 40 times its quanta carries a clock's stretch through its bottom within tick 23, the end's mean teeth (T div 2)(X_now + X_new) at or below 0 there; at such a clock, which the turnover returns to its start, the driven carries and the release read the teeth at the tick's start (Tick.end_teeth), so the bang runs on through 30 ticks and its last 15 back exactly (it stopped at tick 23 with a division by 0)."""
+    calibre, piece = world_of("world_bang.json")
+    seed = [dict(piece["seed"][0], quanta=40 * piece["seed"][0]["quanta"])]
+    fell, end_teeth = [], tick.Tick.end_teeth
+
+    def counted(self: Any, time_gear: Gear) -> Any:
+        fell.append(int((readings.mean_teeth(self.clock, time_gear) <= 0).sum()))
+        return end_teeth(self, time_gear)
+
+    monkeypatch.setattr(tick.Tick, "end_teeth", counted)
+    clock = Clock(calibre, {**piece, "seed": seed})
+    for _ in range(15):
+        clock.tick()
+    assert run_back_exact(clock, 15) == 15 and sum(fell) > 0
+
+
 def test_the_books_close_at_every_striking_mergers_and_lays_alike(monkeypatch: Any) -> None:
     """The close's books (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off): on the one big bang's first 20 ticks, at every striking the board's wind lost (every hand's wind at the striking's start gearings, before less after) is the chimes' booked plus the remainder's rise, the mergers' two-ended cross terms and the lays' cross terms carried by the remainder; mergers among them."""
     calibre, piece = world_of("world_bang.json")
