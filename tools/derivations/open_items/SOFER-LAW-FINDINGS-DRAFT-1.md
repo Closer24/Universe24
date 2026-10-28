@@ -52,3 +52,22 @@ This file holds no law. It is Sofer's draft of what the reviews of Tensor24 (202
 - **F2 above Gamma (draft B):** e = 1 div (1 + k) is bound (1)'s clamp ("the tension in [0, Gamma]") spelt with a quotient that books nothing: the law's letter stands as a clamp until the crossing is a booked event.
 - **Bound (3) (draft C):** "no Node-clock's stretch moves by more than itself in one tick" (1909); the derived push's first step X1 = X0 (1 + 4 n / Gamma) breaks it above n = Gamma / 4, at the plan's own 500 quanta at Gamma 1,000: either the clamp stays or the bound goes.
 - Each enters the law only as the owner rules.
+
+## 8. The charge is not kept by the step on the coupled lattice (draft A; to enter on the owner's word)
+
+- **The law's text:** the Wronskian is "conserved by Rule3" (**The sign is the rotation sense**, docs/ALGEBRA.md; the charge is the Wronskian per quantum), and the plan's section 19 reads the charge's conservation as derived from the one formula.
+- **The finding (draft A, OPEN 1, p1_charge_books.txt; Sofer's law check 6468013453):** the sum over the Node-clocks of the sweep W is not kept by the step (law 2 with its carries and the Mesh's turn): the three coupled trains' charges change at 55, 51 and 44 of 60 ticks on nature, by up to 21,792 in one tick (1.2 e), and at 44, 46 and 48 ticks on the hole, by up to 40,028 (2.2 e); the bang keeps it through 12 ticks. It holds for a free hand and not for the coupled lattice.
+- **What the draft does with it, and why it is not accepted:** F4 and F5 state the conservation as the write's gate, [dQ = 0]: a refusal that makes the ledger's charge row unable to fail, a declaration against the owner's ledger decision of 10:3x and his word of 11:2x ("no declarations"). The gate may stand as a reading in the ledger and not as a refusal in the step.
+- **The sentence proposed, for the clause:** "The Wronskian of one hand is conserved by Rule3; the sum of the sweep over the coupled lattice is not kept by the step under the Mesh's turn (draft A, up to 2.2 e in one tick), and the conservation of the charge is a theorem of the free hand only. Status: a finding against the law's own claim, open: a carry of the step that keeps the sweep (David's)."
+
+## 9. The fitting's threshold does not depend on the mass (draft A; David's)
+
+- **The law's text:** the clauses on matter's fitting from light read a threshold at the rest energy (**Matter's fitting from light**, and the rows that read E = m c^2 at the fitting).
+- **The finding (draft A, p9_fitted_train.txt):** a fitted hand at one Node-clock costs the same wind for every train, 1,010,027 millionths of a light winding, the light lift, both heavy trains and the light itself; the light lift's own winding is 536 millionths of one, its fitted hand born holding 1,882 of its own windings and a remainder; a pair at its own rest form would cost rim / s light windings, 1,863 for the light lift. So no mass threshold stands in the one-Node-clock lay.
+- **Open:** what a fitted hand's shape is, so that a pair costs its own two quanta (David). The sentence waits on his answer.
+
+## 10. Draft A against the generic clause (the payer by integer)
+
+- **The law's text:** **The Node-clock and the Mesh are generic; there is no if** (docs/ALGEBRA.md 96): "no train known by a name, a role or its place in the list ... no case by number stands" (the owner's word of 2026-10-27, 15:5x: "There is no such thing as light's coupling").
+- **The finding:** draft A's F2, F3 and F5 take the payer and the receiver as "the hand whose c is 0", the light named by its integer; draft B's release takes the coupling as c_h = 1 - pinion div rim, the head's min(spring, 1) spelt as a quotient. Both single the unsprung hand out by value. The clause as worded strikes it; the payer has to be stated by a rule every train follows, or the owner rules.
+- **Not a finding against the law:** the pick of the fitted train by the couplings as sizes (a part of size 0 is never drawn and nobody is named).
