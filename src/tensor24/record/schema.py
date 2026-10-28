@@ -5,7 +5,7 @@ from dataclasses import dataclass
 # The lines, in the order (round, kind, site, train): Header first; then Whole, Split, Turnover, Rate and Books; End
 # last. The ledger's own file holds Ledger lines. The other records stand inside lines. A digest is SHA-256 in hex.
 MAJOR = 1  # a breaking change; the decoder upcasts an older major and refuses an unknown one
-MINOR = 1  # an added field; 1.1 names the operands and gives a coupling row its twelve fields (no 1.0 record holds one)
+MINOR = 1  # an added field; 1.1 names the operands, and the coupling row took its twelve fields at 1.1, before any record held one
 
 
 @dataclass(frozen=True)

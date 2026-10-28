@@ -281,3 +281,13 @@ def renamed(made, scale=lambda strength, target: strength):
 def test_the_rename_law_holds_and_fails_where_a_strength_is_read_by_its_target_trains_place(made):
     assert renamed(made)
     assert not renamed(made, lambda strength, target: strength * (target + 1))
+
+
+def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
+    """Sofer's fuzz of stage 6: no couplings or no gears key loads as none, and a board past one array is named."""
+    ks, c = made
+    bare = universe()
+    bare.pop("couplings")
+    assert load(bare, {}, SITES, ks, c)[1] == []
+    held, found = load(universe(), {"gears": []}, 1 << 64, ks, c)
+    assert held is None and len(found) == 1 and found[0].startswith("piece.shape: 17 rows at")

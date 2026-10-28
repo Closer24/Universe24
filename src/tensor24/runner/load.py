@@ -157,7 +157,13 @@ def plan(
 
 def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[Z, ...], list[str]]:
     """The setting's gears laid on the trains' rows, every going, dial, count and time at 0; a component off its train's, named."""
-    a, b, r = (np.zeros((sum(t.rows() for t in trains), sites), dtype=object) for _ in range(1 + 1 + 1))
+    rows = sum(t.rows() for t in trains)
+    try:
+        a, b, r = (np.zeros((rows, sites), dtype=object) for _ in range(1 + 1 + 1))
+    except (ValueError, MemoryError) as error:
+        return (), [
+            f"piece.shape: {rows} rows at {sites} sites, more than one array of this machine holds ({error})"
+        ]
     found = []
     for at, (train, component, site, now, before, tooth) in enumerate(gears):
         if component >= trains[train].rows():
@@ -202,6 +208,6 @@ def load(
     trains, found = trains_of(universe["trains"], labels, dims)
     if found:
         return None, found
-    planned, refused = plan(universe["couplings"], trains, c, labels, kinds.t1.shape[-1])
-    state, laid = lay(setting["gears"], trains, sites)
+    planned, refused = plan(universe.get("couplings", []), trains, c, labels, kinds.t1.shape[-1])
+    state, laid = lay(setting.get("gears", []), trains, sites)
     return (None if refused + laid else Loaded(trains, planned, state)), refused + laid

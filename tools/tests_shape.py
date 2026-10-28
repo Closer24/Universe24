@@ -558,6 +558,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         3,
         TENSOR24_LOAD,
     ),
+    "tests/test_the_tensor24_load.py::test_the_files_the_checker_holds_load_or_are_named_and_none_raises": (
+        8,
+        TENSOR24_LOAD,
+    ),
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (
         26,
         "The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): 20 bangs in 100 ticks within 128 bits under the three bounds, the held field in its universe, and under the order-free click and the one mirror its seed's symmetry standing through the run, every family born chiming one mesh apart at the board's own share exactly (the heavy family bound above it before them, the order's reading); the Boss's room by name.",
