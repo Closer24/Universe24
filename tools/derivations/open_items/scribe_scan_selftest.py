@@ -10,7 +10,9 @@ every change of the gate (SCRIBE-GATE-1.md): a rule that stops tripping would le
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import sys
+import tempfile
 from collections import Counter
 from pathlib import Path
 
@@ -36,6 +38,7 @@ NEW_RUNNER = "tensor24/runner/loop.py"
 NEW_DECODER = "tensor24/decoder/rows.py"
 NEW_READING = "tensor24/readings/wind.py"
 NEW_MESH = "tensor24/engine/mesh.py"
+NEW_ROOT = "tensor24/__init__.py"
 
 CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a for loop", ENGINE, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
@@ -1071,8 +1074,65 @@ TIERS: list[tuple[str, str, str, str, str]] = [
     ),
 ]
 
+# the paths the architect's table names: the package's own file and main.py at the root, the six folders (nested modules of a folder stand);
+# any other path has no wall written for it and is refused (the hostile reader's F2 on dce3c56bd)
+CASES += [
+    ("the package's own file holds a docstring alone", NEW_ROOT, '"""The package."""\n', {}),
+    ("the package's own file imports the standard library", NEW_ROOT, "import json\n", {}),
+    (
+        "the package's own file imports the engine",
+        NEW_ROOT,
+        "from tensor24 import engine\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the package's own file imports the runner",
+        NEW_ROOT,
+        "import tensor24.runner.loop\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the package's own file imports the current engine",
+        NEW_ROOT,
+        "import event_universe\n",
+        {"ISOLATE": 1},
+    ),
+    ("the package's own file imports numpy", NEW_ROOT, "import numpy as np\n", {"ISOLATE": 1}),
+    (
+        "a root module beside main.py",
+        "tensor24/extra.py",
+        '"""A module the table does not name."""\n',
+        {"ISOLATE": 1},
+    ),
+    (
+        "a root module that imports the engine and the runner",
+        "tensor24/extra.py",
+        "import tensor24.engine.step\nimport tensor24.runner.loop\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "a folder the table does not name",
+        "tensor24/misc/tool.py",
+        '"""A folder the table does not name."""\n',
+        {"ISOLATE": 1},
+    ),
+    (
+        "a nested module of a listed folder stands",
+        "tensor24/engine/inner/deep.py",
+        '"""A listed folder."""\n',
+        {},
+    ),
+    (
+        "main.py is a listed path",
+        NEW_MAIN,
+        '"""The one place that imports the engine and the runner."""\n',
+        {},
+    ),
+]
+
 
 IMPORTERS = {
+    "root": NEW_ROOT,
     "algebra": NEW_RING,
     "engine": NEW_STEP,
     "record": NEW_RECORD,
@@ -1095,6 +1155,7 @@ IMPORTED = {
 }
 # the architect's table: what each folder may import besides the standard library (and numpy, where it is named)
 MAY_IMPORT = {
+    "root": set(),
     "algebra": {"algebra"},
     "engine": {"algebra", "record", "engine"},
     "record": {"record"},
@@ -1180,7 +1241,44 @@ def main() -> int:
                 print(
                     f"PARTED  wall: {importer} importing {target}: the architect's table says {'yes' if may else 'no'}"
                 )
-    print(f"ok      the walls: {wall_cases} imports, every folder against every package")
+    print(f"ok      the walls: {wall_cases} imports, every folder and the root against every package")
+    # the floor: a merge base older than the floor is read as the floor, one at or after it as it stands (the hostile reader's F1)
+    floor_cases, kept_floor = 0, gate.FLOOR
+    with tempfile.TemporaryDirectory() as scratch:
+        git = [
+            "git",
+            "-C",
+            scratch,
+            "-c",
+            "user.name=selftest",
+            "-c",
+            "user.email=selftest@example.invalid",
+        ]
+        subprocess.run([*git, "init", "-q"], check=True)
+        shas = []
+        for message in ("old", "floor", "new"):
+            subprocess.run([*git, "commit", "-q", "--allow-empty", "-m", message], check=True)
+            shas.append(
+                subprocess.run(
+                    [*git, "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+                ).stdout.strip()
+            )
+        old, mid, new = shas
+        gate.FLOOR = mid
+        for label, found, tree, want in (
+            ("older than the floor, the tree holding it", old, new, mid),
+            ("at the floor", mid, new, mid),
+            ("after the floor", new, new, new),
+            ("older than the floor, the tree not holding it", old, old, old),
+        ):
+            floor_cases += 1
+            got = gate.floored(Path(scratch), found, tree)
+            if got != want:
+                parted += 1
+                print(f"PARTED  the floor: a merge base {label} gave {got[:9]}, wanted {want[:9]}")
+            else:
+                print(f"ok      the floor: a merge base {label}")
+    gate.FLOOR = kept_floor
     # the ratchet: a hit above the base's count is new, one at the base's count is not
     hits = gate.scan(ENGINE, "def f(a):\n    for x in a:\n        pass\n    for y in a:\n        pass\n")
     stands = Counter({("LOOP", ENGINE, "for"): 1})
@@ -1199,7 +1297,9 @@ def main() -> int:
         print(f"PARTED  a new package: a clamp and a number gave {len(fresh)} new, not 2")
     else:
         print("ok      a new package: every hit in it is new")
-    print(f"selftest: {len(CASES) + tier_cases + closed_cases + wall_cases + 2} cases, {parted} parted")
+    print(
+        f"selftest: {len(CASES) + tier_cases + closed_cases + wall_cases + floor_cases + 2} cases, {parted} parted"
+    )
     return 1 if parted else 0
 
 
