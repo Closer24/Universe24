@@ -293,3 +293,18 @@ The Boss's head (ledger row 272) read whole: the five files of src it moved (eve
 **Verified by the Scribe's runs:** the bang at 250 ticks on the head at the weight 2, at 3 and with no field, and the one chart of 1,000 ticks cut at four ticks (the Boss's counts and tallies integer for integer; the cuts as in row 272).
 
 **Asked of the owner, as in section 17:** R12 with R1 (its rest, G1, G3, G4 and G5); the coupling's general form K / Gamma (Y-S1); the third bound's tick resolution; the remainder's one mirror about its origin (F48-S1, with its price: the fold silences the hole and the swap parts at the tick 9); the field's reach to the regulator's spring; a composite family for fusion.
+
+## 19. The register at 97e5b3fd6, the great clock through its bottom (2026-10-28, 01:1x UTC)
+
+The Boss's head (ledger row 274) read whole: the one file of src it moved (tick.py, 9 added and 3 taken; 6,918 lines under src, six more), tests/test_the_record.py (the bang at 40 times its quanta), tools/tests_shape.py and the hole's chart; the counts by `tools/engine_gates.py` against e910698f9 and the Scribe's lister and AST scan. Sections 10 to 18 stand but for what is added below.
+
+**The counts, unchanged from e910698f9:** numbers beyond 0 and 1, 24 in 7 files; identity reads of the unsprung hand 18 in 7 files; branches by `is`, 8 in 4 files; `coupling_of` 13 calls in 6 files; family-name strings 0, floats 0, true divisions 0, no import of math or trigonometry. Src 6,918 lines in 23 top-level modules; the tests 6 files and 63 functions; the full check 117 passed.
+
+**Standing, with what the head changes:**
+
+- **The floor at the symptom:** Tick.end_teeth (tick.py:289) reads the mean teeth of the tick's start where the end's are not above 0 (`np.where`, the idiom of tick.py:78 and :108); the bound for the whole step, |X_new - X_now| <= X_now, and a floor that keeps a stretch off its bottom within a tick stand open, the Boss names them for David; bound (3) stays asked of the owner (row 256).
+- **David's R12 rest (ledger row 273):** the take as one act by the coupling (the payer's own quantum given back at -1: the whole notches at c = 1, one notch at c = 0), the chime's payer, the release and the setting's seas fold by the coupling bit for bit and are unbuilt in the engine; the local book (each child paid at its own end) moves the charts, for the owner; two uncoupled hands would split the release and the chime's payer between them; the identity branches that remain (unspring.py:163 and :250, setting.py:49, :55, :65 and :77, striking.py:187, run.py:205) would become reads of the coupling, R2 growing once more.
+- **The weight (ledger row 273):** the bang decides none; the weight 2 stays on e910698f9, its derivation open and the owner's; the unit (one weight, no key) keeps the binding on 42e9fb4af and loses it on e910698f9.
+- **R2, R12's rest, R1, R5 and the others:** as sections 17 and 18.
+
+**Asked of the owner, as in section 18, with the local book, the weight's derivation and the bound for the whole step.**
