@@ -742,3 +742,1278 @@ print(f"  pure (det D = 0, |S| = |W|): {pure}; worse (det D < 0, |S| > |W|): {wo
 print(f"  the phase reversal on the real gears reads (W, -S): failures {rev_fail} of {sites}")
 print(f"  the phase reversal twice is -1 on the real gears: failures {tt_fail} of {sites}")
 sys.exit(1 if pos_det or rev_fail or tt_fail else 0)
+
+== THE SECOND HAND (protocol step 5): an independent exact probe written from the claims alone, rerun by David ==
+
+== python3 indep_algebra.py (in its own folder, beside exact.py; about 70 s) ==
+C1  invariant bilinear forms of the 24 on every kind (exact elimination over Q(i))
+    E1/2  [Q=diag(1-i,1+i)]: dim 1, antisymmetric
+    E5/2  [Q=diag(1-i,1+i)]: dim 1, antisymmetric
+    G3/2  [Q=diag(1-i,1+i)]: dim 1, antisymmetric
+    A1    [Q=diag(1-i,1+i)]: dim 1, symmetric
+    A2    [Q=diag(1-i,1+i)]: dim 1, symmetric
+    E     [Q=diag(1-i,1+i)]: dim 1, symmetric
+    T1    [Q=diag(1-i,1+i)]: dim 1, symmetric
+    T2    [Q=diag(1-i,1+i)]: dim 1, symmetric
+    E1/2  [Q=diag(1,i)]: dim 1, antisymmetric
+    E5/2  [Q=diag(1,i)]: dim 1, antisymmetric
+    G3/2  [Q=diag(1,i)]: dim 1, antisymmetric
+    A1    [Q=diag(1,i)]: dim 1, symmetric
+    A2    [Q=diag(1,i)]: dim 1, symmetric
+    E     [Q=diag(1,i)]: dim 1, symmetric
+    T1    [Q=diag(1,i)]: dim 1, symmetric
+    T2    [Q=diag(1,i)]: dim 1, symmetric
+  C1a one line of invariant forms on each kind (both quarter-turn spellings): cases 16, failures 0
+  C1b the line antisymmetric on E1/2, E5/2, G3/2, symmetric on A1, A2, E, T1, T2: cases 16, failures 0
+  C1c the solved form satisfies every generator's condition (direct substitution): cases 80, failures 0
+  C1d on the twins the line is [[0,1],[-1,0]]: cases 2, failures 0
+    forms: E1/2 [[G(0, 0), G(1, 0)], [G(-1, 0), G(0, 0)]]
+           E    [[G(1, 0), G(-1/2, 0)], [G(-1/2, 0), G(1, 0)]]
+           T1   [[G(1, 0), G(0, 0), G(0, 0)], [G(0, 0), G(1, 0), G(0, 0)], [G(0, 0), G(0, 0), G(1, 0)]]
+  C1e twins' generator scales det = 2^k (X,Y,Z: 1; quarter: 2; third: 4): cases 5, failures 0
+  C1f the diagonal closure of the eight kinds' generators is one group of 48: cases 1, failures 0
+  C1g each kind's image order (48,48,48,1,2,6,24,24): cases 8, failures 0
+  C1h characters: (1/48) sum chi(g)^2 = 1 on every kind (dim of invariant forms): cases 8, failures 0
+  C1i Frobenius-Schur (1/48) sum chi(g^2) = -1 spinorial, +1 on O's kinds: cases 8, failures 0
+  C1j the element -1 of the twins: -1 on E5/2 and G3/2, +1 on O's kinds: cases 8, failures 0
+  C1k T1's matrices are the twins' rotations (adjoint), both quarter spellings: cases 10, failures 0
+    image orders {'E1/2': 48, 'E5/2': 48, 'G3/2': 48, 'A1': 1, 'A2': 2, 'E': 6, 'T1': 24, 'T2': 24}; group order 48; FS {'E1/2': '-1', 'E5/2': '-1', 'G3/2': '-1', 'A1': '1', 'A2': '1', 'E': '1', 'T1': '1', 'T2': '1'}
+    M1a dimension 0
+    M1b dimension 0
+    M1c dimension 2
+    M1d dimension 2
+    M1e closure over the cap of 4000; forms dim 0
+    M1f closure 192
+
+C2  the twins' phase reversal from B: T phi = conj(B^T phi)
+  C2a conj(B^T phi) = (-conj z2, conj z1) on the twins: cases 22401, failures 0
+  C2b T T = -1 on the twins: cases 22401, failures 0
+  C2c <T phi, phi> = 0: cases 22401, failures 0
+  C2d the matrix conj(B^T) B^T: -1 on the twins, +1 on A1 and T1: cases 3, failures 0
+  C2e T z = conj z and T T z = z on A1 (from A1's B): cases 5049, failures 0
+  C2f T = conj and T T = +1 on T1 (from T1's B): cases 5729, failures 0
+  C2g <T phi, chi> = B(phi, chi): cases 26561, failures 0
+  C2h B(chi, phi) = -B(phi, chi): cases 26561, failures 0
+  MUTANT M2a T without its minus: <T phi, phi> = 0: caught 21431 of 22401
+  MUTANT M2b T without its minus: T T = -1: caught 22400 of 22401
+  MUTANT M2c T as the plain conjugation: <T phi, phi> = 0: caught 21302 of 22401
+
+C3, C4  pair gears (any n, b): the board's phase reversal and the one field's reading
+  C3o every reading Hermitian with a real determinant: cases 26561, failures 0
+  C3a the board's phase reversal reads (W, -S): cases 26561, failures 0
+  C3b applied twice it negates every gear: cases 26561, failures 0
+  C3c mutant without the exchange: W changes sign (W' = -W, S' = S): cases 26561, failures 0
+  MUTANT M3a without the exchange: reads (W, -S) [cases with W != 0]: caught 23266 of 23266
+  MUTANT M3b T without its minus: twice is -1 [nonzero gears]: caught 26560 of 26560
+  C4a det D <= 0: cases 26561, failures 0
+  C4b W^2 - S.S = 4 det D: cases 26561, failures 0
+  C4c det D = -N(n_u b_d - n_d b_u): cases 26561, failures 0
+  C4d S = 0 only with W = 0: one field never reads (W,0) or (2W,0), W != 0: cases 26561, failures 0
+  MUTANT M4a two hands summed (phi and its reversal, separate gears): det <= 0 [W != 0]: caught 23266 of 23266
+  MUTANT M4b two independent pairs' readings summed: det <= 0: caught 605 of 26560
+    of 26561 gear sets: 558 pure readings (det 0, nonzero)
+
+C5  turning hands phi (by t1), chi (by t2), Im t != 0: the split share
+  C5a share = N(<T phi, chi>) / (N(phi) N(chi)): cases 26400, failures 0
+  C5b share = 1 - N(<phi, chi>) / (N(phi) N(chi)): cases 26400, failures 0
+  C5c 0 <= share <= 1: cases 26400, failures 0
+  C5d (info) the share is independent of t1, t2: equals the t = i share: cases 26400, failures 0
+  C5e chi a Gaussian multiple of phi: share 0: cases 6000, failures 0
+  C5f (info) chi a Gaussian multiple of T phi: share 1: cases 6000, failures 0
+  MUTANT M5a detector without the reversal (phi's own reading): share as claimed: caught 24503 of 26400
+  MUTANT M5b reversal with T without its minus: share as claimed: caught 20949 of 26400
+    note: the reversal WITHOUT the exchange gives the same share in 26400 of 26400 cases (the share is unchanged when the detector's (W_d, m) is negated)
+
+C6  two hands: phi's gears and their reversal, on separate gears and on one field
+  C6a separate gears: the summed reading is (2W, 0): cases 6000, failures 0
+  C6b separate gears: free size (2u - rho) rho_d - S.m = 0 for every newcomer: cases 240000, failures 0
+  C6c one field (gears added): the reading is never (2W, 0) [W != 0]: cases 5805, failures 0
+  C6d (info) one field: its W is exactly 2W and S.S >= 4 W^2: cases 5805, failures 0
+  C6e one field: the free size takes both signs over the newcomers [W != 0]: cases 5805, failures 0
+  MUTANT M6a separate gears, reversal without the exchange: summed reading (2W, 0) [W != 0]: caught 5805 of 5805
+  MUTANT M6b one field: free size 0 for every newcomer [W != 0]: caught 5805 of 5805
+    195 base cases had W = 0 (left out of the [W != 0] checks)
+
+C7  ring of L = 5 node-clocks, 2 components: O(x) <= 1 for exact Gram-Schmidt hands
+  C7a the hands are mutually orthogonal (exact <phi_j, phi_k> = 0): cases 49500, failures 0
+  C7b 1 - O(x) has trace >= 0 and det >= 0 at every node-clock: cases 15000, failures 0
+  C7c (info) O(x) >= 0 and sum_x tr O(x) = K: cases 18000, failures 0
+  C7d (info) with K = 10 hands, O(x) = 1 exactly: cases 1500, failures 0
+  MUTANT M7a hands not orthogonalised: O(x) <= 1: caught 1450 of 2700
+  MUTANT M7b normalised by the node's own N(phi_k(x)): O(x) <= 1: caught 2700 of 3000
+    3000 trials, K = 1..10 hands, entries up to 100
+
+C8  force carriers: the pair's size against the room, and the pairing's own size
+  C8a A1 scalars: N(z)N(w) + N(<z,w>) >= N(z)N(w): cases 22401, failures 0
+  C8b T1 Gaussian triples: N(z)N(w) + N(<z,w>) >= N(z)N(w): cases 551441, failures 0
+  C8c the circular a = (1, i, 0): N(a . a) = 0, and so at its images under the 48 (T1's 24 rotations, each twice): cases 49, failures 0
+  MUTANT M8a the twins' free size N(<T phi,chi>) in place of the pair's size: >= the room: caught 25805 of 26400
+  MUTANT M8b linear polarisations (1,0,0), (1,1,0), (1,1,1): N(a . a) = 0: caught 3 of 3
+    strictly above the room: A1 22304 of 22401, T1 516888 of 551441; isotropic nonzero triples in [-1,1]^6: 48 of 728; isotropic A1 scalars in [-3,3]^2: 0
+
+VERDICT: 45 checks, 1382662 cases, 0 failures; 21 mutants, 21 caught; empty checks 0; 70 s
+
+== venv314/bin/python indep_head.py (about 13 s) ==
+C9  the twin world: 3 rows made twin hands, twin pairs [(0, 1), (2, 3), (4, 5)], board (5, 5, 5), ticks 0..30
+  C9o every gear notch of the twin hands is a Python int: cases 744, failures 0
+  C9p the twin pairs stay the same at every tick: cases 31, failures 0
+  C9q every reading Hermitian with a real det: cases 11625, failures 0
+  C9r D_aa = 2 x the head's own hands.sweep, real and reversed gears: cases 11625, failures 0
+  C9a det D <= 0: cases 11625, failures 0
+  C9b (info) W^2 - S.S = 4 det D and det D = -N(n_u b_d - n_d b_u): cases 11625, failures 0
+  C9c the board's phase reversal on the real gears reads (W, -S): cases 11625, failures 0
+  C9d (consistency) the array reversal equals T on the node's Gaussians: cases 11625, failures 0
+  C9e applied twice, every gear negated (-1): cases 11625, failures 0
+  MUTANT M9a reversal without the exchange on the real gears: reads (W, -S) [W != 0]: caught 3504 of 3504
+  MUTANT M9b T without its minus, applied twice: -1 [nonzero gears]: caught 4394 of 4394
+  MUTANT M9c the real gears' reading plus their reversal's (two hands): det <= 0 [W != 0]: caught 3504 of 3504
+    readings 11625 (31 ticks x 3 pairs x 125 node-clocks): zero 8092, pure (det 0, nonzero) 499, worse (det < 0) 3034; W != 0 in 3504
+    largest (S.S - W^2)/W^2 among the worse readings: 62483.222 (there W^2 has 2 digits)
+    worse readings with W != 0 by (S.S - W^2)/W^2: {'<1': 1199, '<1e-3': 18, '<1e3': 1723, '>=1e3': 65}; largest |notch| of a twin gear 151
+    per tick (tick, zero, pure, worse): 0:375/0/0 1:375/0/0 2:375/0/0 3:375/0/0 4:375/0/0 5:373/2/0 6:373/0/2 7:368/0/7 8:359/0/16 9:345/4/26 10:330/2/43 11:298/7/70 12:260/13/102 13:239/10/126 14:228/15/132 15:219/13/143 16:208/17/150 17:199/23/153 18:192/30/153 19:190/30/155 20:189/30/156 21:188/29/158 22:187/29/159 23:187/29/159 24:187/28/160 25:185/30/160 26:184/30/161 27:182/32/161 28:183/31/161 29:183/31/161 30:181/34/160
+VERDICT: 9 checks, 82150 cases, 0 failures; 3 of 3 mutants caught; 13 s
+
+== venv314/bin/python -I head_signs.py <repo> (David's count of the twins' sweep signs where both hold wind) ==
+readings with wind: one twin's sweep 0: 943; both nonzero with opposite signs: 1395; with the same sign: 1189
+
+== exact.py (the second hand's) ==
+"""Exact arithmetic for an independent probe of the Pauli derivation.
+
+Gaussian numbers are (re, im) pairs whose parts are Python ints (Gaussian integers) or
+fractions.Fraction (the field Q(i), needed only for elimination, shares and Gram-Schmidt).
+A float, a complex or any other type is refused at construction, so no inexact number can
+enter. Matrices are lists of rows of G. Written from the definitions given to the second
+hand; it shares no code with any other probe.
+"""
+
+from __future__ import annotations
+
+from fractions import Fraction
+
+
+def _exact(x):
+    t = type(x)
+    if t is int or t is Fraction:
+        return x
+    raise TypeError(f"inexact number {x!r} of type {t.__name__} refused")
+
+
+class G(tuple):
+    """re + i im as the pair (re, im), parts int or Fraction only."""
+
+    __slots__ = ()
+
+    def __new__(cls, re=0, im=0):
+        return tuple.__new__(cls, (_exact(re), _exact(im)))
+
+    @property
+    def re(self):
+        return self[0]
+
+    @property
+    def im(self):
+        return self[1]
+
+    def __add__(self, o):
+        o = lift(o)
+        return G(self[0] + o[0], self[1] + o[1])
+
+    def __radd__(self, o):
+        return self.__add__(o)
+
+    def __sub__(self, o):
+        o = lift(o)
+        return G(self[0] - o[0], self[1] - o[1])
+
+    def __rsub__(self, o):
+        o = lift(o)
+        return G(o[0] - self[0], o[1] - self[1])
+
+    def __neg__(self):
+        return G(-self[0], -self[1])
+
+    def __mul__(self, o):
+        o = lift(o)
+        a, b = self[0], self[1]
+        c, d = o[0], o[1]
+        return G(a * c - b * d, a * d + b * c)
+
+    def __rmul__(self, o):
+        return self.__mul__(o)
+
+    def conj(self):
+        return G(self[0], -self[1])
+
+    def norm(self):
+        return self[0] * self[0] + self[1] * self[1]
+
+    def inv(self):
+        n = self.norm()
+        if n == 0:
+            raise ZeroDivisionError("inverse of 0")
+        return G(Fraction(self[0]) / n, Fraction(-self[1]) / n)
+
+    def __truediv__(self, o):
+        return self * lift(o).inv()
+
+    def zero(self):
+        return self[0] == 0 and self[1] == 0
+
+    def real(self):
+        return self[1] == 0
+
+    def __repr__(self):
+        return f"G({self[0]}, {self[1]})"
+
+
+def lift(x):
+    return x if isinstance(x, G) else G(x, 0)
+
+
+I = G(0, 1)
+ONE = G(1, 0)
+ZERO = G(0, 0)
+
+
+# ---------------------------------------------------------------- matrices over Q(i)
+def mat(rows):
+    return [[lift(x) for x in r] for r in rows]
+
+
+def eye(n):
+    return [[ONE if r == c else ZERO for c in range(n)] for r in range(n)]
+
+
+def mmul(A, B):
+    return [[sum((A[r][k] * B[k][c] for k in range(len(B))), ZERO) for c in range(len(B[0]))] for r in range(len(A))]
+
+
+def tr(A):
+    return sum((A[k][k] for k in range(len(A))), ZERO)
+
+
+def transpose(A):
+    return [list(r) for r in zip(*A)]
+
+
+def conjm(A):
+    return [[x.conj() for x in r] for r in A]
+
+
+def dagger(A):
+    return transpose(conjm(A))
+
+
+def scal(c, A):
+    c = lift(c)
+    return [[c * x for x in r] for r in A]
+
+
+def madd(A, B):
+    return [[x + y for x, y in zip(ra, rb)] for ra, rb in zip(A, B)]
+
+
+def msub(A, B):
+    return [[x - y for x, y in zip(ra, rb)] for ra, rb in zip(A, B)]
+
+
+def meq(A, B):
+    return all(x == y for ra, rb in zip(A, B) for x, y in zip(ra, rb)) and len(A) == len(B)
+
+
+def kron(A, B):
+    """(A kron B)[(i,k),(j,l)] = A[i][j] B[k][l]."""
+    nb, mb = len(B), len(B[0])
+    return [[A[r // nb][c // mb] * B[r % nb][c % mb] for c in range(len(A[0]) * mb)] for r in range(len(A) * nb)]
+
+
+def blockdiag(A, B):
+    n, m = len(A), len(B)
+    out = [[ZERO] * (n + m) for _ in range(n + m)]
+    for r in range(n):
+        for c in range(n):
+            out[r][c] = A[r][c]
+    for r in range(m):
+        for c in range(m):
+            out[n + r][n + c] = B[r][c]
+    return out
+
+
+def det(A):
+    """Exact determinant over Q(i) by elimination."""
+    A = [list(r) for r in A]
+    n, d = len(A), ONE
+    for c in range(n):
+        p = next((r for r in range(c, n) if not A[r][c].zero()), None)
+        if p is None:
+            return ZERO
+        if p != c:
+            A[c], A[p] = A[p], A[c]
+            d = -d
+        d = d * A[c][c]
+        inv = A[c][c].inv()
+        for r in range(c + 1, n):
+            if not A[r][c].zero():
+                f = A[r][c] * inv
+                A[r] = [x - f * y for x, y in zip(A[r], A[c])]
+    return d
+
+
+def nullspace(rows, ncols):
+    """A basis of {v : rows v = 0} over Q(i), by exact reduced row echelon form."""
+    A = [list(r) for r in rows]
+    pivots, r = [], 0
+    for c in range(ncols):
+        p = next((k for k in range(r, len(A)) if not A[k][c].zero()), None)
+        if p is None:
+            continue
+        A[r], A[p] = A[p], A[r]
+        inv = A[r][c].inv()
+        A[r] = [x * inv for x in A[r]]
+        for k in range(len(A)):
+            if k != r and not A[k][c].zero():
+                f = A[k][c]
+                A[k] = [x - f * y for x, y in zip(A[k], A[r])]
+        pivots.append(c)
+        r += 1
+        if r == len(A):
+            break
+    basis = []
+    for f in (c for c in range(ncols) if c not in pivots):
+        v = [ZERO] * ncols
+        v[f] = ONE
+        for k, pc in enumerate(pivots):
+            v[pc] = -A[k][f]
+        basis.append(v)
+    return basis
+
+
+# ---------------------------------------------------------------- spinors, readings
+def inner(u, v):
+    """<u, v> = sum of conj(u_a) v_a."""
+    return sum((a.conj() * b for a, b in zip(u, v)), ZERO)
+
+
+def bil(u, B, v):
+    """The bilinear form u^T B v (no conjugation)."""
+    return sum((u[p] * B[p][q] * v[q] for p in range(len(u)) for q in range(len(v))), ZERO)
+
+
+def nrm(u):
+    """N(u) = sum of N(u_a)."""
+    return sum((a.norm() for a in u), 0)
+
+
+def T(phi):
+    """The twins' phase reversal T(z1, z2) = (-conj z2, conj z1)."""
+    z1, z2 = phi
+    return (-z2.conj(), z1.conj())
+
+
+def board(n, b, t=None):
+    """The board's phase reversal of a pair's gears: (n, b) -> (T(b), T(n)); T looked up at call time."""
+    t = T if t is None else t
+    return t(b), t(n)
+
+
+def Dmatrix(n, b):
+    """D_ac = i (conj(b_a) n_c - conj(n_a) b_c)."""
+    return [[I * (b[a].conj() * n[c] - n[a].conj() * b[c]) for c in (0, 1)] for a in (0, 1)]
+
+
+class Reading:
+    __slots__ = ("D", "W", "S", "det", "hermitian")
+
+    def __init__(self, n, b):
+        D = Dmatrix(n, b)
+        self.D = D
+        self.hermitian = D[0][0].real() and D[1][1].real() and D[1][0] == D[0][1].conj()
+        self.W = D[0][0].re + D[1][1].re
+        self.S = (2 * D[0][1].re, -2 * D[0][1].im, D[0][0].re - D[1][1].re)
+        d = D[0][0] * D[1][1] - D[0][1] * D[1][0]
+        self.hermitian = self.hermitian and d.real()
+        self.det = d.re
+
+    def ws(self):
+        return (self.W, self.S)
+
+    def zero(self):
+        return all(x.zero() for r in self.D for x in r)
+
+
+def dot3(a, b):
+    return sum((x * y for x, y in zip(a, b)), 0)
+
+
+def split_share(W, S, Wd, m):
+    """(W W_d + S . m) / (2 W W_d), exact."""
+    return Fraction(W * Wd + dot3(S, m), 2 * W * Wd)
+
+
+class Tally:
+    """A claim's count: cases and failures, or a mutant's count: cases and catches."""
+
+    rows: list = []
+
+    def __init__(self, label, mutant=False):
+        self.label, self.mutant, self.cases, self.bad = label, mutant, 0, 0
+        Tally.rows.append(self)
+
+    def add(self, ok):
+        self.cases += 1
+        if not ok:
+            self.bad += 1
+        return ok
+
+    def line(self):
+        if self.mutant:
+            return f"  MUTANT {self.label}: caught {self.bad} of {self.cases}" + ("" if self.bad else "   <-- NOT CAUGHT")
+        return f"  {self.label}: cases {self.cases}, failures {self.bad}" + ("" if not self.bad else "   <-- FAILS")
+
+    @classmethod
+    def verdict(cls):
+        claims_bad = [t for t in cls.rows if not t.mutant and t.bad]
+        mutants_missed = [t for t in cls.rows if t.mutant and not t.bad]
+        empty = [t for t in cls.rows if t.cases == 0]
+        return claims_bad, mutants_missed, empty
+
+== indep_algebra.py (the second hand's) ==
+#!/usr/bin/env python3
+"""Second hand's independent exact probe of David's Pauli derivation, claims C1 to C8.
+
+Exact arithmetic only (exact.py: Gaussian numbers as (re, im) pairs of int or Fraction; floats
+and complex refused). Every check counts its cases and failures; every mutant counts its
+catches; the run exits 1 if a claim fails, a mutant is never caught, or a check has no case.
+"""
+
+from __future__ import annotations
+
+import itertools
+import random
+import sys
+import time
+from fractions import Fraction
+
+from exact import (
+    I, ONE, ZERO, G, Reading, Tally, T, bil, blockdiag, board, conjm, dagger, det, dot3, eye,
+    inner, kron, lift, mat, meq, mmul, nrm, nullspace, scal, split_share, tr, transpose,
+)
+
+T0 = time.time()
+rng = random.Random(20261028)
+MAGS = (1, 2, 3, 10, 1000, 10**9, 10**20)
+
+
+def say(s=""):
+    print(s, flush=True)
+
+
+def rg(R):
+    return G(rng.randint(-R, R), rng.randint(-R, R))
+
+
+def rspinor(R=None, size=2):
+    R = R or rng.choice(MAGS)
+    while True:
+        s = tuple(rg(R) for _ in range(size))
+        if not all(x.zero() for x in s):
+            return s
+
+
+def rturn():
+    R = rng.choice(MAGS)
+    while True:
+        t = rg(R)
+        if t.im != 0:
+            return t
+
+
+def box(k, lo, hi):
+    """Every tuple of k Gaussian integers with parts in [lo, hi]."""
+    for parts in itertools.product(range(lo, hi + 1), repeat=2 * k):
+        yield tuple(G(parts[2 * j], parts[2 * j + 1]) for j in range(k))
+
+
+def neg(v):
+    return tuple(-x for x in v)
+
+
+def scale(g, v):
+    return tuple(g * x for x in v)
+
+
+def vadd(u, v):
+    return tuple(a + b for a, b in zip(u, v))
+
+
+def diag(*xs):
+    n = len(xs)
+    return mat([[xs[r] if r == c else 0 for c in range(n)] for r in range(n)])
+
+
+# ==================================================================================== C1
+say("C1  invariant bilinear forms of the 24 on every kind (exact elimination over Q(i))")
+GENS = ("X", "Y", "Z", "Q", "C")
+Xt = mat([[0, -I], [-I, 0]])
+Yt = mat([[0, -1], [1, 0]])
+Zt = mat([[-I, 0], [0, I]])
+Qa = mat([[1 - I, 0], [0, 1 + I]])
+Qb = mat([[1, 0], [0, I]])
+Ct = mat([[1 - I, -1 - I], [1 - I, 1 + I]])
+E_ = {"X": eye(2), "Y": eye(2), "Z": eye(2), "Q": mat([[-1, 1], [0, 1]]), "C": mat([[0, -1], [1, -1]])}
+A1 = {g: mat([[1]]) for g in GENS}
+A2 = {g: mat([[-1 if g == "Q" else 1]]) for g in GENS}
+CYC = mat([[0, 0, 1], [1, 0, 0], [0, 1, 0]])  # e_x -> e_y -> e_z -> e_x (columns are the images)
+T1 = {"X": diag(1, -1, -1), "Y": diag(-1, 1, -1), "Z": diag(-1, -1, 1), "Q": mat([[0, -1, 0], [1, 0, 0], [0, 0, 1]]), "C": CYC}
+T2 = dict(T1, Q=scal(-1, T1["Q"]))
+UNIT = {g: ONE for g in GENS}
+
+
+def twins(Q):
+    return {"X": Xt, "Y": Yt, "Z": Zt, "Q": Q, "C": Ct}
+
+
+def kinds(Q):
+    tw = twins(Q)
+    e52 = dict(tw, Q=scal(-1, Q))
+    g32 = {g: kron(tw[g], E_[g]) for g in GENS}
+    lam_t = {g: det(tw[g]) for g in GENS}
+    return {
+        "E1/2": (tw, lam_t, True),
+        "E5/2": (e52, {g: det(e52[g]) for g in GENS}, True),
+        "G3/2": (g32, lam_t, True),  # the scale is the twins' factor's: (U_t kron M_E)^T B (..) = B
+        "A1": (A1, UNIT, False),
+        "A2": (A2, UNIT, False),
+        "E": (E_, UNIT, False),
+        "T1": (T1, UNIT, False),
+        "T2": (T2, UNIT, False),
+    }
+
+
+def invariant_forms(gens, lam, names=GENS):
+    """Solve M^T B M = lam(M) B for every generator, B unknown, exactly; a basis of the solutions."""
+    n = len(gens[names[0]])
+    rows = []
+    for g in names:
+        M, l = gens[g], lam[g]
+        for r in range(n):
+            for s in range(n):
+                rows.append([M[p][r] * M[q][s] - (l if (p, q) == (r, s) else ZERO) for p in range(n) for q in range(n)])
+    return [[[v[p * n + q] for q in range(n)] for p in range(n)] for v in nullspace(rows, n * n)]
+
+
+def normalised(B):
+    first = next(x for r in B for x in r if not x.zero())
+    return [[x / first for x in r] for r in B]
+
+
+def shape_of(B):
+    Bt = transpose(B)
+    return "symmetric" if meq(Bt, B) else "antisymmetric" if meq(Bt, scal(-1, B)) else "neither"
+
+
+EXPECT = {"E1/2": "antisymmetric", "E5/2": "antisymmetric", "G3/2": "antisymmetric",
+          "A1": "symmetric", "A2": "symmetric", "E": "symmetric", "T1": "symmetric", "T2": "symmetric"}
+t_line = Tally("C1a one line of invariant forms on each kind (both quarter-turn spellings)")
+t_shape = Tally("C1b the line antisymmetric on E1/2, E5/2, G3/2, symmetric on A1, A2, E, T1, T2")
+t_verify = Tally("C1c the solved form satisfies every generator's condition (direct substitution)")
+t_det = Tally("C1d on the twins the line is [[0,1],[-1,0]]")
+FORMS = {}
+for qname, Q in (("diag(1-i,1+i)", Qa), ("diag(1,i)", Qb)):
+    for kname, (gens, lam, _scaled) in kinds(Q).items():
+        basis = invariant_forms(gens, lam)
+        t_line.add(len(basis) == 1)
+        if len(basis) != 1:
+            say(f"    {kname} [{qname}]: dimension {len(basis)}")
+            continue
+        B = normalised(basis[0])
+        FORMS[(kname, qname)] = B
+        for g in GENS:
+            t_verify.add(meq(mmul(transpose(gens[g]), mmul(B, gens[g])), scal(lam[g], B)))
+        t_shape.add(shape_of(B) == EXPECT[kname])
+        if kname == "E1/2":
+            t_det.add(meq(B, mat([[0, 1], [-1, 0]])))
+        say(f"    {kname:5s} [Q={qname}]: dim 1, {shape_of(B)}")
+for t in (t_line, t_shape, t_verify, t_det):
+    say(t.line())
+say("    forms: E1/2 " + repr(FORMS[("E1/2", "diag(1-i,1+i)")]) )
+say("           E    " + repr(FORMS[("E", "diag(1-i,1+i)")]))
+say("           T1   " + repr(FORMS[("T1", "diag(1-i,1+i)")]))
+
+# ---- C1 second route: the group closure of all kinds at once, characters and Frobenius-Schur
+KEXP = {"X": 0, "Y": 0, "Z": 0, "Q": 1, "C": 2}  # det of the twins' generator = 2^k, U = M / sqrt(2)^k
+t_scale = Tally("C1e twins' generator scales det = 2^k (X,Y,Z: 1; quarter: 2; third: 4)")
+for g in GENS:
+    t_scale.add(det(twins(Qa)[g]) == lift(2 ** KEXP[g]))
+
+
+def canon(M, k):
+    while k >= 2:
+        M = [[x / 2 for x in r] for r in M]
+        k -= 2
+    return M, k
+
+
+def keyof(el):
+    return tuple((k, tuple(tuple(r) for r in M)) for M, k in el)
+
+
+def closure(kind_list, cap=4000):
+    start = tuple((eye(len(gens["X"])), 0) for _n, gens, _s in kind_list)
+    seen = {keyof(start): start}
+    frontier = [start]
+    while frontier:
+        nxt = []
+        for el in frontier:
+            for g in GENS:
+                prod = tuple(canon(mmul(M, gens[g]), k + (KEXP[g] if scaled else 0)) for (M, k), (_n, gens, scaled) in zip(el, kind_list))
+                kk = keyof(prod)
+                if kk not in seen:
+                    seen[kk] = prod
+                    nxt.append(prod)
+                    if len(seen) > cap:
+                        return None
+        frontier = nxt
+    return list(seen.values())
+
+
+KL = [(name, gens, scaled) for name, (gens, _lam, scaled) in kinds(Qa).items()]
+group = closure(KL)
+t_order = Tally("C1f the diagonal closure of the eight kinds' generators is one group of 48")
+t_order.add(group is not None and len(group) == 48)
+images = {name: len({keyof((el[j],)) for el in group}) for j, (name, _g, _s) in enumerate(KL)}
+WANT_IMG = {"E1/2": 48, "E5/2": 48, "G3/2": 48, "A1": 1, "A2": 2, "E": 6, "T1": 24, "T2": 24}
+t_img = Tally("C1g each kind's image order (48,48,48,1,2,6,24,24)")
+for name in WANT_IMG:
+    t_img.add(images[name] == WANT_IMG[name])
+t_char = Tally("C1h characters: (1/48) sum chi(g)^2 = 1 on every kind (dim of invariant forms)")
+t_fs = Tally("C1i Frobenius-Schur (1/48) sum chi(g^2) = -1 spinorial, +1 on O's kinds")
+FS = {}
+for j, (name, _g, _s) in enumerate(KL):
+    s2 = ZERO
+    sq = ZERO
+    for el in group:
+        M, k = el[j]
+        s2 = s2 + tr(M) * tr(M) / (2 ** k)
+        M2, k2 = canon(mmul(M, M), 2 * k)
+        assert k2 == 0
+        sq = sq + tr(M2)
+    dim, fs = s2 / 48, sq / 48
+    FS[name] = fs
+    t_char.add(dim == ONE)
+    t_fs.add(fs == lift(-1 if EXPECT[name] == "antisymmetric" else 1))
+central = [el for el in group if el[0][1] == 0 and meq(el[0][0], scal(-1, eye(2)))]
+t_central = Tally("C1j the element -1 of the twins: -1 on E5/2 and G3/2, +1 on O's kinds")
+for el in central:
+    for j, (name, _g, _s) in enumerate(KL):
+        M, k = el[j]
+        sign = -1 if EXPECT[name] == "antisymmetric" else 1
+        t_central.add(k == 0 and meq(M, scal(sign, eye(len(M)))))
+SIG = [mat([[0, 1], [1, 0]]), mat([[0, -I], [I, 0]]), mat([[1, 0], [0, -1]])]
+
+
+def adjoint(M):
+    """R_jk = (1/2) tr(s_j U s_k U^dagger), U = M / c, |c|^2 = tr(M M^dagger) / 2."""
+    Md = dagger(M)
+    c2 = tr(mmul(M, Md)) / 2
+    return [[tr(mmul(SIG[j], mmul(M, mmul(SIG[k], Md)))) / (c2 * 2) for k in range(3)] for j in range(3)]
+
+
+t_adj = Tally("C1k T1's matrices are the twins' rotations (adjoint), both quarter spellings")
+for Q in (Qa, Qb):
+    for g in GENS:
+        t_adj.add(meq(adjoint(twins(Q)[g]), T1[g]))
+for t in (t_scale, t_order, t_img, t_char, t_fs, t_central, t_adj):
+    say(t.line())
+say(f"    image orders {images}; group order {len(group)}; FS {dict((k, str(v.re)) for k, v in FS.items())}")
+
+# ---- C1 mutants
+m = Tally("M1a twins with M^T B M = B (no det): not one line", mutant=True)
+m.add(len(invariant_forms(twins(Qa), UNIT)) == 1)
+say(f"    M1a dimension {len(invariant_forms(twins(Qa), UNIT))}")
+g32 = kinds(Qa)["G3/2"][0]
+dim_b = len(invariant_forms(g32, {g: det(g32[g]) for g in GENS}))
+m = Tally("M1b G3/2 with det of the 4x4 as the scale: not one line", mutant=True)
+m.add(dim_b == 1)
+say(f"    M1b dimension {dim_b}")
+t1a1 = {g: blockdiag(T1[g], A1[g]) for g in GENS}
+dim_c = len(invariant_forms(t1a1, UNIT))
+m = Tally("M1c the reducible T1+A1: not one line", mutant=True)
+m.add(dim_c == 1)
+say(f"    M1c dimension {dim_c}")
+dim_d = len(invariant_forms(twins(Qa), {g: det(twins(Qa)[g]) for g in GENS}, names=("Z", "Q")))
+m = Tally("M1d twins with only the diagonal Z and quarter turn: not one line", mutant=True)
+m.add(dim_d == 1)
+say(f"    M1d dimension {dim_d}")
+Ebad = dict(E_, Q=diag(-1, 1))
+bad = closure([("E1/2", twins(Qa), True), ("E", Ebad, False)])
+m = Tally("M1e E's quarter turn as diag(-1,1): no group of 48 with the twins", mutant=True)
+m.add(bad is not None and len(bad) == 48)
+say(f"    M1e closure {'over the cap of 4000' if bad is None else len(bad)}; forms dim {len(invariant_forms(Ebad, UNIT))}")
+T1bad = dict(T1, C=transpose(CYC))
+bad = closure([("E1/2", twins(Qa), True), ("T1", T1bad, False)])
+m = Tally("M1f T1's third turn as the opposite cycle: not the twins' rotation, no group of 48", mutant=True)
+m.add(bad is not None and len(bad) == 48 and meq(adjoint(Ct), T1bad["C"]))
+say(f"    M1f closure {'over the cap' if bad is None else len(bad)}")
+
+# ==================================================================================== C2
+say()
+say("C2  the twins' phase reversal from B: T phi = conj(B^T phi)")
+Btw = FORMS[("E1/2", "diag(1-i,1+i)")]
+BA1 = FORMS[("A1", "diag(1-i,1+i)")]
+BT1 = FORMS[("T1", "diag(1-i,1+i)")]
+
+
+def T_of(B, v):
+    n = len(v)
+    return tuple(sum((B[p][q] * v[p] for p in range(n)), ZERO).conj() for q in range(n))
+
+
+def T_plus(phi):  # mutant: no minus sign
+    z1, z2 = phi
+    return (z2.conj(), z1.conj())
+
+
+def T_conj(phi):  # mutant: the plain conjugation
+    return tuple(z.conj() for z in phi)
+
+
+spinors = list(box(2, -3, 3)) + [rspinor() for _ in range(20000)]
+pairs = [(p[:2], p[2:]) for p in box(4, -1, 1)] + [(rspinor(), rspinor()) for _ in range(20000)]
+c2a = Tally("C2a conj(B^T phi) = (-conj z2, conj z1) on the twins")
+c2t = Tally("C2b T T = -1 on the twins")
+c2k = Tally("C2c <T phi, phi> = 0")
+ma = Tally("M2a T without its minus: <T phi, phi> = 0", mutant=True)
+mb = Tally("M2b T without its minus: T T = -1", mutant=True)
+mc = Tally("M2c T as the plain conjugation: <T phi, phi> = 0", mutant=True)
+for phi in spinors:
+    c2a.add(T_of(Btw, phi) == T(phi))
+    c2t.add(T(T(phi)) == neg(phi))
+    c2k.add(inner(T(phi), phi).zero())
+    ma.add(inner(T_plus(phi), phi).zero())
+    mb.add(T_plus(T_plus(phi)) == neg(phi))
+    mc.add(inner(T_conj(phi), phi).zero())
+c2m = Tally("C2d the matrix conj(B^T) B^T: -1 on the twins, +1 on A1 and T1")
+c2m.add(meq(mmul(conjm(transpose(Btw)), transpose(Btw)), scal(-1, eye(2))))
+c2m.add(meq(mmul(conjm(transpose(BA1)), transpose(BA1)), eye(1)))
+c2m.add(meq(mmul(conjm(transpose(BT1)), transpose(BT1)), eye(3)))
+c2s = Tally("C2e T z = conj z and T T z = z on A1 (from A1's B)")
+for (z,) in box(1, -3, 3):
+    c2s.add(T_of(BA1, (z,)) == (z.conj(),) and T_of(BA1, T_of(BA1, (z,))) == (z,))
+for _ in range(5000):
+    z = (rg(rng.choice(MAGS)),)
+    c2s.add(T_of(BA1, z) == (z[0].conj(),) and T_of(BA1, T_of(BA1, z)) == z)
+c2v = Tally("C2f T = conj and T T = +1 on T1 (from T1's B)")
+for a in itertools.chain(box(3, -1, 1), (rspinor(size=3) for _ in range(5000))):
+    c2v.add(T_of(BT1, a) == tuple(x.conj() for x in a) and T_of(BT1, T_of(BT1, a)) == a)
+c2p = Tally("C2g <T phi, chi> = B(phi, chi)")
+c2x = Tally("C2h B(chi, phi) = -B(phi, chi)")
+for phi, chi in pairs:
+    c2p.add(inner(T(phi), chi) == bil(phi, Btw, chi))
+    c2x.add(bil(chi, Btw, phi) == -bil(phi, Btw, chi))
+for t in (c2a, c2t, c2k, c2m, c2s, c2v, c2p, c2x, ma, mb, mc):
+    say(t.line())
+
+# ==================================================================================== C3, C4
+say()
+say("C3, C4  pair gears (any n, b): the board's phase reversal and the one field's reading")
+gearsets = [((p[0], p[1]), (p[2], p[3])) for p in box(4, -1, 1)]
+for _ in range(20000):
+    R = rng.choice(MAGS)
+    gearsets.append(((rg(R), rg(R)), (rg(R), rg(R))))
+c3h = Tally("C3o every reading Hermitian with a real determinant")
+c3a = Tally("C3a the board's phase reversal reads (W, -S)")
+c3b = Tally("C3b applied twice it negates every gear")
+c3w = Tally("C3c mutant without the exchange: W changes sign (W' = -W, S' = S)")
+m3a = Tally("M3a without the exchange: reads (W, -S) [cases with W != 0]", mutant=True)
+m3b = Tally("M3b T without its minus: twice is -1 [nonzero gears]", mutant=True)
+c4a = Tally("C4a det D <= 0")
+c4b = Tally("C4b W^2 - S.S = 4 det D")
+c4c = Tally("C4c det D = -N(n_u b_d - n_d b_u)")
+c4d = Tally("C4d S = 0 only with W = 0: one field never reads (W,0) or (2W,0), W != 0")
+m4a = Tally("M4a two hands summed (phi and its reversal, separate gears): det <= 0 [W != 0]", mutant=True)
+m4b = Tally("M4b two independent pairs' readings summed: det <= 0", mutant=True)
+prev = None
+for n, b in gearsets:
+    r = Reading(n, b)
+    n2, b2 = board(n, b)
+    r2 = Reading(n2, b2)
+    c3h.add(r.hermitian and r2.hermitian)
+    c3a.add(r2.ws() == (r.W, neg(r.S)))
+    c3b.add(board(n2, b2) == (neg(n), neg(b)))
+    rm = Reading(T(n), T(b))
+    c3w.add(rm.W == -r.W and rm.S == r.S)
+    if r.W != 0:
+        m3a.add(rm.ws() == (r.W, neg(r.S)))
+        Dsum = [[r.D[a][c] + r2.D[a][c] for c in (0, 1)] for a in (0, 1)]
+        m4a.add((Dsum[0][0] * Dsum[1][1] - Dsum[0][1] * Dsum[1][0]).re <= 0)
+    if not all(x.zero() for x in n + b):
+        m3b.add(board(*board(n, b, T_plus), T_plus) == (neg(n), neg(b)))
+    c4a.add(r.det <= 0)
+    c4b.add(r.W * r.W - dot3(r.S, r.S) == 4 * r.det)
+    c4c.add(r.det == -(n[0] * b[1] - n[1] * b[0]).norm())
+    c4d.add(r.S != (0, 0, 0) or r.W == 0)
+    if prev is not None:
+        Dsum = [[r.D[a][c] + prev.D[a][c] for c in (0, 1)] for a in (0, 1)]
+        m4b.add((Dsum[0][0] * Dsum[1][1] - Dsum[0][1] * Dsum[1][0]).re <= 0)
+    prev = r
+pure = sum(1 for n, b in gearsets if Reading(n, b).det == 0 and not Reading(n, b).zero())
+for t in (c3h, c3a, c3b, c3w, m3a, m3b, c4a, c4b, c4c, c4d, m4a, m4b):
+    say(t.line())
+say(f"    of {len(gearsets)} gear sets: {pure} pure readings (det 0, nonzero)")
+
+# ==================================================================================== C5
+say()
+say("C5  turning hands phi (by t1), chi (by t2), Im t != 0: the split share")
+TS = [G(0, 1), G(0, -1), G(1, 1), G(2, -1), G(-3, 2), G(5, 7), G(-1, -4), G(0, 3)]
+
+
+def turning(t, phi):
+    """now = t * before, before = phi."""
+    return scale(t, phi), phi
+
+
+cases = []
+bx = [s for s in box(2, -1, 1) if not all(x.zero() for x in s)]
+for k, (phi, chi) in enumerate(itertools.product(bx, bx)):
+    cases.append((phi, chi, TS[k % 8], TS[(k // 8 + 3) % 8]))
+for _ in range(20000):
+    cases.append((rspinor(), rspinor(), rturn(), rturn()))
+c5a = Tally("C5a share = N(<T phi, chi>) / (N(phi) N(chi))")
+c5b = Tally("C5b share = 1 - N(<phi, chi>) / (N(phi) N(chi))")
+c5c = Tally("C5c 0 <= share <= 1")
+c5i = Tally("C5d (info) the share is independent of t1, t2: equals the t = i share")
+m5a = Tally("M5a detector without the reversal (phi's own reading): share as claimed", mutant=True)
+m5b = Tally("M5b reversal with T without its minus: share as claimed", mutant=True)
+same_noexch = 0
+
+
+def share_of(chi_gears, det_gears):
+    rc, rd = Reading(*chi_gears), Reading(*det_gears)
+    return split_share(rc.W, rc.S, rd.W, rd.S)
+
+
+for phi, chi, t1, t2 in cases:
+    pg, cg = turning(t1, phi), turning(t2, chi)
+    sh = share_of(cg, board(*pg))
+    room = nrm(phi) * nrm(chi)
+    c5a.add(sh == Fraction(inner(T(phi), chi).norm(), room))
+    c5b.add(sh == 1 - Fraction(inner(phi, chi).norm(), room))
+    c5c.add(0 <= sh <= 1)
+    c5i.add(sh == share_of(turning(I, chi), board(*turning(I, phi))))
+    m5a.add(share_of(cg, pg) == Fraction(inner(T(phi), chi).norm(), room))
+    m5b.add(share_of(cg, board(*pg, T_plus)) == Fraction(inner(T(phi), chi).norm(), room))
+    same_noexch += share_of(cg, (T(pg[0]), T(pg[1]))) == sh
+c5m = Tally("C5e chi a Gaussian multiple of phi: share 0")
+c5p = Tally("C5f (info) chi a Gaussian multiple of T phi: share 1")
+mults = [G(a, b) for a in range(-3, 4) for b in range(-3, 4) if (a, b) != (0, 0)]
+for k in range(6000):
+    phi = rspinor() if k >= 80 else bx[k]
+    g = mults[k % len(mults)] if k % 2 else rg(rng.choice(MAGS))
+    if g.zero():
+        g = G(1, 1)
+    t1, t2 = rturn(), rturn()
+    c5m.add(share_of(turning(t2, scale(g, phi)), board(*turning(t1, phi))) == 0)
+    c5p.add(share_of(turning(t2, scale(g, T(phi))), board(*turning(t1, phi))) == 1)
+for t in (c5a, c5b, c5c, c5i, c5m, c5p, m5a, m5b):
+    say(t.line())
+say(f"    note: the reversal WITHOUT the exchange gives the same share in {same_noexch} of {len(cases)} cases"
+    " (the share is unchanged when the detector's (W_d, m) is negated)")
+
+# ==================================================================================== C6
+say()
+say("C6  two hands: phi's gears and their reversal, on separate gears and on one field")
+c6a = Tally("C6a separate gears: the summed reading is (2W, 0)")
+c6b = Tally("C6b separate gears: free size (2u - rho) rho_d - S.m = 0 for every newcomer")
+c6c = Tally("C6c one field (gears added): the reading is never (2W, 0) [W != 0]")
+c6w = Tally("C6d (info) one field: its W is exactly 2W and S.S >= 4 W^2")
+c6e = Tally("C6e one field: the free size takes both signs over the newcomers [W != 0]")
+m6a = Tally("M6a separate gears, reversal without the exchange: summed reading (2W, 0) [W != 0]", mutant=True)
+m6b = Tally("M6b one field: free size 0 for every newcomer [W != 0]", mutant=True)
+w_zero = 0
+for k in range(6000):
+    R = rng.choice(MAGS)
+    if k % 2:
+        n, b = (rg(R), rg(R)), (rg(R), rg(R))
+    else:
+        b = rspinor(R)
+        n = scale(rturn(), b)
+    r1 = Reading(n, b)
+    n2, b2 = board(n, b)
+    r2 = Reading(n2, b2)
+    rho, S = r1.W + r2.W, tuple(x + y for x, y in zip(r1.S, r2.S))
+    c6a.add((rho, S) == (2 * r1.W, (0, 0, 0)))
+    one = Reading(vadd(n, n2), vadd(b, b2))
+    u = r1.W
+    newcomers = []
+    for j in range(40):
+        if j < 30:
+            Rn = rng.choice(MAGS)
+            rn = Reading((rg(Rn), rg(Rn)), (rg(Rn), rg(Rn)))
+            newcomers.append((rn.W, rn.S))
+        else:
+            Rn = rng.choice(MAGS)
+            newcomers.append((rng.randint(-Rn, Rn), (rng.randint(-Rn, Rn), rng.randint(-Rn, Rn), rng.randint(-Rn, Rn))))
+    for rho_d, mm in newcomers:
+        c6b.add((2 * u - rho) * rho_d - dot3(S, mm) == 0)
+    if r1.W == 0:
+        w_zero += 1
+        continue
+    c6c.add(one.ws() != (2 * r1.W, (0, 0, 0)))
+    c6w.add(one.W == 2 * r1.W and dot3(one.S, one.S) >= 4 * r1.W * r1.W)
+    frees = [(2 * u - one.W) * rho_d - dot3(one.S, mm) for rho_d, mm in newcomers]
+    c6e.add(any(f > 0 for f in frees) and any(f < 0 for f in frees))
+    m6b.add(all(f == 0 for f in frees))
+    rm = Reading(T(n), T(b))
+    m6a.add((r1.W + rm.W, tuple(x + y for x, y in zip(r1.S, rm.S))) == (2 * r1.W, (0, 0, 0)))
+for t in (c6a, c6b, c6c, c6w, c6e, m6a, m6b):
+    say(t.line())
+say(f"    {w_zero} base cases had W = 0 (left out of the [W != 0] checks)")
+
+# ==================================================================================== C7
+say()
+say("C7  ring of L = 5 node-clocks, 2 components: O(x) <= 1 for exact Gram-Schmidt hands")
+L = 5
+
+
+def gram_schmidt(vs):
+    out = []
+    for a in vs:
+        v = list(a)
+        for w in out:
+            c = inner(w, v) / nrm(w)
+            v = [x - c * y for x, y in zip(v, w)]
+        if all(x.zero() for x in v):
+            return None
+        out.append(tuple(v))
+    return out
+
+
+def occupation(hs, local=False):
+    """O(x) = sum_k phi_k(x) phi_k(x)^dagger / N(phi_k), as (O_uu, O_dd, O_ud) per node-clock."""
+    out = []
+    for x in range(L):
+        ouu = odd = Fraction(0)
+        oud = G(Fraction(0), Fraction(0))
+        for h in hs:
+            u, d = h[2 * x], h[2 * x + 1]
+            nk = (u.norm() + d.norm()) if local else nrm(h)
+            if nk == 0:
+                continue
+            ouu += Fraction(u.norm()) / nk
+            odd += Fraction(d.norm()) / nk
+            oud = oud + (u * d.conj()) / nk
+        out.append((ouu, odd, oud))
+    return out
+
+
+def le_one(o):
+    ouu, odd, oud = o
+    return (2 - ouu - odd) >= 0 and (1 - ouu) * (1 - odd) - oud.norm() >= 0
+
+
+c7o = Tally("C7a the hands are mutually orthogonal (exact <phi_j, phi_k> = 0)")
+c7a = Tally("C7b 1 - O(x) has trace >= 0 and det >= 0 at every node-clock")
+c7p = Tally("C7c (info) O(x) >= 0 and sum_x tr O(x) = K")
+c7f = Tally("C7d (info) with K = 10 hands, O(x) = 1 exactly")
+m7a = Tally("M7a hands not orthogonalised: O(x) <= 1", mutant=True)
+m7b = Tally("M7b normalised by the node's own N(phi_k(x)): O(x) <= 1", mutant=True)
+trials = 0
+for K in range(1, 2 * L + 1):
+    for _ in range(300):
+        R = rng.choice((1, 2, 3, 5, 100))
+        raw = [tuple(rg(R) for _ in range(2 * L)) for _ in range(K)]
+        hs = gram_schmidt(raw)
+        if hs is None:
+            continue
+        trials += 1
+        for j in range(K):
+            for k in range(j + 1, K):
+                c7o.add(inner(hs[j], hs[k]).zero())
+        occ = occupation(hs)
+        for o in occ:
+            c7a.add(le_one(o))
+            ouu, odd, oud = o
+            c7p.add(ouu + odd >= 0 and ouu * odd - oud.norm() >= 0)
+            if K == 2 * L:
+                c7f.add(ouu == 1 and odd == 1 and oud.zero())
+        c7p.add(sum(o[0] + o[1] for o in occ) == K)
+        if K >= 2 and not any(all(x.zero() for x in h) for h in raw):
+            m7a.add(all(le_one(o) for o in occupation(raw)))
+        m7b.add(all(le_one(o) for o in occupation(hs, local=True)))
+for t in (c7o, c7a, c7p, c7f, m7a, m7b):
+    say(t.line())
+say(f"    {trials} trials, K = 1..10 hands, entries up to 100")
+
+# ==================================================================================== C8
+say()
+say("C8  force carriers: the pair's size against the room, and the pairing's own size")
+c8a = Tally("C8a A1 scalars: N(z)N(w) + N(<z,w>) >= N(z)N(w)")
+c8b = Tally("C8b T1 Gaussian triples: N(z)N(w) + N(<z,w>) >= N(z)N(w)")
+strict_a = strict_b = 0
+for z, w in itertools.chain(((p[:1], p[1:]) for p in box(2, -3, 3)), ((rspinor(size=1), rspinor(size=1)) for _ in range(20000))):
+    room = nrm(z) * nrm(w)
+    size = room + inner(z, w).norm()
+    c8a.add(size >= room)
+    strict_a += size > room
+trip = list(box(3, -1, 1))
+for z in trip:
+    for w in trip:
+        room = nrm(z) * nrm(w)
+        size = room + inner(z, w).norm()
+        c8b.add(size >= room)
+        strict_b += size > room
+for _ in range(20000):
+    z, w = rspinor(size=3), rspinor(size=3)
+    room = nrm(z) * nrm(w)
+    size = room + inner(z, w).norm()
+    c8b.add(size >= room)
+    strict_b += size > room
+a = (G(1), G(0, 1), G(0))
+c8c = Tally("C8c the circular a = (1, i, 0): N(a . a) = 0, and so at its images under the 48 (T1's 24 rotations, each twice)")
+c8c.add(bil(a, BT1, a).norm() == 0 and sum((x * x for x in a), ZERO).zero())
+for el in group:
+    M = el[KL.index(next(x for x in KL if x[0] == "T1"))][0]
+    ra = tuple(sum((M[r][c] * a[c] for c in range(3)), ZERO) for r in range(3))
+    c8c.add(sum((x * x for x in ra), ZERO).norm() == 0)
+iso = sum(1 for z in trip if not all(x.zero() for x in z) and sum((x * x for x in z), ZERO).zero())
+iso_a1 = sum(1 for (z,) in box(1, -3, 3) if not z.zero() and (z * z).zero())
+m8a = Tally("M8a the twins' free size N(<T phi,chi>) in place of the pair's size: >= the room", mutant=True)
+for phi, chi in pairs:
+    if all(x.zero() for x in phi) or all(x.zero() for x in chi):
+        continue
+    m8a.add(inner(T(phi), chi).norm() >= nrm(phi) * nrm(chi))
+m8b = Tally("M8b linear polarisations (1,0,0), (1,1,0), (1,1,1): N(a . a) = 0", mutant=True)
+for lin in ((1, 0, 0), (1, 1, 0), (1, 1, 1)):
+    m8b.add(sum((G(x) * G(x) for x in lin), ZERO).norm() == 0)
+for t in (c8a, c8b, c8c, m8a, m8b):
+    say(t.line())
+say(f"    strictly above the room: A1 {strict_a} of {c8a.cases}, T1 {strict_b} of {c8b.cases};"
+    f" isotropic nonzero triples in [-1,1]^6: {iso} of {len(trip) - 1}; isotropic A1 scalars in [-3,3]^2: {iso_a1}")
+
+# ==================================================================================== verdict
+say()
+bad, missed, empty = Tally.verdict()
+claims = [t for t in Tally.rows if not t.mutant]
+muts = [t for t in Tally.rows if t.mutant]
+say(f"VERDICT: {len(claims)} checks, {sum(t.cases for t in claims)} cases, {sum(t.bad for t in claims)} failures;"
+    f" {len(muts)} mutants, {sum(1 for t in muts if t.bad)} caught; empty checks {len(empty)}; {time.time() - T0:.0f} s")
+for t in bad:
+    say("  FAILED: " + t.label)
+for t in missed:
+    say("  MUTANT NOT CAUGHT: " + t.label)
+for t in empty:
+    say("  EMPTY: " + t.label)
+sys.exit(1 if bad or missed or empty else 0)
+
+== indep_head.py (the second hand's) ==
+#!/usr/bin/env python3
+"""Second hand's independent exact probe of claim C9 on the head's code (run with venv314's python).
+
+The twin world: world_nature.json with every row of shape 2 at a pinion below the rim made shape 4
+(twin hands), 30 intervals. At every node-clock and every tick 0..30 (clock.tick() between), for
+every twin pair: det D <= 0; the board's phase reversal applied to the real gear arrays reads
+(W, -S); applied twice it is -1. Exact: the head's arrays hold Python ints (checked), and every
+reading is computed with exact.py's Gaussian pairs. Exits 1 on a failure or an uncaught mutant.
+"""
+
+from __future__ import annotations
+
+import sys
+import time
+
+import numpy as np
+
+from exact import G, Reading, Tally, T, board
+
+import event_universe.assembly.piece as piece_mod
+from event_universe import hands as H
+from event_universe.clock import Clock
+from event_universe.trains import Gear
+
+T0 = time.time()
+WORLD = "/home/user/Universe24/tests/worlds/world_nature.json"
+TICKS = 30
+
+
+def say(s=""):
+    print(s, flush=True)
+
+
+calibre, piece = piece_mod.read_piece(WORLD)
+rim = int(calibre["integers"]["den"])
+rows = [dict(t, shape=4) if t.get("pair") and t["shape"] == 2 and t["pair"][0] < rim else t for t in calibre["rows"]]
+clock = Clock(dict(calibre, rows=rows), {**piece, "intervals": 30})
+pairs0 = H.twin_pairs(clock.hands())
+say(f"C9  the twin world: {len(rows)} rows made twin hands, twin pairs {pairs0}, board {clock.size}, ticks 0..{TICKS}")
+
+
+def T_arr(zu, zd, minus=True):
+    """T on a spinor of Gaussian arrays z = (re, im): (-conj z_d, conj z_u); minus=False is the mutant (conj z_d, conj z_u)."""
+    s = -1 if minus else 1
+    return (s * zd[0], -s * zd[1]), (zu[0], -zu[1])
+
+
+def hand_arrays(gu, gd):
+    nu, nd = (gu[0].now, gu[1].now), (gd[0].now, gd[1].now)
+    bu, bd = (gu[0].before, gu[1].before), (gd[0].before, gd[1].before)
+    return nu, nd, bu, bd
+
+
+def to_gears(nu, nd, bu, bd):
+    up = [Gear(nu[0], bu[0], None, None), Gear(nu[1], bu[1], None, None)]
+    down = [Gear(nd[0], bd[0], None, None), Gear(nd[1], bd[1], None, None)]
+    return up, down
+
+
+def board_arr(gu, gd, minus=True, exchange=True):
+    """The board's phase reversal on the real gear arrays: now' = T(before), before' = T(now)."""
+    nu, nd, bu, bd = hand_arrays(gu, gd)
+    tnu, tnd = T_arr(nu, nd, minus)
+    tbu, tbd = T_arr(bu, bd, minus)
+    if exchange:
+        return to_gears(tbu, tbd, tnu, tnd)
+    return to_gears(tnu, tnd, tbu, tbd)
+
+
+def node(gu, gd, x):
+    n = (G(int(gu[0].now[x]), int(gu[1].now[x])), G(int(gd[0].now[x]), int(gd[1].now[x])))
+    b = (G(int(gu[0].before[x]), int(gu[1].before[x])), G(int(gd[0].before[x]), int(gd[1].before[x])))
+    return n, b
+
+
+def neg(v):
+    return tuple(-z for z in v)
+
+
+t_int = Tally("C9o every gear notch of the twin hands is a Python int")
+t_pairs = Tally("C9p the twin pairs stay the same at every tick")
+t_herm = Tally("C9q every reading Hermitian with a real det")
+t_sweep = Tally("C9r D_aa = 2 x the head's own hands.sweep, real and reversed gears")
+t_det = Tally("C9a det D <= 0")
+t_ident = Tally("C9b (info) W^2 - S.S = 4 det D and det D = -N(n_u b_d - n_d b_u)")
+t_rev = Tally("C9c the board's phase reversal on the real gears reads (W, -S)")
+t_tcon = Tally("C9d (consistency) the array reversal equals T on the node's Gaussians")
+t_twice = Tally("C9e applied twice, every gear negated (-1)")
+m_a = Tally("M9a reversal without the exchange on the real gears: reads (W, -S) [W != 0]", mutant=True)
+m_b = Tally("M9b T without its minus, applied twice: -1 [nonzero gears]", mutant=True)
+m_c = Tally("M9c the real gears' reading plus their reversal's (two hands): det <= 0 [W != 0]", mutant=True)
+zero = pure = worse = 0
+w_nonzero = 0
+per_tick = []
+buckets = {}
+maxnotch = 0
+worst = None  # the largest (S.S - W^2) / W^2 among the worse readings with W != 0
+nodes = list(np.ndindex(*clock.size))
+for tick in range(TICKS + 1):
+    hs = clock.hands()
+    pairs = H.twin_pairs(hs)
+    t_pairs.add(pairs == pairs0)
+    tz = tp = tw = 0
+    for u, d in pairs:
+        gu, gd = hs[u].gears, hs[d].gears
+        for arr in (gu[0].now, gu[1].now, gd[0].now, gd[1].now, gu[0].before, gu[1].before, gd[0].before, gd[1].before):
+            t_int.add(arr.dtype == object and all(type(v) is int for v in arr.flat))
+        ru, rd = board_arr(gu, gd)
+        rru, rrd = board_arr(ru, rd)
+        mu, md = board_arr(gu, gd, exchange=False)
+        pu, pd = board_arr(gu, gd, minus=False)
+        ppu, ppd = board_arr(pu, pd, minus=False)
+        sw = (H.sweep(gu), H.sweep(gd), H.sweep(ru), H.sweep(rd))
+        for x in nodes:
+            n, b = node(gu, gd, x)
+            maxnotch = max(maxnotch, *(abs(v) for z in n + b for v in z))
+            r = Reading(n, b)
+            n2, b2 = node(ru, rd, x)
+            r2 = Reading(n2, b2)
+            t_herm.add(r.hermitian and r2.hermitian)
+            t_sweep.add(r.D[0][0].re == 2 * sw[0][x] and r.D[1][1].re == 2 * sw[1][x]
+                        and r2.D[0][0].re == 2 * sw[2][x] and r2.D[1][1].re == 2 * sw[3][x])
+            t_det.add(r.det <= 0)
+            t_ident.add(r.W * r.W - sum(s * s for s in r.S) == 4 * r.det and r.det == -(n[0] * b[1] - n[1] * b[0]).norm())
+            t_rev.add(r2.ws() == (r.W, tuple(-s for s in r.S)))
+            t_tcon.add((n2, b2) == board(n, b))
+            n3, b3 = node(rru, rrd, x)
+            t_twice.add(n3 == neg(n) and b3 == neg(b))
+            if r.zero():
+                zero += 1
+                tz += 1
+            elif r.det == 0:
+                pure += 1
+                tp += 1
+            else:
+                worse += 1
+                tw += 1
+            if r.W != 0:
+                w_nonzero += 1
+                m_a.add(Reading(*node(mu, md, x)).ws() == (r.W, tuple(-s for s in r.S)))
+                Dsum = [[r.D[a][c] + r2.D[a][c] for c in (0, 1)] for a in (0, 1)]
+                m_c.add((Dsum[0][0] * Dsum[1][1] - Dsum[0][1] * Dsum[1][0]).re <= 0)
+                if r.det < 0:
+                    q4, w2 = -4 * r.det, r.W * r.W  # (S.S - W^2) / W^2 = q4 / w2, bucketed by exact comparisons
+                    lab = next((lab for k, lab in ((3, "<1e-3"), (0, "<1"), (-3, "<1e3")) if (q4 * 10**k < w2 if k >= 0 else q4 < w2 * 10**-k)), ">=1e3")
+                    buckets[lab] = buckets.get(lab, 0) + 1
+                    excess = (sum(s * s for s in r.S) - r.W * r.W, r.W * r.W)
+                    if worst is None or excess[0] * worst[1] > worst[0] * excess[1]:
+                        worst = excess
+            if not all(z.zero() for z in n + b):
+                n4, b4 = node(ppu, ppd, x)
+                m_b.add(n4 == neg(n) and b4 == neg(b))
+    per_tick.append((tick, tz, tp, tw))
+    if tick < TICKS:
+        clock.tick()
+
+for t in (t_int, t_pairs, t_herm, t_sweep, t_det, t_ident, t_rev, t_tcon, t_twice, m_a, m_b, m_c):
+    say(t.line())
+total = zero + pure + worse
+say(f"    readings {total} (31 ticks x {len(pairs0)} pairs x {len(nodes)} node-clocks): zero {zero}, pure (det 0, nonzero) {pure},"
+    f" worse (det < 0) {worse}; W != 0 in {w_nonzero}")
+if worst is not None:
+    q = worst[0] * 1000 // worst[1]
+    say(f"    largest (S.S - W^2)/W^2 among the worse readings: {q // 1000}.{q % 1000:03d} (there W^2 has {len(str(worst[1]))} digits)")
+say(f"    worse readings with W != 0 by (S.S - W^2)/W^2: {dict(sorted(buckets.items()))}; largest |notch| of a twin gear {maxnotch}")
+say("    per tick (tick, zero, pure, worse): " + " ".join(f"{t}:{a}/{b}/{c}" for t, a, b, c in per_tick))
+bad, missed, empty = Tally.verdict()
+claims = [t for t in Tally.rows if not t.mutant]
+say(f"VERDICT: {len(claims)} checks, {sum(t.cases for t in claims)} cases, {sum(t.bad for t in claims)} failures;"
+    f" {sum(1 for t in Tally.rows if t.mutant and t.bad)} of {sum(1 for t in Tally.rows if t.mutant)} mutants caught; {time.time() - T0:.0f} s")
+for t in bad + missed + empty:
+    say("  PROBLEM: " + t.label)
+sys.exit(1 if bad or missed or empty else 0)
+
+== head_signs.py ==
+"""Where both twin hands hold wind on the head's twin world: the signs of the two twins' sweeps (D_uu, D_dd)."""
+import itertools
+import sys
+
+REPO = sys.argv[1]
+sys.path.insert(0, REPO + "/src")
+from event_universe import hands as H  # noqa: E402
+from event_universe.assembly.piece import read_piece  # noqa: E402
+from event_universe.clock import Clock  # noqa: E402
+from event_universe.trains import HAND  # noqa: E402
+
+calibre, piece = read_piece(REPO + "/tests/worlds/world_nature.json")
+rim = int(calibre["integers"]["den"])
+rows = [dict(t, shape=HAND + HAND) if t.get("pair") and t["shape"] == HAND and t["pair"][0] < rim else t for t in calibre["rows"]]
+clock = Clock(dict(calibre, rows=rows), {**piece, "intervals": 30})
+pairs = H.twin_pairs(clock.hands())
+opposite = same = one_zero = 0
+for tick in range(31):
+    hs = clock.hands()
+    for u, d in pairs:
+        su = H.sweep(hs[u].gears)
+        sd = H.sweep(hs[d].gears)
+        for idx in itertools.product(*[range(k) for k in su.shape]):
+            a, b = int(su[idx]), int(sd[idx])
+            if a == 0 and b == 0:
+                continue
+            if a == 0 or b == 0:
+                one_zero += 1
+            elif (a > 0) != (b > 0):
+                opposite += 1
+            else:
+                same += 1
+    if tick < 30:
+        clock.tick()
+print(f"readings with wind: one twin's sweep 0: {one_zero}; both nonzero with opposite signs: {opposite}; with the same sign: {same}")

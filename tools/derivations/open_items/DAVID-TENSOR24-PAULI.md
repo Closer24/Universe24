@@ -5,7 +5,7 @@ David, 2026-10-28, 11:4x UTC, for the Boss (Sofer and Animate copied). This page
 - through Sofer (6467182879): "Pauli never as a postulate. It is derived from the phase reversal of a family on the board; in a click this gives Pauli; check it."
 - to David, 11:0x UTC: "Did you get the solution for Pauli?" Yes, through both lines.
 
-It also answers Sofer's four open items (SOFER-PAULI-PHASE-REVERSAL-1.md, scribe-5 f767a4e08) and the reviews' P1 to P4 and M1 to M4. It is TENSOR24.md section 19's law 7 (Pauli's act), at the protocol's steps 1 to 4, and it derives law 7 as the plan words it at engine-5.0-test 943a40df7. It is read on that head, whose src is 8b657aa57's; toys-5's src is the same. A second hand follows, then Sofer's check and my sign-off. Each claim is marked PROVED, CHECKED or OPEN; the probes and their outputs are in DAVID-TENSOR24-PAULI_CHECKS.txt. No src is pushed.
+It also answers Sofer's four open items (SOFER-PAULI-PHASE-REVERSAL-1.md, scribe-5 f767a4e08) and the reviews' P1 to P4 and M1 to M4. It is TENSOR24.md section 19's law 7 (Pauli's act), at the protocol's steps 1 to 5, and it derives law 7 as the plan words it at engine-5.0-test 943a40df7. It is read on that head, whose src is 8b657aa57's; toys-5's src is the same. The second hand has confirmed it (below); Sofer's check follows, then my sign-off. Each claim is marked PROVED, CHECKED or OPEN; the probes and their outputs are in DAVID-TENSOR24-PAULI_CHECKS.txt. No src is pushed.
 
 ## The big law: a family pairs as its kind pairs
 
@@ -118,6 +118,23 @@ The lay reads only the occupant's gears at its node-clock and the newcomer's. Th
    - **At the click it does not.** Law 5's count at a node-clock goes through law 7: on matter the click books the whole quanta there one at a time, each by the lay's draw against what it has booked. So it books at most the kind's dimension, 2.
    - **Between clicks,** degeneracy follows only from matter's quanta standing as orthogonal hands. That keeps the cap (PROVED), and which representation the plan takes is the owner's word.
 5. **M2: zeroing the field destroys wind.** Nothing is zeroed. The free outcome adds one orthogonal quantum, and the blocked outcome writes nothing and takes nothing. The wind that cannot click stays on the board as the remainder.
+
+## The second hand (protocol step 5)
+
+1. **CONFIRMED.** A second helper wrote its own exact probe from the claims alone, without opening mine. It re-solved every claim:
+   - the invariant forms, by exact elimination over Q(i) and again by the characters of the 48 (the Frobenius-Schur indicator -1 on the three spinor kinds and +1 on the other five);
+   - the phase reversal, the board's reading, the lay's share, the two hands against one field, the cap between clicks and the force carriers;
+   - the head's twin gears.
+
+   It found no failure in 1,464,812 cases (1,382,662 in the algebra, 82,150 on the head), and it caught all 24 of its mutants. With T's minus sign dropped, both of its probes exit 1. I reran both, and the outputs are identical.
+2. **Its three notes:**
+   - **On G3/2 the scale is the twins' factor's det,** the square root of the 4x4's det. My probe used it, and the characters agree.
+   - **The share cannot see the rewind.** A detector read as (-W, S) instead of (W, -S) gives the same share, since the share is a ratio. The rewind shows only in the wind's sign, which the written partner needs. So the rewind serves the write, not the share.
+   - **On one field the summed wind is exactly 2W.** What breaks the filled orbital is S, with S . S >= 4 W^2.
+3. **Its finding on the head, for the plan:**
+   - **All 499 pure twin readings sit where one twin hand is empty.** Wherever both hands hold wind, det D < 0. In 1,788 of the 3,005 such readings with W not 0, S . S >= 2 W^2.
+   - **So no head twin pair is ever a spinor turning with both components.** There its reading has |S| > |W|, outside the bound |S| <= rho of Sofer's open item 3.
+   - **The cause has two parts** (my count). Of the 2,584 readings where both twins sweep, 1,395 have opposite signs: the birth lays the minus child on one twin and the plus child on the other, so a negative and a positive wind meet at one node-clock. In the other 1,189 the twins turn apart, and det[now, before] is not 0. Both are cut (e)'s, with draft D.
 
 ## For the Boss: law 7 and its cuts
 
