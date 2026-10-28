@@ -1,0 +1,10 @@
+uniform c: max error in counts of room: 0.9285714285714286 (<1 means within one count)
+all sizes 0 -> pick: None
+bases (5, 7, 9) M 100 sorted=False: room 100, distinct c 100 of 100, P(up | sizes 1,1)=0.5238 (Born 0.5), max/min count 4/3
+bases (5, 7, 9) M 100 sorted=True: room 100, distinct c 95 of 100, P(up | sizes 1,1)=0.5968 (Born 0.5), max/min count 8/0
+bases (10, 10, 10) M 1000 sorted=False: room 1000, distinct c 1000 of 1000, P(up | sizes 1,1)=0.5000 (Born 0.5), max/min count 1/1
+bases (10, 10, 10) M 1000 sorted=True: room 1000, distinct c 220 of 1000, P(up | sizes 1,1)=0.8750 (Born 0.5), max/min count 6/0
+bases (6, 6, 6, 6) M 1296 sorted=False: room 1296, distinct c 1296 of 1296, P(up | sizes 1,1)=0.5000 (Born 0.5), max/min count 1/1
+bases (6, 6, 6, 6) M 1296 sorted=True: room 1296, distinct c 126 of 1296, P(up | sizes 1,1)=0.9375 (Born 0.5), max/min count 24/0
+bases (8, 8, 8) M 64 sorted=False: room 64, distinct c 64 of 64, P(up | sizes 1,1)=0.5000 (Born 0.5), max/min count 8/8
+bases (8, 8, 8) M 64 sorted=True: room 64, distinct c 36 of 64, P(up | sizes 1,1)=0.5000 (Born 0.5), max/min count 39/0
