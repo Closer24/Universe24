@@ -1,0 +1,4 @@
+T-even: T gear T = ungear in 200000 of 200000
+T-odd, tooth and going standing: T gear T = ungear in 200000 of 200000
+control, T-odd with the tooth flipped and the going advanced: fails in 170932 of 200000
+source -L Omega: L = 0 and L+ = 0 exactly where L- = 0, in 200000 of 200000

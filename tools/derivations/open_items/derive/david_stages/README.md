@@ -1,0 +1,16 @@
+# David's checks of tensor24-review (stages 0 to 5), the tie rule, item (u) and M1
+
+David, 2026-10-28, 19:1x UTC, for the Boss (Sofer and Animate copied), #2187, on the Boss's request of 18:28 UTC. The probes run the review branch's own functions (origin/tensor24-review at 4b39f234b) from a worktree and change no file of it. Run each as `python3 -I <probe> <worktree>/src`; p5 and p7 need no worktree. Exact integers throughout; each output file is the probe's own.
+
+| probe | what it checks | result |
+| --- | --- | --- |
+| p1_algebra.py | stage 1 and the tie rule, on algebra/carry.py and engine/step.gear | the carry exact and unique to 300 bits; nonneg exact; home(w, 1 - go) = w - 1 - home(w, go) for every w to 400; the negation commutes with the step in 200,000 of 200,000, the tooth inside [0, W+); the gear's own reversal, T gear T = ungear, in 200,000 of 200,000; a home that ignores the going fails 50,059 and the flip w - r fails 90,110 |
+| p2_board.py | stages 2 and 3, on engine/step.tick and untick | the rewind 900 of 900 rounds under masks, rates parted, one clock stopped; neighbours' counts within one and k a bit in 900 of 900; the cone in rounds 120 of 120; T S T = S^-1 on the whole board 30 of 30 where every dial is at the full rate, and 0 of 30 where the rates part; one clock at twice the full rate gives k = 2 (Sofer's promise) |
+| p3_cone.py | the cone in counts, past against the probe's lin of derive/asynchronous_read | past: 0 of 6,563 reached sites changed at a count below their Mesh distance; lin: 1,851 of 6,724 |
+| p4_ring.py | stage 5, on algebra/ring.py | T T = +1 on a hand and -1 on a twin hand, Lagrange, S . S = rho rho, Kramers, T reversing the spin and keeping rho, the overlap sesquilinear, T commuting with the half-turn lifts, the ring's laws: 0 failures in 20,000 draws at 120 bits each |
+| p5_link.py | M1's U_j: the Mesh's turn u = T + i n, n = side (A_x + f A_y), the far hand read through K^f | the coupling symmetric on 2,000 of 2,000 boards, commuting with the framed quarter turn on 2,000 of 2,000, the charge kept exactly by the rational step on 200 of 200 boards over 40 ticks; the triple summed with no pawl, and the far hand read without K, each fail all three |
+| p6_odd_turnover.py | the turnover on a gear T negates; the course's zero | T-even (slots exchanged, tooth flipped, going advanced) and T-odd (exchanged and negated, tooth and going standing): T gear T = ungear in 200,000 of 200,000 each; the T-odd turnover with the tooth flipped fails 170,932 of 200,000; under a source that is a product with the gear's own notch, the notch and its next are both 0 exactly where the one before is (200,000 of 200,000) |
+| p7_lin_tie.py | lin's one rounding per read, its home the going's | under the reversal the read turns wrong in 1,024 cases at even tn - tb on each kind of gear, and in none at odd |
+| p8_lin_reversal.py | the board's reversal under the probe's lin and under past | T S T returns the start in 30 of 30 under each where every dial is at the full rate, and in 0 of 30 under each where the rates part: in the synchronous pass lin reads as past does |
+
+What follows from them is in the #2187 post that cites this folder.
