@@ -43,6 +43,7 @@ RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality in the stencil form, purity across two worlds, rename with an inert train, the 24's images with the translations, the formula against a naive model, bijectivity by the engine's own run back) on a trivial engine, Fredkin's second-order form, at three seeds of Python integers across 2**112 on a side of 5, each failing on every mutant it must catch (its own six and the hostile reader's ten of the review of dce3c56bd); the Boss's room by name."
 TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, every divisor at least 1, every reference whole), and each rule refuses its own broken file; the Boss's room by name."
 TENSOR24_SCHEMA = "Tensor24's record schema, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: every field of every line the runner writes is a whole number of any width, a label or a row of them, and a float or a truth value in a field is seen; the Boss's room by name."
+TENSOR24_ALGEBRA = "Tensor24's algebra, stage 1 of the build the owner approved at 16:0x UTC on 2026-10-28: Rule3's carry, the one whether, the choice, the fine tooth's home and its flip, each law failing on its own mutant, the tie rule's odd quotient at both parities among them; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_tensor24_files.py::edits": (
         13,
@@ -51,6 +52,38 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_tensor24_files.py::test_the_examples_hold_and_each_rule_refuses_its_broken_file": (
         9,
         TENSOR24_FILES,
+    ),
+    "tests/test_the_tensor24_algebra.py::numbers": (
+        13,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::exact": (
+        6,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::odd": (
+        9,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::whether": (
+        4,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::choice": (
+        4,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::involution": (
+        7,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::mutants": (
+        14,
+        TENSOR24_ALGEBRA,
+    ),
+    "tests/test_the_tensor24_algebra.py::test_each_law_of_the_carry_holds_and_fails_on_its_mutant": (
+        10,
+        TENSOR24_ALGEBRA,
     ),
     "tests/test_the_tensor24_schema.py::leaves": (
         7,

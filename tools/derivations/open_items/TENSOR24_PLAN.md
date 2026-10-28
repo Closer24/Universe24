@@ -161,7 +161,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 3. **The rewind.**
    - **In the clock:** every gear runs back, and every carry is reversed.
    - **In the tensors:** the same step, with a+ and a- exchanged.
-   - **The going:** for the rewind to be exact at every teeth count, one go dial per Node-clock is needed, the parity of its turnovers, since every gear of a Node-clock turns over together (the design's go dial, within line 98's fixed count). Draft H founded it, and its verifier confirmed it on 91,728 states. Without that bit only the step's invertibility is proved, and the head's 20 of 20 read its stack, that is, a log.
+   - **The going:** for the rewind to be exact at every teeth count, each gear keeps its own going, the parity of its own turnovers and negations, within line 98's fixed count: the 24's turns negate some gears of a Node-clock and not others, so a going shared by the Node-clock fails at even counts (the tie rule, derive/tie_rule: PROVED and CHECKED; Sofer's law passes, #2187 6474681064; David's formula owed). Draft H founded it, and its verifier confirmed it on 91,728 states. Without that bit only the step's invertibility is proved, and the head's 20 of 20 read its stack, that is, a log.
    - **The click is many to one,** so a click is undone only from its log.
 4. **The turnover.**
    - **In the clock:** the clock's own act at the top of its time gear.
@@ -411,7 +411,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **every bound a carry:** carry, in algebra/carry.py, and beat, in engine/step.py.
 2. **Five folders:** algebra/ (new: Rule3 and the Gaussian integers), engine/, record/, readings/ and runner/, with decoder/ beside them.
    - The runner does not import the engine. A main.py of about 15 lines passes it the engine's functions.
-3. **The state:** ten arrays, fixed for the whole run: a, b, r and rd for every gear, e for every hand, and go, ph, tb, tn and the beat count c for every Node-clock, that is, 4G + H + 5 integers per Node-clock (c added by the one architect's ruling). Nothing grows at run time, as line 98 sets.
+3. **The state:** ten arrays, fixed for the whole run: a, b, r, rd and go for every gear, e for every hand, and ph, tb, tn and the beat count c for every Node-clock, that is, 5G + H + 4 integers per Node-clock (c added by the one architect's ruling, the going per gear by the tie rule). Nothing grows at run time, as line 98 sets.
 4. **The lines:** about 850 (section 1).
 5. **Loops** stand only in the runner, the decoder and the tests.
 6. **The undo log:** runner/rewind.py alone reads it, for the rewind check. The engine reads no log.
@@ -541,8 +541,8 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **The two other ways:** (2) doubles every species, a second light included; (3) breaks the loads.
 9. **(h) The tick is its own time reversal, gear by gear.**
    - **It gives:** a rewind with no log, at every teeth count.
-   - **It cancels:** the one mirror at an even count. Its bit is the design's one go dial per Node-clock, within line 98's fixed count.
-   - **Sofer adds:** it is the same object as David's turnover with the frame. The frame, the going, the pawl and the count of turnovers are one remainder of the Node-clock's ratchet.
+   - **It cancels:** the one mirror at an even count. Its bit is each gear's going, within line 98's fixed count (the tie rule).
+   - **Sofer adds:** it is the same object as David's turnover with the frame. The frame, the going, the pawl and the count of turnovers are one remainder of each gear's ratchet.
    - **The recommendation:** approve. The verifier confirmed it, and the bit is a tooth the ratchet already has; k is an integer of the universe file.
 10. **(i) The light cone as one condition per Node-clock.**
     - **The recommendation:** do not approve it now. The verifier found no carry: it is a bound written as a division with a branch, and it erases the tension's A1 part.

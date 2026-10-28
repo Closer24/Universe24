@@ -1651,7 +1651,7 @@ The owner's words of 09:4x UTC: an architect reads the plan and says how the cod
 8. the build in twelve stages, clocks first, then tensors, then the 24's operations, each with a test that can fail (TENSOR24_PLAN.md, section 12); item (u) closes before stage 3;
 9. the width: Python integers in numpy object arrays, dtype=object everywhere, exact at 112 bits and beyond; int64 wraps silently and is refused; the width a universe key, never held by an act;
 10. the twin hands: in any basis of their four integer rows the third turns' lifts cannot act as signed permutations (2T = SL(2,3) has no subgroup of index 2), so no change of ring alone, Z[zeta8] included, makes element-wise carries keep the 24 bit for bit on them; the departure stands until David's route (OPEN 3: carries on what the 24 permute, the axis form (rho, S)).
-The state is 4G + H + 5 integers per Node-clock with c, fixed for the run (line 98).
+The state is 5G + H + 4 integers per Node-clock with c and the going per gear (the tie rule), fixed for the run (line 98).
 
 **Four packages, under src/tensor24/** (the architect adds algebra/, above):
 
@@ -1771,7 +1771,7 @@ Each row declares the record's fields of its two readings, which must be disjoin
 
 **Risks, ranked, and what is done about each:**
 1. **The rewind with no log.** A click at a threshold that reads and writes the hand's notches cannot be inverted from its result; that is why the head's undo reads the log. Every owed click's formula must be a shear with its controls untouched, and David has the shear test as a constraint.
-2. **Rule3's ties.** Rounding half up is not odd: at W = 10, 10 of 101 momenta fail p to -p, and the head's mirror gives -P - W at r = 0, both checked. Rotations negate the T1 and T2 gears, so the 24 hold bit for bit only with odd divisors or a tie rule that is odd. It is decided before carry.py is written (with the mathematician's odd teeth, section 30).
+2. **Rule3's ties.** Rounding half up is not odd: at W = 10, 10 of 101 momenta fail p to -p, and the head's mirror gives -P - W at r = 0, both checked. Rotations negate the T1 and T2 gears, so the 24 hold bit for bit only with odd divisors or a tie rule that is odd. It is decided before carry.py is written (with the mathematician's odd teeth, section 30). Proposed for it: draft H's going kept per gear, home(w, go) = (w - go) div 2, a gear's negation (a, b, r, go) to (-a, -b, w - 1 - r, 1 - go) commuting with the step bit for bit at every teeth count (derive/tie_rule: PROVED, and CHECKED in 200,000 of 200,000; Sofer's law passes, #2187 6474681064; David's formula owed). Odd teeth counts are allowed; what stays struck is a rule that needs a parity.
 3. **Locality against the two-ended clicks.**
 4. **The gate's settings tied to paths, and its holes** (above).
 5. **The twin hands:** only the rotations that fix the twins' axis map them over the Gaussian integers exactly, up to a unit; the others need the root of 2 (or another basis, the mathematician's 12 tetrahedral rotations). The images test states what it runs: those bit for bit, and (rho, S) for the rest.
