@@ -1613,7 +1613,7 @@ The hostile review shows that three of his decisions cannot be met as derivation
     - M8: dark matter's Z2 and coupling 0 are declared, and the mass is only semidefinite at the vacuum's edge: relabelled;
     - M9: a finite board under "no bound": laws 10 and 11 conflict (items (d), (o)).
 
-**APPROVED by the owner** (16:0x UTC, Hebrew, translated): "Approved, build it. You on the engine. Animate on the decoder." The decisions stand as recommended, and the build follows the twelve stages of the one architect's ruling (section 31); stage 0 first, the gate adopted before any line.
+**APPROVED by the owner** (16:0x UTC, Hebrew, translated, #2187 comment 6474211874): "Approved, build it. You on the engine. Animate on the decoder." The decisions stand as recommended, and the build follows the twelve stages of the one architect's ruling (section 31); stage 0 first, the gate adopted before any line.
 
 **The final approvals** (15:4x UTC, #2187): David YES on edb27b24d (6473424362), his two text notes folded ((q) leading with his correction; law 4's weak maximum the head's, the carry OPEN under law 11); Animate YES on edb27b24d (6473561890), her five text conditions to fold after 16:00, none blocking, (c) folded; Sofer APPROVED the head for the owner (8eaf350f2, 6473828939), the one architect's ruling right on every point it corrects in his file, and his remaining wording points folded; the one architect's ruling, one architecture (section 31).
 

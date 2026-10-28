@@ -4,7 +4,7 @@ For the owner and for everyone on the work, in English on the owner's word (2026
 
 ## 0. In one line
 
-**APPROVED by the owner at 16:0x UTC** (Hebrew, translated): "Approved, build it. You on the engine. Animate on the decoder." The decisions stand as recommended.
+**APPROVED by the owner at 16:0x UTC** (Hebrew, translated, #2187 comment 6474211874): "Approved, build it. You on the engine. Animate on the decoder." The decisions stand as recommended.
 
 **This is the plan of a purely algebraic engine.** It names its contradictions with nature, and it does not claim nature one to one.
 

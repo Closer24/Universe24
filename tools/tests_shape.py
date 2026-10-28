@@ -40,7 +40,7 @@ DUPLICATE_LINES = 8
 DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
-TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality, purity, rename, the 24's images, the formula against a naive model, bijectivity both ways) on a trivial engine, Fredkin's second-order form, each failing on its own mutant; the Boss's room by name."
+TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality in the stencil form, purity across two worlds, rename with an inert train, the 24's images with the translations, the formula against a naive model, bijectivity by the engine's own run back) on a trivial engine, Fredkin's second-order form, at three seeds of Python integers across 2**112 on a side of 5, each failing on every mutant it must catch (its own six and the hostile reader's ten of the review of dce3c56bd); the Boss's room by name."
 TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, every divisor at least 1, every reference whole), and each rule refuses its own broken file; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_tensor24_files.py::edits": (
@@ -55,6 +55,14 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         5,
         TENSOR24_FRAME,
     ),
+    "tests/test_the_tensor24_frame.py::world": (
+        8,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::same": (
+        6,
+        TENSOR24_FRAME,
+    ),
     "tests/test_the_tensor24_frame.py::trivial": (
         3,
         TENSOR24_FRAME,
@@ -63,20 +71,20 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         3,
         TENSOR24_FRAME,
     ),
-    "tests/test_the_tensor24_frame.py::mutants": (
-        12,
+    "tests/test_the_tensor24_frame.py::engine": (
+        3,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::local": (
-        6,
+        13,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::pure": (
-        5,
+        8,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::renamed": (
-        5,
+        9,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::turns": (
@@ -84,23 +92,51 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::turned": (
-        10,
+        15,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::naive": (
-        6,
+        10,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::formula": (
-        3,
+        5,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::bijective": (
-        4,
+        5,
         TENSOR24_FRAME,
     ),
-    "tests/test_the_tensor24_frame.py::test_each_property_holds_on_the_trivial_engine_and_fails_on_its_mutant": (
-        7,
+    "tests/test_the_tensor24_frame.py::broken": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::hidden": (
+        13,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::two": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::mark": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::mutants": (
+        53,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::holds": (
+        6,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_must_catch": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::test_the_images_fail_on_a_board_the_24_do_not_keep": (
+        2,
         TENSOR24_FRAME,
     ),
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (

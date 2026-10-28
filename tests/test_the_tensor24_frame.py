@@ -1,18 +1,38 @@
-"""Tensor24's frame: its property tests on a trivial engine, each one failing on its own mutant."""
+"""Tensor24's frame: its property tests on a trivial engine, each one failing on every mutant it must catch."""
 
 import itertools
 
 import numpy as np
 import pytest
 
-SIDE = 3  # a side of 3 or more: on a side of 2, x + e is x - e and hides a sign error
+# a side of 5 or more: x + e, x - e, x + 2e and x - 2e are four sites, so no shift hides another
+SHAPE = (5, 5, 5)
+ASKEW = (3, 4, 5)  # a board the 24 do not keep: the images must fail on it
 
 
-def board():
-    """The six neighbours of every site of the cubic torus, the wrap by Rule3 on the coordinates."""
-    xyz = np.indices((SIDE,) * 3).reshape(3, -1)
+def board(shape):
+    """The six neighbours of every site of the torus, the wrap by Rule3 on each coordinate."""
+    xyz, sides = np.indices(shape).reshape(3, -1), np.array(shape)[:, None]
     steps = [sign * axis for axis in np.eye(3, dtype=int) for sign in (1, -1)]
-    return np.stack([np.ravel_multi_index(tuple((xyz + s[:, None]) % SIDE), (SIDE,) * 3) for s in steps])
+    return np.stack([np.ravel_multi_index(tuple((xyz + s[:, None]) % sides), shape) for s in steps])
+
+
+def world(rng, shape, trains=2):
+    """Both slots of every gear, whole numbers across 2**112, as Python integers in object arrays."""
+    size = (trains, int(np.prod(shape)))
+    return tuple(
+        rng.integers(-(1 << 62), 1 << 62, size).astype(object) * (1 << 50)
+        + rng.integers(-9, 9, size).astype(object)
+        for _ in range(2)
+    )
+
+
+def same(xs, ys):
+    """Equal at every gear, and Python integers throughout: no fixed width and no float."""
+    return all(
+        np.array_equal(x, y) and all(isinstance(v, int) for v in x.flat)
+        for x, y in zip(xs, ys, strict=True)
+    )
 
 
 def trivial(nb, a, b):
@@ -25,40 +45,45 @@ def untrivial(nb, a, b):
     return b, b[:, nb].sum(axis=1) - b - a
 
 
-def mutants():
-    """One broken copy per property, each changing one thing the property must see."""
-    calls = itertools.count()
-    first = (np.arange(2) == 0)[:, None]
-    return {
-        "locality": lambda nb, a, b: trivial(nb, a[:, nb[0]], b),
-        "purity": lambda nb, a, b: (trivial(nb, a, b)[0] + next(calls), a),
-        "rename": lambda nb, a, b: (trivial(nb, a, b)[0] + first, a),
-        "images": lambda nb, a, b: (trivial(nb, a, b)[0] + a[:, nb[0]], a),
-        "formula": lambda nb, a, b: (a[:, nb].sum(axis=1) - b, a),
-        "bijectivity": lambda nb, a, b: (a[:, nb].sum(axis=1) - a, a),
-    }
+def engine():
+    """The trivial engine: its step and its own run back."""
+    return trivial, untrivial
 
 
-def local(step, nb, a, b):
-    """A change at one site reaches its six neighbours in one tick, and no site beyond them."""
-    poked = a.copy()
-    poked[:, 0] += 1
-    moved = (step(nb, poked, b)[0] != step(nb, a, b)[0]).astype(bool).any(axis=0)
-    return set(np.flatnonzero(moved)) <= {0, *nb[:, 0]}
+def local(make, shape, rng):
+    """A site's two new slots read its seven sites alone: every gear beyond them changed, both slots, at every site."""
+    (step, _), nb = make(), board(shape)
+    a, b = world(rng, shape)
+    out = step(nb, a, b)
+    for site in range(nb.shape[1]):
+        far = ~np.isin(np.arange(nb.shape[1]), [site, *nb[:, site]])
+        moved = step(
+            nb, *(np.where(far, new, old) for new, old in zip(world(rng, shape), (a, b), strict=True))
+        )
+        if not same([p[:, site] for p in moved], [p[:, site] for p in out]):
+            return False
+    return True
 
 
-def pure(step, nb, a, b):
-    """With every input frozen, two calls give the same bits."""
-    for frozen in (nb, a, b):
+def pure(make, shape, rng):
+    """Two worlds asked in turn of one engine, every input frozen, each answered as a fresh engine answers it."""
+    nb, worlds = board(shape), [world(rng, shape) for _ in range(2)]
+    for frozen in (nb, *worlds[0], *worlds[1]):
         frozen.flags.writeable = False
-    return all((p == q).all() for p, q in zip(step(nb, a, b), step(nb, a, b), strict=True))
+    fresh = [make()[0](nb, *w) for w in worlds]
+    step = make()[0]
+    return all(same(step(nb, *worlds[i % 2]), fresh[i % 2]) for i in range(4))
 
 
-def renamed(step, nb, a, b):
-    """Renaming the trains renames the step's rows alike."""
-    order = np.roll(np.arange(len(a)), 1)
-    alike = zip(step(nb, a, b), step(nb, a[order], b[order]), strict=True)
-    return all((p[order] == q).all() for p, q in alike)
+def renamed(make, shape, rng):
+    """Every order of three trains orders the step's rows alike, and an inert fourth train leaves the three's bits."""
+    (step, _), nb = make(), board(shape)
+    a, b = world(rng, shape, 3)
+    out, zero = step(nb, a, b), np.zeros((1, a.shape[1]), dtype=object)
+    inert = step(nb, np.concatenate([a, zero]), np.concatenate([b, zero]))
+    orders = [list(order) for order in itertools.permutations(range(3))]
+    alike = all(same(step(nb, a[o], b[o]), [p[o] for p in out]) for o in orders)
+    return alike and same([p[:3] for p in inert], out)
 
 
 def turns():
@@ -72,42 +97,153 @@ def turns():
             yield m
 
 
-def turned(step, nb, a, b):
-    """Each turn of the cube, applied to the board, commutes with the step."""
-    xyz = np.indices((SIDE,) * 3).reshape(3, -1)
-    for m in turns():
-        site = np.ravel_multi_index(tuple((m @ xyz) % SIDE), (SIDE,) * 3)
+def turned(make, shape, rng):
+    """The board's moves, the 24 turns and the three unit translations that generate them all, move both slots alike."""
+    (step, _), nb = make(), board(shape)
+    a, b = world(rng, shape)
+    out = step(nb, a, b)
+    xyz, sides, e = np.indices(shape).reshape(3, -1), np.array(shape)[:, None], np.eye(3, dtype=int)
+    for moved in [m @ xyz for m in turns()] + [xyz + e[:, [k]] for k in range(3)]:
+        site = np.ravel_multi_index(tuple(moved % sides), shape)
+        if np.unique(site).size < site.size:
+            return False  # the move is no symmetry of this board
         a2, b2 = np.empty_like(a), np.empty_like(b)
         a2[:, site], b2[:, site] = a, b
-        if not (step(nb, a2, b2)[0][:, site] == step(nb, a, b)[0]).all():
+        if not same([p[:, site] for p in step(nb, a2, b2)], out):
             return False
     return True
 
 
-def naive(nb, a, b):
-    """The same form site by site, with loops: the model the vectorized step is held to."""
+def naive(shape, a, b):
+    """The same form site by site, with loops and neighbours found from the coordinates: the model the step is held to."""
     out = np.zeros_like(a)
-    for g, x in itertools.product(range(a.shape[0]), range(a.shape[1])):
-        out[g, x] = sum(a[g, y] for y in nb[:, x]) - a[g, x] - b[g, x]
+    for g, x in itertools.product(range(len(a)), itertools.product(*map(range, shape))):
+        near = [
+            tuple((x[i] + d * (i == j)) % shape[i] for i in range(3)) for j in range(3) for d in (1, -1)
+        ]
+        here = np.ravel_multi_index(x, shape)
+        out[g, here] = sum(a[g, np.ravel_multi_index(y, shape)] for y in near) - a[g, here] - b[g, here]
     return out, a
 
 
-def formula(step, nb, a, b):
-    """The step equals the naive model at every gear of every site."""
-    return all((p == q).all() for p, q in zip(step(nb, a, b), naive(nb, a, b), strict=True))
+def formula(make, shape, rng):
+    """The step equals the naive model at every gear of every site, both slots, as Python integers."""
+    (step, _), nb = make(), board(shape)
+    a, b = world(rng, shape)
+    return same(step(nb, a, b), naive(shape, a, b))
 
 
-def bijective(step, nb, a, b):
-    """The step run back after the step, and the step after it is run back, are the identity."""
-    back, forth = untrivial(nb, *step(nb, a, b)), step(nb, *untrivial(nb, a, b))
-    return all((p == q).all() for p, q in zip(back + forth, (a, b, a, b), strict=True))
+def bijective(make, shape, rng):
+    """The engine's own run back after the step, and the step after its run back, give the world back."""
+    (step, unstep), nb = make(), board(shape)
+    a, b = world(rng, shape)
+    return same(unstep(nb, *step(nb, a, b)), (a, b)) and same(step(nb, *unstep(nb, a, b)), (a, b))
 
 
-@pytest.mark.parametrize("name", ["locality", "purity", "rename", "images", "formula", "bijectivity"])
-def test_each_property_holds_on_the_trivial_engine_and_fails_on_its_mutant(name):
-    holds = {"locality": local, "purity": pure, "rename": renamed, "images": turned}
-    holds = holds | {"formula": formula, "bijectivity": bijective}
-    rng = np.random.default_rng(20261028)
-    a, b = (rng.integers(-9, 9, size=(2, SIDE**3)).astype(object) for _ in range(2))
-    assert holds[name](trivial, board(), a.copy(), b.copy())
-    assert not holds[name](mutants()[name], board(), a.copy(), b.copy())
+PROPERTIES = {"locality": local, "purity": pure, "rename": renamed, "images": turned}
+PROPERTIES |= {"formula": formula, "bijectivity": bijective}
+
+
+def broken(step):
+    """An engine whose step is broken, its run back the trivial one."""
+    return lambda: (step, untrivial)
+
+
+def hidden(keep):
+    """An engine holding a state between calls: what keep returns, given the worlds seen so far, is stepped."""
+
+    def make():
+        seen = []
+
+        def step(nb, a, b):
+            seen.append((a, b))
+            return trivial(nb, *keep(seen))
+
+        return step, untrivial
+
+    return make
+
+
+def two(nb):
+    """The site one Mesh along +x and one along +y: two Meshes away, and no neighbour."""
+    return nb[2][nb[0]]
+
+
+def mark(n):
+    """A column of n bits, 1 at row 0 alone."""
+    return (np.arange(n) == 0).astype(object)[:, None]
+
+
+def mutants():
+    """Every broken engine with the property that must catch it: the frame's six and the hostile reader's ten."""
+    return {
+        "a Mesh read two away": ("locality", broken(lambda nb, a, b: trivial(nb, a[:, nb[0]], b))),
+        "each Spoke taken twice": (
+            "locality",
+            broken(lambda nb, a, b: (a[:, np.stack([s[s] for s in nb])].sum(axis=1) - a - b, a)),
+        ),
+        "the before slot read two away": (
+            "locality",
+            broken(lambda nb, a, b: (trivial(nb, a, b)[0] + b - b[:, two(nb)], a)),
+        ),
+        "the new before slot taken two away": (
+            "locality",
+            broken(lambda nb, a, b: (trivial(nb, a, b)[0], a[:, two(nb)])),
+        ),
+        "a far site read through a carry": (
+            "locality",
+            broken(lambda nb, a, b: (trivial(nb, a, b)[0] + (a[:, two(nb)] + 64) // 128, a)),
+        ),
+        "a counter": ("purity", hidden(lambda seen: (seen[-1][0] + len(seen) - 1, seen[-1][1]))),
+        "the first call's world kept": ("purity", hidden(lambda seen: seen[0])),
+        "the last call's world kept": ("purity", hidden(lambda seen: seen[max(len(seen) - 2, 0)])),
+        "train 0 singled out": (
+            "rename",
+            broken(lambda nb, a, b: (trivial(nb, a, b)[0] + mark(len(a)), a)),
+        ),
+        "the act scaled by the trains": (
+            "rename",
+            broken(lambda nb, a, b: ((a[:, nb].sum(axis=1) - a - b) * len(a) // 2, a)),
+        ),
+        "the +x Spoke weighted twice": (
+            "images",
+            broken(lambda nb, a, b: (trivial(nb, a, b)[0] + a[:, nb[0]], a)),
+        ),
+        "site 0 marked": (
+            "images",
+            broken(lambda nb, a, b: (trivial(nb, a, b)[0] + mark(a.shape[1]).T, a)),
+        ),
+        "a term dropped": ("formula", broken(lambda nb, a, b: (a[:, nb].sum(axis=1) - b, a))),
+        "a clamp at 100": (
+            "formula",
+            broken(lambda nb, a, b: (np.minimum(trivial(nb, a, b)[0], 100), a)),
+        ),
+        "the width cut to 64 bits": (
+            "formula",
+            broken(lambda nb, a, b: tuple(x.astype(np.int64) for x in trivial(nb, a, b))),
+        ),
+        "the before slot dropped": (
+            "bijectivity",
+            broken(lambda nb, a, b: (a[:, nb].sum(axis=1) - a, a)),
+        ),
+    }
+
+
+def holds(name, make, shape, seed):
+    """Whether the property holds on the engine at one seed; an engine that overflows a fixed width does not."""
+    try:
+        return PROPERTIES[name](make, shape, np.random.default_rng(seed))
+    except OverflowError:
+        return False
+
+
+@pytest.mark.parametrize("mutant", list(mutants()))
+def test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_must_catch(mutant):
+    name, make = mutants()[mutant]
+    for seed in range(3):
+        assert holds(name, engine, SHAPE, seed)
+        assert not holds(name, make, SHAPE, seed)
+
+
+def test_the_images_fail_on_a_board_the_24_do_not_keep():
+    assert not holds("images", engine, ASKEW, 0)
