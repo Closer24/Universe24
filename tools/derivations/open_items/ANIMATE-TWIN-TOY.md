@@ -60,7 +60,8 @@ So this page is a toy check and no engine build. The toys run on a scratch copy 
      - births per bang: 0, 64, 32, 0, 0, 0, 32 (twin pairs, the up twin fitted), 0, 0, 0, 32 (twin pairs, the down twin fitted);
      - at the bottom of tick 494 the push carries the stretch near the horizon within three ticks (X = 2,786,265,930 at tick 497), and the board splits;
      - steps then carry hundreds of dial turns (the carries read run from -445 to 813), and tick 554 is refused;
-     - the rewind is 20 of 20 from tick 40, and the end teeth's fallback acts 24 times, all after tick 494.
+     - the rewind is 20 of 20 from tick 40, and the end teeth's fallback acts 24 times, all after tick 494;
+     - run to tick 494 alone (twins_JK_count_step_5M_494.txt), the end teeth's fallback acts 0 times, and only F2 and the draw's cap act, as on the A1 course. The books close at 494 of 494 click phases, and the eleven bottoms' states are all distinct (row 1c).
    - **The stage-1 threshold** (twins_JK_threshold_5M_600.txt):
      - 600 ticks, twelve whole-board tops to 481, the rewind 20 of 20;
      - births 206, the twin pairs at the 3rd and 9th bangs;

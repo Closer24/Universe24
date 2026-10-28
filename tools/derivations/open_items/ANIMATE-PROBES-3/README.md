@@ -43,6 +43,7 @@ Three outputs ran before the FORM setting was added, so their settings line name
 | twins_JK_threshold_500k_600.txt | twins | threshold | the start and the step | J K | 600 ticks on the end teeth's fallback (2,676); births 134 |
 | twins_K_threshold_500k_600.txt | twins | threshold | the start and the step | K | the stage-1 run bit for bit (28e42e907a4ad507): the blend is exact |
 | twins_JK_count_step_5M_600.txt | twins | count | the step | J K | eleven clean bangs, twin births at the 7th and 11th bangs, refused at tick 554 |
+| twins_JK_count_step_5M_494.txt | twins | count | the step | J K | the same run to tick 494: the end teeth's fallback 0, the books 494 of 494, eleven distinct bottoms |
 | twins_JK_threshold_5M_600.txt | twins | threshold | the start and the step | J K | 600 ticks on the end teeth's fallback (4,436); births 206 |
 | stage1_*.txt | | the `carry` variant (the stage-1 threshold) | | the engine's own K | the stage-1 runs, kept as run: the A1 threshold (640f11b7135fcbfc), the twins at 500,000 and 5,000,000 quanta, the head with the twin row, and the twins with the floor struck (refused at tick 345) |
 
