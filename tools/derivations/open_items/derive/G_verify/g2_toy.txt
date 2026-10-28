@@ -1,0 +1,165 @@
+part 1: one gear, F = -3 n, notches in [-7, 7]; failures counted over the canonical states
+w  8 up   (1800 states): C_mirror 420; C_raw 435; C_flip 0 (rest not fixed); C_up1 810 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 420 TST 420 P->-P 225 M twice 8
+          T_raw: inv 0 closed 225 retrace 210 TST 210 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 1800 M twice 0
+          T_up1: inv 0 closed 450 retrace 360 TST 360 P->-P 1800 M twice 0
+          T_carried: inv 225 closed 15 retrace 224 TST 0 P->-P 0 M twice 12
+w  8 even (1801 states): C_mirror 211; C_raw 0; C_flip 421 (rest not fixed); C_up1 421 (rest not fixed)
+          T_mirror: inv 113 closed 0 retrace 211 TST 218 P->-P 113 M twice 12
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 225 retrace 196 TST 196 P->-P 1801 M twice 8
+          T_up1: inv 0 closed 225 retrace 196 TST 196 P->-P 1801 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w  8 down (1800 states): C_mirror 435; C_raw 435; C_flip 810 (rest not fixed); C_up1 0 (rest not fixed)
+          T_mirror: inv 225 closed 225 retrace 210 TST 210 P->-P 0 M twice 8
+          T_raw: inv 0 closed 225 retrace 210 TST 210 P->-P 0 M twice 8
+          T_flip: inv 0 closed 450 retrace 360 TST 360 P->-P 1800 M twice 14
+          T_up1: inv 0 closed 0 retrace 0 TST 0 P->-P 1800 M twice 0
+          T_carried: inv 225 closed 15 retrace 224 TST 0 P->-P 0 M twice 8
+w  9 up   (2025 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 750 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 300 TST 300 P->-P 2025 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w  9 even (2025 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 750 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 300 TST 300 P->-P 2025 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w  9 down (2025 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 750 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 300 TST 300 P->-P 2025 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 10 up   (2250 states): C_mirror 420; C_raw 435; C_flip 0 (rest not fixed); C_up1 810 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 420 TST 420 P->-P 225 M twice 9
+          T_raw: inv 0 closed 225 retrace 210 TST 210 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 2250 M twice 0
+          T_up1: inv 0 closed 450 retrace 360 TST 360 P->-P 2250 M twice 0
+          T_carried: inv 225 closed 15 retrace 224 TST 0 P->-P 0 M twice 13
+w 10 even (2251 states): C_mirror 211; C_raw 0; C_flip 421 (rest not fixed); C_up1 421 (rest not fixed)
+          T_mirror: inv 113 closed 0 retrace 211 TST 218 P->-P 113 M twice 11
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 225 retrace 196 TST 196 P->-P 2251 M twice 8
+          T_up1: inv 0 closed 225 retrace 196 TST 196 P->-P 2251 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 10 down (2250 states): C_mirror 435; C_raw 435; C_flip 810 (rest not fixed); C_up1 0 (rest not fixed)
+          T_mirror: inv 225 closed 225 retrace 210 TST 210 P->-P 0 M twice 9
+          T_raw: inv 0 closed 225 retrace 210 TST 210 P->-P 0 M twice 9
+          T_flip: inv 0 closed 450 retrace 360 TST 360 P->-P 2250 M twice 16
+          T_up1: inv 0 closed 0 retrace 0 TST 0 P->-P 2250 M twice 0
+          T_carried: inv 225 closed 15 retrace 224 TST 0 P->-P 0 M twice 9
+w 11 up   (2475 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 810 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 360 TST 360 P->-P 2475 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 11 even (2475 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 810 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 360 TST 360 P->-P 2475 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 11 down (2475 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 810 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 360 TST 360 P->-P 2475 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 12 up   (2700 states): C_mirror 360; C_raw 405; C_flip 0 (rest not fixed); C_up1 810 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 360 TST 360 P->-P 225 M twice 8
+          T_raw: inv 0 closed 225 retrace 180 TST 180 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 2700 M twice 0
+          T_up1: inv 0 closed 450 retrace 360 TST 360 P->-P 2700 M twice 0
+          T_carried: inv 225 closed 15 retrace 222 TST 0 P->-P 0 M twice 11
+w 12 even (2701 states): C_mirror 210; C_raw 0; C_flip 433 (rest not fixed); C_up1 433 (rest not fixed)
+          T_mirror: inv 113 closed 0 retrace 210 TST 203 P->-P 113 M twice 10
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 225 retrace 208 TST 208 P->-P 2701 M twice 10
+          T_up1: inv 0 closed 225 retrace 208 TST 208 P->-P 2701 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 12 down (2700 states): C_mirror 405; C_raw 405; C_flip 810 (rest not fixed); C_up1 0 (rest not fixed)
+          T_mirror: inv 225 closed 225 retrace 180 TST 180 P->-P 0 M twice 8
+          T_raw: inv 0 closed 225 retrace 180 TST 180 P->-P 0 M twice 8
+          T_flip: inv 0 closed 450 retrace 360 TST 360 P->-P 2700 M twice 16
+          T_up1: inv 0 closed 0 retrace 0 TST 0 P->-P 2700 M twice 0
+          T_carried: inv 225 closed 15 retrace 222 TST 0 P->-P 0 M twice 8
+w 13 up   (2925 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 840 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 390 TST 390 P->-P 2925 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 13 even (2925 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 840 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 390 TST 390 P->-P 2925 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 13 down (2925 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 840 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 390 TST 390 P->-P 2925 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 14 up   (3150 states): C_mirror 420; C_raw 435; C_flip 0 (rest not fixed); C_up1 840 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 420 TST 420 P->-P 225 M twice 10
+          T_raw: inv 0 closed 225 retrace 210 TST 210 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 3150 M twice 0
+          T_up1: inv 0 closed 450 retrace 390 TST 390 P->-P 3150 M twice 0
+          T_carried: inv 225 closed 15 retrace 224 TST 0 P->-P 0 M twice 13
+w 14 even (3151 states): C_mirror 211; C_raw 0; C_flip 421 (rest not fixed); C_up1 421 (rest not fixed)
+          T_mirror: inv 113 closed 0 retrace 211 TST 218 P->-P 113 M twice 9
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 225 retrace 196 TST 196 P->-P 3151 M twice 10
+          T_up1: inv 0 closed 225 retrace 196 TST 196 P->-P 3151 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 14 down (3150 states): C_mirror 435; C_raw 435; C_flip 840 (rest not fixed); C_up1 0 (rest not fixed)
+          T_mirror: inv 225 closed 225 retrace 210 TST 210 P->-P 0 M twice 10
+          T_raw: inv 0 closed 225 retrace 210 TST 210 P->-P 0 M twice 10
+          T_flip: inv 0 closed 450 retrace 390 TST 390 P->-P 3150 M twice 19
+          T_up1: inv 0 closed 0 retrace 0 TST 0 P->-P 3150 M twice 0
+          T_carried: inv 225 closed 15 retrace 224 TST 0 P->-P 0 M twice 10
+w 15 up   (3375 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 810 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 360 TST 360 P->-P 3375 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 15 even (3375 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 810 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 360 TST 360 P->-P 3375 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+w 15 down (3375 states): C_mirror 0; C_raw 0; C_flip 0; C_up1 810 (rest not fixed)
+          T_mirror: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_raw: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_flip: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+          T_up1: inv 0 closed 450 retrace 360 TST 360 P->-P 3375 M twice 0
+          T_carried: inv 0 closed 0 retrace 0 TST 0 P->-P 0 M twice 0
+
+part 2: the hand pair A and B = K A (the twelve gear negated about mid), each turned by the rotation act; 400 random seeds, 400 steps each; the net charge W_A + W_B per step
+  w  8: seeds with a nonzero net under up 333 of 400; the sign (-1, 0, 1) of the first nonzero net {-1: 174, 0: 67, 1: 159}, of the last {-1: 147, 0: 95, 1: 158}, of the run's sum {-1: 164, 0: 68, 1: 168}; down = -up at every step on 74; down on the seed = up on the negated seed on 400; even 0 at every step on 400
+  w 10: seeds with a nonzero net under up 0 of 400; the sign (-1, 0, 1) of the first nonzero net {0: 400}, of the last {0: 400}, of the run's sum {0: 400}; down = -up at every step on 400; down on the seed = up on the negated seed on 400; even 0 at every step on 400
+  w 12: seeds with a nonzero net under up 201 of 400; the sign (-1, 0, 1) of the first nonzero net {-1: 90, 0: 199, 1: 111}, of the last {-1: 88, 0: 223, 1: 89}, of the run's sum {-1: 95, 0: 201, 1: 104}; down = -up at every step on 210; down on the seed = up on the negated seed on 400; even 0 at every step on 400
+  w 14: seeds with a nonzero net under up 0 of 400; the sign (-1, 0, 1) of the first nonzero net {0: 400}, of the last {0: 400}, of the run's sum {0: 400}; down = -up at every step on 400; down on the seed = up on the negated seed on 400; even 0 at every step on 400
+  w 16: seeds with a nonzero net under up 347 of 400; the sign (-1, 0, 1) of the first nonzero net {-1: 169, 0: 53, 1: 178}, of the last {-1: 146, 0: 102, 1: 152}, of the run's sum {-1: 154, 0: 54, 1: 192}; down = -up at every step on 79; down on the seed = up on the negated seed on 400; even 0 at every step on 400
+  w 20: seeds with a nonzero net under up 186 of 400; the sign (-1, 0, 1) of the first nonzero net {-1: 103, 0: 214, 1: 83}, of the last {-1: 69, 0: 241, 1: 90}, of the run's sum {-1: 82, 0: 217, 1: 101}; down = -up at every step on 230; down on the seed = up on the negated seed on 400; even 0 at every step on 400
+  w  9: seeds with a nonzero net under up 0 of 400; the sign (-1, 0, 1) of the first nonzero net {0: 400}, of the last {0: 400}, of the run's sum {0: 400}; down = -up at every step on 400; down on the seed = up on the negated seed on 400; even 0 at every step on 400
+  w 11: seeds with a nonzero net under up 0 of 400; the sign (-1, 0, 1) of the first nonzero net {0: 400}, of the last {0: 400}, of the run's sum {0: 400}; down = -up at every step on 400; down on the seed = up on the negated seed on 400; even 0 at every step on 400
+
+part 3: the no-go at even teeth, p in [-60, 60]: oddness q(-p) = -q(p) and the one-notch shift q(p + w) = q(p) + 1, failures per rule; and an advance of whole notches on the notch now (the release, the unwind move) at every canonical state of the box: states it leaves non-canonical
+  w  8: up: odd 16, shift 0, advance 0 of 7200; even: odd 0, shift 16, advance 678 of 7204; down: odd 16, shift 0, advance 0 of 7200
+  w  9: up: odd 0, shift 0, advance 0 of 8100; even: odd 0, shift 0, advance 0 of 8100; down: odd 0, shift 0, advance 0 of 8100
+  w 10: up: odd 12, shift 0, advance 0 of 9000; even: odd 0, shift 12, advance 678 of 9004; down: odd 12, shift 0, advance 0 of 9000
+  w 11: up: odd 0, shift 0, advance 0 of 9900; even: odd 0, shift 0, advance 0 of 9900; down: odd 0, shift 0, advance 0 of 9900
+  w 12: up: odd 10, shift 0, advance 0 of 10800; even: odd 0, shift 10, advance 678 of 10804; down: odd 10, shift 0, advance 0 of 10800
+  w 13: up: odd 0, shift 0, advance 0 of 11700; even: odd 0, shift 0, advance 0 of 11700; down: odd 0, shift 0, advance 0 of 11700
+  w 14: up: odd 8, shift 0, advance 0 of 12600; even: odd 0, shift 8, advance 678 of 12604; down: odd 8, shift 0, advance 0 of 12600
+  w 15: up: odd 0, shift 0, advance 0 of 13500; even: odd 0, shift 0, advance 0 of 13500; down: odd 0, shift 0, advance 0 of 13500

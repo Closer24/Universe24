@@ -1,0 +1,10 @@
+1. Omega_B is conserved by the step, and its exchange sign is -nu; the one-tick dial's is nu
+  [ok] twin hands E1/2 (nu = -1): Omega_B conserved over 30 ticks of the step: 100 of 100
+  [ok] twin hands E1/2 (nu = -1): Omega_B(v, u) = (-nu) Omega_B(u, v): 100 of 100
+  [ok] twin hands E1/2 (nu = -1): the one-tick dial B(v, u) = (nu) B(u, v): 100 of 100
+  [ok] twin hands E1/2 (nu = -1): the conserved dial's two ways survive only for eps = -nu = +1: nonzero eps=+1: 100, eps=-1: 0 of 100
+  [ok] vectors T1 (nu = +1): Omega_B conserved over 30 ticks of the step: 100 of 100
+  [ok] vectors T1 (nu = +1): Omega_B(v, u) = (-nu) Omega_B(u, v): 100 of 100
+  [ok] vectors T1 (nu = +1): the one-tick dial B(v, u) = (nu) B(u, v): 100 of 100
+  [ok] vectors T1 (nu = +1): the conserved dial's two ways survive only for eps = -nu = -1: nonzero eps=+1: 0, eps=-1: 100 of 100
+result: 0 failures

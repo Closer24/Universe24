@@ -1,0 +1,11 @@
+M1. G3/2 built without its E factor (Q_a (x) 1, two copies of E1/2): Schur's one form must break
+  G3/2 without E: commutant 4, invariant bilinears 4 (fails as it must)
+M1b. (kept as a note) the x and y labels of E's axis map exchanged is an inner automorphism of S3: same kind, not a mutant
+  relabelled G3/2: commutant 1, image 48, Hom to G3/2 1 (isomorphic, as it must be)
+M2. The spinor scale dropped (s s = 1 in place of 2): no invariant bilinear on E1/2
+  scale 1 on E1/2: 0 invariant bilinears (fails as it must)
+M3. The symmetric constraint on E1/2's form: none survives (the det is antisymmetric)
+  symmetric invariant on E1/2: 0 symmetric invariant bilinears (fails as it must)
+M4. G3/2 with K in place of T (no sigma_y): B'(u, v) = SUM u v is not directionless
+  plain bilinear on E1/2 (x) T1: 2 of 3 lifts break it (fails as it must)
+result: every mutant fails as it must

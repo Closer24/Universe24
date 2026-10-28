@@ -1,0 +1,140 @@
+### e1_floor
+WMIN world_node.json 20 | differ 20 first 1 | stopped None None
+   counts head {'turns': 117, 'births': 0, 'body_clicks': 0} var {'turns': 540, 'births': 0, 'body_clicks': 0} | bits 96 95 | rewind 20
+   pinned head/var 1 513 | loads<0 head/var 33 0 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 11340 | tensions <0/>G head 1172 0 of 3240
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+WMIN world_hole.json 60 | differ 60 first 1 | stopped None None
+   counts head {'turns': 1073, 'births': 28, 'body_clicks': 1299} var {'turns': 7500, 'births': 0, 'body_clicks': 0} | bits 105 95 | rewind 20
+   pinned head/var 250 7375 | loads<0 head/var 112 0 | X+<=0 not turned 0 | W+<=0 head/var 19 0 | not turned 0 0
+   cone past head/var 0 0 of 157500 | tensions <0/>G head 21842 8884 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+WMIN world_nature.json 60 | differ 60 first 1 | stopped None None
+   counts head {'turns': 861, 'births': 3, 'body_clicks': 2742} var {'turns': 7500, 'births': 0, 'body_clicks': 0} | bits 99 95 | rewind 20
+   pinned head/var 0 7375 | loads<0 head/var 96 0 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 157500 | tensions <0/>G head 21440 0 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+WMIN world_bodies.json 120 | differ 120 first 1 | stopped None None
+   counts head {'turns': 1934, 'births': 0, 'body_clicks': 138} var {'turns': 41160, 'births': 0, 'body_clicks': 0} | bits 77 72 | rewind 20
+   pinned head/var 0 40817 | loads<0 head/var 8 0 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 701092 | tensions <0/>G head 159012 0 of 246960
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+WMIN world_bang.json 250 | differ 250 first 1 | stopped None None
+   counts head {'turns': 3200, 'births': 64, 'body_clicks': 28736} var {'turns': 16000, 'births': 0, 'body_clicks': 0} | bits 114 95 | rewind 20
+   pinned head/var 0 15936 | loads<0 head/var 0 0 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 368064 | tensions <0/>G head 38400 19200 of 96000
+   ties head {' drive': 0, ' size 1': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+SMIN world_node.json 20 | differ 17 first 4 | stopped None None
+   counts head {'turns': 117, 'births': 0, 'body_clicks': 0} var {'turns': 172, 'births': 0, 'body_clicks': 0} | bits 96 95 | rewind 20
+   pinned head/var 1 41 | loads<0 head/var 33 33 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 11340 | tensions <0/>G head 1172 0 of 3240
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+SMIN world_hole.json 60 | differ 2 first 4 | stopped 6 ValueError: the volume X is at most 0 at a Node: the level has no reading, refused by name
+   counts head {'turns': 230, 'births': 0, 'body_clicks': 0} var {'turns': 270, 'births': 0, 'body_clicks': 0} | bits 100 100 | rewind ValueError: the volume X is at most 0 at a Node: the level has no reading, refused by name
+   pinned head/var 66 136 | loads<0 head/var 4 4 | X+<=0 not turned 12 | W+<=0 head/var 0 12 | not turned 0 12
+   cone past head/var 0 0 of 13125 | tensions <0/>G head 768 48 of 4500
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+SMIN world_nature.json 60 | differ 57 first 4 | stopped None None
+   counts head {'turns': 861, 'births': 3, 'body_clicks': 2742} var {'turns': 3372, 'births': 13, 'body_clicks': 2342} | bits 99 99 | rewind 20
+   pinned head/var 0 2126 | loads<0 head/var 96 967 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 182500 | tensions <0/>G head 21440 0 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+SMIN world_bodies.json 120 | differ 117 first 4 | stopped None None
+   counts head {'turns': 1934, 'births': 0, 'body_clicks': 138} var {'turns': 6184, 'births': 0, 'body_clicks': 129} | bits 77 75 | rewind 20
+   pinned head/var 0 1338 | loads<0 head/var 8 40 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 779296 | tensions <0/>G head 159012 0 of 246960
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+### e1_floor_full
+FULL world_node.json 20 | differ 18 first 3 | stopped None None
+   counts head {'turns': 117, 'births': 0, 'body_clicks': 0} var {'turns': 135, 'births': 0, 'body_clicks': 0} | bits 96 96 | rewind 20
+   pinned head/var 1 19 | loads<0 head/var 33 0 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 11340 | tensions <0/>G head 1172 0 of 3240
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+FULL world_hole.json 60 | differ 57 first 4 | stopped None None
+   counts head {'turns': 1073, 'births': 28, 'body_clicks': 1299} var {'turns': 997, 'births': 30, 'body_clicks': 1248} | bits 105 105 | rewind 20
+   pinned head/var 250 243 | loads<0 head/var 112 0 | X+<=0 not turned 0 | W+<=0 head/var 19 5 | not turned 0 0
+   cone past head/var 0 0 of 184250 | tensions <0/>G head 21842 8884 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+FULL world_nature.json 60 | differ 58 first 3 | stopped None None
+   counts head {'turns': 861, 'births': 3, 'body_clicks': 2742} var {'turns': 997, 'births': 2, 'body_clicks': 3366} | bits 99 99 | rewind 20
+   pinned head/var 0 41 | loads<0 head/var 96 0 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 179625 | tensions <0/>G head 21440 0 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+### e2_bounds
+NORM world_hole.json 60 | differ 59 first 2 | stopped None None
+   counts head {'turns': 1073, 'births': 28, 'body_clicks': 1299} var {'turns': 474, 'births': 17, 'body_clicks': 601} | bits 105 105 | rewind 20
+   pinned head/var 250 18 | loads<0 head/var 112 12 | X+<=0 not turned 0 | W+<=0 head/var 19 4 | not turned 0 0
+   cone past head/var 0 0 of 185000 | tensions <0/>G head 21842 8884 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+NOLOW world_hole.json 60 | differ 59 first 2 | stopped None None
+   counts head {'turns': 1073, 'births': 28, 'body_clicks': 1299} var {'turns': 1903, 'births': 82, 'body_clicks': 1242} | bits 105 1476 | rewind 20
+   pinned head/var 250 834 | loads<0 head/var 112 19 | X+<=0 not turned 0 | W+<=0 head/var 19 602 | not turned 0 0
+   cone past head/var 0 28188 of 189125 | tensions <0/>G head 21842 8884 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+NOF5 world_hole.json 60 | differ 56 first 5 | stopped None None
+   counts head {'turns': 1073, 'births': 28, 'body_clicks': 1299} var {'turns': 937, 'births': 31, 'body_clicks': 1110} | bits 105 109 | rewind 20
+   pinned head/var 250 157 | loads<0 head/var 112 54 | X+<=0 not turned 0 | W+<=0 head/var 19 33 | not turned 0 0
+   cone past head/var 0 520 of 184375 | tensions <0/>G head 21842 8884 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+FULLNOF1 world_hole.json 60 | differ 60 first 1 | stopped None None
+   counts head {'turns': 1073, 'births': 28, 'body_clicks': 1299} var {'turns': 839, 'births': 13, 'body_clicks': 177} | bits 105 105 | rewind ValueError: the volume X is at most 0 at a Node: the level has no reading, refused by name
+   pinned head/var 250 122 | loads<0 head/var 112 0 | X+<=0 not turned 0 | W+<=0 head/var 19 83 | not turned 0 0
+   cone past head/var 0 0 of 179500 | tensions <0/>G head 21842 8884 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+NORMALL world_hole.json 60 | differ 59 first 2 | stopped None None
+   counts head {'turns': 1073, 'births': 28, 'body_clicks': 1299} var {'turns': 199, 'births': 4, 'body_clicks': 44} | bits 105 105 | rewind 20
+   pinned head/var 250 18 | loads<0 head/var 112 0 | X+<=0 not turned 0 | W+<=0 head/var 19 0 | not turned 0 0
+   cone past head/var 0 0 of 179750 | tensions <0/>G head 21842 8884 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+NORM world_nature.json 60 | differ 58 first 3 | stopped None None
+   counts head {'turns': 861, 'births': 3, 'body_clicks': 2742} var {'turns': 799, 'births': 3, 'body_clicks': 1197} | bits 99 99 | rewind 20
+   pinned head/var 0 0 | loads<0 head/var 96 90 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 180500 | tensions <0/>G head 21440 0 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+NORM world_bang.json 30 | differ 29 first 2 | stopped None None
+   counts head {'turns': 384, 'births': 64, 'body_clicks': 1984} var {'turns': 256, 'births': 40, 'body_clicks': 672} | bits 111 111 | rewind 20
+   pinned head/var 0 0 | loads<0 head/var 0 0 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 49344 | tensions <0/>G head 4608 2304 of 11520
+   ties head {' drive': 0, ' size 1': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+FULLNOF1 world_bang.json 30 | differ 30 first 1 | stopped None None
+   counts head {'turns': 384, 'births': 64, 'body_clicks': 1984} var {'turns': 640, 'births': 0, 'body_clicks': 0} | bits 111 111 | rewind 1
+   pinned head/var 0 0 | loads<0 head/var 0 0 | X+<=0 not turned 0 | W+<=0 head/var 0 640 | not turned 0 0
+   cone past head/var 0 0 of 44224 | tensions <0/>G head 4608 2304 of 11520
+   ties head {' drive': 0, ' size 1': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+NOF1 world_bang.json 30 | differ 30 first 1 | stopped None None
+   counts head {'turns': 384, 'births': 64, 'body_clicks': 1984} var {'turns': 640, 'births': 0, 'body_clicks': 0} | bits 111 111 | rewind 20
+   pinned head/var 0 0 | loads<0 head/var 0 0 | X+<=0 not turned 0 | W+<=0 head/var 0 640 | not turned 0 0
+   cone past head/var 0 0 of 44224 | tensions <0/>G head 4608 2304 of 11520
+   ties head {' drive': 0, ' size 1': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+NOF5 world_node.json 20 | differ 17 first 4 | stopped None None
+   counts head {'turns': 117, 'births': 0, 'body_clicks': 0} var {'turns': 117, 'births': 0, 'body_clicks': 0} | bits 96 96 | rewind 20
+   pinned head/var 1 1 | loads<0 head/var 33 33 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 429 of 11340 | tensions <0/>G head 1172 0 of 3240
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+### e2_gate_fixed
+FULLNOF1 world_hole.json 60 | differ 60 first 1 | stopped None None
+   counts head {'turns': 1073, 'births': 28, 'body_clicks': 1299} var {'turns': 839, 'births': 13, 'body_clicks': 177} | bits 105 105 | rewind 20
+   pinned head/var 250 122 | loads<0 head/var 112 0 | X+<=0 not turned 0 | W+<=0 head/var 19 83 | not turned 0 0
+   cone past head/var 0 0 of 179500 | tensions <0/>G head 21842 8884 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+FULLNOF1 world_bang.json 30 | differ 30 first 1 | stopped None None
+   counts head {'turns': 384, 'births': 64, 'body_clicks': 1984} var {'turns': 640, 'births': 0, 'body_clicks': 0} | bits 111 111 | rewind 20
+   pinned head/var 0 0 | loads<0 head/var 0 0 | X+<=0 not turned 0 | W+<=0 head/var 0 640 | not turned 0 0
+   cone past head/var 0 0 of 44224 | tensions <0/>G head 4608 2304 of 11520
+   ties head {' drive': 0, ' size 1': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+### e2_together
+FULLNORM world_hole.json 60 | differ 59 first 2 | stopped None None
+   counts head {'turns': 1073, 'births': 28, 'body_clicks': 1299} var {'turns': 489, 'births': 18, 'body_clicks': 646} | bits 105 105 | rewind 20
+   pinned head/var 250 18 | loads<0 head/var 112 0 | X+<=0 not turned 0 | W+<=0 head/var 19 4 | not turned 0 0
+   cone past head/var 0 0 of 185125 | tensions <0/>G head 21842 8884 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+FULLNORM world_bang.json 30 | differ 29 first 2 | stopped None None
+   counts head {'turns': 384, 'births': 64, 'body_clicks': 1984} var {'turns': 256, 'births': 40, 'body_clicks': 672} | bits 111 111 | rewind 20
+   pinned head/var 0 0 | loads<0 head/var 0 0 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 49344 | tensions <0/>G head 4608 2304 of 11520
+   ties head {' drive': 0, ' size 1': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}
+FULLNORM world_nature.json 60 | differ 58 first 3 | stopped None None
+   counts head {'turns': 861, 'births': 3, 'body_clicks': 2742} var {'turns': 1002, 'births': 2, 'body_clicks': 1098} | bits 99 99 | rewind 20
+   pinned head/var 0 37 | loads<0 head/var 96 0 | X+<=0 not turned 0 | W+<=0 head/var 0 0 | not turned 0 0
+   cone past head/var 0 0 of 180875 | tensions <0/>G head 21440 0 of 45000
+   ties head {' drive': 0, ' size 2': 0, ' size 4': 0, ' size 7': 0, 'drive teeth)': 0}

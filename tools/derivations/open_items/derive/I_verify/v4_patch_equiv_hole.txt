@@ -1,0 +1,5 @@
+V4 world_hole.json, 8 head ticks with the draft's patches run in shadow:
+  meshes_of: 16 calls; 0 spoke readings off the one-line change; the odd sum changed at 0 of 12000 spoke-sites, of them at f = +1: 0
+  skewed: 32 calls; 0 spoke readings off the one-line change; the skew changed at 3060 spoke-sites, of them at e = +1: 0
+  reverse: 8 turnovers; 56 trains compared; 0 gears off the one-line change; coupled hands' twelve gears changed at 783 turned Node-clocks; other gears changed: 0
+  turnovers counted by the head: 261

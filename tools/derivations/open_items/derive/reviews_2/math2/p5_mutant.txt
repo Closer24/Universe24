@@ -1,0 +1,1 @@
+mutant flip (2W - R) mod 2W: T S T = S^-1 failures 3926 of 20000

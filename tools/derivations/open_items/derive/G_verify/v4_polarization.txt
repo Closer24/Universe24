@@ -1,0 +1,11 @@
+world_polarization.json 12 ticks
+  meshes.py:49 offset_pair calls: 108000
+  meshes.py:49 offset_pair ties: 0
+  tick.py:115 rate_readings calls: 1500
+  tick.py:115 rate_readings ties: 7
+  tick.py:231 impulse calls: 15000
+  tick.py:231 impulse ties: 0
+  tick.py:232 impulse calls: 15000
+  tick.py:232 impulse ties: 0
+  tick.py:301 advances calls: 1500
+  tick.py:301 advances ties: 0

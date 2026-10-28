@@ -1,0 +1,37 @@
+REVIEW OF TENSOR24.md AT a024126a8 (math2; f49ea0e92, landed later, unread)
+Files: /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/review/math2/ (p*.py, p*.txt, REPORT.txt; integers, python3 -I).
+
+BLOCKING
+
+B1. Laws 3 and 4 refute law 10 (s19 law 10; s12; s30 11(d), 11(f)).
+Assume the exact rewind (T S T = S^-1) and law 4's trigger, which is symmetric under reversing the time gear's triple. Then G = (T at a top, S elsewhere) has T G T = G^-1, each top is fixed by the involution T G, and G^(2k+1) x0 = T x0. A T-symmetric seed (rest, odd teeth) makes bang 2 replay bang 1. Other seeds give at most 2 alternating histories, or 4 with T T = -1. p2: period 17 (rest seed) and 34 (moving seed). Read as T after S, the board freezes in a 2-cycle (3,992 turnovers in 4,000 ticks). Rows 1c and 46 fail on every calibre. The 24's ladder cannot climb, since the rewind undoes each fusion before the next bang. "Closing at the recurrence, of the order of the count of states" is false. Finiteness is unproved (unbounded integers; s30's Jordan-block growth).
+Fix: put the conflict to the owner (exact rewind vs "the seed is not to return exactly"), and fix law 4's composition.
+
+B2. Laws 3 and 4 fail at some teeth counts (s19 laws 3 and 4 with rows; s30 items 5 and 11(e); s31 risk 2).
+Law 3 states T S T = S^-1, but its proof only shows S is invertible, and its 20 of 20 reads the head's stack, a log. Law 4's r -> 2 mid - r sends r = 0 outside [0, W) at even W, so "PROVED as an involution" is false. p1: that mirror fails 30,430 of 200,000. The flip r -> W-1-r (11(e)) holds at fixed W but fails whenever W and W+ differ in parity (p1b: 100,000 of 100,000; p4, the 24's negation: 49,754 of 49,754). Under law 1, no mirror r -> c - r fits both parities, since W - 1 - 2 mid(W) would have to be constant.
+Repair that passed: a 2W-tooth fine wheel, P = 2W(n - b) + R - W, kick 2F, flip R -> 2W-1-R. p3: 0 of 200,000 for T S T = S^-1 and S N = N S at any W, W+; its mutant (p5) fails. Risk 2 is wrong too: N = (-b, -n, W-1-r) keeps the 24 at fixed even W (p4: 0 of 100,000).
+
+B3. Law 7 rests on a premise yet is reported as ruled (law 7 and row; s30 item 1, "Where it stands").
+The verifier: "a premise, equivalent on 2O to spin-statistics". That is a postulate, against "Pauli never as a postulate" and "only generic laws approved". Fix: mark it PREMISE and list it in item 11. Law 7 also needs one hand per quantum (11(a)), which s31's fixed (G, N) arrays cannot hold.
+
+MAJOR
+
+M1. Law 2: N, U_j and J undefined; undefined at W+ <= 0. Its CHECKED cannot fail, since formula0 re-reads the head's F and K. s31's momentum-reading sources break law 3's middle-slot premise.
+M2. Law 5 divides by w_c = 0 for the light. For E < 0, law 1 emits a negative quotient, but law 5 says no click. Law 9's M is 0 for the light and counts hands, which s31's rename test catches.
+M3. Law 6 keeps "capped at the modulus", struck by law 11. Law 7's cap gives negative sizes outside S.S <= (2u - rho)^2, a typed range.
+M4. The mass reading drops -(r+ - r) (s27 has it). s2 keeps "one division over one multilinear contraction", and s20 keeps whether(q) = 1 - 1 div (q+1); s30 and s26 call both wrong.
+M5. s1's "24 turns hold by construction" contradicts s3 (twin hands keep half turns only) and s20's "24 alike bit for bit".
+M6. s30 calls s3 and s20 corrected, but s20 still reads "A1 times two hands, read as W (A1) and S (T1)" and "O's integer product table", and spokes builds 5 kinds. Law 7's sign and the spin term (E1/2 x T1 = E1/2 + G3/2) need 2O, whose quarter-turn lifts are not over Z[i].
+M7. s31's asynchronous board has no formula and contradicts law 2's synchronous stencil, s5, and s30 item 4's "one great clock's tick".
+M8. Draft C's closure is credited to "general relativity's 00 equation" but works through the seed breaching the constraint. Draft F, in the same tree, cites Gromov-Lawson and Schoen-Yau: matter on T^3 has no turnaround.
+M9. Law 11's "lower side the light cone, kept by construction" is underived, and s30 shows a blow-up at negative tension. A tension wrapped by a carry jumps; that is no stability floor.
+
+ITEM 11: (a), (b), (c), (g) are real. (d) is real but understated (B1). (e) fails across a lapse parity change (B2). (f) is not the calibre's doing (B1). Missing: B1's choice, B2, B3, M7, and "no bound" vs the stability floors (M9).
+
+MINOR: "Holds on every group of lifts whose kinds are all real or quaternionic" is false as worded: {+1, -1} has a real sign kind with full turn -1. It holds by classification for SU(2) subgroups containing Q8 with self-dual kinds (Dic_2m, 2O, 2I); the cube adds nothing. "Top or bottom" (s4) and "the top or the floor" (s31) outlive the struck floor. Law 4's row says involution, its text period 4.
+
+SOUND: O, classes, kinds, V products; the eight-kind sign law on 2O, recomputed from characters (indicator = full turn = -1 on E1/2, E5/2, G3/2); Kramers, det = <T phi, chi>, Lagrange, Fierz; law 6 against s27.
+
+NOT CHECKED: head-based counts (formula0, e1 to e7, parity.txt, draft C runs), scribe-5 quotes, sections 13 to 18, 21 to 25, 28, 29.
+
+VERDICT: not fit at a024126a8. With B1 to B3 fixed, the group theory and the integer step are a sound base; M1, M2 and M6 must close before any cut is coded.

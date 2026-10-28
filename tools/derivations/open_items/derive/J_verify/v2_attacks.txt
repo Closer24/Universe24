@@ -1,0 +1,22 @@
+A. Route a: does the run back ever discriminate the sign?
+  [ok] twin hands E1/2: the compensated order-reversed run back fails for neither sign (it is idle): failures eps=+1: 0, eps=-1: 0 of 2000
+  [ok] twin hands E1/2: the order-kept run back fails for neither sign either: failures eps=+1: 0, eps=-1: 0 of 2000
+  [ok] twin hands E1/2: the selection is Q != 0 alone (the A1 premise): nonzero only at eps = T T = -1: nonzero eps=+1: 0, eps=-1: 1998
+  [ok] twin hands E1/2: the uncompensated order-reversed run back fails exactly at eps = T T (it would choose the wrong sign): failures eps=+1: 0, eps=-1: 1998 of 2000
+  [ok] a hand A1: the compensated order-reversed run back fails for neither sign (it is idle): failures eps=+1: 0, eps=-1: 0 of 2000
+  [ok] a hand A1: the order-kept run back fails for neither sign either: failures eps=+1: 0, eps=-1: 0 of 2000
+  [ok] a hand A1: the selection is Q != 0 alone (the A1 premise): nonzero only at eps = T T = +1: nonzero eps=+1: 2000, eps=-1: 0
+  [ok] vectors T1: the compensated order-reversed run back fails for neither sign (it is idle): failures eps=+1: 0, eps=-1: 0 of 2000
+  [ok] vectors T1: the order-kept run back fails for neither sign either: failures eps=+1: 0, eps=-1: 0 of 2000
+  [ok] vectors T1: the selection is Q != 0 alone (the A1 premise): nonzero only at eps = T T = +1: nonzero eps=+1: 2000, eps=-1: 0
+   j1's mutant M3 counting rule, applied to the unmutated (order-reversed, compensated) run back:
+  [ok] M3's count is the same with the order kept and with the order reversed (M3 does not separate them): order kept 1000 of 1000, order reversed 1000 of 1000
+B. P1's probe: the check P (S x S) = (S x S) P on products u x v, for acts applied hand by hand
+  [ok] a linear act on both hands: the check passes in every case (it cannot fail for any act alike on each hand): 300 of 300
+  [ok] Rule3's carry on both hands (nonlinear): the check passes in every case (it cannot fail for any act alike on each hand): 300 of 300
+  [ok] a slot-dependent act (linear on slot 1, the carry on slot 2): the check fails (only an act unlike on the two slots breaks it): 0 of 300 pass
+C. The sesquilinear reading <psi1, psi2> (one quantum read as the other's detector part) is also directionless
+  [ok] <g u, g v> = 2 <u, v> under the three lifts (directionless) on the twin hands: 500 of 500
+  [ok] its two ways <u, v> + eps <v, u> are nonzero for both signs in most pairs (it selects nothing): 483 of 500 pairs nonzero for eps = +1 and -1 alike
+   so the selection needs the dial bilinear (both quanta read as arriving), not only directionless
+result: 0 failures

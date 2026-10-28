@@ -1,0 +1,10 @@
+I4 world_nature.json, 60 ticks, variant fix12; coupled hands [0, 1, 2]; Q* in vacuum sweep units
+  the head's own pull read back at 60 of 60 ticks; the carry P' = w' v + rho' at 60 of 60; the momentum read with the gear's own teeth at the next start at 60 of 60
+  the step: Q*_mid - Q*_start = SUM (I + Rt + Rc) fails at 0 of 60 ticks
+  the Mesh currents: A = SUM I not 0 at 53 of 60 ticks, largest |A| 186
+  the turnover: 2496 Node-clock turnovers; the proper term off its formula at 0 (the mirror's even-teeth edge at 0); the turnover identity fails at 0 of 60 ticks
+  the rates: B = -SUM e (lam' - lam) Im(conj(a) P) fails at 0 of 60 ticks
+  the tick: Q*_next - Q*_start = step + turnover + click + rates fails at 0 of 60 ticks
+  over the run (summed): Q* moved 190944; the turns' rounding -194, the carry's rounding 5404; the turnovers' proper term -36, the turned clocks' inflow not taken 218802; the click -34685 (12 ticks, 20 births); the rates 1909
+  largest |term| in one tick: Rt 507, Rc 2442, proper 572, inflow 40559, C 19986, B 2409, A 186
+VERDICT fix12: the budget closes to the last digit: True; the currents antisymmetric at every tick: False; the turnover keeps the framed charge up to its booked terms: True; PASS as the derived act: False

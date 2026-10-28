@@ -1,0 +1,7 @@
+w 8: first {-1: 1183, 0: 516, 1: 1301}; last {-1: 1091, 0: 781, 1: 1128}; run sum {-1: 1209, 0: 529, 1: 1262}; down = -up on 601 of 3000
+w 12: first {-1: 761, 0: 1445, 1: 794}; last {-1: 690, 0: 1606, 1: 704}; run sum {-1: 774, 0: 1455, 1: 771}; down = -up on 1522 of 3000
+w 16: first {-1: 1291, 0: 478, 1: 1231}; last {-1: 1095, 0: 775, 1: 1130}; run sum {-1: 1229, 0: 493, 1: 1278}; down = -up on 665 of 3000
+w 20: first {-1: 791, 0: 1520, 1: 689}; last {-1: 602, 0: 1733, 1: 665}; run sum {-1: 724, 0: 1529, 1: 747}; down = -up on 1636 of 3000
+pooled first: - 4026, + 4015, excess -11, (excess)^2 * 100 / (n) = 1 (z^2 in hundredths; 384 is the two-sided 5% line)
+pooled last: - 3478, + 3627, excess 149, (excess)^2 * 100 / (n) = 312 (z^2 in hundredths; 384 is the two-sided 5% line)
+pooled sum: - 3936, + 4058, excess 122, (excess)^2 * 100 / (n) = 186 (z^2 in hundredths; 384 is the two-sided 5% line)
