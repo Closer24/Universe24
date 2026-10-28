@@ -143,3 +143,16 @@ Merged into scribe-5 as 395ef5485 (the Boss's push is file only, 49 lines; src a
 **Open from the check of 07:35 (sections 5 to 7), unchanged in the file:** the clamps and the closure; the light known by its spring and the unsprung hand's first gear named in section 2; line 105's "the 24 act on a hand's plane by i alone"; a connection U on the Mesh; J as a cross-train product; the six Spokes' AXES; the coverage gaps G1 to G13; the loops. Law 2 in section 19 carries no clamps, so a build from section 19 alone drops line 1905 without the owner's word.
 
 **Approval:** not given; when the text takes corrections 1 and 7 and the points 2 to 4 of the post of 07:35, or leaves them to the owner by name.
+
+
+## 9. At the 657-line plan (9b6d898e5): the approval (a reading, 08:0x to 08:2x UTC)
+
+The Boss's pushes 2d395ea50 (sections 20 to 22: the dimensions, the generic functions, who writes and approves the code, the rules that put a phenomenon in), 6e0f1e1de (the checks taken) and 9b6d898e5 (the owner's seven decisions, sections 24 and 25) are file only; src and tests are unchanged since 834cfd72e; merged into scribe-5 as 598223799. Read: sections 1 to 5 and 19 to 25 in full, the rest by the diff since 2d395ea50.
+
+**Taken, verified in the file:** the points 2 to 4 of the check of 07:35 (the names; a hand A1 and i the complex product's unit; two kinds of click and the turnover no click; the gate inside the one act; U from the two ends' gears and the Mesh holding no state; J one sum; no train known, the coupling the spring itself; the Spokes from the piece's shape; section 16's fixes marked open; the parts not taken in section 8; the loops in the end check). The six matters left to the owner are his decisions of 08:1x (section 24).
+
+**Approved** at 08:20 on three text conditions: (a) section 19's opening claim "every law once as a formula" with a line that lists the acts owed as formulas; (b) the two meanings of 48 at line 464; (c) the cosine at line 487. Wording for the next push, not blocking: the two meanings of Pauli; "derived from the kind" holds for neither the statistics nor the charge's sign; five readings without formulas; U_j, c, room and "W + W"; the numeral 2; the turnover's two triggers (the weak maximum, the floor X_f).
+
+**The law's lines stand** until the derivations and the owner's approval of the sentences Sofer proposes: Pauli (ALGEBRA.md 817, 1558, 555 and 1903 (7)), the bounds (1905), the closure (33, 92 and 102), the shears (R11). Two checks on David's derivation of Pauli: it names the act that writes the exchange sign and closes the law's exact count of quanta; the twin hands moving on their own gears (decision 6) gives the sign a carrier, which (rho, S) cannot.
+
+**Sections 20 to 22 against the law:** shift and pull (lines 523 and 525) have no argument for U_j and J; the stop of the unspringing is a law clause (the unwind's fall), so its replacement is the owner's word; section 22 uses Pauli for the exclusion and for the spin term. The fakes list is SOFER-FAKES-1.md.

@@ -24,6 +24,8 @@ A rule is a count of hits per file in src/event_universe. A refusal (tier BLOCK)
 | TEXT | WARN | a circular word in a string, a docstring or a comment | read it: a rotation or a closed form may be described there |
 | MEMO | WARN | a module-level cache (functools.cache): state beyond the Node-clock, allowed only for a pure function of integers | Locality is never broken |
 | LOOP | WARN | a for, a while or a comprehension in an engine module (the readers may loop): the machine is one tensor operation | the owner's word of 2026-10-28, 06:5x: no loops there; the count may not rise, and the note becomes a refusal on his word |
+| CLAMP | BLOCK | min, max, abs, clip or where (a call) in an engine module (the readers may use them): a bound or a branch written as a clamp | the owner's word of 2026-10-28, 08:0x, through David: the step does multiplication, addition and Rule3 alone; approved for Sofer's check |
+| COMPARE | WARN | an ordering comparison (less, at most, greater, at least) in an engine module: a threshold read by order and not as the quotient of a carry | the same word; the count may not rise |
 
 `scribe_scan.py --rules` prints the same table. The words are the ones the owner named; the script cannot read a formula that spells no such word (a closed form with plain names), so Sofer still reads every push whole against the five rules, and the gate only takes from that reading what a script can see.
 
@@ -31,7 +33,7 @@ A rule is a count of hits per file in src/event_universe. A refusal (tier BLOCK)
 
 A push may not raise the count of any hit above the same file's at its merge base (the revision named by CHECK_BASE, else origin/engine-5.0-test): what stands at the base stands, and the code departs from the law at the register's R5 until the Boss removes it. A hit is keyed by its rule, its file and its detail (the number, the name, the container), never by its line, so a moved or reformatted line is no new hit; a module git reads as renamed carries its counts; a new file has none. Replacing one hit by another of a different name is a new hit. A hit leaves the list by being removed and enters it only by the owner's word: tools/derivations/open_items/scribe_scan_allowed.json holds the entries the owner allowed (rule, file, detail, count, his word, the ledger's row), is written by Sofer alone and is read from origin/scribe-5, so that a push cannot allow itself by editing its own copy. It stands empty.
 
-`scribe_scan_baseline.json` is the other list: the hits that stand now (576 at the engine head 526a5666d: 152 blocking and 424 notes, of which 367 loops), for Sofer's audit of the whole tree (`scribe_scan.py --baseline`), and it can only shrink.
+`scribe_scan_baseline.json` is the other list: the hits that stand now (749 at the engine head 526a5666d: 223 blocking, of which 71 clamps, and 526 notes, of which 367 loops and 102 ordering comparisons), for Sofer's audit of the whole tree (`scribe_scan.py --baseline`), and it can only shrink.
 
 ## Where it runs
 

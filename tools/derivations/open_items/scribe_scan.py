@@ -119,6 +119,14 @@ RULES: dict[str, tuple[str, str]] = {
         "WARN",
         "a loop (for, while, a comprehension) in an engine module: the machine is one tensor operation with no loop (the owner's word of 2026-10-28, 06:5x); the count may not rise",
     ),
+    "CLAMP": (
+        "BLOCK",
+        "min, max, abs, clip or where in an engine module: a bound or a branch written as a clamp, where the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 08:0x, through David)",
+    ),
+    "COMPARE": (
+        "WARN",
+        "an ordering comparison in an engine module: a threshold read by order and not as the quotient of a carry (the same word); the count may not rise",
+    ),
 }
 
 BAD_IMPORTS = frozenset("math cmath statistics random fractions decimal scipy sympy mpmath".split())
@@ -132,6 +140,8 @@ CIRCULAR_FUNCTIONS = frozenset(
     "hypot unwrap angle".split()
 )
 ROOTS = frozenset("largest_below isqrt integer_root sqrt cbrt sine_rim".split())
+CLAMPS = frozenset("min max abs clip where minimum maximum absolute fmin fmax".split())
+ORDERING = (ast.Lt, ast.LtE, ast.Gt, ast.GtE)
 NEEDS_DTYPE = frozenset("zeros ones empty full eye identity linspace".split())
 CIRCULAR_WORDS = frozenset(
     "cos sin tan cosine sine tangent arccos arcsin arctan atan atan2 acos asin theta angle angles radian radians degree "
@@ -331,6 +341,8 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add("STATE", node, "id()")
             if name in ROOTS:
                 add("ROOT", node, name)
+            if name in CLAMPS and rel not in READERS:
+                add("CLAMP", node, f"{name}()")
             if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name):
                 if (
                     node.func.value.id in numpy
@@ -379,6 +391,12 @@ def scan(rel: str, source: str) -> list[Hit]:
             else:
                 shape = f"{type(node).__name__} over {ast.unparse(node.generators[0].iter)}"
             add("LOOP", node, shape[:56])
+        elif (
+            isinstance(node, ast.Compare)
+            and rel not in READERS
+            and any(isinstance(op, ORDERING) for op in node.ops)
+        ):
+            add("COMPARE", node, ast.unparse(node)[:56])
         elif isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
             for decorator in node.decorator_list:
                 found = (

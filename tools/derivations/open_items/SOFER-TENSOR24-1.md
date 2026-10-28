@@ -6,7 +6,7 @@ The plan is the Boss's file tools/derivations/open_items/TENSOR24.md. The owner 
 
 | cut | state |
 | --- | --- |
-| the plan's text | dab25e48e: 19 sections, 482 lines (section 19, the formulas, new); the owner asks each of Sofer, David and Animate to approve the whole plan; Animate approved at 6cba85cb1 with corrections; Sofer has not approved (posts of 07:35 and 07:47, the thread's 6463396711 and 6463573190); David's answer not posted |
+| the plan's text | 9b6d898e5: 25 sections, 657 lines, with the owner's seven decisions of 08:1x; Animate approved at 6cba85cb1 with corrections; Sofer approved at 08:20 on three text conditions (the thread's 6464153029); David's approval not posted |
 | 0 the main formula | in the plan (sections 2 and 19, read from the head's code; the Boss's probe reads the step bit for bit on three charts, two terms of J for the unsprung hand's release and recoil); David's exact derivation not posted; then Sofer proposes the law's sentence to the owner |
 | 1 the fair draw | pushed at 06:42 as 834cfd72e; Sofer's gate: no refusal, no note; the suite 118 passed on scribe-5; Animate's bench of the sixteen records: confirmed (6463250257) |
 | 2 the gate | the Boss's to adopt with his next code push (his word, item 1231): scribe_gate_check_py.patch and scribe_gate_claude_settings.json under tools/derivations/open_items/ on scribe-5 |
@@ -34,19 +34,16 @@ Decided on his words since 06:0x, to be confirmed at 08:30 UTC:
 - A twin family in the one big bang's calibre: "if it is needed to see natural phenomena, and another family is needed, no problem. Everything should be in the plan Tensor24." (to David, 06:3x): in the plan, David derives its seed.
 - The 24 without the 48: his opinion to David, "In my opinion [we] go with the 24 without the 48, no?", and "Pass this beautiful solution to the Boss." (to Animate): the law the 24 exactly (the cube's 24 rotations) with one one-hand coupling; the 48 (those rotations and their 24 mirror images) stays a test only, not law and not kinds (ledger row 314); the law's last line stands as written.
 - Each approver approves the whole plan; no fakes, everything coming out by itself (07:0x and 07:2x, rows 318 and 319).
+- The seven decisions of 08:1x (to the Boss, row 323): 1 Pauli derived; 2 the bounds derived; 3 the closure fine, from the tensor's algebra and the click in general; 4 the shears from the tensor; 5 the one-hand coupling from the tensor and the families; 6 the twin hands' motion from the tensor, nature shown in the clicks; 7 the one big bang's way out from 1, 5 and 6; and "No specific formulas: all of nature follows from the one act of the Node-clock."
+- The gate's new rules: "Approved. Let the writer check every such thing." (to David, 08:0x, row 323): CLAMP and COMPARE in scribe_scan.py.
 
-Still to be said:
-1. Pauli, the exclusion. The law as it stands: a family's exchange declared, the setting jams per hand (ALGEBRA.md 817, 1558 and 555; the wave approved at 15:5x on 2026-10-27, line 1903 (7)). His word of 07:0x: derived from the families' symmetries and not by force. The plan's law 7 derives it from a full turn, which meets no act in the engine. Recommendation: the exclusion stays a family's property named by its kind (twin hands antisymmetric, a one-hand family symmetric), read at the lay as the occupation bound; derived only with a derivation that has an act under it; until then the law's form stands.
-2. The clamps (ALGEBRA.md 1905, his word of 2026-10-27, 18:5x: the tension in [0, Gamma], the drive in [-B, B]): the plan calls them put in. Recommendation: keep until a replacement is proven bit for bit.
-3. The closure of the Bell click: the split's share by the parts' sizes (the plan's formula) against the closure carried one Mesh a tick (a signal faster than light); his word on the form.
-4. The one-hand coupling as one row of the calibre's couplings, and a cut that makes the twist's reading in the engagement that row (on the hole the reflections part at the first fitting today, row 315).
-5. The shears' return (R11): gravitational waves need the metric's ten gears; his word.
-6. The twin hands' motion: written on (W, S), which keeps the 24, or on their gears, which keeps the half turns and the interference.
-7. The law's clause: its one word, pseudoscalar for the A2 kind (A2 is the sign of x y z; the word is the twist's kind in the 48): A2.
-8. The one big bang's matter and seed (Animate's 6463302451): the symmetry that makes the return exact makes the matter alike; the way out the one-hand coupling or David's twin hands as the bang's matter.
-9. The price of the 24: the light's cycle setting fits nothing (CS5-S2), the hole's chimes fall (ledger rows 296 and 299).
-10. A required status check on engine-5.0-test at the server.
-11. The loop rule as a refusal: Sofer's gate counts loops as a note (engine modules only, 367 at 526a5666d); a refusal that a push may not raise, and 0 in the machine at the end: yes.
-12. Row 56's criterion, S against the local bound 2 with its spread, in place of nature's band (the sentence QG-S3).
-13. The fakes: the owner's word of 07:2x; Sofer's list (the law's text and the gate's rules) goes to the Boss within the hour of 07:35.
-14. Later, when derived and checked: the main formula as law (cut 0).
+Still to be said (the owner's, after the seven decisions):
+1. The law's sentences, one after each derivation: Pauli (ALGEBRA.md 817, 1558, 555 and 1903 (7)), the bounds (1905), the closure (33, 92 and 102), the shears (R11), the turnover's two triggers. Sofer proposes each sentence only on David's derivation and the Boss's bit-for-bit check; nothing enters before his word. Two checks on the derivation of Pauli: the act that writes the exchange sign, and the law's exact count of quanta.
+2. The loop rule as a refusal: Sofer's gate counts loops as a note (367 at 526a5666d); a refusal that a push may not raise, and 0 in the machine at the end: yes. The new rule CLAMP (min, max, abs, clip, where: a block, 71 hits at 526a5666d) he approved through David; COMPARE (an ordering comparison: a note, 102 hits).
+3. A required status check on engine-5.0-test at the server.
+4. The one big bang: his words of 07:4x and 07:5x (longer bangs as in nature, black holes turning Node-clocks over, the seed not returning exactly, many bangs): the five-tick bang is the regulator's clamp (Animate), which decision 2 derives away; the exact return as the goal and rows 1, 1b and 1c (the exact return to the seed) are his to re-word.
+5. The price of the 24: the light's cycle setting fits nothing (CS5-S2), the hole's chimes fall (ledger rows 296 and 299).
+6. The law's clause: its one word, pseudoscalar for the A2 kind (A2 is the sign of x y z; the word is the twist's kind in the 48): A2.
+7. Row 56's criterion, S against the local bound 2 with its spread, in place of nature's band (the sentence QG-S3).
+8. Later, when derived and checked: the main formula as law (cut 0).
+9. The fakes: the owner's word of 07:2x; Sofer's list went to the Boss at 08:31 (SOFER-FAKES-1.md); the owner sees the plan's section 22 and the lists of David and Animate.

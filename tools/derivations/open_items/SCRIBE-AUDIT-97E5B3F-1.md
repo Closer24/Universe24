@@ -49,7 +49,7 @@ The readers read a finished chart and produce nothing, yet several verdicts cann
 
 ## For the Boss and the owner
 
-The departures are the gate's baseline (scribe_scan_baseline.json, 576 hits at 526a5666d, 152 of them blocking) and the register's R5; Sofer's recommendation stands (ledger row 294): the pair's three integers and the setting's weights and angle digits as data in the universe and setting files, so that the engine computes no sine and no root; the formulas that hold a phenomenon (E1, E3, E5, E8, E19 above all) are the owner's to weigh against the law **No circularity that makes a phenomenon happen**; no postulate or law is changed by this read.
+The departures are the gate's baseline (scribe_scan_baseline.json, 749 hits at 526a5666d, 223 of them blocking) and the register's R5; Sofer's recommendation stands (ledger row 294): the pair's three integers and the setting's weights and angle digits as data in the universe and setting files, so that the engine computes no sine and no root; the formulas that hold a phenomenon (E1, E3, E5, E8, E19 above all) are the owner's to weigh against the law **No circularity that makes a phenomenon happen**; no postulate or law is changed by this read.
 
 ## Not read
 
