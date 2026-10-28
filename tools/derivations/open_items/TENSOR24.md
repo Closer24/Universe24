@@ -801,7 +801,7 @@ Every input a function reads is passed to it: U_j from the offset's gears at the
 | the visualizer (the pages) | the clicks and the decoder's output drawn as they are, with no closed form and no typed caption (the current three hold 1,072 lines) | 300 |
 | the tests | the five tests that can fail (section 12), the rewind, the books, and each row's two readings | 400 |
 
-The current engine's 19 modules hold 2,990 lines; the new engine's nine are to hold about 820.
+The current engine's 19 modules hold 2,990 lines; the new engine's nine were estimated at about 820, and the architect's estimate, with the gearing, the clicks' emission and the owed writes, is 1,000 to 1,100 (section 31).
 
 ## 21. Who writes the code, and who approves it
 
@@ -1335,5 +1335,133 @@ The hostile review shows that three of his decisions cannot be met as derivation
 4. **Nature one to one.** Not on a fixed lattice with one great clock's tick (section 18, items 2, 3 and 16 to 26). The plan keeps every one of them named.
 5. **Odd teeth counts** (the mathematician): an exact rewind of the turnover with no read of the log needs every teeth count odd, so that the one mirror keeps the mid tooth; every teeth count is even now (w = 6 rim Gamma^2 G^2). A change of the law, the owner's to rule.
 6. **The draw's fairness** (the mathematician): the draw as built is not uniform, on the head too, so Born's odds stand unproved until a composition free of the sort is derived and a distribution test gates it.
+7. **The ledger** (the architect, section 31): the books' second reading and the conservation rows need totals over the board. Either a declared ledger line per tick, written by the runner from the state, or rows that only restate the click's own arithmetic and cannot fail. The architect recommends the ledger.
+8. **The gate amended before the first line** (the architect, section 31): it scans src/tensor24, gives the runner and the decoder the readers' rules by folder, sets the carry's home, refuses the engine's import into the decoder, and closes its holes. The gate's own files are Sofer's, changed on the owner's word.
 
 **What it means for the hour the owner gave:** the plan is not stable, whole and fully derived. Its algebra and its group theory stand; the step's arithmetic, the rewind, the draw, the light's quantum, the masses and four of the owner's decisions do not, and David's derivations are owed for each.
+
+## 31. The architecture of the new engine and decoder
+
+The owner's words of 09:4x UTC: an architect reads the plan and says how the code is written right, how others in the world do it, and how all of it is written generically; and the decoder is taken out of the engine's code. A reading agent, a software architect with no stake in the plan, read it and the head's code (the gate, scribe_scan.py, read on scribe-5). The owner's word of 10:1x UTC: the code very short, clear and clean.
+
+**Facts checked on the head:**
+- the integers reach 112 bits of state and 105 bits of transients, and T = 6 rim Gamma^2 G^2 is about 2^84, so 64-bit integers cannot hold them;
+- numpy on Python 3.14 runs einsum, the product, floor division and the remainder on arrays of Python integers (object arrays), but not divmod;
+- the boundary between the engine and the readers is broken both ways: tick, clock, click, bobs and setting import run.py, a reader, which imports the reckoner, which imports meshes.through_mesh, trains.rows_of and rates.sine_rim;
+- the current record is mostly refusals: in hole.json 31,239 of the 32,595 log entries are jams, and a birth entry holds 35 internal fields;
+- the gate scans src/event_universe alone, exempts the readers by their file names, and allows the floor division and the remainder only in core/acts.py and core/rule3.py.
+
+**Four packages, under src/tensor24/:**
+
+| package | what it holds | what it may import |
+| --- | --- | --- |
+| record | the click record's schema alone (typed dictionaries and its version), with no logic and no numpy: the only code the engine and the decoder share | nothing of the others |
+| engine | pure functions: load(universe, world) gives (layout, state), and step(layout, state, going) gives (state, clicks); it never sees a file or the record | record, numpy |
+| runner | the tick loop (a loop cannot stand in an engine module): it turns the dense clicks into events, writes the record, runs the rewind, and writes the per-tick digests of the state for the comparison harness | engine, record |
+| decoder | the 80 rows, computed from the record alone, with the standard library and record and no numpy, so that it cannot re-run the physics as the reckoner does now | record |
+
+**The click record:** JSON Lines, append-only, in a fixed order (tick, kind, site, train), so that one run always gives the same bytes. It is an observation log, not an event store: the state cannot be rebuilt from it, step takes no record, and the rewind cannot read it.
+- **the header:** the record's name and version, the engine's commit, the universe and world files verbatim with their digests, and what the engine publishes (the shape, each train's card: its kinds, its own size, its winding; the draw's modulus);
+- **a whole click:** the tick, the Node-clock, the Spoke where two ends hold it, the train, q, the winding, the fine tooth before and after, the wind before and after, the push, the sweep, and the children;
+- **a split click:** the tick, the Node-clock, the train, the parts' sizes, c, room, the part drawn, q, the fine tooth and the wind;
+- **a turnover:** the tick, the Node-clock and its trigger;
+- **the end:** the ticks, the state's digest, and the rewind (back, exact).
+
+No refusal is logged. An added field is a minor version; a breaking change a major one, with an upcaster in the decoder, which refuses an unknown major. The decoder reads the header, the events and the end, never the digests.
+
+**For the owner, one decision:** the books' second reading (the wind before and after over every train) and the conservation rows need totals over the whole board. Either the runner writes a declared ledger line per tick (the tick, the train, its wind, sweep and push, read from the state), so that the clicks are the journal and the ledger the control totals, as in double entry; or those rows only restate the click's own arithmetic and cannot fail. The architect's recommendation is the ledger.
+
+**The boundary, enforced:**
+- a static test of every module's imports (relative imports, importlib and __import__ included);
+- a run-time test: after a step, no decoder, runner or current-engine module is loaded; after decoding, no engine module and no numpy;
+- the gate amended before the first line, on the owner's word since it changes the gate's own files (Sofer's): it scans src/tensor24, gives runner/ and decoder/ the readers' rules by folder, sets the carry's home in engine/carry.py, and refuses any import of the engine into decoder/ or runner/;
+- the gate's holes closed: loops under a function's name (map, filter, reduce, np.vectorize, frompyfunc, apply_along_axis, recursion), comparisons under a function's name (np.less, np.greater, np.sign, heaviside, argmax, amax, select, choose), and arrays made without a dtype (np.array, asarray, arange, stack), which give 64-bit integers silently.
+
+**The data:**
+- **The state** is four arrays of shape (G, N) of Python integers: the notch now, the notch before, the fine tooth and the drive's fine tooth, with the winds' fine teeth. G counts every integer component of every train (a hand two rows, twin hands four), and N the sites. The teeth counts are derived each tick, not stored.
+- **The head's counters are state too:** wound, crossed, beats, reference, the split, the dial, the clicks and the slack are resets that cannot run backward, which is why the head keeps them on its stack. Each becomes a gear of a train in the files, or a reading of the decoder.
+- **The storage basis:** every field is stored where the 24 act as signed permutations (T1, T2, A1, A2 and the three diagonal tensions), since a carry of a sum is not the sum of the carries. E alone has no such integer basis (the three-fold turns act on it by [[0, -1], [1, -1]]), so the kinds serve the contractions and the tests, never the storage; a projector that would divide by the dimension scales the coupling instead.
+- **The stencil is one gather:** a table of the six neighbours of every site, built once from the piece's shape with the torus's wrap as Rule3 on the coordinates; f[:, nb] reads all six Spokes at once. It is the only operation that crosses sites.
+- **Exactness:** Python integers in object arrays, the one workable choice: about 100 ns a product and 200 ns a division per element; a tick of 40 rows takes about 0.2 s at the side 8. Each product table is compiled once into index arrays (a gather, a product, a scattered sum), which cost 51 ms against 616 ms dense at the side 8.
+- **Rule3 on arrays:** q = u // d and r = u - q d. A zero divisor raises on Python integers, loudly; on 64-bit integers it would give 0 silently.
+- **Comparisons:** nonneg(n) = 1 + n // (n n + 1) for every integer, and a choice b x + (1 - b) y.
+- **The order-free phase comes for free:** integer addition is associative, so the scattered sums give the same bits in any order.
+- **mypy strict:** the sums and einsum on object arrays return Any, so one typed helper wraps them.
+
+**Prior art, and what is taken from it:**
+- **Levesque and Verlet (1993), the bit-reversible integrator:** the force reads the middle slot alone, so any rounding inverts exactly. Taken: every act reads the middle slot's data alone.
+- **Toffoli and Margolus (1987):**
+  - Fredkin's second-order form, x+ = f(x) - x-, is taken;
+  - a controlled update inverts exactly when it leaves its controls untouched (conservative logic), also taken;
+  - their partitions are avoided, since they break the 24 at every tick;
+  - their warning is kept: centred differences (the lead, the curl, the stress) part the checkerboard's two sublattices (section 18, item 16).
+- **Lifting (Calderbank, Daubechies, Sweldens and Yeo, 1998):** a shear x += round(f(y)) inverts exactly. For U_j this leaves two ways: three lifting shears, reversible but not exact in the norm, or the units alone, a Z4 link.
+- **Grid, QDP++ and Chroma, openQCD, QUDA:** one shift primitive with everything else local to the site, neighbour tables, and storage as a structure of arrays. All three are taken.
+- **MEEP, Yee's scheme:** the leapfrog as a sequence of shears; first-order staggered storage keeps the mixed derivatives within one Mesh, while the shears' second derivative across two axes is no seven-point stencil in one tick.
+- **opt_einsum and TACO:** dense optimization did not pay on object arrays; TACO's sparse plan, compiled once, is the model.
+- **The point-group codes** (Quantum ESPRESSO's integer symmetry matrices, the Bilbao tables):
+  - work in the lattice's basis, where all 48 elements are integer matrices;
+  - characters give multiplicities, not the intertwiners, so the kinds are built as integer subspaces of the products of V (up to the third) and the characters kept as a test;
+  - E's integer basis has the Gram matrix [[2, -1], [-1, 2]], which the contraction E x E to A1 must carry.
+- **e3nn's equivariance check** (turn the input, run, compare with the turned output) is the images test's form.
+- **Hypothesis**, with stateful tests that shrink to the smallest failing case, and metamorphic relations.
+- **Event sourcing:** immutable, versioned events with upcasters, readings as pure folds over the events, and no internal fields in an event.
+
+**Generic, with no branch:**
+- **neutral elements instead of branches:** every coefficient exists for every train, at 0 or with the divisor 1 where absent (the light's spring 0; a gear with no drive has the drive teeth 1; a train with no Mesh has the grips 0);
+- **one source routine:** J = the sum over the calibre's rows of c times the intertwiner of two operands (the value, the gradient, the momentum or the pull) of two trains. The rows stand in the calibre, and the checker admits only the channels the product table allows; the one-hand coupling is one of them;
+- **one way in for every source:** K = T_k s carry(J, T_d, r_d), the force's path being T_d = T_k = 1, which ends the split between J and K;
+- **roles from kinds and integers:** the lapse is the metric kind's first A1. A flag per gear, its own teeth or the lapse, gives a schedule of two stages: the gears with their own teeth first, then the gears that divide by W+. "Every gear read, then written" holds within each stage;
+- **the gate dense:** the wind, q, the sizes and the draw computed for every hand at every site, their effects entering as terms weighted by indicators of 0 or 1, their writes as additive gathers at the receiving site, and no jam, since additive writes are the derived exclusion's own mechanism.
+
+**The line budget,** the architect's estimate against section 20's:
+
+| the engine's module | lines |
+| --- | --- |
+| carry | 45 |
+| ring (the Gaussian integers and the twin hands) | 70 |
+| spokes (the 48, the sign, the 24, the bases, the kinds' matrices, the Gram matrix, the intertwiners) | 130 |
+| mesh | 60 |
+| calibre (no raise) | 110 |
+| gearing (the lapse, the stretch, Q_j, the grips, the springs, the held load in D) | 60 |
+| node_clock | 170 |
+| click | 190 |
+| vernier | 50 |
+| books | 30 |
+| emit (the clicks out) | 30 |
+| the owed writes | about 100 |
+| **the engine** | **1,000 to 1,100** |
+
+The decoder about 950 (records 70, folds 60, clocks and signals 170, metric 120, readings 220, rows 250, report 60); around them the runner 150, the record 60, the tests about 600 and the comparison harness about 250. The signatures that would force a loop change: step(layout, state, going) gives (state, clicks); across(f, nb) gives the six Spokes at once; contract(plan, operands); vernier(layout, state) gives (c, room) at every site.
+
+**The comparison with the current engine, one act at a time:** each tick starts from the current engine's state, through an adapter to (G, N), with the current engine's coefficients fed to the new step, as formula0.py does; the gearing, the sources and the clicks are compared apart; every difference is covered by the mask of a named fake, recorded by the harness, and the unexplained differences must be 0. Free runs are never compared, since F2 alone acts on 28 to 44 percent of the tensions and the runs part at once. Calibres that write the current engine's typed constants as data give bit-for-bit equality wherever the old choice can be data.
+
+**The five tests, hardened, and three more:**
+- **locality:** the new state at a site a function of its seven sites; and a Mesh's click a function of its two ends alone (the twist, the jam and the ends' winds reach two Meshes on the head);
+- **purity:** the inputs frozen read-only; two worlds interleaved in one process; the hash seed varied;
+- **rename:** the trains permuted, and an inert train added, which catches M = the winding times the hands' count;
+- **the formula:** against a naive model with loops at every site, written by David from section 19, on states that Hypothesis generates, on a side of 3 or more (on the side 2, x + e is x - e, which hides sign errors);
+- **the images:** the 24 applied to the state itself, with the translations, and a board that is no cube as the negative control;
+- **bijectivity both ways:** the step's inverse after the step, and the step after its inverse, are the identity on every valid state;
+- **the shear test:** each act's decision does not depend on what the act writes;
+- **each test shown failing** on a deliberately broken copy of the code.
+
+Each row declares the record's fields of its two readings, which must be disjoint (tested), and carries one control record that must read SHOWN and one that must read NOT SHOWN.
+
+**The order of the work:**
+1. the schema, and a converter from the current records to its first version;
+2. the new decoder on the converted committed records, every verdict that changes named (Animate, in parallel);
+3. the engine's frame, with the comparison harness;
+4. the gate;
+5. the owed parts;
+6. section 8 as a table of capabilities, read on both engines' records;
+7. the switch.
+
+**Risks, ranked, and what is done about each:**
+1. **The rewind with no log.** A click at a threshold that reads and writes the hand's notches cannot be inverted from its result; that is why the head's undo reads the log. Every owed click's formula must be a shear with its controls untouched, and David has the shear test as a constraint.
+2. **Rule3's ties.** Rounding half up is not odd: at W = 10, 10 of 101 momenta fail p to -p, and the head's mirror gives -P - W at r = 0, both checked. Rotations negate the T1 and T2 gears, so the 24 hold bit for bit only with odd divisors or a tie rule that is odd. It is decided before carry.py is written (with the mathematician's odd teeth, section 30).
+3. **Locality against the two-ended clicks.**
+4. **The gate's settings tied to paths, and its holes** (above).
+5. **The twin hands:** only the rotations that fix the twins' axis map them over the Gaussian integers exactly, up to a unit; the others need the root of 2 (or another basis, the mathematician's 12 tetrahedral rotations). The images test states what it runs: those bit for bit, and (rho, S) for the rest.
+6. **The statistical rows need tolerances,** which are numbers: they are the owner's integers, in the world file.
+7. **Speed:** object arrays alone and sparse contractions; the 30-second suite allows a few hundred ticks at the side 4 in all.
