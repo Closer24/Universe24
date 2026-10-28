@@ -17,7 +17,6 @@ from event_universe.reckoner import (
     THIRDS,
     Chart,
     carries,
-    sign,
     unread_words,
 )
 from event_universe.trains import rows_of
@@ -271,7 +270,7 @@ def two_slits(chart: Chart) -> dict[str, Any]:
 
 
 def bell(chart: Chart) -> dict[str, Any]:
-    """Row 56: Bell (QG-S3, BK-S1; the reading of The-Setting-From-The-Frame_COMPARISON.md section 3, the Boss's 6411759969): S as the count over the fitted pairs' four cells, the setting at each end the detector's own datum at its strike (the dial's parity, two-valued) and the outcome the fitted hand's own sense from the fitting line; nature's band 4 < S^2 <= 8 SHOWN as nature, else NOT SHOWN with the cause named: the outcome reads no datum of the detector, the fitted hand has no axis (BS-S1 owed), so every filled cell reads E = -1 and S^2 = 4."""
+    """Row 56: Bell (QG-S3, BK-S1; the reading of The-Setting-From-The-Frame_COMPARISON.md section 3, the Boss's 6411759969): S as the count over the fitted pairs' four cells, each end read at its detector's own click, a click of the second kind (the owner's word of 2026-10-28, 02:2x UTC: the detector's reading is a type-2 click): the setting the detector's datum at its click (its dial's parity, two-valued) and the outcome the click's own sense (the chiming hand's sweep at the clock-node at the tick's start, bobs' `sense`), the product of the two ends' outcomes per pair; nature's band 4 < S^2 <= 8 SHOWN as nature, else NOT SHOWN with the cause named (the former outcome the fitted hand's own sense from the fitting line, E = -1 in every filled cell and S^2 = 4, kept by name)."""
     cells: dict[tuple[int, int], list[int]] = {}
     for b, (a, c) in zip(chart.fittings, chart.sweeps_of(), strict=True):
         if not a or not c:
@@ -279,7 +278,7 @@ def bell(chart: Chart) -> dict[str, Any]:
         ends = [
             next(
                 (
-                    int(rule3.odd(int(k["proper"])))
+                    (int(rule3.odd(int(k["proper"]))), int(k["sense"]))
                     for k in chart.chimes
                     if k["node"] == where and k["line"] == b["line_pair"] and int(k["i"]) > int(b["i"])
                 ),
@@ -287,8 +286,8 @@ def bell(chart: Chart) -> dict[str, Any]:
             )
             for where in (b["minus"], b["plus"])
         ]
-        if ends[0] is not None and ends[1] is not None:
-            cells.setdefault((ends[0], ends[1]), []).append(sign(a) * sign(c))
+        if ends[0] is not None and ends[1] is not None and ends[0][1] * ends[1][1]:
+            cells.setdefault((ends[0][0], ends[1][0]), []).append(ends[0][1] * ends[1][1])
     if len(cells) < PAIR * PAIR:
         return unread(
             "56 Bell",
@@ -309,7 +308,7 @@ def bell(chart: Chart) -> dict[str, Any]:
         if QUARTERS * n * n < s * s <= PAIR * QUARTERS * n * n
         else f"SHOWN in part: the law's own bound met exactly, S = {s} / {n}, S squared 4 (an outcome that factorizes into the child's own sign times the setting's bit is bounded by 2 and meets it: the hands' derivation, the Boss's task of 19:1x UTC); nature's 4 < S^2 <= 8 not shown (the child has no axis, BS-S1 owed)"
         if s * s == QUARTERS * n * n
-        else f"NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = {s} / {n} (the outcome the child's sense fixed at the birth, reading no datum of the detector: the child has no axis, BS-S1 owed; every filled cell E = -1)"
+        else f"NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = {s} / {n} (the outcome the detector's own click, its sense at its setting: the local bound)"
     )
     return {
         "56 Bell": {

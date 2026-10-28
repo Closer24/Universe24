@@ -57,7 +57,7 @@ VERDICTS = {  # the verdicts' words by name
         "9 collisions": "NOT SHOWN: the credited Nodes receding, farthest 2 Links at first and 6 at last",
         "22 Coulomb's sign": "NOT SHOWN: unlike senses do not approach, like senses do not part",
         "45 the bodies' well, binding and collapse": "SHOWN: a body stands in its own well through the run",
-        "56 Bell": "SHOWN in part: the law's own bound met exactly, S = -140 / 70, S squared 4",
+        "56 Bell": "SHOWN in part: the law's own bound met exactly, S = -56 / 28, S squared 4",
         "58 the fast expansion after the bang": "NOT SHOWN: the first growth of the spacing is not above zero and above the next",
         "59 the deceleration in the clicks": "NOT SHOWN: no eighth's growth smaller than the one before",
         "60 the acceleration in the clicks": "NOT SHOWN: no eighth's growth larger than the one before after a slowing",
