@@ -1,4 +1,4 @@
-"""Sofer's gate on src/event_universe: the owner's rules as a script that refuses a push.
+"""Sofer's gate on every package under src: the owner's rules as a script that refuses a push.
 
 The owner's words of 2026-10-28, 04:3x, 04:5x and 05:0x UTC: no number in the code, whole numbers only, no cosine, sine or
 circularity that makes a phenomenon happen, no state beyond the Node-clock; "your laws should be in scripts, so that they cannot
@@ -47,6 +47,8 @@ from pathlib import Path
 from typing import Any
 
 PACKAGE = "src/event_universe"
+TESTS = "tests"
+SCOPES = ("src", TESTS)  # every package under src, and the tests for the rule PIN alone
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
@@ -130,6 +132,10 @@ RULES: dict[str, tuple[str, str]] = {
     "CLAMP": (
         "BLOCK",
         "min, max, abs, clip or where in an engine module: a bound or a branch written as a clamp, where the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 08:0x, through David)",
+    ),
+    "PIN": (
+        "WARN",
+        "an assert against an integer beyond 0 and 1 in a test: a pinned value is a verdict the code wrote; the plan's tests read properties and two independent readings (the count per file may not rise)",
     ),
     "COMPARE": (
         "WARN",
@@ -238,8 +244,21 @@ def callee_name(call: ast.Call) -> str:
 
 
 def scan(rel: str, source: str) -> list[Hit]:
-    """Every hit of every rule in one module (rel: its path inside src/event_universe)."""
+    """Every hit of every rule in one module (rel: its path inside src/event_universe, another package's under its name; a test's under tests/, the rule PIN alone)."""
     tree = ast.parse(source)
+    if rel.startswith(TESTS + "/"):
+        return [
+            Hit("PIN", rel, node.lineno, "assert", "", node.col_offset)
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Assert)
+            and any(
+                isinstance(c, ast.Constant)
+                and isinstance(c.value, int | float)
+                and not isinstance(c.value, bool)
+                and c.value not in (0, 1)
+                for c in ast.walk(node.test)
+            )
+        ]
     parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
     hits: list[Hit] = []
 
@@ -490,9 +509,17 @@ def resolve(repo: Path, rev: str) -> str | None:
     return found.stdout.decode().strip() if found.returncode == 0 else None
 
 
+def rel_of(path: str) -> str:
+    """A file's key path: inside src/event_universe as it was, another package under its own name, a test under tests/."""
+    for prefix in (PACKAGE + "/", "src/"):
+        if path.startswith(prefix):
+            return path[len(prefix) :]
+    return path
+
+
 def sources_at(repo: Path, rev: str) -> dict[str, str]:
-    """The modules of src/event_universe at a revision, read from git without a checkout."""
-    listing = git(repo, "ls-tree", "-r", "--name-only", rev, "--", PACKAGE).stdout.decode().split("\n")
+    """The modules of every package under src and the tests at a revision, read from git without a checkout."""
+    listing = git(repo, "ls-tree", "-r", "--name-only", rev, "--", *SCOPES).stdout.decode().split("\n")
     paths = [p for p in listing if p.endswith(".py")]
     if not paths:
         return {}
@@ -503,15 +530,17 @@ def sources_at(repo: Path, rev: str) -> dict[str, str]:
     found: dict[str, str] = {}
     for path in paths:
         _oid, _kind, size = stream.readline().split()
-        found[path[len(PACKAGE) + 1 :]] = stream.read(int(size)).decode("utf-8")
+        found[rel_of(path)] = stream.read(int(size)).decode("utf-8")
         stream.read(1)
     return found
 
 
 def sources_in(root: Path) -> dict[str, str]:
-    base = root / PACKAGE
     return {
-        p.relative_to(base).as_posix(): p.read_text(encoding="utf-8") for p in sorted(base.rglob("*.py"))
+        rel_of(p.relative_to(root).as_posix()): p.read_text(encoding="utf-8")
+        for scope in SCOPES
+        if (root / scope).is_dir()
+        for p in sorted((root / scope).rglob("*.py"))
     }
 
 
@@ -583,12 +612,12 @@ def merge_base(repo: Path, base: str | None, tree_rev: str) -> tuple[str, str]:
 def moved(repo: Path, *revs: str, cached: bool = False) -> dict[str, str]:
     """The modules git reads as moved between the revisions (or the index and the revision), new path to old."""
     flags = ["diff", "-M", "--name-status", "--diff-filter=R", *(["--cached"] if cached else [])]
-    listing = git(repo, *flags, *revs, "--", PACKAGE).stdout.decode().splitlines()
+    listing = git(repo, *flags, *revs, "--", *SCOPES).stdout.decode().splitlines()
     found: dict[str, str] = {}
     for line in listing:
         _status, old, new = line.split("\t")
-        if old.startswith(PACKAGE + "/") and new.startswith(PACKAGE + "/"):
-            found[new[len(PACKAGE) + 1 :]] = old[len(PACKAGE) + 1 :]
+        if old.endswith(".py") and new.endswith(".py"):
+            found[rel_of(new)] = rel_of(old)
     return found
 
 
@@ -646,7 +675,7 @@ def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout
         print(f"the gate cannot resolve {rev}", file=out)
         return 0
     name, mb = merge_base(repo, base, commit)
-    touched = git(repo, "diff", "--name-only", mb, commit, "--", PACKAGE, *OWN).stdout.decode().split()
+    touched = git(repo, "diff", "--name-only", mb, commit, "--", *SCOPES, *OWN).stdout.decode().split()
     if not touched:
         return 0
     before, after = hits_of(sources_at(repo, mb)), hits_of(sources_at(repo, commit))
