@@ -46,7 +46,52 @@ TENSOR24_SCHEMA = "Tensor24's record schema, stage 0 of the build the owner appr
 TENSOR24_ALGEBRA = "Tensor24's algebra, stage 1 of the build the owner approved at 16:0x UTC on 2026-10-28: Rule3's carry, the one whether, the choice, the fine tooth's home and its flip, each law failing on its own mutant, the tie rule's odd quotient at both parities among them; the Boss's room by name."
 TENSOR24_CLOCK = "Tensor24's one clock, stage 2 of the build the owner approved at 16:0x UTC on 2026-10-28: a gear's tick and its exact run back at teeth counts that change from tick to tick, the rate dial's beat, a stopped clock's beat, and the tie rule at the tick, each failing on its own mutant; the Boss's room by name."
 TENSOR24_MESH = "Tensor24's Mesh, stage 3 of the build the owner approved at 16:0x UTC on 2026-10-28: the due beat, the read as of the reader's count, forty random schedules equal to the synchronous pass, the rewind under a random schedule, a stopped clock keeping pace, and the frame's six properties on the tick against its naive model, each failing on its own mutant; the Boss's room by name."
+TENSOR24_RING = "Tensor24's Gaussian ring, stage 5 of the build the owner approved at 16:0x UTC on 2026-10-28: the hand's product, conjugate, norm and pair, and the twin hand's overlap, reverse and axis, exact at every size: T T +1 on a hand and -1 on a twin hand, Lagrange's identity for the split, S . S = rho rho, each law failing on its own mutant; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_tensor24_ring.py::hands": (
+        4,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::equal": (
+        3,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::ringed": (
+        15,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::conjugate": (
+        6,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::sized": (
+        4,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::paired": (
+        4,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::reversed_twice": (
+        14,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::lagrange": (
+        7,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::axial": (
+        5,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::mutants": (
+        13,
+        TENSOR24_RING,
+    ),
+    "tests/test_the_tensor24_ring.py::test_each_law_of_the_ring_holds_and_fails_on_its_mutant": (
+        3,
+        TENSOR24_RING,
+    ),
     "tests/test_the_tensor24_files.py::edits": (
         158,
         TENSOR24_FILES,
