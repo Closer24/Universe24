@@ -1,0 +1,5 @@
+rest seed G1 turnovers 235 first returns to x0 or T x0 at [17, 34, 51, 68, 85, 102, 119, 136] period 17 distinct states 17
+rest seed G2 turnovers 3992 first returns to x0 or T x0 at [] period None distinct states 9
+moving seed G1 turnovers 235 first returns to x0 or T x0 at [17, 34, 51, 68, 85, 102, 119, 136] period 34 distinct states 34
+moving seed G2 turnovers 3992 first returns to x0 or T x0 at [] period None distinct states 9
+T S T S = id failures 0 of 2000

@@ -1,0 +1,8 @@
+MUT drive    TR 10, W = 2 (X- + X) even, DD 50000               weak top       ran 300 (circles 300), turnovers 27425: TMTM   0  CIRCLE   1  24   0  LAW1   0
+MUT drive    TR 10, W = 2 (X- + X) even, DD 50000               top or bottom  ran 300 (circles 300), turnovers 50958: TMTM   0  CIRCLE   0  24   0  LAW1   0
+MUT drive    TR 11, W = 5 (X- + X) of either parity, DD 49999   weak top       ran 300 (circles 300), turnovers  5299: TMTM   0  CIRCLE   0  24   0  LAW1   0
+MUT drive    TR 11, W = 5 (X- + X) of either parity, DD 49999   top or bottom  ran 300 (circles 299), turnovers 44684: TMTM   0  CIRCLE   0  24   0  LAW1   0
+MUT drive    TR 12, W = 3 (X- + X) of either parity, DD 50000   weak top       ran 300 (circles 300), turnovers 16980: TMTM   0  CIRCLE   0  24   0  LAW1   0
+MUT drive    TR 12, W = 3 (X- + X) of either parity, DD 50000   top or bottom  ran 300 (circles 300), turnovers 50830: TMTM   0  CIRCLE   1  24   0  LAW1   0
+MUT drive    TR 9, W = 3 (X- + X) of either parity, DD 49999    weak top       ran 300 (circles 300), turnovers 20616: TMTM   0  CIRCLE   0  24   0  LAW1   0
+MUT drive    TR 9, W = 3 (X- + X) of either parity, DD 49999    top or bottom  ran 300 (circles 300), turnovers 54687: TMTM   0  CIRCLE   0  24   0  LAW1   0

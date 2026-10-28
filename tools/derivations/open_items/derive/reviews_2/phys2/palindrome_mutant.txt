@@ -1,0 +1,7 @@
+T S T = S^-1 on 2000 random states: ok
+seed 0 ticks 20000, turnovers 10000 distinct turnover states 10000 distinct states visited 20000
+seed 1 ticks 20000, turnovers 19999 distinct turnover states 2 distinct states visited 3
+seed 2 ticks 20000, turnovers 6667 distinct turnover states 6667 distinct states visited 20000
+seed 3 ticks 20000, turnovers 6667 distinct turnover states 6667 distinct states visited 20000
+seed 4 ticks 20000, turnovers 6667 distinct turnover states 6667 distinct states visited 20000
+seed 5 ticks 20000, turnovers 6666 distinct turnover states 6666 distinct states visited 20000

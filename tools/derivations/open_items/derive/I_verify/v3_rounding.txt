@@ -1,0 +1,5 @@
+R2 recount: 95560 primitive momenta with max |P'_k| >= w' (w' = 2..12, |P'_k| <= 60), a charge-keeping quotient at 0; 63192 non-primitive, a keeping quotient at 16272
+R2 bound (w' - 1) |P'_k| >= w' for w' >= 2, |P'_k| >= w': 0 failures
+R3 recount (w=1000, X=5, c=11): null space dimension 1 over the 28 monomials of degree <= 2
+R3 recount (w=999, X=2, c=23): null space dimension 1 over the 28 monomials of degree <= 2
+R3 recount (w=64, X=1, c=3): null space dimension 1 over the 28 monomials of degree <= 2

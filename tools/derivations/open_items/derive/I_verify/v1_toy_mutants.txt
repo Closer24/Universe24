@@ -1,0 +1,17 @@
+=== verifier mutant skew_nopawl: 3 checks FAIL -> mutant KILLED
+   FAIL  C1 Mesh current antisymmetric, fixAB: one frame, odd/skew: 0 of 240 Meshes not antisymmetric; pawl wall, odd/skew: 236 of 246 Meshes not antisymmetric
+   FAIL  C2 Q* kept to the last digit, fixAB: Q* moved at 40 of 40 exact ticks
+   FAIL  C3 the pawl a pure gauge, fixAB, the count framed, the odd gears framed, the flows not framed: 35 of 81 Node-clocks differ between G-then-step and step-then-G
+=== verifier mutant T_twice_plain: 2 checks FAIL -> mutant KILLED
+   FAIL  C6 T_twice_plain (held): framed charge kept up to the inflow: failures 4 of 4
+   FAIL  C6 T_twice_plain (stepped): framed charge kept up to the inflow: failures 4 of 4
+=== verifier mutant T_twice_K: 2 checks FAIL -> mutant KILLED
+   FAIL  C6b the sweep turned with the pawl, mirrored about the held moment: Q*' - Q* = -(the turned clocks' inflow): identity failures 4 of 4; Q* moved at 4 of 4 (the inflow is not 0)
+   FAIL  C6c the sweep turned with the pawl, mirrored on the stepped state: Q* kept: Q* moved at 4 of 4 turnovers
+=== verifier mutant transverse_V: 2 checks FAIL -> mutant KILLED
+   FAIL  C4 the 24 commute with the step, head: 24 rotations of determinant 1; 21 of 24 do not commute
+   FAIL  C4 the 24 commute with the step, fixAB: 24 rotations of determinant 1; 21 of 24 do not commute
+=== verifier mutant transverse_both: 2 checks FAIL -> mutant KILLED
+   FAIL  C4 the 24 commute with the step, head: 24 rotations of determinant 1; 21 of 24 do not commute
+   FAIL  C4 the 24 commute with the step, fixAB: 24 rotations of determinant 1; 21 of 24 do not commute
+recount C3 fixAB (seed 9001, a and P both compared): 0 of 81 Node-clocks differ

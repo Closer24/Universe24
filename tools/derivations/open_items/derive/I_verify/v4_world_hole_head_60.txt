@@ -1,0 +1,5 @@
+V4 world_hole.json, 60 ticks on the head dynamics, the other side run in shadow:
+  meshes_of: 120 calls; 0 spoke readings off the one-line change; the odd sum changed at 2666 of 90000 spoke-sites, of them at f = +1: 0
+  skewed: 240 calls; 0 spoke readings off the one-line change; the skew changed at 61716 spoke-sites, of them at e = +1: 0
+  reverse: 59 turnovers; 413 trains compared; 0 gears off the one-line change; coupled hands' twelve gears changed at 3219 turned Node-clocks; other gears changed: 0
+  turnovers counted by the head: 1073

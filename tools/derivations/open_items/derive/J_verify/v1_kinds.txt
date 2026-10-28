@@ -1,0 +1,66 @@
+0. The lifts: Q_a H_b Q_a^dagger = 2 SUM_c (R_a)_cb H_c (each Q_a lies over the quarter turn R_a)
+  [ok] covering relation: 9 of 9
+1. The eight kinds: closure, z, commutant, invariant bilinear forms, Frobenius-Schur, nu = chi(z)/dim
+    A1    dim 1: |image| 1, z = +1, commutant 1, invariant bilinears 1 (sym 1, alt 0), nu = 1
+  [ok] A1: image order 1: 1
+  [ok] A1: absolutely irreducible (commutant 1): 1
+  [ok] A1: exactly one invariant bilinear form (Schur): 1
+  [ok] A1: it is symmetric iff nu = +1, antisymmetric iff nu = -1 (sym - alt = nu): sym 1, alt 0, nu 1
+  [ok] A1: nu = chi(z)/dim = z (E's big law on 2O): nu 1, z 1
+    A2    dim 1: |image| 2, z = +1, commutant 1, invariant bilinears 1 (sym 1, alt 0), nu = 1
+  [ok] A2: image order 2: 2
+  [ok] A2: absolutely irreducible (commutant 1): 1
+  [ok] A2: exactly one invariant bilinear form (Schur): 1
+  [ok] A2: it is symmetric iff nu = +1, antisymmetric iff nu = -1 (sym - alt = nu): sym 1, alt 0, nu 1
+  [ok] A2: nu = chi(z)/dim = z (E's big law on 2O): nu 1, z 1
+    E     dim 2: |image| 6, z = +1, commutant 1, invariant bilinears 1 (sym 1, alt 0), nu = 1
+  [ok] E: image order 6: 6
+  [ok] E: absolutely irreducible (commutant 1): 1
+  [ok] E: exactly one invariant bilinear form (Schur): 1
+  [ok] E: it is symmetric iff nu = +1, antisymmetric iff nu = -1 (sym - alt = nu): sym 1, alt 0, nu 1
+  [ok] E: nu = chi(z)/dim = z (E's big law on 2O): nu 1, z 1
+    T1    dim 3: |image| 24, z = +1, commutant 1, invariant bilinears 1 (sym 1, alt 0), nu = 1
+  [ok] T1: image order 24: 24
+  [ok] T1: absolutely irreducible (commutant 1): 1
+  [ok] T1: exactly one invariant bilinear form (Schur): 1
+  [ok] T1: it is symmetric iff nu = +1, antisymmetric iff nu = -1 (sym - alt = nu): sym 1, alt 0, nu 1
+  [ok] T1: nu = chi(z)/dim = z (E's big law on 2O): nu 1, z 1
+    T2    dim 3: |image| 24, z = +1, commutant 1, invariant bilinears 1 (sym 1, alt 0), nu = 1
+  [ok] T2: image order 24: 24
+  [ok] T2: absolutely irreducible (commutant 1): 1
+  [ok] T2: exactly one invariant bilinear form (Schur): 1
+  [ok] T2: it is symmetric iff nu = +1, antisymmetric iff nu = -1 (sym - alt = nu): sym 1, alt 0, nu 1
+  [ok] T2: nu = chi(z)/dim = z (E's big law on 2O): nu 1, z 1
+    E1/2  dim 2: |image| 48, z = -1, commutant 1, invariant bilinears 1 (sym 0, alt 1), nu = -1
+  [ok] E1/2: image order 48: 48
+  [ok] E1/2: absolutely irreducible (commutant 1): 1
+  [ok] E1/2: exactly one invariant bilinear form (Schur): 1
+  [ok] E1/2: it is symmetric iff nu = +1, antisymmetric iff nu = -1 (sym - alt = nu): sym 0, alt 1, nu -1
+  [ok] E1/2: nu = chi(z)/dim = z (E's big law on 2O): nu -1, z -1
+    E5/2  dim 2: |image| 48, z = -1, commutant 1, invariant bilinears 1 (sym 0, alt 1), nu = -1
+  [ok] E5/2: image order 48: 48
+  [ok] E5/2: absolutely irreducible (commutant 1): 1
+  [ok] E5/2: exactly one invariant bilinear form (Schur): 1
+  [ok] E5/2: it is symmetric iff nu = +1, antisymmetric iff nu = -1 (sym - alt = nu): sym 0, alt 1, nu -1
+  [ok] E5/2: nu = chi(z)/dim = z (E's big law on 2O): nu -1, z -1
+    G3/2  dim 4: |image| 48, z = -1, commutant 1, invariant bilinears 1 (sym 0, alt 1), nu = -1
+  [ok] G3/2: image order 48: 48
+  [ok] G3/2: absolutely irreducible (commutant 1): 1
+  [ok] G3/2: exactly one invariant bilinear form (Schur): 1
+  [ok] G3/2: it is symmetric iff nu = +1, antisymmetric iff nu = -1 (sym - alt = nu): sym 0, alt 1, nu -1
+  [ok] G3/2: nu = chi(z)/dim = z (E's big law on 2O): nu -1, z -1
+  [ok] sum of dim^2 over the eight kinds = 48 = |2O|: 48
+2. The eight kinds are pairwise distinct (Hom = 0 between kinds of one z; kinds of different z differ by z)
+  [ok] Hom(V, W) = 0 for every pair of distinct kinds of one z: 13 of 13 pairs
+3. G3/2 in orthonormal coordinates: the kernel of psi -> SUM_a H_a psi_a inside E1/2 (x) T1, T = T_twin (x) K
+  [ok] C is an intertwiner E1/2 (x) T1 -> E1/2 (C g = Q C)
+  [ok] the kernel (G3/2) is 4-dimensional: 4
+  [ok] on G3/2, B = <T u, v> is directionless (B(g u, g v) = s s B(u, v) for the three lifts): 300 of 300
+  [ok] on G3/2, B is bilinear (linear in u through T's antilinearity, linear in v): 300 of 300
+  [ok] on G3/2, B(v, u) = (T T) B(u, v) with T T = -1: 300 of 300, T T = -1 on 300 of 300
+  [ok] on G3/2, B restricted to the kernel is nondegenerate (rank 4): 4
+  [ok] T keeps the G3/2 kernel
+  [ok] E1/2 (x) T1 = E1/2 + G3/2 holds exactly 2 invariant bilinears, both antisymmetric: 2 total, 2 antisymmetric
+4. The coordinate caveat: on E in the root coordinates, <K u, v> (the plain dot) is not directionless
+  [ok] plain dot on E's root coordinates fails the 24 on some lift (so <,> must be the 24's own product): 2 of 3 lifts break it
+result: 0 failures

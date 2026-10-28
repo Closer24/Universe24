@@ -1,0 +1,2 @@
+doubled wheel: T S T = S^-1 failures 0 of 200000 (W, W+ of any parity)
+doubled wheel: S N = N S failures 0 of 200000

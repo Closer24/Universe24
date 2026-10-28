@@ -1,0 +1,5 @@
+D5 mod4: stored != physical at 0 of 48 ticks; the stored charge moved at 0 of 48 ticks; 320 Node-clock turnovers
+D5 mod2: stored != physical at 42 of 48 ticks; the stored charge moved at 0 of 48 ticks; 320 Node-clock turnovers
+D5 mod2_sign: stored != physical at 0 of 48 ticks; the stored charge moved at 0 of 48 ticks; 320 Node-clock turnovers
+D5 twice: stored != physical at 46 of 48 ticks; the stored charge moved at 46 of 48 ticks; 320 Node-clock turnovers
+D1 on pawl-only frames (c in {0,1}, read T^(c_y - c_x) with T^-1 = -T): 0 of 486 Meshes not antisymmetric
