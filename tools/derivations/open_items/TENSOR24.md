@@ -44,7 +44,7 @@ The plan's owner: the Boss. The names are the ones the owner sees in his app: Bo
 
 ## 1. The end state
 
-- **One integer tensor machine.** The whole engine is one integer tensor machine of the clocks. Every Node-clock does one act: every gear of every train by one formula (section 2) with its carry, the gate inside the act. The quotient leaves; the remainder stays.
+- **One integer tensor machine.** The whole engine is one integer tensor machine of the clocks, with three operations alone: multiplication, addition and Rule3 (the full picture: section 26; the two clicks: section 27; the parameters: section 28; the whole system: section 29). Every Node-clock does one act: every gear of every train by one formula (section 2) with its carry, the gate inside the act. The quotient leaves; the remainder stays.
 - **Nature one to one.** Every one of the 77 rows of the gates is shown on the one big bang's chart, its calibre holding every train the rows need (section 14 names the trains, acts and settings still missing).
 - **Nothing the engine does on the head is lost** (section 8): every click, the rewind bit for bit, the books, the order-free phase, the swing, the stopped Node-clock, the bottom, the held field, the twin hands, the standard.
 - **The order.** The engine is integer tensor arithmetic of the second order:
@@ -560,7 +560,7 @@ Every law stands here once as a formula, or is named below as owed; each cut is 
    The regulator: w ((a+ - a) - (a - a-)) = sum over j of g_j (a_j - a) - D a, with w its own teeth count, then the drive q = (N + r_d) div T_d, with T_d the drive's teeth count and r_d its fine tooth.
 3. **The rewind:** the same step with a+ and a- exchanged and every carry run backward.
 4. **The turnover,** the clock's own act and no click, on either of the law's two triggers: the time gear's weak maximum (X0 <= X1 >= X2 with one of the two strict: the top), or its output falling below the floor X_f, the least volume with a reading. There every gear's a and a- are exchanged and r goes to mid + mid - r (the one mirror). The one big bang's rest at the full rate is neither, and does not turn (Sofer).
-5. **The click of a whole:** the wind E of a hand at its winding w gives q = E div w; a click where q is at least 1, its remainder booked.
+5. **The click of a whole:** the wind E of a hand at its winding w_c = 3 key s gives q = E div w_c; a click where q is at least 1, its remainder booked (section 27).
 6. **The click of a split:** up where c (rho + rho) rho_d < room (rho rho_d + S . m) (David; from the tensor's algebra, section 24, item 3). Here c and room are the draw's two outputs (law 9): its number, and the count of values it can take, capped at the modulus (F4, section 16). (rho, S) is the pair's reading and (rho_d, m) the detector's, a second twin pair at the Node-clock, or the pair's own upper twin where none stands (11 d).
 7. **Pauli's exclusion:** an exchange of two equal quanta carries the train's exchange sign, -1 on matter, so psi + (-psi) = 0: two equal quanta of matter at one Node-clock hold no winding; +1 on a force carrier. Derived, by the owner's decision (section 24, item 1); the derivation is owed (below), and until it stands the law's lines on the exchange stand (ALGEBRA.md 555, 817 and 1558; Sofer).
 8. **The books:** every carry's remainder kept. Read as a gate only beside a second, independent reading: the wind before and after over every train.
@@ -768,3 +768,216 @@ The Boss's check of nature's content beyond the 33 rows of section 14 (the owner
 10. **Bell at a distance** (section 18, item 4). The closure follows from the tensor's algebra (decided), and its reach is the one act's, one Mesh a tick. Where the partner clicks first, the correlation is lost, and nature keeps it. No local carriage can keep it everywhere (Bell's theorem), so this stands as a contradiction until David's derivation answers it.
 11. **The relics between the swings** (rows 2, 5 and 58) are read through the clocks' reversal (the owner's word: contraction is seen as expansion). Animate reads them.
 12. **The one big bang's matter:** twin hands, the coupling of the kinds, the seed broken at least once, many bangs (section 23).
+
+## 26. The full picture: how everything converges
+
+The owner's words of 08:4x UTC: a full picture of everything and how it converges, with the operations allowed, Rule3, addition and multiplication.
+
+**The three operations, and nothing else** (the owner's word through David, 08:0x UTC, approved):
+- **multiplication and addition** of integers, and of Gaussian integers through their two integer parts: (a + i b)(c + i d) = (a c - b d) + i (a d + b c);
+- **Rule3**, the carry: n + r = q d + r', with 0 <= r' < d. The quotient q leaves, and the remainder r' stays.
+
+Everything else the engine does is one of these:
+- a subtraction is an addition of a product by -1;
+- a division is Rule3, with its remainder kept;
+- a comparison is Rule3's quotient: for n >= 0 and d > 0, n < d exactly where the quotient of n by d is 0. So every "whether" of the engine (a winding filled, the draw's side, the turnover's trigger) is a quotient, whole or not (David);
+- a root, a cosine, a search, a table and a clamp have no place (section 12). Each one on the head has its replacement in section 16.
+
+**The convergence, in eight steps, each by the three operations:**
+1. **The state.** Every Node-clock holds integers only: for every gear of every train, its notch now and before, its fine tooth and its teeth count (a, a-, r, w). A hand is a Gaussian integer; twin hands are two.
+2. **The group, written once.** The 24 act on the six Spokes, which come from the piece's shape. Their five kinds (A1, A2, E, T1, T2) sort every gear. The kinds' product table, all integers, is derived from the Spokes by products alone (kinds(spokes), products(kinds)). It is the one place in the code where the 24 is written (the owner's question of 05:4x UTC).
+3. **The read.** Each Node-clock reads itself and its six neighbours, and nothing else.
+4. **The contraction.** The source J is one sum, over the product table, of products of the trains' gears.
+5. **The pull and the kick.** F = sum over the Spokes j of g_j (U_j a_j - a) - D a + J, and p+ = p + s F + K. The clock enters as the coefficients W, W+ and s, the metric's lapse and stretch.
+6. **The carry.** a+ = a + (p+ + mid W+) div W+, and r+ = (p+ + mid W+) mod W+. The quotient moves the notch; the remainder stays in the fine tooth.
+7. **The gate, inside the same act** (section 27):
+   - the click of a whole, where a hand's wind over its winding gives a quotient of at least 1;
+   - the click of a split, where the draw's quotient falls among the parts' sizes;
+   - the turnover, where the time gear's carry turns.
+
+   Each is Rule3 one level up the ladder of carries (section 4).
+8. **The great clock.** Every Node-clock does the one act at once, each writing only after every read (the order-free phase). The rewind is the same act with every carry run backward, so time reverses bit for bit.
+
+**What converges where:**
+- **In the clocks:** a board of Node-clocks. Each has its trains of gears, its springs, its six Meshes, its time gear (the regulator) and its hands, and every tick it turns its gears by one rule. The quotients that leave are the clicks: a giant machine of clicks, which the readers read as nature (the owner's word of 05:4x UTC).
+- **In the algebra:** a field of integer tensors on the torus, one tensor of each of the 24's kinds at every site, with Gaussian integer coefficients. The step is one multilinear map, of degree at most three with the clock counted (David), followed by one Rule3. Its highest tensors, the metric and the stress, are of rank two (section 1).
+- **In physics:**
+  - the Mesh is the unit of length, and the tick the unit of time;
+  - the regulator is general relativity's metric; its half of the one formula is the linearized Einstein equation on the lattice (David, 6464350822);
+  - the hands are the fields, and their waves the particles;
+  - a click is a quantum event: a whole quantum given, taken or set, or a measurement's outcome by Born's odds;
+  - the remainder is the phase below one quantum;
+  - the rewind is time's symmetry, the turnover the bang's bounce, and the draw the one chance.
+
+**Why nothing else is needed.** Each row of the gates is a theorem of this algebra, read from the state by two independent readings (David, 6463569365; Animate's page, section 14):
+- the 16 theorems follow from the formula wherever their premise stands;
+- the 41 rows under a condition follow where the one big bang's course reaches it;
+- the 20 rows by a train follow once their trains stand in the calibre (section 6);
+- the 3 open rows (50, 51, 57) wait on a route.
+
+## 27. The two clicks: their algebra, and how each is built through the tensor
+
+The owner's words of 08:4x UTC: the two kinds of click, the click of a whole and the click of a split, each with an algebraic definition and its build through the tensor. Both are Rule3. Neither needs a root, an angle or a cosine.
+
+**The wind, which both clicks read** (K1 of Animate's page; hands.wind on the head). Take a hand at a Node-clock, with n its notches now, b its notches before, w its teeth count, S the hold, R_j the six grips and X the stretch at the tick's start. Its wind is X times the sum over the hand's two gears of
+
+    [w (n n + b b) - S n b - n (sum over j of R_j b_j)], doubled, less the sum over j of R_j (b - b_j) (n + n_j)
+
+It is the step's conserved quadratic form, the time-time part of the stress. It is an A1 contraction of the hand with itself, now and before, over the Node-clock and its six neighbours, made of products and sums only. It is section 19's energy reading; its second reading is the books, the wind before and after over every train.
+
+**1. The click of a whole.**
+- **The algebra.** A train's winding is w_c = 3 key s.
+  - key is the calibre's quantum_action.
+  - s is the pair's third integer, with pinion pinion + s s = rim rim: the pair stands on den's circle, so s is the calibre's integer and not a root (R11, E19).
+
+  At a Node-clock, Rule3 on the wind gives
+
+      E + r_E = q w_c + r'_E,   with 0 <= r'_E < w_c
+
+  - Where q is 0, nothing clicks.
+  - Where q is at least 1, the click fires: q whole quanta leave as events, and the remainder r'_E stays. The test "q at least 1" is the quotient itself.
+  - One part holds the whole winding, so nothing is chosen.
+- **Its two holdings** (section 4):
+  - **by one hand at one Node-clock:** the chime, a bob's quantum taken or given;
+  - **at both ends of a Mesh:** the fitting (a pair set from the light) and the unspringing (a pair returned to it).
+    - There the wind is read across the Mesh by the link's bilinear, conj(z_x) z_(x+j). Its real part is the dot, and its imaginary part the lead.
+    - The lead and the twist say which end takes which child.
+    - What the click writes is owed as a formula (section 19).
+- **Through the tensor:**
+  1. E is the A1 contraction of the hand's field, now and before, over the stencil of seven, times s (contract, shift);
+  2. (q, r'_E) = carry(E, w_c, r_E);
+  3. q enters the books, and the click writes its quanta: the hand unwound by q windings at the chime, the children laid at the fitting. What a click writes is owed as a formula (section 19).
+
+  These are the three operations, and the gate stands inside the one act.
+- **In physics:** a quantum given or taken, with E = n h nu on a hand of one frequency (Planck's relation), and its threshold. A pair is set where the wind reaches the pair's winding at both ends (E = mc^2). The stop's replacement is the owner's word (section 22).
+
+**2. The click of a split.**
+- **The algebra.** A whole winding is held by parts of sizes sigma_1, ..., sigma_n, non-negative integers, none of which holds it alone. The draw gives its number c, with 0 <= c < room (law 9). Then Rule3:
+
+      c (sigma_1 + ... + sigma_n) = t room + r_t
+
+  - The part k with sigma_1 + ... + sigma_(k-1) <= t < sigma_1 + ... + sigma_k takes the whole winding by the carry, and the remainder is booked.
+  - Each comparison is a quotient, so the click of a split is Rule3 and addition alone.
+  - Its odds are sigma_k over the sum: exact where the sum divides room, and within one count in room otherwise.
+- **The sizes of twin hands at a detector.** Let psi = (psi_1, psi_2) be the pair's twin hands. Let phi = (phi_1, phi_2) be the detector's: a second twin pair at the Node-clock, or the pair's own upper twin where none stands.
+  - The overlap is <phi, psi> = conj(phi_1) psi_1 + conj(phi_2) psi_2, one Gaussian integer.
+  - sigma_up = N(<phi, psi>) and sigma_down = N(<phi_perp, psi>). N is the norm, the sum of the two parts' squares, and phi_perp = (-conj(phi_2), conj(phi_1)).
+  - sigma_up + sigma_down = rho rho_d, with rho = N(psi_1) + N(psi_2) (Lagrange's identity).
+
+  This is David's law 6, rewritten.
+  - By the Fierz identity, rho rho_d + S . m = 2 N(<phi, psi>), with S and m the two pairs' axes.
+  - The Boss checked both identities on 20,000 random Gaussian spinors with parts up to a million, with no failure (fierz24.py).
+  - The odds are N(<phi, psi>) over N(phi) N(psi): Born's rule, the squared overlap. No angle is ever computed.
+- **Through the tensor:**
+  1. the overlap is one contraction of the twin train with the detector's conjugate, the product table's A1 row for two spinors;
+  2. its norm is one product;
+  3. the draw is one Rule3 composition of the invariant digits;
+  4. the pick is one more Rule3.
+
+  The contraction is of degree four in the twin gears, as the head's (rho, S) form is, and holds fewer products.
+- **The closure** (Bell; the owner's decision, section 24, item 3): the fitting sets the open axis on both fitted hands, so the first click is half and half by the sizes themselves. Its answer is carried one Mesh a tick to the partner by the one formula, with no carriage of its own. Its formula is owed (section 19).
+- **In physics:** the measurement and its outcomes:
+  - Stern-Gerlach (row 42);
+  - Born's odds;
+  - Bell past the local bound with the closure (row 56; section 18, item 4, for the distance);
+  - the detector, a bob and no typed object.
+
+**What the two have in common:** each is the carry of a winding, the quotient leaving as the event and the remainder staying.
+- The click of a whole has one part, so its quotient alone decides.
+- The click of a split has several parts, so the draw's quotient decides among them by their sizes.
+- The turnover is the same carry on the time gear (David, 6464350822). In the law's words it is the clock's own act, not a third kind of click (Sofer).
+
+## 28. The universe's and the world's parameters, and how each enters the tensors
+
+The owner's words of 08:4x UTC: how all the universe's parameters are tied together and enter the tensors, thought through in the clocks, the algebra and physics.
+
+**The rule:**
+- A parameter is an integer of the universe file (the calibre) or of the world file (the piece and its setting). It is never an operation.
+- In the one formula it is a coefficient: of W, s, g_j, D, U_j, J and K, or of the carry's divisor and the winding.
+- A constant of nature is read from the clicks it makes, never computed in the code.
+
+**The universe file** (tests/worlds/universe_bang.json, read by core/rule3.py, trains.py and clock.py):
+
+| key (its value in the one big bang) | in the clocks | in the algebra: where it enters | in physics |
+| --- | --- | --- | --- |
+| den, the rim (15,162,856,759,112,389) | the base of every train's teeth | the teeth count T = w = 6 rim Gamma^2 G^2, the divisor of every gear's carry and the kick's unit, K = T s q (teeth_of) | the resolution of every rest beat: the pairs' common denominator |
+| node_clock, the full rate Gamma (1,000) | the fastest a Node-clock runs, unloaded | the lapse's unit, W at rest; the Mesh's factor Q_j = (Gamma - t)^2 / Gamma^2; the mesh unit G, derived from Gamma (mesh_unit_of); the drive teeth through its powers | the unit of time against the Mesh: with the mesh rate at Gamma, light moves at most 1 over the root of 3 Meshes a tick on the stencil. A loaded clock's rate p_0 below Gamma is time's dilation |
+| quantum_action, the key (36,000) | the click's quantum | the winding w_c = 3 key s (winding_of); the drive teeth of the offset's gears and of the light's first gear, so each kick's q is a whole count of the key in its source (drive_teeth); a factor of the held teeth | Planck's constant: one click, one quantum of action |
+| trace (6) | the weight of the forms against the stress's trace in the time gear's drive (TW-S1: dimensionless, 6 in nature's files) | the drive numerator 4 X (forms trace rim Gamma^2 - tr(stress) p_0^2) p_0 (held_numerator), over the drive teeth trace rim Gamma^4 key on the time gear and trace rim Gamma^2 key on the nine others (held_teeth) | with the drive, how matter's stress moves the clock: the coupling kappa of G = kappa T. Its reading as Newton's constant is owed (David). On the head it also sets the one big bang's length, through the clamp F1 (Animate) |
+| a row's shape: 1, 2 or 4 | the train's own part: one gear, a hand, twin hands | the dimension of the train's part: one integer (A1), one Gaussian integer, or two Gaussian integers (a spinor of the double cover) | a real field, a charged field, or a field of spin one half (matter, with Pauli's exclusion derived) |
+| a row's pair (pinion, rim) | the train's spring, rim - pinion; a pinion equal to the rim is unsprung | the grips g_j = 2 (mesh rate)^2 Q_j pinion; the spring D = 12 (rim - pinion) p_0^2 G^2. At rest in a flat clock the beat's cosine is pinion over rim: the step's identity, read and never computed | the mass, by the rest beat omega_0, E = h-bar omega_0 = m c^2; a pinion equal to the rim is massless, the light. Each pair is measured as nature's masses are (A12, the owner's to rule) |
+| a row's weight (2, on the held field) | the held field's weight | the held field's source, the weight times the masses' contraction (tick.py:229), and its load in D, the load plus the weight times its gear (tick.py:106) | the nuclear coupling: the binding's strength (rows 76 and 77) |
+
+**The world file** (tests/worlds/world_bang.json):
+
+| key (its value) | in the clocks | in the algebra | in physics |
+| --- | --- | --- | --- |
+| shape ([4, 4, 4]) | the board's sides | the torus of side 4 in three axes: the count of axes gives the six Spokes and the 24 (the piece's shape, the 24's one place) | a closed universe, 4 Meshes around |
+| intervals (100) | the run's length in ticks | the count of acts | the time watched |
+| the seed: lay wave, row 0, quanta 5,000,000, p1 (sixteen phase digits), cz 1, mirror 0 | how every hand is wound at the start | the first state (a, a-, r) of every gear: a pure A1 lapse and an eigenmode of the covariant Laplacian (section 23) | the first conditions: the energy at each Node-clock and its pattern. By the owner's word the seed is broken at least once (section 23) |
+
+**Derived, with no key:**
+- the mesh unit G, the least G at which one notch of tension resolves (mesh_unit_of);
+- mid, the teeth's half by the carry on the Spoke's two sides;
+- the draw's modulus M, the unwound train's winding times the hands' count;
+- the counts of Spokes, axes and sides, from the piece's shape.
+
+**Typed in the code, to move into the universe file (R13):** the light (rim, rim), the regulator (rim - rim div Gamma, rim), the offset (rim, rim), and the ratchet's two teeth. The regulator's pair gives the metric a mass (section 18, item 14).
+
+**How they tie together:**
+- **In the clocks:**
+  - every train's teeth are 6 rim Gamma^2 G^2, one divisor for all;
+  - its spring is rim - pinion;
+  - the time gear's teeth are the lapse;
+  - the key is the unit of every winding.
+
+  So the whole board runs on four integers (rim, Gamma, the key and the trace), the rows' pairs and weights, and the setting.
+- **In the algebra:** the formula's coefficients are products of these:
+  - W from Gamma and the state;
+  - s, the stretch;
+  - g_j from the mesh rate, Q_j and the pinion;
+  - D from rim - pinion and p_0;
+  - K from the teeth count T, s and q;
+  - J's weights from the calibre's couplings: the weight; the offset's coupling, which is the spring itself after R4; and the twin train's integer for the one-hand coupling.
+- **In physics:** the dimensionless constants of nature are ratios of these integers, read from the clicks:
+  - a mass ratio is a ratio of two rest beats;
+  - light's speed is a front's Meshes per tick;
+  - Planck's constant is the click's quantum;
+  - Newton's constant comes from the drive's coupling (owed).
+
+  None is computed in the code; each is read by two independent readings.
+
+**What the plan changes in them:**
+- the four typed trains go into the file (R13);
+- the coupling min(spring, 1) goes, and the coupling is the spring (R4, F3);
+- the rate table goes, and the rate is the lapse (E8; David's item d);
+- the regulator's spring goes to 0 (David's item c);
+- the clamps go (F1, F2, F5);
+- the trace stays the calibre's integer (TW-S1), with its meaning as kappa derived (David).
+
+## 29. The whole system under the plan
+
+The owner's words of 08:4x UTC: the plan covers every part of the system, not the engine alone, so that no fake stands anywhere. The implementation starts in the engine, where the hard problems are.
+
+| the part | its files | who audits it | where its fakes are listed | its cuts |
+| --- | --- | --- | --- | --- |
+| the engine | src/event_universe: tick, click, bobs, unspring, unwind, meshes, draw, clock, trains, regulation, hands, phase, readings; core/, assembly/, features/ | David (R1 to R14), Sofer (E1 to E19; CLAMP and COMPARE), Animate (F1 to F5) | section 16 | 3 to 8; the Boss writes them |
+| the readers | gates, predicates, symmetries, clicks, phenomena, great_clock, reckoner, events, run, rim, swings | David and Animate | section 16, the reading modules' fakes | with cuts 4 and 5, and section 23's re-wording; Animate writes them, and run.py is the Boss's |
+| the law | docs/ALGEBRA.md | Sofer | section 16, A1 to A13 | Sofer's sentence after each derivation, on the owner's word |
+| the gates | tools/check.py, engine_gates.py, documents_gates.py, record_code_shape.py, tests_shape.py, merge_base.py, numbers.json, history_allowed.json | Sofer | section 12, G1 to G4; the sweep below | cut 2 and the end check |
+| the pages | tools/page.py, bangs_page.py, phenomena.py | the sweep below, then Animate | the sweep below | regenerated at each cut |
+| the tests | tests/*.py | the sweep below, then Sofer | the sweep below; Sofer's G5 to G9 tests | every cut |
+| the world and universe files | tests/worlds/*.json | David (the settings derived), the owner (A12) | A10, A12; the sweep below | cut 4 |
+| the records shipped | examples/ | the sweep below, then Animate | the sweep below | regenerated at each cut |
+| the documents | docs/ENGINE.md, UNIVERSE24.md, HIGHLIGHTS.md, CLOCK_WORDS.md, FURTHER_RESEARCH.md | Sofer | the sweep below | after each cut |
+| main | | | | untouched, by the owner's rule |
+
+**The sweep below:** a reading agent of the Boss's reads tools/, tests/, the world files, examples/ and the documents for fakes, by the kinds of section 16. Its findings, each checked by the part's auditor, enter here with their cuts.
+
+**The first engine cut, cut 6, the one path** (the owner's go of 08:4x UTC). The regulator's turn and drive and the driven trains' impulse and carry become one form, p+ = p + s F + K, for every gear.
+- **For the regulator,** s is 1 and W is its own teeth count. The turn w (a+ - a) - w (a - a-) + r+ - r = sum over j of g_j (a_j - a) - D a is that form exactly, with p = w (a - a-) + (r - mid w).
+- **Its drive** q = carry(N, T_d, r_d) enters as the kick K = T s q with s = 1, T being its teeth count w. Since T q is a whole count of the teeth, a+ and r+ come out bit for bit as the turn's carry and then the drive's.
+- **Backward,** the head runs the drive first and then the turn, the regulator's carry taking the going and the driven trains' carry its notches reversed. The one path keeps both directions exact, the rewind 20 of 20 on every chart.
+- **The work:**
+  - built in the Boss's toy, bit for bit against the head on every chart (the probe formula0.py's form);
+  - the four approvals of section 21 before the push.
