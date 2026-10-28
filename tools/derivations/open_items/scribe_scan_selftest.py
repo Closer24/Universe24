@@ -275,9 +275,21 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
         {"ISOLATE": 1},
     ),
     (
-        "the runner imports the engine and the record",
+        "the runner imports the engine",
         NEW_RUNNER,
-        "from tensor24.engine import step\nfrom tensor24.record import Row\n",
+        "from tensor24.engine import step\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the runner imports the engine, relative",
+        NEW_RUNNER,
+        "from ..engine.step import step\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the runner takes the step by argument",
+        NEW_RUNNER,
+        "from tensor24.record import Row\n\n\ndef run(step, ticks):\n    for t in ticks:\n        step(t)\n",
         {},
     ),
     (

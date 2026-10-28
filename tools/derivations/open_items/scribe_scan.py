@@ -144,7 +144,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "ISOLATE": (
         "BLOCK",
-        "an import that crosses the new engine's folders: the decoder and the record import the standard library and the record alone (no numpy, no engine, no runner), the engine imports neither the decoder nor the runner nor the current engine, the runner neither the decoder nor the current engine; a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
+        "an import that crosses the new engine's folders: the decoder and the record import the standard library and the record alone (no numpy, no engine, no runner), the engine imports neither the decoder nor the runner nor the current engine, the runner neither the decoder nor the engine nor the current engine (the step is passed in); a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
     ),
     "BRANCH": (
         "WARN",
@@ -321,7 +321,7 @@ def import_ok(rel: str, name: str) -> bool:
     if rel.startswith(NEW_ENGINE + "/engine/"):
         return not (name.startswith((own + "decoder", own + "runner")) or top == "event_universe")
     if rel.startswith(NEW_ENGINE + "/runner/"):
-        return not (name.startswith(own + "decoder") or top == "event_universe")
+        return not (name.startswith((own + "decoder", own + "engine")) or top == "event_universe")
     return True
 
 
