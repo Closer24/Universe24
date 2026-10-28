@@ -30,6 +30,7 @@ NEW_CARRY = "tensor24/engine/carry.py"
 NEW_RECORD = "tensor24/record/schema.py"
 NEW_RUNNER = "tensor24/runner/loop.py"
 NEW_DECODER = "tensor24/decoder/rows.py"
+NEW_READING = "tensor24/readings/wind.py"
 
 CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a for loop", ENGINE, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
@@ -365,9 +366,122 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
         "import numpy as np\n\nX = np.array([1])\n",
         {},
     ),
+    ("min over one iterable in the decoder", NEW_DECODER, "def f(a):\n    return min(a)\n", {}),
+    (
+        "max over a generator in the decoder",
+        NEW_DECODER,
+        "def f(a):\n    return max(x for x in a)\n",
+        {},
+    ),
+    (
+        "max of a written-out pair in the decoder",
+        NEW_DECODER,
+        "def f(a, b):\n    return max(a, b)\n",
+        {"CLAMP": 1},
+    ),
+    (
+        "max of a tuple in the decoder",
+        NEW_DECODER,
+        "def f(a, b):\n    return max((a, b))\n",
+        {"CLAMP": 1},
+    ),
+    (
+        "max of a list in the decoder",
+        NEW_DECODER,
+        "def f(a, b):\n    return min([a, b])\n",
+        {"CLAMP": 1},
+    ),
+    ("max of a star in the decoder", NEW_DECODER, "def f(a):\n    return max(*a)\n", {"CLAMP": 1}),
+    (
+        "clip in the decoder",
+        NEW_DECODER,
+        "import numpy as np\n\n\ndef f(a):\n    return np.clip(a, 0, 1)\n",
+        {"CLAMP": 1},
+    ),
+    ("abs in the decoder", NEW_DECODER, "def f(a):\n    return abs(a)\n", {"CLAMP": 1}),
+    ("where in the decoder", NEW_DECODER, "def f(a, b):\n    return where(a, b, 0)\n", {"CLAMP": 1}),
+    ("a remainder in the decoder", NEW_DECODER, "def f(a, b):\n    return a % b\n", {"OPERATION": 1}),
+    ("divmod in the decoder", NEW_DECODER, "def f(a, b):\n    return divmod(a, b)\n", {"OPERATION": 1}),
+    ("a refusal in the decoder", NEW_DECODER, "def f(a):\n    raise ValueError(a)\n", {"REFUSE": 1}),
+    (
+        "an ordering comparison in the decoder",
+        NEW_DECODER,
+        "def f(a, b):\n    return a < b\n",
+        {},
+    ),
+    ("a log read in the decoder", NEW_DECODER, "def f(a):\n    return a.log\n", {}),
+    ("a remainder in the runner", NEW_RUNNER, "def f(a, b):\n    return a % b\n", {}),
+    ("a refusal in the runner", NEW_RUNNER, "def f(a):\n    raise ValueError(a)\n", {}),
+    ("max of a pair in the runner", NEW_RUNNER, "def f(a, b):\n    return max(a, b)\n", {}),
+    ("a loop in the readings", NEW_READING, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
+    (
+        "an ordering comparison in the readings",
+        NEW_READING,
+        "def f(a, b):\n    return a < b\n",
+        {"COMPARE": 1},
+    ),
+    (
+        "a branch in the readings",
+        NEW_READING,
+        "def f(a):\n    if a:\n        return a\n    return a\n",
+        {"BRANCH": 1},
+    ),
+    ("max of a pair in the readings", NEW_READING, "def f(a, b):\n    return max(a, b)\n", {"CLAMP": 1}),
+    ("a remainder in the readings", NEW_READING, "def f(a, b):\n    return a % b\n", {"OPERATION": 1}),
+    ("the readings import numpy", NEW_READING, "import numpy as np\n", {"ISOLATE": 1}),
+    (
+        "the readings import the engine",
+        NEW_READING,
+        "from tensor24.engine import step\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the readings import the runner",
+        NEW_READING,
+        "from tensor24.runner import loop\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the readings import the decoder",
+        NEW_READING,
+        "from tensor24.decoder import rows\n",
+        {"ISOLATE": 1},
+    ),
+    ("the readings import the record", NEW_READING, "from tensor24.record import schema\n", {}),
+    ("the readings import the record, relative", NEW_READING, "from ..record import schema\n", {}),
+    (
+        "the readings import the standard library",
+        NEW_READING,
+        "import itertools\nfrom typing import Any\n",
+        {},
+    ),
+    ("the readings import one another", NEW_READING, "from tensor24.readings import sweep\n", {}),
+    (
+        "the engine imports the readings",
+        NEW_STEP,
+        "from tensor24.readings import wind\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the engine imports the readings, relative",
+        NEW_STEP,
+        "from ..readings import wind\n",
+        {"ISOLATE": 1},
+    ),
+    (
+        "the record imports the readings",
+        NEW_RECORD,
+        "from tensor24.readings import wind\n",
+        {"ISOLATE": 1},
+    ),
+    ("the runner imports the readings", NEW_RUNNER, "from tensor24.readings import wind\n", {}),
+    ("the runner imports the readings, relative", NEW_RUNNER, "from ..readings import wind\n", {}),
+    ("the decoder imports the readings", NEW_DECODER, "from tensor24.readings import wind\n", {}),
+    ("the decoder imports the readings, relative", NEW_DECODER, "from ..readings import wind\n", {}),
+    ("the decoder imports the readings' package", NEW_DECODER, "from tensor24 import readings\n", {}),
 ]
 
-# a note is a refusal in the new engine's strict folders (engine, record) and a note elsewhere
+# a note is a refusal in the new engine's strict folders (engine, record, readings) and a note elsewhere
 TIERS: list[tuple[str, str, str, str, str]] = [
     ("a comparison in the new engine", NEW_STEP, "def f(a, b):\n    return a < b\n", "COMPARE", "BLOCK"),
     ("a branch in the new engine", NEW_STEP, "def f(a):\n    return a if a else a\n", "BRANCH", "BLOCK"),
@@ -376,6 +490,20 @@ TIERS: list[tuple[str, str, str, str, str]] = [
         NEW_RECORD,
         "from functools import cache\n\n\n@cache\ndef f(a):\n    return a\n",
         "MEMO",
+        "BLOCK",
+    ),
+    (
+        "a comparison in the readings",
+        NEW_READING,
+        "def f(a, b):\n    return a < b\n",
+        "COMPARE",
+        "BLOCK",
+    ),
+    (
+        "a branch in the readings",
+        NEW_READING,
+        "def f(a):\n    return a if a else a\n",
+        "BRANCH",
         "BLOCK",
     ),
     (
