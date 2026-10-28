@@ -1,0 +1,15 @@
+world_hole.json 30 ticks
+  (i) hand gears, sites read: 30000
+  (i) hand gears, sites with a kick K != 0: 0
+  (i) offset gears, kick sites where K = going T s q (q a whole carry): 276
+  (i) offset gears, sites read: 15000
+  (i) offset gears, sites with a kick K != 0: 276
+  (iii) driven gears, sites read: 41250
+  (iii) driven gears, sites where W+ (a+ - a) + (r+ - mid W+) = p + s F + K: 41250
+  (iii) driven gears, sites where a+ = a + carry(p + s F, W+): 41250
+  (iii) unsprung gear 0 (the release drives it), sites read: 3750
+  (iii) unsprung gear 0 (the release drives it), sites where W+ (a+ - a) + (r+ - mid W+) = p + s F + K: 3749
+  (iii) unsprung gear 0 (the release drives it), sites where a+ = a + carry(p + s F, W+): 3749
+  (iv) regulator gears, sites read: 26250
+  (iv) regulator gears, sites where now = turn + drive: 26249
+formula0 exit 0
