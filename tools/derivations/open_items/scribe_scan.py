@@ -116,7 +116,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "LOGREAD": (
         "BLOCK",
-        "an act reads the great clock's log, a global read: only the readers read the record (law: Locality is never broken)",
+        "an act reads the great clock's log, a global read: only the readers read the record, and the runner reads the undo log in runner/rewind.py alone (law: Locality is never broken)",
     ),
     "LOOP": (
         "BLOCK",
@@ -124,7 +124,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "OPERATION": (
         "BLOCK",
-        "a power, a shift, an exclusive or, or a floor division or remainder outside the carry's home (core/acts.py, core/rule3.py): the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 09:0x)",
+        "a power, a shift, an exclusive or, or a floor division or remainder outside the carry's home (core/acts.py, core/rule3.py, and tensor24/algebra/carry.py in the new engine): the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 09:0x)",
     ),
     "REFUSE": (
         "BLOCK",
@@ -144,7 +144,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "ISOLATE": (
         "BLOCK",
-        "an import that crosses the new engine's folders: the decoder and the record import the standard library and the record alone (no numpy, no engine, no runner), the engine imports neither the decoder nor the runner nor the current engine, the runner neither the decoder nor the engine nor the current engine (the step is passed in); a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
+        "an import that crosses the new engine's folders (the architect's table, eaf07f596; the standard library is always allowed): algebra imports algebra alone (no numpy), engine algebra, record and numpy, record the record alone (no numpy), readings algebra, record and readings (no numpy), runner algebra, readings, record and numpy (never the engine or the decoder: the step is passed in), decoder algebra, readings and record (never the engine, the runner or numpy), tensor24/main.py the engine and the runner alone; nothing imports the current engine; a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
     ),
     "BRANCH": (
         "BLOCK",
@@ -157,6 +157,10 @@ RULES: dict[str, tuple[str, str]] = {
     "BOUND": (
         "WARN",
         "a name that holds a floor, a bound, a clamp or a cap (floor, ceiling, cap, clamp, clip, limit, bound, saturate): no act, tool or reading of the system holds one (law: A floor or a bound is an if, and the Node-clock has none); a reader may name one to report; read each note (the count per file may not rise)",
+    ),
+    "ALLOW": (
+        "BLOCK",
+        "not on the Node-clock's closed list: its only operations are addition, multiplication and Rule3's carry, on whole numbers (the owner's idea of 2026-10-28, 15:0x UTC; law: The Node-clock is one act; The Node-clock and the Mesh are generic; there is no if), so a construct, an operator, a call or an array not made with dtype=object that the list does not name is refused in algebra/, engine/ and readings/; the architect's additions go through Sofer by a ledger entry that names the law line each serves (the count per file may not rise)",
     ),
 }
 
@@ -197,24 +201,36 @@ ITERATING_MODULES = {
     "functools": frozenset({"reduce"}),
 }  # a loop under a function's name (the comprehension rule's dodges)
 ITERATING_NUMPY = frozenset("vectorize apply_along_axis apply_over_axes fromfunction frompyfunc".split())
-NEW_ENGINE = "tensor24"  # the new engine's package under src (Tensor24's section 31): four folders, each gated by its own rules
+NEW_ENGINE = "tensor24"  # the new engine's package under src (Tensor24's section 31): five folders and main.py, each gated by its own rules
 STRICT = (
+    NEW_ENGINE + "/algebra/",
     NEW_ENGINE + "/engine/",
     NEW_ENGINE + "/record/",
     NEW_ENGINE + "/readings/",
 )  # a note of PROMOTED is a refusal here: it starts at 0 and stays
 PROMOTED = frozenset({"MEMO"})
-READER_FOLDERS = (
-    NEW_ENGINE + "/runner/",
-    NEW_ENGINE + "/decoder/",
-)  # the readers' exemptions, by folder
+RUNNER = NEW_ENGINE + "/runner/"
+REWIND = RUNNER + "rewind.py"  # the rewind check: the one module of the runner that reads the undo log
 DECODER = NEW_ENGINE + "/decoder/"
 DECODER_KEEPS = frozenset(
     {"OPERATION", "REFUSE", "CLAMP"}
 )  # the rules the decoder keeps and the runner is spared (Animate's stricter set, the Boss's yes of 2026-10-28, 11:24 UTC)
+# main.py: about 15 lines that pass the engine's functions into the runner, the one place that imports both; it is spared no rule
+# (the architect's table, eaf07f596: refused, every rule but the imports), so it holds no loop, branch, comparison or number
+MAIN = NEW_ENGINE + "/main.py"
 CARRY_HOME = frozenset(
-    {"core/acts.py", "core/rule3.py", NEW_ENGINE + "/engine/carry.py"}
-)  # where Rule3's division and remainder are written
+    {"core/acts.py", "core/rule3.py", NEW_ENGINE + "/algebra/carry.py"}
+)  # where Rule3's division and remainder are written (the architect's design, approved at eaf07f596: algebra/carry.py alone in the new engine)
+WALLS = {
+    "algebra": {"algebra"},
+    "engine": {"algebra", "engine", "record"},
+    "record": {"record"},
+    "readings": {"algebra", "readings", "record"},
+    "runner": {"algebra", "readings", "record", "runner"},
+    "decoder": {"algebra", "decoder", "readings", "record"},
+    "main.py": {"engine", "runner"},
+}  # the new engine's folders each may import (the standard library always); the architect's table, section 4 (eaf07f596)
+NUMPY_FOLDERS = frozenset({"engine", "runner"})  # the folders that may import numpy
 COMPARE_CALLS = frozenset(
     "lt le gt ge less greater less_equal greater_equal sorted sort argsort lexsort partition searchsorted isclose "
     "bisect bisect_left bisect_right insort heappush heappop nlargest nsmallest".split()
@@ -223,6 +239,42 @@ NEEDS_DTYPE_NEW = frozenset(
     "array asarray arange fromiter".split()
 )  # an array of Python integers needs its dtype, in the new engine
 NEEDS_DTYPE = frozenset("zeros ones empty full eye identity linspace".split())
+# The closed list (the owner's idea of 2026-10-28, 15:0x UTC: say what a Node-clock may do, and what is not named is refused; the law:
+# its only operations are addition, multiplication and Rule3's carry, on whole numbers). It holds in the folders below, which carry the
+# Node-clock's acts and the readings' formulas; the architect's additions go through Sofer by a ledger entry naming the law line each serves.
+CLOSED = (NEW_ENGINE + "/algebra/", NEW_ENGINE + "/engine/", NEW_ENGINE + "/readings/")
+# a sum and a product (a difference is the sum of the opposite), Rule3's quotient and remainder in the carry's home alone
+ALLOW_BINARY = (ast.Add, ast.Sub, ast.Mult, ast.MatMult)
+ALLOW_CARRY = (ast.FloorDiv, ast.Mod)
+ALLOW_UNARY = (ast.USub, ast.UAdd)
+ALLOW_NUMPY = frozenset(
+    "einsum tensordot matmul dot sum add subtract multiply negative take take_along_axis roll moveaxis swapaxes transpose "
+    "reshape stack concatenate broadcast_to expand_dims squeeze zeros ones zeros_like ones_like full full_like array asarray "
+    "arange eye identity diag trace outer kron tile repeat flip".split()
+)  # the tensor vocabulary: a sum, a product, a gather, a shape; any other call of numpy is refused
+# what an array may be asked to do, what it tells of itself, and the keywords of a call of numpy or of an array's method
+ALLOW_METHODS = frozenset("reshape transpose astype copy take sum swapaxes".split())
+ALLOW_ATTRIBUTES = frozenset("shape ndim T dtype size".split())
+ALLOW_KEYWORDS = frozenset("axis axes dtype keepdims".split())
+CONSTRUCTORS = frozenset(
+    "zeros ones full eye identity zeros_like ones_like full_like array asarray arange".split()
+)  # the calls that make an array: each takes dtype=object (Python integers, whatever their width), the architect's rule
+RECORD_BASES = frozenset("NamedTuple TypedDict Protocol".split())  # a class stands as a record alone
+# what a call may name by import
+SIBLINGS = tuple(NEW_ENGINE + "." + folder for folder in ("algebra", "engine", "readings", "record"))
+SYMBOLS = {
+    ast.Div: "/",
+    ast.FloorDiv: "//",
+    ast.Mod: "%",
+    ast.Pow: "**",
+    ast.LShift: "<<",
+    ast.RShift: ">>",
+    ast.BitAnd: "&",
+    ast.BitOr: "|",
+    ast.BitXor: "^",
+    ast.Not: "not",
+    ast.Invert: "~",
+}
 CIRCULAR_WORDS = frozenset(
     "cos sin tan cosine sine tangent arccos arcsin arctan atan atan2 acos asin theta angle angles radian radians degree "
     "degrees circle circles circular quaternion quaternions trig trigonometric sinusoid sinusoidal tsirelson lorentz "
@@ -249,7 +301,9 @@ def exempt(rel: str, rule: str) -> bool:
         return True
     if rel.startswith(DECODER):
         return rule not in DECODER_KEEPS
-    return rel.startswith(READER_FOLDERS)
+    if rel.startswith(RUNNER):
+        return rule != "LOGREAD" or rel == REWIND  # the undo log is read by the rewind check alone
+    return False
 
 
 def reduction(rel: str, name: str, node: ast.Call) -> bool:
@@ -396,24 +450,326 @@ def import_ok(rel: str, name: str) -> bool:
     """Whether a module of the new engine may import `name` (the folders' walls; other modules import freely)."""
     top = name.split(".")[0]
     own = NEW_ENGINE + "."
-    if rel.startswith(DECODER):
+    if not rel.startswith(NEW_ENGINE + "/"):
+        return True
+    folder = rel.split("/")[1]
+    if folder not in WALLS:
+        return True
+    if top in sys.stdlib_module_names:
+        return True
+    if top == "numpy":
+        return folder in NUMPY_FOLDERS
+    return any(name == own + inside or name.startswith(own + inside + ".") for inside in WALLS[folder])
+
+
+def root_of(node: ast.AST) -> str:
+    """The name at the root of a dotted expression (np in np.linalg.norm); '' where there is none."""
+    while isinstance(node, ast.Attribute):
+        node = node.value
+    return node.id if isinstance(node, ast.Name) else ""
+
+
+def last_name(node: ast.AST) -> str:
+    """The last name of a dotted or subscripted expression (NamedTuple in typing.NamedTuple, Protocol in Protocol[T])."""
+    if isinstance(node, ast.Subscript):
+        return last_name(node.value)
+    return (
+        node.id if isinstance(node, ast.Name) else node.attr if isinstance(node, ast.Attribute) else ""
+    )
+
+
+def is_object(node: ast.AST) -> bool:
+    """The Name object: the dtype of Python integers of any width."""
+    return isinstance(node, ast.Name) and node.id == "object"
+
+
+def frozen_record(decorator: ast.AST) -> bool:
+    """@dataclass(frozen=True): a record that cannot be written after it is made."""
+    return (
+        isinstance(decorator, ast.Call)
+        and callee_name(decorator) == "dataclass"
+        and any(
+            k.arg == "frozen" and isinstance(k.value, ast.Constant) and k.value.value is True
+            for k in decorator.keywords
+        )
+    )
+
+
+def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
+    """What the Node-clock's closed list does not name, in a module of engine/ or readings/: (node, detail), one hit to a refused
+    construct (its parts are not read inside it) and a node class that nobody listed refused by default; an annotation is no code."""
+    parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+    numpy: set[str] = set(NUMPY_NAMES)
+    # known: the functions and classes of the module, and what numpy's tensor vocabulary was imported by name (imported: to its own
+    # name); siblings: the names the engine's own folders were imported by; skipped: the annotations, the decorators and the parts
+    # that a refusal already names
+    known: set[str] = set()
+    imported: dict[str, str] = {}
+    siblings: set[str] = set()
+    skipped: set[ast.AST] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef | ast.ClassDef):
+            known.add(node.name)
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                if alias.name == "numpy":
+                    numpy.add(alias.asname or alias.name)
+                elif alias.name.startswith(NEW_ENGINE + "."):
+                    siblings.add(alias.asname or NEW_ENGINE)
+        elif isinstance(node, ast.ImportFrom):
+            for full, alias in zip(imported_names(rel, node), node.names, strict=True):
+                if any(full == folder or full.startswith(folder + ".") for folder in SIBLINGS):
+                    siblings.add(alias.asname or alias.name)
+                elif (
+                    node.level == 0
+                    and (node.module or "").split(".")[0] == "numpy"
+                    and alias.name in ALLOW_NUMPY
+                ):
+                    known.add(alias.asname or alias.name)
+                    imported[alias.asname or alias.name] = alias.name
+        for annotation in (
+            [node.returns]
+            if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef)
+            else [node.annotation]
+            if isinstance(node, ast.arg | ast.AnnAssign)
+            else []
+        ):
+            if annotation is not None:
+                skipped.update(ast.walk(annotation))
+    found: list[tuple[ast.AST, str]] = []
+
+    def docstring(node: ast.AST) -> bool:
         return (
-            top in sys.stdlib_module_names
-            or name in (NEW_ENGINE + ".record", NEW_ENGINE + ".readings")
-            or name.startswith((own + "record.", own + "readings.", own + "decoder"))
+            isinstance(node, ast.Expr)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
         )
-    if rel.startswith(NEW_ENGINE + "/record/"):
-        return top in sys.stdlib_module_names or name.startswith(own + "record")
-    if rel.startswith(NEW_ENGINE + "/readings/"):
-        return top in sys.stdlib_module_names or name.startswith((own + "record", own + "readings"))
-    if rel.startswith(NEW_ENGINE + "/engine/"):
-        return not (
-            name.startswith((own + "decoder", own + "runner", own + "readings"))
-            or top == "event_universe"
+
+    def target_ok(target: ast.AST) -> bool:
+        return (
+            isinstance(target, ast.Name)
+            or (isinstance(target, ast.Tuple) and all(isinstance(e, ast.Name) for e in target.elts))
+            or (isinstance(target, ast.Subscript) and isinstance(target.value, ast.Name))
         )
-    if rel.startswith(NEW_ENGINE + "/runner/"):
-        return not (name.startswith((own + "decoder", own + "engine")) or top == "event_universe")
-    return True
+
+    def is_scatter(call: ast.Call) -> bool:
+        """np.add.at(out, index, values) as a statement of its own: the scattered sum of a contraction, addition at the receiving site,
+        order-free because addition is associative; the one write into an array that the list names."""
+        func = call.func
+        return (
+            isinstance(func, ast.Attribute)
+            and func.attr == "at"
+            and isinstance(func.value, ast.Attribute)
+            and func.value.attr == "add"
+            and isinstance(func.value.value, ast.Name)
+            and func.value.value.id in numpy
+            and isinstance(parents.get(call), ast.Expr)
+            and len(call.args) == 3
+            and isinstance(call.args[0], ast.Name)
+            and not call.keywords
+        )
+
+    def callee(call: ast.Call) -> tuple[str, bool]:
+        """The detail a call is refused for ('' where the list names its callee), and whether numpy or an array's method is called."""
+        func = call.func
+        if isinstance(func, ast.Name):
+            return ("" if func.id in known | siblings else f"call {func.id}"), False
+        if isinstance(func, ast.Attribute):
+            root = root_of(func)
+            if root in numpy:
+                ok = is_scatter(call) or (isinstance(func.value, ast.Name) and func.attr in ALLOW_NUMPY)
+                return ("" if ok else f"call {ast.unparse(func)}"), True
+            if root in siblings:
+                return "", False
+            return ("" if func.attr in ALLOW_METHODS else f"call .{func.attr}"), True
+        return "call of an expression", False
+
+    def judge(node: ast.AST) -> tuple[list[str], bool]:
+        """The details the list refuses in one node, and whether the node is read inside."""
+        if isinstance(
+            node,
+            ast.expr_context
+            | ast.operator
+            | ast.unaryop
+            | ast.Module
+            | ast.Return
+            | ast.Pass
+            | ast.Import
+            | ast.alias
+            | ast.arguments
+            | ast.arg
+            | ast.Name
+            | ast.Tuple
+            | ast.Subscript
+            | ast.Slice,
+        ):
+            return [], True
+        if isinstance(node, ast.ImportFrom):
+            numpy_import = node.level == 0 and (node.module or "").split(".")[0] == "numpy"
+            return [
+                "import *" if alias.name == "*" else f"numpy.{alias.name}"
+                for alias in node.names
+                if alias.name == "*" or (numpy_import and alias.name not in ALLOW_NUMPY)
+            ], True
+        if isinstance(node, ast.FunctionDef):
+            args, problems = node.args, []
+            if node.decorator_list:
+                problems.append("decorator")
+                for decorator in node.decorator_list:
+                    skipped.update(ast.walk(decorator))
+            for present, detail in (
+                (args.vararg, "*args"),
+                (args.kwarg, "**kwargs"),
+                (args.posonlyargs, "positional-only parameter"),
+                (args.kwonlyargs, "keyword-only parameter"),
+            ):
+                if present:
+                    problems.append(detail)
+            for default in [*args.defaults, *(d for d in args.kw_defaults if d is not None)]:
+                if not (
+                    isinstance(default, ast.Name)
+                    or (isinstance(default, ast.Constant) and (default.value is None or is_bit(default)))
+                ):
+                    problems.append("default " + type(default).__name__)
+                    skipped.update(ast.walk(default))
+            return problems, True
+        if isinstance(node, ast.ClassDef):
+            clean = (
+                any(frozen_record(d) for d in node.decorator_list)
+                or any(last_name(b) in RECORD_BASES for b in node.bases)
+            ) and (
+                all(frozen_record(d) for d in node.decorator_list)
+                and all(last_name(b) in RECORD_BASES for b in node.bases)
+                and not node.keywords
+            )
+            problems = [] if clean else ["class"]
+            for part in [*node.decorator_list, *node.bases, *node.keywords]:
+                skipped.update(ast.walk(part))
+            if not clean:
+                return problems, False
+            for stmt in node.body:
+                record = (
+                    isinstance(stmt, ast.Pass)
+                    or docstring(stmt)
+                    or (isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name))
+                )
+                if not record:
+                    problems.append("class body " + type(stmt).__name__)
+                    skipped.update(ast.walk(stmt))
+            return problems, True
+        if isinstance(node, ast.Assign):
+            problems = []
+            for target in node.targets:
+                if not target_ok(target):
+                    problems.append("assign to " + type(target).__name__)
+                    skipped.update(ast.walk(target))
+            return problems, True
+        if isinstance(node, ast.AnnAssign):
+            if isinstance(node.target, ast.Name):
+                return [], True
+            skipped.update(ast.walk(node.target))
+            return ["assign to " + type(node.target).__name__], True
+        if isinstance(node, ast.Expr):
+            if docstring(node):
+                return [], False
+            if isinstance(node.value, ast.Call) and is_scatter(node.value):
+                return [], True  # np.add.at(out, index, values): the call is judged beside it
+            return ["expression statement " + type(node.value).__name__], False
+        if isinstance(node, ast.If):
+            guard = (
+                isinstance(node.test, ast.Name) and node.test.id == "TYPE_CHECKING" and not node.orelse
+            )
+            return ([], True) if guard else (["If"], False)
+        if isinstance(node, ast.Constant):
+            value, above = node.value, parents.get(node)
+            allowed = (
+                value is None
+                or value is Ellipsis
+                or (type(value) is bool and isinstance(above, ast.keyword))
+                or (type(value) is int and value in (0, 1))
+                or (
+                    isinstance(value, str)
+                    and isinstance(above, ast.Call)
+                    and callee_name(above) == "einsum"
+                    and bool(above.args)
+                    and above.args[0] is node
+                )
+            )
+            return ([] if allowed else [f"constant {value!r:.24}"]), False
+        if isinstance(node, ast.Attribute):
+            root = root_of(node)
+            allowed = (
+                (node.attr in ALLOW_ATTRIBUTES and isinstance(node.ctx, ast.Load))
+                or root in siblings
+                or (root in numpy and isinstance(node.value, ast.Name) and node.attr in ALLOW_NUMPY)
+            )
+            detail = f"attribute {ast.unparse(node)}" if root in numpy else f"attribute .{node.attr}"
+            return ([] if allowed else [detail]), True
+        if isinstance(node, ast.Call):
+            detail, tensor = callee(node)
+            problems = [detail] if detail else []
+            func = node.func
+            made = (
+                imported.get(func.id, "")
+                if isinstance(func, ast.Name)
+                else func.attr
+                if isinstance(func, ast.Attribute)
+                and root_of(func) in numpy
+                and isinstance(func.value, ast.Name)
+                else ""
+            )
+            objects = any(k.arg == "dtype" and is_object(k.value) for k in node.keywords)
+            if made in CONSTRUCTORS and not any(k.arg == "dtype" for k in node.keywords):
+                problems.append(f"np.{made} without dtype=object")
+            if (
+                isinstance(func, ast.Attribute)
+                and func.attr == "astype"
+                and not (objects or (node.args and is_object(node.args[0])))
+            ):
+                problems.append("astype without object")
+            for keyword_ in node.keywords:
+                if keyword_.arg is None:
+                    problems.append("**kwargs in a call")
+                elif tensor and keyword_.arg not in ALLOW_KEYWORDS:
+                    problems.append(f"keyword {keyword_.arg}")
+                elif keyword_.arg == "dtype" and not is_object(keyword_.value):
+                    problems.append("dtype other than object")
+            return problems, True
+        if isinstance(node, ast.UnaryOp):
+            allowed = isinstance(node.op, ALLOW_UNARY)
+            return ([] if allowed else [f"UnaryOp {SYMBOLS.get(type(node.op), '?')}"]), allowed
+        if isinstance(node, ast.BinOp):
+            allowed = isinstance(node.op, ALLOW_BINARY) or (
+                isinstance(node.op, ALLOW_CARRY) and rel in CARRY_HOME
+            )
+            return ([] if allowed else [f"BinOp {SYMBOLS.get(type(node.op), '?')}"]), allowed
+        return [type(node).__name__], False  # a node class nobody listed
+
+    def children(node: ast.AST) -> Iterator[ast.AST]:
+        if isinstance(node, ast.Call):
+            func = node.func
+            if isinstance(func, ast.Attribute):
+                if (
+                    root_of(func) not in numpy | siblings
+                ):  # a module's dotted path is judged with the call
+                    yield func.value
+            elif not isinstance(func, ast.Name):
+                yield func
+            yield from node.args
+            yield from (k.value for k in node.keywords)
+        else:
+            yield from ast.iter_child_nodes(node)
+
+    def visit(node: ast.AST) -> None:
+        problems, inside = judge(node)
+        found.extend((node, detail) for detail in problems)
+        if inside:
+            for child in children(node):
+                if child not in skipped:
+                    visit(child)
+
+    visit(tree)
+    return found
 
 
 def scan(rel: str, source: str) -> list[Hit]:
@@ -711,6 +1067,10 @@ def scan(rel: str, source: str) -> list[Hit]:
             if isinstance(node, ast.Tuple) and not indexing and len(node.elts) >= 3:
                 if all(products(e) >= 2 and sums(e) for e in node.elts):
                     add("MIX", node, f"{len(node.elts)} bilinear sums")
+
+    if rel.startswith(CLOSED):
+        for node, detail in closed_list(tree, rel):
+            add("ALLOW", node, detail)
 
     try:
         for token in tokenize.generate_tokens(io.StringIO(source).readline):

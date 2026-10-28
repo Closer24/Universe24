@@ -26,11 +26,16 @@ CARRY = "core/acts.py"
 READER = "run.py"
 TESTS = "tests/test_step.py"
 NEW_STEP = "tensor24/engine/step.py"
-NEW_CARRY = "tensor24/engine/carry.py"
+NEW_CARRY = "tensor24/algebra/carry.py"
+OLD_CARRY = "tensor24/engine/carry.py"
+NEW_RING = "tensor24/algebra/ring.py"
+NEW_MAIN = "tensor24/main.py"
+NEW_REWIND = "tensor24/runner/rewind.py"
 NEW_RECORD = "tensor24/record/schema.py"
 NEW_RUNNER = "tensor24/runner/loop.py"
 NEW_DECODER = "tensor24/decoder/rows.py"
 NEW_READING = "tensor24/readings/wind.py"
+NEW_MESH = "tensor24/engine/mesh.py"
 
 CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a for loop", ENGINE, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
@@ -266,7 +271,7 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     (
         "the engine imports numpy and the record",
         NEW_STEP,
-        "import numpy as np\nfrom tensor24.record import Row\nfrom .carry import carry\n",
+        "import numpy as np\nfrom tensor24.record import Row\nfrom tensor24.algebra.carry import carry\n",
         {},
     ),
     (
@@ -357,7 +362,7 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     (
         "an array with its dtype in the new engine",
         NEW_STEP,
-        "import numpy as np\n\nX = np.array([1], dtype=object)\n",
+        "import numpy as np\n\n\ndef f(a):\n    return np.array(a, dtype=object)\n",
         {},
     ),
     (
@@ -548,7 +553,12 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
         "def f(a, b, c):\n    return a // (b * c + 1)\n",
         {},
     ),
-    ("a carry of two numbers", NEW_CARRY, "def f(carries, a, b):\n    return carries(a, b)\n", {}),
+    (
+        "a carry of two numbers",
+        NEW_CARRY,
+        "def carries(a, b):\n    return a // b\n\n\ndef f(a, b):\n    return carries(a, b)\n",
+        {},
+    ),
     (
         "an indicator in a reader",
         READER,
@@ -577,13 +587,354 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     (
         "words that only contain one",
         NEW_STEP,
-        "def f(a):\n    return a.capacity + a.boundary + a.flooring\n",
+        "def f(capacity, boundary, flooring):\n    return capacity + boundary + flooring\n",
         {},
     ),
-    ("a floor in a string", NEW_STEP, "X = 'the floor'\n", {}),
+    ("a floor in a docstring", NEW_STEP, 'def f(a):\n    """the floor"""\n    return a\n', {}),
     ("a floor in a reader", READER, "def f(a):\n    return a.floor\n", {}),
     ("a floor in the decoder", NEW_DECODER, "def f(a):\n    return a.floor\n", {}),
     ("a floor in the runner", NEW_RUNNER, "def f(a):\n    return a.floor\n", {}),
+]
+
+
+# The closed list (the owner's idea of 2026-10-28, 15:0x UTC: say what a Node-clock may do, and what is not named is refused; the
+# law: its only operations are addition, multiplication and Rule3's carry, on whole numbers). In the new engine's engine/ and
+# readings/ a snippet that holds anything the list does not name gives a hit of ALLOW, and the same snippet gives none in the
+# record, the runner, the decoder and the current engine (main() runs each snippet there too).
+def fn(body: str, args: str = "a") -> str:
+    """A module of one function f of `args`, its body the lines given."""
+    return f"def f({args}):\n" + "".join(f"    {line}\n" for line in body.split("\n"))
+
+
+NP = "import numpy as np\n\n\n"
+LAWFUL_MESH = (
+    "import numpy as np\n"
+    "from .carry import carry\n\n\n"
+    "def across(f, nb):\n"
+    '    """The six Spokes at once: the stencil is one gather."""\n'
+    "    return np.take(f, nb, axis=1)\n\n\n"
+    "def link(ends, nb, coupling):\n"
+    "    six = across(ends, nb)\n"
+    '    pulled = np.einsum("gs,gns->gn", coupling, six)\n'
+    "    shifted = np.roll(pulled, 1, axis=0)\n"
+    "    quotient, remainder = carry(pulled, shifted)\n"
+    "    return pulled * shifted + quotient, shifted - remainder\n"
+)
+
+
+def refused(label: str, source: str, allow: int = 1) -> tuple[str, str, str, dict[str, int]]:
+    """A snippet that the closed list refuses `allow` times in the new engine's engine/ (the older rules may stand beside it)."""
+    return (label, NEW_STEP, source, {"ALLOW": allow})
+
+
+CASES += [
+    # what the list names passes, with no hit of any rule
+    (
+        "a lawful Mesh act: a gather, a contraction, a roll, a carry, sums and products",
+        NEW_MESH,
+        LAWFUL_MESH,
+        {},
+    ),
+    (
+        "a lawful reading: an array's sum, its transpose, a keyword",
+        NEW_READING,
+        fn("return a.sum(axis=0) * a.T.sum(axis=1)"),
+        {},
+    ),
+    (
+        "an array's methods, a subscript, a slice and a negative one",
+        NEW_STEP,
+        fn("return a.reshape(b).T.sum(axis=0) + a[..., 1:] - a[..., :-1]", "a, b"),
+        {},
+    ),
+    (
+        "a record: a frozen dataclass",
+        NEW_STEP,
+        "from dataclasses import dataclass\n\n\n@dataclass(frozen=True)\nclass Layout:\n    nb: object\n    width: int = 1\n",
+        {},
+    ),
+    (
+        "a record: a named tuple",
+        NEW_STEP,
+        "from typing import NamedTuple\n\n\nclass Row(NamedTuple):\n    tick: int\n    site: int\n",
+        {},
+    ),
+    (
+        "an annotation is no code",
+        NEW_STEP,
+        "def f(a: int | None, b: 'tuple[int, ...]' = None) -> tuple[int, int]:\n    return a, b\n",
+        {},
+    ),
+    (
+        "a type-checking guard",
+        NEW_STEP,
+        "from typing import TYPE_CHECKING\n\nif TYPE_CHECKING:\n    from .carry import carry\n",
+        {},
+    ),
+    (
+        "einsum imported by name, and its subscripts",
+        NEW_STEP,
+        "from numpy import einsum\n\n\ndef f(a, b):\n    return einsum('a,a->a', a, b)\n",
+        {},
+    ),
+    (
+        "a function of the engine's own: a default 1 and a free keyword",
+        NEW_STEP,
+        "def g(a, going=1):\n    return a\n\n\ndef f(a):\n    return g(a, going=0)\n",
+        {},
+    ),
+    ("True as a keyword's value", NEW_STEP, NP + fn("return np.sum(a, axis=0, keepdims=True)"), {}),
+    ("a matrix product", NEW_STEP, fn("return a @ b + a * b - b", "a, b"), {}),
+    # the statements and the expressions that are not on the list
+    refused("an if", fn("if a:\n    return a\nreturn a")),
+    refused("a conditional expression", fn("return a if a else a")),
+    refused("a match", fn("match a:\n    case _:\n        return a")),
+    refused("a for", fn("for x in a:\n    pass")),
+    refused("a while", fn("while a:\n    a = 0")),
+    refused("a list comprehension", fn("return [x for x in a]")),
+    refused("a set comprehension", fn("return {x for x in a}")),
+    refused("a dict comprehension", fn("return {x: x for x in a}")),
+    refused("a generator", fn("return (x for x in a)")),
+    refused("a lambda", fn("return lambda b: b")),
+    refused("a try", fn("try:\n    return a\nexcept ValueError:\n    return a")),
+    refused("a raise", fn("raise ValueError(a)")),
+    refused("an assert", fn("assert a")),
+    refused("a with", fn("with a:\n    pass")),
+    refused("a delete", fn("del a")),
+    refused("a global", "X = 1\n\n\ndef f():\n    global X\n    X = 0\n"),
+    refused(
+        "a nonlocal",
+        "def f():\n    a = 0\n\n    def g():\n        nonlocal a\n        a = 1\n\n    return g\n",
+    ),
+    refused("a yield", fn("yield a")),
+    refused("an async def with an await", "async def f(a):\n    return await a\n"),
+    refused("a walrus", fn("return (b := a)")),
+    refused("an f-string", fn('return f"{a}"')),
+    refused("an ordering comparison", fn("return a < b", "a, b")),
+    refused("an equality", fn("return a == b", "a, b")),
+    refused("an inequality", fn("return a != b", "a, b")),
+    refused("an identity test", fn("return a is b", "a, b")),
+    refused("a membership test", fn("return a in b", "a, b")),
+    refused("an and", fn("return a and b", "a, b")),
+    refused("an or", fn("return a or b", "a, b")),
+    refused("a not", fn("return not a")),
+    refused("an invert", fn("return ~a")),
+    refused("a true division", fn("return a / b", "a, b")),
+    refused("a power", fn("return a ** b", "a, b")),
+    refused("a left shift", fn("return a << b", "a, b")),
+    refused("a right shift", fn("return a >> b", "a, b")),
+    refused("a bit and", fn("return a & b", "a, b")),
+    refused("a bit or", fn("return a | b", "a, b")),
+    refused("an exclusive or", fn("return a ^ b", "a, b")),
+    refused("a list display", fn("return [a]")),
+    refused("a set display", fn("return {a}")),
+    refused("a dict display", fn("return {a: a}")),
+    refused("a star in a call", "def g(a):\n    return a\n\n\ndef f(a):\n    return g(*a)\n"),
+    refused("an augmented assignment", fn("a += 1\nreturn a")),
+    refused("a decorator", "def decorate(g):\n    return g\n\n\n@decorate\ndef f(a):\n    return a\n"),
+    refused("a star parameter", "def f(*a):\n    return a\n"),
+    refused("a double star parameter", "def f(**a):\n    return a\n"),
+    refused("a positional-only parameter", "def f(a, /):\n    return a\n"),
+    refused("a keyword-only parameter", "def f(a, *, b):\n    return a\n"),
+    refused("a default that is no name, 0, 1 or None", "def f(a, b=a + 1):\n    return a\n"),
+    refused("a class that is no record", "class C:\n    x = 1\n"),
+    refused(
+        "a dataclass that is not frozen",
+        "from dataclasses import dataclass\n\n\n@dataclass\nclass C:\n    x: int\n",
+    ),
+    refused(
+        "a record with a method",
+        "from typing import NamedTuple\n\n\nclass R(NamedTuple):\n    a: int\n\n    def total(self):\n        return self.a\n",
+    ),
+    refused("an assignment to an attribute", fn("a.x = 1")),
+    refused("an assignment to a nested tuple", fn("(a, (b, c)) = a")),
+    refused("an import of everything", "from numpy import *\n"),
+    refused("a name of numpy that is off the list", "from numpy import sort\n"),
+    refused("a number beyond 0 and 1", "X = 5\n"),
+    refused("a float", "X = 0.5\n"),
+    refused("a string that is no docstring", 'X = "abc"\n'),
+    refused("a bare True", "X = True\n"),
+    refused("an expression statement", fn("print(a)")),
+    refused("an attribute off the list", fn("return a.real")),
+    # the calls that are not on the list (sorted, the clamps, the comparisons under a name, a loop under a name)
+    refused("a call of sorted", fn("return sorted(a)")),
+    refused("a call of min", fn("return min(a, b)", "a, b")),
+    refused("a call of max", fn("return max(a, b)", "a, b")),
+    refused("a call of np.where", NP + fn("return np.where(a, b, b)", "a, b")),
+    refused("a call of np.sign", NP + fn("return np.sign(a)")),
+    refused("a call of np.argsort", NP + fn("return np.argsort(a)")),
+    refused("a call of np.fromfunction", NP + fn("return np.fromfunction(a, b)", "a, b")),
+    refused("a call of len", fn("return len(a)")),
+    refused("a call of int", fn("return int(a)")),
+    refused("a call of a parameter", fn("return g(a)", "g, a")),
+    refused("a method off the list", fn("return a.sort()")),
+    refused("a call of np.linalg.norm", NP + fn("return np.linalg.norm(a)")),
+    refused("a call of np.add.at", NP + fn("return np.add.at(a, b, a)", "a, b")),
+    refused("a call of an expression", "def g(a):\n    return a\n\n\ndef f(a):\n    return g(a)(a)\n"),
+    refused("a keyword off the tensor four", NP + fn("return np.sum(a, out=a)")),
+    refused("a double star in a call", "def g(a):\n    return a\n\n\ndef f(a):\n    return g(**a)\n"),
+    refused("a string in a call that is no einsum's", fn('return g("a", a)', "g, a"), 2),
+    # Rule3's floor division and remainder stand in the carry's home alone
+    (
+        "a floor division and a remainder elsewhere in the engine",
+        NEW_MESH,
+        fn("return a // b, a % b", "a, b"),
+        {"ALLOW": 2, "OPERATION": 2},
+    ),
+    (
+        "a floor division and a remainder in the readings",
+        NEW_READING,
+        fn("return a // b, a % b", "a, b"),
+        {"ALLOW": 2, "OPERATION": 2},
+    ),
+    # the masks (and, or, not, &, |, ~) were counted nowhere: the engine and the readings refuse them, the readers still use them
+    (
+        "the masks in the new engine",
+        NEW_STEP,
+        fn("return (a and b), (a or b), (not a), (a & b), (a | b), (~a)", "a, b"),
+        {"ALLOW": 6},
+    ),
+    (
+        "the masks in the readings",
+        NEW_READING,
+        fn("return (a and b), (a or b), (not a), (a & b), (a | b), (~a)", "a, b"),
+        {"ALLOW": 6},
+    ),
+    (
+        "the masks in the runner",
+        NEW_RUNNER,
+        fn("return (a and b), (a or b), (not a), (a & b), (a | b), (~a)", "a, b"),
+        {},
+    ),
+    (
+        "the masks in the decoder",
+        NEW_DECODER,
+        fn("return (a and b), (a or b), (not a), (a & b), (a | b), (~a)", "a, b"),
+        {},
+    ),
+    (
+        "the masks in the current engine",
+        "tick.py",
+        fn("return (a and b), (a or b), (not a), (a & b), (a | b), (~a)", "a, b"),
+        {},
+    ),
+]
+
+CASES += [
+    # the carry's home (the architect's design, eaf07f596): Rule3's // and % stand in algebra/carry.py alone
+    (
+        "a floor division and a remainder in the new carry's home",
+        NEW_CARRY,
+        fn("return a // b, a % b", "a, b"),
+        {},
+    ),
+    (
+        "a floor division and a remainder in the ring",
+        NEW_RING,
+        fn("return a // b, a % b", "a, b"),
+        {"ALLOW": 2, "OPERATION": 2},
+    ),
+    (
+        "a floor division and a remainder in the old carry's home",
+        OLD_CARRY,
+        fn("return a // b, a % b", "a, b"),
+        {"ALLOW": 2, "OPERATION": 2},
+    ),
+    ("a floor division in the current engine's carry home", CARRY, fn("return a // b", "a, b"), {}),
+    # algebra/ is strict and under the closed list
+    ("a sum, a product and a pair in algebra", NEW_RING, fn("return a * b + a, a - b", "a, b"), {}),
+    ("a branch in algebra", NEW_RING, fn("if a:\n    return a\nreturn a"), {"BRANCH": 1, "ALLOW": 1}),
+    ("a loop in algebra", NEW_RING, fn("for x in a:\n    pass"), {"LOOP": 1, "ALLOW": 1}),
+    (
+        "an ordering comparison in algebra",
+        NEW_RING,
+        fn("return a < b", "a, b"),
+        {"COMPARE": 1, "ALLOW": 1},
+    ),
+    ("a clamp in algebra", NEW_RING, fn("return min(a, b)", "a, b"), {"CLAMP": 1, "ALLOW": 1}),
+    ("a raise in algebra", NEW_RING, fn("raise ValueError(a)"), {"REFUSE": 1, "ALLOW": 1}),
+    ("a number beyond 0 and 1 in algebra", NEW_RING, "X = 5\n", {"NUMBER": 1, "ALLOW": 1}),
+    # the scattered sum of a contraction: np.add.at(out, index, values) as a statement of its own, on an array the function made
+    (
+        "a lawful scatter-add: np.add.at on a fresh array, a statement of its own",
+        NEW_MESH,
+        NP
+        + "def scatter(rows, vals, shape):\n"
+        + "    out = np.zeros(shape, dtype=object)\n"
+        + "    np.add.at(out, rows, vals)\n"
+        + "    return out\n",
+        {},
+    ),
+    refused(
+        "a scatter-add whose result is used", NP + fn("x = np.add.at(a, b, c)\nreturn x", "a, b, c")
+    ),
+    refused("a scatter-add with two arguments", NP + fn("np.add.at(a, b)\nreturn a", "a, b")),
+    refused(
+        "a scatter-add with a keyword", NP + fn("np.add.at(a, b, c, dtype=object)\nreturn a", "a, b, c")
+    ),
+    refused("a scatter-add into an element", NP + fn("np.add.at(a[0], b, c)\nreturn a", "a, b, c")),
+    refused("another ufunc's at method", NP + fn("np.multiply.at(a, b, c)\nreturn a", "a, b, c")),
+    refused(
+        "a bare call statement of a function of the module",
+        NP + "def g(a):\n    return a\n\n\n" + fn("g(a)\nreturn a"),
+    ),
+    # main.py is spared no rule (the architect's table: every rule but the imports): it passes the engine's functions into the
+    # runner and holds no loop, branch, comparison, remainder or number
+    (
+        "a loop, a branch, a comparison and a remainder in main.py are refused",
+        NEW_MAIN,
+        fn("for x in a:\n    if x < a:\n        return x % a\nreturn a"),
+        {"LOOP": 1, "BRANCH": 1, "COMPARE": 1, "OPERATION": 1},
+    ),
+    (
+        "main.py imports the engine, the runner and the standard library",
+        NEW_MAIN,
+        "import json\nfrom tensor24.engine import step\nfrom tensor24.runner import loop\n",
+        {},
+    ),
+    ("a number in main.py", NEW_MAIN, "X = 5\n", {"NUMBER": 1}),
+    ("a float in main.py", NEW_MAIN, "X = 0.5\n", {"FLOAT": 1}),
+    ("a float import in main.py", NEW_MAIN, "import math\n", {"IMPORT": 1}),
+    ("a circle in main.py", NEW_MAIN, "def cosine_count(a):\n    return a\n", {"WORD": 1}),
+    ("a container in main.py", NEW_MAIN, "SEEN = {}\n", {"STATE": 1}),
+    (
+        "an array with no dtype in main.py",
+        NEW_MAIN,
+        "import numpy as np\n\nX = np.zeros(1)\n",
+        {"DTYPE": 1, "ISOLATE": 1},
+    ),
+    # the undo log is read by runner/rewind.py alone; the decoder reads the record; nothing else reads a log
+    ("the undo log in runner/rewind.py", NEW_REWIND, fn("return a.log"), {}),
+    ("the undo log elsewhere in the runner", NEW_RUNNER, fn("return a.log"), {"LOGREAD": 1}),
+    ("a log read in the engine", NEW_STEP, fn("return a.log"), {"LOGREAD": 1}),
+    ("a log read in algebra", NEW_RING, fn("return a.log"), {"LOGREAD": 1}),
+    ("a log read in the readings", NEW_READING, fn("return a.log"), {"LOGREAD": 1}),
+    ("a log read in the record", NEW_RECORD, fn("return a.log"), {"LOGREAD": 1}),
+    ("a loop in runner/rewind.py", NEW_REWIND, fn("for x in a:\n    pass"), {}),
+    # every array is made with dtype=object (Python integers, whatever their width): the architect's rule
+    ("an array made with dtype=object", NEW_STEP, NP + fn("return np.zeros(a, dtype=object)"), {}),
+    (
+        "an array made like another, with dtype=object",
+        NEW_STEP,
+        NP + fn("return np.zeros_like(a, dtype=object)"),
+        {},
+    ),
+    ("an array cast to object", NEW_STEP, fn("return a.astype(object)"), {}),
+    refused("np.zeros with no dtype", NP + fn("return np.zeros(a)")),
+    refused("np.zeros_like with no dtype", NP + fn("return np.zeros_like(a)")),
+    refused("np.full with no dtype", NP + fn("return np.full(a, 0)")),
+    refused("np.arange with no dtype", NP + fn("return np.arange(a)")),
+    refused("np.eye with no dtype", NP + fn("return np.eye(a)")),
+    refused("np.asarray with no dtype", NP + fn("return np.asarray(a)")),
+    refused("np.array with a dtype that is not object", NP + fn("return np.array(a, dtype=int)")),
+    refused(
+        "np.zeros by name with no dtype", "from numpy import zeros\n\n\ndef f(a):\n    return zeros(a)\n"
+    ),
+    refused("astype to something else", fn("return a.astype(int)")),
+    refused(
+        "a dtype that is not object on the engine's own call",
+        "def g(a, dtype=None):\n    return a\n\n\ndef f(a):\n    return g(a, dtype=int)\n",
+    ),
 ]
 
 # a branch and an ordering comparison are refusals in every engine module (Postulate 5); a cache is a refusal in the new engine's strict folders (engine, record, readings) and a note elsewhere
@@ -660,7 +1011,70 @@ TIERS: list[tuple[str, str, str, str, str]] = [
         "BOUND",
         "WARN",
     ),
+    (
+        "a cache in algebra",
+        NEW_RING,
+        "from functools import cache\n\n\n@cache\ndef f(a):\n    return a\n",
+        "MEMO",
+        "BLOCK",
+    ),
+    ("a comparison in algebra", NEW_RING, "def f(a, b):\n    return a < b\n", "COMPARE", "BLOCK"),
+    ("a branch in algebra", NEW_RING, "def f(a):\n    return a if a else a\n", "BRANCH", "BLOCK"),
+    (
+        "a construct off the closed list in algebra",
+        NEW_RING,
+        "def f(a):\n    return a & a\n",
+        "ALLOW",
+        "BLOCK",
+    ),
+    (
+        "a construct off the closed list in the new engine",
+        NEW_STEP,
+        "def f(a):\n    return a & a\n",
+        "ALLOW",
+        "BLOCK",
+    ),
+    (
+        "a construct off the closed list in the readings",
+        NEW_READING,
+        "def f(a):\n    return a & a\n",
+        "ALLOW",
+        "BLOCK",
+    ),
 ]
+
+
+IMPORTERS = {
+    "algebra": NEW_RING,
+    "engine": NEW_STEP,
+    "record": NEW_RECORD,
+    "readings": NEW_READING,
+    "runner": NEW_RUNNER,
+    "decoder": NEW_DECODER,
+    "main": NEW_MAIN,
+}
+IMPORTED = {
+    "stdlib": "import json\n",
+    "numpy": "import numpy as np\n",
+    "algebra": "from tensor24.algebra import carry\n",
+    "engine": "from tensor24.engine import step\n",
+    "record": "from tensor24.record import schema\n",
+    "readings": "from tensor24.readings import wind\n",
+    "runner": "from tensor24.runner import loop\n",
+    "decoder": "from tensor24.decoder import rows\n",
+    "current engine": "from event_universe import clock\n",
+    "main": "from tensor24 import main\n",
+}
+# the architect's table: what each folder may import besides the standard library (and numpy, where it is named)
+MAY_IMPORT = {
+    "algebra": {"algebra"},
+    "engine": {"algebra", "record", "engine"},
+    "record": {"record"},
+    "readings": {"algebra", "record", "readings"},
+    "runner": {"algebra", "readings", "record", "runner"},
+    "decoder": {"algebra", "record", "readings", "decoder"},
+    "main": {"engine", "runner"},
+}
 
 
 def counts(rel: str, source: str) -> dict[str, int]:
@@ -696,6 +1110,49 @@ def main() -> int:
             print(f"PARTED  {label}: wanted the tier {tier}, the gate gave {got}")
         else:
             print(f"ok      {label}: {rule} is a {tier}")
+    # the closed list holds in engine/ and readings/ alike and nowhere else: each refused snippet gives its hits in the readings too,
+    # and none in the record, the runner, the decoder, the current engine and a package of another name
+    closed_cases = 0
+    elsewhere = (NEW_RECORD, NEW_RUNNER, NEW_DECODER, NEW_MAIN, "tick.py", ENGINE)
+    for label, rel, source, want in CASES:
+        if rel not in (NEW_STEP, NEW_MESH) or not want.get("ALLOW"):
+            continue
+        closed_cases += 3
+        for folder, path in (("readings", NEW_READING), ("algebra", NEW_RING)):
+            found = counts(path, source).get("ALLOW", 0)
+            if found != want["ALLOW"]:
+                parted += 1
+                print(
+                    f"PARTED  {label}: {folder} gave {found} hits of ALLOW, the engine {want['ALLOW']}"
+                )
+            else:
+                print(f"ok      {label}: the same in {folder}")
+        outside = {path: n for path in elsewhere if (n := counts(path, source).get("ALLOW", 0))}
+        if outside:
+            parted += 1
+            print(f"PARTED  {label}: hits of ALLOW outside the engine and the readings: {outside}")
+        else:
+            print(
+                f"ok      {label}: no hit of ALLOW in the record, the runner, the decoder, main.py and the current engine"
+            )
+    # the walls between the new engine's folders, restated from the architect's table (eaf07f596, section 4): every folder against every
+    # package, forward and back; the standard library is allowed everywhere, numpy in the engine and the runner alone
+    wall_cases = 0
+    for importer, rel in IMPORTERS.items():
+        for target, statement in IMPORTED.items():
+            wall_cases += 1
+            may = (
+                target == "stdlib"
+                or (target == "numpy" and importer in ("engine", "runner"))
+                or target in MAY_IMPORT[importer]
+            )
+            crossed = any(hit.rule == "ISOLATE" for hit in gate.scan(rel, statement))
+            if crossed == may:
+                parted += 1
+                print(
+                    f"PARTED  wall: {importer} importing {target}: the architect's table says {'yes' if may else 'no'}"
+                )
+    print(f"ok      the walls: {wall_cases} imports, every folder against every package")
     # the ratchet: a hit above the base's count is new, one at the base's count is not
     hits = gate.scan(ENGINE, "def f(a):\n    for x in a:\n        pass\n    for y in a:\n        pass\n")
     stands = Counter({("LOOP", ENGINE, "for"): 1})
@@ -714,7 +1171,7 @@ def main() -> int:
         print(f"PARTED  a new package: a clamp and a number gave {len(fresh)} new, not 2")
     else:
         print("ok      a new package: every hit in it is new")
-    print(f"selftest: {len(CASES) + tier_cases + 2} cases, {parted} parted")
+    print(f"selftest: {len(CASES) + tier_cases + closed_cases + wall_cases + 2} cases, {parted} parted")
     return 1 if parted else 0
 
 

@@ -150,15 +150,15 @@ The **departures** the build carries by name: item 7 (the twin hands), the loade
 
 The owner's idea turns the gate round. It now names what is forbidden, one rule a dodge (the comparison rule names twenty-three functions and the clamp rule sixteen), and says in its own text that it counts masks (and, or, not, &, | and ~) nowhere. A closed list needs no dodge named: **in algebra/, engine/ and readings/, anything not on the list is refused by default.** Written by Sofer in scribe_scan.py as a rule beside the others (which keep printing their precise law); the vocabulary stands in one place at the head of the script, and the architect's additions go through Sofer by a ledger entry with the law line each serves.
 
-The architect's change 1 is in the same pass: **five folders and main.py** (algebra/, record/, engine/, readings/, runner/, decoder/, and tensor24/main.py), the carry's home moved to algebra/carry.py (the one place // and the remainder are written), and the walls as the design's section 4 has them: algebra/ the standard library alone; engine/ algebra, record and numpy; readings/ the standard library, record, readings and algebra; runner/ algebra, readings, record and numpy and never the engine or the decoder; decoder/ the standard library, record, readings and algebra and never the engine, the runner or numpy; main.py imports the engine and the runner and is the only place they meet. runner/ and decoder/ keep the readers' rules (they loop, compare and branch over a record).
+The architect's change 1 is in the same pass: **a new folder, algebra/, beside record/, engine/, readings/, runner/ and decoder/, and tensor24/main.py** (spared no rule, so it holds no loop, branch or number), the carry's home moved to algebra/carry.py (the one place // and the remainder are written), the scatter-add np.add.at(out, index, values) named on the list as the contraction's scattered sum, and the walls as the design's section 4 has them: algebra/ the standard library alone; engine/ algebra, record and numpy; readings/ the standard library, record, readings and algebra; runner/ algebra, readings, record and numpy and never the engine or the decoder; decoder/ the standard library, record, readings and algebra and never the engine, the runner or numpy; main.py imports the engine and the runner and is the only place they meet. runner/ and decoder/ keep the readers' rules (they loop, compare and branch over a record).
 
-At the time of writing it is being built; the report of what was built, with the self-test's count, will stand in SCRIBE-GATE-1.md.
+It is built (scribe_scan.py): the self-test runs 689 cases, 0 parted; SCRIBE-GATE-1.md holds the vocabulary, the walls and the report.
 
 ## 8. What I ask
 
 **The owner** (at 16:00 with the plan; my recommendation first in each):
 1. Postulate 5 restated as the closed list (section 1): yes.
-2. The gate as a closed list in the engine's folders, and the fifth folder: yes (being built; the report will stand in SCRIBE-GATE-1.md).
+2. The gate as a closed list in the engine's folders, and the architect's new folder: yes (built; the report stands in SCRIBE-GATE-1.md).
 3. A Node-clock never writes into a neighbour; the word is a carry added at the receiving end (section 4): yes.
 4. The click law stands as the premise by name for the plan on its exactness; its derivation (or the exactness shown again) is due before cut 7: yes.
 5. Item (u), the neighbour read as "lin" (David and Sofer): your word.
