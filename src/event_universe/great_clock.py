@@ -6,11 +6,10 @@ from typing import Any
 
 from event_universe.core import rates
 from event_universe.core.rule3 import carries, largest_below
-from event_universe.core.spokes import AXES
+from event_universe.core.spokes import AXES, SPOKE_SIDES
 from event_universe.reckoner import (
     HALF,
     LISTED,
-    MAX,
     QUARTERS,
     SHORT_LIST,
     THIRDS,
@@ -72,10 +71,12 @@ def shortening(chart: Chart) -> dict[str, Any]:
 
 def lift_of(chart: Chart) -> tuple[list[int], list[int]]:
     """LC-S1's lift per tick from the clock lines (lc1's carries form): L = SUM_i carries(Gamma SUM_j (X_j - X_i), 3 X_i) over the clocks and their six neighbours, and the load pull SUM_i 2 largest_below(X_i div Gamma); each clock line's read once per chart."""
-    memo = chart.memo.setdefault("lift", {})
+    memo = chart.memo.setdefault(
+        "lift", {}
+    )  # by the line's place in the clock lines, a cut's the whole's
     lifts, pulls = [], []
-    for line in chart.clocks:
-        if id(line) not in memo:
+    for k, line in enumerate(chart.clocks):
+        if k not in memo:
             xs = [int(x) for x in line["X"]]
             lift = pull = 0
             for at, x in enumerate(xs):
@@ -83,9 +84,9 @@ def lift_of(chart: Chart) -> tuple[list[int], list[int]]:
                     carries(chart.full_rate * sum(xs[n] - x for n in neighbours(chart, at)), AXES * x)
                 )
                 pull += LOAD_PULL * largest_below(int(carries(x, chart.full_rate)))
-            memo[id(line)] = (lift, pull)
-        lifts.append(memo[id(line)][0])
-        pulls.append(memo[id(line)][1])
+            memo[k] = (lift, pull)
+        lifts.append(memo[k][0])
+        pulls.append(memo[k][1])
     return lifts, pulls
 
 
@@ -169,7 +170,7 @@ def standstill(chart: Chart) -> dict[str, Any]:
         if chart.index(e["node"]) in masks.get(int(e["i"]), set())
     ]
     at_mark = sum(1 for c in chart.chimes if c["content"] >= stopped)
-    rows_max = max((int(r["content min/mean/max"][MAX]) for r in chart.rows), default=0)
+    rows_max = max((int(r["content min/mean/max"][-1]) for r in chart.rows), default=0)
     load_max = max((int(x) for line in chart.clocks for x in line["content"]), default=rows_max)
     verdict = (
         "SHOWN as silence (no credit and no birth at a Node frozen at the interval's start)"
@@ -266,12 +267,12 @@ def same_gates(chart: Chart) -> dict[str, Any]:
 
 def neighbours(chart: Chart, at: int) -> list[int]:
     """The six clocks one mesh from a clock's index on the torus."""
-    x, y, z = chart.clock(at)
-    cube = chart.cube
-    return [
-        chart.index(((x + dx) % cube, (y + dy) % cube, (z + dz) % cube))
-        for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
-    ]
+    found = []
+    for axis, sense in SPOKE_SIDES:  # the six spokes in the engine's order [+X, -X, +Y, -Y, +Z, -Z]
+        moved = chart.clock(at)
+        moved[axis] = (moved[axis] + sense) % chart.cube
+        found.append(chart.index(moved))
+    return found
 
 
 def maxwell(chart: Chart) -> dict[str, Any]:

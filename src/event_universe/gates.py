@@ -262,6 +262,8 @@ RESTATED = (
     ("33 free fall by the tail", free_fall),
 )  # the rows of the widened table that restate a gate of the nineteen, the gate's row beside each
 
+REDSHIFT, DILATION, DEFLECTION, FREE_FALL = (restated(*row) for row in RESTATED)
+
 TABLE: tuple[Row, ...] = (
     swings.recurring_swing,
     swings.tops,
@@ -287,18 +289,18 @@ TABLE: tuple[Row, ...] = (
     clicks.mass_ratios,
     events.stub("20"),
     predicates.twist_of_fitting,
-    predicates.coulomb,
+    predicates.senses_approach_or_part,
     recoil,
     clicks.unspring,
     entropy,
     predicates.lifts,
     predicates.confinement,
     events.stub("28"),
-    restated(*RESTATED[0]),
-    restated(*RESTATED[1]),
-    restated(*RESTATED[2]),
+    REDSHIFT,
+    DILATION,
+    DEFLECTION,
     events.stub("32"),
-    restated(*RESTATED[3]),
+    FREE_FALL,
     great_clock.stopped_clock,
     events.stub("35"),
     events.stub("36"),

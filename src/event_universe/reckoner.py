@@ -2,34 +2,42 @@
 
 from __future__ import annotations
 
+import json
 from bisect import bisect_right
 from collections import Counter
+from pathlib import Path
 from typing import Any
 
 from event_universe.core import rates, rule3
 from event_universe.core.rates import sine_rim
+from event_universe.core.spokes import SIDES
 from event_universe.meshes import Mesh, cross, through_mesh
 from event_universe.rim import rim_of
 from event_universe.trains import HAND, rows_of
 
-MIL = 1000000  # readings in parts per million
-HUNDRED = 100  # readings in hundredths
-THOUSAND = 1000  # readings in thousandths
-FEW = 10  # the fewest reckoned chimes for the dilation's two halves
-SPANS = 20  # the fewest spans for the lengthening's two halves
-HALF = 2  # a half: a count div 2, and a majority as a count times 2 above the whole
-PAIR = 2  # two of a kind: the two ends of a mesh, the two parts of a hand's ratio, two bobs, two beats, two marks
-THIRDS = 3  # the thirds of a run (its last third), of the half sweep (T div 2 div 3)
-QUARTERS = 4  # the quarters of a run (a bob wound into the last quarter)
-LISTED = 8  # the most entries a row prints of a course (its first eight) and the eighths a course is sampled at
-SHORT_LIST = 6  # the most falls and steps a row prints
-FOUR_LISTED = 4  # the most returns the rows' reading prints
-MAX = 2  # the index of the max in a row's min / mean / max
-NOTCHES_BACK = (
-    2,
-    1,
-    0,
-)  # the regulator's three notches read from the clock lines: before the tick, at its start, after it, as lines behind the tick's own
+UNITS: dict[str, int] = json.loads(
+    Path(__file__).with_name("reading_units.json").read_text(encoding="utf-8")
+)  # the readers' units and spans, each named once in the file beside the readers (no number in the code)
+MIL = UNITS["parts per million"]  # readings in parts per million
+HUNDRED = UNITS["hundredths"]  # readings in hundredths
+THOUSAND = UNITS["thousandths"]  # readings in thousandths
+FEW = UNITS["the fewest reckoned chimes for the dilation's two halves"]
+SPANS = UNITS["the fewest spans for the lengthening's two halves"]
+HALF = SIDES  # a half: a count div the two sides, and a majority as a count times two above the whole
+PAIR = SIDES  # two of a kind: the two ends of a mesh (a spoke's two sides), the two parts of a hand's ratio, two bobs, two beats, two marks
+THIRDS = UNITS["the thirds of a run (its last third) and of the half sweep"]  # (T div 2 div 3)
+QUARTERS = UNITS["the quarters of a run (a bob wound into the last quarter)"]
+LISTED = UNITS["the most entries a row prints of a course, and the eighths a course is sampled at"]
+SHORT_LIST = UNITS["the most falls and steps a row prints"]
+FOUR_LISTED = UNITS["the most returns the rows' reading prints"]
+NOTCHES = (
+    "before the tick",
+    "at its start",
+    "after it",
+)  # the regulator's three notches read from the clock lines
+NOTCHES_BACK = tuple(
+    range(len(NOTCHES) - 1, -1, -1)
+)  # each notch as clock lines behind the tick's own, the last notch the tick's own line
 Rational = tuple[int, int]
 NOT = "NOT"  # the word a verdict begins with where the gate is not shown, read or reached
 KINDS = (
@@ -306,11 +314,13 @@ def reckoned_chimes(
     reckoned = []
     right = within = 0
     floors: list[int | None] = []
-    reckonings = chart.memo.setdefault("solve", {})
-    for c in sorted(chart.chimes, key=lambda c: int(c["i"])):
-        if id(c) not in reckonings:
-            reckonings[id(c)] = reckon(chart, c)
-        x = reckonings[id(c)]
+    reckonings = chart.memo.setdefault(
+        "solve", {}
+    )  # by the chime's place in the chart's chimes, a cut's the whole's
+    for k, c in sorted(enumerate(chart.chimes), key=lambda kc: int(kc[1]["i"])):
+        if k not in reckonings:
+            reckonings[k] = reckon(chart, c)
+        x = reckonings[k]
         if x is None:
             continue
         name = nearest(chart, x, int(c["beat"]))

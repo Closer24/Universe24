@@ -45,7 +45,7 @@ def twist_of_fitting(chart: Chart) -> dict[str, Any]:
     }
 
 
-def coulomb(chart: Chart) -> dict[str, Any]:
+def senses_approach_or_part(chart: Chart) -> dict[str, Any]:
     """Row 22: Coulomb's sign from the chimed clocks' senses per tick: the mean distance between clocks of unlike senses at the first and the last tick holding such a pair, and between clocks of like senses; unlike approach, like part."""
     by_tick: dict[int, list[tuple[int, tuple[int, ...]]]] = defaultdict(list)
     for c in chart.chimes:

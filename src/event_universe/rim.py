@@ -13,6 +13,17 @@ def witnesses(n: int) -> list[int]:
     return [p for p in range(EVEN, n.bit_length() + EVEN) if all(p % q for q in range(EVEN, p))]
 
 
+def power_mod(a: int, d: int, n: int) -> int:
+    """a^d mod n by squaring and multiplying on the exponent's bits, whole numbers only (the strong test's power)."""
+    found, base = 1, a % n
+    while d:
+        if d & 1:
+            found = found * base % n
+        base = base * base % n
+        d >>= 1
+    return found
+
+
 def is_prime(n: int) -> bool:
     """A prime by the strong test at the witnesses, enough far beyond the width."""
     if n < EVEN:
@@ -25,7 +36,7 @@ def is_prime(n: int) -> bool:
     while d % EVEN == 0:
         d, s = d // EVEN, s + 1
     for a in small:
-        x = pow(a, d, n)
+        x = power_mod(a, d, n)
         if x in (1, n - 1):
             continue
         for _ in range(s - 1):

@@ -6,7 +6,7 @@ from typing import Any
 
 from event_universe.reckoner import FOUR_LISTED, LISTED, Chart, unread_words
 
-FITTINGS = 2  # the index of the fittings in a mark (the tick, the mean stretch, the fittings)
+FITTINGS = -1  # the fittings, the last part of a mark (the tick, the mean stretch, the fittings)
 
 
 def marks(chart: Chart) -> tuple[list[tuple[int, int, int]], list[tuple[int, int]]]:
