@@ -33,7 +33,7 @@ It builds on draft C (derive/C: the derived push, the theorems C1 to C6, the rat
   - the rewind 20 of 20 from ticks 15, 40 and 60, through a top and a bottom;
   - the books closed at 250 of 250 click phases.
 - **The engine under the course still holds three bounds that act** (the audit, part 4):
-  - **The Mesh tension's clamp into [0, Gamma] (F2)** acts at 91,776 values in 250 ticks, and it is load-bearing. With it struck, the course runs away: X = 27,218,198,742,186 at tick 7, below 0 at tick 14, and refused by name at tick 15.
+  - **The Mesh tension's clamp into [0, Gamma] (F2)** acts at 91,776 values in 250 ticks, and it is load-bearing. With it struck, the course runs away: X = 27,218,198,742,186 at tick 2 and again at tick 7, below 0 at tick 14, and refused by name at tick 15 (Sofer's correction, 6469988450: this line first said tick 7). There the time gear's quotient at tick 3's start is 6,376, and the threshold turned the board at ticks 3, 8 and 13. Read as a carry, the quotient is a count: T applied 6,376 times, which is no turnover on the A1 course. The two readings agree wherever the quotient is 0 or 1, the whole F2-held course.
   - **The draw's room capped at the modulus** acts at 1,652,896 draws.
   - **The coupling min(spring, 1)** acts on the three sprung hands.
 
