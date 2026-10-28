@@ -164,7 +164,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 4. **The turnover.**
    - **In the clock:** the clock's own act at the top of its time gear.
    - **The second trigger, the floor, is struck by law 11.** There is no trigger at the bottom.
-   - **The top as the time gear's carry is refuted:** as written, it is an if.
+   - **The top:** the weak maximum X0 <= X1 >= X2 is the law's own text (line 1602) and the head's, a comparison that Postulate 5 refuses in engine code. The top as the time gear's carry, q, r' = carry(X - Gamma, X_c - Gamma) with T applied q times as a choice, is OPEN 7 (David, Sofer). The threshold form as first written is refuted: it is an if.
    - **The one mirror is an involution** only where the fine tooth is not 0 at an even teeth count. At every teeth count it is exact only as the flip r -> w - 1 - r, with the going (H, confirmed).
    - **On every gear the turnover is its kind's T** (item (s), approved at 14:37 UTC). On twin hands that is T = i sigma_y K, and T T = -1, so a twin hand returns only after four turnovers.
 5. **The whole click.**
@@ -332,7 +332,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **Animate's measurement:**
      - **measured:** with the twin hands and F2's carry, the clicks rise at every bang: 64, 96, 256 and 1,152, four bangs in a row;
      - **missing:** two pieces, in the build: the one-turn step (the local tick), and the singlet's lay. With them the detector's click itself fires; in these runs it fires 0 times.
-   - **The memory between bangs** (Animate, 6473533004, on the owner's word to her of 15:4x UTC, that the detector's choice in one bang influence its choice in the next): T reverses every spin and way 2 keeps what a click wrote, so a direction chosen in one bang reads reversed in the next. On the twin calibre the larger twin at clock (0, 0, 0) flips up, down, up, down from the 7th bang to the 10th, until new births write over it. Alone it is the palindrome's period of two, so each bang's new clicks are still needed; a fresh draw whose odds the last choice moves is the next toy.
+   - **The memory between bangs** (Animate, 6473533004, on the owner's word to her of 15:4x UTC, that the detector's choice in one bang influence its choice in the next): T reverses every spin and way 2 keeps what a click wrote, so a direction chosen in one bang reads reversed in the next. On the twin calibre the larger twin at clock (0, 0, 0) flips up, down, up, down from the 7th bang to the 10th, until new births write over it. Alone it is the palindrome's period of two, so each bang's new clicks are still needed; a fresh draw whose odds the last choice moves is the next toy. **The chosen path** (Animate, 6473633678, on the owner's word to her of 15:4x UTC: "the path it chose for the future should not disappear; it should influence it"): the twin pair a click wrote stays in its Node-clock's gears and is the next bang's detector there (law 6); through S . J it moves the next draw's odds, from a half up to certainty with the coupling (a toy of one Node-clock over 4,096 bangs). On the board it is OPEN, since it needs the detector's click to fire. Sofer: it passes in form, the record that carries it being the pair in the gears, never the outside record.
 6. **Every bang shows more: the 24's ladder, after its verifier:**
    - **what holds:** the product table and the rungs;
    - **by David's rule** one family's kinds stay A1 and E1/2 at every bang;
@@ -442,6 +442,18 @@ On the owner's word to David: "a generic solution for everything". This is David
     - law 9's sorted draw as a rank count, with no sort and no law changed;
     - the width: Python integers in numpy object arrays, exact at 112 bits and beyond, int64 refused;
     - **the twin hands:** in no basis of their four integer rows do the third turns act as signed permutations, so no ring alone, Z[zeta8] included, keeps the 24 bit for bit on them under element-wise carries. The departure stands until David's route (OPEN 3), and no twin train loads before it.
+
+12. **The standard of known engines** (the owner's word of 15:5x UTC: "in the standard of known engines in the world; everything generic; only simple operations in the Node-clock"). Each part of the design comes from engines the world already trusts (TENSOR24.md, section 31, the prior art):
+    - **lattice field codes (Grid, Chroma, openQCD, QUDA):** one shift primitive across a Mesh with everything else local to the site, the link U_j on every Mesh, neighbour tables, storage as a structure of arrays, halos between regions, and Wilson's term for the doublers (item (g));
+    - **reversible lattice automata (Toffoli and Margolus, 1987):** Fredkin's second-order form x+ = f(x) - x-, the two slots now and before, so the rewind is exact on integers;
+    - **the bit-reversible integrator (Levesque and Verlet, 1993):** a leapfrog on integers whose rounding inverts exactly, the step with the carry;
+    - **lifting (Calderbank, Daubechies, Sweldens and Yeo, 1998):** an integer shear that inverts exactly;
+    - **parallel discrete-event simulation (Chandy, Misra and Bryant) and Kahn's process networks:** the beat count and the due bit, so every order of the beats gives the same state at equal counts;
+    - **array programming (NumPy, in the pure-function style of JAX):** pure functions over the whole board's arrays, every input passed, no loop in the engine;
+    - **the point-group codes (Quantum ESPRESSO's integer symmetry matrices, the Bilbao tables) and e3nn's equivariance check:** the 24 as integer matrices, the kinds computed, and the images test;
+    - **event sourcing:** the record as immutable, versioned events, and the readings as pure folds over them;
+    - **Hypothesis and mutation testing:** properties, not values, and every test shown failing on a broken copy;
+    - **stricter than all of them:** the Node-clock's closed list. Only addition, multiplication and Rule3's carry on whole numbers, with no float, no if and no number beyond 0 and 1 (section 1).
 
 ## 12. Who builds and when
 
@@ -625,7 +637,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **Sofer:**
      - F passes as a draft, G as a measurement, I as a draft;
      - the law holds the owner's approved (o) and (s) at lines 98, 106 and 1602 since ef9149e94 (14:37 UTC), and his picture of 15:0x at line 106 since 4de7a1b68 (15:31 UTC);
-     - **he approves** the plan's laws and the design (6473316629, 6473366953). His three sentences of TENSOR24.md and four corrections here are folded, and his word on the fixed head follows within five minutes of its push.
+     - **on the head for the owner: APPROVED** (8eaf350f2, 6473828939). The one architect's ruling is right on every point it corrects in his file, and his remaining wording points are folded.
    - **Animate: YES** (edb27b24d, 6473561890), with five text conditions to fold after 16:00, none of them blocking.
    - **The architect:** APPROVED WITH CHANGES (section 11); the one architect's ruling on Sofer's file and the design, one architecture (section 11, items 7 and 11; section 12, item 4).
 4. **The research stopped at 15:00 UTC, on the owner's word.** Everything open is booked by name, and closes in the build.
