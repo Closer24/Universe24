@@ -1,4 +1,4 @@
-"""The generic clock (the owner's word of 2026-10-25: the clock knows nothing, there is no if): its state is the trains the calibre names on the great clock the piece names, 98 integers at every clock with the toy calibre's seven trains; its readings at a tick's start (the load, the rates, the mesh factors, the pawls, the meshes' counts and offsets, the conserved form's wind); its acts on a train, each one act on every train alike forward and backward (Rule3's turn with the pulls turned as the train's size turns them, the drive by one carry, the reverse at the turned-over clocks); the tick's program is tick.run and the striking is striking.strike, each a function of the clock."""
+"""The generic clock (the owner's word of 2026-10-25: the clock knows nothing, there is no if): its state is the trains the calibre names on the great clock the piece names, 98 integers at every clock with the toy calibre's seven trains; its readings at a tick's start (the load, the rates, the mesh factors, the pawls, the meshes' counts and offsets, the conserved form's wind); its acts on a train, each one act on every train alike forward and backward (Rule3's turn with the pulls turned as the train's size turns them, the drive by one carry, the reverse at the turned-over clocks); the tick's program is tick.run and the click is click.click, each a function of the clock."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from typing import Any
 
 import numpy as np
 
-from event_universe import hands, readings, striking, tick
+from event_universe import click, hands, readings, tick
 from event_universe.assembly import setting
 from event_universe.core import acts, rates, rule3
 from event_universe.core.rates import sine_rim
@@ -62,14 +62,14 @@ class Clock:
         setting.set_piece(self, piece.get("seed", []))
 
     def start_state(self) -> None:
-        """The clock's state before the setting: the hands' wound ticks, crossings and beats, each beat's reference (the hand's notch where its winding began, DAVID-OWN-BEAT.md) and each twin pair's split ticks (DAVID-SPLIT-CHIME.md), the dial, the strikes, the slack (EX-S1, set at 0), the ticks, the log, the turnovers, the rewind notes' stack, the run's counts; the regulator's time gear at the full rate, the drift the largest integer whose square is at most the key, the advance's two notches (A, B) with A B = key div 2 (MS-S1), the standard's first pair at the standard length derived from the rim, X = Gamma rim (clock.standard_length, carried above the shortest hand derived from the full rate, standard.carried; DAVID-AMPLITUDES.md section 4, the former length declared from outside by the owner's words of 2026-10-27, 04:0x and 04:4x UTC, the declaration struck by his rule of 11:3x UTC)."""
+        """The clock's state before the setting: the hands' wound ticks, crossings and beats, each beat's reference (the hand's notch where its winding began, DAVID-OWN-BEAT.md) and each twin pair's split ticks (DAVID-SPLIT-CHIME.md), the dial, the clicks, the slack (EX-S1, set at 0), the ticks, the log, the turnovers, the rewind notes' stack, the run's counts; the regulator's time gear at the full rate, the drift the largest integer whose square is at most the key, the advance's two notches (A, B) with A B = key div 2 (MS-S1), the standard's first pair at the standard length derived from the rim, X = Gamma rim (clock.standard_length, carried above the shortest hand derived from the full rate, standard.carried; DAVID-AMPLITUDES.md section 4, the former length declared from outside by the owner's words of 2026-10-27, 04:0x and 04:4x UTC, the declaration struck by his rule of 11:3x UTC)."""
         size, nr = self.size, len(self.hands())
         self.wound = [zeros(size) for _ in range(nr)]
         self.crossed = [zeros(size) for _ in range(nr)]
         self.beats = [zeros(size) for _ in range(nr)]
         self.reference = [[zeros(size), zeros(size)] for _ in range(nr)]
         self.split = {up: zeros(size) for up, _down in hands.twin_pairs(self.hands())}
-        self.dial, self.strikes, self.ticks, self.slack = zeros(size), zeros(size), 0, zeros(size)
+        self.dial, self.clicks, self.ticks, self.slack = zeros(size), zeros(size), 0, zeros(size)
         self.log: list[dict[str, Any]] = []
         self.turnovers: list[tuple[int, int]] = []
         self.stack: list[dict[str, Any]] = []
@@ -120,7 +120,7 @@ class Clock:
         return train_of(self.trains_, size)
 
     def unsprung(self) -> Train:
-        """The hand with no spring of its own, the light: the hand whose gearing's spring D = 2 SPOKES (rim - pinion) rate^2 G^2 is 0 at every rate, its ratio's pinion equal to its rim (a property of the train's own numbers, no role; the assembly admits exactly one): the train the sweep's change is advanced on and whose windings the striking unwinds."""
+        """The hand with no spring of its own, the light: the hand whose gearing's spring D = 2 SPOKES (rim - pinion) rate^2 G^2 is 0 at every rate, its ratio's pinion equal to its rim (a property of the train's own numbers, no role; the assembly admits exactly one): the train the sweep's change is advanced on and whose windings the click unwinds."""
         return next(r for r in self.hands() if r.ratio is not None and r.ratio[0] == r.ratio[1])
 
     def hands(self) -> list[Train]:
@@ -261,11 +261,11 @@ class Clock:
         gearings = [readings.gearing_of(self, r, c, factors) for r in self.trains_]
         return [(gear, gearing) for gearing, gears in zip(gearings, held, strict=True) for gear in gears]
 
-    def strike(
+    def click(
         self, starts: list[list[Gear]], held: list[list[Gear]], going: int = 1, note: Any = None
     ) -> None:
-        """The striking (striking.strike), the clock's fourth act, in the going, `starts` the hands' gears at the tick's start: backward the striking undone from the log's rewind note."""
-        striking.strike(self, starts, held, going, note)
+        """The click (click.click), the clock's fourth act, in the going, `starts` the hands' gears at the tick's start: backward the click undone from the log's rewind note."""
+        click.click(self, starts, held, going, note)
 
     def tick(self, going: int = 1) -> None:
         """One tick of the clock's program forward, or back at -1 (tick.run; the former step_back and run kept by name)."""

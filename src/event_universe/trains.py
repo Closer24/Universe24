@@ -10,7 +10,7 @@ from event_universe.core.acts import mid
 from event_universe.core.rule3 import carries, held_teeth
 from event_universe.core.spokes import AXES, SIDES, SPOKES
 
-REGULATOR = 1 + AXES + AXES + AXES  # the regulator: its time gear, AXES tensions, flows and shears
+REGULATOR = 1 + AXES + AXES  # the regulator: its time gear, AXES tensions and flows (R11)
 OFFSET = AXES + 1  # the size of the train at (rim, rim): its time gear and its AXES odd gears
 HAND = SIDES  # the size of a hand: its two gears, a conjugate pair (the Gaussian integer's two parts, its conjugate one sign apart)
 POWER_TIME = AXES + 1  # the vacuum's balance X p^(d + 1) = Gamma^(d + 2): the time gear's power d + 1
@@ -59,7 +59,7 @@ class Gear:
 def drive_teeth(
     size: int, ratio: Ratio | None, rim: int, full_rate: int, key: int, trace: int
 ) -> list[Any]:
-    """The drive teeth of a train's gears by its size: the regulator's time gear and its other gears the held teeth at the file's trace weight (TW-S1, the owner's word of 2026-10-26, 07:5x UTC: the trace's weight is the calibre's integer, dimensionless, 6 in nature's files, the one value with a sentence in nature, light having no trace; 54 the charts' value of 2026-10-25 kept by name, ga2's file at it until its re-set; rule3.held_teeth at the powers POWER_TIME 4 of the time gear and POWER_AXIS 2 of the nine axis gears, K-S1 to K-S3, Y-S1), the offset train's four gears T, the hand at the calibre's own ratio (rim, rim), the unsprung hand, its first gear T (the advance of W-S1), a held field's one gear at a gapped ratio T (its kick at the impulse, as the offset's), another hand none."""
+    """The drive teeth of a train's gears by its size: the regulator's time gear and its other gears the held teeth at the file's trace weight (TW-S1, the owner's word of 2026-10-26, 07:5x UTC: the trace's weight is the calibre's integer, dimensionless, 6 in nature's files, the one value with a sentence in nature, light having no trace; 54 the charts' value of 2026-10-25 kept by name, ga2's file at it until its re-set; rule3.held_teeth at the powers POWER_TIME 4 of the time gear and POWER_AXIS 2 of the six axis gears, K-S1 to K-S3, Y-S1), the offset train's four gears T, the hand at the calibre's own ratio (rim, rim), the unsprung hand, its first gear T (the advance of W-S1), a held field's one gear at a gapped ratio T (its kick at the impulse, as the offset's), another hand none."""
     if size == REGULATOR:
         powers = (POWER_TIME, *[POWER_AXIS] * (size - 1))
         return [held_teeth(trace, rim, full_rate, key, p) for p in powers]
@@ -102,7 +102,7 @@ def rows_of(calibre: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def trains_of(calibre: dict[str, Any], size: tuple[int, ...], w: int) -> tuple[list[Train], list[Train]]:
-    """The trains of the clock in the acts' order, and the same trains in the index a setting names (the light 0, the file's rows from 1, then the regulator, the offset and the ratchet): the file holds the matter alone, its gapped rows (a hand of two gears, or twin hands of four, at a pinion below the rim), and the four trains every clock holds are built from the rim and the full rate alone (David's DAVID-GENERIC-ENGINE.md part C, the owner's word of 2026-10-27, 18:5x UTC, through the Boss's recommendation: no declarations): the light, the hand at (rim, rim); the regulator, its time gear, AXES tensions, AXES flows and AXES shears at (rim - rim div Gamma, rim); the offset, its time gear and AXES odd gears at (rim, rim); the ratchet, one gear of its own two teeth (the pawl's two sides); twin hands of a row of four gears, each hand two gears at the row's ratio with the spin's drive teeth; a held field, a row of one gear at a gapped ratio with its weight (David's DAVID-MEDIATOR.md, the owner's yes to the nuclear family of 2026-10-27, 16:5x UTC: one gear cannot be a hand, so the numbers tell it from the hands)."""
+    """The trains of the clock in the acts' order, and the same trains in the index a setting names (the light 0, the file's rows from 1, then the regulator, the offset and the ratchet): the file holds the matter alone, its gapped rows (a hand of two gears, or twin hands of four, at a pinion below the rim), and the four trains every clock holds are built from the rim and the full rate alone (David's DAVID-GENERIC-ENGINE.md part C, the owner's word of 2026-10-27, 18:5x UTC, through the Boss's recommendation: no declarations): the light, the hand at (rim, rim); the regulator, its time gear, AXES tensions and AXES flows at (rim - rim div Gamma, rim); the offset, its time gear and AXES odd gears at (rim, rim); the ratchet, one gear of its own two teeth (the pawl's two sides); twin hands of a row of four gears, each hand two gears at the row's ratio with the spin's drive teeth; a held field, a row of one gear at a gapped ratio with its weight (David's DAVID-MEDIATOR.md, the owner's yes to the nuclear family of 2026-10-27, 16:5x UTC: one gear cannot be a hand, so the numbers tell it from the hands)."""
     ints = calibre["integers"]
     rim, full_rate, key = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
     trace = int(ints["trace"])

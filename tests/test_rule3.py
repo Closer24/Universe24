@@ -1,4 +1,4 @@
-"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every hand in either going, the isotropic rule is the same call with equal rates, and no other file of src/ writes this arithmetic; and the generic clock is closed for building (HIGHLIGHTS.md): the clock's state is the gears and the drives' fine teeth alone, one shape for every train, one Rule3 carry per gear and one drive per held gear per tick, the readings drive nothing, the output strike and field only, ENGINE.md's table the code's."""
+"""Rule3 in one place (core/rule3.py; ALGEBRA.md #the-line, #the-direction, #the-interval): one function steps every hand in either going, the isotropic rule is the same call with equal rates, and no other file of src/ writes this arithmetic; and the generic clock is closed for building (HIGHLIGHTS.md): the clock's state is the gears and the drives' fine teeth alone, one shape for every train, one Rule3 carry per gear and one drive per held gear per tick, the readings drive nothing, the output click and field only, ENGINE.md's table the code's."""
 
 import ast
 import random
@@ -115,7 +115,7 @@ FILE_INTEGERS = {"spokes.py": frozenset({3}), "run.py": frozenset({12, 24, 60})}
 # the writer run.py reads the inventory and not the names gate (its chart keys are the files' words)
 READERS = tuple(
     f"{n}.py"
-    for n in "reckoner gates events rim great_clock swings strikes predicates symmetries phenomena".split()
+    for n in "reckoner gates events rim great_clock swings clicks predicates symmetries phenomena".split()
 )
 WRITER = ("run.py",)
 NAMED_CALLS = {
@@ -236,7 +236,7 @@ def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd()
 
 
 def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_s1(monkeypatch) -> None:
-    """TC-S1 as the wave amends it (the owner's word of 2026-10-27, 15:5x UTC, "yes to all, by your recommendation": the take's fall is the wind's own fall; David's DAVID-CLOSE-LAW.md item 1; the closed form's price, which carried the pull's sign reversed against the wind's fall at 47 of 47 takes on the head, the Reader's finding 1, struck and kept by name): at every chime of the chiral setting over 14 ticks (10 under the one mirror, 31 under the great clock's bounds before it, 101 at the wave, each one a take: light arrives at every one, so none is a still chime, bobs.still_chime, which takes nothing) the light's gear moves by the least count at which the window's wind falls by what is owed, the windings less the slack the earlier takes left (3 owe nothing and move no notch, 17 before the one mirror, 57 at the wave), the fall booked is the window's wind before less after to the integer, read on the board the bobs' phase starts from with the take's own move alone (the order-free click, David's DAVID-THE-STRIKES-ORDER.md: every take read on its phase's start board), one count fewer falls short, and the excess stands in the slack (EX-S1)."""
+    """TC-S1 as the wave amends it (the owner's word of 2026-10-27, 15:5x UTC, "yes to all, by your recommendation": the take's fall is the wind's own fall; David's DAVID-CLOSE-LAW.md item 1; the closed form's price, which carried the pull's sign reversed against the wind's fall at 47 of 47 takes on the head, the Reader's finding 1, struck and kept by name): at every chime of the chiral setting over 14 ticks (90 with the shears struck, 10 with them under the one mirror, 31 under the great clock's bounds before it, 101 at the wave, each one a take: light arrives at every one, so none is a still chime, bobs.still_chime, which takes nothing) the light's gear moves by the least count at which the window's wind falls by what is owed, the windings less the slack the earlier takes left (56 owe nothing and move no notch, 3 with the shears, 17 before the one mirror, 57 at the wave), the fall booked is the window's wind before less after to the integer, read on the board the bobs' phase starts from with the take's own move alone (the order-free click, David's DAVID-THE-STRIKES-ORDER.md: every take read on its phase's start board), one count fewer falls short, and the excess stands in the slack (EX-S1)."""
     clock, seen = node_of("world_nature.json", intervals=14), []
     real = bobs.read_unwinds
 
@@ -265,7 +265,7 @@ def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_
         clock.tick()
     credits = [e for e in clock.log if e["event"] == "credit"]
     chimes = (len(seen), len(credits), clock.counts["body_clicks"], clock.counts["laid_back"])
-    assert chimes == (10, 10, 10, 0) and sum(levels == 0 for *_x, levels, _w in seen) == 3
+    assert chimes == (90, 90, 90, 0) and sum(levels == 0 for *_x, levels, _w in seen) == 56
     for fall, short, taken, due, levels, paid in seen:
         assert fall == taken >= due and paid
         assert levels == 0 or short < due  # the least count: one fewer falls short
@@ -273,7 +273,7 @@ def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_
 
 
 def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_identity_lt_s1():
-    """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-clock test): on the chiral setting with its three bobs at 6 quanta (the hole's first fittings stand at its tick 53 under the wave's light; at the world file's 2 quanta no booking of the 14 ticks advances a notch under the great clock's bounds, 4 did at the wave) every move of the striking drives its tally into the regulator's flow gear of its axis at its clock by the clock's one drive act, so at every strike the mesh's chart identity holds per axis at every end, -dP p_0^2 + carry before - carry after = advanced x (K rim Gamma^2 T), seen in both of its cases, the carry below one level of the line and an advance of the gear's notch, the gear gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the clock's own gears and not the log alone; the clock's carry after the tick is the last tally's at that clock; the rewind exact through 14 ticks with the tallies undone. Under 15 s."""
+    """LT-S1 (the owner's word of 2026-10-26, 08:4x UTC, "approve"; The-Lay-As-The-Take-Reversed_COMPARISON.md section 3, H-Lay-As-The-Take-Reversed-1's one-clock test): on the chiral setting with its three bobs at 6 quanta (the hole's first fittings stand at its tick 53 under the wave's light; at the world file's 2 quanta no booking of the 14 ticks advances a notch under the great clock's bounds, 4 did at the wave) every move of the click drives its tally into the regulator's flow gear of its axis at its clock by the clock's one drive act, so at every click the mesh's chart identity holds per axis at every end, -dP p_0^2 + carry before - carry after = advanced x (K rim Gamma^2 T), seen in both of its cases, the carry below one level of the line and an advance of the gear's notch, the gear gaining what the moved quantum lost (the Boss's sign of 10:18 UTC), read on the clock's own gears and not the log alone; the clock's carry after the tick is the last tally's at that clock; the rewind exact through 14 ticks with the tallies undone. Under 15 s."""
     seed = [s | {"quanta": 6} if "quanta" in s else s for s in world_of("world_nature.json")[1]["seed"]]
     clock = node_of("world_nature.json", intervals=14, seed=seed)
     teeth = clock.trace * clock.rim * clock.full_rate * clock.full_rate * clock.key
@@ -307,8 +307,8 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
         gears = clock.train(REGULATOR).gears[flow]
         assert all(carry == [int(gear.dfine[at]) for gear in gears] for at, carry in last.items())
     # every booking, those with a push, those advancing the flow gear's notch, the still chimes (push 0),
-    # under the one mirror (142, 58, 2 and 0 before it; 116, 49, 4 and 0 at the wave at 2 quanta)
-    assert (checked, pushed, advanced, clock.counts["laid_back"]) == (15, 7, 2, 0)  # 142, 58, 2, 0
+    # with the shears struck (15, 7, 2 and 0 with them; 142, 58, 2 and 0 before the one mirror)
+    assert (checked, pushed, advanced, clock.counts["laid_back"]) == (97, 43, 3, 0)  # 15, 7, 2, 0
     for h in reversed(hashes):
         clock.tick(-1)
         assert record.state_hash(clock) == h

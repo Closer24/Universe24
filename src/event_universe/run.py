@@ -1,4 +1,4 @@
-"""The chart as one module, the writer run.py (NL-S1's third stroke, the Boss's 6411590757 under the owner's delegation; H-Readings-One-Reader-1's record_module.py the spec; the engine gate carries the writer's three marks under this name): the log's one spelling (`entry`: every event the engine logs, jammed, fitting, chime and set, through it), the rewind note pushed at the striking for the rewind, the census and the hash of the state, and the writer (the reader's rows at the marks, the clock lines, the rewind, the chart and its command line, `python -m event_universe.run <piece.json> <out.json> [back N]`); the acts write nothing here and read nothing from it but the rewind note."""
+"""The chart as one module, the writer run.py (NL-S1's third stroke, the Boss's 6411590757 under the owner's delegation; H-Readings-One-Reader-1's record_module.py the spec; the engine gate carries the writer's three marks under this name): the log's one spelling (`entry`: every event the engine logs, jammed, fitting, chime and set, through it), the rewind note pushed at the click for the rewind, the census and the hash of the state, and the writer (the reader's rows at the marks, the clock lines, the rewind, the chart and its command line, `python -m event_universe.run <piece.json> <out.json> [back N]`); the acts write nothing here and read nothing from it but the rewind note."""
 
 from __future__ import annotations
 
@@ -104,7 +104,7 @@ def chime(
     face: dict[str, Any],
     start: list[Gear],
 ) -> dict[str, Any]:
-    """A bob's chime with its face (the hand's face_of, the bobs' own readings of the hand), its sense the sign of its sweep at the clock read at the tick's start (`start`, the hand's gears as the tick began, CL-S2; the former read on the great clock after the striking's own drives kept by name), its beat, the unwind's numbers (the unwind act's dict), push and tally, the winding the striking tallied and what is due; returned, not appended (the bobs append it after the return)."""
+    """A bob's chime with its face (the hand's face_of, the bobs' own readings of the hand), its sense the sign of its sweep at the clock read at the tick's start (`start`, the hand's gears as the tick began, CL-S2; the former read on the great clock after the click's own drives kept by name), its beat, the unwind's numbers (the unwind act's dict), push and tally, the winding the click tallied and what is due; returned, not appended (the bobs append it after the return)."""
     w = int(hands.sweep(start)[at])
     fall, notches, unwound_was, gear = (
         unwind["taken"],
@@ -118,7 +118,7 @@ def chime(
         "credit",
         at,
         proper=int(clock.dial[at]),
-        closes=int(clock.strikes[at]),
+        closes=int(clock.clicks[at]),
         content=int(clock.start_load[at]),
         line=rec,
         sense=1 if w > 0 else -1 if w < 0 else 0,
@@ -141,7 +141,7 @@ def chime(
 
 
 def rewind_note(clock: Clock, top: Any, log_from: int, stopped: Any, tallies: Any) -> dict[str, Any]:
-    """The rewind note pushed at the striking for the rewind: the turned-over clocks, the counters as they stood before the strike, the beats' references among them (the turnover changes none), the log's length, the stopped mask and the release's tallies."""
+    """The rewind note pushed at the click for the rewind: the turned-over clocks, the counters as they stood before the click, the beats' references among them (the turnover changes none), the log's length, the stopped mask and the release's tallies."""
     counters = (
         [a.copy() for a in clock.wound],
         [a.copy() for a in clock.crossed],
@@ -171,8 +171,8 @@ def arrays(clock: Clock) -> list[Any]:
 
 
 def state(clock: Clock) -> list[Any]:
-    """Every integer array of the clock's state: the gears' notches and fine teeth, the hands' wound ticks, crossings and beats, the beats' references and the twins' split ticks, the dial, the strikes and the slack (the one list the census counts and the rewind compares; the former comparison of the gears and the slack alone, which left the five counters the bobs' striking reads unchecked, kept by name, the Boss's 6421253357 item 4, 2026-10-26)."""
-    found = arrays(clock) + clock.wound + clock.crossed + clock.beats + [clock.dial, clock.strikes]
+    """Every integer array of the clock's state: the gears' notches and fine teeth, the hands' wound ticks, crossings and beats, the beats' references and the twins' split ticks, the dial, the clicks and the slack (the one list the census counts and the rewind compares; the former comparison of the gears and the slack alone, which left the five counters the bobs' click reads unchecked, kept by name, the Boss's 6421253357 item 4, 2026-10-26)."""
+    found = arrays(clock) + clock.wound + clock.crossed + clock.beats + [clock.dial, clock.clicks]
     found += [a for pair in clock.reference for a in pair] + list(clock.split.values())
     return [*found, clock.slack]
 
@@ -266,13 +266,13 @@ def reading(clock: Clock, maxbits: int) -> dict[str, Any]:
 
 
 def start_winds(clock: Clock) -> list[Any]:
-    """Every hand's wind at every clock at the tick's start, the striking's own reading (hands.wind of the hands' start gears at their gearing at the start load, PM-S1's unit), read again by the writer from what the striking keeps; none before the first strike."""
+    """Every hand's wind at every clock at the tick's start, the click's own reading (hands.wind of the hands' start gears at their gearing at the start load, PM-S1's unit), read again by the writer from what the click keeps; none before the first click."""
     read = [readings.gearing_of(clock, r, clock.start_load, clock.start_factors) for r in clock.hands()]
     return [hands.wind(clock, gears, g) for gears, g in zip(clock.start_gears, read, strict=False)]
 
 
 def clock_lines(clock: Clock) -> dict[str, Any]:
-    """The chart's clock and mesh line at a tick, every clock by its index in the great clock's order: the regulator's notch (the stretch), the load, the turned-over clocks, the stopped clocks (the mesh rate 0), the meshes held disengaged (the factor 0) as [clock, axis] pairs, and every mesh's lead of the unsprung gear, F_ij from the clock along each axis (the sign the direction, the size the flow); the light's kicks, the carries of the hands' lead at the key on the offset's odd gears at the tick's impulse, per axis, and the light, those odd gears' momentum at the tick's end, W (now - before) + fine - mid(W) at the gear's teeth (the impulse's own reading of a stride, which the carry keeps through the stretch's change; row 74; at a turned-over or stopped clock the tick's kick is returned with its pre-state), every hand's wind at every clock at the tick's start in the hands' order (the striking's own reading, PM-S1's unit, row 75), and where the calibre holds a held field, its notch at every clock at its weight (the well the springs read beside the load, row 76); the page draws the great clock from these and nothing else."""
+    """The chart's clock and mesh line at a tick, every clock by its index in the great clock's order: the regulator's notch (the stretch), the load, the turned-over clocks, the stopped clocks (the mesh rate 0), the meshes held disengaged (the factor 0) as [clock, axis] pairs, and every mesh's lead of the unsprung gear, F_ij from the clock along each axis (the sign the direction, the size the flow); the light's kicks, the carries of the hands' lead at the key on the offset's odd gears at the tick's impulse, per axis, and the light, those odd gears' momentum at the tick's end, W (now - before) + fine - mid(W) at the gear's teeth (the impulse's own reading of a stride, which the carry keeps through the stretch's change; row 74; at a turned-over or stopped clock the tick's kick is returned with its pre-state), every hand's wind at every clock at the tick's start in the hands' order (the click's own reading, PM-S1's unit, row 75), and where the calibre holds a held field, its notch at every clock at its weight (the well the springs read beside the load, row 76); the page draws the great clock from these and nothing else."""
     regulator = clock.train(REGULATOR).gears[0]
     load = readings.load(clock)
     mesh_rate = rates.mesh_rate_of(clock.full_rate, load)

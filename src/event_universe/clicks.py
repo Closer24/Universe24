@@ -1,4 +1,4 @@
-"""The gates read from the strikes (the chime and the fitting lines), one function per row of UNIVERSE24's table: 2 the meshes lengthening in the strikes, 8 families forming and 8b the species over a bob's track, 10 the dilation in the reader's view, 15 the conservation at the strike, 16 the one-strike floor, 17 the charge, 19 the mass ratios in the strikes and 24 the unspringing from the fittings' unwound train and the sprung engagements' jams; the species reckoned by reckoner.py, memoized per chart."""
+"""The gates read from the clicks (the chime and the fitting lines), one function per row of UNIVERSE24's table: 2 the meshes lengthening in the clicks, 8 families forming and 8b the species over a bob's track, 10 the dilation in the reader's view, 15 the conservation at the click, 16 the one-click floor, 17 the charge, 19 the mass ratios in the clicks and 24 the unspringing from the fittings' unwound train and the sprung engagements' jams; the species reckoned by reckoner.py, memoized per chart."""
 
 from __future__ import annotations
 
@@ -75,7 +75,7 @@ def species_track(chart: Chart) -> dict[str, Any]:
 
 
 def families(chart: Chart) -> dict[str, Any]:
-    """Gate 8: the species from the face of every chime (the whole view), every chime within the one-strike floor and every track read right, every lift the calibre names fitted (its sprung hands, the typed points of the rim's circle; the former constant 3 the toy calibre's count)."""
+    """Gate 8: the species from the face of every chime (the whole view), every chime within the one-click floor and every track read right, every lift the calibre names fitted (its sprung hands, the typed points of the rim's circle; the former constant 3 the toy calibre's count)."""
     reckoning, right, within, _floors = reckoned(chart)
     tracks, track_right, _confusion = tracks_of(chart)
     fitted = chart.fitted_of()
@@ -112,7 +112,7 @@ def leg_of(chart: Chart, x: Rational) -> int:
 
 
 def mass_ratios(chart: Chart) -> dict[str, Any]:
-    """Gate 19: the mass ratios in the strikes (MS-S1's predicate: per chimed hand the middle reckoning of its tracks' middles, its leg against the header's, the ratio of the two heaviest chimed hands' legs read right within the one-strike floor; NOT SHOWN where one hand alone is chimed) beside the rim's typed legs and the rim's circle."""
+    """Gate 19: the mass ratios in the clicks (MS-S1's predicate: per chimed hand the middle reckoning of its tracks' middles, its leg against the header's, the ratio of the two heaviest chimed hands' legs read right within the one-click floor; NOT SHOWN where one hand alone is chimed) beside the rim's typed legs and the rim's circle."""
     reckoning, _right, _within, floor_mil = reckoned(chart)
     tracks, _track_right, _confusion = tracks_of(chart)
     names, gear_pinion = chart.NAMES, chart.gear_pinion
@@ -139,18 +139,18 @@ def mass_ratios(chart: Chart) -> dict[str, Any]:
         )
     else:
         heavy, light = chimed[-1], chimed[-PAIR]
-        strikes = carries(read_legs[heavy], read_legs[light], MIL) if read_legs[light] else None
+        clicks = carries(read_legs[heavy], read_legs[light], MIL) if read_legs[light] else None
         header = carries(sine_rim(heavy, chart.rim), sine_rim(light, chart.rim), MIL)
         floors = [f for f in floor_mil if f is not None]
         found["the two heaviest credited planes' legs: clicks / header (parts per million)"] = [
-            strikes,
+            clicks,
             header,
         ]
         read = (
             "SHOWN: the mass ratio in the clicks reads the header's within the one-click floor"
-            if strikes is not None and header is not None and abs(strikes - header) <= max(floors or [0])
+            if clicks is not None and header is not None and abs(clicks - header) <= max(floors or [0])
             else "NOT SHOWN: the lighter plane's leg in the clicks is 0 (below the floor)"
-            if strikes is None
+            if clicks is None
             else "NOT SHOWN: the ratio in the clicks is off the header's beyond the floor"
         )
     points = chart.rim_points()
@@ -161,8 +161,8 @@ def mass_ratios(chart: Chart) -> dict[str, Any]:
     return {"19 mass ratios (parts per million)": found | {"verdict": read}}
 
 
-def one_strike_floor(chart: Chart) -> dict[str, Any]:
-    """Gate 16: the one-strike floor on x per chime (the uncertainty floor), no chime reading beyond it."""
+def one_click_floor(chart: Chart) -> dict[str, Any]:
+    """Gate 16: the one-click floor on x per chime (the uncertainty floor), no chime reading beyond it."""
     reckoning, _right, within, floor_mil = reckoned(chart)
     fl = sorted(f for f in floor_mil if f is not None)
     if not fl:
@@ -237,8 +237,8 @@ def charge(chart: Chart) -> dict[str, Any]:
     }
 
 
-def conservation_at_strike(chart: Chart) -> dict[str, Any]:
-    """Gate 15: the conservation at the strike, unwound against tallied over the fittings: where the fitting carries the unwind's slack (EX-S1, the slack kept at the clock) the identity unwound + the slack before - the slack after = tallied on every fitting and on every merger's end (its take carrying the two ends' cross term in the signed slack), else the former identity unwound >= tallied (the exact form is row 47)."""
+def conservation_at_click(chart: Chart) -> dict[str, Any]:
+    """Gate 15: the conservation at the click, unwound against tallied over the fittings: where the fitting carries the unwind's slack (EX-S1, the slack kept at the clock) the identity unwound + the slack before - the slack after = tallied on every fitting and on every merger's end (its take carrying the two ends' cross term in the signed slack), else the former identity unwound >= tallied (the exact form is row 47)."""
     fittings, (unwound, tallied) = chart.fittings, chart.unwinds_of()
     paid = [b for b in fittings if "remainder" in b]
     identity = all(

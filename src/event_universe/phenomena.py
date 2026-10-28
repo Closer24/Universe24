@@ -59,23 +59,29 @@ def well_at_matter(chart: Chart, by_tick: dict[int, set[tuple[int, ...]]]) -> tu
     return deeper, read
 
 
-def bound_pairs(chart: Chart, by_tick: dict[int, set[tuple[int, ...]]]) -> tuple[int, int]:
-    """Of the pairs of clocks chiming one line at one tick, those one mesh apart, and all of them."""
-    pairs = near = 0
-    for clocks in by_tick.values():
-        for a, b in combinations(sorted(clocks), PAIR):
-            pairs += 1
-            near += chart.distance(a, b) == 1
-    return near, pairs
+def laid_pairs(chart: Chart) -> dict[int, set[tuple[tuple[int, ...], ...]]]:
+    """A fitting's own two children, line by line: the two clock-nodes a birth laid one hand at, its - end and its + end, where the hand is its own twin."""
+    found: dict[int, set[tuple[tuple[int, ...], ...]]] = defaultdict(set)
+    for b in (b for b in chart.fittings if "plus_hand" not in b):
+        found[int(b["line_pair"])].add(tuple(sorted((tuple(b["minus"]), tuple(b["plus"])))))
+    return found
+
+
+def bound_pairs(
+    chart: Chart, by_tick: dict[int, set[tuple[int, ...]]], laid: set[tuple[tuple[int, ...], ...]]
+) -> tuple[int, int]:
+    """Of the distinct pairs of clock-nodes chiming one line at one tick, each counted once and a fitting's own two children left out (David's DAVID-THE-MIRRORS-FITTING.md: the former count read the children chiming where laid, at every tick), those one mesh apart, and all of them."""
+    distinct = {p for clocks in by_tick.values() for p in combinations(sorted(clocks), PAIR)} - laid
+    return sum(1 for a, b in distinct if chart.distance(a, b) == 1), len(distinct)
 
 
 def nuclear_binding(chart: Chart) -> dict[str, Any]:
-    """Row 76: nuclear binding and fusion: with a held field in the universe, a family's chimes stand bound one mesh apart (of the pairs of clocks chiming its line at one tick, the share one mesh apart above twice the board's own, by cross multiplication) in the field's well (most of its chimes at a clock whose field stands above the board's mean); NOT READ with no held field or no two clocks chiming one family at one tick; fusion NOT READ, no act joining two bound bobs into one (the merger's book first, DAVID-CLOSE-LAW.md item 2)."""
-    fields, lines = held_fields(chart), matter_by_tick(chart)
+    """Row 76: nuclear binding and fusion: with a held field in the universe, a family's chimes stand bound one mesh apart (of the distinct pairs of clock-nodes chiming its line at one tick, a fitting's own two children left out, the owner's yes of 2026-10-28, 02:2x UTC, the share one mesh apart above twice the board's own, by cross multiplication) in the field's well (most of its chimes at a clock whose field stands above the board's mean); NOT READ with no held field or no two clocks chiming one family at one tick; fusion NOT READ, no act joining two bound bobs into one (the merger's book first, DAVID-CLOSE-LAW.md item 2)."""
+    fields, lines, laid = held_fields(chart), matter_by_tick(chart), laid_pairs(chart)
     neighbours, others = board_share(chart)
     found = {}
     for line, by_tick in sorted(lines.items()):
-        near, pairs = bound_pairs(chart, by_tick)
+        near, pairs = bound_pairs(chart, by_tick, laid[line])
         deeper, read = well_at_matter(chart, by_tick)
         found[chart.gear_name[line]] = [near, pairs, deeper, read]
     bound = [
@@ -94,7 +100,7 @@ def nuclear_binding(chart: Chart) -> dict[str, Any]:
     return {
         "76 nuclear binding and fusion": {
             "held fields (pair, weight)": [[r["pair"], r["weight"]] for r in fields],
-            "by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": found,
+            "by family: distinct pairs one mesh apart, distinct pairs, chimes in the field's well, chimes read": found,
             "the board's own share one mesh from a clock": [neighbours, others],
             "fusion": "NOT READ: no act joins two bound bobs into one (the merger's book first, DAVID-CLOSE-LAW.md item 2)",
             "verdict": verdict,
@@ -225,7 +231,7 @@ def exchanging(chart: Chart) -> list[int]:
 
 
 def temperature(chart: Chart) -> dict[str, Any]:
-    """Row 75: temperature and the equipartition of energy (David's DAVID-FOUR-PHENOMENA.md section 2: equipartition needs a conserved wind and an exchange between the modes; Rule3 is linear, so the close is the only exchange). Every hand is a family and its hand at every clock a mode. A family's wind per mode is its wind summed over the clocks at the tick's start over the count of clocks, from the clock lines' `winds` (the striking's own reading, PM-S1's unit). It is read per bang, the spans from the setting and from every exact return to the next (swings.exact_of; the whole run where there is none), in thousandths of the light's winding (rule3.winding_of at the rim: one unit for every family). The families in the balance are those exchanging at a click (`exchanging`). Equipartition is SHOWN where, at the last bang, every such family's wind per mode lies within a factor two of every other's, the temperature their common mean; SHOWN in part where the spread (the largest family's wind per mode over the least's) narrows from the first bang to the last; NOT SHOWN where it does not; NOT READ where no click exchanges wind (no birth, every chime laid back) or on a record without the winds. Beside it, the light's occupation in whole light windings at the credits' clocks by the credit's beat (row 48's predicate in David's words)."""
+    """Row 75: temperature and the equipartition of energy (David's DAVID-FOUR-PHENOMENA.md section 2: equipartition needs a conserved wind and an exchange between the modes; Rule3 is linear, so the close is the only exchange). Every hand is a family and its hand at every clock a mode. A family's wind per mode is its wind summed over the clocks at the tick's start over the count of clocks, from the clock lines' `winds` (the click's own reading, PM-S1's unit). It is read per bang, the spans from the setting and from every exact return to the next (swings.exact_of; the whole run where there is none), in thousandths of the light's winding (rule3.winding_of at the rim: one unit for every family). The families in the balance are those exchanging at a click (`exchanging`). Equipartition is SHOWN where, at the last bang, every such family's wind per mode lies within a factor two of every other's, the temperature their common mean; SHOWN in part where the spread (the largest family's wind per mode over the least's) narrows from the first bang to the last; NOT SHOWN where it does not; NOT READ where no click exchanges wind (no birth, every chime laid back) or on a record without the winds. Beside it, the light's occupation in whole light windings at the credits' clocks by the credit's beat (row 48's predicate in David's words)."""
     per_tick = {
         int(line["i"]): [sum(int(x) for x in w) for w in line["winds"]]
         for line in chart.clocks
@@ -234,7 +240,7 @@ def temperature(chart: Chart) -> dict[str, Any]:
     if not per_tick:
         return predicates.unread(
             TEMPERATURE,
-            "the record carries no wind of the modes (the clock lines' winds: the striking's wind of every hand at every clock at the tick's start)",
+            "the record carries no wind of the modes (the clock lines' winds: the click's wind of every hand at every clock at the tick's start)",
             BALANCE,
         )
     families = exchanging(chart)

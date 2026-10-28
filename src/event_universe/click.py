@@ -1,4 +1,4 @@
-"""The striking, the clock's fourth act (ALGEBRA.md, The strike writes on the lattice): the readings at the start (every train's gearing, the unsprung hand's wind and each hand's wind at the vacuum's weight, the stopped clocks), the meshes' engagement (`engage`: every mesh once from its +a end, both ends holding a whole winding of the hand, the + fitted hand at the end the hand's lead flows into where the twist is right, the conjugate pair's selector for a sprung hand, the one-mesh read of a number at that end), the advances jammed by name (`jam`), the fittings unwound and advanced (`fittings`: the fitting's one unwind per clock from the unsprung hand, the unspringing's one unwind per end from the unwound hand, SL-S2, every unwind the one act at a list of ends, unspring.unwinds, CR-S2), the bobs' chiming (bobs.py); the advance, the exact unwind and the push they tally; the striking undone from the log at the going -1 (`strike`). The striking's one moment (CL-S2, the owner's word of 2026-10-26, 22:0x UTC by the Boss's clock, the two blind hands' cut): every reading of a hand the striking LOGS is read at the hand's notches at the tick's start (`hand_starts`, kept on the clock as `start_gears`), the sense a chime carries, the notches a chime's face shows and the push an unwind tallies at each of its ends, with the cross term of an unspringing's two moves tallied once at the engagement's own clock; the readings the striking ACTS on keep their own moment by name, the wind's fall and the exact count at an unwind and the notches an unspringing unwinds whole, read on the great clock the unwind writes, since an unwind sized on a notch the great clock no longer holds breaks the law's width; the face's notch before the turnover is the one copy of the state the turnover replaced, read at the turned-over clocks alone."""
+"""The click, the clock's fourth act (ALGEBRA.md, The click writes on the lattice): the readings at the start (every train's gearing, the unsprung hand's wind and each hand's wind at the vacuum's weight, the stopped clocks), the meshes' engagement (`engage`: every mesh once from its +a end, both ends holding a whole winding of the hand, the + fitted hand at the end the hand's lead flows into where the twist is right, the conjugate pair's selector for a sprung hand, the one-mesh read of a number at that end), the advances jammed by name (`jam`), the fittings unwound and advanced (`fittings`: the fitting's one unwind per clock from the unsprung hand, the unspringing's one unwind per end from the unwound hand, SL-S2, every unwind the one act at a list of ends, unspring.unwinds, CR-S2), the bobs' chiming (bobs.py); the advance, the exact unwind and the push they tally; the click undone from the log at the going -1 (`click`). The click's one moment (CL-S2, the owner's word of 2026-10-26, 22:0x UTC by the Boss's clock, the two blind hands' cut): every reading of a hand the click LOGS is read at the hand's notches at the tick's start (`hand_starts`, kept on the clock as `start_gears`), the sense a chime carries, the notches a chime's face shows and the push an unwind tallies at each of its ends, with the cross term of an unspringing's two moves tallied once at the engagement's own clock; the readings the click ACTS on keep their own moment by name, the wind's fall and the exact count at an unwind and the notches an unspringing unwinds whole, read on the great clock the unwind writes, since an unwind sized on a notch the great clock no longer holds breaks the law's width; the face's notch before the turnover is the one copy of the state the turnover replaced, read at the turned-over clocks alone."""
 
 from __future__ import annotations
 
@@ -59,7 +59,7 @@ def engage(
     stopped: Any,
     other: tuple[int, Any, list[Gear]] | None = None,
 ) -> list[Fitting]:
-    """The meshes' engagement of one hand, the same for every hand (SL-S1, the generic striking): every mesh once from its +a end; an engagement where both ends hold a whole winding of the hand at the tick's start and neither end is stopped (counted as `met`); the + fitted hand at the end the hand's own lead flows into where the twist of its transverse leads is right, at the other end where left (F = 0 and h = 0 jammed by name); a sprung hand engages as the conjugate pair alone, the two ends' sweeps of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; jammed by name `sense` where not), every sweep and the sense's refusal weighted by the hand's coupling (meshes.coupling_of, min(spring, 1): the unsprung hand's sweeps 0 and its meetings never refused by the sense, the branch on its identity a product, David's DAVID-GENERIC-ENGINE.md part B), and at rest, no lead across the mesh, as the pair at rest (MG-S1: the + fitted hand at the end whose sweep is positive, the fitting's orientation read at -1, the twist not read, its number read after the stop in `fittings`); the mesh's one number read at the lead's end names the fitted hands' hand (`list_of`; one read per clock and hand in a striking). Returns the fittings as (the unwind's clock, the fitted hands' hand, the - fitted hand's clock, the + fitted hand's clock, the vernier's room, the unwound hand)."""
+    """The meshes' engagement of one hand, the same for every hand (SL-S1, the generic click): every mesh once from its +a end; an engagement where both ends hold a whole winding of the hand at the tick's start and neither end is stopped (counted as `met`); the + fitted hand at the end the hand's own lead flows into where the twist of its transverse leads is right, at the other end where left (F = 0 and h = 0 jammed by name); a sprung hand engages as the conjugate pair alone, the two ends' sweeps of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; jammed by name `sense` where not), every sweep and the sense's refusal weighted by the hand's coupling (meshes.coupling_of, min(spring, 1): the unsprung hand's sweeps 0 and its meetings never refused by the sense, the branch on its identity a product, David's DAVID-GENERIC-ENGINE.md part B), and at rest, no lead across the mesh, as the pair at rest (MG-S1: the + fitted hand at the end whose sweep is positive, the fitting's orientation read at -1, the twist not read, its number read after the stop in `fittings`); the mesh's one number read at the lead's end names the fitted hands' hand (`list_of`; one read per clock and hand in a click). Returns the fittings as (the unwind's clock, the fitted hands' hand, the - fitted hand's clock, the + fitted hand's clock, the vernier's room, the unwound hand)."""
     fits: list[Fitting] = []
     hand, winding = clock.hands()[rec], clock.windings[rec]
     wound = (wind >= winding) & ~stopped
@@ -127,7 +127,7 @@ def twin_at(
 
 
 def jam(clock: Clock, fits: list[Fitting], winds: list[Any]) -> list[Fitting]:
-    """The advance jammed by name: where any of the fitted hand's hand already stands at its clock, and where two fitted hands of one hand would land at one clock in one striking (the sweep made at a crowded advance); an unspringing's unsprung fitted hands (the engagement lowering the coupling: the unwound hand's coupling above the fitted hands', meshes.coupling_of; the former read of the two hands' identities kept by name, R12) pass both and read their bound on their own quantum at the unwind, the unsprung hand's winding at the end as MG-S1's wind reads it, the unsprung hand a sea the unspringing pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the fitting read at -1, MG-S1). Returns the fittings kept."""
+    """The advance jammed by name: where any of the fitted hand's hand already stands at its clock, and where two fitted hands of one hand would land at one clock in one click (the sweep made at a crowded advance); an unspringing's unsprung fitted hands (the engagement lowering the coupling: the unwound hand's coupling above the fitted hands', meshes.coupling_of; the former read of the two hands' identities kept by name, R12) pass both and read their bound on their own quantum at the unwind, the unsprung hand's winding at the end as MG-S1's wind reads it, the unsprung hand a sea the unspringing pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the fitting read at -1, MG-S1). Returns the fittings kept."""
     all_hands = clock.hands()
     inverse = [k for k in fits if coupling_of(all_hands[k.rec]) > coupling_of(all_hands[k.gear_ratio])]
     kept = []
@@ -166,7 +166,7 @@ def fittings(
     factors: tuple[Any, ...],
     reads: list[tuple[Gear, rule3.Gearing]],
 ) -> set[tuple[int, ...]]:
-    """The fittings kept, every face read before any write: every fitted hand's winding first (`fitted_windings_of`, MS-S1: what is unwound is what the advance tallies and nothing made; the gearings once per hand), then the unwinds by the case of the unwound hand's ratio, the unwound hand's gear by the fall's sign paying at its gearing (unwind.fall_of's choice, CS4-S2; the former first line kept by name): at the spring 0 one exact unwind per clock and unwound hand of its fitted hands' windings summed (the birth's case, kept by name); with a spring each fitted hand's winding paid at its own end by the hand's notches unwound whole (MG-S1: the fitting read at -1, the wind's fall read at the end's clock and its six neighbours, where alone the advance changes it, the winds read kept per striking until an unspringing writes; the mesh's number read at the unwind's clock after the stop, the vernier's jam counted there); every unwind the striking's one act at a list of ends, read whole before any write (unspring.read_ends, unwind_ends, unwinds; CR-S2, the owner's word of 2026-10-26, 06:1x UTC; the former take_at, take_line and merger_take kept by name); then each fitted hand advanced at the sweep key div 2 (`fitted`). Returns every clock an unwound fitting touched."""
+    """The fittings kept, every face read before any write: every fitted hand's winding first (`fitted_windings_of`, MS-S1: what is unwound is what the advance tallies and nothing made; the gearings once per hand), then the unwinds by the case of the unwound hand's ratio, the unwound hand's gear by the fall's sign paying at its gearing (unwind.fall_of's choice, CS4-S2; the former first line kept by name): at the spring 0 one exact unwind per clock and unwound hand of its fitted hands' windings summed (the birth's case, kept by name); with a spring each fitted hand's winding paid at its own end by the hand's notches unwound whole (MG-S1: the fitting read at -1, the wind's fall read at the end's clock and its six neighbours, where alone the advance changes it, the winds read kept per click until an unspringing writes; the mesh's number read at the unwind's clock after the stop, the vernier's jam counted there); every unwind the click's one act at a list of ends, read whole before any write (unspring.read_ends, unwind_ends, unwinds; CR-S2, the owner's word of 2026-10-26, 06:1x UTC; the former take_at, take_line and merger_take kept by name); then each fitted hand advanced at the sweep key div 2 (`fitted`). Returns every clock an unwound fitting touched."""
     by_clock: dict[tuple[tuple[int, ...], int], list[Fitting]] = {}
     for k in kept:
         by_clock.setdefault((k.at, k.rec), []).append(k)
@@ -209,7 +209,7 @@ def fittings(
     for at, rec, fits, (taker, ends), light in crowded(
         clock, planned, lambda plan: claimed(clock, plan)
     ):
-        clock.strikes[at] -= light
+        clock.clicks[at] -= light
         unwound.append((at, rec, fits, summed(unwind_ends(clock, ends, taker, at))))
         writes += [(read[-1], read[0], False) for read in ends]
     for at, rec, fits, unwind in unwound:
@@ -233,7 +233,7 @@ def fitted(
     factors: tuple[Any, ...],
     writes: list[tuple[int, tuple[int, ...], bool]],
 ) -> set[tuple[int, ...]]:
-    """One unwind's fitted hands advanced by the one advance act (unspring.fitted_advanced: the sweeping fitted hands at the sweep key div 2, an unspringing's unsprung fitted hands as the exact unwind at -1, unspring.unsprung_notches, MG-S1, each end's winding found by its clock and not by its place in the unwind's list, so the advance is order-free under the ends' naming, the comparison's bug of close.py:166-169, CL-S2), each fitting logged with its numbers, its unwind's own push among them (the Boss's 6399718139: every unwind's dP on its gear, not the striking's last), an unspringing's two ends' unwinds under `takes` and its advances under `exact_lay`. Returns the clocks touched."""
+    """One unwind's fitted hands advanced by the one advance act (unspring.fitted_advanced: the sweeping fitted hands at the sweep key div 2, an unspringing's unsprung fitted hands as the exact unwind at -1, unspring.unsprung_notches, MG-S1, each end's winding found by its clock and not by its place in the unwind's list, so the advance is order-free under the ends' naming, the comparison's bug of close.py:166-169, CL-S2), each fitting logged with its numbers, its unwind's own push among them (the Boss's 6399718139: every unwind's dP on its gear, not the click's last), an unspringing's two ends' unwinds under `takes` and its advances under `exact_lay`. Returns the clocks touched."""
     touched = {at}
     for _at, s, minus, plus, room, _rec in fits:
         exact: list[list[int] | None] = []
@@ -263,13 +263,13 @@ def fitted(
             for where, push in zip((minus, plus), advanced[-1], strict=True)
         ]
         clock.counts["births"] += 1
-        clock.strikes[at] += 1
+        clock.clicks[at] += 1
         fitting(clock, at, s, (minus, plus), unwind, rec, advanced, tallies, len(fits), room, exact)
     return touched
 
 
 def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
-    """The strike at -1 (X2): the log since the tick's rewind note read backward, every fitting's recoils and advances and every unwind undone by the same acts at -1, the log cut back and the counters set to the rewind note's."""
+    """The click at -1 (X2): the log since the tick's rewind note read backward, every fitting's recoils and advances and every unwind undone by the same acts at -1, the log cut back and the counters set to the rewind note's."""
     rec0 = clock.hands().index(clock.unsprung())
     untallied: set[tuple[Any, ...]] = set()
     for entry in reversed(clock.log[rewind_note["log_from"] :]):
@@ -310,7 +310,7 @@ def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
                     recoil(clock, where, unwind["dP_take"], unwind["clock"], -1)
                 if "taken_levels" in unwind:
                     advance(clock, unwind.get("hand", rec), where, tuple(unwind["taken_levels"]))
-                    clock.strikes[where] += 1
+                    clock.clicks[where] += 1
                     clock.slack[where] = unwind["remainder_was"]
                     continue
                 if not first:
@@ -319,19 +319,19 @@ def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
                 count = 0 if "laid_back" in unwind else toward * unwind["levels"]
                 move(clock, rec, unwind["taken_line"], where, -count)
                 clock.slack[where] = unwind["remainder_was"]
-            clock.strikes[at] -= 1
+            clock.clicks[at] -= 1
     del clock.log[rewind_note["log_from"] :]
     clock.wound, clock.crossed, clock.beats, clock.reference, clock.split = rewind_note["counters"]
 
 
-def strike(
+def click(
     clock: Clock,
     hand_starts: list[list[Gear]],
     held: list[list[Gear]],
     going: int = 1,
     rewind_note: dict[str, Any] | None = None,
 ) -> None:
-    """The strike in the going (X2: the undo is the strike at -1): forward the readings at the start (each hand's wind at its unscaled gearing in the regulator's winding, PM-S1), the meshes' engagement of every hand alike (SL-S1), the advances jammed by name, the fittings unwound and advanced, the bobs' chiming; backward the striking undone from the log's rewind note in the reverse order of its lines: the advances removed, an unspringing's cross term untallied at the engagement's clock, the unwound gear moved back by the unwind's own count at every unwind's clock (`taken_line`, CS4-S2; the former restore to the notch that was, which read a gear another advance of the same striking had moved and undid that advance twice, struck 2026-10-26 under CL-S2's rewind on the fed horizon piece; an unspringing's two ends under `takes`, their notches returned whole, MG-S1, and its exact advances removed), the slack, the strikes at every end and the readings' counters restored (an unspringing's ends count their strike back, left uncounted by the former undo and met by the rewind once the state's counters are compared, 2026-10-26) (RW-S1: one function with the going, the former `unclick` kept by name). `hand_starts` the hands' gears at the tick's start, `held` every train's."""
+    """The click in the going (X2: the undo is the click at -1): forward the readings at the start (each hand's wind at its unscaled gearing in the regulator's winding, PM-S1), the meshes' engagement of every hand alike (SL-S1), the advances jammed by name, the fittings unwound and advanced, the bobs' chiming; backward the click undone from the log's rewind note in the reverse order of its lines: the advances removed, an unspringing's cross term untallied at the engagement's clock, the unwound gear moved back by the unwind's own count at every unwind's clock (`taken_line`, CS4-S2; the former restore to the notch that was, which read a gear another advance of the same click had moved and undid that advance twice, struck 2026-10-26 under CL-S2's rewind on the fed horizon piece; an unspringing's two ends under `takes`, their notches returned whole, MG-S1, and its exact advances removed), the slack, the clicks at every end and the readings' counters restored (an unspringing's ends count their click back, left uncounted by the former undo and met by the rewind once the state's counters are compared, 2026-10-26) (RW-S1: one function with the going, the former `unclick` kept by name). `hand_starts` the hands' gears at the tick's start, `held` every train's."""
     if going == -1:
         assert rewind_note is not None
         undo(clock, rewind_note)

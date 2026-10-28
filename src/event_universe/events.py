@@ -1,4 +1,4 @@
-"""The reading's event lines, the rows' names, the rows that are words alone and the eras in the strikes' view: the event lines (the owner's words of 2026-10-25: the record tells what it sees as it sees it; every gate has a label when it happens): one line per row of the table at the tick it first shows, found by reading the row on the chart cut to each tick (a search on the cuts, the verdict read as standing from its first tick on), with its clock where the row names one (`at`) and its label in the gate's own words of three to six and its phenomenon in plain words (NAMES, the one table of the rows' names), for the page's labels and the bar's ticks; every line read from the chart alone."""
+"""The reading's event lines, the rows' names, the rows that are words alone and the eras in the clicks' view: the event lines (the owner's words of 2026-10-25: the record tells what it sees as it sees it; every gate has a label when it happens): one line per row of the table at the tick it first shows, found by reading the row on the chart cut to each tick (a search on the cuts, the verdict read as standing from its first tick on), with its clock where the row names one (`at`) and its label in the gate's own words of three to six and its phenomenon in plain words (NAMES, the one table of the rows' names), for the page's labels and the bar's ticks; every line read from the chart alone."""
 
 from __future__ import annotations
 
@@ -197,7 +197,7 @@ def cycle_setting(chart: Chart) -> bool:
 
 
 def no_wave(chart: Chart) -> str:
-    """Why a row of a packet's motion is not read: no packet with a stride in the piece, else no position per striking."""
+    """Why a row of a packet's motion is not read: no packet with a stride in the piece, else no position per click."""
     return (
         "no lay with a wave number in the world"
         if not cycle_setting(chart)
@@ -308,7 +308,7 @@ def stub(number: str) -> Callable[[Chart], dict[str, Any]]:
 
 
 def eighths_of(chart: Chart) -> tuple[list[int | None], list[list[int]], list[tuple[int, list[int]]]]:
-    """The eras in the strikes' view (rows 58 to 60): the spacing of a gear's chimes at one clock in the clock's own dial, its mean per eighth of the run (the whole run's eighths, so a cut reads the same eighths; an eighth read once complete), the growth of each eighth over the complete one before it as (the eighth, the growth), and the last chime of each eighth (its tick and clock)."""
+    """The eras in the clicks' view (rows 58 to 60): the spacing of a gear's chimes at one clock in the clock's own dial, its mean per eighth of the run (the whole run's eighths, so a cut reads the same eighths; an eighth read once complete), the growth of each eighth over the complete one before it as (the eighth, the growth), and the last chime of each eighth (its tick and clock)."""
     eighths: list[list[int]] = [[] for _ in range(LISTED)]
     last: list[tuple[int, list[int]]] = [(0, []) for _ in range(LISTED)]
     whole = int(chart.run["intervals"])
@@ -372,8 +372,8 @@ def deceleration(chart: Chart) -> dict[str, Any]:
     )
 
 
-def acceleration_in_strikes(chart: Chart) -> dict[str, Any]:
-    """Row 60: the acceleration in the strikes, after a slowing an eighth's growth of the spacing larger than the one before."""
+def acceleration_in_clicks(chart: Chart) -> dict[str, Any]:
+    """Row 60: the acceleration in the clicks, after a slowing an eighth's growth of the spacing larger than the one before."""
 
     def quickens(g: list[int]) -> int | None:
         slow = next((k for k in range(1, len(g)) if g[k] < g[k - 1]), len(g))

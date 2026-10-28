@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from event_universe import hands
-from event_universe.core.spokes import AXES, transverse
+from event_universe.core.spokes import AXES
 from event_universe.meshes import gradient
 
 if TYPE_CHECKING:
@@ -13,10 +13,10 @@ if TYPE_CHECKING:
 
 
 def stress_of(notches: list[Any], velocity: list[Any]) -> list[Any]:
-    """A hand's stress as one outer product (Y-S1 to Y-S3), Re(conj(d_mu z) d_nu z) of the Gaussian hand, the dot over its gears (hands.dot) of two of its changes, d_0 z its velocity and d_a z the centred gradient of its notches along the axis a at the tick's start: the nine axis gears' sources in the regulator's order, the diagonal (a, a) (the tensions before the trace is taken), the flows (0, a) (the momentum density, odd under the axis's inversion, T_1u) and the shears (a, a + 1) (xy, yz, zx, T_2g: the sign the product of the two axes' signs); one mesh's reach, no carry, the same act on every hand."""
+    """A hand's stress as one outer product (Y-S1 to Y-S3), Re(conj(d_mu z) d_nu z) of the Gaussian hand, the dot over its gears (hands.dot) of two of its changes, d_0 z its velocity and d_a z the centred gradient of its notches along the axis a at the tick's start: the six axis gears' sources in the regulator's order, the diagonal (a, a) (the tensions before the trace is taken) and the flows (0, a) (the momentum density, odd under the axis's inversion, T_1u); one mesh's reach, no carry, the same act on every hand (the shears (a, a + 1), xy, yz and zx, T_2g, read by no act, struck: the Scribe's R11, the owner's yes of 2026-10-28, 02:2x UTC)."""
     d = [[gradient(x, a) for x in notches] for a in range(AXES)]
     pairs = [(d[a], d[a]) for a in range(AXES)] + [(velocity, d[a]) for a in range(AXES)]
-    return [hands.dot(x, y) for x, y in pairs + [(d[a], d[transverse(a)[0]]) for a in range(AXES)]]
+    return [hands.dot(x, y) for x, y in pairs]
 
 
 def tensor_parts(parts: list[Any]) -> tuple[Any, list[Any]]:
