@@ -1,0 +1,40 @@
+world_nature.json 60 ticks; births 3
+  jams by name `orientation` or `twist`: 185
+    of them F1 gives sigma = 0 (h F = 0): 185
+  engagements engage() orients (uncoupled giver (fittings)), before the lay jam and the stop: 1262
+    [uncoupled giver (fittings)] F1's senses equal to the head's (+ at plus, - at minus): 1262
+    [uncoupled giver (fittings)] sigma_x + sigma_y = 0: 1262
+    [uncoupled giver (fittings)] the same-time Im(conj(z_x) z_y) (the charge current) is 0: 1262
+    [uncoupled giver (fittings)] sgn(Im(conj(z_x) z_y)) = sgn(F): 0
+  rest-branch engagements (R2, lead 0): F1 gives sigma 0 there: 46
+  engagements engage() orients (coupled giver (moving unspringings)), before the lay jam and the stop: 8423
+    [coupled giver (moving unspringings)] F1's senses equal to the head's (+ at plus, - at minus): 8423
+    [coupled giver (moving unspringings)] sigma_x + sigma_y = 0: 8423
+    [coupled giver (moving unspringings)] the same-time Im(conj(z_x) z_y) (the charge current) is 0: 47
+    [coupled giver (moving unspringings)] sgn(Im(conj(z_x) z_y)) = sgn(F): 4310
+  the sign lemma: sgn(n) = n div (n n + 1) - (-n) div (n n + 1) off at 0 of 200008 integers
+world_hole.json 60 ticks; births 28
+  jams by name `orientation` or `twist`: 1200
+    of them F1 gives sigma = 0 (h F = 0): 1200
+  engagements engage() orients (uncoupled giver (fittings)), before the lay jam and the stop: 13586
+    [uncoupled giver (fittings)] F1's senses equal to the head's (+ at plus, - at minus): 13586
+    [uncoupled giver (fittings)] sigma_x + sigma_y = 0: 13586
+    [uncoupled giver (fittings)] the same-time Im(conj(z_x) z_y) (the charge current) is 0: 4565
+    [uncoupled giver (fittings)] sgn(Im(conj(z_x) z_y)) = sgn(F): 4910
+  rest-branch engagements (R2, lead 0): F1 gives sigma 0 there: 53
+  engagements engage() orients (coupled giver (moving unspringings)), before the lay jam and the stop: 2783
+    [coupled giver (moving unspringings)] F1's senses equal to the head's (+ at plus, - at minus): 2783
+    [coupled giver (moving unspringings)] sigma_x + sigma_y = 0: 2783
+    [coupled giver (moving unspringings)] the same-time Im(conj(z_x) z_y) (the charge current) is 0: 14
+    [coupled giver (moving unspringings)] sgn(Im(conj(z_x) z_y)) = sgn(F): 1346
+  the sign lemma: sgn(n) = n div (n n + 1) - (-n) div (n n + 1) off at 0 of 200008 integers
+world_bang.json 12 ticks; births 64
+  engagements engage() orients (uncoupled giver (fittings)), before the lay jam and the stop: 768
+    [uncoupled giver (fittings)] F1's senses equal to the head's (+ at plus, - at minus): 768
+    [uncoupled giver (fittings)] sigma_x + sigma_y = 0: 768
+    [uncoupled giver (fittings)] the same-time Im(conj(z_x) z_y) (the charge current) is 0: 0
+    [uncoupled giver (fittings)] sgn(Im(conj(z_x) z_y)) = sgn(F): 0
+  jams by name `orientation` or `twist`: 1344
+    of them F1 gives sigma = 0 (h F = 0): 1344
+  rest-branch engagements (R2, lead 0): F1 gives sigma 0 there: 1408
+  the sign lemma: sgn(n) = n div (n n + 1) - (-n) div (n n + 1) off at 0 of 200008 integers

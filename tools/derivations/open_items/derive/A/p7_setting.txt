@@ -1,0 +1,98 @@
+P7 the setting's lay
+  (f) world_hole.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (0, 0)
+  (a) world_hole.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_hole.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_hole.json: row 0: the file's quanta summed 395; the quotients E(x) div w_c read and summed 22794: 1
+  (f) world_nature.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (0, 0)
+  (a) world_nature.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_nature.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_nature.json: row 0: the file's quanta summed 6; the quotients E(x) div w_c read and summed 24: 1
+  (f) world_bang.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (1, 0)
+  (a) world_bang.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_bang.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_bang.json: row 0: the file's quanta summed 5000000; the quotients E(x) div w_c read and summed 320000000: 1
+  (f) world_node.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (0, 0)
+  (a) world_node.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_node.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_node.json: row 0: the file's quanta summed 1; the quotients E(x) div w_c read and summed 3: 1
+  (f) world_sea.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (0, 0)
+  (a) world_sea.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_sea.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (f) world_sea_3.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (0, 0)
+  (a) world_sea_3.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_sea_3.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (f) world_pair_3.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (1, 35)
+  (a) world_pair_3.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_pair_3.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_pair_3.json: row 2: the file's quanta summed 1; the quotients E(x) div w_c read and summed 27: 1
+  (f) world_plasma.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (2, 50)
+  (a) world_plasma.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_plasma.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_plasma.json: row 1: the file's quanta summed 1; the quotients E(x) div w_c read and summed 125: 1
+  (e) world_plasma.json: row 2: the file's quanta summed 1; the quotients E(x) div w_c read and summed 125: 1
+  (f) world_plasma_3.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (2, 50)
+  (a) world_plasma_3.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_plasma_3.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_plasma_3.json: row 1: the file's quanta summed 1; the quotients E(x) div w_c read and summed 27: 1
+  (e) world_plasma_3.json: row 2: the file's quanta summed 1; the quotients E(x) div w_c read and summed 27: 1
+  (f) world_universe.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (2, 40)
+  (a) world_universe.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_universe.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_universe.json: row 2: the file's quanta summed 1; the quotients E(x) div w_c read and summed 125: 1
+  (e) world_universe.json: row 3: the file's quanta summed 1; the quotients E(x) div w_c read and summed 125: 1
+  (f) world_universe_3.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (2, 40)
+  (a) world_universe_3.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_universe_3.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_universe_3.json: row 2: the file's quanta summed 1; the quotients E(x) div w_c read and summed 27: 1
+  (e) world_universe_3.json: row 3: the file's quanta summed 1; the quotients E(x) div w_c read and summed 27: 1
+  (f) world_ga2.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (1, 0)
+  (a) world_ga2.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_ga2.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_ga2.json: row 0: the file's quanta summed 5; the quotients E(x) div w_c read and summed 320: 1
+  (f) world_packet.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (1, 28)
+  (a) world_packet.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_packet.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_packet.json: row 2: the file's quanta summed 218; the quotients E(x) div w_c read and summed 400: 1
+  (f) world_bodies.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (2, 56)
+  (a) world_bodies.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_bodies.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_bodies.json: row 0: the file's quanta summed 8; the quotients E(x) div w_c read and summed 48: 1
+  (e) world_bodies.json: row 2: the file's quanta summed 250; the quotients E(x) div w_c read and summed 492: 1
+  (f) world_emission.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (2, 56)
+  (a) world_emission.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_emission.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_emission.json: row 2: the file's quanta summed 250; the quotients E(x) div w_c read and summed 492: 1
+  (f) world_emission_one.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (1, 28)
+  (a) world_emission_one.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_emission_one.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_emission_one.json: row 2: the file's quanta summed 125; the quotients E(x) div w_c read and summed 246: 1
+  (f) world_polarization.json: the setting's own searches (least_at) and roots (largest_below), beyond the bare clock's: (2, 35)
+  (a) world_polarization.json: S1's lay equal to the head's setting bit for bit: 1
+  (a) world_polarization.json: five ticks of the two runs equal bit for bit (every gear and the slack): 1
+  (e) world_polarization.json: row 2: the file's quanta summed 250; the quotients E(x) div w_c read and summed 406: 1
+  (b) world_packet.json: row 2 Node-clocks the rest lay touched: 125
+  (b) world_packet.json: row 2 S2 equal to the head (before, fine) bit for bit: 125
+  (b) world_bodies.json: row 2 Node-clocks the rest lay touched: 54
+  (b) world_bodies.json: row 2 S2 equal to the head (before, fine) bit for bit: 54
+  (b) world_emission_one.json: row 2 Node-clocks the rest lay touched: 27
+  (b) world_emission_one.json: row 2 S2 equal to the head (before, fine) bit for bit: 27
+  (b) world_pair_3.json: row 2 Node-clocks the rest lay touched: 27
+  (b) world_pair_3.json: row 2 S2 equal to the head (before, fine) bit for bit: 27
+  (b) world_plasma_3.json: row 2 Node-clocks the rest lay touched: 27
+  (b) world_plasma_3.json: row 2 S2 equal to the head (before, fine) bit for bit: 27
+  (b) world_plasma_3.json: row 1 Node-clocks the rest lay touched: 27
+  (b) world_plasma_3.json: row 1 S2 equal to the head (before, fine) bit for bit: 27
+  (b) world_universe_3.json: row 2 Node-clocks the rest lay touched: 27
+  (b) world_universe_3.json: row 2 S2 equal to the head (before, fine) bit for bit: 27
+  (b) world_universe_3.json: row 3 Node-clocks the rest lay touched: 27
+  (b) world_universe_3.json: row 3 S2 equal to the head (before, fine) bit for bit: 27
+  (b) S2 under z -> i z on random complex hands: the rest momentum turned exactly (off of 2000): 0
+  (c) world_bang.json: S4's i^p by products against the head's quarter table, Node-clocks equal: (64, 64)
+  (c) world_ga2.json: S4's i^p by products against the head's quarter table, Node-clocks equal: (64, 64)
+  (d) the double rounding composed in the 6 orders: draws where the order moves the result (of 3000): 2290
+  (d) the exact product rounded once: draws where the order moves the result (of 3000): 0
+  (d) the head's sorted angle_of differs from the exact product by a tooth (of 3000): 1344
+
+real	0m7.832s
+user	0m7.488s
+sys	0m0.044s
