@@ -98,7 +98,7 @@ NAMES = {
     ),
     "73": (
         "the mass becomes light",
-        "E = mc^2 at the merger, the pair's share taken as the light's quantum",
+        "E = mc^2 at the merger, the pair's share taken as the light's quantum and its remainder",
     ),
     "74": (
         "the light polarized by its current",
