@@ -383,3 +383,9 @@ The owner's direct word of 03:2x UTC to the Scribe (ledger row 285): "node-clock
 **Departures and questions to name for the Boss, as in section 22:** (a) the code spelling (the class Clock to NodeClock or his own choice, striking.py, strikes.py, the identifiers and the chart's keys named strike, the Reader's keys) is the Boss's; (b) the lowercase word clock where it names a node in running text is the confusion the owner names, and this pass did not read those places one by one; (c) David's files write clock-node, the order the owner has turned; (d) the Reader's generated blocks still carry Node (9 places) until the Boss's push.
 
 **Asked of the owner, as in section 24, and whether the lowercase word clock for a node is to become node-clock too.**
+
+## 26. The register at the owner's request for the postulates as one clock (2026-10-28, 03:4x UTC)
+
+The owner's direct request of 03:3x UTC to the Scribe (ledger row 286): a wording for the postulates, the world built of clocks that make a kind of system of a great unifying clock. The Scribe's draft is SCRIBE-POSTULATES-AS-ONE-CLOCK-1.md beside this report: a picture over the postulates, the four postulates in the owner's titles with the great clock in their bodies, and a paragraph of what the four make (the clauses that already say how many clocks are one), each sentence's ground in the law named in a table; the law's postulates stand unchanged until his word. No src is read or moved; the counts of the engine stand as in section 19.
+
+**Departures and questions to name for the Boss, new:** none in the engine. **Asked of the owner:** (a) whether Postulate 3's title is to read one Mesh per tick at most (the law's light is 1 / sqrt 3 of a Mesh per tick, below the causal speed); (b) whether the picture's last sentence stays; (c) whether the paragraph of what the four make stays a consequence; and, as in section 25, whether the lowercase word clock for a node is to become node-clock too.

@@ -1,0 +1,48 @@
+# The postulates as one clock
+
+A wording drafted by the Scribe at the owner's request of 2026-10-28, 03:3x UTC, directly to the Scribe (in Hebrew, verbatim in translation): "Give me a wording for the postulates, how the world is built of clocks that make a kind of system of a great unifying clock.." A proposal only: no sentence of docs/ALGEBRA.md changes until the owner's word, and the four postulates stand there, in the owner's own sentences, as they are. If the wording is entered, the former text is kept by name and dated, as every renamed clause of the law is.
+
+The picture is the owner's own, from his words: "Look at everything as clocks and think what each thing actually is" (2026-10-27, 08:4x UTC, in David's session), "Think of the whole system as one big clock that runs small clocks" (2026-10-27, 18:5x UTC, to the Boss) and "everything is clocks of strange sizes" (2026-10-28, 02:4x UTC, to the Scribe). The postulates keep his titles and his sentences' meaning; what is new is the great clock in their bodies, the picture over them and a paragraph of what the four make together.
+
+## The wording
+
+**The picture over the postulates.** Reality is a system of very many small clocks, the Node-clocks, united into one great clock. Every Node-clock is the same small clock: a count of whole numbers that moves by one fixed act, with no name, number or role, differing from another only in its place and in the numbers it holds. Each is joined by a Mesh to each of its six neighbours and to nothing else, and the great clock is nothing beyond the Node-clocks and their Meshes: it has no centre, keeps no state of its own and makes no act of its own, and its tick is the count of their rounds. What is seen in it, a bob, a light, a detector, is itself a clock of its own size made of these clocks, a hand turning over them at its own rate.
+
+**Postulate 1, the many Node-clocks and no centre, so locality** (the owner's word of 2026-10-26, 05:4x UTC; the most important postulate): the great clock is built of very, very many Node-clocks, 10 to the power of a huge number of them, and they are managed from no central place: no Node-clock manages another and none is the centre. Therefore every Node-clock must keep locality: it reads itself and its six neighbours through its six Meshes and nothing further, it holds bounded information of its own, and no act, read, drive or refusal reaches beyond one Mesh; nothing global exists in the law, no reading of the great clock as a whole, no centre, no list that grows with the world.
+
+**Postulate 2, whole numbers, for the reversibility of time** (the owner's word of 2026-10-26, 05:4x UTC; the second, because everything after it is seen through it): every clock is whole numbers only, the Node-clocks hold integers and nothing else, and the reality that is seen is those whole numbers and nowhere else; the reason is that they are cleaner and more ordered, and that the law is then reversible in time, every act a bijection on the integers with its remainder kept, so the great clock runs backward by the same acts in the reverse order, bit for bit; and it must be reversible in time.
+
+**Postulate 3, the Node-clocks speak at the speed of light at most** (the owner's word of 2026-10-26, 05:5x UTC): a Node-clock's word reaches its neighbour through one Mesh in one tick and no further, so every act travels one Mesh per tick at most, the causal speed one Mesh per tick is built in, and nothing passes it; every other speed is a count of Meshes over a count of ticks, below it.
+
+**Postulate 4, nature is cyclic and information does not vanish** (the owner's word of 2026-10-26, 05:5x UTC): the great clock does not freeze and does not run down, its swing recurs and no Node-clock stays frozen for ever; no whole number of its state is lost at any act, the clicks included, every click booked on the hand and undone by the rewind bit for bit, so what the great clock holds at one tick is held, moved or booked at the next and never erased.
+
+**What the four postulates make: one great clock** (a consequence, not a fifth postulate; each sentence stands in the law as the clause named). With no centre (Postulate 1) and no word faster than one Mesh per tick (Postulate 3) the great clock has no order of its own but the order of the Node-clocks' words, a cause before its effect, so the Node-clocks, each stepped on its own clock, in any order and at any rates, each when the arrivals it needs from its six neighbours stand, are one great clock: at every equal count of ticks it is the same, bit for bit, whatever the order was (**The Node-clock steps on its own clock; the great clock at equal ticks is one**). Each Node-clock keeps its own time, the count of its own hand's swings, which its load slows, the rates composing and the Mesh's rate the Node-clock's rate twice (**The rates compose**), while the great clock's tick is only the count of rounds and has no arrow; the arrow is the click's alone (**Time is a count of a hand's turns**), the click being the great clock reading itself once per tick at every Node-clock (**The click**). With the whole numbers (Postulate 2) every one of these acts runs back, and with Postulate 4 none of them loses a number.
+
+## Where each sentence stands in the law now
+
+| the wording | its ground in docs/ALGEBRA.md |
+| --- | --- |
+| the picture: a system of small clocks united into one great clock; the same small clock everywhere, no name, number or role | **The Node-clock** (a Node-clock has no name, number or role and differs from another place in its position and its values alone); **The great clock's tick is no observable**; the owner's words quoted above |
+| the great clock keeps no state and makes no act of its own | **Locality is never broken** (no act fires on the whole great clock, no act reads a global); **The tick is one function of the Node-clock** |
+| its tick is the count of their rounds | **The tick is the count of rounds** (no Node-clock reads the tick) |
+| what is seen is a clock made of these clocks, a hand turning over them | **Time is a count of a hand's turns** (matter at rest rotates at its mass's rate; a clock is a hand counting swings); **What a bob is** |
+| Postulate 1 | the present Postulate 1; "the great clock is built of" for "reality is built of", and "no Node-clock manages another and none is the centre" for "managed from no central place", the owner's sentence of 2026-10-26, 05:5x UTC |
+| Postulate 2 | the present Postulate 2; "every clock is whole numbers only" and "the great clock runs backward" for "the law is reversible", the rewind the same acts in the reverse order |
+| Postulate 3 | the present Postulate 3, unchanged |
+| Postulate 4 | the present Postulate 4, in the great clock's words |
+| what the four make: the great clock at equal ticks is one | **The Node-clock steps on its own clock; the great clock at equal ticks is one**; **The tick is the count of rounds** (the numbers depend only on the order of sends and receipts on the Spokes, the causal partial order) |
+| each Node-clock's own time, the rates, the Mesh's rate twice | **Time is a count of a hand's turns**; **The rates compose** |
+| the arrow the click's alone, the click the great clock reading itself | **Time is a count of a hand's turns** (the great clock has no arrow); **The click**; **The great clock reads itself** |
+
+## What changes against the present text
+
+- A picture paragraph is new, put together from the owner's own words and the law's own lines, no new law.
+- Postulates 1 and 2 swap "reality" and "the law" for "the great clock" and name the great clock's rewind; Postulate 3 stands as it is; Postulate 4 says "the great clock" where it said "the world".
+- A paragraph of what the four make is new: it names, in one place, the clauses that already say how many clocks are one clock, and calls them a consequence, so that the number of postulates stays four.
+
+## Questions for the owner
+
+- (a) Postulate 3's title says the speed of light and its body the causal speed of one Mesh per tick; the law's light is 1 / sqrt 3 of a Mesh per tick (the units clause, CLOCK_WORDS.md's table of the measures), below that speed. The wording keeps his title and the law's body; say if the title is to read "one Mesh per tick at most".
+- (b) The picture's last sentence (a bob, a light, a detector a clock made of these clocks) restates **Time is a count of a hand's turns** and **What a bob is**; cut it if the postulates are to hold the structure alone.
+- (c) The paragraph of what the four make is a consequence, as the law carries it; say if it is to be a fifth postulate instead, which would be a change of his, not of the Scribe's.
+- (d) The Boss's and David's check comes after his word, before the text enters the law.
