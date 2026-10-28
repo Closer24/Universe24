@@ -12,6 +12,8 @@ The owner's words of 2026-10-28, 06:0x to 06:4x UTC (Hebrew, translated):
 
 - Through David, 07:0x UTC (#2187 6462857797): "Pauli should be derived from matter being something not symmetric, and from the trains that carry force, which are symmetric: wholly from the laws, the mathematics and the trains' symmetries, and not by force. This should be part of the plan Tensor24."
 
+- Through David, 07:1x UTC (6463014614, 6463102778): "Which group is this, the group 24 or the cube 24? What are the mathematical definitions? If there is a unique formula that stands on a node, like Einstein's: the whole plan needs everything as formulas, and then the engine represents them." And: "From the tensors, what are the masses, and what is everything seen after the clicks, so that the gates are right and follow from these tensor acts; and whether the trains' properties must stand outside, or all is derived."
+
 The plan's owner: the Boss. The names are the ones the owner sees in his app: Boss, Sofer, David and Animate (the owner's word through Animate, 06:3x UTC, #2187 6462416209). Its base: engine-5.0-test at 526a5666d. Its status: a plan, with nothing built under it.
 
 - **This file is the one plan.** Sofer's record of the program (the state of the cuts, the owner's list with his recommendations, the ledger) stands on scribe-5 and points here.
@@ -342,6 +344,7 @@ For nature one to one, every row must be shown on the one big bang's chart. What
   - the rows' table at 834cfd72e (section 14);
   - the fair draw, cut 1, pushed as 834cfd72e (the full check 118 passed, the scan clean).
 - **David, done:**
+  - the group's definitions, the readings as formulas, and the gates that cannot fail, read on the head (6463014614, 6463102778);
   - the twin hands' scale exponent refuted at the carries (956 of 2,000 random draws differ);
   - the Bell click in the gear's form, alike with the head at 30,388 draws, Born's singlet exactly (DAVID-TENSOR24-THE-CLICK.md, toys-5 1cadb3931, full check 118, Sofer's gate clean);
   - the twist checked over all 48 images (6462024199).
@@ -382,6 +385,9 @@ Sofer's audit of the source (SCRIBE-AUDIT-97E5B3F-1.md, items E1 to E19: where a
 | the jams by name: disengaged, orientation, twist, sense, lay, stop, origin | each typed condition | the gate's one comparison (a whole winding held, or shared), the order-free jam of two writes of one gear, each other a sign of a contraction (David) | 5 |
 | state beyond the Node-clock: id() keys, module-level containers and caches, log reads | all of it | nothing | 7 |
 | count_max and max_transient in the step | the step's writes | the readers | 8 |
+| the chart's typed senses at every fitting (run.py) and the reckoner's charges read from them (reckoner.sweeps_of), so rows 17, 65 and 70 read a constant (David, 6463102778) | the typed senses | the fitted hands' sweeps read from their gears after the setting; the senses from the sweep's conservation, the unsprung hand's sweep 0 | 5, with Animate |
+| row 73's book identity, which cannot fail | the identity as a gate | the window's wind before and after the unspringing over every train, read from the state | Animate |
+| row 56's criterion, nature's band | the band | S against the local bound 2, with its spread | Animate |
 
 **What stays, the generic core:** Rule3's carry (acts.carry), the dial, the one mirror at the turnover, the six Spokes (the 24's one place), the trains' gears, the calibre's integers, the order-free phase, the books, the invariant draw.
 
@@ -431,3 +437,46 @@ The plan's end has none. On the head these stand, each with its way out:
 10. **The clamps** (the tension into [0, full rate], the regulator's drive at the hold) **and the bottom's fallback** are limits put in to keep the run finite. The way out: derived (David), or the gate's comparisons.
 11. **The one big bang's exact return asks a symmetric setting, and a symmetric setting makes almost no matter** (two orbits of fittings, no unspringing, the near-light train never fitted). Nature has the bang and the matter. Open: the setting (David; the owner's word).
 12. **Reads beyond one Mesh** (section 8): nature is local, and the head reads two and three Meshes at a few sites and the whole great clock at six. The way out: the stencil of seven alone (cut 7).
+13. **Gates that cannot fail** (David): rows 17, 65 and 70 read the typed senses, row 73 an identity, row 56 nature's band. A gate compares two independent readings of the state, so that it can fail. The way out: section 16.
+
+## 19. The formulas: the definitions, and every law as a formula the engine represents
+
+Every law stands here once as a formula; each cut is the engine's representation of its formula (David's proposal, 6463014614).
+
+**The group.**
+- The 24 is O, the cube's rotation group, isomorphic to S4 (the permutations of the cube's four body diagonals): the 24 signed permutation matrices of determinant 1.
+- Its classes: the identity (1), the quarter turns about the face axes (6), the half turns about them (3), the third turns about the body diagonals (8), the half turns about the edge axes (6).
+- With the mirrors it is O_h (48). On the twin hands acts its double cover 2O (48), where a full turn is -1.
+- Its five irreducible representations, A1, A2, E, T1 and T2 of dimensions 1, 1, 2, 3 and 3, are the five kinds.
+
+**The state.** At every site x and tick t, every gear holds (a, a-, r, w): the notch now and before, the fine tooth, the teeth count. A hand is z = a3 + i a12, a Gaussian integer. A train of kind K holds dim K components, times its own part: one gear, a hand, or two hands.
+
+**The laws:**
+1. **Rule3, the carry:** n + r = q d + r', 0 <= r' < d. The quotient q leaves; the remainder r' stays.
+2. **The Node-clock's step:**
+   - p = W (a - a-) + (r - mid W);
+   - p+ = p + s F + K;
+   - F = sum over j of g_j (U_j a_j - a) - D a + J;
+   - a+ = a + (p+ + mid W+) div W+, and r+ = (p+ + mid W+) mod W+.
+
+   The regulator: T (a+ - 2 a + a-) = sum over j of g_j (a_j - a) - D a, then the drive q = (N + r_d) div T_d.
+3. **The rewind:** the same step with a+ and a- exchanged and every carry run backward.
+4. **The turnover:** at the dial's top or bottom, a and a- are exchanged and r goes to 2 mid - r (the one mirror).
+5. **The click of a whole:** the wind E of a hand at its winding w gives q = E div w; a click where q is at least 1, its remainder booked.
+6. **The click of a split:** up where c (W + W) W_d < room (W W_d + S . m) (David).
+7. **Pauli:** an exchange is a full turn, -1 on the twin hands, so psi + (-psi) = 0: two equal quanta of matter at one Node-clock hold no winding. It is +1 on a one-hand train.
+8. **The books:** at every click, taken + the remainder before - the remainder after = booked, with every carry's remainder kept.
+9. **The draw:** the vernier's number, the mixed-radix composition of the invariant digits modulo the hands' count times the winding.
+
+**The readings, each a formula over the state** (David, 6463102778). A gate compares two independent ones, so that it can fail:
+- **mass:** the train's spring D. At rest in a flat clock, the beat read from the step meets cos omega_0 = 1 - s D / (W + W). A composite's mass is its parts' springs less the binding;
+- **energy:** the wind, the quadratic form of a hand's notches now and before and its neighbours', the time-time part of the stress;
+- **momentum:** the lead across each Mesh (the Wronskian), the time-space part, tallied on the regulator's flows;
+- **stress:** the products of the gradients, the space-space part;
+- **charge:** the sign of the sweep, Im(conj(z-) z), the cross of a hand's own two gears in time;
+- **spin:** the twin hands' axis S, with S . S = W W;
+- **angular momentum:** the moment (the cube's cross) plus the spin;
+- **statistics:** the exchange sign of the kind;
+- **helicity:** the twist.
+
+**What a train names outside:** only its kind and its integers (its pair, its weight, its couplings), as nature measures masses and couplings. Derived from the kind and the one formula: the spin, the statistics, the charge's sign and its conservation, the unsprung hand's coupling 0, the dispersion, the energy and the momentum, and a composite's mass. The pair enters only as its spring D, and the beat is read, not computed.
