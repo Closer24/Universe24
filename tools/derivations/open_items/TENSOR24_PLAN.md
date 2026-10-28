@@ -4,6 +4,8 @@ For the owner and for everyone on the work, in English on the owner's word (2026
 
 ## 0. In one line
 
+**APPROVED by the owner at 16:0x UTC** (Hebrew, translated): "Approved, build it. You on the engine. Animate on the decoder." The decisions stand as recommended.
+
 **This is the plan of a purely algebraic engine.** It names its contradictions with nature, and it does not claim nature one to one.
 
 **The picture, in the owner's words (15:0x UTC):** "It is more logical that the whole board is one big bang, but it must run synchronously, and the detectors' clicks change the information from bang to bang, and the clocks become more and more complex: that is the picture."

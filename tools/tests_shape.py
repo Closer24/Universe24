@@ -40,7 +40,60 @@ DUPLICATE_LINES = 8
 DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
+TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality, purity, rename, the 24's images, the formula against a naive model, bijectivity both ways) on a trivial engine, Fredkin's second-order form, each failing on its own mutant; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_tensor24_frame.py::board": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::trivial": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::untrivial": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::mutants": (
+        12,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::local": (
+        6,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::pure": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::renamed": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::turns": (
+        9,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::turned": (
+        10,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::naive": (
+        6,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::formula": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::bijective": (
+        4,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::test_each_property_holds_on_the_trivial_engine_and_fails_on_its_mutant": (
+        7,
+        TENSOR24_FRAME,
+    ),
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (
         26,
         "The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): 20 bangs in 100 ticks within 128 bits under the three bounds, the held field in its universe, and under the order-free click and the one mirror its seed's symmetry standing through the run, every family born chiming one mesh apart at the board's own share exactly (the heavy family bound above it before them, the order's reading); the Boss's room by name.",
