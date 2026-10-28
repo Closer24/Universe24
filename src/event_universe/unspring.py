@@ -10,6 +10,7 @@ import numpy as np
 from event_universe import hands
 from event_universe.core import rule3
 from event_universe.core.spokes import AXES
+from event_universe.meshes import coupling_of
 from event_universe.trains import HAND, Gear, Train, zeros
 from event_universe.unwind import advance, move, push_of, recoil, window_clocks
 
@@ -152,12 +153,12 @@ def read_ends(
     cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
     twins: tuple[int, int] | None = None,
 ) -> list[Read] | None:
-    """The unwind act's reads (CR-S2, the owner's word of 2026-10-26, 06:1x UTC: every end read before any is written, jammed by name `stop` at the first that cannot pay, the first end's jam sparing the second's read): at the unsprung hand the end owes the windings tallied less the slack there (EX-S1) and its gear by the fall's sign is read for the least count paying it (`fall_of`); at a sprung hand the end's notches are read whole with the wind the great clock loses by their advance at -1 (`wind_fall`, MG-S1, the fitting read at -1), owing the winding. Returns per end (the clock, the windings tallied, the notches or the count, the fall, the gear or None, the slack before, the due), or None; the former merger_falls kept by name."""
+    """The unwind act's reads (CR-S2, the owner's word of 2026-10-26, 06:1x UTC: every end read before any is written, jammed by name `stop` at the first that cannot pay, the first end's jam sparing the second's read): every end owes the windings tallied less the slack there weighted by the hand's coupling's complement (meshes.coupling_of, a product: the slack whole at the coupling 0, EX-S1, and 0 at the coupling 1, MG-S1's end owing the whole winding; the former branch on the hand's identity kept by name, R12); at the unsprung hand its gear by the fall's sign is read for the least count paying it (`fall_of`); at a sprung hand the end's notches are read whole with the wind the great clock loses by their advance at -1 (`wind_fall`, MG-S1, the fitting read at -1), owing the winding. Returns per end (the clock, the windings tallied, the notches or the count, the fall, the gear or None, the slack before, the due), or None; the former merger_falls kept by name."""
     found = []
     for end, (where, tallied) in enumerate(ends):
         r = rec if twins is None else twins[end]
         hand = clock.hands()[r]
-        slack_was = 0 if hand is not clock.unsprung() else int(clock.slack[where])
+        slack_was = (1 - coupling_of(hand)) * int(clock.slack[where])
         due = tallied - slack_was
         if hand is not clock.unsprung():
             notches: Any = notches_at(hand, where)
@@ -241,7 +242,7 @@ def unwind_ends(
     rec: int,
     at: tuple[int, ...] | None = None,
 ) -> list[dict[str, Any]]:
-    """The unwind act's writes after its reads (CR-S2): at the unsprung hand the end's gear moved toward its before by the count (unwind.move, CR-S1), the fall above what was due its new slack (EX-S1), the push tallied; at a sprung hand the end's notches unwound whole by the advance act at -1, the push each end tallies read at the hand's notches at the tick's start (clock.start_gears, CL-S2: so the two ends of one mesh commute and the per-clock attribution does not depend on the order the engagement named them) and the cross term of the two moves, the live great clock's sum less the start's, nonzero on the mesh's own axis alone, tallied once at the engagement's own clock `at` after both ends (the notches unwound whole keep their moment, the great clock the unwind writes, MG-S1). Returns each end's unwind as the log carries it, the cross under the last end's `cross` for `summed` to lift; the former take_line and merger_take kept by name."""
+    """The unwind act's writes after its reads (CR-S2): at the unsprung hand the end's gear moved toward its before by the count (unwind.move, CR-S1), the fall above what was due its new slack (EX-S1), the push tallied; at a sprung hand the end's notches unwound whole by the advance act at -1, the push each end tallies read at the hand's notches at the tick's start (clock.start_gears, CL-S2: so the two ends of one mesh commute and the per-clock attribution does not depend on the order the engagement named them) and the cross term of the two moves, the live great clock's sum less the start's, nonzero on the mesh's own axis alone, tallied once at the engagement's own clock `at` after both ends, the two-ended unwind's alone, an unspringing's (the notches unwound whole keep their moment, the great clock the unwind writes, MG-S1; the former third read of the hand's identity, implied by the engagement's clock and the two ends, kept by name, R12). Returns each end's unwind as the log carries it, the cross under the last end's `cross` for `summed` to lift; the former take_line and merger_take kept by name."""
     hand = clock.hands()[rec]
     found: list[dict[str, Any]] = []
     cross = [0] * AXES
@@ -252,7 +253,7 @@ def unwind_ends(
             found.append(entry)
             continue
         found.append(unsprung_end(clock, rec, read))
-    if at is not None and len(found) > 1 and hand is not clock.unsprung():
+    if at is not None and len(found) > 1:
         tally = recoil(clock, at, cross, int(clock.start_rate[at]), 1)
         found[-1]["cross"] = {"node": list(at), "dP": cross, **tally}
     return found
