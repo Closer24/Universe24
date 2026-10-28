@@ -1,0 +1,15 @@
+PASS A1 the six Spokes are A1 + E + T1 : {'A1': 1, 'A2': 0, 'E': 1, 'T1': 1, 'T2': 0}
+PASS A2 the Mesh's odd gear (reversed with the Mesh) is T1; the even part A1 + E
+PASS B1 [side 3] curl grad = 0 exactly
+PASS B2 [side 3] rank grad = N - 1 = 26, rank curl = 2N - 2 = 52: per wave number k != 0 one gauge and two transverse : 26 and 52
+PASS B3 [side 3] the harmonic gears ker curl / im grad: 3N - rank curl - rank grad = 3 (the torus's three loops)
+PASS B4 [side 3] curl^T curl + grad grad^T = -LAPLACIAN on the Meshes (so on transverse gears Maxwell = the one formula's pull)
+PASS B1 [side 4] curl grad = 0 exactly
+PASS B2 [side 4] rank grad = N - 1 = 63, rank curl = 2N - 2 = 126: per wave number k != 0 one gauge and two transverse : 63 and 126
+PASS B3 [side 4] the harmonic gears ker curl / im grad: 3N - rank curl - rank grad = 3 (the torus's three loops)
+PASS B4 [side 4] curl^T curl + grad grad^T = -LAPLACIAN on the Meshes (so on transverse gears Maxwell = the one formula's pull)
+PASS C1 the 24 commute with the gauge's gradient on the Meshes
+PASS C2 the 24 commute with the transverse operator curl^T curl: the link light keeps the 24
+PASS D1 Gauss's law kept: div E - rho the same at every Node-clock over 10 ticks (the source the Mesh's flux of the sweep)
+PASS E1 the Gaussian integers of norm 1 are exactly 1, i, -1, -i: a hand's exact turn across a Mesh is a Z4 link : [(-1, 0), (0, -1), (0, 1), (1, 0)]
+RESULT: ALL PASS
