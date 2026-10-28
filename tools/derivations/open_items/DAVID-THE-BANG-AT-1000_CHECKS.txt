@@ -1,0 +1,104 @@
+DAVID-THE-BANG-AT-1000 checks, 2026-10-28, 00:3x UTC, on the Boss's head 13f58bb25 (worktree scratchpad/wt_g11, its own src on the path; no src touched). Harnesses under scratchpad/field and scratchpad/edge.
+
+1. The bang at 1,000 ticks (v10.py, read_bang.py, kinds.py; returns counts the ticks at the full rate, two a bounce):
+   as built: bang1000_g11.json: returns 400 (first [4, 5, 9, 10]), widest X bits 13, fittings 1465, chimes 60085, rows SHOWN 38, the rewind {'intervals': 20, 'exact': 20}
+   bang1000_g11.json {'SHOWN': 34, 'SHOWN in part': 5, 'NOT READ': 27, 'NOT SHOWN': 14, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 1896 of 2000 merger ends the pair's share taken exceeds the light's quantum booked, up to 6038 thousandths of it, the excess booked nowhere
+       74 NOT SHOWN: the light's acceleration not along its kick on any axis read (229 of 3466, 130 of 3755, -271 of 3494)
+       76 NOT SHOWN: no family chimes bound one mesh apart in the held field's well above twice the board's own share 6 of 63
+   the cross term at the fitting's clock (cross_at.py): bang1000_ca.json: returns 400 (first [4, 5, 9, 10]), widest X bits 13, fittings 1275, chimes 60381, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+   bang1000_ca.json {'SHOWN': 36, 'NOT READ': 27, 'SHOWN in part': 5, 'NOT SHOWN': 12, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 1636 of 1740 merger ends the pair's share taken exceeds the light's quantum booked, up to 10445 thousandths of it, the excess booked nowhere
+       74 SHOWN in part: the light polarized along its kick on 2 of 3 axes read (191 of 3308, 388 of 3672, -248 of 3521)
+       76 SHOWN: gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+
+2. Rows 74 and 76 with the chart cut at 250, 500, 750 and 1,000 ticks (windows.py):
+   as built: 250 74 SHOWN {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[95, -13, 15], [7, 160, 42], [-1, -26, 61]]}
+   as built: 250 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [27775, 290421, 4810, 11419], "gapped 2": [35, 145, 91, 119], "gapped 1": [26, 26, 31, 54]}}
+   as built: 500 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[159, -110, 35], [-72, 173, 71], [-5, -47, 35]]}
+   as built: 500 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [67499, 705334, 11545, 25878], "gapped 2": [284, 2234, 522, 981], "gapped 1": [76, 231, 142, 230]}}
+   as built: 750 74 NOT SHOWN {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[89, -216, 23], [-7, 128, 130], [-9, -56, -143]]}
+   as built: 750 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [111047, 1160464, 18704, 41060], "gapped 2": [508, 4230, 972, 1901], "gapped 1": [138, 576, 245, 443]}}
+   as built: 1000 74 NOT SHOWN {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[229, -211, 36], [96, 130, 211], [44, -8, -271]]}
+   as built: 1000 76 NOT SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [153778, 1607457, 25717, 56092], "gapped 2": [943, 8771, 1566, 3305], "gapped 1": [230, 1044, 340, 688]}}
+   at the fitting's clock: 250 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[131, 7, -10], [28, 128, 72], [-13, 1, 20]]}
+   at the fitting's clock: 250 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [28134, 293697, 4689, 11469], "gapped 2": [49, 173, 98, 156], "gapped 1": [12, 13, 25, 42]}}
+   at the fitting's clock: 500 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[160, 22, 34], [3, 253, 101], [-34, -72, -9]]}
+   at the fitting's clock: 500 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [69437, 724924, 11459, 26224], "gapped 2": [243, 1674, 478, 908], "gapped 1": [62, 138, 108, 173]}}
+   at the fitting's clock: 750 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[161, 25, 5], [36, 366, 94], [-155, -28, -44]]}
+   at the fitting's clock: 750 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [113111, 1181628, 18244, 41434], "gapped 2": [362, 3401, 914, 1835], "gapped 1": [77, 333, 251, 373]}}
+   at the fitting's clock: 1000 74 SHOWN in part {"sign(kick on a) sign(the light's acceleration on b), [a][b]": [[191, 73, 47], [-70, 388, -70], [-260, -8, -248]]}
+   at the fitting's clock: 1000 76 SHOWN {"by family: pairs one mesh apart, pairs, chimes in the field's well, chimes read": {"gapped 0": [158058, 1651862, 25155, 56872], "gapped 2": [612, 6170, 1418, 2936], "gapped 1": [127, 633, 401, 573]}}
+
+3. Row 74's parts on the light's own odd gears at every kicked clock with no turnover at the tick or before and no stop (polar_slope.py over the 1,000 ticks, polar_win.py by 250 ticks; the wall's part [W_side v + r - W_side div 2] / W_new - v, the meshes' stretch pull / W_new, the kick's T stretch q / W_new), as built:
+   field, 1000 ticks, kicks read per axis [5287, 5557, 5346]:
+     acc: tally [[473, -61, -51], [105, 205, -95], [176, -144, 104]], mean size on the kick's own axis [10.22275331924518, 14.274913143134983, 11.562562233721959]
+     wall: tally [[-43, -105, -21], [165, -311, -83], [66, -186, -317]], mean size on the kick's own axis [4.019840777934791, 6.464344074452333, 5.408080030501538]
+     meshes: tally [[273, -97, 29], [-23, 216, 85], [154, 15, -227]], mean size on the kick's own axis [8.620354242234104, 11.374885789566449, 9.038184503772687]
+     kick: tally [[5287, -52, -13], [-52, 5557, -47], [-13, -47, 5346]], mean size on the kick's own axis [0.7574429880183827, 0.7478404906621237, 0.7618086245985954]
+     the slope SUM q_a part_b / SUM q_a^2, per part [a][b]:
+       acc: [[1.114, -0.052, -0.029], [0.062, 0.299, -0.029], [0.399, -0.213, 0.008]]
+       wall: [[-0.057, -0.182, 0.014], [0.142, -0.79, -0.24], [0.147, -0.233, -0.773]]
+       meshes: [[0.417, 0.138, -0.04], [-0.073, 0.344, 0.218], [0.254, 0.028, 0.025]]
+       kick: [[0.754, -0.008, -0.002], [-0.008, 0.745, -0.007], [-0.002, -0.007, 0.756]]
+   field, 1000 ticks, kicks read per axis [5287, 5557, 5346]:
+     acc: tally [[473, -61, -51], [105, 205, -95], [176, -144, 104]], mean size on the kick's own axis [10.22275331924518, 14.274913143134983, 11.562562233721959]
+     wall: tally [[-43, -105, -21], [165, -311, -83], [66, -186, -317]], mean size on the kick's own axis [4.019840777934791, 6.464344074452333, 5.408080030501538]
+     meshes: tally [[273, -97, 29], [-23, 216, 85], [154, 15, -227]], mean size on the kick's own axis [8.620354242234104, 11.374885789566449, 9.038184503772687]
+     kick: tally [[5287, -52, -13], [-52, 5557, -47], [-13, -47, 5346]], mean size on the kick's own axis [0.7574429880183827, 0.7478404906621237, 0.7618086245985954]
+     the slope SUM q_a part_b / SUM q_a^2, per part [a][b]:
+       acc: [[1.114, -0.052, -0.029], [0.062, 0.299, -0.029], [0.399, -0.213, 0.008]]
+       wall: [[-0.057, -0.182, 0.014], [0.142, -0.79, -0.24], [0.147, -0.233, -0.773]]
+       meshes: [[0.417, 0.138, -0.04], [-0.073, 0.344, 0.218], [0.254, 0.028, 0.025]]
+       kick: [[0.754, -0.008, -0.002], [-0.008, 0.745, -0.007], [-0.002, -0.007, 0.756]]
+     ticks 1 to 250:
+       acc: tally [[175, -11, -7], [-15, 209, -19], [-42, -16, 162]], slope [[0.931, -0.14, 0.022], [-0.028, 1.225, -0.259], [-0.106, -0.136, 1.058]]
+       wall: tally [[-35, 47, 5], [3, -5, 43], [28, 30, 13]], slope [[-0.07, 0.028, 0.04], [-0.014, -0.085, 0.088], [0.09, 0.039, 0.016]]
+       meshes: tally [[88, -40, -3], [-16, 87, -17], [-30, -43, -15]], slope [[0.234, -0.163, -0.005], [-0.01, 0.544, -0.349], [-0.181, -0.177, 0.261]]
+       kick: tally [[989, -4, -20], [-4, 1047, 1], [-20, 1, 928]], slope [[0.768, -0.004, -0.013], [-0.004, 0.766, 0.001], [-0.014, 0.001, 0.781]]
+     ticks 251 to 500:
+       acc: tally [[160, -50, 16], [-3, 107, 9], [42, -92, 60]], slope [[0.878, -0.27, 0.243], [-0.121, 1.147, 0.068], [0.154, -0.563, 1.026]]
+       wall: tally [[76, -54, -14], [-25, -65, 3], [-8, -134, -44]], slope [[-0.0, -0.204, 0.01], [-0.189, -0.405, -0.076], [0.015, -0.413, -0.332]]
+       meshes: tally [[82, -63, 53], [-81, 109, 0], [45, -33, -20]], slope [[0.124, -0.045, 0.232], [0.087, 0.806, 0.164], [0.137, -0.129, 0.607]]
+       kick: tally [[1450, -44, 7], [-44, 1589, -36], [7, -36, 1548]], slope [[0.754, -0.02, 0.001], [-0.019, 0.747, -0.02], [0.001, -0.021, 0.752]]
+     ticks 501 to 750:
+       acc: tally [[48, -48, -78], [57, -53, -49], [61, -11, -19]], slope [[0.825, -0.821, -0.982], [0.13, -0.438, 0.2], [0.622, -0.126, -0.509]]
+       wall: tally [[-106, -68, -14], [19, -145, -45], [-15, -63, -183]], slope [[-0.456, -0.71, -0.299], [0.232, -0.974, -0.068], [0.07, -0.325, -1.376]]
+       meshes: tally [[-16, -32, -26], [41, -14, 56], [62, 10, -65]], slope [[0.523, -0.11, -0.692], [-0.102, -0.209, 0.281], [0.543, 0.211, 0.107]]
+       kick: tally [[1418, 1, 15], [1, 1427, -25], [15, -25, 1527]], slope [[0.758, -0.0, 0.009], [-0.0, 0.745, -0.013], [0.008, -0.012, 0.76]]
+     ticks 751 to 1000:
+       acc: tally [[90, 48, 18], [66, -58, -36], [115, -25, -99]], slope [[1.771, 0.997, 0.603], [0.256, -0.548, -0.193], [0.771, 0.042, -1.297]]
+       wall: tally [[22, -30, 2], [168, -96, -84], [61, -19, -103]], slope [[0.29, 0.221, 0.311], [0.521, -1.519, -0.813], [0.426, -0.106, -1.132]]
+       meshes: tally [[119, 38, 5], [33, 34, 46], [77, 81, -127]], slope [[0.742, 0.781, 0.302], [-0.26, 0.241, 0.613], [0.355, 0.14, -0.904]]
+       kick: tally [[1430, -5, -15], [-5, 1494, 13], [-15, 13, 1343]], slope [[0.74, -0.005, -0.009], [-0.005, 0.73, 0.007], [-0.01, 0.008, 0.739]]
+
+4. The low densities (scratchpad/edge/low.py: world_bang.json's wave at the given quanta; every 10 ticks the regulator's notches at every clock, and the least X_now + X_before):
+   quanta 500 on 13f58bb25:
+     tick 190: X at most 3816984, X at least 3455, the least X_now + X_before 27043 at clock 4, turned 10, births 64
+     tick 200: X at most 3492220, X at least 6168, the least X_now + X_before 31386 at clock 12, turned 8, births 64
+   quanta 1000 on 13f58bb25:
+     tick 120: X at most 794311, X at least 5156, the least X_now + X_before 25004 at clock 57, turned 4, births 111
+     tick 130: X at most 567281, X at least 11516, the least X_now + X_before 21793 at clock 60, turned 3, births 111
+   quanta 2000 on 13f58bb25:
+     tick 190: X at most 3273682, X at least 7776, the least X_now + X_before 23255 at clock 17, turned 15, births 71
+     tick 200: X at most 3863521, X at least 1723, the least X_now + X_before 23255 at clock 17, turned 14, births 72
+   quanta 10000 on 13f58bb25:
+     tick 190: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 410
+     tick 200: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 440
+   quanta 64000 on 13f58bb25:
+     tick 120: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 370
+     tick 130: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 392
+   quanta 300000 on 13f58bb25:
+     tick 120: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 206
+     tick 130: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 216
+   quanta 1000000 on 13f58bb25:
+     tick 120: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 127
+     tick 130: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 129
+   low_1000_g10.txt on 6a853217f:
+     tick 120: X at most 1162932, X at least 7970, the least X_now + X_before 17292 at clock 26, turned 6, births 109
+     tick 130: X at most 1651546, X at least 9726, the least X_now + X_before 18109 at clock 11, turned 3, births 109
+   low_64000_g10.txt on 6a853217f:
+     tick 120: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 403
+     tick 130: X at most 1000, X at least 1000, the least X_now + X_before 2000 at clock 0, turned 0, births 434
