@@ -10,6 +10,8 @@ The draft is ANIMATE-MANY-BANGS.md. Nothing here is engine code, and nothing was
   - **base:** law 4's two triggers and BH-S1's restore, as draft C ran it.
   - **nofloor:** law 4's floor clause struck.
   - **notick:** nofloor, and BH-S1's restore struck. Law 4 reads the time gear of a clock with no tick (Mesh rate 0 at the tick's start) as held, and nothing else changes.
+  - **weakmin:** notick, with law 4's bottom as the top's mirror, the time gear's weak minimum (X0 >= X1 <= X2, one strict), in place of the floor (the Boss's candidate).
+  - **fallmin:** weakmin with the bottom entered from above only (X0 > X1 <= X2).
 - **Its readings:**
   - X per tick, least and largest;
   - the tops, the local turnovers and the floor's firings;
@@ -20,7 +22,9 @@ The draft is ANIMATE-MANY-BANGS.md. Nothing here is engine code, and nothing was
 - **The outputs:**
   - many_bangs_base_5M_250.txt, many_bangs_nofloor_5M_250.txt and many_bangs_notick_5M_250.txt: all three end at the state hash 77e8684641d42469;
   - many_bangs_notick_5M_1000.txt;
-  - many_bangs_notick_500k_1000.txt.
+  - many_bangs_notick_500k_1000.txt;
+  - many_bangs_weakmin_5M_250.txt: the board turned over at every tick, X = 1,000 throughout, no birth;
+  - many_bangs_fallmin_5M_250.txt: a turnover at every top and every bottom, the same top 4,638,548,302 at every bang, no birth.
 
 ## 2. tst_time_gear.py: T S T = S^-1 for the time gear's step
 

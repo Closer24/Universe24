@@ -7,13 +7,16 @@ Variants (each changes one thing, named; everything else is the tree's own):
   base      draft C's vol0 as built: law 4's two triggers (the top and the floor X_f), BH-S1's restore of every gear
             at a stopped Node-clock
   nofloor   law 4's floor clause struck: the turnover only at the time gear's weak maximum
+  weakmin   notick, with law 4's bottom as the top's mirror, the time gear's weak minimum (X0 >= X1 <= X2, one
+            strict), in place of the floor (the Boss's candidate, #2187 6468487676)
+  fallmin   weakmin with the bottom entered from above only (X0 > X1 <= X2)
   notick    nofloor, and BH-S1's restore struck: no gear of a stopped clock is restored; law 4 reads the time gear
             of a clock with no tick (mesh rate 0 at the tick's start) as held, X2 = X1 (the clock has no tick on the
             board, the owner's asynchronous board), and nothing else
 Readings, per tick and per bang (a bang is the course from one bottom at rest to the next):
   the stretch X (least and largest over the board), the whole-board turnovers, the local turnovers, the floor's
   firings, the births, the books per click phase, the state hash per bottom (is any bottom's state a repeat of an
-  earlier one?), the retrace (after each top, X at top + k against X at top - 1 - k), the rewind (n ticks forward
+  earlier one?), the retrace (after each top, X at top + k against X at top - 2 - k), the rewind (n ticks forward
   and n back from a tick, the state bit for bit).
 Usage: python -I many_bangs.py <root> <variant> <quanta> <ticks> [<rewind n> <rewind from> ...]
 """
@@ -52,7 +55,7 @@ def turnover_law4(self, held, going=1, top=None):
         return top
     k = self.trains_.index(self.train(REGULATOR))
     x0, x1, x2 = held[k][0].before, held[k][0].now, self.train(REGULATOR).gears[0].now
-    if variant == "notick":
+    if variant in ("notick", "weakmin", "fallmin"):
         no_tick = readings.stopped_of(self, stretch_feature.load_of(self.full_rate, x1))
         x2 = np.where(no_tick, x1, x2)
     xf = readings.bottom(self)
@@ -61,6 +64,12 @@ def turnover_law4(self, held, going=1, top=None):
     top = (x0 <= x1) & (x2 <= x1) & ((x0 < x1) | (x2 < x1))
     if variant == "base":
         top = top | floor
+    if variant in ("weakmin", "fallmin"):
+        bottom = (x0 >= x1) & (x2 >= x1) & ((x0 > x1) | (x2 > x1))
+        if variant == "fallmin":
+            bottom = (x0 > x1) & (x2 >= x1)
+        FIRED["weakmin"] = FIRED.get("weakmin", 0) + int(bottom.sum())
+        top = top | bottom
     self.turned_over = top
     if top.any():
         self.counts["turns"] += int(top.sum())
@@ -71,7 +80,7 @@ def turnover_law4(self, held, going=1, top=None):
 
 drives.install(T, "vol0")
 C.Clock.turnover = turnover_law4
-if variant == "notick":
+if variant in ("notick", "weakmin", "fallmin"):
     drives.NO_RESTORE.add("vol0")
 
 calibre, piece = world_of("world_bang.json")
@@ -147,6 +156,8 @@ for at, lo, hi, turned, b, st in rows:
     )
 print(f"whole-board turnovers (tops): {len(whole)} at ticks {whole}")
 print(f"local turnovers: {local}; the floor's trigger true at {FIRED['floor']} Node-clock ticks")
+if "weakmin" in FIRED:
+    print(f"the weak minimum's trigger true at {FIRED['weakmin']} Node-clock ticks")
 print(f"births: {clock.counts['births']}; books closed at {sum(books)} of {len(books)} click phases")
 X_at = {0: X_seed}
 X_at.update({at: hi for at, _lo, hi, *_ in rows})

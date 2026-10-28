@@ -22,6 +22,11 @@ The probes are in ANIMATE-PROBES-2 (README there): many_bangs.py on the engine, 
   - the floor's trigger true at 0 Node-clock ticks;
   - the rewind 20 of 20 from ticks 15, 40 and 60, through a top and a bottom;
   - the books closed at 250 of 250 click phases.
+- **The bottom carries no trigger, and it must not.** The Boss's candidate, law 4's bottom as the top's mirror (the weak minimum), was run in place of the floor (CHECKED, 5,000,000 quanta, 250 ticks):
+  - as the full mirror (X0 >= X1 <= X2, one strict), it fires at the seed itself, at rest with the push about to raise it. The board turns over at every tick and never leaves the seed: X = 1,000 throughout, no bang and no birth;
+  - entered from above only (X0 > X1 <= X2), it turns the board over at every bang, the light reversed there. Every bang then replays the first: the same top 4,638,548,302 every time, and no birth in 250 ticks.
+
+  With no trigger, the push turns the course at the bang and the births come there (96).
 - **Over 1,000 ticks:**
   - 21 tops at 5,000,000 quanta, one every 47 ticks;
   - 7 tops at 500,000 quanta, one every 147 ticks, so a tenth of the light lengthens the bang by 3.13, against Friedmann's square root of 10, 3.16;
@@ -41,6 +46,7 @@ The probes are in ANIMATE-PROBES-2 (README there): many_bangs.py on the engine, 
 - **The horizon.** The clock's Mesh rate p_m = rounded(p0^2, Gamma) is the rate at which its Links carry. It rounds to 0 where 2 p0^2 < Gamma: at the stopped load 3,793 at Gamma = 1,000, the rate 22, X_c = 4,268,834,097 (about 4 Gamma^3).
   - Past it no Mesh of the clock carries anything, and the factors are 0 from both ends.
   - That is the slowest a clock on the integers can be read by its neighbours: the board's horizon.
+  - Under law 11 (every bound is a clock's carry) it is no bound: the Mesh rate is a carry's quotient, and at the horizon the clock's Mesh dial completes no turn in a tick, so no event crosses its Links. The top's turnover is the event.
 - **For the whole system.** Where every clock steps alike (the A1 course), the board is one clock, and its stretch is the universe's scale. It rises to the horizon, turns over, runs back and comes to the bang: one swing per bang.
   - The bang is where the Links are shortest and the light densest, at the seed's stretch, the full rate.
   - The top is where the Links are longest, at the horizon.
@@ -81,6 +87,7 @@ The probes are in ANIMATE-PROBES-2 (README there): many_bangs.py on the engine, 
 - **P4, the bottom with no floor.** The forward course leaves the seed at rest (both slots at Gamma, clock.start_state). By P3 the run back arrives at T(seed): X = Gamma, at rest. There the push is at least 0 (C2), so the course rises again: the bottom is a weak minimum at rest, with no trigger.
   - After the first bottom the course does not repeat the first bang: X at tick 48 is 20,000,876, against 20,001,000 at tick 1.
   - PROVED. CHECKED: the floor's trigger true at 0 Node-clock ticks in every run; with the floor clause struck, the same integers bit for bit.
+  - A trigger at the bottom does harm (CHECKED, part 0). The seed at rest is itself a weak minimum, so the full mirror freezes the board there. A turnover at a bottom entered from above reverses the light at the bang, so the next rise replays the last and the births never come.
 - **P5, BH-S1's restore is not load-bearing.** By P2 a clock turns over at its first tick past the horizon, and the turnover sets its whole state from the tick's start. So the restore of its other gears never reaches the course.
   - CHECKED: with no gear restored and law 4's reading alone, the same state hash.
   - In the asynchronous runner (the owner's word of 11:3x UTC: each Node-clock on its own tick), a clock whose Mesh rate is 0 takes no tick. Law 4's reading is then that runner's own fact: the great clock sees no change across the horizon. It is not a mask.
@@ -110,7 +117,7 @@ The probes are in ANIMATE-PROBES-2 (README there): many_bangs.py on the engine, 
   - twin hands in the calibre, whose splits draw at every bang; the one big bang has none (open item 11 e);
   - the late settings carried back by the turnover to the next birth (89d4d2a9e);
   - a lay whose light outlasts the fittings.
-- **(e) Local contractions with no floor.** Six charts send clocks into the hills (draft B). The Boss's candidate is the top's mirror, the weak minimum. On the A1 course here no clock falls below the seed's stretch.
+- **(e) Local contractions with no floor.** Six charts send clocks into the hills (draft B). The weak minimum cannot serve as their bottom: it freezes every clock that starts at rest and is pushed (part 0). Under law 11 (the owner's word of 12:5x UTC, "every bound is a clock's carry"), a clock's dial that would pass the full rate needs its own carry, to derive. On the A1 course here no clock falls below the seed's stretch.
 - **(f) The other closure, by general relativity's 00 equation** (draft C's verifier). The seed's breach acts as k > 0.
   - On a sprung hand it gives natural tops and bottoms with no horizon: tops at 40, 118, 193, 266 and 337 with 20 quanta, each different.
   - On the plan's light seed it is static.
@@ -120,7 +127,7 @@ The probes are in ANIMATE-PROBES-2 (README there): many_bangs.py on the engine, 
 ## 6. What it replaces (step 4)
 
 - **R10, BH-S1's restore:** struck, in favour of law 4's reading of a clock with no tick (P2, P5).
-- **Law 4's floor clause** (X_f = 19, stretch LOW = -1, readings.bottom): struck for the course (P4). The six charts' local contractions are (e).
+- **Law 4's floor clause** (X_f = 19, stretch LOW = -1, readings.bottom): struck for the course, with no bottom trigger in its place (P4). The six charts' local contractions are (e).
 - **F1 and bound (3):** gone with the derived push (draft C), on the owner's word of 11:5x.
 - **The ceiling:** never typed. The top is law 4's own, at the horizon.
 - **The rows:**
