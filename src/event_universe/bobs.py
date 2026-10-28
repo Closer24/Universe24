@@ -81,7 +81,7 @@ def chimes_of(
     hand_starts: list[list[Gear]],
     rec0: int,
 ) -> None:
-    """The chimes of one take (David's DAVID-THE-ORDER-FREE-STRIKE.md: one take per clock-node and unwound hand, the dues summed, every read on the start board): the hands chiming at one clock-node in one click share its one take of their windings summed, each chime logged with its own winding booked, the first with the take's fall and each later one taking nothing, the remainder handing on what the fall paid for it, so every chime's book closes (taken + the remainder before - the remainder after = its winding) and the last leaves the take's remainder."""
+    """The chimes of one take (David's DAVID-THE-ORDER-FREE-STRIKE.md: one take per node-clock and unwound hand, the dues summed, every read on the start board): the hands chiming at one node-clock in one click share its one take of their windings summed, each chime logged with its own winding booked, the first with the take's fall and each later one taking nothing, the remainder handing on what the fall paid for it, so every chime's book closes (taken + the remainder before - the remainder after = its winding) and the last leaves the take's remainder."""
     after, rest = take["remainder"], sum(clock.windings[r] for r in recs[1:])
     gear = clock.hands()[rec0].gears[take["taken_line"]]
     clock.counts["body_clicks"] += len(recs)

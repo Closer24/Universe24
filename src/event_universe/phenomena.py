@@ -60,7 +60,7 @@ def well_at_matter(chart: Chart, by_tick: dict[int, set[tuple[int, ...]]]) -> tu
 
 
 def laid_pairs(chart: Chart) -> dict[int, set[tuple[tuple[int, ...], ...]]]:
-    """A fitting's own two children, line by line: the two clock-nodes a birth laid one hand at, its - end and its + end, where the hand is its own twin."""
+    """A fitting's own two children, line by line: the two node-clocks a birth laid one hand at, its - end and its + end, where the hand is its own twin."""
     found: dict[int, set[tuple[tuple[int, ...], ...]]] = defaultdict(set)
     for b in (b for b in chart.fittings if "plus_hand" not in b):
         found[int(b["line_pair"])].add(tuple(sorted((tuple(b["minus"]), tuple(b["plus"])))))
@@ -70,13 +70,13 @@ def laid_pairs(chart: Chart) -> dict[int, set[tuple[tuple[int, ...], ...]]]:
 def bound_pairs(
     chart: Chart, by_tick: dict[int, set[tuple[int, ...]]], laid: set[tuple[tuple[int, ...], ...]]
 ) -> tuple[int, int]:
-    """Of the distinct pairs of clock-nodes chiming one line at one tick, each counted once and a fitting's own two children left out (David's DAVID-THE-MIRRORS-FITTING.md: the former count read the children chiming where laid, at every tick), those one mesh apart, and all of them."""
+    """Of the distinct pairs of node-clocks chiming one line at one tick, each counted once and a fitting's own two children left out (David's DAVID-THE-MIRRORS-FITTING.md: the former count read the children chiming where laid, at every tick), those one mesh apart, and all of them."""
     distinct = {p for clocks in by_tick.values() for p in combinations(sorted(clocks), PAIR)} - laid
     return sum(1 for a, b in distinct if chart.distance(a, b) == 1), len(distinct)
 
 
 def nuclear_binding(chart: Chart) -> dict[str, Any]:
-    """Row 76: nuclear binding and fusion: with a held field in the universe, a family's chimes stand bound one mesh apart (of the distinct pairs of clock-nodes chiming its line at one tick, a fitting's own two children left out, the owner's yes of 2026-10-28, 02:2x UTC, the share one mesh apart above twice the board's own, by cross multiplication) in the field's well (most of its chimes at a clock whose field stands above the board's mean); NOT READ with no held field or no two clocks chiming one family at one tick; fusion NOT READ, no act joining two bound bobs into one (the merger's book first, DAVID-CLOSE-LAW.md item 2)."""
+    """Row 76: nuclear binding and fusion: with a held field in the universe, a family's chimes stand bound one mesh apart (of the distinct pairs of node-clocks chiming its line at one tick, a fitting's own two children left out, the owner's yes of 2026-10-28, 02:2x UTC, the share one mesh apart above twice the board's own, by cross multiplication) in the field's well (most of its chimes at a clock whose field stands above the board's mean); NOT READ with no held field or no two clocks chiming one family at one tick; fusion NOT READ, no act joining two bound bobs into one (the merger's book first, DAVID-CLOSE-LAW.md item 2)."""
     fields, lines, laid = held_fields(chart), matter_by_tick(chart), laid_pairs(chart)
     neighbours, others = board_share(chart)
     found = {}
