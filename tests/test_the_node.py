@@ -215,7 +215,7 @@ def test_the_files_are_refused_by_name() -> None:
     ):
         refused(match, Clock, universe, dict(piece, **change))
     # the trains the clock builds beside the file's three gapped hands: the ratchet, the light, the offset and the regulator
-    assert [r.size for r in node_of("world_node.json").trains_] == [1, 2, 2, 2, 2, 4, 10]
+    assert [r.size for r in node_of("world_node.json").trains_] == [1, 2, 2, 2, 2, 4, 7]  # R11
 
 
 def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
@@ -291,7 +291,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     for _ in range(40):
         chiral.tick()
     counts = (chiral.counts["births"], chiral.counts["body_clicks"], record.census(chiral))
-    assert counts == (3, 1384, (107, 112))  # the one mirror (2, 1,543 before it; 5, 1,873 at the wave)
+    assert counts == (1, 1553, (95, 112))  # the shears struck (3, 1,384 with them; 2, 1,543 before)
     assert run_back_exact(kept, 10) == 10
 
 
@@ -421,8 +421,8 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert clock.wronskians["kept"] == clock.wronskians["sites"] > 0
         assert not {"negated", "changed"} & clock.wronskians.keys()
         found.append(clock.wronskians)
-        # 2,668 and 277 under the one mirror (2,624 and 224 before it; 2,668 and 440 at the wave; 2,152 sites and 708 with W not 0 at the trace 54, 664 before cc1)
-    assert [(f["sites"], f.get("nonzero", 0)) for f in found] == [(148, 9), (2668, 277)]
+        # 2,620 and 256 with the shears struck (2,668 and 277 with them; 2,624 and 224 before the one mirror; 2,668 and 440 at the wave; 2,152 sites and 708 with W not 0 at the trace 54, 664 before cc1)
+    assert [(f["sites"], f.get("nonzero", 0)) for f in found] == [(148, 9), (2620, 256)]
 
 
 def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1() -> None:
@@ -470,7 +470,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         new = [e for e in clock.log[read_from:] if e["event"] == "credit" and e["line"] in hands_of]
         chimes += [(e["beat"], beat.get((e["line"], tuple(e["node"])))) for e in new]
     assert all(by_hand is not None and b == by_hand[0] for b, by_hand in chimes)
-    assert (len(chimes), sum(1 for _b, h in chimes if h and h[1])) == (201, 101)  # 275, 138; 453, 281
+    assert (len(chimes), sum(1 for _b, h in chimes if h and h[1])) == (387, 274)  # 201, 101; 275, 138
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
@@ -546,8 +546,8 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     kept = copy.deepcopy(clock)
     for _ in range(INTERVALS):
         clock.tick()
-    # under the one mirror (0b429dc0 before it, b4c97c7c at the wave, ddfeb210 at 54); over the whole state since 2026-10-26, ff82a0da over the gears and the unwind's slack alone
-    assert record.state_hash(clock) == "fba1dd44d34fe56e83947040dd6bff488d75a15431f5f82a7d96e688c5f469f4"
+    # with the shears struck (fba1dd44 with them, 0b429dc0 before the one mirror, b4c97c7c at the wave, ddfeb210 at 54); over the whole state since 2026-10-26, ff82a0da over the gears and the unwind's slack alone
+    assert record.state_hash(clock) == "30c9c357029cded7e2ed344f8ee07673e785e890c516d4c6d13d264d5499175c"
     tick = Tick(copy.deepcopy(clock), 1)
     tick.readings()
     assert sorted(tick.meshes_at) == [0, 1] and any(
@@ -581,7 +581,7 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
         paid += fall + slack_was - slack == windings
         below += 0 <= slack < fall_of(clock, at, 1, gearing, unsprung)[1]
         undo.append((now, k, slack_was))
-    assert (paid, below) == (20, 20) and record.census(clock)[0] == 107
+    assert (paid, below) == (20, 20) and record.census(clock)[0] == 95  # 107 with the shears
     for now, k, slack_was in reversed(undo):
         move(clock, rec0, k, at, now - int(unsprung.gears[k].now[at]))
         clock.strikes[at] -= 1

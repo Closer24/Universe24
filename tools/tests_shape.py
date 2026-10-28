@@ -47,7 +47,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_the_record.py::test_the_books_close_at_every_striking_mergers_and_lays_alike": (
         26,
-        "The close's books at every striking (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off; his rule of 14:5x UTC that a push's test sees what it was pushed for): on the hole's first 20 ticks (the bang's merging nothing under the order-free click) the board's wind lost is the chimes' booked plus the remainder's rise at every striking, mergers among them; the Boss's room by name.",
+        "The close's books at every striking (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off; his rule of 14:5x UTC that a push's test sees what it was pushed for): on the hole's first 30 ticks (the bang's merging nothing under the order-free click) the board's wind lost is the chimes' booked plus the remainder's rise at every striking, mergers among them; the Boss's room by name.",
     ),
     "tests/test_the_record.py::test_the_hole_falls_through_its_bottom_and_runs_on_and_back": (
         17,
