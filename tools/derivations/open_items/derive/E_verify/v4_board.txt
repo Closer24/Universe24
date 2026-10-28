@@ -1,0 +1,31 @@
+1. One twin pair per Node-clock: one spinor, rank one
+  [ok] S . S = rho^2 for every Gaussian twin pair in {-3..3}^4 (Fierz for one spinor): 2400 of 2400
+    the two quanta phi, T phi summed into one pair: a third newcomer finds free > 0 at 35180 of 35568
+  [ok] so the head's one pair per Node-clock cannot hold the filled orbital
+2. One hand per quantum: phi and T phi as two hands
+  [ok] n = rho(phi) I: S = 0, rho = 2u, and a third newcomer's free size is 0 for every newcomer in {-1..1}^4: 624 of 624
+3. The occupation is a reading, not a state
+  [ok] torus (7,): a Node-clock phase keeps every (rho, S) and moves the next tick's: 12 of 12
+  [ok] torus (7,): a global phase moves nothing (the control): 12 of 12
+  [ok] torus (3, 3, 2): a Node-clock phase keeps every (rho, S) and moves the next tick's: 12 of 12
+  [ok] torus (3, 3, 2): a global phase moves nothing (the control): 12 of 12
+4. The step keeps W(u, v), moves the one-slot form; one quantum's two-slot occupation is not positive
+  [ok] W kept at every tick (3 x 3 entries, 16 ticks); the one-slot form moved: kept 16 of 16, moved 16 of 16
+  [ok] det D = -N(det[now, before]) exactly, so D has a negative eigenvalue wherever now and before are independent: 20000 of 20000, strictly indefinite at 19997
+  [ok] the occupant's turnover image (T before, T now) has W(u, v) = 0 and W(v, v) = W(u, u): 20000 of 20000
+5. Sofer's bound against 0 <= n <= u
+  [ok] u = 3: no negative free size inside |S| <= 2u - rho (newcomers in {-2..2}^4): 0
+    u = 3: occupations inside Sofer's bound but outside 0 <= n <= u: 1656; shown negative with newcomers up to 2, 3, 4: [1648, 1656, 1656]; left 0
+    the 0 left: a newcomer aimed along S by the inverse Hopf map shows a negative free size at 0 of 0
+  [ok] u = 3: every occupation inside Sofer's bound and outside 0 <= n <= u has a newcomer with a negative free size: 1656 of 1656
+  [ok] u = 4: no negative free size inside |S| <= 2u - rho (newcomers in {-2..2}^4): 0
+    u = 4: occupations inside Sofer's bound but outside 0 <= n <= u: 4804; shown negative with newcomers up to 2, 3, 4: [4780, 4796, 4804]; left 0
+    the 0 left: a newcomer aimed along S by the inverse Hopf map shows a negative free size at 0 of 0
+  [ok] u = 4: every occupation inside Sofer's bound and outside 0 <= n <= u has a newcomer with a negative free size: 4804 of 4804
+  [ok] u = 6: no negative free size inside |S| <= 2u - rho (newcomers in {-2..2}^4): 0
+    u = 6: occupations inside Sofer's bound but outside 0 <= n <= u: 22560; shown negative with newcomers up to 2, 3, 4: [22384, 22528, 22544]; left 16
+    the 16 left: a newcomer aimed along S by the inverse Hopf map shows a negative free size at 16 of 16
+  [ok] u = 6: every occupation inside Sofer's bound and outside 0 <= n <= u has a newcomer with a negative free size: 22560 of 22560
+   (the theorem: free >= 0 for every newcomer iff the larger eigenvalue (rho + |S|)/2 <= u, by Cauchy-Schwarz and
+    the density of Gaussian directions; with n >= 0 the full bound is |S| <= min(rho, 2u - rho), i.e. 0 <= n <= u)
+result: 0 failures

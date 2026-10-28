@@ -1,0 +1,9 @@
+M1. eps = +1 on the twin hands: the one-Node-clock zero must fail
+  pairs with A_++ != 0: 1999 of 2000 (must be above 0)
+M2. the frame (phi, K phi) in place of (phi, T phi): the singlet must stop being frame-free
+  pairs whose A_+- is not rho(phi) det: 1999 of 2000 (must be above 0)
+M3. a third quantum with eps = +1: some assignment must survive
+  triples with a nonzero assignment: 500 of 500 (must be above 0)
+M4. the books with the exchange term dropped (distinguishable): the eps = -1 sum rule must fail
+  pairs whose books fail: 2000 of 2000 (must be above 0)
+result: every mutant fails as it must

@@ -1,0 +1,7 @@
+M1. Sofer's bound taken as enough: the occupation (2u, (0, 0, 2u)), two quanta in one sense, must show a negative free size
+  newcomers in {-1..1}^4 with a negative free size: 24 of 80 (must be above 0)
+M2. the occupation taken as the state (stepped by a rule of its own): two boards equal in (rho, S) must still step apart
+  boards whose next occupations differ (no rule on (rho, S) alone can step them): 6 of 6 (must be above 0)
+M3. the step made unequal on two quanta (one hand's grip changed): W must move
+  ticks with W moved: 5 of 5 (must be above 0)
+result: every mutant fails as it must
