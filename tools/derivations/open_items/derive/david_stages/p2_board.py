@@ -43,6 +43,17 @@ def grips(layout):
     """Each Spoke's grip, (6, N), on either head."""
     return layout.grip[layout.meshes] if "meshes" in Layout._fields else layout.grip
 
+
+def state_of(**fields):
+    """The State of either head: with the before slot's time tb where the State holds it (to 0970b0deb), else without
+    (13672be1e on, the out carrying the replaced now-slot time)."""
+    return State(**{key: value for key, value in fields.items() if key in State._fields})
+
+
+def times_of(s):
+    """The slots' times a State holds, to carry onto another of the same head."""
+    return {key: getattr(s, key) for key in ("tb", "tn") if key in State._fields}
+
 def board(side):
     xyz = np.indices((side,) * 3).reshape(3, -1)
     steps = [sign * axis for axis in np.eye(3, dtype=int) for sign in (1, -1)]
@@ -71,7 +82,7 @@ def world(seed, side=5, rates="parted", gears=2):
     go = obj(rng.integers(0, 2, size=(gears, n)))
     ph = obj(rng.integers(0, GAMMA, size=(1, n)))
     zero = obj(np.zeros((1, n), dtype=int))
-    return layout, State(a, b, r, go, ph, zero, zero - 1, zero), rng, xyz
+    return layout, state_of(a=a, b=b, r=r, go=go, ph=ph, c=zero, tb=zero - 1, tn=zero), rng, xyz
 
 
 def same(s, t):
@@ -132,7 +143,7 @@ for seed in range(30):
         s1, out = step.tick(layout, s, ones)
         back = step.untick(layout, s1, out)
         # T, one round, T: compare the gears with untick's
-        t1, _ = step.tick(layout, T(layout, s1)._replace(c=s.c, tb=s.tb, tn=s.tn), ones)
+        t1, _ = step.tick(layout, T(layout, s1)._replace(c=s.c, **times_of(s)), ones)
         rev = T(layout, t1)
         ok = all(np.array_equal(x, y) for x, y in zip((rev.a, rev.b, rev.r, rev.go), (back.a, back.b, back.r, back.go)))
         if rates == "equal":
