@@ -1304,7 +1304,7 @@ def main() -> int:
     print(
         f"ok      dynamic imports: {dynamic_cases} cases, every folder and the root against the loaders and the calls that run text"
     )
-    # the floor: a merge base older than the floor, on its own line, is read as the floor; one at or after it, or beside it, as it stands (the first hostile
+    # the floor: a merge base older than the floor, on its own line, is read as the floor; one at or after it, or beside it, is read as found (the first hostile
     # review's F1 and the fourth's follow-up)
     floor_cases, kept_floor = 1, gate.FLOOR
     if kept_floor != PINNED_FLOOR:
