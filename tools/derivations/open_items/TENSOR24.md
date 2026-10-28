@@ -10,6 +10,8 @@ The owner's words of 2026-10-28, 06:0x to 06:4x UTC (Hebrew, translated):
 
 - Through David, 06:3x UTC (#2187 6462481390): "If it is needed to see natural phenomena, and another family is needed, no problem. Everything should be in the plan Tensor24." And: "In my opinion go with the 24 without the 48, no?" To David, 06:1x UTC (6462435432): "Work only on the Tensor24 program. Only once it is whole, implement by the Boss."
 
+- Through David, 07:0x UTC (#2187 6462857797): "Pauli should be derived from matter being something not symmetric, and from the trains that carry force, which are symmetric: wholly from the laws, the mathematics and the trains' symmetries, and not by force. This should be part of the plan Tensor24."
+
 The plan's owner: the Boss. The names are the ones the owner sees in his app: Boss, Sofer, David and Animate (the owner's word through Animate, 06:3x UTC, #2187 6462416209). Its base: engine-5.0-test at 526a5666d. Its status: a plan, with nothing built under it.
 
 - **This file is the one plan.** Sofer's record of the program (the state of the cuts, the owner's list with his recommendations, the ledger) stands on scribe-5 and points here.
@@ -275,6 +277,7 @@ The cuts, in order:
   - The twin train goes into the one big bang's calibre with its own pair.
   - It shows the click of a split (Born), and Bell wherever a second twin pair stands at a fitted hand's Node-clock.
   - Its pair and its place in the setting are David's to derive after the main formula.
+  - David's proposal (6462857797): the one big bang's matter as twin hands, so that its matter is antisymmetric, as nature's is.
 
 ## 12. The end check
 
@@ -366,7 +369,8 @@ Sofer's audit of the source (SCRIBE-AUDIT-97E5B3F-1.md, items E1 to E19: where a
 | the regulator's drive (held_numerator) and its clamp at plus and minus the hold (E10, E11) | the typed form, the clamp | J's metric half from the product table, the stress's kinds on the regulator's kinds | 3, 6 |
 | Pauli's sigma on the curl, the kicks (E12, E13) | the typed sigma | the product table's twin-by-vector part, on (W, S) or on the gears (the owner's word, 11 a) | 3 |
 | the winding as 3 T sin omega, the light's drift as a floor root (E14, E15) | the sine, the root | the calibre's integers | 4 |
-| the exclusion as refusals, the pair set at senses -1 and +1, the + end by the twist's sign (E16, E17) | the typed rules | the exclusion from the twin hands' kind; the senses from the fitting's books (the charge and the spin conserved); the end by the twist, the coupling's carrier (David) | 5 |
+| the exclusion as refusals (E16): the setting's refusal by name (assembly/setting.py), the lay jam for every train (click.jam) | both | **Pauli from the trains' exchange symmetry** (David, the owner's word of 07:0x UTC): each train's sign under the exchange of two equal quanta follows from its kind, none declared. A full turn is -1 on the twin hands and +1 on a one-hand train, and an exchange is a full turn of one quantum about the other. So matter (the twin hands) is antisymmetric: two equal quanta at one Node-clock sum to 0 and cannot hold a whole winding. The force carriers (the unsprung hand, the offset, the regulator, the held field) are symmetric and may share a Node-clock. The setting's book is read with the train's exchange sign | 5 |
+| the pair set at senses -1 and +1, the + end by the twist's sign (E17) | the typed rules | the senses from the fitting's books (the charge and the spin conserved); the end by the twist, the coupling's carrier (David) | 5 |
 | the books balanced by a plug (E18) | the plug | every carry's remainder kept and signed (phase.books, built) | 5 |
 | every hand a point on den's circle, sine_rim (E19) | the root | the pair's integers in the calibre | 4 |
 | the unsprung hand known by identity (18 reads in 7 files) | the identity reads | the spring 0, by multiplication | 5 |
