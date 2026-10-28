@@ -35,6 +35,8 @@ A rule is a count of hits per file in src/event_universe. A refusal (tier BLOCK)
 
 A push may not raise the count of any hit above the same file's at its merge base (the revision named by CHECK_BASE, else origin/engine-5.0-test): what stands at the base stands, and the code departs from the law at the register's R5 until the Boss removes it. A hit is keyed by its rule, its file and its detail (the number, the name, the container), never by its line, so a moved or reformatted line is no new hit; a module git reads as renamed carries its counts; a new file has none. Replacing one hit by another of a different name is a new hit. A hit leaves the list by being removed and enters it only by the owner's word: tools/derivations/open_items/scribe_scan_allowed.json holds the entries the owner allowed (rule, file, detail, count, his word, the ledger's row), is written by Sofer alone and is read from origin/scribe-5, so that a push cannot allow itself by editing its own copy. It stands empty.
 
+A patch (`--patch FILE --base REV`) and a push also print one line of counts by rule from the base to the push (`counts from the base: LOOP 372 to 360, CLAMP 76 to 70`), so that the plan's end check, every count falling or equal and 0 at the end, is read at each push.
+
 `scribe_scan_baseline.json` is the other list: the hits that stand now (806 at the engine head 526a5666d: 647 refusing, of which 372 loops, 76 clamps, 75 circular names, 31 raises, 27 roots, 24 numbers, 22 state, 13 operations, 3 tables, 3 log reads and 1 float, and 159 notes: 102 ordering comparisons, 51 circular words in text and 6 caches), for Sofer's audit of the whole tree (`scribe_scan.py --baseline`), and it can only shrink.
 
 ## Where it runs

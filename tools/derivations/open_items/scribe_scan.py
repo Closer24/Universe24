@@ -628,6 +628,17 @@ def report(label: str, new: list[Hit], base_label: str, out: Any = sys.stdout) -
     return 1 if refusals else 0
 
 
+def delta_line(before: list[Hit], after: list[Hit]) -> str:
+    """The hits by rule from the base to the push: what falls toward the end state of 0 and what rises."""
+    was, now = Counter(h.rule for h in before), Counter(h.rule for h in after)
+    moved_rules = [
+        f"{rule} {was[rule]} to {now[rule]}"
+        for rule in sorted(set(was) | set(now))
+        if was[rule] != now[rule]
+    ]
+    return "counts from the base: " + (", ".join(moved_rules) if moved_rules else "unchanged")
+
+
 def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout) -> int:
     """The tree at `rev` against its merge base: 1 on a refusal."""
     commit = resolve(repo, rev)
@@ -638,10 +649,12 @@ def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout
     touched = git(repo, "diff", "--name-only", mb, commit, "--", PACKAGE, *OWN).stdout.decode().split()
     if not touched:
         return 0
-    stands = stood(hits_of(sources_at(repo, mb)), moved(repo, mb, commit))
-    new = above(hits_of(sources_at(repo, commit)), stands)
+    before, after = hits_of(sources_at(repo, mb)), hits_of(sources_at(repo, commit))
+    stands = stood(before, moved(repo, mb, commit))
+    new = above(after, stands)
     own = [p for p in touched if p in OWN]
     status = report(f"{commit[:9]}", new, f"its merge base {mb[:9]} with {name}", out) if new else 0
+    print(f"  {delta_line(before, after)}", file=out)
     if own:
         print(
             f"  note: this push changes the gate's own files {own}: the owner's word is needed for it",
@@ -670,10 +683,15 @@ def check_patch(repo: Path, patch: Path, base: str | None) -> int:
             print(f"the patch does not apply on {commit[:9]}: {applied.stderr.decode().strip()}")
             return 2
         git(tree, "add", "-A")
-        stands = stood(hits_of(sources_at(repo, commit)), moved(tree, commit, cached=True))
-        new = above(hits_of(sources_in(tree)), stands)
+        before, after = hits_of(sources_at(repo, commit)), hits_of(sources_in(tree))
+        stands = stood(before, moved(tree, commit, cached=True))
+        new = above(after, stands)
     base_label = name if name == commit[:9] else f"{name} ({commit[:9]})"
-    return report(f"the patch {patch.name}", new, base_label) if new else _clean(patch.name, base_label)
+    status = (
+        report(f"the patch {patch.name}", new, base_label) if new else _clean(patch.name, base_label)
+    )
+    print(f"  {delta_line(before, after)}")
+    return status
 
 
 def _clean(label: str, base: str) -> int:
