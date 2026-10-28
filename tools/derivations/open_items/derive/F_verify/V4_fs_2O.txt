@@ -1,0 +1,8 @@
+PASS 1 the generated group has 48 elements (2O) : 48
+PASS 2 the 48 map onto the 24 rotations, two to one
+   indicators: {'A1': '1', 'A2': '1', 'E': '1', 'T1': '1', 'T2': '1', 'E1/2': '-1 + 0 sqrt2', 'E5/2': '-1 + 0 sqrt2', 'G3/2': '-1 + 0 sqrt2'}
+   spinor kinds' mean |chi|^2: {'E1/2': '1 + 0 sqrt2', 'E5/2': '1 + 0 sqrt2', 'G3/2': '1 + 0 sqrt2'}
+PASS 3 each spinor kind is irreducible (mean |chi|^2 = 1)
+PASS 4 the five kinds of O have indicator +1 (real)
+PASS 5 the three spinor kinds of 2O have indicator -1 (quaternionic): no kind of 2O is complex
+RESULT: ALL PASS

@@ -1,0 +1,158 @@
+MIRROR                             w 2..15  even->even law1    0 TT    0 TSTi 2108 STS 2108 PNEG 1744 REST    0 NSN 2046  (of 4000)
+MIRROR                             w 2..15  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+MIRROR                             w 2..15  odd->even  law1    0 TT    0 TSTi  756 STS  756 PNEG    0 REST    0 NSN  763  (of 4000)
+MIRROR                             w 2..15  even->odd  law1    0 TT    0 TSTi 1670 STS 1670 PNEG 1670 REST    0 NSN 1670  (of 4000)
+MIRROR                             w ~1e20  even->even law1    0 TT    0 TSTi 1198 STS 1198 PNEG 1198 REST    0 NSN 1198  (of 4000)
+MIRROR                             w ~1e20  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+MIRROR                             w ~1e20  odd->even  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+MIRROR                             w ~1e20  even->odd  law1    0 TT    0 TSTi 1204 STS 1204 PNEG 1204 REST    0 NSN 1204  (of 4000)
+MIRROR                             w 2..15  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in  984 of 1000
+MIRROR                             w 2..15  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+MIRROR                             w 2..15  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in  959 of 1000
+MIRROR                             w ~1e20  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in    0 of 1000
+MIRROR                             w ~1e20  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+MIRROR                             w ~1e20  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in    0 of 1000
+MIRROR                             one-gear tick, D 3, w  8 (even): weak top: images hit twice  12, T M T M x != x 1027; top or bottom: hit twice  24, T M T M x != x 954
+MIRROR                             one-gear tick, D 3, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+MIRROR                             one-gear tick, D 3, w 10 (even): weak top: images hit twice  13, T M T M x != x 1040; top or bottom: hit twice  26, T M T M x != x 980
+MIRROR                             one-gear tick, D 3, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+MIRROR                             one-gear tick, D 3, w 12 (even): weak top: images hit twice  12, T M T M x != x 858; top or bottom: hit twice  24, T M T M x != x 816
+MIRROR                             one-gear tick, D 3, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+MIRROR                             one-gear tick, D 3, w 14 (even): weak top: images hit twice  15, T M T M x != x 1146; top or bottom: hit twice  30, T M T M x != x 1092
+MIRROR                             one-gear tick, D 3, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+MIRROR                             one-gear tick, D 5, w  8 (even): weak top: images hit twice  11, T M T M x != x 992; top or bottom: hit twice  22, T M T M x != x 884
+MIRROR                             one-gear tick, D 5, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+MIRROR                             one-gear tick, D 5, w 10 (even): weak top: images hit twice   7, T M T M x != x 553; top or bottom: hit twice  14, T M T M x != x 506
+MIRROR                             one-gear tick, D 5, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+MIRROR                             one-gear tick, D 5, w 12 (even): weak top: images hit twice  13, T M T M x != x 1025; top or bottom: hit twice  26, T M T M x != x 950
+MIRROR                             one-gear tick, D 5, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+MIRROR                             one-gear tick, D 5, w 14 (even): weak top: images hit twice  13, T M T M x != x 1122; top or bottom: hit twice  26, T M T M x != x 1044
+MIRROR                             one-gear tick, D 5, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               w 2..15  even->even law1    0 TT    0 TSTi    0 STS    0 PNEG 4000 REST 4000 NSN    0  (of 4000)
+FLIP                               w 2..15  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FLIP                               w 2..15  odd->even  law1    0 TT    0 TSTi 4000 STS 4000 PNEG    0 REST    0 NSN 4000  (of 4000)
+FLIP                               w 2..15  even->odd  law1    0 TT    0 TSTi 4000 STS 4000 PNEG 4000 REST 4000 NSN 4000  (of 4000)
+FLIP                               w ~1e20  even->even law1    0 TT    0 TSTi    0 STS    0 PNEG 4000 REST 4000 NSN    0  (of 4000)
+FLIP                               w ~1e20  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FLIP                               w ~1e20  odd->even  law1    0 TT    0 TSTi 4000 STS 4000 PNEG    0 REST    0 NSN 4000  (of 4000)
+FLIP                               w ~1e20  even->odd  law1    0 TT    0 TSTi 4000 STS 4000 PNEG 4000 REST 4000 NSN 4000  (of 4000)
+FLIP                               w 2..15  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in    0 of 1000
+FLIP                               w 2..15  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+FLIP                               w 2..15  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in  965 of 1000
+FLIP                               w ~1e20  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in    0 of 1000
+FLIP                               w ~1e20  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+FLIP                               w ~1e20  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in  480 of 1000
+FLIP                               one-gear tick, D 3, w  8 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 3, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 3, w 10 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 3, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 3, w 12 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 3, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 3, w 14 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 3, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 5, w  8 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 5, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 5, w 10 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 5, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 5, w 12 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 5, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 5, w 14 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FLIP                               one-gear tick, D 5, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+CARRIED                            w 2..15  even->even law1    0 TT 1713 TSTi    0 STS 1713 PNEG    0 REST    0 NSN  756  (of 4000)
+CARRIED                            w 2..15  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+CARRIED                            w 2..15  odd->even  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN  714  (of 4000)
+CARRIED                            w 2..15  even->odd  law1    0 TT 1746 TSTi    0 STS 1746 PNEG    0 REST    0 NSN    0  (of 4000)
+CARRIED                            w ~1e20  even->even law1    0 TT 1229 TSTi    0 STS 1229 PNEG    0 REST    0 NSN    0  (of 4000)
+CARRIED                            w ~1e20  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+CARRIED                            w ~1e20  odd->even  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+CARRIED                            w ~1e20  even->odd  law1    0 TT 1184 TSTi    0 STS 1184 PNEG    0 REST    0 NSN    0  (of 4000)
+CARRIED                            w 2..15  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in  978 of 1000
+CARRIED                            w 2..15  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+CARRIED                            w 2..15  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in  945 of 1000
+CARRIED                            w ~1e20  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in    0 of 1000
+CARRIED                            w ~1e20  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+CARRIED                            w ~1e20  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in    0 of 1000
+CARRIED                            one-gear tick, D 3, w  8 (even): weak top: images hit twice  18, T M T M x != x  61; top or bottom: hit twice  30, T M T M x != x 108
+CARRIED                            one-gear tick, D 3, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+CARRIED                            one-gear tick, D 3, w 10 (even): weak top: images hit twice  18, T M T M x != x  56; top or bottom: hit twice  31, T M T M x != x  97
+CARRIED                            one-gear tick, D 3, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+CARRIED                            one-gear tick, D 3, w 12 (even): weak top: images hit twice  16, T M T M x != x  51; top or bottom: hit twice  28, T M T M x != x  89
+CARRIED                            one-gear tick, D 3, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+CARRIED                            one-gear tick, D 3, w 14 (even): weak top: images hit twice  19, T M T M x != x  51; top or bottom: hit twice  34, T M T M x != x  85
+CARRIED                            one-gear tick, D 3, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+CARRIED                            one-gear tick, D 5, w  8 (even): weak top: images hit twice  20, T M T M x != x  79; top or bottom: hit twice  31, T M T M x != x 145
+CARRIED                            one-gear tick, D 5, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+CARRIED                            one-gear tick, D 5, w 10 (even): weak top: images hit twice  14, T M T M x != x  67; top or bottom: hit twice  21, T M T M x != x 126
+CARRIED                            one-gear tick, D 5, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+CARRIED                            one-gear tick, D 5, w 12 (even): weak top: images hit twice  19, T M T M x != x  64; top or bottom: hit twice  32, T M T M x != x 114
+CARRIED                            one-gear tick, D 5, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+CARRIED                            one-gear tick, D 5, w 14 (even): weak top: images hit twice  19, T M T M x != x  60; top or bottom: hit twice  32, T M T M x != x 105
+CARRIED                            one-gear tick, D 5, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               w 2..15  even->even law1  382 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+EVEN                               w 2..15  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+EVEN                               w 2..15  odd->even  law1  354 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+EVEN                               w 2..15  even->odd  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+EVEN                               w ~1e20  even->even law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+EVEN                               w ~1e20  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+EVEN                               w ~1e20  odd->even  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+EVEN                               w ~1e20  even->odd  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+EVEN                               w 2..15  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in    0 of 1000
+EVEN                               w 2..15  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+EVEN                               w 2..15  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in    0 of 1000
+EVEN                               w ~1e20  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in    0 of 1000
+EVEN                               w ~1e20  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+EVEN                               w ~1e20  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in    0 of 1000
+EVEN                               one-gear tick, D 3, w  8 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 3, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 3, w 10 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 3, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 3, w 12 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 3, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 3, w 14 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 3, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 5, w  8 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 5, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 5, w 10 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 5, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 5, w 12 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 5, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 5, w 14 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+EVEN                               one-gear tick, D 5, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              w 2..15  even->even law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FRAME                              w 2..15  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FRAME                              w 2..15  odd->even  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FRAME                              w 2..15  even->odd  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FRAME                              w ~1e20  even->even law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FRAME                              w ~1e20  odd->odd   law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FRAME                              w ~1e20  odd->even  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FRAME                              w ~1e20  even->odd  law1    0 TT    0 TSTi    0 STS    0 PNEG    0 REST    0 NSN    0  (of 4000)
+FRAME                              w 2..15  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in    0 of 1000
+FRAME                              w 2..15  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+FRAME                              w 2..15  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in    0 of 1000
+FRAME                              w ~1e20  retrace 40 ticks, teeth even : S^n T x_n != T x_0 in    0 of 1000
+FRAME                              w ~1e20  retrace 40 ticks, teeth odd  : S^n T x_n != T x_0 in    0 of 1000
+FRAME                              w ~1e20  retrace 40 ticks, teeth mixed: S^n T x_n != T x_0 in    0 of 1000
+FRAME                              one-gear tick, D 3, w  8 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 3, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 3, w 10 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 3, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 3, w 12 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 3, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 3, w 14 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 3, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 5, w  8 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 5, w  9 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 5, w 10 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 5, w 11 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 5, w 12 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 5, w 13 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 5, w 14 (even): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+FRAME                              one-gear tick, D 5, w 15 (odd ): weak top: images hit twice   0, T M T M x != x   0; top or bottom: hit twice   0, T M T M x != x   0
+the mathematician's box (span 25, D 3), MIRROR  w 10: images hit twice 25, T M T M x != x 4472
+the mathematician's box (span 25, D 3), MIRROR  w 11: images hit twice 0, T M T M x != x 0
+the mathematician's box (span 25, D 3), FLIP    w 10: images hit twice 0, T M T M x != x 0
+the mathematician's box (span 25, D 3), FLIP    w 11: images hit twice 0, T M T M x != x 0
+the mathematician's box (span 25, D 3), FRAME   w 10: images hit twice 0, T M T M x != x 0
+the mathematician's box (span 25, D 3), FRAME   w 11: images hit twice 0, T M T M x != x 0
+drive fine tooth reflected by the flip  : reversed carry wrong in even D 0, odd D 0 (of about 10000 each)
+drive fine tooth reflected by the mirror: reversed carry wrong in even D 1454, odd D 0 (of about 10000 each)

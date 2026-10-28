@@ -1,0 +1,10 @@
+=== mutant edge
+FAIL A3 the L1 ball's inradius^2 is 1/3, light's c^2 at the edge : inradius^2 1/3 against c^2 101/300
+FAIL B4 the axis tip carries exactly 3^-t of the pulse
+RESULT: FAILED A3 the L1 ball's inradius^2 is 1/3, light's c^2 at the edge, B4 the axis tip carries exactly 3^-t of the pulse
+=== mutant pell
+FAIL D1 the boost (t, x) -> (2t + 3x, t + 2x) keeps t^2 - 3 x^2 and has determinant 1
+RESULT: FAILED D1 the boost (t, x) -> (2t + 3x, t + 2x) keeps t^2 - 3 x^2 and has determinant 1
+=== mutant parity
+FAIL B2 with the checkerboard's parity |x|_1 = t mod 2
+RESULT: FAILED B2 with the checkerboard's parity |x|_1 = t mod 2

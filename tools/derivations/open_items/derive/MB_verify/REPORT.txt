@@ -1,0 +1,40 @@
+Animate's ANIMATE-MANY-BANGS (reader-5 211ccb34b). Files: /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/derive/MB_verify/.
+
+Reproduction: all five 250-tick runs at 5M match the kept outputs line for line; carry at 1,000 ticks matches (1bc59fa2b92b6617 without the dial). Base ends at draft C's 77e8684641d42469. Not rerun: 500k at 1,000 ticks, base at 1,000, rewinds from 180 and 140.
+
+1. Course: CONFIRMED WITH CORRECTIONS.
+- One top per bang, every 47 ticks (5M) and 147 (500k); carry equals base without the dial (131263b34da818ef).
+- sqrt 10 = 3.162 is right but dimensional: a push linear in the quanta between quanta-free ends (Gamma, X_c) gives Q^-1/2. 147/47 = 3.128 < sqrt 10 < 146/46 = 3.174; no Friedmann test.
+- Rewind 20 of 20 (15, 40, 60) reproduced, but it replays the stack note (tick.py:54-62).
+- "Every retrace exact": true for X, REFUTED for the state. mb_tcheck compares state(24+k) with the engine's T(state(23-k)): all gears agree except the regulator's three flow gears (train 7, gears 4-6), drive teeth apart by tick 30, notches 10, 10, 5 apart at the first bottom; bottoms 140 and 234 differ in 13 of 76 arrays (up to 9,999,973 notches). Cause OPEN.
+
+2. T S T = S^-1: CONFIRMED WITH CORRECTIONS (v_time_gear.txt).
+- Proof right for a push read from the now slot (draft C's N). Flip: 0 failures, w = 2..16.
+- The head's mirror is an involution and fails where exactly ONE of r, r' is 0: w = 8, 2,100 = 1,050 + 1,050; the 175 both-zero cases pass.
+- Draft G: the time gear's drive is the floor carry with its tooth kept (clock.py:171-174), identical to G's half-up 'up' step (0 differences); no tie arises. G's carried mirror is a third map, absent from tst_time_gear: (S T)^2 = id at all 1,800, T T != id at 225 (every r = 0), retrace fails 225 (G: 224); head's mirror 420 (G: 420).
+- The runs used the mirror; T_d (3,275,177,059,968,276,024 x 10^15) is even, yet 0 of 64,000 drive steps hit a zero tooth: no run tells flip from mirror. With the flip (carry_flip) course and rewinds hold, the hash moves (93622c78c9a493e4): proposal (d) ends "draft C bit for bit".
+
+3. No bottom trigger: CONFIRMED. weakmin turns at all 250 ticks, 0 births; fallmin turns every 23 ticks, every top 4,638,548,302, 0 births.
+
+4. Top as carry.
+(a) REFUTED, an if: many_bangs.py:80-81 "turns = x1 // teeth; top = turns >= 1", then the reverse on that mask. No remainder stays, X >= 2 X_c acts once, for X >= 0 it is X >= X_c; X_c comes from a walk with an if (rates.stopped_load). ALGEBRA.md (scribe-5 3d6cd8a35) line 106: "the turn leaves as an event ... and the remainder stays on the dial"; line 106: "an indicator that zeroes a term above a bound is a bound spelt as a quotient"; line 35: "no act holds a floor, a bound, a clamp, a mask or a branch".
+(b) Rewind kept, by the note.
+(c) CONFIRMED, both hashes reproduced; the draw's cap acts 5,248 more times, changing nothing.
+(d) CONFIRMED at 500k, 300 ticks: body clicks 5,888 against 5,824, refusals 86,752 against 86,176, taken and booked equal: the bobs' click at a top's tick past the horizon, which BH-S1 skipped; a bob chime books 0 (bobs.py:141). Events with no quotient, moving the clicks array.
+
+5. F2: CONFIRMED load-bearing, no probe artifact: carry_f2ctl (the probe's factor code, clip restored) reproduces carry bit for bit. The runaway is Q = round(G^2 (Gamma - t)^2 / Gamma^2) (rule3.py:57-61) read past its range: a stopped mesh runs faster the further past. F2 acts at 91,776 of 96,000 readings: x and y spokes below 0, z above Gamma, 239 of 250 ticks. The course is not cubic.
+
+6. Law 10: CONFIRMED failing. Births per bang 0, 64, 32, then 0 for 18 bangs; row 46 fails from bang 3. After tick 94 row 1c holds only by gear drift, chiefly the flow gears (the kept hash also holds the tick and the dial), not by "the births of the earlier bangs".
+
+7. Ladder (v_ladder: 2O from its 48 quaternions, no table typed). Product table, signs, rungs and n = 8 (15, 7, 21, 36, 28): CONFIRMED.
+- David's rule, one family, no antiquanta: E1/2 x E1/2 enters Alt^2 = A1 only; {A1, E1/2} at every bang. Unequal twin hands: eight at bang 4, composites equal (A2 from T1 x T2, E5/2 from T2 x E1/2).
+- n equal twin hands: Lambda^2 = A1, 0 from n = 3; the 2^n rise contradicts the draft's own Pauli line.
+- "Every pair fused each bang" is a premise (11 a, c, e). Eight from a faithful kind is Burnside-Brauer, true of any group; kinds stop at 8.
+
+8. Closing: the candidate renames. A bijection of a finite set is a union of cycles, so c1 < ... < ck < c1 is impossible. "One tooth on" trades "more" for "next"; its carry, kept, stops the circle closing; dropped, the closing bang reads the first; row 46 still falls. The law holds it open (line 106: "a finite board, exactly reversible, returns at last to its start"). The engine is no finite bijection (the click is not one; no counter-free repeat in 1,000 ticks).
+
+Law 10 needs an engine act making new click kinds or counts every bang, and the owner's word on the closing. The ladder gives neither.
+
+OPEN: the top as Rule3's carry with its remainder; the flow gears' retrace; F2 and the two caps as carries; twin hands, composite clock, fusion click; the closing.
+
+Protocol: steps 3 and 5 met; the mutants fail (mirror for flip, bottom triggers, F2 struck, wrong table, rule off). Step 1 not met (comparison and mask at the top, a search for X_c, clamps under the course). Step 2: P3 right with the correction; P2's PROVED is a definition; the retrace claim refuted. Step 6: Sofer's findings stand, no sign-off. The draft does not meet the protocol.

@@ -1,0 +1,24 @@
+the one big bang, 500 quanta, 250 ticks, the head's engine (t24), the board (4, 4, 4)
+trains: 0: one gear, spring None; 1: hand, spring 2183583978; 2: hand, spring 12704646675360514; 3: hand, spring 12582467845487104; 4: hand at (rim, rim), the light; 5: held field (one gear, weight 2); 6: offset (the potential); 7: size 7, spring 15162856759112
+the split's second reading: the trains' forms sum to the head's forms at every Node-clock at 250 of 250 ticks
+click record, by event: {'birth': 80, 'books': 45, 'credit': 2560, 'refused': 125800}
+the hands' train indices the clicks name (births: line_pair, taken_row; credits: the gear 'line' of a hand): {'birth': {'line_pair': [1, 2, 3, 4], 'taken_row': [3, 4]}, 'credit': {'line': [0, 1, 2]}}
+births 80 chimes 2560 ; whole-board turnovers at [12] 
+the forms summed over every tick and Node-clock: total 7089831832; the trains that never click (5: held field (one gear, weight 2), 6: offset (the potential)): 372465988
+  ticks 1..12: forms 2616671624, of which never clicking 5312
+  ticks 13..250: forms 4473160208, of which never clicking 372460676
+tick: forms summed over the board, train by train [the held field's least..largest per Node-clock]
+  1: total 1152000000; 1=0, 2=0, 3=0, 4=1152000000, 5=0, 6=0; held {5: (0, 0)}
+  2: total 617859200; 1=0, 2=0, 3=0, 4=617859200, 5=0, 6=0; held {5: (0, 0)}
+  5: total 95020224; 1=0, 2=0, 3=0, 4=95020224, 5=0, 6=0; held {5: (0, 0)}
+  10: total 40910208; 1=1056320, 2=1290304, 3=0, 4=38562688, 5=384, 6=512; held {5: (6, 6)}
+  20: total 122572400; 1=4006740, 2=3288724, 3=1323896, 4=113947424, 5=4412, 6=1204; held {5: (3, 236)}
+  50: total 6054956; 1=3125156, 2=30684, 3=13808, 4=663036, 5=2936, 6=2219336; held {5: (28, 58)}
+  100: total 1519316; 1=250372, 2=4032, 3=2224, 4=19500, 5=1216, 6=1241972; held {5: (14, 31)}
+  200: total 893608; 1=16416, 2=484, 3=380, 4=224, 5=104, 6=876000; held {5: (0, 4)}
+  250: total 2268564; 1=5852, 2=232, 3=240, 4=56, 5=24, 6=2262160; held {5: (-1, 1)}
+stretch at the end: 5591434..30007244
+
+real	1m6.576s
+user	1m6.104s
+sys	0m0.112s

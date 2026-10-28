@@ -1,0 +1,17 @@
+PASS A1 [light] SIGMA commutes with the step for 12 ticks at the vacuum's hold 0
+PASS B1 [light] the doubler keeps the wind and reverses the sweep : wind 423968/3, sweep -5002 -> 5002
+PASS A1 [massive r = 3/5] SIGMA commutes with the step for 12 ticks at the vacuum's hold 0
+PASS B1 [massive r = 3/5] the doubler keeps the wind and reverses the sweep : wind 725934/5, sweep 957 -> -957
+PASS A2 off the edge (hold 1/5) SIGMA fails at the first tick
+PASS B2 off the edge the wind is not SIGMA-even
+PASS C1 the neighbours' sum of SIGMA a is -e(x, t) times the neighbours' sum of a (every Spoke changes the colour)
+PASS C2 the Node-clock's own term of SIGMA a is +e(x, t) times its own: so a+ + a- (which takes -e) matches the neighbours and not the hold
+PASS D1 the head's hold is 0 at the vacuum for every train of the one big bang's calibre (the Courant edge) : G = 16
+PASS D2 at a load (p0 = 999, 900, 500) the hold is 12 G^2 (rim (Gamma^2 - p0^2) + pinion (p0^2 - pm^2))
+PASS D3 so it is > 0 at every load: the doubler is lifted wherever the clock runs below the full rate
+PASS D4 a tension on one Mesh raises the hold above 0 too
+PASS E1 with Rule3's carry SIGMA is not exact: the image and the step part within a few ticks : [1, 1, 1, 1, 1]
+   light (hold 0): staggered amplitude SUM e(x, t) a(x, t), none set: [(1, -2), (10, -232), (50, -1946), (100, -4547), (200, -11247), (400, -30256)]
+   massive at the edge (g 199, D 804, cos w0 = 597/999): staggered amplitude: [(1, 2), (10, 15), (50, 29), (100, 15), (200, -20), (400, 23)]
+PASS E2 with Rule3's carry the rounding feeds the staggered mode from a setting with none (light at the edge) : (400, -30256)
+RESULT: ALL PASS

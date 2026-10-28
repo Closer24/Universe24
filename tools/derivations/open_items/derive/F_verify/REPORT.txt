@@ -1,0 +1,44 @@
+F_verify: second hand on draft F (protocol step 5).
+
+Rerun: F1 to F7, their 23 mutants and both head runs reproduce byte for byte (head: timing lines aside); every mutant fails. New probes V1 to V6, each with a failing mutant.
+
+1. II.3: CONFIRMED WITH CORRECTIONS. O(k^2) counts: A1 1, A2 1, E 2, T1 3, T2 3, E1/2 1, E5/2 1, G3/2 4, so isotropy covers two-component twins only. "Only a gauge" overstates: a component-blind pull is isotropic for every kind; the gauge fixes T1's beta = -alpha and gamma = 0. The 24 also allow an O(k) helicity term on T1 and T2.
+
+2. II.21: CONFIRMED WITH CORRECTIONS. The group is right, and no boost keeps any finite stencil (its group is finite; Pell's boost has infinite order). c_K^2 = r/3 confirmed. REFUTED: "exact universality impossible". cos w0 = 4/5 (weight 1/10) and 7/25 (weight 2/25) share c^2 exactly, since (4+3i)^2 = 7+24i. The claim holds for a continuum of rest beats and under the law of the grips (ratio 7/16).
+
+3. II.23: CONFIRMED (186 and 624 reproduce).
+
+4. II.16: CONFIRMED WITH CORRECTIONS.
+- SIGMA is exact iff the hold is 0; the hold is the one SIGMA-odd term, given T's local two-slot form; no listed symmetry fixes it.
+- The feed runs through the remainder slot the two colours of space-time share. Over 4 seeds, SUM S(1600)^2 is 68,689 with a slot per colour and 375,202,181,643 shared. The mean square grows 8 to 16 fold per doubling, so at least t^(3/2).
+- Ways out incomplete. (c): at the hold 0 the step reads one colour only, and there SIGMA is the identity. So one colour has no doubler and keeps c^2 = 1/3, but a hold needs both colours.
+- (b) is no opposite-charge species. The corner sector holds both charges at equal wind (sweeps -256/5 and 256/5), and its w in (0, pi) mode has the particle's charge. So (b) is a degenerate copy of every hold-0 train, a second light included. Kogut-Susskind's reading is for first-order operators.
+
+5. II.26: CONFIRMED. Indicators recomputed from an explicit 2O (V4): +1 on O's kinds, -1 on all three spinor kinds. CPT = P R and the table reproduce. S . J is CPT-odd because the middle-slot S has the tensor density's parities (P R = +); SW has the axial current's.
+
+6. III: CONFIRMED WITH CORRECTIONS. HOM, antibunching, the partition, wind = 2 sin w x sweep, line 915 and recurrence confirmed. The token's 6 failing ticks all overflow, and ticks 1 and 6 also have a negative density. The sweep of interfering waves is no positive density (the Klein-Gordon problem), and no finer tick cures that.
+
+7. Law 10: proof CONFIRMED (V1: exhaustive to 7 bangs; around any cycle the rises total the falls).
+- The dial renames the fall. With dials of radices 3 and 4, the low dial advances one tooth a bang and the high one at each carry, yet the whole reading falls by 11 at the closing bang. A kept top carry grows, so the full state never returns.
+- Unbounded orbits: CONFIRMED (the drift, the staggered feed). Such a board is no finite bijection, so Postulate 4's return fails. The one formula on dials is owed (draft H).
+- Head at 5,000,000 quanta: forms repeat every 10 ticks, but 61 reads give 61 gear states. Births run 0, 64, 0; chimes per bang alternate 640 and 576. Row 46 fails.
+
+8. V: CONFIRMED WITH CORRECTIONS. F6 D1 keeps div E - rho at its setting value, not at 0. The step is local, but Gauss's law constrains the setting (zero total charge on the torus). "Refutes line 458" is too strong.
+
+9. VI: CONFIRMED WITH CORRECTIONS. The argument needs rho >= 0, Lambda >= 0, and a maximal slice. One exists between everywhere-expanding and everywhere-contracting slices (Gerhardt; Bartnik), or between crushing ends; a volume maximum with mixed regions is not covered. BGT 1986 is right; Witt checks.
+
+10. Dark matter: CONFIRMED WITH CORRECTIONS. The kinds' argument and the remainders' refutation hold. The "5.3 percent" is right arithmetic (93116497/1772457958) but no dark fraction: it sums ticks 1 to 250, which the light dominates early. Per tick, the never-clicking share is under 1/1000 up to tick 20, then 367/1000 (tick 50), 818/1000 (100) and 997/1000 (250), nearly all of it the offset. "No halo" is not measured.
+
+For the owner:
+- Law 10, a real conflict for any count: "On a board that returns to its start, every count read at the bangs rises around the circle as much as it falls. Is 'more' one tooth on a dial, with the closing bang its carry? Or is the carry kept, so the books grow and time is a circle for the gears only?"
+- The doubler, a choice among three: "At the full rate the board is two boards that never meet. Keep both (a copy of every particle), tie them by a hold (light at 1/sqrt 6), or keep one (half the state; a load needs both)."
+
+OPEN: (c)'s loads; the feed's rate; the speeds under sources; the token's density; SW . J's rewind; the light's click; dials; halos and amount. Unchecked by the deadline: citations other than Witt; confinement; the rows of the 80.
+
+Protocol: steps 1 to 4 met.
+- Gaps: F7_dark_head kept no mutant (V3 adds one); 2.1 has two decimals.
+- The numbering holds at 25027b4f6 and at origin/scribe-5 3d6cd8a35; the new Postulate 5 ("no if") bears on the token.
+- 69 of 72 quoted fragments sit on their lines. Misses: one quote is DAVID-FOUR-PHENOMENA.md's, not line 1905's; section 8 shortens line 458; one differs in case.
+- The statuses match, except line 1606's date.
+
+Files: /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/derive/F_verify/ (REPORT.txt; rerun/; V1 to V6 with outputs and mutants).

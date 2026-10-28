@@ -1,0 +1,30 @@
+PASS A1 the 48 and the 24 : 48 and 24
+PASS A2 the five kinds' characters orthonormal over the 24 : sum of squares of dims 24
+PASS A3 the classes 1 + 6 + 3 + 8 + 6 : [1, 3, 6, 6, 8]
+   invariants of degree n = 0..9 under the 24: [1, 0, 1, 0, 2, 0, 3, 0, 4, 1]
+   invariants of degree n = 0..9 under the 48: [1, 0, 1, 0, 2, 0, 3, 0, 4, 0]
+PASS B1 degree 2: one invariant, |k|^2 (so every scalar train's long-wave form is isotropic)
+PASS B2 degree 4: two invariants, |k|^4 and SUM k_a^4 (the first cube invariant)
+PASS B3 degree 6: three; degree 8: four; degree 9: one under the 24 and none under the 48
+PASS B4 SUM k_a^4 is no multiple of |k|^4 (axis 1, face diagonal 1/2) : 1 and 1/2
+   24-invariant long-wave operators by kind: {'A1': 1, 'A2': 1, 'E': 2, 'T1': 3, 'T2': 3}
+PASS C1 A1 and A2 trains: one constant each (isotropic by the 24 alone)
+PASS C2 E: two constants; T1 and T2: three each (a cubic crystal's elasticity, not isotropic by the 24)
+PASS D1 the 24-invariant T1 operators span a space of dimension 3 (= C2's count) : 3
+PASS D2 alpha |k|^2 delta, beta k k^T and gamma diag(k_a^2) are invariant and span them
+PASS D3 the gauge condition M(k) k = 0 leaves one operator : dimension 1
+PASS D4 the survivor is |k|^2 delta - k k^T (Maxwell's), killing every gradient wave
+PASS D5 under the rational rotation (3/5, 4/5) about z: alpha and beta covariant, gamma not
+   lambda 1/3, axis: w^2/p^2 -> 1/3; first slowing kappa = 1/12; (S4 - 1/3)/8 = 1/12
+   lambda 1/3, face: w^2/p^2 -> 1/3; first slowing kappa = 1/48; (S4 - 1/3)/8 = 1/48
+   lambda 1/3, body: w^2/p^2 -> 1/3; first slowing kappa = 0; (S4 - 1/3)/8 = 0
+   lambda 1/3, (1,2,3): w^2/p^2 -> 1/3; first slowing kappa = 1/48; (S4 - 1/3)/8 = 1/48
+PASS E1 at the Courant edge every direction has c^2 = 1/3 and kappa = (S4 - 1/3)/8
+PASS E2 kappa: axis 1/12, face diagonal 1/48, body diagonal 0
+PASS E3 below the edge (lambda 1/6, hold 1) the body diagonal slows too: kappa = 1/48 : 1/48
+   massive r = 1: (2 sin(w/2))^2 = 0 + 1/3 p^2 + ...
+   massive r = 4/5: (2 sin(w/2))^2 = 2/5 + 4/15 p^2 + ...
+   massive r = 3/5: (2 sin(w/2))^2 = 4/5 + 1/5 p^2 + ...
+   massive r = 1/2: (2 sin(w/2))^2 = 1 + 1/6 p^2 + ...
+PASS E4 in the variable 2 sin(w/2) each train's long-wave speed^2 is r/3 = pinion/(3 rim)
+RESULT: ALL PASS

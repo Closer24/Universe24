@@ -1,0 +1,34 @@
+1. Run back at parts: parts and quanta turned over, the quanta's order reversed (T antiunitary)
+  [ok] twin hands E1/2: every joint size kept by the run back, for eps = +1 and eps = -1: +1: 400 of 400, -1: 400 of 400
+  [ok] a hand A1: every joint size kept by the run back, for eps = +1 and eps = -1: +1: 400 of 400, -1: 400 of 400
+  [ok] vectors T1: every joint size kept by the run back, for eps = +1 and eps = -1: +1: 400 of 400, -1: 400 of 400
+   so the turnover keeps the joint click whatever the exchange sign: it chooses nothing at parts
+2. The pair's one pairing B(u, v) = <T u, v> under the turnover (exhaustive boxes)
+  [ok] twin hands E1/2: T T = -1 on every hand of the box: 625 of 625
+  [ok] twin hands E1/2: B(T u, T v) = conj B(u, v)  (order kept): 3000 of 3000
+  [ok] twin hands E1/2: B(T v, T u) = (T T) conj B(u, v)  (order reversed): 3000 of 3000
+  [ok] twin hands E1/2: B(v, u) = (T T) B(u, v)  (Kramers = Frobenius-Schur): 3000 of 3000
+  [ok] a hand A1: T T = +1 on every hand of the box: 49 of 49
+  [ok] a hand A1: B(T u, T v) = conj B(u, v)  (order kept): 3000 of 3000
+  [ok] a hand A1: B(T v, T u) = (T T) conj B(u, v)  (order reversed): 3000 of 3000
+  [ok] a hand A1: B(v, u) = (T T) B(u, v)  (Kramers = Frobenius-Schur): 3000 of 3000
+  [ok] vectors T1: T T = +1 on every hand of the box: 146 of 146
+  [ok] vectors T1: B(T u, T v) = conj B(u, v)  (order kept): 3000 of 3000
+  [ok] vectors T1: B(T v, T u) = (T T) conj B(u, v)  (order reversed): 3000 of 3000
+  [ok] vectors T1: B(v, u) = (T T) B(u, v)  (Kramers = Frobenius-Schur): 3000 of 3000
+3. The A1 part of two equal quanta, Q = B(u, v) + eps B(v, u), run back with the order compensated by eps
+  [ok] twin hands E1/2: the run back keeps a present A1 part only for eps = T T = -1; for eps = +1 the A1 part is 0 in every pair: eps=+1: kept 0 of 0 nonzero; eps=-1: kept 1997 of 1997 nonzero
+  [ok] a hand A1: the run back keeps a present A1 part only for eps = T T = +1; for eps = -1 the A1 part is 0 in every pair: eps=+1: kept 2000 of 2000 nonzero; eps=-1: kept 0 of 0 nonzero
+  [ok] vectors T1: the run back keeps a present A1 part only for eps = T T = +1; for eps = -1 the A1 part is 0 in every pair: eps=+1: kept 2000 of 2000 nonzero; eps=-1: kept 0 of 0 nonzero
+4. The A1 pair Omega_T = SUM_k e_k x T e_k: exchange = double turnover; on the dial, exchange = full turn of one
+  [ok] twin hands E1/2: P Omega_T = (T T) Omega_T, Omega_T not 0: 300 of 300
+  [ok] twin hands E1/2: B(v, u) = B(u, z v): on the pair's one dial, exchanging the quanta is the full turn of one: 2000 of 2000
+  [ok] a hand A1: P Omega_T = (T T) Omega_T, Omega_T not 0: 300 of 300
+  [ok] a hand A1: B(v, u) = B(u, z v): on the pair's one dial, exchanging the quanta is the full turn of one: 2000 of 2000
+  [ok] vectors T1: P Omega_T = (T T) Omega_T, Omega_T not 0: 300 of 300
+  [ok] vectors T1: B(v, u) = B(u, z v): on the pair's one dial, exchanging the quanta is the full turn of one: 2000 of 2000
+5. Superselection: the acts alike on each quantum commute with the exchange (a ring of 4 Node-clocks, twin hands)
+  [ok] the step (plain hop and the half-turn hop) on each quantum alike commutes with the exchange P: 12 of 12
+  [ok] the turnover on each quantum alike commutes with the exchange: both sectors run back as themselves: 200 of 200
+   so neither sector is chosen by the board's acts: the sign can only be the click's (the owner's 'about the clicks')
+result: 0 failures

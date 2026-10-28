@@ -1,0 +1,9 @@
+M1. The literal composite rule (swap = the composite's own full turn, +1): the twin singlet must be lost
+  twin pairs whose A1 composite the literal rule rejects: 300 of 300 (must be above 0)
+M2. eps = +1 on the twin hands in the belt: process = z snake must fail
+  quanta whose belt process (+psi) is not the full turn (-psi): 300 of 300 (must be above 0)
+M3. A product fitted pair u x w in place of the A1 pair (the one-hand board): the process must not be a multiple of psi
+  quanta whose process is no multiple of psi: 298 of 300 (must be above 0)
+M4. The T1 composite's middle gear made antisymmetric (u1 v2 - u2 v1): the Lagrange split must fail
+  pairs where the mutated T1 size breaks Lagrange: 282 of 300 (must be above 0)
+result: every mutant fails as it must
