@@ -5,7 +5,12 @@ The owner's words of 2026-10-28, 06:0x to 06:2x UTC (Hebrew, translated):
 - "Call the plan Tensor24 [not Tenzor24]. Write it for me here and for everyone in such a file, make sure it stands, divide the work. At its end the whole engine is tensor arithmetic only: say of which order. Explain how the clock enters here, what the node takes and what it gives, and what all the families are. For now only close the plans with everyone, implementing nothing. Make sure that at its end there are no numbers in the code and no circular proofs."
 - "Understand how the click enters the plan, its kinds, all the families and what they are, the family you wanted to add included. Reach the main formula of the node-clock, just as general relativity has a tensor equation, but that one is not for the node."
 
-The plan's owner: the Boss. Its base: engine-5.0-test at 526a5666d. Its status: a plan, with nothing built under it. It takes in whole the Reader's proposal of 05:49 UTC (#2187, 6461767760) and the Scribe's SCRIBE-THE-NODE-AS-ONE-ACT-1.md (scribe-5 d2d78b945, #2187, 6461843937). It adds the main formula read from the head's code, the click's kinds, the families, what the Boss's check found, and who does what.
+The plan's owner: the Boss. Its base: engine-5.0-test at 526a5666d. Its status: a plan, with nothing built under it.
+
+- **This file is the one plan.** The Scribe's record of the program (the state of the cuts, the owner's list with his recommendations, the ledger) stands on scribe-5 and points here.
+- **The law's sentence is entered** as decided and not built: "The Node-clock is one act" (docs/ALGEBRA.md, scribe-5 8c0a0cd01), on the owner's "Yes and yes" to the Scribe at 06:0x UTC.
+- **What it takes in whole:** the Reader's proposal of 05:49 UTC (#2187, 6461767760) and the Scribe's SCRIBE-THE-NODE-AS-ONE-ACT-1.md (scribe-5 d2d78b945, #2187, 6461843937).
+- **What it adds:** the main formula read from the head's code, the click's kinds, the families, the Boss's check, David's derivations of 06:0x UTC (6462024199), the Reader's reading of the mirror of 06:2x UTC (6462233147), and who does what.
 
 ## 1. The end state
 
@@ -41,6 +46,12 @@ then the carry: the quotient goes to the notch and the remainder stays in the fi
 
 **On the head the form is written twice.** The regulator steps by clock.turn plus a separate drive carry; the driven trains step by the impulse and tick.carry. These are two paths of one form, and Tensor24 makes them one.
 
+**Its degrees (David, 6462024199):**
+- The sources are products of trains: the stress, the masses, the forms and Pauli's numerator are of degree 2 in the gears. The release is of degree 3, counting the clock's s: the stretch times the cross of a hand and its pull.
+- The grips and springs they carry are maps of the load.
+- So the one act is one division over one multilinear contraction, and a cut keeps its bits within what clock.max_transient reads on the head.
+- A train's kind is its cube kind times its own: one gear, the Gaussian pair (its two products, hands.dot and meshes.cross, the real and imaginary parts of conj(z) w), or the twins' four.
+
 **The work:**
 - David derives the formula exactly: each term's integers, where each carry's remainder goes, and the drive's teeth.
 - The Boss checks it bit for bit against the head's step on the committed charts, with a probe and no engine change.
@@ -61,7 +72,8 @@ then the carry: the quotient goes to the notch and the remainder stays in the fi
 
 **Two points on the head:**
 - The fitting's family is drawn evenly among the hands it may lay (click.list_of), not by the parts' sizes. Tensor24 makes every draw the one draw by sizes, by David's derivation.
-- A detector is no typed object: any node-clock where a winding is shared is a detector. The bang's universe holds no twins, so no split click happens in the one bang. Born and Bell will not be seen there until its universe holds a twin family.
+- A detector is no typed object. It is a bob, a small clock that counts its swings, and its reading is its click; where its winding is shared, that click is the split one with the draw (the Scribe's reading, 6461915413). The bang's universe holds no twins, so no split click happens in the one bang. Born and Bell will not be seen there until its universe holds a twin family.
+- **The mirror and the click (the Reader, 6462233147).** The click shows the hand; it does not decide it. The draw stays fair, by the parts' sizes alone, under the 24. A one-hand coupling (one row of the couplings, section 9 b) sets the sizes the click reads, and the fair click then comes out on one side.
 
 **In the code**, the gate is cut 5: one act for every family. It compares the wind with the whole winding: a whole winding gives the whole click, a shared one the draw.
 
@@ -144,10 +156,15 @@ Every cut goes the same way:
 The cuts, in order:
 
 0. **The main formula.** David derives it (section 2); the Boss checks it bit for bit against the head; the Scribe proposes it as the law's sentence. Every later cut builds toward it.
-1. **The fair draw.** Built in the Boss's toy and measured: the 24 on nature and the hole, the rewind 20 of 20, the suite 118. Pushed on the owner's go.
+1. **The fair draw.** Built in the Boss's toy and measured: the 24 on nature and the hole, the rewind 20 of 20, the suite 118. The owner's go came through the Scribe at 06:0x UTC. It is held by his later word to the Boss at 06:1x UTC ("for now only close the plans, implementing nothing") until he confirms. Before the push: the Scribe's scan against 526a5666d, and the Reader's bench within the hour.
 2. **The gate.** The Scribe's scan goes into tools/check.py's ratchets and the push hook, so it holds every later cut.
 3. **The pure contractions, bit for bit:** regulation.stress_of; the hands' products (dot, lead, sweep, products); the meshes' cross and gradient; the offset's curl; Pauli's numerator. They become J, one contraction over the stencil, its weights from the kinds' product table.
 4. **The pointwise maps:** the rate table and its inverse by search (stretch.load_of, readings.rates_of), the mesh factor, rest_rate_of, the clamps, rounded(p + p + 1, d) and the end teeth's selection. Each becomes a chain of Rule3 carries or integers in the universe file, by David's derivation.
+   - David has derived three already (6462024199):
+     - the rate table is a Rule3 chain on the head, one carry per unit of load at the teeth Gamma, kept, then one rounding (core/rates.py);
+     - its inverse by search is that chain read backward;
+     - rest_rate_of is a constant of the setting, kept on the clock rather than an act of the step.
+   - He derives the others (the mesh factor, the clamps, the selections) before the cut.
    - With them, every sine, cosine and root search of src leaves for integer data: core/rates.sine_rim; assembly/setting.py's raised_cosine, rim_point, angle_of, angles_of and running_rotation; assembly/cycle.cycle_angles; readings.standard_angle; hands.cosine_count.
    - The three integers of each pair go into the universe file, and the setting's weights into the setting file.
 5. **The gate as one act for every family:** the turnover, the whole click and the split click with the one draw by the parts' sizes (engage, jam, unwinds, winds, the bobs, the merger's ends), read whole and then written whole. The light is known by its spring 0, never by identity.
@@ -161,8 +178,8 @@ The cuts, in order:
 | the Boss | owns the plan and this file; writes every line of code; checks the formula against the head; builds each cut in his toy, measures it and pushes it |
 | David | derives the main formula and every cut before it is built (the contraction table from the spokes, the pointwise maps, the twins, the gate and its one draw, the composite) and confirms or refutes each build; writes no engine code |
 | the Reader | benches each cut: the 77 rows on the 16 records and the 3 committed charts, the head against the cut, within the hour of each push; clears the readers' own modules under the scan; takes the reductions into the readers |
-| the Scribe | the gate on every push; the law's sentence and the formula (proposed in his file, entered on the owner's word after the first measured cut); the documents after each cut; the ledger |
-| the owner | the law's sentence and the formula; the 24 or the 48; the Bell click's form; the bang's seed; a twin family in the bang's universe |
+| the Scribe | the gate on every push; the law's sentence (entered, scribe-5 8c0a0cd01) and the formula (proposed, entered on the owner's word); the program's record on scribe-5, pointing here; the documents after each cut; the ledger |
+| the owner | the formula as law; the 24 with one coupling, or the 48; the Bell click's form; the bang's seed; a twin family in the bang's universe; the fair draw's push |
 
 ## 9. Open, by name
 
@@ -171,7 +188,13 @@ The cuts, in order:
   - the twins read only through their bilinears (the density, a scalar, and the spin, a vector), with the 24 asked of those.
 
   Until then the 24 is asked of the five kinds and of the twins' bilinears.
-- **(b) The 48.** With the reflections, every kind splits in two, giving ten kinds. This is the owner's word.
+- **(b) The 48, or the 24 with one coupling.** With the reflections, every kind splits in two, giving ten kinds.
+  - David (6462024199): the twist the engagement reads is kept by every turn and reversed by every mirror. So it is a scalar of the 24 and the pseudoscalar of the 48. The fixed-point test must name its group: at a point the 48 fix, the twist reads 0; at a point only the 24 fix, it may stand.
+  - The Reader's reading (6462233147), which the Boss recommends:
+    - the law is the 24 exactly; under the 24 alone a vector and a mirror vector are one kind;
+    - the mirror's break, nature's one hand (row 69), enters at one place only: a one-hand coupling, one row of the couplings in the universe file, with no act of its own;
+    - the test: the 24 rotations alike bit for bit always; the reflections part only through that coupling, where it acts; a parting anywhere else is a bug.
+  - This is the owner's word at 08:30 UTC.
 - **(c) The composite family.** Fusion: a bound pair as one larger clock, its kind the product of its parts' kinds and its integers derived from theirs, with no new number. It waits on David's derivation. It is not seen on the head: row 76 reads NOT SHOWN on the bang.
 - **(d) The Bell click.** Its form is the owner's word: a detector hand's gear by Rule3's carry (the Scribe's recommendation), or another. The twins' state holds the correlation.
 - **(e) Detectors in the one bang.** The bang's universe has no twin family, so it has no split click, and neither Born nor Bell is seen there. Adding one is the owner's word on the bang's universe.
