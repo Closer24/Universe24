@@ -1,0 +1,13 @@
+head carry/mid = floor-divmod on 20,000 values: failures 0
+[M2e, own code] light train, shape (14, 1, 1): per case (24 settings x n x answers = 24 cases with something written)
+    Delta  6: weighted alignment x10^4 10000; worst case 10000 (rho_B 36); max rho_B / fitted hand x10^4 0; max rho_B / remainder x10^4 0; empty B in 4 of 24
+    Delta  8: weighted alignment x10^4 10000; worst case 10000 (rho_B 31684); max rho_B / fitted hand x10^4 18; max rho_B / remainder x10^4 18; empty B in 4 of 24
+    Delta 12: weighted alignment x10^4 9999; worst case 9999 (rho_B 222445); max rho_B / fitted hand x10^4 264; max rho_B / remainder x10^4 265; empty B in 4 of 24
+    Delta 20: weighted alignment x10^4 10000; worst case 10000 (rho_B 1155625); max rho_B / fitted hand x10^4 688; max rho_B / remainder x10^4 690; empty B in 4 of 24
+    Delta 36: weighted alignment x10^4 9999; worst case 9999 (rho_B 500002); max rho_B / fitted hand x10^4 596; max rho_B / remainder x10^4 596; empty B in 4 of 24
+[M2e, own code] light train, shape (14, 3, 3): per case (24 settings x n x answers = 24 cases with something written)
+    Delta  6: weighted alignment x10^4 10000; worst case 10000 (rho_B 36); max rho_B / fitted hand x10^4 0; max rho_B / remainder x10^4 0; empty B in 4 of 24
+    Delta  8: weighted alignment x10^4 10000; worst case 10000 (rho_B 1444); max rho_B / fitted hand x10^4 0; max rho_B / remainder x10^4 0; empty B in 4 of 24
+    Delta 12: weighted alignment x10^4 10000; worst case 10000 (rho_B 784); max rho_B / fitted hand x10^4 0; max rho_B / remainder x10^4 0; empty B in 4 of 24
+    Delta 20: weighted alignment x10^4 9999; worst case 9999 (rho_B 323216); max rho_B / fitted hand x10^4 389; max rho_B / remainder x10^4 389; empty B in 4 of 24
+    Delta 36: weighted alignment x10^4 9999; worst case 9999 (rho_B 54785); max rho_B / fitted hand x10^4 16; max rho_B / remainder x10^4 16; empty B in 4 of 24

@@ -1,0 +1,31 @@
+head carry/mid = floor-divmod on 20,000 values: failures 0
+[light ring K=4096] n = +z, A's setting a' (x), answer +1: at B, max |d_int| (notches), max |G delta| (linear), max |d_int - G delta|, per mille of |G delta|, max |beta|
+    Delta   6: |d_int|      1  |G delta|      1  deviation    0  (112 per mille)  |beta| 1478
+    Delta   8: |d_int|     55  |G delta|     53  deviation    1  (32 per mille)  |beta| 778
+    Delta  12: |d_int|    962  |G delta|    961  deviation    0  (0 per mille)  |beta| 742
+    Delta  20: |d_int|   1001  |G delta|   1001  deviation    1  (1 per mille)  |beta| 736
+    Delta  36: |d_int|    957  |G delta|    956  deviation    0  (0 per mille)  |beta| 130
+[light torus K=4096] n = +z, A's setting a' (x), answer +1: at B, max |d_int| (notches), max |G delta| (linear), max |d_int - G delta|, per mille of |G delta|, max |beta|
+    Delta   6: |d_int|      1  |G delta|      0  deviation    0  (227 per mille)  |beta| 187
+    Delta   8: |d_int|      6  |G delta|      6  deviation    1  (186 per mille)  |beta| 913
+    Delta  12: |d_int|    171  |G delta|    170  deviation    1  (9 per mille)  |beta| 387
+    Delta  20: |d_int|    368  |G delta|    361  deviation    6  (18 per mille)  |beta| 777
+    Delta  36: |d_int|    216  |G delta|    212  deviation    3  (17 per mille)  |beta| 939
+[heavy ring K=4096] n = +z, A's setting a' (x), answer +1: at B, max |d_int| (notches), max |G delta| (linear), max |d_int - G delta|, per mille of |G delta|, max |beta|
+    Delta   6: |d_int|      0  |G delta|      0  deviation    0  (1000 per mille)  |beta| 3503
+    Delta   8: |d_int|      0  |G delta|      0  deviation    0  (1000 per mille)  |beta| 545
+    Delta  12: |d_int|      0  |G delta|      0  deviation    0  (1000 per mille)  |beta| 4060
+    Delta  20: |d_int|      0  |G delta|      0  deviation    0  (1000 per mille)  |beta| 3588
+    Delta  36: |d_int|      0  |G delta|      0  deviation    0  (1000 per mille)  |beta| 1535
+[light ring K=8] n = +z, A's setting a' (x), answer +1: at B, max |d_int| (notches), max |G delta| (linear), max |d_int - G delta|, per mille of |G delta|, max |beta|
+    Delta   6: |d_int|      0  |G delta|      0  deviation    0  (1000 per mille)  |beta| 2
+    Delta   8: |d_int|      0  |G delta|      0  deviation    0  (1000 per mille)  |beta| 1
+    Delta  12: |d_int|      2  |G delta|      1  deviation    1  (1000 per mille)  |beta| 1
+    Delta  20: |d_int|      2  |G delta|      1  deviation    0  (459 per mille)  |beta| 2
+    Delta  36: |d_int|      2  |G delta|      1  deviation    0  (442 per mille)  |beta| 1
+[light ring K=2] n = +z, A's setting a' (x), answer +1: at B, max |d_int| (notches), max |G delta| (linear), max |d_int - G delta|, per mille of |G delta|, max |beta|
+    Delta   6: |d_int|      0  |G delta|      0  deviation    0  (0 per mille)  |beta| 0
+    Delta   8: |d_int|      0  |G delta|      0  deviation    0  (1000 per mille)  |beta| 0
+    Delta  12: |d_int|      1  |G delta|      0  deviation    0  (1000 per mille)  |beta| 1
+    Delta  20: |d_int|      2  |G delta|      0  deviation    1  (2612 per mille)  |beta| 0
+    Delta  36: |d_int|      3  |G delta|      0  deviation    3  (4681 per mille)  |beta| 1

@@ -1,0 +1,1 @@
+world_hole.json quanta None ticks 30: books closed at 30 of 30 phases; mergers 0; births 0

@@ -1,0 +1,19 @@
+tick 50: open by 4; turned over 8; least load 368
+   birth at (0, 0, 1): merger True, X 7457, load 511, turned True, keys booked 22593775286649146922059 taken 43635114248930734901036 rem None->None
+   birth at (1, 1, 3): merger True, X 7457, load 511, turned True, keys booked 22593775286649146922059 taken 43635114248930734901036 rem None->None
+   birth at (2, 2, 1): merger True, X 7457, load 511, turned True, keys booked 22593775286649146922059 taken 43635114248930734901036 rem None->None
+   birth at (3, 3, 3): merger True, X 7457, load 511, turned True, keys booked 22593775286649146922059 taken 43635114248930734901036 rem None->None
+tick 54: open by 8; turned over 0; least load 417
+   birth at (0, 2, 0): merger True, X 17501, load 685, turned False, keys booked 95241198283735810985803 taken 166137663296188226779162 rem None->None
+   birth at (0, 2, 3): merger True, X 10695, load 540, turned False, keys booked 65493830162917003709575 taken 178898909281870186449858 rem None->None
+   birth at (1, 3, 1): merger True, X 10695, load 540, turned False, keys booked 65493830162917003709575 taken 178898909281870186449858 rem None->None
+   birth at (1, 3, 2): merger True, X 17501, load 685, turned False, keys booked 95241198283735810985803 taken 166137663296188226779162 rem None->None
+   birth at (2, 0, 0): merger True, X 17501, load 685, turned False, keys booked 95241198283735810985803 taken 166137663296188226779162 rem None->None
+   birth at (2, 0, 3): merger True, X 10695, load 540, turned False, keys booked 65493830162917003709575 taken 178898909281870186449858 rem None->None
+   birth at (3, 1, 1): merger True, X 10695, load 540, turned False, keys booked 65493830162917003709575 taken 178898909281870186449858 rem None->None
+   birth at (3, 1, 2): merger True, X 17501, load 685, turned False, keys booked 95241198283735810985803 taken 166137663296188226779162 rem None->None
+tick 67: open by 4; turned over 0; least load 531
+   birth at (0, 3, 2): merger True, X 24633, load 803, turned False, keys booked 73522394236225565873534 taken 137961210940781331759701 rem None->None
+   birth at (1, 2, 0): merger True, X 24633, load 803, turned False, keys booked 73522394236225565873534 taken 137961210940781331759701 rem None->None
+   birth at (2, 1, 2): merger True, X 24633, load 803, turned False, keys booked 73522394236225565873534 taken 137961210940781331759701 rem None->None
+   birth at (3, 0, 0): merger True, X 24633, load 803, turned False, keys booked 73522394236225565873534 taken 137961210940781331759701 rem None->None

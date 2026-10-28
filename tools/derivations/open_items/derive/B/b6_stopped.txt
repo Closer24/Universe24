@@ -1,0 +1,61 @@
+Probe B6: R10 and BH-S1, the stopped clock (b6_stopped.py, b6_spread.py): the head's fed BH-S1 world under the head and under Z (no stopped mask anywhere); the stop spreading to the neighbours under Z; the hole at 900 ticks in lockstep
+===========================================================================================================================================================================================================================================
+
+- mode: fed; variant: head; ticks: 100; ticks the centre starts stopped: 100; ticks its gears differ from the fed values: 0; the centre's own grips not 0, no mask (summed over its stopped ticks): 0; neighbours' grips toward the centre not 0, no mask (summed): 3600; turns: 362; rewind exact: 100 of 100
+    tick: 1; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 2; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 3; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 4; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 5; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 6; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 7; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 8; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 10; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 20; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 30; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 40; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 50; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 60; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 70; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 80; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 90; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+    tick: 100; X now: 4268834097; turned: False; stopped at start: True; dial: 0; light gear 0: 189
+- mode: fed; variant: Z; ticks: 100; ticks the centre starts stopped: 100; ticks its gears differ from the fed values: 100; the centre's own grips not 0, no mask (summed over its stopped ticks): 0; neighbours' grips toward the centre not 0, no mask (summed): 144; turns: 5; rewind exact: 100 of 100
+    tick: 1; X now: 4269202711; turned: False; stopped at start: True; dial: 22; light gear 0: 378
+    tick: 2; X now: 4269939970; turned: False; stopped at start: True; dial: 44; light gear 0: 567
+    tick: 3; X now: 4271045939; turned: False; stopped at start: True; dial: 66; light gear 0: 756
+    tick: 4; X now: 4272520713; turned: False; stopped at start: True; dial: 88; light gear 0: 945
+    tick: 5; X now: 4274364419; turned: False; stopped at start: True; dial: 110; light gear 0: 1134
+    tick: 6; X now: 4276577216; turned: False; stopped at start: True; dial: 132; light gear 0: 1323
+    tick: 7; X now: 4279159295; turned: False; stopped at start: True; dial: 154; light gear 0: 1512
+    tick: 8; X now: 4282110880; turned: False; stopped at start: True; dial: 176; light gear 0: 1700
+    tick: 10; X now: 4289111776; turned: False; stopped at start: True; dial: 220; light gear 0: 2076
+    tick: 20; X now: 4346071863; turned: False; stopped at start: True; dial: 440; light gear 0: 3946
+    tick: 30; X now: 4439218490; turned: False; stopped at start: True; dial: 660; light gear 0: 5783
+    tick: 40; X now: 4567749365; turned: False; stopped at start: True; dial: 880; light gear 0: 7577
+    tick: 50; X now: 4730640974; turned: False; stopped at start: True; dial: 1100; light gear 0: 9314
+    tick: 60; X now: 4926710079; turned: False; stopped at start: True; dial: 1320; light gear 0: 10987
+    tick: 70; X now: 5154586038; turned: False; stopped at start: True; dial: 1540; light gear 0: 12589
+    tick: 80; X now: 5412109014; turned: False; stopped at start: True; dial: 1750; light gear 0: 14116
+    tick: 90; X now: 5697235870; turned: False; stopped at start: True; dial: 1960; light gear 0: 15569
+    tick: 100; X now: 6008523804; turned: False; stopped at start: True; dial: 2170; light gear 0: 16949
+
+- variant: head; tick: 0; the stopped load: 3793; centre X: 4268834097; centre tensions: [0, 0, 0]; neighbours' loads: [0, 0, 0, 0, 0, 0]
+- variant: head; tick: 1; the stopped load: 3793; centre X: 4268834097; centre tensions: [0, 0, 0]; neighbours' loads: [0, 0, 0, 0, 0, 0]
+- variant: head; tick: 2; the stopped load: 3793; centre X: 4268834097; centre tensions: [0, 0, 0]; neighbours' loads: [1, 1, 0, 3, 0, 3]
+- variant: head; tick: 3; the stopped load: 3793; centre X: 4268834097; centre tensions: [0, 0, 0]; neighbours' loads: [3, 1, 4, 4, 4, 4]
+- variant: head; tick: 4; the stopped load: 3793; centre X: 4268834097; centre tensions: [0, 0, 0]; neighbours' loads: [5, 1, 10, 3, 10, 3]
+- variant: head; tick: 5; the stopped load: 3793; centre X: 4268834097; centre tensions: [0, 0, 0]; neighbours' loads: [3, 4, 4, -1, 4, -1]
+- variant: head; tick: 6; the stopped load: 3793; centre X: 4268834097; centre tensions: [0, 0, 0]; neighbours' loads: [7, 13, -3, 14, -3, 14]
+- variant: head; tick: 7; the stopped load: 3793; centre X: 4268834097; centre tensions: [0, 0, 0]; neighbours' loads: [26, 4, 10, 19, 10, 19]
+- variant: Z; tick: 0; the stopped load: 3793; centre X: 4268834097; centre tensions: [0, 0, 0]; neighbours' loads: [0, 0, 0, 0, 0, 0]
+- variant: Z; tick: 1; the stopped load: 3793; centre X: 4269202711; centre tensions: [0, 0, 0]; neighbours' loads: [3556, 3556, 3556, 3556, 3556, 3556]
+- variant: Z; tick: 2; the stopped load: 3793; centre X: 4269939970; centre tensions: [0, 0, 0]; neighbours' loads: [3707, 3707, 3707, 3707, 3707, 3707]
+- variant: Z; tick: 3; the stopped load: 3793; centre X: 4271045939; centre tensions: [0, 0, 0]; neighbours' loads: [3792, 3792, 3792, 3792, 3792, 3792]
+- variant: Z; tick: 4; the stopped load: 3793; centre X: 4272520713; centre tensions: [0, 0, 0]; neighbours' loads: [3885, 3885, 3885, 3885, 3885, 3885]
+- variant: Z; tick: 5; the stopped load: 3793; centre X: 4274364419; centre tensions: [0, 0, 0]; neighbours' loads: [3935, 3935, 3935, 3935, 3935, 3935]
+- variant: Z; tick: 6; the stopped load: 3793; centre X: 4276577216; centre tensions: [0, 0, 0]; neighbours' loads: [3987, 3987, 3987, 3987, 3987, 3987]
+- variant: Z; tick: 7; the stopped load: 3793; centre X: 4279159295; centre tensions: [0, 0, 0]; neighbours' loads: [4043, 4043, 4043, 4043, 4043, 4043]
+
+- mode: chart; variant: Z; world: world_hole.json; ticks: 900; stopped clock-ticks (head): 397; first tick with a stopped clock (head): 476; counts head: {'turns': 4020, 'births': 35, 'body_clicks': 58295}; ticks whose state differs: 425; first tick differing: 476; counts Z: {'turns': 3642, 'births': 35, 'body_clicks': 58455}; X bits head / Z: [33, 50]; Z rewind of 20 from 5 ticks before the first stop: 20
+

@@ -1,0 +1,69 @@
+Probe B7: F2, the tension held in [0, Gamma] (b7_tension.py): the cone with the head's factors and with the lower side struck; the upper side as the tension's carry at the full rate; the lower side struck in lockstep
+========================================================================================================================================================================================================================
+
+- mode: cone; world: world_nature.json; ticks: 60; clock-ticks: 7500; light past its edge, head: 0; light past its edge, struck: 19; matter past its edge, head: 0; matter past its edge, struck: 19; clocks with a tension below 0: 6620; largest |n_x + n_y + n_z|: 39; largest |n_a|: 81; largest light grips over the vacuum's, struck (quotient): 1
+- mode: cone; world: world_hole.json; ticks: 60; clock-ticks: 7500; light past its edge, head: 0; light past its edge, struck: 494; matter past its edge, head: 0; matter past its edge, struck: 516; clocks with a tension below 0: 6951; largest |n_x + n_y + n_z|: 156; largest |n_a|: 33131; largest light grips over the vacuum's, struck (quotient): 6
+- mode: cone; world: world_bodies.json; ticks: 120; clock-ticks: 41160; light past its edge, head: 0; light past its edge, struck: 20; matter past its edge, head: 0; matter past its edge, struck: 20; clocks with a tension below 0: 39634; largest |n_x + n_y + n_z|: 85; largest |n_a|: 68; largest light grips over the vacuum's, struck (quotient): 1
+- mode: cone; world: world_bang.json; ticks: 60; clock-ticks: 3840; light past its edge, head: 0; light past its edge, struck: 2304; matter past its edge, head: 0; matter past its edge, struck: 6912; clocks with a tension below 0: 2304; largest |n_x + n_y + n_z|: 3; largest |n_a|: 3988069; largest light grips over the vacuum's, struck (quotient): 534933
+- mode: cone; world: world_ga2.json; ticks: 230; clock-ticks: 14720; light past its edge, head: 0; light past its edge, struck: 0; matter past its edge, head: 0; matter past its edge, struck: 0; clocks with a tension below 0: 13664; largest |n_x + n_y + n_z|: 33; largest |n_a|: 101; largest light grips over the vacuum's, struck (quotient): 1
+- mode: cone; world: world_collapse_500.json; ticks: 600; clock-ticks: 437400; light past its edge, head: 0; light past its edge, struck: 0; matter past its edge, head: 0; matter past its edge, struck: 0; clocks with a tension below 0: 280475; largest |n_x + n_y + n_z|: 123; largest |n_a|: 41; largest light grips over the vacuum's, struck (quotient): 1
+
+- mode: upper; Gamma 1000: {'t in [0, 5 Gamma] equal': '5001 of 5001', 'below 0: 1 + t div Gamma': [0, 0, 0]}; Gamma 6000: {'t in [0, 5 Gamma] equal': '30001 of 30001', 'below 0: 1 + t div Gamma': [0, 0, 0]}; Gamma 23057: {'t in [0, 5 Gamma] equal': '115286 of 115286', 'below 0: 1 + t div Gamma': [0, 0, 0]}; random (Gamma, t >= 0): 20000 of 20000
+
+- mode: lockstep; world: world_nature.json; ticks: 60; ticks whose state differs: 58; first tick differing: 3; rewind (struck): 20
+    tick: 1; X bits head/struck: [11, 11]; turns: [18, 18]; births: [0, 0]
+    tick: 2; X bits head/struck: [11, 11]; turns: [22, 22]; births: [0, 0]
+    tick: 3; X bits head/struck: [11, 11]; turns: [66, 66]; births: [0, 0]
+    tick: 4; X bits head/struck: [11, 11]; turns: [116, 116]; births: [0, 0]
+    tick: 5; X bits head/struck: [11, 11]; turns: [171, 171]; births: [1, 1]
+    tick: 6; X bits head/struck: [11, 11]; turns: [212, 212]; births: [1, 1]
+    tick: 12; X bits head/struck: [11, 11]; turns: [472, 476]; births: [2, 3]
+    tick: 18; X bits head/struck: [12, 12]; turns: [634, 632]; births: [3, 4]
+    tick: 24; X bits head/struck: [13, 13]; turns: [712, 691]; births: [3, 4]
+    tick: 30; X bits head/struck: [13, 13]; turns: [751, 727]; births: [3, 4]
+    tick: 36; X bits head/struck: [14, 14]; turns: [773, 752]; births: [3, 4]
+    tick: 42; X bits head/struck: [14, 14]; turns: [794, 777]; births: [3, 4]
+    tick: 48; X bits head/struck: [15, 14]; turns: [817, 801]; births: [3, 4]
+    tick: 54; X bits head/struck: [15, 15]; turns: [839, 828]; births: [3, 4]
+    tick: 60; X bits head/struck: [15, 15]; turns: [861, 853]; births: [3, 4]
+- mode: lockstep; world: world_hole.json; ticks: 60; ticks whose state differs: 59; first tick differing: 2; rewind (struck): 20
+    tick: 1; X bits head/struck: [11, 11]; turns: [18, 18]; births: [0, 0]
+    tick: 2; X bits head/struck: [13, 13]; turns: [36, 24]; births: [0, 0]
+    tick: 3; X bits head/struck: [14, 14]; turns: [80, 63]; births: [0, 0]
+    tick: 4; X bits head/struck: [15, 15]; turns: [134, 105]; births: [0, 0]
+    tick: 5; X bits head/struck: [16, 16]; turns: [200, 141]; births: [0, 0]
+    tick: 6; X bits head/struck: [16, 16]; turns: [230, 141]; births: [0, 0]
+    tick: 12; X bits head/struck: [18, 17]; turns: [360, 200]; births: [3, 0]
+    tick: 18; X bits head/struck: [19, 21]; turns: [552, 267]; births: [11, 2]
+    tick: 24; X bits head/struck: [20, 23]; turns: [738, 338]; births: [18, 4]
+    tick: 30; X bits head/struck: [20, 24]; turns: [841, 405]; births: [21, 11]
+    tick: 36; X bits head/struck: [21, 29]; turns: [904, 495]; births: [25, 16]
+    tick: 42; X bits head/struck: [21, 54]; turns: [951, 612]; births: [27, 25]
+    tick: 48; X bits head/struck: [21, 57]; turns: [998, 852]; births: [27, 35]
+    tick: 54; X bits head/struck: [21, 151]; turns: [1039, 1332]; births: [28, 61]
+    tick: 60; X bits head/struck: [20, 808]; turns: [1073, 1903]; births: [28, 82]
+- mode: lockstep; world: world_bodies.json; ticks: 120; ticks whose state differs: 119; first tick differing: 2; rewind (struck): 20
+    tick: 1; X bits head/struck: [11, 11]; turns: [8, 8]; births: [0, 0]
+    tick: 2; X bits head/struck: [11, 11]; turns: [8, 8]; births: [0, 0]
+    tick: 3; X bits head/struck: [11, 11]; turns: [42, 42]; births: [0, 0]
+    tick: 4; X bits head/struck: [11, 11]; turns: [98, 98]; births: [0, 0]
+    tick: 5; X bits head/struck: [11, 11]; turns: [158, 158]; births: [0, 0]
+    tick: 12; X bits head/struck: [12, 12]; turns: [736, 784]; births: [0, 0]
+    tick: 24; X bits head/struck: [13, 13]; turns: [979, 1053]; births: [0, 0]
+    tick: 36; X bits head/struck: [14, 14]; turns: [1108, 1210]; births: [0, 0]
+    tick: 48; X bits head/struck: [15, 15]; turns: [1192, 1299]; births: [0, 0]
+    tick: 60; X bits head/struck: [15, 15]; turns: [1243, 1383]; births: [0, 0]
+    tick: 72; X bits head/struck: [15, 15]; turns: [1304, 1480]; births: [0, 0]
+    tick: 84; X bits head/struck: [15, 15]; turns: [1415, 1609]; births: [0, 0]
+    tick: 96; X bits head/struck: [16, 16]; turns: [1591, 1711]; births: [0, 0]
+    tick: 108; X bits head/struck: [16, 16]; turns: [1744, 1936]; births: [0, 0]
+    tick: 120; X bits head/struck: [16, 16]; turns: [1934, 2090]; births: [0, 0]
+- mode: lockstep; world: world_bang.json; ticks: 30; ticks whose state differs: 8; first tick differing: 2; rewind (struck): refused: ValueError
+    tick: 1; X bits head/struck: [11, 11]; turns: [0, 0]; births: [0, 0]
+    tick: 2; X bits head/struck: [13, 13]; turns: [0, 0]; births: [0, 0]
+    tick: 3; X bits head/struck: [11, 14]; turns: [64, 0]; births: [0, 0]
+    tick: 4; X bits head/struck: [10, 16]; turns: [64, 0]; births: [0, 0]
+    tick: 5; X bits head/struck: [10, 17]; turns: [64, 0]; births: [0, 0]
+    tick: 6; X bits head/struck: [11, 18]; turns: [64, 0]; births: [32, 0]
+    tick: 9; struck X bits: 22; stopped: ValueError: Exceeds the limit (4300 digits) for integer string conversio
+

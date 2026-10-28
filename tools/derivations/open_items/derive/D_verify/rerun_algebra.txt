@@ -1,0 +1,22 @@
+closure24_algebra.py: draft D's algebra, integers only
+  lagrange     runs   20625 failures   0  S . S = rho rho for every twin pair (exhaustive in [-2, 2]^4, then 20,000 random up to 10^6)
+  two-time     runs   26561 failures   0  S . S - W W = 4 N(det[now, before]) on David's reading (exhaustive in [-1, 1]^8, then 20,000 random)
+  open         runs     321 failures   0  every two-time reading with S = 0 has W = 0: no twin pair holds the open reading (W > 0, S = 0)
+  perp         runs   20000 failures   0  phi_perp has the same rho and the opposite axis; its perp is -phi (the half-spin sign); it is orthogonal to phi
+  det-fierz    runs   20000 failures   0  det[u, v] = <u_perp, v> exactly, and 2 N(det[u, v]) = rho_u rho_v - S_u . S_v
+  remainder    runs   60000 failures   0  N(phi) psi = <phi,psi> phi + <phi_perp,psi> phi_perp; the part not taken has the axis -a m exactly
+  joint        runs   20000 failures   0  sigma_ab = N(det[phi1^a, phi2^b]) = (rho1 rho2 - a b m1 . m2) / 2; each first part rho1 rho2; E = -m1.m2/(rho1 rho2)
+  factor       runs    1600 failures   0  the joint split's odds equal the first click (half and half) then the partner's law 6 on (rho1, -a m1)
+  antisym      runs   80000 failures   0  u (x) v - v (x) u = det[u, v] epsilon: the antisymmetric part of two twin pairs is the singlet alone
+  2O           runs    1061 failures   0  the 48 of 2O close; det M = 2^e; epsilon is the one A1 two-spinor; the axis S moves by the 24, each twice
+  isotropy     runs      15 failures   0  the six Spoke directions sum n n^T to 2 I, and each has a Gaussian twin pair along it
+  chsh         runs       1 failures   0  S singlet = -82/29 (4 < S^2 <= 8), local isotropic = -82/87, max over the 16 deterministic strategies = 2
+  E(a,b)       runs       0 failures   0  singlet (-21, 29), local (-7, 29)
+  E(a,b')      runs       0 failures   0  singlet (-21, 29), local (-7, 29)
+  E(a',b)      runs       0 failures   0  singlet (-20, 29), local (-20, 87)
+  E(a',b')     runs       0 failures   0  singlet (20, 29), local (20, 87)
+  local bound  runs      16 failures   0  the largest |S| of the 16 deterministic local strategies: 2
+total failures over the checks: 0
+  control (a wrong form; a count above 0 shows the check can fail): partner +a m1        mismatches 788
+  control (a wrong form; a count above 0 shows the check can fail): half without perp    mismatches 391
+S singlet -82/29 (x 10^4: -28275), local isotropic -82/87 (x 10^4: -9425)
