@@ -1,6 +1,6 @@
 # The Node-clock as one act: the frame, the sentence proposed and the cuts
 
-The owner's questions of 2026-10-28, 05:4x to 05:5x UTC, to the Scribe (ledger rows 303 to 305): the whole system as a tensor machine and the Node-clock a simple one, every family a kind of tensor; whether a singularity can be caught; how everything converges to the clock and whether the 24 arranges it. His order after them: "Sync the Boss." The Reader reports his word to the Reader: "Sync only with the Writer on the right way." This file holds the frame, the sentence entered in the law on the owner's word of 06:0x UTC (decided, not built), the step's acts by kind, what David derived for the cuts and the order of the cuts, as agreed in the thread with the Reader and put to the Boss and David.
+The owner's questions of 2026-10-28, 05:4x to 05:5x UTC, to the Scribe (ledger rows 303 to 305): the whole system as a tensor machine and the Node-clock a simple one, every family a kind of tensor; whether a singularity can be caught; how everything converges to the clock and whether the 24 arranges it. His order after them: "Sync the Boss." The Reader reports his word to the Reader: "Sync only with the Writer on the right way." This file holds the frame, the sentence entered in the law on the owner's word of 06:0x UTC (decided, not built), the step's acts by kind and what David derived; the plan, with the order of the cuts and the checks, is the Boss's file tools/derivations/open_items/TENSOR24.md, which took this file whole.
 
 ## The frame
 
@@ -49,22 +49,16 @@ The independent read of 97e5b3fd6 (SCRIBE-AUDIT-97E5B3F-1.md) lists 26 acts in t
 
 **Nine contractions, eight pointwise maps of one gear, five of bookkeeping, two gate acts, two global reductions.** The pointwise maps need a place in the one act (a chain of Rule3 carries, or data; they carry the audit's E8 and E9, the rate's exponential table and the Mesh factor). The two global reductions are no act: clock.count_max and clock.max_transient are written in the step and read by run.py's census alone (checked), so they are readings of the whole lattice and leave the step.
 
-## What David derived for the cuts (06:06 UTC, the thread's item 1226; the code of the third checked)
+## What David derived (06:06 UTC, the thread's item 1226, posted to the Boss; the code of the third checked)
 
-- **Cut 1, the fixed-point test names its group.** At a point the 48 fix, the twist's kind reads 0 with the rest; at a point only the 24 fix, it may stand.
-- **Cut 2, the contractions are products of trains and not one linear sum.** The stress, the masses, the forms and Pauli's numerator are of degree 2 in the gears; the release is of degree 3 (the stretch times the cross of a hand and its pull). In the hand's plane there are two products (hands.dot, meshes.cross); on the cube three, from the six Spokes (the trace, the cross spokes.transverse, the diagonal's split regulation.tensor_parts). A train's kind is its cube kind times its own (one gear, the Gaussian pair, the twins' four). A cut keeps its bits within what clock.max_transient reads now.
-- **Cut 3, three of the eight pointwise maps are no map of the step.** The rate table p_0(c) = Gamma (1 - 1 / Gamma)^c is one carry per unit of load at the teeth Gamma and one rounding (rates.Side.fill_to, core/rates.py:41 and :91): act 2 is no formula and no data, act 1 is that chain read backward, and act 12 (rest_rate_of) is found once per ratio and kept on the clock (clock.rest_rates, regulation.py:28-32, clock.py:90), a constant of the setting. The Mesh factor, the clamps and the selections he derives one by one before the cut.
+- **The fixed-point test names its group.** At a point the 48 fix, the twist's kind reads 0 with the rest; at a point only the 24 fix, it may stand.
+- **The contractions are products of trains and not one linear sum.** The stress, the masses, the forms and Pauli's numerator are of degree 2 in the gears; the release is of degree 3 (the stretch times the cross of a hand and its pull). In the hand's plane there are two products (hands.dot, meshes.cross); on the cube three, from the six Spokes (the trace, the cross spokes.transverse, the diagonal's split regulation.tensor_parts). A train's kind is its cube kind times its own (one gear, the Gaussian pair, the twins' four). A cut keeps its bits within what clock.max_transient reads now.
+- **Three of the eight pointwise maps are no map of the step.** The rate table p_0(c) = Gamma (1 - 1 / Gamma)^c is one carry per unit of load at the teeth Gamma and one rounding (rates.Side.fill_to, core/rates.py:41 and :91): act 2 is no formula and no data, act 1 is that chain read backward, and act 12 (rest_rate_of) is found once per ratio and kept on the clock (clock.rest_rates, regulation.py:28-32, clock.py:90), a constant of the setting. The Mesh factor, the clamps and the selections he derives one by one before they are built.
 
 ## The order of the cuts and the checks
 
-1. The fair draw (the Boss's, in progress after David's finding of 05:02): the draw reads invariants only at the points the cube's turns fix, the precondition of every draw.
-2. The pure contractions with no gate (regulation.stress_of, the hands' products, the Meshes' cross and gradient).
-3. The pointwise maps.
-4. The gate (click, chime, merger ends, turnover) as one act for every family.
-5. The two global reductions out of the step into the readers.
-
-After each cut, by David on toys-5 and merged by the Boss as usual: the Reader's per-row diff of the 77 rows between the two engines on the same seeds, the 16 records and the 3 committed charts as before, the rewind exact 20 of 20, the suite, `scribe_scan.py --patch FILE --base <head>` (counts only fall, a new file is clean; code moved between files shows as new hits, and the owner's word allows it), and one generic test: at a fixed point of a symmetric setting every gear of a non-scalar kind is 0.
+The order of the cuts and the checks after each cut are the Boss's plan (tools/derivations/open_items/TENSOR24.md, sections 6 and 9). The Scribe's part in them is the scan: `scribe_scan.py --patch FILE --base <head>` (counts only fall, a new file is clean; code moved between files shows as new hits, and the owner's word allows it).
 
 ## Not decided
 
-The Boss's order within the owner's go (the program Tenzor24, TENZOR24.md); whether the reflections are parted or held (ledger row 299), with its consequence for the law's clause: held, the clause's last line names the 48 and its second kind is A2 (the clause holds the word pseudoscalar for it, which is the twist's kind in the 48); parted, the clause stands as written except that word.
+The Boss's order of the cuts (the program Tensor24, his file TENSOR24.md); whether the reflections are parted or held (ledger row 299), with its consequence for the law's clause: held, the clause's last line names the 48 and its second kind is A2 (the clause holds the word pseudoscalar for it, which is the twist's kind in the 48); parted, the clause stands as written except that word.
