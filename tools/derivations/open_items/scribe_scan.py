@@ -121,11 +121,11 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "LOOP": (
         "BLOCK",
-        "a loop (for, while, a comprehension, map, filter, reduce, itertools, np.vectorize, a function that calls itself) in an engine module: no loop that makes a formula, the machine is one tensor operation (the owner's words of 2026-10-28, 06:5x and 09:0x); the count per file and kind may not rise",
+        "a loop (for, while, a comprehension, map, filter, reduce, itertools, np.vectorize, a function that calls itself) in an engine module, and in the new engine's runner/board.py: no loop that makes a formula, the machine is one tensor operation (the owner's words of 2026-10-28, 06:5x and 09:0x); the count per file and kind may not rise",
     ),
     "OPERATION": (
         "BLOCK",
-        "a power, a shift, an exclusive or, or a floor division or remainder outside the carry's home (core/acts.py, core/rule3.py, and tensor24/algebra/carry.py in the new engine): the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 09:0x)",
+        "a power, a shift, an exclusive or, or a floor division or remainder outside the carry's home (core/acts.py, core/rule3.py, and tensor24/algebra/carry.py in the new engine; the new engine's runner/board.py writes none of it, its wrap being the carry imported from there): the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 09:0x); the same under a method's name (a.__mod__(b)), a name imported or aliased from numpy or operator, a getattr of an operation's name, and, in runner/board.py, numpy's own wraps (roll, pad, a call with mode=)",
     ),
     "REFUSE": (
         "BLOCK",
@@ -133,7 +133,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "CLAMP": (
         "BLOCK",
-        "min, max, abs, clip or where in an engine module: a bound or a branch written as a clamp, where the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 08:0x, through David)",
+        "min, max, abs, clip or where in an engine module, and in the new engine's runner/board.py: a bound or a branch written as a clamp, where the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 08:0x, through David)",
     ),
     "PIN": (
         "WARN",
@@ -141,7 +141,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "COMPARE": (
         "BLOCK",
-        "an ordering comparison in an engine module: a threshold read by order and not as the quotient of a carry (Postulate 5: the Node-clock has no if; the owner's word of 2026-10-28, 12:5x); the count per file may not rise",
+        "an ordering comparison in an engine module, and in the new engine's runner/board.py: a threshold read by order and not as the quotient of a carry (Postulate 5: the Node-clock has no if; the owner's word of 2026-10-28, 12:5x); the count per file may not rise",
     ),
     "ISOLATE": (
         "BLOCK",
@@ -149,7 +149,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "BRANCH": (
         "BLOCK",
-        "a branch (if, a conditional expression, match) in an engine module: the Node-clock has no if (Postulate 5; the owner's word of 2026-10-28, 12:5x: enforce it, never cross it; also The Node-clock and the Mesh are generic; there is no if), and a whether is Rule3's quotient (n < d exactly where the quotient of n by d is 0; the sign test [x >= 0] = 1 + x div (x x + 1)); a branch the formula does not hold is a declaration (the count per file may not rise)",
+        "a branch (if, a conditional expression, match) in an engine module, and in the new engine's runner/board.py: the Node-clock has no if (Postulate 5; the owner's word of 2026-10-28, 12:5x: enforce it, never cross it; also The Node-clock and the Mesh are generic; there is no if), and a whether is Rule3's quotient (n < d exactly where the quotient of n by d is 0; the sign test [x >= 0] = 1 + x div (x x + 1)); a branch the formula does not hold is a declaration (the count per file may not rise)",
     ),
     "INDICATOR": (
         "WARN",
@@ -192,6 +192,11 @@ FOREIGN_OPERATORS = {ast.Pow: "**", ast.LShift: "<<", ast.RShift: ">>", ast.BitX
 OPERATION_CALLS = frozenset(
     "divmod floor_divide remainder mod fmod left_shift right_shift bitwise_xor floordiv lshift rshift xor".split()
 )  # the foreign operations under their function names (np.mod, operator.xor ...)
+OPERATION_DUNDERS = frozenset(
+    "__mod__ __rmod__ __imod__ __floordiv__ __rfloordiv__ __ifloordiv__ __divmod__ __rdivmod__ __pow__ __rpow__ __ipow__ "
+    "__lshift__ __rlshift__ __ilshift__ __rshift__ __rrshift__ __irshift__ __xor__ __rxor__ __ixor__".split()
+)  # the foreign operators under their method names (a.__mod__(b))
+BOARD_WRAPS = frozenset({"roll", "pad"})  # numpy's own wraps: in the board's module the wrap is the carry's alone (and a call with mode=)
 ITERATING_BARE = frozenset(
     "map filter iter reduce accumulate starmap vectorize permutations combinations groupby".split()
 )
@@ -212,6 +217,10 @@ STRICT = (
 PROMOTED = frozenset({"MEMO"})
 RUNNER = NEW_ENGINE + "/runner/"
 REWIND = RUNNER + "rewind.py"  # the rewind check: the one module of the runner that reads the undo log
+BOARD = RUNNER + "board.py"  # the board's wrap is Rule3's carry, imported from algebra/carry.py: nothing else spells one there
+BOARD_KEEPS = frozenset(
+    {"OPERATION", "LOOP", "CLAMP", "COMPARE", "BRANCH"}
+)  # the rules the board's module keeps and the rest of the runner is spared: a wrap by hand is a remainder, a quotient, a branch, a comparison, a clamp or a loop (the sixth hostile review, follow-up 2)
 DECODER = NEW_ENGINE + "/decoder/"
 DECODER_KEEPS = frozenset(
     {"OPERATION", "REFUSE", "CLAMP"}
@@ -312,8 +321,19 @@ def exempt(rel: str, rule: str) -> bool:
     if rel.startswith(DECODER):
         return rule not in DECODER_KEEPS
     if rel.startswith(RUNNER):
+        if rel == BOARD and rule in BOARD_KEEPS:
+            return False  # the board's wrap is the carry's, imported
         return rule != "LOGREAD" or rel == REWIND  # the undo log is read by the rewind check alone
     return False
+
+
+def spelt_operation(node: ast.AST, numpy: set[str]) -> bool:
+    """Whether an attribute is spelt by numpy's or the operator module's name: np.mod, operator.xor."""
+    return (
+        isinstance(node, ast.Attribute)
+        and isinstance(node.value, ast.Name)
+        and (node.value.id in numpy or node.value.id == "operator")
+    )
 
 
 def own_choose(rel: str, name: str, node: ast.Call) -> bool:
@@ -931,6 +951,14 @@ def scan(rel: str, source: str) -> list[Hit]:
             module = node.module or ""
             if module.split(".")[0] in BAD_IMPORTS:
                 add("IMPORT", node, module)
+            if rel not in CARRY_HOME and not exempt(rel, "OPERATION") and module.split(".")[0] in numpy | {"operator"}:
+                for alias in node.names:
+                    if alias.name in OPERATION_CALLS | OPERATION_DUNDERS:
+                        add("OPERATION", node, f"{module}.{alias.name}")
+            if rel == BOARD and module.split(".")[0] in numpy:
+                for alias in node.names:
+                    if alias.name in BOARD_WRAPS:
+                        add("OPERATION", node, f"numpy.{alias.name}")
             if module.split(".")[0] in numpy:
                 for alias in node.names:
                     rule = (
@@ -970,14 +998,15 @@ def scan(rel: str, source: str) -> list[Hit]:
             name = callee_name(node)
             if isinstance(node.func, ast.Name) and name in {"round", "complex", "pow"}:
                 add("FLOAT", node, f"{name}()")
-            if rel not in CARRY_HOME and not exempt(rel, "OPERATION") and name in OPERATION_CALLS:
-                spelt = (
-                    isinstance(node.func, ast.Attribute)
-                    and isinstance(node.func.value, ast.Name)
-                    and (node.func.value.id in numpy or node.func.value.id == "operator")
-                )
-                if name == "divmod" or spelt:
-                    add("OPERATION", node, name if name == "divmod" else f"{name}()")
+            if rel not in CARRY_HOME and not exempt(rel, "OPERATION"):
+                if name == "divmod":
+                    add("OPERATION", node, "divmod")  # np.divmod too: the attribute rule gives the same hit, kept once
+                if name in {"getattr", "attrgetter", "methodcaller"} and any(
+                    isinstance(arg, ast.Constant) and arg.value in OPERATION_CALLS | OPERATION_DUNDERS for arg in node.args
+                ):
+                    add("OPERATION", node, f"{name} of an operation's name")
+            if rel == BOARD and any(k.arg == "mode" for k in node.keywords):
+                add("OPERATION", node, "mode=")
             if not exempt(rel, "LOOP"):
                 module = (
                     node.func.value.id
@@ -1026,6 +1055,14 @@ def scan(rel: str, source: str) -> list[Hit]:
                 ):
                     add("DTYPE", node, f"np.{name}")
         elif isinstance(node, ast.Attribute):
+            if (
+                rel not in CARRY_HOME
+                and not exempt(rel, "OPERATION")
+                and (node.attr in OPERATION_DUNDERS or (node.attr in OPERATION_CALLS and spelt_operation(node, numpy)))
+            ):
+                add("OPERATION", node, node.attr)
+            if rel == BOARD and node.attr in BOARD_WRAPS and isinstance(node.value, ast.Name) and node.value.id in numpy:
+                add("OPERATION", node, f"np.{node.attr}")
             if isinstance(node.value, ast.Name) and node.value.id in numpy:
                 if node.attr in NP_FLOAT:
                     add("FLOAT", node, f"np.{node.attr}")
