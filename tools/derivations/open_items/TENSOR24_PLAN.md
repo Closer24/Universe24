@@ -72,6 +72,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 
 **What stays for the owner's decision under this core:**
 - (m) the pair dial;
+- (r) the click counting the action against law 5's fixed winding;
 - (u) lin against past;
 - (j) the second carry;
 - (g) the doubler;
@@ -158,7 +159,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 3. **The rewind.**
    - **In the clock:** every gear runs back, and every carry is reversed.
    - **In the tensors:** the same step, with a+ and a- exchanged.
-   - **The going:** for the rewind to be exact at every teeth count, one bit per gear is needed, the parity of its turnovers. Draft H founded it, and its verifier confirmed it on 91,728 states. Without that bit only the step's invertibility is proved, and the head's 20 of 20 read its stack, that is, a log.
+   - **The going:** for the rewind to be exact at every teeth count, one go dial per Node-clock is needed, the parity of its turnovers, since every gear of a Node-clock turns over together (the design's go dial, within line 98's fixed count). Draft H founded it, and its verifier confirmed it on 91,728 states. Without that bit only the step's invertibility is proved, and the head's 20 of 20 read its stack, that is, a log.
    - **The click is many to one,** so a click is undone only from its log.
 4. **The turnover.**
    - **In the clock:** the clock's own act at the top of its time gear.
@@ -331,6 +332,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **Animate's measurement:**
      - **measured:** with the twin hands and F2's carry, the clicks rise at every bang: 64, 96, 256 and 1,152, four bangs in a row;
      - **missing:** two pieces, in the build: the one-turn step (the local tick), and the singlet's lay. With them the detector's click itself fires; in these runs it fires 0 times.
+   - **The memory between bangs** (Animate, 6473533004, on the owner's word to her of 15:4x UTC, that the detector's choice in one bang influence its choice in the next): T reverses every spin and way 2 keeps what a click wrote, so a direction chosen in one bang reads reversed in the next. On the twin calibre the larger twin at clock (0, 0, 0) flips up, down, up, down from the 7th bang to the 10th, until new births write over it. Alone it is the palindrome's period of two, so each bang's new clicks are still needed; a fresh draw whose odds the last choice moves is the next toy.
 6. **Every bang shows more: the 24's ladder, after its verifier:**
    - **what holds:** the product table and the rungs;
    - **by David's rule** one family's kinds stay A1 and E1/2 at every bang;
@@ -497,7 +499,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **Way (1):** local turnovers, every Node-clock at its own top. It was (v), withdrawn at 15:0x UTC.
 2. **(a) One hand per quantum.**
    - **It gives:** Pauli on the board. Without it a third quantum enters (29,488 of 29,952).
-   - **It cancels:** the fixed count of integers per Node-clock (line 98).
+   - **What is asked:** one hand per quantum as fixed rows by the kind's cap, which keeps line 98's fixed count (the design; Sofer). A list that grows at run time does not fit and is refused. Whether that cap is a bound or a clock's carry (law 11) is the owner's to weigh (the one architect).
    - **The recommendation:** approve. This is how nature counts quanta.
 3. **(b) T with period four on twin hands.**
    - **It gives:** the 24 kept at the turnover.
@@ -525,7 +527,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **The two other ways:** (2) doubles every species, a second light included; (3) breaks the loads.
 9. **(h) The tick is its own time reversal, gear by gear.**
    - **It gives:** a rewind with no log, at every teeth count.
-   - **It cancels:** the one mirror at an even count. It also adds a bit per gear.
+   - **It cancels:** the one mirror at an even count. Its bit is the design's one go dial per Node-clock, within line 98's fixed count.
    - **Sofer adds:** it is the same object as David's turnover with the frame. The frame, the going, the pawl and the count of turnovers are one remainder of the Node-clock's ratchet.
    - **The recommendation:** approve. The verifier confirmed it, and the bit is a tooth the ratchet already has; k is an integer of the universe file.
 10. **(i) The light cone as one condition per Node-clock.**
@@ -599,6 +601,8 @@ On the owner's word to David: "a generic solution for everything". This is David
       - the bang is the swing where the tops fall together;
       - how far the tops part is measured in the build, before a global read is asked of the owner.
 
+24. **(x) A candidate big law: the board is dials and their carries** (Animate, 6473326413, ANIMATE-CLOCK-ROOTS.md, reader-5 ab860c82, on the owner's word to her of 15:2x UTC; a candidate big law, with no verifier): each clock's time is the carry of its own dial; clocks that meet share one dial; every carry keeps the kind of what feeds it. Its letters: A, time (the local tick: a fast clock ticks more often, one at rate 0 does not tick, light crosses one Mesh per local tick); B, state (the joint dial held where its clocks meet, so a winding may stand with no direction and the detector's click has something to decide); C, selection (still light lays the singlet, a lead lays the vector along its Mesh). Its toys: local_tick.py (the local tick holds, its rewind exact over 9,600 events, where one tick for all grows past 10^6); kind_kept.py (the singlet and vector lay keep the 24 at 72 of 72 cases, the head's lay at 12 of 72); the families' ladder (a vector light reaches the 24's five kinds by bang 3, all eight with the twins by bang 3 or 4). The owner's to decide with it: the light as a vector (T1, three Gaussian gears). OPEN: law 7's premise; Bell at a distance; the density step's form; the draw's fairness; the joint toy of A, B and C on the one big bang. Recommended: approve as a direction, checked in the build by the joint toy before it enters the law.
+
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
 ## 15. The reviewers, the approvals and where it stands
@@ -617,12 +621,11 @@ On the owner's word to David: "a generic solution for everything". This is David
      - E signed;
      - A, B and D signed with notes. The lines excluded are named, and none of them is a line the plan stands on;
      - C signed in its scope only, its closure's text on hold;
-     - his approval of the whole plan follows on its final text.
+     - **on the whole plan: YES** (edb27b24d, 6473424362), with two text notes, neither a blocker, both folded.
    - **Sofer:**
      - F passes as a draft, G as a measurement, I as a draft;
-     - nothing entered the law;
-     - his approval of the whole plan is asked for by 15:45 UTC.
-   - **Animate:** her approval is asked for by 15:45 UTC.
+     - the law holds the owner's approved (o) and (s) at lines 98, 106 and 1602 since ef9149e94 (14:37 UTC), and his picture of 15:0x at line 106 since 4de7a1b68 (15:31 UTC);
+     - **he approves** the plan's laws and the design (6473316629, 6473366953). His three sentences of TENSOR24.md and four corrections here are folded, and his word on the fixed head follows within five minutes of its push.
+   - **Animate: YES** (edb27b24d, 6473561890), with five text conditions to fold after 16:00, none of them blocking.
    - **The architect:** APPROVED WITH CHANGES (section 11); the one architect's ruling on Sofer's file and the design, one architecture (section 11, items 7 and 11; section 12, item 4).
-   - **The final word of Sofer, David and Animate** on the head for the owner is asked for on #2187 by 15:45 UTC, and is entered here when given.
 4. **The research stopped at 15:00 UTC, on the owner's word.** Everything open is booked by name, and closes in the build.
