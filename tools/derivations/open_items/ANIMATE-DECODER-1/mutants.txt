@@ -1,0 +1,52 @@
+unmutated: rc=0 46 passed in 0.45s
+killed   the books close at any end, not every end  <- test_the_books_close_at_each_end_and_the_verdict
+killed   the books close over the two ends together, not at each  <- test_the_books_close_at_each_end_and_the_verdict
+killed   the round's winds summed over every round (the round dropped)  <- test_the_wind_over_every_train_round_by_round
+killed   the ledger agreeing where the clicks' wind is at least the step's  <- test_the_wind_over_every_train_round_by_round
+killed   the ledger agreeing where the clicks' wind is at most the step's  <- test_the_wind_over_every_train_round_by_round
+killed   SHOWN wherever the ledger agrees, the books open or not  <- test_the_books_close_at_each_end_and_the_verdict
+killed   SHOWN wherever the record reads  <- test_the_books_close_at_each_end_and_the_verdict
+killed   the ledger absent read as an empty ledger  <- test_the_books_close_at_each_end_and_the_verdict
+killed   the rate lines read by the round, not by the beat's count  <- test_the_ticks_from_a_record_whose_counts_are_not_its_rounds
+killed   the rate lines of every Node-clock read as one  <- test_the_ticks_from_a_record_whose_counts_are_not_its_rounds
+killed   the broken line named one line on  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a key twice]
+killed   the unplaced event named one line back  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an event without its site]
+killed   the two causes of the major swapped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[no major]
+killed   the order read by round and kind alone  <- test_a_line_with_no_kind_and_the_order_by_site_and_kind
+killed   the kinds' order within a round changed (rate before turnover)  <- test_a_line_with_no_kind_and_the_order_by_site_and_kind
+killed   a line with no kind let through the first guard  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a line with no kind]
+killed   a line past the interpreter's depth or digits raises (JSON's own error caught alone)  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a line nested past the interpreter's depth]
+killed   a key twice read as its last value  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a key twice]
+killed   the lines split by splitlines  <- test_a_record_of_the_schema_reads_its_lines_split_at_the_line_feed_alone
+killed   the file read with universal newlines  <- test_a_record_of_the_schema_reads_its_lines_split_at_the_line_feed_alone
+killed   the file's last line feed read as an empty line  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[NaN where a whole number stands]
+killed   a file's cause unnamed  <- test_a_record_of_the_schema_reads_its_lines_split_at_the_line_feed_alone
+killed   an empty file let through the frame  <- test_a_record_of_the_schema_reads_its_lines_split_at_the_line_feed_alone
+killed   a newer major read  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an unknown major]
+killed   the header's and end's kinds read as events' kinds  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[NaN where a whole number stands]
+killed   the ticks not read past the first missing rate line (the tool's zip)  <- test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat
+killed   the tool's usage line dropped  <- test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits
+killed   the tool keeps the interpreter's digits  <- test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits
+killed   the ledger's at not read  <- test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard[a line after neither the step nor the clicks]
+killed   the ledger's fields' shapes not read  <- test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard[a blank line]
+killed   a ledger line at the place of an earlier one read  <- test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard[a line at the place of an earlier one]
+killed   a truth value read as a whole number (G2)  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a truth value where a whole number stands]
+killed   a float read as a whole number (G2)  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[NaN where a whole number stands]
+killed   a row of any length (G1)  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a row of another length]
+killed   a record of the schema read as any mapping (G1)  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a float where a whole number stands]
+killed   the header and the end not shaped (G1)  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a float in the header]
+killed   a click booked at the click and again at its ends read (G3)  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a click booked at the click and again at its ends]
+killed   a click with one end read at that end (G3)  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a click with one end]
+killed   a click's lacking ends read (G1)  <- test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read[its ends]
+killed   a holding's lacking kept read (G1)  <- test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read[a holding's kept]
+killed   a click that lacks its books read among the others (G1)  <- test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read[a holding's kept]
+killed   a split click's round not read (whole clicks alone)  <- test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click
+killed   a round read whose step and clicks lines hold other trains  <- test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click
+killed   a round read whose wind is no whole number  <- test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click
+killed   the ledger shown where it is read at some rounds alone  <- test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click
+killed   a negative count read  <- test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat
+killed   a rate line's lacking k read  <- test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat
+killed   the first rate line read at any beat  <- test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat
+killed   rate lines that do not rise read  <- test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat
+killed   a stretch read past its count  <- test_each_law_of_the_readings_holds_and_fails_on_its_mutant[the ticks counted from the rate lines]
+50 mutants, 0 survived
