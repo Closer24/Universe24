@@ -52,7 +52,7 @@ A clause head keeps its former name by name: the head of every renamed clause op
 
 ## The words kept
 
-Nature's names for the phenomena stay (light, charge, mass, energy, momentum, force, velocity, current, the horizon, the Big Bang), and so do the plain words a clock does (now, before, start, top, count, run, read, state, time, beat, carry, recoil, tension, weight, drift, volume, quantum, unit, credit, draw, take, frozen, refused, meeting, born, mirror, exchange, direction) and the law's clause tags, the codes of letters with an S and a number. The core table of the dictionary renames some of these in code names only (credit chime, draw vernier, take unwind, frozen stopped, current lead); the prose keeps them until the owner says otherwise.
+Nature's names for the phenomena stay (light, charge, mass, energy, momentum, force, velocity, current, the horizon, the Big Bang), and so do the plain words a clock does (now, before, start, top, count, run, read, state, time, beat, carry, recoil, tension, weight, drift, volume, quantum, unit, credit, draw, take, frozen, refused, meeting, born, mirror, exchange, direction) and the law's clause tags, the codes of letters with an S and a number. The core table of the dictionary renames some of these in code names only (credit chime, draw vernier, take unwind, frozen stopped, current lead); the prose keeps them until the owner says otherwise. The gear words of the code stay as they are: grip, spring, pinion, pawl and ratchet, and the stretch (the time gear's notch, TENSOR24.md section 2); the lapse, the plan's word for W in its main formula, is a word of general relativity and not a clock word.
 
 ## The measures and the kinds of click
 

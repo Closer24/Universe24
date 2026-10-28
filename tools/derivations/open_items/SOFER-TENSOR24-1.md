@@ -7,7 +7,7 @@ The plan is the Boss's file tools/derivations/open_items/TENSOR24.md. The owner 
 | cut | state |
 | --- | --- |
 | 0 the main formula | in the plan (section 2, read from the head's code); David's exact derivation and the Boss's bit-for-bit check not posted; then Sofer proposes the law's sentence to the owner |
-| 1 the fair draw | built and measured in the Boss's toy; the push held until the owner confirms (his "for now only close the plans, implementing nothing" to the Boss, 06:1x, after his "Yes and yes." to Sofer, 06:0x) |
+| 1 the fair draw | pushed at 06:42 as 834cfd72e on the owner's word to the Boss "if the push helps the plan, push"; Sofer's gate: no refusal, no note; merged into scribe-5; Animate's bench within the hour not yet posted |
 | 2 the gate | the Boss's to adopt with his next code push (his word, item 1231): scribe_gate_check_py.patch and scribe_gate_claude_settings.json under tools/derivations/open_items/ on scribe-5 |
 | 3 the pure contractions | not begun |
 | 4 the pointwise maps | not begun (David has derived three: the rate table, its inverse, rest_rate_of) |
@@ -25,13 +25,19 @@ The plan is the Boss's file tools/derivations/open_items/TENSOR24.md. The owner 
 
 ## The owner's list for 08:30 UTC (10:30 Israel time), with Sofer's recommendations
 
-1. The law the 24 exactly (the cube's 24 rotations) with one one-hand coupling, or the 48 (those 24 rotations and their 24 mirror images): Animate's reading, which the owner called a beautiful solution and the Boss recommends, yes, and the law's last line stands as written; the 48 stays as a test only (checked, ledger row 314), not as law and not as kinds.
+Decided on his words since 06:0x, to be confirmed at 08:30 UTC:
+- The law's sentence **The Node-clock is one act**: yes (to Sofer, 06:0x), entered.
+- The fair draw's push: pushed (his word to the Boss, "if the push helps the plan, push").
+- The Bell click's form: not a function (to Sofer, 06:4x: "A function is forbidden; maybe a complex number solves it. In any case let it be part of Tensor24"); David derives it with the twin hands.
+- A twin family in the one big bang's calibre: "if it is needed to see natural phenomena, and another family is needed, no problem. Everything should be in the plan Tensor24." (to David, 06:3x): in the plan, David derives its seed.
+- The 24 without the 48: his opinion to David, "In my opinion [we] go with the 24 without the 48, no?", and "Pass this beautiful solution to the Boss." (to Animate): the law the 24 exactly (the cube's 24 rotations) with one one-hand coupling; the 48 (those rotations and their 24 mirror images) stays a test only, not law and not kinds (ledger row 314); the law's last line stands as written.
+
+Still to be said:
+1. The one-hand coupling as one row of the calibre's couplings, and a cut that makes the twist's reading in the engagement that row (on the hole the reflections part at the first fitting today, row 315).
 2. The law's clause: its one word, pseudoscalar for the A2 kind (A2 is the sign of x y z; the word is the twist's kind in the 48): A2.
-3. The fair draw's push, held: push it right after the plan closes with him.
-4. The Bell click's form: not a function (the owner, 06:4x: "A function is forbidden; maybe a complex number solves it. In any case let it be part of Tensor24"); David derives it with the twins (the Boss's open items (a) and (d)); the final form is his word, and Sofer's recommendation stands: a detector hand's gear, a Gaussian pair, by Rule3's carry.
-5. The bang's seed.
-6. A twin family in the bang's universe (without one there is no split click, so no Born and no Bell in the one bang).
-7. The price of the 24: the light's cycle setting fits nothing (CS5-S2), the hole's chimes fall (ledger rows 296 and 299).
-8. A required status check on engine-5.0-test at the server.
-8a. The loop rule as a refusal: Sofer's gate counts loops from 06:5x as a note (engine modules only, 367 at 526a5666d); a refusal that a push may not raise, and 0 in the machine at the end: yes.
-9. Later, when derived and checked: the main formula as law (cut 0).
+3. The bang's seed.
+4. The price of the 24: the light's cycle setting fits nothing (CS5-S2), the hole's chimes fall (ledger rows 296 and 299).
+5. A required status check on engine-5.0-test at the server.
+6. The loop rule as a refusal: Sofer's gate counts loops as a note (engine modules only, 367 at 526a5666d); a refusal that a push may not raise, and 0 in the machine at the end: yes.
+7. Later, when derived and checked: the main formula as law (cut 0).
+8. The eighth roots of unity (Z[zeta8]) for the twin hands: whether they stand inside his "complex numbers with integer coefficients" under the law **No circularity that makes a phenomenon happen** (Sofer's reading in the thread post of 07:0x).
