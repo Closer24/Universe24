@@ -120,7 +120,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "LOOP": (
         "BLOCK",
-        "a loop (for, while, a comprehension) in an engine module: no loop that makes a formula, the machine is one tensor operation (the owner's words of 2026-10-28, 06:5x and 09:0x); the count per file and kind may not rise",
+        "a loop (for, while, a comprehension, map, filter, reduce, itertools, np.vectorize, a function that calls itself) in an engine module: no loop that makes a formula, the machine is one tensor operation (the owner's words of 2026-10-28, 06:5x and 09:0x); the count per file and kind may not rise",
     ),
     "OPERATION": (
         "BLOCK",
@@ -168,6 +168,16 @@ FOREIGN_OPERATORS = {ast.Pow: "**", ast.LShift: "<<", ast.RShift: ">>", ast.BitX
 OPERATION_CALLS = frozenset(
     "divmod floor_divide remainder mod fmod left_shift right_shift bitwise_xor floordiv lshift rshift xor".split()
 )  # the foreign operations under their function names (np.mod, operator.xor ...)
+ITERATING_BARE = frozenset(
+    "map filter iter reduce accumulate starmap vectorize permutations combinations groupby".split()
+)
+ITERATING_MODULES = {
+    "itertools": frozenset(
+        "product permutations combinations combinations_with_replacement groupby accumulate starmap takewhile dropwhile".split()
+    ),
+    "functools": frozenset({"reduce"}),
+}  # a loop under a function's name (the comprehension rule's dodges)
+ITERATING_NUMPY = frozenset("vectorize apply_along_axis apply_over_axes fromfunction frompyfunc".split())
 CARRY_HOME = frozenset(
     {"core/acts.py", "core/rule3.py"}
 )  # where Rule3's division and remainder are written
@@ -412,6 +422,30 @@ def scan(rel: str, source: str) -> list[Hit]:
                 )
                 if name == "divmod" or spelt:
                     add("OPERATION", node, name if name == "divmod" else f"{name}()")
+            if rel not in READERS:
+                module = (
+                    node.func.value.id
+                    if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name)
+                    else ""
+                )
+                if (
+                    (isinstance(node.func, ast.Name) and name in ITERATING_BARE)
+                    or name in ITERATING_MODULES.get(module, frozenset())
+                    or (module in numpy and name in ITERATING_NUMPY)
+                ):
+                    add("LOOP", node, "call")
+                if isinstance(node.func, ast.Name):
+                    cursor: ast.AST | None = parents.get(node)
+                    while cursor is not None and not isinstance(
+                        cursor, ast.FunctionDef | ast.AsyncFunctionDef
+                    ):
+                        cursor = parents.get(cursor)
+                    if (
+                        isinstance(cursor, ast.FunctionDef | ast.AsyncFunctionDef)
+                        and cursor.name == name
+                        and not isinstance(parents.get(cursor), ast.ClassDef)
+                    ):
+                        add("LOOP", node, "recursion")
             if isinstance(node.func, ast.Name) and name == "id":
                 add("STATE", node, "id()")
             if name in ROOTS:
