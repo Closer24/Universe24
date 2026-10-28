@@ -1,17 +1,26 @@
 """Row 15, the conservation at the click, read twice: the books at every whole click, and the ledger beside them."""
 
 # The first reading, K3 (Animate's part C): over a whole click's holdings, taken and laid, the windings and the kept
-# together gain nothing (law 8: every integer is held, moved or booked), at the click itself, or at each of its ends
-# where it takes at both, its books standing in its ends alone there. The second reading, the ledger: per round and
-# train, the windings held after the clicks less those after the step, against the windings the round's whole clicks
-# moved into that train. A record with no whole click reads the row not read, "no whole click"; a ledger absent, or
-# with no round holding both its step and its clicks lines, reads the second not read, and the row with it.
+# together gain nothing (law 8: every integer is held, moved or booked), at the click itself, or at each of its two
+# ends where it takes at both, its books standing in its ends alone there (the record's guard). A whole click that
+# lacks a field its books are read from (its ends, a part's taken and laid, a holding's windings and kept) leaves the
+# reading not read, the click named (Sofer's G1). The second reading, the plan's (section 8, the books): the wind over
+# every train after the clicks against the wind over every train after the step, at every round with a click, whole
+# or split, the ledger's control totals beside the clicks' journal; a click moves wind between trains and keeps its
+# remainder in the train it took from, so the total stands, and a split click or a turnover between the two lines is
+# read alike. A round is read where its step and its clicks lines hold the same trains, each with its whole wind. The
+# row: not read with no whole click, "no whole click", or with the ledger absent or not read, the cause named; shown
+# where every whole click's books close and the wind agrees at every round with a click; not shown where either
+# fails at a part read; not read where the ledger's lines are read at no round with a click, or at some alone.
 
 from typing import Any
 
 from tensor24.decoder.records import Record, whole
 
 Line = dict[str, Any]
+BOOKS = ("taken", "laid")
+HELD = ("windings", "kept")
+CLICKS = ("whole", "split")
 
 
 def gained(holdings: list[Line]) -> int:
@@ -21,48 +30,49 @@ def gained(holdings: list[Line]) -> int:
 
 def parts(click: Line) -> list[Line]:
     """Where a click's books stand: at its ends where it takes at both, else at the click itself."""
-    ends: list[Line] = click.get("ends", [])
+    ends: list[Line] = click["ends"]
     return ends if ends else [click]
 
 
 def closes(click: Line) -> bool:
     """Whether a whole click's books close at every part that holds them."""
-    return all(gained(p.get("taken", [])) + gained(p.get("laid", [])) == 0 for p in parts(click))
+    return all(gained(p["taken"]) + gained(p["laid"]) == 0 for p in parts(click))
 
 
-def moved(click: Line) -> dict[int, int]:
-    """The windings a click moved into each train, laid less taken; the kept stays at the clock."""
-    into: dict[int, int] = {}
-    for p in parts(click):
-        for h in [*p.get("taken", []), *p.get("laid", [])]:
-            into[h["train"]] = into.get(h["train"], 0) + h["windings"][1] - h["windings"][0]
-    return into
+def legible(click: Line) -> bool:
+    """Whether a whole click holds every field its books are read from: its ends, each part's books, each holding's."""
+    sides = [click, *click.get("ends", [])]
+    held = [h for p in sides for key in BOOKS for h in p.get(key, [])]
+    return (
+        "ends" in click
+        and all(key in p for p in sides for key in BOOKS)
+        and all(key in h for h in held for key in HELD)
+    )
 
 
 def first_reading(record: Record) -> dict[str, int]:
-    """The books at every whole click."""
+    """The books at every whole click: the whole clicks, those whose books are read, and those that close."""
     clicks = record.of("whole")
-    return {"whole clicks": len(clicks), "closed": sum(closes(c) for c in clicks)}
+    read = [c for c in clicks if legible(c)]
+    return {"whole clicks": len(clicks), "read": len(read), "closed": sum(closes(c) for c in read)}
 
 
 def second_reading(record: Record, ledger: list[Line]) -> dict[str, int]:
-    """The ledger's clicks less its step, per round and train, against the round's clicks."""
-    held = {(line["round"], line["at"], line["train"]): line.get("windings") for line in ledger}
-    rounds = sorted(
-        {r for r, at, _ in held if at == "step"} & {r for r, at, _ in held if at == "clicks"}
-    )
-    trains = sorted({t for _, _, t in held})
-    into: dict[tuple[int, int], int] = {}
-    for c in record.of("whole"):
-        for train, windings in moved(c).items():
-            into[(c["round"], train)] = into.get((c["round"], train), 0) + windings
-    pairs = [(r, t) for r in rounds for t in trains]
-    agree = 0
-    for r, t in pairs:
-        after, before = held.get((r, "clicks", t)), held.get((r, "step", t))
-        if whole(after) and whole(before):
-            agree += after - before == into.get((r, t), 0)
-    return {"rounds with both lines": len(rounds), "pairs read": len(pairs), "agree": agree}
+    """The wind over every train after the clicks against after the step, at every round with a click."""
+    winds: dict[tuple[int, str], dict[int, Any]] = {}
+    for line in ledger:
+        winds.setdefault((line["round"], line["at"]), {})[line["train"]] = line.get("wind")
+    clicked = sorted({e["round"] for e in record.events if e["kind"] in CLICKS})
+    pairs = [(winds.get((r, "step"), {}), winds.get((r, "clicks"), {})) for r in clicked]
+    read = [
+        (step, clicks)
+        for step, clicks in pairs
+        if step
+        and set(step) == set(clicks)
+        and all(whole(w) for w in [*step.values(), *clicks.values()])
+    ]
+    agree = sum(sum(step.values()) == sum(clicks.values()) for step, clicks in read)
+    return {"rounds with a click": len(clicked), "read": len(read), "agree": agree}
 
 
 def unread(first: dict[str, int]) -> bool:
@@ -70,11 +80,17 @@ def unread(first: dict[str, int]) -> bool:
     return not first["whole clicks"]
 
 
-def row_15(record: Record, ledger: list[Line] | None) -> dict[str, Any]:
-    """The row's verdict from its two readings, with its cause."""
+def row_15(
+    record: Record, ledger: list[Line] | None, why: str = "the ledger is absent"
+) -> dict[str, Any]:
+    """The row's verdict from its two readings, with its cause; why names the cause of a ledger that is None."""
     first = first_reading(record)
     if unread(first):
         return {"kind": "NOT READ", "cause": "no whole click", "first": first}
+    if first["read"] < first["whole clicks"]:
+        lacking = [c for c in record.of("whole") if not legible(c)][0]
+        cause = f"the whole click at round {lacking['round']}, site {lacking['site']} lacks a field its books are read from"
+        return {"kind": "NOT READ", "cause": cause, "first": first}
     every = first["closed"] == first["whole clicks"]
     books = (
         "the books close at every whole click"
@@ -82,14 +98,17 @@ def row_15(record: Record, ledger: list[Line] | None) -> dict[str, Any]:
         else f"the books open at {first['whole clicks'] - first['closed']} of {first['whole clicks']} whole clicks"
     )
     if ledger is None:
-        return {"kind": "NOT READ", "cause": f"the ledger is absent; {books}", "first": first}
+        return {"kind": "NOT READ", "cause": f"{why}; {books}", "first": first}
     second = second_reading(record, ledger)
-    if not second["rounds with both lines"]:
-        cause = f"no round of the ledger holds both its step and its clicks lines; {books}"
+    rounds, read, agree = second["rounds with a click"], second["read"], second["agree"]
+    held = every and agree == read
+    if not read or (held and read < rounds):
+        cause = f"{books}; the ledger's lines are read at {read} of {rounds} rounds with a click"
         return {"kind": "NOT READ", "cause": cause, "first": first, "second": second}
-    agree = second["agree"] == second["pairs read"]
-    kind = "SHOWN" if every and agree else "NOT SHOWN"
-    cause = (
-        f"{books}; the ledger agrees at {second['agree']} of {second['pairs read']} rounds and trains"
-    )
-    return {"kind": kind, "cause": cause, "first": first, "second": second}
+    wind = f"the wind over every train agrees after the clicks and after the step at {agree} of {read} rounds read, of {rounds} with a click"
+    return {
+        "kind": "SHOWN" if held else "NOT SHOWN",
+        "cause": f"{books}; {wind}",
+        "first": first,
+        "second": second,
+    }
