@@ -35,6 +35,7 @@ The owner's direct word of 2026-10-28, 13:2x UTC, to Sofer (in Hebrew, verbatim 
 | stretch | the notch X of a Node-clock's time gear: the length of its Meshes (the engine's feature `stretch`); X equals Gamma at the vacuum and is longer where the clock runs slower | the renamed words, below (the turnover); **Every bound is a clock's carry** | law |
 | rate, full rate, mesh rate, ruler | the rate is the clock's beats per tick; the full rate Gamma is the rate at the vacuum; the mesh rate is the rate twice, p_0^2 div Gamma, the ruler: a length is a count of Meshes at that rate | **The rates compose** | law |
 | load | the count of slowings on a clock's rate; 0 at the vacuum | **The rates compose** | law |
+| lapse, slowing | a slowing is one count of the load on a clock's rate; the lapse is a Node-clock's rate against the great clock's, 1 at the vacuum, lower by its slowings and 0 where the mesh rate is 0, where the Node-clock has no tick; the plan finds BH-S1's mask, the cone's slowing, F5's rate dial and the local tick's rate 0 one dial | **The rates compose**; LOCAL-TICK; draft H | law (slowing); plan (one dial) |
 | vacuum | a Node-clock with nothing slowing it: load 0, the full rate and the stretch Gamma | **The rates compose** | law |
 | horizon | where a Mesh's rate is 0 and nothing crosses it, its two ends decoupled; a frozen Node-clock is one whose mesh rate reads 0, and the stopped load is the load at which it does | **The horizon**; **BH-S1, the frozen Node-clock** | law |
 
@@ -50,6 +51,7 @@ The owner's direct word of 2026-10-28, 13:2x UTC, to Sofer (in Hebrew, verbatim 
 | rewind | the great clock run backward, every gear and every click undone exactly | **The inverse** | law |
 | turnover | the great clock's turn at the top: a clock's two notches exchanged and every fine tooth turned, so that time runs back; the swap applied twice is the identity on the 24's kinds, and the plan finds it of period four on the twin hands (the owner's word asked) | **The turnover** | law |
 | phase reversal, T | the exact reversal of a hand's phase: z to conj(z) on a force carrier (A1), (z1, z2) to (-conj(z2), conj(z1)) on the twin hands, so that T T is +1 on A1 and -1 on matter | Tensor24 plan, law 7 | plan |
+| ratchet, pawl, going | the Node-clock's own small clock of two teeth, whose tooth is the clock's turnover parity: each turnover advances it one tooth and its whole turn leaves as a carry; a Mesh between two Node-clocks of different parity reads the neighbour's hand in the other frame (the pawl); the plan's draft H calls the tooth a gear's going and David's ANY-TEETH the frame f, one object; the twin hands, where T T is -1, need the count modulo 4, one more two-tooth dial fed by the ratchet's carry | **The turnover** (the frame clause); lines 618 and 1911; draft H, item 11 (h) | law (two teeth); plan (modulo 4) |
 | half turn, full turn | a half turn is an element of 2O whose square is the full turn; a full turn is a hand turned through 2 pi about its own axis, +1 on the five kinds and -1 on the three spinor kinds (the Frobenius-Schur sign, equal to T T) | **The click law** | law |
 
 ### The symmetry words
@@ -61,6 +63,7 @@ The owner's direct word of 2026-10-28, 13:2x UTC, to Sofer (in Hebrew, verbatim 
 | 2O | the 24 with the twin's sign: each of the cube's 24 turns taken with its two signs on the twin hands, the double cover of the 24; where a kind's full turn can be -1, as it is on the spinor kinds | **The click law**; the Tensor24 plan, the group's definition | plan |
 | product table | how the contraction of two kinds splits into kinds: A1 x A1 = A1, E1/2 x E1/2 = A1 + T1, and so on for every pair of the eight | **The Node-clock is one act** | law |
 | A1 | the scalar kind: what no turn of the cube moves, the clock itself; the light, the sprung hands and the held field of the one big bang's calibre are all A1 | **The Node-clock is one act**; **The click law** | law |
+| pair dial | the one directionless reading two equal quanta have at one Node-clock: each quantum against the other's phase reversal, B(psi1, psi2) = <T psi1, psi2>; exchanging the two turns one a full turn, so the two ways add with the sign T T, -1 on the twin hands and +1 on the 24's kinds | **The two kinds of click** (the click law); derive/J, item 11 (m) | premise by name |
 | A1 pairing | the one invariant bilinear form on a kind's gears; its symmetry under exchange is the kind's sign, +1 on A1, A2, E, T1 and T2 and -1 on E1/2, E5/2 and G3/2 | **The click law** | law |
 | singlet | the A1 part of two twin hands: the antisymmetric pair, of size N(det[u, v]) | derive/E | plan |
 | intertwiner | an integer map from the gears of K1 x K2 to the gears of a kind K that commutes with the 24's lifts, the composite clock's tool | David's page on the composite clock | proposed |
@@ -89,6 +92,8 @@ The owner's direct word of 2026-10-28, 13:2x UTC, to Sofer (in Hebrew, verbatim 
 | bottom | where the stretch is least: the vacuum's stretch at rest, where the Links are shortest and the light densest and the fittings come | Animate's draft ANIMATE-MANY-BANGS.md | plan |
 | bang | one swing of the great clock: the stretch rises from the vacuum's at rest to the top, the turnover turns it, and the run back brings it to the vacuum's again; the dictionary's word is swing, the owner's laws 10 and 11 say bang, and nature's Big Bang keeps its name | the renamed words, below; laws 10 and 11 | law |
 | ladder | the kinds a bang can reach by the product table: from all A1 nothing new, with the twin hands and the composite clock all eight kinds by the fourth bang | ANIMATE-MANY-BANGS.md, part 7 | proposed |
+| circle, palindrome | the circle is the great clock's time as a closed course of its own integers: the run forward to the top, the turnover, the run back, the next bang; a palindrome is an orbit that runs back along the path it came, which the exact rewind with a whole-board turnover makes of every orbit unless the turnover is local or the clicks stay as the record | law 10 (line 106); item 11 (o) | law; open, the owner's |
+| premise by name | a sentence the law keeps and marks as a premise until it is explained from the clocks and realized by the tensors and the 24 (the owner's rule that only generic laws are approved) | the click law (line 156) | law |
 
 ## The renamed words
 
