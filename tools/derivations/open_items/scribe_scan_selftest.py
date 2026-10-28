@@ -38,6 +38,7 @@ NEW_MAIN = "tensor24/main.py"
 NEW_REWIND = "tensor24/runner/rewind.py"
 NEW_RECORD = "tensor24/record/schema.py"
 NEW_RUNNER = "tensor24/runner/loop.py"
+NEW_BOARD = "tensor24/runner/board.py"
 NEW_DECODER = "tensor24/decoder/rows.py"
 NEW_READING = "tensor24/readings/wind.py"
 NEW_MESH = "tensor24/engine/mesh.py"
@@ -424,6 +425,50 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a remainder in the runner", NEW_RUNNER, "def f(a, b):\n    return a % b\n", {}),
     ("a refusal in the runner", NEW_RUNNER, "def f(a):\n    raise ValueError(a)\n", {}),
     ("max of a pair in the runner", NEW_RUNNER, "def f(a, b):\n    return max(a, b)\n", {}),
+    # the board's module keeps the rules a wrap by hand would break; the rest of the runner is spared them
+    ("a remainder in the board's module", NEW_BOARD, "def f(a, b):\n    return a % b\n", {"OPERATION": 1}),
+    ("a floor division in the board's module", NEW_BOARD, "def f(a, b):\n    return a // b\n", {"OPERATION": 1}),
+    ("an augmented remainder in the board's module", NEW_BOARD, "def f(a, b):\n    a %= b\n    return a\n", {"OPERATION": 1}),
+    ("divmod in the board's module", NEW_BOARD, "def f(a, b):\n    return divmod(a, b)\n", {"OPERATION": 1}),
+    (
+        "numpy's mod in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.mod(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's floor_divide in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.floor_divide(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    ("a power in the board's module", NEW_BOARD, "def f(a):\n    return a ** a\n", {"OPERATION": 1}),
+    ("a shift in the board's module", NEW_BOARD, "def f(a):\n    return a << a\n", {"OPERATION": 1}),
+    ("a branch in the board's module", NEW_BOARD, "def f(a, b):\n    if a:\n        return b\n    return a\n", {"BRANCH": 1}),
+    ("a conditional expression in the board's module", NEW_BOARD, "def f(a, b):\n    return b if a else a\n", {"BRANCH": 1}),
+    ("an ordering comparison in the board's module", NEW_BOARD, "def f(a, b):\n    return a < b\n", {"COMPARE": 1}),
+    ("a loop in the board's module", NEW_BOARD, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
+    ("a comprehension in the board's module", NEW_BOARD, "def f(a):\n    return [x for x in a]\n", {"LOOP": 1}),
+    ("max of a pair in the board's module", NEW_BOARD, "def f(a, b):\n    return max(a, b)\n", {"CLAMP": 1}),
+    ("where in the board's module", NEW_BOARD, "def f(a, b):\n    return where(a, b, 0)\n", {"CLAMP": 1}),
+    (
+        "a wrap by hand in the board's module: a subtraction under a comparison",
+        NEW_BOARD,
+        "def f(a, b):\n    return a - b if a >= b else a\n",
+        {"BRANCH": 1, "COMPARE": 1},
+    ),
+    (
+        "the carry imported and called in the board's module",
+        NEW_BOARD,
+        "from tensor24.algebra.carry import carry\n\n\ndef f(a, b):\n    return carry(a, b, 0)\n",
+        {},
+    ),
+    ("an equality in the board's module", NEW_BOARD, "def f(a, b):\n    return a == b\n", {}),
+    ("a refusal in the board's module", NEW_BOARD, "def f(a):\n    raise ValueError(a)\n", {}),
+    ("a remainder in a module named for the board", "tensor24/runner/boards.py", "def f(a, b):\n    return a % b\n", {}),
+    ("a remainder in a runner module whose name ends in the board's", "tensor24/runner/dashboard.py", "def f(a, b):\n    return a % b\n", {}),
+    ("a remainder in the board's name in the decoder", "tensor24/decoder/board.py", "def f(a, b):\n    return a % b\n", {"OPERATION": 1}),
+    ("a loop in a module of the decoder named for the board", "tensor24/decoder/board.py", "def f(a):\n    for x in a:\n        pass\n", {}),
     ("a loop in the readings", NEW_READING, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
     (
         "an ordering comparison in the readings",
