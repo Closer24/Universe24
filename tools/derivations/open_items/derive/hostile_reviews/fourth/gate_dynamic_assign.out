@@ -1,0 +1,5 @@
+tensor24/algebra/x.py    ALLOW:call .import_module, ALLOW:constant 'numpy'
+tensor24/engine/x.py     ALLOW:call .import_module, ALLOW:constant 'numpy'
+tensor24/readings/x.py   ALLOW:call .import_module, ALLOW:constant 'numpy'
+tensor24/runner/x.py     stands
+tensor24/__init__.py     stands

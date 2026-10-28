@@ -85,7 +85,7 @@ def pure(make, shape, rng):
 
 
 def renamed(make, shape, rng):
-    """Every order of three trains orders the trains' rows alike, and an inert fourth train leaves the rest's bits."""
+    """Every order of three trains orders the trains' rows alike, and three inert trains more leave the rest's bits."""
     e, nb = make(), board(shape)
     s = e.world(rng, shape, 3)
     out = flat(e.step(nb, s))
@@ -95,7 +95,7 @@ def renamed(make, shape, rng):
 
     orders = map(list, itertools.permutations(range(3)))
     alike = all(same(flat(e.step(nb, tuple(ordered(s, o)))), ordered(out, o)) for o in orders)
-    inert = tuple(np.concatenate([x, 0 * x[:1]]) if len(x) == 3 else x for x in s)
+    inert = tuple(np.concatenate([x, 0 * x]) if len(x) == 3 else x for x in s)
     return alike and same([p[:3] for p in flat(e.step(nb, inert))], [p[:3] for p in out])
 
 

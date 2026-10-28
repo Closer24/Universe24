@@ -55,18 +55,18 @@ def edits():
         "an integer past the width": (
             "universe",
             lambda u: u["integers"].update(width=8),
-            f"universe: the integer {DEN} takes more bits than the width, 8",
+            f"universe.integers.den: the integer {DEN} takes more bits than the width, 8",
         ),
         "the width one bit short": (
             "universe",
             lambda u: u["integers"].update(width=53),
-            f"universe: the integer {DEN} takes more bits than the width, 53",
+            f"universe.trains[0].pair[1]: the integer {DEN} takes more bits than the width, 53",
         ),
         "the width at the widest integer": ("universe", lambda u: u["integers"].update(width=54), None),
         "an integer too wide in the setting": (
             "setting",
             lambda s: s["gears"].append([0, 0, 1, 1 << 200, 0, 0]),
-            f"setting: the integer {1 << 200} takes more bits than the width, 128",
+            f"setting.gears[1][3]: the integer {1 << 200} takes more bits than the width, 128",
         ),
         "a key off the format": (
             "universe",
@@ -221,6 +221,33 @@ def edits():
             "piece.json: not read:",
         ),
         "no JSON": ("setting", lambda s: "{", "setting.json: not read:"),
+        "a part of 1": ("universe", lambda u: u["trains"][0].update(part=1), None),
+        "an integer of 1": ("universe", lambda u: u["integers"].update(full_rate=1), None),
+        "a side of 1": ("piece", lambda p: p["shape"].__setitem__(0, 1), None),
+        "a coupling at the first parts": coupling([0, 0, 0, 0, 0, 1], None),
+        "a version 0": ("setting", lambda s: s.update(version=0), "setting.version: 1, not 0"),
+        "a rim below den": (
+            "universe",
+            lambda u: u["trains"][0].update(pair=[0, DEN - 1]),
+            f"{train}.pair: the rim is den, not {DEN - 1}",
+        ),
+        "a pair of three": (
+            "universe",
+            lambda u: u["trains"][0].update(pair=[0, DEN, DEN]),
+            f"{train}.pair: the pinion and the rim",
+        ),
+        "a pair of one": (
+            "universe",
+            lambda u: u["trains"][0].update(pair=[DEN]),
+            f"{train}.pair: the pinion and the rim",
+        ),
+        "four axes": ("piece", lambda p: p.update(shape=[4, 4, 4, 4]), "piece.shape: one side per axis"),
+        "a gear row of seven": gear([0, 0, 1, 1, 0, 0, 0], "a row of whole numbers, one per field"),
+        "a gear row of five": gear([0, 0, 1, 1, 0], "a row of whole numbers, one per field"),
+        "a coupling row of seven": coupling(
+            [0, 0, 0, 0, 0, 1, 1], "a row of whole numbers, one per field"
+        ),
+        "a coupling row of five": coupling([0, 0, 0, 0, 0], "a row of whole numbers, one per field"),
     }
 
 

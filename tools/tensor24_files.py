@@ -1,4 +1,4 @@
-"""Tensor24's three files checked: whole numbers alone, the integers and the sides at least 1, every reference whole.
+"""Tensor24's three files checked: whole numbers alone, the integers and the sides at least 1, each train, part and site referred to there.
 
 Usage: `python tools/tensor24_files.py [universe piece setting]` prints every departure (the examples by default)
 and exits 1 if there is one, 2 if the files are not three. A gear's component within its kind's dimension and its

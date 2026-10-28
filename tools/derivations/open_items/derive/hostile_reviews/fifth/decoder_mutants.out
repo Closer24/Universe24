@@ -1,0 +1,18 @@
+unmutated: rc=0 15 passed in 0.11s
+SURVIVED the books close at any end, not every end
+SURVIVED the books close over the two ends together, not at each
+SURVIVED the windings moved read at the click alone, never at its ends
+SURVIVED the round's clicks summed over every round (the round dropped)
+SURVIVED the ledger agreeing where its change is at least the clicks'
+SURVIVED SHOWN wherever the ledger agrees, the books open or not
+killed   SHOWN wherever the record reads  <- test_each_law_of_the_readings_holds_and_fails_on_its_mutant[the ledger's clicks less its step agree with the clicks]
+SURVIVED the ledger absent read as an empty ledger
+SURVIVED the rate lines read by the round (the schema's former line), not by the beat's count
+SURVIVED the rate lines of every Node-clock read as one
+SURVIVED the broken line named one line on
+SURVIVED the unplaced event named one line back
+SURVIVED the two causes of the major swapped
+SURVIVED the order read by round and kind alone
+SURVIVED the kinds' order within a round changed (rate before turnover)
+SURVIVED a line with no kind let through the first guard
+16 mutants, 15 survived

@@ -105,7 +105,7 @@ class Whole:
 
     round: int
     site: int
-    count: int  # the Node-clock's own beat count c, read at its site
+    count: int  # the count the Node-clock's beat reached, its first beat being 1
     dial: int  # its rate dial after the beat
     train: int
     q: int
@@ -163,7 +163,7 @@ class Rate:
 
     round: int
     site: int
-    count: int
+    count: int  # the count the beat reached, the first beat being 1
     dial: int
     k: int
 

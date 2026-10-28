@@ -1,4 +1,4 @@
-"""The three files read and checked: whole numbers alone, the integers and the sides at least 1, every reference whole."""
+"""The three files read and checked: whole numbers alone, the integers and the sides at least 1, each train, part and site referred to there."""
 
 import json
 from collections import Counter
@@ -42,15 +42,18 @@ def whole(value: Any) -> TypeGuard[int]:
     return isinstance(value, int) and not isinstance(value, bool)
 
 
-def numbers(held: Any) -> list[int]:
-    """Every whole number a file holds, at any depth, walked without recursion."""
-    found, left = [], [held]
+def numbers(held: Any) -> list[tuple[str, int]]:
+    """Every whole number a file holds, at any depth, with the field it stands in, walked without recursion."""
+    found: list[tuple[str, int]] = []
+    left: list[tuple[str, Any]] = [("", held)]
     while left:
-        value = left.pop()
-        if isinstance(value, dict | list):
-            left += value.values() if isinstance(value, dict) else value
+        where, value = left.pop()
+        if isinstance(value, dict):
+            left += [(f"{where}.{key}", item) for key, item in value.items()]
+        elif isinstance(value, list):
+            left += [(f"{where}[{at}]", item) for at, item in enumerate(value)]
         elif whole(value):
-            found.append(value)
+            found.append((where, value))
     return found
 
 
@@ -189,15 +192,15 @@ def setting_departures(setting: Any, universe: Any, piece: Any) -> list[str]:
 
 
 def departures(universe: Path, piece: Path, setting: Path) -> list[str]:
-    """Every departure of the three files, the setting read once the universe and the piece stand, then the width, file by file."""
+    """Every departure of the three files, the setting read once the universe and the piece stand, then the width, field by field."""
     (u, bad_u), (p, bad_p), (s, bad_s) = read(universe), read(piece), read(setting)
     found = bad_u + bad_p + bad_s
     found = found or universe_departures(u) + piece_departures(p)
     found = found or setting_departures(s, u, p)
     width = 0 if found else u["integers"]["width"]
     return found or [
-        f"{name}: the integer {n} takes more bits than the width, {width}"
+        f"{name}{where}: the integer {n} takes more bits than the width, {width}"
         for name, held in zip(NAMES, (u, p, s), strict=True)
-        for n in numbers(held)
+        for where, n in numbers(held)
         if n.bit_length() > width
     ]

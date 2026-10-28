@@ -47,7 +47,14 @@ def world(rng, shape, trains, w=W):
     tn = c - draw(0, 2, one)
     tooth = draw(0, 1 << 20, size) % w
     return State(
-        wide(rng, size), wide(rng, size), tooth, draw(0, 2, size), draw(0, GAMMA, one), c, tn - 1, tn
+        wide(rng, size),
+        wide(rng, size),
+        tooth,
+        draw(0, 2, size),
+        draw(0, GAMMA, one),
+        c,
+        tn - 1 - draw(0, 2, one),
+        tn,
     )
 
 
@@ -88,11 +95,14 @@ def until(layout, s, rng=None, limit=60 * T):
 
 
 def order():
-    """Forty random schedules give the synchronous pass's state at equal counts, the counts parting, before slots read."""
-    layout, s, rng = parted(1)
-    reference = until(layout, s)[0]
-    runs = [until(layout, s, rng) for _ in range(40)]
-    return all(same(end, reference) and parting and stale for end, _, parting, stale in runs)
+    """At two layouts, forty random schedules give the synchronous pass's state at equal counts, parting, stale reads."""
+    for seed in (1, 4):
+        layout, s, rng = parted(seed)
+        reference = until(layout, s)[0]
+        runs = [until(layout, s, rng) for _ in range(40)]
+        if not all(same(end, reference) and parting and stale for end, _, parting, stale in runs):
+            return False
+    return True
 
 
 def back():

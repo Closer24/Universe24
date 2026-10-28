@@ -1,0 +1,18 @@
+unmutated: rc=0 28 passed in 0.12s
+killed   the books close at any end, not every end  <- test_the_books_close_at_each_end_and_the_verdict
+killed   the books close over the two ends together, not at each  <- test_the_books_close_at_each_end_and_the_verdict
+killed   the windings moved read at the click alone, never at its ends  <- test_the_ledger_at_the_ends_and_round_by_round
+killed   the round's clicks summed over every round (the round dropped)  <- test_the_ledger_at_the_ends_and_round_by_round
+killed   the ledger agreeing where its change is at least the clicks'  <- test_the_ledger_at_the_ends_and_round_by_round
+killed   SHOWN wherever the ledger agrees, the books open or not  <- test_the_books_close_at_each_end_and_the_verdict
+killed   SHOWN wherever the record reads  <- test_each_law_of_the_readings_holds_and_fails_on_its_mutant[the ledger's clicks less its step agree with the clicks]; test_the_books_close_at_each_end_and_the_verdict; test_the_ledger_at_the_ends_and_round_by_round
+killed   the ledger absent read as an empty ledger  <- test_the_books_close_at_each_end_and_the_verdict
+killed   the rate lines read by the round (the schema's former line), not by the beat's count  <- test_the_ticks_from_a_record_whose_counts_are_not_its_rounds
+killed   the rate lines of every Node-clock read as one  <- test_the_ticks_from_a_record_whose_counts_are_not_its_rounds
+killed   the broken line named one line on  <- test_a_broken_record_names_its_own_cause[a line that is no JSON]; test_a_line_with_no_kind_and_the_order_by_site_and_kind
+killed   the unplaced event named one line back  <- test_a_broken_record_names_its_own_cause[an event without its site]
+killed   the two causes of the major swapped  <- test_a_broken_record_names_its_own_cause[no major]
+killed   the order read by round and kind alone  <- test_a_line_with_no_kind_and_the_order_by_site_and_kind
+killed   the kinds' order within a round changed (rate before turnover)  <- test_a_line_with_no_kind_and_the_order_by_site_and_kind
+killed   a line with no kind let through the first guard  <- test_a_line_with_no_kind_and_the_order_by_site_and_kind
+16 mutants, 0 survived
