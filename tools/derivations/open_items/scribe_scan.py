@@ -142,6 +142,10 @@ RULES: dict[str, tuple[str, str]] = {
         "WARN",
         "an ordering comparison in an engine module: a threshold read by order and not as the quotient of a carry (the same word); the count may not rise",
     ),
+    "BRANCH": (
+        "WARN",
+        "a branch (if, a conditional expression, match) in an engine module: the law says there is no if on a train (The Node-clock and the Mesh are generic; there is no if) and a whether is the indicator 1 - 1 div (q + 1) of a carry's quotient; a branch the formula does not hold is a declaration (the count per file may not rise)",
+    ),
 }
 
 BAD_IMPORTS = frozenset("math cmath statistics random fractions decimal scipy sympy mpmath".split())
@@ -470,6 +474,22 @@ def scan(rel: str, source: str) -> list[Hit]:
             and any(isinstance(op, ORDERING) for op in node.ops)
         ):
             add("COMPARE", node, "ordering")
+        elif isinstance(node, ast.If | ast.IfExp | ast.Match) and rel not in READERS:
+            guard = (
+                isinstance(node, ast.If)
+                and isinstance(node.test, ast.Name)
+                and node.test.id == "TYPE_CHECKING"
+            )
+            if not guard:
+                add(
+                    "BRANCH",
+                    node,
+                    "if"
+                    if isinstance(node, ast.If)
+                    else "match"
+                    if isinstance(node, ast.Match)
+                    else "ternary",
+                )
         elif isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
             for decorator in node.decorator_list:
                 found = (
