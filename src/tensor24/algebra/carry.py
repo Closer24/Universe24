@@ -11,6 +11,11 @@ def carry(n: Z, d: Z, r: Z) -> tuple[Z, Z]:
     return u // d, u % d
 
 
+def uncarry(q: Z, d: Z, kept: Z) -> Z:
+    """The carry run back: n + r from the quotient that left and the remainder that stayed."""
+    return q * d + kept
+
+
 def nonneg(n: Z) -> Z:
     """The one whether: 1 where n is at least 0 and 0 below, the quotient of n by n n + 1."""
     q, _ = carry(n, n * n + 1, 0)

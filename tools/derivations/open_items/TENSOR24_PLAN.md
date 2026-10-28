@@ -603,6 +603,7 @@ On the owner's word to David: "a generic solution for everything". This is David
       - **lin** keeps the reversal, and reaches 318 of 372 Node-clocks faster than one Mesh per shortest tick.
     - **It cancels:** Postulate 3 against Postulate 2, in the teeth.
     - **The recommendation:** lin, as David and Sofer recommend. The great clock's tick is nothing observed.
+    - **Found on the stage 3 engine (derive/asynchronous_read, CHECKED):** past keeps the order test, 40 of 40 random schedules equal to the synchronous pass; lin as one carry by tn - tb fails it, 0 of 40, since a neighbour one count ahead holds its next tick. Stage 3 reads by past, the ruling's line 5; lin's formula with the order test's form under it, or past kept, is David's word.
 22. **(v) The local turnover, at every Node-clock's top. WITHDRAWN (15:0x UTC):** the whole board is one bang, run synchronously.
     - **What it gave:** with the exact T, worlds where the clocks turn over at different ticks keep their clicks; only one-clock worlds copy themselves.
     - **Law 4 would have read:** "The turnover is T = J K on every gear, at the clock's own top, as a carry; each gear's sign is its source's."

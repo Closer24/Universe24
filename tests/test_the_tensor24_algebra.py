@@ -54,6 +54,13 @@ def choice(m):
     return (m.choose(1, n, d) == n).all() and (m.choose(0, n, d) == d).all()
 
 
+def back(m):
+    """The carry run back returns n + r from the quotient and the remainder."""
+    n, d, r = numbers()
+    q, kept = m.carry(n, d, r)
+    return (m.uncarry(q, d, kept) == n + r).all()
+
+
 def involution(m):
     """The flip stays within the teeth and, twice, is the identity."""
     _, d, r = numbers()
@@ -75,17 +82,19 @@ def mutants():
         "odd": {"home": lambda w, go: algebra.carry(w, 1 + 1, 0)[0]},
         "whether": {"nonneg": lambda n: algebra.carry(n, n * n + 1, 0)[0]},
         "choice": {"choose": lambda k, x, y: k * x + k * y},
+        "back": {"uncarry": lambda q, d, kept: q * d - kept},
         "involution": {"flip": lambda r, w: w - r},
     }
 
 
-@pytest.mark.parametrize("name", ["exact", "odd", "whether", "choice", "involution"])
+@pytest.mark.parametrize("name", ["exact", "odd", "whether", "choice", "back", "involution"])
 def test_each_law_of_the_carry_holds_and_fails_on_its_mutant(name):
     law = {
         "exact": exact,
         "odd": odd,
         "whether": whether,
         "choice": choice,
+        "back": back,
     }
     law = law | {"involution": involution}
     assert law[name](algebra)
