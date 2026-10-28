@@ -258,7 +258,7 @@ class Tick:
         self.out[k] = clk.act(
             self.trains[k], gearing, None, numerators, self.going, None, *self.ends(regulator)
         )[-1]
-        w_div = readings.mean_teeth(self.clock, self.out[k][0])
+        w_div = self.end_teeth(self.out[k][0])
         for r in self.driven:
             k = self.where[id(r)]
             new = []
@@ -286,13 +286,19 @@ class Tick:
             clk.all_gears(), [gear for train in self.held for gear in train], self.stopped & ~self.top
         )
 
+    def end_teeth(self, time_gear: Gear) -> Any:
+        """The mean teeth of the regulator's two notches at the act's end, the teeth every driven gear's carry and the release's advance divide by; where the time gear's step carried its new notch to or below minus the one before (the stretch fallen through the bottom within the tick, a clock the turnover then returns to its start), the mean teeth at the tick's start, the teeth the impulse read: no clock's teeth fall to 0, and every value there is one the turnover replaces (the bang at 40 times its quanta stopped at tick 23 with a division by 0)."""
+        w = readings.mean_teeth(self.clock, time_gear)
+        return np.where(
+            w > 0, w, readings.mean_teeth(self.clock, self.held[self.where[id(self.regulator)]][0])
+        )
+
     def advances(self) -> None:
         """The advances among the carries (the former `writes` and `unwrite`), each one carry at the gear's drive teeth T with the carry kept in its drive fine tooth (clock.drive), on the trains as the clock holds them at the end: the unsprung gear's W-S1 advance, the release over the regulator's mean teeth at the end, its carries rounded odd (EM-S1's odd rounding, rates.rounded: the advance exactly odd under the sense's flip, the former floor kept by name), its size counted forward (`advanced_on`), its tally per advanced clock driven on the regulator's flow gears by the clock's drive act (unwind.recoil, LT-S1: the release's advance taken into the clause), its tallies kept in the tick's rewind note for the rewind and undone at -1 by the same act, the last first, after the turnover's undoing and before the drives come off, at no still clock (turned over or stopped), where the turnover or the restore wiped the forward's tally with the advance; the offset train's four gears kicked at the impulse and driven by no advance (PL-S1); forward after every gear's carry, backward the first act to come off."""
         clock = self.clock
         gear, time_gear = clock.unsprung().gears[0], clock.train(REGULATOR).gears[0]
         notches = gear.now
-        teeth = readings.mean_teeth(self.clock, time_gear)
-        clock.drive(gear, rates.rounded(self.release, teeth), self.going)
+        clock.drive(gear, rates.rounded(self.release, self.end_teeth(time_gear)), self.going)
         if self.going == 1:
             advanced_on(clock, gear, notches)
         if self.going == -1:

@@ -49,6 +49,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         26,
         "The close's books at every striking (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off; his rule of 14:5x UTC that a push's test sees what it was pushed for): on the one big bang's first 20 ticks the board's wind lost is the chimes' booked plus the remainder's rise at every striking, mergers among them; the Boss's room by name.",
     ),
+    "tests/test_the_record.py::test_the_bang_at_forty_times_its_quanta_falls_through_its_bottom_and_runs_on_and_back": (
+        17,
+        "The great clock whole through the bottom (the owner's word of 2026-10-27, 18:5x UTC: a whole engine that runs one big bang; the Boss's finding of 2026-10-28, 00:5x UTC): the bang's seed at 40 times its quanta stopped at tick 23 with a division by 0, a clock's stretch carried through its bottom within the tick and the end's mean teeth at or below 0 there; the start's teeth read at such a clock (Tick.end_teeth), the bang runs on and back exactly; the Boss's room by name.",
+    ),
     "tests/test_the_record.py::test_the_bangs_heavy_matter_stays_silent_without_the_held_field": (
         14,
         "The control of the nuclear binding (the owner's rule of 2026-10-27, 14:5x UTC that a push's test sees what it was pushed for): the same bang with no held field chimes on the near-light family alone, and a weight on a hand and a held field with no weight are refused by name; the Boss's room by name.",
