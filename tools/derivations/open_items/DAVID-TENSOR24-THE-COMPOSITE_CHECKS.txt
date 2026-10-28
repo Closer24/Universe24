@@ -1,0 +1,617 @@
+DAVID-TENSOR24-THE-COMPOSITE_CHECKS.txt: the checks of DAVID-TENSOR24-THE-COMPOSITE.md.
+One exact probe (complex rationals over fractions.Fraction, no float): the intertwiners of the 24's ladder solved under the
+24's lifts with their scales, the composite's gears from its parts' gears, law 6 on the composite, equal quanta, and the write.
+kinds_lib.py is the exact algebra and the kinds' generators shared with DAVID-TENSOR24-PAULI.md's probe.
+
+== python3 -I composite_probe.py (beside kinds_lib.py; about 10 s) ==
+1. The intertwiners K1 x K2 -> K, solved exactly under the 24's lifts with their scales: their count is the product table
+  E1/2 x E1/2 -> A1: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E1/2 x E1/2 -> A2: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E1/2 x E1/2 -> E: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E1/2 x E1/2 -> T1: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E1/2 x E1/2 -> T2: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  T1 x T1 -> A1: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  T1 x T1 -> A2: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  T1 x T1 -> E: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  T1 x T1 -> T1: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  T1 x T1 -> T2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  T1 x E1/2 -> E1/2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  T1 x E1/2 -> E5/2: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  T1 x E1/2 -> G3/2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E x E -> A1: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E x E -> A2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E x E -> E: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E x E -> T1: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E x E -> T2: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E x T1 -> A1: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E x T1 -> E: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E x T1 -> T1: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E x T1 -> T2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  T2 x E1/2 -> E1/2: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  T2 x E1/2 -> E5/2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  T2 x E1/2 -> G3/2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E x E1/2 -> E1/2: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E x E1/2 -> E5/2: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E x E1/2 -> G3/2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E1/2 x E5/2 -> A1: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E1/2 x E5/2 -> A2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E1/2 x E5/2 -> E: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E1/2 x E5/2 -> T1: 0 intertwiners (the table's 0): 1 cases, 0 failures
+  E1/2 x E5/2 -> T2: 1 intertwiners (the table's 1): 1 cases, 0 failures
+  E1/2 x E1/2 -> A1 is the determinant, u1 v2 - u2 v1, up to its sign: 1 cases, 0 failures
+  E1/2 x E1/2 -> T1, the vector clock's three gears from the two hands' four products (rows):
+    [(-1+0i), (0+0i), (0+0i), (1+0i)]
+    [(0-1i), (0+0i), (0+0i), (0-1i)]
+    [(0+0i), (1+0i), (1+0i), (0+0i)]
+  MUTANT the twins' scale dropped (mu = 1 on spinor x spinor): the rung E1/2 x E1/2 loses its kinds: caught on 1 of 1 cases (must be above 0)
+  MUTANT the half turns alone: T1 x T1 no longer tells E from T2 apart (more intertwiners than the table): caught on 1 of 1 cases (must be above 0)
+2. The composite's gears are the intertwiner on the parts' gears: they turn as the kind K under the 24 (any gears)
+  the composite of the turned parts is the turned composite, on every product and generator: 5400 cases, 0 failures
+3. The beats add: parts turning by g and h (now = g before) give a composite turning by g h, with no new number
+  the composite's now is g h times its before: 1440 cases, 0 failures
+  the product of two of the toy calibre's pairs (3 on den's circle) lies on den^2's circle: the composite's rest beat is the sum of the parts': 9 cases, 0 failures
+4. Law 6 on the composite: the kinds' shares are the norms of the parts, and they fill the room exactly
+  SUM over the kinds of |C_K x|^2 / n_K = |x|^2, each in its kind's invariant form, n_K read from C_K itself (any pair state): 2400 cases, 0 failures
+  each P_K read from C_K is a projector (P P = P), on every product split into kinds: 18 cases, 0 failures
+  the first rung's sizes are Animate's: N(det[u, v]) and 2 rho_u rho_v - N(det[u, v]): 3000 cases, 0 failures
+5. Equal quanta (one train, one sense): the pair is exchanged by the kind's sign, so only that symmetry's kinds are drawn
+  for equal quanta every kind of the wrong symmetry has size 0, and every kind of the right one is reached: 3600 cases, 0 failures
+  MUTANT two equal twin quanta with the symmetric exchange reach the vector clock T1: caught on 400 of 400 cases (must be above 0)
+  two equal twin quanta (antisymmetric) reach the singlet A1 exactly where det[u, v] is not 0 (the same state: Pauli): 400 cases, 0 failures
+6. The write: the drawn kind's composite as one whole quantum. In the pair's density it is exact; in the amplitude it is a root
+  the composite's density carries the whole pair's wind (its trace is the room), with one division and no root: 4000 cases, 0 failures
+  the amplitude's rescale sqrt(1 / share) is irrational at 3994 of 4000 draws: the amplitude cannot be written whole
+result: 0 failures
+
+== composite_probe.py ==
+"""The probe of DAVID-TENSOR24-THE-COMPOSITE.md: the composite clock of the 24's ladder, its gears from its parts' gears.
+
+Exact complex rationals only (kinds_lib.C over fractions.Fraction); no float. Run: python3 -I composite_probe.py (beside
+kinds_lib.py). Every claim counts its cases and failures; every mutant must fail; the script exits 1 on any failure.
+
+The kinds' generators are the five turns of the Pauli probe (the half turns about x, y, z, the quarter turn about z, the third
+turn about the diagonal), each acting on a kind by its integer matrix: on the spinor kinds up to the scale lam with
+lam^2 = det of the 2x2 factor, on the 24's kinds exactly. An intertwiner C from K1 x K2 to K solves C (M1 x M2) = mu M_K C for
+every generator, mu = lam1 lam2 / lam_K, which is an integer on every product below (lam^2 = det M when both factors are spinors,
+1 otherwise).
+"""
+
+import random
+import sys
+
+sys.path.insert(0, __import__("os").path.dirname(__import__("os").path.abspath(__file__)))
+from kinds_lib import (  # noqa: E402
+    A_ONE, A_TWO, C, E_FIVE, E_HALF, E_TWO, FAILS, G_FOUR, I, M, ONE, T_ONE, T_TWO, ZERO, cc, claim, det2, g, kron, mutant,
+    null_space,
+)
+
+rnd = random.Random(20261028)
+
+# Each kind: its generators [(matrix, lam^2)], its dimension, whether it is a spinor kind, and its invariant Hermitian form G
+# (the identity on the kinds whose matrices are unitary up to their scale; on E, in the integer basis (1,-1,0), (0,1,-1), the
+# Gram matrix; on G3/2 = E1/2 x E, the identity times E's Gram matrix).
+GE = M([[2, -1], [-1, 2]])
+ID = lambda n: [[ONE if i == j else ZERO for j in range(n)] for i in range(n)]  # noqa: E731
+KIND = {
+    "A1": (A_ONE, 1, False, ID(1)),
+    "A2": (A_TWO, 1, False, ID(1)),
+    "E": (E_TWO, 2, False, GE),
+    "T1": (T_ONE, 3, False, ID(3)),
+    "T2": (T_TWO, 3, False, ID(3)),
+    "E1/2": (E_HALF, 2, True, ID(2)),
+    "E5/2": (E_FIVE, 2, True, ID(2)),
+    "G3/2": (G_FOUR, 4, True, kron(ID(2), GE)),
+}
+
+
+def mu_of(k1, k2, k, gi):
+    """mu = lam1 lam2 / lam_K for generator gi, as an exact rational, from the kinds' lam^2 (both spinors: lam1 lam2 = det;
+    one spinor and a spinor target, or none: 1)."""
+    s1, s2, sk = KIND[k1][2], KIND[k2][2], KIND[k][2]
+    if s1 and s2 and not sk:
+        return cc(KIND[k1][0][gi][1])  # lam^2 of the twins' factor (both factors share it)
+    return ONE
+
+
+def intertwiners(k1, k2, k):
+    """Every C (dim K x d1 d2) with C (M1 x M2) = mu M_K C for the five generators: the null space, exactly."""
+    g1, d1 = KIND[k1][0], KIND[k1][1]
+    g2, d2 = KIND[k2][0], KIND[k2][1]
+    gk, dk = KIND[k][0], KIND[k][1]
+    n = d1 * d2
+    rows = []
+    for gi in range(5):
+        m12 = kron(g1[gi][0], g2[gi][0])
+        mk = gk[gi][0]
+        mu = mu_of(k1, k2, k, gi)
+        for i in range(dk):
+            for col in range(n):
+                row = [ZERO] * (dk * n)
+                for j in range(n):
+                    row[i * n + j] = row[i * n + j] + m12[j][col]
+                for kk in range(dk):
+                    row[kk * n + col] = row[kk * n + col] - mu * mk[i][kk]
+                rows.append(row)
+    basis = null_space(rows, dk * n)
+    return [[[v[i * n + j] for j in range(n)] for i in range(dk)] for v in basis]
+
+
+def scaled_to_integers(c):
+    """The intertwiner times the least common denominator of its entries, and divided by the entries' common factor: an
+    integer (Gaussian) matrix with no number chosen."""
+    from math import gcd
+
+    den = 1
+    for r in c:
+        for x in r:
+            for part in (x.re, x.im):
+                den = den * part.denominator // gcd(den, part.denominator)
+    out = [[x * den for x in r] for r in c]
+    common = 0
+    for r in out:
+        for x in r:
+            common = gcd(common, int(x.re))
+            common = gcd(common, int(x.im))
+    return [[C(x.re / common, x.im / common) for x in r] for r in out] if common else out
+
+
+def apply(c, x):
+    return [sum((c[i][j] * x[j] for j in range(len(x))), ZERO) for i in range(len(c))]
+
+
+def herm_g(gm, a, b):
+    return sum((a[i].conj() * gm[i][j] * b[j] for i in range(len(a)) for j in range(len(b))), ZERO)
+
+
+def tensor(u, v):
+    return [a * b for a in u for b in v]
+
+
+def norm2(x):
+    return sum((t.norm() for t in x), C(0).re)
+
+
+PRODUCTS = [
+    ("E1/2", "E1/2", {"A1": 1, "A2": 0, "E": 0, "T1": 1, "T2": 0}),
+    ("T1", "T1", {"A1": 1, "A2": 0, "E": 1, "T1": 1, "T2": 1}),
+    ("T1", "E1/2", {"E1/2": 1, "E5/2": 0, "G3/2": 1}),
+    ("E", "E", {"A1": 1, "A2": 1, "E": 1, "T1": 0, "T2": 0}),
+    ("E", "T1", {"A1": 0, "E": 0, "T1": 1, "T2": 1}),
+    ("T2", "E1/2", {"E1/2": 0, "E5/2": 1, "G3/2": 1}),
+    ("E", "E1/2", {"E1/2": 0, "E5/2": 0, "G3/2": 1}),
+    ("E1/2", "E5/2", {"A1": 0, "A2": 1, "E": 0, "T1": 0, "T2": 1}),
+]
+
+print("1. The intertwiners K1 x K2 -> K, solved exactly under the 24's lifts with their scales: their count is the product table")
+CS = {}
+for k1, k2, table in PRODUCTS:
+    for k, want in table.items():
+        basis = intertwiners(k1, k2, k)
+        claim(f"{k1} x {k2} -> {k}: {len(basis)} intertwiners (the table's {want})", 1, int(len(basis) != want))
+        if len(basis) == 1:
+            CS[(k1, k2, k)] = scaled_to_integers(basis[0])
+cdet = CS[("E1/2", "E1/2", "A1")]
+claim("E1/2 x E1/2 -> A1 is the determinant, u1 v2 - u2 v1, up to its sign", 1,
+      int(not (cdet[0][0].zero() and cdet[0][3].zero() and cdet[0][1] == -cdet[0][2] and cdet[0][1].norm() == 1)))
+print("  E1/2 x E1/2 -> T1, the vector clock's three gears from the two hands' four products (rows):")
+for r in CS[("E1/2", "E1/2", "T1")]:
+    print("   ", r)
+
+_save = mu_of
+
+
+def mu_one(k1, k2, k, gi):
+    return ONE
+
+
+mu_of = mu_one
+lost = len(intertwiners("E1/2", "E1/2", "A1")) + len(intertwiners("E1/2", "E1/2", "T1"))
+mu_of = _save
+mutant("the twins' scale dropped (mu = 1 on spinor x spinor): the rung E1/2 x E1/2 loses its kinds", 1, int(lost == 0))
+_gens = {k: v[0] for k, v in KIND.items()}
+for k in KIND:
+    KIND[k] = (KIND[k][0][:3] * 2, *KIND[k][1:])  # the half turns alone (repeated to keep five slots)
+extra = len(intertwiners("T1", "T1", "T2")) + len(intertwiners("T1", "T1", "E"))
+for k in KIND:
+    KIND[k] = (_gens[k], *KIND[k][1:])
+mutant("the half turns alone: T1 x T1 no longer tells E from T2 apart (more intertwiners than the table)", 1, int(extra > 2))
+
+print("2. The composite's gears are the intertwiner on the parts' gears: they turn as the kind K under the 24 (any gears)")
+f = runs = 0
+for (k1, k2, k), c in CS.items():
+    g1, g2, gk = KIND[k1][0], KIND[k2][0], KIND[k][0]
+    for _ in range(60):
+        u = [g() for _ in range(KIND[k1][1])]
+        v = [g() for _ in range(KIND[k2][1])]
+        comp = apply(c, tensor(u, v))
+        for gi in range(5):
+            runs += 1
+            left = apply(c, tensor(apply(g1[gi][0], u), apply(g2[gi][0], v)))
+            right = [mu_of(k1, k2, k, gi) * t for t in apply(gk[gi][0], comp)]
+            f += left != right
+claim("the composite of the turned parts is the turned composite, on every product and generator", runs, f)
+
+print("3. The beats add: parts turning by g and h (now = g before) give a composite turning by g h, with no new number")
+f = runs = 0
+for (k1, k2, k), c in CS.items():
+    for _ in range(80):
+        u = [g() for _ in range(KIND[k1][1])]
+        v = [g() for _ in range(KIND[k2][1])]
+        gg, hh = g(5), g(5)
+        c_before = apply(c, tensor(u, v))
+        c_now = apply(c, tensor([gg * t for t in u], [hh * t for t in v]))
+        runs += 1
+        f += c_now != [gg * hh * t for t in c_before]
+claim("the composite's now is g h times its before", runs, f)
+# the composite train's pair: the product of the parts' pairs (pinion + i s) on den's circle lies on den^2's circle
+rows = __import__("json").load(open("/home/user/Universe24/tests/worlds/universe_toy.json"))["rows"]
+den = 15162856759112389
+from math import isqrt  # noqa: E402
+
+pairs = []
+for r in rows:
+    p = int(r["pair"][0])
+    s = isqrt(den * den - p * p)
+    if s * s + p * p == den * den:
+        pairs.append(C(p, s))
+f = runs = 0
+for a in pairs:
+    for b in pairs:
+        runs += 1
+        prod = a * b
+        f += prod.norm() != (den * den) ** 2
+claim(f"the product of two of the toy calibre's pairs ({len(pairs)} on den's circle) lies on den^2's circle: the composite's"
+      " rest beat is the sum of the parts'", runs, f)
+
+print("4. Law 6 on the composite: the kinds' shares are the norms of the parts, and they fill the room exactly")
+
+
+def inverse(m):
+    """The exact inverse of a small complex-rational matrix, by elimination."""
+    n = len(m)
+    a = [list(r) + [ONE if i == j else ZERO for j in range(n)] for i, r in enumerate(m)]
+    for col in range(n):
+        piv = next(i for i in range(col, n) if not a[i][col].zero())
+        a[col], a[piv] = a[piv], a[col]
+        inv = ONE / a[col][col]
+        a[col] = [x * inv for x in a[col]]
+        for i in range(n):
+            if i != col and not a[i][col].zero():
+                fac = a[i][col]
+                a[i] = [x - fac * y for x, y in zip(a[i], a[col])]
+    return [r[n:] for r in a]
+
+
+def form_of(k1, k2):
+    return kron(KIND[k1][3], KIND[k2][3])
+
+
+def scale_and_projector(c, gk, gp):
+    """C^dagger G_K C = n_K G_p P_K: n_K and P_K read from the intertwiner itself (n_K from the trace over the kind's dimension)."""
+    n = len(c[0])
+    ctgc = [[herm_g(gk, [c[i][a] for i in range(len(c))], [c[i][b] for i in range(len(c))]) for b in range(n)] for a in range(n)]
+    gpi = inverse(gp)
+    q = [[sum((gpi[a][m] * ctgc[m][b] for m in range(n)), ZERO) for b in range(n)] for a in range(n)]
+    nk = sum((q[a][a] for a in range(n)), ZERO).re / len(c)
+    return nk, [[x / C(nk) for x in r] for r in q]
+
+
+f_book = f_proj = runs = 0
+NS = {}
+for k1, k2, table in PRODUCTS:
+    full = [k for k, w in table.items() if w == 1]
+    if sum(KIND[k][1] for k in full) != KIND[k1][1] * KIND[k2][1]:
+        continue  # a product not split here into kinds of multiplicity one
+    gp = form_of(k1, k2)
+    for k in full:
+        NS[(k1, k2, k)] = scale_and_projector(CS[(k1, k2, k)], KIND[k][3], gp)
+        pk = NS[(k1, k2, k)][1]
+        n = len(pk)
+        pp = [[sum((pk[a][m] * pk[m][b] for m in range(n)), ZERO) for b in range(n)] for a in range(n)]
+        f_proj += pp != pk
+    for _ in range(300):
+        x = [g() for _ in range(KIND[k1][1] * KIND[k2][1])]
+        runs += 1
+        tot = sum((herm_g(KIND[k][3], apply(CS[(k1, k2, k)], x), apply(CS[(k1, k2, k)], x)).re / NS[(k1, k2, k)][0] for k in full), 0)
+        f_book += tot != herm_g(gp, x, x).re
+claim("SUM over the kinds of |C_K x|^2 / n_K = |x|^2, each in its kind's invariant form, n_K read from C_K itself (any pair state)", runs, f_book)
+claim("each P_K read from C_K is a projector (P P = P), on every product split into kinds", len(NS), f_proj)
+f = runs = 0
+na1 = NS[("E1/2", "E1/2", "A1")][0]
+nt1 = NS[("E1/2", "E1/2", "T1")][0]
+for _ in range(3000):
+    u, v = [g(), g()], [g(), g()]
+    if all(t.zero() for t in u) or all(t.zero() for t in v):
+        continue
+    runs += 1
+    x = tensor(u, v)
+    a1 = apply(CS[("E1/2", "E1/2", "A1")], x)
+    t1 = apply(CS[("E1/2", "E1/2", "T1")], x)
+    det = (u[0] * v[1] - u[1] * v[0]).norm()
+    room = norm2(u) * norm2(v)
+    f += (2 * norm2(a1) / na1, 2 * norm2(t1) / nt1) != (det, 2 * room - det)
+claim("the first rung's sizes are Animate's: N(det[u, v]) and 2 rho_u rho_v - N(det[u, v])", runs, f)
+
+print("5. Equal quanta (one train, one sense): the pair is exchanged by the kind's sign, so only that symmetry's kinds are drawn")
+
+
+def exchange(x, d):
+    return [x[(j % d) * d + j // d] for j in range(d * d)]
+
+
+SIGN = {"E1/2": -1, "E5/2": -1, "T1": +1, "E": +1}
+f = runs = 0
+for kind, d in (("E1/2", 2), ("T1", 3), ("E", 2)):
+    table = [t for t in PRODUCTS if t[0] == kind and t[1] == kind][0][2]
+    full = [k for k, w in table.items() if w == 1]
+    for _ in range(400):
+        u, v = [g() for _ in range(d)], [g() for _ in range(d)]
+        x = tensor(u, v)
+        xe = exchange(x, d)
+        pair = [a + b * SIGN[kind] for a, b in zip(x, xe)]  # u v + e v u
+        for k in full:
+            part = apply(CS[(kind, kind, k)], pair)
+            # the kind's own symmetry under the exchange: C_K(P x) = +/- C_K(x)
+            sym = apply(CS[(kind, kind, k)], xe) == apply(CS[(kind, kind, k)], x)
+            asym = apply(CS[(kind, kind, k)], xe) == [-t for t in apply(CS[(kind, kind, k)], x)]
+            allowed = (sym and SIGN[kind] == 1) or (asym and SIGN[kind] == -1)
+            runs += 1
+            f += (not allowed) and not all(t.zero() for t in part)
+            f += allowed and all(t.zero() for t in part) and not all(t.zero() for t in apply(CS[(kind, kind, k)], x))
+claim("for equal quanta every kind of the wrong symmetry has size 0, and every kind of the right one is reached", runs, f)
+c1 = 0
+for _ in range(400):
+    u, v = [g(), g()], [g(), g()]
+    x = tensor(u, v)
+    pair = [a + b for a, b in zip(x, exchange(x, 2))]  # the twins exchanged with +1
+    c1 += not all(t.zero() for t in apply(CS[("E1/2", "E1/2", "T1")], pair))
+mutant("two equal twin quanta with the symmetric exchange reach the vector clock T1", 400, c1)
+f = runs = 0
+for _ in range(400):
+    u, v = [g(), g()], [g(), g()]
+    x = tensor(u, v)
+    pair = [a - b for a, b in zip(x, exchange(x, 2))]
+    reach = not all(t.zero() for t in apply(CS[("E1/2", "E1/2", "A1")], pair))
+    det_zero = (u[0] * v[1] - u[1] * v[0]).zero()
+    runs += 1
+    f += reach == det_zero
+claim("two equal twin quanta (antisymmetric) reach the singlet A1 exactly where det[u, v] is not 0 (the same state: Pauli)", runs, f)
+
+print("6. The write: the drawn kind's composite as one whole quantum. In the pair's density it is exact; in the amplitude it is a root")
+f = runs = irr = 0
+from fractions import Fraction  # noqa: E402
+
+for _ in range(2000):
+    u, v = [g(), g()], [g(), g()]
+    x = tensor(u, v)
+    room = norm2(x)
+    if room == 0:
+        continue
+    for k, gk in (("A1", ID(1)), ("T1", ID(3))):
+        c = CS[("E1/2", "E1/2", k)]
+        part = apply(c, x)
+        nk = NS[("E1/2", "E1/2", k)][0]
+        size = herm_g(gk, part, part).re / nk
+        if size == 0:
+            continue
+        runs += 1
+        # the density of the composite, (C x)(C x)^dagger / (n_K share), share = size / room: its trace (in G) is the room
+        share = size / room
+        trace = herm_g(gk, part, part).re / (nk * share)
+        f += trace != room
+        # the amplitude's rescale sqrt(1 / share) is rational only where 1 / share is a rational square
+        q = Fraction(1) / share
+        irr += not (isqrt(q.numerator) ** 2 == q.numerator and isqrt(q.denominator) ** 2 == q.denominator)
+claim("the composite's density carries the whole pair's wind (its trace is the room), with one division and no root", runs, f)
+print(f"  the amplitude's rescale sqrt(1 / share) is irrational at {irr} of {runs} draws: the amplitude cannot be written whole")
+
+print(f"result: {len(FAILS)} failures" + ("" if not FAILS else ": " + "; ".join(FAILS)))
+sys.exit(1 if FAILS else 0)
+
+== kinds_lib.py ==
+"""The exact complex rationals, the linear algebra and the kinds' generators, shared with DAVID-TENSOR24-PAULI.md's probe."""
+
+import itertools
+import random
+import sys
+from fractions import Fraction as F
+
+rnd = random.Random(20261028)
+FAILS: list[str] = []
+
+
+def claim(text: str, cases: int, fails: int) -> None:
+    print(f"  {text}: {cases} cases, {fails} failures")
+    if fails:
+        FAILS.append(text)
+
+
+def mutant(text: str, cases: int, caught: int) -> None:
+    """A mutant must be caught on at least one case."""
+    print(f"  MUTANT {text}: caught on {caught} of {cases} cases (must be above 0)")
+    if caught == 0:
+        FAILS.append("mutant not caught: " + text)
+
+
+class C:
+    """An exact complex rational; with integer parts it is a Gaussian integer, a hand's two gears (three, twelve)."""
+
+    __slots__ = ("re", "im")
+
+    def __init__(self, re=0, im=0):
+        self.re, self.im = F(re), F(im)
+
+    def __add__(self, o):
+        o = cc(o)
+        return C(self.re + o.re, self.im + o.im)
+
+    __radd__ = __add__
+
+    def __sub__(self, o):
+        o = cc(o)
+        return C(self.re - o.re, self.im - o.im)
+
+    def __rsub__(self, o):
+        return cc(o) - self
+
+    def __neg__(self):
+        return C(-self.re, -self.im)
+
+    def __mul__(self, o):
+        o = cc(o)
+        return C(self.re * o.re - self.im * o.im, self.re * o.im + self.im * o.re)
+
+    __rmul__ = __mul__
+
+    def __truediv__(self, o):
+        o = cc(o)
+        n = o.re * o.re + o.im * o.im
+        return self * C(o.re / n, -o.im / n)
+
+    def conj(self):
+        return C(self.re, -self.im)
+
+    def norm(self):
+        return self.re * self.re + self.im * self.im
+
+    def zero(self):
+        return self.re == 0 and self.im == 0
+
+    def __eq__(self, o):
+        o = cc(o)
+        return self.re == o.re and self.im == o.im
+
+    def __hash__(self):
+        return hash((self.re, self.im))
+
+    def __repr__(self):
+        return f"({self.re}{'+' if self.im >= 0 else ''}{self.im}i)"
+
+
+def cc(x):
+    return x if isinstance(x, C) else C(x)
+
+
+I = C(0, 1)
+ONE = C(1)
+ZERO = C(0)
+
+
+def g(k=9):
+    return C(rnd.randint(-k, k), rnd.randint(-k, k))
+
+
+def mat_mul(a, b):
+    return [[sum((a[i][k] * b[k][j] for k in range(len(b))), ZERO) for j in range(len(b[0]))] for i in range(len(a))]
+
+
+def transpose(a):
+    return [list(r) for r in zip(*a)]
+
+
+def kron(a, b):
+    return [[a[i][j] * b[k][l] for j in range(len(a[0])) for l in range(len(b[0]))] for i in range(len(a)) for k in range(len(b))]
+
+
+def det2(m):
+    return m[0][0] * m[1][1] - m[0][1] * m[1][0]
+
+
+def M(rows):
+    return [[cc(x) for x in r] for r in rows]
+
+
+def null_space(rows, n):
+    """The null space of a linear system over the complex rationals, by exact elimination; returns a basis."""
+    a = [list(r) for r in rows]
+    pivots = []
+    r = 0
+    for c in range(n):
+        p = next((i for i in range(r, len(a)) if not a[i][c].zero()), None)
+        if p is None:
+            continue
+        a[r], a[p] = a[p], a[r]
+        inv = ONE / a[r][c]
+        a[r] = [x * inv for x in a[r]]
+        for i in range(len(a)):
+            if i != r and not a[i][c].zero():
+                f = a[i][c]
+                a[i] = [x - f * y for x, y in zip(a[i], a[r])]
+        pivots.append(c)
+        r += 1
+    free = [c for c in range(n) if c not in pivots]
+    basis = []
+    for fc in free:
+        v = [ZERO] * n
+        v[fc] = ONE
+        for i, pc in enumerate(pivots):
+            v[pc] = -a[i][fc]
+        basis.append(v)
+    return basis
+
+
+def invariant_forms(gens, n, parity=None):
+    """Every bilinear form B on the kind with M^T B M = s B for every generator (M, s); parity +1 or -1 adds B^T = parity B."""
+    rows = []
+    for m, s in gens:
+        # (M^T B M)_ij - s B_ij = sum_kl M_ki B_kl M_lj - s B_ij, linear in the n*n unknowns B_kl
+        for i in range(n):
+            for j in range(n):
+                row = [ZERO] * (n * n)
+                for k in range(n):
+                    for l in range(n):
+                        row[k * n + l] = row[k * n + l] + m[k][i] * m[l][j]
+                row[i * n + j] = row[i * n + j] - cc(s)
+                rows.append(row)
+    if parity is not None:
+        for i in range(n):
+            for j in range(n):
+                row = [ZERO] * (n * n)
+                row[i * n + j] = row[i * n + j] + ONE
+                row[j * n + i] = row[j * n + i] - cc(parity)
+                rows.append(row)
+    return null_space(rows, n * n)
+
+
+# The twins' acts (TENSOR24's kinds; DAVID-TENSOR24-THE-CLICK.md, checks 9 and 10): the half turns about x, y, z as Gaussian
+# units, the quarter turn about z as (1 - i, 1 + i) of norm 2, the third turn about the cube's diagonal (1 + i + j + k) / 2
+# doubled. Each acts on the twins up to its scale s = det M.
+TX = M([[0, -I], [-I, 0]])
+TY = M([[0, -1], [1, 0]])
+TZ = M([[-I, 0], [0, I]])
+TQ = M([[1 - I, 0], [0, 1 + I]])
+T3 = M([[1 - I, -1 - I], [1 - I, 1 + I]])
+E_HALF = [(m, det2(m)) for m in (TX, TY, TZ, TQ, T3)]
+# The same kind with the quarter turn about z written exactly on the gears, a phase on one twin, diag(1, i), and the half turn
+# about x + y as [[0, -i], [1, 0]] (both Gaussian units, scale det = i: the rotations about the twins' axis, D4, act with no
+# scale; the readings helper's correction of DAVID-TENSOR24-THE-CLICK.md's check 10).
+E_EXACT = [(m, det2(m)) for m in (TX, TY, TZ, M([[1, 0], [0, I]]), M([[0, -I], [1, 0]]), T3)]
+E_FIVE = [(m, det2(m)) for m in (TX, TY, TZ)] + [([[-x for x in r] for r in TQ], det2(TQ)), (T3, det2(T3))]
+# The 24's acts on the vectors (T1): the half turns, the quarter turn about z, the third turn (x to y to z).
+RX = M([[1, 0, 0], [0, -1, 0], [0, 0, -1]])
+RY = M([[-1, 0, 0], [0, 1, 0], [0, 0, -1]])
+RZ = M([[-1, 0, 0], [0, -1, 0], [0, 0, 1]])
+RQ = M([[0, -1, 0], [1, 0, 0], [0, 0, 1]])
+R3 = M([[0, 0, 1], [1, 0, 0], [0, 1, 0]])
+T_ONE = [(m, 1) for m in (RX, RY, RZ, RQ, R3)]
+T_TWO = [(m, 1) for m in (RX, RY, RZ)] + [([[-x for x in r] for r in RQ], 1), (R3, 1)]
+A_ONE = [(M([[1]]), 1)] * 5
+A_TWO = [(M([[1]]), 1)] * 3 + [(M([[-1]]), 1), (M([[1]]), 1)]
+# E: the 24 onto the axes' permutations, on the plane a + b + c = 0 in the basis (1, -1, 0), (0, 1, -1).
+EI = M([[1, 0], [0, 1]])
+E_TWO = [(EI, 1)] * 3 + [(M([[-1, 1], [0, 1]]), 1), (M([[0, -1], [1, -1]]), 1)]
+# G3/2 = E1/2 times E (the twins' kind times the plane's), at the twins' scale.
+G_FOUR = [(kron(mh, me), s) for (mh, s), (me, _) in zip(E_HALF, E_TWO)]
+
+KINDS = [
+    ("A1 (the light, the force carriers' scalar)", A_ONE, 1, +1),
+    ("A2", A_TWO, 1, +1),
+    ("E", E_TWO, 2, +1),
+    ("T1 (the vectors)", T_ONE, 3, +1),
+    ("T2", T_TWO, 3, +1),
+    ("E1/2 (the twins, matter)", E_HALF, 2, -1),
+    ("E1/2 with D4 exact on the gears", E_EXACT, 2, -1),
+    ("E5/2", E_FIVE, 2, -1),
+    ("G3/2", G_FOUR, 4, -1),
+]
+
