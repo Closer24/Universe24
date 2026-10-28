@@ -136,7 +136,37 @@ The owner's word (Hebrew, translated): "And try to reach the part where the draw
   - A mutant that reads the z parts alone, an axis typed, keeps the 24 under 16 of 24 turns. It parts at exactly the 8 turns that carry its run's line onto the z line.
   - A law made of A1 contractions cannot part the 24; the mutant shows that the check can fail.
 
-## 7. What stays open
+## 7. Does it build ever more complex clocks? (the owner's word of 15:57 UTC)
+
+The owner's word (translated): "Does this help build more and more complex clocks?"
+
+- **In clocks, yes: it is the inheritance.**
+  - Without it each bang starts from the seed, and every bang builds the same.
+  - With it, what a bang built stands into the next, keeps its kind through the turnover, and meets the next bang's new part at the click. Through S . J the new part comes along the old one's direction, so it joins the old composite rather than lying beside it.
+- **The turnover keeps every kind of the 24** (composite_climb.py, counted exactly). T commutes with every turn, so it keeps a kind exactly where every turn is conjugate to its own reverse. CHECKED.
+  - On the 24 turns and their 48 lifts this holds for all eight kinds: every composite comes out of the turnover with its kind, its direction reversed. T T is +1 on the five integer kinds and -1 on the three spinor kinds.
+  - On the tetrahedron's 12 turns (the mutant) it holds for 3 of 7 kinds, and the other 4 would turn into one another at every bang.
+- **Three kinds hold no direction:** A1, A2 and E (T1 does not occur in K x K*). They carry their kind through the bang but no chosen path. T1, T2, E1/2, E5/2 and G3/2 can hold one. CHECKED.
+- **The toy: one composite, one new twin per bang,** in the plan's item (t). Every meeting is one shared dial, the 24 decompose it into kinds, and the click draws a kind with the projections' norms. The composite is then a clock of that kind, so line 98's count stays fixed. 2,048 runs per rule over 24 bangs, the draws by a fixed stream. CHECKED.
+
+  | what crosses into the next bang | mean rung at bang 24 | reached the top kind (A2) by bang 24 | closed (A1) at bang 24 |
+  |---|---|---|---|
+  | nothing: the exact rewind | 2.00 | 0 | 0.25 |
+  | the composite, the twin laid against it | 2.53 | 0 | 0.24 |
+  | the composite, the twin on its line with a fair sign | 3.24 | 0.23 | 0.04 |
+  | the composite, the twin half along it | 3.72 | 0.50 | 0.01 |
+  | the composite, the twin wholly along it | 4.13 | 0.68 | 0 |
+
+  The rung is the fewest twins that hold the kind: E1/2 1, A1 and T1 2, G3/2 3, E and T2 4, E5/2 5, A2 6.
+- **So the chosen path builds.**
+  - With the coupling along, the composite climbs higher and never closes. Against, it closes into the singlet and stays low. With nothing crossing, it never passes the first meeting.
+  - The click's up or down stays a detail, as the plan's section 8 has it ("the writing, not the choice"): the next part follows whichever was chosen. The coupling's sign, a constant of the law, decides whether the chosen path builds or closes.
+- **Two limits:**
+  - **The 24's ladder is finite:** eight kinds, the top at six twins. One composite levels off by about the 12th bang (mean rung 4.1 wholly along). Beyond it, more complex clocks mean more composites and their order on the board: the joint toy of item (x).
+  - **Along a cube axis the 24 take the direction away at four parts.** Wholly along, the climb is certain for four bangs (E1/2, T1, G3/2, then E or T2), and at bang 4 no run holds a direction: four twins along one axis click into E or T2 states with none. The steering starts again from a fresh draw, and returns as new parts give the composite a direction.
+- **OPEN:** the binding that holds a composite of many parts (David); which of a G3/2 composite's two T1 readings S . J couples to, for the kind table (the toy reads it through its first route, spin one and a twin); the same on the board.
+
+## 8. What stays open
 
 - Pauli's exchange sign: law 7's premise, draft J.
 - Bell at a distance: Bell's theorem leaves no local law that gives it; the cone route stands within the common past.

@@ -1,0 +1,47 @@
+1. the turnover keeps a kind exactly where every turn is conjugate to its own reverse (counted exactly)
+   the 24 turns: 5 kinds, 5 kept by the turnover, 0 sent to another kind
+   their 48 lifts to the twins: 8 kinds, 8 kept by the turnover, 0 sent to another kind
+   the mutant: the tetrahedron's 12 turns: 4 kinds, 2 kept by the turnover, 2 sent to another kind
+   their 24 lifts: 7 kinds, 3 kept by the turnover, 4 sent to another kind
+2. the kinds built from the twins, each by meeting one more twin (the traces match the characters)
+   E1/2  rung 1, T T = -1, T1 in K x K* 1 times, largest |<S_z>| 0.500; with one more twin: A1 or T1
+   A1    rung 2, T T = +1, T1 in K x K* 0 times, largest |<S_z>| 0.000; with one more twin: E1/2
+   T1    rung 2, T T = +1, T1 in K x K* 1 times, largest |<S_z>| 1.000; with one more twin: E1/2 or G3/2
+   G3/2  rung 3, T T = -1, T1 in K x K* 2 times, largest |<S_z>| 1.500; with one more twin: E or T1 or T2
+   E     rung 4, T T = +1, T1 in K x K* 0 times, largest |<S_z>| 0.000; with one more twin: G3/2
+   T2    rung 4, T T = +1, T1 in K x K* 1 times, largest |<S_z>| 1.000; with one more twin: E5/2 or G3/2
+   E5/2  rung 5, T T = -1, T1 in K x K* 1 times, largest |<S_z>| 0.833; with one more twin: A2 or T2
+   A2    rung 6, T T = +1, T1 in K x K* 0 times, largest |<S_z>| 0.000; with one more twin: E5/2
+3. one composite over 24 bangs, 2048 runs per rule; per bang: the share at the bang's new rung
+   (bangs 1 to 6), the mean rung, the share holding a direction, and the share that has reached the top
+   kind (A2, rung 6) at least once
+   rewound:
+     new rung    1.00 1.00 0.00 0.00 0.00 0.00
+     mean rung   1.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00 2.00
+     direction   1.00 0.50 0.51 0.49 0.50 0.52 0.49 0.51 0.52 0.50 0.49 0.52 0.50 0.49 0.51 0.50 0.49 0.51 0.51 0.49 0.51 0.49 0.48 0.50
+     reached A2  0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00
+     the kinds at bang 24: A1 0.25, T1 0.75
+   against:
+     new rung    1.00 1.00 0.34 0.14 0.03 0.00
+     mean rung   1.00 2.00 1.67 2.28 2.02 2.45 2.10 2.51 2.13 2.50 2.14 2.53 2.20 2.57 2.15 2.51 2.15 2.53 2.18 2.53 2.14 2.54 2.12 2.53
+     direction   1.00 0.00 1.00 0.12 0.91 0.23 0.88 0.25 0.90 0.26 0.90 0.25 0.90 0.27 0.89 0.26 0.91 0.26 0.90 0.28 0.90 0.25 0.89 0.27
+     reached A2  0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00
+     the kinds at bang 24: A1 0.24, E 0.11, T1 0.50, T2 0.16
+   axis:
+     new rung    1.00 1.00 0.49 0.30 0.06 0.01
+     mean rung   1.00 2.00 1.99 2.60 2.47 2.86 2.70 3.06 2.81 3.19 2.93 3.18 2.95 3.20 2.95 3.24 2.96 3.26 3.03 3.28 3.01 3.23 2.96 3.24
+     direction   1.00 0.52 1.00 0.48 0.91 0.51 0.88 0.48 0.89 0.48 0.88 0.49 0.88 0.50 0.89 0.48 0.88 0.52 0.89 0.49 0.87 0.50 0.89 0.48
+     reached A2  0.00 0.00 0.00 0.00 0.00 0.01 0.01 0.03 0.03 0.06 0.06 0.09 0.09 0.11 0.11 0.13 0.13 0.15 0.15 0.17 0.17 0.21 0.21 0.23
+     the kinds at bang 24: A1 0.04, A2 0.04, E 0.17, T1 0.38, T2 0.37
+   half:
+     new rung    1.00 1.00 0.70 0.56 0.11 0.05
+     mean rung   1.00 2.00 2.41 3.13 3.00 3.45 3.23 3.61 3.35 3.67 3.45 3.72 3.47 3.77 3.53 3.79 3.49 3.76 3.48 3.73 3.46 3.72 3.50 3.72
+     direction   1.00 0.76 1.00 0.44 0.75 0.39 0.75 0.39 0.77 0.41 0.81 0.40 0.83 0.39 0.81 0.37 0.81 0.38 0.81 0.40 0.82 0.41 0.84 0.38
+     reached A2  0.00 0.00 0.00 0.00 0.00 0.05 0.05 0.11 0.11 0.16 0.16 0.23 0.23 0.28 0.28 0.34 0.34 0.38 0.38 0.42 0.42 0.46 0.46 0.50
+     the kinds at bang 24: A1 0.01, A2 0.10, E 0.21, T1 0.23, T2 0.46
+   choice:
+     new rung    1.00 1.00 1.00 1.00 0.15 0.08
+     mean rung   1.00 2.00 3.00 4.00 3.31 3.70 3.44 3.88 3.60 4.04 3.66 4.06 3.69 4.13 3.74 4.17 3.76 4.15 3.77 4.14 3.72 4.09 3.74 4.13
+     direction   1.00 1.00 1.00 0.00 0.41 0.28 0.71 0.27 0.78 0.22 0.76 0.22 0.77 0.23 0.78 0.20 0.77 0.20 0.78 0.19 0.76 0.21 0.78 0.20
+     reached A2  0.00 0.00 0.00 0.00 0.00 0.08 0.08 0.18 0.18 0.26 0.26 0.34 0.34 0.42 0.42 0.50 0.50 0.56 0.56 0.61 0.61 0.65 0.65 0.68
+     the kinds at bang 24: A2 0.19, E 0.20, T1 0.13, T2 0.48

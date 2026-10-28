@@ -42,5 +42,15 @@ The page is ANIMATE-CLOCK-ROOTS.md. These are toys that check whether a law woul
   - Every rule, built from the A1 contraction, turns its choices with the frame under 24 of 24 turns.
   - A mutant that reads the z parts alone keeps it under 16 of 24, parting at the 8 turns that carry its run's line onto the z line.
 
+## composite_climb.py: does the chosen path build ever more complex clocks?
+
+- **Exact fractions and complex doubles, no engine:** `python -I composite_climb.py` (about 30 seconds). The owner's word of 15:57 UTC.
+- **Part 1 (exact):** the turnover keeps a kind where every turn is conjugate to its own reverse. The 24 keep all 5 kinds (all 8 with the twins' lifts); the mutant, the tetrahedron's 12 turns, keeps 2 of 4 (3 of 7).
+- **Part 2:** the eight kinds built from the twins by meeting one more twin, checked against the characters: their rungs, T T (+1 on the five integer kinds, -1 on the three spinor kinds), and which hold a direction (all but A1, A2 and E).
+- **Part 3:** one composite meets one new twin per bang (the plan's item (t)), 2,048 runs per rule over 24 bangs.
+  - The mean rung at bang 24: 2.00 with nothing crossing, 2.53 with the twin laid against the composite, 3.24 on its line, 3.72 half along, 4.13 wholly along.
+  - The top kind A2 reached by 0, 0, 23, 50 and 68 percent of the runs.
+  - Wholly along, no run holds a direction at bang 4: along a cube axis four twins click into E or T2 with none.
+
 ---
 Animate, reader-5.
