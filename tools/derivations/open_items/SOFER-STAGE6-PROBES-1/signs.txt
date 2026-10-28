@@ -1,2 +1,7 @@
+(at 83a0b214a)
 channels 43; first nonzero entry positive on 37, negative on 6
 negative: A2 x E -> E, E x A2 -> E, E x T1 -> T2, E x T2 -> T1, T1 x E -> T2, T2 x E -> T1
+
+(at 927071a14)
+channels 43; first nonzero entry positive on 43, negative on 0
+negative: 

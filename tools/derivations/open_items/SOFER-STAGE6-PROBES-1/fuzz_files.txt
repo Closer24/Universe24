@@ -1,3 +1,4 @@
+(at 83a0b214a, before the load's fix; its pool of values shared its objects among variants)
 == python -I fuzz_files.py <worktree at 83a0b214a> 3000 20261028
 variants 3000: held by the checker 264; of those the load named a departure in 20 and loaded 230
 raised in the checker: {}
@@ -14,3 +15,20 @@ raised in the contraction: {}
 sample ('load', "KeyError: 'couplings'") ('universe', ['  File "<worktree>/src/tensor24/runner/load.py", line 196, in load', '    planned, refused = plan(universe["couplings"], trains, c, labels, kinds.t1.shape[-1])', '                            ~~~~~~~~^^^^^^^^^^^^^', "KeyError: 'couplings'"])
 sample ('load', "KeyError: 'gears'") ('setting', ['  File "<worktree>/src/tensor24/runner/load.py", line 197, in load', '    state, laid = lay(setting["gears"], trains, sites)', '                      ~~~~~~~^^^^^^^^^', "KeyError: 'gears'"])
 sample ('load', 'ValueError: Maximum allowed dimension exceeded') ('piece', ['  File "<worktree>/src/tensor24/runner/load.py", line 151, in <genexpr>', '    a, b, r = (np.zeros((sum(t.rows() for t in trains), sites), dtype=object) for _ in range(1 + 1 + 1))', '               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', 'ValueError: Maximum allowed dimension exceeded'])
+
+(at 927071a14, the Boss's load fix 91226e796 and the eighth review's changes; each value drawn from the pool is now a copy)
+== python -I fuzz_files.py <worktree at 927071a14> 3000 20261028
+variants 3000: held by the checker 280; of those the load named a departure in 22 and loaded 258
+raised in the checker: {}
+raised in the load: {}
+raised in the contraction: {}
+== python -I fuzz_files.py <worktree at 927071a14> 20000 7
+variants 20000: held by the checker 1774; of those the load named a departure in 182 and loaded 1592
+raised in the checker: {}
+raised in the load: {}
+raised in the contraction: {}
+== python -I fuzz_files.py <worktree at 927071a14> 20000 11
+variants 20000: held by the checker 1777; of those the load named a departure in 171 and loaded 1606
+raised in the checker: {}
+raised in the load: {}
+raised in the contraction: {}

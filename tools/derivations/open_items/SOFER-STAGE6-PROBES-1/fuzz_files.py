@@ -60,15 +60,15 @@ def mutate(doc, rng):
         parent, key = get(doc, p[:-1]), p[-1]
         op = rng.choice(("set", "set", "set", "del", "dup", "add"))
         if op == "set":
-            parent[key] = rng.choice(POOL)
+            parent[key] = copy.deepcopy(rng.choice(POOL))
         elif op == "del":
             del parent[key]
         elif op == "dup" and isinstance(parent, list):
             parent.insert(key, copy.deepcopy(parent[key]))
         elif op == "add" and isinstance(parent, dict):
-            parent["extra"] = rng.choice(POOL)
+            parent["extra"] = copy.deepcopy(rng.choice(POOL))
         elif op == "add" and isinstance(parent, list):
-            parent.append(rng.choice(POOL))
+            parent.append(copy.deepcopy(rng.choice(POOL)))
     return doc
 
 

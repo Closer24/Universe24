@@ -32,5 +32,13 @@ Four files, each run on the repo's Python with `python -I`, the outputs beside t
   one); before stage 7 puts E beside A1 in the tensions, a sign by rule (the first nonzero entry positive) keeps the
   tables whatever the order.
 
+## What they give at 927071a14 (the Boss's 91226e796 and the eighth review's changes)
+
+- **The load raises on none of 43,000 variants** (3,000 at seed 20261028, 20,000 at seed 7 and 20,000 at seed 11): the checker, the
+  load and the contraction each raise none. The `.get` for gears and couplings and the board's size named in lay() are in.
+- **signs.py gives 43 of 43 positive:** each table is primitive with its first entry positive.
+- The harness drew its hostile values from one pool of objects, which made a circular document in one configuration;
+  each value drawn is now a copy.
+
 ---
 Sofer, scribe-5.
