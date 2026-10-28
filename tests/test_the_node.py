@@ -16,7 +16,7 @@ from event_universe.core.rule3 import carries
 from event_universe.core.spokes import SPOKES
 from event_universe.meshes import coupling_of, factors
 from event_universe.tick import Tick
-from event_universe.trains import HAND, OFFSET, REGULATOR, rows_of, zeros
+from event_universe.trains import HAND, OFFSET, REGULATOR, ratchet_of, rows_of, zeros
 from event_universe.unspring import fall_of, unwinds
 from event_universe.unwind import advance, move, window_clocks
 from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of, wronskian
@@ -79,18 +79,24 @@ def test_the_frozen_node_is_not_read_and_never_clicks() -> None:
 
 
 def exchanged(clock: Clock, held: list[list[Any]], at: tuple[int, ...]) -> bool:
-    flat = [gear for train in held for gear in train]
+    flat, pawl = [gear for train in held for gear in train], ratchet_of(clock.trains_).gears[0]
     twelves = [hands.signs(r.size)[k] < 0 for r in clock.trains_ for k in range(r.size)]
     for gear, h, twelve in zip(clock.all_gears(), flat, twelves, strict=True):
         sign = -1 if twelve else 1
         teeth = int(np.asarray(gear.teeth)[at]) if np.ndim(gear.teeth) else int(gear.teeth)
+        mirrored = (
+            teeth - 1 - int(h.fine[at]) if gear is pawl else (teeth // 2 * 2 - int(h.fine[at])) % teeth
+        )
         if int(gear.now[at]) != sign * int(h.before[at]) or int(gear.before[at]) != sign * int(
             h.now[at]
         ):
             return False
-        if int(gear.fine[at]) != (int(h.fine[at]) if twelve else teeth - 1 - int(h.fine[at])):
+        if int(gear.fine[at]) != (int(h.fine[at]) if twelve else mirrored):
             return False
-        if gear.dfine is not None and int(gear.dfine[at]) != gear.dteeth - 1 - int(h.dfine[at]):
+        if (
+            gear.dfine is not None
+            and int(gear.dfine[at]) != (gear.dteeth // 2 * 2 - int(h.dfine[at])) % gear.dteeth
+        ):
             return False
     return True
 
@@ -285,7 +291,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     for _ in range(40):
         chiral.tick()
     counts = (chiral.counts["births"], chiral.counts["body_clicks"], record.census(chiral))
-    assert counts == (2, 1543, (107, 112))  # under the great clock's bounds (5, 1,873 at the wave)
+    assert counts == (3, 1384, (107, 112))  # the one mirror (2, 1,543 before it; 5, 1,873 at the wave)
     assert run_back_exact(kept, 10) == 10
 
 
@@ -318,8 +324,8 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
         clock.tick()
     fittings = [e for e in clock.log if e["event"] == "birth"]
     pairs = [b for b in fittings if b["line_pair"] != clock.hands().index(clock.unsprung())]
-    # 6 fittings, every one a pair, with the lead at the kick (7 under the great clock's bounds, 5 and 5 at the wave); 6 fittings and 5 pairs on the 3-cube before the wave and before LT-S1 as at -dP; 6 pairs at 54
-    assert len(fittings) == 6 and len(pairs) == 6 and clock.counts["met"] > len(fittings)
+    # 4 fittings, every one a pair, under the one mirror (6 with the lead at the kick, 7 under the great clock's bounds, 5 and 5 at the wave); 6 fittings and 5 pairs on the 3-cube before the wave and before LT-S1 as at -dP; 6 pairs at 54
+    assert len(fittings) == 4 and len(pairs) == 4 and clock.counts["met"] > len(fittings)
     for b in pairs:
         mesh = {tuple(b["minus"]), tuple(b["plus"])}
         # the advance's or the orientation's jam under 4ad484eb9's bound; the stop again, MG-S1's own
@@ -415,8 +421,8 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert clock.wronskians["kept"] == clock.wronskians["sites"] > 0
         assert not {"negated", "changed"} & clock.wronskians.keys()
         found.append(clock.wronskians)
-        # 2,624 and 224 under the great clock's bounds (2,668 and 440 at the wave; 2,152 sites and 708 with W not 0 at the trace 54, 664 before cc1)
-    assert [(f["sites"], f.get("nonzero", 0)) for f in found] == [(148, 9), (2624, 224)]
+        # 2,668 and 277 under the one mirror (2,624 and 224 before it; 2,668 and 440 at the wave; 2,152 sites and 708 with W not 0 at the trace 54, 664 before cc1)
+    assert [(f["sites"], f.get("nonzero", 0)) for f in found] == [(148, 9), (2668, 277)]
 
 
 def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1() -> None:
@@ -464,7 +470,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         new = [e for e in clock.log[read_from:] if e["event"] == "credit" and e["line"] in hands_of]
         chimes += [(e["beat"], beat.get((e["line"], tuple(e["node"])))) for e in new]
     assert all(by_hand is not None and b == by_hand[0] for b, by_hand in chimes)
-    assert (len(chimes), sum(1 for _b, h in chimes if h and h[1])) == (275, 138)  # 453, 281 at the wave
+    assert (len(chimes), sum(1 for _b, h in chimes if h and h[1])) == (201, 101)  # 275, 138; 453, 281
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
@@ -540,8 +546,8 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     kept = copy.deepcopy(clock)
     for _ in range(INTERVALS):
         clock.tick()
-    # under the great clock's bounds (b4c97c7c at the wave, ddfeb210 at 54); over the whole state since 2026-10-26, ff82a0da over the gears and the unwind's slack alone
-    assert record.state_hash(clock) == "0b429dc013419de0a890bc0fc45abc77a187b382cca0bfdf3e86219acd3c6c06"
+    # under the one mirror (0b429dc0 before it, b4c97c7c at the wave, ddfeb210 at 54); over the whole state since 2026-10-26, ff82a0da over the gears and the unwind's slack alone
+    assert record.state_hash(clock) == "fba1dd44d34fe56e83947040dd6bff488d75a15431f5f82a7d96e688c5f469f4"
     tick = Tick(copy.deepcopy(clock), 1)
     tick.readings()
     assert sorted(tick.meshes_at) == [0, 1] and any(

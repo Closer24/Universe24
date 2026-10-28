@@ -226,16 +226,11 @@ class Clock:
         return [gear for train in self.trains() for gear in train]
 
     def reverse(self, top: Any, held: list[list[Gear]]) -> None:
-        """The turnover's act at the clocks `top`: every train set to its held train exchanged and reflected by the train's K (hands.signs: a hand's twelve gear negated, the identity on another train), every fine tooth flipped once per reversal of its gear by the one rule: once for time's exchange, twice where the reflection negates the gear (its own entry of K), so a twelve gear's fine tooth is left; the drive fine teeth and the pawl once; an involution with the state it leaves; the trains set at the top by the clock's one restore."""
+        """The turnover's act at the clocks `top`: every train set to its held train exchanged and reflected by the train's K (hands.signs: a hand's twelve gear negated, the identity on another train), every fine tooth mirrored about its mid tooth once per reversal of its gear (acts.mirror, the one mirror, David's DAVID-THE-ONE-MIRROR.md: once for time's exchange, twice where the reflection negates the gear, its own entry of K, so a twelve gear's fine tooth is left; a stride's reading P turns to -P exactly, so a gear at rest stays at rest and an axis's image negates it alike; the former flip w - 1 - r, which read -P - 1 and parted the cube's 24 at a turned clock-node, kept by name), the drive fine teeth mirrored once at the drive teeth; the ratchet, the train of its own two teeth, counts the turnover, its pawl stepped once modulo its teeth (the flip at two teeth, the pawls' frames); an involution with the state it leaves; the trains set at the top by the clock's one restore."""
         for r, train, held_train in zip(self.trains_, self.trains(), held, strict=True):
-            nows, befores, fines = acts.reverse(
-                [h.now for h in held_train],
-                [h.before for h in held_train],
-                [h.fine for h in held_train],
-                [h.teeth for h in held_train],
-                hands.signs(r.size),
-            )
-            drives = [None if h.dfine is None else acts.flip(h.dfine, h.dteeth, 1) for h in held_train]
+            nows, befores, fines = acts.reverse(held_train, hands.signs(r.size))
+            drives = [None if h.dfine is None else acts.mirror(h.dfine, h.dteeth, 1) for h in held_train]
+            fines = fines if r.teeth is None else [acts.flip(h.fine, h.teeth, 1) for h in held_train]
             reversed_gears = [
                 Gear(n, b, fine, h.teeth, d, h.dteeth)
                 for n, b, fine, h, d in zip(nows, befores, fines, held_train, drives, strict=True)
