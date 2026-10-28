@@ -19,13 +19,12 @@ This file holds no law. It is Sofer's draft of what the reviews of Tensor24 (202
 - **The three ways:** (a) odd teeth counts; (b) even teeth with T S T = S^-1 proved and symmetric triggers; (c) the law's frame (RW-S1: the turnover's and the draw's many-to-one reads are written into the frame and read back), which may make (a) and (b) unnecessary.
 - **Sofer's recommendation to the owner:** no teeth count changes until David has answered on T S T = S^-1 and the frame.
 
-## 3. Pauli (the owner's question)
+## 3. Pauli (the owner's word: never a postulate)
 
-- **The law's text:** the exclusion stands under its own name and not as the law (**The algebra of the exclusivity**); the head holds it as a declared act (the twins' quotient, the setting's jam, the exclusion's refusals among the 31 raises).
-- **The review (the hostile physicist, 6465825135):** an exchange is a half-braid; spin and statistics are tied only by Lorentz invariance and microcausality; so law 7 is an axiom, an occupation algebra of 0 or 1 or anticommuting gears.
-- **The owner's rule (2026-10-28, 08:5x):** no declarations and no statements, everything follows from the laws and the mathematics, no result fitted to what is wanted, as there is with Pauli.
-- **The question:** if David's derivation fails, is the exclusion to be set as a postulate beside the 24 and the one mirror (status "assumption", the owner's word), or left open with the contradiction with nature listed? An axiom is a declaration, so only he decides it.
-- **Sofer's recommendation:** David tries the derivation under the protocol first; if it fails, the owner is asked.
+- **The owner's word (2026-10-28, 10:4x UTC, to Sofer):** "Pauli never as a postulate. It is derived from the phase reversal of a family on the board; in a click this gives Pauli; check it." It closes the question this draft had put (a postulate beside the 24 and the one mirror if the derivation failed): the exclusion is derived, never set.
+- **Sofer's check:** SOFER-PAULI-PHASE-REVERSAL-1.md, with its probe and output: the matter's phase reversal squares to minus one, a hand is orthogonal to its own partner, the click lays only the partner's state beside a first quantum, the third quantum has no state, the books stay closed; the Node-clock's state must be the occupation (rho, S).
+- **The review's objection (the hostile physicist, 6465825135):** an exchange is a half-braid and law 7 an axiom. The click-level form answers the two-particle point (the pair, occupant and newcomer, is at one Node-clock) and not the spin-statistics link in general, which here is the kind's own phase reversal (T squared minus one on the twin hands) and no theorem of Lorentz invariance; David's derivation says what it assumes.
+- **The law's lines on the exchange stand until David's derivation has passed the protocol and the owner has given his word;** the sentence is drafted then.
 
 ## 4. Findings the Boss confirmed against the code, to draft after David's answers
 

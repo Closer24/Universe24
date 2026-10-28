@@ -1,0 +1,46 @@
+Run: python3 -I tools/derivations/open_items/SOFER-PAULI-PHASE-REVERSAL-1_PROBE.py (Sofer, 2026-10-28, 10:5x UTC; integers only; about 1 second)
+
+1. The phase reversal of the twin hands squares to minus one (Kramers), and keeps the norm
+  T(T(phi)) = -phi, exhaustive box: 2401 cases, 0 failures
+  T(T(phi)) = -phi, random: 20000 cases, 0 failures
+  N(T phi) = N(phi), random: 20000 cases, 0 failures
+  <T phi, T chi> = conj <phi, chi>, random pairs: 20000 cases, 0 failures
+2. The occupant is orthogonal to its own phase-reversed partner: the identical hand has no overlap with it
+  <T phi, phi> = 0, exhaustive box: 2401 cases, 0 failures
+  <T phi, phi> = 0, random: 20000 cases, 0 failures
+3. The antisymmetric overlap is the overlap with the phase-reversed partner, and the exchange reverses its sign
+  det(phi, chi) = <T phi, chi>, random pairs: 20000 cases, 0 failures
+  det(chi, phi) = -det(phi, chi), exhaustive pairs: 6561 cases, 0 failures
+4. Lagrange: the two sizes (antisymmetric, symmetric) fill the room exactly
+  N(det) + N(<phi, chi>) = rho(phi) rho(chi), exhaustive pairs: 6561 cases, 0 failures
+  N(det) + N(<phi, chi>) = rho(phi) rho(chi), random pairs: 20000 cases, 0 failures
+5. The size of the lay is zero for the same state, whatever its multiplier, and positive otherwise (a sample)
+  N(det(phi, m phi)) = 0, a Gaussian multiple of the same hand: 14400 cases, 0 failures
+  hands with det nonzero: 5888; of them with Cauchy-Schwarz equality: 0 (must be 0)
+6. The click: the lay part has the size N(<T phi, chi>), the blocked part N(<phi, chi>); the draw is exact in integers
+  the draw's counts equal the sizes: 6561 pairs, 0 failures
+  draws on which the same hand is laid beside itself: 0 (must be 0)
+7. The books: where the click does not happen nothing is taken; the board-level cancellation destroys the wind
+  psi + (-psi) = 0 carries the wind of two quanta to 0 in 168 of 168 hands: the books would book two where the board holds none (the plan's law 7 as written fails the count)
+8. The kind decides: the one-Gaussian-integer hand (force carriers) has T squared +1 and no exclusion
+  T(T(z)) = z, one Gaussian integer: 1680 cases, 0 failures
+  <T z, z> = z z is 0 for 0 of 1680 nonzero hands (must be 0: no exclusion for force carriers)
+9. The occupation (rho, S) of a Node-clock: the lay's two sizes, with the capacity 2 u (the kind's dimension, 2, times the unit)
+  S(T phi) = -S(phi), exhaustive box: 2401 cases, 0 failures
+  Fierz: rho(phi) rho(chi) + S(phi) . S(chi) = 2 N(<phi, chi>), exhaustive pairs: 6561 cases, 0 failures
+  one quantum there: the free size is 2 N(det(phi, chi)), the room 2 u rho(chi): 15000 cases, 0 failures
+  one quantum there: the free size is 0 for its own state and its Gaussian multiples: 144 cases, 0 failures
+  the filled orbital (the quantum and its phase-reversed partner, rho = 2 u, S = 0): no size is free, whatever the newcomer: 15000 cases, 0 failures
+  the empty Node-clock: every size is free: 625 cases, 0 failures
+  the free lay writes the phase-reversed partner: (rho, S) goes from (u, S) to (2 u, 0): 24 cases, 0 failures
+  sizes below 0 with one quantum there: 0 (must be 0)
+  the single-spinor reading of a filled orbital (the sum of the two amplitudes) cannot carry the cap:
+  a third quantum would be allowed by the sum amplitude's determinant in 57600 of 60000 cases (the plan's twin hand as one spinor)
+10. The mutation proof: each formula with one term changed must fail
+  T without its minus sign, (conj z2, conj z1): <T phi, phi> is not 0 for 2304 of 2401 hands (must be above 0)
+  T as plain conjugation on the spinor: <T phi, phi> is not 0 for 2304 of 2401 hands (must be above 0)
+  T as the identity: <T phi, phi> is not 0 for 2400 of 2401 hands (must be above 0)
+  the capacity u instead of 2 u: 5952 negative free sizes with one quantum there (must be above 0)
+  the capacity 3 u instead of 2 u: a third quantum free in 14976 of 15000 cases (must be above 0)
+  the size with the plus sign (the bosonic exchange) beside itself is positive for 2304 of 2304 hands: no exclusion
+result: 0 failures of the claims (the mutants fail as they must)

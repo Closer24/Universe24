@@ -1,0 +1,34 @@
+# Pauli at the click, from the phase reversal of a family: Sofer's check of the owner's derivation
+
+The owner to Sofer, 2026-10-28, 10:4x UTC (in Hebrew, verbatim in translation): "Pauli never as a postulate. It is derived from the phase reversal of a family on the board; in a click this gives Pauli; check it." This page is Sofer's check, with its probe (SOFER-PAULI-PHASE-REVERSAL-1_PROBE.py) and the probe's output (SOFER-PAULI-PHASE-REVERSAL-1_CHECKS.txt). It is not David's derivation, which the plan's protocol owes; it says what the owner's idea gives, exactly, and what the derivation must still show. Each claim is marked PROVED (with its proof), CHECKED (with its probe's count) or OPEN.
+
+**The verdict.** The idea holds, in integers, and it is the Kramers pair: the matter's phase reversal squares to minus one, so a hand is orthogonal to its own phase-reversed partner, and the click that lays a second quantum beside a first draws only the partner's state. The same state has size 0 and no click is drawn; the third quantum has no state left; the books stay closed; nothing is declared. It holds for the twin hands and fails for the force carriers, as it should. It needs the family's state at a Node-clock to be its occupation (rho, S), not one spinor.
+
+## The construction, all in integers
+
+1. **A family's hand:** one Gaussian integer z (the force carriers, kind A1) or two, a spinor phi = (z1, z2) (matter, the twin hands, kind E1/2 of the double cover).
+2. **The phase reversal T of a family:** z to conj(z) for A1; (z1, z2) to (-conj(z2), conj(z1)) for the twin hands, the conjugation of every phase with the spinor's own exchange of its two components. T(T(phi)) = -phi on the twin hands and T(T(z)) = z on A1. PROVED (two lines of algebra); CHECKED (2,401 hands exhaustive, 20,000 random, 0 failures).
+3. **Kramers: a hand is orthogonal to its phase-reversed partner.** <T phi, phi> = -z2 z1 + z1 z2 = 0 for every spinor; on A1, <T z, z> = z z, nonzero for z not 0. PROVED; CHECKED (2,401 and 20,000; 1,680 hands of A1: none zero).
+4. **The antisymmetric overlap is the overlap with the partner:** det(phi, chi) = phi1 chi2 - phi2 chi1 = <T phi, chi>, and the exchange reverses its sign, det(chi, phi) = -det(phi, chi). PROVED; CHECKED (20,000 random and 6,561 exhaustive pairs).
+5. **The click at an occupied Node-clock.** The newcomer chi has two parts, its overlaps with the occupant's frame: with phi (blocked: the place is taken) and with T phi (free: the place the phase reversal leaves). Lagrange: N(<phi, chi>) + N(<T phi, chi>) = rho(phi) rho(chi), so the two sizes fill the room exactly with no remainder. The free size is 0 exactly for the occupant's own state (any Gaussian multiple of it), so the draw c in [0, room) never lands in it: no click, nothing taken from the light, the books closed. PROVED (Lagrange); CHECKED (6,561 exhaustive and 20,000 random pairs; 14,400 multiples of one hand; the draw's counts equal the sizes in 6,561 pairs; 0 draws lay a hand beside itself).
+6. **The plan's law 7 as written fails the count.** "psi + (-psi) = 0: two equal quanta of matter at one Node-clock hold no winding" takes the wind of two quanta to 0 while the click has booked two: 168 of 168 hands (CHECKED). It is interference, which bosons show too, and it breaks the books. The exclusion is the click's, not the board's cancellation.
+7. **The cap.** Let the Node-clock hold the family's occupation, rho (the A1 part) and S (the T1 part) as independent integers, u the quantum's unit and 2 u the capacity (the kind's dimension 2 times u). For a newcomer (rho_d, m = S(chi)): free = (2 u - rho) rho_d - S . m, blocked = rho rho_d + S . m, room 2 u rho_d. Then: one quantum there (rho = u, |S| = u): free = 2 N(det(phi, chi)), the same as 5; the filled orbital (the quantum and its partner, rho = 2 u, S = 0): free = 0 whatever the newcomer, so a third quantum has no state: at most 2 per Node-clock per family; the empty Node-clock: free = 2 u rho_d. The free lay writes the partner: (rho, S) goes from (u, S) to (2 u, 0). PROVED (Fierz, rho rho_d + S . m = 2 N(<phi, chi>), and S(T phi) = -S(phi)); CHECKED (15,000 cases with one quantum there, 15,000 filled, 625 empty, 24 writes; no size below 0).
+8. **The kind decides.** For A1 there is no exclusion (<T z, z> = z z). With the minus sign taken from T, or T as the plain conjugation or the identity, <T phi, phi> is not 0 for 2,304 to 2,400 of 2,401 hands; with the capacity u the free sizes go negative (5,952 cases), with 3 u a third quantum is free (14,976 of 15,000); the bosonic exchange sign gives size 4 N(z1) N(z2) beside itself, positive for all 2,304 hands. CHECKED: each mutant fails as it must.
+
+## What the check shows must be kept
+
+- **The twin hand's state is the occupation (rho, S), not one spinor.** A single spinor has S . S = rho^2, so it cannot be the filled orbital (S = 0). Read as the sum of the two amplitudes, the filled orbital lets a third quantum in by the determinant's size in 57,600 of 60,000 cases. This is the same point as Draft D's open axis S = 0 (the Bell closure), and one answer serves both.
+- **The exclusion lives in the clicks.** Between clicks the board's step is linear and two equal waves superpose; Pauli is the rule of the lay (the click of a split in the occupant's own frame), which is where the law's one choice already stands.
+- **What goes:** the setting's refusal by name ("Pauli at the setting: a twin hand sweeps two quanta at a clock, refused by name") and the lay jam, as the plan's section 16 says; the gate's REFUSE count falls with them.
+- **The integers are lattice counts:** the capacity 2 is the kind's dimension and u the quantum's unit of the click of a whole, with no number typed.
+
+## What David's derivation still owes (OPEN)
+
+1. That the sizes of a lay into an occupant are law 6's overlaps with the occupant's frame (phi, T phi), the occupant standing as the detector, and that the click of a whole and the click of a split join in the one carry.
+2. The written state of the free outcome for the occupation (rho, S) at every n, and the effect on the books and the sweep.
+3. That the occupation bound (|S| at most rho, rho at most 2 u) is kept by the step between clicks or is met at the next click; constructive interference of two waves can raise a local amplitude above the bound on the board.
+4. Locality: the lay reads the Node-clock's own occupation and the newcomer, nothing farther.
+
+## For the law
+
+Nothing enters ALGEBRA.md until David's derivation stands under the protocol and the owner gives his word; the law's lines on the exchange (the exclusion under its own name, and the setting's jam) stand until then. The owner's word closes the question put in SOFER-LAW-FINDINGS-DRAFT-1.md: the exclusion is never a postulate, and the sentence is drafted when the derivation has passed.
