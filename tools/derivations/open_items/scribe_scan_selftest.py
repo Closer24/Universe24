@@ -9,11 +9,14 @@ every change of the gate (SCRIBE-GATE-1.md): a rule that stops tripping would le
 
 from __future__ import annotations
 
+import contextlib
 import importlib.util
+import os
 import subprocess
 import sys
 import tempfile
 from collections import Counter
+from collections.abc import Iterator
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -1190,6 +1193,16 @@ NOT_DYNAMIC = (
 PINNED_FLOOR = "526a5666d"
 
 
+@contextlib.contextmanager
+def without_git_variables() -> Iterator[None]:
+    """The git variables a hook exports (GIT_DIR, GIT_INDEX_FILE and the like) set aside: git then finds a repository by the path it is given."""
+    aside = {name: os.environ.pop(name) for name in [n for n in os.environ if n.startswith("GIT_")]}
+    try:
+        yield
+    finally:
+        os.environ.update(aside)
+
+
 def counts(rel: str, source: str) -> dict[str, int]:
     return dict(Counter(hit.rule for hit in gate.scan(rel, source)))
 
@@ -1301,68 +1314,111 @@ def main() -> int:
         )
     else:
         print(f"ok      the floor is {PINNED_FLOOR}, the engine head the list that stands was taken at")
-    with tempfile.TemporaryDirectory() as scratch:
-        git = [
-            "git",
-            "-C",
-            scratch,
-            "-c",
-            "user.name=selftest",
-            "-c",
-            "user.email=selftest@example.invalid",
-        ]
+    # a hook exports GIT_DIR and the like, and git then reads and writes the repository they name whatever path it is given: the section's
+    # scratch repository is found by its path alone, with the git variables set aside, and a repository standing in for the one a hook
+    # would name (GIT_DIR exported to it) must come out of the section with no commit in it
+    with tempfile.TemporaryDirectory() as bait:
+        with without_git_variables():
+            subprocess.run(["git", "-C", bait, "init", "-q"], check=True)
+        exported = os.environ.get("GIT_DIR")
+        os.environ["GIT_DIR"] = f"{bait}/.git"  # as a hook exports it
+        try:
+            with without_git_variables():
+                with tempfile.TemporaryDirectory() as scratch:
+                    git = [
+                        "git",
+                        "-C",
+                        scratch,
+                        "-c",
+                        "user.name=selftest",
+                        "-c",
+                        "user.email=selftest@example.invalid",
+                    ]
 
-        def commit(message: str) -> str:
-            subprocess.run([*git, "commit", "-q", "--allow-empty", "-m", message], check=True)
-            return subprocess.run(
-                [*git, "rev-parse", "HEAD"], capture_output=True, text=True, check=True
-            ).stdout.strip()
+                    def commit(message: str) -> str:
+                        subprocess.run(
+                            [*git, "commit", "-q", "--allow-empty", "-m", message], check=True
+                        )
+                        return subprocess.run(
+                            [*git, "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+                        ).stdout.strip()
 
-        subprocess.run([*git, "init", "-q"], check=True)
-        old, mid, new = commit("old"), commit("floor"), commit("new")
-        subprocess.run([*git, "checkout", "-q", "-b", "side", old], check=True)
-        side = commit("side")  # a line the floor is not part of
-        subprocess.run([*git, "checkout", "-q", "-b", "joined", new], check=True)
-        subprocess.run([*git, "merge", "-q", "--no-ff", "-m", "joined", side], check=True)
-        joined = subprocess.run(
-            [*git, "rev-parse", "HEAD"], capture_output=True, text=True, check=True
-        ).stdout.strip()
-        gate.FLOOR = mid
-        for label, found, tree, want in (
-            ("older than the floor, the tree holding it", old, new, mid),
-            ("at the floor", mid, new, mid),
-            ("after the floor", new, new, new),
-            ("older than the floor, the tree not holding it", old, old, old),
-            ("beside the floor, on a line the floor is not part of", side, joined, side),
-            ("older than the floor, the tree joining a line beside it", old, joined, mid),
-        ):
-            floor_cases += 1
-            got = gate.floored(Path(scratch), found, tree)
-            if got != want:
-                parted += 1
-                print(f"PARTED  the floor: a merge base {label} gave {got[:9]}, wanted {want[:9]}")
+                    subprocess.run([*git, "init", "-q"], check=True)
+                    old, mid, new = commit("old"), commit("floor"), commit("new")
+                    subprocess.run([*git, "checkout", "-q", "-b", "side", old], check=True)
+                    side = commit("side")  # a line the floor is not part of
+                    subprocess.run([*git, "checkout", "-q", "-b", "joined", new], check=True)
+                    subprocess.run([*git, "merge", "-q", "--no-ff", "-m", "joined", side], check=True)
+                    joined = subprocess.run(
+                        [*git, "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+                    ).stdout.strip()
+                    gate.FLOOR = mid
+                    for label, found, tree, want in (
+                        ("older than the floor, the tree holding it", old, new, mid),
+                        ("at the floor", mid, new, mid),
+                        ("after the floor", new, new, new),
+                        ("older than the floor, the tree not holding it", old, old, old),
+                        ("beside the floor, on a line the floor is not part of", side, joined, side),
+                        ("older than the floor, the tree joining a line beside it", old, joined, mid),
+                    ):
+                        floor_cases += 1
+                        got = gate.floored(Path(scratch), found, tree)
+                        if got != want:
+                            parted += 1
+                            print(
+                                f"PARTED  the floor: a merge base {label} gave {got[:9]}, wanted {want[:9]}"
+                            )
+                        else:
+                            print(f"ok      the floor: a merge base {label}")
+                    # the merge base itself, through merge_base: never the tree, the base's own merge base, lifted to the floor only from behind it
+                    for label, base, tree, want in (
+                        (
+                            "a base older than the floor, the tree holding it: lifted to the floor",
+                            old,
+                            new,
+                            mid,
+                        ),
+                        (
+                            "the base ahead of a side line: the common ancestor, not the tree",
+                            new,
+                            side,
+                            old,
+                        ),
+                        (
+                            "the base a side line the tree joined: that line's commit, not the tree",
+                            side,
+                            joined,
+                            side,
+                        ),
+                        ("the base the tree holds: the base, not the tree", new, joined, new),
+                    ):
+                        floor_cases += 1
+                        _, kept = gate.merge_base(Path(scratch), base, tree)
+                        if kept != want:
+                            parted += 1
+                            print(f"PARTED  merge_base: {label} gave {kept[:9]}, wanted {want[:9]}")
+                        else:
+                            print(f"ok      merge_base: {label}")
+        finally:
+            if exported is None:
+                os.environ.pop("GIT_DIR", None)
             else:
-                print(f"ok      the floor: a merge base {label}")
-        # the merge base itself, through merge_base: never the tree, the base's own merge base, lifted to the floor only from behind it
-        for label, base, tree, want in (
-            ("a base older than the floor, the tree holding it: lifted to the floor", old, new, mid),
-            ("the base ahead of a side line: the common ancestor, not the tree", new, side, old),
-            (
-                "the base a side line the tree joined: that line's commit, not the tree",
-                side,
-                joined,
-                side,
-            ),
-            ("the base the tree holds: the base, not the tree", new, joined, new),
-        ):
-            floor_cases += 1
-            _, kept = gate.merge_base(Path(scratch), base, tree)
-            if kept != want:
-                parted += 1
-                print(f"PARTED  merge_base: {label} gave {kept[:9]}, wanted {want[:9]}")
-            else:
-                print(f"ok      merge_base: {label}")
-    gate.FLOOR = kept_floor
+                os.environ["GIT_DIR"] = exported
+        gate.FLOOR = kept_floor
+        floor_cases += 1
+        with without_git_variables():
+            left = subprocess.run(
+                ["git", "-C", bait, "rev-list", "--all"], capture_output=True, text=True, check=True
+            ).stdout
+        if left.strip():
+            parted += 1
+            print(
+                "PARTED  the floor: the scratch repository wrote into the repository a hook's GIT_DIR names"
+            )
+        else:
+            print(
+                "ok      the floor: the scratch repository is found by its path, a hook's GIT_DIR names none of it"
+            )
     # the ratchet: a hit above the base's count is new, one at the base's count is not
     hits = gate.scan(ENGINE, "def f(a):\n    for x in a:\n        pass\n    for y in a:\n        pass\n")
     stands = Counter({("LOOP", ENGINE, "for"): 1})
