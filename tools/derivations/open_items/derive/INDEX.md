@@ -1,6 +1,6 @@
 # The derivation board of Tensor24
 
-One board for everyone (the owner's word of 2026-10-28, 13:4x UTC: make everyone's work efficient). Before work starts on an item, its drafter and verifier are written here, so no item is drafted twice. Each draft follows PROTOCOL.md and TEMPLATE.md: the formula in the three operations, the clocks, the tensors, the proofs, the probes with their mutants kept, the law's lines with scribe-5's numbers, what it replaces, and OPEN; then a second hand that did not write it, Sofer's law check and David's sign-off. Every claim is marked PROVED, CHECKED or OPEN.
+One board for everyone (the owner's word of 2026-10-28, 12:2x UTC: make everyone's work efficient). Before work starts on an item, its drafter and verifier are written here, so no item is drafted twice. Each draft follows PROTOCOL.md and TEMPLATE.md: the formula in the three operations, the clocks, the tensors, the proofs, the probes with their mutants kept, the law's lines with scribe-5's numbers, what it replaces, and OPEN; then a second hand that did not write it, Sofer's law check and David's sign-off. Every claim is marked PROVED, CHECKED or OPEN.
 
 | item | what it derives | drafter (taken by) | verifier | where it stands |
 | --- | --- | --- | --- | --- |
