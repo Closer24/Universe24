@@ -1,0 +1,3 @@
+centre acts as -1 in Ind: True
+elements where the induced (signed-permutation) character differs from E1/2 on four rows: 16
+example: [(('1/2', '1/2', '1/2', '1/2'), '-1', '2'), (('1/2', '1/2', '1/2', '-1/2'), '-1', '2')]
