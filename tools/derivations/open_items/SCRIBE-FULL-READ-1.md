@@ -367,3 +367,11 @@ David's comment of 03:00 UTC (#2187 comment 6459479329, ledger row 283): the own
 **Departures to name for the Boss, new:** (a) the open-axis solution writes the second child's record at the first click in the great clock's forward run (row 283), inside the cones when read along them; the owner's leave covers a contradiction of his word, the Boss's read of the build against Postulate 1 and **Only local** stands before the OK.
 
 **Asked of the owner, as in section 22, and whether the open axis is the locality he meant.**
+
+## 24. The register at the owner's measures and kinds of click (2026-10-28, 03:2x UTC)
+
+The owner's direct words of 03:1x UTC (ledger row 284): what the speed c and the length of the link are in the language of the clocks, a definition for each kind of click, and "Sync with the Boss." The two kinds of click stand in the law (**The two kinds of click**, his sentences verbatim) and in HIGHLIGHTS.md; the speed and the length stand in CLOCK_WORDS.md as the law's own lines in clock words (the causal speed one Mesh per tick, light 1 / sqrt 3 of a Mesh per tick, the Mesh the ruler, the Clock-node's rate twice); the engine holds both kinds as built (`bobs.bobs` the whole, `bobs.splits` the split). The engine head 97e5b3fd6 unchanged, no push of the Boss since 01:03 UTC. Sections 10 to 23 stand but for what is added below.
+
+**Departures and questions to name for the Boss, new:** (a) the letter c names light's speed and the load in the law; (b) the vernier is read by the fitting and the unspringing too (striking.py:107, :196), where the owner's sentence makes the split click the only place a choice enters, so which kind a fitting is, and whether the plane read at a fitting is a choice, is asked; (c) whether the twins upper and lower of the owner's sentence are the twin pair of `bobs.splits` alone or also the two children of a fitting laid on a twin pair is asked.
+
+**Asked of the owner, as in section 23, and whether the fitting's plane read from the fine teeth is a choice in his sense.**

@@ -54,6 +54,20 @@ A clause head keeps its former name by name: the head of every renamed clause op
 
 Nature's names for the phenomena stay (light, charge, mass, energy, momentum, force, velocity, current, the horizon, the Big Bang), and so do the plain words a clock does (now, before, start, top, count, run, read, state, time, beat, carry, recoil, tension, weight, drift, volume, quantum, unit, credit, draw, take, frozen, refused, meeting, born, mirror, exchange, direction) and the law's clause tags, the codes of letters with an S and a number. The core table of the dictionary renames some of these in code names only (credit chime, draw vernier, take unwind, frozen stopped, current lead); the prose keeps them until the owner says otherwise.
 
+## The measures and the kinds of click
+
+The owner's questions and words of 2026-10-28, 03:1x UTC, directly to the Scribe (in Hebrew, verbatim in translation): "And the speed c and the length of the link, what are they in the language of the clocks?" and "We also need a definition, if there isn't one, for each kind of click" (the two kinds, in the law's **The two kinds of click**). The rows below are the Scribe's reading of the law's own lines in clock words, for the Boss's and David's check, and no new law.
+
+| the word | in clock words | the law's line |
+| --- | --- | --- |
+| the causal speed | one Mesh per tick: a Clock-node's word reaches its neighbour through one Mesh in one tick and no further, and no click and no hand goes faster | Postulate 3 |
+| c, light's speed | light's hand crosses a Mesh in the square root of 3 ticks: 1 / sqrt 3 of a Mesh per tick at the full rate, c squared 1 / 3; at a Clock-node whose clock runs at N of the full rate it crosses N squared times that, the Mesh being the clock twice; counted in the Clock-node's own ticks and Meshes it is the same everywhere | **The units are the electron's and the wind's ceiling is the highest photon energy**; **The same clock and the same ruler for every act** |
+| the length of a Mesh | the unit of length, one meshing of two Clock-nodes: the distance light covers in the square root of 3 ticks; in nature sqrt 3 omega_e times the electron's reduced Compton wavelength, 6.69 x 10^-13 m x omega_e, the one calibration the law does not derive | the same units clause; what is open, item 9 |
+| the ruler | the Mesh's rate, the Clock-node's rate twice, p_a = p_0^2 div Gamma: a length is a count of Meshes at that rate, and where the clock runs at N of the full rate a Mesh is 1 / N times its rest length (the ruler goes with the clock, h N = 1) | **The rates compose**; **The same clock and the same ruler for every act** |
+| the letter c | the law uses it for two things, light's speed (c squared 1 / 3, Lorentz's composition) and the load, the count of slowings on a Clock-node's rate (U = c / Gamma): the dictionary keeps both and names which in each place | the rates; **The measured speed** |
+| the click of a whole | one hand holds the whole winding; there is nothing to choose, and the wind decides where the click happens | **The two kinds of click** |
+| the click of a split | the winding is divided between two twins, upper and lower; neither holds a whole winding and together they do, so the great clock must choose who receives it, by a draw according to the size of the parts (Born); the detector's click, and the only place where a choice enters the world | **The two kinds of click** |
+
 ## What stays in the former words
 
 - The owner's words in quotes, verbatim.
