@@ -1,0 +1,744 @@
+DAVID-TENSOR24-PAULI_CHECKS.txt: the checks of DAVID-TENSOR24-PAULI.md.
+Two probes, both exact (integers and fractions.Fraction, no float). pauli_probe.py is the algebra: the kinds' pairings solved
+under the 24, the phase reversal, the lay's sizes, the board's reading, the two hands against one field, the cap between
+clicks, the force carriers, the plan's two ways, the draw, and the mutants that must fail. pauli_head.py reads the head's own
+twin gears (engine-5.0-test 943a40df7, whose src is 8b657aa57's; toys-5's src is the same) at every node-clock and tick of
+the twin world.
+
+== python3 -I pauli_probe.py (about 30 s) ==
+1. The kind's own pairing, solved under the 24 (no form chosen): the forms every turn keeps, by their symmetry
+  A1 (the light, the force carriers' scalar): kept forms 1, symmetric 1, antisymmetric 0: the pairing's sign +1
+  A1 (the light, the force carriers' scalar): exactly one kept form, of sign +1: 1 cases, 0 failures
+  A2: kept forms 1, symmetric 1, antisymmetric 0: the pairing's sign +1
+  A2: exactly one kept form, of sign +1: 1 cases, 0 failures
+  E: kept forms 1, symmetric 1, antisymmetric 0: the pairing's sign +1
+  E: exactly one kept form, of sign +1: 1 cases, 0 failures
+  T1 (the vectors): kept forms 1, symmetric 1, antisymmetric 0: the pairing's sign +1
+  T1 (the vectors): exactly one kept form, of sign +1: 1 cases, 0 failures
+  T2: kept forms 1, symmetric 1, antisymmetric 0: the pairing's sign +1
+  T2: exactly one kept form, of sign +1: 1 cases, 0 failures
+  E1/2 (the twins, matter): kept forms 1, symmetric 0, antisymmetric 1: the pairing's sign -1
+  E1/2 (the twins, matter): exactly one kept form, of sign -1: 1 cases, 0 failures
+  E1/2 with D4 exact on the gears: kept forms 1, symmetric 0, antisymmetric 1: the pairing's sign -1
+  E1/2 with D4 exact on the gears: exactly one kept form, of sign -1: 1 cases, 0 failures
+  E5/2: kept forms 1, symmetric 0, antisymmetric 1: the pairing's sign -1
+  E5/2: exactly one kept form, of sign -1: 1 cases, 0 failures
+  G3/2: kept forms 1, symmetric 0, antisymmetric 1: the pairing's sign -1
+  G3/2: exactly one kept form, of sign -1: 1 cases, 0 failures
+  the twins' one kept form is the determinant, B = [[0, 1], [-1, 0]] up to its factor: 1 cases, 0 failures
+  MUTANT the twins' quarter and third turns without their scale (s = 1): no form at all is kept: caught on 1 of 1 cases (must be above 0)
+  MUTANT the twins' half turns alone already keep no symmetric form (the quaternion units): caught on 1 of 1 cases (must be above 0)
+2. The pair's whole: the scalar of two quanta of one kind (the vectors of the pair space that every turn keeps), and its exchange
+  A1 (the light, the force carriers' scalar): the pair space's kept vectors 1, the exchange on it +1
+  A1 (the light, the force carriers' scalar): one scalar of the pair, exchanged by +1: 1 cases, 0 failures
+  T1 (the vectors): the pair space's kept vectors 1, the exchange on it +1
+  T1 (the vectors): one scalar of the pair, exchanged by +1: 1 cases, 0 failures
+  E1/2 (the twins, matter): the pair space's kept vectors 1, the exchange on it -1
+  E1/2 (the twins, matter): one scalar of the pair, exchanged by -1: 1 cases, 0 failures
+3. The phase reversal is the pairing with every phase reversed: <T phi, chi> = B(phi, chi), T phi = conj(B^T phi)
+  A1: <T phi, chi> = B(phi, chi): 4000 cases, 0 failures
+  A1: T T = +1: 4000 cases, 0 failures
+  A1: T keeps the overlaps, <T phi, T chi> = <chi, phi>: 4000 cases, 0 failures
+  A1: the exchange B(chi, phi) = +1 B(phi, chi): 4000 cases, 0 failures
+  T1: <T phi, chi> = B(phi, chi): 4000 cases, 0 failures
+  T1: T T = +1: 4000 cases, 0 failures
+  T1: T keeps the overlaps, <T phi, T chi> = <chi, phi>: 4000 cases, 0 failures
+  T1: the exchange B(chi, phi) = +1 B(phi, chi): 4000 cases, 0 failures
+  E1/2: <T phi, chi> = B(phi, chi): 4000 cases, 0 failures
+  E1/2: T T = -1: 4000 cases, 0 failures
+  E1/2: T keeps the overlaps, <T phi, T chi> = <chi, phi>: 4000 cases, 0 failures
+  E1/2: the exchange B(chi, phi) = -1 B(phi, chi): 4000 cases, 0 failures
+  on the twins T(z1, z2) = (-conj z2, conj z1) (Sofer's T): 1000 cases, 0 failures
+  Kramers: every twin hand is orthogonal to its own phase reversal, <T phi, phi> = 0: 4000 cases, 0 failures
+4. The phase reversal on the board's gears: exact acts; the twins' reading (W, S) goes to (W, -S) for any gears
+  the twins: reading(T gears) = (W, -S), any now and before: 6000 cases, 0 failures
+  the twins: T T = -1 on the gears (every gear's notch negated): 6000 cases, 0 failures
+  a single hand: the sweep (its wind) is kept: 6000 cases, 0 failures
+  a single hand: T T = +1: 6000 cases, 0 failures
+  MUTANT T without the rewind (the now and the before not exchanged): the wind's sign flips, the antiparticle: caught on 1981 of 2000 cases (must be above 0)
+  MUTANT T without its sign (the twins exchanged and conjugated, no minus): S does not go to -S: caught on 2000 of 2000 cases (must be above 0)
+5. The lay into an occupant: the pair's size N(phi) N(chi) + e N(<phi, chi>), e the pairing's sign
+  the twins: N(phi) N(chi) - N(<phi, chi>) = N(det(phi, chi)) (Lagrange): 6000 cases, 0 failures
+  the twins: it is N(<T phi, chi>), the newcomer's part along the occupant's phase reversal: 6000 cases, 0 failures
+  the twins: no free size below 0: 6000 cases, 0 failures
+  the twins: the newcomer in the occupant's own state (any Gaussian multiple) has the free size 0: 4000 cases, 0 failures
+6. The lay is law 6's split, read on the board: the newcomer against the occupant's phase reversal as the detector
+  the split share against the reversed occupant equals N(<T phi, chi>) / (N(phi) N(chi)): 3170 cases, 0 failures
+  it equals Sofer's cap at one quantum standing, ((2u - rho) rho_d - S . m) / (2 u rho_d) with u = the occupant's wind: 3170 cases, 0 failures
+  MUTANT the occupant itself as the detector (no reversal): the newcomer in its state is laid whole: caught on 1608 of 2000 cases (must be above 0)
+7. What the lay writes: the occupant's phase reversal; the occupation (u, S) goes to (2u, 0) as two hands, never as one
+  two hands, the occupant and its phase reversal: the occupation is (2u, 0) for any gears: 2984 cases, 0 failures
+  two hands: the third newcomer's free size is 0, whatever its state: 2984 cases, 0 failures
+  one field (the two summed on the same gears) never reads (2u, 0): 2984 cases, 0 failures
+  MUTANT one field: the third's free size is below 0 for 6631 and above 0 for 6652 newcomers (the cap is not carried): caught on 1 of 13283 cases (must be above 0)
+8. One field per family holds no mixed reading: det D <= 0 for every now and before (D is a rank-one matrix plus its adjoint)
+  det D <= 0 on one field's gears: 12000 cases, 0 failures
+  W^2 - S . S = 4 det D, so on one field |S| >= |W|: pure (|S| = W) or worse, never the open (W, 0) or the filled (2u, 0): 12000 cases, 0 failures
+  det D = -N(det[now, before]): pure exactly where the now and the before are parallel (draft D's verifier's form): 6000 cases, 0 failures
+9. The bound between clicks: quanta as orthogonal hands keep the cap at every node-clock, whatever the hands
+  orthogonal hands on a board of 5 node-clocks: 1 - O(x) is positive at every node-clock (the diagonal block of a projector): 1500 cases, 0 failures
+  MUTANT three quanta in one hand's state (the one field's sum, no orthogonality): the cap broken at a node-clock: caught on 21 of 300 cases (must be above 0)
+10. The force carriers: the pairing symmetric, the lay never blocked
+  A1: the pair's size 2 N(z) N(w) is the room or more (no exclusion; the excess is the stimulated weight): 4000 cases, 0 failures
+  T1: the pair's size N(a) N(b) + N(<a, b>) is the room or more: 4000 cases, 0 failures
+  MUTANT the pairing's own size as the lay's size on a vector kind: a . a = 0 for the circular (1, i, 0), a boson wrongly blocked; so the lay's size is the pair's norm, equal to the pairing's size on the twins alone (Lagrange in two dimensions): caught on 1 of 1 cases (must be above 0)
+  MUTANT the twins with the symmetric exchange (e = +1): the same state is laid, with twice the room: caught on 2000 of 2000 cases (must be above 0)
+10b. The plan's sizes of the two ways (law 7 at 943a40df7): sigma_ab = N(M_a1 M_b2 + e M_b1 M_a2), summed over the parts
+  summed over the parts, sigma is twice the pair's size N(phi) N(chi) + e N(<phi, chi>), for e = -1 and +1: 8000 cases, 0 failures
+  e = -1: one part for both quanta has size 0: 4000 cases, 0 failures
+  e = +1: one part for both has four times its size (the bunching): 4000 cases, 0 failures
+11. The draw is one comparison of two products (cut 1's draw, Rule3's sign test): the laid draws count the free size exactly
+  over the room's draws c in [0, room), the laid ones number N(<T phi, chi>) exactly: 300 cases, 0 failures
+result: 0 failures
+
+== venv314/bin/python -I pauli_head.py <repo> 30 (about 12 s) ==
+the twin world on the head: 3 twin pairs, 30 ticks, 5 births, 11625 pair-node-clock-ticks read
+  det D > 0 (a mixed reading on one field): 0 (must be 0)
+  pure (det D = 0, |S| = |W|): 499; worse (det D < 0, |S| > |W|): 3034; empty: 8092
+  the phase reversal on the real gears reads (W, -S): failures 0 of 11625
+  the phase reversal twice is -1 on the real gears: failures 0 of 11625
+
+== pauli_probe.py ==
+"""The probe of DAVID-TENSOR24-PAULI.md: Pauli at the click, from the kind's own pairing and the phase reversal.
+
+Exact integers and rationals only (fractions.Fraction); no float anywhere. Run: python3 -I pauli_probe.py.
+Every claim counts its cases and its failures; every mutant must fail. The script exits 1 on any failure.
+"""
+
+import itertools
+import random
+import sys
+from fractions import Fraction as F
+
+rnd = random.Random(20261028)
+FAILS: list[str] = []
+
+
+def claim(text: str, cases: int, fails: int) -> None:
+    print(f"  {text}: {cases} cases, {fails} failures")
+    if fails:
+        FAILS.append(text)
+
+
+def mutant(text: str, cases: int, caught: int) -> None:
+    """A mutant must be caught on at least one case."""
+    print(f"  MUTANT {text}: caught on {caught} of {cases} cases (must be above 0)")
+    if caught == 0:
+        FAILS.append("mutant not caught: " + text)
+
+
+class C:
+    """An exact complex rational; with integer parts it is a Gaussian integer, a hand's two gears (three, twelve)."""
+
+    __slots__ = ("re", "im")
+
+    def __init__(self, re=0, im=0):
+        self.re, self.im = F(re), F(im)
+
+    def __add__(self, o):
+        o = cc(o)
+        return C(self.re + o.re, self.im + o.im)
+
+    __radd__ = __add__
+
+    def __sub__(self, o):
+        o = cc(o)
+        return C(self.re - o.re, self.im - o.im)
+
+    def __rsub__(self, o):
+        return cc(o) - self
+
+    def __neg__(self):
+        return C(-self.re, -self.im)
+
+    def __mul__(self, o):
+        o = cc(o)
+        return C(self.re * o.re - self.im * o.im, self.re * o.im + self.im * o.re)
+
+    __rmul__ = __mul__
+
+    def __truediv__(self, o):
+        o = cc(o)
+        n = o.re * o.re + o.im * o.im
+        return self * C(o.re / n, -o.im / n)
+
+    def conj(self):
+        return C(self.re, -self.im)
+
+    def norm(self):
+        return self.re * self.re + self.im * self.im
+
+    def zero(self):
+        return self.re == 0 and self.im == 0
+
+    def __eq__(self, o):
+        o = cc(o)
+        return self.re == o.re and self.im == o.im
+
+    def __hash__(self):
+        return hash((self.re, self.im))
+
+    def __repr__(self):
+        return f"({self.re}{'+' if self.im >= 0 else ''}{self.im}i)"
+
+
+def cc(x):
+    return x if isinstance(x, C) else C(x)
+
+
+I = C(0, 1)
+ONE = C(1)
+ZERO = C(0)
+
+
+def g(k=9):
+    return C(rnd.randint(-k, k), rnd.randint(-k, k))
+
+
+def mat_mul(a, b):
+    return [[sum((a[i][k] * b[k][j] for k in range(len(b))), ZERO) for j in range(len(b[0]))] for i in range(len(a))]
+
+
+def transpose(a):
+    return [list(r) for r in zip(*a)]
+
+
+def kron(a, b):
+    return [[a[i][j] * b[k][l] for j in range(len(a[0])) for l in range(len(b[0]))] for i in range(len(a)) for k in range(len(b))]
+
+
+def det2(m):
+    return m[0][0] * m[1][1] - m[0][1] * m[1][0]
+
+
+def M(rows):
+    return [[cc(x) for x in r] for r in rows]
+
+
+def null_space(rows, n):
+    """The null space of a linear system over the complex rationals, by exact elimination; returns a basis."""
+    a = [list(r) for r in rows]
+    pivots = []
+    r = 0
+    for c in range(n):
+        p = next((i for i in range(r, len(a)) if not a[i][c].zero()), None)
+        if p is None:
+            continue
+        a[r], a[p] = a[p], a[r]
+        inv = ONE / a[r][c]
+        a[r] = [x * inv for x in a[r]]
+        for i in range(len(a)):
+            if i != r and not a[i][c].zero():
+                f = a[i][c]
+                a[i] = [x - f * y for x, y in zip(a[i], a[r])]
+        pivots.append(c)
+        r += 1
+    free = [c for c in range(n) if c not in pivots]
+    basis = []
+    for fc in free:
+        v = [ZERO] * n
+        v[fc] = ONE
+        for i, pc in enumerate(pivots):
+            v[pc] = -a[i][fc]
+        basis.append(v)
+    return basis
+
+
+def invariant_forms(gens, n, parity=None):
+    """Every bilinear form B on the kind with M^T B M = s B for every generator (M, s); parity +1 or -1 adds B^T = parity B."""
+    rows = []
+    for m, s in gens:
+        # (M^T B M)_ij - s B_ij = sum_kl M_ki B_kl M_lj - s B_ij, linear in the n*n unknowns B_kl
+        for i in range(n):
+            for j in range(n):
+                row = [ZERO] * (n * n)
+                for k in range(n):
+                    for l in range(n):
+                        row[k * n + l] = row[k * n + l] + m[k][i] * m[l][j]
+                row[i * n + j] = row[i * n + j] - cc(s)
+                rows.append(row)
+    if parity is not None:
+        for i in range(n):
+            for j in range(n):
+                row = [ZERO] * (n * n)
+                row[i * n + j] = row[i * n + j] + ONE
+                row[j * n + i] = row[j * n + i] - cc(parity)
+                rows.append(row)
+    return null_space(rows, n * n)
+
+
+# The twins' acts (TENSOR24's kinds; DAVID-TENSOR24-THE-CLICK.md, checks 9 and 10): the half turns about x, y, z as Gaussian
+# units, the quarter turn about z as (1 - i, 1 + i) of norm 2, the third turn about the cube's diagonal (1 + i + j + k) / 2
+# doubled. Each acts on the twins up to its scale s = det M.
+TX = M([[0, -I], [-I, 0]])
+TY = M([[0, -1], [1, 0]])
+TZ = M([[-I, 0], [0, I]])
+TQ = M([[1 - I, 0], [0, 1 + I]])
+T3 = M([[1 - I, -1 - I], [1 - I, 1 + I]])
+E_HALF = [(m, det2(m)) for m in (TX, TY, TZ, TQ, T3)]
+# The same kind with the quarter turn about z written exactly on the gears, a phase on one twin, diag(1, i), and the half turn
+# about x + y as [[0, -i], [1, 0]] (both Gaussian units, scale det = i: the rotations about the twins' axis, D4, act with no
+# scale; the readings helper's correction of DAVID-TENSOR24-THE-CLICK.md's check 10).
+E_EXACT = [(m, det2(m)) for m in (TX, TY, TZ, M([[1, 0], [0, I]]), M([[0, -I], [1, 0]]), T3)]
+E_FIVE = [(m, det2(m)) for m in (TX, TY, TZ)] + [([[-x for x in r] for r in TQ], det2(TQ)), (T3, det2(T3))]
+# The 24's acts on the vectors (T1): the half turns, the quarter turn about z, the third turn (x to y to z).
+RX = M([[1, 0, 0], [0, -1, 0], [0, 0, -1]])
+RY = M([[-1, 0, 0], [0, 1, 0], [0, 0, -1]])
+RZ = M([[-1, 0, 0], [0, -1, 0], [0, 0, 1]])
+RQ = M([[0, -1, 0], [1, 0, 0], [0, 0, 1]])
+R3 = M([[0, 0, 1], [1, 0, 0], [0, 1, 0]])
+T_ONE = [(m, 1) for m in (RX, RY, RZ, RQ, R3)]
+T_TWO = [(m, 1) for m in (RX, RY, RZ)] + [([[-x for x in r] for r in RQ], 1), (R3, 1)]
+A_ONE = [(M([[1]]), 1)] * 5
+A_TWO = [(M([[1]]), 1)] * 3 + [(M([[-1]]), 1), (M([[1]]), 1)]
+# E: the 24 onto the axes' permutations, on the plane a + b + c = 0 in the basis (1, -1, 0), (0, 1, -1).
+EI = M([[1, 0], [0, 1]])
+E_TWO = [(EI, 1)] * 3 + [(M([[-1, 1], [0, 1]]), 1), (M([[0, -1], [1, -1]]), 1)]
+# G3/2 = E1/2 times E (the twins' kind times the plane's), at the twins' scale.
+G_FOUR = [(kron(mh, me), s) for (mh, s), (me, _) in zip(E_HALF, E_TWO)]
+
+KINDS = [
+    ("A1 (the light, the force carriers' scalar)", A_ONE, 1, +1),
+    ("A2", A_TWO, 1, +1),
+    ("E", E_TWO, 2, +1),
+    ("T1 (the vectors)", T_ONE, 3, +1),
+    ("T2", T_TWO, 3, +1),
+    ("E1/2 (the twins, matter)", E_HALF, 2, -1),
+    ("E1/2 with D4 exact on the gears", E_EXACT, 2, -1),
+    ("E5/2", E_FIVE, 2, -1),
+    ("G3/2", G_FOUR, 4, -1),
+]
+
+print("1. The kind's own pairing, solved under the 24 (no form chosen): the forms every turn keeps, by their symmetry")
+for name, gens, n, want in KINDS:
+    total = len(invariant_forms(gens, n))
+    sym = len(invariant_forms(gens, n, +1))
+    anti = len(invariant_forms(gens, n, -1))
+    sign = +1 if (sym, anti) == (1, 0) else -1 if (sym, anti) == (0, 1) else 0
+    print(f"  {name}: kept forms {total}, symmetric {sym}, antisymmetric {anti}: the pairing's sign {sign:+d}")
+    claim(f"{name}: exactly one kept form, of sign {want:+d}", 1, int(total != 1 or sign != want))
+basis = invariant_forms(E_HALF, 2)
+b = [[basis[0][0], basis[0][1]], [basis[0][2], basis[0][3]]]
+claim("the twins' one kept form is the determinant, B = [[0, 1], [-1, 0]] up to its factor", 1,
+      int(not (b[0][0].zero() and b[1][1].zero() and b[0][1] == -b[1][0] and not b[0][1].zero())))
+mutant("the twins' quarter and third turns without their scale (s = 1): no form at all is kept",
+       1, int(len(invariant_forms([(m, 1) for m, _ in E_HALF], 2)) == 0))
+mutant("the twins' half turns alone already keep no symmetric form (the quaternion units)",
+       1, int(len(invariant_forms(E_HALF[:3], 2, +1)) == 0))
+
+print("2. The pair's whole: the scalar of two quanta of one kind (the vectors of the pair space that every turn keeps), and its exchange")
+for name, gens, n, want in KINDS[:1] + KINDS[3:4] + KINDS[5:6]:
+    rows = []
+    for m, s in gens:
+        mm = kron(m, m)
+        for i in range(n * n):
+            rows.append([mm[i][j] - (cc(s) if i == j else ZERO) for j in range(n * n)])
+    vs = null_space(rows, n * n)
+    ex = 0
+    for v in vs:
+        pv = [v[(j % n) * n + j // n] for j in range(n * n)]
+        ex = +1 if all(x == y for x, y in zip(pv, v)) else -1 if all(x == -y for x, y in zip(pv, v)) else 0
+    print(f"  {name}: the pair space's kept vectors {len(vs)}, the exchange on it {ex:+d}")
+    claim(f"{name}: one scalar of the pair, exchanged by {want:+d}", 1, int(len(vs) != 1 or ex != want))
+
+print("3. The phase reversal is the pairing with every phase reversed: <T phi, chi> = B(phi, chi), T phi = conj(B^T phi)")
+PAIRINGS = {"A1": [[ONE]], "T1": [[ONE, ZERO, ZERO], [ZERO, ONE, ZERO], [ZERO, ZERO, ONE]], "E1/2": [[ZERO, ONE], [-ONE, ZERO]]}
+
+
+def herm(u, v):
+    return sum((x.conj() * y for x, y in zip(u, v)), ZERO)
+
+
+def bil(bm, u, v):
+    return sum((u[i] * bm[i][j] * v[j] for i in range(len(u)) for j in range(len(v))), ZERO)
+
+
+def rev(bm, u):
+    """T u = conj(B^T u)."""
+    n = len(u)
+    return [sum((bm[i][j] * u[i] for i in range(n)), ZERO).conj() for j in range(n)]
+
+
+for name, bm in PAIRINGS.items():
+    n = len(bm)
+    sign = -1 if name == "E1/2" else +1
+    f1 = f2 = f3 = f4 = 0
+    for _ in range(4000):
+        u, v = [g() for _ in range(n)], [g() for _ in range(n)]
+        f1 += herm(rev(bm, u), v) != bil(bm, u, v)
+        f2 += rev(bm, rev(bm, u)) != [x * sign for x in u]
+        f3 += herm(rev(bm, u), rev(bm, v)) != herm(v, u)
+        f4 += bil(bm, v, u) != bil(bm, u, v) * sign
+    claim(f"{name}: <T phi, chi> = B(phi, chi)", 4000, f1)
+    claim(f"{name}: T T = {sign:+d}", 4000, f2)
+    claim(f"{name}: T keeps the overlaps, <T phi, T chi> = <chi, phi>", 4000, f3)
+    claim(f"{name}: the exchange B(chi, phi) = {sign:+d} B(phi, chi)", 4000, f4)
+twin_t = lambda u: [-(u[1].conj()), u[0].conj()]  # noqa: E731
+claim("on the twins T(z1, z2) = (-conj z2, conj z1) (Sofer's T)", 1000,
+      sum(rev(PAIRINGS["E1/2"], u) != twin_t(u) for u in ([g(), g()] for _ in range(1000))))
+kram = sum(not herm(twin_t(u), u).zero() for u in ([g(), g()] for _ in range(4000)))
+claim("Kramers: every twin hand is orthogonal to its own phase reversal, <T phi, phi> = 0", 4000, kram)
+
+
+# The board: a twin pair at a node-clock is two hands (up, down), each hand two gears (three, twelve) read as the Gaussian
+# z = three + i twelve, at now and before. The reading of DAVID-TENSOR24-THE-CLICK.md: the doubled density
+# D_ac = i (conj(b_a) n_c - conj(n_a) b_c), W = D_uu + D_dd, S = (2 Re D_ud, -2 Im D_ud, D_uu - D_dd); D_aa is twice the
+# hand's sweep Im(conj(z_now) z_before), the engine's hands.sweep.
+def density(n, b):
+    return [[I * (b[a].conj() * n[c] - n[a].conj() * b[c]) for c in range(2)] for a in range(2)]
+
+
+def reading(n, b):
+    d = density(n, b)
+    return d[0][0].re + d[1][1].re, (2 * d[0][1].re, -2 * d[0][1].im, d[0][0].re - d[1][1].re)
+
+
+def sweep(now, before):
+    return (now.conj() * before).im
+
+
+def board_reversal(n, b):
+    """The phase reversal on a twin pair's gears, three exact acts and no division: the now and the before exchanged (the
+    rewind), every phase conjugated (the twelve gear's sign), the twins exchanged with one sign."""
+    return twin_t(b), twin_t(n)
+
+
+def board_reversal_one(now, before):
+    """On a single hand (a force carrier): the now and the before exchanged, the phase conjugated."""
+    return before.conj(), now.conj()
+
+
+print("4. The phase reversal on the board's gears: exact acts; the twins' reading (W, S) goes to (W, -S) for any gears")
+f1 = f2 = f3 = f4 = 0
+for _ in range(6000):
+    n, b = [g(), g()], [g(), g()]
+    w, s = reading(n, b)
+    n2, b2 = board_reversal(n, b)
+    w2, s2 = reading(n2, b2)
+    f1 += (w2, s2) != (w, tuple(-x for x in s))
+    n3, b3 = board_reversal(n2, b2)
+    f2 += (n3, b3) != ([-x for x in n], [-x for x in b])
+    z, y = g(), g()
+    z2, y2 = board_reversal_one(z, y)
+    f3 += sweep(z2, y2) != sweep(z, y)
+    f4 += board_reversal_one(*board_reversal_one(z, y)) != (z, y)
+claim("the twins: reading(T gears) = (W, -S), any now and before", 6000, f1)
+claim("the twins: T T = -1 on the gears (every gear's notch negated)", 6000, f2)
+claim("a single hand: the sweep (its wind) is kept", 6000, f3)
+claim("a single hand: T T = +1", 6000, f4)
+c1 = c2 = 0
+for _ in range(2000):
+    n, b = [g(), g()], [g(), g()]
+    w, s = reading(n, b)
+    wr, sr = reading(twin_t(n), twin_t(b))
+    c1 += wr != w and w != 0
+    nn, bb = [n[1].conj(), n[0].conj()], [b[1].conj(), b[0].conj()]
+    w3, s3 = reading(bb, nn)
+    c2 += (w3, s3) != (w, tuple(-x for x in s))
+mutant("T without the rewind (the now and the before not exchanged): the wind's sign flips, the antiparticle", 2000, c1)
+mutant("T without its sign (the twins exchanged and conjugated, no minus): S does not go to -S", 2000, c2)
+
+print("5. The lay into an occupant: the pair's size N(phi) N(chi) + e N(<phi, chi>), e the pairing's sign")
+f1 = f2 = f3 = 0
+for _ in range(6000):
+    p, x = [g(), g()], [g(), g()]
+    if all(t.zero() for t in p) or all(t.zero() for t in x):
+        continue
+    room = (p[0].norm() + p[1].norm()) * (x[0].norm() + x[1].norm())
+    over = herm(p, x).norm()
+    free = room - over
+    f1 += free != bil(PAIRINGS["E1/2"], p, x).norm()
+    f2 += free != herm(twin_t(p), x).norm()
+    f3 += free < 0
+claim("the twins: N(phi) N(chi) - N(<phi, chi>) = N(det(phi, chi)) (Lagrange)", 6000, f1)
+claim("the twins: it is N(<T phi, chi>), the newcomer's part along the occupant's phase reversal", 6000, f2)
+claim("the twins: no free size below 0", 6000, f3)
+same = sum((bil(PAIRINGS["E1/2"], p, [p[0] * m, p[1] * m]).norm() != 0) for p, m in (([g(), g()], g()) for _ in range(4000)))
+claim("the twins: the newcomer in the occupant's own state (any Gaussian multiple) has the free size 0", 4000, same)
+
+print("6. The lay is law 6's split, read on the board: the newcomer against the occupant's phase reversal as the detector")
+
+
+def turning(phi, turn):
+    """A hand turning by the Gaussian turn a tick: now = turn before (the readings scale with the turn; the share is a ratio)."""
+    return [turn * t for t in phi], list(phi)
+
+
+def split_share(child, detector):
+    """DAVID-TENSOR24-THE-CLICK.md's split: up where c (W + W) W_d < room (W W_d + S . m); the share as a fraction."""
+    (w, s), (wd, m) = child, detector
+    return F(w * wd + sum(a * c for a, c in zip(s, m)), (w + w) * wd)
+
+
+f1 = f2 = runs = 0
+for _ in range(4000):
+    phi, chi, t1, t2 = [g(), g()], [g(), g()], g(4), g(4)
+    if t1.im == 0 or t2.im == 0 or all(t.zero() for t in phi) or all(t.zero() for t in chi):
+        continue
+    runs += 1
+    occ = turning(phi, t1)
+    new = turning(chi, t2)
+    det_gears = board_reversal(*occ)
+    share = split_share(reading(*new), reading(*det_gears))
+    born = F(herm(twin_t(phi), chi).norm(), (phi[0].norm() + phi[1].norm()) * (chi[0].norm() + chi[1].norm()))
+    f1 += share != born
+    w, s = reading(*occ)
+    wd, m = reading(*new)
+    cap = F((2 * w - w) * wd - sum(a * c for a, c in zip(s, m)), 2 * w * wd)
+    f2 += cap != share
+claim("the split share against the reversed occupant equals N(<T phi, chi>) / (N(phi) N(chi))", runs, f1)
+claim("it equals Sofer's cap at one quantum standing, ((2u - rho) rho_d - S . m) / (2 u rho_d) with u = the occupant's wind", runs, f2)
+c1 = 0
+for _ in range(2000):
+    phi, t1, t2 = [g(), g()], g(4), g(4)
+    if t1.im == 0 or t2.im == 0 or all(t.zero() for t in phi):
+        continue
+    occ, new = turning(phi, t1), turning([phi[0] * 3, phi[1] * 3], t2)
+    c1 += split_share(reading(*new), reading(*occ)) == 1
+mutant("the occupant itself as the detector (no reversal): the newcomer in its state is laid whole", 2000, c1)
+
+print("7. What the lay writes: the occupant's phase reversal; the occupation (u, S) goes to (2u, 0) as two hands, never as one")
+f1 = f2 = f3 = 0
+neg = pos = 0
+cases = 0
+for _ in range(3000):
+    n, b = [g(), g()], [g(), g()]
+    w, s = reading(n, b)
+    if w == 0:
+        continue
+    cases += 1
+    n2, b2 = board_reversal(n, b)
+    w2, s2 = reading(n2, b2)
+    rho, S = w + w2, tuple(x + y for x, y in zip(s, s2))
+    f1 += (rho, S) != (2 * w, (0, 0, 0))
+    for _ in range(5):
+        x, t = [g(), g()], g(4)
+        if t.im == 0 or all(q.zero() for q in x):
+            continue
+        wd, m = reading(*turning(x, t))
+        f2 += (2 * w - rho) * wd - sum(a * c for a, c in zip(S, m)) != 0
+    one = reading([n[0] + n2[0], n[1] + n2[1]], [b[0] + b2[0], b[1] + b2[1]])
+    f3 += one == (2 * w, (0, 0, 0))
+    for _ in range(5):
+        x, t = [g(), g()], g(4)
+        if t.im == 0 or all(q.zero() for q in x):
+            continue
+        wd, m = reading(*turning(x, t))
+        share = F((2 * w - one[0]) * wd - sum(a * c for a, c in zip(one[1], m)), 2 * w * wd)
+        neg += share < 0
+        pos += share > 0
+claim("two hands, the occupant and its phase reversal: the occupation is (2u, 0) for any gears", cases, f1)
+claim("two hands: the third newcomer's free size is 0, whatever its state", cases, f2)
+claim("one field (the two summed on the same gears) never reads (2u, 0)", cases, f3)
+mutant(f"one field: the third's free size is below 0 for {neg} and above 0 for {pos} newcomers (the cap is not carried)",
+       neg + pos, int(neg > 0 and pos > 0))
+
+print("8. One field per family holds no mixed reading: det D <= 0 for every now and before (D is a rank-one matrix plus its adjoint)")
+f1 = f2 = 0
+for k in (2, 9, 60):
+    for _ in range(4000):
+        n, b = [g(k), g(k)], [g(k), g(k)]
+        d = density(n, b)
+        dd = d[0][0].re * d[1][1].re - d[0][1].norm()
+        f1 += dd > 0
+        w, s = reading(n, b)
+        f2 += w * w - sum(x * x for x in s) != 4 * dd
+claim("det D <= 0 on one field's gears", 12000, f1)
+claim("W^2 - S . S = 4 det D, so on one field |S| >= |W|: pure (|S| = W) or worse, never the open (W, 0) or the filled (2u, 0)", 12000, f2)
+f3 = 0
+for _ in range(6000):
+    n, b = [g(), g()], [g(), g()]
+    d = density(n, b)
+    f3 += d[0][0].re * d[1][1].re - d[0][1].norm() != -(n[0] * b[1] - n[1] * b[0]).norm()
+claim("det D = -N(det[now, before]): pure exactly where the now and the before are parallel (draft D's verifier's form)", 6000, f3)
+
+print("9. The bound between clicks: quanta as orthogonal hands keep the cap at every node-clock, whatever the hands")
+f1 = runs = 0
+L = 5
+for _ in range(300):
+    k = rnd.randint(2, 2 * L)
+    vs = []
+    for _ in range(k):
+        v = [g(3) for _ in range(2 * L)]
+        for u in vs:
+            c = herm(u, v) / herm(u, u)
+            v = [y - c * x for x, y in zip(u, v)]
+        if not all(t.zero() for t in v):
+            vs.append(v)
+    runs += 1
+    for x in range(L):
+        # the local occupation O(x) = sum over the hands of phi(x) phi(x)^dagger / N(phi), each quantum of unit 1
+        o = [[sum((u[2 * x + a] * u[2 * x + c].conj() / herm(u, u) for u in vs), ZERO) for c in range(2)] for a in range(2)]
+        free_tr = 2 - (o[0][0] + o[1][1]).re
+        free_det = ((ONE - o[0][0]) * (ONE - o[1][1]) - o[0][1] * o[1][0]).re
+        f1 += free_tr < 0 or free_det < 0
+claim("orthogonal hands on a board of 5 node-clocks: 1 - O(x) is positive at every node-clock (the diagonal block of a projector)", runs * L, f1)
+c1 = 0
+for _ in range(300):
+    u = [g(3) for _ in range(2 * L)]
+    x = rnd.randrange(L)
+    o = [[u[2 * x + a] * u[2 * x + c].conj() / herm(u, u) * 3 for c in range(2)] for a in range(2)]
+    c1 += ((ONE - o[0][0]) * (ONE - o[1][1]) - o[0][1] * o[1][0]).re < 0 or 2 - (o[0][0] + o[1][1]).re < 0
+mutant("three quanta in one hand's state (the one field's sum, no orthogonality): the cap broken at a node-clock", 300, c1)
+
+print("10. The force carriers: the pairing symmetric, the lay never blocked")
+f1 = f2 = 0
+zero_pairing = 0
+for _ in range(4000):
+    z, w = g(), g()
+    if z.zero() or w.zero():
+        continue
+    room = z.norm() * w.norm()
+    f1 += room + (z.conj() * w).norm() < room
+    a, c = [g(), g(), g()], [g(), g(), g()]
+    ra = sum(t.norm() for t in a) * sum(t.norm() for t in c)
+    if ra == 0:
+        continue
+    f2 += ra + herm(a, c).norm() < ra
+claim("A1: the pair's size 2 N(z) N(w) is the room or more (no exclusion; the excess is the stimulated weight)", 4000, f1)
+claim("T1: the pair's size N(a) N(b) + N(<a, b>) is the room or more", 4000, f2)
+circ = [ONE, I, ZERO]
+zero_pairing = int(bil(PAIRINGS["T1"], circ, circ).zero())
+mutant("the pairing's own size as the lay's size on a vector kind: a . a = 0 for the circular (1, i, 0), a boson wrongly blocked;"
+       " so the lay's size is the pair's norm, equal to the pairing's size on the twins alone (Lagrange in two dimensions)", 1, zero_pairing)
+c1 = 0
+for _ in range(2000):
+    p = [g(), g()]
+    if all(t.zero() for t in p):
+        continue
+    room = (p[0].norm() + p[1].norm()) ** 2
+    c1 += room + herm(p, p).norm() > 0
+mutant("the twins with the symmetric exchange (e = +1): the same state is laid, with twice the room", 2000, c1)
+
+print("10b. The plan's sizes of the two ways (law 7 at 943a40df7): sigma_ab = N(M_a1 M_b2 + e M_b1 M_a2), summed over the parts")
+f1 = f2 = f3 = 0
+for _ in range(4000):
+    p, x = [g(), g()], [g(), g()]
+    for e in (-1, 1):
+        tot = sum((p[a] * x[c] + p[c] * x[a] * e).norm() for a in range(2) for c in range(2))
+        f1 += tot != 2 * ((p[0].norm() + p[1].norm()) * (x[0].norm() + x[1].norm()) + e * herm(p, x).norm())
+    f2 += any((p[a] * x[a] - p[a] * x[a]).norm() != 0 for a in range(2))
+    f3 += any((p[a] * x[a] + p[a] * x[a]).norm() != 4 * (p[a] * x[a]).norm() for a in range(2))
+claim("summed over the parts, sigma is twice the pair's size N(phi) N(chi) + e N(<phi, chi>), for e = -1 and +1", 8000, f1)
+claim("e = -1: one part for both quanta has size 0", 4000, f2)
+claim("e = +1: one part for both has four times its size (the bunching)", 4000, f3)
+
+print("11. The draw is one comparison of two products (cut 1's draw, Rule3's sign test): the laid draws count the free size exactly")
+f1 = runs = 0
+for _ in range(300):
+    phi, chi = [g(3), g(3)], [g(3), g(3)]
+    room = (phi[0].norm() + phi[1].norm()) * (chi[0].norm() + chi[1].norm())
+    if room == 0:
+        continue
+    runs += 1
+    free = herm(twin_t(phi), chi).norm()
+    laid = sum(1 for c in range(int(room)) if c * room < room * free)
+    f1 += laid != free
+claim("over the room's draws c in [0, room), the laid ones number N(<T phi, chi>) exactly", runs, f1)
+
+print(f"result: {len(FAILS)} failures" + ("" if not FAILS else ": " + "; ".join(FAILS)))
+sys.exit(1 if FAILS else 0)
+
+== pauli_head.py ==
+"""The head's part of DAVID-TENSOR24-PAULI.md's probe: the twins' own gears on the engine, read at every node-clock and tick.
+
+The twin world is world_nature.json with its gapped rows as twin hands (the four-gear rows; the helper's twin_world), on the
+head's code. At every tick and every twin pair (up hand, down hand), each hand's Gaussian z = three + i twelve at now and before:
+- the one field's reading has det D <= 0 at every node-clock (never the open or the filled reading);
+- the phase reversal on the real gears (now and before exchanged, every phase conjugated, the twins exchanged with one sign)
+  reads (W, -S) exactly, and twice is -1;
+- how many node-clocks read pure (|S| = |W|, det D = 0) and how many worse (|S| > |W|).
+Integers only. Run: venv314/bin/python -I pauli_head.py <repo> [ticks].
+"""
+
+import itertools
+import sys
+
+REPO = sys.argv[1]
+TICKS = int(sys.argv[2]) if len(sys.argv) > 2 else 30
+sys.path.insert(0, REPO + "/src")
+
+from event_universe import hands as H  # noqa: E402
+from event_universe.assembly.piece import read_piece  # noqa: E402
+from event_universe.clock import Clock  # noqa: E402
+from event_universe.trains import HAND  # noqa: E402
+
+
+def twin_world(intervals):
+    calibre, piece = read_piece(REPO + "/tests/worlds/world_nature.json")
+    rim = int(calibre["integers"]["den"])
+    four = [
+        dict(t, shape=HAND + HAND) if t.get("pair") and t["shape"] == HAND and t["pair"][0] < rim else t
+        for t in calibre["rows"]
+    ]
+    return Clock(dict(calibre, rows=four), {**piece, "intervals": intervals})
+
+
+def gz(re, im):
+    return (int(re), int(im))
+
+
+def mul_conj(a, b):
+    """conj(a) b for Gaussians as pairs."""
+    return (a[0] * b[0] + a[1] * b[1], a[0] * b[1] - a[1] * b[0])
+
+
+def density(n, b):
+    """D_ac = i (conj(b_a) n_c - conj(n_a) b_c), entries as Gaussian pairs."""
+    out = [[None, None], [None, None]]
+    for a in range(2):
+        for c in range(2):
+            x = mul_conj(b[a], n[c])
+            y = mul_conj(n[a], b[c])
+            d = (x[0] - y[0], x[1] - y[1])
+            out[a][c] = (-d[1], d[0])  # i times d
+    return out
+
+
+def reading(n, b):
+    d = density(n, b)
+    w = d[0][0][0] + d[1][1][0]
+    s = (2 * d[0][1][0], -2 * d[0][1][1], d[0][0][0] - d[1][1][0])
+    det = d[0][0][0] * d[1][1][0] - (d[0][1][0] ** 2 + d[0][1][1] ** 2)
+    return w, s, det
+
+
+def twin_t(u):
+    """(z1, z2) to (-conj z2, conj z1)."""
+    return [(-u[1][0], u[1][1]), (u[0][0], -u[0][1])]
+
+
+clock = twin_world(TICKS)
+hs = clock.hands()
+pairs = H.twin_pairs(hs)
+pos_det = rev_fail = tt_fail = sites = pure = worse = zero = 0
+for tick in range(TICKS + 1):
+    for u, d in pairs:
+        three_u, twelve_u = hs[u].gears
+        three_d, twelve_d = hs[d].gears
+        for idx in itertools.product(*[range(k) for k in three_u.now.shape]):
+            n = [gz(three_u.now[idx], twelve_u.now[idx]), gz(three_d.now[idx], twelve_d.now[idx])]
+            b = [gz(three_u.before[idx], twelve_u.before[idx]), gz(three_d.before[idx], twelve_d.before[idx])]
+            w, s, det = reading(n, b)
+            sites += 1
+            pos_det += det > 0
+            if w == 0 and s == (0, 0, 0):
+                zero += 1
+            elif det == 0:
+                pure += 1
+            else:
+                worse += 1
+            w2, s2, _ = reading(twin_t(b), twin_t(n))
+            rev_fail += (w2, s2) != (w, tuple(-x for x in s))
+            nn2, bb2 = twin_t(b), twin_t(n)
+            nn3, bb3 = twin_t(bb2), twin_t(nn2)
+            tt_fail += (nn3, bb3) != ([(-x, -y) for x, y in n], [(-x, -y) for x, y in b])
+    if tick < TICKS:
+        clock.tick()
+births = sum(1 for e in clock.log if e["event"] == "birth")
+print(f"the twin world on the head: {len(pairs)} twin pairs, {TICKS} ticks, {births} births, {sites} pair-node-clock-ticks read")
+print(f"  det D > 0 (a mixed reading on one field): {pos_det} (must be 0)")
+print(f"  pure (det D = 0, |S| = |W|): {pure}; worse (det D < 0, |S| > |W|): {worse}; empty: {zero}")
+print(f"  the phase reversal on the real gears reads (W, -S): failures {rev_fail} of {sites}")
+print(f"  the phase reversal twice is -1 on the real gears: failures {tt_fail} of {sites}")
+sys.exit(1 if pos_det or rev_fail or tt_fail else 0)
