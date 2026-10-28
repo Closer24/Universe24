@@ -1,0 +1,6 @@
+I2 the twin hands, a 3^3 torus; mutant: none
+PASS  D1 the twins' Mesh current antisymmetric, the frame count modulo 4: 0 of 486 Meshes not antisymmetric
+PASS  D2 Q kept to the last digit, 30 exact ticks, turnovers on the stepped state, T once in the count: Q moved at 0 of 30 ticks; 93 Node-clock turnovers
+PASS  D3 T applied once keeps Q (in the count, or in the gears); T in both reverses the turned clocks' charge: count: kept 8 of 8, reversed 0 of 8; gears: kept 8 of 8, reversed 0 of 8; twice: kept 0 of 8, reversed 8 of 8
+PASS  D4 the stored twins read through T^c (c modulo 4) move exactly as the physical twins: 0 of 12 ticks differ
+4 of 4 checks PASS

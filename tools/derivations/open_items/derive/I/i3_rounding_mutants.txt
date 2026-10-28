@@ -1,0 +1,13 @@
+=== mutant no_rho
+I3 the rounding; mutant: no_rho
+FAIL  R1 D' - D = X Im(conj(a) pull) + Im(conj(v) rho') exactly, and the momentum carried exactly: 19966 failures in 20000 random steps to 2^200 (both signs, the edges 0 and teeth 2 among them)
+5 of 6 checks PASS; FAIL: ["R1 D' - D = X Im(conj(a) pull) + Im(conj(v) rho') exactly, and the momentum carried exactly"]
+=== mutant even_round
+I3 the rounding; mutant: even_round
+FAIL  R4 the turn's rounding: the rounded current not antisymmetric, the exact one antisymmetric: of 5000 Meshes the rounded turn leaves 5000 not antisymmetric, the exact turn 5000
+5 of 6 checks PASS; FAIL: ["R4 the turn's rounding: the rounded current not antisymmetric, the exact one antisymmetric"]
+=== mutant wrong_mid
+I3 the rounding; mutant: wrong_mid
+FAIL  R1 D' - D = X Im(conj(a) pull) + Im(conj(v) rho') exactly, and the momentum carried exactly: 19928 failures in 20000 random steps to 2^200 (both signs, the edges 0 and teeth 2 among them)
+FAIL  R1b the carry's charge E = Im(conj(v) rho') = Im(conj(v) P'): 19928 failures in 20000
+4 of 6 checks PASS; FAIL: ["R1 D' - D = X Im(conj(a) pull) + Im(conj(v) rho') exactly, and the momentum carried exactly", "R1b the carry's charge E = Im(conj(v) rho') = Im(conj(v) P')"]

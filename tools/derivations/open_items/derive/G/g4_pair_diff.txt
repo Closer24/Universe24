@@ -1,0 +1,12 @@
+up against down:
+  after tick 28: every array equal
+  after tick 29: the light gear 0 now: 27 clocks, differences [-1]; the light gear 0 fine: 27 clocks, differences [65212414349590562611200000000] (teeth 65212414349590562611200000000)
+  after tick 30: the light gear 0 now: 27 clocks, differences [-1]; the light gear 0 before: 27 clocks, differences [-1]
+  after tick 100: the light gear 0 now: 27 clocks, differences [-3]; the light gear 0 before: 27 clocks, differences [-3]
+  after tick 400: the light gear 0 now: 27 clocks, differences [-5]; the light gear 0 before: 27 clocks, differences [-5]
+up against even:
+  after tick 28: every array equal
+  after tick 29: every array equal
+  after tick 30: every array equal
+  after tick 100: the light gear 0 now: 27 clocks, differences [-1]; the light gear 0 before: 27 clocks, differences [-1]
+  after tick 400: the light gear 0 now: 27 clocks, differences [-2]; the light gear 0 before: 27 clocks, differences [-2]

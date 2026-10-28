@@ -1,0 +1,15 @@
+g1_nature60_head_u.txt world_nature.json 60 head 20 mod digest head
+g1_nature60_head_ueven.txt world_nature.json 60 head 20 mod digest even
+g1_nature60_head_udown.txt world_nature.json 60 head 20 mod digest down
+g1_nature60_even_ueven.txt world_nature.json 60 even 20 mod digest even
+g1_nature60_down_udown.txt world_nature.json 60 down 20 mod digest down
+g1_count_node20.txt world_node.json 20 head 20 mod nodigest head
+g1_count_polarization12.txt world_polarization.json 12 head 12 mod nodigest head
+g1_count_pair3_400.txt world_pair_3.json 400 head 20 mod nodigest head
+g1_count_plasma3_400.txt world_plasma_3.json 400 head 20 mod nodigest head
+g1_count_sea3_240.txt world_sea_3.json 240 head 20 mod nodigest head
+g1_count_universe3_400.txt world_universe_3.json 400 head 20 mod nodigest head
+g1_count_ga2_230.txt world_ga2.json 230 head 20 mod nodigest head
+g1_count_plasma400.txt world_plasma.json 400 head 20 mod nodigest head
+g1_count_sea400.txt world_sea.json 400 head 20 mod nodigest head
+g1_count_universe400.txt world_universe.json 400 head 20 mod nodigest head

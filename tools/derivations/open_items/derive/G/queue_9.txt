@@ -1,0 +1,11 @@
+g7_polar12_b_noskew.txt exit 0 2s
+g7_polar12_a_noskew.txt exit 0 2s
+g7_polar12_c_noskew.txt exit 0 2s
+g7_hole60_b.txt exit 0 24s
+g7_hole60_b_noskew.txt exit 0 29s
+g7_nature60_b_noskew.txt exit 0 26s
+g7_bodies120_a.txt exit 0 20s
+g7_bodies120_a_noskew.txt exit 0 17s
+g7_packet150_a_noskew.txt exit 0 35s
+g7_emission_one300_a_noskew.txt exit 0 36s
+DONE

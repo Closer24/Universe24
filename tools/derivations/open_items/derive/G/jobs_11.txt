@@ -1,0 +1,1 @@
+g7_collapse1200_a_noskew.txt g7_antiworld.py world_collapse_1200.json 600 up up three noskew
