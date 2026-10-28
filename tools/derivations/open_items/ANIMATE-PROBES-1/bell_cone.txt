@@ -13,8 +13,8 @@
    a' b': E = -820/24389
    S = -82/24389 = -0.0034; |S| <= 2: True
 5. mutants (each must move S off the singlet's -82/29)
-   perp without the sign: S = -18522/35989 (FAILS as it must)
-   perp without the conjugates: S = -82/29 (DOES NOT FAIL)
+   perp without the sign: S = -18522/35989 (fails as it must)
+   perp without the conjugates: S = -82/29 (does not fail)
    the frames off the real plane (y and z): the head's perp: S = -82/29
    the frames off the real plane: perp without the conjugates: S = -18522/35989
-   the plus sign in det: S = -2/29 (FAILS as it must)
+   the plus sign in det: S = -2/29 (fails as it must)

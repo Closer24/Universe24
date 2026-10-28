@@ -154,10 +154,10 @@ def main():
         ra, ma = reading(fa)
         rb, mb = reading(fb)
         singlet = Fraction(-(ma[0] * mb[0] + ma[1] * mb[1] + ma[2] * mb[2]), ra * rb)
-        print(f"   {sa:2s} {sb:2s}: E = {str(ex):>7s} (the singlet {str(singlet):>7s}, {'equal' if ex == singlet else 'APART'}); "
+        print(f"   {sa:2s} {sb:2s}: E = {str(ex):>7s} (the singlet {str(singlet):>7s}, {'equal' if ex == singlet else 'apart'}); "
               f"far clicks of a whole {whole} of {room}; A up {a_up}")
     s = chsh(e)
-    print(f"   S = {s} = {float(s):.4f}; S^2 = {s * s} ({'above 4, at most 8' if 4 < s * s <= 8 else 'NOT in the band'})")
+    print(f"   S = {s} = {float(s):.4f}; S^2 = {s * s} ({'above 4, at most 8' if 4 < s * s <= 8 else 'not in the band'})")
     print(f"   every far click a click of a whole: {whole_all}")
     print(f"   no signalling: A's odds per setting pair {[(x, y, str(p)) for x, y, p in signal]}")
 
@@ -184,7 +184,7 @@ def main():
             fa, fb = SETTINGS[sa], SETTINGS[sb]
             e3[(sa, sb)] = run(fa, fb, fa, fb, perp_of=p)[0]
         s3 = chsh(e3)
-        print(f"   {name}: S = {s3} ({'FAILS as it must' if s3 != s else 'DOES NOT FAIL'})")
+        print(f"   {name}: S = {s3} ({'fails as it must' if s3 != s else 'does not fail'})")
     complex_settings = {
         "a": (g(1), g(0)),        # z
         "a'": (g(1), g(0, 1)),    # y, rho 2
@@ -205,7 +205,7 @@ def main():
         fa, fb = SETTINGS[sa], SETTINGS[sb]
         e4[(sa, sb)] = run(fa, fb, fa, fb, det_of=plus)[0]
     s4 = chsh(e4)
-    print(f"   the plus sign in det: S = {s4} ({'FAILS as it must' if s4 != s else 'DOES NOT FAIL'})")
+    print(f"   the plus sign in det: S = {s4} ({'fails as it must' if s4 != s else 'does not fail'})")
 
 
 if __name__ == "__main__":
