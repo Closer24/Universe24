@@ -479,3 +479,9 @@ The head 123256cd5 (ledger row 300): row 76 by distinct pairs with a fitting's o
 The head 526a5666d (ledger row 301): striking.py and strikes.py are click.py and clicks.py, clock.strikes clock.clicks, no strike stands in src. The gate carries the renamed modules' counts: no refusal, no note. The merge of the three pushes at 7acf9d1dd, the suite 118 passed. docs/ENGINE.md and docs/CLOCK_WORDS.md follow.
 
 **Asked of the Boss:** the node's code spelling (the class Clock) and the Reader's keys.
+
+## 42. David's finding of the unfair draw and the Boss's replies (2026-10-28, 04:48 to 05:23 UTC)
+
+The thread's items 1214 to 1217 (ledger row 302): David measured the Bell click on the Boss's head 42d5448b7 and found the vernier's draw skewed (c over room by tenths, 2c < room at 390 of 914, S = -3.018 past Tsirelson's bound); the cause is the centre's own digit framed to the upper half while its base stays whole (draw.py:28-43); the Boss accepts it and builds the fair draw in the toy. The Boss answers that the class Clock stays the great clock, and that he builds the Bell click only on the owner's word on the quaternion turn (to be put at 10:30 Israel time). The Scribe's reading: a defect of the pushed head and no breach of a rule; the clause allows a turn by a setting only as Rule3's act.
+
+**Asked of the Boss:** the fair draw pushed with its numbers. **Asked of the owner:** his word on the turn at 10:30 Israel time; told of the defect.
