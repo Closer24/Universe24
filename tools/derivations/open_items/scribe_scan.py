@@ -58,6 +58,7 @@ PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by S
 # the gate's own files: a push that changes one needs the owner's word, and says so
 OWN = (
     "tools/derivations/open_items/scribe_scan.py",
+    "tools/derivations/open_items/scribe_scan_selftest.py",
     "tools/derivations/open_items/scribe_scan_allowed.json",
     "tools/derivations/open_items/scribe_scan_baseline.json",
     ".claude/settings.json",
@@ -148,16 +149,21 @@ NUMPY_NAMES = frozenset({"np", "numpy"})
 NP_FLOAT = frozenset(
     "sqrt cbrt exp expm1 log log2 log10 log1p mean average median std var linspace logspace fft linalg random e inf nan "
     "float16 float32 float64 float_ double true_divide divide power complex_ complex64 complex128 complex256 csingle cdouble "
-    "clongdouble".split()
+    "clongdouble floor ceil trunc rint around round fix".split()
 )
 CIRCULAR_FUNCTIONS = frozenset(
     "cos sin tan acos asin atan atan2 arccos arcsin arctan arctan2 sinh cosh tanh radians degrees deg2rad rad2deg "
     "hypot unwrap angle".split()
 )
 ROOTS = frozenset("largest_below isqrt integer_root sqrt cbrt sine_rim".split())
-CLAMPS = frozenset("min max abs clip where minimum maximum absolute fmin fmax".split())
+CLAMPS = frozenset(
+    "min max abs clip where minimum maximum absolute fmin fmax sign select piecewise choose heaviside copysign".split()
+)
 ORDERING = (ast.Lt, ast.LtE, ast.Gt, ast.GtE)
 FOREIGN_OPERATORS = {ast.Pow: "**", ast.LShift: "<<", ast.RShift: ">>", ast.BitXor: "^"}
+OPERATION_CALLS = frozenset(
+    "divmod floor_divide remainder mod fmod left_shift right_shift bitwise_xor floordiv lshift rshift xor".split()
+)  # the foreign operations under their function names (np.mod, operator.xor ...)
 CARRY_HOME = frozenset(
     {"core/acts.py", "core/rule3.py"}
 )  # where Rule3's division and remainder are written
@@ -394,8 +400,14 @@ def scan(rel: str, source: str) -> list[Hit]:
             name = callee_name(node)
             if isinstance(node.func, ast.Name) and name in {"round", "complex", "pow"}:
                 add("FLOAT", node, f"{name}()")
-            if name == "divmod" and rel not in CARRY_HOME and rel not in READERS:
-                add("OPERATION", node, "divmod")
+            if rel not in CARRY_HOME and rel not in READERS and name in OPERATION_CALLS:
+                spelt = (
+                    isinstance(node.func, ast.Attribute)
+                    and isinstance(node.func.value, ast.Name)
+                    and (node.func.value.id in numpy or node.func.value.id == "operator")
+                )
+                if name == "divmod" or spelt:
+                    add("OPERATION", node, name if name == "divmod" else f"{name}()")
             if isinstance(node.func, ast.Name) and name == "id":
                 add("STATE", node, "id()")
             if name in ROOTS:
