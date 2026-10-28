@@ -1,0 +1,9 @@
+M1. T = K at the turnover: the 48 must break, and Kramers' orthogonal partner must fail
+  lifts K fails to commute with: 40 of 48 (must be above 0)
+  pairs with <K phi, phi> != 0: 576 of 624 (must be above 0)
+M2. T without its sign, (conj z2, conj z1): it must square to +1 and break the 48
+  pairs where it squares to +1 (no Kramers sign): 624 of 624 (must be above 0)
+  lifts it fails to commute with: 40 of 48 (must be above 0)
+M3. the rewind by the turnover itself (the involution assumed): the state must not return
+  states not returned: 2000 of 2000 (must be above 0)
+result: every mutant fails as it must

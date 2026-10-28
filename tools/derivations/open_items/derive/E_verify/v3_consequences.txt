@@ -1,0 +1,32 @@
+1. One Node-clock: the amplitudes in the frame (phi, T phi)
+  [ok] exhaustive on the box {-1, 0, 1}^4 (phi all 80, quanta thinned): A_++ = A_-- = 0, A_+- = -A_-+ = rho(phi) det: 34560 of 34560
+  [ok] random, entries up to 9: 20000 of 20000
+2. A third and a fourth twin quantum at one Node-clock: every assignment to the two senses has amplitude 0
+  [ok] q = 3: all 8 assignments 0 with eps = -1 (and some not 0 with eps = +1): 2000 and 2000 of 2000
+  [ok] q = 4: all 16 assignments 0 with eps = -1 (and some not 0 with eps = +1): 400 and 400 of 400
+3. q quanta in one part
+  [ok] q = 2: SUM over the q! orders of sgn (counted by cycles) = 0
+  [ok] q = 3: SUM over the q! orders of sgn (counted by cycles) = 0
+  [ok] q = 4: SUM over the q! orders of sgn (counted by cycles) = 0
+  [ok] q = 5: SUM over the q! orders of sgn (counted by cycles) = 0
+  [ok] q = 6: SUM over the q! orders of sgn (counted by cycles) = 0
+  [ok] q = 7: SUM over the q! orders of sgn (counted by cycles) = 0
+  [ok] q = 2: the determinant with q equal rows is 0, the permanent q! PROD M: 200 of 200
+  [ok] q = 3: the determinant with q equal rows is 0, the permanent q! PROD M: 200 of 200
+  [ok] q = 4: the determinant with q equal rows is 0, the permanent q! PROD M: 200 of 200
+  [ok] q = 5: the determinant with q equal rows is 0, the permanent q! PROD M: 200 of 200
+   (this bounds the q-quantum joint amplitude in one part; it does not bound law 5's q = E div w_c on one hand's wind)
+4. The force carriers: bunching, Hong-Ou-Mandel, the ordering
+  [ok] sigma_aa = 4 N(M_a1 M_a2) for eps = +1: 20000 of 20000
+  [ok] the balanced splitter (1, i), (i, 1): sigma_xy = 0 for eps = +1, 4 for eps = -1
+  [ok] splitters [[a, -conj c], [c, conj a]]: bosons <= distinguishable <= fermions, bosons 0 iff N(a) = N(c): 19999 of 19999
+    general 2 x 2 overlaps (not a splitter): the ordering breaks at 9852 of 19999; the draft's claim holds for splitters only
+5. The books over K parts: SUM_(a, b) sigma = 2 [(psi1 G psi1)(psi2 G psi2) + eps N(psi1 G psi2)]
+  [ok] K = 2 parts: the sum rule for both signs, and Cauchy-Binet SUM_(a<b) N(minor) = det(M^dagger M): 2000, 2000 of 2000
+  [ok] K = 3 parts: the sum rule for both signs, and Cauchy-Binet SUM_(a<b) N(minor) = det(M^dagger M): 2000, 2000 of 2000
+  [ok] K = 4 parts: the sum rule for both signs, and Cauchy-Binet SUM_(a<b) N(minor) = det(M^dagger M): 2000, 2000 of 2000
+  [ok] K = 5 parts: the sum rule for both signs, and Cauchy-Binet SUM_(a<b) N(minor) = det(M^dagger M): 2000, 2000 of 2000
+  [ok] a complete frame (phi, T phi), G = rho(phi) I: 2 lam^2 (rho1 rho2 + eps N<psi1, psi2>): 5000 of 5000
+6. Sofer's occupant frame is the joint click of occupant and newcomer, read in the occupant's frame
+  [ok] exhaustive phi in the box {-2..2}^4, newcomers thinned: 23088 of 23088
+result: 0 failures

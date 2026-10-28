@@ -1,0 +1,25 @@
+1. T and K against the 48 lifts (exact, Q(zeta24))
+  [ok] T commutes with every lift: 48 of 48
+  [ok] K commutes with exactly the real lifts: 8 of 48 (real lifts: 8)
+  [ok] K commutes up to a sign with 16 lifts: 16 of 48
+2. The head's K is the phase reversal followed by the half turn about y
+  [ok] K psi = (-H_y)(T psi) on every twin pair in {-2..2}^4 (-H_y the other lift of the half turn about y): 624 of 624
+  [ok] H_y commutes with T, so K K = H_y H_y T T = (-1)(-1) = +1: 624 of 624
+3. T T = -1 and T^4 = 1 on every twin pair; K K = 1; Kramers <T phi, phi> = 0, while <K phi, phi> = phi1^2 + phi2^2
+  [ok] T T = -1: 624 of 624
+  [ok] T^4 = 1: 624 of 624
+  [ok] K K = 1: 624 of 624
+  [ok] <T phi, phi> = 0: 624 of 624
+    <K phi, phi> != 0 at 576 of 624 pairs: K's partner of an occupant is not orthogonal to it
+4. The turnover act tau(now, before) = (T before, T now)
+  [ok] tau tau = -1 on the twin gears: no involution: 20000 of 20000
+  [ok] tau^4 = 1: period four: 20000 of 20000
+  [ok] on one-hand trains (K) tau tau = 1: the involution stands there: 20000 of 20000
+  [ok] tau tau keeps every quadratic reading (rho, S of both slots, the sweeps' sum): an involution on readings: 20000 of 20000
+  [ok] tau reverses S (time reversed, the spin reversed), keeps rho: 20000 of 20000
+5. The rewind of a turnover
+  [ok] tau^-1 = (-T before, -T now) returns the state bit for bit: 20000 of 20000
+  [ok] re-applying the turnover as the head's rewind does lands on -psi, not psi: 20000 of 20000
+6. A turnover at some Node-clocks only (the head's mask): the relative sign is read
+  [ok] a part over both Node-clocks reads |(-a) + b|^2 != |a + b|^2 wherever Re <a, b> != 0: 1946 configurations
+result: 0 failures
