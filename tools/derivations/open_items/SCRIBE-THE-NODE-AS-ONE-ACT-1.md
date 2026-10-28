@@ -1,6 +1,6 @@
 # The Node-clock as one act: the frame, the sentence proposed and the cuts
 
-The owner's questions of 2026-10-28, 05:4x to 05:5x UTC, to the Scribe (ledger rows 303 to 305): the whole system as a tensor machine and the Node-clock a simple one, every family a kind of tensor; whether a singularity can be caught; how everything converges to the clock and whether the 24 arranges it. His order after them: "Sync the Boss." The Reader reports his word to the Reader: "Sync only with the Writer on the right way." This file holds the frame, the sentence entered in the law on the owner's word of 06:0x UTC (decided, not built), the step's acts by kind and what David derived; the plan, with the order of the cuts and the checks, is the Boss's file tools/derivations/open_items/TENSOR24.md, which took this file whole.
+The owner's questions of 2026-10-28, 05:4x to 05:5x UTC, to Sofer (ledger rows 303 to 305): the whole system as a tensor machine and the Node-clock a simple one, every family a kind of tensor; whether a singularity can be caught; how everything converges to the clock and whether the 24 arranges it. His order after them: "Sync the Boss." Animate reports his word to Animate: "Sync only with the Writer on the right way." This file holds the frame, the sentence entered in the law on the owner's word of 06:0x UTC (decided, not built), the step's acts by kind and what David derived; the plan, with the order of the cuts and the checks, is the Boss's file tools/derivations/open_items/TENSOR24.md, which took this file whole.
 
 ## The frame
 
@@ -16,7 +16,7 @@ The owner's questions of 2026-10-28, 05:4x to 05:5x UTC, to the Scribe (ledger r
 
 ## The step's acts by kind
 
-The independent read of 97e5b3fd6 (SCRIBE-AUDIT-97E5B3F-1.md) lists 26 acts in tick.py's step beyond Rule3's one carry. Read by kind (the Scribe's reading, for the Reader and David to check):
+The independent read of 97e5b3fd6 (SCRIBE-AUDIT-97E5B3F-1.md) lists 26 acts in tick.py's step beyond Rule3's one carry. Read by kind (Sofer's reading, for Animate and David to check):
 
 | # | the act (tick.py, 97e5b3fd6) | kind |
 | --- | --- | --- |
@@ -57,7 +57,7 @@ The independent read of 97e5b3fd6 (SCRIBE-AUDIT-97E5B3F-1.md) lists 26 acts in t
 
 ## The order of the cuts and the checks
 
-The order of the cuts and the checks after each cut are the Boss's plan (tools/derivations/open_items/TENSOR24.md, sections 6 and 9). The Scribe's part in them is the scan: `scribe_scan.py --patch FILE --base <head>` (counts only fall, a new file is clean; code moved between files shows as new hits, and the owner's word allows it).
+The order of the cuts and the checks after each cut are the Boss's plan (tools/derivations/open_items/TENSOR24.md, sections 6 and 9). Sofer's part in them is the scan: `scribe_scan.py --patch FILE --base <head>` (counts only fall, a new file is clean; code moved between files shows as new hits, and the owner's word allows it).
 
 ## Not decided
 

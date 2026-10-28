@@ -33,4 +33,4 @@ The law holds two speeds, light's c, 1 / sqrt 3 of a Mesh per tick, and the caus
 
 ## Still to check
 
-- The two derivations of the section above (the Mesh-count speed of light at most one at every wave vector and exactly one along the diagonal; a gapped train's at most num / den) are the Scribe's own arithmetic on the law's dispersion form, checked numerically; the Boss's or David's check of them is asked.
+- The two derivations of the section above (the Mesh-count speed of light at most one at every wave vector and exactly one along the diagonal; a gapped train's at most num / den) are Sofer's own arithmetic on the law's dispersion form, checked numerically; the Boss's or David's check of them is asked.
