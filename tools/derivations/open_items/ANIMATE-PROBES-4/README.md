@@ -38,6 +38,9 @@ The page is ANIMATE-CLOCK-ROOTS.md. These are toys that check whether a law woul
   - with nothing crossing, the next choice is on the last choice's line a third of the time;
   - with the record, always;
   - the last choice reversed a half, all and three quarters of the time.
+- **The 24** (the owner's word of 15:48 UTC: a generic law, a tensor one): the same draws with every frame turned by each of the 24 turns.
+  - Every rule, built from the A1 contraction, turns its choices with the frame under 24 of 24 turns.
+  - A mutant that reads the z parts alone keeps it under 16 of 24, parting at the 8 turns that carry its run's line onto the z line.
 
 ---
 Animate, reader-5.

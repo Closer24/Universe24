@@ -121,6 +121,20 @@ The owner's word (Hebrew, translated): "And try to reach the part where the draw
 - **So the chosen path never disappears under way 2.** It carries the next click's axis always. Through S . J it also moves the next choice's odds, from a half to certainty as the coupling grows, while each click stays a draw below that.
 - **Bell through the circle reads the same way:** each bang's pairs are clicked in the frames the last bang's records left, in their common past.
 
+**A generic law, a tensor one?** The owner's word (15:48 UTC, translated): "And is this possible with a generic law? A tensorial one?"
+
+- **Yes, and it adds no law.** The chosen path's carry is three contractions the plan already holds, each one formula for every kind:
+  - **the click's share is law 6's contraction:** (rho rho_d + S . S_d) / (2 rho rho_d) is the trace of the child's reading times the detector's, over rho rho_d. The detector is the twin pair held in the Node-clock's gears; after a click it is the pair the click wrote there, and no act reads a log (Sofer's condition, 6473697571).
+  - **the turnover is T on every gear,** J K by the kind table, so every spin reverses, S to -S.
+  - **the record bends the light by S . J,** the A1 contraction of its spin with the light's current (T1 x T1 holds A1, item 5), and the next fitting lays the kind of what feeds it (law C).
+- **The share is forced, not chosen.** Schur leaves two A1 contractions of two twin readings, rho rho_d and S . S_d. That the two shares add to the whole, and that a child laid along the detector is read as itself, fix them one to one.
+- **In integers:** the law reads only the two-point readings (rho, S), integers on which every turn of the 24, the third turns too, acts as a signed permutation. The ruling's finding on the twins' own gears (David's OPEN 3) is about holding the gears, not about this law.
+- **The one number is the coupling's integer** in the universe file. It sets how far the record bends the next child: none leaves the next sign a fair draw, the whole spin makes the reversal certain, and half the spin gives three quarters.
+- **The check** (chosen_path.py; the same draws with every frame turned by each of the 24 turns). CHECKED.
+  - Every rule above turns its 4,096 choices with the frame under 24 of 24 turns.
+  - A mutant that reads the z parts alone, an axis typed, keeps the 24 under 16 of 24 turns. It parts at exactly the 8 turns that carry its run's line onto the z line.
+  - A law made of A1 contractions cannot part the 24; the mutant shows that the check can fail.
+
 ## 7. What stays open
 
 - Pauli's exchange sign: law 7's premise, draft J.
