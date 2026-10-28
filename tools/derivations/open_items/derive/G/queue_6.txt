@@ -1,0 +1,7 @@
+g1_collapse500_head.txt exit 0 83s
+g1_collapse500_ueven.txt exit 0 85s
+g1_collapse500_udown.txt exit 0 79s
+g1_collapse1200_head.txt exit 0 102s
+g1_collapse1200_ueven.txt exit 0 104s
+g1_collapse1200_udown.txt exit 0 90s
+DONE

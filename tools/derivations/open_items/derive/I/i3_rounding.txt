@@ -1,0 +1,8 @@
+I3 the rounding; mutant: none
+PASS  R1 D' - D = X Im(conj(a) pull) + Im(conj(v) rho') exactly, and the momentum carried exactly: 0 failures in 20000 random steps to 2^200 (both signs, the edges 0 and teeth 2 among them)
+PASS  R1b the carry's charge E = Im(conj(v) rho') = Im(conj(v) P'): 0 failures in 20000
+PASS  R2 no carry keeps the charge where P' is primitive and outgrows the teeth: 95560 primitive momenta with max |P'_k| >= w' (w' = 2..12, |P'_k| <= 60): a charge-keeping quotient with every remainder inside the teeth at 0; among the 63192 non-primitive ones it exists at 16272; the head's mid carry keeps E = 0 at 14372 of 161040 momenta (mostly v = 0)
+PASS  R3 the integer step of one Node-clock keeps no quadratic form but the constants (the law's line 785): null space dimension 1 over the 28 monomials of degree <= 2 (constants alone: True)
+PASS  R3b control: the exact rational step's null space holds the charge Im(conj(a) P): null space dimension 5 over the 15 monomials of (a3, a12, P3, P12); the charge invariant at every sample: True
+PASS  R4 the turn's rounding: the rounded current not antisymmetric, the exact one antisymmetric: of 5000 Meshes the rounded turn leaves 5000 not antisymmetric, the exact turn 0
+6 of 6 checks PASS

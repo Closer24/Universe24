@@ -1,0 +1,9 @@
+g1_count_bodies120.txt exit 0 12s
+g1_count_packet150.txt exit 0 29s
+g1_count_emission_none300.txt exit 0 15s
+g1_count_emission_one300.txt exit 0 23s
+g1_count_emission300.txt exit 0 33s
+g1_count_collapse500_600.txt exit 0 79s
+g1_count_collapse800_600.txt exit 0 80s
+g1_count_collapse1200_600.txt exit 0 97s
+DONE

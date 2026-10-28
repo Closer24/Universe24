@@ -1,0 +1,10 @@
+I4 world_hole.json, 60 ticks, variant head; coupled hands [0, 1, 2]; Q* in vacuum sweep units
+  the head's own pull read back at 60 of 60 ticks; the carry P' = w' v + rho' at 60 of 60; the momentum read with the gear's own teeth at the next start at 60 of 60
+  the step: Q*_mid - Q*_start = SUM (I + Rt + Rc) fails at 0 of 60 ticks
+  the Mesh currents: A = SUM I not 0 at 47 of 60 ticks, largest |A| 17276.1
+  the turnover: 3219 Node-clock turnovers; the proper term off its formula at 0 (the mirror's even-teeth edge at 0); the turnover identity fails at 0 of 60 ticks
+  the rates: B = -SUM e (lam' - lam) Im(conj(a) P) fails at 0 of 60 ticks
+  the tick: Q*_next - Q*_start = step + turnover + click + rates fails at 0 of 60 ticks
+  over the run (summed): Q* moved 288911.4; the turns' rounding 314.3, the carry's rounding -17836.8; the turnovers' proper term 796203.2, the turned clocks' inflow not taken -57750.8; the click -837343.5 (15 ticks, 28 births); the rates 369660.9
+  largest |term| in one tick: Rt 150.4, Rc 10079.9, proper 2674429.1, inflow 23354.1, C 1253994.1, B 500611.2, A 17276.1
+VERDICT head: the budget closes to the last digit: True; the currents antisymmetric at every tick: False; the turnover keeps the framed charge up to its booked terms: False; PASS as the derived act: False

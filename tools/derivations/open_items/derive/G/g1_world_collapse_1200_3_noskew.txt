@@ -1,0 +1,49 @@
+world_collapse_1200.json, 3 ticks, rule head, mirror mod, back 0, the impulse rounding u at its tie: head, the skew struck (a diagnosis)
+hands (acts order): ['hand 0', 'hand 1', 'hand 2 (light)']; couplings [1, 1, 0]; teeth t = 2543476440576000000 (t even: True)
+setting: S5 carries 1458, ties 0
+tick 0: plain charges [0, 0, 0]; Q* (floor) [0, 0, 0]
+  tick   1: X 9 values 1001..1425; turned 0; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 0, 0]
+  tick   2: X 11 values 1006..1983; turned 0; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 24 S3 312 S4 0 S6 0; plain charges [0, 0, 0]
+  tick   3: X 16 values 1012..2418; turned 0; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 600 S4 0 S6 0; plain charges [0, 0, 0]
+forward done in 1 s; the final state hash 84a576ebe5afa0567836a9a4048b26231fde1ff1dcc0169d3c863cdd5b3bfcb8
+S2 ties (tick, rounding, clock, p, the head's u): [(2, 'hand 2 (light) gear 0 in', (np.int64(2), np.int64(3), np.int64(4)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(2), np.int64(4), np.int64(3)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(2), np.int64(4), np.int64(5)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(2), np.int64(5), np.int64(4)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(3), np.int64(2), np.int64(4)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(3), np.int64(4), np.int64(2)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(3), np.int64(4), np.int64(6)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(3), np.int64(6), np.int64(4)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(4), np.int64(2), np.int64(3)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(4), np.int64(2), np.int64(5)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(4), np.int64(3), np.int64(2)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(4), np.int64(3), np.int64(6)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(4), np.int64(5), np.int64(2)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(4), np.int64(5), np.int64(6)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(4), np.int64(6), np.int64(3)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(4), np.int64(6), np.int64(5)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(5), np.int64(2), np.int64(4)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(5), np.int64(4), np.int64(2)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(5), np.int64(4), np.int64(6)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(5), np.int64(6), np.int64(4)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(6), np.int64(3), np.int64(4)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(6), np.int64(4), np.int64(3)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(6), np.int64(4), np.int64(5)), 480717047268864000000000, 188), (2, 'hand 2 (light) gear 0 in', (np.int64(6), np.int64(5), np.int64(4)), 480717047268864000000000, 188)]
+counts:
+  S1 driven carries: 21870
+  S1 driven carries, odd teeth: 0
+  S1 ties: 0
+  S1 ties on hand 0: 0
+  S1 ties on hand 1: 0
+  S1 ties on hand 2 (light): 0
+  S1 ties on offset: 0
+  S2 u roundings: 43740
+  S2 u ties (2p = tX mod 2tX): 24
+  S2 u ties on hand 2 (light) gear 0 in: 24
+  S3 tension means: 13122
+  S3 tension ties (n_i + n_j odd): 1008
+  S3 tension ties inside 0..Gamma: 912
+  S4 drive (tick.py) carries: 8748
+  S4 drive (tick.py) remainder at 0, even teeth: 0
+  S4 drive carries: 17496
+  S4 drive remainder at 0, even teeth: 0
+  S4 turn (the ratchet, two teeth: its pawl bit) carries: 2187
+  S4 turn (the ratchet, two teeth: its pawl bit) remainder at 0, even teeth: 0
+  S4 turn carries: 15309
+  S4 turn remainder at 0, even teeth: 0
+  S5 setting carries: 1458
+  S5 setting ties: 0
+fittings: 0 pairs, 0 unspringings (mergers)
+  fitted hands by hand and sense: []
+  fittings per tick: []
+  unspringings per tick: []
+  unspringings by the unwound hand and the sign of the sweep they unwound (W_x + W_y): []
+  unspringings' ends by hand and the sign of the sweep unwound there: []; the net sweep unwound 0
+chimes by hand and sense: []
+plain charges at the end (the head's sweep summed per hand): [0, 0, 0]; their total 0
+  coupled total SUM c_T Q_T: 0
+Q* at the end per hand (vacuum units, the floor of the exact rational): [0, 0, 0]
+  coupled total SUM c_T Q*_T (floor): 0
+reckoner: {'68 matter against antimatter': {"moving births with the + child at the take's Node / at the other end": [0, 0], 'mergers beside (the light at both ends, no hand)': 0, 'verdict': "NOT READ: no moving birth; the predicate: the + child's end chosen by the twist's hand at every moving birth"}}
+reckoner: {"69 the neutrino's one hand": {"moving births by hand (the + child at the take's Node / at the other end)": [0, 0], 'mergers beside (no hand)': 0, 'verdict': 'NOT READ: no moving birth; the predicate: one hand at every moving birth of the record'}}
+reckoner: {'70 the baryon number': {"births whose children's own charges sum to 0 / in all": [0, 0], "births of a pair whose record W at the children's Nodes sums apart from 0 (the standing level's residue)": 0, "the mergers' light children's record W summed (0 by the letter)": 0, 'verdict': "NOT READ: no birth; the predicate: the children's own charges summing to 0 at every birth, no matter made by a click"}}
+counts of the clock: {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 0, 'laid_back': 0, 'refused_stop': 0, 'refused_origin': 0, 'refused_lay': 0, 'refused_orientation': 0, 'refused_twist': 396, 'refused_sense': 144, 'refused_disengaged': 0, 'turns': 0, 'met': 540, 'laid': 0, 'laid_nodes': 0}
+done in 1 s

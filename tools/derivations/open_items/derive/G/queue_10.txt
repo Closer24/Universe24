@@ -1,0 +1,2 @@
+g7_collapse500_a_noskew.txt exit 0 153s
+DONE

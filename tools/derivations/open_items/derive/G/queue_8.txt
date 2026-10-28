@@ -1,0 +1,7 @@
+g7_collapse500_a.txt exit 0 142s
+g7_collapse500_b.txt exit 0 142s
+g7_collapse500_c.txt exit 0 142s
+g7_collapse1200_a.txt exit 0 182s
+g7_collapse1200_b.txt exit 0 172s
+g7_collapse1200_c.txt exit 0 156s
+DONE

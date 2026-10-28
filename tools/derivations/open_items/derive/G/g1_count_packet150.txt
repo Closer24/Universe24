@@ -1,0 +1,203 @@
+world_packet.json, 150 ticks, rule head, mirror mod, back 20, the impulse rounding u at its tie: head
+hands (acts order): ['hand 0', 'hand 1', 'hand 2 (light)']; couplings [1, 1, 0]; teeth t = 2543476440576000000 (t even: True)
+setting: S5 carries 1458, ties 0
+tick 0: plain charges [0, 0, 0]; Q* (floor) [0, 0, 0]
+  tick   1: X 6 values 1000..1152; turned 672; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 0, 0]
+  tick   2: X 8 values 1000..1325; turned 648; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 240 S4 0 S6 0; plain charges [0, 0, 0]
+  tick   3: X 12 values 1000..1431; turned 558; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 336 S4 0 S6 0; plain charges [0, -1260, 0]
+  tick   4: X 15 values 1000..1465; turned 520; births 0 pairs, 0 mergers; chimes +6 -1; ties S1 0 S2 0 S3 276 S4 0 S6 0; plain charges [0, -1027, 0]
+  tick   5: X 19 values 1000..1431; turned 425; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 564 S4 0 S6 0; plain charges [0, -1351, 0]
+  tick   6: X 24 values 1000..1400; turned 298; births 0 pairs, 0 mergers; chimes +0 -7; ties S1 0 S2 0 S3 756 S4 0 S6 0; plain charges [0, -1754, 0]
+  tick   7: X 26 values 1000..1383; turned 184; births 0 pairs, 0 mergers; chimes +0 -0; ties S1 0 S2 0 S3 948 S4 0 S6 0; plain charges [0, -906, 0]
+  tick   8: X 29 values 1000..1401; turned 142; births 0 pairs, 0 mergers; chimes +1 -6; ties S1 0 S2 0 S3 648 S4 0 S6 0; plain charges [0, -1821, 0]
+  tick   9: X 32 values 1000..1414; turned 116; births 0 pairs, 0 mergers; chimes +0 -6; ties S1 0 S2 0 S3 912 S4 0 S6 0; plain charges [0, -1582, 0]
+  tick  10: X 32 values 1000..1401; turned 59; births 0 pairs, 0 mergers; chimes +1 -6; ties S1 0 S2 0 S3 996 S4 0 S6 0; plain charges [0, -7474, 0]
+  tick  11: X 32 values 1000..1382; turned 56; births 0 pairs, 0 mergers; chimes +1 -6; ties S1 0 S2 0 S3 1416 S4 0 S6 0; plain charges [0, -9352, 0]
+  tick  12: X 28 values 1015..1406; turned 8; births 0 pairs, 0 mergers; chimes +1 -20; ties S1 0 S2 0 S3 1092 S4 0 S6 0; plain charges [0, -13772, 0]
+  tick  13: X 30 values 1069..1382; turned 127; births 0 pairs, 0 mergers; chimes +1 -14; ties S1 0 S2 0 S3 1644 S4 0 S6 0; plain charges [0, -13424, 0]
+  tick  14: X 28 values 1122..1358; turned 24; births 0 pairs, 0 mergers; chimes +1 -12; ties S1 0 S2 0 S3 1332 S4 0 S6 0; plain charges [0, -8370, 0]
+  tick  15: X 30 values 1123..1383; turned 48; births 0 pairs, 0 mergers; chimes +9 -0; ties S1 0 S2 0 S3 1824 S4 0 S6 0; plain charges [0, -8620, 0]
+  tick  16: X 30 values 1118..1457; turned 144; births 0 pairs, 0 mergers; chimes +15 -6; ties S1 0 S2 0 S3 1848 S4 0 S6 0; plain charges [0, -11473, 0]
+  tick  17: X 30 values 1136..1562; turned 100; births 0 pairs, 0 mergers; chimes +25 -0; ties S1 0 S2 0 S3 1464 S4 0 S6 0; plain charges [0, -11357, 0]
+  tick  18: X 31 values 1158..1457; turned 27; births 0 pairs, 0 mergers; chimes +24 -19; ties S1 0 S2 0 S3 2460 S4 0 S6 0; plain charges [0, -7177, 0]
+  tick  19: X 32 values 1165..1433; turned 216; births 0 pairs, 0 mergers; chimes +32 -13; ties S1 0 S2 0 S3 1656 S4 0 S6 0; plain charges [0, -3305, 0]
+  tick  20: X 32 values 1177..1587; turned 70; births 0 pairs, 0 mergers; chimes +32 -19; ties S1 0 S2 0 S3 1860 S4 0 S6 0; plain charges [0, -753, 0]
+  tick  21: X 31 values 1188..1693; turned 168; births 0 pairs, 0 mergers; chimes +36 -7; ties S1 0 S2 0 S3 2028 S4 0 S6 0; plain charges [0, 3554, 0]
+  tick  22: X 33 values 1159..1587; turned 55; births 0 pairs, 0 mergers; chimes +32 -19; ties S1 0 S2 0 S3 2088 S4 0 S6 0; plain charges [0, 2028, 0]
+  tick  23: X 35 values 1129..1515; turned 134; births 0 pairs, 0 mergers; chimes +56 -7; ties S1 0 S2 0 S3 2340 S4 0 S6 0; plain charges [0, 2004, 0]
+  tick  24: X 32 values 1104..1563; turned 156; births 0 pairs, 0 mergers; chimes +37 -14; ties S1 0 S2 0 S3 1908 S4 0 S6 0; plain charges [0, -2784, 0]
+  tick  25: X 31 values 1104..1650; turned 128; births 0 pairs, 0 mergers; chimes +25 -38; ties S1 0 S2 0 S3 1908 S4 0 S6 0; plain charges [0, -1360, 0]
+  tick  26: X 35 values 1114..1563; turned 179; births 0 pairs, 0 mergers; chimes +36 -45; ties S1 0 S2 0 S3 1776 S4 0 S6 0; plain charges [0, -3898, 0]
+  tick  27: X 33 values 1151..1507; turned 132; births 0 pairs, 0 mergers; chimes +48 -33; ties S1 0 S2 0 S3 1920 S4 0 S6 0; plain charges [0, 6518, 0]
+  tick  28: X 32 values 1198..1555; turned 134; births 0 pairs, 0 mergers; chimes +42 -33; ties S1 0 S2 0 S3 1752 S4 0 S6 0; plain charges [0, 4205, 0]
+  tick  29: X 30 values 1215..1625; turned 162; births 0 pairs, 0 mergers; chimes +36 -33; ties S1 0 S2 0 S3 1872 S4 0 S6 0; plain charges [0, 8973, 0]
+  tick  30: X 31 values 1226..1555; turned 213; births 0 pairs, 0 mergers; chimes +42 -9; ties S1 0 S2 0 S3 2220 S4 0 S6 0; plain charges [0, 10989, 0]
+  tick  31: X 29 values 1235..1496; turned 134; births 0 pairs, 0 mergers; chimes +54 -9; ties S1 0 S2 0 S3 1752 S4 0 S6 0; plain charges [0, 13500, 0]
+  tick  32: X 33 values 1232..1499; turned 230; births 0 pairs, 0 mergers; chimes +31 -24; ties S1 0 S2 0 S3 1788 S4 0 S6 0; plain charges [0, 7405, 0]
+  tick  33: X 31 values 1231..1543; turned 176; births 0 pairs, 0 mergers; chimes +19 -24; ties S1 0 S2 0 S3 2016 S4 0 S6 0; plain charges [0, 21499, 0]
+  tick  34: X 30 values 1220..1499; turned 205; births 0 pairs, 0 mergers; chimes +25 -24; ties S1 0 S2 0 S3 1800 S4 0 S6 0; plain charges [0, 16399, 0]
+  tick  35: X 29 values 1198..1483; turned 170; births 0 pairs, 0 mergers; chimes +33 -24; ties S1 0 S2 0 S3 1728 S4 0 S6 0; plain charges [0, 23617, 0]
+  tick  36: X 27 values 1199..1508; turned 142; births 0 pairs, 0 mergers; chimes +25 -32; ties S1 0 S2 0 S3 1764 S4 0 S6 0; plain charges [0, 18499, 0]
+  tick  37: X 32 values 1180..1537; turned 132; births 0 pairs, 0 mergers; chimes +25 -32; ties S1 0 S2 0 S3 2016 S4 0 S6 0; plain charges [0, 27387, 0]
+  tick  38: X 31 values 1106..1508; turned 147; births 0 pairs, 0 mergers; chimes +25 -32; ties S1 0 S2 0 S3 1980 S4 0 S6 0; plain charges [0, 25779, 0]
+  tick  39: X 31 values 1124..1463; turned 210; births 0 pairs, 0 mergers; chimes +19 -38; ties S1 0 S2 0 S3 1728 S4 0 S6 0; plain charges [0, 28067, 0]
+  tick  40: X 33 values 1133..1517; turned 92; births 0 pairs, 0 mergers; chimes +19 -38; ties S1 0 S2 0 S3 1536 S4 0 S6 0; plain charges [0, 28521, 0]
+  tick  41: X 31 values 1164..1584; turned 218; births 0 pairs, 0 mergers; chimes +31 -32; ties S1 0 S2 0 S3 2184 S4 0 S6 0; plain charges [0, 33720, 0]
+  tick  42: X 28 values 1165..1601; turned 224; births 0 pairs, 0 mergers; chimes +19 -32; ties S1 0 S2 0 S3 2208 S4 0 S6 0; plain charges [0, 45506, 0]
+  tick  43: X 31 values 1197..1655; turned 118; births 0 pairs, 0 mergers; chimes +19 -32; ties S1 0 S2 0 S3 2136 S4 0 S6 0; plain charges [0, 45600, 0]
+  tick  44: X 30 values 1200..1601; turned 175; births 0 pairs, 0 mergers; chimes +7 -32; ties S1 0 S2 0 S3 1656 S4 0 S6 0; plain charges [0, 46620, 0]
+  tick  45: X 32 values 1197..1448; turned 168; births 0 pairs, 0 mergers; chimes +31 -44; ties S1 0 S2 0 S3 2112 S4 0 S6 0; plain charges [0, 44822, 0]
+  tick  46: X 31 values 1197..1430; turned 208; births 0 pairs, 0 mergers; chimes +39 -24; ties S1 0 S2 0 S3 1752 S4 0 S6 0; plain charges [0, 41554, 0]
+  tick  47: X 27 values 1193..1624; turned 178; births 0 pairs, 0 mergers; chimes +15 -36; ties S1 0 S2 0 S3 2028 S4 0 S6 0; plain charges [0, 50584, 0]
+  tick  48: X 32 values 1173..1762; turned 150; births 0 pairs, 0 mergers; chimes +51 -24; ties S1 0 S2 0 S3 1668 S4 0 S6 0; plain charges [0, 30329, 0]
+  tick  49: X 32 values 1152..1624; turned 277; births 0 pairs, 0 mergers; chimes +1 -50; ties S1 0 S2 0 S3 1464 S4 0 S6 0; plain charges [0, 45333, 0]
+  tick  50: X 31 values 1151..1482; turned 172; births 0 pairs, 0 mergers; chimes +39 -24; ties S1 0 S2 0 S3 1800 S4 0 S6 0; plain charges [0, 47596, 0]
+  tick  51: X 33 values 1159..1477; turned 194; births 0 pairs, 0 mergers; chimes +39 -36; ties S1 0 S2 0 S3 1440 S4 0 S6 0; plain charges [0, 50032, 0]
+  tick  52: X 30 values 1153..1644; turned 162; births 0 pairs, 0 mergers; chimes +31 -32; ties S1 0 S2 0 S3 1356 S4 0 S6 0; plain charges [0, 59612, 0]
+  tick  53: X 31 values 1174..1724; turned 174; births 0 pairs, 0 mergers; chimes +31 -44; ties S1 0 S2 0 S3 1884 S4 0 S6 0; plain charges [0, 53373, 0]
+  tick  54: X 31 values 1168..1644; turned 119; births 0 pairs, 0 mergers; chimes +43 -32; ties S1 0 S2 0 S3 1944 S4 0 S6 0; plain charges [0, 43779, 0]
+  tick  55: X 32 values 1188..1612; turned 132; births 0 pairs, 0 mergers; chimes +31 -44; ties S1 0 S2 0 S3 1404 S4 0 S6 0; plain charges [0, 46958, 0]
+  tick  56: X 29 values 1189..1653; turned 152; births 0 pairs, 0 mergers; chimes +43 -44; ties S1 0 S2 0 S3 1464 S4 0 S6 0; plain charges [0, 37879, 0]
+  tick  57: X 31 values 1191..1693; turned 200; births 0 pairs, 0 mergers; chimes +31 -44; ties S1 0 S2 0 S3 1872 S4 0 S6 0; plain charges [0, 50568, 0]
+  tick  58: X 33 values 1184..1653; turned 173; births 0 pairs, 0 mergers; chimes +57 -36; ties S1 0 S2 0 S3 1908 S4 0 S6 0; plain charges [0, 41250, 0]
+  tick  59: X 34 values 1156..1587; turned 128; births 0 pairs, 0 mergers; chimes +63 -36; ties S1 0 S2 0 S3 1932 S4 0 S6 0; plain charges [0, 58911, 0]
+  tick  60: X 32 values 1173..1537; turned 174; births 0 pairs, 0 mergers; chimes +39 -72; ties S1 0 S2 0 S3 1632 S4 0 S6 0; plain charges [0, 59279, 0]
+  tick  61: X 30 values 1202..1528; turned 180; births 0 pairs, 0 mergers; chimes +39 -60; ties S1 0 S2 0 S3 1452 S4 0 S6 0; plain charges [0, 60065, 0]
+  tick  62: X 27 values 1190..1536; turned 116; births 0 pairs, 0 mergers; chimes +15 -72; ties S1 0 S2 0 S3 1692 S4 0 S6 0; plain charges [0, 45725, 0]
+  tick  63: X 30 values 1187..1611; turned 184; births 0 pairs, 0 mergers; chimes +33 -60; ties S1 0 S2 0 S3 1392 S4 0 S6 0; plain charges [0, 38157, 0]
+  tick  64: X 29 values 1184..1751; turned 156; births 0 pairs, 0 mergers; chimes +21 -60; ties S1 0 S2 0 S3 1980 S4 0 S6 0; plain charges [0, 24431, 0]
+  tick  65: X 29 values 1166..1795; turned 182; births 0 pairs, 0 mergers; chimes +33 -36; ties S1 0 S2 0 S3 1596 S4 0 S6 0; plain charges [0, 20063, 0]
+  tick  66: X 30 values 1191..1751; turned 185; births 0 pairs, 0 mergers; chimes +39 -42; ties S1 0 S2 0 S3 1788 S4 0 S6 0; plain charges [0, 21325, 0]
+  tick  67: X 30 values 1196..1585; turned 168; births 0 pairs, 0 mergers; chimes +39 -42; ties S1 0 S2 0 S3 2028 S4 0 S6 0; plain charges [0, 34561, 0]
+  tick  68: X 31 values 1201..1515; turned 150; births 0 pairs, 0 mergers; chimes +39 -42; ties S1 0 S2 0 S3 1656 S4 0 S6 0; plain charges [0, 38783, 0]
+  tick  69: X 29 values 1183..1589; turned 228; births 0 pairs, 0 mergers; chimes +39 -24; ties S1 0 S2 0 S3 1380 S4 0 S6 0; plain charges [0, 53917, 0]
+  tick  70: X 29 values 1205..1621; turned 150; births 0 pairs, 0 mergers; chimes +55 -32; ties S1 0 S2 0 S3 1896 S4 0 S6 0; plain charges [0, 51343, 0]
+  tick  71: X 28 values 1162..1669; turned 164; births 0 pairs, 0 mergers; chimes +39 -38; ties S1 0 S2 0 S3 1260 S4 0 S6 0; plain charges [0, 71034, 0]
+  tick  72: X 29 values 1155..1747; turned 90; births 0 pairs, 0 mergers; chimes +63 -20; ties S1 0 S2 0 S3 1668 S4 0 S6 0; plain charges [0, 65178, 0]
+  tick  73: X 30 values 1158..1669; turned 253; births 0 pairs, 0 mergers; chimes +63 -8; ties S1 0 S2 0 S3 1536 S4 0 S6 0; plain charges [0, 73718, 0]
+  tick  74: X 32 values 1180..1474; turned 142; births 0 pairs, 0 mergers; chimes +39 -14; ties S1 0 S2 0 S3 1536 S4 0 S6 0; plain charges [0, 71898, 0]
+  tick  75: X 31 values 1182..1380; turned 134; births 0 pairs, 0 mergers; chimes +39 -8; ties S1 0 S2 0 S3 1176 S4 0 S6 0; plain charges [0, 105497, 0]
+  tick  76: X 31 values 1161..1530; turned 200; births 0 pairs, 0 mergers; chimes +47 -6; ties S1 0 S2 0 S3 1164 S4 0 S6 0; plain charges [0, 106772, 0]
+  tick  77: X 29 values 1175..1679; turned 108; births 0 pairs, 0 mergers; chimes +47 -0; ties S1 0 S2 0 S3 1356 S4 0 S6 0; plain charges [0, 101306, 0]
+  tick  78: X 31 values 1145..1720; turned 242; births 0 pairs, 0 mergers; chimes +47 -6; ties S1 0 S2 0 S3 1248 S4 0 S6 0; plain charges [0, 106230, 0]
+  tick  79: X 30 values 1123..1679; turned 105; births 0 pairs, 0 mergers; chimes +47 -0; ties S1 0 S2 0 S3 1068 S4 0 S6 0; plain charges [0, 103402, 0]
+  tick  80: X 30 values 1109..1654; turned 306; births 0 pairs, 0 mergers; chimes +47 -6; ties S1 0 S2 0 S3 852 S4 0 S6 0; plain charges [0, 105926, 0]
+  tick  81: X 31 values 1196..1660; turned 96; births 0 pairs, 0 mergers; chimes +41 -6; ties S1 0 S2 0 S3 660 S4 0 S6 0; plain charges [0, 82879, 0]
+  tick  82: X 33 values 1201..1685; turned 154; births 0 pairs, 0 mergers; chimes +71 -12; ties S1 0 S2 0 S3 912 S4 0 S6 0; plain charges [0, 61488, 0]
+  tick  83: X 33 values 1198..1660; turned 205; births 0 pairs, 0 mergers; chimes +47 -42; ties S1 0 S2 0 S3 348 S4 0 S6 0; plain charges [0, 39670, 0]
+  tick  84: X 29 values 1205..1540; turned 202; births 0 pairs, 0 mergers; chimes +47 -60; ties S1 0 S2 0 S3 288 S4 0 S6 0; plain charges [0, 34906, 0]
+  tick  85: X 31 values 1212..1446; turned 92; births 0 pairs, 0 mergers; chimes +41 -48; ties S1 0 S2 0 S3 240 S4 0 S6 0; plain charges [0, 39414, 0]
+  tick  86: X 29 values 1148..1485; turned 156; births 0 pairs, 0 mergers; chimes +57 -50; ties S1 0 S2 0 S3 384 S4 0 S6 0; plain charges [0, 39254, 0]
+  tick  87: X 29 values 1112..1594; turned 206; births 0 pairs, 0 mergers; chimes +33 -56; ties S1 0 S2 0 S3 144 S4 0 S6 0; plain charges [0, 53733, 0]
+  tick  88: X 32 values 1145..1607; turned 114; births 0 pairs, 0 mergers; chimes +33 -98; ties S1 0 S2 0 S3 144 S4 0 S6 0; plain charges [0, 50473, 0]
+  tick  89: X 29 values 1209..1594; turned 177; births 0 pairs, 0 mergers; chimes +45 -32; ties S1 0 S2 0 S3 96 S4 0 S6 0; plain charges [0, 49629, 0]
+  tick  90: X 29 values 1223..1499; turned 198; births 0 pairs, 0 mergers; chimes +9 -74; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 33086, 0]
+  tick  91: X 29 values 1221..1426; turned 126; births 0 pairs, 0 mergers; chimes +21 -32; ties S1 0 S2 0 S3 48 S4 0 S6 0; plain charges [0, 27832, 0]
+  tick  92: X 32 values 1207..1468; turned 128; births 0 pairs, 0 mergers; chimes +9 -74; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 18043, 0]
+  tick  93: X 32 values 1211..1566; turned 208; births 0 pairs, 0 mergers; chimes +21 -32; ties S1 0 S2 0 S3 96 S4 0 S6 0; plain charges [0, 5633, 0]
+  tick  94: X 31 values 1192..1612; turned 182; births 0 pairs, 0 mergers; chimes +21 -44; ties S1 0 S2 0 S3 48 S4 0 S6 0; plain charges [0, -240, 0]
+  tick  95: X 31 values 1228..1566; turned 133; births 0 pairs, 0 mergers; chimes +21 -50; ties S1 0 S2 0 S3 48 S4 0 S6 0; plain charges [0, -2906, 0]
+  tick  96: X 32 values 1204..1573; turned 218; births 0 pairs, 0 mergers; chimes +9 -50; ties S1 0 S2 0 S3 12 S4 0 S6 0; plain charges [0, -10598, 0]
+  tick  97: X 28 values 1179..1566; turned 99; births 0 pairs, 0 mergers; chimes +21 -92; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -14132, 0]
+  tick  98: X 32 values 1197..1453; turned 144; births 0 pairs, 0 mergers; chimes +9 -62; ties S1 0 S2 0 S3 96 S4 0 S6 0; plain charges [0, -38091, 0]
+  tick  99: X 31 values 1225..1355; turned 184; births 0 pairs, 0 mergers; chimes +21 -68; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -21336, 0]
+  tick 100: X 32 values 1209..1469; turned 72; births 0 pairs, 0 mergers; chimes +27 -98; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 17770, 0]
+  tick 101: X 33 values 1172..1663; turned 152; births 0 pairs, 0 mergers; chimes +27 -86; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 40019, 0]
+  tick 102: X 30 values 1212..1719; turned 126; births 0 pairs, 0 mergers; chimes +21 -86; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 44058, 0]
+  tick 103: X 28 values 1208..1663; turned 237; births 0 pairs, 0 mergers; chimes +27 -78; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 39446, 0]
+  tick 104: X 30 values 1219..1552; turned 180; births 0 pairs, 0 mergers; chimes +21 -66; ties S1 0 S2 0 S3 12 S4 0 S6 0; plain charges [0, 51293, 0]
+  tick 105: X 30 values 1215..1497; turned 74; births 0 pairs, 0 mergers; chimes +33 -84; ties S1 0 S2 0 S3 60 S4 0 S6 0; plain charges [0, 48972, 0]
+  tick 106: X 30 values 1217..1570; turned 196; births 0 pairs, 0 mergers; chimes +27 -48; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 63140, 0]
+  tick 107: X 30 values 1241..1655; turned 174; births 0 pairs, 0 mergers; chimes +27 -48; ties S1 0 S2 0 S3 48 S4 0 S6 0; plain charges [0, 44622, 0]
+  tick 108: X 31 values 1232..1570; turned 145; births 0 pairs, 0 mergers; chimes +25 -80; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 67258, 0]
+  tick 109: X 30 values 1232..1417; turned 206; births 0 pairs, 0 mergers; chimes +33 -48; ties S1 0 S2 0 S3 72 S4 0 S6 0; plain charges [0, 68120, 0]
+  tick 110: X 30 values 1228..1447; turned 182; births 0 pairs, 0 mergers; chimes +19 -38; ties S1 0 S2 0 S3 72 S4 0 S6 0; plain charges [0, 64158, 0]
+  tick 111: X 32 values 1230..1562; turned 170; births 0 pairs, 0 mergers; chimes +19 -62; ties S1 0 S2 0 S3 60 S4 0 S6 0; plain charges [0, 67713, 0]
+  tick 112: X 28 values 1252..1610; turned 182; births 0 pairs, 0 mergers; chimes +43 -38; ties S1 0 S2 0 S3 12 S4 0 S6 0; plain charges [0, 73420, 0]
+  tick 113: X 33 values 1240..1619; turned 86; births 0 pairs, 0 mergers; chimes +19 -38; ties S1 0 S2 0 S3 24 S4 0 S6 0; plain charges [0, 69004, 0]
+  tick 114: X 30 values 1223..1626; turned 218; births 0 pairs, 0 mergers; chimes +27 -30; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 86822, 0]
+  tick 115: X 30 values 1242..1619; turned 169; births 0 pairs, 0 mergers; chimes +63 -18; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 91134, 0]
+  tick 116: X 33 values 1251..1520; turned 152; births 0 pairs, 0 mergers; chimes +63 -18; ties S1 0 S2 0 S3 48 S4 0 S6 0; plain charges [0, 96450, 0]
+  tick 117: X 30 values 1245..1440; turned 140; births 0 pairs, 0 mergers; chimes +59 -30; ties S1 0 S2 0 S3 12 S4 0 S6 0; plain charges [0, 98789, 0]
+  tick 118: X 32 values 1235..1488; turned 164; births 0 pairs, 0 mergers; chimes +51 -30; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 120420, 0]
+  tick 119: X 30 values 1245..1617; turned 206; births 0 pairs, 0 mergers; chimes +59 -24; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 110686, 0]
+  tick 120: X 32 values 1258..1657; turned 168; births 0 pairs, 0 mergers; chimes +57 -18; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 121572, 0]
+  tick 121: X 27 values 1235..1617; turned 165; births 0 pairs, 0 mergers; chimes +89 -18; ties S1 0 S2 0 S3 48 S4 0 S6 0; plain charges [0, 138634, 0]
+  tick 122: X 31 values 1253..1458; turned 102; births 0 pairs, 0 mergers; chimes +57 -6; ties S1 0 S2 0 S3 60 S4 0 S6 0; plain charges [0, 123446, 0]
+  tick 123: X 26 values 1256..1411; turned 238; births 0 pairs, 0 mergers; chimes +105 -14; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 137198, 0]
+  tick 124: X 30 values 1269..1496; turned 186; births 0 pairs, 0 mergers; chimes +57 -14; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 108904, 0]
+  tick 125: X 29 values 1259..1636; turned 110; births 0 pairs, 0 mergers; chimes +73 -22; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 102004, 0]
+  tick 126: X 33 values 1271..1701; turned 142; births 0 pairs, 0 mergers; chimes +43 -28; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 91015, 0]
+  tick 127: X 28 values 1262..1636; turned 163; births 0 pairs, 0 mergers; chimes +67 -52; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 98603, 0]
+  tick 128: X 32 values 1277..1434; turned 186; births 0 pairs, 0 mergers; chimes +37 -58; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 90106, 0]
+  tick 129: X 34 values 1270..1424; turned 248; births 0 pairs, 0 mergers; chimes +67 -52; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 100431, 0]
+  tick 130: X 32 values 1259..1527; turned 136; births 0 pairs, 0 mergers; chimes +51 -44; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 90104, 0]
+  tick 131: X 34 values 1247..1543; turned 180; births 0 pairs, 0 mergers; chimes +51 -44; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 83070, 0]
+  tick 132: X 31 values 1239..1604; turned 78; births 0 pairs, 0 mergers; chimes +49 -46; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 53736, 0]
+  tick 133: X 32 values 1248..1715; turned 270; births 0 pairs, 0 mergers; chimes +43 -52; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 39101, 0]
+  tick 134: X 28 values 1261..1604; turned 85; births 0 pairs, 0 mergers; chimes +51 -56; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, 15093, 0]
+  tick 135: X 30 values 1272..1432; turned 228; births 0 pairs, 0 mergers; chimes +50 -38; ties S1 0 S2 0 S3 72 S4 0 S6 0; plain charges [0, 21692, 0]
+  tick 136: X 32 values 1246..1466; turned 114; births 0 pairs, 0 mergers; chimes +57 -50; ties S1 0 S2 0 S3 12 S4 0 S6 0; plain charges [0, 3674, 0]
+  tick 137: X 32 values 1265..1632; turned 128; births 0 pairs, 0 mergers; chimes +42 -46; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -13775, 0]
+  tick 138: X 32 values 1262..1753; turned 108; births 0 pairs, 0 mergers; chimes +18 -82; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -32606, 0]
+  tick 139: X 34 values 1265..1632; turned 275; births 0 pairs, 0 mergers; chimes +18 -46; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -21182, 0]
+  tick 140: X 34 values 1258..1524; turned 122; births 0 pairs, 0 mergers; chimes +18 -58; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -10800, 0]
+  tick 141: X 29 values 1258..1493; turned 116; births 0 pairs, 0 mergers; chimes +18 -70; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -5484, 0]
+  tick 142: X 27 values 1256..1429; turned 204; births 0 pairs, 0 mergers; chimes +24 -76; ties S1 0 S2 0 S3 12 S4 0 S6 0; plain charges [0, -19480, 0]
+  tick 143: X 22 values 1267..1403; turned 192; births 0 pairs, 0 mergers; chimes +18 -52; ties S1 0 S2 0 S3 60 S4 0 S6 0; plain charges [0, -12593, 0]
+  tick 144: X 26 values 1256..1531; turned 156; births 0 pairs, 0 mergers; chimes +24 -92; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -20092, 0]
+  tick 145: X 28 values 1245..1565; turned 198; births 0 pairs, 0 mergers; chimes +18 -20; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -16574, 0]
+  tick 146: X 29 values 1245..1531; turned 121; births 0 pairs, 0 mergers; chimes +30 -68; ties S1 0 S2 0 S3 48 S4 0 S6 0; plain charges [0, -12750, 0]
+  tick 147: X 33 values 1262..1532; turned 168; births 0 pairs, 0 mergers; chimes +6 -44; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -24032, 0]
+  tick 148: X 32 values 1256..1643; turned 106; births 0 pairs, 0 mergers; chimes +6 -68; ties S1 0 S2 0 S3 0 S4 0 S6 0; plain charges [0, -12682, 0]
+  tick 149: X 28 values 1243..1744; turned 234; births 0 pairs, 0 mergers; chimes +14 -44; ties S1 0 S2 0 S3 60 S4 0 S6 0; plain charges [0, -9004, 0]
+  tick 150: X 29 values 1244..1643; turned 111; births 0 pairs, 0 mergers; chimes +18 -44; ties S1 0 S2 0 S3 12 S4 0 S6 0; plain charges [0, -9732, 0]
+forward done in 25 s; the final state hash 125137776ad88001dce3a9ac2a8fc318280bdb4b8db2712ab51e3ef99df54189
+S2 ties (tick, rounding, clock, p, the head's u): []
+counts:
+  S1 driven carries: 1093500
+  S1 driven carries, odd teeth: 0
+  S1 ties: 0
+  S1 ties on hand 0: 0
+  S1 ties on hand 1: 0
+  S1 ties on hand 2 (light): 0
+  S1 ties on offset: 0
+  S2 u roundings: 2187000
+  S2 u ties (2p = tX mod 2tX): 0
+  S3 tension means: 656100
+  S3 tension ties (n_i + n_j odd): 277860
+  S3 tension ties inside 0..Gamma: 130128
+  S4 drive (tick.py) carries: 437400
+  S4 drive (tick.py) remainder at 0, even teeth: 0
+  S4 drive carries: 25043337
+  S4 drive remainder at 0, even teeth: 0
+  S4 turn (the ratchet, two teeth: its pawl bit) carries: 109350
+  S4 turn (the ratchet, two teeth: its pawl bit) remainder at 0, even teeth: 54664
+  S4 turn carries: 765450
+  S4 turn remainder at 0, even teeth: 0
+  S5 setting carries: 1458
+  S5 setting ties: 0
+  S6 turned drive fine teeth: 309252
+  S6 turned drive fine teeth at 0: 0
+  S6 turned driven gears (mirrored once): 180397
+  S6 turned driven gears at fine 0 (the mirror misses -P by W): 0
+  S6 turned driven gears at fine W (a variant tie): 0
+  S6 turned regulator gears: 180397
+  S6 turned regulator gears at fine 0: 0
+fittings: 0 pairs, 0 unspringings (mergers)
+  fitted hands by hand and sense: []
+  fittings per tick: []
+  unspringings per tick: []
+  unspringings by the unwound hand and the sign of the sweep they unwound (W_x + W_y): []
+  unspringings' ends by hand and the sign of the sweep unwound there: []; the net sweep unwound 0
+chimes by hand and sense: [(('hand 1', -1), 5428), (('hand 1', 0), 770), (('hand 1', 1), 4847)]
+plain charges at the end (the head's sweep summed per hand): [0, -9732, 0]; their total -9732
+  coupled total SUM c_T Q_T: -9732
+Q* at the end per hand (vacuum units, the floor of the exact rational): [0, 198836, 0]
+  coupled total SUM c_T Q*_T (floor): 198836
+reckoner: {'68 matter against antimatter': {"moving births with the + child at the take's Node / at the other end": [0, 0], 'mergers beside (the light at both ends, no hand)': 0, 'verdict': "NOT READ: no moving birth; the predicate: the + child's end chosen by the twist's hand at every moving birth"}}
+reckoner: {"69 the neutrino's one hand": {"moving births by hand (the + child at the take's Node / at the other end)": [0, 0], 'mergers beside (no hand)': 0, 'verdict': 'NOT READ: no moving birth; the predicate: one hand at every moving birth of the record'}}
+reckoner: {'70 the baryon number': {"births whose children's own charges sum to 0 / in all": [0, 0], "births of a pair whose record W at the children's Nodes sums apart from 0 (the standing level's residue)": 0, "the mergers' light children's record W summed (0 by the letter)": 0, 'verdict': "NOT READ: no birth; the predicate: the children's own charges summing to 0 at every birth, no matter made by a click"}}
+counts of the clock: {'births': 0, 'taken': 0, 'booked': 0, 'body_clicks': 11045, 'laid_back': 11045, 'refused_stop': 941, 'refused_origin': 0, 'refused_lay': 1008, 'refused_orientation': 213, 'refused_twist': 16074, 'refused_sense': 1104, 'refused_disengaged': 0, 'turns': 25771, 'met': 19215, 'laid': 6, 'laid_nodes': 6}
+the rewind: 20 of 20 exact
+done in 28 s
