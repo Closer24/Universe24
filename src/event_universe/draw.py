@@ -21,7 +21,7 @@ kept_mid = cache(acts.mid)  # a teeth's mid tooth kept within a click alike
 def vernier(
     clock: Clock, at: tuple[int, ...], gearings: list[tuple[Gear, rule3.Gearing]], winding: int
 ) -> tuple[int, int] | None:
-    """The one-mesh read: every gear's fine tooth at the clock on the clock's own pitch F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the mesh's pitch gcd(w, R_ji), the digit read in the frame of the gear's own displacement at the clock (the one mirror, David's DAVID-THE-ONE-MIRROR.md: an image that negates a gear's whole field moves every fine tooth r to 2 o - r about the mid tooth o it was born at, the turnover's mirror keeping it there (acts.mirror), and turns the sign s of the displacement r - o at the clock with it, so the digit (o + s (r - o)) div F reads alike in the image; where the clock's own tooth stands at its origin, s = 0, the window folds onto its upper side, (o + |r - o|) div F; the former digit r div F, which parted the cube's 24 at the first draw, kept by name), the base w div F + 1, sorted by value, composed modulo M = the unwound train's winding times the hands' count, the size-2 hands the vernier names (the carry); jammed by name at the origin (every fine tooth at the mid tooth) and where every pitch is coarse (A48-S1's read in the advance's pawl, a48b's form, built at 05cca50 and reverted: the 48 on the clicks held to the tick 10 and parted at 11 on every reflection at the tie of the sign train's time gear's drive fine tooth, and the cycle setting's vernier reads fell on the origin; it returns with its mend)."""
+    """The one-mesh read: every gear's fine tooth at the clock on the clock's own pitch F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the mesh's pitch gcd(w, R_ji), the digit read in the frame of the gear's own displacement at the clock (the one mirror, David's DAVID-THE-ONE-MIRROR.md: an image that negates a gear's whole field moves every fine tooth r to 2 o - r about the mid tooth o it was born at, the turnover's mirror keeping it there (acts.mirror), and turns the sign s of the displacement r - o at the clock with it, so a neighbour's digit (o + s (r - o)) div F on the base w div F + 1 reads alike in the image; the node-clock's own digit, whose frame its own sign fixes, reads folded on its own half, |r - o| div F on the base (w - o) div F + 1, and so does every digit where that tooth stands at its origin, s = 0, so every digit spans its base and the read is the mixed-radix number of its digits (David's finding of 2026-10-28, 05:0x UTC: the own digit framed to o + |r - o| on the whole base stood in its upper half; the composed number fair under either frame on the hole and nature, the modulus folding the half away, the bang's 225 draws too few to read a frame by; the former digit r div F, which parted the cube's 24 at the first draw, kept by name), sorted by value, composed modulo M = the unwound train's winding times the hands' count, the size-2 hands the vernier names (the carry); jammed by name at the origin (every fine tooth at the mid tooth) and where every pitch is coarse (A48-S1's read in the advance's pawl, a48b's form, built at 05cca50 and reverted: the 48 on the clicks held to the tick 10 and parted at 11 on every reflection at the tie of the sign train's time gear's drive fine tooth, and the cycle setting's vernier reads fell on the origin; it returns with its mend)."""
     modulus = winding * sum(1 for r in clock.hands() if r.size == HAND)
     clocks, digits, origin, coarse, mid = window_clocks(clock, at), [], True, True, acts.mid(clock.teeth)
     for gear, r in gearings:
@@ -38,9 +38,11 @@ def vernier(
             fine, values = int(gear.fine[n]), carries(teeth, f := clock.pitches[key])
             origin = origin and fine in (mid, acts.flip(mid, clock.teeth, 1))
             coarse = coarse and values <= AXES
-            o = kept_mid(teeth)
-            framed = o + sense * (fine - o) + (1 - sense * sense) * abs(fine - o)
-            digits.append((carries(framed, f), values + 1))
+            o, frame = kept_mid(teeth), sense * (k != 0)
+            whole = frame * frame
+            value = whole * (o + frame * (fine - o)) + (1 - whole) * abs(fine - o)
+            base = whole * (values + 1) + (1 - whole) * (carries(teeth - o, f) + 1)
+            digits.append((carries(value, f), base))
     if origin or coarse:
         clock.counts["refused_origin"] += origin
         return None

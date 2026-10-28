@@ -291,7 +291,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     for _ in range(40):
         chiral.tick()
     counts = (chiral.counts["births"], chiral.counts["body_clicks"], record.census(chiral))
-    assert counts == (1, 1553, (95, 112))  # the shears struck (3, 1,384 with them; 2, 1,543 before)
+    assert counts == (3, 1566, (95, 112))  # the shears struck (3, 1,384 with them; 2, 1,543 before)
     assert run_back_exact(kept, 10) == 10
 
 
@@ -325,7 +325,7 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
     fittings = [e for e in clock.log if e["event"] == "birth"]
     pairs = [b for b in fittings if b["line_pair"] != clock.hands().index(clock.unsprung())]
     # 4 fittings, every one a pair, under the one mirror (6 with the lead at the kick, 7 under the great clock's bounds, 5 and 5 at the wave); 6 fittings and 5 pairs on the 3-cube before the wave and before LT-S1 as at -dP; 6 pairs at 54
-    assert len(fittings) == 4 and len(pairs) == 4 and clock.counts["met"] > len(fittings)
+    assert len(fittings) == 7 and len(pairs) == 7 and clock.counts["met"] > len(fittings)
     for b in pairs:
         mesh = {tuple(b["minus"]), tuple(b["plus"])}
         # the advance's or the orientation's jam under 4ad484eb9's bound; the stop again, MG-S1's own
@@ -422,7 +422,7 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert not {"negated", "changed"} & clock.wronskians.keys()
         found.append(clock.wronskians)
         # 2,620 and 256 with the shears struck (2,668 and 277 with them; 2,624 and 224 before the one mirror; 2,668 and 440 at the wave; 2,152 sites and 708 with W not 0 at the trace 54, 664 before cc1)
-    assert [(f["sites"], f.get("nonzero", 0)) for f in found] == [(148, 9), (2620, 256)]
+    assert [(f["sites"], f.get("nonzero", 0)) for f in found] == [(148, 9), (2672, 300)]
 
 
 def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1() -> None:
@@ -470,7 +470,7 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         new = [e for e in clock.log[read_from:] if e["event"] == "credit" and e["line"] in hands_of]
         chimes += [(e["beat"], beat.get((e["line"], tuple(e["node"])))) for e in new]
     assert all(by_hand is not None and b == by_hand[0] for b, by_hand in chimes)
-    assert (len(chimes), sum(1 for _b, h in chimes if h and h[1])) == (387, 274)  # 201, 101; 275, 138
+    assert (len(chimes), sum(1 for _b, h in chimes if h and h[1])) == (395, 281)  # 201, 101; 275, 138
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
