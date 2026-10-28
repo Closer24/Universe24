@@ -40,27 +40,27 @@ DUPLICATE_LINES = 8
 DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
-TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality in the stencil form, purity across two worlds, rename with an inert train, the 24's images with the translations, the formula against a naive model, bijectivity by the engine's own run back) on a trivial engine, Fredkin's second-order form, at three seeds of Python integers across 2**112 on a side of 5, each failing on every mutant it must catch (its own six and the hostile reader's ten of the review of dce3c56bd); the Boss's room by name."
-TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, every divisor at least 1, every reference whole), and each rule refuses its own broken file; the Boss's room by name."
-TENSOR24_SCHEMA = "Tensor24's record schema, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: every field of every line the runner writes is a whole number of any width, a label or a row of them, and a float or a truth value in a field is seen; the Boss's room by name."
+TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality in the stencil form, purity across two worlds and across fresh interpreters at other hash seeds, rename with an inert train, the 24's images with the translations, the formula against a naive model, the run back by a fresh engine) for any engine, on a trivial engine at three seeds of Python integers whose every bit is drawn across 2**256 on a side of 5, each failing on every mutant it must catch; the Boss's room by name."
+TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, the integers and the sides at least 1, every reference whole, every integer within the width), and each of its rules refuses its own broken file by name; the Boss's room by name."
+TENSOR24_SCHEMA = "Tensor24's record schema, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: every field of every line the runner writes is a whole number of any width, a label or a row of them, and a float, a truth value, an absence or a mapping in a field is seen; the Boss's room by name."
 TENSOR24_ALGEBRA = "Tensor24's algebra, stage 1 of the build the owner approved at 16:0x UTC on 2026-10-28: Rule3's carry, the one whether, the choice, the fine tooth's home and its flip, each law failing on its own mutant, the tie rule's odd quotient at both parities among them; the Boss's room by name."
 TENSOR24_CLOCK = "Tensor24's one clock, stage 2 of the build the owner approved at 16:0x UTC on 2026-10-28: a gear's tick and its exact run back at teeth counts that change from tick to tick, the rate dial's beat, a stopped clock's beat, and the tie rule at the tick, each failing on its own mutant; the Boss's room by name."
 TENSOR24_MESH = "Tensor24's Mesh, stage 3 of the build the owner approved at 16:0x UTC on 2026-10-28: the due beat, the read as of the reader's count, forty random schedules equal to the synchronous pass, the rewind under a random schedule, a stopped clock keeping pace, and the frame's six properties on the tick against its naive model, each failing on its own mutant; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_tensor24_files.py::edits": (
-        13,
+        158,
         TENSOR24_FILES,
     ),
-    "tests/test_the_tensor24_files.py::test_the_examples_hold_and_each_rule_refuses_its_broken_file": (
-        9,
+    "tests/test_the_tensor24_files.py::test_the_examples_hold_and_each_rule_refuses_its_own_broken_file_by_name": (
+        12,
         TENSOR24_FILES,
     ),
     "tests/test_the_tensor24_schema.py::leaves": (
-        7,
+        12,
         TENSOR24_SCHEMA,
     ),
-    "tests/test_the_tensor24_schema.py::test_every_line_holds_whole_numbers_and_labels_alone_and_a_float_is_seen": (
-        5,
+    "tests/test_the_tensor24_schema.py::test_every_line_holds_whole_numbers_and_labels_and_a_float_a_truth_an_absence_or_a_mapping_is_seen": (
+        7,
         TENSOR24_SCHEMA,
     ),
     "tests/test_the_tensor24_algebra.py::numbers": (
@@ -171,6 +171,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         5,
         TENSOR24_MESH,
     ),
+    "tests/test_the_tensor24_mesh.py::test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds": (
+        2,
+        TENSOR24_MESH,
+    ),
     "tests/frame.py::board": (
         5,
         TENSOR24_FRAME,
@@ -183,8 +187,12 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         4,
         TENSOR24_FRAME,
     ),
+    "tests/frame.py::wide": (
+        4,
+        TENSOR24_FRAME,
+    ),
     "tests/frame.py::same": (
-        6,
+        5,
         TENSOR24_FRAME,
     ),
     "tests/frame.py::local": (
@@ -212,7 +220,19 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_FRAME,
     ),
     "tests/frame.py::bijective": (
-        7,
+        9,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::answer": (
+        5,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::elsewhere": (
+        13,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::unseeded": (
+        4,
         TENSOR24_FRAME,
     ),
     "tests/frame.py::holds": (
@@ -220,7 +240,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::world": (
-        8,
+        3,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::trivial": (
@@ -243,6 +263,22 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         13,
         TENSOR24_FRAME,
     ),
+    "tests/test_the_tensor24_frame.py::logged": (
+        10,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::engine": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::cached": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::salted": (
+        3,
+        TENSOR24_FRAME,
+    ),
     "tests/test_the_tensor24_frame.py::two": (
         3,
         TENSOR24_FRAME,
@@ -252,7 +288,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::mutants": (
-        53,
+        58,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_must_catch": (
@@ -260,6 +296,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::test_the_images_fail_on_a_board_the_24_do_not_keep": (
+        2,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds": (
         2,
         TENSOR24_FRAME,
     ),

@@ -1,10 +1,19 @@
 """The plan's property tests for any engine of Tensor24: locality, purity, rename, the 24's images, the formula, the run back."""
 
+import hashlib
+import importlib
 import itertools
+import json
+import os
+import subprocess
+import sys
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any, NamedTuple
 
 import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 class Engine(NamedTuple):
@@ -36,11 +45,16 @@ def flat(result):
     return [*state, *out]
 
 
+def wide(rng, size):
+    """Whole numbers whose every bit is drawn, across 2**256 either side of 0, as Python integers."""
+    limbs = [rng.integers(0, 1 << 62, size).astype(object) << (62 * k) for k in range(5)]
+    return sum(limbs) - (1 << 309)
+
+
 def same(xs, ys):
-    """Equal at every entry, and Python integers throughout: no fixed width and no float."""
+    """Equal at every entry, and Python integers throughout: no fixed width, no float and no truth value."""
     return all(
-        np.array_equal(x, y) and all(isinstance(v, int) for v in x.flat)
-        for x, y in zip(xs, ys, strict=True)
+        np.array_equal(x, y) and all(type(v) is int for v in x.flat) for x, y in zip(xs, ys, strict=True)
     )
 
 
@@ -122,16 +136,46 @@ def formula(make, shape, rng):
 
 
 def bijective(make, shape, rng):
-    """The engine's own run back undoes the step; where the step puts out nothing, the step undoes the run back."""
-    e, nb = make(), board(shape)
-    s, x = e.world(rng, shape, 2), e.world(rng, shape, 2)
-    state, out = e.step(nb, s)
-    forth = bool(out) or same(flat(e.step(nb, e.unstep(nb, x, out))), [*x])
-    return same(e.unstep(nb, state, out), s) and forth
+    """A fresh engine runs back another's steps of two worlds, in their order; a step with no out undoes its run back."""
+    nb, (s, t) = board(shape), [make().world(rng, shape, 2) for _ in range(2)]
+    e = make()
+    (s1, o1), (t1, p1) = e.step(nb, s), e.step(nb, t)
+    back = make().unstep
+    undone = same(back(nb, s1, o1), s) and same(back(nb, t1, p1), t)
+    forth = bool(o1) or same(flat(make().step(nb, make().unstep(nb, s, o1))), [*s])
+    return undone and forth
 
 
 PROPERTIES = {"locality": local, "purity": pure, "rename": renamed, "images": turned}
 PROPERTIES |= {"formula": formula, "bijectivity": bijective}
+
+
+def answer(module, factory, shape, seeds):
+    """The digest of the step of the last seed's world, by the engine the factory names, after the earlier seeds'."""
+    e, nb = getattr(importlib.import_module(module), factory)(), board(shape)
+    out = [flat(e.step(nb, e.world(np.random.default_rng(seed), shape, 2))) for seed in seeds]
+    return hashlib.sha256(repr([x.tolist() for x in out[-1]]).encode()).hexdigest()
+
+
+def elsewhere(module, factory, shape, seed, hash_seed):
+    """The same answer to one seed's world in a fresh interpreter at another hash seed."""
+    code = "import json, sys; from tests.frame import answer; print(answer(*sys.argv[1:3], *map(json.loads, sys.argv[3:])))"
+    env = {
+        **os.environ,
+        "PYTHONHASHSEED": str(hash_seed),
+        "PYTHONPATH": os.pathsep.join([str(ROOT), str(ROOT / "src")]),
+    }
+    args = [module, factory, json.dumps(shape), json.dumps([seed])]
+    run = subprocess.run(
+        [sys.executable, "-c", code, *args], cwd=ROOT, env=env, capture_output=True, text=True
+    )
+    return run.stdout.strip() or run.stderr
+
+
+def unseeded(module, factory, shape):
+    """Purity across interpreters: a world answered here after another, and in fresh ones at two hash seeds, alike."""
+    here = answer(module, factory, shape, [1, 0])
+    return all(elsewhere(module, factory, shape, 0, hash_seed) == here for hash_seed in (1, 1 + 1 + 1))
 
 
 def holds(name, make, shape, seed):

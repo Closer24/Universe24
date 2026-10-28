@@ -9,7 +9,7 @@ from tensor24.engine import mesh, step
 from tensor24.engine.state import Layout, State
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
-from tests.frame import PROPERTIES, Engine, board, holds, near, same
+from tests.frame import PROPERTIES, Engine, board, holds, near, same, unseeded, wide
 
 SHAPE, T = (5, 5, 5), 10  # the board, and the count every Node-clock is run to
 W, RATE, GAMMA = 7, 5, 9  # the teeth, the rate and the full rate where every site is alike
@@ -65,13 +65,13 @@ def stopped():
 
 
 def world(rng, shape, trains):
-    """A state the tick may meet: wide gears, fine teeth within W, goings, dials, counts a beat apart, times behind."""
+    """A state the tick may meet: gears of every bit across 2**256, teeth within W, goings, dials, counts, times."""
     size, one = (trains, int(np.prod(shape))), (1, int(np.prod(shape)))
 
     def draw(low, high, rows):
         return rng.integers(low, high, size=rows).astype(object)
 
-    a, b = (draw(-(1 << 62), 1 << 62, size) * (1 << 50) for _ in range(2))
+    a, b = wide(rng, size), wide(rng, size)
     c = draw(0, 2, one)
     tn = c - draw(0, 2, one)
     return State(
@@ -160,3 +160,7 @@ def test_each_law_of_the_mesh_holds_and_fails_on_its_mutant(name, monkeypatch):
     assert law(name)
     monkeypatch.setattr(step, attribute, broken)
     assert not law(name)
+
+
+def test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds():
+    assert unseeded(__name__, "engine", SHAPE)

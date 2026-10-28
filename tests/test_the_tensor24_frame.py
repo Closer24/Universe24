@@ -5,7 +5,7 @@ import itertools
 import numpy as np
 import pytest
 
-from tests.frame import Engine, holds, near
+from tests.frame import Engine, holds, near, unseeded, wide
 
 # a side of 5 or more: x + e, x - e, x + 2e and x - 2e are four sites, so no shift hides another
 SHAPE = (5, 5, 5)
@@ -13,13 +13,8 @@ ASKEW = (3, 4, 5)  # a board the 24 do not keep: the images must fail on it
 
 
 def world(rng, shape, trains):
-    """Both slots of every gear, whole numbers across 2**112, as Python integers in object arrays."""
-    size = (trains, int(np.prod(shape)))
-    return tuple(
-        rng.integers(-(1 << 62), 1 << 62, size).astype(object) * (1 << 50)
-        + rng.integers(-9, 9, size).astype(object)
-        for _ in range(2)
-    )
+    """Both slots of every gear, every bit drawn across 2**256, as Python integers in object arrays."""
+    return tuple(wide(rng, (trains, int(np.prod(shape)))) for _ in range(2))
 
 
 def trivial(nb, a, b):
@@ -63,6 +58,36 @@ def hidden(keep):
         return broken(step)()
 
     return make
+
+
+def logged():
+    """An engine that loses half its act and whose run back reads the log its step hid."""
+    log = []
+
+    def step(nb, s):
+        log.append(s)
+        a, b = trivial(nb, *s)
+        return (a // 2, b), ()
+
+    return Engine(step, lambda nb, s, out: log.pop(0) if log else s, world, naive)
+
+
+HELD = {}  # the module-level state a cached engine keeps, which a fresh interpreter has not
+
+
+def engine():
+    """The trivial engine, named for a fresh interpreter."""
+    return broken(trivial)()
+
+
+def cached():
+    """An engine whose step answers every world of a shape as it answered the first: state held in the module."""
+    return broken(lambda nb, a, b: HELD.setdefault(a.shape, trivial(nb, a, b)))()
+
+
+def salted():
+    """An engine whose step reads the interpreter's hash seed."""
+    return broken(lambda nb, a, b: (trivial(nb, a, b)[0] + (hash("tensor24") & 1), a))()
 
 
 def two(nb):
@@ -123,10 +148,15 @@ def mutants():
             "formula",
             broken(lambda nb, a, b: tuple(x.astype(np.int64) for x in trivial(nb, a, b))),
         ),
+        "both x Spokes weighted twice": (
+            "images",
+            broken(lambda nb, a, b: (trivial(nb, a, b)[0] + a[:, nb[0]] + a[:, nb[1]], a)),
+        ),
         "the before slot dropped": (
             "bijectivity",
             broken(lambda nb, a, b: (a[:, nb].sum(axis=1) - a, a)),
         ),
+        "a hidden log": ("bijectivity", logged),
     }
 
 
@@ -140,3 +170,8 @@ def test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_
 
 def test_the_images_fail_on_a_board_the_24_do_not_keep():
     assert not holds("images", broken(trivial), ASKEW, 0)
+
+
+@pytest.mark.parametrize("factory, pure", [("engine", True), ("cached", False), ("salted", False)])
+def test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds(factory, pure):
+    assert unseeded(__name__, factory, SHAPE) == pure

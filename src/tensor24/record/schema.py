@@ -2,6 +2,8 @@
 
 from dataclasses import dataclass
 
+# The lines, in the order (round, kind, site, train): Header first; then Whole, Split, Turnover, Rate and Books; End
+# last. The ledger's own file holds Ledger lines. The other records stand inside lines. A digest is SHA-256 in hex.
 MAJOR = 1  # a breaking change; the decoder upcasts an older major and refuses an unknown one
 MINOR = 0  # an added field
 
@@ -17,25 +19,24 @@ class File:
 
 @dataclass(frozen=True)
 class Kind:
-    """One kind of the 24 as the engine built it: its index, label, dimension, characters on the classes, T T."""
+    """One kind as the engine built it: index, label, dimension, its character on each class as a + b sqrt 2, T T."""
 
     index: int
     label: str
     dimension: int
-    characters: tuple[int, ...]
+    characters: tuple[tuple[int, int], ...]
     tt: int
 
 
 @dataclass(frozen=True)
 class Train:
-    """One train: its index, label, kinds, own size and winding, and its coupling rows as the universe gives them."""
+    """One train: its index, its label, its kinds, its part and its winding."""
 
     index: int
     label: str
     kinds: tuple[int, ...]
-    size: int
+    part: int
     winding: int
-    couplings: tuple[tuple[int, int, int, int, int, int], ...]
 
 
 @dataclass(frozen=True)
@@ -46,14 +47,14 @@ class Header:
     major: int
     minor: int
     engine: str
-    runner: str
+    runner: str  # "synchronous", or the asynchronous run with its masks' seed named
     files: tuple[File, ...]
     sides: tuple[int, ...]
-    sites: int
     order: str
     classes: tuple[int, ...]
     kinds: tuple[Kind, ...]
     trains: tuple[Train, ...]
+    couplings: tuple[tuple[int, int, int, int, int, int], ...]  # as the universe gives them
     draw: int
     width: int
 
@@ -69,9 +70,10 @@ class Holding:
 
 @dataclass(frozen=True)
 class Taking:
-    """One end of a whole click that takes at both ends, a reading of its own one-ended act: site, books, push."""
+    """One end of a whole click that takes at both, a reading of its own one-ended act: site, Spoke, books, push."""
 
     site: int
+    spoke: int  # the Spoke's index in the six, toward the other end
     taken: tuple[Holding, ...]
     laid: tuple[Holding, ...]
     push: tuple[int, int, int]
@@ -105,9 +107,6 @@ class Whole:
     site: int
     count: int  # the Node-clock's own beat count c, read at its site
     dial: int  # its rate dial after the beat
-    steps: int  # its ticks so far, the runner's count of Out's k, which the engine never reads
-    spoke: int | None  # the Spoke's index in the six where two ends hold the click, else None
-    far: int | None  # the far end's site: a reading of the two one-ended acts, never an act joining them
     train: int
     q: int
     winding: int
@@ -118,7 +117,9 @@ class Whole:
     moment: tuple[int, int, int]
     taken: tuple[Holding, ...]
     laid: tuple[Holding, ...]
-    ends: tuple[Taking, ...]
+    ends: tuple[
+        Taking, ...
+    ]  # both ends where both take, each its own one-ended act; none where one end takes
     children: tuple[Child, ...]
     lead: int
     twist: int
@@ -126,13 +127,12 @@ class Whole:
 
 @dataclass(frozen=True)
 class Split:
-    """A split click (law 6 on the composite clock), its count, dial and steps as a whole click's: c over room."""
+    """A split click (law 6 on the composite clock), its count and dial as a whole click's: c over room."""
 
     round: int
     site: int
     count: int
     dial: int
-    steps: int
     train: int
     sizes: tuple[int, ...]
     kinds: tuple[int, ...]
@@ -159,13 +159,12 @@ class Turnover:
 
 @dataclass(frozen=True)
 class Rate:
-    """A change of a Node-clock's tick, written at the change alone: k 0 where the dial stops, 1 at the release."""
+    """A Node-clock's tick k at the first round and at each change: the decoder counts the ticks from these."""
 
     round: int
     site: int
     count: int
     dial: int
-    steps: int
     k: int
 
 
