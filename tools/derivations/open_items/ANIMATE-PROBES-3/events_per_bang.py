@@ -1,8 +1,9 @@
 """Toy reading: the click events per bang (Animate; the owner's word of 2026-10-28, 15:0x UTC, on law 10's missing part:
 "think in clocks and the tensor"). It runs many_bangs.py's set-up (beside it, on draft C's tree at 33d9ecaa) and counts
 the log's events in each bang (a bang runs from one bottom of the largest X to the next), the refusals by their cause.
-Settings by environment variable: VARIANT (dial or dial_nof2), QUANTA, TICKS, TWIN (1 by default, empty for the A1
-calibre), READ, TENSION and CONE as in many_bangs.py. A refusal by name ends the run and the counts to it are printed.
+Its settings are environment variables: the variant in VARIANT (dial or dial_nof2), the quanta in QUANTA, the ticks in
+TICKS, the twin row in TWIN (1 by default, empty for the A1 calibre), and READ, TENSION and CONE as in many_bangs.py.
+A refusal by name ends the run, and the counts to it are printed.
 """
 
 import os
