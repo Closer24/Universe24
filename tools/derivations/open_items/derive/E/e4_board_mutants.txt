@@ -1,0 +1,9 @@
+M1. Two equal quanta held at one Node-clock (not orthogonal): Bessel's bound must fail
+  Node-clocks where an equal pair exceeds one quantum in one sense: 8 of 8 pairs x 4 Node-clocks (must be above 0)
+M2. The head's K at the turnover in place of T: the image must stop being orthogonal to the occupant
+  occupants with W(u, K image) != 0: 5000 of 5000 (must be above 0)
+M3. The partner without the slot exchange (T on each slot in place): W must stop being 0
+  occupants with W(u, T in place) != 0: 5000 of 5000 (must be above 0)
+M4. A step that is not the same on the two quanta (one hand's grip changed): W(u, v) must move
+  ticks with W moved: 6 of 6 (must be above 0)
+result: every mutant fails as it must

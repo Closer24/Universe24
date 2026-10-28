@@ -1,0 +1,17 @@
+M1. eps = +1 on the twin hands: sigma_aa must stop being 0
+  twin pairs with sigma_aa > 0: 1996 of 2000 (must be above 0)
+M2. probabilities added (no amplitude sum): sigma_aa = 2 N(M_a1) N(M_a2) must stop being 0
+  pairs with the same part's size above 0: 1998 of 2000 (must be above 0)
+M3. the exchange term conjugated (the head's K on the second way): Pauli and the books must fail
+  pairs with sigma_aa > 0: 1998 of 2000 (must be above 0)
+  pairs whose books fail: 2000 of 2000 (must be above 0)
+M4. the parts left unexchanged (A = M_a1 M_a2 + eps M_b1 M_b2): the books must fail
+  pairs whose books fail: 1998 of 2000 (must be above 0)
+M5. K's partner in the occupant's frame (K phi = conj phi in place of T phi): the same state must stay free
+  hands with N(<K phi, phi>) > 0: 576 of 624 (must be above 0)
+M6. the capacity u in place of 2u: free sizes must go negative; 3u: a third quantum must be free
+  negative free sizes with the capacity u: 1791 of 3744 (must be above 0)
+  a third quantum free with the capacity 3u (the filled orbital 2u, S = 0): 3744 of 3744 (must be above 0)
+N1. not a mutation: the sign on the other term (eps M_a1 M_b2 + M_b1 M_a2) keeps every size, N(eps x + y) = N(x + eps y)
+  pairs with every size unchanged: 2000 of 2000 (it must be 2000: this change cannot fail, by N(-w) = N(w))
+result: every mutant fails as it must

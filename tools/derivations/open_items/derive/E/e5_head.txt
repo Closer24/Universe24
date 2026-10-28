@@ -1,0 +1,14 @@
+1. The head's turnover on twin hands is K: S(now after) = (Sx, -Sy, Sz)(before), not -S
+  [ok] every Node-clock of every twin pair: S(now after) = (Sx, -Sy, Sz) of the before: 375 of 375
+  [ok] where S is not 0, the head's image differs from T's -S: 69 of 69
+2. The head's pawl signs are a pure gauge (no flux)
+  [ok] plaquette products of the head's pawl signs that are not +1: 0 of 15000
+3. The head's lay jam on the twin world, against the occupant-frame sizes at each end
+  [ok] at every end read, free + blocked = the room (Lagrange): 1440
+  twin fittings read: 720; kept by the head 155; refused by the standing test 303, by the crowding test alone 262
+  refused by the standing test where an occupied end's free size is 0 (the derived act refuses too): 51
+  refused by the standing test although every occupied end leaves a free size above 0 (the derived act could lay): 252
+    of them with every end's free size the whole room (the derived act lays for sure): 57
+  kept by the head although an end's occupant has a blocked size above 0: 0
+  [ok] every twin fitting was read at both ends: 720
+result: 0 failures
