@@ -1,0 +1,115 @@
+CHANGES to draft A (S/derive/A_rev/DERIVATION.md against t24/tools/derivations/open_items/derive/A/DERIVATION.md).
+D<n> is the draft's line; R<n> is this revision's line. 'after D<n>' is a block inserted after the draft's line.
+
+ 1. after D1 -> R3: revision note added (sources, marks, the 48 and 2O)
+ 2. D3 -> R5: wording: a phrase of the ground rules' list removed; no claim changed
+ 3. D5 -> R7: steps 5 and 6 as they ran; the REFUTED and SUPERSEDED marks defined
+ 4. D11 -> R13: F1 row: premise odd in h; 1,507 rest-branch engagements; sgn superseded (Postulate 5)
+ 5. D12 -> R14: F2 row: charge read as the plain sweep; c = 0 refuted; F3's parts inherited; 2O open
+ 6. D13 -> R15: F3 row: gap at a due <= 0 (809/301, 190/29); loop refused (Sofer); zero and indicator refuted (Postulate 5, law 11); 'keeps the 48' refuted
+ 7. D14 -> R16: F4 row: gate refused (Sofer), an if (Postulate 5), the plain sweep superseded by Q*; the sweep algebra kept
+ 8. D15 -> R17: F5 row: the gate's cause refuted (the verifier); gate refused; c = 0 refuted; backward ladder refuted
+ 9. D16 -> R18: chime row: F3's gap inherited (the verifier); payer by c = 0
+10. D17 -> R19: S1-S5 row: S1's 17 of 17 cannot fail; S2's sense tested at 108 of 341
+11. D19 -> R21: the list of fakes replaced, superseded on the corrections
+12. D23 -> R25: the words: Q_T the plain sweep, Q* the step's charge; c = 0 a case by number; the 48 and 2O defined
+13. D25 -> R27: L0 as a device refuted (Postulate 5); the identities kept as arithmetic
+14. D32 -> R34: L0's use for every whether refuted (Postulate 5); the verifier's count added
+15. D35 -> R37: the lead cited to the law's line 140
+16. D39 -> R41: the orienting lead marked a finding the plan may cite
+17. D44 -> R46: the verifier's confirmation and line 140
+18. D54 -> R56: 'No train known, and no number. PROVED' refuted in part
+19. D56 -> R58: payer and receiver by c = 0 refuted (line 96)
+20. D58 -> R60: D58 corrected: sgn a clamp spelt as quotients; the whethers ifs
+21. D59 -> R61: two loops, not one; the loop refused
+22. after D67 -> R71: F1's spelling superseded (Postulate 5)
+23. D78 -> R82: uniqueness needs the rule odd in h (the verifier)
+24. D84 -> R88: D84 corrected: the 1,507 rest-branch engagements
+25. D91 -> R95: the 48 named as the mirrors
+26. D91 -> R95: the verifier's counts under the 24 and the mirrors
+27. D93 -> R97: E17's replacement limited to F1's reading
+28. D95 -> R99: heading: the replacements refuted
+29. D97 -> R101: payer by c = 0 refuted; F3's gap at a due <= 0
+30. D107 -> R111: the verifier's check of the quadratic
+31. D110 -> R114: the steepest gear's indicator refuted (Postulate 5)
+32. D113 -> R117: F3's zero refuted (Postulate 5, law 11)
+33. D114 -> R118: the count refuted (Sofer; the verifier)
+34. D124 -> R128: the ladder's proof limited to a due above 0
+35. D133 -> R137: the 48 named as the mirrors
+36. D133 -> R137: covariance, not a symmetry of the law
+37. after D135 -> R141: the proofs' range stated
+38. after D145 -> R152: the gap's counts added (809/301, 190/29)
+39. D170 -> R180: R7's replacement superseded
+40. D171 -> R181: least_at's replacement refuted
+41. D172 -> R182: the stop's replacement refuted
+42. D176 -> R186: OPEN 1 moved to REFUTED (Sofer); the verifier's growth
+43. D177 -> R187: the one carry carries the gap
+44. D178 -> R188: the question answered by Sofer's refusal
+45. D181 -> R191: heading: refused as R1's replacement
+46. after D181 -> R193: F4's status: refused, superseded, its sweep algebra kept
+47. D187 -> R199: the indicator refuted
+48. D192 -> R204: PROVED 1 superseded: the plain sweep, not Q*
+49. D193 -> R205: item 2 kept as the sweep's algebra
+50. D194 -> R206: item 3 kept as the sweep's algebra
+51. D197 -> R209: counts named the plain sweep's
+52. D198 -> R210: D198 corrected: 5 of 6 on the board unwound; the amounts
+53. D199 -> R211: R1's annihilations: the plain sweep
+54. D202 -> R214: the charge read as the plain sweep
+55. D204 -> R216: the head's fittings: the plain sweep kept, Q* not
+56. D207 -> R219: R1's replacement refuted
+57. D208 -> R220: E16's charge part refuted with the gate
+58. D210 -> R222: the charge against F4 settled
+59. D213 -> R225: the drift kept as the plain sweep's; its cause refuted
+60. D218 -> R230: D218 corrected: Q*, its two breaks; the cause refuted
+61. D219 -> R231: lays over standing matter: counts only
+62. D225 -> R237: the giver by c = 0 refuted
+63. D228 -> R240: twin hands under 2O open
+64. D229 -> R241: F2's gate refuted
+65. D230 -> R242: F2's payment inherits F3's refusals
+66. D234 -> R246: F2's charge: the plain sweep
+67. D237 -> R249: the 48 named as the mirrors
+68. D237 -> R249: 2O open
+69. D257 -> R269: the fitted hand's cost confirmed, a finding
+70. D263 -> R275: F5's gate refuted
+71. D264 -> R276: the receiver by c = 0 refuted
+72. D267 -> R279: the backward ladder refuted
+73. D271 -> R283: F5's charge: the plain sweep
+74. D272 -> R284: the ladder's arithmetic kept, the act refused
+75. D288 -> R300: the 3 of 6 named the start's sums
+76. D291 -> R303: R2's replacement limited
+77. D293 -> R305: the stop's quotient a carry, kept
+78. D297 -> R309: D297 corrected: the local gate fails under a kept charge
+79. D301 -> R313: the receiver by c = 0 refuted
+80. D316 -> R328: R6's zero refuted
+81. D320 -> R332: the 48 named as the mirrors
+82. D320 -> R332: the chime inherits F3's gap; payer by c = 0
+83. D354 -> R366: D354 corrected: S1's 17 of 17 cannot fail
+84. D355 -> R367: D355 corrected: the sense's sign tested at 108 of 341
+85. D415 -> R427: finding 1: the plain sweep; Q*
+86. D416 -> R428: line 140 cited
+87. D418 -> R430: D418 corrected: 5 of 6, the plain sweep
+88. D419 -> R431: the charge read as the plain sweep
+89. D420 -> R432: the cost's formula, a finding
+90. D426 -> R438: R1 row
+91. D427 -> R439: R2 row
+92. D428 -> R440: R3 row
+93. D429 -> R441: R6 row
+94. D430 -> R442: R7 row
+95. D431 -> R443: least_at row
+96. D432 -> R444: stop row
+97. D433 -> R445: E16 row
+98. D435 -> R447: E17 row
+99. D436 -> R448: jams row
+100. D437 -> R449: crowd row
+101. D438 -> R450: E5 row
+102. D440 -> R452: searches row
+103. D443 -> R455: OPEN 1 rewritten
+104. D444 -> R456: OPEN 2 rewritten
+105. D456 -> R468: OPEN 14 settled
+106. after D457 -> R470: OPEN 16 to 20 added
+107. after D471 -> R489: the verifier's probes listed
+108. after D482 -> R502: the mutants' outputs cited; section 14, the law's lines
+109. D324 -> R336: the chime's F4 reading superseded with F4's gate
+
+109 changes in all, on 97 of the draft's lines and 8 inserted blocks.
+The lines David's HOLD names, each corrected: D13 -> R15, D15 -> R17, D58 -> R60, D84 -> R88, D198 -> R210, D218 -> R230, D297 -> R309, D354 -> R366, D355 -> R367, D418 -> R430.
