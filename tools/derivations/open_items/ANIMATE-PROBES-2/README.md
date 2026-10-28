@@ -10,7 +10,7 @@ The draft is ANIMATE-MANY-BANGS.md. Nothing here is engine code, and nothing was
   - **base:** law 4's two triggers and BH-S1 (its hold and restore, its masks on the Meshes and the dial, the click's skip), as draft C ran it.
   - **nofloor:** law 4's floor clause struck.
   - **notick:** nofloor, and BH-S1's restore struck. Law 4 reads the time gear of a clock with no tick as held: a mask, refused by "no bound and no floor", kept as the first form.
-  - **carry:** law 11 at the time gear. The turnover is the event of the horizon dial's whole turn, the load at the tick's start divided by the stopped load L_c. There is no weak maximum and no floor, and BH-S1 is struck everywhere. This is the draft's form.
+  - **carry:** law 11 at the time gear. The time gear's notch is a dial of X_c teeth, X_c the stretch of the stopped load, and its whole turn (X div X_c at the tick's start) is the turnover. There is no weak maximum and no floor, and BH-S1 is struck everywhere. This is the draft's form.
   - **carry_nof2:** carry, with the Mesh factor read from the tension unclipped (F2 struck).
   - **weakmin:** notick, with law 4's bottom as the top's mirror, the weak minimum (X0 >= X1 <= X2, one strict), in place of the floor.
   - **fallmin:** weakmin, with the bottom entered from above only (X0 > X1 <= X2).

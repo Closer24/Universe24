@@ -10,10 +10,10 @@ Variants (each changes one thing, named; everything else is the tree's own):
   weakmin   notick, with law 4's bottom as the top's mirror, the time gear's weak minimum (X0 >= X1 <= X2, one
             strict), in place of the floor (the Boss's candidate, #2187 6468487676)
   fallmin   weakmin with the bottom entered from above only (X0 > X1 <= X2)
-  carry     law 11 at the time gear: the turnover is the event of the horizon's dial, the load's whole turn at the
-            stopped load L_c (Rule3's own zero of the Mesh rate), read at the tick's start as the quotient
-            load div L_c; no weak maximum, no floor, and BH-S1 struck everywhere (no restore, no mask on the Mesh
-            factors, on the dial or on the click)
+  carry     law 11 at the time gear: the time gear's notch is a dial of X_c teeth, X_c the stretch of the stopped load
+            L_c (Rule3's own zero of the Mesh rate, from Gamma alone); its whole turn, the quotient X div X_c at the
+            tick's start, leaves as the turnover; no weak maximum, no floor, and BH-S1 struck everywhere (no restore,
+            no mask on the Mesh factors, on the dial or on the click)
   carry_nof2  carry, with the Mesh factor read from the tension unclipped (the bound F2 struck)
   notick    nofloor, and BH-S1's restore struck: no gear of a stopped clock is restored; law 4 reads the time gear
             of a clock with no tick (mesh rate 0 at the tick's start) as held, X2 = X1 (the clock has no tick on the
@@ -68,8 +68,16 @@ def turnover_law4(self, held, going=1, top=None):
         no_tick = readings.stopped_of(self, stretch_feature.load_of(self.full_rate, x1))
         x2 = np.where(no_tick, x1, x2)
     if variant in ("carry", "carry_nof2"):
-        horizon = rates_stopped_load(self.full_rate)
-        turns = np.asarray(stretch_feature.load_of(self.full_rate, x1), dtype=object) // horizon
+        # the time gear's own notch as a dial of X_c teeth, X_c the stretch of the stopped load (from Gamma alone):
+        # its whole turn, the quotient X div X_c, leaves as the turnover (law 11 at the time gear)
+        teeth = int(
+            np.asarray(
+                stretch_feature.stretch_of(
+                    self.full_rate, np.array([rates_stopped_load(self.full_rate)], dtype=object)
+                )
+            ).reshape(-1)[0]
+        )
+        turns = np.asarray(x1, dtype=object) // teeth
         top = turns >= 1
         self.turned_over = top
         if top.any():

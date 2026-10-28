@@ -16,8 +16,10 @@ It builds on draft C (derive/C: the derived push, the theorems C1 to C6, the rat
 
 - **The course is one swing of the great clock per bang, with no bound, no floor and no mask in its own acts.** In order:
   - **The push drives it out.** It is draft C's: general relativity's A1 volume equation in the board's integers, with no clamp. The Links stretch, and every Node-clock slows.
-  - **The horizon is a dial's whole turn (law 11).** Each clock's load counts its slowing from the vacuum (load 0, the full rate) up to the stopped load L_c, where its Mesh rate rounds to 0. That is Rule3's own zero: 3,793 at Gamma = 1,000, X_c = 4,268,834,097.
-  - **The top.** The load is a dial of L_c teeth. Its whole turn leaves as an event, the turnover: law 4's top as law 11 has it at the time gear. There is no ceiling, no hold and no mask, and BH-S1 is struck everywhere: its hold, its restore, its mask on the Meshes and on the dial, and the click's skip.
+  - **The horizon.** Each clock's load counts its slowing from the vacuum (load 0, the full rate) up to the stopped load L_c, where its Mesh rate rounds to 0. That is Rule3's own zero: 3,793 at Gamma = 1,000, at the stretch X_c = 4,268,834,097.
+  - **The top is the time gear's own whole turn (law 11).** The time gear's notch, the stretch X, is a dial of X_c teeth. Its whole turn, the quotient X div X_c, leaves as an event, the turnover. That is law 4's top as law 11 has it at the time gear, booked in the gear's own carry.
+    - There is no ceiling, no hold, no mask and no reading of a clock with no tick.
+    - BH-S1 is struck everywhere: its hold, its restore, its mask on the Meshes and on the dial, and the click's skip.
   - **The run back.** The turnover reverses time, and the run back retraces the rise exactly, as T S T = S^-1 for the time gear's step.
   - **The bang.** The run back arrives at the seed's stretch (load 0) at rest and passes no turn there, so no event comes. The push turns it out again, and the births come there.
 - **CHECKED against draft C's run** (64 Node-clocks, 5,000,000 quanta). With law 11's top, no floor and BH-S1 struck everywhere, every integer of the state but the dial is draft C's bit for bit:
@@ -53,9 +55,9 @@ It builds on draft C (derive/C: the derived push, the theorems C1 to C6, the rat
 - **The horizon, as a dial.** The clock's load counts its slowing in hollows, each multiplying the rate by Gamma - 1 over Gamma.
   - Its Mesh rate p_m = rounded(p0^2, Gamma) is the count of whole Mesh turns its Links make in a tick. That count reaches 0 at the stopped load L_c, where 2 p0^2 < Gamma: L_c = 3,793 at Gamma = 1,000, the rate 22.
   - Past it no Mesh of the clock completes a turn, so nothing crosses its Links.
-  - Under law 11 the load's range is a dial of L_c teeth from the vacuum, and its whole turn is an event.
+  - Under law 11 the stretch's range from the vacuum's Gamma to the horizon's X_c is the time gear's dial, and its whole turn at X_c is an event.
 - **For the whole system.** Where every clock steps alike (the A1 course), the board is one clock, and its stretch is the universe's scale.
-  - The load rises together on every clock to the dial's whole turn: the turnover. Then the run back, and the bang at the dial's zero: one swing per bang.
+  - The stretch rises together on every clock to the dial's whole turn: the turnover. Then the run back, and the bang at the vacuum's stretch: one swing per bang.
   - The bang is where the Links are shortest and the light densest. The top is where the Links are longest.
   - The maximal scale per bang is a_c = Gamma / p_c, about the square root of 2 Gamma (about 45 at Gamma = 1,000). It is set by the clock's fineness Gamma alone.
 - **Locally the same.** Off the A1 course, a region whose clocks complete the dial's turn alone turns over alone: the local turnovers, the black holes' stopped clocks. A bang is that turnover done by the whole board at once.
@@ -63,8 +65,9 @@ It builds on draft C (derive/C: the derived push, the theorems C1 to C6, the rat
 ## 2. The formula (step 1)
 
 - **The time gear's step:** X+ = 2 X - X- + q, with q, r_d' = carry(N + r_d, T_d) and N = X ((d + 1) G + 2 d V), draft C's derived push. It has no typed form and no clamp.
-- **Law 4's top as law 11's carry.** The turnover comes at the clocks whose load at the tick's start has completed the horizon dial's turn: the quotient load(X) div L_c is 1.
-  - L_c is the first load whose Mesh rate is 0, from Gamma alone.
+- **Law 4's top as law 11's carry.** The turnover comes at the clocks whose time gear has completed its dial's turn by the tick's start: the quotient X div X_c is 1.
+  - X_c is the stretch of L_c, the first load whose Mesh rate is 0, from Gamma alone (X_c = stretch_of(L_c)). Since the load is monotone in X, X div X_c is 1 exactly where the load has reached L_c (CHECKED: the runs are the same with either quotient).
+  - Sofer's test for law 11 (6469180767): the crossing is a carry of a gear, the time gear, not a read of another quantity.
   - The quotient is the event, as the winding's quotient is the click of a whole (law 5).
   - The state is kept whole, the two slots exchanged, so nothing is lost and everything runs back.
 - **The turnover T:** the time gear's two slots exchanged, every fine tooth turned as the engine turns it. Proposed: the drive's fine tooth flipped, r to T_d - 1 - r (P3).
@@ -76,14 +79,14 @@ It builds on draft C (derive/C: the derived push, the theorems C1 to C6, the rat
   - any ceiling.
 
   On the A1 course the weak-maximum comparison never fires below the horizon (C2), so the top needs none.
-- **What it holds:** Rule3's carries, sums and products, and law 11's quotient as the event. No typed number: L_c comes from Gamma, and the push's counts d + 1 and 2 d are the lattice's (draft C).
+- **What it holds:** Rule3's carries, sums and products, and law 11's quotient as the event. No typed number: X_c comes from Gamma, and the push's counts d + 1 and 2 d are the lattice's (draft C).
 
 ## 3. The proofs (step 2)
 
 - **P1, the horizon is Rule3's own zero.** The rates' table steps the hollows by Gamma - 1 over Gamma per load. It reads p0 = rounded(N, Gamma^2) and p_m = rounded(p0^2, Gamma), half up (core/rates.py, Side.fill_to). The first load whose p_m is 0 is L_c (rates.stopped_load).
   - No number enters but Gamma, the universe file's integer.
   - PROVED by the table's construction. CHECKED: 3,793, rate 22, X_c = 4,268,834,097 (derive/C_verify/rate_zero.txt).
-- **P2, the top as the dial's turn.** On the A1 course the load rises with X (C2), so it completes the dial's turn at the first tick whose start has X at or past X_c.
+- **P2, the top as the time gear's turn.** On the A1 course X rises (C2), so the time gear completes its dial's turn at the first tick whose start has X at or past X_c.
   - There the quotient is 1 and the turnover comes. Below it the quotient is 0 and nothing comes.
   - It is the same tick at which BH-S1's frozen time gear made law 4's weak maximum on the head, so the course is the same.
   - PROVED. CHECKED: the same five tops (24, 71, 118, 165, 212) and every integer but the dial the same, at 250 and 1,000 ticks.
@@ -142,7 +145,7 @@ Over 1,000 ticks F2 acts at 367,488 values (5,000,000 quanta) and 379,008 (500,0
 ## 6. Owed, by name (OPEN)
 
 - **(a) The law's sentences** (Sofer):
-  - law 4's top as law 11's carry at the horizon dial, L_c from Gamma;
+  - law 4's top as law 11's carry of the time gear at X_c teeth, X_c from Gamma;
   - "The floor" (line 1608) with no bottom trigger, in place of the weak minimum, which parts 0 and 3 refute;
   - BH-S1 (line 132) struck;
   - the horizon (line 1610) read as the Mesh rate's zero.
@@ -153,7 +156,7 @@ Over 1,000 ticks F2 acts at 367,488 values (5,000,000 quanta) and 379,008 (500,0
   - twin hands in the calibre, whose splits draw at every bang; the one big bang has none (open item 11 e);
   - the late settings carried back by the turnover to the next birth (89d4d2a9e);
   - a lay whose light outlasts the fittings.
-- **(f) Local contractions.** Six charts send clocks below the vacuum's stretch (draft B). Under law 11 the load's zero is the same dial's other end: a load that passes below 0 would leave a borrow, whose event is a turnover at the full rate. On the A1 course the load comes to 0 at rest and never passes it.
+- **(f) Local contractions.** Six charts send clocks below the vacuum's stretch (draft B). Under law 11 the vacuum's stretch is the same dial's other end: a stretch that passes below it would leave a borrow, whose event is a turnover at the full rate. On the A1 course the stretch comes to the vacuum's at rest and never passes it.
 - **(g) The asynchronous runner's tick,** with the lapse counted once: David's formula (section 31). The A1 course here is the same sequence of states under any schedule that steps the clocks alike.
 - **(h) The other closure, by general relativity's 00 equation** (draft C's verifier). The seed's breach acts as k > 0.
   - On a sprung hand it gives tops and bottoms with no horizon: tops at 40, 118, 193, 266 and 337 with 20 quanta, each different.
@@ -162,15 +165,15 @@ Over 1,000 ticks F2 acts at 367,488 values (5,000,000 quanta) and 379,008 (500,0
 
 ## 7. What it replaces (step 4)
 
-- **BH-S1, R10:** struck everywhere, with law 11's turn of the horizon dial as law 4's top (P2, P5).
+- **BH-S1, R10:** struck everywhere, with law 11's turn of the time gear's dial as law 4's top (P2, P5).
 - **Law 4's floor clause** (X_f = 19, stretch LOW = -1, readings.bottom): struck, with no bottom trigger in its place (P4). The six charts are (f).
 - **F1 and bound (3):** gone with the derived push (draft C), on the owner's word of 11:5x.
-- **The ceiling:** never typed. The top is law 11's event at the horizon dial.
+- **The ceiling:** never typed. The top is law 11's event at the time gear's dial, X_c from Gamma.
 - **The rows:**
   - row 1 reads the tops (21 in 1,000 ticks at 5,000,000 quanta);
   - row 1c reads the bottoms' distinct states;
   - row 46 reads the click counts per bang, which fail from the third bang here (part 5).
-- **Section 18, root VI, and law 10's sentence:** the closure stands on law 11's horizon dial with no declared number. Its course stands on F2 until (b), and law 10's "every bang shows more" waits on (e).
+- **Section 18, root VI, and law 10's sentence:** the closure stands on law 11's turn of the time gear with no declared number. Its course stands on F2 until (b), and law 10's "every bang shows more" waits on (e).
 
 ---
 Animate, reader-5.
