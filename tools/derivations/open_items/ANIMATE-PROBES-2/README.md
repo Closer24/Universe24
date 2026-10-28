@@ -7,24 +7,33 @@ The draft is ANIMATE-MANY-BANGS.md. Nothing here is engine code, and nothing was
 - **The tree:** engine-5.0-test at 33d9ecaa (its src at that commit), with draft C's drives.py and course.py beside this harness. Copy many_bangs.py into tools/derivations/open_items/derive/C of that tree, then run `python -I many_bangs.py <the tree> <variant> <quanta> <ticks> [<rewind n> <rewind from> ...]` with an interpreter that has numpy and pytest (tests.laws imports pytest).
 - **The world:** tests/worlds/world_bang.json on universe_bang.json, 64 Node-clocks, the seed's quanta set by the argument. The drive is draft C's vol0, the derived push with no clamp.
 - **The variants, one change each:**
-  - **base:** law 4's two triggers and BH-S1's restore, as draft C ran it.
+  - **base:** law 4's two triggers and BH-S1 (its hold and restore, its masks on the Meshes and the dial, the click's skip), as draft C ran it.
   - **nofloor:** law 4's floor clause struck.
-  - **notick:** nofloor, and BH-S1's restore struck. Law 4 reads the time gear of a clock with no tick (Mesh rate 0 at the tick's start) as held, and nothing else changes.
-  - **weakmin:** notick, with law 4's bottom as the top's mirror, the time gear's weak minimum (X0 >= X1 <= X2, one strict), in place of the floor (the Boss's candidate).
-  - **fallmin:** weakmin with the bottom entered from above only (X0 > X1 <= X2).
+  - **notick:** nofloor, and BH-S1's restore struck. Law 4 reads the time gear of a clock with no tick as held: a mask, refused by "no bound and no floor", kept as the first form.
+  - **carry:** law 11 at the time gear. The turnover is the event of the horizon dial's whole turn, the load at the tick's start divided by the stopped load L_c. There is no weak maximum and no floor, and BH-S1 is struck everywhere. This is the draft's form.
+  - **carry_nof2:** carry, with the Mesh factor read from the tension unclipped (F2 struck).
+  - **weakmin:** notick, with law 4's bottom as the top's mirror, the weak minimum (X0 >= X1 <= X2, one strict), in place of the floor.
+  - **fallmin:** weakmin, with the bottom entered from above only (X0 > X1 <= X2).
 - **Its readings:**
   - X per tick, least and largest;
   - the tops, the local turnovers and the floor's firings;
   - the births per tick and per bang, and the books per click phase;
   - the bottoms' state hashes;
   - the retrace after each top: X at top + k against X at top - 2 - k;
-  - the rewind.
-- **The outputs:**
-  - many_bangs_base_5M_250.txt, many_bangs_nofloor_5M_250.txt and many_bangs_notick_5M_250.txt: all three end at the state hash 77e8684641d42469;
-  - many_bangs_notick_5M_1000.txt;
-  - many_bangs_notick_500k_1000.txt;
-  - many_bangs_weakmin_5M_250.txt: the board turned over at every tick, X = 1,000 throughout, no birth;
-  - many_bangs_fallmin_5M_250.txt: a turnover at every top and every bottom, the same top 4,638,548,302 at every bang, no birth.
+  - the state hash with and without the dial;
+  - the rewind;
+  - a refusal by name with its tick.
+- **The audit, on every variant:** how many values each bound the engine still holds changed in the run:
+  - a load below 0;
+  - a tension below 0 or above Gamma;
+  - a Mesh factor zeroed by a stopped end;
+  - the dial held at a stopped clock;
+  - the end teeth's fallback;
+  - the draw's room capped;
+  - the coupling's cap.
+- **The outputs, many_bangs_<variant>_<quanta>_<ticks>.txt:**
+  - **At 5,000,000 quanta and 250 ticks,** every variant. Base, nofloor and notick end at 77e8684641d42469; carry at 640f11b7135fcbfc, the same without the dial (131263b34da818ef). carry_nof2 is refused at tick 15. weakmin turns over at every tick, and fallmin replays the first bang.
+  - **Over 1,000 ticks,** base and carry at 5,000,000 and 500,000 quanta. At 5,000,000 they are the same without the dial (1bc59fa2b92b6617). At 500,000 they part in the dial and the clicks counter alone (draft, P5).
 
 ## 2. tst_time_gear.py: T S T = S^-1 for the time gear's step
 

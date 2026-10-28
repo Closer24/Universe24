@@ -10,6 +10,11 @@ Variants (each changes one thing, named; everything else is the tree's own):
   weakmin   notick, with law 4's bottom as the top's mirror, the time gear's weak minimum (X0 >= X1 <= X2, one
             strict), in place of the floor (the Boss's candidate, #2187 6468487676)
   fallmin   weakmin with the bottom entered from above only (X0 > X1 <= X2)
+  carry     law 11 at the time gear: the turnover is the event of the horizon's dial, the load's whole turn at the
+            stopped load L_c (Rule3's own zero of the Mesh rate), read at the tick's start as the quotient
+            load div L_c; no weak maximum, no floor, and BH-S1 struck everywhere (no restore, no mask on the Mesh
+            factors, on the dial or on the click)
+  carry_nof2  carry, with the Mesh factor read from the tension unclipped (the bound F2 struck)
   notick    nofloor, and BH-S1's restore struck: no gear of a stopped clock is restored; law 4 reads the time gear
             of a clock with no tick (mesh rate 0 at the tick's start) as held, X2 = X1 (the clock has no tick on the
             board, the owner's asynchronous board), and nothing else
@@ -18,6 +23,9 @@ Readings, per tick and per bang (a bang is the course from one bottom at rest to
   firings, the births, the books per click phase, the state hash per bottom (is any bottom's state a repeat of an
   earlier one?), the retrace (after each top, X at top + k against X at top - 2 - k), the rewind (n ticks forward
   and n back from a tick, the state bit for bit).
+The audit, on every variant: how often each bound the engine still holds changes a value in the run (a load below 0
+read at 0; a tension below 0 or above Gamma read at the edge; a Mesh factor zeroed by a stopped end; the dial held at
+a stopped clock; the end teeth's fallback; the draw's room capped at the modulus; the coupling min(spring, 1)).
 Usage: python -I many_bangs.py <root> <variant> <quanta> <ticks> [<rewind n> <rewind from> ...]
 """
 
@@ -44,6 +52,7 @@ from event_universe.trains import REGULATOR  # noqa: E402
 from tests.laws import run_back_exact, state_of, world_of  # noqa: E402
 
 FIRED = {"floor": 0}
+from event_universe.core.rates import stopped_load as rates_stopped_load  # noqa: E402
 
 
 def turnover_law4(self, held, going=1, top=None):
@@ -58,6 +67,16 @@ def turnover_law4(self, held, going=1, top=None):
     if variant in ("notick", "weakmin", "fallmin"):
         no_tick = readings.stopped_of(self, stretch_feature.load_of(self.full_rate, x1))
         x2 = np.where(no_tick, x1, x2)
+    if variant in ("carry", "carry_nof2"):
+        horizon = rates_stopped_load(self.full_rate)
+        turns = np.asarray(stretch_feature.load_of(self.full_rate, x1), dtype=object) // horizon
+        top = turns >= 1
+        self.turned_over = top
+        if top.any():
+            self.counts["turns"] += int(top.sum())
+            self.turnovers.append((self.ticks, int(top.sum())))
+            self.reverse(top, held)
+        return top
     xf = readings.bottom(self)
     floor = (x0 < xf) | (x2 < xf)
     FIRED["floor"] += int(floor.sum())
@@ -80,6 +99,105 @@ def turnover_law4(self, held, going=1, top=None):
 
 drives.install(T, "vol0")
 C.Clock.turnover = turnover_law4
+
+AUDIT = {
+    "load below 0 read at 0": 0,
+    "tension below 0 read at 0": 0,
+    "tension above Gamma read at Gamma": 0,
+    "Mesh factor zeroed by a stopped end": 0,
+    "dial held at a stopped clock": 0,
+    "end teeth's fallback": 0,
+    "draw's room capped at the modulus": 0,
+}
+from event_universe import draw as D  # noqa: E402
+from event_universe import meshes as M  # noqa: E402
+from event_universe.core.rule3 import carries as carries_act  # noqa: E402
+from event_universe.core.spokes import SPOKE_SIDES  # noqa: E402
+
+_rates_of = readings.rates_of
+
+
+def rates_of_audited(clock, c):
+    AUDIT["load below 0 read at 0"] += int((np.asarray(c, dtype=object) < 0).sum())
+    return _rates_of(clock, c)
+
+
+readings.rates_of = rates_of_audited
+_factors = M.factors
+
+
+def factors_audited(clock, axis_notches=None, stopped=None):
+    notches = (
+        [gear.now for gear in clock.train(REGULATOR).gears[1:4]]
+        if axis_notches is None
+        else axis_notches
+    )
+    for spoke, (axis, _side) in enumerate(SPOKE_SIDES):
+        t = carries_act(M.even(notches[axis], spoke) + 1, M.SIDES)
+        AUDIT["tension below 0 read at 0"] += int((np.asarray(t) < 0).sum())
+        AUDIT["tension above Gamma read at Gamma"] += int((np.asarray(t) > clock.full_rate).sum())
+    if variant in ("carry", "carry_nof2"):
+        stopped = None
+    if variant == "carry_nof2":
+        found = []
+        for spoke, (axis, _side) in enumerate(SPOKE_SIDES):
+            t = carries_act(M.even(notches[axis], spoke) + 1, M.SIDES)
+            found.append(M.mesh_factor(clock.full_rate, clock.G, t))
+        return tuple(found)
+    found = _factors(clock, axis_notches, stopped)
+    if stopped is not None and np.asarray(stopped).any():
+        free = _factors(clock, axis_notches, None)
+        AUDIT["Mesh factor zeroed by a stopped end"] += sum(
+            int((np.asarray(a) != np.asarray(b)).sum()) for a, b in zip(found, free, strict=True)
+        )
+    return found
+
+
+M.factors = factors_audited
+T.factors = factors_audited
+_end_teeth = T.Tick.end_teeth
+
+
+def end_teeth_audited(self, time_gear):
+    w = readings.mean_teeth(self.clock, time_gear)
+    AUDIT["end teeth's fallback"] += int((np.asarray(w) <= 0).sum())
+    return _end_teeth(self, time_gear)
+
+
+T.Tick.end_teeth = end_teeth_audited
+
+
+def min_audited(a, b, *rest):
+    if not rest and a > b:
+        AUDIT["draw's room capped at the modulus"] += 1
+    return min(a, b, *rest)
+
+
+D.min = min_audited
+_rate_readings = T.Tick.rate_readings
+
+
+def rate_readings_audited(self):
+    _rate_readings(self)
+    if variant in ("carry", "carry_nof2"):
+        self.clock.dial = self.clock.dial + self.going * np.where(self.stopped, self.rate, 0)
+        self.stopped = np.zeros(self.clock.size, dtype=bool)
+        self.still = self.top | self.stopped
+    else:
+        AUDIT["dial held at a stopped clock"] += int(np.asarray(self.stopped).sum())
+
+
+T.Tick.rate_readings = rate_readings_audited
+if variant in ("carry", "carry_nof2"):
+    from event_universe import click as K  # noqa: E402
+
+    _stopped_of = readings.stopped_of
+    K.readings = type("R", (), {})()
+    for name in dir(readings):
+        if not name.startswith("__"):
+            setattr(K.readings, name, getattr(readings, name))
+    K.readings.stopped_of = lambda clock, c: np.zeros(clock.size, dtype=bool)
+    drives.NO_RESTORE.add("vol0")
 if variant in ("notick", "weakmin", "fallmin"):
     drives.NO_RESTORE.add("vol0")
 
@@ -120,6 +238,15 @@ def short(clock):
     return hashlib.sha256(state_of(clock).encode()).hexdigest()[:16]
 
 
+def short_without_dial(clock):
+    """The state's hash with the dial (the count of each clock's own rate, a reading of its proper time) left out."""
+    from event_universe import run as R
+
+    arrays = [a for a in R.state(clock) if a is not clock.dial]
+    text = " ".join(str(int(v)) for a in arrays for v in a.reshape(-1))
+    return hashlib.sha256(text.encode()).hexdigest()[:16]
+
+
 click.click = booked
 t0 = time.time()
 clock = make_clock()
@@ -131,20 +258,25 @@ whole, local = [], 0
 near = {
     0: short(clock)
 }  # the state hash at every tick whose largest X is within 20 seeds of the seed's stretch
+refused = None
 for at in range(1, ticks + 1):
-    g = clock.train(REGULATOR).gears[0]
-    stopped = readings.stopped_of(clock, stretch_feature.load_of(clock.full_rate, g.now))
-    clock.tick()
-    X = clock.train(REGULATOR).gears[0].now
-    turned = int(clock.turned_over.sum())
-    if turned == size:
-        whole.append(at)
-    elif turned:
-        local += turned
-    rows.append((at, int(X.min()), int(X.max()), turned, clock.counts["births"], int(stopped.sum())))
-    if int(X.max()) <= 20 * X_seed:
-        near[at] = short(clock)
+    try:
+        g = clock.train(REGULATOR).gears[0]
+        stopped = readings.stopped_of(clock, stretch_feature.load_of(clock.full_rate, g.now))
+        clock.tick()
+        X = clock.train(REGULATOR).gears[0].now
+        turned = int(clock.turned_over.sum())
+        if turned == size:
+            whole.append(at)
+        elif turned:
+            local += turned
+        rows.append((at, int(X.min()), int(X.max()), turned, clock.counts["births"], int(stopped.sum())))
+        if int(X.max()) <= 20 * X_seed:
+            near[at] = short(clock)
 
+    except ValueError as err:
+        refused = (at, str(err))
+        break
 print(f"variant {variant}  quanta {quanta}  ticks {ticks}  board {size} Node-clocks")
 print("tick: X least..largest [turned over] births stopped-at-start")
 for at, lo, hi, turned, b, st in rows:
@@ -154,6 +286,9 @@ for at, lo, hi, turned, b, st in rows:
         + f"  b{b}"
         + (f" s{st}" if st else "")
     )
+if refused:
+    print(f"refused by name at tick {refused[0]}: {refused[1]}")
+    ticks = refused[0] - 1
 print(f"whole-board turnovers (tops): {len(whole)} at ticks {whole}")
 print(f"local turnovers: {local}; the floor's trigger true at {FIRED['floor']} Node-clock ticks")
 if "weakmin" in FIRED:
@@ -196,7 +331,14 @@ for s, e in zip(edges, edges[1:], strict=False):
     tops_in = [t for t in whole if s < t <= e]
     largest = max(X_at[t] for t in range(s, e + 1))
     print(f"  {s}..{e}: top {tops_in}, largest X {largest}, births {births_at[e] - births_at[s]}")
-print("state hash", short(clock))
+print("the bounds the engine still holds, values each changed in the run:")
+for name, n in AUDIT.items():
+    print(f"  {name}: {n}")
+springs = [r.spring for r in clock.hands() if r.spring is not None]
+print(
+    f"  the coupling min(spring, 1): the hands' springs {sorted(set(springs))} (a cap acts where a spring passes 1)"
+)
+print("state hash", short(clock), "| without the dial", short_without_dial(clock))
 click.click = clicked
 for n, frm in rewinds:
     start = make_clock()

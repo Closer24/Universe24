@@ -269,8 +269,14 @@ bangs (from a bottom to the next): start, end, top tick, largest X, births in it
   140..187: top [165], largest X 4641121200, births 0
   187..234: top [212], largest X 4641211062, births 0
   234..250: top [], largest X 1736085489, births 0
-state hash 77e8684641d42469
-rewind from tick 15: 20 of 20
-rewind from tick 40: 20 of 20
-rewind from tick 60: 20 of 20
-seconds 43.7
+the bounds the engine still holds, values each changed in the run:
+  load below 0 read at 0: 0
+  tension below 0 read at 0: 61184
+  tension above Gamma read at Gamma: 30592
+  Mesh factor zeroed by a stopped end: 1280
+  dial held at a stopped clock: 320
+  end teeth's fallback: 0
+  draw's room capped at the modulus: 1647648
+  the coupling min(spring, 1): the hands' springs [0, 2183583978, 12582467845487104, 12704646675360514] (a cap acts where a spring passes 1)
+state hash 77e8684641d42469 | without the dial 131263b34da818ef
+seconds 24.7

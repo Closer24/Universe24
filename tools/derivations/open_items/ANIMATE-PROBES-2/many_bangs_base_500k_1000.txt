@@ -1,4 +1,4 @@
-variant notick  quanta 500000  ticks 1000  board 64 Node-clocks
+variant base  quanta 500000  ticks 1000  board 64 Node-clocks
 tick: X least..largest [turned over] births stopped-at-start
   1: 2001028..2001028  b0
   2: 5409644..5409644  b0
@@ -1023,6 +1023,14 @@ bangs (from a bottom to the next): start, end, top tick, largest X, births in it
   587..734: top [662], largest X 4402013878, births 0
   734..881: top [809], largest X 4399938656, births 0
   881..1000: top [956], largest X 4402040984, births 32
-state hash d73ceab4db61d611
-rewind from tick 140: 20 of 20
-seconds 116.0
+the bounds the engine still holds, values each changed in the run:
+  load below 0 read at 0: 0
+  tension below 0 read at 0: 252672
+  tension above Gamma read at Gamma: 126336
+  Mesh factor zeroed by a stopped end: 1792
+  dial held at a stopped clock: 448
+  end teeth's fallback: 0
+  draw's room capped at the modulus: 6524768
+  the coupling min(spring, 1): the hands' springs [0, 2183583978, 12582467845487104, 12704646675360514] (a cap acts where a spring passes 1)
+state hash d73ceab4db61d611 | without the dial 45490dd58bb310bd
+seconds 92.8
