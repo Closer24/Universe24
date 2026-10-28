@@ -4,11 +4,11 @@ The law not to be crossed **The cube's 24 turns hold** stands in docs/ALGEBRA.md
 
 ## The state
 
-- The step keeps all 24 turns; the click's draw parts them, 3 of the 24 as built (the identity and the two turns of the axes with no axis negated; ledger row 262), a bug and not a gap.
-- F48-S1's letter, the remainder's one mirror about its origin (f to 2 o - f, the odd gears' digits read folded, |f - o| div F), is derived and unbuilt. With it all 24 turns run alike on nature (14 ticks), the hole (20 ticks) and the bodies, at the price that the fold silences the hole (rows 262 and 267).
-- T0 (exactly the 24, the reflections left chiral) and T4 (the whole 48 at no cost to the step) are the Boss's trial builds, T4 his local 639c3c7ff, unpushed (rows 275 and 281). The law's claim is the 24, which T0 matches; T4 also holds the 24 and leaves the great clock without a handedness.
+- The Boss's push 42d5448b7 (2026-10-28, 04:39 UTC) builds F48-S1's letter, the one mirror (the turnover mirrors every fine tooth about its mid tooth, the vernier reads each gear's digit in the frame of its own displacement), with David's order-free click (every take read on the phase's start board). tests/test_the_board.py asserts that every rotation of the 24 runs alike on the nature setting over 20 ticks (3 of the 24 before) and that every reflection parts at its first fitting, which exchanges the two children (ledger row 296).
+- T0 (exactly the 24, the reflections left chiral) is what was pushed; T4 (the whole 48 at no cost to the step) stays the Boss's local 639c3c7ff, unpushed.
+- The prices the tests record: the light's cycle setting (CS5-S2) fits nothing by 20 ticks, MG-S1's merger test asserts no births and no stops where 64 and 384 stood, the hole gives 23 fittings and 877 chimes (17 and 920 before).
 
 ## Asked
 
-- **The Boss and David** (the thread, comment 6460557629): the state now, T0 or T4, the Boss's refactor and full check; whether the clause says what is being built; the tag for the mend (F48-S1 kept, or F24-S1).
-- **The Boss:** the findings on parity (the step commutes with the reflections, a finding by name against nature) stay in the law as findings of the step until the click is built chiral; when T0 lands they are re-read.
+- **The Boss:** the gate of the 24 on every chart in the tests (the hole through 60 ticks, the bang's translation through 100 and the bodies: the commit claims them and no test gates them); the tag (F48-S1 kept, or F24-S1); the findings on parity (the step commutes with the reflections, a finding by name against nature) re-read now that the click is chiral.
+- **The owner:** his word on the price, the light's cycle setting born nothing.

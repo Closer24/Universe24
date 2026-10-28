@@ -1,44 +1,173 @@
-"""The Scribe's scan of src/event_universe for the owner's rules (2026-10-28, 04:3x and 04:5x UTC).
+"""The Scribe's gate on src/event_universe: the owner's rules as a script that refuses a push.
 
-Usage: python scribe_scan.py [ROOT] [--baseline FILE] [--write-baseline] [--all]
+The owner's words of 2026-10-28, 04:3x, 04:5x and 05:0x UTC: no number in the code, whole numbers only, no cosine, sine or
+circularity that makes a phenomenon happen, no state beyond the Node-clock; "your laws should be in scripts, so that they cannot
+push at all what breaks our lawfulness, and let it be logical and smart".
 
-It reads every .py file under ROOT/src/event_universe and lists, by rule:
-  NUMBER   a numeric literal beyond 0 and 1 (no number in the code)
-  FLOAT    a float literal or dtype, a true division, float(), round(), a numpy function that returns a float
-  IMPORT   math, cmath, statistics, random, fractions, decimal, scipy, sympy, mpmath
-  CIRCLE   a cosine, sine or other circular function or constant (calls, attributes, names)
-  WORD     a circular word in a name, string or comment: cos, sin, tan, angle, theta, circle, quaternion, Born, Lorentz ...
-  DTYPE    a numpy constructor with no explicit dtype (its default is a float)
-  STATE    a module-level empty container or defaultdict, a `global` statement, an `id(` call
-Exit status 1 if a hit is not in the baseline (the hits that stand are listed in the baseline file; a new hit is
-a refusal at the merge until it is read by a person). With --all every hit is listed, the baseline's included.
+How it decides. A push may not raise the count of any rule's hits, at any (rule, file, detail), above the same file's at the push's
+merge base: what stands at the base stands, a new hit is a REFUSAL (BLOCK) or a NOTE (WARN) by the rule's tier. A hit leaves the list
+by being removed and enters it only by the owner's word (scribe_scan_allowed.json, written by the Scribe on that word, with the
+row of the ledger that holds it). The key of a hit holds no line number, so a moved or reformatted line is no new hit.
+
+  python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/engine-5.0-test)
+  python scribe_scan.py TREE [--base REV]      TREE a directory or a git revision; the base a revision
+  python scribe_scan.py --patch FILE           the patch applied on the base in a scratch worktree, then the same check
+  python scribe_scan.py TREE --baseline FILE   the tree against the list of departures that stand (the Scribe's audit of the whole)
+  python scribe_scan.py TREE --all [--summary] every hit of the tree, by rule and file (--summary: the counts only)
+  python scribe_scan.py --write-baseline FILE  [TREE]  the tree's hits written as the list that stands
+  python scribe_scan.py --rules                the rules, their tiers and the law each one keeps
+  python scribe_scan.py --install              the git pre-push hook of this clone
+  python scribe_scan.py --hook                 git's pre-push call (the refs on stdin); --claude-hook: Claude Code's call before `git push`
+
+Exit status 1 on a refusal, 0 otherwise (2: the call itself is wrong). Read with the repository's own interpreter, Python 3.14
+(venv314/bin/python); an older one runs the script again under it.
 """
 
+from __future__ import annotations
+
+import argparse
 import ast
 import io
 import json
+import keyword
+import os
 import re
+import shlex
+import shutil
+import subprocess
 import sys
+import tempfile
 import tokenize
+from collections import Counter
+from collections.abc import Callable, Iterable, Iterator
+from contextlib import contextmanager
+from dataclasses import dataclass
+from itertools import groupby
 from pathlib import Path
+from typing import Any
 
-BAD_IMPORTS = {"math", "cmath", "statistics", "random", "fractions", "decimal", "scipy", "sympy", "mpmath"}
-NP_FLOAT = {
-    "sqrt", "cbrt", "exp", "expm1", "log", "log2", "log10", "log1p", "hypot", "mean", "average", "median", "std",
-    "var", "linspace", "logspace", "fft", "linalg", "random", "e", "inf", "nan", "float32", "float64", "float16",
+PACKAGE = "src/event_universe"
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[2]
+BASELINE = HERE / "scribe_scan_baseline.json"
+ALLOWED = HERE / "scribe_scan_allowed.json"
+BASES = ("origin/engine-5.0-test", "origin/main")
+PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by the Scribe alone
+# the gate's own files: a push that changes one needs the owner's word, and says so
+OWN = (
+    "tools/derivations/open_items/scribe_scan.py",
+    "tools/derivations/open_items/scribe_scan_allowed.json",
+    "tools/derivations/open_items/scribe_scan_baseline.json",
+    ".claude/settings.json",
+)
+
+# rule: (tier, the line the refusal prints with the law it keeps)
+RULES: dict[str, tuple[str, str]] = {
+    "NUMBER": (
+        "BLOCK",
+        "a number beyond 0 and 1: numbers stand in the world, universe and setting files (law: No number in the code)",
+    ),
+    "FLOAT": (
+        "BLOCK",
+        "a float, a true division, round() or pow(): whole numbers only (law: No float anywhere in the system)",
+    ),
+    "IMPORT": (
+        "BLOCK",
+        "math, random, fractions, decimal, statistics, scipy, sympy: integers and Rule3 only (law: No float anywhere)",
+    ),
+    "DTYPE": (
+        "BLOCK",
+        "a numpy constructor with no dtype makes a float (law: No float anywhere in the system)",
+    ),
+    "CIRCLE": (
+        "BLOCK",
+        "a cosine, sine, tangent, pi or other circular function (law: No circularity that makes a phenomenon happen)",
+    ),
+    "ROOT": (
+        "BLOCK",
+        "a call of an integer root, the integer sine by search: no new call (law: No circularity that makes a phenomenon happen)",
+    ),
+    "WORD": (
+        "BLOCK",
+        "a circular word in a name (cosine, sine, angle, theta, circle, quaternion ...): an angle or circle used as a rule",
+    ),
+    "TEXT": (
+        "WARN",
+        "a circular word in a string, docstring or comment: read it, a rotation or a closed form may be described there",
+    ),
+    "STATE": (
+        "BLOCK",
+        "state outside a Node-clock: a module-level container, a global, an id() key (law: Locality is never broken)",
+    ),
+    "MEMO": (
+        "WARN",
+        "a module-level cache is state beyond the Node-clock: only a pure function of integers may stand so, and say it",
+    ),
+    "TABLE": (
+        "BLOCK",
+        "a typed table of integers in the code (a quarter turn, a singlet): a world's data stands in the world file",
+    ),
+    "MIX": (
+        "BLOCK",
+        "a tuple of bilinear sums: a rotation or hypercomplex product by a setting outside Rule3 (law: No circularity ...)",
+    ),
+    "LOGREAD": (
+        "BLOCK",
+        "an act reads the great clock's log, a global read: only the readers read the record (law: Locality is never broken)",
+    ),
 }
-NP_CIRCLE = {
-    "cos", "sin", "tan", "arccos", "arcsin", "arctan", "arctan2", "cosh", "sinh", "tanh", "angle", "pi",
-    "deg2rad", "rad2deg", "degrees", "radians", "unwrap",
-}
-NP_NEEDS_DTYPE = {"zeros", "ones", "empty", "full", "eye", "identity", "linspace"}
-CIRCLE_WORDS = {
-    "cos", "sin", "tan", "cosine", "sine", "tangent", "arctan", "atan", "atan2", "acos", "asin", "theta", "angle",
-    "angles", "radian", "radians", "degree", "degrees", "circle", "circles", "circular", "quaternion",
-    "quaternions", "tsirelson", "lorentz", "planck", "coulomb", "pi",
-}
+
+BAD_IMPORTS = frozenset("math cmath statistics random fractions decimal scipy sympy mpmath".split())
+NUMPY_NAMES = frozenset({"np", "numpy"})
+NP_FLOAT = frozenset(
+    "sqrt cbrt exp expm1 log log2 log10 log1p mean average median std var linspace logspace fft linalg random e inf nan "
+    "float16 float32 float64 float_ double true_divide divide power".split()
+)
+CIRCULAR_FUNCTIONS = frozenset(
+    "cos sin tan acos asin atan atan2 arccos arcsin arctan arctan2 sinh cosh tanh radians degrees deg2rad rad2deg "
+    "hypot unwrap angle".split()
+)
+ROOTS = frozenset("largest_below isqrt integer_root sqrt cbrt sine_rim".split())
+NEEDS_DTYPE = frozenset("zeros ones empty full eye identity linspace".split())
+CIRCULAR_WORDS = frozenset(
+    "cos sin tan cosine sine tangent arccos arcsin arctan atan atan2 acos asin theta angle angles radian radians degree "
+    "degrees circle circles circular quaternion quaternions trig trigonometric sinusoid sinusoidal tsirelson lorentz "
+    "planck coulomb pi".split()
+)
 BORN = re.compile(r"\bBorn\b")
-CONTAINERS = {"dict", "list", "set", "defaultdict", "OrderedDict", "Counter", "deque"}
+SHOWN = 40  # the hits a refusal prints, the rest counted
+CONTAINERS = frozenset("dict list set defaultdict OrderedDict Counter deque".split())
+MUTATORS = frozenset(
+    "append extend insert pop remove clear update setdefault add discard popitem sort reverse".split()
+)
+MEMOS = frozenset({"cache", "lru_cache", "cached_property"})
+# the modules that read a finished chart and run no step (the Scribe's audit of 2026-10-28): they may read the log
+READERS = frozenset(
+    "run.py gates.py predicates.py reckoner.py rim.py swings.py great_clock.py strikes.py events.py symmetries.py "
+    "phenomena.py".split()
+)
+TEXT_TOKENS = {tokenize.STRING, tokenize.COMMENT}
+if hasattr(tokenize, "FSTRING_MIDDLE"):
+    TEXT_TOKENS.add(tokenize.FSTRING_MIDDLE)
+
+
+@dataclass(frozen=True)
+class Hit:
+    """One hit of one rule: its key holds no line, so a moved line is the same hit."""
+
+    rule: str
+    rel: str
+    line: int
+    detail: str
+    where: str = ""
+
+    @property
+    def key(self) -> tuple[str, str, str]:
+        return (self.rule, self.rel, self.detail)
+
+    @property
+    def tier(self) -> str:
+        return RULES[self.rule][0]
 
 
 def words_of(text: str) -> list[str]:
@@ -46,120 +175,643 @@ def words_of(text: str) -> list[str]:
     return [w.lower() for w in re.findall(r"[A-Za-z]+", spaced)]
 
 
-def scan_file(path: Path, rel: str) -> list[tuple[str, int, str]]:
-    source = path.read_text(encoding="utf-8")
-    lines = source.splitlines()
-    hits: list[tuple[str, int, str]] = []
+def integer_leaves(node: ast.AST) -> list[int] | None:
+    """The integers of a literal tuple or list of integers (nested, signed); None where a leaf is not one."""
+    if isinstance(node, ast.Tuple | ast.List):
+        found: list[int] = []
+        for element in node.elts:
+            leaves = integer_leaves(element)
+            if leaves is None:
+                return None
+            found += leaves
+        return found
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub | ast.UAdd):
+        return integer_leaves(node.operand)
+    if (
+        isinstance(node, ast.Constant)
+        and isinstance(node.value, int)
+        and not isinstance(node.value, bool)
+    ):
+        return [node.value]
+    return None
 
-    def add(rule: str, line: int, text: str = "") -> None:
-        hits.append((rule, line, (text or lines[line - 1]).strip()))
 
+def products(node: ast.AST) -> int:
+    return sum(isinstance(n, ast.BinOp) and isinstance(n.op, ast.Mult) for n in ast.walk(node))
+
+
+def sums(node: ast.AST) -> bool:
+    return any(isinstance(n, ast.BinOp) and isinstance(n.op, ast.Add | ast.Sub) for n in ast.walk(node))
+
+
+def callee_name(call: ast.Call) -> str:
+    f = call.func
+    return f.id if isinstance(f, ast.Name) else f.attr if isinstance(f, ast.Attribute) else ""
+
+
+def scan(rel: str, source: str) -> list[Hit]:
+    """Every hit of every rule in one module (rel: its path inside src/event_universe)."""
     tree = ast.parse(source)
-    numpy_names = {"np", "numpy"}
+    parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+    hits: list[Hit] = []
+
+    def where(node: ast.AST) -> str:
+        names: list[str] = []
+        cursor: ast.AST | None = node
+        while cursor is not None:
+            if isinstance(cursor, ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
+                names.append(cursor.name)
+            cursor = parents.get(cursor)
+        return ".".join(reversed(names)) or "<module>"
+
+    def add(rule: str, node: ast.AST, detail: str) -> None:
+        hits.append(Hit(rule, rel, getattr(node, "lineno", 0), detail, where(node)))
+
+    numpy = set(NUMPY_NAMES)
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
-            for a in node.names:
-                if a.name.split(".")[0] in BAD_IMPORTS:
-                    add("IMPORT", node.lineno)
-        elif isinstance(node, ast.ImportFrom):
-            if (node.module or "").split(".")[0] in BAD_IMPORTS:
-                add("IMPORT", node.lineno)
-        elif isinstance(node, ast.Constant) and isinstance(node.value, int | float | complex):
-            if isinstance(node.value, bool):
-                continue
-            if isinstance(node.value, float | complex):
-                add("FLOAT", node.lineno)
-            if node.value not in (0, 1):
-                add("NUMBER", node.lineno)
-        elif isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
-            add("FLOAT", node.lineno, "true division: " + lines[node.lineno - 1].strip())
-        elif isinstance(node, ast.AugAssign) and isinstance(node.op, ast.Div):
-            add("FLOAT", node.lineno, "true division: " + lines[node.lineno - 1].strip())
-        elif isinstance(node, ast.Call):
-            f = node.func
-            if isinstance(f, ast.Name) and f.id in {"float", "round", "complex"}:
-                add("FLOAT", node.lineno)
-            if isinstance(f, ast.Name) and f.id == "pow":
-                add("FLOAT", node.lineno, "pow: " + lines[node.lineno - 1].strip())
-            if isinstance(f, ast.Name) and f.id == "id":
-                add("STATE", node.lineno, "id(): " + lines[node.lineno - 1].strip())
-            if isinstance(f, ast.Attribute) and isinstance(f.value, ast.Name) and f.value.id in numpy_names:
-                if f.attr in NP_NEEDS_DTYPE and not any(k.arg == "dtype" for k in node.keywords):
-                    add("DTYPE", node.lineno)
-        elif isinstance(node, ast.Attribute):
-            base = node.value
-            if isinstance(base, ast.Name) and base.id in numpy_names:
-                if node.attr in NP_FLOAT:
-                    add("FLOAT", node.lineno)
-                if node.attr in NP_CIRCLE:
-                    add("CIRCLE", node.lineno)
-            if node.attr in {"float", "float_", "double"} and isinstance(base, ast.Name) and base.id in numpy_names:
-                add("FLOAT", node.lineno)
-        elif isinstance(node, ast.Name) and node.id in {"float", "cos", "sin", "tan", "atan2"}:
-            add("CIRCLE" if node.id != "float" else "FLOAT", node.lineno)
-        elif isinstance(node, ast.Global):
-            add("STATE", node.lineno, "global: " + lines[node.lineno - 1].strip())
+            numpy |= {a.asname or a.name for a in node.names if a.name == "numpy"}
+    module_containers: dict[str, ast.stmt] = {}
     for stmt in tree.body:
-        value = None
-        if isinstance(stmt, ast.Assign | ast.AnnAssign):
-            value = stmt.value
-        if value is None:
-            continue
-        empty = (
-            (isinstance(value, ast.Dict) and not value.keys)
-            or (isinstance(value, ast.List | ast.Set) and not value.elts)
-            or (
-                isinstance(value, ast.Call)
-                and isinstance(value.func, ast.Name | ast.Attribute)
-                and (value.func.id if isinstance(value.func, ast.Name) else value.func.attr) in CONTAINERS
-                and not value.args
-            )
+        value = stmt.value if isinstance(stmt, ast.Assign | ast.AnnAssign) else None
+        targets = (
+            stmt.targets
+            if isinstance(stmt, ast.Assign)
+            else [stmt.target]
+            if isinstance(stmt, ast.AnnAssign)
+            else []
         )
-        if empty:
-            add("STATE", stmt.lineno, "module-level container: " + lines[stmt.lineno - 1].strip())
-    for tok in tokenize.generate_tokens(io.StringIO(source).readline):
-        if tok.type == tokenize.NAME:
-            found = [w for w in words_of(tok.string) if w in CIRCLE_WORDS]
-            if found:
-                add("WORD", tok.start[0], f"name {tok.string}: " + lines[tok.start[0] - 1].strip())
-        elif tok.type in (tokenize.STRING, tokenize.COMMENT):
-            found = sorted({w for w in words_of(tok.string) if w in CIRCLE_WORDS})
-            if BORN.search(tok.string):
-                found.append("Born")
-            if found:
-                add("WORD", tok.start[0], f"{'/'.join(found)}: " + lines[tok.start[0] - 1].strip())
-    return sorted(set(hits), key=lambda h: (h[1], h[0], h[2]))
+        names = [t.id for t in targets if isinstance(t, ast.Name)]
+        if value is None or not names:
+            continue
+        literal = isinstance(
+            value, ast.Dict | ast.List | ast.Set | ast.DictComp | ast.ListComp | ast.SetComp
+        )
+        built = isinstance(value, ast.Call) and callee_name(value) in CONTAINERS
+        if literal or built:
+            emptied = (
+                (isinstance(value, ast.Dict) and not value.keys)
+                or (isinstance(value, ast.List | ast.Set) and not value.elts)
+                or (isinstance(value, ast.Call) and not value.args and not value.keywords)
+            )
+            for name in names:
+                module_containers[name] = stmt
+                if emptied:
+                    add("STATE", stmt, f"module-level container {name}")
+        if isinstance(value, ast.Call) and callee_name(value) in MEMOS:
+            add("MEMO", stmt, f"{names[0]} = {callee_name(value)}(...)")
+
+    written: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Global):
+            add("STATE", node, "global " + ", ".join(node.names))
+            written |= set(node.names)
+        elif isinstance(node, ast.Assign | ast.AugAssign | ast.Delete):
+            for target in node.targets if isinstance(node, ast.Assign | ast.Delete) else [node.target]:
+                base = (
+                    target.value
+                    if isinstance(target, ast.Subscript)
+                    else target
+                    if isinstance(node, ast.AugAssign)
+                    else None
+                )
+                if isinstance(base, ast.Name):
+                    written.add(base.id)
+        elif (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Attribute)
+            and node.func.attr in MUTATORS
+        ):
+            if isinstance(node.func.value, ast.Name):
+                written.add(node.func.value.id)
+    for name, stmt in module_containers.items():
+        if name in written and not any(
+            h.rule == "STATE" and h.detail == f"module-level container {name}" for h in hits
+        ):
+            add("STATE", stmt, f"module-level container {name}")
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                if alias.name.split(".")[0] in BAD_IMPORTS:
+                    add("IMPORT", node, alias.name)
+        elif isinstance(node, ast.ImportFrom):
+            module = node.module or ""
+            if module.split(".")[0] in BAD_IMPORTS:
+                add("IMPORT", node, module)
+            if module.split(".")[0] in numpy:
+                for alias in node.names:
+                    rule = (
+                        "CIRCLE"
+                        if alias.name in CIRCULAR_FUNCTIONS | {"pi"}
+                        else "FLOAT"
+                        if alias.name in NP_FLOAT
+                        else ""
+                    )
+                    if rule:
+                        add(rule, node, f"numpy.{alias.name}")
+        elif isinstance(node, ast.Constant):
+            value = node.value
+            if isinstance(value, int | float | complex) and not isinstance(value, bool):
+                if isinstance(value, float | complex):
+                    add("FLOAT", node, f"literal {value!r}")
+                if value not in (0, 1):
+                    add("NUMBER", node, repr(value))
+        elif isinstance(node, ast.BinOp | ast.AugAssign) and isinstance(node.op, ast.Div):
+            add("FLOAT", node, "true division")
+        elif isinstance(node, ast.Call):
+            name = callee_name(node)
+            if isinstance(node.func, ast.Name) and name in {"round", "complex", "pow"}:
+                add("FLOAT", node, f"{name}()")
+            if isinstance(node.func, ast.Name) and name == "id":
+                add("STATE", node, "id()")
+            if name in ROOTS:
+                add("ROOT", node, name)
+            if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name):
+                if (
+                    node.func.value.id in numpy
+                    and name in NEEDS_DTYPE
+                    and not any(k.arg == "dtype" for k in node.keywords)
+                ):
+                    add("DTYPE", node, f"np.{name}")
+        elif isinstance(node, ast.Attribute):
+            if isinstance(node.value, ast.Name) and node.value.id in numpy:
+                if node.attr in NP_FLOAT:
+                    add("FLOAT", node, f"np.{node.attr}")
+                if node.attr in CIRCULAR_FUNCTIONS or node.attr == "pi":
+                    add("CIRCLE", node, f"np.{node.attr}")
+            if node.attr == "log" and isinstance(node.ctx, ast.Load) and rel not in READERS:
+                above = parents.get(node)
+                call = parents.get(above) if above is not None else None
+                appends = (
+                    isinstance(above, ast.Attribute)
+                    and above.attr in MUTATORS
+                    and isinstance(call, ast.Call)
+                )
+                if not appends:
+                    add("LOGREAD", node, "log read")
+        elif isinstance(node, ast.Name):
+            if node.id == "float":
+                add("FLOAT", node, "float")
+            if node.id in CIRCULAR_FUNCTIONS or node.id == "pi":
+                add("CIRCLE", node, node.id)
+        elif isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
+            for decorator in node.decorator_list:
+                found = (
+                    callee_name(decorator)
+                    if isinstance(decorator, ast.Call)
+                    else (
+                        decorator.id
+                        if isinstance(decorator, ast.Name)
+                        else decorator.attr
+                        if isinstance(decorator, ast.Attribute)
+                        else ""
+                    )
+                )
+                if found in MEMOS:
+                    add("MEMO", node, f"@{found} {node.name}")
+        if isinstance(node, ast.Tuple | ast.List):
+            above = parents.get(node)
+            indexing = isinstance(above, ast.Subscript) and above.slice is node
+            if not indexing and not isinstance(above, ast.Tuple | ast.List):
+                leaves = integer_leaves(node)
+                if leaves is not None and len(leaves) >= 3 and any(leaves):
+                    add("TABLE", node, "table " + ast.unparse(node)[:48])
+            if isinstance(node, ast.Tuple) and not indexing and len(node.elts) >= 3:
+                if all(products(e) >= 2 and sums(e) for e in node.elts):
+                    add("MIX", node, f"{len(node.elts)} bilinear sums")
+
+    try:
+        for token in tokenize.generate_tokens(io.StringIO(source).readline):
+            if token.type == tokenize.NAME and not keyword.iskeyword(token.string):
+                if any(w in CIRCULAR_WORDS for w in words_of(token.string)):
+                    hits.append(Hit("WORD", rel, token.start[0], token.string))
+            elif token.type in TEXT_TOKENS:
+                found_words = sorted({w for w in words_of(token.string) if w in CIRCULAR_WORDS})
+                if BORN.search(token.string):
+                    found_words.append("Born")
+                if found_words:
+                    hits.append(Hit("TEXT", rel, token.start[0], "/".join(found_words)))
+    except tokenize.TokenError:
+        pass
+    return sorted(set(hits), key=lambda h: (h.rel, h.line, h.rule, h.detail))
+
+
+def git(repo: Path, *args: str, stdin: bytes | None = None) -> subprocess.CompletedProcess[bytes]:
+    return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, input=stdin, check=False)
+
+
+def resolve(repo: Path, rev: str) -> str | None:
+    found = git(repo, "rev-parse", "--verify", "--quiet", f"{rev}^{{commit}}")
+    return found.stdout.decode().strip() if found.returncode == 0 else None
+
+
+def sources_at(repo: Path, rev: str) -> dict[str, str]:
+    """The modules of src/event_universe at a revision, read from git without a checkout."""
+    listing = git(repo, "ls-tree", "-r", "--name-only", rev, "--", PACKAGE).stdout.decode().split("\n")
+    paths = [p for p in listing if p.endswith(".py")]
+    if not paths:
+        return {}
+    payload = git(
+        repo, "cat-file", "--batch", stdin="".join(f"{rev}:{p}\n" for p in paths).encode()
+    ).stdout
+    stream = io.BytesIO(payload)
+    found: dict[str, str] = {}
+    for path in paths:
+        _oid, _kind, size = stream.readline().split()
+        found[path[len(PACKAGE) + 1 :]] = stream.read(int(size)).decode("utf-8")
+        stream.read(1)
+    return found
+
+
+def sources_in(root: Path) -> dict[str, str]:
+    base = root / PACKAGE
+    return {
+        p.relative_to(base).as_posix(): p.read_text(encoding="utf-8") for p in sorted(base.rglob("*.py"))
+    }
+
+
+def hits_of(sources: dict[str, str]) -> list[Hit]:
+    found: list[Hit] = []
+    for rel, text in sorted(sources.items()):
+        try:
+            found += scan(rel, text)
+        except SyntaxError as error:
+            raise SystemExit(
+                f"the gate cannot parse {rel}: {error} (read it with venv314/bin/python)"
+            ) from None
+    return found
+
+
+def standing(path: Path) -> Counter[tuple[str, str, str]]:
+    """A list of hits that stands: 'RULE|file|detail' per line, a repeat a count."""
+    if not path.is_file():
+        return Counter()
+    keys = [tuple(k.split("|", 2)) for k in json.loads(path.read_text(encoding="utf-8"))]
+    return Counter((r, f, d) for r, f, d in keys)
+
+
+def allowance(repo: Path = REPO) -> Counter[tuple[str, str, str]]:
+    """What the owner's word lets stand: entries {rule, file, detail, count, word, row}, read from the Scribe's published branch
+    (origin/scribe-5), so that a push cannot approve itself by editing its own copy; the working file where that ref is absent."""
+    relative = ALLOWED.relative_to(REPO).as_posix()
+    shown = git(repo, "show", f"{PUBLISHED}:{relative}")
+    if shown.returncode == 0:
+        text = shown.stdout.decode()
+    elif ALLOWED.is_file():
+        text = ALLOWED.read_text(encoding="utf-8")
+    else:
+        return Counter()
+    held: Counter[tuple[str, str, str]] = Counter()
+    for entry in json.loads(text):
+        held[(entry["rule"], entry["file"], entry["detail"])] += int(entry.get("count", 1))
+    return held
+
+
+def above(now: Iterable[Hit], stands: Counter[tuple[str, str, str]]) -> list[Hit]:
+    """The hits above what stands at their key (the last by line), less what the owner's word allows."""
+    stands = stands + allowance()
+    found: list[Hit] = []
+    for key, group in groupby(sorted(now, key=lambda h: (h.key, h.line)), key=lambda h: h.key):
+        members = list(group)
+        extra = len(members) - stands.get(key, 0)
+        if extra > 0:
+            found += members[-extra:]
+    return sorted(found, key=lambda h: (h.rel, h.line, h.rule))
+
+
+def merge_base(repo: Path, base: str | None, tree_rev: str) -> tuple[str, str]:
+    """The base ref (given, CHECK_BASE, else the first of BASES that resolves) and its merge base with the tree's revision."""
+    names = (
+        [base] if base else [os.environ["CHECK_BASE"]] if os.environ.get("CHECK_BASE") else list(BASES)
+    )
+    for name in names:
+        commit = resolve(repo, name)
+        if commit:
+            found = git(repo, "merge-base", commit, tree_rev)
+            if found.returncode == 0:
+                return name, found.stdout.decode().strip()
+    raise SystemExit(
+        f"the merge base of {tree_rev[:9]} with {names} cannot be found: fetch the base or set CHECK_BASE"
+    )
+
+
+def moved(repo: Path, *revs: str, cached: bool = False) -> dict[str, str]:
+    """The modules git reads as moved between the revisions (or the index and the revision), new path to old."""
+    flags = ["diff", "-M", "--name-status", "--diff-filter=R", *(["--cached"] if cached else [])]
+    listing = git(repo, *flags, *revs, "--", PACKAGE).stdout.decode().splitlines()
+    found: dict[str, str] = {}
+    for line in listing:
+        _status, old, new = line.split("\t")
+        if old.startswith(PACKAGE + "/") and new.startswith(PACKAGE + "/"):
+            found[new[len(PACKAGE) + 1 :]] = old[len(PACKAGE) + 1 :]
+    return found
+
+
+def stood(hits: Iterable[Hit], moves: dict[str, str]) -> Counter[tuple[str, str, str]]:
+    """The base's hits as counts per key, a moved module's under its new path (a rename is no new hit)."""
+    renamed = {old: new for new, old in moves.items()}
+    return Counter((h.rule, renamed.get(h.rel, h.rel), h.detail) for h in hits)
+
+
+def report(label: str, new: list[Hit], base_label: str, out: Any = sys.stdout) -> int:
+    """Print the refusals and the notes; 1 where a refusal stands."""
+    refusals = [h for h in new if h.tier == "BLOCK"]
+    notes = [h for h in new if h.tier == "WARN"]
+    print(
+        f"The Scribe's gate: {label} against {base_label}: refusals {len(refusals)}, notes {len(notes)}",
+        file=out,
+    )
+    for hit in (refusals + notes)[:SHOWN]:
+        mark = "REFUSED" if hit.tier == "BLOCK" else "note   "
+        place = f" in {hit.where}" if hit.where and hit.where != "<module>" else ""
+        print(f"  {mark} {hit.rule:7s} {hit.rel}:{hit.line}{place}: {hit.detail}", file=out)
+    if len(new) > SHOWN:
+        print(
+            f"  ... and {len(new) - SHOWN} more (scribe_scan.py TREE --base REV lists them all)",
+            file=out,
+        )
+    for rule in sorted({h.rule for h in new}):
+        print(f"  {rule}: {RULES[rule][1]}", file=out)
+    if refusals:
+        print(
+            "  These are the owner's rules (docs/ALGEBRA.md): the push is refused and nothing was sent.\n"
+            "  If a rule or a law must be broken, STOP and tell the owner, the Boss and David in the thread at once (his order of\n"
+            "  2026-10-28, 04:5x UTC); only his word lets a hit stand (scribe_scan_allowed.json, written by the Scribe on that word).\n"
+            "  Do not weaken or go round this gate (--no-verify, an edited list or script): the Scribe reads every push and reports it.",
+            file=out,
+        )
+    return 1 if refusals else 0
+
+
+def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout) -> int:
+    """The tree at `rev` against its merge base: 1 on a refusal."""
+    commit = resolve(repo, rev)
+    if commit is None:
+        print(f"the gate cannot resolve {rev}", file=out)
+        return 0
+    name, mb = merge_base(repo, base, commit)
+    touched = git(repo, "diff", "--name-only", mb, commit, "--", PACKAGE, *OWN).stdout.decode().split()
+    if not touched:
+        return 0
+    stands = stood(hits_of(sources_at(repo, mb)), moved(repo, mb, commit))
+    new = above(hits_of(sources_at(repo, commit)), stands)
+    own = [p for p in touched if p in OWN]
+    status = report(f"{commit[:9]}", new, f"its merge base {mb[:9]} with {name}", out) if new else 0
+    if own:
+        print(
+            f"  note: this push changes the gate's own files {own}: the owner's word is needed for it",
+            file=out,
+        )
+    return status
+
+
+@contextmanager
+def scratch(repo: Path, commit: str) -> Iterator[Path]:
+    """A detached worktree of the commit, removed after."""
+    with tempfile.TemporaryDirectory() as directory:
+        place = Path(directory) / "tree"
+        git(repo, "worktree", "add", "--detach", str(place), commit)
+        try:
+            yield place
+        finally:
+            git(repo, "worktree", "remove", "--force", str(place))
+
+
+def check_patch(repo: Path, patch: Path, base: str | None) -> int:
+    name, commit = merge_base(repo, base, "HEAD") if base is None else (base, resolve(repo, base) or "")
+    with scratch(repo, commit) as tree:
+        applied = git(tree, "apply", "--3way", str(patch.resolve()))
+        if applied.returncode != 0:
+            print(f"the patch does not apply on {commit[:9]}: {applied.stderr.decode().strip()}")
+            return 2
+        git(tree, "add", "-A")
+        stands = stood(hits_of(sources_at(repo, commit)), moved(tree, commit, cached=True))
+        new = above(hits_of(sources_in(tree)), stands)
+    base_label = name if name == commit[:9] else f"{name} ({commit[:9]})"
+    return report(f"the patch {patch.name}", new, base_label) if new else _clean(patch.name, base_label)
+
+
+def _clean(label: str, base: str) -> int:
+    print(f"The Scribe's gate: {label} against {base}: no refusal, no note")
+    return 0
+
+
+def pushes(command: str, cwd: str) -> list[tuple[Path, str]]:
+    """The (directory, revision) of every `git push` in a shell command line: its refspecs' sources, else HEAD."""
+    found: list[tuple[Path, str]] = []
+    where = Path(cwd)
+    for segment in re.split(r"&&|\|\||;|\n|\|", command):
+        try:
+            words = shlex.split(segment)
+        except ValueError:
+            continue
+        if words[:1] == ["cd"] and len(words) > 1:
+            where = (where / words[1]) if not words[1].startswith("/") else Path(words[1])
+            continue
+        if words[:1] != ["git"] or "push" not in words:
+            continue
+        index, folder = 1, where
+        while index < len(words) and words[index] != "push":
+            if words[index] == "-C" and index + 1 < len(words):
+                folder = (
+                    (where / words[index + 1])
+                    if not words[index + 1].startswith("/")
+                    else Path(words[index + 1])
+                )
+                index += 1
+            index += 1
+        rest = [w for w in words[index + 1 :] if not w.startswith("-")]
+        if "--delete" in words or "-d" in words:
+            continue
+        specs = rest[1:] or ["HEAD"]
+        for spec in specs:
+            source = spec.lstrip("+").split(":")[0]
+            if source:
+                found.append((folder, source))
+    return found
+
+
+def claude_hook(base: str | None) -> int:
+    """Claude Code's PreToolUse call: a Bash command holding `git push` is checked before it runs; exit 2 refuses it."""
+    try:
+        event = json.loads(sys.stdin.read() or "{}")
+    except ValueError:
+        return 0
+    if event.get("tool_name") != "Bash":
+        return 0
+    command = str(event.get("tool_input", {}).get("command", ""))
+    if "git" not in command or "push" not in command:
+        return 0
+    refused = False
+    seen: set[tuple[str, str]] = set()
+    for folder, rev in pushes(command, str(event.get("cwd") or os.getcwd())):
+        top = git(folder, "rev-parse", "--show-toplevel").stdout.decode().strip()
+        if not top or (top, rev) in seen:
+            continue
+        seen.add((top, rev))
+        try:
+            refused |= check_revision(Path(top), rev, base, sys.stderr) == 1
+        except SystemExit as error:
+            print(f"the gate could not run ({error}); the push is not held by it", file=sys.stderr)
+    return 2 if refused else 0
+
+
+def push_hook(base: str | None) -> int:
+    """Git's pre-push call: lines `<local ref> <local oid> <remote ref> <remote oid>` on stdin."""
+    refused = False
+    for line in sys.stdin.read().splitlines():
+        parts = line.split()
+        if len(parts) == 4 and set(parts[1]) != {"0"}:
+            try:
+                refused |= check_revision(REPO, parts[1], base, sys.stderr) == 1
+            except SystemExit as error:
+                print(f"the gate could not run ({error}); the push is not held by it", file=sys.stderr)
+    return 1 if refused else 0
+
+
+def guarded(call: Callable[[str | None], int], base: str | None) -> int:
+    """A caller's run: the gate's own fault never holds a push, it says so and lets it go (the Scribe's scan reads it after)."""
+    try:
+        return call(base)
+    except (Exception, SystemExit) as error:
+        print(
+            f"The Scribe's gate could not run ({error!r}); this push is not held by it", file=sys.stderr
+        )
+        return 0
+
+
+def install() -> int:
+    """Write .git/hooks/pre-push for this clone (a foreign hook is never overwritten)."""
+    hooks = Path(git(REPO, "rev-parse", "--git-path", "hooks").stdout.decode().strip())
+    hooks = hooks if hooks.is_absolute() else REPO / hooks
+    target = hooks / "pre-push"
+    marker = "# installed by tools/derivations/open_items/scribe_scan.py --install"
+    if target.exists() and marker not in target.read_text(encoding="utf-8"):
+        print(
+            f'{target} exists and is not the Scribe\'s: chain `python {Path(__file__).resolve()} --hook "$@"` into it by hand'
+        )
+        return 2
+    python = REPO / "venv314" / "bin" / "python"
+    interpreter = str(python) if python.is_file() else sys.executable
+    hooks.mkdir(parents=True, exist_ok=True)
+    target.write_text(
+        f"#!/bin/sh\n{marker} (the owner, 2026-10-28, 05:0x UTC: the laws in scripts that refuse the push)\n"
+        f'script="{Path(__file__).resolve()}"\n[ -f "$script" ] || exit 0\n'
+        f'exec "{interpreter}" "$script" --hook "$@"\n',
+        encoding="utf-8",
+    )
+    target.chmod(0o755)
+    print(
+        f"installed {target}: a push that raises a count of the Scribe's rules is refused (git push --no-verify goes round it, and is reported)"
+    )
+    return 0
+
+
+def ensure_python() -> None:
+    """The tree is Python 3.14's: an older interpreter runs this script again under the repository's own."""
+    if (sys.version_info.major, sys.version_info.minor) >= (3, 14):
+        return
+    for candidate in (str(REPO / "venv314" / "bin" / "python"), shutil.which("python3.14") or ""):
+        if candidate and Path(candidate).is_file():
+            os.execv(candidate, [candidate, *sys.argv])
+
+
+def summary(found: list[Hit]) -> None:
+    by_rule = Counter(h.rule for h in found)
+    print("hits by rule:", dict(sorted(by_rule.items())))
+    by_file: dict[str, Counter[str]] = {}
+    for h in found:
+        by_file.setdefault(h.rel, Counter())[h.rule] += 1
+    for rel in sorted(by_file):
+        print(f"  {rel:34s} {dict(sorted(by_file[rel].items()))}")
 
 
 def main(argv: list[str]) -> int:
-    root = Path(next((a for a in argv if not a.startswith("--") and not a.endswith(".json")), "."))
-    baseline_path = None
-    if "--baseline" in argv:
-        baseline_path = Path(argv[argv.index("--baseline") + 1])
-    everything: dict[str, list[tuple[str, int, str]]] = {}
-    for path in sorted((root / "src" / "event_universe").rglob("*.py")):
-        rel = path.relative_to(root / "src" / "event_universe").as_posix()
-        everything[rel] = scan_file(path, rel)
-    keys = {f"{rule}|{rel}|{text}" for rel, hs in everything.items() for rule, _, text in hs}
-    if "--write-baseline" in argv and baseline_path is not None:
-        baseline_path.write_text(json.dumps(sorted(keys), indent=0) + "\n", encoding="utf-8")
-        print(f"baseline written: {len(keys)} hits in {len(everything)} files")
+    ensure_python()
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "tree", nargs="?", help="a directory or a git revision (default: the working tree of this clone)"
+    )
+    parser.add_argument(
+        "--base",
+        help="the revision the merge base is taken with (default CHECK_BASE, else origin/engine-5.0-test)",
+    )
+    parser.add_argument(
+        "--baseline",
+        nargs="?",
+        const=str(BASELINE),
+        help="compare with the list that stands, not a merge base",
+    )
+    parser.add_argument(
+        "--write-baseline", metavar="FILE", help="write the tree's hits as the list that stands"
+    )
+    parser.add_argument(
+        "--patch", type=Path, help="a patch to apply on the base in a scratch worktree, then check"
+    )
+    parser.add_argument("--all", action="store_true", help="every hit of the tree")
+    parser.add_argument("--summary", action="store_true", help="with --all: the counts only")
+    parser.add_argument("--rules", action="store_true")
+    parser.add_argument("--install", action="store_true")
+    parser.add_argument("--hook", action="store_true")
+    parser.add_argument("--claude-hook", action="store_true")
+    args, extra = parser.parse_known_args(argv)  # git's pre-push call adds the remote's name and url
+    if extra and not (args.hook or args.claude_hook):
+        parser.error(f"unrecognized arguments: {' '.join(extra)}")
+    if args.rules:
+        for rule, (tier, line) in RULES.items():
+            print(f"{rule:8s} {tier:5s} {line}")
         return 0
-    baseline: set[str] = set(json.loads(baseline_path.read_text(encoding="utf-8"))) if baseline_path else set()
-    new = 0
-    counts: dict[str, int] = {}
-    for rel, hs in everything.items():
-        for rule, line, text in hs:
-            counts[rule] = counts.get(rule, 0) + 1
-            key = f"{rule}|{rel}|{text}"
-            if key in baseline and "--all" not in argv:
-                continue
-            tag = "" if key in baseline else "NEW "
-            new += 0 if key in baseline else 1
-            print(f"{tag}{rule:7s} {rel}:{line}  {text[:130]}")
-    print("hits by rule:", dict(sorted(counts.items())), "| files:", len(everything), "| new:", new)
-    return 1 if new else 0
+    if args.install:
+        return install()
+    if args.hook:
+        return guarded(push_hook, args.base)
+    if args.claude_hook:
+        return guarded(claude_hook, args.base)
+    if args.patch:
+        return check_patch(REPO, args.patch, args.base)
+    if args.tree and not Path(args.tree).is_dir() and resolve(REPO, args.tree):
+        repo, rev, sources, label = REPO, args.tree, sources_at(REPO, args.tree), args.tree
+    else:
+        root = Path(args.tree or REPO).resolve()
+        top = git(root, "rev-parse", "--show-toplevel").stdout.decode().strip()
+        repo, rev, sources, label = (
+            Path(top or root),
+            "HEAD",
+            sources_in(root),
+            str(args.tree or "the working tree"),
+        )
+    found = hits_of(sources)
+    if args.write_baseline:
+        Path(args.write_baseline).write_text(
+            json.dumps(sorted("|".join(h.key) for h in found), indent=0) + "\n", encoding="utf-8"
+        )
+        print(f"written: {len(found)} hits in {len(sources)} modules")
+        return 0
+    if args.all:
+        summary(found) if args.summary else [
+            print(f"{h.tier:5s} {h.rule:7s} {h.rel}:{h.line}  {h.detail}") for h in found
+        ]
+        return 0
+    if args.baseline:
+        return report(
+            label,
+            above(found, standing(Path(args.baseline))),
+            f"the list that stands ({Path(args.baseline).name})",
+        )
+    name, mb = merge_base(repo, args.base, rev)
+    new = above(found, stood(hits_of(sources_at(repo, mb)), moved(repo, mb)))
+    return (
+        report(label, new, f"its merge base {mb[:9]} with {name}")
+        if new
+        else _clean(label, f"its merge base {mb[:9]} with {name}")
+    )
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    try:
+        sys.exit(main(sys.argv[1:]))
+    except BrokenPipeError:
+        sys.exit(0)  # the reader of a pipe (head) closed it
