@@ -1,0 +1,3254 @@
+DAVID-TENSOR24-THE-CAP_CHECKS.txt: the checks of DAVID-TENSOR24-THE-CAP.md (item 4, the cap between clicks).
+A helper's five probes (caplib.py the exact library: Gaussian numbers, board operators, the 24, the scaled tensor; c1 to c5
+import the engine read-only for den's circle (rates.sine_rim), the head's gearing (rule3.gearing) and the head's carry (rule3.rule3)),
+rerun by David on toys-5 with its own src, each output identical to the helper's; c1, c2, c3 and c5 also run with the argument
+'mutants', and every mutant fails as it must. Then David's own check of the junctions carried at a fixed width (junctions.py).
+Then the helper's draft with its proofs in full, and the sources. Integers and exact fractions only; no float.
+
+== venv314/bin/python -I c1_clock.py src ==
+1. The Spoke's two senses: P_a^+- = (1 +- sigma_a) / 2
+  [ok] P^+ + P^- = 1, P P = P, P^+ P^- = 0, P^dagger = P on the three axes: 6 of 6
+2. The axis step W_a = P_a^+ T_+a + P_a^- T_-a is unitary
+  [ok] its symbol W_a(k) = P^+ e^{-ik} + P^- e^{ik} has W^dagger W = 1 at exact points of the circle: 1200 of 1200
+  [ok] W_a(k) = cos k - i sigma_a sin k (the twins' turn about a by the Spoke's phase): 300 of 300
+  [ok] on the boards (rings of 8, 12, 16; tori 3^3 and 4^3) W^dagger W = W W^dagger = 1 exactly: 9 of 9
+3. The junctions are lifts of the 24 with Gaussian-unit entries over (1 - i)
+  [ok] Q_a unitary, Q_a sigma_z Q_a^dagger = sigma_a, Q_a P_z Q_a^dagger = P_a, and Q_a's turn is one of the 24: 3 of 3
+  [ok] W_a = Q_a S_a Q_a^dagger with S_a the integer shift (up hand +a, down hand -a): 600 of 600
+  [ok] the x-to-y junction Q_y^dagger Q_x = (1/(1 + i)) [[1, i], [i, 1]]: one Rule3 division by the prime above 2
+4. The turn on den's circle (the calibre's pairs, the engine's sine_rim)
+  [ok] pinion^2 + s^2 = den^2 for the toy calibre's three sprung rows and the light (MS-S2): 4 of 4
+  [ok] M = [[c, -is], [-is, c]] unitary, and (1 - i t)^2 / (1 + t^2) = (pinion - i s)/den with t = s/(den + pinion): 4 of 4
+  [ok] the Cayley coin (1 - iA)(1 + iA)^-1 of any rational spin pull A = phi . sigma is exactly unitary, no root: 300 of 300
+5. The steps on the boards are unitary
+  [ok] the ring's step U = M W_z (1-D Dirac) on rings of 8, 12, 16, with (20, 21, 29) and the calibre's row 0: 6 of 6
+  [ok] the 3^3 torus's Weyl step U_L = W_z W_y W_x (2 components, 54 rows): U^dagger U = 1
+  [ok] the 3^3 torus's Dirac step M (U_L + U_R) (4 components, 108 rows): U^dagger U = 1
+  [ok] the same with the calibre's row 0 on den's circle (den = 15162856759112389)
+6. The one-slot count is kept and the rewind is exact (scaled integers, no remainder)
+  [ok] ring of 16: D = den makes D U integral; |Psi_t|^2 = den^(2t) |Psi_0|^2 at every tick: 300 of 300 ticks
+  [ok] ring of 16: 300 ticks back by D U^dagger return the start times den^600, bit for bit
+  [ok] 3^3 Weyl: D = 2(1 + i) makes D U integral; the count kept at every tick: 80 of 80 ticks
+  [ok] 3^3 Weyl: 80 ticks rewound bit for bit
+  [ok] 3^3 Dirac: D = 2(1 + i) den makes D U integral; the count kept at every tick: 30 of 30 ticks
+  [ok] 3^3 Dirac: 30 ticks rewound bit for bit
+7. The phase reversal maps the field's step to the opposite helicity's
+  [ok] sigma_y conj(U_L) sigma_y = U_R = W~_z W~_y W~_x with W~_a = P_a^- T_+a + P_a^+ T_-a (3^3, operator level)
+  [ok] U_R's symbol is V(-k): Bialynicki-Birula's W(-h), the other helicity (his eq. 21): 300 of 300
+8. The 24 acting on the step
+  [ok] the generated group has 24 turns, each a signed permutation of det +1: 24
+  [ok] u P_a^s u^dagger = P_b^(s sign) where R e_a = sign e_b: the 24 permute the Spokes' senses: 144 of 144
+  [ok] each of the 24 maps W_a to W_pi(a) on the 3^3 board (operator level, both indices): 24 of 24
+  [ok] the 4 turns that fix every axis (the half turns about the axes and the identity) fix U_L: 4 of 24
+  [ok] the 8 third turns map U_L to a W-conjugate of itself (the same beat): 8 of 24
+  [ok] the one Weyl field's beat Tr V(k) is kept by 12 of the 24 (the tetrahedron's: sx sy sz is odd under the rest): 12 of 24
+  [ok] Tr V(k) / 2 = cx cy cz + sx sy sz (Bialynicki-Birula's eq. 27, k -> -k): 60 of 60
+  [ok] the Dirac pair's beat (the characteristic polynomial of (U + U^dagger)/2) is kept by all 24: 24 of 24
+  [ok] and by the inversion k -> -k (so by all 48 with the mirrors)
+  [ok] the Dirac symbol's own characteristic polynomial is real (beats in pairs e^{+-i omega}) and kept by all 24: 24 of 24
+9. The no-go: no one-tick step on the six Spokes is covariant under the 24
+  [ok] the matrices the quarter turn about z keeps are the diagonal ones (E11, E22 of the four units): 2 of 4
+  [ok] P_a^s P_b^t + P_b^-t P_a^-s = 1/2 for every pair of distinct axes and senses (the unitarity term that cannot vanish): 24 of 24
+  [ok] on the 8 corners the same term is (1 + d.d'/3)/2, never 0: no covariant corner step either: 48 of 48
+10. Rule3 in integers
+  [ok] the denominators: den on the ring, 2(1 + i) for the Weyl step (and (1 + i) is not enough), 2(1 + i) den for Dirac
+  [ok] every unitary 2x2 matrix of Gaussian integers in the box |re|, |im| <= 2 is monomial with unit entries: 32 of 32
+  [ok] the ring's step with the coin as three carried shears (Rule3, remainders kept): 400 ticks back bit for bit
+  [ok] the carried step moves the one-slot count by its remainders (not kept): moved at 400 of 400 ticks, worst |drift| / count = 1.019e-6
+  [ok] the carry of the whole turn at once, den x' + r' = pinion x - s y + r, is not injective (no rewind): (-2, -2, 0, 20) and (-2, -1, 21, 0) both carry to (0, -3, 2, 25)
+result: 0 failures
+
+== venv314/bin/python -I c1_clock.py src mutants ==
+M1. Feynman's checkerboard coin, straight 1 and corner -i s/den (not the cosine): the step must stop being unitary
+  rows of U^dagger U that are not the identity's: 24 of 24 (must be above 0)
+M2. A coin off den's circle (pinion + 1): unitarity must fail
+  rows of U^dagger U that are not the identity's: 24 of 24 (must be above 0)
+M3. The axis step with both senses alike, P^+ T_+a + P^+ T_-a: unitarity must fail
+  rows of W^dagger W that are not the identity's: 54 of 54 (must be above 0)
+M4. The R field without the phase reversal (U_R := U_L): the Dirac pair's beat must lose the 24
+  turns of the 24 that move the beat: 12 of 24 (must be above 0)
+M5. The phase reversal without i sigma_y (K alone): it must stop mapping U_L to U_R
+  rows where conj(U_L) differs from U_R: 54 of 54 (must be above 0)
+M6. The carried shears with a remainder dropped (the fine tooth reset to 0): the rewind must fail
+  states not returned: 200 of 200 (must be above 0)
+result: every mutant fails as it must
+
+== venv314/bin/python -I c2_beat.py src ==
+1. The head's matter step: the leapfrog with the engine's gearing integers at the vacuum
+  [ok] the vacuum's rates p0 = p_i = Gamma = 1000, the mesh unit G = 16
+  [ok] T = 6 den Gamma^2 G^2, D = 12 (den - pinion) Gamma^2 G^2, R_j = 2 Gamma^2 G^2 pinion, S = 2T - D - SUM R_j: 8 of 8
+  [ok] the engine's rule3.rule3 is the carried leapfrog: T a+ + r+ = T (2a - a-) - D a + SUM R_j (a_j - a) + r: 3000 of 3000
+  [ok] its beat: cos w = (c/3)(cos kx + cos ky + cos kz) with c = pinion/den, at exact momenta, every row: 2000 of 2000
+2. The rest beat is one reading
+  [ok] the head's rest beat (2T - D)/(2T) = pinion/den = the walk's coin cosine, s the engine's sine_rim, on den's circle: 4 of 4
+  [ok] the walk at rest: U(0) = M, eigenvalues e^{-+i w0} with cos w0 = pinion/den (trace 2c, det 1): 4 of 4
+3. The walk's beats
+  [ok] the ring (1-D Dirac): det(lambda - U(k)) = lambda^2 - 2 c cos k lambda + 1, so cos w = c cos k: 800 of 800
+  [ok] the 3-D Dirac pair: det((U+U^dagger)/2 - X) = [(X - c a0)(X - c b0) - (s^2/4) q]^2, a0,b0 = cx cy cz +- sx sy sz, q = 4(SUM sa^2 sb^2 - 2 sx^2 sy^2 sz^2): 600 of 600
+  [ok] along an axis the pair's beat is the ring's, cos w = c cos k (double): 60 of 60
+4. The head against the walk
+  [ok] along an axis, at every k: cos w_head - c = (cos w_walk - c) / 3 exactly: 1200 of 1200
+  [ok] in 3-D at small k the head's kinetic part over the pair's mean kinetic part tends to 1/3 in every direction (worst |ratio - 1/3| falls as k halves, 6 halvings): last worst = 35/983029
+result: 0 failures
+
+== venv314/bin/python -I c2_beat.py src mutants ==
+M1. The head's kinetic part claimed equal to the walk's (no factor 3): it must fail
+  momenta where it fails: 195 of 200 (must be above 0)
+M2. The head's spring one tooth off (D + 1): the rest beat must leave pinion/den
+  rows where it fails: 3 of 3 (must be above 0)
+M3. The Dirac closed form with the inversion term delta dropped: it must fail
+  momenta where it fails: 38 of 40 (must be above 0)
+M4. The Dirac closed form with c and s exchanged: it must fail
+  momenta where it fails: 40 of 40 (must be above 0)
+result: every mutant fails as it must
+
+== venv314/bin/python -I c3_tensor.py src ==
+1. Matter (e = -1) on rings of 8, 12, 16 Node-clocks with 2 states, the ring's step U = M W_z on (3, 4, 5), 200 ticks
+   ring 8: 6 laid, 1 refused of 7 lays; widest integer 1293 bits
+  [ok] ring 8: R Hermitian and rho^2 = rho at every tick: 201 of 201
+  [ok] ring 8: Tr rho = N (the quanta laid) at every tick: 201 of 201
+  [ok] ring 8: 1 - rho_xx and rho_xx positive at every Node-clock and tick (the cap): 1608 of 1608
+  [ok] ring 8: the free size of a newcomer at one Node-clock reads rho_xx alone: 7 of 7
+  [ok] ring 8: rho = SUM_k phi_k phi_k^dagger / |phi_k|^2 with the laid hands stepped alone (orthogonal for ever): 9 of 9
+  [ok] ring 8: det rho_xx = SUM_(k<l) N(det[phi_k(x), phi_l(x)]) / (|phi_k|^2 |phi_l|^2) (draft E's joint sizes): 72 of 72
+  [ok] ring 8: the third quantum at the filled Node-clock is refused (free size 0); the six others are laid, two of them at the same Node-clock after the spread: ['laid', 'laid', 'refused', 'laid', 'laid', 'laid', 'laid']
+   ring 12: 6 laid, 1 refused of 7 lays; widest integer 1296 bits
+  [ok] ring 12: R Hermitian and rho^2 = rho at every tick: 201 of 201
+  [ok] ring 12: Tr rho = N (the quanta laid) at every tick: 201 of 201
+  [ok] ring 12: 1 - rho_xx and rho_xx positive at every Node-clock and tick (the cap): 2412 of 2412
+  [ok] ring 12: the free size of a newcomer at one Node-clock reads rho_xx alone: 7 of 7
+  [ok] ring 12: rho = SUM_k phi_k phi_k^dagger / |phi_k|^2 with the laid hands stepped alone (orthogonal for ever): 9 of 9
+  [ok] ring 12: det rho_xx = SUM_(k<l) N(det[phi_k(x), phi_l(x)]) / (|phi_k|^2 |phi_l|^2) (draft E's joint sizes): 108 of 108
+  [ok] ring 12: the third quantum at the filled Node-clock is refused (free size 0); the six others are laid, two of them at the same Node-clock after the spread: ['laid', 'laid', 'refused', 'laid', 'laid', 'laid', 'laid']
+   ring 16: 6 laid, 1 refused of 7 lays; widest integer 1313 bits
+  [ok] ring 16: R Hermitian and rho^2 = rho at every tick: 201 of 201
+  [ok] ring 16: Tr rho = N (the quanta laid) at every tick: 201 of 201
+  [ok] ring 16: 1 - rho_xx and rho_xx positive at every Node-clock and tick (the cap): 3216 of 3216
+  [ok] ring 16: the free size of a newcomer at one Node-clock reads rho_xx alone: 7 of 7
+  [ok] ring 16: rho = SUM_k phi_k phi_k^dagger / |phi_k|^2 with the laid hands stepped alone (orthogonal for ever): 9 of 9
+  [ok] ring 16: det rho_xx = SUM_(k<l) N(det[phi_k(x), phi_l(x)]) / (|phi_k|^2 |phi_l|^2) (draft E's joint sizes): 144 of 144
+  [ok] ring 16: the third quantum at the filled Node-clock is refused (free size 0); the six others are laid, two of them at the same Node-clock after the spread: ['laid', 'laid', 'refused', 'laid', 'laid', 'laid', 'laid']
+2. The same ring with the calibre's row 0 on den's circle (den = 15162856759112389), 24 ticks
+   4 laid, 1 refused of 5; widest integer 1780 bits after 24 ticks
+  [ok] calibre ring: rho^2 = rho, Tr rho = N, and the cap at every Node-clock and tick: 25 of 25 ticks, 300 of 300 caps
+3. Matter on the 3^3 torus, 2 states: the Weyl step U_L = W_z W_y W_x, 40 ticks
+   6 laid, 1 refused of 7; widest integer 191 bits
+  [ok] 3^3 Weyl: R Hermitian, rho^2 = rho and Tr rho = N at every tick: 41 of 41
+  [ok] 3^3 Weyl: the cap at every Node-clock and tick: 1107 of 1107
+  [ok] 3^3 Weyl: rho from the hands alone, and det rho_xx = the joint sizes summed: 3 of 3; 81 of 81
+4. Matter on the 3^3 torus, 4 states: the Dirac pair M (U_L + U_R), 8 ticks
+   5 laid, 1 refused of 6; widest integer 280 bits
+  [ok] 3^3 Dirac: rho^2 = rho, Tr rho = N and the cap (4x4 blocks) at every Node-clock and tick: 9 of 9 ticks, 243 of 243 caps
+  [ok] 3^3 Dirac: one Node-clock holds four quanta (the field's two states and its phase reversal's two); the fifth is refused: ['laid', 'laid', 'laid', 'laid', 'refused']
+4b. The tie to draft E: one occupant held at one Node-clock
+  [ok] the lay's denominator chi^dagger (1 - rho) chi = N(det[phi, chi]) / |phi|^2 = N(<T phi, chi>) / |phi|^2 (Lagrange): draft E's free size: 500 of 500
+5. The force carriers (e = +1): rho + chi chi^dagger / |chi|^2 stacks
+  [ok] three in one state: (Tr rho, Tr rho^2, Tr rho^3) = (3, 9, 27), one eigenvalue 3; with a fourth elsewhere (4, 10, 28): ['3', '9', '27'] then ['4', '10', '28']
+  [ok] the step keeps the spectrum (Tr rho, Tr rho^2, Tr rho^3) at every tick after each lay: 59 of 59
+  [ok] the local occupation exceeds 1 (no cap for the force carriers): 46 of 732 Node-clock ticks
+6. One law with the kind's sign, and its closure
+  [ok] e = -1: the e-symmetrized state's one-body density (determinants of the Gram matrix) is the generic lay's tensor: 300 of 300 sets of 1 to 3 hands in 3 states
+  [ok] e = +1: the permanent state's density equals rho + chi chi^dagger exactly where the two hands are orthogonal, and differs elsewhere: 300 of 300
+  [ok] e = +1, two in one state: the permanent's density is 2 f f^dagger (an eigenvalue 2: they stack)
+   bosons: rho(e1,e2) = rho(e1+e2, e1-e2): True; with e1 laid: 2 against 5/2 in state 1
+  [ok] e = +1 is not closed in the tensor: two pairs with one tensor give two tensors when one quantum is laid
+  [ok] e = -1 is closed: the same two pairs (one span) give one tensor when a third is laid
+result: 0 failures
+
+== venv314/bin/python -I c3_tensor.py src mutants ==
+M1. The symmetric lay on matter (rho + chi chi^dagger for e = -1's family): an eigenvalue 2, the cap broken
+  rho^2 != rho (1 = yes): 1 of 1 (must be above 0)
+  Node-clock ticks with 1 - rho_xx not positive: 15 of 360 (must be above 0)
+M2. One summed field for the family (the head's board): it gathers
+   the summed field's largest occupation at one Node-clock: 4; the tensor's (both states): 1
+  quanta gathered at one Node-clock in one state by the summed field, above the cap of 1 (4 = all four): 3 of 3 (must be above 0)
+   six quanta at three Node-clocks: the summed field above one quantum in one state at 32 of 656 Node-clock ticks; the tensor of the same quanta at 0
+  Node-clock ticks where the summed field of six orthonormal quanta holds more than one quantum in one state: 32 of 656 (must be above 0)
+M3. A non-unitary coin (Feynman's checkerboard: straight 1, corner -i s/den): rho stops being a projector, the cap breaks
+  ticks with rho^2 != rho: 40 of 40 (must be above 0)
+  ticks with Tr rho != 2: 40 of 40 (must be above 0)
+  Node-clock ticks with the cap broken: 225 of 480 (must be above 0)
+M4. The lay without its denominator (rho + Q chi chi^dagger Q): not a projector
+  rho^2 != rho after the unnormalized lay (1 = yes): 1 of 1 (must be above 0)
+result: every mutant fails as it must
+
+== venv314/bin/python -I c4_head_hands.py src ==
+The head's leapfrog on separate hands (4^3 board, six Spokes, the vacuum's gearing), one hand per quantum
+ row 0: pinion/den = 15162854575528411/15162856759112389
+   exact: two-slot form W kept at 30 of 30 ticks; one-slot Gram moved at 30 of 30; the cap broken at 582 of 1920 Node-clock ticks; the largest diagonal occupation about 4371 thousandths of a quantum in one state
+   the engine's carry (rule3.rule3, base 1000000): the cap broken at 582 of 1920 Node-clock ticks; the largest diagonal occupation about 4370 thousandths
+ row 1: pinion/den = 2458210083751875/15162856759112389
+   exact: two-slot form W kept at 30 of 30 ticks; one-slot Gram moved at 30 of 30; the cap broken at 2 of 1920 Node-clock ticks; the largest diagonal occupation about 1002 thousandths of a quantum in one state
+   the engine's carry (rule3.rule3, base 1000000): the cap broken at 2 of 1920 Node-clock ticks; the largest diagonal occupation about 1002 thousandths
+result: the mutant fails as it must (the cap broken on the head's step), the controls hold
+
+== venv314/bin/python -I c5_law.py src ==
+1. The count of integers per Node-clock (line 98: fixed for the run)
+   ring of 16: the tensor's row 128 integers per Node-clock (half with the Hermitian pair stored once); one hand per quantum 4 integers per quantum (N quanta: 4 N)
+   3^3, Weyl: the tensor's row 216 integers per Node-clock (half with the Hermitian pair stored once); one hand per quantum 4 integers per quantum (N quanta: 4 N)
+   3^3, Dirac: the tensor's row 864 integers per Node-clock (half with the Hermitian pair stored once); one hand per quantum 8 integers per quantum (N quanta: 8 N)
+   5^3 (world_nature's board), Dirac: the tensor's row 4000 integers per Node-clock (half with the Hermitian pair stored once); one hand per quantum 8 integers per quantum (N quanta: 8 N)
+  [ok] the tensor's row length per Node-clock is the same at every tick while quanta are laid: 1 length(s) seen over 30 ticks with 3 lays
+2. The integers' growth in the exact form
+   ring, (3, 4, 5): N(D) = 25, about 4.6 bits per tick
+   ring, (20, 21, 29): N(D) = 841, about 9.7 bits per tick
+   ring, the calibre's den: N(D) = 229912225097360260697587133287321, about 107.5 bits per tick
+   3-D Weyl, 2(1 + i): N(D) = 8, about 3.0 bits per tick
+   3-D Dirac, 2(1 + i) den: N(D) = 1839297800778882085580697066298568, about 110.5 bits per tick
+   a lay after 40 ticks: the widest integer 186 bits before, 376 after
+  [ok] a lay into spread occupants roughly doubles the tensor's widest integer (the Gram-Schmidt denominator): 186 -> 376
+3. The step's reach
+  [ok] each axis step W_a reads one Mesh (5^3 torus, operator level)
+  [ok] the whole tick W_z W_y W_x reaches three Meshes: each hand 4 corners (the up hand's +z, the down hand's -z), the Node-clock's two hands the 8; so the tick is three sub-acts of one Mesh each: reach 3, corners per row {4}, per Node-clock {8}
+4. A coin that differs at one Node-clock: the tensor's row reads it from afar; one hand per quantum does not
+  [ok] the tensor's row at Node-clock 0, 8 Meshes from y0, changes when only the coin at y0 changes: 4 of 64 entries of the row
+  [ok] one hand per quantum: the hand's values beyond one Mesh of y0 do not change
+5. The lay's write reaches beyond one Mesh
+  [ok] a newcomer laid at Node-clock 3 into spread occupants changes rows more than one Mesh away: 14 of 26 rows beyond one Mesh
+6. A lay that writes within one Mesh: exact, local, and more often refused
+  [ok] the local free size |Q_S chi|^2 is at most the global free size chi^dagger (1 - rho) chi: 6 of 6
+  [ok] the local lay keeps rho a projector and changes only the S x S entries: 6 and 6 of 6
+  [ok] 14 spread quanta: rho_SS has full rank 14 at every S tried, the local lay refuses every newcomer, the global lay none: ranks {14}; refused 21 of 21; globally free 21 of 21
+result: 0 failures
+
+== venv314/bin/python -I c5_law.py src mutants ==
+M1. The global free state cut to one Mesh (Q chi truncated to S): rho must stop being a projector
+  lays whose result is not a projector: 6 of 6 (must be above 0)
+M2. A local write that ignores the occupants (psi = chi at x): rho must stop being a projector
+  lays whose result is not a projector: 6 of 6 (must be above 0)
+result: every mutant fails as it must
+
+== venv314/bin/python -I junctions.py (David) ==
+z to x: Qx^dagger: diag(1, (0-1i)) J = shear((1+0i)) . lower((-1/2-1/2i)) . shear((0-1i)); denominators <= 2
+x to y: Qy^dagger Qx: diag(1, (0+1i)) J = shear((0+1i)) . lower((-1/2+1/2i)) . shear((1+0i)); denominators <= 2
+y to z: Qy: diag(1, (1+0i)) J = shear((1+0i)) . lower((-1/2+1/2i)) . shear((0+1i)); denominators <= 2
+carried junctions: 6000 of 6000 states returned bit for bit; the count moved at 2993 of 6000
+mutant (undo in the wrong order): 600 of 600 states not returned
+RESULT: 0 failures
+
+== the draft (DERIVATION.md) ==
+# Item 4, the cap between clicks: from the clock's turn and the family's tensor
+
+A helper's draft for David, 2026-10-28, about 13:2x UTC, under derive/PROTOCOL.md, steps 1 to 4. Steps 5 (a second hand) and 6 (Sofer's law check, David's sign-off) are not this draft's.
+
+**The owner's word** (Hebrew, translated): "Item 4 is something generic, to be understood from the clocks and the tensor, how it is solved from them, and not from a specific law."
+
+**Item 4.** Between one click and the next, no more quanta of matter may gather at one Node-clock than the kind allows, and this must follow from the clocks and the tensor for every family alike, with no law added.
+
+**Read on:**
+- toys-5 at b56643b0e (src last changed at 834cfd72e): DAVID-TENSOR24-PAULI.md, DAVID-TENSOR24-THE-ONE-FORMULA.md, and src's core/rule3.py, core/rates.py, core/acts.py, hands.py, clock.py and gates.py;
+- origin/engine-5.0-test at 08ec59132: derive/E/DERIVATION.md (parts 4, 12 and its probe e4) and derive/PROTOCOL.md;
+- origin/scribe-5 at f32b67cc3: docs/ALGEBRA.md line 98.
+
+**The probes** are in this folder: c1 to c5, with caplib.py. Each runs with `venv314/bin/python -I <probe> <repo>/src`. c1, c2, c3 and c5 also run with the argument `mutants`, and every mutation must fail. All outputs are kept beside the probes.
+- Arithmetic is exact: integers and fractions.Fraction only. There is no float anywhere (scanned).
+- The engine is imported for den's circle (rates.sine_rim), the head's gearing (rule3.gearing at the vacuum's rates) and the head's carry (rule3.rule3).
+- 97 checks pass and none fail. The 24 mutant readings all fail as they must.
+
+Every claim is marked **PROVED** (the proof is given), **CHECKED** (the probe and its count are given) or **OPEN**.
+
+## 0. The answer in one page
+
+1. **The cap is generic.** It follows from two things every family already has:
+   - **the clock's turn:** each tick is a unitary turn of the state;
+   - **the family's tensor:** rho(x, y) = SUM_k phi_k(x) phi_k(y)^dagger, read with the sign e of the kind's pairing.
+
+   The step is rho -> U rho U^dagger for every family. The lay of a newcomer chi is:
+   - on matter (e = -1): rho + Q chi chi^dagger Q / (chi^dagger Q chi), with Q = 1 - rho;
+   - on the force carriers (e = +1): rho + chi chi^dagger / (chi^dagger chi).
+
+   Matter's rho is then a projector at every tick, so at every Node-clock and every tick 0 <= rho_xx <= 1: one quantum per state at most. The force carriers' eigenvalues are free, and they stack.
+   - No law is added. The sign is the kind's (draft E), and the bound is the unitarity of the turn.
+   - PROVED (P15 to P17). CHECKED on rings of 8, 12 and 16 Node-clocks and on the 3^3 torus with 2 and with 4 states, at every Node-clock and tick (part 3).
+2. **The clock's step is Bialynicki-Birula's automaton** (Phys. Rev. D 49, 6920 (1994), his eqs. 10, 21 and 27), written here on the Spokes, the 24's lifts and den's circle.
+   - Its parts:
+     - the three axis sub-acts W_a = P_a^+ T_+a + P_a^- T_-a, with P_a^+- = (1 +- sigma_a)/2 the Spoke's two senses. In momentum each is the twins' turn about a by the Spoke's phase, W_a(k) = exp(-i k sigma_a);
+     - between the field and its phase-reversed field, the turn on den's circle, M = [[pinion, -i s], [-i s, pinion]] / den.
+   - It is exactly unitary in rationals (P1, P5). CHECKED (part 2).
+   - **Its rest beat is the head's,** cos w0 = pinion/den: one reading (P9).
+   - **Its kinetic term is three times the head's:** along an axis, cos w_head - c = (cos w_walk - c)/3 exactly, at every k (P10). The walk's light runs one Spoke per tick, and the head's light runs 1/sqrt(3) of a Spoke per tick at small k.
+3. **The 24.**
+   - They permute the three sub-acts (P11).
+   - One Weyl field keeps only the tetrahedron's 12 in its beat (P12). The field beside its phase-reversed field (the Dirac pair) keeps all 24 and the inversion (P13).
+   - No one-tick step on the six Spokes, or on the eight corners, is covariant under the 24 for any number of copies of the twins' kind (P14, a no-go). So the tick must be three sub-acts, which the 24 permute.
+4. **Integers.**
+   - **An exactly unitary step on Gaussian integers of fixed width is a permutation with unit phases** (P6), so it has no interference and no Weyl limit.
+   - **Exactly:** the integers grow by log2 N(D) bits a tick, about 110.5 bits for the Dirac pair at the calibre's den, and each lay of a spread newcomer roughly doubles the tensor's widest integer.
+   - **With Rule3's carry at a fixed width:** the turn as three carried shears is exactly reversible, but the count moves by the remainders (CHECKED).
+5. **The price, OPEN for the owner (part 7):**
+   - **The integers' growth,** or the count kept only up to the remainders.
+   - **The speed.** If matter walks while the light keeps the leapfrog, matter outruns the light at small k.
+   - **Locality.** The tensor's step reads the coin at both Node-clocks of an entry, so it is beyond one Mesh as soon as the coin varies.
+     - The lay's write reaches every row that holds a column at the lay's Node-clock.
+     - A lay that writes within one Mesh exists and is exact, but it refuses every newcomer once the occupants span the one-Mesh states.
+   - **The force carriers' state** is not carried by their tensor.
+   - **The Dirac pair** gives a Node-clock 4 states, not 2.
+
+**On David's direction:**
+- **(A) CONFIRMED, with three corrections:**
+  - the 24 hold in the beat only for the Dirac pair;
+  - exactness needs rationals;
+  - the walk's speed is not the head's.
+- **(B) CONFIRMED for the cap.** Two of its sentences are refuted in part:
+  - "each entry updates from its neighbours' entries in both indices" holds only for a coin that is the same at every Node-clock;
+  - "the click reads rho_xx alone" holds for the draw, not for the write.
+
+## 1. The words
+
+- **The twin pair** psi = (u, d) at a Node-clock, two Gaussian numbers: the up hand and the down hand.
+- **The Spoke's two senses** P_a^+- = (1 +- sigma_a)/2, the projectors of the twins' turn about axis a.
+- **The axis sub-act** W_a = P_a^+ T_+a + P_a^- T_-a, where (T_+a psi)(x) = psi(x - e_a). The up sense moves along +a and the down sense along -a.
+- **The opposite helicity's sub-act** W~_a = P_a^- T_+a + P_a^+ T_-a.
+- **The Weyl tick** U_L = W_z W_y W_x, with W_x first. Its symbol is V(k) = exp(-i kz sigma_z) exp(-i ky sigma_y) exp(-i kx sigma_x).
+- **The phase reversal** T = i sigma_y K (draft E).
+- **The Dirac pair** (psi_L, psi_R): the family's field beside its phase-reversed field. Its tick is U = M (U_L + U_R), with U_R = sigma_y conj(U_L) sigma_y.
+- **The turn on den's circle** M = [[pinion, -i s], [-i s, pinion]] / den, acting on (L, R) at each spin. Here s = sine_rim(pinion, den) is the engine's integer sine, and pinion^2 + s^2 = den^2 (MS-S2). Its cosine and sine are c = pinion/den and s/den.
+- **The tensor** rho = R / lam, with R Hermitian of Gaussian integers and lam > 0 an integer (the scale). Its block at Node-clock x is rho_xx, an m x m matrix (m = 2 for the twins, 4 for the Dirac pair).
+- **The free size** of a newcomer chi is chi^dagger (1 - rho) chi; F = lam times it.
+
+## 2. The clock's first-order step (part A)
+
+### 2.1 The formula in the three operations
+
+At every Node-clock x, with psi- = psi(x - e_a) and psi+ = psi(x + e_a), the sub-acts are these. In the exact form the halves and den stay in the scale (2.3).
+- **z:** u' = u-, d' = d+. Pure moves, with no arithmetic.
+- **x:** 2u' = (u- + d-) + (u+ - d+), 2d' = (u- + d-) - (u+ - d+).
+- **y:** 2u' = (u- - i d-) + (u+ + i d+), 2d' = (i u- + d-) + (d+ - i u+).
+- **The turn on den's circle** (the Dirac pair), at each spin: den L' = pinion L - i s R, den R' = -i s L + pinion R.
+- **The R field** takes the same sub-acts with the senses exchanged.
+
+The numbers are 1, i, the 2 of a Spoke's two sides, and the calibre's pinion, s and den. There is no root, no angle and no table. The tick is three sub-acts of one Mesh each. The whole tick reaches the eight corners (three Meshes): each hand reaches 4 of them, the up hand the +z ones and the down hand the -z ones (c5: per row {4}, per Node-clock {8}). It is Bialynicki-Birula's automaton (his eq. 10, with q_+- = (1 +- i)/4 and rank-one P_i) up to his conventions: his symbol, eq. 27, is ours at -k (c1).
+
+**The junction form, with the 24's lifts as Gaussian units:**
+- W_a = Q_a S_a Q_a^dagger, where S_a is the integer shift (up +a, down -a) and Q_a maps sigma_z to sigma_a:
+  - Q_x = [[1, 1], [1, -1]] / (1 - i), the edge half turn's lift;
+  - Q_y = [[1, 1], [i, -i]] / (1 - i);
+  - Q_z = 1.
+- The x-to-y junction is Q_y^dagger Q_x = [[1, i], [i, 1]] / (1 + i).
+- So a tick holds three Rule3 divisions by the Gaussian prime above 2, one per junction, and one by den for the mass. This is Arrighi, Forets and Nesme's factorisation (their W_epsilon: the Hadamard and F = R_{pi/2} H between partial shifts).
+- The mass cannot come from the 24: their lifts turn by multiples of pi/4 and pi/3. It comes from den's circle, as the engine's pairs do.
+
+### 2.2 The proofs
+
+- **P1, unitarity.**
+  - W_a^dagger W_a = P^+ + P^- + P^+ P^- T_-2a + P^- P^+ T_2a = 1, since P^2 = P, P^+ P^- = 0, and the translations are unitary and commute with P. The same holds for W W^dagger.
+  - M^dagger M = (pinion^2 + s^2)/den^2 = 1.
+  - U_L, U_R and M (U_L + U_R) are products of unitaries.
+  - PROVED. CHECKED (c1):
+    - the symbol at exact points of the circle, 1,200 of 1,200;
+    - the operators on rings of 8, 12 and 16 and on the tori 3^3 and 4^3, 9 of 9;
+    - the full steps: the ring, 6 of 6; the 3^3 Weyl; the 3^3 Dirac, with (20, 21, 29) and with the calibre's row 0 (den = 15162856759112389).
+- **P2, the clock picture.** W_a(k) = P^+ e^{-ik} + P^- e^{ik} = cos k - i sigma_a sin k = exp(-i k sigma_a). Each sub-act is a turn of the twin pair about a by the Spoke's phase, so each tick is a rotation of the state before, in every momentum. PROVED. CHECKED (c1: 300 of 300).
+- **P3, the junctions.** Q_a sigma_z Q_a^dagger = sigma_a gives Q_a P_z Q_a^dagger = P_a, and so W_a = Q_a S_a Q_a^dagger.
+  - The x, y and z eigenbases are mutually unbiased, so every junction has all |entries|^2 = 1/2: a Gaussian unit over (1 +- i).
+  - PROVED. CHECKED (c1: 3 of 3; 600 of 600; the junction exactly).
+- **P4, the coin as a Cayley form.** For any Hermitian A, C = (1 - iA)(1 + iA)^-1 is unitary.
+  - For A = phi . sigma, A^2 = |phi|^2, so C = (1 - iA)^2 / (1 + |phi|^2): rational, with no root.
+  - The mass coin is the case A = t sigma_x on (L, R), with t = s/(den + pinion): (1 - it)^2 / (1 + t^2) = (pinion - i s)/den.
+  - A spin pull from the board (the Pauli term) would enter the same way.
+  - PROVED. CHECKED (c1: the calibre's 4 pairs; 300 of 300 random rational pulls).
+  - The Cayley form keeps locality only on a Node-clock's own states: (1 + iH)^-1 of a hopping H is global. That is why the hop is the exact shift and only the coin is a Cayley form.
+- **P5, the phase reversal and Dirac.**
+  - sigma_y conj(P_a^+-) sigma_y = P_a^-+, so sigma_y conj(W_a) sigma_y = W~_a and T U_L T^-1 = U_R. Its symbol is V(-k), Bialynicki-Birula's W(-h).
+  - To first order in k and in the mass angle, U = 1 - i(alpha . k + beta m) with alpha_a = sigma_a (x) sigma_z and beta = 1 (x) sigma_x, which pairwise anticommute: Dirac's equation in the chiral representation (his eq. 22).
+  - Arrighi, Forets and Nesme prove convergence with an O(epsilon^2) discrepancy at any time.
+  - PROVED (to first order; the rest cited). CHECKED (c1: operator level on 3^3; 300 of 300 symbols).
+
+### 2.3 Rule3 in integers
+
+- **P6, a unitary matrix of Gaussian integers is monomial.** Each column has squared norm 1 and every nonzero Gaussian integer has norm at least 1, so each column has exactly one nonzero entry, a unit.
+  - So an exactly unitary step that keeps fixed-width integers integral only permutes Node-clock states with phases. It has no interference.
+  - PROVED. CHECKED (c1: every unitary 2x2 in the box |re|, |im| <= 2 is monomial, 32 of 32).
+- **The exact form: the scale carries the denominators.**
+  - D U is integral for D = den on the ring, D = 2(1 + i) for the Weyl tick ((1 + i) is not enough), and D = 2(1 + i) den for the Dirac pair.
+  - Then Psi_t = D^t psi_t is integral, and |Psi_t|^2 = N(D)^t |psi_0|^2 at every tick.
+  - Rule3 enters only at the click, as the division of a reading by the scale.
+  - CHECKED (c1):
+    - the count kept at 300 of 300 ticks (ring of 16), 80 of 80 (3^3 Weyl) and 30 of 30 (3^3 Dirac);
+    - the rewind by (D U)^dagger returns the start, times the scale, bit for bit after 300, 80 and 30 ticks.
+  - The growth is log2 N(D) bits a tick: 4.6 at (3, 4, 5), 9.7 at (20, 21, 29), 107.5 for the ring at the calibre's den, 3.0 for the Weyl tick and 110.5 for the Dirac pair at the calibre's den (c5).
+- **The carried form, at a fixed width.**
+  - **The whole turn carried at once has no rewind.** den x' + r' = pinion x - s y + r is not injective, since (pinion, s) = D U (1, 0) has both parts in (-den, den). CHECKED (c1: (-2, -2, 0, 20) and (-2, -1, 21, 0) carry to one state).
+  - **The turn as three carried shears is exactly reversible:** x <- x - t y, then y <- y + S x, then x <- x - t y, with t = s/(den + pinion) and S = s/den. Each shear is triangular and keeps its remainder in a fine tooth. CHECKED (c1: 400 ticks there and back, bit for bit, on a ring of 16).
+  - **The count is not kept by the carry.** It moved at 400 of 400 ticks, with a worst relative drift of 1.019e-6 at an amplitude of 10^6 a quantum. Dropping the remainders breaks the rewind (mutant M6, 200 of 200).
+  - So with the carry, the count, the projector and the cap hold only up to the remainders. This is the head's own status for its two-slot form (DAVID-TENSOR24-PAULI.md: "The engine's carries keep the overlaps only up to their remainders").
+
+### 2.4 The beat against k, and the head's
+
+- **P7, the head.** The engine's gearing at the vacuum (rule3.gearing, p0 = p_i = Gamma = 1000, G = 16) gives:
+  - T = 6 den Gamma^2 G^2, D = 12 (den - pinion) Gamma^2 G^2, R_j = 2 Gamma^2 G^2 pinion.
+  - rule3.rule3 is the carried leapfrog T a+ + r+ = T (2a - a-) - D a + SUM R_j (a_j - a) + r.
+  - Its symbol is cos w = (c/3)(cos kx + cos ky + cos kz).
+  - PROVED. CHECKED (c2: the integers, 8 of 8; the act bit for bit, 3,000 of 3,000; the beat, 2,000 of 2,000 on the toy's three rows and the light).
+- **P8, the walk.**
+  - The ring: det(lambda - U(k)) = lambda^2 - 2c cos k lambda + 1, so cos w = c cos k.
+  - The Weyl tick: Tr V / 2 = cx cy cz + sx sy sz (Bialynicki-Birula's eq. 27, k -> -k).
+  - The Dirac pair: cos w solves (X - c a0)(X - c b0) = (s^2/4) q, each root double, where:
+    - a0, b0 = cx cy cz +- sx sy sz;
+    - q = 4(sx^2 sy^2 + sy^2 sz^2 + sz^2 sx^2 - 2 sx^2 sy^2 sz^2).
+    - Here c = pinion/den and s = sine_rim/den are the coin's cosine and sine, and cx, sx are the momentum's.
+    - Proof: (U + U^dagger)/2 = [[c a0, (is/2) X], [-(is/2) X^dagger, c b0]] with X = V^dagger - V', and X X^dagger = q.
+  - Along an axis q = 0, and the beat is the ring's.
+  - PROVED. CHECKED (c2: 800 of 800; 600 of 600 characteristic polynomials; 60 of 60. c1: 60 of 60).
+- **P9, the rest beat is one reading.** At k = 0 the head gives (2T - D)/(2T) = pinion/den, and the walk gives U(0) = M with cos w0 = pinion/den. The coin's s is the engine's own sine_rim, the one the head's winding uses. PROVED. CHECKED (c2: 4 of 4 rows, each way).
+- **P10, the kinetic term.** Along an axis, cos w_head - c = (c/3)(cos k - 1) = (cos w_walk - c)/3 at every k. In 3-D, the head gives c - (c/6)|k|^2 and the pair's mean gives c cx cy cz = c - (c/2)|k|^2, plus higher terms.
+  - So the mass, read as the rest beat, is the same reading. The light cone is not: the walk's light runs 1 Spoke per tick (exactly, along an axis), and the head's 1/sqrt(3) at small k.
+  - The inertial mass, read from the curvature (w - w0 = k^2 / (2M) at small k), is tan w0 on the walk and 3 tan w0 on the head (PROVED, from the exact relation along an axis).
+  - PROVED. CHECKED (c2: 1,200 of 1,200 along an axis; in 3-D the ratio tends to 1/3 in four directions, the worst gap falling through six halvings of k to 35/983029).
+
+### 2.5 The 24 acting on the step
+
+- **P11, the 24 permute the sub-acts.** Write the turn R with lift u as u (x) P_R. Then T_+a -> T_{R e_a}, u P_a u^dagger = P_{R e_a} (sigma is a vector), and W_-b = W_b. So W_a -> W_pi(a).
+  - PROVED. CHECKED (c1: the group generated by diag(1, i) and Q_x has 24 turns; the senses 144 of 144; the operators on 3^3, both indices, 24 of 24).
+- **P12, the ordering.** The image of U_L is W_pi(z) W_pi(y) W_pi(x):
+  - U_L itself for the 4 turns that fix every axis;
+  - a W-conjugate of U_L for the 8 third turns (W_x U_L W_x^-1 or W_z^-1 U_L W_z);
+  - the reversed cycle for the 12 odd turns.
+  - Since det R = 1 = sign(pi) times the product of the signs, sx sy sz -> sign(pi) sx sy sz. One Weyl field's beat keeps the tetrahedron's 12 and loses the other 12 at third order in k. This holds for Bialynicki-Birula's automaton too.
+  - PROVED. CHECKED (c1: 4, 8 and 12 of 24).
+- **P13, the Dirac pair keeps all 24.** Its beat (P8) reads cx cy cz, (sx sy sz)^2 and SUM sa^2 sb^2 only, all even under every signed permutation, so under the 24 and the inversion. Its own characteristic polynomial is real and kept too.
+  - PROVED. CHECKED (c1: 24 of 24; the inversion; 24 of 24). The mutant with R := L, no phase reversal, loses 12 of 24.
+- **P14, the no-go: no one-tick step is covariant.** Let a step on the six Spokes hold the twins' kind m times (E1/2 (x) C^m) and be covariant: A_{Rd} = u A_d u^dagger.
+  - The quarter turn about z keeps e_z, so A_z commutes with diag(1, i): A_z = P_z^+ (x) B_u + P_z^- (x) B_d.
+  - The half and third turns then give A_-z and A_+-x.
+  - Unitarity at the displacement 2e_z gives B_u^dagger B_d = 0.
+  - At e_z - e_x it gives (P_x^+ P_z^+ + P_z^- P_x^-) (x) B_u^dagger B_u + (P_x^- P_z^- + P_z^+ P_x^+) (x) B_d^dagger B_d = (1/2)(x)(B_u^dagger B_u + B_d^dagger B_d) = 0. So B_u = B_d = 0, and nothing moves.
+  - A rest term commutes with the 48 (Schur) and does not enter that condition.
+  - On the eight corners, covariance and unitarity at the opposite corner force A_d = alpha P_d^+ or beta P_d^-, with P_d^+- = (1 +- d.sigma/sqrt 3)/2 (a root), and the same term is then (1 + d.d'/3)/2, never 0.
+  - So the tick must be a product of sub-acts, and the 24 permute it (P11).
+  - PROVED. CHECKED (c1: the quarter turn keeps 2 of the 4 unit matrices; the identity 24 of 24; the corners 48 of 48).
+
+## 3. The family's tensor (part B)
+
+### 3.1 The formula in the three operations
+
+- **The step:** R <- (D U) R (D U)^dagger and lam <- lam N(D): sums of products on the rows, and the same, conjugated, on the columns.
+- **The lay, e = -1:**
+  - F = lam chi^dagger chi - chi^dagger R chi.
+  - Where F = 0 it is refused (Rule3's sign test).
+  - Otherwise v = lam chi - R chi, R <- F R + v v^dagger and lam <- lam F.
+  - The division by the free size is deferred into the scale, with no root.
+- **The lay, e = +1:** R <- (chi^dagger chi) R + lam chi chi^dagger and lam <- lam (chi^dagger chi).
+- **The click's reads at x:**
+  - the count, Tr R_xx / lam;
+  - the pair, det R_xx / lam^2;
+  - a newcomer s's free size, (lam s^dagger s - s^dagger R_xx s) / lam.
+  - Each is a Rule3 division by the scale.
+- **The pitch:** the gcd of R and lam is removed (Euclid's carry, rule3.pitch). The algebra of P15 to P20 does not depend on it.
+
+### 3.2 The proofs
+
+- **P15, the step keeps the spectrum.** (U rho U^dagger)^2 = U rho^2 U^dagger, and every Tr rho^j is kept. A projector stays a projector with its trace. PROVED.
+- **P16, the lay keeps the projector.** If rho is a projector, Q = 1 - rho is the complementary one.
+  - Q chi is orthogonal to the range of rho, and Q chi chi^dagger Q / (chi^dagger Q chi) is the projector onto it.
+  - The sum is a projector of rank N + 1. This is Gram-Schmidt done on the tensor.
+  - F = 0 exactly when chi lies in the occupied states: no free state, so no lay.
+  - PROVED.
+- **P17, the cap.** 0 <= rho <= 1, so for w held at x, 0 <= w^dagger rho w <= w^dagger w. That is, 0 <= rho_xx <= 1 as an m x m matrix: at most one quantum per state, and m in all at a Node-clock, at every tick by P15 and P16.
+  - For m = 2, the check is that the trace and the determinant of rho_xx and of 1 - rho_xx are both at least 0.
+  - PROVED (David's page proved it for orthogonal hands; the tensor is that projector, CHECKED below).
+- **P18, draft E's numbers read from the tensor.**
+  - **The free size.** For one occupant phi at x, chi^dagger (1 - phi phi^dagger / |phi|^2) chi = N(det[phi, chi]) / |phi|^2 = N(<T phi, chi>) / |phi|^2 (Lagrange): draft E's free size.
+  - **The partial occupation.** For spread or many occupants the free size is s^dagger s - s^dagger rho_xx s, which reads the partial occupation exactly. That is David's OPEN "a spread quantum's wind at the node-clock below u".
+  - **The pair.** With orthogonal hands of norms n_k, rho_xx = Phi_x diag(1/n_k) Phi_x^dagger. So det rho_xx = SUM_{k<l} N(det[phi_k(x), phi_l(x)]) / (n_k n_l) (Cauchy-Binet): the click's pair at one Node-clock is the sum of draft E's two-quantum joint sizes there.
+  - PROVED.
+- **P19, one law with the kind's sign, and its closure.** The e-symmetrised state of the hands v_1 to v_N has norm imm_e(G), where G is their Gram matrix and imm_e is the determinant for e = -1 and the permanent for e = +1. Its density is rho = SUM_ij v_i v_j^dagger e^(i+j) imm_e(G without row j and column i) / imm_e(G).
+  - **On e = -1** this is V G^-1 V^dagger, the projector onto the span. It is fixed by rho alone, and the lay is the Schur complement det G' / det G = chi^dagger Q chi: closed on the tensor.
+  - **The permanent has no Schur complement.** Two boson pairs with one tensor, (e1, e2) and (e1 + e2, e1 - e2), give 2 and 5/2 in state 1 when e1 is laid. So the force carriers' state is not carried by their tensor.
+  - **The mixed lay rho + chi chi^dagger** (B's e = +1) is closed, keeps the count and stacks. But it equals the permanent's density only where chi is orthogonal to the occupied states.
+  - PROVED. CHECKED (c3).
+- **P20, the force carriers stack.** Their lay sets eigenvalues above 1, and P15 keeps them. PROVED. CHECKED (c3).
+
+### 3.3 The checks (c3, every Node-clock and every tick, exact)
+
+| board and step | ticks | quanta laid (refused) | rho^2 = rho, Tr = N | the cap |
+| --- | --- | --- | --- | --- |
+| ring of 8, U = M W_z on (3, 4, 5) | 200 | 6 (1) | 201 of 201 | 1,608 of 1,608 |
+| ring of 12, the same | 200 | 6 (1) | 201 of 201 | 2,412 of 2,412 |
+| ring of 16, the same | 200 | 6 (1) | 201 of 201 | 3,216 of 3,216 |
+| ring of 12, the calibre's row 0 (den about 1.5 x 10^16) | 24 | 4 (1) | 25 of 25 | 300 of 300 |
+| 3^3 torus, Weyl U_L, 2 states | 40 | 6 (1) | 41 of 41 | 1,107 of 1,107 |
+| 3^3 torus, Dirac pair, 4 states (4 x 4 blocks) | 8 | 5 (1) | 9 of 9 | 243 of 243 |
+
+- **The order of lays on each ring:** laid, laid, refused, laid, laid, laid, laid. The refused one is the third quantum at the filled Node-clock, where the free size is 0. Two more are laid there once the first two have spread.
+- **The tensor is the hands' projector:** it equals SUM_k phi_k phi_k^dagger / |phi_k|^2 with the laid hands stepped alone (9 of 9 on each ring; 3 of 3 on the torus).
+- **The pair:** det rho_xx equals the joint sizes summed (72, 108 and 144 on the rings; 81 on the torus).
+- **The tie to draft E:** the free size equals N(det[phi, chi]) / |phi|^2, 500 of 500.
+- **A Node-clock of the Dirac pair** holds four quanta, and the fifth is refused.
+- **The force carriers (e = +1):**
+  - three in one state read (Tr rho, Tr rho^2, Tr rho^3) = (3, 9, 27); with a fourth elsewhere, (4, 10, 28);
+  - the step keeps them at 59 of 59 ticks;
+  - the local occupation exceeds 1 at 46 of 732 Node-clock ticks.
+- **P19:** 300 of 300 sets on e = -1; 300 of 300 on e = +1 (equal exactly where orthogonal); the counterexample 2 against 5/2.
+
+## 4. The mutants (each must fail, and each does)
+
+| mutant | where | it fails |
+| --- | --- | --- |
+| **the head's leapfrog on separate hands, read in the one-slot occupation** (the engine's gearing at the vacuum; exact, and with rule3.rule3's carry) | c4, 4^3 board | row 0: the cap broken at 582 of 1,920 Node-clock ticks, up to about 4.37 quanta in one state; row 1: at 2 of 1,920, about 1.002; the same with the carry. Controls: the two-slot form kept at 30 of 30 ticks, the one-slot Gram moved at 30 of 30 |
+| **the symmetric lay on matter** (rho + chi chi^dagger for e = -1) | c3 M1 | an eigenvalue 2 (rho^2 != rho); the cap broken at 15 of 360 Node-clock ticks |
+| **one summed field** (the head's board) | c3 M2 | four orthonormal quanta gather at one Node-clock in one state, occupation 4, while their tensor reads 1; six quanta at three Node-clocks exceed one in one state at 32 of 656 Node-clock ticks, their tensor at 0 |
+| **a non-unitary coin** (Feynman's checkerboard: straight 1, corner -i s/den) | c3 M3, c1 M1 | rho^2 != rho at 40 of 40 ticks; Tr != N at 40 of 40; the cap broken at 225 of 480; U^dagger U != 1 on 24 of 24 rows |
+| a coin off den's circle (pinion + 1) | c1 M2 | U^dagger U != 1 on 24 of 24 rows |
+| the lay without its denominator | c3 M4 | rho^2 != rho |
+| both senses alike (P^+ T_+a + P^+ T_-a) | c1 M3 | 54 of 54 rows not unitary |
+| R := L, no phase reversal | c1 M4 | the Dirac beat moved by 12 of 24 turns |
+| K for T (no i sigma_y) | c1 M5 | conj(U_L) != U_R on 54 of 54 rows |
+| the carried shears with the remainders dropped | c1 M6 | 200 of 200 states not returned |
+| the head's curvature without the 3; its spring one tooth off; the Dirac form without delta; c and s exchanged | c2 M1 to M4 | 195 of 200; 3 of 3; 38 of 40; 40 of 40 |
+| the global free state cut to one Mesh; a local write that ignores the occupants | c5 M1, M2 | 6 of 6 and 6 of 6 not projectors |
+
+## 5. The cost and the law
+
+### 5.1 Line 98: the count of integers per Node-clock, and the width
+
+ALGEBRA.md line 98 (scribe-5) reads: "every integer within the universe file's width; the count of integers per Node-clock fixed for the run".
+
+- **The tensor's row.** At a Node-clock it holds m rows of mV Gaussian entries, 2 m^2 V integers per family (half with each Hermitian pair stored once). On a fixed board its length is fixed for the run (CHECKED, c5: one length over 30 ticks and 3 lays). Line 98 holds.
+  - The rows' sizes: 128 on a ring of 16; 216 on 3^3 (Weyl); 864 on 3^3 (Dirac); 4,000 on world_nature's 5^3 board (Dirac).
+  - The head holds 98 integers per Node-clock in all, for seven trains.
+- **One hand per quantum** holds 2m integers per quantum and Node-clock (8 for the Dirac pair), so its count varies with the quanta, unless a largest count is fixed for the run.
+- **Without a root, either way.** One hand per quantum needs no root if each hand keeps its own norm n_k. The norm is set at the lay to the free size F and kept by the unitary step, and every reading is phi_k phi_k^dagger / n_k. CHECKED (c3: the hands' projector, 9 of 9 on each ring and 3 of 3 on the torus).
+  - So the choice between the tensor and the hands is not about the root (DAVID-TENSOR24-THE-COMPOSITE.md, "exact only as a density": true of a normalised amplitude, not of an amplitude that keeps its norm).
+  - It is the count (line 98) against locality (5.2).
+- **The Dirac pair without the tensor** holds 8 notches per Node-clock, now only. That is the head's twin pair's count of notches (four gears, now and before, with their fine teeth beside): the before slot becomes the phase-reversed field.
+- **The width.**
+  - gates.py:178 records the owner's ruling of 2026-10-26, 22:1x UTC: "the physics may not be tied to the bits of the run; the former verdict read every integer within the width ... is struck". Line 98's text on scribe-5 still names the width.
+  - In the exact form the integers grow without bound (2.3), by about 110.5 bits a tick for the Dirac pair at the calibre's den.
+  - A lay into spread occupants roughly doubles the tensor's widest integer (c5: 186 to 376 bits).
+  - OPEN for David and Sofer: whether the line's width clause stands.
+
+### 5.2 Locality
+
+1. **The step's reach.** Each axis sub-act reads one Mesh in each index of the tensor. The whole tick reaches three Meshes, so it is three sub-acts of one Mesh each. CHECKED (c5).
+2. **P23, the tensor's step is bilocal.** (U rho U^dagger)(x, y) = SUM U(x, x') rho(x', y') conj(U(y, y')) reads U's coefficients at x and at y. So with a coin that varies, the row at x reads the coin of every Node-clock it holds a column for, beyond one Mesh. Stored by columns instead, the left factor reads afar. One hand per quantum, phi_k -> U phi_k, reads only its own Node-clock's coin. PROVED.
+   - CHECKED (c5): the row at Node-clock 0 changed in 4 of 64 entries when only the coin 8 Meshes away changed.
+   - With the Pauli pull or the lapse in the coin (P4), the tensor's step is beyond one Mesh. One hand per quantum is not (CHECKED: its values beyond one Mesh of the changed coin are unchanged).
+   - So "each entry updates from its neighbours' entries in both indices" holds only for a coin that is the same at every Node-clock.
+3. **The lay's write.** rho' - rho = (Q chi)(Q chi)^dagger / F, and (Q chi)(y) = -rho(y, x) s for y != x. So the write reaches every row that holds a column at x. This is the conditioning on the click, the exchange hole of nature's Fermi sea.
+   - CHECKED (c5: 14 of the 26 rows beyond one Mesh changed).
+   - One hand per quantum has the same reach: its new hand Q chi spreads over the occupants' support.
+4. **P21, a lay that writes within one Mesh.** Let S be x and its six neighbours, and psi = Q_S chi, with Q_S the projector off the range of rho_SS.
+   - psi is orthogonal to every occupant, rho + psi psi^dagger / |psi|^2 is a projector, and only S x S changes.
+   - |Q_S chi|^2 <= chi^dagger Q chi, since the local free states lie inside the global ones.
+   - PROVED. CHECKED (c5: 6 of 6 each).
+5. **P22, the one-Mesh no-go.** If the occupants' restrictions to S span the m|S| states of S, no nonzero state in S is orthogonal to them, so every exact lay that writes within one Mesh is refused, whatever the global free size.
+   - PROVED. CHECKED (c5: with 14 spread quanta on 3^3, rho_SS has rank 14 at every S tried; the local lay refused 21 of 21 newcomers, all 21 globally free).
+   - So exact Pauli with spread occupants, and a write within one Mesh, cannot both hold in the integers. OPEN (part 7).
+
+### 5.3 What the click reads
+
+- **The draw reads rho_xx alone** (CHECKED, c3: 7 of 7 on each ring):
+  - the count, Tr rho_xx;
+  - the pair, det rho_xx (P18);
+  - a newcomer's free size, s^dagger s - s^dagger rho_xx s.
+- **The write needs the row of x** (5.2, item 3).
+
+### 5.4 The speed
+
+- The walk's light cone is one Spoke per tick (three sub-acts).
+- The head's light runs 1/sqrt(3) at small k (P10).
+- If matter walks while the light keeps the leapfrog, matter's speed at small k exceeds the light's by sqrt(3). If the walk takes one sub-act per head tick instead, massless matter runs at 1/3, slower than the light.
+- Neither matches nature. Bialynicki-Birula's title also covers Maxwell's equations, so a walk for the light would remove the mismatch; not built here.
+- OPEN.
+
+## 6. What it replaces (protocol step 4)
+
+1. **The bound between clicks, OPEN in two places:**
+   - draft E, part 12, item 2: "no bound on the board follows from the step as written";
+   - David's page: "between clicks it is kept only by the antisymmetric algebra on the board ... which representation the plan takes is the owner's word".
+
+   It is kept by the unitarity of the clock's first-order step on the family's tensor, one law for every family with the kind's sign. PROVED, and CHECKED in rationals.
+2. **The head's matter step for the twins** (the second-order leapfrog on one field per family, cut 0's letter) becomes the first-order walk on the Dirac pair, with the same rest beat.
+   - The leapfrog's two-slot form W, indefinite, with det D = -N(det[now, before]) <= 0, stops being matter's count.
+   - The one-slot count |psi|^2 is kept exactly and is positive at every Node-clock.
+3. **David's cut (d)** ("the phase-reversed field beside each matter family, or each quantum its own hand ... only the second keeps the cap between clicks") gets a sharper answer: this route needs both.
+   - The phase-reversed field beside the field gives the first-order unitary step.
+   - The cap needs the quanta as a projector: the tensor, with a fixed count but a step that leaves the Mesh, or orthonormal hands, with a local step but a count that varies.
+   - One summed Dirac field gathers (c3 M2).
+4. **David's OPEN "the partial occupation"** is read exactly by the free size (P18).
+5. **Draft E's acts read on the tensor:** act 7 (the lay into an occupant) is the generic lay, whose denominator is draft E's free size. The joint click at one Node-clock is det rho_xx, the sum of draft E's joint sizes.
+6. **A row, proposed:** per family and tick, the largest eigenvalue of rho_xx over the Node-clocks. On matter it is never above 1, and on the force carriers it is free. This would replace row 43's count of lay jams by a reading of the cap.
+
+**Contradictions with nature it leaves:**
+- the speed (5.4);
+- the Dirac sea: four states per Node-clock, two at the rest beat's positive frequency (L + R) and two at its negative (L - R), as in nature's first-quantised Dirac theory;
+- the one Weyl field's anisotropy at third order (P12), which the Dirac pair removes;
+- the absent Fock term (draft E part 12, item 4), unless the coin reads rho.
+
+## 7. What stays OPEN
+
+1. **The integers.** Exact unitarity needs the scale to grow (log2 N(D) bits a tick, and the bits doubled at each spread lay). The carry keeps the rewind but not the count (c1). Whether line 98's width clause stands against the owner's ruling is David's and Sofer's to decide.
+2. **The speed** (5.4): one cone for matter and light.
+3. **Locality:**
+   - the tensor's step under a coin that varies (5.2, item 2);
+   - the lay's write beyond one Mesh (5.2, item 3);
+   - the one-Mesh lay's refusals (P22).
+   - on the asynchronous board (DAVID-TENSOR24-THE-LOCAL-TICK.md), each entry rho(x, y) joins two Node-clocks at their own dials, so its step waits on both ticks.
+
+   Whether the click's conditioning may write beyond one Mesh, as the reckoner already reads Bell's correlations, is the owner's word.
+4. **The force carriers:** their tensor does not carry the permanent state (P19), and the stimulated weight's use stays OPEN (David's page).
+5. **The interacting coin:** the walk's coupling to the lapse and the Pauli pull is not written. P4 gives its exact form, a Cayley coin.
+6. **The Dirac sea:** which of the four states per Node-clock matter's lay may use.
+7. **The cost and the representation,** decided with the composite (DAVID-TENSOR24-THE-COMPOSITE.md, OPEN there): the tensor's row of 2 m^2 V integers per family and Node-clock, with a step that leaves the Mesh; or one hand per quantum, 2m N integers with their norms and a local step, whose count varies.
+
+## 8. Status of every claim
+
+| claim | status |
+| --- | --- |
+| the sub-acts, the coin and the walk exactly unitary in rationals | PROVED (P1); CHECKED (c1) |
+| the clock picture: each sub-act a turn by the Spoke's phase | PROVED (P2); CHECKED |
+| the junctions are the 24's lifts over (1 +- i); the mass from den's circle | PROVED (P3, P4); CHECKED |
+| the phase reversal maps U_L to U_R; the Dirac pair is Bialynicki-Birula's eq. 21; Dirac's equation to first order | PROVED (P5); CHECKED; the convergence cited (AFN 2014) |
+| a unitary Gaussian-integer step is monomial | PROVED (P6); CHECKED |
+| the exact form: the count kept and the rewind bit for bit, with the integers growing | CHECKED (c1, c5) |
+| the carried shears reversible; the count not kept by the carry | CHECKED (c1) |
+| the head's beat; the walk's beats; the rest beat one reading; the head's kinetic term a third | PROVED (P7 to P10); CHECKED (c2) |
+| the 24 permute the sub-acts; one Weyl field keeps 12; the Dirac pair keeps 24 and the inversion | PROVED (P11 to P13); CHECKED (c1) |
+| no one-tick covariant step (six Spokes or eight corners) | PROVED (P14); CHECKED (its identities) |
+| matter's tensor a projector at every tick; the cap at every Node-clock and tick | PROVED (P15 to P17); CHECKED (c3) |
+| the lay's denominator is draft E's free size; det rho_xx is the joint sizes summed | PROVED (P18); CHECKED (c3) |
+| one law with the sign; closed on e = -1, not on e = +1 | PROVED (P19); CHECKED (c3) |
+| the force carriers stack | PROVED (P20); CHECKED (c3) |
+| the four requested mutants fail, with eight more | CHECKED (c1, c2, c3, c4, c5) |
+| line 98's count fixed for the tensor, varying for the hands | CHECKED (c5) |
+| the step's reach; a varying coin read from afar; the lay's write beyond one Mesh | PROVED (P23); CHECKED (c5) |
+| the one-Mesh lay exact; its no-go with spread occupants | PROVED (P21, P22); CHECKED (c5) |
+| the draw reads rho_xx alone; the write does not | PROVED; CHECKED (c3, c5) |
+| the width, the speed, locality, the force carriers' state, the interacting coin, the Dirac sea | OPEN |
+
+## 9. Literature (as read)
+
+- **I. Bialynicki-Birula,** "Dirac and Weyl equations on a lattice as quantum cellular automata", arXiv:hep-th/9304070, Phys. Rev. D 49, 6920 (1994), read in full.
+  - The automaton on the cubic lattice reaches the eight corners in one step (eqs. 1 to 3), with W(h) = q_+- P_i, q_+- = (1 +- i)/4 (eqs. 10 to 12).
+  - Its symbol is eq. 27, and its eigenvalues are exp(+-i phi) with cos phi = cx cy cz + sx sy sz (eq. 29).
+  - The Dirac form multiplies [[cos ma, i sin ma], [i sin ma, cos ma]] by diag(W(h), W(-h)) (eq. 21), and the continuum is Dirac's equation in the Weyl representation (eq. 22).
+  - The abstract: every local and unitary automaton on a cubic lattice, "under some natural assumptions", leads to the Weyl equation. One assumption is "the evolution algorithm preserves the symmetry of the lattice".
+  - His automaton keeps only the tetrahedron's 12 in its beat (P12), so that assumption is used there in a weaker form (the eigenvalues of W^dagger(h) W(h)).
+- **P. Arrighi, V. Nesme, M. Forets,** "The Dirac equation as a quantum walk: higher dimensions, observational convergence", arXiv:1307.3524, J. Phys. A 47, 465302 (2014), pages 1 to 4 read.
+  - The (3+1) walk is W_epsilon = C_epsilon (Id (x) H) T_1 (Id (x) H F) T_2 (Id (x) F^dagger) T_3, with H the Hadamard and F = R_{pi/2} H: the junction form of 2.1.
+  - The abstract: the model "was proposed independently by Succi and Benzi, Bialynicki-Birula and Meyer", and the discrepancy is O(epsilon^2) at any time.
+- **D. A. Meyer,** "From quantum cellular automata to quantum lattice gases", arXiv:quant-ph/9604003, J. Stat. Phys. 85, 551 (1996), abstract read. No nontrivial homogeneous local unitary scalar automaton exists in one dimension, and a two-component version gives Dirac's equation. P6 and P14 are its integer and cubic relatives.
+- **The Feynman checkerboard** (R. P. Feynman and A. R. Hibbs, Quantum Mechanics and Path Integrals, 1965), not read in the original. It is cited by Bialynicki-Birula (refs. 1 and 2: a particle "zigzagging through spacetime, reversing its helicity at each bend") and by Arrighi et al., who trace the walk back to "Feynman's relativistic checkerboard" (their ref. 23) and add that "early models where not unitary" (their ref. 24).
+  - The corner amplitude i epsilon m with straight amplitude 1 is the mutant c3 M3 and c1 M1 here: U^dagger U != 1, and the cap breaks.
+  - The turn on den's circle (pinion, s)/den is its exact unitary completion.
+- **Schur, Cauchy-Binet, Lagrange's identity, the Cayley transform and the Schur complement** are used, not quoted.
+
+## The probes
+
+| probe | what it checks | claims | mutants |
+| --- | --- | --- | --- |
+| c1_clock.py (.txt, _mutants.txt) | P1 to P6, P11 to P14; Rule3 in integers | 40 checks, 0 failures | 6 of 6 fail |
+| c2_beat.py (.txt, _mutants.txt) | P7 to P10, from the engine's gearing and rule3.rule3 | 11 checks, 0 failures | 4 of 4 fail |
+| c3_tensor.py (.txt, _mutants.txt) | P15 to P20 on the rings and the 3^3 torus | 36 checks, 0 failures | 8 of 8 readings fail |
+| c4_head_hands.py (.txt) | the head's leapfrog on separate hands (a mutant of the cap, on the head's own act) | its two controls hold | the cap broken on both rows, exact and carried |
+| c5_law.py (.txt, _mutants.txt) | line 98, the growth, locality, P21 to P23 | 10 checks, 0 failures | 2 of 2 fail |
+| caplib.py | the exact library: Gaussian numbers, board operators, the 24, the scaled tensor | | |
+
+Each probe runs in under a minute, and c3, the longest, in about 55 seconds.
+
+== caplib.py ==
+"""Exact helpers for the cap probes: Gaussian numbers as (re, im) pairs of int or Fraction, small dense matrices,
+sparse board operators, the clock's split step (the Spoke's two senses), the 24's lifts, and the scaled tensor.
+
+No float anywhere. Every division is a Fraction or an exact integer division that is checked.
+"""
+
+from __future__ import annotations
+
+import random
+from fractions import Fraction as Fr
+from itertools import product
+from math import gcd
+
+# ---------------------------------------------------------------- Gaussian numbers
+
+ZERO, ONE, I = (0, 0), (1, 0), (0, 1)
+
+
+def ga(a, b):
+    return (a[0] + b[0], a[1] + b[1])
+
+
+def gs(a, b):
+    return (a[0] - b[0], a[1] - b[1])
+
+
+def gm(a, b):
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
+
+
+def gc(a):
+    return (a[0], -a[1])
+
+
+def gn(a):
+    return a[0] * a[0] + a[1] * a[1]
+
+
+def gk(k, a):
+    return (k * a[0], k * a[1])
+
+
+def gdiv(a, b):
+    """a / b exactly, Fractions (b != 0)."""
+    n = gn(b)
+    p = gm(a, gc(b))
+    return (Fr(p[0], n), Fr(p[1], n))
+
+
+def fr(a):
+    return (Fr(a[0]), Fr(a[1]))
+
+
+# ---------------------------------------------------------------- dense matrices of Gaussian numbers
+
+
+def mzero(r, c=None):
+    c = r if c is None else c
+    return [[ZERO] * c for _ in range(r)]
+
+
+def meye(n):
+    return [[ONE if i == j else ZERO for j in range(n)] for i in range(n)]
+
+
+def mmul(A, B):
+    n, m, p = len(A), len(B), len(B[0])
+    out = []
+    for i in range(n):
+        row = []
+        Ai = A[i]
+        for j in range(p):
+            re = im = 0
+            for k in range(m):
+                a, b = Ai[k], B[k][j]
+                re += a[0] * b[0] - a[1] * b[1]
+                im += a[0] * b[1] + a[1] * b[0]
+            row.append((re, im))
+        out.append(row)
+    return out
+
+
+def madj(A):
+    return [[gc(A[j][i]) for j in range(len(A))] for i in range(len(A[0]))]
+
+
+def madd(A, B):
+    return [[ga(a, b) for a, b in zip(ra, rb)] for ra, rb in zip(A, B)]
+
+
+def msub(A, B):
+    return [[gs(a, b) for a, b in zip(ra, rb)] for ra, rb in zip(A, B)]
+
+
+def mscale(k, A):
+    """k a Gaussian number."""
+    return [[gm(k, a) for a in row] for row in A]
+
+
+def meq(A, B):
+    return all(a[0] == b[0] and a[1] == b[1] for ra, rb in zip(A, B) for a, b in zip(ra, rb))
+
+
+def mtr(A):
+    t = ZERO
+    for i in range(len(A)):
+        t = ga(t, A[i][i])
+    return t
+
+
+def kron(A, B):
+    return [[gm(A[i][j], B[k][l]) for j in range(len(A[0])) for l in range(len(B[0]))] for i in range(len(A)) for k in range(len(B))]
+
+
+def mfr(A):
+    return [[fr(a) for a in row] for row in A]
+
+
+def charpoly(A):
+    """Coefficients [1, c1, ..., cn] of det(x I - A) by Faddeev-LeVerrier, exact (Fractions)."""
+    n = len(A)
+    A = mfr(A)
+    coeffs = [(Fr(1), Fr(0))]
+    M = mzero(n)
+    for k in range(1, n + 1):
+        AM = mmul(A, M)
+        M = [[ga(AM[i][j], coeffs[-1] if i == j else ZERO) for j in range(n)] for i in range(n)]
+        tr = mtr(mmul(A, M))
+        coeffs.append((Fr(-tr[0], k), Fr(-tr[1], k)))
+    return coeffs
+
+
+# ---------------------------------------------------------------- Pauli matrices and the Spoke's two senses
+
+S0 = [[ONE, ZERO], [ZERO, ONE]]
+SX = [[ZERO, ONE], [ONE, ZERO]]
+SY = [[ZERO, (0, -1)], [I, ZERO]]
+SZ = [[ONE, ZERO], [ZERO, (-1, 0)]]
+SIG = [SX, SY, SZ]
+HALF = (Fr(1, 2), Fr(0))
+
+
+def proj(a, sense):
+    """P_a^sense = (1 + sense sigma_a) / 2, sense = +1 or -1."""
+    return mscale(HALF, madd(S0, mscale((sense, 0), SIG[a])))
+
+
+def rotation_of(u):
+    """The 3x3 matrix R with u sigma_a u^dagger = SUM_b R_ba sigma_b (exact; u unitary up to a phase)."""
+    ud = madj(u)
+    norm = mtr(mmul(u, ud))  # 2 |phase|^2
+    R = [[None] * 3 for _ in range(3)]
+    for a in range(3):
+        img = mmul(mmul(u, SIG[a]), ud)
+        for b in range(3):
+            t = mtr(mmul(SIG[b], img))
+            v = gdiv(t, norm)
+            assert v[1] == 0
+            R[b][a] = v[0]
+    return R
+
+
+def the_24():
+    """The cube's 24 turns as (R, u): u a Gaussian lift up to a phase, generated by the quarter turn about z,
+    diag(1, i), and the edge half turn (1/(1 - i)) [[1, 1], [1, -1]] (the Hadamard, a lift of the turn by pi about x + z)."""
+    uz = [[fr(ONE), fr(ZERO)], [fr(ZERO), fr(I)]]
+    q = gdiv(ONE, (1, -1))
+    h = [[q, q], [q, gk(-1, q)]]
+    found = {}
+    frontier = [mfr(meye(2))]
+    while frontier:
+        nxt = []
+        for u in frontier:
+            for g in (uz, h):
+                w = mmul(g, u)
+                R = rotation_of(w)
+                key = tuple(tuple(r) for r in R)
+                if key not in found:
+                    found[key] = w
+                    nxt.append(w)
+        frontier = nxt
+    return [(list(map(list, k)), u) for k, u in found.items()]
+
+
+def det3(R):
+    return (R[0][0] * (R[1][1] * R[2][2] - R[1][2] * R[2][1]) - R[0][1] * (R[1][0] * R[2][2] - R[1][2] * R[2][0])
+            + R[0][2] * (R[1][0] * R[2][1] - R[1][1] * R[2][0]))
+
+
+# ---------------------------------------------------------------- Pythagorean momenta (exact points of the circle)
+
+
+def pyth_phases(count, rng, top=40):
+    """zeta = e^{ik} = (m + i n)^2 / (m^2 + n^2) as a Fraction pair, with cos k and sin k rational."""
+    out = []
+    while len(out) < count:
+        m, n = rng.randint(-top, top), rng.randint(-top, top)
+        if m == 0 and n == 0:
+            continue
+        z = gm((m, n), (m, n))
+        d = m * m + n * n
+        out.append((Fr(z[0], d), Fr(z[1], d)))
+    return out
+
+
+# ---------------------------------------------------------------- boards and sparse operators
+
+
+class Board:
+    """A torus of side L in d dimensions with m components per Node-clock; index = site * m + component."""
+
+    def __init__(self, L, d, m):
+        self.L, self.d, self.m = L, d, m
+        self.sites = list(product(range(L), repeat=d))
+        self.index = {s: i for i, s in enumerate(self.sites)}
+        self.V = len(self.sites)
+        self.n = self.V * m
+
+    def step(self, s, axis, e):
+        t = list(s)
+        t[axis] = (t[axis] + e) % self.L
+        return tuple(t)
+
+
+def sp_from_blocks(board, blocks):
+    """A sparse operator from a list of (displacement d, m x m matrix A): (U psi)(x) = SUM A psi(x - d)."""
+    U = [dict() for _ in range(board.n)]
+    m = board.m
+    for s in board.sites:
+        x = board.index[s]
+        for disp, A in blocks:
+            t = tuple((s[a] - disp[a]) % board.L for a in range(board.d))
+            y = board.index[t]
+            for c in range(m):
+                for c2 in range(m):
+                    v = A[c][c2]
+                    if v[0] or v[1]:
+                        key = y * m + c2
+                        old = U[x * m + c].get(key, ZERO)
+                        U[x * m + c][key] = ga(old, v)
+    return [{k: v for k, v in row.items() if v[0] or v[1]} for row in U]
+
+
+def sp_mul(A, B):
+    out = []
+    for row in A:
+        acc = {}
+        for k, a in row.items():
+            for j, b in B[k].items():
+                acc[j] = ga(acc.get(j, ZERO), gm(a, b))
+        out.append({j: v for j, v in acc.items() if v[0] or v[1]})
+    return out
+
+
+def sp_adj(A):
+    n = len(A)
+    out = [dict() for _ in range(n)]
+    for i, row in enumerate(A):
+        for j, v in row.items():
+            out[j][i] = gc(v)
+    return out
+
+
+def sp_eq(A, B):
+    return all(ra == rb for ra, rb in zip(A, B))
+
+
+def sp_scale(k, A):
+    return [{j: gm(k, v) for j, v in row.items()} for row in A]
+
+
+def sp_is_identity(A, lam=ONE):
+    return all(row == ({i: lam} if (lam[0] or lam[1]) else {}) for i, row in enumerate(A))
+
+
+def sp_apply(A, v):
+    out = []
+    for row in A:
+        re = im = 0
+        for j, a in row.items():
+            b = v[j]
+            re += a[0] * b[0] - a[1] * b[1]
+            im += a[0] * b[1] + a[1] * b[0]
+        out.append((re, im))
+    return out
+
+
+def sp_integral(A):
+    return all(isinstance(v[0], int) or v[0].denominator == 1 for row in A for v in row.values()) and all(
+        isinstance(v[1], int) or v[1].denominator == 1 for row in A for v in row.values()
+    )
+
+
+def sp_int(A):
+    return [{j: (int(v[0]), int(v[1])) for j, v in row.items()} for row in A]
+
+
+def sp_kron_internal(board_big, M_ext, A, board_small):
+    """Not used."""
+    raise NotImplementedError
+
+
+# ---------------------------------------------------------------- the clock's split step
+
+
+def axis_step(board, axis, senses=(1, -1)):
+    """W_a = P_a^+ T_{+a} + P_a^- T_{-a} on a board of 2 components (senses (-1, 1): the opposite helicity)."""
+    e = [0] * board.d
+    e[axis] = 1
+    a3 = axis if board.d == 3 else 2  # a ring is read along its own axis z
+    Pp, Pm = proj(a3, senses[0]), proj(a3, senses[1])
+    return sp_from_blocks(board, [(tuple(e), Pp), (tuple(-x for x in e), Pm)])
+
+
+def coin_op(board, M):
+    """The same m x m coin at every Node-clock."""
+    return sp_from_blocks(board, [((0,) * board.d, M)])
+
+
+def weyl_step(board, senses=(1, -1)):
+    """U = W_z W_y W_x on a 3-torus (W_x applied first), or W_z on a ring."""
+    if board.d == 1:
+        return axis_step(board, 0, senses)
+    Wx, Wy, Wz = (axis_step(board, a, senses) for a in range(3))
+    return sp_mul(Wz, sp_mul(Wy, Wx))
+
+
+def mass_coin(pinion, s, den):
+    """M = [[c, -i s], [-i s, c]] with c = pinion / den, s / den: a turn on den's circle."""
+    c, sn = (Fr(pinion, den), Fr(0)), (Fr(0), Fr(-s, den))
+    return [[c, sn], [sn, c]]
+
+
+def dirac_step(board3, pinion, s, den):
+    """The 4-component step: M (U_L + U_R), the field beside its phase-reversed field, on a board with m = 4
+    ordered (L up, L down, R up, R down) at each Node-clock."""
+    m2 = Board(board3.L, board3.d, 2)
+    UL = weyl_step(m2)
+    UR = weyl_step(m2, senses=(-1, 1))
+    n2 = m2.n
+    U = [dict() for _ in range(2 * n2)]
+    # embed: L component c of site x -> index x*4 + c ; R component c -> x*4 + 2 + c
+    def emb(i, part):
+        x, c = divmod(i, 2)
+        return x * 4 + 2 * part + c
+    D = [dict() for _ in range(2 * n2)]
+    for part, Up in ((0, UL), (1, UR)):
+        for i, row in enumerate(Up):
+            D[emb(i, part)] = {emb(j, part): v for j, v in row.items()}
+    c, sn = Fr(pinion, den), Fr(-s, den)
+    Mbig = [dict() for _ in range(2 * n2)]
+    for x in range(m2.V):
+        for c2 in range(2):
+            iL, iR = x * 4 + c2, x * 4 + 2 + c2
+            Mbig[iL] = {iL: (c, Fr(0)), iR: (Fr(0), sn)}
+            Mbig[iR] = {iL: (Fr(0), sn), iR: (c, Fr(0))}
+    U = sp_mul(Mbig, D)
+    return U
+
+
+# ---------------------------------------------------------------- the scaled tensor rho = R / lam (Gaussian integers)
+
+
+class Tensor:
+    """rho = R / lam with R a Hermitian matrix of Gaussian integers and lam a positive integer."""
+
+    def __init__(self, n):
+        self.n = n
+        self.R = mzero(n)
+        self.lam = 1
+
+    def copy(self):
+        t = Tensor(self.n)
+        t.R = [row[:] for row in self.R]
+        t.lam = self.lam
+        return t
+
+    def reduce(self):
+        g = self.lam
+        for row in self.R:
+            for v in row:
+                g = gcd(g, v[0])
+                g = gcd(g, v[1])
+                if g == 1:
+                    return
+        if g > 1:
+            self.lam //= g
+            self.R = [[(v[0] // g, v[1] // g) for v in row] for row in self.R]
+
+    def matvec(self, v):
+        out = []
+        for row in self.R:
+            re = im = 0
+            for a, b in zip(row, v):
+                re += a[0] * b[0] - a[1] * b[1]
+                im += a[0] * b[1] + a[1] * b[0]
+            out.append((re, im))
+        return out
+
+    def free_size(self, chi):
+        """F = lam |chi|^2 - chi^dagger R chi: lam times the Pauli free size chi^dagger (1 - rho) chi."""
+        Rc = self.matvec(chi)
+        q = ZERO
+        for a, b in zip(chi, Rc):
+            q = ga(q, gm(gc(a), b))
+        assert q[1] == 0
+        return self.lam * sum(gn(a) for a in chi) - q[0], Rc
+
+    def lay(self, chi, e):
+        """The generic lay. e = -1: rho + Q chi chi^dagger Q / (chi^dagger Q chi), Q = 1 - rho; refused where the free
+        size is 0. e = +1: rho + chi chi^dagger / (chi^dagger chi). Returns the free size (scaled) or None if refused."""
+        if e == -1:
+            F, Rc = self.free_size(chi)
+            if F == 0:
+                return 0
+            v = [gs(gk(self.lam, a), b) for a, b in zip(chi, Rc)]
+            self.R = [[ga(gk(F, self.R[i][j]), gm(v[i], gc(v[j]))) for j in range(self.n)] for i in range(self.n)]
+            self.lam *= F
+        else:
+            F = sum(gn(a) for a in chi)
+            self.R = [[ga(gk(F, self.R[i][j]), gk(self.lam, gm(chi[i], gc(chi[j])))) for j in range(self.n)] for i in range(self.n)]
+            self.lam *= F
+        self.reduce()
+        return F
+
+    def step(self, Uint, normD):
+        """rho -> U rho U^dagger with Uint = D U integral (sparse): R -> Uint R Uint^dagger, lam -> lam N(D)."""
+        n = self.n
+        X = []
+        for row in Uint:
+            acc = [ZERO] * n
+            for k, a in row.items():
+                Rk = self.R[k]
+                acc = [(p[0] + a[0] * b[0] - a[1] * b[1], p[1] + a[0] * b[1] + a[1] * b[0]) for p, b in zip(acc, Rk)]
+            X.append(acc)
+        Y = []
+        for i in range(n):
+            Xi = X[i]
+            rowY = []
+            for j in range(n):
+                re = im = 0
+                for k, a in Uint[j].items():
+                    b = Xi[k]
+                    # Xi[k] * conj(a)
+                    re += b[0] * a[0] + b[1] * a[1]
+                    im += b[1] * a[0] - b[0] * a[1]
+                rowY.append((re, im))
+            Y.append(rowY)
+        self.R = Y
+        self.lam *= normD
+        self.reduce()
+
+    def hermitian(self):
+        return all(self.R[i][j] == gc(self.R[j][i]) for i in range(self.n) for j in range(i, self.n))
+
+    def idempotent(self):
+        """rho^2 = rho  <=>  R R = lam R."""
+        RR = mmul(self.R, self.R)
+        return all(RR[i][j] == gk(self.lam, self.R[i][j]) for i in range(self.n) for j in range(self.n))
+
+    def trace(self):
+        t = mtr(self.R)
+        return t
+
+    def block(self, x, m):
+        return [[self.R[x * m + a][x * m + b] for b in range(m)] for a in range(m)]
+
+    def cap_2x2(self, x, m=2):
+        """At Node-clock x (m = 2): 1 - rho_xx and rho_xx positive, by trace >= 0 and det >= 0 of each (scaled)."""
+        B = self.block(x, m)
+        lam = self.lam
+        a, d, b = B[0][0][0], B[1][1][0], B[0][1]
+        hole_tr, hole_det = 2 * lam - a - d, (lam - a) * (lam - d) - gn(b)
+        occ_tr, occ_det = a + d, a * d - gn(b)
+        return hole_tr >= 0 and hole_det >= 0 and occ_tr >= 0 and occ_det >= 0, (hole_tr, hole_det, occ_tr, occ_det)
+
+    def power_traces(self, k):
+        """Tr rho^j for j = 1..k as Fractions (the spectrum's invariants)."""
+        out = []
+        P = [row[:] for row in self.R]
+        for j in range(1, k + 1):
+            if j > 1:
+                P = mmul(P, self.R)
+            t = mtr(P)
+            out.append((Fr(t[0], self.lam ** j), Fr(t[1], self.lam ** j)))
+        return out
+
+
+def rand_gauss_vec(rng, n, top=3):
+    while True:
+        v = [(rng.randint(-top, top), rng.randint(-top, top)) for _ in range(n)]
+        if any(a[0] or a[1] for a in v):
+            return v
+
+
+def local_vec(board, site_index, spin):
+    v = [ZERO] * board.n
+    for c in range(board.m):
+        v[site_index * board.m + c] = spin[c]
+    return v
+
+== c1_clock.py ==
+"""Probe c1: the clock's first-order step for the twin hands, exactly unitary, and the 24 acting on it.
+
+  venv314/bin/python -I c1_clock.py <repo>/src            the claims (must print 0 failures)
+  venv314/bin/python -I c1_clock.py <repo>/src mutants    the mutations (each must fail)
+
+1. The Spoke's two senses P_a^+- = (1 +- sigma_a)/2 are the projectors of the twins' turn about axis a.
+2. The axis step W_a = P_a^+ T_+a + P_a^- T_-a is unitary (its symbol at exact points of the circle; the operator on boards).
+3. W_a = Q_a S_a Q_a^dagger: S_a the integer shift (up hand +a, down hand -a), Q_a a lift of the 24 with Gaussian-unit
+   entries over (1 - i).
+4. The turn on den's circle: the calibre's pairs (pinion, s, den) with s the engine's own sine_rim; the coin
+   M = [[c, -i s], [-i s, c]] is unitary, and it is the Cayley form of t = s / (den + pinion).
+5. The steps on boards are unitary: the ring (1-D Dirac), the 3^3 torus (Weyl, 2 components), the 3^3 torus (Dirac,
+   4 components: the field beside its phase-reversed field).
+6. The one-slot count |psi|^2 is kept exactly, and the rewind returns the start bit for bit (scaled integers).
+7. The phase reversal T = i sigma_y K maps the field's step to the opposite helicity's step: U_R = sigma_y conj(U_L) sigma_y.
+8. The 24: they permute the three axis steps; the one Weyl field keeps the 12 of the tetrahedron in its beat; the
+   Dirac pair keeps all 24 and the mirrors.
+9. The no-go: no step of one tick on the six Spokes is covariant under the 24 (the identity P_a^+P_b^+ + P_b^-P_a^- = 1/2).
+10. Rule3 in integers: D U integral; a unitary matrix of Gaussian integers is monomial; the carried shears are exactly
+    reversible and move the count by their remainders; the carry of the whole turn at once is not injective.
+Integers and Fractions only.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import random
+import sys
+from fractions import Fraction as Fr
+from itertools import product
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+SRC = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("mut") else "/home/user/Universe24/src"
+sys.path.insert(0, SRC)
+
+from caplib import (  # noqa: E402
+    I, ONE, ZERO, S0, SIG, SX, SY, SZ, Board, axis_step, charpoly, coin_op, dirac_step, fr, ga, gc, gdiv, gk, gm, gn, gs,
+    madd, madj, mass_coin, meq, meye, mfr, mmul, mscale, mtr, proj, pyth_phases, rotation_of, sp_adj, sp_apply,
+    sp_eq, sp_from_blocks, sp_int, sp_integral, sp_is_identity, sp_mul, sp_scale, the_24, det3, weyl_step,
+)
+from event_universe.core.rates import sine_rim  # noqa: E402  (the engine's integer sine, no root)
+
+FAIL: list[str] = []
+RNG = random.Random(2810)
+
+
+def check(name, ok, count=None):
+    if not ok:
+        FAIL.append(name)
+    print(f"  [{'ok' if ok else 'FAILED'}] {name}" + ("" if count is None else f": {count}"))
+
+
+def calibre_pairs():
+    path = os.path.join(os.path.dirname(SRC.rstrip("/")), "tests", "worlds", "universe_toy.json")
+    with open(path) as f:
+        cal = json.load(f)
+    den = int(cal["integers"]["den"])
+    rows = [int(r["pair"][0]) for r in cal["rows"]]
+    return den, rows
+
+
+def sym_axis(a, zeta, senses=(1, -1)):
+    """The symbol of W_a: P_a^+ conj(zeta) + P_a^- zeta (T_+a psi(x) = psi(x - e_a) has the symbol e^{-ik})."""
+    return madd(mscale(gc(zeta), proj(a, senses[0])), mscale(zeta, proj(a, senses[1])))
+
+
+def sym_weyl(z3, senses=(1, -1)):
+    return mmul(sym_axis(2, z3[2], senses), mmul(sym_axis(1, z3[1], senses), sym_axis(0, z3[0], senses)))
+
+
+def block_diag(A, B):
+    n, m = len(A), len(B)
+    out = [[(Fr(0), Fr(0))] * (n + m) for _ in range(n + m)]
+    for i in range(n):
+        for j in range(n):
+            out[i][j] = A[i][j]
+    for i in range(m):
+        for j in range(m):
+            out[n + i][n + j] = B[i][j]
+    return out
+
+
+def sym_dirac(z3, pinion, s, den, right=None):
+    """M (V(k) + V'(k)) with M = [[c, -is], [-is, c]] on (L, R), each 2x2 in spin; V' the phase-reversed field's symbol."""
+    VL = sym_weyl(z3)
+    VR = sym_weyl(z3, senses=(-1, 1)) if right is None else right
+    c, sn = (Fr(pinion, den), Fr(0)), (Fr(0), Fr(-s, den))
+    M = [[c if i == j else ZERO for j in range(4)] for i in range(4)]
+    for k in range(2):
+        M[k][2 + k] = sn
+        M[2 + k][k] = sn
+    return mmul(M, block_diag(VL, VR))
+
+
+def herm_part(U):
+    """(U + U^dagger) / 2."""
+    A = madd(U, madj(U))
+    return [[(Fr(a[0]) / 2, Fr(a[1]) / 2) for a in row] for row in A]
+
+
+def rotate_zetas(R, z3):
+    """The phases at R^{-1} k for a signed permutation R: (R^{-1} k)_b = SUM_a R_ab k_a."""
+    out = []
+    for b in range(3):
+        for a in range(3):
+            if R[a][b] != 0:
+                out.append(z3[a] if R[a][b] == 1 else gc(z3[a]))
+    return out
+
+
+def conj_op(board, U, R, u):
+    """The operator (u x P_R) U (u x P_R)^-1 on a 3-torus with 2 components, u a lift up to a phase."""
+    ud = madj(u)
+    nrm = mtr(mmul(u, ud))[0] / 2  # u u^dagger = |phase|^2 1
+    uinv = [[(a[0] / nrm, a[1] / nrm) for a in row] for row in ud]
+    L = board.L
+
+    def rot(s):  # R acting on coordinates
+        return tuple(sum(R[b][a] * s[a] for a in range(3)) % L for b in range(3))
+
+    def rot_inv(s):
+        return tuple(sum(R[a][b] * s[a] for a in range(3)) % L for b in range(3))
+
+    n = board.n
+    out = [dict() for _ in range(n)]
+    for s in board.sites:
+        x = board.index[s]
+        xs = board.index[rot_inv(s)]
+        for c in range(2):
+            acc = {}
+            for a in range(2):
+                ua = u[c][a]
+                if not (ua[0] or ua[1]):
+                    continue
+                for col, v in U[xs * 2 + a].items():
+                    ys, b = divmod(col, 2)
+                    y = board.index[rot(board.sites[ys])]
+                    for c2 in range(2):
+                        w = uinv[b][c2]
+                        if w[0] or w[1]:
+                            key = y * 2 + c2
+                            acc[key] = ga(acc.get(key, ZERO), gm(gm(ua, v), w))
+            out[x * 2 + c] = {k: v for k, v in acc.items() if v[0] or v[1]}
+    return out
+
+
+def evolve_count(Uint, normD, n, ticks, rng):
+    psi = [(rng.randint(-5, 5), rng.randint(-5, 5)) for _ in range(n)]
+    n0 = sum(gn(a) for a in psi)
+    kept = 0
+    cur = psi
+    scale = 1
+    for _ in range(ticks):
+        cur = sp_apply(Uint, cur)
+        scale *= normD
+        kept += sum(gn(a) for a in cur) == scale * n0
+    back = cur
+    Uadj = sp_adj(Uint)
+    for _ in range(ticks):
+        back = sp_apply(Uadj, back)
+    rewound = all(b == gk(scale, a) for a, b in zip(psi, back))
+    return kept, rewound
+
+
+def integral_scale(U, D):
+    S = sp_scale(fr(D), U)
+    return sp_integral(S), S
+
+
+# ------------------------------------------------------------------------------------------- the claims
+
+
+def main_claims():
+    print("1. The Spoke's two senses: P_a^+- = (1 +- sigma_a) / 2")
+    ok = 0
+    for a in range(3):
+        Pp, Pm = proj(a, 1), proj(a, -1)
+        ok += meq(madd(Pp, Pm), mfr(S0)) and meq(mmul(Pp, Pp), Pp) and meq(mmul(Pm, Pm), Pm)
+        ok += meq(mmul(Pp, Pm), [[ZERO, ZERO], [ZERO, ZERO]]) and meq(madj(Pp), Pp)
+    check("P^+ + P^- = 1, P P = P, P^+ P^- = 0, P^dagger = P on the three axes", ok == 6, f"{ok} of 6")
+
+    print("2. The axis step W_a = P_a^+ T_+a + P_a^- T_-a is unitary")
+    zetas = pyth_phases(400, RNG)
+    ok = sum(meq(mmul(madj(sym_axis(a, z)), sym_axis(a, z)), mfr(S0)) for z in zetas for a in range(3))
+    check("its symbol W_a(k) = P^+ e^{-ik} + P^- e^{ik} has W^dagger W = 1 at exact points of the circle", ok == 1200, f"{ok} of 1200")
+    ok = sum(meq(sym_axis(a, z), madd(mscale((z[0], Fr(0)), mfr(S0)), mscale((Fr(0), -z[1]), mfr(SIG[a])))) for z in zetas[:100] for a in range(3))
+    check("W_a(k) = cos k - i sigma_a sin k (the twins' turn about a by the Spoke's phase)", ok == 300, f"{ok} of 300")
+    boards = [Board(8, 1, 2), Board(12, 1, 2), Board(16, 1, 2), Board(3, 3, 2), Board(4, 3, 2)]
+    ok = tot = 0
+    for b in boards:
+        for a in range(b.d):
+            W = axis_step(b, a)
+            tot += 1
+            ok += sp_is_identity(sp_mul(sp_adj(W), W)) and sp_is_identity(sp_mul(W, sp_adj(W)))
+    check("on the boards (rings of 8, 12, 16; tori 3^3 and 4^3) W^dagger W = W W^dagger = 1 exactly", ok == tot, f"{ok} of {tot}")
+
+    print("3. The junctions are lifts of the 24 with Gaussian-unit entries over (1 - i)")
+    q = gdiv(ONE, (1, -1))
+    Qx = [[q, q], [q, gk(-1, q)]]
+    Qy = [[q, q], [gm(I, q), gm((0, -1), q)]]
+    Qz = mfr(S0)
+    Qs = [Qx, Qy, Qz]
+    ok = 0
+    for a, Q in enumerate(Qs):
+        unit = meq(mmul(Q, madj(Q)), mfr(S0))
+        maps = meq(mmul(mmul(Q, SZ), madj(Q)), mfr(SIG[a]))
+        projs = meq(mmul(mmul(Q, proj(2, 1)), madj(Q)), proj(a, 1)) and meq(mmul(mmul(Q, proj(2, -1)), madj(Q)), proj(a, -1))
+        R = rotation_of(Q)
+        in24 = det3(R) == 1 and all(sorted(abs(x) for x in row) == [0, 0, 1] for row in R)
+        ok += unit and maps and projs and in24
+    check("Q_a unitary, Q_a sigma_z Q_a^dagger = sigma_a, Q_a P_z Q_a^dagger = P_a, and Q_a's turn is one of the 24", ok == 3, f"{ok} of 3")
+    ok = 0
+    for z in zetas[:200]:
+        for a, Q in enumerate(Qs):
+            S = madd(mscale(gc(z), proj(2, 1)), mscale(z, proj(2, -1)))  # up hand +a, down hand -a: integral
+            ok += meq(mmul(mmul(Q, S), madj(Q)), sym_axis(a, z))
+    check("W_a = Q_a S_a Q_a^dagger with S_a the integer shift (up hand +a, down hand -a)", ok == 600, f"{ok} of 600")
+    junction = mmul(madj(Qy), Qx)
+    ok = meq(junction, [[gdiv(ONE, (1, 1)), gdiv(I, (1, 1))], [gdiv(I, (1, 1)), gdiv(ONE, (1, 1))]])
+    check("the x-to-y junction Q_y^dagger Q_x = (1/(1 + i)) [[1, i], [i, 1]]: one Rule3 division by the prime above 2", ok)
+
+    print("4. The turn on den's circle (the calibre's pairs, the engine's sine_rim)")
+    den, rows = calibre_pairs()
+    pairs = [(p, sine_rim(p, den), den) for p in rows] + [(den, sine_rim(den, den), den)]
+    ok_circle = sum(p * p + s * s == d * d for p, s, d in pairs)
+    check("pinion^2 + s^2 = den^2 for the toy calibre's three sprung rows and the light (MS-S2)", ok_circle == len(pairs), f"{ok_circle} of {len(pairs)}")
+    ok = 0
+    for p, s, d in pairs:
+        M = mass_coin(p, s, d)
+        unit = meq(mmul(madj(M), M), mfr(S0))
+        t = Fr(s, d + p)
+        cay = gdiv(gm((1, -t), (1, -t)), (1 + t * t, 0))  # (1 - i t)^2 / (1 + t^2)
+        ok += unit and cay == (Fr(p, d), Fr(-s, d))
+    check("M = [[c, -is], [-is, c]] unitary, and (1 - i t)^2 / (1 + t^2) = (pinion - i s)/den with t = s/(den + pinion)", ok == len(pairs), f"{ok} of {len(pairs)}")
+    ok = 0
+    for _ in range(300):
+        phi = [(Fr(RNG.randint(-9, 9), RNG.randint(1, 9))) for _ in range(3)]
+        A = madd(madd(mscale((phi[0], 0), mfr(SX)), mscale((phi[1], 0), mfr(SY))), mscale((phi[2], 0), mfr(SZ)))
+        num = madd(mfr(S0), mscale((0, -1), A))
+        den_ = madd(mfr(S0), mscale((0, 1), A))
+        nn = 1 + sum(x * x for x in phi)  # (1 + iA)^-1 = (1 - iA) / (1 + |phi|^2)
+        C = [[(a[0] / nn, a[1] / nn) for a in row] for row in mmul(num, num)]
+        ok += meq(mmul(madj(C), C), mfr(S0)) and meq(mmul(C, den_), num)
+    check("the Cayley coin (1 - iA)(1 + iA)^-1 of any rational spin pull A = phi . sigma is exactly unitary, no root", ok == 300, f"{ok} of 300")
+
+    print("5. The steps on the boards are unitary")
+    p, s, d = 20, 21, 29
+    pe, se, de = pairs[0]
+    ok = tot = 0
+    for L in (8, 12, 16):
+        b = Board(L, 1, 2)
+        for (pp, ss, dd) in ((p, s, d), (pe, se, de)):
+            U = sp_mul(coin_op(b, mass_coin(pp, ss, dd)), weyl_step(b))
+            tot += 1
+            ok += sp_is_identity(sp_mul(sp_adj(U), U))
+    check("the ring's step U = M W_z (1-D Dirac) on rings of 8, 12, 16, with (20, 21, 29) and the calibre's row 0", ok == tot, f"{ok} of {tot}")
+    b3 = Board(3, 3, 2)
+    UL = weyl_step(b3)
+    check("the 3^3 torus's Weyl step U_L = W_z W_y W_x (2 components, 54 rows): U^dagger U = 1", sp_is_identity(sp_mul(sp_adj(UL), UL)))
+    b34 = Board(3, 3, 4)
+    UD = dirac_step(b3, p, s, d)
+    check("the 3^3 torus's Dirac step M (U_L + U_R) (4 components, 108 rows): U^dagger U = 1", sp_is_identity(sp_mul(sp_adj(UD), UD)))
+    UDe = dirac_step(b3, pe, se, de)
+    check("the same with the calibre's row 0 on den's circle (den = 15162856759112389)", sp_is_identity(sp_mul(sp_adj(UDe), UDe)))
+
+    print("6. The one-slot count is kept and the rewind is exact (scaled integers, no remainder)")
+    b = Board(16, 1, 2)
+    U = sp_mul(coin_op(b, mass_coin(p, s, d)), weyl_step(b))
+    okI, Uint = integral_scale(U, (d, 0))
+    k1, r1 = evolve_count(sp_int(Uint), d * d, b.n, 300, RNG)
+    check("ring of 16: D = den makes D U integral; |Psi_t|^2 = den^(2t) |Psi_0|^2 at every tick", okI and k1 == 300, f"{k1} of 300 ticks")
+    check("ring of 16: 300 ticks back by D U^dagger return the start times den^600, bit for bit", r1)
+    okI, Uint = integral_scale(UL, (2, 2))
+    k2, r2 = evolve_count(sp_int(Uint), 8, b3.n, 80, RNG)
+    check("3^3 Weyl: D = 2(1 + i) makes D U integral; the count kept at every tick", okI and k2 == 80, f"{k2} of 80 ticks")
+    check("3^3 Weyl: 80 ticks rewound bit for bit", r2)
+    okI, Uint = integral_scale(UD, (2 * d, 2 * d))
+    k3, r3 = evolve_count(sp_int(Uint), 8 * d * d, b34.n, 30, RNG)
+    check("3^3 Dirac: D = 2(1 + i) den makes D U integral; the count kept at every tick", okI and k3 == 30, f"{k3} of 30 ticks")
+    check("3^3 Dirac: 30 ticks rewound bit for bit", r3)
+
+    print("7. The phase reversal maps the field's step to the opposite helicity's")
+    sy = mfr(SY)
+    T_UL = [dict() for _ in range(b3.n)]
+    # (sigma_y conj(U) sigma_y)[(x,c),(y,c')] = SUM sy[c][a] conj(U[(x,a),(y,b)]) sy[b][c']
+    for x in range(b3.V):
+        for c in range(2):
+            acc = {}
+            for a in range(2):
+                if not (sy[c][a][0] or sy[c][a][1]):
+                    continue
+                for col, v in UL[x * 2 + a].items():
+                    y, bb = divmod(col, 2)
+                    for c2 in range(2):
+                        w = sy[bb][c2]
+                        if w[0] or w[1]:
+                            key = y * 2 + c2
+                            acc[key] = ga(acc.get(key, ZERO), gm(gm(sy[c][a], gc(v)), w))
+            T_UL[x * 2 + c] = {k: v for k, v in acc.items() if v[0] or v[1]}
+    UR = weyl_step(b3, senses=(-1, 1))
+    check("sigma_y conj(U_L) sigma_y = U_R = W~_z W~_y W~_x with W~_a = P_a^- T_+a + P_a^+ T_-a (3^3, operator level)", sp_eq(T_UL, UR))
+    ok = sum(meq(sym_weyl(z3, senses=(-1, 1)), sym_weyl([gc(z) for z in z3])) for z3 in (pyth_phases(3, RNG) for _ in range(300)))
+    check("U_R's symbol is V(-k): Bialynicki-Birula's W(-h), the other helicity (his eq. 21)", ok == 300, f"{ok} of 300")
+
+    print("8. The 24 acting on the step")
+    G = the_24()
+    rots = [R for R, _u in G]
+    check("the generated group has 24 turns, each a signed permutation of det +1", len(G) == 24 and all(det3(R) == 1 for R in rots), f"{len(G)}")
+    ok = 0
+    for R, u in G:
+        for a in range(3):
+            for sense in (1, -1):
+                b = next(bb for bb in range(3) if R[bb][a] != 0)
+                sg = R[b][a]
+                img = mmul(mmul(u, proj(a, sense)), madj(u))
+                nrm = mtr(mmul(u, madj(u)))[0] / 2
+                img = [[(x[0] / nrm, x[1] / nrm) for x in row] for row in img]
+                ok += meq(img, proj(b, sense * sg))
+    check("u P_a^s u^dagger = P_b^(s sign) where R e_a = sign e_b: the 24 permute the Spokes' senses", ok == 144, f"{ok} of 144")
+    Ws = [axis_step(b3, a) for a in range(3)]
+    perm_ok = fixed = cyclic = 0
+    for R, u in G:
+        pi = [next(bb for bb in range(3) if R[bb][a] != 0) for a in range(3)]
+        img = [conj_op(b3, W, R, u) for W in Ws]
+        perm_ok += all(sp_eq(img[a], Ws[pi[a]]) for a in range(3))
+        imgU = conj_op(b3, UL, R, u)
+        if sp_eq(imgU, UL):
+            fixed += 1
+        else:
+            for Wc in (Ws[0], Ws[2]):
+                if sp_eq(sp_mul(imgU, Wc), sp_mul(Wc, UL)) or sp_eq(sp_mul(Wc, imgU), sp_mul(UL, Wc)):
+                    cyclic += 1
+                    break
+    check("each of the 24 maps W_a to W_pi(a) on the 3^3 board (operator level, both indices)", perm_ok == 24, f"{perm_ok} of 24")
+    check("the 4 turns that fix every axis (the half turns about the axes and the identity) fix U_L", fixed == 4, f"{fixed} of 24")
+    check("the 8 third turns map U_L to a W-conjugate of itself (the same beat)", cyclic == 8, f"{cyclic} of 24")
+    keep_weyl = 0
+    samples = [pyth_phases(3, RNG) for _ in range(60)]
+    for R, _u in G:
+        keep_weyl += all(mtr(sym_weyl(rotate_zetas(R, z3))) == mtr(sym_weyl(z3)) for z3 in samples)
+    check("the one Weyl field's beat Tr V(k) is kept by 12 of the 24 (the tetrahedron's: sx sy sz is odd under the rest)", keep_weyl == 12, f"{keep_weyl} of 24")
+    ok_formula = sum(mtr(sym_weyl(z3)) == (2 * (z3[0][0] * z3[1][0] * z3[2][0] + z3[0][1] * z3[1][1] * z3[2][1]), Fr(0)) for z3 in samples)
+    check("Tr V(k) / 2 = cx cy cz + sx sy sz (Bialynicki-Birula's eq. 27, k -> -k)", ok_formula == len(samples), f"{ok_formula} of {len(samples)}")
+    keep_dirac = mirror = 0
+    for R, _u in G:
+        keep_dirac += all(charpoly(herm_part(sym_dirac(rotate_zetas(R, z3), p, s, d))) == charpoly(herm_part(sym_dirac(z3, p, s, d))) for z3 in samples[:12])
+    mirror = all(charpoly(herm_part(sym_dirac([gc(z) for z in z3], p, s, d))) == charpoly(herm_part(sym_dirac(z3, p, s, d))) for z3 in samples[:12])
+    check("the Dirac pair's beat (the characteristic polynomial of (U + U^dagger)/2) is kept by all 24", keep_dirac == 24, f"{keep_dirac} of 24")
+    check("and by the inversion k -> -k (so by all 48 with the mirrors)", mirror)
+    real_cp = all(all(cf[1] == 0 for cf in charpoly(sym_dirac(z3, p, s, d))) for z3 in samples[:12])
+    keep_U = sum(all(charpoly(sym_dirac(rotate_zetas(R, z3), p, s, d)) == charpoly(sym_dirac(z3, p, s, d)) for z3 in samples[:12]) for R, _u in G)
+    check("the Dirac symbol's own characteristic polynomial is real (beats in pairs e^{+-i omega}) and kept by all 24", real_cp and keep_U == 24, f"{keep_U} of 24")
+
+    print("9. The no-go: no one-tick step on the six Spokes is covariant under the 24")
+    uz = [[fr(ONE), fr(ZERO)], [fr(ZERO), fr(I)]]
+    basis = [[[fr(ONE if (i, j) == (r, c) else ZERO) for j in range(2)] for i in range(2)] for r in range(2) for c in range(2)]
+    fixed_by_quarter = [B for B in basis if meq(mmul(mmul(uz, B), madj(uz)), B)]
+    check("the matrices the quarter turn about z keeps are the diagonal ones (E11, E22 of the four units)", len(fixed_by_quarter) == 2, f"{len(fixed_by_quarter)} of 4")
+    ok = 0
+    halfI = [[(Fr(1, 2), Fr(0)), ZERO], [ZERO, (Fr(1, 2), Fr(0))]]
+    for a in range(3):
+        for b in range(3):
+            if a == b:
+                continue
+            for s1 in (1, -1):
+                for s2 in (1, -1):
+                    lhs = madd(mmul(proj(a, s1), proj(b, s2)), mmul(proj(b, -s2), proj(a, -s1)))
+                    ok += meq(lhs, halfI)
+    check("P_a^s P_b^t + P_b^-t P_a^-s = 1/2 for every pair of distinct axes and senses (the unitarity term that cannot vanish)", ok == 24, f"{ok} of 24")
+    corners = list(product((1, -1), repeat=3))
+    ok = 0
+    for c1 in corners:
+        for c2 in corners:
+            if c2 in (c1, tuple(-x for x in c1)):
+                continue
+            A1 = madd(madd(mscale((c1[0], 0), mfr(SX)), mscale((c1[1], 0), mfr(SY))), mscale((c1[2], 0), mfr(SZ)))
+            A2 = madd(madd(mscale((c2[0], 0), mfr(SX)), mscale((c2[1], 0), mfr(SY))), mscale((c2[2], 0), mfr(SZ)))
+            dot = sum(x * y for x, y in zip(c1, c2))
+            anti = meq(madd(mmul(A1, A2), mmul(A2, A1)), mscale((2 * dot, 0), mfr(S0)))
+            ok += anti and (3 + dot) != 0
+    check("on the 8 corners the same term is (1 + d.d'/3)/2, never 0: no covariant corner step either", ok == 48, f"{ok} of 48")
+
+    print("10. Rule3 in integers")
+    okI_ring, _ = integral_scale(sp_mul(coin_op(Board(8, 1, 2), mass_coin(p, s, d)), weyl_step(Board(8, 1, 2))), (d, 0))
+    okI_w, _ = integral_scale(UL, (2, 2))
+    not_less, _ = integral_scale(UL, (1, 1))
+    okI_d, _ = integral_scale(UD, (2 * d, 2 * d))
+    check("the denominators: den on the ring, 2(1 + i) for the Weyl step (and (1 + i) is not enough), 2(1 + i) den for Dirac", okI_ring and okI_w and not not_less and okI_d)
+    units, monomial = 0, 0
+    vals = [(x, y) for x in range(-2, 3) for y in range(-2, 3)]
+    for a, b, c, e in product(vals, repeat=4):
+        if gn(a) + gn(b) == 1 and gn(c) + gn(e) == 1 and ga(gm(gc(a), c), gm(gc(b), e)) == ZERO:
+            units += 1
+            monomial += (gn(a) == 1 and gn(e) == 1 and b == ZERO and c == ZERO) or (gn(b) == 1 and gn(c) == 1 and a == ZERO and e == ZERO)
+    check("every unitary 2x2 matrix of Gaussian integers in the box |re|, |im| <= 2 is monomial with unit entries", units == monomial == 32, f"{monomial} of {units}")
+    rev, drifted, worst = carried_ring(p, s, d, 16, 400)
+    check("the ring's step with the coin as three carried shears (Rule3, remainders kept): 400 ticks back bit for bit", rev)
+    check("the carried step moves the one-slot count by its remainders (not kept)", drifted > 0, f"moved at {drifted} of 400 ticks, worst |drift| / count = {worst}")
+    coll = collision(p, s, d)
+    check("the carry of the whole turn at once, den x' + r' = pinion x - s y + r, is not injective (no rewind)", coll is not None, f"{coll}")
+
+
+def shear(x, r, y, num, dn):
+    """Carried shear x <- x - (num / dn) y: dn x' + r' = dn x + r - num y, 0 <= r' < dn."""
+    tot = dn * x + r - num * y
+    return tot // dn, tot % dn
+
+
+def unshear(x, r, y, num, dn):
+    tot = dn * x + r + num * y
+    return tot // dn, tot % dn
+
+
+def turn_carried(a, ra, b, rb, p, s, d, sign, going):
+    """The plane turn by sign*theta (cos = p/d, sin = s/d) as three carried shears: t = s/(d + p), then sin, then t.
+    x <- x - t y ; y <- y + S x ; x <- x - t y   (for +theta; the sign flips t and S)."""
+    t_num, t_den = sign * s, d + p
+    S_num, S_den = sign * s, d
+    if going == 1:
+        a, ra = shear(a, ra, b, t_num, t_den)
+        b, rb = shear(b, rb, a, -S_num, S_den)
+        a, ra = shear(a, ra, b, t_num, t_den)
+    else:
+        a, ra = unshear(a, ra, b, t_num, t_den)
+        b, rb = unshear(b, rb, a, -S_num, S_den)
+        a, ra = unshear(a, ra, b, t_num, t_den)
+    return a, ra, b, rb
+
+
+def carried_ring(p, s, d, L, ticks):
+    """The ring's 1-D Dirac step with integer notches and carried remainders: shift (up +1, down -1), then the coin.
+    The coin [[c, -is], [-is, c]] on (up, down) = (a + ib, c + id) turns the plane (a, d) by -theta and (b, c) by +theta."""
+    rng = random.Random(7)
+    A = 10 ** 6
+    up = [(rng.randint(-A, A), rng.randint(-A, A)) for _ in range(L)]
+    dn = [(rng.randint(-A, A), rng.randint(-A, A)) for _ in range(L)]
+    fine = [[0, 0, 0, 0] for _ in range(L)]  # remainders of a, b, c, d
+    start = (list(up), list(dn), [f[:] for f in fine])
+    n0 = sum(gn(z) for z in up) + sum(gn(z) for z in dn)
+    drifted, worst = 0, Fr(0)
+    for _ in range(ticks):
+        up = [up[(x - 1) % L] for x in range(L)]
+        dn = [dn[(x + 1) % L] for x in range(L)]
+        fine = [[fine[(x - 1) % L][0], fine[(x - 1) % L][1], fine[(x + 1) % L][2], fine[(x + 1) % L][3]] for x in range(L)]
+        for x in range(L):
+            a, b = up[x]
+            c, e = dn[x]
+            ra, rb, rc, re = fine[x]
+            a, ra, e, re = turn_carried(a, ra, e, re, p, s, d, -1, 1)
+            b, rb, c, rc = turn_carried(b, rb, c, rc, p, s, d, 1, 1)
+            up[x], dn[x], fine[x] = (a, b), (c, e), [ra, rb, rc, re]
+        nn = sum(gn(z) for z in up) + sum(gn(z) for z in dn)
+        if nn != n0:
+            drifted += 1
+            worst = max(worst, Fr(abs(nn - n0), n0))
+    for _ in range(ticks):
+        for x in range(L):
+            a, b = up[x]
+            c, e = dn[x]
+            ra, rb, rc, re = fine[x]
+            a, ra, e, re = turn_carried(a, ra, e, re, p, s, d, -1, -1)
+            b, rb, c, rc = turn_carried(b, rb, c, rc, p, s, d, 1, -1)
+            up[x], dn[x], fine[x] = (a, b), (c, e), [ra, rb, rc, re]
+        up = [up[(x + 1) % L] for x in range(L)]
+        dn = [dn[(x - 1) % L] for x in range(L)]
+        fine = [[fine[(x + 1) % L][0], fine[(x + 1) % L][1], fine[(x - 1) % L][2], fine[(x - 1) % L][3]] for x in range(L)]
+    rev = (up, dn, fine) == start
+    return rev, drifted, dec(worst)
+
+
+def dec(x, digits=3):
+    """A non-negative Fraction as a decimal string in scientific form, by integer arithmetic alone (no float)."""
+    if x == 0:
+        return "0"
+    e = 0
+    while x >= 10:
+        x /= 10
+        e += 1
+    while x < 1:
+        x *= 10
+        e -= 1
+    scaled = (x * 10 ** digits).numerator * 2 // (x * 10 ** digits).denominator
+    scaled = (scaled + 1) // 2
+    s = str(scaled)
+    return f"{s[0]}.{s[1:]}e{e}"
+
+
+def collision(p, s, d):
+    """Two states (x, y, rx, ry) with the same carried image under the whole turn."""
+    seen = {}
+    for x in range(-2, 3):
+        for y in range(-2, 3):
+            for rx in range(d):
+                for ry in range(d):
+                    nx, ny = p * x - s * y + rx, s * x + p * y + ry
+                    key = (nx, ny)
+                    if key in seen:
+                        return f"{seen[key]} and {(x, y, rx, ry)} both carry to {(nx // d, ny // d, nx % d, ny % d)}"
+                    seen[key] = (x, y, rx, ry)
+    return None
+
+
+# ------------------------------------------------------------------------------------------- the mutants
+
+
+def mutants():
+    bad = []
+
+    def report(name, count, of):
+        print(f"  {name}: {count} of {of} (must be above 0)")
+        if count == 0:
+            bad.append(name)
+
+    p, s, d = 20, 21, 29
+    b = Board(12, 1, 2)
+    print("M1. Feynman's checkerboard coin, straight 1 and corner -i s/den (not the cosine): the step must stop being unitary")
+    Mf = [[(Fr(1), Fr(0)), (Fr(0), Fr(-s, d))], [(Fr(0), Fr(-s, d)), (Fr(1), Fr(0))]]
+    U = sp_mul(coin_op(b, Mf), weyl_step(b))
+    rows = sum(1 for i, row in enumerate(sp_mul(sp_adj(U), U)) if row != {i: (1, 0)} and row != {i: (Fr(1), Fr(0))})
+    report("rows of U^dagger U that are not the identity's", rows, b.n)
+    print("M2. A coin off den's circle (pinion + 1): unitarity must fail")
+    U = sp_mul(coin_op(b, mass_coin(p + 1, s, d)), weyl_step(b))
+    rows = sum(1 for i, row in enumerate(sp_mul(sp_adj(U), U)) if row != {i: (Fr(1), Fr(0))})
+    report("rows of U^dagger U that are not the identity's", rows, b.n)
+    print("M3. The axis step with both senses alike, P^+ T_+a + P^+ T_-a: unitarity must fail")
+    b3 = Board(3, 3, 2)
+    e = (1, 0, 0)
+    W = sp_from_blocks(b3, [(e, proj(0, 1)), ((-1, 0, 0), proj(0, 1))])
+    rows = sum(1 for i, row in enumerate(sp_mul(sp_adj(W), W)) if row != {i: (Fr(1), Fr(0))})
+    report("rows of W^dagger W that are not the identity's", rows, b3.n)
+    print("M4. The R field without the phase reversal (U_R := U_L): the Dirac pair's beat must lose the 24")
+    G = the_24()
+    rng = random.Random(5)
+    samples = [pyth_phases(3, rng) for _ in range(12)]
+    lost = 0
+    for R, _u in G:
+        if not all(charpoly(herm_part(sym_dirac(rotate_zetas(R, z3), p, s, d, right=sym_weyl(rotate_zetas(R, z3)))))
+                   == charpoly(herm_part(sym_dirac(z3, p, s, d, right=sym_weyl(z3)))) for z3 in samples):
+            lost += 1
+    report("turns of the 24 that move the beat", lost, 24)
+    print("M5. The phase reversal without i sigma_y (K alone): it must stop mapping U_L to U_R")
+    UL = weyl_step(b3)
+    KUL = [{k: gc(v) for k, v in row.items()} for row in UL]
+    UR = weyl_step(b3, senses=(-1, 1))
+    rows = sum(1 for r1, r2 in zip(KUL, UR) if r1 != r2)
+    report("rows where conj(U_L) differs from U_R", rows, b3.n)
+    print("M6. The carried shears with a remainder dropped (the fine tooth reset to 0): the rewind must fail")
+    fails = dropped_remainder_rewind(p, s, d)
+    report("states not returned", fails, 200)
+    print("result:", "every mutant fails as it must" if not bad else f"MUTANTS PASSED: {bad}")
+    return 1 if bad else 0
+
+
+def dropped_remainder_rewind(p, s, d):
+    rng = random.Random(9)
+    fails = 0
+    for _ in range(200):
+        a, b = rng.randint(-10 ** 6, 10 ** 6), rng.randint(-10 ** 6, 10 ** 6)
+        x, rx, y, ry = turn_carried(a, 0, b, 0, p, s, d, 1, 1)
+        x2, _r2, y2, _r3 = turn_carried(x, 0, y, 0, p, s, d, 1, -1)  # remainders dropped
+        fails += (x2, y2) != (a, b)
+    return fails
+
+
+if __name__ == "__main__":
+    if "mutants" in sys.argv[1:]:
+        raise SystemExit(mutants())
+    main_claims()
+    print("result:", f"{len(FAIL)} failures" + ("" if not FAIL else f": {FAIL}"))
+    raise SystemExit(1 if FAIL else 0)
+
+== c2_beat.py ==
+"""Probe c2: the beat against k, the walk's against the head's, read from the engine's own integers.
+
+  venv314/bin/python -I c2_beat.py <repo>/src            the claims (must print 0 failures)
+  venv314/bin/python -I c2_beat.py <repo>/src mutants    the mutations (each must fail)
+
+1. The head's matter step is the second-order leapfrog with the engine's gearing integers at the vacuum (rule3.gearing,
+   rule3.rule3 bit for bit): its symbol is cos w = (c / 3)(cos kx + cos ky + cos kz), c = pinion / den.
+2. The rest beat: (2T - D) / (2T) = pinion / den on every row, the walk's coin cosine: the same reading.
+3. The walk's beats: the ring's cos w = c cos k; the 3-D Dirac pair's closed form.
+4. Head against walk: along an axis the head's kinetic part is exactly a third of the walk's, at every k; in 3-D the same
+   ratio at small k: the head's light runs 1/sqrt(3) of a Spoke per tick at small k, the walk's one Spoke.
+Integers and Fractions only.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import random
+import sys
+from fractions import Fraction as Fr
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+SRC = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("mut") else "/home/user/Universe24/src"
+sys.path.insert(0, SRC)
+
+from caplib import ONE, ZERO, charpoly, gc, gm, madd, madj, mmul, pyth_phases  # noqa: E402
+from event_universe.core import rule3  # noqa: E402
+from event_universe.core.rates import mesh_rate_of, rate_of, sine_rim  # noqa: E402
+
+FAIL: list[str] = []
+RNG = random.Random(4242)
+
+
+def check(name, ok, count=None):
+    if not ok:
+        FAIL.append(name)
+    print(f"  [{'ok' if ok else 'FAILED'}] {name}" + ("" if count is None else f": {count}"))
+
+
+def calibre():
+    path = os.path.join(os.path.dirname(SRC.rstrip("/")), "tests", "worlds", "universe_toy.json")
+    with open(path) as f:
+        cal = json.load(f)
+    ints = cal["integers"]
+    return int(ints["den"]), int(ints["node_clock"]), [int(r["pair"][0]) for r in cal["rows"]]
+
+
+def head_gearing(pinion, den, gamma):
+    G = rule3.mesh_unit_of(gamma)
+    p0 = int(rate_of(gamma, 0))
+    pi = int(mesh_rate_of(gamma, 0))
+    return rule3.gearing(pinion, den, gamma, p0, pi, None, G), (p0, pi, G)
+
+
+def head_symbol(g, z3):
+    """(lambda + 1/lambda)/2 of the leapfrog a+ = 2a - a- + [SUM_j R_j (a_j - a) - D a] / T at the phases z3."""
+    T, D = g.teeth, g.spring
+    grips = g.grips  # spoke order +X, -X, +Y, -Y, +Z, -Z
+    tot = Fr(2) - Fr(D, T)
+    for a in range(3):
+        cosk = z3[a][0]
+        tot += Fr(grips[2 * a], T) * (cosk - 1) + Fr(grips[2 * a + 1], T) * (cosk - 1)
+    return tot / 2
+
+
+def walk_ring_symbol(z, pinion, s, den):
+    """U(k) = M diag(conj z, z): the ring's 1-D Dirac step."""
+    c, sn = (Fr(pinion, den), Fr(0)), (Fr(0), Fr(-s, den))
+    M = [[c, sn], [sn, c]]
+    return mmul(M, [[gc(z), ZERO], [ZERO, z]])
+
+
+def dirac_closed(z3, pinion, s, den):
+    """The pair's quadratic for X = cos w: (X - c a0)(X - c b0) - (s^2/4)(delta^2 + |n|^2)."""
+    cx, cy, cz = (z[0] for z in z3)
+    sx, sy, sz = (z[1] for z in z3)
+    c, sn = Fr(pinion, den), Fr(s, den)
+    a0 = cx * cy * cz + sx * sy * sz
+    b0 = cx * cy * cz - sx * sy * sz
+    q = 4 * (sy * sy * sz * sz + sx * sx * sz * sz + sx * sx * sy * sy - 2 * sx * sx * sy * sy * sz * sz)
+    return c, a0, b0, sn, q
+
+
+def sym_dirac(z3, pinion, s, den):
+    from c1_clock import sym_dirac as sd  # the same construction as probe c1
+    return sd(z3, pinion, s, den)
+
+
+def herm_part(U):
+    A = madd(U, madj(U))
+    return [[(Fr(a[0]) / 2, Fr(a[1]) / 2) for a in row] for row in A]
+
+
+def poly_eval(coeffs, x):
+    """coeffs [1, c1, ..., cn] of det(x - A) at the Fraction x (real coefficients asserted)."""
+    acc = Fr(0)
+    for cf in coeffs:
+        assert cf[1] == 0
+        acc = acc * x + cf[0]
+    return acc
+
+
+def main_claims():
+    den, gamma, rows = calibre()
+    pairs = [(p, sine_rim(p, den)) for p in rows] + [(den, 0)]
+    print("1. The head's matter step: the leapfrog with the engine's gearing integers at the vacuum")
+    g0, (p0, pi, G) = head_gearing(rows[0], den, gamma)
+    check(f"the vacuum's rates p0 = p_i = Gamma = {gamma}, the mesh unit G = {G}", p0 == gamma and pi == gamma)
+    ok = 0
+    for p, _s in pairs:
+        g, _ = head_gearing(p, den, gamma)
+        ok += g.teeth == 6 * den * gamma ** 2 * G ** 2 and g.spring == 12 * (den - p) * gamma ** 2 * G ** 2
+        ok += all(r == 2 * gamma ** 2 * G ** 2 * p for r in g.grips) and g.hold == 2 * g.teeth - g.spring - sum(g.grips)
+    check("T = 6 den Gamma^2 G^2, D = 12 (den - pinion) Gamma^2 G^2, R_j = 2 Gamma^2 G^2 pinion, S = 2T - D - SUM R_j", ok == 2 * len(pairs), f"{ok} of {2 * len(pairs)}")
+    ok = 0
+    for _ in range(3000):
+        p, _s = pairs[RNG.randrange(len(pairs))]
+        g, _ = head_gearing(p, den, gamma)
+        a, ab = RNG.randint(-10 ** 9, 10 ** 9), RNG.randint(-10 ** 9, 10 ** 9)
+        nb = [RNG.randint(-10 ** 9, 10 ** 9) for _ in range(6)]
+        r = RNG.randrange(g.teeth)
+        pull = sum(R * (m - a) for R, m in zip(g.grips, nb))
+        nxt, fine = rule3.rule3(pull, g.spring, g.teeth, a, ab, r)
+        tot = g.teeth * (2 * a - ab) - g.spring * a + pull + r
+        ok += nxt == tot // g.teeth and fine == tot % g.teeth
+    check("the engine's rule3.rule3 is the carried leapfrog: T a+ + r+ = T (2a - a-) - D a + SUM R_j (a_j - a) + r", ok == 3000, f"{ok} of 3000")
+    samples = [pyth_phases(3, RNG) for _ in range(500)]
+    ok = 0
+    for p, _s in pairs:
+        g, _ = head_gearing(p, den, gamma)
+        c = Fr(p, den)
+        ok += sum(head_symbol(g, z3) == c * (z3[0][0] + z3[1][0] + z3[2][0]) / 3 for z3 in samples)
+    check("its beat: cos w = (c/3)(cos kx + cos ky + cos kz) with c = pinion/den, at exact momenta, every row", ok == 500 * len(pairs), f"{ok} of {500 * len(pairs)}")
+
+    print("2. The rest beat is one reading")
+    ok = 0
+    for p, s in pairs:
+        g, _ = head_gearing(p, den, gamma)
+        ok += Fr(2 * g.teeth - g.spring, 2 * g.teeth) == Fr(p, den) and p * p + s * s == den * den
+    check("the head's rest beat (2T - D)/(2T) = pinion/den = the walk's coin cosine, s the engine's sine_rim, on den's circle", ok == len(pairs), f"{ok} of {len(pairs)}")
+    ok = 0
+    for p, s in pairs:
+        U0 = walk_ring_symbol((Fr(1), Fr(0)), p, s, den)
+        cp = charpoly(U0)
+        ok += cp[1] == (Fr(-2 * p, den), Fr(0)) and cp[2] == (Fr(1), Fr(0))
+    check("the walk at rest: U(0) = M, eigenvalues e^{-+i w0} with cos w0 = pinion/den (trace 2c, det 1)", ok == len(pairs), f"{ok} of {len(pairs)}")
+
+    print("3. The walk's beats")
+    zs = pyth_phases(800, RNG)
+    ok = 0
+    for z in zs:
+        p, s = pairs[RNG.randrange(len(pairs))]
+        cp = charpoly(walk_ring_symbol(z, p, s, den))
+        ok += cp[1] == (-2 * Fr(p, den) * z[0], Fr(0)) and cp[2] == (Fr(1), Fr(0))
+    check("the ring (1-D Dirac): det(lambda - U(k)) = lambda^2 - 2 c cos k lambda + 1, so cos w = c cos k", ok == 800, f"{ok} of 800")
+    ok = tot = 0
+    for z3 in samples[:60]:
+        for (p, s) in ((20, 21), pairs[0][:2]):
+            dd = 29 if p == 20 else den
+            cp = charpoly(herm_part(sym_dirac(z3, p, s, dd)))
+            c, a0, b0, sn, q = dirac_closed(z3, p, s, dd)
+            for X in (Fr(0), Fr(1, 3), Fr(-2, 7), c, Fr(5, 4)):
+                tot += 1
+                quad = (X - c * a0) * (X - c * b0) - sn * sn * q / 4
+                ok += poly_eval(cp, X) == quad * quad
+    check("the 3-D Dirac pair: det((U+U^dagger)/2 - X) = [(X - c a0)(X - c b0) - (s^2/4) q]^2, a0,b0 = cx cy cz +- sx sy sz,"
+          " q = 4(SUM sa^2 sb^2 - 2 sx^2 sy^2 sz^2)", ok == tot, f"{ok} of {tot}")
+    ok = 0
+    for z3 in samples[:60]:
+        p, s = 20, 21
+        c, a0, b0, sn, q = dirac_closed(z3, p, s, 29)
+        # along an axis (two phases at 1) the quadratic is (X - c cos k)^2
+        z1 = [z3[0], (Fr(1), Fr(0)), (Fr(1), Fr(0))]
+        c, a0, b0, sn, q = dirac_closed(z1, p, s, 29)
+        ok += q == 0 and a0 == b0 == z3[0][0]
+    check("along an axis the pair's beat is the ring's, cos w = c cos k (double)", ok == 60, f"{ok} of 60")
+
+    print("4. The head against the walk")
+    ok = tot = 0
+    for p, s in pairs:
+        g, _ = head_gearing(p, den, gamma)
+        c = Fr(p, den)
+        for z in zs[:300]:
+            z3 = [z, (Fr(1), Fr(0)), (Fr(1), Fr(0))]
+            tot += 1
+            ok += 3 * (head_symbol(g, z3) - c) == c * z[0] - c
+    check("along an axis, at every k: cos w_head - c = (cos w_walk - c) / 3 exactly", ok == tot, f"{ok} of {tot}")
+    # small momenta: the ratio of the kinetic parts tends to 1/3 in every direction
+    seq_ok = True
+    last = None
+    for m in (8, 16, 32, 64, 128, 256):
+        dirs = [(1, 2, 3), (2, -1, 1), (1, 1, 1), (3, 0, 1)]
+        worst = Fr(0)
+        for dvec in dirs:
+            z3 = []
+            for comp in dvec:
+                # e^{ik} with k ~ 2 comp / m: zeta = (m + i comp)^2 / (m^2 + comp^2)
+                zz = gm((m, comp), (m, comp))
+                dd = m * m + comp * comp
+                z3.append((Fr(zz[0], dd), Fr(zz[1], dd)))
+            p, s = pairs[0]
+            g, _ = head_gearing(p, den, gamma)
+            c = Fr(p, den)
+            head_kin = c - head_symbol(g, z3)
+            walk_mean = c - c * z3[0][0] * z3[1][0] * z3[2][0]
+            worst = max(worst, abs(head_kin / walk_mean - Fr(1, 3)))
+        if last is not None and not worst < last:
+            seq_ok = False
+        last = worst
+    check("in 3-D at small k the head's kinetic part over the pair's mean kinetic part tends to 1/3 in every direction"
+          " (worst |ratio - 1/3| falls as k halves, 6 halvings)", seq_ok, f"last worst = {last.limit_denominator(10 ** 6)}")
+
+
+def mutants():
+    bad = []
+
+    def report(name, count, of):
+        print(f"  {name}: {count} of {of} (must be above 0)")
+        if count == 0:
+            bad.append(name)
+
+    den, gamma, rows = calibre()
+    pairs = [(p, sine_rim(p, den)) for p in rows]
+    rng = random.Random(99)
+    zs = pyth_phases(200, rng)
+    print("M1. The head's kinetic part claimed equal to the walk's (no factor 3): it must fail")
+    g, _ = head_gearing(pairs[0][0], den, gamma)
+    c = Fr(pairs[0][0], den)
+    n = sum(1 for z in zs if head_symbol(g, [z, (Fr(1), Fr(0)), (Fr(1), Fr(0))]) - c != c * z[0] - c)
+    report("momenta where it fails", n, 200)
+    print("M2. The head's spring one tooth off (D + 1): the rest beat must leave pinion/den")
+    n = sum(1 for p, _s in pairs if Fr(2 * head_gearing(p, den, gamma)[0].teeth - head_gearing(p, den, gamma)[0].spring - 1, 2 * head_gearing(p, den, gamma)[0].teeth) == Fr(p, den))
+    report("rows where it fails", len(pairs) - n, len(pairs))
+    print("M3. The Dirac closed form with the inversion term delta dropped: it must fail")
+    fails = 0
+    for _ in range(40):
+        z3 = pyth_phases(3, rng)
+        cp = charpoly(herm_part(sym_dirac(z3, 20, 21, 29)))
+        cc, a0, b0, sn, q = dirac_closed(z3, 20, 21, 29)
+        mid = cc * z3[0][0] * z3[1][0] * z3[2][0]
+        X = Fr(1, 3)
+        quad = (X - mid) * (X - mid) - sn * sn * q / 4
+        fails += poly_eval(cp, X) != quad * quad
+    report("momenta where it fails", fails, 40)
+    print("M4. The Dirac closed form with c and s exchanged: it must fail")
+    fails = 0
+    for _ in range(40):
+        z3 = pyth_phases(3, rng)
+        cp = charpoly(herm_part(sym_dirac(z3, 20, 21, 29)))
+        cc, a0, b0, sn, q = dirac_closed(z3, 21, 20, 29)
+        X = Fr(1, 3)
+        quad = (X - cc * a0) * (X - cc * b0) - sn * sn * q / 4
+        fails += poly_eval(cp, X) != quad * quad
+    report("momenta where it fails", fails, 40)
+    print("result:", "every mutant fails as it must" if not bad else f"MUTANTS PASSED: {bad}")
+    return 1 if bad else 0
+
+
+if __name__ == "__main__":
+    if "mutants" in sys.argv[1:]:
+        raise SystemExit(mutants())
+    main_claims()
+    print("result:", f"{len(FAIL)} failures" + ("" if not FAIL else f": {FAIL}"))
+    raise SystemExit(1 if FAIL else 0)
+
+== c3_tensor.py ==
+"""Probe c3: the tensor of a family, rho(x, y) = SUM_k phi_k(x) phi_k(y)^dagger, under the clock's unitary step and the
+generic lay; the cap at every Node-clock and every tick.
+
+  venv314/bin/python -I c3_tensor.py <repo>/src            the claims (must print 0 failures)
+  venv314/bin/python -I c3_tensor.py <repo>/src mutants    the mutations (each must fail)
+
+The tensor is held as rho = R / lam, R Gaussian integers, lam a positive integer: the step R -> (D U) R (D U)^dagger,
+lam -> lam N(D); the lay with e = -1: R -> F R + v v^dagger, lam -> lam F, v = lam chi - R chi,
+F = lam |chi|^2 - chi^dagger R chi (lam times the Pauli free size; refused where F = 0); with e = +1:
+R -> |chi|^2 R + lam chi chi^dagger. Checked exactly at every tick: R Hermitian, R R = lam R (rho^2 = rho),
+Tr R = N lam, and at every Node-clock lam - R_xx and R_xx positive (2x2: trace >= 0 and det >= 0; 4x4: every
+elementary symmetric function of the eigenvalues >= 0).
+Integers and Fractions only.
+"""
+
+from __future__ import annotations
+
+import os
+import random
+import sys
+from fractions import Fraction as Fr
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+SRC = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("mut") else "/home/user/Universe24/src"
+sys.path.insert(0, SRC)
+
+from caplib import (  # noqa: E402
+    ZERO, Board, Tensor, charpoly, coin_op, dirac_step, fr, ga, gc, gk, gm, gn, gs, local_vec, mass_coin, mmul, mtr,
+    rand_gauss_vec, sp_adj, sp_apply, sp_int, sp_integral, sp_mul, sp_scale, weyl_step,
+)
+from event_universe.core.rates import sine_rim  # noqa: E402
+
+FAIL: list[str] = []
+
+
+def check(name, ok, count=None):
+    if not ok:
+        FAIL.append(name)
+    print(f"  [{'ok' if ok else 'FAILED'}] {name}" + ("" if count is None else f": {count}"))
+
+
+def scaled_step(U, D):
+    S = sp_scale(fr(D), U)
+    assert sp_integral(S)
+    return sp_int(S), gn(D)
+
+
+def block_psd(B, lam):
+    """lam I - B and B positive semidefinite (B Hermitian, Gaussian integers), exact."""
+    m = len(B)
+    if m == 2:
+        a, d, b = B[0][0][0], B[1][1][0], B[0][1]
+        return (2 * lam - a - d >= 0 and (lam - a) * (lam - d) - gn(b) >= 0 and a + d >= 0 and a * d - gn(b) >= 0)
+    for M in (B, [[gs((lam, 0) if i == j else ZERO, B[i][j]) for j in range(m)] for i in range(m)]):
+        cp = charpoly(M)  # det(x - M) = x^m - e1 x^(m-1) + e2 x^(m-2) - ...
+        for k in range(1, m + 1):
+            ek = cp[k][0] * (-1) ** k
+            if ek < 0:
+                return False
+    return True
+
+
+def occupation_top_above_one(B, lam):
+    """True where the larger eigenvalue of rho_xx = B / lam exceeds 1 (2x2)."""
+    a, d, b = B[0][0][0], B[1][1][0], B[0][1]
+    return not (2 * lam - a - d >= 0 and (lam - a) * (lam - d) - gn(b) >= 0)
+
+
+def run_board(label, board, Uint, normD, plan, ticks, hands_check_every=0, e=-1):
+    """Run a lay plan and the step; check everything at every tick. plan: {tick: [chi, ...]}."""
+    T = Tensor(board.n)
+    hands = []  # (phi scaled by the same D^t, norm scaled) for the Cauchy-Binet and projector identities
+    N = 0
+    stats = dict(ticks=0, herm=0, idem=0, trace=0, caps=0, cap_ok=0, laid=0, refused=0, local_free=0, lays=0,
+                 hands_ok=0, hands_checked=0, cb_ok=0, cb_checked=0)
+    for t in range(ticks + 1):
+        for chi in plan.get(t, []):
+            stats["lays"] += 1
+            F, _Rc = T.free_size(chi)
+            # the free size of a newcomer held at one Node-clock reads that Node-clock's block alone
+            sites = {i // board.m for i, a in enumerate(chi) if a[0] or a[1]}
+            if len(sites) == 1:
+                x = sites.pop()
+                s = chi[x * board.m:(x + 1) * board.m]
+                B = T.block(x, board.m)
+                q = ZERO
+                for i in range(board.m):
+                    for j in range(board.m):
+                        q = ga(q, gm(gm(gc(s[i]), B[i][j]), s[j]))
+                stats["local_free"] += F == T.lam * sum(gn(a) for a in s) - q[0]
+            else:
+                stats["local_free"] += 1
+            if e == -1:
+                if F == 0:
+                    stats["refused"] += 1
+                    stats.setdefault("outcomes", []).append("refused")
+                    continue
+                stats.setdefault("outcomes", []).append("laid")
+                v = T.matvec(chi)
+                v = [gs(gk(T.lam, a), b) for a, b in zip(chi, v)]
+                hands.append([v, F * T.lam])  # phi = v / lam, |phi|^2 = F / lam  ->  phi phi^dagger / |phi|^2 = v v^dagger / (lam F)
+                T.lay(chi, -1)
+            else:
+                hands.append([chi, sum(gn(a) for a in chi)])
+                T.lay(chi, +1)
+            N += 1
+            stats["laid"] += 1
+        stats["ticks"] += 1
+        stats["herm"] += T.hermitian()
+        if e == -1:
+            stats["idem"] += T.idempotent()
+        tr = T.trace()
+        stats["trace"] += tr == (N * T.lam, 0)
+        for x in range(board.V):
+            stats["caps"] += 1
+            stats["cap_ok"] += block_psd(T.block(x, board.m), T.lam)
+        if hands_check_every and t % hands_check_every == 0 and hands and e == -1:
+            stats["hands_checked"] += 1
+            stats["hands_ok"] += projector_from_hands(T, hands)
+            ok_cb, n_cb = cauchy_binet(T, hands, board)
+            stats["cb_checked"] += n_cb
+            stats["cb_ok"] += ok_cb
+        if t < ticks:
+            T.step(Uint, normD)
+            for h in hands:
+                h[0] = sp_apply(Uint, h[0])
+                h[1] *= normD
+    stats["N"] = N
+    stats["bits"] = max(max(abs(v[0]).bit_length(), abs(v[1]).bit_length()) for row in T.R for v in row)
+    return stats, T, hands
+
+
+def projector_from_hands(T, hands):
+    """rho = SUM_k phi_k phi_k^dagger / |phi_k|^2 with the hands' own norms (they stay orthogonal under the unitary step)."""
+    n = T.n
+    acc = [[(Fr(0), Fr(0))] * n for _ in range(n)]
+    for v, nv in hands:
+        for i in range(n):
+            vi = v[i]
+            if not (vi[0] or vi[1]):
+                continue
+            for j in range(n):
+                p = gm(vi, gc(v[j]))
+                if p[0] or p[1]:
+                    a = acc[i][j]
+                    acc[i][j] = (a[0] + Fr(p[0], nv), a[1] + Fr(p[1], nv))
+    lam = T.lam
+    return all(acc[i][j][0] * lam == T.R[i][j][0] and acc[i][j][1] * lam == T.R[i][j][1] for i in range(n) for j in range(n))
+
+
+def cauchy_binet(T, hands, board):
+    """det rho_xx = SUM_{k<l} N(det[phi_k(x), phi_l(x)]) / (|phi_k|^2 |phi_l|^2): the click's pair at one Node-clock is
+    the sum of draft E's two-quantum joint sizes (2 components)."""
+    if board.m != 2:
+        return 0, 0
+    ok = cnt = 0
+    for x in range(board.V):
+        B = T.block(x, 2)
+        det = Fr(B[0][0][0] * B[1][1][0] - gn(B[0][1]), T.lam * T.lam)
+        tot = Fr(0)
+        for k in range(len(hands)):
+            for l in range(k + 1, len(hands)):
+                a, b = hands[k][0][2 * x:2 * x + 2], hands[l][0][2 * x:2 * x + 2]
+                dd = gs(gm(a[0], b[1]), gm(a[1], b[0]))
+                tot += Fr(gn(dd), hands[k][1] * hands[l][1])
+        cnt += 1
+        ok += det == tot
+    return ok, cnt
+
+
+def ring_plan(board, rng):
+    """Six quanta on a ring: two at x0 (they fill it), a third there (must be refused), one at x0 + 1; after the spread,
+    two more at x0 and one spread newcomer. The expected outcomes, in order: laid, laid, refused, laid, laid, laid, laid."""
+    up, dn = [(1, 0), ZERO], [ZERO, (1, 0)]
+    x0 = 0
+    return {
+        0: [local_vec(board, x0, up), local_vec(board, x0, [(1, 1), (2, -1)]), local_vec(board, x0, [(3, 0), (0, 1)]),
+            local_vec(board, (x0 + 1) % board.V, dn)],
+        25: [local_vec(board, x0, up), local_vec(board, x0, dn)],
+        60: [rand_gauss_vec(rng, board.n, 2)],
+    }
+
+
+def torus_plan(board, rng):
+    m = board.m
+    one = [(1, 0)] + [ZERO] * (m - 1)
+    two = [ZERO, (1, 0)] + [ZERO] * (m - 2)
+    plan = {
+        0: [local_vec(board, 0, one), local_vec(board, 0, two), local_vec(board, 0, [(1, 0), (0, 1)] + [ZERO] * (m - 2)),
+            local_vec(board, 13, one)],
+        7: [local_vec(board, 0, one), rand_gauss_vec(rng, board.n, 2)],
+        15: [local_vec(board, 13, two)],
+    }
+    return plan
+
+
+def main_claims():
+    rng = random.Random(1028)
+    p, s, d = 20, 21, 29
+    print("1. Matter (e = -1) on rings of 8, 12, 16 Node-clocks with 2 states, the ring's step U = M W_z on (3, 4, 5), 200 ticks")
+    for L in (8, 12, 16):
+        b = Board(L, 1, 2)
+        U = sp_mul(coin_op(b, mass_coin(3, 4, 5)), weyl_step(b))
+        Uint, nD = scaled_step(U, (5, 0))
+        st, T, hands = run_board(f"ring {L}", b, Uint, nD, ring_plan(b, rng), 200, hands_check_every=25)
+        print(f"   ring {L}: {st['laid']} laid, {st['refused']} refused of {st['lays']} lays; widest integer {st['bits']} bits")
+        check(f"ring {L}: R Hermitian and rho^2 = rho at every tick", st["herm"] == st["ticks"] == st["idem"], f"{st['idem']} of {st['ticks']}")
+        check(f"ring {L}: Tr rho = N (the quanta laid) at every tick", st["trace"] == st["ticks"], f"{st['trace']} of {st['ticks']}")
+        check(f"ring {L}: 1 - rho_xx and rho_xx positive at every Node-clock and tick (the cap)", st["cap_ok"] == st["caps"], f"{st['cap_ok']} of {st['caps']}")
+        check(f"ring {L}: the free size of a newcomer at one Node-clock reads rho_xx alone", st["local_free"] == st["lays"], f"{st['local_free']} of {st['lays']}")
+        check(f"ring {L}: rho = SUM_k phi_k phi_k^dagger / |phi_k|^2 with the laid hands stepped alone (orthogonal for ever)", st["hands_ok"] == st["hands_checked"] > 0, f"{st['hands_ok']} of {st['hands_checked']}")
+        check(f"ring {L}: det rho_xx = SUM_(k<l) N(det[phi_k(x), phi_l(x)]) / (|phi_k|^2 |phi_l|^2) (draft E's joint sizes)", st["cb_ok"] == st["cb_checked"] > 0, f"{st['cb_ok']} of {st['cb_checked']}")
+        want = ["laid", "laid", "refused", "laid", "laid", "laid", "laid"]
+        check(f"ring {L}: the third quantum at the filled Node-clock is refused (free size 0); the six others are laid, two of them at"
+              " the same Node-clock after the spread", st.get("outcomes") == want, f"{st.get('outcomes')}")
+
+    print("2. The same ring with the calibre's row 0 on den's circle (den = 15162856759112389), 24 ticks")
+    from caplib import Board as B_  # noqa
+    import json
+    with open(os.path.join(os.path.dirname(SRC.rstrip('/')), "tests", "worlds", "universe_toy.json")) as f:
+        cal = json.load(f)
+    den = int(cal["integers"]["den"])
+    pe = int(cal["rows"][0]["pair"][0])
+    se = sine_rim(pe, den)
+    b = Board(12, 1, 2)
+    U = sp_mul(coin_op(b, mass_coin(pe, se, den)), weyl_step(b))
+    Uint, nD = scaled_step(U, (den, 0))
+    plan = {0: [local_vec(b, 0, [(1, 0), ZERO]), local_vec(b, 0, [ZERO, (1, 0)]), local_vec(b, 0, [(1, 0), (1, 0)])],
+            9: [local_vec(b, 0, [(1, 0), ZERO]), local_vec(b, 5, [(2, 1), (0, 3)])]}
+    st, T, _ = run_board("ring 12 calibre", b, Uint, nD, plan, 24)
+    print(f"   {st['laid']} laid, {st['refused']} refused of {st['lays']}; widest integer {st['bits']} bits after 24 ticks")
+    check("calibre ring: rho^2 = rho, Tr rho = N, and the cap at every Node-clock and tick",
+          st["idem"] == st["trace"] == st["ticks"] and st["cap_ok"] == st["caps"], f"{st['idem']} of {st['ticks']} ticks, {st['cap_ok']} of {st['caps']} caps")
+
+    print("3. Matter on the 3^3 torus, 2 states: the Weyl step U_L = W_z W_y W_x, 40 ticks")
+    b3 = Board(3, 3, 2)
+    UL = weyl_step(b3)
+    Uint, nD = scaled_step(UL, (2, 2))
+    st, T, _ = run_board("torus 3^3 Weyl", b3, Uint, nD, torus_plan(b3, rng), 40, hands_check_every=20)
+    print(f"   {st['laid']} laid, {st['refused']} refused of {st['lays']}; widest integer {st['bits']} bits")
+    check("3^3 Weyl: R Hermitian, rho^2 = rho and Tr rho = N at every tick", st["herm"] == st["idem"] == st["trace"] == st["ticks"], f"{st['idem']} of {st['ticks']}")
+    check("3^3 Weyl: the cap at every Node-clock and tick", st["cap_ok"] == st["caps"], f"{st['cap_ok']} of {st['caps']}")
+    check("3^3 Weyl: rho from the hands alone, and det rho_xx = the joint sizes summed", st["hands_ok"] == st["hands_checked"] > 0 and st["cb_ok"] == st["cb_checked"] > 0,
+          f"{st['hands_ok']} of {st['hands_checked']}; {st['cb_ok']} of {st['cb_checked']}")
+
+    print("4. Matter on the 3^3 torus, 4 states: the Dirac pair M (U_L + U_R), 8 ticks")
+    b34 = Board(3, 3, 4)
+    UD = dirac_step(b3, p, s, d)
+    Uint, nD = scaled_step(UD, (2 * d, 2 * d))
+    st, T, _ = run_board("torus 3^3 Dirac", b34, Uint, nD, torus_plan(b34, rng), 8)
+    print(f"   {st['laid']} laid, {st['refused']} refused of {st['lays']}; widest integer {st['bits']} bits")
+    check("3^3 Dirac: rho^2 = rho, Tr rho = N and the cap (4x4 blocks) at every Node-clock and tick",
+          st["idem"] == st["trace"] == st["ticks"] and st["cap_ok"] == st["caps"], f"{st['idem']} of {st['ticks']} ticks, {st['cap_ok']} of {st['caps']} caps")
+
+    T = Tensor(b34.n)
+    outcomes = []
+    for st_ in ([(1, 0), ZERO, ZERO, ZERO], [ZERO, (1, 0), ZERO, ZERO], [ZERO, ZERO, (1, 0), ZERO], [ZERO, ZERO, ZERO, (1, 0)],
+                [(1, 0), (0, 1), (2, 0), (1, 1)]):
+        outcomes.append("laid" if T.lay(local_vec(b34, 0, st_), -1) else "refused")
+    check("3^3 Dirac: one Node-clock holds four quanta (the field's two states and its phase reversal's two); the fifth is refused",
+          outcomes == ["laid"] * 4 + ["refused"], f"{outcomes}")
+
+    print("4b. The tie to draft E: one occupant held at one Node-clock")
+    rng2 = random.Random(11)
+    ok = tried = 0
+    b2 = Board(8, 1, 2)
+    for _ in range(500):
+        phi = [(rng2.randint(-4, 4), rng2.randint(-4, 4)) for _ in range(2)]
+        chi = [(rng2.randint(-4, 4), rng2.randint(-4, 4)) for _ in range(2)]
+        if gn(phi[0]) + gn(phi[1]) == 0:
+            continue
+        T = Tensor(b2.n)
+        T.lay(local_vec(b2, 3, phi), -1)
+        F, _ = T.free_size(local_vec(b2, 3, chi))
+        dd = gs(gm(phi[0], chi[1]), gm(phi[1], chi[0]))
+        tried += 1
+        ok += Fr(F, T.lam) == Fr(gn(dd), gn(phi[0]) + gn(phi[1]))
+    check("the lay's denominator chi^dagger (1 - rho) chi = N(det[phi, chi]) / |phi|^2 = N(<T phi, chi>) / |phi|^2 (Lagrange): draft E's free size",
+          ok == tried > 0, f"{ok} of {tried}")
+
+    print("5. The force carriers (e = +1): rho + chi chi^dagger / |chi|^2 stacks")
+    b = Board(12, 1, 2)
+    U = sp_mul(coin_op(b, mass_coin(p, s, d)), weyl_step(b))
+    Uint, nD = scaled_step(U, (d, 0))
+    same = local_vec(b, 0, [(1, 0), ZERO])
+    plan = {0: [same, same, same], 20: [local_vec(b, 3, [(0, 1), (1, 0)])]}
+    T = Tensor(b.n)
+    invariants_kept = above = caps = 0
+    first = None
+    for t in range(61):
+        for chi in plan.get(t, []):
+            T.lay(chi, +1)
+        inv = T.power_traces(3)
+        if t == 0:
+            three = inv
+        if t in plan:
+            first = inv
+        elif first is not None:
+            invariants_kept += inv == first
+        for x in range(b.V):
+            caps += 1
+            above += occupation_top_above_one(T.block(x, 2), T.lam)
+        if t < 60:
+            T.step(Uint, nD)
+    check("three in one state: (Tr rho, Tr rho^2, Tr rho^3) = (3, 9, 27), one eigenvalue 3; with a fourth elsewhere (4, 10, 28)",
+          three == [(3, 0), (9, 0), (27, 0)] and [v for v in T.power_traces(3)] == [(4, 0), (10, 0), (28, 0)],
+          f"{[str(v[0]) for v in three]} then {[str(v[0]) for v in T.power_traces(3)]}")
+    check("the step keeps the spectrum (Tr rho, Tr rho^2, Tr rho^3) at every tick after each lay", invariants_kept == 60 - 1, f"{invariants_kept} of 59")
+    check("the local occupation exceeds 1 (no cap for the force carriers)", above > 0, f"{above} of {caps} Node-clock ticks")
+
+    print("6. One law with the kind's sign, and its closure")
+    two_quanta_identities(rng)
+
+
+def ginner(u, v):
+    t = ZERO
+    for a, b in zip(u, v):
+        t = ga(t, gm(gc(a), b))
+    return t
+
+
+def gram(vs):
+    return [[ginner(u, v) for v in vs] for u in vs]
+
+
+def immanant(G, e):
+    """SUM over permutations of e^inversions PROD G[i][pi(i)]: det for e = -1, perm for e = +1 (Fractions/ints)."""
+    from itertools import permutations
+    n = len(G)
+    tot = ZERO
+    for pi in permutations(range(n)):
+        inv = sum(1 for i in range(n) for j in range(i + 1, n) if pi[i] > pi[j])
+        term = (e ** inv, 0)
+        for i in range(n):
+            term = gm(term, G[i][pi[i]])
+        tot = ga(tot, term)
+    return tot
+
+
+def one_body(vs, e):
+    """The one-body density of the e-symmetrized state of the hands vs: rho(x,y) = SUM_ij v_i(x) conj(v_j(y)) e^(i+j)
+    imm(G minus row j, column i) / imm(G) (the sign of the minor's position for e = -1)."""
+    n, k = len(vs[0]), len(vs)
+    G = gram(vs)
+    Z = immanant(G, e)
+    rho = [[(Fr(0), Fr(0))] * n for _ in range(n)]
+    for i in range(k):
+        for j in range(k):
+            minor = [[G[r][c] for c in range(k) if c != i] for r in range(k) if r != j]
+            w = immanant(minor, e) if minor else (1, 0)
+            sign = (e ** (i + j), 0)
+            w = gm(sign, w)
+            for x in range(n):
+                a = gm(vs[i][x], w)
+                if not (a[0] or a[1]):
+                    continue
+                for y in range(n):
+                    b = gm(a, gc(vs[j][y]))
+                    rho[x][y] = (rho[x][y][0] + b[0], rho[x][y][1] + b[1])
+    Zf = Z[0]
+    assert Z[1] == 0
+    return [[(v[0] / Zf, v[1] / Zf) for v in row] for row in rho]
+
+
+def tensor_rho(T):
+    return [[(Fr(v[0], T.lam), Fr(v[1], T.lam)) for v in row] for row in T.R]
+
+
+def two_quanta_identities(rng):
+    n = 3
+    ok_f = ok_tr = 0
+    for _ in range(300):
+        vs = [rand_gauss_vec(rng, n, 3) for _ in range(rng.randint(1, 3))]
+        G = gram(vs)
+        if immanant(G, -1) == ZERO:
+            continue
+        T = Tensor(n)
+        for v in vs:
+            T.lay(v, -1)
+        ok_f += one_body(vs, -1) == tensor_rho(T)
+        ok_tr += 1
+    check("e = -1: the e-symmetrized state's one-body density (determinants of the Gram matrix) is the generic lay's tensor",
+          ok_f == ok_tr > 0, f"{ok_f} of {ok_tr} sets of 1 to 3 hands in 3 states")
+    ok_b = cnt = 0
+    for _ in range(300):
+        f, g = rand_gauss_vec(rng, n, 3), rand_gauss_vec(rng, n, 3)
+        T = Tensor(n)
+        T.lay(f, +1)
+        T.lay(g, +1)
+        perm_rho = one_body([f, g], +1)
+        cnt += 1
+        ov = ginner(f, g)
+        ok_b += (perm_rho != tensor_rho(T)) == (ov != ZERO)
+    check("e = +1: the permanent state's density equals rho + chi chi^dagger exactly where the two hands are orthogonal, and differs elsewhere",
+          ok_b == cnt, f"{ok_b} of {cnt}")
+    f = [(1, 0), (0, 0), (0, 0)]
+    stacked = one_body([f, f], +1)
+    check("e = +1, two in one state: the permanent's density is 2 f f^dagger (an eigenvalue 2: they stack)", stacked[0][0] == (2, 0))
+    # closure: two pairs with the same tensor, one quantum laid into each
+    e1, e2 = [(1, 0), (0, 0), (0, 0)], [(0, 0), (1, 0), (0, 0)]
+    u, v = [(1, 0), (1, 0), (0, 0)], [(1, 0), (-1, 0), (0, 0)]
+    g = [(1, 0), (2, 0), (3, 1)]
+    same_b = one_body([e1, e2], +1) == one_body([u, v], +1)
+    after_b = one_body([e1, e2, e1], +1) != one_body([u, v, e1], +1)
+    same_f = one_body([e1, e2], -1) == one_body([u, v], -1)
+    after_f = one_body([e1, e2, g], -1) == one_body([u, v, g], -1)
+    print(f"   bosons: rho(e1,e2) = rho(e1+e2, e1-e2): {same_b}; with e1 laid: {one_body([e1, e2, e1], +1)[0][0][0]} against {one_body([u, v, e1], +1)[0][0][0]} in state 1")
+    check("e = +1 is not closed in the tensor: two pairs with one tensor give two tensors when one quantum is laid", same_b and after_b)
+    check("e = -1 is closed: the same two pairs (one span) give one tensor when a third is laid", same_f and after_f)
+
+
+# ------------------------------------------------------------------------------------------- the mutants
+
+
+def mutants():
+    bad = []
+
+    def report(name, count, of):
+        print(f"  {name}: {count} of {of} (must be above 0)")
+        if count == 0:
+            bad.append(name)
+
+    p, s, d = 20, 21, 29
+    b = Board(12, 1, 2)
+    U = sp_mul(coin_op(b, mass_coin(p, s, d)), weyl_step(b))
+    Uint, nD = scaled_step(U, (d, 0))
+    print("M1. The symmetric lay on matter (rho + chi chi^dagger for e = -1's family): an eigenvalue 2, the cap broken")
+    T = Tensor(b.n)
+    chi = local_vec(b, 0, [(1, 0), ZERO])
+    T.lay(chi, +1)
+    T.lay(chi, +1)
+    report("rho^2 != rho (1 = yes)", int(not T.idempotent()), 1)
+    broken = 0
+    for t in range(30):
+        broken += sum(1 for x in range(b.V) if not block_psd(T.block(x, 2), T.lam))
+        T.step(Uint, nD)
+    report("Node-clock ticks with 1 - rho_xx not positive", broken, 30 * b.V)
+
+    print("M2. One summed field for the family (the head's board): it gathers")
+    # four orthonormal quanta that the step brings to one Node-clock in one state
+    L, ticks = 16, 10
+    b16 = Board(L, 1, 2)
+    U = sp_mul(coin_op(b16, mass_coin(p, s, d)), weyl_step(b16))
+    Ui, nD16 = scaled_step(U, (d, 0))
+    Uadj = sp_adj(Ui)
+    H = [[1, 1, 1, 1], [1, -1, 1, -1], [1, 1, -1, -1], [1, -1, -1, 1]]
+    hs = []
+    for k in range(4):
+        v = [ZERO] * b16.n
+        for j in range(4):
+            v[2 * j] = (H[k][j], 0)  # 2 h_k: entries +-1 on four Node-clocks, the up state
+        hs.append(v)
+    phis = []
+    for v in hs:
+        w = v
+        for _ in range(ticks):
+            w = sp_apply(Uadj, w)
+        phis.append(w)  # = conj(D)^ticks U^-ticks (2 h_k)
+    field = [ZERO] * b16.n
+    for w in phis:
+        field = [ga(a, c) for a, c in zip(field, w)]
+    T = Tensor(b16.n)
+    for w in phis:
+        T.lay(w, -1)
+    worst_field, worst_tensor = Fr(0), Fr(0)
+    for t in range(ticks + 1):
+        unit = 4 * nD16 ** ticks  # |2 h_k|^2 = 4, scaled by N(D)^ticks from the rewind, and by N(D)^t from the steps
+        for x in range(L):
+            a = field[2 * x]
+            c = field[2 * x + 1]
+            occ_field = Fr(gn(a) + gn(c), unit * nD16 ** t)
+            worst_field = max(worst_field, occ_field)
+            B = T.block(x, 2)
+            worst_tensor = max(worst_tensor, Fr(B[0][0][0] + B[1][1][0], T.lam))
+        if t < ticks:
+            field = sp_apply(Ui, field)
+            T.step(Ui, nD16)
+    print(f"   the summed field's largest occupation at one Node-clock: {worst_field}; the tensor's (both states): {worst_tensor}")
+    report("quanta gathered at one Node-clock in one state by the summed field, above the cap of 1 (4 = all four)", int(worst_field) - 1 if worst_field > 1 else 0, 3)
+    # six quanta held at three Node-clocks, both states each (the filled orbitals of draft E's e4), summed into one field
+    sixq = []
+    for x in range(3):
+        for st_ in ([(1, 0), ZERO], [ZERO, (1, 0)]):
+            sixq.append(local_vec(b16, x, st_))
+    field = [ZERO] * b16.n
+    for w in sixq:
+        field = [ga(a, c) for a, c in zip(field, w)]
+    T = Tensor(b16.n)
+    for w in sixq:
+        T.lay(w, -1)
+    above = above_t = cnt = 0
+    for t in range(41):
+        for x in range(L):
+            cnt += 1
+            occ = gn(field[2 * x]) + gn(field[2 * x + 1])  # the one field's rank-one occupation, scaled by N(D)^t
+            above += occ > nD16 ** t
+            above_t += occupation_top_above_one(T.block(x, 2), T.lam)
+        if t < 40:
+            field = sp_apply(Ui, field)
+            T.step(Ui, nD16)
+    print(f"   six quanta at three Node-clocks: the summed field above one quantum in one state at {above} of {cnt} Node-clock ticks;"
+          f" the tensor of the same quanta at {above_t}")
+    report("Node-clock ticks where the summed field of six orthonormal quanta holds more than one quantum in one state", above, cnt)
+
+    print("M3. A non-unitary coin (Feynman's checkerboard: straight 1, corner -i s/den): rho stops being a projector, the cap breaks")
+    Mf = [[(Fr(1), Fr(0)), (Fr(0), Fr(-s, d))], [(Fr(0), Fr(-s, d)), (Fr(1), Fr(0))]]
+    Uf = sp_mul(coin_op(b, Mf), weyl_step(b))
+    Ufi, nf = scaled_step(Uf, (d, 0))
+    T = Tensor(b.n)
+    T.lay(local_vec(b, 0, [(1, 0), ZERO]), -1)
+    T.lay(local_vec(b, 0, [ZERO, (1, 0)]), -1)
+    not_idem = broken = trace_moved = 0
+    for t in range(40):
+        T.step(Ufi, nf)
+        not_idem += not T.idempotent()
+        trace_moved += T.trace() != (2 * T.lam, 0)
+        broken += sum(1 for x in range(b.V) if not block_psd(T.block(x, 2), T.lam))
+    report("ticks with rho^2 != rho", not_idem, 40)
+    report("ticks with Tr rho != 2", trace_moved, 40)
+    report("Node-clock ticks with the cap broken", broken, 40 * b.V)
+
+    print("M4. The lay without its denominator (rho + Q chi chi^dagger Q): not a projector")
+    T = Tensor(b.n)
+    T.lay(local_vec(b, 0, [(1, 0), (1, 0)]), -1)
+    chi = local_vec(b, 0, [(3, 0), (1, 1)])  # free size 5/2, not 1
+    F, Rc = T.free_size(chi)
+    v = [gs(gk(T.lam, a), c) for a, c in zip(chi, Rc)]
+    # rho' = R/lam + v v^dagger / lam^2  ->  R' = lam R + v v^dagger, lam' = lam^2
+    T.R = [[ga(gk(T.lam, T.R[i][j]), gm(v[i], gc(v[j]))) for j in range(T.n)] for i in range(T.n)]
+    T.lam = T.lam * T.lam
+    report("rho^2 != rho after the unnormalized lay (1 = yes)", int(not T.idempotent()), 1)
+    print("result:", "every mutant fails as it must" if not bad else f"MUTANTS PASSED: {bad}")
+    return 1 if bad else 0
+
+
+if __name__ == "__main__":
+    if "mutants" in sys.argv[1:]:
+        raise SystemExit(mutants())
+    main_claims()
+    print("result:", f"{len(FAIL)} failures" + ("" if not FAIL else f": {FAIL}"))
+    raise SystemExit(1 if FAIL else 0)
+
+== c4_head_hands.py ==
+"""Probe c4 (a mutant of the cap, on the head's own step): the head's second-order leapfrog applied to separate hands, one
+hand per quantum, read in the one-slot occupation n(x) = SUM_k psi_k(x) psi_k(x)^dagger: the cap is broken.
+
+  venv314/bin/python -I c4_head_hands.py <repo>/src     prints the counts; exit 0 when the mutant fails as it must
+                                                        (the cap broken) and the positive controls hold
+
+The step is the head's at the vacuum: the gearing from rule3.gearing (the calibre's rows, Gamma, G), in exact rationals
+a+ = 2a - a- + [SUM_j R_j (a_j - a) - D a] / T, and in integers through the engine's own carry rule3.rule3 (notches and
+fine teeth). Each twin hand is set at one Node-clock by the head's rest setting: now = base (1, 0), before =
+base (pinion, s) / den, the hand turning at the rest beat. Positive controls: the two-slot form
+W(u, v) = SUM_x <u_now, v_before> - <u_before, v_now> is kept exactly by the rational leapfrog (draft E's e4); the
+one-slot overlaps are not. The same quanta under the clock's unitary step and the tensor keep the cap (probe c3).
+Integers and Fractions only.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+from fractions import Fraction as Fr
+from itertools import product
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+SRC = sys.argv[1] if len(sys.argv) > 1 else "/home/user/Universe24/src"
+sys.path.insert(0, SRC)
+
+from event_universe.core import rule3  # noqa: E402
+from event_universe.core.rates import mesh_rate_of, rate_of, sine_rim  # noqa: E402
+
+L = 4
+SITES = list(product(range(L), repeat=3))
+IDX = {s: i for i, s in enumerate(SITES)}
+
+
+def nbrs(i):
+    s = SITES[i]
+    out = []
+    for a in range(3):
+        for e in (1, -1):  # spoke order +X, -X, +Y, -Y, +Z, -Z
+            t = list(s)
+            t[a] = (t[a] + e) % L
+            out.append(IDX[tuple(t)])
+    return out
+
+
+NB = [nbrs(i) for i in range(len(SITES))]
+
+
+def calibre():
+    path = os.path.join(os.path.dirname(SRC.rstrip("/")), "tests", "worlds", "universe_toy.json")
+    with open(path) as f:
+        cal = json.load(f)
+    ints = cal["integers"]
+    return int(ints["den"]), int(ints["node_clock"]), [int(r["pair"][0]) for r in cal["rows"]]
+
+
+def gearing_of(pinion, den, gamma):
+    G = rule3.mesh_unit_of(gamma)
+    return rule3.gearing(pinion, den, gamma, int(rate_of(gamma, 0)), int(mesh_rate_of(gamma, 0)), None, G)
+
+
+def setting(quanta, pinion, s, den, base, exact):
+    """Each quantum: (site, (alpha, beta)) a twin spin state of Gaussian integers; its up and down hands at the site turn at
+    the rest beat: now = base * alpha, before = base * alpha * (pinion + i s) / den (and beta for the down hand).
+    A hand is four real gears per Node-clock: up three, up twelve, down three, down twelve."""
+    hands = []
+    for site, (al, be) in quanta:
+        now = [[0] * 4 for _ in SITES]
+        bef = [[0] * 4 for _ in SITES]
+        for c, z in enumerate((al, be)):
+            zr, zi = base * z[0], base * z[1]
+            # z (pinion + i s) / den
+            br, bi = zr * pinion - zi * s, zr * s + zi * pinion
+            if exact:
+                br, bi = Fr(br, den), Fr(bi, den)
+            else:
+                br, bi = int(rule3.signed_carries(br, den)), int(rule3.signed_carries(bi, den))
+            now[IDX[site]][2 * c], now[IDX[site]][2 * c + 1] = zr, zi
+            bef[IDX[site]][2 * c], bef[IDX[site]][2 * c + 1] = br, bi
+        hands.append([now, bef, [[0] * 4 for _ in SITES]])
+    return hands
+
+
+def step_exact(hand, g):
+    now, bef, _ = hand
+    T, D, R = g.teeth, g.spring, g.grips
+    new = []
+    for i in range(len(SITES)):
+        row = []
+        for c in range(4):
+            a = now[i][c]
+            pull = sum(R[j] * (now[NB[i][j]][c] - a) for j in range(6))
+            row.append(2 * a - bef[i][c] + Fr(pull - D * a, T))
+        new.append(row)
+    return [new, now, hand[2]]
+
+
+def step_carried(hand, g):
+    """The engine's own act: rule3.rule3(pull, D, T, now, before, fine) per gear."""
+    now, bef, fine = hand
+    T, D, R = g.teeth, g.spring, g.grips
+    new, newfine = [], []
+    for i in range(len(SITES)):
+        row, frow = [], []
+        for c in range(4):
+            a = now[i][c]
+            pull = sum(R[j] * (now[NB[i][j]][c] - a) for j in range(6))
+            nxt, fn = rule3.rule3(pull, D, T, a, bef[i][c], fine[i][c])
+            row.append(int(nxt))
+            frow.append(int(fn))
+        new.append(row)
+        newfine.append(frow)
+    return [new, now, newfine]
+
+
+def zpair(v, c):
+    return (v[2 * c], v[2 * c + 1])
+
+
+def inner_now_before(u, v, slot_u, slot_v):
+    """SUM_x <u_slot, v_slot> over the twin pair's two hands (Gaussian)."""
+    re = im = 0
+    for i in range(len(SITES)):
+        for c in range(2):
+            a, b = zpair(u[slot_u][i], c), zpair(v[slot_v][i], c)
+            re += a[0] * b[0] + a[1] * b[1]
+            im += a[0] * b[1] - a[1] * b[0]
+    return (re, im)
+
+
+def wform(u, v):
+    a = inner_now_before(u, v, 0, 1)
+    b = inner_now_before(u, v, 1, 0)
+    return (a[0] - b[0], a[1] - b[1])
+
+
+def main():
+    den, gamma, rows = calibre()
+    quanta = [((0, 0, 0), ((1, 0), (0, 0))), ((0, 0, 0), ((0, 0), (1, 0))), ((1, 0, 0), ((1, 0), (1, 0))), ((1, 0, 0), ((1, 0), (-1, 0)))]
+    # one-slot orthogonal at the start: up and down at (0,0,0); (1,1) and (1,-1) at (1,0,0) (each normalized by its own
+    # weight below: the two at (1,0,0) have weight 2)
+    weights = [1, 1, 2, 2]
+    fails = []
+    print("The head's leapfrog on separate hands (4^3 board, six Spokes, the vacuum's gearing), one hand per quantum")
+    for row_i in (0, 1):
+        p = rows[row_i]
+        s = sine_rim(p, den)
+        g = gearing_of(p, den, gamma)
+        print(f" row {row_i}: pinion/den = {p}/{den}")
+        # exact rationals
+        hands = setting(quanta, p, s, den, 1, True)
+        W0 = [[wform(hands[k], hands[l]) for l in range(4)] for k in range(4)]
+        G0 = [[inner_now_before(hands[k], hands[l], 0, 0) for l in range(4)] for k in range(4)]
+        w_kept = g_moved = broken = cnt = 0
+        worst = Fr(0)
+        ticks = 30
+        for t in range(1, ticks + 1):
+            hands = [step_exact(h, g) for h in hands]
+            W = [[wform(hands[k], hands[l]) for l in range(4)] for k in range(4)]
+            Gm = [[inner_now_before(hands[k], hands[l], 0, 0) for l in range(4)] for k in range(4)]
+            w_kept += W == W0
+            g_moved += Gm != G0
+            for i in range(len(SITES)):
+                cnt += 1
+                # occupation with each quantum normalized by its weight: n = SUM psi psi^dagger / weight
+                n11 = n22 = n12r = n12i = Fr(0)
+                for k, h in enumerate(hands):
+                    u, d = zpair(h[0][i], 0), zpair(h[0][i], 1)
+                    wgt = weights[k]
+                    n11 += Fr(u[0] * u[0] + u[1] * u[1]) / wgt
+                    n22 += Fr(d[0] * d[0] + d[1] * d[1]) / wgt
+                    n12r += Fr(u[0] * d[0] + u[1] * d[1]) / wgt
+                    n12i += Fr(u[1] * d[0] - u[0] * d[1]) / wgt
+                tr = 2 - n11 - n22
+                det = (1 - n11) * (1 - n22) - (n12r * n12r + n12i * n12i)
+                if not (tr >= 0 and det >= 0):
+                    broken += 1
+                worst = max(worst, n11, n22)
+        print(f"   exact: two-slot form W kept at {w_kept} of {ticks} ticks; one-slot Gram moved at {g_moved} of {ticks};"
+              f" the cap broken at {broken} of {cnt} Node-clock ticks; the largest diagonal occupation"
+              f" about {int(worst * 1000)} thousandths of a quantum in one state")
+        if w_kept != ticks:
+            fails.append(f"row {row_i}: the two-slot form not kept")
+        if g_moved == 0:
+            fails.append(f"row {row_i}: the one-slot Gram kept")
+        if broken == 0:
+            fails.append(f"row {row_i}: the cap not broken (exact)")
+        # the engine's carried act
+        base = 10 ** 6
+        hands = setting(quanta, p, s, den, base, False)
+        broken_c = cnt_c = 0
+        worst_c = Fr(0)
+        for t in range(1, ticks + 1):
+            hands = [step_carried(h, g) for h in hands]
+            for i in range(len(SITES)):
+                cnt_c += 1
+                n11 = n22 = n12r = n12i = Fr(0)
+                for k, h in enumerate(hands):
+                    u, d = zpair(h[0][i], 0), zpair(h[0][i], 1)
+                    wgt = weights[k] * base * base
+                    n11 += Fr(u[0] * u[0] + u[1] * u[1], wgt)
+                    n22 += Fr(d[0] * d[0] + d[1] * d[1], wgt)
+                    n12r += Fr(u[0] * d[0] + u[1] * d[1], wgt)
+                    n12i += Fr(u[1] * d[0] - u[0] * d[1], wgt)
+                tr = 2 - n11 - n22
+                det = (1 - n11) * (1 - n22) - (n12r * n12r + n12i * n12i)
+                broken_c += not (tr >= 0 and det >= 0)
+                worst_c = max(worst_c, n11, n22)
+        print(f"   the engine's carry (rule3.rule3, base {base}): the cap broken at {broken_c} of {cnt_c} Node-clock ticks;"
+              f" the largest diagonal occupation about {int(worst_c * 1000)} thousandths")
+        if broken_c == 0:
+            fails.append(f"row {row_i}: the cap not broken (carried)")
+    print("result:", "the mutant fails as it must (the cap broken on the head's step), the controls hold" if not fails else f"UNEXPECTED: {fails}")
+    return 1 if fails else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+== c5_law.py ==
+"""Probe c5: the tensor against the law (ALGEBRA.md line 98 and the locality law): the count of integers per Node-clock,
+the integers' growth, the reach of the step and of the lay, and a lay that writes within one Mesh.
+
+  venv314/bin/python -I c5_law.py <repo>/src            the claims (must print 0 failures)
+  venv314/bin/python -I c5_law.py <repo>/src mutants    the mutations (each must fail)
+
+1. The count per Node-clock: the tensor's row has a fixed length on a fixed board (m x mV Gaussian entries); one hand per
+   quantum holds m Gaussian entries per quantum (it varies with the quanta).
+2. The growth: the exact step multiplies the scale by N(D) each tick (bits per tick read from the operators); a lay of a
+   spread newcomer roughly doubles the tensor's widest integer.
+3. The step's reach: each axis step reads one Mesh; the whole tick U = W_z W_y W_x reaches the 8 corners (three Meshes),
+   so the tick is three sub-acts of one Mesh each.
+4. With a coin that differs at one Node-clock y0, the tensor's row at x (far from y0) changes: the row reads the coin of
+   every Node-clock it holds a column for. One hand per quantum does not.
+5. The lay's write: a newcomer laid at x into spread occupants changes rows beyond one Mesh of x.
+6. A lay that writes within one Mesh (S = x and its six neighbours): psi = Q_S chi with Q_S the projector off the range of
+   rho_SS; rho stays a projector, only S x S changes, its free size is at most the global one; with 14 spread quanta on
+   the 3^3 torus (14 = 2 x 7 states in S) it refuses every newcomer while the global free size is above 0.
+Integers and Fractions only.
+"""
+
+from __future__ import annotations
+
+import os
+import random
+import sys
+from fractions import Fraction as Fr
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+SRC = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("mut") else "/home/user/Universe24/src"
+sys.path.insert(0, SRC)
+
+from caplib import (  # noqa: E402
+    ZERO, Board, Tensor, coin_op, dirac_step, fr, ga, gc, gk, gm, gn, gs, local_vec, mass_coin, rand_gauss_vec, sp_apply,
+    sp_from_blocks, sp_int, sp_integral, sp_mul, sp_scale, weyl_step, axis_step,
+)
+from event_universe.core.rates import sine_rim  # noqa: E402
+
+FAIL: list[str] = []
+
+
+def check(name, ok, count=None):
+    if not ok:
+        FAIL.append(name)
+    print(f"  [{'ok' if ok else 'FAILED'}] {name}" + ("" if count is None else f": {count}"))
+
+
+def bits_per_tick(normD):
+    """log2 N(D) in whole and tenths of bits, by integer arithmetic: the largest b with 2^b <= N(D)^10."""
+    x = normD ** 10
+    b = x.bit_length() - 1
+    return f"{b // 10}.{b % 10}"
+
+
+def graph_dist(board, i, j):
+    a, b = board.sites[i // board.m], board.sites[j // board.m]
+    d = 0
+    for u, v in zip(a, b):
+        w = (u - v) % board.L
+        d += min(w, board.L - w)
+    return d
+
+
+def dense_rho(T):
+    return [[(Fr(v[0], T.lam), Fr(v[1], T.lam)) for v in row] for row in T.R]
+
+
+def step_dense(U, rho):
+    """U rho U^dagger with U sparse (Fractions)."""
+    n = len(rho)
+    X = []
+    for row in U:
+        acc = [(Fr(0), Fr(0))] * n
+        for k, a in row.items():
+            acc = [ga(p, gm(a, b)) for p, b in zip(acc, rho[k])]
+        X.append(acc)
+    Y = [[(Fr(0), Fr(0))] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            t = (Fr(0), Fr(0))
+            for k, a in U[j].items():
+                t = ga(t, gm(X[i][k], gc(a)))
+            Y[i][j] = t
+    return Y
+
+
+# ---------------------------------------------------------------- exact linear algebra over Q(i)
+
+
+def gdivf(a, b):
+    n = b[0] * b[0] + b[1] * b[1]
+    p = gm(a, gc(b))
+    return (Fr(p[0]) / n, Fr(p[1]) / n)
+
+
+def column_basis(A):
+    """Indices of a maximal set of independent columns of A (Gaussian elimination over Q(i))."""
+    rows, cols = len(A), len(A[0])
+    M = [[(Fr(v[0]), Fr(v[1])) for v in row] for row in A]
+    piv_cols, r = [], 0
+    for c in range(cols):
+        p = next((i for i in range(r, rows) if M[i][c][0] or M[i][c][1]), None)
+        if p is None:
+            continue
+        M[r], M[p] = M[p], M[r]
+        for i in range(rows):
+            if i != r and (M[i][c][0] or M[i][c][1]):
+                f = gdivf(M[i][c], M[r][c])
+                M[i] = [gs(x, gm(f, y)) for x, y in zip(M[i], M[r])]
+        piv_cols.append(c)
+        r += 1
+        if r == rows:
+            break
+    return piv_cols
+
+
+def inverse(A):
+    n = len(A)
+    M = [[(Fr(v[0]), Fr(v[1])) for v in row] + [((Fr(1), Fr(0)) if i == j else (Fr(0), Fr(0))) for j in range(n)] for i, row in enumerate(A)]
+    for c in range(n):
+        p = next(i for i in range(c, n) if M[i][c][0] or M[i][c][1])
+        M[c], M[p] = M[p], M[c]
+        inv = gdivf((Fr(1), Fr(0)), M[c][c])
+        M[c] = [gm(inv, x) for x in M[c]]
+        for i in range(n):
+            if i != c and (M[i][c][0] or M[i][c][1]):
+                f = M[i][c]
+                M[i] = [gs(x, gm(f, y)) for x, y in zip(M[i], M[c])]
+    return [row[n:] for row in M]
+
+
+def range_projector(A):
+    """The projector onto the column space of A: B (B^dagger B)^-1 B^dagger, B the independent columns."""
+    n = len(A)
+    cols = column_basis(A)
+    if not cols:
+        return [[(Fr(0), Fr(0))] * n for _ in range(n)], 0
+    B = [[A[i][c] for c in cols] for i in range(n)]
+    r = len(cols)
+    G = [[sum_g(gm(gc(B[k][a]), B[k][b]) for k in range(n)) for b in range(r)] for a in range(r)]
+    Gi = inverse(G)
+    BG = [[sum_g(gm(B[i][a], Gi[a][b]) for a in range(r)) for b in range(r)] for i in range(n)]
+    P = [[sum_g(gm(BG[i][b], gc(B[j][b])) for b in range(r)) for j in range(n)] for i in range(n)]
+    return P, r
+
+
+def sum_g(it):
+    t = (Fr(0), Fr(0))
+    for x in it:
+        t = ga(t, x)
+    return t
+
+
+def is_projector(rho):
+    n = len(rho)
+    for i in range(n):
+        for j in range(n):
+            t = sum_g(gm(rho[i][k], rho[k][j]) for k in range(n))
+            if t != rho[i][j]:
+                return False
+    return True
+
+
+def local_lay(board, rho, x, s):
+    """The lay that writes within one Mesh of x: S = x and its six neighbours; psi = Q_S chi_S."""
+    m = board.m
+    site = board.sites[x]
+    S = [x]
+    for a in range(board.d):
+        for e in (1, -1):
+            S.append(board.index[board.step(site, a, e)])
+    idx = [y * m + c for y in S for c in range(m)]
+    rho_SS = [[rho[i][j] for j in idx] for i in idx]
+    P, r = range_projector(rho_SS)
+    nS = len(idx)
+    chi_S = [(Fr(0), Fr(0))] * nS
+    for c in range(m):
+        chi_S[c] = (Fr(s[c][0]), Fr(s[c][1]))
+    psi = [gs(chi_S[i], sum_g(gm(P[i][j], chi_S[j]) for j in range(nS))) for i in range(nS)]
+    f_loc = sum(gn(v) for v in psi)  # chi^dagger Q_S chi = |Q_S chi|^2
+    return idx, psi, f_loc, r
+
+
+def main_claims():
+    rng = random.Random(77)
+    print("1. The count of integers per Node-clock (line 98: fixed for the run)")
+    rows = []
+    for name, V, m in (("ring of 16", 16, 2), ("3^3, Weyl", 27, 2), ("3^3, Dirac", 27, 4), ("5^3 (world_nature's board), Dirac", 125, 4)):
+        tensor_row = 2 * m * m * V  # m rows of mV Gaussian entries, two integers each
+        hands = 2 * m  # per quantum, first order: m Gaussian entries
+        rows.append((name, tensor_row, hands))
+        print(f"   {name}: the tensor's row {tensor_row} integers per Node-clock (half with the Hermitian pair stored once);"
+              f" one hand per quantum {hands} integers per quantum (N quanta: {hands} N)")
+    b = Board(16, 1, 2)
+    T = Tensor(b.n)
+    U = sp_mul(coin_op(b, mass_coin(3, 4, 5)), weyl_step(b))
+    Ui = sp_int(sp_scale(fr((5, 0)), U))
+    lens = set()
+    for t in range(30):
+        if t in (0, 10, 20):
+            T.lay(rand_gauss_vec(rng, b.n, 2), -1)
+        lens.add(tuple(len(T.R[x * 2 + c]) for x in range(b.V) for c in range(2)))
+        T.step(Ui, 25)
+    check("the tensor's row length per Node-clock is the same at every tick while quanta are laid", len(lens) == 1, f"{len(lens)} length(s) seen over 30 ticks with 3 lays")
+
+    print("2. The integers' growth in the exact form")
+    import json
+    with open(os.path.join(os.path.dirname(SRC.rstrip('/')), "tests", "worlds", "universe_toy.json")) as f:
+        cal = json.load(f)
+    den = int(cal["integers"]["den"])
+    pe = int(cal["rows"][0]["pair"][0])
+    for name, nD in (("ring, (3, 4, 5)", 25), ("ring, (20, 21, 29)", 29 * 29), ("ring, the calibre's den", den * den),
+                     ("3-D Weyl, 2(1 + i)", 8), ("3-D Dirac, 2(1 + i) den", 8 * den * den)):
+        print(f"   {name}: N(D) = {nD}, about {bits_per_tick(nD)} bits per tick")
+    b = Board(12, 1, 2)
+    U = sp_mul(coin_op(b, mass_coin(3, 4, 5)), weyl_step(b))
+    Ui = sp_int(sp_scale(fr((5, 0)), U))
+    T = Tensor(b.n)
+    T.lay(local_vec(b, 0, [(1, 0), ZERO]), -1)
+    T.lay(local_vec(b, 3, [(1, 1), (0, 1)]), -1)
+    for _ in range(40):
+        T.step(Ui, 25)
+    before = max(max(abs(v[0]).bit_length(), abs(v[1]).bit_length()) for row in T.R for v in row)
+    T.lay(local_vec(b, 6, [(2, 1), (1, -1)]), -1)
+    after = max(max(abs(v[0]).bit_length(), abs(v[1]).bit_length()) for row in T.R for v in row)
+    print(f"   a lay after 40 ticks: the widest integer {before} bits before, {after} after")
+    check("a lay into spread occupants roughly doubles the tensor's widest integer (the Gram-Schmidt denominator)", after >= before + before // 2, f"{before} -> {after}")
+
+    print("3. The step's reach")
+    b3 = Board(3, 3, 2)
+    b4 = Board(5, 3, 2)
+    ok = True
+    for a in range(3):
+        W = axis_step(b4, a)
+        ok &= all(graph_dist(b4, i, j) <= 1 for i, row in enumerate(W) for j in row)
+    UL = weyl_step(b4)
+    reach = max(graph_dist(b4, i, j) for i, row in enumerate(UL) for j in row)
+    per_row = {len({j // 2 for j in row}) for row in UL}
+    per_site = {len({j // 2 for c in range(2) for j in UL[2 * x + c]}) for x in range(b4.V)}
+    check("each axis step W_a reads one Mesh (5^3 torus, operator level)", ok)
+    check("the whole tick W_z W_y W_x reaches three Meshes: each hand 4 corners (the up hand's +z, the down hand's -z),"
+          " the Node-clock's two hands the 8; so the tick is three sub-acts of one Mesh each", reach == 3 and per_row == {4} and per_site == {8},
+          f"reach {reach}, corners per row {per_row}, per Node-clock {per_site}")
+
+    print("4. A coin that differs at one Node-clock: the tensor's row reads it from afar; one hand per quantum does not")
+    b = Board(16, 1, 2)
+    y0 = 8
+    S_ = weyl_step(b)
+    blocks_uniform = [((0,), mass_coin(3, 4, 5))]
+    Cu = coin_op(b, mass_coin(3, 4, 5))
+    Cv = [dict(r) for r in Cu]
+    M2 = mass_coin(5, 12, 13)
+    for c in range(2):
+        Cv[y0 * 2 + c] = {y0 * 2 + c2: M2[c][c2] for c2 in range(2) if M2[c][c2][0] or M2[c][c2][1]}
+    Uu, Uv = sp_mul(Cu, S_), sp_mul(Cv, S_)
+    T = Tensor(b.n)
+    for chi in (local_vec(b, 0, [(1, 0), ZERO]), local_vec(b, 5, [(0, 1), (1, 0)]), local_vec(b, 11, [(1, 0), (1, 0)])):
+        T.lay(chi, -1)
+    Ui = sp_int(sp_scale(fr((5, 0)), Uu))
+    for _ in range(12):
+        T.step(Ui, 25)  # spread the occupants over the ring
+    rho = dense_rho(T)
+    ru, rv = step_dense(Uu, rho), step_dense(Uv, rho)
+    x = 0  # eight Meshes from y0
+    changed = sum(1 for c in range(2) for j in range(b.n) if ru[x * 2 + c][j] != rv[x * 2 + c][j])
+    check(f"the tensor's row at Node-clock {x}, {graph_dist(b, 2 * x, 2 * y0)} Meshes from y0, changes when only the coin at y0 changes",
+          changed > 0, f"{changed} of {2 * b.n} entries of the row")
+    hand = rand_gauss_vec(rng, b.n, 3)
+    hu, hv = sp_apply(Uu, [fr(a) for a in hand]), sp_apply(Uv, [fr(a) for a in hand])
+    far_same = all(hu[i] == hv[i] for i in range(b.n) if graph_dist(b, i, 2 * y0) > 1)
+    check("one hand per quantum: the hand's values beyond one Mesh of y0 do not change", far_same)
+
+    print("5. The lay's write reaches beyond one Mesh")
+    rho = dense_rho(T)
+    T2 = T.copy()
+    T2.lay(local_vec(b, 3, [(1, 0), (0, 1)]), -1)
+    rho2 = dense_rho(T2)
+    far_rows = sum(1 for i in range(b.n) if graph_dist(b, i, 6) > 1 and any(rho[i][j] != rho2[i][j] for j in range(b.n)))
+    check("a newcomer laid at Node-clock 3 into spread occupants changes rows more than one Mesh away", far_rows > 0,
+          f"{far_rows} of {sum(1 for i in range(b.n) if graph_dist(b, i, 6) > 1)} rows beyond one Mesh")
+
+    print("6. A lay that writes within one Mesh: exact, local, and more often refused")
+    b3 = Board(3, 3, 2)
+    UL3 = sp_int(sp_scale(fr((2, 2)), weyl_step(b3)))
+    ok_proj = ok_local = ok_le = tried = 0
+    for trial in range(6):
+        T = Tensor(b3.n)
+        for _ in range(4):
+            T.lay(rand_gauss_vec(rng, b3.n, 2), -1)
+        for _ in range(2):
+            T.step(UL3, 8)
+        rho = dense_rho(T)
+        x = rng.randrange(b3.V)
+        s = [(rng.randint(-2, 2), rng.randint(-2, 2)) for _ in range(2)]
+        if not any(a[0] or a[1] for a in s):
+            s = [(1, 0), ZERO]
+        idx, psi, f_loc, r = local_lay(b3, rho, x, s)
+        F, _ = T.free_size(local_vec(b3, x, s))
+        f_glob = Fr(F, T.lam)
+        tried += 1
+        ok_le += f_loc <= f_glob
+        if f_loc > 0:
+            new = [row[:] for row in rho]
+            for a, i in enumerate(idx):
+                for c, j in enumerate(idx):
+                    p = gm(psi[a], gc(psi[c]))
+                    new[i][j] = ga(new[i][j], (p[0] / f_loc, p[1] / f_loc))
+            ok_proj += is_projector(new)
+            ok_local += all(new[i][j] == rho[i][j] for i in range(b3.n) for j in range(b3.n) if not (i in idx and j in idx))
+    check("the local free size |Q_S chi|^2 is at most the global free size chi^dagger (1 - rho) chi", ok_le == tried, f"{ok_le} of {tried}")
+    check("the local lay keeps rho a projector and changes only the S x S entries", ok_proj == ok_local == tried, f"{ok_proj} and {ok_local} of {tried}")
+    T = Tensor(b3.n)
+    laid = 0
+    while laid < 14:
+        if T.lay(rand_gauss_vec(rng, b3.n, 2), -1):
+            laid += 1
+    for _ in range(2):
+        T.step(UL3, 8)
+    rho = dense_rho(T)
+    blocked = glob_free = 0
+    ranks = set()
+    for x in range(0, b3.V, 4):
+        for s in ([(1, 0), ZERO], [ZERO, (1, 0)], [(1, 0), (1, 1)]):
+            idx, psi, f_loc, r = local_lay(b3, rho, x, s)
+            ranks.add(r)
+            F, _ = T.free_size(local_vec(b3, x, s))
+            blocked += f_loc == 0
+            glob_free += F > 0
+    n_tried = 3 * len(range(0, b3.V, 4))
+    check("14 spread quanta: rho_SS has full rank 14 at every S tried, the local lay refuses every newcomer, the global lay none",
+          ranks == {14} and blocked == n_tried and glob_free == n_tried, f"ranks {ranks}; refused {blocked} of {n_tried}; globally free {glob_free} of {n_tried}")
+
+
+def mutants():
+    bad = []
+
+    def report(name, count, of):
+        print(f"  {name}: {count} of {of} (must be above 0)")
+        if count == 0:
+            bad.append(name)
+
+    rng = random.Random(5)
+    b3 = Board(3, 3, 2)
+    UL3 = sp_int(sp_scale(fr((2, 2)), weyl_step(b3)))
+    print("M1. The global free state cut to one Mesh (Q chi truncated to S): rho must stop being a projector")
+    fails = 0
+    for _ in range(6):
+        T = Tensor(b3.n)
+        for _ in range(4):
+            T.lay(rand_gauss_vec(rng, b3.n, 2), -1)
+        T.step(UL3, 8)
+        rho = dense_rho(T)
+        x = rng.randrange(b3.V)
+        chi = local_vec(b3, x, [(1, 0), (0, 1)])
+        F, Rc = T.free_size(chi)
+        v = [(Fr(T.lam * a[0] - c[0], T.lam), Fr(T.lam * a[1] - c[1], T.lam)) for a, c in zip(chi, Rc)]
+        site = b3.sites[x]
+        S = {x} | {b3.index[b3.step(site, a, e)] for a in range(3) for e in (1, -1)}
+        vt = [v[i] if i // 2 in S else (Fr(0), Fr(0)) for i in range(b3.n)]
+        nv = sum(gn(a) for a in vt)
+        new = [[ga(rho[i][j], (gm(vt[i], gc(vt[j]))[0] / nv, gm(vt[i], gc(vt[j]))[1] / nv)) for j in range(b3.n)] for i in range(b3.n)]
+        fails += not is_projector(new)
+    report("lays whose result is not a projector", fails, 6)
+    print("M2. A local write that ignores the occupants (psi = chi at x): rho must stop being a projector")
+    fails = 0
+    for _ in range(6):
+        T = Tensor(b3.n)
+        for _ in range(4):
+            T.lay(rand_gauss_vec(rng, b3.n, 2), -1)
+        T.step(UL3, 8)
+        rho = dense_rho(T)
+        x = rng.randrange(b3.V)
+        chi = local_vec(b3, x, [(1, 0), (0, 1)])
+        nv = sum(gn(a) for a in chi)
+        new = [[ga(rho[i][j], (Fr(gm(chi[i], gc(chi[j]))[0], nv), Fr(gm(chi[i], gc(chi[j]))[1], nv))) for j in range(b3.n)] for i in range(b3.n)]
+        fails += not is_projector(new)
+    report("lays whose result is not a projector", fails, 6)
+    print("result:", "every mutant fails as it must" if not bad else f"MUTANTS PASSED: {bad}")
+    return 1 if bad else 0
+
+
+if __name__ == "__main__":
+    if "mutants" in sys.argv[1:]:
+        raise SystemExit(mutants())
+    main_claims()
+    print("result:", f"{len(FAIL)} failures" + ("" if not FAIL else f": {FAIL}"))
+    raise SystemExit(1 if FAIL else 0)
+
+== junctions.py (David) ==
+"""David's check: each junction of the walk, times a Gaussian unit phase, is three shears with
+Gaussian coefficients over 2 at most; carried with Rule3's rounding, each shear is undone exactly.
+Exact: Fraction pairs only."""
+from fractions import Fraction as Fr
+import random
+
+class G:
+    __slots__ = ("re", "im")
+    def __init__(s, re, im=0): s.re = Fr(re); s.im = Fr(im)
+    def __add__(s, o): o = o if isinstance(o, G) else G(o); return G(s.re + o.re, s.im + o.im)
+    __radd__ = __add__
+    def __sub__(s, o): o = o if isinstance(o, G) else G(o); return G(s.re - o.re, s.im - o.im)
+    def __rsub__(s, o): return G(o) - s
+    def __mul__(s, o): o = o if isinstance(o, G) else G(o); return G(s.re*o.re - s.im*o.im, s.re*o.im + s.im*o.re)
+    __rmul__ = __mul__
+    def conj(s): return G(s.re, -s.im)
+    def norm(s): return s.re*s.re + s.im*s.im
+    def inv(s): n = s.norm(); return G(s.re/n, -s.im/n)
+    def __truediv__(s, o): o = o if isinstance(o, G) else G(o); return s * o.inv()
+    def __eq__(s, o): o = o if isinstance(o, G) else G(o); return s.re == o.re and s.im == o.im
+    def __repr__(s): return f"({s.re}{'+' if s.im >= 0 else '-'}{abs(s.im)}i)"
+    def den(s): return max(s.re.denominator, s.im.denominator)
+
+I = G(0, 1)
+def mm(A, B): return [[A[r][0]*B[0][c] + A[r][1]*B[1][c] for c in range(2)] for r in range(2)]
+def sc(M, z): return [[M[r][c]*z for c in range(2)] for r in range(2)]
+def det(M): return M[0][0]*M[1][1] - M[0][1]*M[1][0]
+def dag(M): return [[M[c][r].conj() for c in range(2)] for r in range(2)]
+def eq(A, B): return all(A[r][c] == B[r][c] for r in range(2) for c in range(2))
+
+Qx = sc([[G(1), G(1)], [G(1), G(-1)]], G(1) / G(1, -1))
+Qy = sc([[G(1), G(1)], [I, G(0, -1)]], G(1) / G(1, -1))
+junctions = {"z to x: Qx^dagger": dag(Qx), "x to y: Qy^dagger Qx": mm(dag(Qy), Qx), "y to z: Qy": Qy}
+units = [G(1), I, G(-1), G(0, -1)]
+fails = 0
+found = {}
+for name, J in junctions.items():
+    ok = False
+    for u in units:  # V = diag(1, u): one Gaussian unit phase on the second row
+        V = [[G(1), G(0)], [G(0), u]]
+        M = mm(V, J)
+        if not (det(M) == G(1)) or M[1][0] == G(0):
+            continue
+        a, b, c, d = M[0][0], M[0][1], M[1][0], M[1][1]
+        p, q = (a - 1) / c, (d - 1) / c
+        S = mm(mm([[G(1), p], [G(0), G(1)]], [[G(1), G(0)], [c, G(1)]]), [[G(1), q], [G(0), G(1)]])
+        if eq(S, M) and max(p.den(), q.den(), c.den()) <= 2:
+            print(f"{name}: diag(1, {u}) J = shear({p}) . lower({c}) . shear({q}); denominators <= 2")
+            found[name] = (u, p, c, q); ok = True; break
+    if not ok:
+        print(f"{name}: NO factorisation found"); fails += 1
+    # the junction is unitary
+    if not eq(mm(dag(J), J), [[G(1), G(0)], [G(0), G(1)]]):
+        print(f"{name}: not unitary"); fails += 1
+
+def R(z):  # Rule3's rounding of a Gaussian rational to the nearest Gaussian integer, half up, per part
+    def r1(x): return (x.numerator * 2 + x.denominator) // (2 * x.denominator)
+    return G(r1(z.re), r1(z.im))
+
+def carried(xy, coefs, back=False):
+    x, y = xy
+    u, p, c, q = coefs
+    steps = [("up", q), ("low", c), ("up", p)]
+    if not back:
+        for kind, k in steps:
+            if kind == "up": x = x + R(k * y)
+            else: y = y + R(k * x)
+        y = y * u
+    else:
+        y = y * u.inv()
+        for kind, k in reversed(steps):
+            if kind == "up": x = x - R(k * y)
+            else: y = y - R(k * x)
+    return (x, y)
+
+random.seed(20261028)
+n_rev = 0; n_moved = 0; N = 2000
+for name, coefs in found.items():
+    for _ in range(N):
+        xy = (G(random.randint(-10**6, 10**6), random.randint(-10**6, 10**6)),
+              G(random.randint(-10**6, 10**6), random.randint(-10**6, 10**6)))
+        f = carried(xy, coefs)
+        if all(t.re.denominator == 1 and t.im.denominator == 1 for t in f) and carried(f, coefs, back=True)[0] == xy[0] and carried(f, coefs, back=True)[1] == xy[1]:
+            n_rev += 1
+        else:
+            fails += 1
+        if f[0].norm() + f[1].norm() != xy[0].norm() + xy[1].norm():
+            n_moved += 1
+print(f"carried junctions: {n_rev} of {N * len(found)} states returned bit for bit; the count moved at {n_moved} of {N * len(found)}")
+# mutant: drop the rounding's remainder handling by rounding with floor in one direction only on the way back
+mut_ok = 0
+for name, coefs in found.items():
+    for _ in range(200):
+        xy = (G(random.randint(-10**6, 10**6), random.randint(-10**6, 10**6)), G(random.randint(-10**6, 10**6), random.randint(-10**6, 10**6)))
+        f = carried(xy, coefs)
+        u, p, c, q = coefs
+        x, y = f; y = y * u.inv()
+        # wrong undo: the shears undone in the forward order
+        for kind, k in [("up", q), ("low", c), ("up", p)]:
+            if kind == "up": x = x - R(k * y)
+            else: y = y - R(k * x)
+        if not (x == xy[0] and y == xy[1]): mut_ok += 1
+print(f"mutant (undo in the wrong order): {mut_ok} of {200 * len(found)} states not returned")
+print("RESULT:", "0 failures" if fails == 0 else f"{fails} failures")
