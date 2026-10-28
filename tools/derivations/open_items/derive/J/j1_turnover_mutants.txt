@@ -1,0 +1,9 @@
+M1. K in place of T on the twin hands: the sign read as K K = +1, so the twin pair would take eps = +1
+  pairs whose sigma_++ in the frame (phi, T phi) is not 0 (Pauli lost): 500 of 500 (must be above 0)
+M2. eps = +1 on the twin hands: the claim 'the run back keeps a present A1 part' must fail (no A1 part at all)
+  twin pairs whose A1 part is 0 under eps = +1: 500 of 500 (must be above 0)
+M3. The order kept, not reversed: the run back then reads no T T, so step 3's selection must vanish
+  cases where the order-kept run back passes (it accepts both signs: the selection is gone): 1000 of 1000 (must be above 0)
+M4. T without its sign (T' u = (conj u2, conj u1)): Kramers must fail
+  pairs where B'(v, u) is not -B'(u, v): 500 of 500 (must be above 0)
+result: every mutant fails as it must

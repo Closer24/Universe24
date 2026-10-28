@@ -1,0 +1,4 @@
+=== mutant grip
+FAIL A2 c_K^2 / c_L^2 = 1 exactly: one limiting speed for two trains of different rest beats : ratio 7/16
+FAIL A3 both holds above 0 and both bands stable : holds 0 and 0
+RESULT: FAILED A2 c_K^2 / c_L^2 = 1 exactly: one limiting speed for two trains of different rest beats, A3 both holds above 0 and both bands stable

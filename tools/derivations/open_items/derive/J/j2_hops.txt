@@ -1,0 +1,20 @@
+1. The hops a Mesh allows: commuting with the Mesh's quarter turn, with T, and units
+  [ok] every Gaussian 2x2 hop (entries in {-1,0,1} + i{-1,0,1}) commuting with Q_z is diagonal: span{1, H_z}: 81 of 6561, all diagonal: True
+  [ok] the unit hops among them that commute with the turnover T are exactly +-1 and +-H_z: 16 units, 4 commuting with T
+  [ok] the plain hop U_d = 1 is covariant under the three quarter turns' lifts: Q U_d Q^-1 = U_(R d): 18 of 18
+  [ok] the half-turn hop U_d = H_d is covariant under the three quarter turns' lifts: Q U_d Q^-1 = U_(R d): 18 of 18
+   so the 24 (and T) allow both hops; nothing in the 24 forces the half-turn hop
+2. The half-turn hop is the staggered (Kogut-Susskind) structure on the 4^3 torus
+  [ok] g(x + e_a)^-1 H_a g(x) is a scalar sign on every link: 192 of 192
+  [ok] the signs are Kogut and Susskind's eta_a(x) = (-1)^(x_1 + ... + x_(a-1)): 192 of 192
+  [ok] a pi flux through every plaquette (the staggered Dirac structure, not a defect of the 24): 192 of 192
+3. Levin and Wen's T-junction on two quanta with spin, explicit hops (center i, neighbours j=+x, k=+y, l=+z)
+  [ok] plain hop: e^(i theta) = +1 on the symmetric pair, -1 on the antisymmetric pair (spins agreeing at the junction): 60 and 60 of 60
+  [ok] plain hop: on the labelled pair LHS = P(RHS), not a number: the exchange is P itself, its sign the sector's: 60 of 60
+  [ok] plain hop: spins not agreeing at the junction give no scalar e^(i theta) (Levin-Wen's particles carry no spin): 60 of 60
+  [ok] half-turn hop: e^(i theta) = +1 on the symmetric pair, -1 on the antisymmetric pair (spins agreeing at the junction): 60 and 60 of 60
+  [ok] half-turn hop: on the labelled pair LHS = P(RHS), not a number: the exchange is P itself, its sign the sector's: 60 of 60
+  [ok] half-turn hop: spins not agreeing at the junction give no scalar e^(i theta) (Levin-Wen's particles carry no spin): 60 of 60
+  [ok] one quantum: H_x H_y H_z = -H_z H_y H_x (a holonomy of one hand; it cancels in the two-quantum relation above)
+   so the hop never makes the sign: the half-turn hop's pi flux 'contributes equally to the swapped and unswapped states'
+result: 0 failures

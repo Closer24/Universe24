@@ -1,0 +1,18 @@
+=== mutant current
+FAIL D1 Gauss's law kept: div E - rho the same at every Node-clock over 10 ticks (the source the Mesh's flux of the sweep)
+RESULT: FAILED D1 Gauss's law kept: div E - rho the same at every Node-clock over 10 ticks (the source the Mesh's flux of the sweep)
+=== mutant curl
+FAIL B1 [side 3] curl grad = 0 exactly
+FAIL B2 [side 3] rank grad = N - 1 = 26, rank curl = 2N - 2 = 52: per wave number k != 0 one gauge and two transverse : 26 and 81
+FAIL B3 [side 3] the harmonic gears ker curl / im grad: 3N - rank curl - rank grad = 3 (the torus's three loops)
+FAIL B4 [side 3] curl^T curl + grad grad^T = -LAPLACIAN on the Meshes (so on transverse gears Maxwell = the one formula's pull)
+FAIL B1 [side 4] curl grad = 0 exactly
+FAIL B2 [side 4] rank grad = N - 1 = 63, rank curl = 2N - 2 = 126: per wave number k != 0 one gauge and two transverse : 63 and 174
+FAIL B3 [side 4] the harmonic gears ker curl / im grad: 3N - rank curl - rank grad = 3 (the torus's three loops)
+FAIL B4 [side 4] curl^T curl + grad grad^T = -LAPLACIAN on the Meshes (so on transverse gears Maxwell = the one formula's pull)
+FAIL C2 the 24 commute with the transverse operator curl^T curl: the link light keeps the 24
+FAIL D1 Gauss's law kept: div E - rho the same at every Node-clock over 10 ticks (the source the Mesh's flux of the sweep)
+RESULT: FAILED B1 [side 3] curl grad = 0 exactly, B2 [side 3] rank grad = N - 1 = 26, rank curl = 2N - 2 = 52: per wave number k != 0 one gauge and two transverse, B3 [side 3] the harmonic gears ker curl / im grad: 3N - rank curl - rank grad = 3 (the torus's three loops), B4 [side 3] curl^T curl + grad grad^T = -LAPLACIAN on the Meshes (so on transverse gears Maxwell = the one formula's pull), B1 [side 4] curl grad = 0 exactly, B2 [side 4] rank grad = N - 1 = 63, rank curl = 2N - 2 = 126: per wave number k != 0 one gauge and two transverse, B3 [side 4] the harmonic gears ker curl / im grad: 3N - rank curl - rank grad = 3 (the torus's three loops), B4 [side 4] curl^T curl + grad grad^T = -LAPLACIAN on the Meshes (so on transverse gears Maxwell = the one formula's pull), C2 the 24 commute with the transverse operator curl^T curl: the link light keeps the 24, D1 Gauss's law kept: div E - rho the same at every Node-clock over 10 ticks (the source the Mesh's flux of the sweep)
+=== mutant unit
+FAIL E1 the Gaussian integers of norm 1 are exactly 1, i, -1, -i: a hand's exact turn across a Mesh is a Z4 link : [(-1, 0), (0, -1), (0, 1), (1, 0), (1, 1)]
+RESULT: FAILED E1 the Gaussian integers of norm 1 are exactly 1, i, -1, -i: a hand's exact turn across a Mesh is a Z4 link
