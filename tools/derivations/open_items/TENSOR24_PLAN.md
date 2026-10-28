@@ -442,7 +442,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 11. **One architecture** (the owner's word to Sofer, 15:0x UTC: one architect; centralize it): Sofer's SOFER-ARCHITECTURE-1.md (scribe-5) is the frame the owner reads, the design its detail, and the one architect's ruling (derive/architecture/RULING.md, 15:4x UTC) decides where they differed. Beside the rule above it fixes:
     - the turnover's T^q as a choice by the bit q, not a power;
     - law 9's sorted draw as a rank count, with no sort and no law changed;
-    - the width: Python integers in numpy object arrays, exact at 112 bits and beyond, int64 refused; the board's index tables (nb and meshes, runner/board.py) alone are integer arrays, since an index counts sites below N and holds no integer of a Node-clock;
+    - the width: Python integers in numpy object arrays, exact at 112 bits and beyond, int64 refused; the index tables alone are integer arrays, since an index counts places and holds no integer of a Node-clock: the board's nb (sites below N) and meshes (Meshes below 3N), runner/board.py, and the plan's two rows of the readings per term, runner/load.py;
     - **the twin hands:** in no basis of their four integer rows do the third turns act as signed permutations, so no ring alone, Z[zeta8] included, keeps the 24 bit for bit on them under element-wise carries. The departure stands until David's route (OPEN 3), and no twin train loads before it.
 
 12. **The standard of known engines** (the owner's word of 15:5x UTC: "in the standard of known engines in the world; everything generic; only simple operations in the Node-clock"). Each part of the design comes from engines the world already trusts (TENSOR24.md, section 31, the prior art):

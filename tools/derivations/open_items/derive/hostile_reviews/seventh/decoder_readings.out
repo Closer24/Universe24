@@ -1,0 +1,68 @@
+lawful: TAKE, the header naming trains 0 and 1, the ledger's every train
+    the plan or schema: SHOWN
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken ledger: it holds train 7 alone, a train of no record
+    the plan or schema: NOT READ
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken ledger: train 1 (which the click took from) left out
+    the plan or schema: NOT READ
+    the head reads:     NOT SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 0 of 1 rounds read, of 1 with a click
+broken ledger: train 0 (which the click laid into) left out, the click's wind lost
+    the plan or schema: NOT READ
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: a whole click of q 5 windings with no books at all
+    the plan or schema: books open or not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: a take that gains its windings (4 to 8) laid from a train that loses them
+    the plan or schema: books open or not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: a click of train 1 that takes from train 0 alone, q 4
+    the plan or schema: books open or not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: a whole click at site 99 of a board of one site
+    the plan or schema: not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: a whole click at site -1
+    the plan or schema: not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: a whole click at round 5 of a record of 1 round
+    the plan or schema: not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: a whole click at round -3
+    the plan or schema: not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: a float in a field the schema does not name
+    the plan or schema: not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: NaN in a field the schema does not name
+    the plan or schema: not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: a truth value in a field the schema does not name
+    the plan or schema: not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: null in a field the schema does not name
+    the plan or schema: not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+broken: the end's digest "" (the schema: a digest is SHA-256 in hex)
+    the plan or schema: not read
+    the head reads:     SHOWN: the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
+ticks, k 2 at every beat
+    the plan or schema: not read
+    the head reads:     8 ticks
+ticks, k -1 at every beat
+    the plan or schema: not read
+    the head reads:     -4 ticks
+ticks, a second line repeating k 1 at beat 3
+    the plan or schema: not read (or 4)
+    the head reads:     4 ticks
+ticks, a whole click at count 0 (before any beat)
+    the plan or schema: not read
+    the head reads:     0 ticks
+the library, a lawful rate line of a 4301-digit dial
+    the head reads:     line 2 is no JSON object with its kind
+the tool, the ledger of train 7 alone: exit 0
+    row 15: {'kind': 'SHOWN', 'cause': 'the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click', 'first': {'whole clicks': 1, 'read': 1, 'closed': 1}, 'second': {'rounds with a click': 1, 'read': 1, 'agree': 1}}
+    the whole clicks' ticks from the rate lines: 1 read, 0 not read; the last read [1]
+the tool, a click with no books, q 5: exit 0
+    row 15: {'kind': 'SHOWN', 'cause': 'the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click', 'first': {'whole clicks': 1, 'read': 1, 'closed': 1}, 'second': {'rounds with a click': 1, 'read': 1, 'agree': 1}}
+    the whole clicks' ticks from the rate lines: 1 read, 0 not read; the last read [-1]
