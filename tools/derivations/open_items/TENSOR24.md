@@ -5,6 +5,7 @@ The owner's words of 2026-10-28, 06:0x to 06:4x UTC (Hebrew, translated):
 - "Call the plan Tensor24. Write it for me here and for everyone in such a file, make sure it stands, divide the work. At its end the whole engine is tensor arithmetic only: say of which order. Explain how the clock enters here, what the node takes and what it gives, and what all the families are. For now only close the plans with everyone, implementing nothing. Make sure that at its end there are no numbers in the code and no circular proofs."
 - "Understand how the click enters the plan, its kinds, all the families and what they are, the family you wanted to add included. Reach the main formula of the Node-clock, just as general relativity has a tensor equation, but that one is not for the node."
 - "Only when everyone agrees on the plan, present it to me. It must bring the whole engine to work as an integer tensor machine that represents the clocks and everything the system has now: clicks, time reversal, everything. There is no problem that the tensor has complex numbers, is there? Maybe it simplifies, but the acts are on the complex numbers' coefficients, so they are integers. Call them by the names they have now."
+- "First reach a plan that closes everything, everything, everything, and that everyone approves. If the push helps the plan, push. You manage the plan Tensor24 and present it to me, right? Remember: all of you must approve it after you have checked it, locally, in the code. Every part of this plan you must check that it works and reflects nature in the end one to one, and that it has all the clocks needed, all the gears, all the hands, everything that is needed there."
 
 The plan's owner: the Boss. The names are the ones the owner sees in his app: Boss, Sofer, David and Animate (the owner's word through Animate, 06:3x UTC, #2187 6462416209). Its base: engine-5.0-test at 526a5666d. Its status: a plan, with nothing built under it.
 
@@ -25,6 +26,7 @@ The plan's owner: the Boss. The names are the ones the owner sees in his app: Bo
 ## 1. The end state
 
 - **One integer tensor machine.** The whole engine is one integer tensor machine of the clocks. Every Node-clock steps every gear of every train by one formula (section 2), then one carry. The quotient leaves; the remainder stays.
+- **Nature one to one.** Every one of the 77 rows of the gates is shown on the one big bang's chart, its calibre holding every train the rows need (section 14 names the trains, acts and settings still missing).
 - **Nothing the engine does on the head is lost** (section 8): every click, the rewind bit for bit, the books, the order-free phase, the swing, the stopped Node-clock, the bottom, the held field, the twin hands, the standard.
 - **The order.** The engine is integer tensor arithmetic of the second order:
   - its highest tensors, the metric and the stress, are of rank 2;
@@ -51,6 +53,26 @@ then the carry: the quotient goes to the notch and the remainder stays in the fi
 - D is the spring, the train's mass term, from its pair and the clock's rate.
 - J is the source: one contraction of the other trains' gears, its kind's part of the product table, weighed by the calibre's couplings.
 
+**The exact integer form, checked bit for bit on the head.** The gear's momentum is p = W (a - a-) + (r - mid W), the notch's step in the clock's teeth count with the fine tooth's offset. The step is
+
+    p+ = p + s F + K,    a+ = a + (p+ + mid W+) div W+,    r+ = (p+ + mid W+) mod W+
+
+- F is the pull: the sum over the six Spokes of g_j (U_j a_j - a), less D a, with Pauli's term for the twin hands.
+- U_j a_j is the neighbour's hand carried across the Mesh: turned by the Mesh's turn (the offset's pair of each Spoke) and by the pawl's reflection. So the Laplacian is the covariant one, and the Mesh carries the potential's connection.
+- K is the kick, T s q, with q a whole carry of the source: the lead's on the offset, the masses' on the held field.
+- The regulator steps by Rule3's turn, T (a+ - 2 a + a-) = the grips times (a_j - a) less D a, then by the drive of its numerators, q = carry(N, its drive teeth count, its drive fine tooth).
+- The unsprung hand's first gear takes the release's advance, and its recoil drives the regulator's flow gear on the Mesh.
+
+**The Boss's probe** (formula0.py, a harness on the head's own acts, no engine change) read every gear at every Node-clock:
+
+| world, ticks | sprung and unsprung hands, sites with K != 0 | offset and held field kicks equal to T s q | driven gears where p+ = p + s F + K | regulator gears where turn + drive |
+| --- | --- | --- | --- | --- |
+| the hole, 30 | 0 of 30,000 | 276 of 276 | 41,250 of 41,250 | 26,249 of 26,250 |
+| nature, 20 | 0 of 20,000 | 29 of 29 | 27,500 of 27,500 | 17,500 of 17,500 |
+| the one big bang, 12 | 0 of 6,144 | 768 of 768 | 9,216 of 9,216 | 5,376 of 5,376 |
+
+The one regulator site and the one unsprung site on the hole not read by the form are the release's advance of the unsprung hand and its recoil, the two terms of J the formula names for them.
+
 **Its two halves, as in general relativity:**
 - **The metric's half** (the Einstein part): the regulator's gears are driven by the matter's stress. J is kappa times the stress's part of each kind: the trace and the forms on the time gear, the traceless part on the tensions, the flows on the flow gears.
 - **The matter's half** (the motion part): every hand moves by the same form, with the metric's W, s and Q_j as its coefficients.
@@ -73,10 +95,11 @@ then the carry: the quotient goes to the notch and the remainder stays in the fi
 - **The products are the complex product's two coefficients.** The hand's own two products are the real and imaginary coefficients of conj(z) w: hands.dot and meshes.cross (David, 6462024199). A product of two hands is one complex product.
 - **A quarter turn of a hand's plane is the multiplication by i:** (three, twelve) to (-twelve, three), an exchange and a sign, the one mirror's own act. The 24 act on a hand's plane by i alone.
 - **A train's kind is its cube kind times its own.** Its own part is one gear, one Gaussian integer (a hand), or two Gaussian integers (the twin hands).
-- **The twin hands.** A spinor's quarter turn is the multiplication by the eighth root of unity, (1 + i) over the root of 2.
-  - Over the eighth roots, the integer ring Z[zeta8] with four integer coefficients a + b zeta + c zeta^2 + d zeta^3, that multiplication is an exchange of the coefficients with one sign. So it is exact in integers.
-  - The cube's three-fold turns of a spinor still ask a half.
-  - David derives the way (open item 11 a).
+- **The twin hands, checked by the Boss's probe spinor24.py:**
+  - **One axis.** Over the eighth roots of unity, the ring Z[zeta8] with four integer coefficients a + b zeta + c zeta^2 + d zeta^3, a spinor's quarter turn about its own axis is the multiplication by zeta: an exchange of the coefficients with one sign, exact. Four quarter turns give -1 and eight give +1, spin one half's sign.
+  - **The other turns.** The quarter turns about the other two axes and the three-fold turns ask 1 over the root of 2. That is no integer of Z[zeta8], since the norm of the root of 2 there is 4.
+  - **What does hold.** With an integer scale exponent e carried with the twin hands (the state psi over the root of 2 to the e), every turn of the cube's double cover is an integer matrix over the Gaussian integers: a quarter turn with e + 1, a three-fold turn with e + 2, a half turn with e unchanged.
+  - **What David derives:** the step with twin hands at two exponents (open item 11 a).
 
 ## 4. The click in the plan
 
@@ -220,8 +243,8 @@ The cuts, in order:
 
 ## 11. Open, by name
 
-- **(a) The twin hands.** A spinor's quarter turn needs the root of 2 over the Gaussian integers: on the z axis it is the diagonal (1 - i, 1 + i) over the root of 2. Its half turn is a Gaussian integer. Over the eighth roots of unity (section 3) the quarter turn is exact, but the three-fold turns ask a half. David derives which way stands:
-  - the twin hands' gears over the eighth roots, with the half carried as an integer scale exponent; or
+- **(a) The twin hands.** A spinor's quarter turn needs the root of 2 over the Gaussian integers: on the z axis it is the diagonal (1 - i, 1 + i) over the root of 2. Its half turn is a Gaussian integer. Over the eighth roots of unity only the quarter turn about the twin hands' own axis is exact (section 3). David derives which way stands:
+  - the twin hands' gears over the Gaussian integers with an integer scale exponent, every turn of the double cover an integer matrix (section 3); or
   - the twin hands read only through their bilinears (the density, A1, and the spin, T1), with the 24 asked of those.
 
   Until then the 24 is asked of the five kinds and of the twin hands' bilinears.
@@ -258,3 +281,49 @@ The cuts, in order:
 - the suite under the 30 s bound;
 - the scan with no count risen;
 - the full check exiting 0 before any push.
+
+## 14. Nature one to one: the 77 rows and what each needs
+
+**The count.** The 77 rows of the gates on the four charts at 834cfd72e (the one big bang at 250 ticks), shown whole or in part:
+- the hole 36, the chiral 33, the bodies 18, the one big bang 34;
+- 44 of the 77 rows on at least one chart, 33 on none.
+
+For nature one to one, every row must be shown on the one big bang's chart. What the 33 need, by kind (the Boss's reading of the rows' names and verdicts, for Animate to check row by row):
+
+| what is missing | the rows | of what kind | who |
+| --- | --- | --- | --- |
+| twin hands in a calibre and a setting (the click of a split) | 39 the Zeeman and Stark shifts, 41 the spinor's two beats, 42 the split along the gradient (Stern-Gerlach), 57 GHZ; 56 Bell past the local bound | a train, the twin hands, in the one big bang's calibre | David derives (11 a); the owner's word on the calibre (11 e) |
+| the one-hand coupling | 20 the twist's 24 and 24, 52 the neutrino; 69 on the one big bang | one row of the calibre's couplings | David derives; the owner's word (11 b) |
+| the composite train | 76 nuclear binding and fusion, 77 the baryon as a shape | a train, the product of two kinds, with no new number | David derives (11 c) |
+| the conversion of one train into its list | 28 the conversion list, 49 the exponential decay | the click of a whole into several trains, the unspringing's generic form | David derives |
+| the metric's shears read by an act | 36 the shears as waves, 35 frame dragging | the regulator's T2 back, with the act that reads it (R11 struck the shears because no act read them; general relativity's metric has ten components, the regulator seven) | David derives; the owner's word, R11 standing until then |
+| gravity on light and on an orbit | 11 gravitational redshift, 12 light's delay or deflection, 13 free fall, 29 the redshift of light, 31 the deflection and the Shapiro delay, 32 the perihelion, 33 free fall by the tail | a setting, a mass with light or a bob passing, and its reading | the Boss sets; Animate reads |
+| a stopped Node-clock | 14 the horizon, 34 the horizon and the stopped clock, 61 the horizon radiates | a setting that collapses to a stopped clock | the Boss sets; Animate reads |
+| settings of packets | 38 the Aharonov-Bohm phase, 44 the moving setting's velocity against k, 50 light on light, 51 the Casimir force and the running alpha, 53 a fast packet binds at its setting, 54 scattering, 55 the two slits | pieces and their readings | the Boss sets; Animate reads |
+| a common temperature | 48 the black body, 75 temperature and equipartition | an exchange that shares the wind among the trains (the unsprung hand's wind stands 10^7 above matter's) | David derives |
+| the reading across the turnover | 58 the fast expansion after the bang; 2, 3, 5 and 6 on the one big bang | the relics between swings read through the clocks' reversal (the owner's word of 05:4x UTC: because of the clocks' reversal, contraction is seen as expansion) | Animate reads |
+| the momentum across the click | 23 the momentum across the click | the fitting's momentum read across its two ends | cut 5; Animate reads |
+
+**The order:**
+- the cuts of section 10 make the engine one act, row for row as the head;
+- the trains, acts and settings above then bring the rows in, each derived by David before it is built, each read by Animate on the one big bang's chart;
+- a train or act that needs a new number is refused, and goes to the owner.
+
+## 15. The checks, by who ran them
+
+- **The Boss:**
+  - kinds24.py: the five kinds by characters on the 24;
+  - spinor24.py: the twin hands' turns in integers (section 3);
+  - formula0.py: the main formula bit for bit on the hole, nature and the one big bang (the table in section 2);
+  - the scan's counts at 526a5666d (section 9);
+  - the rows' table at 834cfd72e (section 14);
+  - the fair draw, cut 1, pushed as 834cfd72e (the full check 118 passed, the scan clean).
+- **David** (asked, #2187 6462600571):
+  - the main formula against the head on toys-5;
+  - the twin hands' integer turns;
+  - section 8's completeness;
+  - the fair draw on toys-5;
+  - the derivations of section 14.
+- **Animate** (asked): the 77 rows against the trains each needs (section 14, row by row); the bench of 834cfd72e.
+- **Sofer** (asked): the plan against the law clause by clause; the names against docs/CLOCK_WORDS.md; the scan on every push.
+- **The plan goes to the owner** when all four have checked and approved.
