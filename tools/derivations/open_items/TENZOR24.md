@@ -9,7 +9,7 @@
 
 ## The plan in one paragraph
 
-**The Node-clock is one act.** Its step is one division with a carried remainder over one integer contraction of its own gears and its six Meshes' gears, the same for every train; every gear is read before any is written. A gear is a dial (an integer with a carried remainder); a train is a tensor whose kind is a way the cube's 24 turns exchange and reflect its dials (five kinds, derived from the lattice's axes); the contraction of two kinds follows the group's product table; what differs between families is the kind and the integers of the universe file, never a branch of the code. The click is the one place a choice enters: a draw by the sizes of the parts, reading invariants only at the points the 24 fixes. The sentence is proposed for the law (SCRIBE-THE-NODE-AS-ONE-ACT-1.md) and enters on the owner's word.
+**The Node-clock is one act.** Its step is one division with a carried remainder over one integer contraction of its own gears and its six Meshes' gears, the same for every train; every gear is read before any is written. A gear is a dial (an integer with a carried remainder); a train is a tensor whose kind is a way the cube's 24 turns exchange and reflect its dials (five kinds, derived from the lattice's axes); the contraction of two kinds follows the group's product table; what differs between families is the kind and the integers of the universe file, never a branch of the code. The click is the one place a choice enters: a draw by the sizes of the parts, reading invariants only at the points the 24 fixes. The sentence is the law's clause **The Node-clock is one act** (docs/ALGEBRA.md), entered on the owner's word of 06:0x UTC as decided and not yet built.
 
 ## The one place of the 24
 
@@ -39,7 +39,7 @@ The engine never turns anything: the step is made of invariants (a sum over the 
 
 | cut | state | bench |
 | --- | --- | --- |
-| 0 the fair draw | built and measured in the Boss's toy; not pushed, the owner's go awaited | the Reader's diff at the push |
+| 0 the fair draw | built and measured in the Boss's toy; the owner's go given (06:0x UTC, relayed in the thread), the push the Boss's | the Reader's diff within the hour of the push |
 | 1 the one place of the 24, the fixed-point test | not begun | |
 | 2 the pure contractions | not begun | |
 | 3 the pointwise maps | not begun (David's derivations first) | |
@@ -53,12 +53,12 @@ The engine never turns anything: the step is made of invariants (a sum over the 
 3. **Fusion as a composite family, and the clock of clocks** (a bound pair that becomes one larger clock). In the frame a composite is a train whose kind is the product of two kinds (the product table); whether it needs a new number is David's derivation.
 4. **"On the board, do we see both after a bang?"** and **the bang's seed.** Open for the Boss and David; the Boss's finding stands: the bang's matter rests on two or three draws (births in orbits of 32 Node-clocks), and under the fair draw the near-light family is never born, which comes from the seed's symmetry.
 
-## For the owner at 10:30 Israel time (08:30 UTC), with the Scribe's recommendations
+## For the owner at 10:30 Israel time (08:30 UTC), with the Scribe's recommendations (items 1 and 4 decided at 06:0x UTC)
 
-1. **The law's sentence "The Node-clock is one act", entered as decided and not yet built** (the Boss: "the law's form is yours to write first"). Recommended: yes.
+1. **The law's sentence "The Node-clock is one act", entered as decided and not yet built:** yes (06:0x UTC), entered in docs/ALGEBRA.md.
 2. **The reflections, parted or held.** Recommended: held as they are now (the law asks the 24 and allows more); parted only when he wants nature's parity violation as a phenomenon.
 3. **The Bell click:** bell_turn as a function, or a detector hand's gear by Rule3's carry. Recommended: the gear.
-4. **The fair draw's push.** Recommended: yes.
+4. **The fair draw's push:** yes (06:0x UTC), the Boss's to push.
 5. **The bang's seed.**
 6. **The price of the 24:** the light's cycle setting fits nothing (CS5-S2), the hole's chimes fall.
 7. **A required status check on engine-5.0-test,** so that the server too refuses a push that breaks a rule.
@@ -75,3 +75,4 @@ The engine never turns anything: the step is made of invariants (a sum over the 
 - 05:54 the Reader: the five kinds replace his three; the first cut goes now; the law's sentence follows the measured count on the owner's word; the bench within the hour of each push.
 - 06:0x this plan, passed to the Boss in the thread (6461915413).
 - 06:0x the owner names the program Tenzor24 and puts the Boss in charge of it.
+- 06:0x the owner, "Yes and yes.": the law's clause **The Node-clock is one act** entered as decided and not built; the fair draw's push approved.

@@ -521,3 +521,9 @@ The owner's order: pass everything to the Boss so that everyone works on one ten
 The owner names the one tensor plan the program Tenzor24 and puts the Boss in charge of it (ledger row 308). Its file is tools/derivations/open_items/TENZOR24.md: the goal in his words, the Node-clock as one act, the one place of the 24, the roles (the Boss manages and writes, David derives and confirms, the Reader benches, the Scribe documents and keeps the gate), the cuts in order with the state of each, the owner's questions and his list for 08:30 UTC. The Scribe reports to the Boss each hour under the name Tenzor24. No law changed.
 
 **Asked of the Boss:** his word on the plan.
+
+## 49. The Node-clock is one act entered; the fair draw approved (the owner's word, 2026-10-28, 06:0x UTC)
+
+The owner's "Yes and yes." to the Scribe's two recommendations (ledger row 309): the law not to be crossed **The Node-clock is one act** enters docs/ALGEBRA.md as decided and not yet built (after the five-functions clause, whose status now says it is the form of the built engine), and the push of the fair draw is approved, relayed to the Boss in the thread. Of the list for 08:30 UTC remain the reflections, the Bell click, the bang's seed, the price of the 24 and the server's required check.
+
+**Asked of the Boss:** the push of the fair draw. **Asked of the owner at 08:30 UTC:** the five that remain.

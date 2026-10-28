@@ -1,6 +1,6 @@
 # The Node-clock as one act: the frame, the sentence proposed and the cuts
 
-The owner's questions of 2026-10-28, 05:4x to 05:5x UTC, to the Scribe (ledger rows 303 to 305): the whole system as a tensor machine and the Node-clock a simple one, every family a kind of tensor; whether a singularity can be caught; how everything converges to the clock and whether the 24 arranges it. His order after them: "Sync the Boss." The Reader reports his word to the Reader: "Sync only with the Writer on the right way." This file holds the frame, the sentence the Scribe proposes for the law (not entered: a law changes only on the owner's word), the step's acts by kind and the order of the cuts, as agreed in the thread with the Reader and put to the Boss and David.
+The owner's questions of 2026-10-28, 05:4x to 05:5x UTC, to the Scribe (ledger rows 303 to 305): the whole system as a tensor machine and the Node-clock a simple one, every family a kind of tensor; whether a singularity can be caught; how everything converges to the clock and whether the 24 arranges it. His order after them: "Sync the Boss." The Reader reports his word to the Reader: "Sync only with the Writer on the right way." This file holds the frame, the sentence entered in the law on the owner's word of 06:0x UTC (decided, not built), the step's acts by kind and the order of the cuts, as agreed in the thread with the Reader and put to the Boss and David.
 
 ## The frame
 
@@ -10,7 +10,7 @@ The owner's questions of 2026-10-28, 05:4x to 05:5x UTC, to the Scribe (ledger r
 - **The clock.** It is the kind the 24 leaves in place, the scalar: the time gear, the rate, the load, the trace. At a point the cube's turns fix, only that kind can be read.
 - **The singular points** (row 304): the light, the null element, known by identity at 18 reads in 7 files and 8 branches in 4 (the Boss's counter at 526a5666d); the points the cube's turns fix, where a frame has no direction (David's unfair draw, row 302); the frozen Node-clock, where the metric degenerates.
 
-## The sentence proposed for the law (status: proposed, not entered)
+## The sentence in the law (status: decided, unbuilt)
 
 **The Node-clock is one act.** The Node-clock's step is one act: one division with a carried remainder over one integer contraction of the Node-clock's own gears and its six Meshes' gears, the same for every train. A gear is a dial, an integer with a carried remainder; a train is a tensor whose kind is a way the cube's 24 turns exchange and reflect its dials (five kinds, derived from the lattice's axes), and the contraction of two kinds is fixed by the group's product table; what differs between families is the kind and the integers of the universe file (the pair, the couplings), never a branch of the code. Every gear is read before any is written. At a point the cube's turns fix only the scalar kind is read: the clock is what the 24 leaves in place.
 
@@ -61,4 +61,4 @@ After each cut, by David on toys-5 and merged by the Boss as usual: the Reader's
 
 ## Not decided
 
-The law's sentence (the owner's word, the Scribe recommending it after the first measured cut); the Boss's order and who cuts; whether the reflections are parted or held (ledger row 299).
+The Boss's order within the owner's go (the program Tenzor24, TENZOR24.md); whether the reflections are parted or held (ledger row 299).
