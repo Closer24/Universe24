@@ -1,4 +1,4 @@
-"""The plan's property tests for any engine of Tensor24: locality, purity, rename, the 24's images, the formula, the run back."""
+"""The plan's property tests for any engine of Tensor24: locality, purity, rename, the 24's images on sites and kinds, the formula, the run back."""
 
 import hashlib
 import importlib
@@ -110,10 +110,10 @@ def turns():
             yield m
 
 
-def turned(make, shape, rng):
+def turned(make, shape, rng, trains=2):
     """The board's moves, the 24 turns and the three unit translations that generate them all, move the step alike."""
     e, nb = make(), board(shape)
-    s = e.world(rng, shape, 2)
+    s = e.world(rng, shape, trains)
     out = flat(e.step(nb, s))
     xyz, sides, unit = np.indices(shape).reshape(3, -1), np.array(shape)[:, None], np.eye(3, dtype=int)
     for moved in [m @ xyz for m in turns()] + [xyz + unit[:, [k]] for k in range(3)]:
@@ -124,6 +124,42 @@ def turned(make, shape, rng):
         for x, y in zip(there, s, strict=True):
             x[:, site] = y
         if not same([p[:, site] for p in flat(e.step(nb, there))], out):
+            return False
+    return True
+
+
+def stored(m):
+    """A turn on the kinds as stored, from the turn alone: A1 1, A2 the axes' sign, T1 the turn, T2 the two, the tensions |m|."""
+    sign = round(np.linalg.det(np.abs(m)))
+    blocks = [np.eye(1, dtype=int), sign * np.eye(1, dtype=int), m, sign * m, np.abs(m)]
+    turn = np.zeros((STORED, STORED), dtype=object)
+    at = 0
+    for block in blocks:
+        turn[at : at + len(block), at : at + len(block)] = block.tolist()
+        at += len(block)
+    return turn
+
+
+STORED = (
+    1 + 1 + 3 + 3 + 3
+)  # one train of each kind as stored: A1 and A2, T1 and T2, and the three tensions (A1 + E)
+
+
+def kinded(make, shape, rng):
+    """The 24 turn a train's components as they turn the sites, each stored kind's rows by its own matrix (David's n2)."""
+    e, nb = make(), board(shape)
+    s = e.world(rng, shape, STORED)
+    out = flat(e.step(nb, s))
+    xyz, sides = np.indices(shape).reshape(3, -1), np.array(shape)[:, None]
+    for m in turns():
+        site = np.ravel_multi_index(tuple((m @ xyz) % sides), shape)
+        if np.unique(site).size < site.size:
+            return False  # the turn is no symmetry of this board
+        turn = stored(m)
+        there = tuple(np.empty_like(x) for x in s)
+        for x, y in zip(there, s, strict=True):
+            x[:, site] = turn @ y
+        if not same([p[:, site] for p in flat(e.step(nb, there))], [turn @ p for p in out]):
             return False
     return True
 
@@ -146,7 +182,7 @@ def bijective(make, shape, rng):
     return undone and forth
 
 
-PROPERTIES = {"locality": local, "purity": pure, "rename": renamed, "images": turned}
+PROPERTIES = {"locality": local, "purity": pure, "rename": renamed, "images": turned, "kinds": kinded}
 PROPERTIES |= {"formula": formula, "bijectivity": bijective}
 
 

@@ -1,11 +1,11 @@
-"""The record's schema 1.0: JSON Lines of whole numbers and labels, each line's kind its record's name in lower case."""
+"""The record's schema 1.1: JSON Lines of whole numbers and labels, each line's kind its record's name in lower case."""
 
 from dataclasses import dataclass
 
 # The lines, in the order (round, kind, site, train): Header first; then Whole, Split, Turnover, Rate and Books; End
 # last. The ledger's own file holds Ledger lines. The other records stand inside lines. A digest is SHA-256 in hex.
 MAJOR = 1  # a breaking change; the decoder upcasts an older major and refuses an unknown one
-MINOR = 0  # an added field
+MINOR = 1  # an added field; 1.1 names the operands and gives a coupling row its twelve fields (no 1.0 record holds one)
 
 
 @dataclass(frozen=True)
@@ -54,7 +54,10 @@ class Header:
     classes: tuple[int, ...]
     kinds: tuple[Kind, ...]
     trains: tuple[Train, ...]
-    couplings: tuple[tuple[int, int, int, int, int, int], ...]  # as the universe gives them
+    couplings: tuple[
+        tuple[int, int, int, int, int, int, int, int, int, int, int, int], ...
+    ]  # as the universe gives them
+    operands: tuple[str, ...]  # the readings a coupling row's operand indexes, in order
     draw: int
     width: int
 

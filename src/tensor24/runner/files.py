@@ -1,20 +1,26 @@
-"""The three files read and checked: whole numbers alone, the integers and the sides at least 1, each train, part and site referred to there."""
+"""The three files read and checked: whole numbers alone, the integers and the sides at least 1, each train, kind, part and site referred to there."""
 
 import json
 from collections import Counter
 from pathlib import Path
 from typing import Any, TypeGuard
 
-# The checker's one deferral: a gear's component within its kind's dimension and its fine tooth within the teeth
-# are the load's to refuse (stage 6), where the kinds and the teeth are read.
+# The checker's one deferral: a gear's component within its train's rows, a kind among the 24's and a coupling's
+# channel are the load's to refuse (runner/load.py), where the kinds are made; the fine tooth within the teeth is the
+# load's where the teeth are read (stage 7).
 
 NAMES = ("universe", "piece", "setting")
 VERSION = 1
 UNIVERSE = ("version", "integers", "trains", "couplings")
 INTEGERS = ("den", "full_rate", "key", "trace", "width")
-TRAIN = ("name", "kinds", "part", "pair", "weight")
-PAIR = ("pinion", "rim")
-COUPLING = ("train", "part", "with_train", "with_part", "target", "strength")
+PAIR = ("pinion", "sine")  # a hand's Gaussian pair over den; a train of one gear holds its pinion alone
+TRAIN = ("name", "kinds", "part", *PAIR, "weight")
+COUPLING = (
+    *("train", "kind", "part", "operand"),
+    *("with_train", "with_kind", "with_part", "with_operand"),
+    *("target", "target_kind", "target_part", "strength"),
+)
+OPERANDS = ("value", "gradient", "pull", "before", "after")  # the readings an operand names, in order
 PIECE = ("version", "shape")
 SETTING = ("version", "ticks", "gears")
 GEAR = ("train", "component", "site", "a", "b", "r")
@@ -83,24 +89,46 @@ def rows(where: str, held: Any, fields: tuple[str, ...]) -> list[str]:
     ]
 
 
+def pair_departures(where: str, train: dict[str, Any], den: Any) -> list[str]:
+    """A train's pinion within [0, den]; on a hand, a part above 1, its pair's other within [0, den] and the norm den den."""
+    first, second = PAIR
+    pinion, other = train.get(first), train.get(second)
+    if not whole(den):
+        return []  # the integers' own departure is named
+    found = (
+        []
+        if whole(pinion) and 0 <= pinion <= den
+        else [f"{where}.{first}: a whole number within [0, den], not {pinion!r}"]
+    )
+    if not (whole(train.get("part")) and train["part"] > 1):
+        return found + (
+            [] if other is None else [f"{where}.{second}: none on a train of one gear, not {other!r}"]
+        )
+    if not (whole(other) and 0 <= other <= den):
+        return found + [f"{where}.{second}: on a hand, a whole number within [0, den], not {other!r}"]
+    if found or not (whole(pinion) and whole(other)):
+        return found
+    norm = pinion * pinion + other * other
+    return (
+        []
+        if norm == den * den
+        else [f"{where}: the hand's pair ({pinion}, {other}) has the norm {norm}, not den den"]
+    )
+
+
 def train_departures(where: str, train: Any, den: Any) -> list[str]:
-    """Every way one train's row departs: its label, its kinds, its part, its pair and its weight."""
+    """Every way one train's row departs: its label, its kinds, its part, its pinion and pair, and its weight."""
     found = mapping(where, train, TRAIN)
     if not isinstance(train, dict):
         return found
-    name, kinds, part, pair = train.get("name"), train.get("kinds"), train.get("part"), train.get("pair")
+    name, kinds, part = train.get("name"), train.get("kinds"), train.get("part")
     if not (isinstance(name, str) and name):
         found.append(f"{where}.name: a label, not {name!r}")
     if not (isinstance(kinds, list) and kinds and all(isinstance(kind, str) and kind for kind in kinds)):
         found.append(f"{where}.kinds: a list of the kinds' labels, not {kinds!r}")
     if not (whole(part) and part >= 1):
         found.append(f"{where}.part: a whole number of at least 1, not {part!r}")
-    if not (isinstance(pair, list) and len(pair) == len(PAIR) and all(map(whole, pair))):
-        found.append(f"{where}.pair: the pinion and the rim, two whole numbers, not {pair!r}")
-    elif pair[1] != den:
-        found.append(f"{where}.pair: the rim is den, not {pair[1]}")
-    elif not 0 <= pair[0] <= pair[1]:
-        found.append(f"{where}.pair: the pinion within [0, den], not {pair[0]}")
+    found += pair_departures(where, train, den)
     if "weight" in train and not whole(train["weight"]):
         found.append(f"{where}.weight: a whole number, not {train['weight']!r}")
     return found
@@ -138,11 +166,34 @@ def universe_departures(universe: Any) -> list[str]:
     ]
     couplings = universe.get("couplings", [])
     found += rows("universe.couplings", couplings, COUPLING)
-    for at, (train, part, with_train, with_part, target, _) in enumerate(couplings if not found else []):
-        if not all(0 <= end < len(trains) for end in (train, with_train, target)):
+    for at, row in enumerate(couplings if not found else []):
+        (
+            train,
+            kind,
+            part,
+            operand,
+            with_train,
+            with_kind,
+            with_part,
+            with_operand,
+            target,
+            target_kind,
+            target_part,
+            _,
+        ) = row
+        sides = (
+            (train, kind, part, operand),
+            (with_train, with_kind, with_part, with_operand),
+            (target, target_kind, target_part, 0),
+        )
+        if not all(0 <= train < len(trains) for train, _, _, _ in sides):
             found.append(f"universe.couplings[{at}]: a train off the trains' rows")
-        elif not (0 <= part < trains[train]["part"] and 0 <= with_part < trains[with_train]["part"]):
+        elif not all(0 <= kind < len(trains[train]["kinds"]) for train, kind, _, _ in sides):
+            found.append(f"universe.couplings[{at}]: a kind off its train's")
+        elif not all(0 <= part < trains[train]["part"] for train, _, part, _ in sides):
             found.append(f"universe.couplings[{at}]: a part off its train's")
+        elif not all(0 <= operand < len(OPERANDS) for _, _, _, operand in sides):
+            found.append(f"universe.couplings[{at}]: an operand off the readings {OPERANDS}")
     return found
 
 
