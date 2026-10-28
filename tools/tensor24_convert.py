@@ -17,6 +17,8 @@ No refusal is written. A field the head lacks is left absent, so the decoder's r
 named. The head ticks every Node-clock once a round, so a click's count is its round; its proper time, the head's
 `proper`, is the dial's whole turns and remainder by the Node-clock's full rate (Rule3).
 
+Beside the record it writes the ledger, <out>.ledger.jsonl: per round and train, the wind summed over every site.
+
 Usage: python -I tools/tensor24_convert.py <head record .json> <out .jsonl> [engine commit]
 """
 
@@ -178,14 +180,30 @@ def converted(head, engine):
     return [header, *lines, end]
 
 
+def ledger(head):
+    """The ledger beside the record: per round and train, the train's wind summed over every site (the head's nodes hold
+    each train's wind per site at the end of every interval). The head writes no sweep, push or moment there, so those
+    stay absent."""
+    return [
+        {"round": n["i"], "train": k, "wind": sum(int(w) for w in winds)}
+        for n in head["nodes"]
+        for k, winds in enumerate(n["winds"])
+    ]
+
+
+def write(lines, path):
+    with open(path, "w") as f:
+        for line in lines:
+            f.write(json.dumps(line, separators=(",", ":")) + "\n")
+
+
 def main():
     source, target, *rest = sys.argv[1:]
     engine = rest[0] if rest else "head"
     with open(source) as f:
         head = json.load(f)
-    with open(target, "w") as f:
-        for line in converted(head, engine):
-            f.write(json.dumps(line, separators=(",", ":")) + "\n")
+    write(converted(head, engine), target)
+    write(ledger(head), target.removesuffix(".jsonl") + ".ledger.jsonl")
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ The modules are staged here until stage 0a gives src/tensor24/decoder/, and then
 
 ## The files
 
-- **tools/tensor24_convert.py,** the converter (Animate's tool, outside src/tensor24): writes a head record in the record's schema version 1 (6474766574), with the three corrections below.
+- **tools/tensor24_convert.py,** the converter (Animate's tool, outside src/tensor24): writes a head record in the record's schema version 1 (6474766574), with the three corrections below, and its ledger beside it.
 - **records.py,** the record reader. It checks four things as it reads:
   - the header comes first and the end last;
   - the major version is known;
@@ -14,7 +14,7 @@ The modules are staged here until stage 0a gives src/tensor24/decoder/, and then
   - the events stand in the schema's order.
 
   A record that breaks a rule is not read, with the cause named; nothing is raised. It uses the standard library alone.
-- **books.py:** row 15's first reading, K3, the books at every whole click, or at each end where a click takes at both.
+- **books.py:** row 15's two readings: K3, the books at every whole click (or at each end where a click takes at both), and the ledger's wind over every train, round by round, against the round's clicks.
 - **first_slice.py and first_slice.txt:** the three committed records (examples/records: bodies, chiral and hole) converted, read back, counted against the head's own counts, and read for row 15 beside the head's reader.
 
 ## What it reads
@@ -24,7 +24,11 @@ The modules are staged here until stage 0a gives src/tensor24/decoder/, and then
   - the books entries: 116, 54 and 71;
   - the turnovers: 1,934, 861 and 1,073.
 - **Row 15's first reading closes at every whole click on all three,** 4,210 clicks, the chimes included; the head's reader read the births alone. The hole holds 28 fittings, 6 of them pairs into light with their books per end.
-- **Row 15 itself reads NOT READ on the converted records:** its second reading is the ledger's, and the converter writes no ledger. The head's reader reads it SHOWN exact on the chiral and the hole, from the births alone, and NOT READ on the bodies, which hold no birth.
+- **The ledger** (the converter writes it beside each record, per round and train, from the head's per-interval winds) gives row 15 its second reading.
+- **Row 15 reads NOT SHOWN on all three.** The head's reader reads it SHOWN exact on the chiral and the hole, from the births alone, and NOT READ on the bodies, which hold no birth.
+  - The first reading closes at every whole click.
+  - The second, from the ledger, holds at no round, since the tick itself moves the wind. On every round with no click the wind over every train moved: the bodies 94 of 94, the chiral 5 of 5, the hole 12 of 12, light's train on all of them and a matter train on some. The largest gap is 1.6 x 10^25 at the hole's round 9, against 0 from the clicks.
+  - So the tick, not the click, parts the two readings. The ledger's reading presumes a tick that keeps the wind, which is David's (q) for the new engine; the head's tick does not keep it.
 
 ## The schema's three corrections, for 0b
 
@@ -34,7 +38,6 @@ The modules are staged here until stage 0a gives src/tensor24/decoder/, and then
 
 ## Next
 
-- The ledger, from the head's per-interval nodes: the conservation rows' second reading.
 - The rows' readings by part C (ANIMATE-TENSOR24-READINGS.md, K1 to K8), each row with its two readings' fields disjoint, and a control record that reads SHOWN and one that reads NOT SHOWN.
 
 ---

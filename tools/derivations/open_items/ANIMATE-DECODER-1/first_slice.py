@@ -14,7 +14,7 @@ sys.path[:0] = [HERE, os.path.join(ROOT, "tools")]
 
 from books import row_15  # noqa: E402
 from records import read  # noqa: E402
-from tensor24_convert import converted  # noqa: E402
+from tensor24_convert import converted, ledger  # noqa: E402
 
 NAMES = ("bodies", "chiral", "hole")
 ROW = "15 conservation at the click"
@@ -52,10 +52,12 @@ def main():
             f"{sum(len(n['turned']) for n in head['nodes'])} turnovers in its nodes; the counts' turns {head['counts']['turns']}"
         )
         print(f"  the end: {record.end}")
-        verdict = row_15(record, None)
+        verdict = row_15(record, ledger(head))
         old = head_reading(name)
         print(f"  row 15, the new decoder: {verdict['kind']}: {verdict['cause']}")
         print(f"    its first reading: {verdict['first']}")
+        if "second" in verdict:
+            print(f"    its second reading: {verdict['second']}")
         print(f"  row 15, the head's reader: {old['kind']}: {old['verdict']}")
 
 
