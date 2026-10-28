@@ -357,3 +357,13 @@ The owner's direct word of 02:4x UTC to the Scribe (ledger row 282): the name cl
 **Departures and questions to name for the Boss, new:** (a) the code spelling of the two names (the class Clock, striking.py, strikes.py, the identifiers and the chart's keys named strike) is the Boss's; the documents hold the tree's names in code spans until his push; (b) the lowercase word clock naming a node in running text stands, for the Boss's word or the owner's; (c) the prose spelling Clock-node follows the law's proper nouns Mesh and Spoke.
 
 **Asked of the owner, as in section 21, and whether the lowercase word clock for a node is to become clock-node too.**
+
+## 23. The register at 03:1x UTC, David's Bell build and the owner's leave (2026-10-28)
+
+David's comment of 03:00 UTC (#2187 comment 6459479329, ledger row 283): the owner's words to him of 02:50, "Contradict a word of mine if needed in the solution", and of 02:59, "Sync with the Boss. Build the above click solution locally. Make sure it works. Then give him OK." (in David's rendering); his solution that keeps locality for Bell (a fitting's two children carrying one open axis to the first click of either) is built in a local worktree of 97e5b3fd6, unpushed; the engine head 97e5b3fd6 unchanged, no push of the Boss since 01:03 UTC. Sections 10 to 22 stand but for what is added below.
+
+**Standing, with what the comment changes:** the law holds locality and no sentence changes; the second child's record written at the first click is the departure David names against the owner's word of 2026-10-25, 08:02 UTC, to be read by the Boss against locality; David takes the name click.
+
+**Departures to name for the Boss, new:** (a) the open-axis solution writes the second child's record at the first click in the great clock's forward run (row 283), inside the cones when read along them; the owner's leave covers a contradiction of his word, the Boss's read of the build against Postulate 1 and **Only local** stands before the OK.
+
+**Asked of the owner, as in section 22, and whether the open axis is the locality he meant.**
