@@ -1,4 +1,4 @@
-"""The reckoner's reads of the chart, integers only (the owner's word: no float anywhere, every reading a quotient with its remainder or a count over a span): the chart as read from the run's log alone (chimes, fittings, jams; the rows of the great clock's course; the clock lines), cut to a tick for a gate read as it first shows (`Chart.to`), its own names for the hands (never the Clock's), the species reckoned from a chime's face and the nearest name; the verdicts' kinds and their one reader (kind_of, shown); the gates themselves are the table of gates.py, the rows read from the strikes strikes.py, the great clock's great_clock.py and the widened rows predicates.py."""
+"""The reckoner's reads of the chart, integers only (the owner's word: no float anywhere, every reading a quotient with its remainder or a count over a span): the chart as read from the run's log alone (chimes, fittings, jams; the rows of the great clock's course; the clock lines), cut to a tick for a gate read as it first shows (`Chart.to`), its own names for the hands (never the Clock's), the species reckoned from a chime's face and the nearest name; the verdicts' kinds and their one reader (kind_of, shown); the gates themselves are the table of gates.py, the rows read from the clicks clicks.py, the great clock's great_clock.py and the widened rows predicates.py."""
 
 from __future__ import annotations
 
@@ -301,7 +301,7 @@ def middle(xs: list[Rational]) -> Rational:
 def reckoned_chimes(
     chart: Chart,
 ) -> tuple[list[tuple[dict[str, Any], str, Rational]], int, int, list[int | None]]:
-    """Every chime's species reckoned from its face: the reckoned (chime, name, x), the count read right, the count within the one-strike floor, and each chime's floor on x in parts per million."""
+    """Every chime's species reckoned from its face: the reckoned (chime, name, x), the count read right, the count within the one-click floor, and each chime's floor on x in parts per million."""
     rim, gear_pinion = chart.rim, chart.gear_pinion
     reckoned = []
     right = within = 0

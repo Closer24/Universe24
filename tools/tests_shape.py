@@ -41,21 +41,21 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
-    "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_binds_its_heavy_matter": (
+    "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (
         26,
-        "The one big bang on the great clock with nuclear binding (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his yes to the nuclear family through the Boss's recommendation, David's DAVID-MEDIATOR.md; his rule of 14:5x UTC that a push's test sees what it was pushed for): 20 bangs in 100 ticks within 128 bits under the three bounds, and a heavy family's chimes bound one mesh apart in the held field above twice the board's own share; the run back exact; the Boss's room by name.",
+        "The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): 20 bangs in 100 ticks within 128 bits under the three bounds, the held field in its universe, and under the order-free click and the one mirror its seed's symmetry standing through the run, every family's chimes one mesh apart at the board's own share exactly (the heavy family bound above it before them, the order's reading); the Boss's room by name.",
     ),
-    "tests/test_the_record.py::test_the_books_close_at_every_striking_mergers_and_lays_alike": (
+    "tests/test_the_record.py::test_the_books_close_at_every_click_mergers_and_lays_alike": (
         26,
-        "The close's books at every striking (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 strikings with a merger off; his rule of 14:5x UTC that a push's test sees what it was pushed for): on the one big bang's first 20 ticks the board's wind lost is the chimes' booked plus the remainder's rise at every striking, mergers among them; the Boss's room by name.",
+        "The close's books at every click (the owner's yes of 2026-10-27, 15:5x UTC to the unspringing carrying its excess in the signed remainder; the temperature builder's finding, 68 of 70 clicks with a merger off; his rule of 14:5x UTC that a push's test sees what it was pushed for): on the hole's first 30 ticks (the bang's merging nothing under the order-free click) the board's wind lost is the chimes' booked plus the remainder's rise at every click, mergers among them; the Boss's room by name.",
     ),
-    "tests/test_the_record.py::test_the_bang_at_forty_times_its_quanta_falls_through_its_bottom_and_runs_on_and_back": (
+    "tests/test_the_record.py::test_the_hole_falls_through_its_bottom_and_runs_on_and_back": (
         17,
-        "The great clock whole through the bottom (the owner's word of 2026-10-27, 18:5x UTC: a whole engine that runs one big bang; the Boss's finding of 2026-10-28, 00:5x UTC): the bang's seed at 40 times its quanta stopped at tick 23 with a division by 0, a clock's stretch carried through its bottom within the tick and the end's mean teeth at or below 0 there; the start's teeth read at such a clock (Tick.end_teeth), the bang runs on and back exactly; the Boss's room by name.",
+        "The great clock whole through the bottom (the owner's word of 2026-10-27, 18:5x UTC: a whole engine that runs one big bang; the Boss's finding of 2026-10-28, 00:5x UTC): the bang's seed at 40 times its quanta stopped at tick 23 with a division by 0, a clock's stretch carried through its bottom within the tick and the end's mean teeth at or below 0 there; the start's teeth read at such a clock (Tick.end_teeth), the bang runs on and back exactly; under the one mirror and the order-free click the hole falls through its bottom at its ticks 12 and 18 to 22 and the bang no more, so the hole runs it; the Boss's room by name.",
     ),
-    "tests/test_the_record.py::test_the_bangs_heavy_matter_stays_silent_without_the_held_field": (
+    "tests/test_the_record.py::test_the_bang_without_the_held_field_chimes_every_family_and_a_weightless_field_is_refused": (
         14,
-        "The control of the nuclear binding (the owner's rule of 2026-10-27, 14:5x UTC that a push's test sees what it was pushed for): the same bang with no held field chimes on the near-light family alone, and a weight on a hand and a held field with no weight are refused by name; the Boss's room by name.",
+        "The control of the nuclear binding (the owner's rule of 2026-10-27, 14:5x UTC that a push's test sees what it was pushed for): the same bang with no held field chimes on every family under the order-free click (the near-light family alone before it, the order's), and a weight on a hand and a held field with no weight are refused by name; the Boss's room by name.",
     ),
     "tests/test_the_record.py::test_the_light_is_polarized_along_its_sources_current_at_the_detectors_chimes": (
         38,

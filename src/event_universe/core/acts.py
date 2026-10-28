@@ -12,6 +12,11 @@ def flip(fine: Any, teeth: Any, reversals: int) -> Any:
     return teeth - 1 - fine if reversals & 1 else fine
 
 
+def mirror(fine: Any, teeth: Any, reversals: int) -> Any:
+    """The one mirror of a gear's state (David's DAVID-THE-ONE-MIRROR.md): the momentum negated moves the fine tooth about the mid tooth it was born at, r to 2 mid - r, once for every reversal of its gear (time's exchange at the turnover, the sign's negation), two leaving it; its fixed point the mid tooth, so a gear at rest stays at rest and the stride's reading P = W (now - before) + r - mid turns to -P exactly (the flip's -P - 1 at even teeth kept by name)."""
+    return carry(mid(teeth) + mid(teeth) - fine, teeth, 0)[1] if reversals & 1 else fine
+
+
 def mid(teeth: Any) -> Any:
     """The fine tooth every gear is born with, the half teeth by the carry on 2 (the engine's one mid tooth, spelt once; the former half(wall) at the trains' gears, the driven teeth, the driven carry, the standard and the vernier's origin kept by name): the fixed point of the negated gear's flip, (teeth - r) mod teeth = r, at even teeth, which the going's flip teeth - 1 - r sends to the half teeth less one; so the mid tooth fits the negation's flip and not the going's, the third spelling the 48's pair named (The-48-Holds_COMPARISON.md section 5, 2026-10-26)."""
     return carry(teeth, SIDES, 0)[0]
@@ -24,16 +29,16 @@ def carry(total: Any, teeth: Any, fine: Any, going: int = 1) -> tuple[Any, Any]:
     return carries, flip(carried - teeth * carries, teeth, going == -1)
 
 
-def reverse(
-    nows: list[Any], befores: list[Any], fines: list[Any], train_teeth: list[Any], signs: list[int]
-) -> tuple[list[Any], list[Any], list[Any]]:
-    """The two slots of a train reversed at the top with the flip (X2, the turnover; Clock.reverse): the two slots exchanged through the train's reflection K (the hand's twelve-o'clock gear negated), the fine tooth flipped once for time's reverse and once more where its own K entry negates the gear; an involution."""
+def reverse(gears: list[Any], signs: list[int]) -> tuple[list[Any], list[Any], list[Any]]:
+    """The two slots of a train reversed at the top with the mirror (X2, the turnover; Clock.reverse): `gears` the train's held gears, the two slots exchanged through the train's reflection K (the hand's twelve-o'clock gear negated), the fine tooth mirrored once for time's reverse and once more where its own K entry negates the gear; an involution (the former flip kept by name)."""
+    nows, befores = [g.now for g in gears], [g.before for g in gears]
+    fines, train_teeth = [g.fine for g in gears], [g.teeth for g in gears]
     new_nows = [s * b for s, b in zip(signs, befores, strict=True)]
     new_befores = [s * n for s, n in zip(signs, nows, strict=True)]
     return (
         new_nows,
         new_befores,
-        [flip(f, w, 1 + (s < 0)) for f, w, s in zip(fines, train_teeth, signs, strict=True)],
+        [mirror(f, w, 1 + (s < 0)) for f, w, s in zip(fines, train_teeth, signs, strict=True)],
     )
 
 

@@ -1,4 +1,4 @@
-"""The rows of the kinds and the symmetries in the strikes, rows 63 to 73 (the owner's word of 2026-10-26, 07:24 UTC, "enter 61 to 65", through the Boss, The-Laws-Of-Nature-Missing_COMPARISON.md section 3 item 2; the ledger's row 164), each one function of the reading in the one shape: the uniformity in the strikes (the chimes spread over the great clock's eight regions alike), dark matter in kind (a bob chimed in its own well whose clocks advance no light, the law's theorem of the gears), the lepton number (every sprung species' senses summing to 0 over its fittings, the hand's count of each species conserved at the strike), the energy in the strikes (a bob's beat per proper tick before and after its strike equal within one notch, the unwound light's beat the difference), and CPT as one row (on every chime's face the sweep odd under the conjugation C, even under the reflection P of the clock's six meshes, odd under the slot reverse T of CA-S1, so even under the three together); and the owner's word of 2026-10-27, 13:3x UTC ("OK" to the Reader's list of the laws of nature still unread, the angular momentum and E = mc^2 first): the angular momentum tallied on the mesh (row 72, every move's moment closed by the moment written on the mesh at the move's own clock) and the mass to light at the unspringing (row 73, the pair's wind unwound against the light's quantum tallied)."""
+"""The rows of the kinds and the symmetries in the clicks, rows 63 to 73 (the owner's word of 2026-10-26, 07:24 UTC, "enter 61 to 65", through the Boss, The-Laws-Of-Nature-Missing_COMPARISON.md section 3 item 2; the ledger's row 164), each one function of the reading in the one shape: the uniformity in the clicks (the chimes spread over the great clock's eight regions alike), dark matter in kind (a bob chimed in its own well whose clocks advance no light, the law's theorem of the gears), the lepton number (every sprung species' senses summing to 0 over its fittings, the hand's count of each species conserved at the click), the energy in the clicks (a bob's beat per proper tick before and after its click equal within one notch, the unwound light's beat the difference), and CPT as one row (on every chime's face the sweep odd under the conjugation C, even under the reflection P of the clock's six meshes, odd under the slot reverse T of CA-S1, so even under the three together); and the owner's word of 2026-10-27, 13:3x UTC ("OK" to the Reader's list of the laws of nature still unread, the angular momentum and E = mc^2 first): the angular momentum tallied on the mesh (row 72, every move's moment closed by the moment written on the mesh at the move's own clock) and the mass to light at the unspringing (row 73, the pair's wind unwound against the light's quantum tallied)."""
 
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ def region_clocks(cube: int, half: int, r: int) -> int:
 
 
 def uniformity(chart: Chart) -> dict[str, Any]:
-    """Row 63: the uniformity in the strikes, the chimes counted per region of the great clock (eight, each axis at its half) and read per clock of the region, the regions of an odd side holding unlike counts of clocks: SHOWN where every region is chimed and the least chimes per clock hold at least half the largest, compared by cross multiplication (the former read of the raw counts failed every odd side, where a great clock chimed alike at every clock gives regions of 8 and 27 clocks on the side 5, kept by name)."""
+    """Row 63: the uniformity in the clicks, the chimes counted per region of the great clock (eight, each axis at its half) and read per clock of the region, the regions of an odd side holding unlike counts of clocks: SHOWN where every region is chimed and the least chimes per clock hold at least half the largest, compared by cross multiplication (the former read of the raw counts failed every odd side, where a great clock chimed alike at every clock gives regions of 8 and 27 clocks on the side 5, kept by name)."""
     counts = Counter(region(chart, c["node"]) for c in chart.chimes)
     half = int(rule3.carries(chart.cube, HALF))
     sizes = [region_clocks(chart.cube, half, r) for r in range(REGIONS)]
@@ -78,7 +78,7 @@ def dark_matter(chart: Chart) -> dict[str, Any]:
 
 
 def lepton_number(chart: Chart) -> dict[str, Any]:
-    """Row 65: the lepton number (the hand's parts are its particles, the hand's count conserved at the strike): for every species fitted, the fitted hands' own senses summed over its fittings is 0, each fitting a pair of opposite senses, so the number of each species less its anti-species is conserved."""
+    """Row 65: the lepton number (the hand's parts are its particles, the hand's count conserved at the click): for every species fitted, the fitted hands' own senses summed over its fittings is 0, each fitting a pair of opposite senses, so the number of each species less its anti-species is conserved."""
     sums: Counter[str] = Counter()
     for b, (a, c) in zip(chart.fittings, chart.sweeps_of(), strict=True):
         sums[chart.gear_name[b["line_pair"]]] += sign(a) + sign(c)
@@ -95,7 +95,7 @@ def lepton_number(chart: Chart) -> dict[str, Any]:
 
 
 def energy(chart: Chart) -> dict[str, Any]:
-    """Row 66: the energy in the strikes (one point and one beat, D-S2): a bob's beat per proper tick before and after its strike equal within one notch, the unwound light's beat the difference, on every pair of a bob's consecutive chimes."""
+    """Row 66: the energy in the clicks (one point and one beat, D-S2): a bob's beat per proper tick before and after its click equal within one notch, the unwound light's beat the difference, on every pair of a bob's consecutive chimes."""
     pairs = [
         (b1, b2)
         for cs in ([(c["proper"], c["beat"]) for c in bob] for bob in chart.bobs_of().values())
@@ -157,7 +157,7 @@ def twists_of(chart: Chart) -> tuple[int, int, int]:
 
 
 def matter_against_antimatter(chart: Chart) -> dict[str, Any]:
-    """Row 68: matter against antimatter (HD-S1, the Boss's 6412271828 and 6413689341): the twist enters the law in one act, the + fitted hand advanced at the end the lead flows into where the twist is right-handed, so over the moving fittings the + fitted hand stands at the unwind's clock on some and at the other end on the rest (the twist's sign at each strike, P-odd and C-even, kept by the bijection), the unspringings named beside; counted, the twist's choice read at every moving fitting."""
+    """Row 68: matter against antimatter (HD-S1, the Boss's 6412271828 and 6413689341): the twist enters the law in one act, the + fitted hand advanced at the end the lead flows into where the twist is right-handed, so over the moving fittings the + fitted hand stands at the unwind's clock on some and at the other end on the rest (the twist's sign at each click, P-odd and C-even, kept by the bijection), the unspringings named beside; counted, the twist's choice read at every moving fitting."""
     at_clock, other, unspringings = twists_of(chart)
     return {
         "68 matter against antimatter": {
@@ -173,7 +173,7 @@ def matter_against_antimatter(chart: Chart) -> dict[str, Any]:
 
 
 def one_twist(chart: Chart) -> dict[str, Any]:
-    """Row 69: the neutrino's one hand (the Boss's 6412773403, the helicity pair's reading): the twist of every moving fitting, the end the + fitted hand is advanced at (the unwind's clock or the other end, by the twist at the strike), all one over the chart where nature's neutrino shows one hand alone; NOT SHOWN with its cause where both twists stand (no conversion on the hands, the fittings' twists split), NOT READ where no moving fitting."""
+    """Row 69: the neutrino's one hand (the Boss's 6412773403, the helicity pair's reading): the twist of every moving fitting, the end the + fitted hand is advanced at (the unwind's clock or the other end, by the twist at the click), all one over the chart where nature's neutrino shows one hand alone; NOT SHOWN with its cause where both twists stand (no conversion on the hands, the fittings' twists split), NOT READ where no moving fitting."""
     at_clock, other, unspringings = twists_of(chart)
     return {
         "69 the neutrino's one hand": {
@@ -192,7 +192,7 @@ def one_twist(chart: Chart) -> dict[str, Any]:
 
 
 def baryon_number(chart: Chart) -> dict[str, Any]:
-    """Row 70: the baryon number, the C-odd count (the Boss's 6413689341, the floor pair's reading): the fitted hands' own sweeps summed over each fitting's two fitted hands, 0 at every fitting (a pair at opposite senses, an unspringing's light at 0 and 0: no matter-making act in the law, the count conserved at the strike); the hand's sweep at the fitted hands' clocks summed beside it, apart from 0 where a fitted hand was advanced on a standing notch (the residue, the clock's sweep) and over the unspringings' light (a sweep of one sign on both until unspring.py's fix); SHOWN where the own sweeps sum to 0 at every fitting."""
+    """Row 70: the baryon number, the C-odd count (the Boss's 6413689341, the floor pair's reading): the fitted hands' own sweeps summed over each fitting's two fitted hands, 0 at every fitting (a pair at opposite senses, an unspringing's light at 0 and 0: no matter-making act in the law, the count conserved at the click); the hand's sweep at the fitted hands' clocks summed beside it, apart from 0 where a fitted hand was advanced on a standing notch (the residue, the clock's sweep) and over the unspringings' light (a sweep of one sign on both until unspring.py's fix); SHOWN where the own sweeps sum to 0 at every fitting."""
     own = [a + c for a, c in chart.sweeps_of()]
     pairs = [sum(b["W_children"]) for b in chart.fittings if "takes" not in b]
     unspringings = [sum(b["W_children"]) for b in chart.fittings if "takes" in b]
@@ -240,7 +240,7 @@ def flow_teeth(record: Chart) -> int:
 
 
 def momentum_booked(chart: Chart) -> dict[str, Any]:
-    """Row 71: the momentum tallied on the mesh (LT-S1, H-Lay-As-The-Take-Reversed-1's derivation, line 19 as the Boss corrected its sign): at every move the momentum the quantum lost is written on the regulator's flow gear of each axis at the clock by the one drive act, -push_a rate^2 + the carry before - the carry after = the notches advanced times the drive teeth trace rim full_rate^2 key (`drive_teeth`, the calibre file's trace), the rate the clock's at the tick's start; so the hands' and the lattice's momentum sum to what they were at every strike, an identity on every tally of the chart, an unspringing's two unwinds, its cross term and its two advances among them; NOT READ on a chart without the tallies' keys."""
+    """Row 71: the momentum tallied on the mesh (LT-S1, H-Lay-As-The-Take-Reversed-1's derivation, line 19 as the Boss corrected its sign): at every move the momentum the quantum lost is written on the regulator's flow gear of each axis at the clock by the one drive act, -push_a rate^2 + the carry before - the carry after = the notches advanced times the drive teeth trace rim full_rate^2 key (`drive_teeth`, the calibre file's trace), the rate the clock's at the tick's start; so the hands' and the lattice's momentum sum to what they were at every click, an identity on every tally of the chart, an unspringing's two unwinds, its cross term and its two advances among them; NOT READ on a chart without the tallies' keys."""
     teeth = flow_teeth(chart)
     held = advanced = failed = 0
     for _i, _clock, push, rate, recoil, was, after in tallies_of(chart):
@@ -273,7 +273,7 @@ def moment(arm: list[int], push: list[int]) -> list[int]:
 
 
 def angular_momentum(chart: Chart) -> dict[str, Any]:
-    """Row 72: the angular momentum tallied on the mesh (the conservation of angular momentum in the strikes, the hands' first missing law; AJ-S1 to AJ-S3, the one-clock theorem: a move at one clock changes the momentum on that clock's six meshes alone, each along its own axis, so its moment about any centre is the clock's arm times the momentum it tallies): every tally of row 71 is written at its move's own clock, so the move's moment and the moment written on the mesh sum to 0 about the great clock's centre, arm x (push rate^2 + the notches advanced times the drive teeth + the carry after - the carry before) = 0, the arm the clock's place doubled from the centre (2 r - (cube - 1), integers); summed per striking the hands' moment and the lattice's sum to 0, the hands' own moment changing at a fitting's or an unspringing's unwind (the transverse recoil, AJ-S2) and the lattice carrying it; an unspringing's cross term with a part off the mesh's own axis, written at the engagement's clock as the log names it, counted beside; NOT READ on a chart without the tallies' keys."""
+    """Row 72: the angular momentum tallied on the mesh (the conservation of angular momentum in the clicks, the hands' first missing law; AJ-S1 to AJ-S3, the one-clock theorem: a move at one clock changes the momentum on that clock's six meshes alone, each along its own axis, so its moment about any centre is the clock's arm times the momentum it tallies): every tally of row 71 is written at its move's own clock, so the move's moment and the moment written on the mesh sum to 0 about the great clock's centre, arm x (push rate^2 + the notches advanced times the drive teeth + the carry after - the carry before) = 0, the arm the clock's place doubled from the centre (2 r - (cube - 1), integers); summed per click the hands' moment and the lattice's sum to 0, the hands' own moment changing at a fitting's or an unspringing's unwind (the transverse recoil, AJ-S2) and the lattice carrying it; an unspringing's cross term with a part off the mesh's own axis, written at the engagement's clock as the log names it, counted beside; NOT READ on a chart without the tallies' keys."""
     teeth = flow_teeth(chart)
     closed = 0
     walk: dict[int, list[int]] = {}

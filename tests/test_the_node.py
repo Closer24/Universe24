@@ -1,4 +1,4 @@
-"""The one-clock tests (the owner's word of 2026-10-25: every property tested on one clock fed through its six meshes): the horizon (a clock whose x meshes stand disengaged holds on that axis, is read by no mesh striking and fits nothing; a bob wound at it by a neighbour's shared half chimes, PM-S1), the stopped load (a clock at the mesh rate 0 is not read and never strikes), the turnover (the turned-over clock ends the tick at its pre-state reversed and complemented, the reverse an involution), the rewind exact through all of it; the step's reach of one mesh forward and none back; the files' refusals by name. The horizon's fed clock fits once on its own z mesh at 6 under EX-S1 (listed as its own and as its + end; nothing under the former unwind)."""
+"""The one-clock tests (the owner's word of 2026-10-25: every property tested on one clock fed through its six meshes): the horizon (a clock whose x meshes stand disengaged holds on that axis, is read by no mesh click and fits nothing; a bob wound at it by a neighbour's shared half chimes, PM-S1), the stopped load (a clock at the mesh rate 0 is not read and never clicks), the turnover (the turned-over clock ends the tick at its pre-state reversed and complemented, the reverse an involution), the rewind exact through all of it; the step's reach of one mesh forward and none back; the files' refusals by name. The horizon's fed clock fits once on its own z mesh at 6 under EX-S1 (listed as its own and as its + end; nothing under the former unwind)."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ from event_universe.core.rule3 import carries
 from event_universe.core.spokes import SPOKES
 from event_universe.meshes import coupling_of, factors
 from event_universe.tick import Tick
-from event_universe.trains import HAND, OFFSET, REGULATOR, rows_of, zeros
+from event_universe.trains import HAND, OFFSET, REGULATOR, ratchet_of, rows_of, zeros
 from event_universe.unspring import fall_of, unwinds
 from event_universe.unwind import advance, move, window_clocks
 from tests.laws import level_at, node_of, refused, run_back_exact, state_of, world_of, wronskian
@@ -43,7 +43,7 @@ def fed_horizon(clock: Clock, at: tuple[int, ...]) -> Clock:
 
 
 def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -> None:
-    """The horizon: the fed clock's two x meshes disengaged (the factor 0), its other four above; no mesh striking reads the clock (no fitting at it, none with it as an end); a bob of the near-massless hand laid at the fed clock, two quanta over the half-width 2, chimes there under the light the feed raised: three in 20 ticks under the great clock's bounds, at 8, 13 and 18 on the beat 5, the first at W = 0 paying one notch of the fed light and the next two from its slack (the one-clock bob of one quantum, wound at every tick, chimes none by 40, its dot with its reference crossing zero once in 20 ticks; seven in 20 ticks under the wave's honest books, where the neighbours' fittings that once shared a half into the clock under PM-S1 are jammed by the stop), so the near-massless hand's chimes are read there (twelve in 20 ticks under PL-S1, five at W = 0 (none by 20 under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting)); under the former drive of 2 W after the step twelve with nine at W = 0, the first beat 4 and the rest 1, under MS-S1's advance at T div 2 and CK-S1's beat of the half period with the crossing read even; eleven with eight at W = 0 and every beat 1 under the crossing odd at a touch of zero; named: the bobs' striking is not the mesh striking); the rewind exact."""
+    """The horizon: the fed clock's two x meshes disengaged (the factor 0), its other four above; no mesh click reads the clock (no fitting at it, none with it as an end); a bob of the near-massless hand laid at the fed clock, two quanta over the half-width 2, chimes there under the light the feed raised: three in 20 ticks under the great clock's bounds, at 8, 13 and 18 on the beat 5, the first at W = 0 paying one notch of the fed light and the next two from its slack (the one-clock bob of one quantum, wound at every tick, chimes none by 40, its dot with its reference crossing zero once in 20 ticks; seven in 20 ticks under the wave's honest books, where the neighbours' fittings that once shared a half into the clock under PM-S1 are jammed by the stop), so the near-massless hand's chimes are read there (twelve in 20 ticks under PL-S1, five at W = 0 (none by 20 under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting)); under the former drive of 2 W after the step twelve with nine at W = 0, the first beat 4 and the rest 1, under MS-S1's advance at T div 2 and CK-S1's beat of the half period with the crossing read even; eleven with eight at W = 0 and every beat 1 under the crossing odd at a touch of zero; named: the bobs' click is not the mesh click); the rewind exact."""
     _, piece = world_of("world_node.json")
     bob = {"lay": "at", "row": 1, "centre": list(CENTRE), "width": 2, "quanta": 2, "sense": 1}
     clock = fed_horizon(node_of("world_node.json", seed=[*piece["seed"], bob]), CENTRE)
@@ -53,11 +53,11 @@ def test_the_horizon_holds_the_links_at_the_wall_and_the_node_births_nothing() -
     fed = copy.deepcopy(clock)
     for _ in range(INTERVALS):
         clock.tick()
-    strikes = clicks_at(clock, CENTRE)
+    clicks = clicks_at(clock, CENTRE)
     # no fitting at the fed clock under CL-S2 (the unspringing's two ends tallied from the start at 6, the course following; (11, 1) and (12, 519) before it, two fittings of 270 notches at 10 before LT-S1, (6, 18) at 54)
-    assert [(e["i"], e["levels"]) for e in strikes if e["event"] == "birth"] == []
+    assert [(e["i"], e["levels"]) for e in clicks if e["event"] == "birth"] == []
     # the laid bob's three chimes under the great clock's bounds (seven at the wave, one quantum at the one clock; the head's six under CL-S2 from the neighbours' shared halves; (-1, 0), (0, 0), (1, 0), (0, 0), (0, 0) before CL-S2; two under BH-S1's mask, six with the stopped clock released, FR-S1)
-    chimes = [(e["sense"], e["line"]) for e in strikes if e["event"] == "credit"]
+    chimes = [(e["sense"], e["line"]) for e in clicks if e["event"] == "credit"]
     assert chimes == [(0, 0), (1, 0), (1, 0)]
     assert run_back_exact(fed, INTERVALS) == INTERVALS
 
@@ -79,18 +79,24 @@ def test_the_frozen_node_is_not_read_and_never_clicks() -> None:
 
 
 def exchanged(clock: Clock, held: list[list[Any]], at: tuple[int, ...]) -> bool:
-    flat = [gear for train in held for gear in train]
+    flat, pawl = [gear for train in held for gear in train], ratchet_of(clock.trains_).gears[0]
     twelves = [hands.signs(r.size)[k] < 0 for r in clock.trains_ for k in range(r.size)]
     for gear, h, twelve in zip(clock.all_gears(), flat, twelves, strict=True):
         sign = -1 if twelve else 1
         teeth = int(np.asarray(gear.teeth)[at]) if np.ndim(gear.teeth) else int(gear.teeth)
+        mirrored = (
+            teeth - 1 - int(h.fine[at]) if gear is pawl else (teeth // 2 * 2 - int(h.fine[at])) % teeth
+        )
         if int(gear.now[at]) != sign * int(h.before[at]) or int(gear.before[at]) != sign * int(
             h.now[at]
         ):
             return False
-        if int(gear.fine[at]) != (int(h.fine[at]) if twelve else teeth - 1 - int(h.fine[at])):
+        if int(gear.fine[at]) != (int(h.fine[at]) if twelve else mirrored):
             return False
-        if gear.dfine is not None and int(gear.dfine[at]) != gear.dteeth - 1 - int(h.dfine[at]):
+        if (
+            gear.dfine is not None
+            and int(gear.dfine[at]) != (gear.dteeth // 2 * 2 - int(h.dfine[at])) % gear.dteeth
+        ):
             return False
     return True
 
@@ -209,11 +215,11 @@ def test_the_files_are_refused_by_name() -> None:
     ):
         refused(match, Clock, universe, dict(piece, **change))
     # the trains the clock builds beside the file's three gapped hands: the ratchet, the light, the offset and the regulator
-    assert [r.size for r in node_of("world_node.json").trains_] == [1, 2, 2, 2, 2, 4, 10]
+    assert [r.size for r in node_of("world_node.json").trains_] == [1, 2, 2, 2, 2, 4, 7]  # R11
 
 
 def test_the_frozen_node_rests_and_its_links_stand_at_the_wall_bh_s1() -> None:
-    """BH-S1 (the owner's word of 2026-10-25 through the Boss, 6398593790; The-Frozen-Node-Black-Hole_COMPARISON.md section 6): a clock whose mesh rate reads 0 at the tick's start is stopped: no act changes any integer of its state and its dial rests, no strike reads it, every mesh with a stopped end is disengaged from both ends; the stopped mask kept in the rewind note for the rewind. The 3-cube centre fed to the stopped load 3,793 at Gamma 1,000 (X 4,268,834,097), 100 ticks: the centre's gears equal to the fed values at every tick, dial[centre] unchanged, the twelve factors 0, 0 strikes at it, the stopped count 1 at every tick, the transient within 128, the rewind exact 100 of 100."""
+    """BH-S1 (the owner's word of 2026-10-25 through the Boss, 6398593790; The-Frozen-Node-Black-Hole_COMPARISON.md section 6): a clock whose mesh rate reads 0 at the tick's start is stopped: no act changes any integer of its state and its dial rests, no click reads it, every mesh with a stopped end is disengaged from both ends; the stopped mask kept in the rewind note for the rewind. The 3-cube centre fed to the stopped load 3,793 at Gamma 1,000 (X 4,268,834,097), 100 ticks: the centre's gears equal to the fed values at every tick, dial[centre] unchanged, the twelve factors 0, 0 clicks at it, the stopped count 1 at every tick, the transient within 128, the rewind exact 100 of 100."""
     clock = node_of("world_node.json")
     stopped = rates.stopped_load(clock.full_rate)
     regulator = clock.train(REGULATOR).gears[0]
@@ -285,7 +291,7 @@ def test_every_count_is_read_in_the_carriers_unit_pm_s1() -> None:
     for _ in range(40):
         chiral.tick()
     counts = (chiral.counts["births"], chiral.counts["body_clicks"], record.census(chiral))
-    assert counts == (2, 1543, (107, 112))  # under the great clock's bounds (5, 1,873 at the wave)
+    assert counts == (1, 1553, (95, 112))  # the shears struck (3, 1,384 with them; 2, 1,543 before)
     assert run_back_exact(kept, 10) == 10
 
 
@@ -311,15 +317,15 @@ def test_the_charge_is_one_e_for_every_row_at_the_lay_ms_s1() -> None:
 def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by_the_orientation_sl_s1() -> (
     None
 ):
-    """SL-S1 (the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic striking, every hand's engagement by its own list): the chiral setting at 14 ticks, its light raised to seven quanta a packet under the great clock's bounds, where the file's two fit twice in 14 ticks (the 5-cube as written at the wave: under the wave's honest books its 3-cube cut, with two packets of two quanta, fits nothing, so the test reads the whole setting; the 3-cube at 30 ticks before the wave): every fitted pair's mesh engages at the next striking (the two ends holding a whole winding of the fitted hands) and reads no lead, F = 0 exactly: under MG-S1 the pair at rest reaches the unspringing's premise by its sweeps and the stop jams the undoing at an end by name, the pair's fall below the unsprung fitted hand's own quantum (7 of 7 fitted pairs under the great clock's bounds, 2 of 2 with the file's light; 5 of 5 under the wave, 4 of 4 before it; before MG-S1 the orientation jammed the same meshes with no name, 4 of 4 under PL-S1; 8 of 8 pairs of matter with a ninth fitting, an unspringing of the lightest pair at rest whose unsprung fitted hands the advance jams, under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); 5 of 5 under the former drive of 2 W after the step); the engagements counted as `met`; the rewind exact."""
+    """SL-S1 (the Boss's 6399718139, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 4: the generic click, every hand's engagement by its own list): the chiral setting at 14 ticks, its light raised to seven quanta a packet under the great clock's bounds, where the file's two fit twice in 14 ticks (the 5-cube as written at the wave: under the wave's honest books its 3-cube cut, with two packets of two quanta, fits nothing, so the test reads the whole setting; the 3-cube at 30 ticks before the wave): every fitted pair's mesh engages at the next click (the two ends holding a whole winding of the fitted hands) and reads no lead, F = 0 exactly: under MG-S1 the pair at rest reaches the unspringing's premise by its sweeps and the stop jams the undoing at an end by name, the pair's fall below the unsprung fitted hand's own quantum (7 of 7 fitted pairs under the great clock's bounds, 2 of 2 with the file's light; 5 of 5 under the wave, 4 of 4 before it; before MG-S1 the orientation jammed the same meshes with no name, 4 of 4 under PL-S1; 8 of 8 pairs of matter with a ninth fitting, an unspringing of the lightest pair at rest whose unsprung fitted hands the advance jams, under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); 5 of 5 under the former drive of 2 W after the step); the engagements counted as `met`; the rewind exact."""
     clock = node_of("world_nature.json", intervals=14, seed=RAISED)
     kept = copy.deepcopy(clock)
     for _ in range(14):
         clock.tick()
     fittings = [e for e in clock.log if e["event"] == "birth"]
     pairs = [b for b in fittings if b["line_pair"] != clock.hands().index(clock.unsprung())]
-    # 6 fittings, every one a pair, with the lead at the kick (7 under the great clock's bounds, 5 and 5 at the wave); 6 fittings and 5 pairs on the 3-cube before the wave and before LT-S1 as at -dP; 6 pairs at 54
-    assert len(fittings) == 6 and len(pairs) == 6 and clock.counts["met"] > len(fittings)
+    # 4 fittings, every one a pair, under the one mirror (6 with the lead at the kick, 7 under the great clock's bounds, 5 and 5 at the wave); 6 fittings and 5 pairs on the 3-cube before the wave and before LT-S1 as at -dP; 6 pairs at 54
+    assert len(fittings) == 4 and len(pairs) == 4 and clock.counts["met"] > len(fittings)
     for b in pairs:
         mesh = {tuple(b["minus"]), tuple(b["plus"])}
         # the advance's or the orientation's jam under 4ad484eb9's bound; the stop again, MG-S1's own
@@ -336,7 +342,7 @@ def test_the_born_pair_meets_at_the_next_close_with_no_current_and_is_refused_by
 
 
 def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the_light_sl_s2() -> None:
-    """SL-S2 (the Boss's ledger item 10, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 3: the unspringing is the fitting read at -1): the heaviest hand's reflected pair fed at two adjacent clocks of the bare 5-cube (the + hand at M and the - hand at P at three times the advance's notches (A, B), one notch pair on P's three-o'clock gear for a lead across the mesh and on two transverse neighbours for a twist) engages as the reflected pair (the ends' sweeps opposite) and strikes into light: one fitting whose unwound train is the heaviest hand and whose fitted hands are the unsprung train, each fitted hand's windings one light quantum to the rounding (its own quantum, MG-S1, 1,654,009,903,854,256,729,287 at both ends) paid at its own end by the unwound hand's four notches unwound whole by the one advance act at -1 (MG-S1; before it by one exact unwind from the unwound train's gear), the unsprung train wound at a whole winding at each end where nothing stood (the unsprung hand advanced as the fitted hand's advance, the gear having no going there), the fitted hands' sweeps -+(T div 2) summing to 0 and the unsprung train's sweep 0 over the great clock, unwound at or above tallied, the unspringing at the first striking with no stop before it (the former unwinds by gear, CS4-S2, logged `taken_line` [1, 1] on the heavy train's second gear, 3 B against 0 the farthest; at the second striking on the first gear, [0, 0], under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); under the former first gear's unwind the stop jammed both ends by name before the unspringing paid); the rewind exact."""
+    """SL-S2 (the Boss's ledger item 10, The-Merger-As-The-Birth-Reversed_COMPARISON.md section 3: the unspringing is the fitting read at -1): the heaviest hand's reflected pair fed at two adjacent clocks of the bare 5-cube (the + hand at M and the - hand at P at three times the advance's notches (A, B), one notch pair on P's three-o'clock gear for a lead across the mesh and on two transverse neighbours for a twist) engages as the reflected pair (the ends' sweeps opposite) and clicks into light: one fitting whose unwound train is the heaviest hand and whose fitted hands are the unsprung train, each fitted hand's windings one light quantum to the rounding (its own quantum, MG-S1, 1,654,009,903,854,256,729,287 at both ends) paid at its own end by the unwound hand's four notches unwound whole by the one advance act at -1 (MG-S1; before it by one exact unwind from the unwound train's gear), the unsprung train wound at a whole winding at each end where nothing stood (the unsprung hand advanced as the fitted hand's advance, the gear having no going there), the fitted hands' sweeps -+(T div 2) summing to 0 and the unsprung train's sweep 0 over the great clock, unwound at or above tallied, the unspringing at the first click with no stop before it (the former unwinds by gear, CS4-S2, logged `taken_line` [1, 1] on the heavy train's second gear, 3 B against 0 the farthest; at the second click on the first gear, [0, 0], under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); under the former first gear's unwind the stop jammed both ends by name before the unspringing paid); the rewind exact."""
     clock = node_of("world_node.json", shape=[5, 5, 5], seed=[])
     a, b, k = clock.A, clock.B, 3
     heavy = max(range(len(clock.hands())), key=lambda r: clock.hands()[r].spring or 0)
@@ -385,12 +391,12 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
 
 
 def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> None:
-    """WS (the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the turnover at the top is the reflection composed with the reverse of the two notches, and W = three_now twelve_before - twelve_now three_before, odd under each, is even under the two: at every turned-over clock and every hand (the unsprung hand with the sprung), W after the turnover equals W of the held pre-state exactly (read by a clock whose strike reads before it advances; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one winding of train 1 at the centre) 148 of 148 sites by 60 under the great clock's bounds as under the wave's honest books (37 turned-over clocks, the first at the tick 1, 9 sites with W not 0, every one kept; the centre's bob chimed 18 times, none laid back, 57 at the wave) and before the wave (the first turnover at 42 under EQ-S1, the centre's bob returning 12 of its 39 chimes where nothing arrives; 35 with the unwind standing under CK-S1's crossing read even, 37 under the crossing odd at a touch of zero, 42 before CK-S1's chimes) 296 of 296 sites (74 turned-over clocks; 324 and 81 with the unwind standing), every W 0 there; on the chiral 5-cube at 20 ticks 2,624 of 2,624 sites by 656 turned-over clocks, 224 of them with W not 0, under the great clock's bounds (2,668 by 667 and 440 under the wave; 2,112 and 533 before it; 2,152 of 2,152 sites, 664 of them with W not 0 under EX-S1 (2,124 and 632 under GP-S1; 2,172 of 2,172 by 543 turned-over clocks, 686 with W not 0 under MG-S1; 2,156 sites by 539 turned-over clocks and 625 under PL-S1; 2,180 sites by 545 turned-over clocks and 722 under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); 2,160 sites by 540 turned-over clocks and 695 under the former drive of 2 W after the step; 2,124 and 672 under the odd crossing; 2,120 and 668 under the upward crossing alone; at 60 the probe read 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head))."""
+    """WS (the Boss's 6400357538, The-Swap-Keeps-The-Charge_VERDICT.md section 4, ws1's exchange_read as a test under 15 s): the turnover at the top is the reflection composed with the reverse of the two notches, and W = three_now twelve_before - twelve_now three_before, odd under each, is even under the two: at every turned-over clock and every hand (the unsprung hand with the sprung), W after the turnover equals W of the held pre-state exactly (read by a clock whose click reads before it advances; the acts untouched), kept = sites, negated 0, changed 0; on the Boss's 3-cube (the sea and one winding of train 1 at the centre) 148 of 148 sites by 60 under the great clock's bounds as under the wave's honest books (37 turned-over clocks, the first at the tick 1, 9 sites with W not 0, every one kept; the centre's bob chimed 18 times, none laid back, 57 at the wave) and before the wave (the first turnover at 42 under EQ-S1, the centre's bob returning 12 of its 39 chimes where nothing arrives; 35 with the unwind standing under CK-S1's crossing read even, 37 under the crossing odd at a touch of zero, 42 before CK-S1's chimes) 296 of 296 sites (74 turned-over clocks; 324 and 81 with the unwind standing), every W 0 there; on the chiral 5-cube at 20 ticks 2,624 of 2,624 sites by 656 turned-over clocks, 224 of them with W not 0, under the great clock's bounds (2,668 by 667 and 440 under the wave; 2,112 and 533 before it; 2,152 of 2,152 sites, 664 of them with W not 0 under EX-S1 (2,124 and 632 under GP-S1; 2,172 of 2,172 by 543 turned-over clocks, 686 with W not 0 under MG-S1; 2,156 sites by 539 turned-over clocks and 625 under PL-S1; 2,180 sites by 545 turned-over clocks and 722 under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); 2,160 sites by 540 turned-over clocks and 695 under the former drive of 2 W after the step; 2,124 and 672 under the odd crossing; 2,120 and 668 under the upward crossing alone; at 60 the probe read 2,500 of 2,500, 908 not 0, against ws1's 1,863 on the former head))."""
 
     class Reading(Clock):
         wronskians: dict[str, int] = {}
 
-        def strike(self, *args: Any, **keys: Any) -> Any:
+        def click(self, *args: Any, **keys: Any) -> Any:
             where = list(zip(*np.nonzero(self.turned_over), strict=True))
             for r, train, htrain in zip(self.trains_, self.trains(), args[1], strict=True):
                 if r.size == HAND:
@@ -400,7 +406,7 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
                         key = "kept" if wa == wp else "negated" if wa == -wp else "changed"
                         for k in ("sites", key, "nonzero" if wp else "zero"):
                             self.wronskians[k] = self.wronskians.get(k, 0) + 1
-            return super().strike(*args, **keys)
+            return super().click(*args, **keys)
 
     calibre, piece = world_of("world_node.json")
     one = {"lay": "at", "row": 1, "centre": [1, 1, 1], "quanta": 1, "width": 2, "sense": 1}
@@ -415,12 +421,12 @@ def test_the_swap_keeps_the_charge_of_every_plane_at_every_turned_node_ws() -> N
         assert clock.wronskians["kept"] == clock.wronskians["sites"] > 0
         assert not {"negated", "changed"} & clock.wronskians.keys()
         found.append(clock.wronskians)
-        # 2,624 and 224 under the great clock's bounds (2,668 and 440 at the wave; 2,152 sites and 708 with W not 0 at the trace 54, 664 before cc1)
-    assert [(f["sites"], f.get("nonzero", 0)) for f in found] == [(148, 9), (2624, 224)]
+        # 2,620 and 256 with the shears struck (2,668 and 277 with them; 2,624 and 224 before the one mirror; 2,668 and 440 at the wave; 2,152 sites and 708 with W not 0 at the trace 54, 664 before cc1)
+    assert [(f["sites"], f.get("nonzero", 0)) for f in found] == [(148, 9), (2620, 256)]
 
 
 def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s1() -> None:
-    """CK-S1 (the owner's word of 2026-10-25, 17:57 UTC, through the Boss, 6401141446; ck1's REPORT.md section 4): a hand wound at a whole quantum of its own winding through one period of its three-o'clock gear's zero crossings, in either direction, strikes, the beat the half period, the crossing read even under the negation of the gear (the two notches' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike; the Boss's 6402516165), read on the hand's own beat (the owner's word of 2026-10-27, 15:5x UTC, DAVID-OWN-BEAT.md: the dot of the hand's notch with its reference, the notch where its winding began, the crossings' timer restarted there): at one clock a hand's three-o'clock gear fed at rest, its reference set along the three gear, over the period 8 touching zero (2, 1, 0, -1, -2, -1, 0, 1) and over the period 6 (2, 1, -1, -2, -1, 1), each with its negation, gives the counters crossed and beats equal step for step, the period 6 the beat 3; on the chiral 5-cube at 20 ticks every hand chime's beat is the tick count between the two latest zero crossings of that dot at its clock in either direction after its winding began, read by hand from the gears and the references by the even form, 275 chimes with 138 of them on an upward crossing under the great clock's bounds, every one a take, at the beats 1 to 5 (453 and 281 under the wave's honest books; 1,037 and 481 on the three gear before the wave; 1,036 chimes with 671 of them on a downward crossing under EX-S1 (762 and 512 under GP-S1, 910 and 106 under MG-S1, 825 and 128 under PL-S1; 834 and 79 under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); 819 and 177 under the former drive of 2 W after the step; 536 and 50 under the form `b < 0 <= n or n < 0 <= b`, odd where exactly one notch is 0; 115 chimes under the upward crossing alone)); the rewind exact."""
+    """CK-S1 (the owner's word of 2026-10-25, 17:57 UTC, through the Boss, 6401141446; ck1's REPORT.md section 4): a hand wound at a whole quantum of its own winding through one period of its three-o'clock gear's zero crossings, in either direction, clicks, the beat the half period, the crossing read even under the negation of the gear (the two notches' product below 0 or exactly one of them 0, a touch of zero a crossing from either side alike; the Boss's 6402516165), read on the hand's own beat (the owner's word of 2026-10-27, 15:5x UTC, DAVID-OWN-BEAT.md: the dot of the hand's notch with its reference, the notch where its winding began, the crossings' timer restarted there): at one clock a hand's three-o'clock gear fed at rest, its reference set along the three gear, over the period 8 touching zero (2, 1, 0, -1, -2, -1, 0, 1) and over the period 6 (2, 1, -1, -2, -1, 1), each with its negation, gives the counters crossed and beats equal step for step, the period 6 the beat 3; on the chiral 5-cube at 20 ticks every hand chime's beat is the tick count between the two latest zero crossings of that dot at its clock in either direction after its winding began, read by hand from the gears and the references by the even form, 275 chimes with 138 of them on an upward crossing under the great clock's bounds, every one a take, at the beats 1 to 5 (453 and 281 under the wave's honest books; 1,037 and 481 on the three gear before the wave; 1,036 chimes with 671 of them on a downward crossing under EX-S1 (762 and 512 under GP-S1, 910 and 106 under MG-S1, 825 and 128 under PL-S1; 834 and 79 under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting); 819 and 177 under the former drive of 2 W after the step; 536 and 50 under the form `b < 0 <= n or n < 0 <= b`, odd where exactly one notch is 0; 115 chimes under the upward crossing alone)); the rewind exact."""
     from event_universe.bobs import bobs
 
     clock = node_of("world_node.json")
@@ -464,12 +470,12 @@ def test_the_bodies_closing_clicks_on_the_zero_crossing_in_either_direction_ck_s
         new = [e for e in clock.log[read_from:] if e["event"] == "credit" and e["line"] in hands_of]
         chimes += [(e["beat"], beat.get((e["line"], tuple(e["node"])))) for e in new]
     assert all(by_hand is not None and b == by_hand[0] for b, by_hand in chimes)
-    assert (len(chimes), sum(1 for _b, h in chimes if h and h[1])) == (275, 138)  # 453, 281 at the wave
+    assert (len(chimes), sum(1 for _b, h in chimes if h and h[1])) == (387, 274)  # 201, 101; 275, 138
     assert run_back_exact(kept, INTERVALS) == INTERVALS
 
 
 def test_the_take_moves_the_line_farthest_from_its_before_and_logs_it_per_take_cs4_s2() -> None:
-    """CS4-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss; cs4's REPORT.md sections 1.2, 1.5 and 4, The-Handed-Seed-And-Births_COMPARISON.md's finding (a) and cs5's mend, the gear logged PER UNWIND; the test under 20 s): the exact unwind moves the unwound hand's gear whose notch now stands farthest from its before (the largest now^2 - before^2, the first where equal), the gear logged as `taken_line` on every fitting, chime and unspringing unwind, the strike undone restoring that gear. The pair's 3-cube at 20 ticks (81 chimes at 4, 6 and 12 under the great clock's bounds where nothing arrives, each taking nothing and logged on the gear a take would move, bobs.still_chime; 27, the first at 336, under the wave's honest books, the run then 336 ticks; 81 in 20 before the wave) beside its image with the unsprung hand turned a quarter at the setting ((three, twelve) -> (-twelve, three): the unsprung hand on its second gear, the first at 0): the two great clocks' X equal at every clock at 20 of 20 ticks and the 81 chimes equal chime for chime in their numbers, every one logged on the first gear on the great clock and on the second on the image, where the former act (the first gear's unwind) is the stop by name (fall_of (None, 0) on a gear at 0), the rewind exact 20 of 20 through the chimes on the second gear (the numbers equal at an even count of turnovers: run to 336, every clock turns over at 84 and 252 and the image's chimes at 168 to 172 read the logged notch negated, the turnover conjugating the quarter turn); SL-S2's unspringing great clock (the heaviest hand's reflected pair at two adjacent clocks of the bare 5-cube) at 20: under MG-S1 the unspringing at the first striking with no stop before it, its two ends' notches unwound whole (no gear), six unsprung fittings after it at 9 and 17 on the unsprung hand's second gear under GP-S1 (the fitted hands advanced with the sweep's sign), each of the 11 unwinds' gears re-derived by hand from the clock's notches after the striking (the other gear untouched by the unwind, the unwound gear as the unwind found it), 11 of 11 on a gear other than the first, 5 chimes (under MG-S1 with Y-S3's six gears three unsprung fittings at 9, 19 and 20, 344 unwinds with 233 on another gear and 341 chimes, one unsprung fitting at 9 and 343 chimes before Y-S3; before MG-S1 the unspringing's two unwinds on the heavy train's second gear, 3 B against 0, the farthest at both ends, where under the former act the first gear's fall came short and the stop jammed both ends, ten unsprung fittings after it unwinding the unsprung hand's second gear but one at 19 where the first gear's gap is the larger, 87 unwinds with 66 on another gear, 0 under the former act, 74 chimes (the unspringing at the second striking on the first gear with 2 fittings, 4 unwinds and 1 chime under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting)); under the sign train's former drive of 2 W after the step, before PL-S1, 9 fittings every one on the second gear, 318 unwinds with 219 on it and 308 chimes; the rewind exact."""
+    """CS4-S2 (the owner's word of 2026-10-25, 22:50 UTC, "all of them", through the Boss; cs4's REPORT.md sections 1.2, 1.5 and 4, The-Handed-Seed-And-Births_COMPARISON.md's finding (a) and cs5's mend, the gear logged PER UNWIND; the test under 20 s): the exact unwind moves the unwound hand's gear whose notch now stands farthest from its before (the largest now^2 - before^2, the first where equal), the gear logged as `taken_line` on every fitting, chime and unspringing unwind, the click undone restoring that gear. The pair's 3-cube at 20 ticks (81 chimes at 4, 6 and 12 under the great clock's bounds where nothing arrives, each taking nothing and logged on the gear a take would move, bobs.still_chime; 27, the first at 336, under the wave's honest books, the run then 336 ticks; 81 in 20 before the wave) beside its image with the unsprung hand turned a quarter at the setting ((three, twelve) -> (-twelve, three): the unsprung hand on its second gear, the first at 0): the two great clocks' X equal at every clock at 20 of 20 ticks and the 81 chimes equal chime for chime in their numbers, every one logged on the first gear on the great clock and on the second on the image, where the former act (the first gear's unwind) is the stop by name (fall_of (None, 0) on a gear at 0), the rewind exact 20 of 20 through the chimes on the second gear (the numbers equal at an even count of turnovers: run to 336, every clock turns over at 84 and 252 and the image's chimes at 168 to 172 read the logged notch negated, the turnover conjugating the quarter turn); SL-S2's unspringing great clock (the heaviest hand's reflected pair at two adjacent clocks of the bare 5-cube) at 20: under MG-S1 the unspringing at the first click with no stop before it, its two ends' notches unwound whole (no gear), six unsprung fittings after it at 9 and 17 on the unsprung hand's second gear under GP-S1 (the fitted hands advanced with the sweep's sign), each of the 11 unwinds' gears re-derived by hand from the clock's notches after the click (the other gear untouched by the unwind, the unwound gear as the unwind found it), 11 of 11 on a gear other than the first, 5 chimes (under MG-S1 with Y-S3's six gears three unsprung fittings at 9, 19 and 20, 344 unwinds with 233 on another gear and 341 chimes, one unsprung fitting at 9 and 343 chimes before Y-S3; before MG-S1 the unspringing's two unwinds on the heavy train's second gear, 3 B against 0, the farthest at both ends, where under the former act the first gear's fall came short and the stop jammed both ends, ten unsprung fittings after it unwinding the unsprung hand's second gear but one at 19 where the first gear's gap is the larger, 87 unwinds with 66 on another gear, 0 under the former act, 74 chimes (the unspringing at the second click on the first gear with 2 fittings, 4 unwinds and 1 chime under A48-S1 (05cca50, the read of the fine tooth at the pawl of its setting, reverted for the tie of the sign train's drive fine tooth and the fittings' setting)); under the sign train's former drive of 2 W after the step, before PL-S1, 9 fittings every one on the second gear, 318 unwinds with 219 on it and 308 chimes; the rewind exact."""
     pair, image = node_of("world_pair_3.json"), node_of("world_pair_3.json")
     re, im = image.unsprung().gears
     im.now[...], im.before[...], re.now[...], re.before[...] = re.now.copy(), re.before.copy(), 0, 0
@@ -540,8 +546,8 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     kept = copy.deepcopy(clock)
     for _ in range(INTERVALS):
         clock.tick()
-    # under the great clock's bounds (b4c97c7c at the wave, ddfeb210 at 54); over the whole state since 2026-10-26, ff82a0da over the gears and the unwind's slack alone
-    assert record.state_hash(clock) == "0b429dc013419de0a890bc0fc45abc77a187b382cca0bfdf3e86219acd3c6c06"
+    # with the shears struck (fba1dd44 with them, 0b429dc0 before the one mirror, b4c97c7c at the wave, ddfeb210 at 54); over the whole state since 2026-10-26, ff82a0da over the gears and the unwind's slack alone
+    assert record.state_hash(clock) == "30c9c357029cded7e2ed344f8ee07673e785e890c516d4c6d13d264d5499175c"
     tick = Tick(copy.deepcopy(clock), 1)
     tick.readings()
     assert sorted(tick.meshes_at) == [0, 1] and any(
@@ -555,7 +561,7 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
 
 
 def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> None:
-    """EX-S1 (the Boss's order of 2026-10-26, 03:3x UTC, 6407630119, under the owner's delegation; H-Exact-Take-Remainder-1's REPORT.md sections 2 and 4, the one-clock test one_node_take.py re-read on the engine): the exact unwind is one carry of the clock: what the striking tallies less the unwind's slack standing at the clock is the unwind's due, the unwound gear moved by the least count of notches whose fall pays what is due (by none where the slack alone pays), the fall above what is due the new slack, one integer of the clock's state, starting at 0; on the 3-cube hole piece the unsprung gear at (1, 0, 0) fed 3,000 notches above its before and unwound twenty times for two unsprung windings by take_at alone: fall + slack before - slack after = tallied at 20 of 20 (the former unwind paid above tallied at every one), every slack below the one-notch step at its unwind, the clock's count one integer more (99 on the toy's calibre, 107 with the beats' references, two a hand), the unwind's push read at the gears of the tick's start (CL-S2's one moment, here the gears as set), the twenty unwinds undone by the advance back and the slack's restore to the state's hash before them."""
+    """EX-S1 (the Boss's order of 2026-10-26, 03:3x UTC, 6407630119, under the owner's delegation; H-Exact-Take-Remainder-1's REPORT.md sections 2 and 4, the one-clock test one_node_take.py re-read on the engine): the exact unwind is one carry of the clock: what the click tallies less the unwind's slack standing at the clock is the unwind's due, the unwound gear moved by the least count of notches whose fall pays what is due (by none where the slack alone pays), the fall above what is due the new slack, one integer of the clock's state, starting at 0; on the 3-cube hole piece the unsprung gear at (1, 0, 0) fed 3,000 notches above its before and unwound twenty times for two unsprung windings by take_at alone: fall + slack before - slack after = tallied at 20 of 20 (the former unwind paid above tallied at every one), every slack below the one-notch step at its unwind, the clock's count one integer more (99 on the toy's calibre, 107 with the beats' references, two a hand), the unwind's push read at the gears of the tick's start (CL-S2's one moment, here the gears as set), the twenty unwinds undone by the advance back and the slack's restore to the state's hash before them."""
     clock = node_of("world_node.json")
     at, clock.start_gears = (1, 0, 0), [r.gears for r in clock.hands()]
     unsprung = clock.unsprung()
@@ -575,9 +581,9 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
         paid += fall + slack_was - slack == windings
         below += 0 <= slack < fall_of(clock, at, 1, gearing, unsprung)[1]
         undo.append((now, k, slack_was))
-    assert (paid, below) == (20, 20) and record.census(clock)[0] == 107
+    assert (paid, below) == (20, 20) and record.census(clock)[0] == 95  # 107 with the shears
     for now, k, slack_was in reversed(undo):
         move(clock, rec0, k, at, now - int(unsprung.gears[k].now[at]))
-        clock.strikes[at] -= 1
+        clock.clicks[at] -= 1
         clock.slack[at] = slack_was
     assert record.state_hash(clock) == hash_before
