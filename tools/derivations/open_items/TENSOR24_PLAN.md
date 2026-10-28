@@ -411,7 +411,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **every bound a carry:** carry, in algebra/carry.py, and beat, in engine/step.py.
 2. **Five folders:** algebra/ (new: Rule3 and the Gaussian integers), engine/, record/, readings/ and runner/, with decoder/ beside them.
    - The runner does not import the engine. A main.py of about 15 lines passes it the engine's functions.
-3. **The state:** ten arrays, fixed for the whole run: a, b, r, rd and go for every gear, e for every hand, and ph, tb, tn and the beat count c for every Node-clock, that is, 5G + H + 4 integers per Node-clock (c added by the one architect's ruling, the going per gear by the tie rule). Nothing grows at run time, as line 98 sets.
+3. **The state:** nine arrays, fixed for the whole run: a, b, r, rd and go for every gear, e for every hand, and ph, tn and the beat count c for every Node-clock, that is, 5G + H + 3 integers per Node-clock (c added by the one architect's ruling, the going per gear by the tie rule; tb, which lin alone read, dropped under past by Sofer's and David's yes, 6478702384 and 6479871986, the out carrying the replaced tn). Nothing grows at run time, as line 98 sets.
 4. **The lines:** about 850 (section 1).
 5. **Loops** stand only in the runner, the decoder and the tests.
 6. **The undo log:** runner/rewind.py alone reads it, for the rewind check. The engine reads no log.

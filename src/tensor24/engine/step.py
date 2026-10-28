@@ -29,40 +29,27 @@ def unbeat(k: Z, ph: Z, rate: Z, gamma: Z, fire: Z) -> Z:
     return choose(fire, uncarry(k, gamma, ph) - rate, ph)
 
 
-def times(k: Z, c: Z, tb: Z, tn: Z) -> tuple[Z, Z]:
-    """The slots' local times after a tick of k at the count c: the before slot takes the now's, the now c."""
-    return choose(k, tn, tb), choose(k, c, tn)
-
-
 def tick(layout: Layout, s: State, allowed: Z) -> tuple[State, Out]:
     """One round where the runner allows (a bit per Node-clock): the due beat turns the dial; where it ticks, the gears step."""
     nb, _, _, w, rate, gamma = layout
-    a, b, r, go, ph, c, tb, tn = s
+    a, b, r, go, ph, c, tn = s
     fire = due(c, nb) * allowed
     k, dial = beat(ph, rate, gamma, fire)
     a1, b1, r1 = gear(a, b, r, go, w, w, pull(layout, s))
     count = c + fire
-    tb1, tn1 = times(k, count, tb, tn)
-    now = State(choose(k, a1, a), choose(k, b1, b), choose(k, r1, r), go, dial, count, tb1, tn1)
-    return now, Out(fire, k, tb)
+    now = State(
+        choose(k, a1, a), choose(k, b1, b), choose(k, r1, r), go, dial, count, choose(k, count, tn)
+    )
+    return now, Out(fire, k, tn)
 
 
 def untick(layout: Layout, s: State, o: Out) -> State:
-    """The round run back from its out: the pull as it was read, the gears, the times, the count and the dial."""
+    """The round run back from its out: the pull as it was read, the gears, the count, the dial and the time."""
     _, _, _, w, rate, gamma = layout
-    a, b, r, go, ph, c, tb, tn = s
+    a, b, r, go, ph, c, tn = s
     fire, k, before = o
     count = c - fire
-    read = pull(layout, State(choose(k, b, a), b, r, go, ph, count, tb, tn))
+    read = pull(layout, State(choose(k, b, a), b, r, go, ph, count, tn))
     a0, b0, r0 = ungear(a, b, r, go, w, w, read)
     dial = unbeat(k, ph, rate, gamma, fire)
-    return State(
-        choose(k, a0, a),
-        choose(k, b0, b),
-        choose(k, r0, r),
-        go,
-        dial,
-        count,
-        choose(k, before, tb),
-        choose(k, tb, tn),
-    )
+    return State(choose(k, a0, a), choose(k, b0, b), choose(k, r0, r), go, dial, count, before)

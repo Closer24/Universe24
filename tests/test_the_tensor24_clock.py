@@ -40,21 +40,20 @@ def clock(seed, size):
 
 def run(m, a, b, r, go, w, push, fire, ph, rate, gamma):
     """Twenty beats forward and the same twenty back; the teeth count moves only where a gear ticks."""
-    c, tb, tn, i, log = 0, 0, 0, 0, []
-    start = (a, b, r, ph, c, tb, tn)
+    c, tn, i, log = 0, 0, 0, []
+    start = (a, b, r, ph, c, tn)
     for t in range(20):
         k, ph = m.beat(ph, rate, gamma, fire[t])
-        c, log = c + fire[t], [*log, (k, tb)]
+        c, log = c + fire[t], [*log, (k, tn)]
         ticked = m.gear(a, b, r, go, w[i], w[i + 1], push[t])
         a, b, r = (choose(k, x, y) for x, y in zip(ticked, (a, b, r), strict=True))
-        tb, tn, i = *m.times(k, c, tb, tn), i + k
+        tn, i = choose(k, c, tn), i + k
     for t in reversed(range(20)):
-        (k, old_tb), i = log[t], i - log[t][0]
+        (k, tn), i = log[t], i - log[t][0]
         back = m.ungear(a, b, r, go, w[i], w[i + 1], push[t])
         a, b, r = (choose(k, x, y) for x, y in zip(back, (a, b, r), strict=True))
-        tb, tn = choose(k, old_tb, tb), choose(k, tb, tn)
         c, ph = c - fire[t], m.unbeat(k, ph, rate, gamma, fire[t])
-    now = (a, b, r, ph, c, tb, tn)
+    now = (a, b, r, ph, c, tn)
     return all(
         np.array_equal(x, y) if isinstance(x, np.ndarray) else x == y
         for x, y in zip(now, start, strict=True)

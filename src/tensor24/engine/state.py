@@ -6,7 +6,7 @@ from tensor24.algebra.carry import Z
 
 
 class State(NamedTuple):
-    """Per gear its now and before slots, fine tooth and going; per Node-clock its dial, count and slots' times."""
+    """Per gear its now and before slots, fine tooth and going; per Node-clock its dial, count and now slot's time."""
 
     a: Z
     b: Z
@@ -14,7 +14,6 @@ class State(NamedTuple):
     go: Z
     ph: Z
     c: Z
-    tb: Z
     tn: Z
 
 
@@ -30,8 +29,8 @@ class Layout(NamedTuple):
 
 
 class Out(NamedTuple):
-    """What a round puts out: where it fired, where it ticked, and the before slot's time it replaced."""
+    """What a round puts out: where it fired, where it ticked, and the now slot's time before the round."""
 
     fire: Z
     k: Z
-    tb: Z
+    tn: Z

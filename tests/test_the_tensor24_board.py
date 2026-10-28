@@ -5,7 +5,6 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from tensor24.algebra.carry import carry, choose, nonneg
 from tensor24.engine import step
 from tensor24.engine.state import Layout, State
 from tensor24.runner import board
@@ -39,16 +38,11 @@ def alike(m):
     return True
 
 
-def lin(layout, s):
-    """derive/asynchronous_read's lin: the neighbour read on the line toward a slot written a count ahead."""
+def ahead(layout, s):
+    """The neighbour's now slot read whatever its time: a slot written a count ahead is seen early."""
     nb, meshes, grip, _, _, _ = layout
-    a, b, _, _, _, c, tb, tn = s
-    line = (
-        b[:, nb]
-        + carry((a[:, nb] - b[:, nb]) * (c[:, None, :] - tb[:, nb]), tn[:, nb] - tb[:, nb], 0)[0]
-    )
-    seen = choose(nonneg(c[:, None, :] - tn[:, nb]), a[:, nb], line)
-    return ((seen - a[:, None, :]) * grip[meshes]).sum(axis=1)
+    a, _, _, _, _, _, _ = s
+    return ((a[:, nb] - a[:, None, :]) * grip[meshes]).sum(axis=1)
 
 
 def row(rng, low, high):
@@ -67,7 +61,7 @@ def world(seed, rate=None):
     )
     return (
         Layout(nb, meshes, grip, w, rates, GAMMA),
-        State(a, b, r % w, go, ph, zero, zero - 1, zero),
+        State(a, b, r % w, go, ph, zero, zero),
         rng,
     )
 
@@ -135,8 +129,8 @@ def mutants():
         nb, meshes = board.board(shape)
         return np.stack([nb[0], nb[0], *nb[2:]]), meshes
 
-    def read_by_line(layout, s, allowed):
-        saved, step.pull = step.pull, lin
+    def read_ahead(layout, s, allowed):
+        saved, step.pull = step.pull, ahead
         try:
             return step.tick(layout, s, allowed)
         finally:
@@ -145,7 +139,7 @@ def mutants():
     return {
         "the -x neighbour taken as the +x": ("model", board, {"board": one_short}),
         "the -x Spoke holding the site's own Mesh": ("alike", board, {"board": wrapped_once}),
-        "the read on the line toward the slot ahead": ("cone", step, {"tick": read_by_line}),
+        "the now slot read whatever its time": ("cone", step, {"tick": read_ahead}),
         "the run back reading two Meshes away": (
             "back",
             step,

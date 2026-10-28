@@ -98,7 +98,7 @@ def alike(m, heads):
             off = ~act["top"]
             for (a, b, r), done, end in zip(act["start"], act["act"], act["end"], strict=True):
                 zero = 0 * a
-                pull = m.pull(layout, State(a, b, r, zero, zero, zero, zero - 1, zero))
+                pull = m.pull(layout, State(a, b, r, zero, zero, zero, zero))
                 ticked = m.gear(a, b, r, zero, w, wp, pull)
                 if not (
                     same(ticked, done)

@@ -37,7 +37,7 @@ def varied(rng, stopped=True):
 
 
 def world(rng, shape, trains, w=W):
-    """A state the tick may meet: gears of every bit across 2**256, teeth within w, goings, dials, counts, times."""
+    """A state the tick may meet: gears of every bit across 2**256, teeth within w, goings, dials, counts, the times."""
     size, one = (trains, int(np.prod(shape))), (1, int(np.prod(shape)))
 
     def draw(low, high, rows):
@@ -46,20 +46,11 @@ def world(rng, shape, trains, w=W):
     c = draw(0, 2, one)
     tn = c - draw(0, 2, one)
     tooth = draw(0, 1 << 20, size) % w
-    return State(
-        wide(rng, size),
-        wide(rng, size),
-        tooth,
-        draw(0, 2, size),
-        draw(0, GAMMA, one),
-        c,
-        tn - 1 - draw(0, 2, one),
-        tn,
-    )
+    return State(wide(rng, size), wide(rng, size), tooth, draw(0, 2, size), draw(0, GAMMA, one), c, tn)
 
 
 def start(rng, layout):
-    """The first state on a layout: two trains, every count at 0 and the slots' times behind it."""
+    """The first state on a layout: two trains, every count and the now slots' times at 0."""
     n = layout.w.shape[1]
     a, b = (rng.integers(-99, 99, size=(2, n)).astype(object) for _ in range(2))
     r = rng.integers(0, 1 << 20, size=(2, n)).astype(object) % layout.w
@@ -68,7 +59,7 @@ def start(rng, layout):
         rng.integers(0, GAMMA, size=(1, n)).astype(object),
     )
     zero = np.zeros((1, n), dtype=object)
-    return State(a, b, r, go, ph, zero, zero - 1, zero)
+    return State(a, b, r, go, ph, zero, zero)
 
 
 def parted(seed, stopped=True):
@@ -122,10 +113,10 @@ def stopped():
 def naive(shape, s, layout, mask):
     """The tick site by site, with loops and plain integers, its neighbours and Meshes found from the coordinates."""
     _, _, grip, w, rate, gamma = layout
-    a, b, r, go, ph, c, tb, tn = (x.tolist() for x in s)
+    a, b, r, go, ph, c, tn = (x.tolist() for x in s)
     grip, (w,), (rate,), (mask,) = grip.tolist(), w.tolist(), rate.tolist(), mask.tolist()
     n = len(c[0])
-    new = [[row[:] for row in x] for x in (a, b, r, go, ph, c, tb, tn)]
+    new = [[row[:] for row in x] for x in (a, b, r, go, ph, c, tn)]
     fire, k, before = ([[0] * n] for _ in range(3))
     for x in itertools.product(*map(range, shape)):
         i, around = (
@@ -135,7 +126,7 @@ def naive(shape, s, layout, mask):
         spokes = [axis * n + j for axis in range(3) for j in (i, around[axis + axis + 1])]
         fire[0][i] = mask[i] * int(all(c[0][j] >= c[0][i] for j in around))
         k[0][i], new[4][0][i] = divmod(ph[0][i] + rate[i], gamma) if fire[0][i] else (0, ph[0][i])
-        new[5][0][i], before[0][i] = c[0][i] + fire[0][i], tb[0][i]
+        new[5][0][i], before[0][i] = c[0][i] + fire[0][i], tn[0][i]
         if k[0][i]:
             for g in range(len(a)):
                 seen = [a[g][j] if c[0][i] >= tn[0][j] else b[g][j] for j in around]
@@ -143,7 +134,7 @@ def naive(shape, s, layout, mask):
                 home = (w[i] - go[g][i]) // 2
                 q, new[2][g][i] = divmod(w[i] * (a[g][i] - b[g][i]) + r[g][i] - home + pull + home, w[i])
                 new[0][g][i], new[1][g][i] = a[g][i] + q, a[g][i]
-            new[6][0][i], new[7][0][i] = tn[0][i], new[5][0][i]
+            new[6][0][i] = new[5][0][i]
     return State(*(np.array(x, dtype=object) for x in new)), tuple(
         np.array(x, dtype=object) for x in (fire, k, before)
     )

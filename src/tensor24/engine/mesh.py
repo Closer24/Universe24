@@ -13,12 +13,12 @@ def due(c: Z, nb: Z) -> Z:
 
 def seen(s: State, nb: Z) -> Z:
     """Each neighbour's gears as of the reader's count: the now slot written at or before it, else the before slot."""
-    a, b, _, _, _, c, _, tn = s
+    a, b, _, _, _, c, tn = s
     return choose(nonneg(c[:, None, :] - tn[:, nb]), a[:, nb], b[:, nb])
 
 
 def pull(layout: Layout, s: State) -> Z:
     """The Meshes' pull on every gear: each Spoke's grip times its neighbour as seen less the gear's own now."""
     nb, meshes, grip, _, _, _ = layout
-    a, _, _, _, _, _, _, _ = s
+    a, _, _, _, _, _, _ = s
     return ((seen(s, nb) - a[:, None, :]) * grip[meshes]).sum(axis=1)
