@@ -116,8 +116,16 @@ RULES: dict[str, tuple[str, str]] = {
         "an act reads the great clock's log, a global read: only the readers read the record (law: Locality is never broken)",
     ),
     "LOOP": (
-        "WARN",
-        "a loop (for, while, a comprehension) in an engine module: the machine is one tensor operation with no loop (the owner's word of 2026-10-28, 06:5x); the count may not rise",
+        "BLOCK",
+        "a loop (for, while, a comprehension) in an engine module: no loop that makes a formula, the machine is one tensor operation (the owner's words of 2026-10-28, 06:5x and 09:0x); the count per file and kind may not rise",
+    ),
+    "OPERATION": (
+        "BLOCK",
+        "a power, a shift, an exclusive or, or a floor division or remainder outside the carry's home (core/acts.py, core/rule3.py): the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 09:0x)",
+    ),
+    "REFUSE": (
+        "BLOCK",
+        "a raise in an engine module: a refusal by name is a rule written for a phenomenon (the exclusion's refusals were such); the count per file may not rise (the owner's word of 2026-10-28, 09:0x: no declarations)",
     ),
     "CLAMP": (
         "BLOCK",
@@ -133,7 +141,8 @@ BAD_IMPORTS = frozenset("math cmath statistics random fractions decimal scipy sy
 NUMPY_NAMES = frozenset({"np", "numpy"})
 NP_FLOAT = frozenset(
     "sqrt cbrt exp expm1 log log2 log10 log1p mean average median std var linspace logspace fft linalg random e inf nan "
-    "float16 float32 float64 float_ double true_divide divide power".split()
+    "float16 float32 float64 float_ double true_divide divide power complex_ complex64 complex128 complex256 csingle cdouble "
+    "clongdouble".split()
 )
 CIRCULAR_FUNCTIONS = frozenset(
     "cos sin tan acos asin atan atan2 arccos arcsin arctan arctan2 sinh cosh tanh radians degrees deg2rad rad2deg "
@@ -142,6 +151,10 @@ CIRCULAR_FUNCTIONS = frozenset(
 ROOTS = frozenset("largest_below isqrt integer_root sqrt cbrt sine_rim".split())
 CLAMPS = frozenset("min max abs clip where minimum maximum absolute fmin fmax".split())
 ORDERING = (ast.Lt, ast.LtE, ast.Gt, ast.GtE)
+FOREIGN_OPERATORS = {ast.Pow: "**", ast.LShift: "<<", ast.RShift: ">>", ast.BitXor: "^"}
+CARRY_HOME = frozenset(
+    {"core/acts.py", "core/rule3.py"}
+)  # where Rule3's division and remainder are written
 NEEDS_DTYPE = frozenset("zeros ones empty full eye identity linspace".split())
 CIRCULAR_WORDS = frozenset(
     "cos sin tan cosine sine tangent arccos arcsin arctan atan atan2 acos asin theta angle angles radian radians degree "
@@ -174,6 +187,7 @@ class Hit:
     line: int
     detail: str
     where: str = ""
+    col: int = 0  # keeps two hits of one kind on one line apart; not part of the key
 
     @property
     def key(self) -> tuple[str, str, str]:
@@ -239,7 +253,16 @@ def scan(rel: str, source: str) -> list[Hit]:
         return ".".join(reversed(names)) or "<module>"
 
     def add(rule: str, node: ast.AST, detail: str) -> None:
-        hits.append(Hit(rule, rel, getattr(node, "lineno", 0), detail, where(node)))
+        hits.append(
+            Hit(
+                rule,
+                rel,
+                getattr(node, "lineno", 0),
+                detail,
+                where(node),
+                getattr(node, "col_offset", 0),
+            )
+        )
 
     numpy = set(NUMPY_NAMES)
     for node in ast.walk(tree):
@@ -333,10 +356,27 @@ def scan(rel: str, source: str) -> list[Hit]:
                     add("NUMBER", node, repr(value))
         elif isinstance(node, ast.BinOp | ast.AugAssign) and isinstance(node.op, ast.Div):
             add("FLOAT", node, "true division")
+        elif (
+            isinstance(node, ast.BinOp | ast.AugAssign)
+            and rel not in READERS
+            and (
+                type(node.op) in FOREIGN_OPERATORS
+                or (isinstance(node.op, ast.FloorDiv | ast.Mod) and rel not in CARRY_HOME)
+            )
+        ):
+            add(
+                "OPERATION",
+                node,
+                FOREIGN_OPERATORS.get(type(node.op), "//" if isinstance(node.op, ast.FloorDiv) else "%"),
+            )
+        elif isinstance(node, ast.Raise) and rel not in READERS:
+            add("REFUSE", node, "raise")
         elif isinstance(node, ast.Call):
             name = callee_name(node)
             if isinstance(node.func, ast.Name) and name in {"round", "complex", "pow"}:
                 add("FLOAT", node, f"{name}()")
+            if name == "divmod" and rel not in CARRY_HOME and rel not in READERS:
+                add("OPERATION", node, "divmod")
             if isinstance(node.func, ast.Name) and name == "id":
                 add("STATE", node, "id()")
             if name in ROOTS:
@@ -367,8 +407,8 @@ def scan(rel: str, source: str) -> list[Hit]:
                 if not appends:
                     add("LOGREAD", node, "log read")
         elif isinstance(node, ast.Name):
-            if node.id == "float":
-                add("FLOAT", node, "float")
+            if node.id in {"float", "complex"}:
+                add("FLOAT", node, node.id)
             if node.id in CIRCULAR_FUNCTIONS or node.id == "pi":
                 add("CIRCLE", node, node.id)
         elif (
@@ -384,19 +424,21 @@ def scan(rel: str, source: str) -> list[Hit]:
             )
             and rel not in READERS
         ):
-            if isinstance(node, ast.For | ast.AsyncFor):
-                shape = f"for {ast.unparse(node.target)} in {ast.unparse(node.iter)}"
-            elif isinstance(node, ast.While):
-                shape = f"while {ast.unparse(node.test)}"
-            else:
-                shape = f"{type(node).__name__} over {ast.unparse(node.generators[0].iter)}"
-            add("LOOP", node, shape[:56])
+            add(
+                "LOOP",
+                node,
+                "for"
+                if isinstance(node, ast.For | ast.AsyncFor)
+                else "while"
+                if isinstance(node, ast.While)
+                else "comprehension",
+            )
         elif (
             isinstance(node, ast.Compare)
             and rel not in READERS
             and any(isinstance(op, ORDERING) for op in node.ops)
         ):
-            add("COMPARE", node, ast.unparse(node)[:56])
+            add("COMPARE", node, "ordering")
         elif isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
             for decorator in node.decorator_list:
                 found = (
