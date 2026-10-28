@@ -5,8 +5,8 @@ orthonormal: failures 0
 nonzero exactly on the channels: failures 0
 equivariant: failures 0
 primitive: failures 0
-the sign: 6 of the nonzero tables have a negative first entry (A2xE->E, ExA2->E, ExT1->T2, ExT2->T1, T1xE->T2, T2xE->T1)
-  the seeds in the reverse order turn 14 of them over (A2xE->E, ExA2->E, ExE->A2, ExE->E, ExT1->T1, ExT2->T2, T1xE->T1, T1xT1->E, T1xT1->T1, T1xT2->T2, T2xE->T2, T2xT1->T2, T2xT2->E, T2xT2->T1)
-  of those, with no E (a stage 6 file can name them): 4 (T1xT1->T1, T1xT2->T2, T2xT1->T2, T2xT2->T1)
-the sign fixed by the first nonzero entry: the reverse order and 20 random orders move 0 of the 43; the rule turns 6 of the head's tables over (A2xE->E, ExA2->E, ExT1->T2, ExT2->T1, T1xE->T2, T2xE->T1)
+the sign: 0 of the nonzero tables have a negative first entry ()
+the order: the seeds in the reverse order move 0 tables (); 0 of them with no E ()
+  the reverse order and 20 random orders move 0 tables in all
+the rule, the first nonzero entry positive, laid on top: it turns 0 of the head's tables over (); under it the 21 orders move 0
 the dot: plain ; the cross: plain ; A2 x T1 -> T2: plain

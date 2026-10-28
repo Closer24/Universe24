@@ -1,4 +1,4 @@
-"""David's probe of stage 6's tables (83a0b214a): the kinds and C as main.made builds them, against the groups.
+"""David's probe of stage 6's tables (83a0b214a, 3fbbd1cd0): the kinds and C as main.made builds them, against the groups.
 
 usage: python3 -I p12_stage6_tables.py <worktree>/src
 Checks on the engine's own kinds and the load's own tables, exact integers:
@@ -6,10 +6,12 @@ Checks on the engine's own kinds and the load's own tables, exact integers:
   (2) the characters on the five classes and their orthonormality;
   (3) every C[i, k -> m] equivariant under the 24, nonzero exactly where the characters hold m in i x k (43);
   (4) every nonzero C primitive (its entries' gcd 1), and its sign: whether its first nonzero entry, in C's own
-      index order, is positive; and whether that sign stays when the elementary seeds are tried in another order;
-  (5) the dot (T1 x T1 -> A1) and the cross (T1 x T1 -> T1) as the plain dot and cross, up to their sign;
-  (6) the sign fixed by the rule "the first nonzero entry, in C's own index order, positive": whether C then stands
-      under the seeds in the reverse order and in 20 random orders, and which of the head's tables it turns over.
+      index order (the target, then the two sides), is positive;
+  (5) the dot (T1 x T1 -> A1), the cross (T1 x T1 -> T1) and A2 x T1 -> T2 as the plain ones, up to their sign;
+  (6) the order of the seeds: the head's own load.tables run again with a projector whose elementary seeds come in
+      the reverse order, and in 20 random orders: which tables move;
+  (7) the rule "the first nonzero entry positive" laid on top: which of the head's tables it turns over, and whether
+      the tables of every order then agree.
 """
 import itertools
 import sys
@@ -62,24 +64,43 @@ for i, k, m in itertools.product(names, repeat=3):
     n = Fraction(sum(chi[i][g] * chi[k][g] * chi[m][g] for g in range(24)), 24)
     held_channels[(i, k, m)] = n
 nonzero_ok = equi = prim = 0
-negative, reordered, fixed_moved, turned = [], [], [], []
+negative = []
 inv = K.kinds(K.inverse(matrix), axes)
 rng = np.random.default_rng(12)
 
 
-def primitive(seeds, order):
-    """The first seed not 0 in the given order, its entries' gcd divided out, as the load does."""
-    s = next(seeds[n] for n in order if seeds[n].any())
-    g = load.common(s)
-    return np.asarray([x // g for x in s])
+def ordered(orders):
+    """The projector with its elementary seeds (the last three indices, flattened) taken in the given orders by count."""
+
+    def projector(weight, m, i, k):
+        p = np.asarray(K.projector(weight, m, i, k))
+        n = int(np.prod(p.shape[:3]))
+        return p.reshape(n, n)[:, orders(n)].reshape(p.shape)
+
+    return projector
 
 
 def signed(c):
-    """C with its first nonzero entry made positive."""
-    first = next(int(x) for x in c.reshape(-1) if x)
-    return c * (1 if first > 0 else -1)
+    """C with its first nonzero entry made positive (C 0 left as it is)."""
+    first = next((int(x) for x in np.asarray(c).reshape(-1) if x), 1)
+    return np.asarray(c) * (1 if first > 0 else -1)
 
 
+def label(key):
+    return f"{names[key[0]]}x{names[key[1]]}->{names[key[2]]}"
+
+
+reverse = load.tables(held, inv, weight, ordered(lambda n: np.arange(n)[::-1]))
+randoms = []
+for _ in range(20):
+    perms = {}
+    randoms.append(load.tables(held, inv, weight, ordered(lambda n: perms.setdefault(n, rng.permutation(n)))))
+moved_reverse = [label(key) for key in tables if not np.array_equal(reverse[key], tables[key])]
+moved_any = [label(key) for key in tables if any(not np.array_equal(r[key], tables[key]) for r in [reverse, *randoms])]
+turned = [label(key) for key in tables if not np.array_equal(signed(tables[key]), tables[key])]
+signed_moved = [
+    label(key) for key in tables if any(not np.array_equal(signed(r[key]), signed(tables[key])) for r in [reverse, *randoms])
+]
 for (a, b, c), table in tables.items():
     i, k, m = names[a], names[b], names[c]
     t = np.asarray(table)
@@ -95,21 +116,8 @@ for (a, b, c), table in tables.items():
         equi += not np.array_equal(lhs, rhs)
     entries = [int(x) for x in t.reshape(-1)]
     prim += gcd(*[abs(x) for x in entries if x]) != 1
-    first = next(x for x in entries if x)
-    label = f"{i}x{k}->{m}"
-    if first < 0:
-        negative.append(label)
-    # the same projector, the elementary seeds tried in the reverse order and in 20 random orders
-    seeds = K.projector(weight, reps[c], np.asarray(getattr(inv, held._fields[a])), np.asarray(getattr(inv, held._fields[b])))
-    seeds = np.asarray(seeds).reshape(int(np.prod(t.shape)), -1).T
-    orders = [list(range(len(seeds)))[::-1]] + [list(rng.permutation(len(seeds))) for _ in range(20)]
-    tried = [primitive(seeds, order).reshape(t.shape) for order in orders]
-    if not np.array_equal(tried[0], t):
-        reordered.append(label)
-    if any(not np.array_equal(signed(x), signed(t)) for x in tried):
-        fixed_moved.append(label)
-    if not np.array_equal(signed(t), t):
-        turned.append(label)
+    if next(x for x in entries if x) < 0:
+        negative.append(f"{i}x{k}->{m}")
 fails["nonzero exactly on the channels"] = nonzero_ok
 fails["equivariant"] = equi
 fails["primitive"] = prim
@@ -117,11 +125,12 @@ print(f"channels held: {sum(1 for v in held_channels.values() if v)}; tables not
 for k_, v in fails.items():
     print(f"{k_}: failures {v}")
 print(f"the sign: {len(negative)} of the nonzero tables have a negative first entry ({', '.join(negative)})")
-print(f"  the seeds in the reverse order turn {len(reordered)} of them over ({', '.join(reordered)})")
-plain = [x for x in reordered if "E" not in x]
-print(f"  of those, with no E (a stage 6 file can name them): {len(plain)} ({', '.join(plain)})")
-print(f"the sign fixed by the first nonzero entry: the reverse order and 20 random orders move {len(fixed_moved)} of the 43;"
-      f" the rule turns {len(turned)} of the head's tables over ({', '.join(turned)})")
+plain = [x for x in moved_reverse if "E" not in x]
+print(f"the order: the seeds in the reverse order move {len(moved_reverse)} tables ({', '.join(moved_reverse)});"
+      f" {len(plain)} of them with no E ({', '.join(plain)})")
+print(f"  the reverse order and 20 random orders move {len(moved_any)} tables in all")
+print(f"the rule, the first nonzero entry positive, laid on top: it turns {len(turned)} of the head's tables over"
+      f" ({', '.join(turned)}); under it the 21 orders move {len(signed_moved)}")
 dot = np.asarray(tables[(names.index('T1'), names.index('T1'), names.index('A1'))]).reshape(3, 3)
 cross = np.asarray(tables[(names.index('T1'),) * 3])
 eps = np.zeros((3, 3, 3), dtype=int)
