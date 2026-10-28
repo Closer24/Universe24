@@ -1,0 +1,48 @@
+1. the table: every kind's norm and the orthogonality
+   8 kinds, the orthonormality failing at 0 pairs; the squared dimensions sum to 48 (the group's order 48)
+2. the one big bang's calibre: the light, three sprung hands and the held field, all A1
+   A1 x A1 = {'A1': 1}
+   bang 1: kinds present ['A1']
+   bang 2: kinds present ['A1']
+   bang 3: kinds present ['A1']
+   bang 4: kinds present ['A1']
+3. the twin hands (E1/2) beside them, each bang fusing every pair of kinds present
+   bang 1: 2 kinds ['A1', 'E1/2']
+   bang 2: 3 kinds ['A1', 'T1', 'E1/2']
+   bang 3: 6 kinds ['A1', 'E', 'T1', 'T2', 'E1/2', 'G3/2']
+   bang 4: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 5: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 6: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   all eight kinds stand at bang 4
+4. each bang adding one twin hand to every clock (K x E1/2)
+   bang 1: 2 kinds ['A1', 'E1/2']
+   bang 2: 3 kinds ['A1', 'T1', 'E1/2']
+   bang 3: 4 kinds ['A1', 'T1', 'E1/2', 'G3/2']
+   bang 4: 6 kinds ['A1', 'E', 'T1', 'T2', 'E1/2', 'G3/2']
+   bang 5: 7 kinds ['A1', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 6: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 7: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 8: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 9: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+5. n twin hands: the multiplicity of each kind in E1/2^n, and the gears 2^n
+   n = 1: gears 2 (2^n = 2); {'E1/2': 1}
+   n = 2: gears 4 (2^n = 4); {'A1': 1, 'T1': 1}
+   n = 3: gears 8 (2^n = 8); {'E1/2': 2, 'G3/2': 1}
+   n = 4: gears 16 (2^n = 16); {'A1': 2, 'E': 1, 'T1': 3, 'T2': 1}
+   n = 5: gears 32 (2^n = 32); {'E1/2': 5, 'E5/2': 1, 'G3/2': 5}
+   n = 6: gears 64 (2^n = 64); {'A1': 5, 'A2': 1, 'E': 5, 'T1': 10, 'T2': 6}
+   n = 7: gears 128 (2^n = 128); {'E1/2': 15, 'E5/2': 7, 'G3/2': 21}
+   n = 8: gears 256 (2^n = 256); {'A1': 15, 'A2': 7, 'E': 21, 'T1': 36, 'T2': 28}
+6. the exchange sign of each kind's A1 pairing (draft E's big law), and two equal clocks of each kind
+   A1   : sign +1; A1 x A1 = {'A1': 1}
+   A2   : sign +1; A2 x A2 = {'A1': 1}
+   E    : sign +1; E x E = {'A1': 1, 'A2': 1, 'E': 1}
+   T1   : sign +1; T1 x T1 = {'A1': 1, 'E': 1, 'T1': 1, 'T2': 1}
+   T2   : sign +1; T2 x T2 = {'A1': 1, 'E': 1, 'T1': 1, 'T2': 1}
+   E1/2 : sign -1; E1/2 x E1/2 = {'A1': 1, 'T1': 1}
+   E5/2 : sign -1; E5/2 x E5/2 = {'A1': 1, 'T1': 1}
+   G3/2 : sign -1; G3/2 x G3/2 = {'A1': 1, 'A2': 1, 'E': 1, 'T1': 2, 'T2': 2}
+7. mutants
+   E1/2 with its two C4 classes swapped is E5/2: True
+   the ladder from E5/2 alone reaches 8 kinds
+   A2 read as A1: the orthonormality fails at 2 pairs (fails as it must)

@@ -153,7 +153,7 @@ Over 1,000 ticks F2 acts at 367,488 values (5,000,000 quanta) and 379,008 (500,0
 - **(c) The draw's room** as a carry, with the draw's fairness (the mathematician's finding); and the coupling's cap.
 - **(d) The drive's fine tooth at the turnover:** the flip in place of the mirror (P3), one line. The driven gears' strides at even teeth go with the parity candidates.
 - **(e) New clicks at every bang (law 10).** Candidates:
-  - twin hands in the calibre, whose splits draw at every bang; the one big bang has none (open item 11 e);
+  - twin hands in the calibre with the composite clock: the 24's ladder (part 7) reaches all eight kinds by the fourth bang, where the calibre's A1 clocks alone never leave A1; the one big bang has no twin hands (open item 11 e);
   - the late settings carried back by the turnover to the next birth (89d4d2a9e);
   - a lay whose light outlasts the fittings.
 - **(f) Local contractions.** Six charts send clocks below the vacuum's stretch (draft B). Under law 11 the vacuum's stretch is the same dial's other end: a stretch that passes below it would leave a borrow, whose event is a turnover at the full rate. On the A1 course the stretch comes to the vacuum's at rest and never passes it.
@@ -163,7 +163,30 @@ Over 1,000 ticks F2 acts at 367,488 values (5,000,000 quanta) and 379,008 (500,0
   - On the plan's light seed it is static.
   - Its exact rewind is owed. In nature a recollapse is curvature's, not a horizon's; the top here is a property of the integers. For David to weigh.
 
-## 7. What it replaces (step 4)
+## 7. Every bang shows more: the 24's ladder (the owner's word of 13:0x UTC)
+
+The owner (Hebrew, translated): "Think in clocks: what will make every bang make clocks more sophisticated, more beautiful, that show everything, through the tensors, the 24." The probe is ANIMATE-PROBES-2/kinds_ladder.py, with exact characters of 2O in Z[sqrt 2] and every multiplicity an integer.
+
+- **Why the bangs here stop showing more.** Every clock of the one big bang's calibre is of one kind, A1, the kind the 24 leave in place: the light, the three sprung hands and the held field (the plan's section 6). Two A1 clocks meeting read a joint dial of kind A1 x A1 = A1. So no bang can make a new kind of clock, and once the light's births run out, nothing new comes. PROVED (the product table). CHECKED: the ladder from A1 stays at A1.
+- **The 24's ladder.** Two clocks of kinds K1 and K2 meeting at one Node-clock read a joint dial of kind K1 x K2. The product table splits it into kinds, and law 6 on the composite (the click of a split on the pair's state; Sofer's entry 11) draws which one the pair becomes: a composite clock, the plan's "clock of clocks" (open item 11 c). The 24's double cover has eight kinds:
+  - **The 24's own five:** A1 and A2, one gear each; E, two gears; T1 and T2, three gears each.
+  - **The three spinor kinds:** E1/2 and E5/2, two gears each; G3/2, four gears.
+- **With the twin hands (E1/2) in the calibre,** each bang fusing every pair of kinds present (CHECKED):
+  - bang 1: A1 and E1/2;
+  - bang 2: T1 too. Two twin hands make a vector clock of three gears, beside their A1 pair;
+  - bang 3: E, T2 and G3/2 too. Vectors with vectors make the cube's two shear clocks, and vectors with twin hands make a four-gear spin-3/2 clock: six kinds;
+  - bang 4: A2 and E5/2 too, the handed clock and the second spinor. All eight kinds stand, so every kind of clock the 24 allow is shown.
+  - Adding one twin hand per bang instead of fusing every pair, the eight stand at bang 6.
+- **After the eight, the counts rise.** n twin hands hold 2^n gears, and every kind's count grows with n: at n = 8, 15 A1, 7 A2, 21 E, 36 T1 and 28 T2. Each bang carries its clocks into the next, since the run back undoes no birth (row 1c), so each bang starts with more and richer clocks than the last.
+- **Pauli keeps them apart.** On every kind the A1 pairing's exchange sign is +1 on the 24's own kinds and -1 on the spinor kinds (draft E's big law, reproduced). So two equal twin hands pair only antisymmetrically, and the composites cannot all fall into one state: the shells.
+- **Owed for the engine** (OPEN):
+  - the twin hands in the one big bang's calibre (open items 11 a and 11 e);
+  - the composite clock: law 6 on the pair's state as the fusion's click, with its gears derived from its parts' and no new number (11 c);
+  - the light's split into a twin pair at the bang: A1 lies in E1/2 x E1/2, so the light can lay the singlet pair (the Bell draft's part 1a).
+
+  The bangs above count what the 24's table can reach. How many fusions a bang makes is the engine's click to measure.
+
+## 8. What it replaces (step 4)
 
 - **BH-S1, R10:** struck everywhere, with law 11's turn of the time gear's dial as law 4's top (P2, P5).
 - **Law 4's floor clause** (X_f = 19, stretch LOW = -1, readings.bottom): struck, with no bottom trigger in its place (P4). The six charts are (f).
