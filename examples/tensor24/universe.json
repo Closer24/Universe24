@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "integers": {"den": 15162856759112389, "full_rate": 1000, "key": 36000, "trace": 6},
+  "trains": [
+    {"name": "light", "kinds": ["A1"], "part": 2, "pair": [15162856759112389, 15162856759112389]}
+  ],
+  "couplings": []
+}

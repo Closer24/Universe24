@@ -41,7 +41,16 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality, purity, rename, the 24's images, the formula against a naive model, bijectivity both ways) on a trivial engine, Fredkin's second-order form, each failing on its own mutant; the Boss's room by name."
+TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, every divisor at least 1, every reference whole), and each rule refuses its own broken file; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
+    "tests/test_the_tensor24_files.py::edits": (
+        13,
+        TENSOR24_FILES,
+    ),
+    "tests/test_the_tensor24_files.py::test_the_examples_hold_and_each_rule_refuses_its_broken_file": (
+        9,
+        TENSOR24_FILES,
+    ),
     "tests/test_the_tensor24_frame.py::board": (
         5,
         TENSOR24_FRAME,
