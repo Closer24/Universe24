@@ -4,7 +4,7 @@ Each draft follows PROTOCOL.md: the formula in the three operations, its proof, 
 
 | draft | what it derives | where it stands |
 | --- | --- | --- |
-| A | what a click writes, the unspringing, the setting's lay | drafting |
+| A | what a click writes, the unspringing, the setting's lay | steps 1 to 4 (A/DERIVATION.md); its verifier reading it |
 | B | the bounds of the head as thresholds or zeros, the held load in D, the release and its recoil | steps 1 to 4 (B/DERIVATION.md); its verifier reading it |
 | C | the course's closure | steps 1 to 4 (C/DERIVATION.md); its verifier reading it |
 | D | the closure of the split (Bell) | steps 1 to 5 (D/DERIVATION.md; the verifier's probes and counts in D_verify); confirmed with corrections, and its one-Mesh premise refuted as the singlet itself; Sofer's law check and David's sign-off owed |

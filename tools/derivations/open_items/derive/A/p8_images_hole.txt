@@ -1,0 +1,20 @@
+P8 world_hole.json, 20 ticks, the engine as on the head:
+  fittings 13, chimes 3, stops 31, takes True
+  rotations alike: 24 of 24; reflections alike with the fitted hands exchanged: 0 of 24
+
+real	1m21.585s
+user	1m20.957s
+sys	0m0.036s
+P8 world_hole.json, 20 ticks, the engine with F3:
+  fittings 13, chimes 63, stops 337, takes True
+  rotations alike: 24 of 24; reflections alike with the fitted hands exchanged: 0 of 24
+
+real	1m43.875s
+user	1m42.712s
+sys	0m0.058s
+P8 world_hole.json, 16 ticks, the engine as on the head:
+  fittings 7, chimes 1, stops 16, takes True
+  rotations alike: 24 of 24; reflections alike with the fitted hands exchanged: 0 of 24
+P8 world_hole.json, 17 ticks, the engine as on the head:
+  fittings 9, chimes 1, stops 18, takes True
+  rotations alike: 24 of 24; reflections alike with the fitted hands exchanged: 0 of 24

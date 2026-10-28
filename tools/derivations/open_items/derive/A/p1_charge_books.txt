@@ -1,0 +1,53 @@
+world_nature.json 60 ticks; the hands in the acts' order, with ratio and coupling:
+  hand 0: spring 2183583978, coupling 1, twin False
+    the step: {'ticks': 60, "ticks with the step's change 0": 5, 'largest |step change|': 21792, 'the total sweep at the end': 685}
+    the click: {"ticks with the click's change 0": 60, 'largest |click change|': 0}
+  hand 1: spring 12704646675360514, coupling 1, twin False
+    the step: {'ticks': 60, "ticks with the step's change 0": 9, 'largest |step change|': 3783, 'the total sweep at the end': -406}
+    the click: {"ticks with the click's change 0": 60, 'largest |click change|': 0}
+  hand 2: spring 12582467845487104, coupling 1, twin False
+    the step: {'ticks': 60, "ticks with the step's change 0": 16, 'largest |step change|': 1430, 'the total sweep at the end': -78}
+    the click: {"ticks with the click's change 0": 60, 'largest |click change|': 0}
+  hand 3: spring 0, coupling 0, twin False
+    the step: {'ticks': 60, "ticks with the step's change 0": 60, 'largest |step change|': 0, 'the total sweep at the end': 0}
+    the click: {"ticks with the click's change 0": 60, 'largest |click change|': 0}
+  fittings: 3
+  fittings, the two ends' sweeps after the click summing 0: 3
+  counts: {'births': 3, 'taken': 11149239981346502872990, 'booked': 11148026751977690355390, 'body_clicks': 2742, 'refused_stop': 8816, 'refused_lay': 1183, 'refused_orientation': 109, 'refused_twist': 76, 'refused_sense': 10320, 'turns': 861, 'met': 20236}
+world_hole.json 60 ticks; the hands in the acts' order, with ratio and coupling:
+  hand 0: spring 2183583978, coupling 1, twin False
+    the step: {'ticks': 60, "ticks with the step's change 0": 16, 'largest |step change|': 20838, 'the total sweep at the end': 466}
+    the click: {"ticks with the click's change 0": 56, 'largest |click change|': 35758}
+  hand 1: spring 12704646675360514, coupling 1, twin False
+    the step: {'ticks': 60, "ticks with the step's change 0": 14, 'largest |step change|': 40028, 'the total sweep at the end': -22739}
+    the click: {"ticks with the click's change 0": 59, 'largest |click change|': 41519}
+  hand 2: spring 12582467845487104, coupling 1, twin False
+    the step: {'ticks': 60, "ticks with the step's change 0": 12, 'largest |step change|': 22054, 'the total sweep at the end': -7473}
+    the click: {"ticks with the click's change 0": 60, 'largest |click change|': 0}
+  hand 3: spring 0, coupling 0, twin False
+    the step: {'ticks': 60, "ticks with the step's change 0": 19, 'largest |step change|': 3936252, 'the total sweep at the end': 3166453}
+    the click: {"ticks with the click's change 0": 22, 'largest |click change|': 3602069}
+  fittings: 22
+  fittings, the two ends' sweeps after the click summing 0: 22
+  unspringing pair sums (first 12): [(-18000, 18000, 0), (-18000, 18000, 0), (-18000, 18000, 0), (-28519, 31457, 2938), (17378, -22365, -4987), (164, -22046, -21882)]
+  unspringings: 6
+  unspringings, the pair's sweeps at the start of opposite sign (the head's R1): 6
+  unspringings, the pair's sweeps at the start summing 0 (W_x + W_y = 0): 3
+  unspringings, the two ends' sweeps after the click summing 0: 2
+  counts: {'births': 28, 'taken': 907400156779405388238026, 'booked': 688463428370391966741639, 'body_clicks': 1299, 'refused_stop': 3133, 'refused_lay': 13486, 'refused_orientation': 902, 'refused_twist': 298, 'refused_sense': 5401, 'refused_disengaged': 8059, 'turns': 1073, 'met': 31082, 'laid': 4, 'laid_nodes': 2}
+world_bang.json 12 ticks; the hands in the acts' order, with ratio and coupling:
+  hand 0: spring 2183583978, coupling 1, twin False
+    the step: {'ticks': 12, "ticks with the step's change 0": 12, 'largest |step change|': 0, 'the total sweep at the end': 0}
+    the click: {"ticks with the click's change 0": 12, 'largest |click change|': 0}
+  hand 1: spring 12704646675360514, coupling 1, twin False
+    the step: {'ticks': 12, "ticks with the step's change 0": 12, 'largest |step change|': 0, 'the total sweep at the end': 0}
+    the click: {"ticks with the click's change 0": 12, 'largest |click change|': 0}
+  hand 2: spring 12582467845487104, coupling 1, twin False
+    the step: {'ticks': 12, "ticks with the step's change 0": 12, 'largest |step change|': 0, 'the total sweep at the end': 0}
+    the click: {"ticks with the click's change 0": 12, 'largest |click change|': 0}
+  hand 3: spring 0, coupling 0, twin False
+    the step: {'ticks': 12, "ticks with the step's change 0": 2, 'largest |step change|': 2194484255552, 'the total sweep at the end': 1648062940192}
+    the click: {"ticks with the click's change 0": 11, 'largest |click change|': 9600000}
+  fittings: 64
+  fittings, the two ends' sweeps after the click summing 0: 64
+  counts: {'births': 64, 'taken': 582639442625867556776160, 'booked': 317358188272323947161728, 'body_clicks': 128, 'laid_back': 128, 'refused_stop': 384, 'refused_lay': 1728, 'refused_orientation': 1024, 'refused_twist': 320, 'refused_disengaged': 896, 'turns': 128, 'met': 4416}
