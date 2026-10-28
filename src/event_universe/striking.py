@@ -11,19 +11,21 @@ from event_universe.bobs import bobs, splits
 from event_universe.core import rule3
 from event_universe.core.rule3 import carries, remainder
 from event_universe.core.spokes import AXES, across, spoke_of
-from event_universe.draw import kept_pitch, vernier
+from event_universe.draw import kept_mid, kept_pitch, vernier
 from event_universe.meshes import coupling_of, train_lead, train_twists
-from event_universe.run import fitting, jammed
+from event_universe.phase import books, claimed, crowded, snapshot
+from event_universe.run import fitting, jammed, logged
 from event_universe.trains import HAND, Gear, Train
 from event_universe.unspring import (
     fitted_advanced,
     fitted_notches,
     fitted_windings_of,
+    read_unwinds,
     summed,
     unsprung_notches,
-    unwinds,
+    unwind_ends,
 )
-from event_universe.unwind import advance, move, neighbour, recoil, window_clocks
+from event_universe.unwind import advance, move, neighbour, recoil
 
 if TYPE_CHECKING:
     from event_universe.clock import Clock
@@ -179,7 +181,7 @@ def fittings(
         k: fitted_windings_of(clock, k.gear_ratio, k.minus, k.plus, gearings[k.gear_ratio], own)
         for k in kept
     }
-    unwound: list[tuple[tuple[int, ...], int, list[Fitting], dict[str, Any]]] = []
+    start, planned = snapshot(clock), []
     winds: dict[tuple[int, tuple[int, ...]], int] = {}
     for at, rec in sorted(by_clock):
         fits = by_clock[(at, rec)]
@@ -190,28 +192,34 @@ def fittings(
                 twins = clock.twin_ends.get((rec, fit.minus, fit.plus))
                 drawn: list[Any] = []
 
-                def draw(
-                    at: tuple[int, ...] = at, winding: int = clock.windings[rec], into: list[Any] = drawn
-                ) -> Any:
-                    into.append(vernier(clock, at, reads, winding))
+                def draw(at: tuple[int, ...] = at, rec: int = rec, into: list[Any] = drawn) -> Any:
+                    if (at, rec) not in clock.vernier_read:  # one read per clock-node and hand
+                        clock.vernier_read[(at, rec)] = vernier(clock, at, reads, clock.windings[rec])
+                    into.append(clock.vernier_read[(at, rec)])
                     return into[-1]
 
-                got = unwinds(clock, ends, gearing, 1, rec, draw, winds, at, twins)
-                if got is None:
-                    continue
-                unwound.append((at, rec, [fit._replace(room=drawn[-1][1])], summed(got)))
-                winds.clear()
+                got = read_unwinds(clock, ends, gearing, 1, rec, draw, winds, twins)
+                planned += [] if got is None else [(at, rec, [fit._replace(room=drawn[-1][1])], got, 0)]
             continue
-        got = unwinds(clock, [(at, sum(sum(windings[fit]) for fit in fits))], gearing, len(fits), rec)
-        if got is None:
-            continue
-        clock.strikes[at] -= 1
-        unwound.append((at, rec, fits, summed(got)))
-    touched: set[tuple[int, ...]] = set()
+        got = read_unwinds(
+            clock, [(at, sum(sum(windings[fit]) for fit in fits))], gearing, len(fits), rec
+        )
+        planned += [] if got is None else [(at, rec, fits, got, 1)]
+    unwound, writes, touched = [], [], set()
+    for at, rec, fits, (taker, ends), light in crowded(
+        clock, planned, lambda plan: claimed(clock, plan)
+    ):
+        clock.strikes[at] -= light
+        unwound.append((at, rec, fits, summed(unwind_ends(clock, ends, taker, at))))
+        writes += [(read[-1], read[0], False) for read in ends]
     for at, rec, fits, unwind in unwound:
-        touched |= fitted(clock, at, fits, unwind, rec, c, factors)
+        touched |= fitted(clock, at, fits, unwind, rec, c, factors, writes)
         clock.counts["taken"] += unwind["taken"]
         clock.counts["booked"] += unwind["booked"]
+    laid = {r: readings.gearing(clock, h.ratio, c, factors) for r, h in enumerate(all_hands) if h.ratio}
+    booked = books(clock, start, writes, laid)
+    if booked:
+        logged(clock, "books", tuple(booked[0][:-1]), booked=booked)
     return touched
 
 
@@ -223,11 +231,10 @@ def fitted(
     rec: int,
     c: Any,
     factors: tuple[Any, ...],
+    writes: list[tuple[int, tuple[int, ...], bool]],
 ) -> set[tuple[int, ...]]:
     """One unwind's fitted hands advanced by the one advance act (unspring.fitted_advanced: the sweeping fitted hands at the sweep key div 2, an unspringing's unsprung fitted hands as the exact unwind at -1, unspring.unsprung_notches, MG-S1, each end's winding found by its clock and not by its place in the unwind's list, so the advance is order-free under the ends' naming, the comparison's bug of close.py:166-169, CL-S2), each fitting logged with its numbers, its unwind's own push among them (the Boss's 6399718139: every unwind's dP on its gear, not the striking's last), an unspringing's two ends' unwinds under `takes` and its advances under `exact_lay`. Returns the clocks touched."""
     touched = {at}
-    laid = lay_window(clock, fits)
-    gain = -lay_wind(clock, laid, c, factors)
     for _at, s, minus, plus, room, _rec in fits:
         exact: list[list[int] | None] = []
         hand = clock.hands()[s]
@@ -249,6 +256,8 @@ def fitted(
 
         advanced = fitted_advanced(clock, s, minus, plus, notches_of)
         touched |= {minus, plus}
+        twin = hands.twin_of(clock.hands(), s)
+        writes += [(s, minus, "takes" not in unwind), (twin, plus, "takes" not in unwind)]
         tallies = [
             recoil(clock, where, push, int(clock.start_rate[where]), 1)
             for where, push in zip((minus, plus), advanced[-1], strict=True)
@@ -256,39 +265,7 @@ def fitted(
         clock.counts["births"] += 1
         clock.strikes[at] += 1
         fitting(clock, at, s, (minus, plus), unwind, rec, advanced, tallies, len(fits), room, exact)
-    if "takes" not in unwind:
-        cross = gain + lay_wind(clock, laid, c, factors) - unwind["booked"]
-        clock.slack[at] -= cross
-        clock.log[-1]["lay_cross"] = cross
     return touched
-
-
-def lay_window(clock: Clock, fits: list[Fitting]) -> list[tuple[int, list[tuple[int, ...]]]]:
-    """The fitted hands of a clock's fittings and the clocks their advances change: every fitting's two fitted hands (twin hands at their own) and the two ends' windows, the clock and its six neighbours."""
-    found: dict[int, set[tuple[int, ...]]] = {}
-    for _at, s, minus, plus, _room, _rec in fits:
-        for p in {s, hands.twin_of(clock.hands(), s)}:
-            found.setdefault(p, set()).update(
-                c for end in (minus, plus) for c in window_clocks(clock, end)
-            )
-    return [(p, sorted(clocks)) for p, clocks in sorted(found.items())]
-
-
-def lay_wind(
-    clock: Clock, laid: list[tuple[int, list[tuple[int, ...]]]], c: Any, factors: tuple[Any, ...]
-) -> int:
-    """The fitted hands' wind over the clocks their advances change, at their gearings at the tick's start (the pair's lay read on the board: its own quanta, the windings paid, read on no gear of the great clock, so the lay's cross terms with the residue and between its two ends on one mesh are the board's wind less the windings, the take's remainder carrying them signed, EX-S1)."""
-    total = 0
-    for p, window in laid:
-        hand = clock.hands()[p]
-        assert hand.ratio is not None
-        total += sum(
-            int(v)
-            for v in hands.wind(
-                clock, hand.gears, readings.gearing(clock, hand.ratio, c, factors), window
-            )
-        )
-    return total
 
 
 def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
@@ -296,6 +273,8 @@ def undo(clock: Clock, rewind_note: dict[str, Any]) -> None:
     rec0 = clock.hands().index(clock.unsprung())
     untallied: set[tuple[Any, ...]] = set()
     for entry in reversed(clock.log[rewind_note["log_from"] :]):
+        for *where, amount in entry.get("booked", []) if entry["event"] == "books" else []:
+            clock.slack[tuple(where)] += amount
         at = tuple(entry["node"])
         if entry["event"] == "split":
             for r, moved in zip(entry["pair"], entry["moved"], strict=True):
@@ -361,6 +340,7 @@ def strike(
     clock.start_gears = hand_starts
     clock.pitches, clock.vernier_read, clock.twin_ends = {}, {}, {}
     kept_pitch.cache_clear()
+    kept_mid.cache_clear()
     stopped = readings.stopped_of(clock, c)
     read = clock.start_factors
     r_unsprung = readings.gearing_of(clock, clock.unsprung(), c, read)

@@ -236,37 +236,40 @@ def test_the_one_rule_of_the_remainder_is_one_primitive_and_every_rounding_odd()
 
 
 def test_the_take_is_the_least_count_whose_window_wind_falls_by_the_windings_tc_s1(monkeypatch) -> None:
-    """TC-S1 as the wave amends it (the owner's word of 2026-10-27, 15:5x UTC, "yes to all, by your recommendation": the take's fall is the wind's own fall; David's DAVID-CLOSE-LAW.md item 1; the closed form's price, which carried the pull's sign reversed against the wind's fall at 47 of 47 takes on the head, the Reader's finding 1, struck and kept by name): at every chime of the chiral setting over 14 ticks (31 under the great clock's bounds, 101 at the wave, each one a take: light arrives at every one, so none is a still chime, bobs.still_chime, which takes nothing) the light's gear moves by the least count at which the window's wind falls by what is owed, the windings less the slack the earlier takes left (17 owe nothing and move no notch, 57 at the wave), the fall booked is the window's wind before less after to the integer, one count fewer falls short, and the excess stands in the slack (EX-S1)."""
+    """TC-S1 as the wave amends it (the owner's word of 2026-10-27, 15:5x UTC, "yes to all, by your recommendation": the take's fall is the wind's own fall; David's DAVID-CLOSE-LAW.md item 1; the closed form's price, which carried the pull's sign reversed against the wind's fall at 47 of 47 takes on the head, the Reader's finding 1, struck and kept by name): at every chime of the chiral setting over 14 ticks (10 under the one mirror, 31 under the great clock's bounds before it, 101 at the wave, each one a take: light arrives at every one, so none is a still chime, bobs.still_chime, which takes nothing) the light's gear moves by the least count at which the window's wind falls by what is owed, the windings less the slack the earlier takes left (3 owe nothing and move no notch, 17 before the one mirror, 57 at the wave), the fall booked is the window's wind before less after to the integer, read on the board the bobs' phase starts from with the take's own move alone (the order-free click, David's DAVID-THE-STRIKES-ORDER.md: every take read on its phase's start board), one count fewer falls short, and the excess stands in the slack (EX-S1)."""
     clock, seen = node_of("world_nature.json", intervals=14), []
-    real = bobs.unwinds
+    real = bobs.read_unwinds
 
     def wrapped(clock_: Any, ends: Any, gearing_: Any, cause: int, *args: Any, **keys: Any) -> Any:
         (at, windings), light = ends[0], clock_.unsprung()
-        window = unwind.window_clocks(clock_, at)
+        got = real(clock_, ends, gearing_, cause, *args, **keys)
+        window, rec0 = unwind.window_clocks(clock_, at), clock_.hands().index(light)
 
-        def wind() -> int:
-            return sum(int(v) for v in hands.wind(clock_, light.gears, gearing_, window))
+        def wind(
+            count: int,
+        ) -> int:  # the window's wind on the phase's start board, the take's move alone
+            unwind.move(clock_, rec0, k, at, count)
+            total = sum(int(v) for v in hands.wind(clock_, light.gears, gearing_, window))
+            unwind.move(clock_, rec0, k, at, -count)
+            return total
 
-        before, got = wind(), real(clock_, ends, gearing_, cause, *args, **keys)
         if got is not None:
-            (take,) = got
-            gear, (now, was, _s) = light.gears[take["taken_line"]], take["taker"]
-            after, back = wind(), 1 if was > now else -1
-            gear.now[at] -= back
-            short = wind()
-            gear.now[at] += back
-            seen.append((before - after, before - short, take, windings))
+            ((_at, tallied, levels, fall, k, _slack, due, _r),) = got[1]
+            way = 1 if int(light.gears[k].before[at]) > int(light.gears[k].now[at]) else -1
+            short = wind(0) - wind(way * (levels - 1))
+            seen.append((wind(0) - wind(way * levels), short, fall, due, levels, tallied == windings))
         return got
 
-    monkeypatch.setattr(bobs, "unwinds", wrapped)
+    monkeypatch.setattr(bobs, "read_unwinds", wrapped)
     for _ in range(14):
         clock.tick()
-    chimes = (len(seen), clock.counts["body_clicks"], clock.counts["laid_back"])  # takes, chimes, still
-    assert chimes == (31, 31, 0) and sum(take["levels"] == 0 for _f, _s, take, _w in seen) == 17
-    for fall, short, take, windings in seen:
-        assert fall == take["taken"] >= take["owed"] and take["booked"] == windings
-        assert take["levels"] == 0 or short < take["owed"]  # the least count: one fewer falls short
-        assert take["taken"] + take["remainder_was"] - take["remainder"] == windings  # EX-S1
+    credits = [e for e in clock.log if e["event"] == "credit"]
+    chimes = (len(seen), len(credits), clock.counts["body_clicks"], clock.counts["laid_back"])
+    assert chimes == (10, 10, 10, 0) and sum(levels == 0 for *_x, levels, _w in seen) == 3
+    for fall, short, taken, due, levels, paid in seen:
+        assert fall == taken >= due and paid
+        assert levels == 0 or short < due  # the least count: one fewer falls short
+    assert all(e["taken"] + e["remainder_was"] - e["remainder"] == e["booked"] for e in credits)  # EX-S1
 
 
 def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_identity_lt_s1():
@@ -304,8 +307,8 @@ def test_every_move_of_the_close_books_its_momentum_on_the_flux_line_as_an_ident
         gears = clock.train(REGULATOR).gears[flow]
         assert all(carry == [int(gear.dfine[at]) for gear in gears] for at, carry in last.items())
     # every booking, those with a push, those advancing the flow gear's notch, the still chimes (push 0),
-    # under the great clock's bounds (116, 49, 4 and 0 at the wave at 2 quanta)
-    assert (checked, pushed, advanced, clock.counts["laid_back"]) == (142, 58, 2, 0)
+    # under the one mirror (142, 58, 2 and 0 before it; 116, 49, 4 and 0 at the wave at 2 quanta)
+    assert (checked, pushed, advanced, clock.counts["laid_back"]) == (15, 7, 2, 0)  # 142, 58, 2, 0
     for h in reversed(hashes):
         clock.tick(-1)
         assert record.state_hash(clock) == h
