@@ -1,0 +1,28 @@
+root eng world light mode derived quanta 500000 ticks 400 opts {'spring': '1', 'every': '1000'}
+  74: 4227323329..4227323329 [64]
+  221: 4227323329..4227323329 [64]
+  368: 4227323329..4227323329 [64]
+bangs (whole-board turnovers): 3 at [74, 221, 368]
+local turnovers: 0
+first difference fell at 0 of 25408 Node-clock ticks not turned over
+births 0; books closed 400 of 400
+largest X 4387372397
+state hash a42a2744072662c5
+seconds 16.0
+root eng world light mode derived quanta 50000 ticks 400 opts {'spring': '1', 'every': '1000'}
+  251: 4242569545..4242569545 [64]
+bangs (whole-board turnovers): 1 at [251]
+local turnovers: 0
+first difference fell at 0 of 25536 Node-clock ticks not turned over
+births 0; books closed 400 of 400
+largest X 4287863870
+state hash 13a21d94997bd4f3
+seconds 16.3
+root eng world light mode derived quanta 5000 ticks 400 opts {'spring': '1', 'every': '1000'}
+bangs (whole-board turnovers): 0 at []
+local turnovers: 0
+first difference fell at 17792 of 25600 Node-clock ticks not turned over
+births 0; books closed 400 of 400
+largest X 69745386
+state hash c49b7f23c5de6752
+seconds 16.5

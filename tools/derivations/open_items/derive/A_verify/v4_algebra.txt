@@ -1,0 +1,25 @@
+L0 sgn(n) = n div (n n + 1) - (-n) div (n n + 1): 0 off of 202055
+L0 [n >= 0] = 1 + n div (n n + 1): 0 off of 202055
+L0 [n = 0] = 1 + (-n n) div (n^4 + 1): 0 off of 202055
+L0 ceil(n / d) = (n + d - 1) div d, d > 0: 0 off of 38459
+Rule3: n = q d + r', 0 <= r' < d for d = n n + 1: 0 off of 202055
+F1 sigma_x + sigma_y = 0: 0 off of 7680
+F1 sigma = 0 exactly where h F = 0: 0 off of 7680
+F1 rotations: the image Mesh's senses equal: 0 off of 24384
+F1 reflections: the image Mesh's senses exchanged: 0 off of 21696
+L1 J = Im(conj(z_x) z_y) = 0 on a real hand (no twelve gear): 0 off of 192
+F1 uniqueness: rules g(sgn h, sgn F) odd in F and odd in h: 3 (kappa s_h s_F); odd in F and even in h (a mirror-symmetric lay): 9
+F3 the ladder's fixed point = the least count (D > 0, payable): 9 off of 59996
+F3 the ladder's longest run on these draws: 1000000 carries past the first
+F3 the ladder's carries at the top's own due, P = 2 10^k + 1, a' = 1: [(10, 186000), (20, 1000000), (40, 1000000), (80, 1000000), (160, 1000000)]
+F3 at a due D M <= 0, (D M, the count the formula writes): [(0, 0), (-1, 0), (-1000000, None), (-5000000, -4), (-3000000000000000000000, -29)]
+F3 the bend a = 2 w X, the same on both gears: 0 off of 120
+F3 the numerator's fall along u is exactly s P - a' s s (s = 1, 2, 7, 33): 0 off of 480
+F3 the ladder's count is the least on the numerator: 0 off of 120
+F3 the carried window's fall in (D - 14, D + P div M + 15): 0 off of 120
+F3 covariant under z -> i z, -z, conj z (unit turned, count and fall kept): 0 off of 360
+F4 W(z + d) - W(z) = W(d) + X(z, d): 0 off of 20000
+F4 q fitted hands as one hand carry q q sigma e: 0 off of 58
+F4 k fitted hands at one Node-clock: excess (k - 1)(SUM sigma) e: 0 off of 126
+F2 the fitted hand's wind on zero gears at the vacuum, per pinion and sense: [1654009903854256729287]
+   3 rim (A^2 + B^2) = 1654009903854256729287; over the light winding 3 key rim: 36361/36000 = 1010027.8 millionths

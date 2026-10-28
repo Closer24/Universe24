@@ -1,0 +1,4 @@
+pawl walls False, triple turn False: ticks the charge moved of 30 -- plain 30, framed 30, Q*  0;  Q* first 10776.2, last 10776.2
+pawl walls True , triple turn False: ticks the charge moved of 30 -- plain 30, framed 30, Q*  0;  Q* first 43335.7, last 43335.7
+pawl walls False, triple turn True : ticks the charge moved of 30 -- plain 30, framed 30, Q*  0;  Q* first 119071, last 119071
+pawl walls True , triple turn True : ticks the charge moved of 30 -- plain 30, framed 30, Q* 30;  Q* first 29503.4, last 29501.9

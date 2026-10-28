@@ -1,0 +1,25 @@
+world_hole.json, 60 ticks, e = 18000: Q* (vacuum sweep units) per act, largest |change| and ticks changed
+hand 0: Q* at the first start 0.0, at the last start 51597.6
+  step                      : largest      51392.3, ticks changed  44 of 60, summed     -27140.6
+  turn (pawls flipped)      : largest    1347456.4, ticks changed  44 of 60, summed     -67692.3
+  turn (pawls not flipped)  : largest      33768.1, ticks changed  44 of 60, summed      15139.5
+  click                     : largest     691640.0, ticks changed   6 of 60, summed      27885.5
+  background                : largest     118793.9, ticks changed  44 of 59, summed     123247.3
+  tick                      : largest    1371222.5, ticks changed  44 of 59, summed      51597.6
+  plain tick                : largest      22704.0, ticks changed  44 of 60, summed        466.0
+hand 1: Q* at the first start 0.0, at the last start -308929.8
+  step                      : largest     119814.7, ticks changed  46 of 60, summed    -416355.9
+  turn (pawls flipped)      : largest    1141884.5, ticks changed  45 of 60, summed    -621788.9
+  turn (pawls not flipped)  : largest     117182.8, ticks changed  45 of 60, summed     385744.8
+  click                     : largest     993079.6, ticks changed   7 of 60, summed     707433.4
+  background                : largest     505508.4, ticks changed  46 of 59, summed      22253.9
+  tick                      : largest    1145087.9, ticks changed  46 of 59, summed    -308929.8
+  plain tick                : largest      40028.0, ticks changed  46 of 60, summed     -22739.0
+hand 2: Q* at the first start 0.0, at the last start 587329.0
+  step                      : largest       5689.8, ticks changed  48 of 60, summed       8298.6
+  turn (pawls flipped)      : largest     717780.3, ticks changed  48 of 60, summed    1881273.1
+  turn (pawls not flipped)  : largest       4922.0, ticks changed  48 of 60, summed      -8452.0
+  click                     : largest     562354.1, ticks changed   6 of 60, summed   -1572662.4
+  background                : largest     217191.5, ticks changed  48 of 59, summed     228414.8
+  tick                      : largest     805331.9, ticks changed  48 of 59, summed     587329.0
+  plain tick                : largest      22054.0, ticks changed  48 of 60, summed      -7473.0

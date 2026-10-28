@@ -1,0 +1,5 @@
+row cos w0 = pinion / rim = 0.162121; (2/3)(2 + cos w0) = 1.4414 per V (the draft: 2)
+vw 6: board alike True; X 1000 -> 8044944; births 0, chimes 4736; E ratio by window: [5,50) -3.507  [50,100) -28.421  [100,150) -89.181  [150,200) -176.186  [200,300) -366.791
+vw 4: board alike True; X 1000 -> 5664212; births 0, chimes 4736; E ratio by window: [5,50) -20.795  [50,100) -83.418  [100,150) -178.642  [150,200) -300.598  [200,300) -578.146
+vw 3: board alike True; X 1000 -> 4540135; births 0, chimes 4736; E ratio by window: [5,50) -25.134  [50,100) -99.757  [100,150) -217.105  [150,200) -365.336  [200,300) -660.250
+vw 9: board alike True; X 1000 -> 11413559; births 0, chimes 3776; E ratio by window: [5,50) +43.240  [50,100) +123.615  [100,150) +194.092  [150,200) +249.673  [200,300) +247.866

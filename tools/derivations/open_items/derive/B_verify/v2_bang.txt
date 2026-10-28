@@ -1,0 +1,5 @@
+{"mode": "bang", "quanta": 500, "ticks": 250, "time-gear slots below Gamma at tick ends": 0, "first tick": null, "least slot": 1000, "turns": 64, "births": 80}
+
+real	1m11.603s
+user	1m1.558s
+sys	0m0.167s

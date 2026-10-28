@@ -1,0 +1,54 @@
+== 1. the rate table, the load reading, the floor's stretch (claims 1, 6)
+Gamma 1000: X(0) = 1000, X_f head = X(-Gamma) = 19, stopped load 3793 (rate 22, X 4268834097), rate 0 at 7598
+  c >= 0 iff X >= Gamma over X in [19, 3000]: PASS (0 mismatches); load_of(Gamma - 1) = -1, load_of(Gamma) = 0
+  p0 non-increasing on [-Gamma, 8 Gamma]: PASS
+Gamma 6000: X(0) = 6000, X_f head = X(-Gamma) = 110, stopped load 28206 (rate 54, X 914494741656), rate 0 at None
+  c >= 0 iff X >= Gamma over X in [110, 18000]: PASS (0 mismatches); load_of(Gamma - 1) = -1, load_of(Gamma) = 0
+  p0 non-increasing on [-Gamma, 8 Gamma]: PASS
+== 1/2. the floor's invariant P(t) and the end teeth, law 4's trigger on adversarial raw outputs X+
+  X_f = Gamma, ET3: tick boundaries with a slot below Gamma 0, tick-start loads below 0 0, end teeth <= 0 0, mismatches with the head's teeth 0; head fallbacks 25025, discarded clock-ticks 71627 of 160000: PASS
+  MUTATION X_f = Gamma - 1, ET3: tick boundaries with a slot below Gamma 53927, tick-start loads below 0 31091, end teeth <= 0 0, mismatches with the head's teeth 0; head fallbacks 25679, discarded clock-ticks 59002 of 160000: FAIL
+  MUTATION ET3 with f (X+ - X-): tick boundaries with a slot below Gamma 0, tick-start loads below 0 0, end teeth <= 0 47933, mismatches with the head's teeth 25025; head fallbacks 25025, discarded clock-ticks 71627 of 160000: FAIL
+  MUTATION ET3 with f (X - X+): tick boundaries with a slot below Gamma 0, tick-start loads below 0 0, end teeth <= 0 0, mismatches with the head's teeth 22591; head fallbacks 25025, discarded clock-ticks 71627 of 160000: FAIL
+== 3. F2 above Gamma: Q = mesh_factor(t) (1 div (1 + t div Gamma)) against mesh_factor(min(max(t, 0), Gamma))
+  exhaustive t in [0, 6 Gamma] at Gamma 2..119, 1000, 6000, 23057: 223297 of 223297 equal: PASS
+  random Gamma < 10^12, any G < Gamma, t < 10^40: 20000 of 20000 equal: PASS
+  below 0 at Gamma 1000: 1 + t div Gamma = 0 at 1000 of 1000 tensions in [-Gamma, -1] (no factor); e takes [-1] for t < -Gamma
+  MUTATION k = t div (Gamma + d), d in 1..200: passes at 45 values, d = [1]..[45] (the cut is not pinned)
+  MUTATION k = t div (Gamma - d), d in 1..200: passes at 44 values, d = [1]..[44]
+  MUTATION e = 1 div (2 + k): 5045 of 6001 equal: FAIL (caught)
+  the head's factor is 0 already at t in [956, 1044] (the rounding), G = 16
+== 4. F2 below 0: the light's hold S at the full rate with traceless tensions
+  exact identity 6 Gamma^2 - 2 SUM (Gamma - t_a)^2 = -2 SUM t_a^2 < 0, |t_x|,|t_y| <= 400: 641600 of 641600: PASS
+  with the head's rounding of Q: nonzero traceless tensions with S >= 0: 4713 of 641600; largest SUM t_a^2 among them 5282 -> 'S < 0 at any nonzero tension' is FALSE on the integers (true above the rounding band)
+  examples (t_x, t_y, t_z) -> 6 G^2 - SUM Q: (1, -1, 0) -> 0, (1, 1, -2) -> 2, (2, -1, -1) -> -2, (3, -2, -1) -> 0, (5, 5, -10) -> 2
+  with the upper clamp kept (the lower struck): nonzero traceless tensions with S >= 0: 4713 of 641600
+  with both clamps: S < 0 at 0 of 200000 random tensions: PASS
+  MUTATION one mesh per axis: the identity fails at 10201 of 10201: FAIL (caught)
+  MUTATION a trace (t, t, t), t in 1..199: S_exact > 0 at 199 of 199: FAIL (caught)
+== 5. F1: N / H with N = 4 X (F t rim Gamma^2 - sigma p0^2) p0, H = X t rim Gamma^4 key
+  N B = H A (the claimed form): 20000 of 20000: PASS; X cancels: 20000 of 20000; the full-rate condition: 20000 of 20000
+  MUTATION the brake at p0^2: 6 of 20000 equal: FAIL (caught)
+== 6. R10: the grips R_j = 2 pinion p_i^2 Q_j at the mesh rate 0
+  nonzero grips at p_i = 0 over 100000 random (Q, pinion): 0: PASS
+  at Gamma 1000 the mesh rate is 0 from the load 3793 on, where the rate p0 is 22 (not 0): the clock's own spring 12 (rim - pinion) p0^2 G^2 stays, so its gears are not frozen by the zero
+== 7. the held load: reaction over source = key (p0(c)^2 - p0(c + w)^2) / (2 w p0(c)^2), the bang's calibre
+  load 0: p0 1000, p0(c + w) 998, ratio 35 + 3856000/4000000 (~ 35.964)
+  load 10: p0 990, p0(c + w) 988, ratio 36 + 1281600/3920400 (~ 36.326)
+  load 100: p0 905, p0(c + w) 903, ratio 39 + 2408100/3276100 (~ 39.735)
+  load 1000: p0 368, p0(c + w) 367, ratio 48 + 458592/541696 (~ 48.846)
+  load 3000: p0 50, p0(c + w) 50, ratio 0 + 0/10000 (~ 0.0)
+  key div Gamma = 36 remainder 0
+  the exact exponential p0 = Gamma (1 - 1/Gamma)^c: ratio 35 + 3784143964000/4000000000000 at every load (~ 35.946); the rise with the load is the table's rounding
+== 7b. toy: the source the reaction over lam; which energy is kept?
+  source = reaction / 36, E read with the held part x 36: largest |E - E(0)| / E(0) = 1883 ppm (the held part reached 997868 ppm of E(0) in weighted terms)
+  source = reaction / 36, E read with every part x 1 (the draft's reading): largest |E - E(0)| / E(0) = 969560 ppm (the held part reached 997868 ppm of E(0) in weighted terms)
+  control: source = reaction (beta 2), E read x 1: largest |E - E(0)| / E(0) = 1829 ppm (the held part reached 972179 ppm of E(0) in weighted terms)
+  control: source = reaction (beta 2), E read with the held part x 36: largest |E - E(0)| / E(0) = 34026905 ppm (the held part reached 972179 ppm of E(0) in weighted terms)
+== 8. the release: u_h = pinion div rim, c_h = 1 - u_h, the kick, the merged recoil
+  I1 on 0 <= pinion <= rim <= 300: 45450 of 45450: PASS
+  I1 on -rim <= pinion < 0 (the loader refuses only pinion >= rim): fails at 45150 of 45150; (pinion, rim, 1 - pinion div rim, min(rim - pinion, 1)) = [(-13, 13, 2, 1), (-12, 13, 2, 1), (-5, 13, 2, 1), (-1, 13, 2, 1)]
+  I2 the advance after the carry = the kick W+ q before it: 100000 of 100000: PASS; MUTATION kick W+ q + 1: 0 of 100000 equal: FAIL (caught)
+  I3 two drives at one teeth = one drive of the sum, at +1 and -1: 100000 of 100000: PASS; MUTATION the remainder not carried: 0 of 100000 equal: FAIL (caught)
+  the carry of 0 at the key leaves its remainder (u_h = 0), at +1 and -1: PASS
+exit 0

@@ -1,0 +1,6 @@
+tick 1: SUM W - SUM W at the start = 0 (kept exactly); the pair's book W_x + W_y = 0 (F5's gate open)
+tick 2: SUM W - SUM W at the start = 0 (kept exactly); the pair's book W_x + W_y = -1.304 (F5's gate closed)
+tick 3: SUM W - SUM W at the start = 0 (kept exactly); the pair's book W_x + W_y = -16.67 (F5's gate closed)
+tick 4: SUM W - SUM W at the start = 0 (kept exactly); the pair's book W_x + W_y = -71.16 (F5's gate closed)
+tick 5: SUM W - SUM W at the start = 0 (kept exactly); the pair's book W_x + W_y = -200.2 (F5's gate closed)
+tick 6: SUM W - SUM W at the start = 0 (kept exactly); the pair's book W_x + W_y = -444.5 (F5's gate closed)

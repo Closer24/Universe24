@@ -1,0 +1,65 @@
+=== bang derived 5000000 40 rewind=20 rewind_from=15
+root eng world bang mode derived quanta 5000000 ticks 40 opts {'rewind': '20', 'rewind_from': '15', 'every': '1000'}
+bangs (whole-board turnovers): 1 at [24]
+local turnovers: 0
+first difference fell at 0 of 2496 Node-clock ticks not turned over
+births 0; books closed 40 of 40
+largest X 4638548302
+state hash 6cabd8a77fccff51
+rewind from tick 15: 20 of 20
+seconds 6.4
+=== bang derived 5000000 40 restore=0 rewind=20 rewind_from=15
+root eng world bang mode derived quanta 5000000 ticks 40 opts {'restore': '0', 'rewind': '20', 'rewind_from': '15', 'every': '1000'}
+bangs (whole-board turnovers): 0 at []
+local turnovers: 0
+first difference fell at 0 of 2560 Node-clock ticks not turned over
+births 0; books closed 40 of 40
+largest X 13429503013
+state hash f5bb4bfb4f2b203e
+rewind from tick 15: 0 of 20
+seconds 5.4
+=== bang derived 5000000 40 sign=-1
+root eng world bang mode derived quanta 5000000 ticks 40 opts {'sign': '-1', 'every': '1000'}
+bangs (whole-board turnovers): 40 at [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
+local turnovers: 0
+first difference fell at 0 of 0 Node-clock ticks not turned over
+births 0; books closed 40 of 40
+largest X 1000
+state hash 65254b301898436a
+seconds 3.0
+=== bang derived 500 30 sign=-1
+root eng world bang mode derived quanta 500 ticks 30 opts {'sign': '-1', 'every': '1000'}
+bangs (whole-board turnovers): 30 at [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+local turnovers: 0
+first difference fell at 0 of 0 Node-clock ticks not turned over
+births 0; books closed 30 of 30
+largest X 1000
+state hash 14e2534a5b1a178c
+seconds 1.8
+=== bang derived 5000000 40 gw=3
+root eng world bang mode derived quanta 5000000 ticks 40 opts {'gw': '3', 'every': '1000'}
+bangs (whole-board turnovers): 1 at [28]
+local turnovers: 0
+first difference fell at 0 of 2496 Node-clock ticks not turned over
+births 0; books closed 40 of 40
+largest X 4652558527
+state hash 7528609c788182a5
+seconds 4.0
+=== bang derived 5000000 40 gw=5
+root eng world bang mode derived quanta 5000000 ticks 40 opts {'gw': '5', 'every': '1000'}
+bangs (whole-board turnovers): 1 at [22]
+local turnovers: 0
+first difference fell at 0 of 2496 Node-clock ticks not turned over
+births 0; books closed 40 of 40
+largest X 4826697482
+state hash 0e993a5d62b791d6
+seconds 3.9
+=== bang derived 5000000 40 spring=1
+root eng world bang mode derived quanta 5000000 ticks 40 opts {'spring': '1', 'every': '1000'}
+bangs (whole-board turnovers): 1 at [24]
+local turnovers: 0
+first difference fell at 0 of 2496 Node-clock ticks not turned over
+births 0; books closed 40 of 40
+largest X 4637947306
+state hash ce7a5147e653a951
+seconds 3.4

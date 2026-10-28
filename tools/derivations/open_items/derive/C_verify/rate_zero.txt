@@ -1,0 +1,8 @@
+stopped load 3793 rate 22 mesh rate 0 | load 3792 rate 23 mesh rate 1
+2 p0^2 < Gamma at the stop: True | at the load before: False
+X_c = stretch_of(stopped load) = 4268834097 | ceil(G^5 / p^4) = 4268834097 | 4 G^3 = 4000000000
+  load_of(4268834096) = 3792, mesh rate there 1
+  load_of(4268834097) = 3837, mesh rate there 0
+  load_of(4268834098) = 3837, mesh rate there 0
+first zero of the mesh rate is the stopped load: True
+floor X_f = 19 a_c^2 = (G/p)^2 = 2066.115702479339 2 Gamma = 2000
