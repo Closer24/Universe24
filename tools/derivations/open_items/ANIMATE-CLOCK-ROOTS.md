@@ -30,7 +30,7 @@ This page is a toy check for the plan. Nothing here is engine code. The toys are
 - This removes problems 1 to 3 and is Sofer's one operation under six names.
 
 **B, state: clocks that meet share one dial.**
-- Two clocks at one Node-clock, or the two children of a fitting at the two ends of one Mesh, are read as one joint dial, held where they meet and never wider (line 98's count stays fixed).
+- Two clocks at one Node-clock, or the two children of a fitting at the two ends of one Mesh, are read as one joint dial, held where they meet and never wider (line 98's count stays fixed). On a fitting's Mesh the joint dial is a reading of the two ends' own gears, never state of the Mesh (Sofer's condition (i), 6473697571).
 - A clock's own state is how its winding is shared among its directions, and it may have none.
 - This removes problems 4 and 5, and it keeps the state local (11).
 
@@ -48,13 +48,14 @@ This page is a toy check for the plan. Nothing here is engine code. The toys are
 - **A:**
   - each Node-clock holds one more integer, its dial tau (David's local tick);
   - its tick is Rule3's carry of tau plus its rate by the full rate;
-  - an event steps its gears by the one formula with the coupling c d^2 (d its own tick), reading each neighbour at the event's moment: the neighbour's now, its before, or the point between them, by one carry;
+  - an event steps its gears by the one formula with the coupling c d^2 (d its own tick), reading each neighbour at the event's moment: the neighbour's now, its before, or the point between them, by one carry that keeps its remainder (Postulate 2; Sofer's condition (ii), which the toy's exact rationals cannot show);
   - the events run in the order of their moments, and the rewind undoes them in the reverse order.
 - **B:**
   - the joint dial of two clocks u and v is u x v, for two twins a 2 x 2 Gaussian matrix;
   - its kind parts are C_K (u x v) (DAVID-TENSOR24-THE-COMPOSITE.md);
   - a clock's own state is its two-point reading, for the twins (rho, S);
-  - it is held at one Node-clock, or on the one Mesh of a fitting.
+  - it is read at one Node-clock, or from the two ends' own gears across a fitting's one Mesh, never held as the Mesh's state (Sofer's (i));
+  - (rho, S) as a state is David's item 4 (Sofer's (iii)).
 - **C:**
   - the lay is the source kind's projection of E1/2 x E1/2: eps from A1 light, sigma_a eps from a lead along the axis a;
   - every click is the 24's kind projection, with shares the projections' traces (Schur).
