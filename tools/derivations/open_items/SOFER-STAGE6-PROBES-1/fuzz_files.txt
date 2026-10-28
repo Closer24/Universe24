@@ -1,0 +1,16 @@
+== python -I fuzz_files.py <worktree at 83a0b214a> 3000 20261028
+variants 3000: held by the checker 264; of those the load named a departure in 20 and loaded 230
+raised in the checker: {}
+raised in the load: {"KeyError: 'gears'": 8, 'ValueError: Maximum allowed dimension exceeded': 5, "KeyError: 'couplings'": 1}
+raised in the contraction: {}
+sample ('load', "KeyError: 'gears'") ('setting', ['  File "<worktree>/src/tensor24/runner/load.py", line 197, in load', '    state, laid = lay(setting["gears"], trains, sites)', '                      ~~~~~~~^^^^^^^^^', "KeyError: 'gears'"])
+sample ('load', 'ValueError: Maximum allowed dimension exceeded') ('piece', ['  File "<worktree>/src/tensor24/runner/load.py", line 151, in <genexpr>', '    a, b, r = (np.zeros((sum(t.rows() for t in trains), sites), dtype=object) for _ in range(1 + 1 + 1))', '               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', 'ValueError: Maximum allowed dimension exceeded'])
+sample ('load', "KeyError: 'couplings'") ('universe', ['  File "<worktree>/src/tensor24/runner/load.py", line 196, in load', '    planned, refused = plan(universe["couplings"], trains, c, labels, kinds.t1.shape[-1])', '                            ~~~~~~~~^^^^^^^^^^^^^', "KeyError: 'couplings'"])
+== python -I fuzz_files.py <worktree at 83a0b214a> 20000 7
+variants 20000: held by the checker 1701; of those the load named a departure in 138 and loaded 1486
+raised in the checker: {}
+raised in the load: {"KeyError: 'couplings'": 14, "KeyError: 'gears'": 35, 'ValueError: Maximum allowed dimension exceeded': 28}
+raised in the contraction: {}
+sample ('load', "KeyError: 'couplings'") ('universe', ['  File "<worktree>/src/tensor24/runner/load.py", line 196, in load', '    planned, refused = plan(universe["couplings"], trains, c, labels, kinds.t1.shape[-1])', '                            ~~~~~~~~^^^^^^^^^^^^^', "KeyError: 'couplings'"])
+sample ('load', "KeyError: 'gears'") ('setting', ['  File "<worktree>/src/tensor24/runner/load.py", line 197, in load', '    state, laid = lay(setting["gears"], trains, sites)', '                      ~~~~~~~^^^^^^^^^', "KeyError: 'gears'"])
+sample ('load', 'ValueError: Maximum allowed dimension exceeded') ('piece', ['  File "<worktree>/src/tensor24/runner/load.py", line 151, in <genexpr>', '    a, b, r = (np.zeros((sum(t.rows() for t in trains), sites), dtype=object) for _ in range(1 + 1 + 1))', '               ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', 'ValueError: Maximum allowed dimension exceeded'])
