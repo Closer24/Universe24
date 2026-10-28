@@ -61,4 +61,4 @@ The order of the cuts and the checks after each cut are the Boss's plan (tools/d
 
 ## Not decided
 
-The Boss's order of the cuts (the program Tensor24, his file TENSOR24.md); whether the reflections are parted or held (ledger row 299), with its consequence for the law's clause: held, the clause's last line names the 48 and its second kind is A2 (the clause holds the word pseudoscalar for it, which is the twist's kind in the 48); parted, the clause stands as written except that word.
+The Boss's order of the cuts (the program Tensor24, his file TENSOR24.md); the reflections as the 24 exactly with one one-hand coupling (the Boss's recommendation, ledger row 312; the clause's last line stands as written) or the 48 (the last line then names the 48); in both, the clause's word pseudoscalar for the A2 kind is the twist's kind in the 48 and waits for the owner's word.
