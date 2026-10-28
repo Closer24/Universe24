@@ -442,7 +442,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 11. **One architecture** (the owner's word to Sofer, 15:0x UTC: one architect; centralize it): Sofer's SOFER-ARCHITECTURE-1.md (scribe-5) is the frame the owner reads, the design its detail, and the one architect's ruling (derive/architecture/RULING.md, 15:4x UTC) decides where they differed. Beside the rule above it fixes:
     - the turnover's T^q as a choice by the bit q, not a power;
     - law 9's sorted draw as a rank count, with no sort and no law changed;
-    - the width: Python integers in numpy object arrays, exact at 112 bits and beyond, int64 refused;
+    - the width: Python integers in numpy object arrays, exact at 112 bits and beyond, int64 refused; the board's index tables (nb and meshes, runner/board.py) alone are integer arrays, since an index counts sites below N and holds no integer of a Node-clock;
     - **the twin hands:** in no basis of their four integer rows do the third turns act as signed permutations, so no ring alone, Z[zeta8] included, keeps the 24 bit for bit on them under element-wise carries. The departure stands until David's route (OPEN 3), and no twin train loads before it.
 
 12. **The standard of known engines** (the owner's word of 15:5x UTC: "in the standard of known engines in the world; everything generic; only simple operations in the Node-clock"). Each part of the design comes from engines the world already trusts (TENSOR24.md, section 31, the prior art):
@@ -476,7 +476,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    | --- | --- | --- | --- |
    | 0 | the gate amended (algebra/, the closed list in engine/ and readings/, main.py); the three files and their checker; the record's schema; the harness on a trivial engine | the scan refuses a planted if, a literal 2 and a sort; the harness fails on a mutant | the owner's yes on the closed list and the gate |
    | 1 | algebra/carry.py: carry, nonneg, choose, home and flip, forward and at -1 | the carry exact and unique; q(-p) = -q(p) at both parities; nonneg exact across 0 | items (h) and (e), and the tie rule |
-   | 2 | one clock: a gear with its fine tooth; beat: the rate dial, the count c, the due and allowed bits, tb and tn | the rewind 20 of 20, both ways; a stopped clock beats, its count advances, its gears stand | nothing |
+   | 2 | one clock: a gear with its fine tooth; beat: the rate dial, the count c, the due and allowed bits, tb and tn (tb out at stage 4, under past) | the rewind 20 of 20, both ways; a stopped clock beats, its count advances, its gears stand | nothing |
    | 3 | two clocks over one Mesh: link, the slot read by tn, the arrivals rule; the synchronous pass and random masks | the order test: 40 random masks equal the synchronous pass, rates parted, one clock stopped; its mutant fails | item (u), past or lin |
    | 4 | the board: the six neighbours from the shape, the gather over the Spokes, the scalar light with its spring | the one-Mesh reach both ways; the formula against a naive loop model; equal to the head on the light, act by act | M1 (N, U_j, J, W+ >= 1); the cap's step; F2, F5 and the horizon; the doubler (g) |
    | 5 | the ring: the Gaussian integers, the hand, the twin hand | the ring's laws exact; T T = +1 on a hand, -1 on a twin hand | nothing |
