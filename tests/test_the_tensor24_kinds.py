@@ -7,6 +7,7 @@ import numpy as np
 import pytest
 
 from tensor24.engine import kinds
+from tensor24.main import made as joint
 from tensor24.runner.load import common, tables
 
 # Sofer's table (SOFER-KINDS-REFERENCE-1, scribe-5 d9d538ed4): the five characters on the five classes, the identity,
@@ -47,9 +48,8 @@ class Made(NamedTuple):
 
 
 def made():
-    axes = np.diag(np.ones(3, dtype=object))
-    matrix, weight = kinds.turns(axes)
-    ks, inverse = kinds.kinds(matrix, axes), kinds.kinds(matrix.swapaxes(1, 2), axes)
+    matrix, weight = kinds.turns(kinds.axes(3))
+    ks, inverse = kinds.kinds(matrix), kinds.kinds(kinds.inverse(matrix))
     return Made(matrix, weight, ks, inverse, tables(ks, inverse, weight, kinds.projector))
 
 
@@ -95,6 +95,19 @@ def group(m):
     )
     inverses = all(tuple(m.matrix[g].T.flat) in index for g in keep)
     return products and inverses and len(keep) == sum(SIZES) and all(kinds.det(m.matrix[keep]) == 1)
+
+
+def forms(m):
+    """On the 24: A1 is 1, T1 the turn itself, A2 the sign of its axes' permutation, T2 their product (stored(m)'s blocks)."""
+    keep, _ = the24(m)
+    a1, a2, _, t1, t2 = m.kinds
+    for g in keep:
+        sign = round(np.linalg.det(np.abs(np.array(m.matrix[g], dtype=int))))
+        if not ((a1[g] == 1).all() and (a2[g] == sign).all() and (t1[g] == m.matrix[g]).all()):
+            return False
+        if not (t2[g] == sign * m.matrix[g]).all():
+            return False
+    return True
 
 
 def representations(m):
@@ -200,6 +213,7 @@ LAWS = {
     law.__name__: law
     for law in (
         group,
+        forms,
         representations,
         characters,
         orthonormal,
@@ -250,6 +264,10 @@ def mutants():
             held[key] = next((seed for seed in seeds if seed.any()), seeds[0]).reshape(c.shape)
         return m._replace(c=held)
 
+    def cycled(m, x):
+        cycle = np.roll(EYE, 1, axis=0)
+        return np.einsum("ij,gjk,lk->gil", cycle, x, cycle)
+
     def one_seed(m):
         sums = {
             key: kinds.projector(m.weight, m.kinds[key[-1]], m.inverse[key[0]], m.inverse[key[1]])
@@ -263,6 +281,10 @@ def mutants():
             lambda m: m._replace(weight=kinds.det(m.matrix) * kinds.det(m.matrix)),
         ),
         "a kind's matrix entry changed": ("representations", lambda m: kind(m, "E", entry)),
+        "T1 and T2 turned by a third turn of the axes": (
+            "forms",
+            lambda m: kind(kind(m, "T1", cycled), "T2", cycled),
+        ),
         "a character changed by one": ("characters", lambda m: kind(m, "E", at_identity)),
         "T2 as T1": (
             "characters",
@@ -296,3 +318,10 @@ def test_each_law_of_the_kinds_fails_on_its_mutant(mutant, good):
     name, broken = mutants()[mutant]
     assert LAWS[name](good)
     assert not LAWS[name](broken(good))
+
+
+def test_the_joint_makes_the_kinds_and_the_tables_the_load_reads(good):
+    """main.made, the one joint, gives these kinds and tables: its inverses the turns' own, so every table is kept."""
+    held, c = joint((4, 4, 4))
+    assert all((x == y).all() for x, y in zip(held, good.kinds, strict=True))
+    assert c.keys() == good.c.keys() and all((c[key] == good.c[key]).all() for key in c)

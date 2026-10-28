@@ -168,7 +168,7 @@ class Rate:
     site: int
     count: int  # the count the beat reached, the first beat being 1
     dial: int
-    k: int  # a bit, 1 where the beat ticked: the load holds every rate within [0, the full rate]
+    k: int  # a bit, 1 where the beat ticked, under the second promise: every rate within [0, the full rate]
 
 
 @dataclass(frozen=True)

@@ -2,8 +2,8 @@
 
 Each review is a fresh reader who did not write the code, run on the review branch tensor24-review: it approves only
 what it could not break, with evidence it ran. Every change it asks is made before the branch moves to the three
-integration branches. The fourth to seventh reports are here, the fourth, fifth and seventh with the probes their
-authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
+integration branches. The fourth to eighth reports are here, the fourth, fifth, seventh and eighth with the probes
+their authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
 
 | review | commits read | verdict | the changes, where |
 | --- | --- | --- | --- |
@@ -14,6 +14,7 @@ authors are to run; the first three stand in the Boss's posts on #2187 (64748660
 | fifth | 81521e0f4, 49c65abfa, 0970b0deb | approve with changes, four | the commit that adds this folder (the checker); the decoder's three are Animate's |
 | sixth | 2eec73c1d, 6fa366dbe, 3f9e974ad, 37d2d06e2, 13672be1e (the gate, the fifth's changes, stage 4, tb out) | approve; nine follow-ups, none blocking | the commit that adds sixth/; the gate's one is Sofer's |
 | seventh | 814fe5c45, 8469170ad, 823690afc (the gate's text lines, the sixth's follow-ups, the decoder's fixes) | approve with changes, four, all the decoder's | Animate's; the Boss's two follow-ups in the commit that adds seventh/ |
+| eighth | 83a0b214a, 3fbbd1cd0, 91226e796 (stage 6) | approve with changes, five, all of the tests | the commit that adds eighth/ |
 
 Each probe runs as `python3 -I <probe> <a worktree of tensor24-review> [...]`, its docstring naming its arguments;
 its output stands beside it. The copies here are the readers' files but for the text rules: the fourth report's
@@ -29,3 +30,5 @@ and the fifth's sketch of tests is renamed decoder_tests_strengthened.py, so pyt
 - seventh/: REPORT.md; decoder_readings.py (row 15 and the ticks on lawful and broken records), decoder_mutants_s8.py
   (eighteen mutants of the decoder's new text), decoder_tests_s8.py (the reader's sketch of 21 tests, run by
   decoder_tests_s8_run.py) and decoder_precedence.py (row 15's order of decision).
+- eighth/: REPORT.md, each change with where it went; source_mutants.py (48 source mutants of stage 6), its output at
+  91226e796 and after the changes.

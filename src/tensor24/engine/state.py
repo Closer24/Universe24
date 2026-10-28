@@ -24,7 +24,7 @@ class Layout(NamedTuple):
     meshes: Z  # (6, N): the Mesh each Spoke holds, its two ends paired by runner/board.py; a grip its own conjugate
     grip: Z  # one grip per Mesh
     w: Z
-    rate: Z  # from 0 to the full rate, so the beat's k is a bit (the load refuses a rate above it)
+    rate: Z  # from 0 to the full rate, so the beat's k is a bit (the load's promises name one past it, from stage 7)
     gamma: Z
 
 

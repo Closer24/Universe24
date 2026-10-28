@@ -49,9 +49,9 @@ def turns(unit: Z) -> tuple[Z, Z]:
     return matrix, weight
 
 
-def kinds(matrix: Z, unit: Z) -> Kinds:
+def kinds(matrix: Z) -> Kinds:
     """The five kinds on each matrix, from the Spokes alone: T1 the turn, A2 and E from the axes it permutes."""
-    e1, e2, e3 = unit
+    e1, e2, e3 = axes(matrix.shape[-1])
     permutation = matrix * matrix
     sign = det(permutation)[:, None, None]
     plane = np.stack((e1 - e2, e2 - e3), axis=1)

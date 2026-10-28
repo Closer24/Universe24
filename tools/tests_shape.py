@@ -394,6 +394,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         3,
         TENSOR24_FRAME,
     ),
+    "tests/test_the_tensor24_frame.py::graded": (
+        7,
+        TENSOR24_FRAME,
+    ),
     "tests/test_the_tensor24_frame.py::fed": (
         6,
         TENSOR24_FRAME,
@@ -414,6 +418,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         3,
         TENSOR24_FRAME,
     ),
+    "tests/test_the_tensor24_frame.py::test_a_mixing_the_24_keep_passes_the_kinds_images": (
+        3,
+        TENSOR24_FRAME,
+    ),
     "tests/test_the_tensor24_frame.py::test_the_mixing_mutants_pass_the_images_of_the_sites_alone_on_every_stored_kind": (
         3,
         TENSOR24_FRAME,
@@ -427,7 +435,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_kinds.py::made": (
-        5,
+        4,
         TENSOR24_KINDS,
     ),
     "tests/test_the_tensor24_kinds.py::product": (
@@ -448,6 +456,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_the_tensor24_kinds.py::group": (
         8,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::forms": (
+        11,
         TENSOR24_KINDS,
     ),
     "tests/test_the_tensor24_kinds.py::representations": (
@@ -483,7 +495,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_KINDS,
     ),
     "tests/test_the_tensor24_kinds.py::mutants": (
-        69,
+        77,
         TENSOR24_KINDS,
     ),
     "tests/test_the_tensor24_kinds.py::good": (
@@ -498,6 +510,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         4,
         TENSOR24_KINDS,
     ),
+    "tests/test_the_tensor24_kinds.py::test_the_joint_makes_the_kinds_and_the_tables_the_load_reads": (
+        5,
+        TENSOR24_KINDS,
+    ),
     "tests/test_the_tensor24_load.py::row": (
         3,
         TENSOR24_LOAD,
@@ -507,7 +523,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::made": (
-        5,
+        3,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::universe": (
@@ -527,7 +543,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::edits": (
-        41,
+        45,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_each_refusal_of_the_load_names_its_own_broken_file_and_its_edge_loads": (
@@ -535,7 +551,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid": (
-        9,
+        24,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_a_coupling_the_table_lacks_holds_no_term_and_gives_0": (
@@ -547,7 +563,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_the_two_promises_are_named_where_they_fail_and_are_the_run_backs_own_condition": (
-        22,
+        30,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::renamed": (

@@ -6,13 +6,13 @@ import itertools
 import numpy as np
 import pytest
 
-from tensor24.engine import kinds
 from tensor24.engine.contract import Plan, contract
 from tensor24.engine.state import Layout, State
 from tensor24.engine.step import tick, untick
+from tensor24.main import made as joint
 from tensor24.runner.board import board
 from tensor24.runner.files import COUPLING, OPERANDS
-from tensor24.runner.load import load, promises, tables
+from tensor24.runner.load import load, promises
 
 D = 3
 SITES = 8
@@ -63,15 +63,16 @@ COUPLINGS = [
         strength=11,
     ),
     row(train=0, with_train=0, with_part=1, target=0, target_part=1, strength=13),
+    row(
+        train=0, part=1, operand=op("gradient"), with_train=1, target=4, strength=17
+    ),  # a hand's second part's
 ]
 
 
 @pytest.fixture(scope="module")
 def made():
-    axes = np.diag(np.ones(D, dtype=object))
-    matrix, weight = kinds.turns(axes)
-    ks, inverse = kinds.kinds(matrix, axes), kinds.kinds(matrix.swapaxes(1, 2), axes)
-    return ks, tables(ks, inverse, weight, kinds.projector)
+    """The kinds and tables as main.py, the one joint, makes them for the load."""
+    return joint((SITES, 1, 1))
 
 
 def universe(trains=TRAINS, couplings=COUPLINGS):
@@ -130,6 +131,9 @@ def test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables(made):
     assert (contract(Plan(*held.plan), flat) == naive(universe(), c, flat, labels)).all()
 
 
+AT = f"universe.couplings[{len(COUPLINGS)}]"  # where an edit's coupling row stands, after the universe's own
+
+
 def edits():
     """One edit per refusal of the load: the edit, the departure named, or None at the refusal's edge."""
 
@@ -153,21 +157,25 @@ def edits():
         "a hand of T1": (train(1, part=2), None),
         "a channel the 24 forbid": (
             coupling(target=1),
-            "universe.couplings[6]: the 24 hold no A1 x A1 -> T1",
+            f"{AT}: the 24 hold no A1 x A1 -> T1",
         ),
         "the scalar product": (coupling(target=0), None),
         "a gradient of a T1 train": (
             coupling(train=1, operand=op("gradient"), target=4),
-            "universe.couplings[6]: a gradient of a train not of A1",
+            f"{AT}: a gradient of a train not of A1",
+        ),
+        "a gradient of a T1 train on the second side": (
+            coupling(with_train=1, with_operand=op("gradient"), target=4),
+            f"{AT}: a gradient of a train not of A1",
         ),
         "a gradient of an A1 train": (coupling(operand=op("gradient"), with_train=1, target=0), None),
         "the before stride": (
             coupling(operand=op("before")),
-            "universe.couplings[6]: before and after enter at stage 7",
+            f"{AT}: before and after enter at stage 7",
         ),
         "the after stride": (
             coupling(with_operand=op("after")),
-            "universe.couplings[6]: before and after enter at stage 7",
+            f"{AT}: before and after enter at stage 7",
         ),
         "the pull": (coupling(operand=op("pull"), with_operand=op("pull")), None),
     }
@@ -188,12 +196,27 @@ def test_each_refusal_of_the_load_names_its_own_broken_file_and_its_edge_loads(r
 
 
 def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
+    """A gear lands on its train's own rows, the first train's and a later one's; every going, dial, count and time is 0."""
     rows, site, now, before = 2, 3, 5, 6  # the light's hand: two rows
-    held, found = loaded(made, universe(), [(0, rows - 1, site, now, before, 0)])
-    assert found == [] and (held.state[0][rows - 1, site], held.state[1][rows - 1, site]) == (
+    dims = {"A1": 1, "A2": 1, "T1": 3, "T2": 3}
+    first = sum(
+        sum(dims[k] for k in t["kinds"]) * t["part"] for t in TRAINS[:-1]
+    )  # the potential's first row
+    gears = [(0, rows - 1, site, now, before, 0), (len(TRAINS) - 1, 1, site, before, now, 0)]
+    held, found = loaded(made, universe(), gears)
+    a, b, _, go, *clocks = held.state
+    assert found == [] and (
+        a[rows - 1, site],
+        b[rows - 1, site],
+        a[first + 1, site],
+        b[first + 1, site],
+    ) == (
         now,
         before,
+        before,
+        now,
     )
+    assert not go.any() and not any(x.any() for x in clocks)
     held, found = loaded(made, universe(), [(0, rows, site, now, before, 0)])
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
 
@@ -212,13 +235,13 @@ def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
     assert planned[0].size == 0 and not contract(Plan(*planned), readings).any()
 
 
-def rewound(r, w, rate, gamma):
+def rewound(r, w, rate, gamma, dial=0):
     """One round of every gear on a ring of sites and its run back from the out: the start back exactly, or not."""
     nb, meshes = board((SITES, 1, 1))
     layout = Layout(nb, meshes, np.ones(D * SITES, dtype=object), w, rate, gamma)
     a = np.arange(SITES, dtype=object)[None, :] + 0
     clocks = 0 * a
-    s = State(a, a - 1, r, 0 * a, clocks, clocks, clocks)
+    s = State(a, a - 1, r, 0 * a, clocks + dial, clocks, clocks)
     now, out = tick(layout, s, clocks + 1)
     return all((x == y).all() for x, y in zip(untick(layout, now, out), s, strict=True))
 
@@ -244,6 +267,14 @@ def test_the_two_promises_are_named_where_they_fail_and_are_the_run_backs_own_co
     rate[0, 3] = -1
     assert promises(0 * r, w, rate, gamma) == [
         f"site 3: the rate -1 not within [0, the full rate {gamma}]"
+    ]
+    assert not rewound(0 * r, w, 0 * full - 1, gamma)  # every rate at -1: k is -1, no bit
+    edge = full + 0  # at the dial's top, Gamma - 1, the full rate gives k = 1 and one past it k = 2
+    assert rewound(0 * r, w, edge, gamma, gamma - 1)
+    edge[0, 3] = gamma + 1
+    assert not rewound(0 * r, w, edge, gamma, gamma - 1)
+    assert promises(0 * r, w, edge, gamma) == [
+        f"site 3: the rate {gamma + 1} not within [0, the full rate {gamma}]"
     ]
 
 

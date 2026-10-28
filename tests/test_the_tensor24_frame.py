@@ -118,6 +118,15 @@ def two(nb):
     return nb[2][nb[0]]
 
 
+def graded(nb, a, b):
+    """The trivial form with each T1 row fed the A1 row's difference across its own axis: a mixing the 24 keep."""
+    new, before = trivial(nb, a, b)
+    if len(a) == STORED:
+        for axis in range(3):
+            new[1 + 1 + axis] += a[0, nb[axis + axis]] - a[0, nb[axis + axis + 1]]
+    return new, before
+
+
 def fed(a, into, by):
     """Row by added into row into, where the world holds both: a step that mixes two components at every site alike."""
     out = 0 * a
@@ -211,6 +220,11 @@ def test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_
 def test_the_images_fail_on_a_board_the_24_do_not_keep():
     assert not holds("images", broken(trivial), ASKEW, 0)
     assert not holds("kinds", broken(trivial), ASKEW, 0)
+
+
+def test_a_mixing_the_24_keep_passes_the_kinds_images():
+    for seed in range(3):
+        assert holds("kinds", broken(graded), SHAPE, seed)
 
 
 def test_the_mixing_mutants_pass_the_images_of_the_sites_alone_on_every_stored_kind():
