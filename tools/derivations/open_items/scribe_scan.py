@@ -139,16 +139,16 @@ RULES: dict[str, tuple[str, str]] = {
         "an assert against an integer beyond 0 and 1 in a test: a pinned value is a verdict the code wrote; the plan's tests read properties and two independent readings (the count per file may not rise)",
     ),
     "COMPARE": (
-        "WARN",
-        "an ordering comparison in an engine module: a threshold read by order and not as the quotient of a carry (the same word); the count may not rise",
+        "BLOCK",
+        "an ordering comparison in an engine module: a threshold read by order and not as the quotient of a carry (Postulate 5: the Node-clock has no if; the owner's word of 2026-10-28, 12:5x); the count per file may not rise",
     ),
     "ISOLATE": (
         "BLOCK",
         "an import that crosses the new engine's folders: the decoder and the record import the standard library and the record alone (no numpy, no engine, no runner), the engine imports neither the decoder nor the runner nor the current engine, the runner neither the decoder nor the engine nor the current engine (the step is passed in); a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
     ),
     "BRANCH": (
-        "WARN",
-        "a branch (if, a conditional expression, match) in an engine module: the law says there is no if on a train (The Node-clock and the Mesh are generic; there is no if) and a whether is Rule3's quotient (n < d exactly where the quotient of n by d is 0; the sign test [x >= 0] = 1 + x div (x x + 1)); a branch the formula does not hold is a declaration (the count per file may not rise)",
+        "BLOCK",
+        "a branch (if, a conditional expression, match) in an engine module: the Node-clock has no if (Postulate 5; the owner's word of 2026-10-28, 12:5x: enforce it, never cross it; also The Node-clock and the Mesh are generic; there is no if), and a whether is Rule3's quotient (n < d exactly where the quotient of n by d is 0; the sign test [x >= 0] = 1 + x div (x x + 1)); a branch the formula does not hold is a declaration (the count per file may not rise)",
     ),
     "INDICATOR": (
         "WARN",
@@ -203,7 +203,7 @@ STRICT = (
     NEW_ENGINE + "/record/",
     NEW_ENGINE + "/readings/",
 )  # a note of PROMOTED is a refusal here: it starts at 0 and stays
-PROMOTED = frozenset({"COMPARE", "BRANCH", "MEMO"})
+PROMOTED = frozenset({"MEMO"})
 READER_FOLDERS = (
     NEW_ENGINE + "/runner/",
     NEW_ENGINE + "/decoder/",

@@ -586,7 +586,7 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a floor in the runner", NEW_RUNNER, "def f(a):\n    return a.floor\n", {}),
 ]
 
-# a note is a refusal in the new engine's strict folders (engine, record, readings) and a note elsewhere
+# a branch and an ordering comparison are refusals in every engine module (Postulate 5); a cache is a refusal in the new engine's strict folders (engine, record, readings) and a note elsewhere
 TIERS: list[tuple[str, str, str, str, str]] = [
     ("a comparison in the new engine", NEW_STEP, "def f(a, b):\n    return a < b\n", "COMPARE", "BLOCK"),
     ("a branch in the new engine", NEW_STEP, "def f(a):\n    return a if a else a\n", "BRANCH", "BLOCK"),
@@ -616,13 +616,20 @@ TIERS: list[tuple[str, str, str, str, str]] = [
         "tick.py",
         "def f(a, b):\n    return a < b\n",
         "COMPARE",
-        "WARN",
+        "BLOCK",
     ),
     (
         "a branch in the current engine",
         "tick.py",
         "def f(a):\n    return a if a else a\n",
         "BRANCH",
+        "BLOCK",
+    ),
+    (
+        "a cache in the current engine stays a note",
+        "tick.py",
+        "from functools import cache\n\n\n@cache\ndef f(a):\n    return a\n",
+        "MEMO",
         "WARN",
     ),
     (
