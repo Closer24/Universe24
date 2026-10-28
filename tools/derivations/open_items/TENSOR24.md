@@ -1335,8 +1335,8 @@ The hostile review shows that three of his decisions cannot be met as derivation
 4. **Nature one to one.** Not on a fixed lattice with one great clock's tick (section 18, items 2, 3 and 16 to 26). The plan keeps every one of them named.
 5. **Odd teeth counts** (the mathematician): an exact rewind of the turnover with no read of the log needs every teeth count odd, so that the one mirror keeps the mid tooth; every teeth count is even now (w = 6 rim Gamma^2 G^2). A change of the law, the owner's to rule.
 6. **The draw's fairness** (the mathematician): the draw as built is not uniform, on the head too, so Born's odds stand unproved until a composition free of the sort is derived and a distribution test gates it.
-7. **The ledger** (the architect, section 31): the books' second reading and the conservation rows need totals over the board. Either a declared ledger line per tick, written by the runner from the state, or rows that only restate the click's own arithmetic and cannot fail. The architect recommends the ledger.
-8. **The gate amended before the first line** (the architect, section 31): it scans src/tensor24, gives the runner and the decoder the readers' rules by folder, sets the carry's home, refuses the engine's import into the decoder, and closes its holes. The gate's own files are Sofer's, changed on the owner's word.
+7. **The ledger** (the architect, section 31): the books' second reading and the conservation rows need totals over the board. **Decided** (the owner's word of 10:3x UTC): a declared ledger line per tick, written by the runner from the state, so that the conservation rows can fail.
+8. **The gate amended before the first line** (the architect, section 31): it scans src/tensor24, gives the runner and the decoder the readers' rules by folder, sets the carry's home, refuses the engine's import into the decoder, and closes its holes. **Decided** (the owner's word of 10:3x UTC); the gate's files are Sofer's, and he writes the amendment.
 
 **What it means for the hour the owner gave:** the plan is not stable, whole and fully derived. Its algebra and its group theory stand; the step's arithmetic, the rewind, the draw, the light's quantum, the masses and four of the owner's decisions do not, and David's derivations are owed for each.
 
@@ -1369,12 +1369,12 @@ The owner's words of 09:4x UTC: an architect reads the plan and says how the cod
 
 No refusal is logged. An added field is a minor version; a breaking change a major one, with an upcaster in the decoder, which refuses an unknown major. The decoder reads the header, the events and the end, never the digests.
 
-**For the owner, one decision:** the books' second reading (the wind before and after over every train) and the conservation rows need totals over the whole board. Either the runner writes a declared ledger line per tick (the tick, the train, its wind, sweep and push, read from the state), so that the clicks are the journal and the ledger the control totals, as in double entry; or those rows only restate the click's own arithmetic and cannot fail. The architect's recommendation is the ledger.
+**The ledger, decided** (the owner's word of 10:3x UTC, on the architect's recommendation): the books' second reading (the wind before and after over every train) and the conservation rows need totals over the whole board, so the runner writes a declared ledger line per tick (the tick, the train, its wind, sweep and push, read from the state). The clicks are the journal and the ledger the control totals, as in double entry, and the conservation rows compare the two, so that they can fail.
 
 **The boundary, enforced:**
 - a static test of every module's imports (relative imports, importlib and __import__ included);
 - a run-time test: after a step, no decoder, runner or current-engine module is loaded; after decoding, no engine module and no numpy;
-- the gate amended before the first line, on the owner's word since it changes the gate's own files (Sofer's): it scans src/tensor24, gives runner/ and decoder/ the readers' rules by folder, sets the carry's home in engine/carry.py, and refuses any import of the engine into decoder/ or runner/;
+- the gate amended before the first line (decided, the owner's word of 10:3x UTC; the gate's files are Sofer's, and he writes it): it scans src/tensor24, gives runner/ and decoder/ the readers' rules by folder, sets the carry's home in engine/carry.py, and refuses any import of the engine into decoder/ or runner/;
 - the gate's holes closed: loops under a function's name (map, filter, reduce, np.vectorize, frompyfunc, apply_along_axis, recursion), comparisons under a function's name (np.less, np.greater, np.sign, heaviside, argmax, amax, select, choose), and arrays made without a dtype (np.array, asarray, arange, stack), which give 64-bit integers silently.
 
 **The data:**
