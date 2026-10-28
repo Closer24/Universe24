@@ -1,6 +1,6 @@
-# The one tensor plan
+# Tenzor24: the one tensor plan
 
-2026-10-28, 06:0x UTC. The owner's order to the Scribe: "Pass everything to the Boss so that everyone works on one tensor plan." This is that plan, written once for the Boss, David, the Reader and the Scribe. The grounds stand in four files: SCRIBE-THE-NODE-AS-ONE-ACT-1.md (the frame and the step's 26 acts by kind), SCRIBE-GATE-1.md (the gate), SCRIBE-AUDIT-97E5B3F-1.md (the read of every module) and SCRIBE-THE-24-AS-LAW-1.md (the 24's state). The thread's items 1213 to 1222 hold the owner's words, the Reader's proposal of 05:49, the Boss's reply of 05:53 and the Reader's of 05:54, which this plan takes in.
+2026-10-28, 06:0x UTC. The owner's order to the Scribe: "Pass everything to the Boss so that everyone works on one tensor plan." And his word after it: "The Boss manages the program Tenzor24, let's call it that." **Tenzor24 is the program; the Boss manages it.** This is its plan, written once for the Boss, David, the Reader and the Scribe. The grounds stand in four files: SCRIBE-THE-NODE-AS-ONE-ACT-1.md (the frame and the step's 26 acts by kind), SCRIBE-GATE-1.md (the gate), SCRIBE-AUDIT-97E5B3F-1.md (the read of every module) and SCRIBE-THE-24-AS-LAW-1.md (the 24's state). The thread's items 1213 to 1222 hold the owner's words, the Reader's proposal of 05:49, the Boss's reply of 05:53 and the Reader's of 05:54, which this plan takes in.
 
 ## The goal, in the owner's words (to the Boss, 05:4x to 05:5x UTC, relayed in the Boss's 6461840658)
 
@@ -19,7 +19,7 @@ The engine never turns anything: the step is made of invariants (a sum over the 
 
 | who | what |
 | --- | --- |
-| **the Boss** | writes every cut, in his toy, act by act; pushes only on the owner's go; runs the gate before each push; posts a module's line in the thread before a push that adds or renames a module |
+| **the Boss** | manages Tenzor24 (the owner's word of 06:0x UTC): orders the cuts within the owner's go, writes every cut in his toy, act by act, pushes only on the owner's go, runs the gate before each push, posts a module's line in the thread before a push that adds or renames a module |
 | **David** | derives and confirms: the pointwise maps as Rule3 chains or data, fusion as a composite family with no new number, the detector's reading, the fair draw's letter |
 | **the Reader** | benches every cut: the per-row diff of the 77 rows on the 16 records and the 3 committed charts, the head against the cut on the same seeds, the rewind and the scan beside it, within the hour of each push; moves the two global reductions with their cut |
 | **the Scribe** | documents (the ledger, the law's sentence on the owner's word, the module lines), keeps the gate, puts the questions to the owner and tells the thread his words |
@@ -34,6 +34,17 @@ The engine never turns anything: the step is made of invariants (a sum over the 
 5. **The two global reductions** (clock.count_max and clock.max_transient) out of the step into the readers.
 
 **After each cut:** the Reader's per-row diff against the head, the 16 records and the 3 charts as before, the rewind exact 20 of 20, the suite, `scribe_scan.py --patch FILE --base <head>` (counts only fall, a new file is clean; code moved between files shows as new hits and goes with the owner's word), and the fixed-point test once it exists.
+
+## The state of the cuts (the Scribe updates it each hour, from the thread and the heads)
+
+| cut | state | bench |
+| --- | --- | --- |
+| 0 the fair draw | built and measured in the Boss's toy; not pushed, the owner's go awaited | the Reader's diff at the push |
+| 1 the one place of the 24, the fixed-point test | not begun | |
+| 2 the pure contractions | not begun | |
+| 3 the pointwise maps | not begun (David's derivations first) | |
+| 4 the gate as one act | not begun | |
+| 5 the two global reductions | not begun | |
 
 ## The owner's questions of 05:4x to 05:5x, with the readings
 
@@ -62,4 +73,5 @@ The engine never turns anything: the step is made of invariants (a sum over the 
 
 - 05:53 the Boss: synced at the owner's word; the fair draw in his toy, measured, not pushed; the gate adopted at his next push; the cuts his, in his toy.
 - 05:54 the Reader: the five kinds replace his three; the first cut goes now; the law's sentence follows the measured count on the owner's word; the bench within the hour of each push.
-- 06:0x this plan.
+- 06:0x this plan, passed to the Boss in the thread (6461915413).
+- 06:0x the owner names the program Tenzor24 and puts the Boss in charge of it.
