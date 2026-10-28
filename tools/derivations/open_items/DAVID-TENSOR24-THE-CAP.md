@@ -12,7 +12,7 @@ The page follows the owner's method of 13:21 and 13:31 UTC: the clock first, the
 4. **So each state of a Node-clock holds at most one quantum.** A state's occupation is the sum of the squared shadows of the quanta's unit hands on it. Unit hands at right angles cast at most one unit of shadow, in all, on any unit state (Bessel's inequality). A Node-clock with m states holds at most m quanta: 2 for one twin pair, and 4 for the field beside its phase-reversed field.
 5. **The force carriers' quanta need not stand at right angles** (their exchange sign is +1), so they stack.
 6. **No law of caps is added.** The cap is what a turning clock does to hands laid at right angles. It rests on two things the plan already has: the tick is a turn, and matter's lay is at right angles (law 7's sign, which draft J is deriving from the clocks). PROVED (P15 to P17 in the checks).
-7. **What the head lacks.** Its step, cut 0's one formula, is a second-order leapfrog. It is not a turn of the state. It keeps a two-slot form that is not a length (det D = -N(det[now, before]) <= 0, DAVID-TENSOR24-PAULI.md), so a hand's count can go below 0 and no cap follows.
+7. **What the head lacks** (corrected by section 9: read in the wind's metric, the head's step is a turn, and the cap holds; what it lacks is the quanta held as hands). Its step, cut 0's one formula, is a second-order leapfrog. It is not a turn of the state in the one-slot count. It keeps a two-slot form that is not a length (det D = -N(det[now, before]) <= 0, DAVID-TENSOR24-PAULI.md), so a hand's count can go below 0 and no cap follows.
    - CHECKED (c4): the head's own leapfrog, run on separate hands at the vacuum's gearing and read in the one-slot occupation, breaks the cap at 582 of 1,920 Node-clock ticks on row 0 (up to about 4.37 quanta in one state), and at 2 of 1,920 on row 1. The carried form gives the same.
 
 ## 2. The turning clock in the three operations
@@ -145,11 +145,34 @@ The page follows the owner's method of 13:21 and 13:31 UTC: the clock first, the
    - the far coin is read where rho couples the two places (section 6).
 3. **It also found the pair's beat in closed form:** Tr(U_L(k) U_L(-k)) / 2 = 1 - 2 SUM sa^2 sb^2 + 4 (sx sy sz)^2.
 
+## 9. Sofer's question, answered: the head's own step is a turn in the wind's metric (added 14:4x UTC)
+
+Sofer asked (6471863755, item 1): "In the wind's form (positive, kept by the step: law 8's books) is the step a turn, and does the cap follow by Bessel with no walk, no corners and no growing width?" Yes. This simplifies the page.
+
+1. **The step is a turn in the wind's metric.**
+   - The one formula at fixed coefficients is w (a+ + a-) = M a, with M = S + SUM_j R_j shift_j.
+   - Its wind is the Hermitian form G = [[w, -M/2], [-M/2, w]] on the two-slot state (a, a-).
+   - Wherever M is Hermitian, G(Sx, Sy) = G(x, y) for every two states. M is Hermitian where every Mesh couples its two ends alike, the charge page's condition (QR1). PROVED, since w a+ = M a - w a- gives both sides as w <a, b> - w Re<a+, b-> terms.
+   - CHECKED (wind_turn.py, exact rationals, a ring of 8 at three pairs): 18 of 18 random pairs of states over 30 ticks.
+2. **The wind is positive for matter.** G is positive definite exactly where M's eigenvalues lie strictly inside (-2w, 2w). At the vacuum that means pinion < rim, so every massive train qualifies; the light sits on the edge, with its zero mode. This is the law's own edge, "D plus twice the grips summed at most 4 w" (line 1909).
+3. **So the cap follows by Bessel, with the head's own step.** Quanta laid at right angles in the wind's metric stay at right angles, and every state's occupation lies in [0, 1].
+   - CHECKED: 0 of 1,920 site-state ticks outside [0, 1], and the orthogonality is kept at every tick.
+   - No walk, no corners and no growing width: the step keeps its one Mesh and all 24.
+4. **When the coefficients change from tick to tick** (the regulator, the lapse), the wind is not kept, and the orthogonality is lost (40 of 40 ticks).
+   - The cap still holds if matter's state is read as the projector onto its quanta's span, H (H^dagger G_t H)^-1 H^dagger G_t. That is the antisymmetric state's density (P19).
+   - It is a projector in any positive metric, and an invertible step keeps the span's dimension, which is the count. PROVED.
+   - What a changing clock moves is the quanta's wind, which the books track. The action is what is kept (DAVID-TENSOR24-THE-MASS.md).
+5. **What this changes on this page:**
+   - **Section 1, item 7, and the c4 mutant:** the head's step breaks the cap only when read in the one-slot count without the quanta's Gram. In the wind's metric it keeps it.
+   - **Section 2's walk is one route, not needed for the cap.** Its prices need not be paid: the speed, three Meshes a tick (Sofer: the corners, and covariance only in the beat), and the growing width.
+   - **What the head lacks is the representation alone:** one summed field per family gathers (c3). So matter's quanta are to be held as hands, or as their tensor (cut (d)), laid at right angles in the wind's metric.
+   - **Section 7's big law becomes:** every tick keeps the books' own metric, the wind. The one formula already does so wherever every Mesh couples its two ends alike. It contradicts no law, and item (q) needs no walk.
+
 ## For the Boss and the plan
 
 1. **The cuts** (for the plan, not for an engine before the owner's approval):
-   - matter's step: the walk on the field beside its phase-reversed field, three sub-acts a tick, the junctions the 24's lifts, the mass by den's circle;
-   - each family's quanta: the tensor, or hands at right angles with their norms (the owner's choice, with the composite's);
+   - matter's step: the one formula as it stands, read in the wind's metric, with every Mesh coupling its two ends alike (section 9). The walk (section 2) is the route only if the owner wants a first-order step;
+   - each family's quanta: the tensor, or hands at right angles in the wind's metric with their norms (the owner's choice, with the composite's);
    - the lay with the kind's sign, as in section 3;
    - the click's reads: the count, the pair and the free size at a Node-clock.
 2. **For the owner, through section 30, item 11:** the big law of section 7, and the price of section 6 (the integers, the speed, locality).

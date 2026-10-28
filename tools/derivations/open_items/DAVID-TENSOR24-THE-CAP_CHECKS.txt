@@ -4820,3 +4820,153 @@ def scan(path):
             if not (isinstance(r, ast.Constant) and type(r.value) is int and r.value >= 0):
                 bad.append(('pow with non-literal exponent', ln))
     return bad
+
+== venv314/bin/python -I wind_turn.py (David, 14:4x UTC: Sofer's question, the step a turn in the wind's metric) ==
+pair (3, 4, 5): (1) G(Sx, Sy) = G(x, y) over 30 ticks: 6 of 6 random pairs
+   (2) D > 0 and D + 4R < 4w: True; the mode bound holds at cos k = 1, 0, -1: True
+   (3) 40 ticks, 3 quanta: occupation outside [0, 1] at 0 of 640 site-state ticks (largest 0.4761); G-orthogonality lost at 0 pair-ticks
+pair (20, 21, 29): (1) G(Sx, Sy) = G(x, y) over 30 ticks: 6 of 6 random pairs
+   (2) D > 0 and D + 4R < 4w: True; the mode bound holds at cos k = 1, 0, -1: True
+   (3) 40 ticks, 3 quanta: occupation outside [0, 1] at 0 of 640 site-state ticks (largest 0.6485); G-orthogonality lost at 0 pair-ticks
+pair (119, 120, 169): (1) G(Sx, Sy) = G(x, y) over 30 ticks: 6 of 6 random pairs
+   (2) D > 0 and D + 4R < 4w: True; the mode bound holds at cos k = 1, 0, -1: True
+   (3) 40 ticks, 3 quanta: occupation outside [0, 1] at 0 of 640 site-state ticks (largest 0.5392); G-orthogonality lost at 0 pair-ticks
+(4) changing teeth, 40 ticks: orthogonality lost at 40 of 40 ticks; occupation above 1 at 0 of 320 site ticks (largest 0.6542)
+RESULT: claims (1) to (3) hold, 0 failures
+
+== wind_turn.py (David) ==
+"""David's check of Sofer's question (6471863755, item 1): is the head's leapfrog a turn in the wind's metric, and does
+the cap then follow by Bessel with no walk?  Exact rationals (Fraction) on a ring of N sites, one hand per site
+(Gaussian numbers as pairs). The one formula at fixed coefficients: w (a+ + a-) = M a, M = S + R (shift+ + shift-),
+S = 2w - D - 2R. Two-slot state x = (a, a-). The wind E(x) = w(|a|^2 + |a-|^2) - Re<a, M a->, as a Hermitian form
+G = [[w, -M/2], [-M/2, w]]. Claims: (1) G(Sx, Sy) = G(x, y) for every x, y: the step is a turn in G's metric;
+(2) G is positive definite iff D > 0 and D + 4R < 4w (the law's edge); (3) quanta laid G-orthonormal stay
+G-orthonormal, and every state's occupation <w, P w>_G / <w, w>_G lies in [0, 1] at every tick (Bessel);
+(4) with coefficients that change from tick to tick (the kick-drift form with its own teeth per difference),
+no fixed metric is kept, and the occupation read in the tick's own wind metric can leave [0, 1]."""
+from fractions import Fraction as Fr
+import random
+
+random.seed(20261028)
+N = 8
+
+def cm(a, b): return (a[0]*b[0] - a[1]*b[1], a[0]*b[1] + a[1]*b[0])
+def cj(a): return (a[0], -a[1])
+def add(a, b): return (a[0] + b[0], a[1] + b[1])
+def sub(a, b): return (a[0] - b[0], a[1] - b[1])
+def sc(a, r): return (a[0]*r, a[1]*r)
+Z = (Fr(0), Fr(0))
+
+def Mop(v, S, R):
+    return [add(sc(v[x], S), sc(add(v[(x+1) % N], v[(x-1) % N]), R)) for x in range(N)]
+
+def inner(u, v):  # <u, v> = sum conj(u) v
+    s = Z
+    for x in range(N): s = add(s, cm(cj(u[x]), v[x]))
+    return s
+
+def G(xs, ys, w, S, R):  # Hermitian wind form on two-slot states
+    a, am = xs; b, bm = ys
+    t = add(sc(inner(a, b), w), sc(inner(am, bm), w))
+    t = sub(t, sc(add(inner(a, Mop(bm, S, R)), inner(am, Mop(b, S, R))), Fr(1, 2)))
+    return t
+
+def step(xs, w, S, R):
+    a, am = xs
+    Ma = Mop(a, S, R)
+    ap = [sub(sc(Ma[x], Fr(1) / w), am[x]) for x in range(N)]
+    return (ap, a)
+
+def rnd():
+    return ([(Fr(random.randint(-9, 9)), Fr(random.randint(-9, 9))) for _ in range(N)],
+            [(Fr(random.randint(-9, 9)), Fr(random.randint(-9, 9))) for _ in range(N)])
+
+def lin(xs, c, ys):
+    return ([add(xs[0][x], cm(c, ys[0][x])) for x in range(N)], [add(xs[1][x], cm(c, ys[1][x])) for x in range(N)])
+
+def scal(xs, c):
+    return ([cm(c, v) for v in xs[0]], [cm(c, v) for v in xs[1]])
+
+def cdiv(a, r): return (a[0] / r, a[1] / r)
+
+fails = 0
+# a massive train at the vacuum of the head's gearing in 1-D units: w = 6 rim, R = 2 pinion, D = 12 (rim - pinion)
+# (the grips are the head's 2 pinion per Spoke; on a ring the hold S = 2w - D - 2R is not 0, the 1-D cut of the cube)
+for (p, s_, rim) in [(3, 4, 5), (20, 21, 29), (119, 120, 169)]:
+    w, R, Dsp = Fr(6 * rim), Fr(2 * p), Fr(12 * (rim - p))
+    S = 2*w - Dsp - 2*R
+    # (1) the step keeps G exactly, on random pairs of states, over 30 ticks
+    ok = 0
+    for _ in range(6):
+        x, y = rnd(), rnd()
+        g0 = G(x, y, w, S, R)
+        for t in range(30):
+            x, y = step(x, w, S, R), step(y, w, S, R)
+            if G(x, y, w, S, R) != g0: fails += 1; break
+        else: ok += 1
+    print(f"pair ({p}, {s_}, {rim}): (1) G(Sx, Sy) = G(x, y) over 30 ticks: {ok} of 6 random pairs")
+    # (2) positivity: G's eigen-bound by modes: M's eigenvalues S + 2R cos k; positive definite iff |S + 2R cos k| < 2w
+    pos = all(abs(S + 2*R*c) < 2*w for c in [Fr(1), Fr(-1), Fr(0)])
+    print(f"   (2) D > 0 and D + 4R < 4w: {Dsp > 0 and Dsp + 4*R < 4*w}; the mode bound holds at cos k = 1, 0, -1: {pos}")
+    # (3) lay three quanta G-orthonormal (Gram-Schmidt in G; norms kept, no root: phi_k with n_k = G(phi_k, phi_k))
+    hands, norms = [], []
+    for _ in range(3):
+        v = rnd()
+        for h, n in zip(hands, norms):
+            c = cdiv(G(h, v, w, S, R), n)
+            v = lin(v, (-c[0], -c[1]), h)
+        hands.append(v); norms.append(G(v, v, w, S, R)[0])
+    worst = Fr(0); bad = 0; offdiag = 0
+    for t in range(40):
+        # occupation of every site-local two-slot state e (now at x, or before at x) in G's metric
+        for x in range(N):
+            for slot in (0, 1):
+                e = ([Z]*N, [Z]*N); e[slot][x] = (Fr(1), Fr(0))
+                ee = G(e, e, w, S, R)[0]
+                occ = sum((lambda g: (g[0]*g[0] + g[1]*g[1]) / n)(G(e, h, w, S, R)) for h, n in zip(hands, norms)) / ee
+                worst = max(worst, occ)
+                if occ < 0 or occ > 1: bad += 1
+        for i in range(3):
+            for j in range(i + 1, 3):
+                if G(hands[i], hands[j], w, S, R) != Z: offdiag += 1
+        hands = [step(h, w, S, R) for h in hands]
+    print(f"   (3) 40 ticks, 3 quanta: occupation outside [0, 1] at {bad} of {40*N*2} site-state ticks (largest {float(worst):.4f}); "
+          f"G-orthogonality lost at {offdiag} pair-ticks")
+    if bad or offdiag: fails += 1
+
+# (4) coefficients that change every tick: the kick-drift form W_t (a+ - a) - W_(t-1) (a - a-) = R (a_+ + a_- - 2a) - D a,
+# read in each tick's own wind metric (W_t for w): the quanta laid orthonormal at t = 0 lose orthogonality, and
+# the occupation can leave [0, 1]
+p, s_, rim = 20, 21, 29
+R, Dsp = Fr(2 * p), Fr(12 * (rim - p))
+Ws = [Fr(6 * rim) * Fr(10 + (t % 7), 10) for t in range(41)]
+def step_var(xs, Wt, Wm):
+    a, am = xs
+    lap = [sub(add(a[(x+1) % N], a[(x-1) % N]), sc(a[x], 2)) for x in range(N)]
+    ap = [add(a[x], cdiv(add(sc(sub(a[x], am[x]), Wm), sub(sc(lap[x], R), sc(a[x], Dsp))), Wt)) for x in range(N)]
+    return (ap, a)
+def Gt(xs, ys, Wt):
+    S = 2*Wt - Dsp - 2*R
+    return G(xs, ys, Wt, S, R)
+hands, norms = [], []
+for _ in range(3):
+    v = rnd()
+    for h, n in zip(hands, norms):
+        c = cdiv(Gt(h, v, Ws[0]), n)
+        v = lin(v, (-c[0], -c[1]), h)
+    hands.append(v); norms.append(Gt(v, v, Ws[0])[0])
+lost = 0; outside = 0; worst = Fr(0)
+for t in range(1, 41):
+    hands = [step_var(h, Ws[t], Ws[t-1]) for h in hands]
+    # orthonormalise nothing: read the occupation of the evolved, no longer orthogonal, set in tick t's metric
+    gram = [[Gt(hands[i], hands[j], Ws[t]) for j in range(3)] for i in range(3)]
+    if any(gram[i][j] != Z for i in range(3) for j in range(3) if i != j): lost += 1
+    for x in range(N):
+        e = ([Z]*N, [Z]*N); e[0][x] = (Fr(1), Fr(0))
+        ee = Gt(e, e, Ws[t])[0]
+        occ = sum((lambda g: (g[0]*g[0] + g[1]*g[1]) / gram[k][k][0])(Gt(e, hands[k], Ws[t])) for k in range(3)) / ee
+        worst = max(worst, occ)
+        if occ > 1: outside += 1
+print(f"(4) changing teeth, 40 ticks: orthogonality lost at {lost} of 40 ticks; occupation above 1 at {outside} of {40*N} "
+      f"site ticks (largest {float(worst):.4f})")
+print("RESULT:", "claims (1) to (3) hold, 0 failures" if fails == 0 else f"{fails} failures")
