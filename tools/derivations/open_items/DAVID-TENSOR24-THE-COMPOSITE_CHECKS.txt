@@ -2,6 +2,8 @@ DAVID-TENSOR24-THE-COMPOSITE_CHECKS.txt: the checks of DAVID-TENSOR24-THE-COMPOS
 One exact probe (complex rationals over fractions.Fraction, no float): the intertwiners of the 24's ladder solved under the
 24's lifts with their scales, the composite's gears from its parts' gears, law 6 on the composite, equal quanta, and the write.
 kinds_lib.py is the exact algebra and the kinds' generators shared with DAVID-TENSOR24-PAULI.md's probe.
+At the end, the second hand: an independent exact probe written from the claims alone, and its guard test, with their outputs
+(rerun by David, identical): 23,629 cases, 0 failures.
 
 == python3 -I composite_probe.py (beside kinds_lib.py; about 10 s) ==
 1. The intertwiners K1 x K2 -> K, solved exactly under the 24's lifts with their scales: their count is the product table
@@ -615,3 +617,1236 @@ KINDS = [
     ("G3/2", G_FOUR, 4, -1),
 ]
 
+== the second hand: venv314/bin/python -I probe.py (seed 20261028; rerun by David, identical) ==
+exactness source guard: clean
+C0  group order (8 kinds together) = 48; images {'A1': 1, 'A2': 2, 'E': 6, 'T1': 24, 'T2': 24, 'E1/2': 48, 'E5/2': 48, 'G3/2': 48}
+C1  E1/2 x E1/2 : A1:1 T1:1
+C1  T1   x T1   : A1:1 E:1 T1:1 T2:1
+C1  T1   x E1/2 : E1/2:1 G3/2:1
+C1  E    x E    : A1:1 A2:1 E:1
+C1  E    x T1   : T1:1 T2:1
+C1  T2   x E1/2 : E5/2:1 G3/2:1
+C1  E    x E1/2 : G3/2:1
+C1  E1/2 x E5/2 : A2:1 T2:1
+C2  solver T1 = S * claimed with S = 1 * 1; solver A1 = -1 * det
+C4  n_K (solver normalisation): E1/2 x E1/2: n_A1=2, n_T1=2; T1 x T1: n_A1=3, n_E=9/4, n_T1=2, n_T2=2; T1 x E1/2: n_E1/2=3, n_G3/2=9/4; E x E: n_A1=1/2, n_A2=2/3, n_E=3; E x T1: n_T1=2/3, n_T2=2; T2 x E1/2: n_E5/2=3, n_G3/2=3; E x E1/2: n_G3/2=1; E1/2 x E5/2: n_A2=2, n_T2=2
+M4a not caught on E x E1/2 (identity forms on both sides)
+C5  exchange symmetry s_K: {'E1/2': {'A1': -1, 'T1': 1}, 'T1': {'A1': 1, 'E': 1, 'T1': -1, 'T2': 1}, 'E': {'A1': 1, 'A2': -1, 'E': 1}}; E1/2 draws det=0: 20, det!=0: 40
+C6  rational rescale in a split product: E x T1 -> T1, product draw, share = 9/16
+C6  sqrt(1/share) irrational (product draws, share>0): 611 of 648; general draws: 204 of 216; share=0 cells: 0 + 0
+C6  per product (irrational / product-draw cells): E1/2 x E1/2 72/72; T1 x T1 144/144; T1 x E1/2 72/72; E x E 108/108; E x T1 71/72; T2 x E1/2 72/72; E x E1/2 0/36; E1/2 x E5/2 72/72
+M0a 8-kind group order with T1 C3 transposed: 192
+M1a mu := 1 everywhere: 4 of 64 cells differ: E1/2.E1/2->A1 0, E1/2.E1/2->T1 0, E1/2.E5/2->A2 0, E1/2.E5/2->T2 0
+M1b E5/2 := twins (Q not negated): 6 of 64 cells differ: T1.E1/2->E5/2 1, T2.E1/2->E5/2 0, E1/2.E5/2->A1 1, E1/2.E5/2->A2 0, E1/2.E5/2->T1 1, E1/2.E5/2->T2 0
+M1c T1/T2 third turn transposed: 6 of 64 cells differ: E1/2.E1/2->T1 0, T1.E1/2->E1/2 0, T1.E1/2->G3/2 0, T2.E1/2->E5/2 0, T2.E1/2->G3/2 0, E1/2.E5/2->T2 0
+
+claim                                                        cases failures
+C0                                                             140        0
+C1a counts = table, dims, bases verified                        90        0
+C1b wrong parity: half turns alone force 0                      30        0
+C1c same table from characters over 48 elements                 64        0
+C2a solver = claimed forms (scalar)                              4        0
+C2b claimed forms intertwine, mu = det                           2        0
+C2c vector turns as T1 x det (draws x 5 turns)                 275        0
+C2d same over all 48 elements                                   96        0
+C3a equivariance: 5 turns, words, 48 elements                 2160        0
+C3b beats: C(gu x hv) = gh C(u x v)                            216        0
+C3c Pythagorean: product on circle den^2 (den<=65)            6032        0
+C3d Pythagorean, unequal dens: circle d1*d2 (<=25)           12672        0
+C4a n_K, P_K projector, = character projector                  126        0
+C4b completeness, sum P = 1, P P' = 0                          140        0
+C4c first rung (det and 2 rho rho - N det)                     145        0
+C5a wrong-symmetry kinds have size 0                            69        0
+C5b E1/2 pair: A1 iff det != 0, never T1                       120        0
+C6a density trace in G_K = |x|^2                               864        0
+C6b shares sum to 1                                            384        0
+mutant (must fail)                                           cases  catches
+M2a A1 := symmetric u1v2+u2v1 (solver match)                     1        1
+M2a A1 := symmetric u1v2+u2v1 (equivariance)                     1        1
+M2b T1 middle phase +i (weak: up to change of basis)             1        0
+M2b T1 middle phase +i (strong: turns as T1)                     1        1
+M2c T1 last part antisymmetric (weak)                            1        1
+M2c T1 last part antisymmetric (strong)                          1        1
+M2d mu := 1 for the T1 vector                                    1        1
+M2a A1 := symmetric (draws x 5 turns)                          125       74
+M2b T1 middle phase +i (draws x 5 turns)                       125       50
+M2c T1 last part antisymmetric (draws x 5 turns)               125       75
+M2d mu := 1 (draws x Q,C3)                                      50       50
+M3a mu := 1 (spinor x spinor, Q and C3)                         96       96
+M3b beat g*conj(h)                                             198      198
+M3d sum of points on the circle of den^2                      6032     6028
+M3c product on the circle of den (not den^2)                  6016     6016
+M4d first rung: 2 rho rho + N(det)                              56       56
+M4a E's form := identity (products touching E)                   6        5
+M4b n_K := trace (no / d_K)                                      8        8
+M4c completeness with one kind dropped                          18       18
+M5a sign flipped, brief's wrong-symmetry kinds still 0          60       60
+M5b claim 'E1/2 equal quanta reach T1'                          60       60
+M6d claim 'sqrt(1/share) always rational'                      864      815
+M6a density without the share                                  816      816
+M6b plain trace instead of the trace in G_K                    240      239
+M6c Euclidean share in an E product                            288      240
+M0a T1/T2 third turn transposed: 8-kind group order != 48        1        1
+M0b twins' C3 entry conjugated: not lam*unitary                  1        1
+M1a mu := 1 everywhere (cells)                                  64        4
+M1b E5/2 := twins (Q not negated) (cells)                       64        6
+M1c T1/T2 third turn transposed (cells)                         64        6
+
+== the second hand: venv314/bin/python -I guard_test.py ==
+source guard flags 'x = 0.5'     : True
+source guard flags 'y = 2j'      : True
+source guard flags 'z = float(3)': True
+source guard flags 'w = 1e3'     : True
+constructor refuses 0.5
+constructor refuses 2j
+constructor refuses True
+guard catches: 7 of 7
+
+== probe.py (the second hand, written from the claims alone) ==
+#!/usr/bin/env python3
+"""
+composite2/probe.py -- independent second-hand probe of the composite clock (the fusion of two
+clocks' kinds) on the 24's ladder.  Written from the brief's definitions only.
+
+Exact arithmetic only: Python int, fractions.Fraction, and Gaussian rationals held as a pair
+(re, im) of Fractions.  No float, no Python complex.  Two guards enforce this:
+  * a source guard (tokenize) rejects any non-integer numeric literal and the names
+    float / complex / math / cmath / decimal / numpy / sqrt in this file;
+  * the Gaussian constructor rejects any part that is not an int or a Fraction.
+
+Sections: C0 (the definitions are a representation of 2O), C1..C6 (David's claims), mutants.
+"""
+import random
+import sys
+import tokenize
+from fractions import Fraction as Fr
+
+HERE = __file__
+
+
+# ------------------------------------------------------------------ exactness guards
+def source_guard(path):
+    banned = {"float", "complex", "cmath", "math", "numpy", "decimal", "sqrt"}
+    bad = []
+    with open(path, "rb") as fh:
+        for tok in tokenize.tokenize(fh.readline):
+            if tok.type == tokenize.NUMBER:
+                if not tok.string.replace("_", "").isdigit():
+                    bad.append((tok.start[0], tok.string))
+            elif tok.type == tokenize.NAME and tok.string in banned:
+                bad.append((tok.start[0], tok.string))
+    return bad
+
+
+def _part(x):
+    t = type(x)
+    if t is Fr:
+        return x
+    if t is int:
+        return Fr(x)
+    raise TypeError("inexact or foreign scalar part: %r" % (t,))
+
+
+class G:
+    """Gaussian rational re + i im, held as a pair of Fractions."""
+    __slots__ = ("re", "im")
+
+    def __init__(self, re=0, im=0):
+        self.re = _part(re)
+        self.im = _part(im)
+
+    def __add__(self, o):
+        o = lift(o)
+        return G(self.re + o.re, self.im + o.im)
+    __radd__ = __add__
+
+    def __sub__(self, o):
+        o = lift(o)
+        return G(self.re - o.re, self.im - o.im)
+
+    def __rsub__(self, o):
+        return lift(o) - self
+
+    def __mul__(self, o):
+        o = lift(o)
+        return G(self.re * o.re - self.im * o.im, self.re * o.im + self.im * o.re)
+    __rmul__ = __mul__
+
+    def __neg__(self):
+        return G(-self.re, -self.im)
+
+    def conj(self):
+        return G(self.re, -self.im)
+
+    def norm(self):
+        return self.re * self.re + self.im * self.im
+
+    def inv(self):
+        n = self.norm()
+        if n == 0:
+            raise ZeroDivisionError("Gaussian zero")
+        return G(self.re / n, -self.im / n)
+
+    def __truediv__(self, o):
+        return self * lift(o).inv()
+
+    def __rtruediv__(self, o):
+        return lift(o) * self.inv()
+
+    def __eq__(self, o):
+        o = lift(o)
+        return self.re == o.re and self.im == o.im
+
+    def __ne__(self, o):
+        return not self.__eq__(o)
+
+    def __hash__(self):
+        return hash((self.re, self.im))
+
+    def nz(self):
+        return bool(self.re) or bool(self.im)
+
+    def __repr__(self):
+        def f(q):
+            return str(q.numerator) if q.denominator == 1 else "%d/%d" % (q.numerator, q.denominator)
+        if self.im == 0:
+            return f(self.re)
+        if self.re == 0:
+            return f(self.im) + "i"
+        return "%s%s%si" % (f(self.re), "+" if self.im > 0 else "-", f(abs(self.im)))
+
+
+def lift(x):
+    return x if type(x) is G else G(x, 0)
+
+
+G0 = G(0, 0)
+G1 = G(1, 0)
+I_ = G(0, 1)
+
+
+# ------------------------------------------------------------------ exact linear algebra
+def Mx(rows):
+    return [[lift(x) for x in r] for r in rows]
+
+
+def zeros(n, m):
+    return [[G0] * m for _ in range(n)]
+
+
+def eye(n):
+    return [[G1 if i == j else G0 for j in range(n)] for i in range(n)]
+
+
+def mm(A, B):
+    k, m = len(B), len(B[0])
+    out = []
+    for Ai in A:
+        row = []
+        for j in range(m):
+            s = G0
+            for t in range(k):
+                a = Ai[t]
+                if a.nz():
+                    b = B[t][j]
+                    if b.nz():
+                        s = s + a * b
+            row.append(s)
+        out.append(row)
+    return out
+
+
+def mv(A, x):
+    out = []
+    for Ai in A:
+        s = G0
+        for a, b in zip(Ai, x):
+            if a.nz() and b.nz():
+                s = s + a * b
+        out.append(s)
+    return out
+
+
+def kron(A, B):
+    return [[a * b for a in Ai for b in Bk] for Ai in A for Bk in B]
+
+
+def vkron(u, v):
+    return [a * b for a in u for b in v]
+
+
+def dag(A):
+    return [[A[j][i].conj() for j in range(len(A))] for i in range(len(A[0]))]
+
+
+def tr(A):
+    s = G0
+    for i in range(len(A)):
+        s = s + A[i][i]
+    return s
+
+
+def scal(A, s):
+    s = lift(s)
+    return [[s * x for x in r] for r in A]
+
+
+def vscal(x, s):
+    s = lift(s)
+    return [s * a for a in x]
+
+
+def madd(A, B):
+    return [[a + b for a, b in zip(r, q)] for r, q in zip(A, B)]
+
+
+def msub(A, B):
+    return [[a - b for a, b in zip(r, q)] for r, q in zip(A, B)]
+
+
+def neg(A):
+    return [[-x for x in r] for r in A]
+
+
+def meq(A, B):
+    return len(A) == len(B) and all(len(r) == len(q) and all(a == b for a, b in zip(r, q)) for r, q in zip(A, B))
+
+
+def veq(x, y):
+    return len(x) == len(y) and all(a == b for a, b in zip(x, y))
+
+
+def mzero(A):
+    return all(not a.nz() for r in A for a in r)
+
+
+def vzero(x):
+    return all(not a.nz() for a in x)
+
+
+def transpose(A):
+    return [[A[j][i] for j in range(len(A))] for i in range(len(A[0]))]
+
+
+def minv(A):
+    n = len(A)
+    M = [list(A[i]) + [G1 if i == j else G0 for j in range(n)] for i in range(n)]
+    for c in range(n):
+        p = next((r for r in range(c, n) if M[r][c].nz()), None)
+        if p is None:
+            raise ZeroDivisionError("singular matrix")
+        M[c], M[p] = M[p], M[c]
+        iv = M[c][c].inv()
+        M[c] = [z * iv for z in M[c]]
+        for r in range(n):
+            if r != c and M[r][c].nz():
+                f = M[r][c]
+                M[r] = [a - f * b for a, b in zip(M[r], M[c])]
+    return [row[n:] for row in M]
+
+
+def mdet(A):
+    n = len(A)
+    M = [list(r) for r in A]
+    d = G1
+    for c in range(n):
+        p = next((r for r in range(c, n) if M[r][c].nz()), None)
+        if p is None:
+            return G0
+        if p != c:
+            M[c], M[p] = M[p], M[c]
+            d = -d
+        d = d * M[c][c]
+        iv = M[c][c].inv()
+        for r in range(c + 1, n):
+            if M[r][c].nz():
+                f = M[r][c] * iv
+                M[r] = [a - f * b for a, b in zip(M[r], M[c])]
+    return d
+
+
+def herm(x, Gm):
+    """x^dagger Gm x, which must be real; returns a Fraction."""
+    s = G0
+    for i, xi in enumerate(x):
+        if not xi.nz():
+            continue
+        ci = xi.conj()
+        row = Gm[i]
+        for j, xj in enumerate(x):
+            if xj.nz() and row[j].nz():
+                s = s + ci * row[j] * xj
+    if s.im != 0:
+        raise ValueError("non-real Hermitian value %r" % (s,))
+    return s.re
+
+
+def nullspace(rows, n):
+    """Exact basis of {c : row . c = 0 for every row} by incremental full reduction."""
+    piv = []  # list of (col, fully reduced row with 1 at col and 0 at the other pivot cols)
+    for r in rows:
+        r = list(r)
+        for c, pr in piv:
+            f = r[c]
+            if f.nz():
+                r = [a - f * b for a, b in zip(r, pr)]
+        lead = next((j for j in range(n) if r[j].nz()), None)
+        if lead is None:
+            continue
+        iv = r[lead].inv()
+        r = [a * iv for a in r]
+        new = []
+        for c, pr in piv:
+            f = pr[lead]
+            if f.nz():
+                pr = [a - f * b for a, b in zip(pr, r)]
+            new.append((c, pr))
+        new.append((lead, r))
+        piv = new
+        if len(piv) == n:
+            break
+    pcs = {c for c, _ in piv}
+    basis = []
+    for fc in range(n):
+        if fc in pcs:
+            continue
+        v = [G0] * n
+        v[fc] = G1
+        for c, pr in piv:
+            v[c] = -pr[fc]
+        basis.append(v)
+    return basis
+
+
+def isqrt(n):
+    if n < 0:
+        raise ValueError("negative")
+    if n < 2:
+        return n
+    x = 1 << ((n.bit_length() + 1) // 2)
+    while True:
+        y = (x + n // x) // 2
+        if y >= x:
+            return x
+        x = y
+
+
+def is_rat_square(q):
+    q = Fr(q)
+    if q < 0:
+        return False
+    a, b = q.numerator, q.denominator
+    return isqrt(a) ** 2 == a and isqrt(b) ** 2 == b
+
+
+# ------------------------------------------------------------------ the kinds (from the brief)
+GENS = ("X", "Y", "Z", "Q", "C3")
+DET = {"X": 1, "Y": 1, "Z": 1, "Q": 2, "C3": 4}
+KINDS = ("A1", "A2", "E", "T1", "T2", "E1/2", "E5/2", "G3/2")
+SPIN = frozenset(("E1/2", "E5/2", "G3/2"))
+DIM = {"A1": 1, "A2": 1, "E": 2, "T1": 3, "T2": 3, "E1/2": 2, "E5/2": 2, "G3/2": 4}
+GE_FORM = Mx([[2, -1], [-1, 2]])
+
+PRODUCTS = (
+    ("E1/2", "E1/2", {"A1": 1, "T1": 1}),
+    ("T1", "T1", {"A1": 1, "E": 1, "T1": 1, "T2": 1}),
+    ("T1", "E1/2", {"E1/2": 1, "G3/2": 1}),
+    ("E", "E", {"A1": 1, "A2": 1, "E": 1}),
+    ("E", "T1", {"T1": 1, "T2": 1}),
+    ("T2", "E1/2", {"E5/2": 1, "G3/2": 1}),
+    ("E", "E1/2", {"G3/2": 1}),
+    ("E1/2", "E5/2", {"A2": 1, "T2": 1}),
+)
+
+
+def build_kinds(mut=frozenset()):
+    i = I_
+    c3tw = [[1 - i, -1 - i], [1 - i, 1 + i]]
+    if "TW_C3_entry" in mut:          # mutant: one entry of the twins' third turn conjugated
+        c3tw = [[1 + i, -1 - i], [1 - i, 1 + i]]
+    TW = {
+        "X": Mx([[0, -i], [-i, 0]]),
+        "Y": Mx([[0, -1], [1, 0]]),
+        "Z": Mx([[-i, 0], [0, i]]),
+        "Q": Mx([[1 - i, 0], [0, 1 + i]]),
+        "C3": Mx(c3tw),
+    }
+    E52 = {g: (neg(TW[g]) if (g == "Q" and "E52_unnegated" not in mut) else TW[g]) for g in GENS}
+    c3 = [[0, 0, 1], [1, 0, 0], [0, 1, 0]]
+    if "T1_C3_transposed" in mut:     # mutant: the vectors' third turn run backwards (x->z->y)
+        c3 = [[0, 1, 0], [0, 0, 1], [1, 0, 0]]
+    T1 = {
+        "X": Mx([[1, 0, 0], [0, -1, 0], [0, 0, -1]]),
+        "Y": Mx([[-1, 0, 0], [0, 1, 0], [0, 0, -1]]),
+        "Z": Mx([[-1, 0, 0], [0, -1, 0], [0, 0, 1]]),
+        "Q": Mx([[0, -1, 0], [1, 0, 0], [0, 0, 1]]),
+        "C3": Mx(c3),
+    }
+    T2 = {g: (neg(T1[g]) if g == "Q" else T1[g]) for g in GENS}
+    A1 = {g: Mx([[1]]) for g in GENS}
+    A2 = {g: (Mx([[-1]]) if g == "Q" else Mx([[1]])) for g in GENS}
+    E = {"X": eye(2), "Y": eye(2), "Z": eye(2), "Q": Mx([[-1, 1], [0, 1]]), "C3": Mx([[0, -1], [1, -1]])}
+    G32 = {g: kron(TW[g], E[g]) for g in GENS}
+    return {"A1": A1, "A2": A2, "E": E, "T1": T1, "T2": T2, "E1/2": TW, "E5/2": E52, "G3/2": G32}
+
+
+def build_forms(mut=frozenset()):
+    ge = eye(2) if "GE_identity" in mut else GE_FORM
+    return {"A1": eye(1), "A2": eye(1), "E": ge, "T1": eye(3), "T2": eye(3),
+            "E1/2": eye(2), "E5/2": eye(2), "G3/2": kron(eye(2), ge)}
+
+
+def mu_brief(K1, K2, K, g):
+    if K1 in SPIN and K2 in SPIN and K not in SPIN:
+        return DET[g]
+    return 1
+
+
+def mu_one(K1, K2, K, g):
+    return 1
+
+
+def parity_ok(K1, K2, K):
+    return ((K1 in SPIN) != (K2 in SPIN)) == (K in SPIN)
+
+
+# ------------------------------------------------------------------ intertwiners
+def eqn_rows(K1, K2, K, kinds, mufn, gens):
+    N = DIM[K1] * DIM[K2]
+    dK = DIM[K]
+    n = dK * N
+    rows = []
+    for g in gens:
+        Mp = kron(kinds[K1][g], kinds[K2][g])
+        MK = kinds[K][g]
+        mu = lift(mufn(K1, K2, K, g))
+        for a in range(dK):
+            for j in range(N):
+                row = [G0] * n
+                for b in range(N):
+                    c = Mp[b][j]
+                    if c.nz():
+                        row[a * N + b] = row[a * N + b] + c
+                for k in range(dK):
+                    c = MK[a][k]
+                    if c.nz():
+                        row[k * N + j] = row[k * N + j] - mu * c
+                rows.append(row)
+    return rows, n
+
+
+def solve(K1, K2, K, kinds, mufn, gens=GENS):
+    rows, n = eqn_rows(K1, K2, K, kinds, mufn, gens)
+    N = DIM[K1] * DIM[K2]
+    return [[v[a * N:(a + 1) * N] for a in range(DIM[K])] for v in nullspace(rows, n)]
+
+
+def is_intertwiner(C, K1, K2, K, kinds, mufn):
+    for g in GENS:
+        lhs = mm(C, kron(kinds[K1][g], kinds[K2][g]))
+        rhs = scal(mm(kinds[K][g], C), mufn(K1, K2, K, g))
+        if not meq(lhs, rhs):
+            return False
+    return True
+
+
+def c1_table(kinds, mufn):
+    return {(K1, K2, K): solve(K1, K2, K, kinds, mufn) for K1, K2, dec in PRODUCTS for K in KINDS}
+
+
+def c1_mismatches(table):
+    return [(K1, K2, K, len(table[(K1, K2, K)]), dec.get(K, 0))
+            for K1, K2, dec in PRODUCTS for K in KINDS if len(table[(K1, K2, K)]) != dec.get(K, 0)]
+
+
+# ------------------------------------------------------------------ the group 2O, exactly
+def freeze(A):
+    return tuple(tuple((z.re, z.im) for z in r) for r in A)
+
+
+def closure(kinds, klist, cap=5000):
+    """Elements (p, mats): the true matrix is mats[K] / sqrt2^p for spinor kinds, mats[K] otherwise."""
+    has_spin = any(K in SPIN for K in klist)
+
+    def gen(g):
+        p = 1 if (g == "Q" and has_spin) else 0
+        mats = []
+        for K in klist:
+            A = kinds[K][g]
+            if K in SPIN and g == "C3":
+                A = scal(A, Fr(1, 2))
+            mats.append(A)
+        return (p, mats)
+
+    gens = [gen(g) for g in GENS]
+
+    def mul(e, f):
+        s = e[0] + f[0]
+        mats = [mm(a, b) for a, b in zip(e[1], f[1])]
+        if s == 2:
+            mats = [scal(m, Fr(1, 2)) if K in SPIN else m for m, K in zip(mats, klist)]
+            s = 0
+        return (s, mats)
+
+    def key(e):
+        return (e[0],) + tuple(freeze(m) for m in e[1])
+
+    ident = (0, [eye(DIM[K]) for K in klist])
+    seen = {key(ident): ident}
+    frontier = [ident]
+    while frontier:
+        nxt = []
+        for e in frontier:
+            for gg in gens:
+                f = mul(e, gg)
+                k = key(f)
+                if k not in seen:
+                    seen[k] = f
+                    nxt.append(f)
+                    if len(seen) > cap:
+                        return None
+        frontier = nxt
+    return list(seen.values())
+
+
+def kpow(K, p):
+    return p if K in SPIN else 0
+
+
+def char_mult(elems, idx, K1, K2, K):
+    """(1/|G|) sum chi1 chi2 conj(chiK) as A + B/sqrt2 (A, B Gaussian rationals)."""
+    A, B = G0, G0
+    for p, mats in elems:
+        v = tr(mats[idx[K1]]) * tr(mats[idx[K2]]) * tr(mats[idx[K]]).conj()
+        k = kpow(K1, p) + kpow(K2, p) + kpow(K, p)
+        v = v * Fr(1, 2 ** (k // 2))
+        if k % 2:
+            B = B + v
+        else:
+            A = A + v
+    n = len(elems)
+    return A / n, B / n
+
+
+def char_projector(elems, idx, K1, K2, K):
+    """Isotypic projector (dK/|G|) sum conj(chiK(g)) U1(g) kron U2(g), as A + B/sqrt2."""
+    N = DIM[K1] * DIM[K2]
+    A, B = zeros(N, N), zeros(N, N)
+    for p, mats in elems:
+        c = tr(mats[idx[K]]).conj()
+        k = kpow(K1, p) + kpow(K2, p) + kpow(K, p)
+        c = c * Fr(1, 2 ** (k // 2))
+        T = scal(kron(mats[idx[K1]], mats[idx[K2]]), c)
+        if k % 2:
+            B = madd(B, T)
+        else:
+            A = madd(A, T)
+    f = Fr(DIM[K], len(elems))
+    return scal(A, f), scal(B, f)
+
+
+# ------------------------------------------------------------------ helpers for the claims
+def rand_g(rng, R=4):
+    return G(rng.randint(-R, R), rng.randint(-R, R))
+
+
+def rand_vec(rng, d, R=4):
+    while True:
+        v = [rand_g(rng, R) for _ in range(d)]
+        if not vzero(v):
+            return v
+
+
+def rand_gq(rng):
+    """Nonzero Gaussian rational with small denominators."""
+    while True:
+        z = G(Fr(rng.randint(-6, 6), rng.randint(1, 5)), Fr(rng.randint(-6, 6), rng.randint(1, 5)))
+        if z.nz():
+            return z
+
+
+def pyth_points(den):
+    pts = []
+    for p in range(-den, den + 1):
+        s2 = den * den - p * p
+        s = isqrt(s2)
+        if s * s == s2:
+            pts.append((p, s))
+            if s:
+                pts.append((p, -s))
+    return pts
+
+
+def det_uv(u, v):
+    return u[0] * v[1] - u[1] * v[0]
+
+
+def w_T1(u, v):
+    u1, u2 = u
+    v1, v2 = v
+    return [-(u1 * v1) + u2 * v2, -I_ * (u1 * v1 + u2 * v2), u1 * v2 + u2 * v1]
+
+
+def w_phase(u, v):       # mutant: the phase of the middle component flipped (+i)
+    u1, u2 = u
+    v1, v2 = v
+    return [-(u1 * v1) + u2 * v2, I_ * (u1 * v1 + u2 * v2), u1 * v2 + u2 * v1]
+
+
+def w_anti(u, v):        # mutant: the last component antisymmetric
+    u1, u2 = u
+    v1, v2 = v
+    return [-(u1 * v1) + u2 * v2, -I_ * (u1 * v1 + u2 * v2), u1 * v2 - u2 * v1]
+
+
+def sym_uv(u, v):        # mutant for A1: the symmetric form
+    return u[0] * v[1] + u[1] * v[0]
+
+
+def word_mat(kind_mats, word):
+    M = None
+    for g in word:
+        M = kind_mats[g] if M is None else mm(M, kind_mats[g])
+    return M
+
+
+def swap(d):
+    N = d * d
+    S = zeros(N, N)
+    for i in range(d):
+        for j in range(d):
+            S[i * d + j][j * d + i] = G1
+    return S
+
+
+def rowspace_change(Cs, Cc):
+    """S with Cs = S Cc (Cc of full row rank), whether it holds exactly, and whether S is invertible."""
+    S = mm(mm(Cs, dag(Cc)), minv(mm(Cc, dag(Cc))))
+    return meq(mm(S, Cc), Cs), S, mdet(S).nz()
+
+
+def proportional(x, y):
+    """Is the (flattened) x a nonzero multiple of y?"""
+    fx = [a for r in x for a in r]
+    fy = [a for r in y for a in r]
+    j = next((k for k, a in enumerate(fy) if a.nz()), None)
+    if j is None or not fx[j].nz():
+        return False, None
+    lam = fx[j] / fy[j]
+    return all(a == lam * b for a, b in zip(fx, fy)), lam
+
+
+# ------------------------------------------------------------------ tallies
+class Tally:
+    def __init__(self):
+        self.order, self.cases, self.fails, self.notes = [], {}, {}, []
+
+    def check(self, key, ok, msg=""):
+        if key not in self.cases:
+            self.order.append(key)
+            self.cases[key] = 0
+            self.fails[key] = 0
+        self.cases[key] += 1
+        if not ok:
+            self.fails[key] += 1
+            if len(self.notes) < 80:
+                self.notes.append("%s: %s" % (key, msg))
+        return ok
+
+
+# ------------------------------------------------------------------ C0: the definitions
+def c0(T, kinds, forms, say):
+    for K in KINDS:
+        for g in GENS:
+            Mk = kinds[K][g]
+            lam2 = DET[g] if K in SPIN else 1
+            T.check("C0", meq(mm(mm(dag(Mk), forms[K]), Mk), scal(forms[K], lam2)),
+                    "form of %s not invariant under %s" % (K, g))
+    for K in ("E1/2", "E5/2"):
+        for g in GENS:
+            Mk = kinds[K][g]
+            T.check("C0", mdet(Mk) == DET[g], "det %s %s" % (K, g))
+            T.check("C0", meq(mm(dag(Mk), Mk), scal(eye(2), DET[g])), "lam*unitary %s %s" % (K, g))
+    T.check("C0", mdet(GE_FORM) == 3 and GE_FORM[0][0] == 2, "E form not positive")
+    # E is the coordinate-permutation action on the basis (1,-1,0), (0,1,-1); its form is their Gram matrix
+    Bm = Mx([[1, 0], [-1, 1], [0, -1]])
+    T.check("C0", meq(mm(transpose(Bm), Bm), GE_FORM), "E form is not the Gram matrix")
+    for g in GENS:
+        Pg = [[G(abs(z.re), 0) for z in r] for r in kinds["T1"][g]]
+        T.check("C0", meq(mm(Pg, Bm), mm(Bm, kinds["E"][g])), "E is not the permutation action at %s" % g)
+    elems = closure(kinds, list(KINDS))
+    T.check("C0", elems is not None and len(elems) == 48, "8-kind group order")
+    idx = {K: n for n, K in enumerate(KINDS)}
+    images = {}
+    for K in KINDS:
+        sub = closure(kinds, [K])
+        images[K] = len(sub)
+    want = {"A1": 1, "A2": 2, "E": 6, "T1": 24, "T2": 24, "E1/2": 48, "E5/2": 48, "G3/2": 48}
+    for K in KINDS:
+        T.check("C0", images[K] == want[K], "image of %s has %d" % (K, images[K]))
+    # irreducibility and inequivalence by characters
+    for a in KINDS:
+        for b in KINDS:
+            A, B = G0, G0
+            for p, mats in elems:
+                v = tr(mats[idx[a]]) * tr(mats[idx[b]]).conj()
+                k = kpow(a, p) + kpow(b, p)
+                v = v * Fr(1, 2 ** (k // 2))
+                if k % 2:
+                    B = B + v
+                else:
+                    A = A + v
+            want_ab = 48 if a == b else 0
+            T.check("C0", A == want_ab and not B.nz(), "<chi %s, chi %s> = %r + %r/sqrt2" % (a, b, A, B))
+    say("C0  group order (8 kinds together) = %s; images %s" % (len(elems) if elems else None, images))
+    return elems, idx
+
+
+# ------------------------------------------------------------------ C1
+def c1(T, kinds, elems, idx, say):
+    table = c1_table(kinds, mu_brief)
+    for K1, K2, dec in PRODUCTS:
+        tot = 0
+        got = {}
+        for K in KINDS:
+            basis = table[(K1, K2, K)]
+            n = len(basis)
+            got[K] = n
+            T.check("C1a counts = table, dims, bases verified", n == dec.get(K, 0), "%s x %s -> %s: %d intertwiners, claimed %d"
+                    % (K1, K2, K, n, dec.get(K, 0)))
+            for Cb in basis:
+                T.check("C1a counts = table, dims, bases verified", is_intertwiner(Cb, K1, K2, K, kinds, mu_brief), "basis not an intertwiner")
+            tot += n * DIM[K]
+        T.check("C1a counts = table, dims, bases verified", tot == DIM[K1] * DIM[K2], "dimension sum %s x %s" % (K1, K2))
+        say("C1  %-4s x %-4s : %s" % (K1, K2, " ".join("%s:%d" % (K, got[K]) for K in KINDS if got[K])))
+    # wrong-parity kinds: the half turns alone (where mu = 1 is exact) already force zero,
+    # so the zero does not depend on the (irrational) true scale on Q and C3.
+    for K1, K2, dec in PRODUCTS:
+        for K in KINDS:
+            if not parity_ok(K1, K2, K):
+                T.check("C1b wrong parity: half turns alone force 0", len(solve(K1, K2, K, kinds, mu_one, gens=("X", "Y", "Z"))) == 0,
+                        "half turns do not kill %s x %s -> %s" % (K1, K2, K))
+    # independent: the multiplicities from characters over the 48 elements
+    for K1, K2, dec in PRODUCTS:
+        for K in KINDS:
+            A, B = char_mult(elems, idx, K1, K2, K)
+            T.check("C1c same table from characters over 48 elements", A == dec.get(K, 0) and not B.nz(), "char mult %s x %s -> %s = %r + %r/sqrt2"
+                    % (K1, K2, K, A, B))
+    return table
+
+
+# ------------------------------------------------------------------ C2
+def c2(T, M, kinds, table, elems, idx, rng, nd):
+    CA1 = Mx([[0, 1, -1, 0]])
+    CT1 = Mx([[-1, 0, 0, 1], [-I_, 0, 0, -I_], [0, 1, 1, 0]])
+    CT1_phase = Mx([[-1, 0, 0, 1], [I_, 0, 0, I_], [0, 1, 1, 0]])
+    CT1_anti = Mx([[-1, 0, 0, 1], [-I_, 0, 0, -I_], [0, 1, -1, 0]])
+    CA1_sym = Mx([[0, 1, 1, 0]])
+    bA1 = table[("E1/2", "E1/2", "A1")]
+    bT1 = table[("E1/2", "E1/2", "T1")]
+    T.check("C2a solver = claimed forms (scalar)", len(bA1) == 1 and len(bT1) == 1, "first-rung solution spaces not 1-dim")
+    ok, lam = proportional(bA1[0], CA1)
+    T.check("C2a solver = claimed forms (scalar)", ok, "solver A1 not a multiple of the determinant")
+    ok, S, inv_ok = rowspace_change(bT1[0], CT1)
+    T.check("C2a solver = claimed forms (scalar)", ok and inv_ok, "solver T1 not S*claimed with S invertible")
+    T.check("C2a solver = claimed forms (scalar)", meq(S, scal(eye(3), S[0][0])), "the change of basis is not a scalar")
+    T.check("C2b claimed forms intertwine, mu = det", is_intertwiner(CA1, "E1/2", "E1/2", "A1", kinds, mu_brief), "det not an intertwiner")
+    T.check("C2b claimed forms intertwine, mu = det", is_intertwiner(CT1, "E1/2", "E1/2", "T1", kinds, mu_brief), "claimed T1 not an intertwiner")
+    # mutants against the matrix forms
+    M.check("M2a A1 := symmetric u1v2+u2v1 (solver match)", not proportional(bA1[0], CA1_sym)[0])
+    M.check("M2a A1 := symmetric u1v2+u2v1 (equivariance)", not is_intertwiner(CA1_sym, "E1/2", "E1/2", "A1", kinds, mu_brief))
+    okp, Sp, invp = rowspace_change(bT1[0], CT1_phase)
+    M.check("M2b T1 middle phase +i (weak: up to change of basis)", not (okp and invp))
+    M.check("M2b T1 middle phase +i (strong: turns as T1)", not is_intertwiner(CT1_phase, "E1/2", "E1/2", "T1", kinds, mu_brief))
+    oka, Sa, inva = rowspace_change(bT1[0], CT1_anti)
+    M.check("M2c T1 last part antisymmetric (weak)", not (oka and inva))
+    M.check("M2c T1 last part antisymmetric (strong)", not is_intertwiner(CT1_anti, "E1/2", "E1/2", "T1", kinds, mu_brief))
+    M.check("M2d mu := 1 for the T1 vector", not is_intertwiner(CT1, "E1/2", "E1/2", "T1", kinds, mu_one))
+    TW, T1 = kinds["E1/2"], kinds["T1"]
+    # vector-level: the formula turns as T1 does, with mu = det, at the five generators
+    for _ in range(nd):
+        u, v = rand_vec(rng, 2), rand_vec(rng, 2)
+        x = vkron(u, v)
+        T.check("C2c vector turns as T1 x det (draws x 5 turns)", veq(mv(CT1, x), w_T1(u, v)) and mv(CA1, x)[0] == det_uv(u, v), "transcription")
+        for g in GENS:
+            Mg = TW[g]
+            uu, vv = mv(Mg, u), mv(Mg, v)
+            T.check("C2c vector turns as T1 x det (draws x 5 turns)", veq(w_T1(uu, vv), vscal(mv(T1[g], w_T1(u, v)), DET[g])), "w(Mu,Mv) at %s" % g)
+            T.check("C2c vector turns as T1 x det (draws x 5 turns)", det_uv(uu, vv) == DET[g] * det_uv(u, v), "det(Mu,Mv) at %s" % g)
+            M.check("M2a A1 := symmetric (draws x 5 turns)", sym_uv(uu, vv) != DET[g] * sym_uv(u, v))
+            M.check("M2b T1 middle phase +i (draws x 5 turns)", not veq(w_phase(uu, vv), vscal(mv(T1[g], w_phase(u, v)), DET[g])))
+            M.check("M2c T1 last part antisymmetric (draws x 5 turns)", not veq(w_anti(uu, vv), vscal(mv(T1[g], w_anti(u, v)), DET[g])))
+            if g in ("Q", "C3"):
+                M.check("M2d mu := 1 (draws x Q,C3)", not veq(w_T1(uu, vv), mv(T1[g], w_T1(u, v))))
+    # the whole group at true scale: w(V u, V v) = 2^p T1(g) w(u, v)
+    for p, mats in elems:
+        u, v = rand_vec(rng, 2), rand_vec(rng, 2)
+        V, R = mats[idx["E1/2"]], mats[idx["T1"]]
+        T.check("C2d same over all 48 elements", veq(w_T1(mv(V, u), mv(V, v)), vscal(mv(R, w_T1(u, v)), 2 ** p)), "group element")
+        T.check("C2d same over all 48 elements", det_uv(mv(V, u), mv(V, v)) == det_uv(u, v) * (2 ** p), "group element det")
+    return S, lam
+
+
+# ------------------------------------------------------------------ C3
+def c3(T, M, kinds, table, elems, idx, rng, nd):
+    for K1, K2, dec in PRODUCTS:
+        for K in dec:
+            C = table[(K1, K2, K)][0]
+            M1, M2, MK = kinds[K1], kinds[K2], kinds[K]
+            ss = K1 in SPIN and K2 in SPIN
+            for _ in range(nd):
+                u, v = rand_vec(rng, DIM[K1]), rand_vec(rng, DIM[K2])
+                y = mv(C, vkron(u, v))
+                for g in GENS:
+                    lhs = mv(C, vkron(mv(M1[g], u), mv(M2[g], v)))
+                    T.check("C3a equivariance: 5 turns, words, 48 elements", veq(lhs, vscal(mv(MK[g], y), mu_brief(K1, K2, K, g))),
+                            "turn %s on %s x %s -> %s" % (g, K1, K2, K))
+                    if ss and g in ("Q", "C3"):
+                        M.check("M3a mu := 1 (spinor x spinor, Q and C3)", not veq(lhs, mv(MK[g], y)))
+                word = [rng.choice(GENS) for _ in range(rng.randint(2, 5))]
+                mu = 1
+                for g in word:
+                    mu = mu * mu_brief(K1, K2, K, g)
+                lhs = mv(C, vkron(mv(word_mat(M1, word), u), mv(word_mat(M2, word), v)))
+                T.check("C3a equivariance: 5 turns, words, 48 elements", veq(lhs, vscal(mv(word_mat(MK, word), y), mu)), "word %s" % (word,))
+                # beats: Gaussian scalars g, h on the two factors
+                gg, hh = rand_gq(rng), rand_gq(rng)
+                lhs = mv(C, vkron(vscal(u, gg), vscal(v, hh)))
+                T.check("C3b beats: C(gu x hv) = gh C(u x v)", veq(lhs, vscal(y, gg * hh)), "beat")
+                if hh.im != 0 and not vzero(y):
+                    M.check("M3b beat g*conj(h)", not veq(lhs, vscal(y, gg * hh.conj())))
+            # the whole group at true scale
+            for p, mats in elems:
+                u, v = rand_vec(rng, DIM[K1]), rand_vec(rng, DIM[K2])
+                k = kpow(K1, p) + kpow(K2, p) - kpow(K, p)
+                lhs = mv(C, vkron(mv(mats[idx[K1]], u), mv(mats[idx[K2]], v)))
+                rhs = vscal(mv(mats[idx[K]], mv(C, vkron(u, v))), 2 ** (k // 2))
+                T.check("C3a equivariance: 5 turns, words, 48 elements", k % 2 == 0 and veq(lhs, rhs), "group element on %s x %s -> %s" % (K1, K2, K))
+    # Pythagorean points
+    for den in range(1, 66):
+        pts = pyth_points(den)
+        for (p1, s1) in pts:
+            z1 = G(p1, s1)
+            for (p2, s2) in pts:
+                z = z1 * G(p2, s2)
+                T.check("C3c Pythagorean: product on circle den^2 (den<=65)", z.re.denominator == 1 and z.im.denominator == 1 and z.norm() == den ** 4,
+                        "product of points on den %d" % den)
+                if den >= 2:
+                    M.check("M3c product on the circle of den (not den^2)", z.norm() != den ** 2)
+                M.check("M3d sum of points on the circle of den^2", (z1 + G(p2, s2)).norm() != den ** 4)
+    for d1 in range(1, 26):
+        for d2 in range(d1 + 1, 26):
+            for (p1, s1) in pyth_points(d1):
+                for (p2, s2) in pyth_points(d2):
+                    T.check("C3d Pythagorean, unequal dens: circle d1*d2 (<=25)", (G(p1, s1) * G(p2, s2)).norm() == (d1 * d2) ** 2, "unequal dens")
+
+
+# ------------------------------------------------------------------ C4
+def c4_core(kinds, forms, table, Pchar, nmode="claim"):
+    """Per product: list of (label, ok) for the claim's identities, plus n_K and P_K."""
+    res = {}
+    for K1, K2, dec in PRODUCTS:
+        Gp = kron(forms[K1], forms[K2])
+        Gpi = minv(Gp)
+        N = DIM[K1] * DIM[K2]
+        checks, ns, Ps = [], {}, {}
+        for K in dec:
+            C = table[(K1, K2, K)][0]
+            H = mm(mm(dag(C), forms[K]), C)
+            GH = mm(Gpi, H)
+            t = tr(GH)
+            n = t / DIM[K] if nmode == "claim" else t
+            okn = n.im == 0 and n.re > 0
+            checks.append(("n_%s real > 0" % K, okn))
+            if not n.nz():
+                checks.append(("P_%s defined" % K, False))
+                continue
+            P = scal(GH, n.inv())
+            ns[K], Ps[K] = n, P
+            checks.append(("P_%s projector" % K, meq(mm(P, P), P)))
+            checks.append(("P_%s = character projector" % K, meq(P, Pchar[(K1, K2, K)])))
+            checks.append(("C^dag G_K C = n G_p P (%s)" % K, meq(H, scal(mm(Gp, Pchar[(K1, K2, K)]), n))))
+            alt = tr(H) / tr(mm(Gp, Pchar[(K1, K2, K)]))
+            checks.append(("n_%s from tr(C^dag G C)/tr(G_p P)" % K, alt == n))
+        tot = zeros(N, N)
+        for K in ns:
+            C = table[(K1, K2, K)][0]
+            tot = madd(tot, scal(mm(mm(dag(C), forms[K]), C), ns[K].inv()))
+        checks.append(("completeness sum = G_p", meq(tot, Gp)))
+        Psum = zeros(N, N)
+        for K in Ps:
+            Psum = madd(Psum, Ps[K])
+        checks.append(("sum P_K = 1", meq(Psum, eye(N))))
+        for Ka in Ps:
+            for Kb in Ps:
+                if Ka != Kb:
+                    checks.append(("P_%s P_%s = 0" % (Ka, Kb), mzero(mm(Ps[Ka], Ps[Kb]))))
+        res[(K1, K2)] = (checks, ns, Ps, Gp)
+    return res
+
+
+def c4(T, M, kinds, forms, table, Pchar, rng, nd, say):
+    for (K1, K2, dec) in PRODUCTS:
+        for K in dec:
+            Pc = Pchar[(K1, K2, K)]
+            T.check("C4a n_K, P_K projector, = character projector", meq(mm(Pc, Pc), Pc) and tr(Pc) == DIM[K], "character projector %s" % K)
+    res = c4_core(kinds, forms, table, Pchar)
+    nlines = []
+    for K1, K2, dec in PRODUCTS:
+        checks, ns, Ps, Gp = res[(K1, K2)]
+        for label, ok in checks:
+            T.check("C4b completeness, sum P = 1, P P' = 0" if (label.startswith("completeness") or label.startswith("sum P") or " = 0" in label) else "C4a n_K, P_K projector, = character projector", ok, "%s x %s: %s" % (K1, K2, label))
+        nlines.append("%s x %s: %s" % (K1, K2, ", ".join("n_%s=%r" % (K, ns[K]) for K in ns)))
+        N = DIM[K1] * DIM[K2]
+        for _ in range(nd):
+            x = rand_vec(rng, N)
+            s = Fr(0)
+            for K in ns:
+                s += herm(mv(table[(K1, K2, K)][0], x), forms[K]) / ns[K].re
+            T.check("C4b completeness, sum P = 1, P P' = 0", s == herm(x, Gp), "random x completeness %s x %s" % (K1, K2))
+    say("C4  n_K (solver normalisation): " + "; ".join(nlines))
+    # first rung, with the solver's C and with the explicit forms of C2 (n = 2, 2)
+    CA1 = Mx([[0, 1, -1, 0]])
+    CT1 = Mx([[-1, 0, 0, 1], [-I_, 0, 0, -I_], [0, 1, 1, 0]])
+    nA1x = tr(mm(dag(CA1), CA1)) / 1
+    nT1x = tr(mm(dag(CT1), CT1)) / 3
+    T.check("C4c first rung (det and 2 rho rho - N det)", nA1x == 2 and nT1x == 2, "explicit n")
+    nA1, nT1 = res[("E1/2", "E1/2")][1]["A1"].re, res[("E1/2", "E1/2")][1]["T1"].re
+    CsA, CsT = table[("E1/2", "E1/2", "A1")][0], table[("E1/2", "E1/2", "T1")][0]
+    I2, I3, I1 = eye(2), eye(3), eye(1)
+    for _ in range(nd * 3):
+        u, v = rand_vec(rng, 2), rand_vec(rng, 2)
+        if rng.randint(0, 4) == 0:
+            v = vscal(u, rand_gq(rng))           # degenerate draws: det = 0
+        x = vkron(u, v)
+        Nd = det_uv(u, v).norm()
+        ru, rv = herm(u, I2), herm(v, I2)
+        for (cA, nA, cT, nT) in ((CsA, nA1, CsT, nT1), (CA1, nA1x.re, CT1, nT1x.re)):
+            a = 2 * herm(mv(cA, x), I1) / nA
+            t = 2 * herm(mv(cT, x), I3) / nT
+            T.check("C4c first rung (det and 2 rho rho - N det)", a == Nd, "2|C_A1 x|^2/n = N(det)")
+            T.check("C4c first rung (det and 2 rho rho - N det)", t == 2 * ru * rv - Nd, "2|C_T1 x|^2/n = 2 rho rho - N(det)")
+            if Nd != 0:
+                M.check("M4d first rung: 2 rho rho + N(det)", t != 2 * ru * rv + Nd)
+    # mutants
+    for mut, name in (("GE_identity", "M4a E's form := identity"),):
+        res_m = c4_core(kinds, build_forms(frozenset([mut])), table, Pchar)
+        for K1, K2, dec in PRODUCTS:
+            if "E" in (K1, K2) or any(K in ("E", "G3/2") for K in dec):
+                ok_all = all(ok for label, ok in res_m[(K1, K2)][0])
+                M.check(name + " (products touching E)", not ok_all)
+                if ok_all:
+                    say("M4a not caught on %s x %s (identity forms on both sides)" % (K1, K2))
+    res_n = c4_core(kinds, forms, table, Pchar, nmode="no_dim")
+    for K1, K2, dec in PRODUCTS:
+        ok = dict(res_n[(K1, K2)][0])["completeness sum = G_p"]
+        M.check("M4b n_K := trace (no / d_K)", not ok)
+    for K1, K2, dec in PRODUCTS:
+        checks, ns, Ps, Gp = res[(K1, K2)]
+        N = DIM[K1] * DIM[K2]
+        for drop in ns:
+            tot = zeros(N, N)
+            for K in ns:
+                if K != drop:
+                    C = table[(K1, K2, K)][0]
+                    tot = madd(tot, scal(mm(mm(dag(C), forms[K]), C), ns[K].inv()))
+            M.check("M4c completeness with one kind dropped", not meq(tot, Gp))
+    return res
+
+
+# ------------------------------------------------------------------ C5
+def c5(T, M, kinds, table, rng, nd, say):
+    SIGN = {"E1/2": -1, "T1": 1, "E": 1}
+    syms = {}
+    for Kf in ("E1/2", "T1", "E"):
+        dec = next(d for a, b, d in PRODUCTS if a == Kf and b == Kf)
+        Sw = swap(DIM[Kf])
+        sK = {}
+        for K in dec:
+            C = table[(Kf, Kf, K)][0]
+            CS = mm(C, Sw)
+            s = 1 if meq(CS, C) else (-1 if meq(CS, neg(C)) else 0)
+            T.check("C5a wrong-symmetry kinds have size 0", s != 0, "%s in %s x %s has no exchange symmetry" % (K, Kf, Kf))
+            sK[K] = s
+        syms[Kf] = sK
+        e = SIGN[Kf]
+        for _ in range(nd):
+            u, v = rand_vec(rng, DIM[Kf]), rand_vec(rng, DIM[Kf])
+            xu, xv = vkron(u, v), vkron(v, u)
+            x = [a + e * b for a, b in zip(xu, xv)]
+            xm = [a - e * b for a, b in zip(xu, xv)]      # mutant: the wrong exchange sign
+            for K in dec:
+                C = table[(Kf, Kf, K)][0]
+                y = mv(C, x)
+                if sK[K] != e:
+                    T.check("C5a wrong-symmetry kinds have size 0", vzero(y), "wrong-symmetry %s nonzero in %s pair" % (K, Kf))
+                ym = mv(C, xm)
+                if sK[K] != e and not vzero(mv(C, xu)):
+                    M.check("M5a sign flipped, brief's wrong-symmetry kinds still 0", not vzero(ym))
+    # E1/2 equal quanta: A1 exactly where det != 0, never T1
+    CA, CT = table[("E1/2", "E1/2", "A1")][0], table[("E1/2", "E1/2", "T1")][0]
+    reachA = [0, 0]
+    for n in range(nd * 3):
+        u = rand_vec(rng, 2)
+        v = vscal(u, rand_gq(rng)) if n % 3 == 0 else rand_vec(rng, 2)
+        x = [a - b for a, b in zip(vkron(u, v), vkron(v, u))]
+        d = det_uv(u, v)
+        a_reach = not vzero(mv(CA, x))
+        T.check("C5b E1/2 pair: A1 iff det != 0, never T1", a_reach == d.nz(), "A1 reach vs det")
+        T.check("C5b E1/2 pair: A1 iff det != 0, never T1", vzero(mv(CT, x)), "T1 reached by E1/2 equal quanta")
+        reachA[1 if d.nz() else 0] += 1
+        M.check("M5b claim 'E1/2 equal quanta reach T1'", vzero(mv(CT, x)))
+    say("C5  exchange symmetry s_K: %s; E1/2 draws det=0: %d, det!=0: %d" % (syms, reachA[0], reachA[1]))
+    return syms
+
+
+# ------------------------------------------------------------------ C6
+def c6(T, M, kinds, forms, table, Pchar, ns_all, rng, nd, say):
+    irr = {"product": [0, 0, 0], "general": [0, 0, 0]}     # irrational, rational, share = 0
+    per = []
+    for K1, K2, dec in PRODUCTS:
+        Gp = kron(forms[K1], forms[K2])
+        N = DIM[K1] * DIM[K2]
+        ns = ns_all[(K1, K2)]
+        cnt = [0, 0]
+        for n in range(nd * 2):
+            kind = "product" if n % 4 != 3 else "general"
+            if kind == "product":
+                u, v = rand_vec(rng, DIM[K1]), rand_vec(rng, DIM[K2])
+                x = vkron(u, v)
+            else:
+                x = rand_vec(rng, N)
+            den = herm(x, Gp)
+            den_I = herm(x, eye(N))
+            shares = {}
+            for K in dec:
+                Px = mv(Pchar[(K1, K2, K)], x)
+                share = herm(Px, Gp) / den
+                shares[K] = share
+                if share == 0:
+                    irr[kind][2] += 1
+                    continue
+                y = mv(table[(K1, K2, K)][0], x)
+                nK = ns[K].re
+                rho = [[a * b.conj() / (nK * share) for b in y] for a in y]
+                tGK = tr(mm(forms[K], rho))
+                T.check("C6a density trace in G_K = |x|^2", tGK == den, "trace of the density, %s x %s -> %s" % (K1, K2, K))
+                rational = is_rat_square(share)
+                if rational and len(dec) > 1:
+                    say("C6  rational rescale in a split product: %s x %s -> %s, %s draw, share = %s" % (K1, K2, K, kind, share))
+                irr[kind][1 if rational else 0] += 1
+                if kind == "product":
+                    cnt[1 if rational else 0] += 1
+                M.check("M6d claim 'sqrt(1/share) always rational'", not rational)
+                # mutants
+                if share != 1:
+                    rho0 = [[a * b.conj() / nK for b in y] for a in y]
+                    M.check("M6a density without the share", tr(mm(forms[K], rho0)) != den)
+                if K in ("E", "G3/2"):
+                    M.check("M6b plain trace instead of the trace in G_K", tr(rho) != den)
+                if "E" in (K1, K2):
+                    share_I = herm(Px, eye(N)) / den_I
+                    if share_I != 0:
+                        rhoI = [[a * b.conj() / (nK * share_I) for b in y] for a in y]
+                        M.check("M6c Euclidean share in an E product", tr(mm(forms[K], rhoI)) != den)
+            T.check("C6b shares sum to 1", sum(shares.values()) == 1, "shares sum to 1")
+        per.append("%s x %s %d/%d" % (K1, K2, cnt[0], cnt[0] + cnt[1]))
+    say("C6  sqrt(1/share) irrational (product draws, share>0): %d of %d; general draws: %d of %d; share=0 cells: %d + %d"
+        % (irr["product"][0], irr["product"][0] + irr["product"][1], irr["general"][0],
+           irr["general"][0] + irr["general"][1], irr["product"][2], irr["general"][2]))
+    say("C6  per product (irrational / product-draw cells): " + "; ".join(per))
+    return irr
+
+
+# ------------------------------------------------------------------ main
+def main():
+    lines = []
+
+    def say(*a):
+        s = " ".join(str(x) for x in a)
+        print(s)
+        lines.append(s)
+
+    bad = source_guard(HERE)
+    say("exactness source guard: %s" % ("clean" if not bad else bad))
+    if bad:
+        sys.exit(2)
+    rng = random.Random(20261028)
+    T, M = Tally(), Tally()
+    kinds, forms = build_kinds(), build_forms()
+
+    elems, idx = c0(T, kinds, forms, say)
+    table = c1(T, kinds, elems, idx, say)
+    S, lam = c2(T, M, kinds, table, elems, idx, rng, 25)
+    say("C2  solver T1 = S * claimed with S = %r * 1; solver A1 = %r * det" % (S[0][0], lam))
+    c3(T, M, kinds, table, elems, idx, rng, 12)
+    Pchar = {}
+    for K1, K2, dec in PRODUCTS:
+        for K in dec:
+            A, B = char_projector(elems, idx, K1, K2, K)
+            T.check("C4a n_K, P_K projector, = character projector", mzero(B), "projector has a sqrt2 part")
+            Pchar[(K1, K2, K)] = A
+    res = c4(T, M, kinds, forms, table, Pchar, rng, 12, say)
+    c5(T, M, kinds, table, rng, 20, say)
+    ns_all = {k: v[1] for k, v in res.items()}
+    c6(T, M, kinds, forms, table, Pchar, ns_all, rng, 24, say)
+
+    # ---------------- mutants of the definitions (C0 / C1)
+    km = build_kinds(frozenset(["T1_C3_transposed"]))
+    el = closure(km, list(KINDS))
+    M.check("M0a T1/T2 third turn transposed: 8-kind group order != 48", el is None or len(el) != 48)
+    say("M0a 8-kind group order with T1 C3 transposed: %s" % (len(el) if el else ">cap"))
+    kt = build_kinds(frozenset(["TW_C3_entry"]))
+    M.check("M0b twins' C3 entry conjugated: not lam*unitary", not meq(mm(dag(kt["E1/2"]["C3"]), kt["E1/2"]["C3"]), scal(eye(2), 4)))
+    for name, kk, mf in (("M1a mu := 1 everywhere", kinds, mu_one),
+                         ("M1b E5/2 := twins (Q not negated)", build_kinds(frozenset(["E52_unnegated"])), mu_brief),
+                         ("M1c T1/T2 third turn transposed", km, mu_brief)):
+        tb = c1_table(kk, mf)
+        mis = c1_mismatches(tb)
+        for K1, K2, dec in PRODUCTS:
+            for K in KINDS:
+                M.check(name + " (cells)", len(tb[(K1, K2, K)]) != dec.get(K, 0))
+        say("%s: %d of 64 cells differ: %s" % (name, len(mis), ", ".join("%s.%s->%s %d" % (a, b, c, d) for a, b, c, d, e in mis)))
+
+    say("")
+    say("%-58s %7s %8s" % ("claim", "cases", "failures"))
+    for k in T.order:
+        say("%-58s %7d %8d" % (k, T.cases[k], T.fails[k]))
+    say("%-58s %7s %8s" % ("mutant (must fail)", "cases", "catches"))
+    for k in M.order:
+        say("%-58s %7d %8d" % (k, M.cases[k], M.cases[k] - M.fails[k]))
+    if T.notes:
+        say("claim failure notes:")
+        for n in T.notes:
+            say("  " + n)
+    with open(HERE.rsplit("/", 1)[0] + "/probe_out.txt", "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+
+
+if __name__ == "__main__":
+    main()
+
+== guard_test.py (the second hand) ==
+# Checks that the exactness guards of probe.py bite: a float literal is flagged, and floats or
+# Python complex values are refused by the Gaussian constructor.
+import os, sys, tempfile
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import probe
+src = open(probe.HERE).read()
+hits = 0
+for bad in ("x = 0.5\n", "y = 2j\n", "z = float(3)\n", "w = 1e3\n"):
+    with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False, dir=os.path.dirname(probe.HERE)) as fh:
+        fh.write(src + bad)
+        name = fh.name
+    flagged = bool(probe.source_guard(name))
+    os.unlink(name)
+    hits += flagged
+    print("source guard flags %-14r: %s" % (bad.strip(), flagged))
+for val in (0.5, 2j, True):
+    try:
+        probe.G(val)
+        print("constructor accepted", repr(val))
+    except TypeError:
+        hits += 1
+        print("constructor refuses %r" % (val,))
+print("guard catches: %d of 7" % hits)

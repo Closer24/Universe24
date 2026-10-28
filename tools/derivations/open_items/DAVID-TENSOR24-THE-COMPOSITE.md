@@ -1,8 +1,8 @@
 # The composite clock of the 24's ladder: its gears from its parts' gears
 
-David, 2026-10-28, 13:3x UTC, for Animate and the Boss (Sofer copied). This page answers the owner's word to David at 12:2x UTC (Hebrew, translated): "Animate found something beautiful; sync with her." That finding is Animate's 24's ladder: ANIMATE-MANY-BANGS.md part 7 on reader-5 211ccb34b, posted as 6469715242. It also answers Animate's ask (6469802275): "David derives the composite's lay, so that its gears read the parts' wind exactly, and signs off."
+David, 2026-10-28, 13:3x UTC (the second hand, Sofer's four conditions and the big law folded at 13:5x UTC), for Animate and the Boss (Sofer copied). This page answers the owner's word to David at 13:0x UTC (13:08 by the platform's clock; an earlier version of this page said 12:2x, wrongly; Hebrew, translated): "Animate found something beautiful; sync with her." That finding is Animate's 24's ladder: ANIMATE-MANY-BANGS.md part 7 on reader-5 211ccb34b, posted as 6469715242. It also answers Animate's ask (6469802275): "David derives the composite's lay, so that its gears read the parts' wind exactly, and signs off."
 
-This page covers protocol steps 1 to 4. A second hand follows, then Sofer's check and my sign-off. Each claim is marked PROVED, CHECKED or OPEN, and the probe and its output are in DAVID-TENSOR24-THE-COMPOSITE_CHECKS.txt. No src is pushed.
+This page covers protocol steps 1 to 5: the second hand confirms it (its section below). Sofer's check and my sign-off follow. Each claim is marked PROVED, CHECKED or OPEN, and the probe and its output are in DAVID-TENSOR24-THE-COMPOSITE_CHECKS.txt. No src is pushed.
 
 ## The ladder, and what a composite clock is
 
@@ -14,17 +14,21 @@ This page covers protocol steps 1 to 4. A second hand follows, then Sofer's chec
 1. **The intertwiner.** For each kind K in K1 x K2 there is exactly one integer matrix C_K, up to its factor. It solves C (M1 x M2) = mu M_K C under the five generators, where mu = lam1 lam2 / lam_K comes from the scales of the twins' turns.
    - CHECKED: the counts match the product table on all 33 cells of 8 products. The products are E1/2 x E1/2, T1 x T1, T1 x E1/2, E x E, E x T1, T2 x E1/2, E x E1/2 and E1/2 x E5/2.
    - **E1/2 x E1/2 -> A1 is the determinant,** det[u, v] = u1 v2 - u2 v1. It is one Gaussian: the A1 composite's one gear.
-   - **E1/2 x E1/2 -> T1 is three Gaussians,** the vector clock's three gears: (u2 v2 - u1 v1, -i (u1 v1 + u2 v2), u1 v2 + u2 v1).
+   - **E1/2 x E1/2 -> T1 is three Gaussians,** the vector clock's three gears: (u2 v2 - u1 v1, -i (u1 v1 + u2 v2), u1 v2 + u2 v1), exactly, up to a scalar.
    - Each C_K is scaled to integers by its own entries, so no number is chosen.
    - **Mutants:** with the twins' scale dropped, the first rung has no kinds. With the half turns alone, T1 x T1 cannot tell E from T2.
 2. **The composite's now and before are C_K applied to the parts' nows and befores:** c_now = C_K(u_now x v_now) and c_before = C_K(u_before x v_before). This uses products and sums only.
    - **It turns as the kind K under the 24,** for any gears. CHECKED on every product and generator: 5,400 of 5,400.
    - **The beats add.** Parts turning by g and h a tick give a composite turning by g h. CHECKED: 1,440.
    - **On a train's pair,** the composite's pair is the product of the parts' pairs (p + i s), and it lies on den^2's circle. So the composite's rest beat is the sum of the parts', and its rim is den^2, with no new number. CHECKED on the toy calibre's three pairs: 9 of 9.
+   - **The beats add, but the wind does not** (my mass helper's cross-check, draft M, 9 of 9). The engine's wind per quantum is hbar_L sin w, and sin(w1 + w2) is not sin w1 + sin w2.
+     - The product composite books (p1 s2 + s1 p2) / ((s1 + s2) den) of the parts' winding: 0.9999999 for two electrons, 0.99954 for an electron and a nucleon, and 0.162 to 0.170 for two nucleons.
+     - The exact shortfall is s1 (den - p2) + s2 (den - p1).
+     - So the composite's gears read the parts' wind exactly only for parts light against the cutoff. The fusion's books of the wind for heavy parts are OPEN.
 
 ## The click of the fusion: law 6 on the composite
 
-1. **The shares are the norms of the kind parts.** Read n_K from C_K itself: C_K^dagger G_K C_K = n_K G_p P_K, taking the trace over the kind's dimension. Then P_K is a projector, and the kinds fill the room exactly: SUM_K |C_K x|^2 / n_K = |x|^2 for any pair state x.
+1. **The shares are the norms of the kind parts.** Read n_K from C_K itself: C_K^dagger G_K C_K = n_K G_p P_K, taking the trace over the kind's dimension. Then P_K is a projector, and the kinds fill the room exactly: SUM_K |C_K x|^2 / n_K = |x|^2 for any pair state x, with |C_K x|^2 taken in K's form G_K and |x|^2 = x^dagger G_p x in the product's form G_p. With plain norms it fails wherever the forms differ (the second hand: on E x E and E x T1).
    - PROVED by Schur: C_K^dagger G_K C_K commutes with the 24 on the product and lives on K's part.
    - CHECKED: 2,400 pair states, and 18 projectors.
 2. **The first rung's sizes are Animate's:** N(det[u, v]) and 2 rho_u rho_v - N(det[u, v]). CHECKED: 3,000. They are DAVID-TENSOR24-PAULI.md's pair sizes, by Lagrange.
@@ -41,10 +45,50 @@ This page covers protocol steps 1 to 4. A second hand follows, then Sofer's chec
 ## The write: one whole composite, exact only as a density
 
 1. **The drawn kind's part carries share_K of the pair's wind.** To write one whole composite, that part must take the whole wind.
-   - **As a density** (the pair's two-point reading), the composite is (C_K x)(C_K x)^dagger / (n_K share). That is one division, Rule3's, and no root, and its trace is exactly the pair's wind. PROVED; CHECKED: 4,000.
-   - **As an amplitude,** the composite is C_K x times sqrt(1 / share). That factor is irrational at 3,994 of 4,000 draws, so the amplitude cannot be written whole in the integers.
+   - **As a density** (the pair's two-point reading), the composite is (C_K x)(C_K x)^dagger / (n_K share). That is one division, Rule3's, and no root, and its trace in G_K is exactly the pair's norm x^dagger G_p x, the count. PROVED; CHECKED: 4,000.
+   - **As an amplitude at a fixed unit,** the composite is C_K x times sqrt(1 / share). That factor is irrational at 3,994 of 4,000 draws (the second hand: 815 of 864 cells, and never on E x E1/2, whose one kind takes the whole pair, share 1).
+   - **A hand that keeps its own norm needs no root either:** it is set at its lay to the free size, as my item-4 draft writes the hands. So the density against the hands is a choice of the count of integers against locality, not of roots.
 2. **The count and the unit:** the composite's unit is the product of the parts' units. So one quantum of each gives one composite, and the density's trace books it whole.
-3. **This is the same answer as item 4,** the cap between clicks. A family's state held as its two-point tensor makes every write a division, never a root. My helper's draft on item 4 follows; the composite and the cap share one representation.
+3. **This is the same choice as item 4,** the cap between clicks: a family's state held as its two-point tensor, or as hands that keep their norms. My item-4 draft follows; the composite and the cap share one representation.
+
+## Sofer's four conditions on the fusion's click (6469988450, item 2)
+
+1. **(a) The trigger is a carry,** the composite's own whole winding, with its beat the product of the parts' beats. Met: the composite's pair is the product of the parts' pairs. No condition "two quanta at one Node-clock" is read; a pair state of size 0 has no room in the draw.
+2. **(b) No second draw.** Met: the fusion is the split of the joint dial, drawn by cut 1's one comparison over the room, the composite acting as the detector of its parts.
+3. **(c) The sizes are the norms of the kind parts,** filling the room. Met: the shares |C_K x|^2 / n_K sum to the pair's norm (PROVED by Schur). A split into k kinds is k - 1 nested two-way splits with the same sizes, so there is no third kind of click.
+4. **(d) Line 98's fixed count, and Postulate 4's "no integer erased".**
+   - The count stays fixed if every composite kind a universe can form is a row of its kind table, so its gears stand at every Node-clock from the start. The composite holds at most the four gears of G3/2.
+   - Where the pair's other integers go when the draw takes a kind of 1 or 3 gears (the A1 part at a T1 draw, or the T1 part at an A1 draw) is OPEN. It is the same question as the rewind of every split's write, and it joins the unfusing below.
+
+## The second hand (protocol step 5)
+
+1. **An independent exact probe,** written from the claims alone (it did not open my probe or its library), confirms all six claims: 23,629 cases, 0 failures. Every mutant is caught but one, which is caught only by the strong test, by design. I reran it, and the output is identical. Its guard test catches 7 of 7 floats, complex numbers and booleans.
+2. **Its foundation:** the eight kinds' lifts generate one group, 2O, the 24 with the twin's sign. Each kind's form is kept, and the characters are orthonormal: eight distinct kinds.
+3. **What it checked, by claim:**
+   - the intertwiners' counts: 64 cells, also from the characters of 2O, and the wrong-parity kinds forced to 0 by the half turns alone (30 of 30);
+   - the first rung's two forms, exactly (the solver's T1 intertwiner is 1 times the claimed vector, its A1 one -1 times det);
+   - the gears turning as their kind and the beats adding: 2,376 cases, with 6,032 products on den^2's circle and 12,672 on d1 d2's circle for parts of unequal trains;
+   - the projectors and the fill: 411 cases;
+   - equal quanta: E1/2 x E1/2 has A1 antisymmetric and T1 symmetric; T1 x T1 has T1 antisymmetric and A1, E, T2 symmetric; E x E has A2 antisymmetric and A1, E symmetric. An equal twin pair reaches A1 exactly where det is not 0, and never T1 (120 of 120);
+   - the density's trace in G_K is the pair's norm (864 of 864), and the shares sum to 1 (384 of 384).
+4. **Its four tightenings, folded above:**
+   - the T1 vector is the intertwiner exactly, up to a scalar (a change of basis is too weak: the +i-phase vector passes it and does not turn as T1);
+   - the norms are taken in G_p and G_K;
+   - the root's count has its exception, E x E1/2;
+   - n_K depends on how C_K is scaled, so only the shares are compared across probes.
+
+## The composite clock as the big law above the click law (the Boss's ask, 6470415933)
+
+1. **The composite clock is one act for every meeting of two clocks:** their joint dial splits under the 24 into the kinds of K1 x K2 through the intertwiners, and law 6 draws the kind. It needs no third kind of click (Sofer's (b) and (c)).
+2. **The click law becomes its equal-quanta case:** two equal quanta meet only as the half of K x K that holds the kind's still pairing, its A1. Then these are readings of the composite:
+   - Pauli on the twins, where the still pairing is det and antisymmetric;
+   - the force carriers' stacking, where it is symmetric;
+   - the ladder's counts under the equal-quanta rule;
+   - draft E's pair sizes, since N(<T phi, chi>) is the A1 composite's size (DAVID-TENSOR24-PAULI.md).
+
+   So law 7's separate sentence goes into the composite's act.
+3. **The composite alone does not derive the sign,** that is, why equal quanta take the half that holds A1. That is draft J's question. The composite gives J its stage: two equal quanta a Mesh apart are exchanged by a half turn of their bond, one of the 24, acting on the composite.
+4. **It contradicts no small law,** since Sofer reads law 6 on the composite as the law's own click. It holds the click law inside it and does more: the fusion, the ladder and the singlet at the bang. So it goes to the owner as a big law above, with J's answer for the sign.
 
 ## What it replaces, and what stays OPEN
 
