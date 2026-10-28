@@ -272,3 +272,24 @@ The Boss's head (ledger row 269) read whole: the six files of src it moved (asse
 **Verified by the Scribe's run:** the bang at 250 ticks from tests/worlds/world_bang.json on 42e9fb4af against 13f58bb25: the whole chart equal (the log, the clock lines, the counts, the turns, `gapped`, `planes` and the run back 20 of 20; the rows equal but for their milliseconds) and the reading equal to the character.
 
 **Asked of the owner, as in section 14, with David's letters:** R12 with R1 (its rest, G1, G3, G4 and G5); the coupling's general form K / Gamma (Y-S1); the third bound's tick resolution; the remainder's one mirror about its origin (F48-S1, with its price: the fold silences the hole and the swap parts at the tick 9); the field's reach to the regulator's spring; a composite family for fusion.
+
+## 18. The register at e910698f9, the swap's images (2026-10-28, 01:0x UTC)
+
+The Boss's head (ledger row 272) read whole: the five files of src it moved (events.py, phenomena.py, run.py, symmetries.py and unspring.py; 6,912 lines under src, five fewer), the tests (the polarization test's swap at every tick, row 73's test, the control's counts), tools/tests_shape.py and the three records; the counts by `tools/engine_gates.py` against 42e9fb4af and the Scribe's lister and AST scan. Sections 10 to 17 stand but for what is closed or changed below; files the head did not touch keep their lines.
+
+**The counts, unchanged from 42e9fb4af:** numbers beyond 0 and 1, 24 in 7 files; identity reads of the unsprung hand 18 in 7 files (setting.py 49 55 65 77; bobs.py 161; run.py 205 227 261 283; striking.py 187 296 366; tick.py 292 303; trains.py 68; unspring.py 163 250 274); branches by `is`, 8 in 4 files (setting.py 49 55 65 77; run.py 205; striking.py 187; unspring.py 163 250); `coupling_of` 13 calls in 6 files; family-name strings 0, floats 0, true divisions 0, no import of math or trigonometry. Src 6,912 lines in 23 top-level modules; the tests 6 files and 62 functions; the full check 116 passed.
+
+**Closed:** section 16's (b), the first end's logged `taken` carrying the term while row 73's reader read it as the pair's share, rows 15 and 73 disagreeing (row 73 now reads every merger end by its own book, its stale words struck), and (d), the cross term's clock (unspring.py:280-282, the end at the fitting's own clock by `.index(at)`, the swap of x and y an exact image through its 12 ticks).
+
+**Standing, with what the head changes:**
+
+- **Two spellings of one meaning:** the gear's momentum W (now - before) + fine - mid(W) stands in the writer (run.py:294) beside the impulse's own (tick.py:216).
+- **Rows 15 and 73 read one identity,** which the remainder is defined by at a merger end (unspring.py:191 writes the slack as the slack plus the fall less the booked, the cross term added to the taken and to the remainder alike): both can fail only by a bookkeeping error; whether the carried excess is paid to light later is read by no row.
+- **The weight's reason is gone:** under the momentum reading row 74 reads on all three axes at the weights 2 and 3 and with no field; the weight 2 stands on row 76 (both heavy families bound at 2, gapped 1 alone at 3) and on row 9 (SHOWN at the weight 3 alone).
+- **Row 74's reading changed in the commit that would have lowered it** (the stride's reading 1 of 3 with the term moved), on David's analysis; the momentum reading holds on all three axes through 750 ticks and fails the z axis at 1,000 (228 against a cross 122); row 76 holds at every cut to 1,000 (gapped 1 throughout, gapped 2 at 250 alone).
+- **For David, the order effect that stands:** the two images' credits at the tick 5 of the polarization world split their takes one unit apart (684 and 278 against 685 and 277), two credits of one striking at image clocks read in the list's order.
+- **R2, R12's rest, R1, R5 and the others:** as section 17.
+
+**Verified by the Scribe's runs:** the bang at 250 ticks on the head at the weight 2, at 3 and with no field, and the one chart of 1,000 ticks cut at four ticks (the Boss's counts and tallies integer for integer; the cuts as in row 272).
+
+**Asked of the owner, as in section 17:** R12 with R1 (its rest, G1, G3, G4 and G5); the coupling's general form K / Gamma (Y-S1); the third bound's tick resolution; the remainder's one mirror about its origin (F48-S1, with its price: the fold silences the hole and the swap parts at the tick 9); the field's reach to the regulator's spring; a composite family for fusion.
