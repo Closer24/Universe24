@@ -145,7 +145,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "ISOLATE": (
         "BLOCK",
-        "an import that crosses the new engine's folders (the architect's table, eaf07f596; the standard library is always allowed): algebra imports algebra alone (no numpy), engine algebra, record and numpy, record the record alone (no numpy), readings algebra, record and readings (no numpy), runner algebra, readings, record and numpy (never the engine or the decoder: the step is passed in), decoder algebra, readings and record (never the engine, the runner or numpy), tensor24/main.py the engine and the runner alone, tensor24/__init__.py the standard library alone; a module at an unlisted path (directly under tensor24/ beside __init__.py and main.py, or in a folder the table does not name) has no wall written for it and is refused; nothing imports the current engine; a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
+        "an import that crosses the new engine's folders (the architect's table, eaf07f596; the standard library is always allowed): algebra imports algebra alone (no numpy), engine algebra, record and numpy, record the record alone (no numpy), readings algebra, record and readings (no numpy), runner algebra, readings, record and numpy (never the engine or the decoder: the step is passed in), decoder algebra, readings and record (never the engine, the runner or numpy), tensor24/main.py the engine and the runner alone, tensor24/__init__.py the standard library alone; a module at an unlisted path (directly under tensor24/ beside __init__.py and main.py, or in a folder the table does not name) has no wall written for it and is refused; a loader (importlib, runpy, imp, pkgutil, zipimport) imported, or a call that imports or runs text by a string (__import__, import_module, exec, eval, the builtin compile), in any folder of the new engine, since a module named by a string crosses a wall that reads import statements; nothing imports the current engine; a judge that runs the defendant's code cannot catch it (the owner's word of 2026-10-28, 10:1x: the decoder out of the engine)",
     ),
     "BRANCH": (
         "BLOCK",
@@ -235,6 +235,12 @@ NUMPY_FOLDERS = frozenset({"engine", "runner"})  # the folders that may import n
 ROOT_MODULES = frozenset(
     {"__init__.py", "main.py"}
 )  # the only modules directly under tensor24/: the package's own file (the standard library alone) and main.py; any other path is unlisted
+DYNAMIC_MODULES = frozenset(
+    {"importlib", "runpy", "imp", "pkgutil", "zipimport"}
+)  # the loaders: a module found by a string crosses a wall that reads import statements, so no folder of the new engine imports one
+DYNAMIC_CALLS = frozenset(
+    {"__import__", "import_module", "exec", "eval"}
+)  # a call that imports or runs text by a string, the builtin compile read by its bare name beside them
 COMPARE_CALLS = frozenset(
     "lt le gt ge less greater less_equal greater_equal sorted sort argsort lexsort partition searchsorted isclose "
     "bisect bisect_left bisect_right insort heappush heappop nlargest nsmallest".split()
@@ -393,6 +399,14 @@ def callee_name(call: ast.Call) -> str:
     return f.id if isinstance(f, ast.Name) else f.attr if isinstance(f, ast.Attribute) else ""
 
 
+def dynamic_call(call: ast.Call) -> str:
+    """The name of a call that imports or runs text by a string (__import__, import_module, exec, eval, the builtin compile), else ''."""
+    name = callee_name(call)
+    return (
+        name if name in DYNAMIC_CALLS or (name == "compile" and isinstance(call.func, ast.Name)) else ""
+    )
+
+
 def is_bit(node: ast.AST) -> bool:
     return (
         isinstance(node, ast.Constant)
@@ -462,6 +476,8 @@ def import_ok(rel: str, name: str) -> bool:
     own = NEW_ENGINE + "."
     if not rel.startswith(NEW_ENGINE + "/"):
         return True
+    if top in DYNAMIC_MODULES:
+        return False  # a loader is refused in every folder of the new engine, the root included
     folder = rel.split("/")[1]
     if folder == "__init__.py":
         return top in sys.stdlib_module_names  # the package's own file: the standard library alone
@@ -840,6 +856,10 @@ def scan(rel: str, source: str) -> list[Hit]:
             for name in imported_names(rel, node):
                 if not import_ok(rel, name):
                     add("ISOLATE", node, name)
+        elif rel.startswith(NEW_ENGINE + "/") and isinstance(node, ast.Call) and dynamic_call(node):
+            add(
+                "ISOLATE", node, f"dynamic import {dynamic_call(node)}"
+            )  # a string names the module: no wall reads it
     module_containers: dict[str, ast.stmt] = {}
     for stmt in tree.body:
         value = stmt.value if isinstance(stmt, ast.Assign | ast.AnnAssign) else None
@@ -1208,12 +1228,18 @@ def above(now: Iterable[Hit], stands: Counter[tuple[str, str, str]]) -> list[Hit
     return sorted(found, key=lambda h: (h.rel, h.line, h.rule))
 
 
+def is_ancestor(repo: Path, old: str, new: str) -> bool:
+    """Whether the commit `old` is `new` or lies behind it in its history."""
+    return git(repo, "merge-base", "--is-ancestor", old, new).returncode == 0
+
+
 def floored(repo: Path, found: str, tree_rev: str) -> str:
-    """The merge base, or the floor where the merge base is older than it and the tree holds it (a pull request into main)."""
+    """The merge base, or the floor where the merge base lies behind the floor and the tree holds the floor (a pull request into main).
+
+    A merge base beside the floor, on a line the floor is not part of, stands as it is: only a base older than the floor on its own line is lifted to it."""
     floor = resolve(repo, FLOOR)
-    if not floor or git(repo, "merge-base", "--is-ancestor", floor, found).returncode == 0:
-        return found
-    return floor if git(repo, "merge-base", "--is-ancestor", floor, tree_rev).returncode == 0 else found
+    lifted = bool(floor) and is_ancestor(repo, found, floor) and is_ancestor(repo, floor, tree_rev)
+    return floor if lifted else found
 
 
 def merge_base(repo: Path, base: str | None, tree_rev: str) -> tuple[str, str]:
