@@ -1,0 +1,568 @@
+The head's light act, tick by tick, against its formula in Tensor24's terms (stage 4's probe, BRIEF_HEAD_LIGHT.md).
+
+The head is src/event_universe at 67b765312; Tensor24's gear is src/tensor24/engine/step.py:gear on tensor24-review
+(0970b0deb), read from a copy made by `git archive` (never the Boss's clone). Every number below is a Python integer.
+
+The formula checked, for the light (the unsprung hand, ratio (rim, rim), gears three and twelve) at a clock i, forward:
+    W   = (T div 2)(X_b + X_n)                 T = 6 rim Gamma^2 G^2, (X_b, X_n) the regulator's time gear at the start
+    s   = X_n                                  the stretch at the start
+    p_i = mesh_rate(max(load_of(X_n), 0))      the clock's own mesh rate at its load
+    Q_ij from the regulator's tension gears    (G^2 (Gamma - t)^2 + Gamma^2 div 2) div Gamma^2, t = (N_a(i) + N_a(j) + 1) div 2
+                                               clipped to [0, Gamma]; 0 where an end is stopped
+    R_ij = 2 rim p_i^2 Q_ij                    the six grips; D = 12 (rim - rim) p_0^2 G^2 = 0 the spring
+    F    = SUM_j R_ij (a_j - a) - D a          a_j the neighbour's now slot as it is (coupling 0: the turn is the identity)
+    P    = W (a - b) + (r - W div 2)           W div 2 = mid(W) = Tensor24's home(W, 0)
+    W+   = (T div 2)(X_n + X_n')               X_n' the time gear after the regulator's act (W where that is <= 0)
+    (q, r+) = divmod(P + going s F + W+ div 2, W+),  a+ = a + q,  b+ = a     (going = 1, no kick K)
+i.e. Tensor24's gear(a, b, r, go=0, w=W, wp=W+, push=s F) with grip_j = s R_ij.
+After the gear act the head can still change the light at a clock: the release's advance on the three gear (Tick.advances),
+the stopped clocks' restore, the turnover at the top (the held pre-state exchanged: three (b, a, (2 mid W - r) mod W),
+twelve (-b, -a, r)) and the click's unwinds; the probe checks the end of every tick against these and counts each.
+
+== node3: shape [3, 3, 3] (27 sites), 40 ticks, records /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/stage4/head_light_records/head_light_records_node3.jsonl.gz
+   integers: rim 15162856759112389, Gamma 1000, key T_d 36000, G 16, T = 6 rim Gamma^2 G^2 = 23290147981996629504000000
+   the setting's light: three now [0, 189, 378], three before [0], twelve now [0]
+   range X_n: [831, 8532]
+   range W: [21706417919220858697728000000, 196906556113790504141568000000]
+   range W+: [21706417919220858697728000000, 196906556113790504141568000000]
+   range grip R: [877676307947584219102812, 7763382660665543168000000]
+   range load: [-47, 535]
+   range mesh rate p_i: [343, 1000]
+   range three F: [-20786078096644028783164710912, 14183700121035947367936000000]
+   range three q (a+ - a): [-441, 695]
+   range twelve F: [0, 0]
+   range twelve q (a+ - a): [0, 0]
+   the click: meshes engaged (both ends a whole winding) 291, refused by name 291, births 0, unwinds taken 0; turnovers 141
+   D: 12 (rim - pinion) p_0^2 G^2 = the head's spring, sites: 1080
+   D: = 0, sites: 1080
+   D: the head's spring per train = 0, sites: 1080
+   Q: the mesh factor = the head's factors, spoke-sites: 6480
+   R: 2 rim p_i^2 Q_ij = the head's light grip, spoke-sites: 6480
+   R: meshes read alike from both ends (R_ij = R_ji), meshes: 916
+   R: meshes where Q_ij = Q_ji, meshes: 3240
+   R: meshes where p_i = p_j (the two ends' mesh rates), meshes: 916
+   R: meshes where s R_ij = s R_ji (Tensor24's grip), meshes: 813
+   R: meshes, read: 3240
+   R: ticks with one grip on every spoke of every clock: 1
+   W+ = W, sites (the stretch's two notches summed unchanged): 8
+   W+: (T div 2)(X_n + X_n') = the head's end teeth, sites: 1080
+   W+: X_b after the act = X_n at the start, sites: 1080
+   W+: fallback to W (X_n + X_n' <= 0), sites: 0
+   W: (T div 2)(X_b + X_n) = the head's mean teeth at the impulse, sites: 1080
+   W: = the light gear's own teeth at the tick's start (both gears), gear-sites: 2160
+   births in the click: 0
+   home: W div 2 = Tensor24's home(W, 0), sites: 1080
+   load: load_of(X_n) = the head's load, sites: 1080
+   s: X_n = the head's stretch_now, sites: 1080
+   stopped clocks, sites: 0
+   stopped: mesh rate 0 at the load = the head's mask, sites: 1080
+   three: the end of tick = the gear act (off the top), sites: 939
+   three: the end of tick, off the top, sites: 939
+   three: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 1080
+   three: GEAR ACT (a+, b+, r+) = the formula, sites: 1080
+   three: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 1080
+   three: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 0
+   three: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 47
+   three: fine tooth r in [0, W) at the start, sites: 1080
+   three: gear act, the gear's teeth set to W+, sites: 1080
+   three: sites read: 1080
+   three: the click moved the gear, sites: 0
+   three: the head's impelled = P + going s F (kick K = 0), sites: 1080
+   three: the release's advance moved the gear, sites: 0
+   three: the stopped restore moved the gear, sites: 0
+   three: the turnover changed the gear off the top, sites: 0
+   three: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 141
+   three: turned-over clocks where the turnover changed the gear act, sites: 141
+   three: turned-over clocks, sites: 141
+   top: X_n'' (after the drives and the restore) = X_n' (after the act), sites: 1080
+   top: the weak maximum of (X_b, X_n, X_n'') or below the bottom = the head's top, sites: 1080
+   twelve: the end of tick = the gear act (off the top), sites: 939
+   twelve: the end of tick, off the top, sites: 939
+   twelve: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 1080
+   twelve: GEAR ACT (a+, b+, r+) = the formula, sites: 1080
+   twelve: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 1080
+   twelve: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 8
+   twelve: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 515
+   twelve: fine tooth r in [0, W) at the start, sites: 1080
+   twelve: gear act, the gear's teeth set to W+, sites: 1080
+   twelve: sites read: 1080
+   twelve: the click moved the gear, sites: 0
+   twelve: the head's impelled = P + going s F (kick K = 0), sites: 1080
+   twelve: the release's advance moved the gear, sites: 0
+   twelve: the stopped restore moved the gear, sites: 0
+   twelve: the turnover changed the gear off the top, sites: 0
+   twelve: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 141
+   twelve: turned-over clocks where the turnover changed the gear act, sites: 141
+   twelve: turned-over clocks, sites: 141
+   M1 run on its own beside the head (W+ = W = W_0 = 23290147981996629504000000000, every grip g_0 = 7763382660665543168000000000, no regulator, no turnover), sites equal to the head's end of tick, per tick:
+     notches (a, b) of both gears: [25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     (a, b, r) of both gears:      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     first tick with a site's notches apart: 1
+== sea3: shape [3, 3, 3] (27 sites), 30 ticks, records /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/stage4/head_light_records/head_light_records_sea3.jsonl.gz
+   integers: rim 15162856759112389, Gamma 1000, key T_d 36000, G 16, T = 6 rim Gamma^2 G^2 = 23290147981996629504000000
+   the setting's light: three now [189], three before [0], twelve now [0]
+   range X_n: [1000, 1600]
+   range W: [23290147981996629504000000000, 36938174699446654393344000000]
+   range W+: [23313438129978626133504000000, 37578653768951561704704000000]
+   range grip R: [4869690461259711269732352, 7763382660665543168000000]
+   range load: [0, 117]
+   range mesh rate p_i: [792, 1000]
+   range three F: [0, 0]
+   range three q (a+ - a): [117, 189]
+   range twelve F: [0, 0]
+   range twelve q (a+ - a): [0, 0]
+   the click: meshes engaged (both ends a whole winding) 0, refused by name 0, births 0, unwinds taken 0; turnovers 0
+   D: 12 (rim - pinion) p_0^2 G^2 = the head's spring, sites: 810
+   D: = 0, sites: 810
+   D: the head's spring per train = 0, sites: 810
+   Q: the mesh factor = the head's factors, spoke-sites: 4860
+   R: 2 rim p_i^2 Q_ij = the head's light grip, spoke-sites: 4860
+   R: meshes read alike from both ends (R_ij = R_ji), meshes: 2430
+   R: meshes where Q_ij = Q_ji, meshes: 2430
+   R: meshes where p_i = p_j (the two ends' mesh rates), meshes: 2430
+   R: meshes where s R_ij = s R_ji (Tensor24's grip), meshes: 2430
+   R: meshes, read: 2430
+   R: ticks with one grip on every spoke of every clock: 30
+   W+ = W, sites (the stretch's two notches summed unchanged): 0
+   W+: (T div 2)(X_n + X_n') = the head's end teeth, sites: 810
+   W+: X_b after the act = X_n at the start, sites: 810
+   W+: fallback to W (X_n + X_n' <= 0), sites: 0
+   W: (T div 2)(X_b + X_n) = the head's mean teeth at the impulse, sites: 810
+   W: = the light gear's own teeth at the tick's start (both gears), gear-sites: 1620
+   births in the click: 0
+   home: W div 2 = Tensor24's home(W, 0), sites: 810
+   load: load_of(X_n) = the head's load, sites: 810
+   s: X_n = the head's stretch_now, sites: 810
+   stopped clocks, sites: 0
+   stopped: mesh rate 0 at the load = the head's mask, sites: 810
+   three: the end of tick = the gear act (off the top), sites: 810
+   three: the end of tick, off the top, sites: 810
+   three: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 810
+   three: GEAR ACT (a+, b+, r+) = the formula, sites: 810
+   three: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 810
+   three: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 0
+   three: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 27
+   three: fine tooth r in [0, W) at the start, sites: 810
+   three: gear act, the gear's teeth set to W+, sites: 810
+   three: sites read: 810
+   three: the click moved the gear, sites: 0
+   three: the head's impelled = P + going s F (kick K = 0), sites: 810
+   three: the release's advance moved the gear, sites: 0
+   three: the stopped restore moved the gear, sites: 0
+   three: the turnover changed the gear off the top, sites: 0
+   three: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 0
+   three: turned-over clocks where the turnover changed the gear act, sites: 0
+   three: turned-over clocks, sites: 0
+   top: X_n'' (after the drives and the restore) = X_n' (after the act), sites: 810
+   top: the weak maximum of (X_b, X_n, X_n'') or below the bottom = the head's top, sites: 810
+   twelve: the end of tick = the gear act (off the top), sites: 810
+   twelve: the end of tick, off the top, sites: 810
+   twelve: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 810
+   twelve: GEAR ACT (a+, b+, r+) = the formula, sites: 810
+   twelve: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 810
+   twelve: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 0
+   twelve: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 810
+   twelve: fine tooth r in [0, W) at the start, sites: 810
+   twelve: gear act, the gear's teeth set to W+, sites: 810
+   twelve: sites read: 810
+   twelve: the click moved the gear, sites: 0
+   twelve: the head's impelled = P + going s F (kick K = 0), sites: 810
+   twelve: the release's advance moved the gear, sites: 0
+   twelve: the stopped restore moved the gear, sites: 0
+   twelve: the turnover changed the gear off the top, sites: 0
+   twelve: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 0
+   twelve: turned-over clocks where the turnover changed the gear act, sites: 0
+   twelve: turned-over clocks, sites: 0
+   M1 run on its own beside the head (W+ = W = W_0 = 23290147981996629504000000000, every grip g_0 = 7763382660665543168000000000, no regulator, no turnover), sites equal to the head's end of tick, per tick:
+     notches (a, b) of both gears: [27, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     (a, b, r) of both gears:      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     first tick with a site's notches apart: 2
+== sea_packet3: shape [3, 3, 3] (27 sites), 30 ticks, records /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/stage4/head_light_records/head_light_records_sea_packet3.jsonl.gz
+   integers: rim 15162856759112389, Gamma 1000, key T_d 36000, G 16, T = 6 rim Gamma^2 G^2 = 23290147981996629504000000
+   the setting's light: three now [195, 202, 216, 243, 297], three before [-3, -1, 0, 11, 22, 24, 45, 48, 90], twelve now [-46, -23, -11, 0, 11, 23, 46]
+   range X_n: [956, 12400]
+   range W: [23115471872131654782720000000, 273065340014919482619648000000]
+   range W+: [23115471872131654782720000000, 303889850869092021768192000000]
+   range grip R: [569906524639543482787744, 7763382660665543168000000]
+   range load: [-12, 629]
+   range mesh rate p_i: [284, 1000]
+   range three F: [-33990937024521676887282090000, 26715642115697935264892692350]
+   range three q (a+ - a): [-1030, 684]
+   range twelve F: [-38923822939108332962953046016, 60034878278608729635917668800]
+   range twelve q (a+ - a): [-1313, 1840]
+   the click: meshes engaged (both ends a whole winding) 1669, refused by name 1669, births 0, unwinds taken 0; turnovers 85
+   D: 12 (rim - pinion) p_0^2 G^2 = the head's spring, sites: 810
+   D: = 0, sites: 810
+   D: the head's spring per train = 0, sites: 810
+   Q: the mesh factor = the head's factors, spoke-sites: 4860
+   R: 2 rim p_i^2 Q_ij = the head's light grip, spoke-sites: 4860
+   R: meshes read alike from both ends (R_ij = R_ji), meshes: 786
+   R: meshes where Q_ij = Q_ji, meshes: 2430
+   R: meshes where p_i = p_j (the two ends' mesh rates), meshes: 786
+   R: meshes where s R_ij = s R_ji (Tensor24's grip), meshes: 644
+   R: meshes, read: 2430
+   R: ticks with one grip on every spoke of every clock: 2
+   W+ = W, sites (the stretch's two notches summed unchanged): 0
+   W+: (T div 2)(X_n + X_n') = the head's end teeth, sites: 810
+   W+: X_b after the act = X_n at the start, sites: 810
+   W+: fallback to W (X_n + X_n' <= 0), sites: 0
+   W: (T div 2)(X_b + X_n) = the head's mean teeth at the impulse, sites: 810
+   W: = the light gear's own teeth at the tick's start (both gears), gear-sites: 1620
+   births in the click: 0
+   home: W div 2 = Tensor24's home(W, 0), sites: 810
+   load: load_of(X_n) = the head's load, sites: 810
+   s: X_n = the head's stretch_now, sites: 810
+   stopped clocks, sites: 0
+   stopped: mesh rate 0 at the load = the head's mask, sites: 810
+   three: the end of tick = the gear act (off the top), sites: 725
+   three: the end of tick, off the top, sites: 725
+   three: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 810
+   three: GEAR ACT (a+, b+, r+) = the formula, sites: 810
+   three: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 810
+   three: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 0
+   three: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 25
+   three: fine tooth r in [0, W) at the start, sites: 810
+   three: gear act, the gear's teeth set to W+, sites: 810
+   three: sites read: 810
+   three: the click moved the gear, sites: 0
+   three: the head's impelled = P + going s F (kick K = 0), sites: 810
+   three: the release's advance moved the gear, sites: 0
+   three: the stopped restore moved the gear, sites: 0
+   three: the turnover changed the gear off the top, sites: 0
+   three: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 85
+   three: turned-over clocks where the turnover changed the gear act, sites: 85
+   three: turned-over clocks, sites: 85
+   top: X_n'' (after the drives and the restore) = X_n' (after the act), sites: 810
+   top: the weak maximum of (X_b, X_n, X_n'') or below the bottom = the head's top, sites: 810
+   twelve: the end of tick = the gear act (off the top), sites: 725
+   twelve: the end of tick, off the top, sites: 725
+   twelve: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 810
+   twelve: GEAR ACT (a+, b+, r+) = the formula, sites: 810
+   twelve: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 810
+   twelve: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 0
+   twelve: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 106
+   twelve: fine tooth r in [0, W) at the start, sites: 810
+   twelve: gear act, the gear's teeth set to W+, sites: 810
+   twelve: sites read: 810
+   twelve: the click moved the gear, sites: 0
+   twelve: the head's impelled = P + going s F (kick K = 0), sites: 810
+   twelve: the release's advance moved the gear, sites: 0
+   twelve: the stopped restore moved the gear, sites: 0
+   twelve: the turnover changed the gear off the top, sites: 0
+   twelve: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 85
+   twelve: turned-over clocks where the turnover changed the gear act, sites: 85
+   twelve: turned-over clocks, sites: 85
+   M1 run on its own beside the head (W+ = W = W_0 = 23290147981996629504000000000, every grip g_0 = 7763382660665543168000000000, no regulator, no turnover), sites equal to the head's end of tick, per tick:
+     notches (a, b) of both gears: [10, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     (a, b, r) of both gears:      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     first tick with a site's notches apart: 1
+== packet3: shape [3, 3, 3] (27 sites), 30 ticks, records /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/stage4/head_light_records/head_light_records_packet3.jsonl.gz
+   integers: rim 15162856759112389, Gamma 1000, key T_d 36000, G 16, T = 6 rim Gamma^2 G^2 = 23290147981996629504000000
+   the setting's light: three now [6, 13, 27, 54, 108], three before [-3, -1, 0, 11, 22, 24, 45, 48, 90], twelve now [-46, -23, -11, 0, 11, 23, 46]
+   range X_n: [997, 1010]
+   range W: [23231922612041637930240000000, 23511404387825597484288000000]
+   range W+: [23231922612041637930240000000, 23511404387825597484288000000]
+   range grip R: [7671316220481294199974240, 7763382660665543168000000]
+   range load: [-1, 2]
+   range mesh rate p_i: [996, 1000]
+   range three F: [-5636215811643184339968000000, 3633263085191474202624000000]
+   range three q (a+ - a): [-123, 125]
+   range twelve F: [-13854999712211908999194000000, 11808105026872291158528000000]
+   range twelve q (a+ - a): [-466, 326]
+   the click: meshes engaged (both ends a whole winding) 9, refused by name 9, births 0, unwinds taken 0; turnovers 746
+   D: 12 (rim - pinion) p_0^2 G^2 = the head's spring, sites: 810
+   D: = 0, sites: 810
+   D: the head's spring per train = 0, sites: 810
+   Q: the mesh factor = the head's factors, spoke-sites: 4860
+   R: 2 rim p_i^2 Q_ij = the head's light grip, spoke-sites: 4860
+   R: meshes read alike from both ends (R_ij = R_ji), meshes: 2389
+   R: meshes where Q_ij = Q_ji, meshes: 2430
+   R: meshes where p_i = p_j (the two ends' mesh rates), meshes: 2389
+   R: meshes where s R_ij = s R_ji (Tensor24's grip), meshes: 2228
+   R: meshes, read: 2430
+   R: ticks with one grip on every spoke of every clock: 22
+   W+ = W, sites (the stretch's two notches summed unchanged): 33
+   W+: (T div 2)(X_n + X_n') = the head's end teeth, sites: 810
+   W+: X_b after the act = X_n at the start, sites: 810
+   W+: fallback to W (X_n + X_n' <= 0), sites: 0
+   W: (T div 2)(X_b + X_n) = the head's mean teeth at the impulse, sites: 810
+   W: = the light gear's own teeth at the tick's start (both gears), gear-sites: 1620
+   births in the click: 0
+   home: W div 2 = Tensor24's home(W, 0), sites: 810
+   load: load_of(X_n) = the head's load, sites: 810
+   s: X_n = the head's stretch_now, sites: 810
+   stopped clocks, sites: 0
+   stopped: mesh rate 0 at the load = the head's mask, sites: 810
+   three: the end of tick = the gear act (off the top), sites: 64
+   three: the end of tick, off the top, sites: 64
+   three: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 810
+   three: GEAR ACT (a+, b+, r+) = the formula, sites: 810
+   three: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 810
+   three: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 25
+   three: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 805
+   three: fine tooth r in [0, W) at the start, sites: 810
+   three: gear act, the gear's teeth set to W+, sites: 810
+   three: sites read: 810
+   three: the click moved the gear, sites: 0
+   three: the head's impelled = P + going s F (kick K = 0), sites: 810
+   three: the release's advance moved the gear, sites: 0
+   three: the stopped restore moved the gear, sites: 0
+   three: the turnover changed the gear off the top, sites: 0
+   three: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 746
+   three: turned-over clocks where the turnover changed the gear act, sites: 746
+   three: turned-over clocks, sites: 746
+   top: X_n'' (after the drives and the restore) = X_n' (after the act), sites: 810
+   top: the weak maximum of (X_b, X_n, X_n'') or below the bottom = the head's top, sites: 810
+   twelve: the end of tick = the gear act (off the top), sites: 64
+   twelve: the end of tick, off the top, sites: 64
+   twelve: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 810
+   twelve: GEAR ACT (a+, b+, r+) = the formula, sites: 810
+   twelve: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 810
+   twelve: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 25
+   twelve: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 792
+   twelve: fine tooth r in [0, W) at the start, sites: 810
+   twelve: gear act, the gear's teeth set to W+, sites: 810
+   twelve: sites read: 810
+   twelve: the click moved the gear, sites: 0
+   twelve: the head's impelled = P + going s F (kick K = 0), sites: 810
+   twelve: the release's advance moved the gear, sites: 0
+   twelve: the stopped restore moved the gear, sites: 0
+   twelve: the turnover changed the gear off the top, sites: 0
+   twelve: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 746
+   twelve: turned-over clocks where the turnover changed the gear act, sites: 746
+   twelve: turned-over clocks, sites: 746
+   M1 run on its own beside the head (W+ = W = W_0 = 23290147981996629504000000000, every grip g_0 = 7763382660665543168000000000, no regulator, no turnover), sites equal to the head's end of tick, per tick:
+     notches (a, b) of both gears: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     (a, b, r) of both gears:      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     first tick with a site's notches apart: 1
+== node4: shape [4, 4, 4] (64 sites), 30 ticks, records /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/stage4/head_light_records/head_light_records_node4.jsonl.gz
+   integers: rim 15162856759112389, Gamma 1000, key T_d 36000, G 16, T = 6 rim Gamma^2 G^2 = 23290147981996629504000000
+   the setting's light: three now [0, 189, 378], three before [0], twelve now [0]
+   range X_n: [870, 9005]
+   range W: [21811223585139843530496000000, 203125025624983604219136000000]
+   range W+: [21811223585139843530496000000, 213326110441098127941888000000]
+   range grip R: [808540656040140916961752, 7763382660665543168000000]
+   range load: [-35, 548]
+   range mesh rate p_i: [334, 1000]
+   range three F: [-25674702803852342477443731968, 26113952876359755380779080000]
+   range three q (a+ - a): [-703, 710]
+   range twelve F: [0, 0]
+   range twelve q (a+ - a): [0, 0]
+   the click: meshes engaged (both ends a whole winding) 500, refused by name 500, births 0, unwinds taken 0; turnovers 335
+   D: 12 (rim - pinion) p_0^2 G^2 = the head's spring, sites: 1920
+   D: = 0, sites: 1920
+   D: the head's spring per train = 0, sites: 1920
+   Q: the mesh factor = the head's factors, spoke-sites: 11520
+   R: 2 rim p_i^2 Q_ij = the head's light grip, spoke-sites: 11520
+   R: meshes read alike from both ends (R_ij = R_ji), meshes: 622
+   R: meshes where Q_ij = Q_ji, meshes: 5760
+   R: meshes where p_i = p_j (the two ends' mesh rates), meshes: 622
+   R: meshes where s R_ij = s R_ji (Tensor24's grip), meshes: 462
+   R: meshes, read: 5760
+   R: ticks with one grip on every spoke of every clock: 1
+   W+ = W, sites (the stretch's two notches summed unchanged): 4
+   W+: (T div 2)(X_n + X_n') = the head's end teeth, sites: 1920
+   W+: X_b after the act = X_n at the start, sites: 1920
+   W+: fallback to W (X_n + X_n' <= 0), sites: 0
+   W: (T div 2)(X_b + X_n) = the head's mean teeth at the impulse, sites: 1920
+   W: = the light gear's own teeth at the tick's start (both gears), gear-sites: 3840
+   births in the click: 0
+   home: W div 2 = Tensor24's home(W, 0), sites: 1920
+   load: load_of(X_n) = the head's load, sites: 1920
+   s: X_n = the head's stretch_now, sites: 1920
+   stopped clocks, sites: 0
+   stopped: mesh rate 0 at the load = the head's mask, sites: 1920
+   three: the end of tick = the gear act (off the top), sites: 1585
+   three: the end of tick, off the top, sites: 1585
+   three: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 1920
+   three: GEAR ACT (a+, b+, r+) = the formula, sites: 1920
+   three: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 1920
+   three: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 0
+   three: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 93
+   three: fine tooth r in [0, W) at the start, sites: 1920
+   three: gear act, the gear's teeth set to W+, sites: 1920
+   three: sites read: 1920
+   three: the click moved the gear, sites: 0
+   three: the head's impelled = P + going s F (kick K = 0), sites: 1920
+   three: the release's advance moved the gear, sites: 0
+   three: the stopped restore moved the gear, sites: 0
+   three: the turnover changed the gear off the top, sites: 0
+   three: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 335
+   three: turned-over clocks where the turnover changed the gear act, sites: 335
+   three: turned-over clocks, sites: 335
+   top: X_n'' (after the drives and the restore) = X_n' (after the act), sites: 1920
+   top: the weak maximum of (X_b, X_n, X_n'') or below the bottom = the head's top, sites: 1920
+   twelve: the end of tick = the gear act (off the top), sites: 1585
+   twelve: the end of tick, off the top, sites: 1585
+   twelve: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 1920
+   twelve: GEAR ACT (a+, b+, r+) = the formula, sites: 1920
+   twelve: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 1920
+   twelve: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 4
+   twelve: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 1081
+   twelve: fine tooth r in [0, W) at the start, sites: 1920
+   twelve: gear act, the gear's teeth set to W+, sites: 1920
+   twelve: sites read: 1920
+   twelve: the click moved the gear, sites: 0
+   twelve: the head's impelled = P + going s F (kick K = 0), sites: 1920
+   twelve: the release's advance moved the gear, sites: 0
+   twelve: the stopped restore moved the gear, sites: 0
+   twelve: the turnover changed the gear off the top, sites: 0
+   twelve: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 335
+   twelve: turned-over clocks where the turnover changed the gear act, sites: 331
+   twelve: turned-over clocks, sites: 335
+   M1 run on its own beside the head (W+ = W = W_0 = 23290147981996629504000000000, every grip g_0 = 7763382660665543168000000000, no regulator, no turnover), sites equal to the head's end of tick, per tick:
+     notches (a, b) of both gears: [63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     (a, b, r) of both gears:      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     first tick with a site's notches apart: 1
+== vacuum3: shape [3, 3, 3] (27 sites), 20 ticks, records /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/stage4/head_light_records/head_light_records_vacuum3.jsonl.gz
+   integers: rim 15162856759112389, Gamma 1000, key T_d 36000, G 16, T = 6 rim Gamma^2 G^2 = 23290147981996629504000000
+   the setting's light: three now [0], three before [0], twelve now [0]
+   range X_n: [1000, 1000]
+   range W: [23290147981996629504000000000, 23290147981996629504000000000]
+   range W+: [23266857834014632874496000000, 23266857834014632874496000000]
+   range grip R: [7763382660665543168000000, 7763382660665543168000000]
+   range load: [0, 0]
+   range mesh rate p_i: [1000, 1000]
+   range three F: [0, 0]
+   range three q (a+ - a): [0, 0]
+   range twelve F: [0, 0]
+   range twelve q (a+ - a): [0, 0]
+   the click: meshes engaged (both ends a whole winding) 0, refused by name 0, births 0, unwinds taken 0; turnovers 540
+   D: 12 (rim - pinion) p_0^2 G^2 = the head's spring, sites: 540
+   D: = 0, sites: 540
+   D: the head's spring per train = 0, sites: 540
+   Q: the mesh factor = the head's factors, spoke-sites: 3240
+   R: 2 rim p_i^2 Q_ij = the head's light grip, spoke-sites: 3240
+   R: meshes read alike from both ends (R_ij = R_ji), meshes: 1620
+   R: meshes where Q_ij = Q_ji, meshes: 1620
+   R: meshes where p_i = p_j (the two ends' mesh rates), meshes: 1620
+   R: meshes where s R_ij = s R_ji (Tensor24's grip), meshes: 1620
+   R: meshes, read: 1620
+   R: ticks with one grip on every spoke of every clock: 20
+   W+ = W, sites (the stretch's two notches summed unchanged): 0
+   W+: (T div 2)(X_n + X_n') = the head's end teeth, sites: 540
+   W+: X_b after the act = X_n at the start, sites: 540
+   W+: fallback to W (X_n + X_n' <= 0), sites: 0
+   W: (T div 2)(X_b + X_n) = the head's mean teeth at the impulse, sites: 540
+   W: = the light gear's own teeth at the tick's start (both gears), gear-sites: 1080
+   births in the click: 0
+   home: W div 2 = Tensor24's home(W, 0), sites: 540
+   load: load_of(X_n) = the head's load, sites: 540
+   s: X_n = the head's stretch_now, sites: 540
+   stopped clocks, sites: 0
+   stopped: mesh rate 0 at the load = the head's mask, sites: 540
+   three: the end of tick = the gear act (off the top), sites: 0
+   three: the end of tick, off the top, sites: 0
+   three: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 540
+   three: GEAR ACT (a+, b+, r+) = the formula, sites: 540
+   three: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 540
+   three: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 0
+   three: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 540
+   three: fine tooth r in [0, W) at the start, sites: 540
+   three: gear act, the gear's teeth set to W+, sites: 540
+   three: sites read: 540
+   three: the click moved the gear, sites: 0
+   three: the head's impelled = P + going s F (kick K = 0), sites: 540
+   three: the release's advance moved the gear, sites: 0
+   three: the stopped restore moved the gear, sites: 0
+   three: the turnover changed the gear off the top, sites: 0
+   three: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 540
+   three: turned-over clocks where the turnover changed the gear act, sites: 540
+   three: turned-over clocks, sites: 540
+   top: X_n'' (after the drives and the restore) = X_n' (after the act), sites: 540
+   top: the weak maximum of (X_b, X_n, X_n'') or below the bottom = the head's top, sites: 540
+   twelve: the end of tick = the gear act (off the top), sites: 0
+   twelve: the end of tick, off the top, sites: 0
+   twelve: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 540
+   twelve: GEAR ACT (a+, b+, r+) = the formula, sites: 540
+   twelve: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 540
+   twelve: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 0
+   twelve: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 540
+   twelve: fine tooth r in [0, W) at the start, sites: 540
+   twelve: gear act, the gear's teeth set to W+, sites: 540
+   twelve: sites read: 540
+   twelve: the click moved the gear, sites: 0
+   twelve: the head's impelled = P + going s F (kick K = 0), sites: 540
+   twelve: the release's advance moved the gear, sites: 0
+   twelve: the stopped restore moved the gear, sites: 0
+   twelve: the turnover changed the gear off the top, sites: 0
+   twelve: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 540
+   twelve: turned-over clocks where the turnover changed the gear act, sites: 540
+   twelve: turned-over clocks, sites: 540
+   M1 run on its own beside the head (W+ = W = W_0 = 23290147981996629504000000000, every grip g_0 = 7763382660665543168000000000, no regulator, no turnover), sites equal to the head's end of tick, per tick:
+     notches (a, b) of both gears: [27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27]
+     (a, b, r) of both gears:      [27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27]
+     first tick with a site's notches apart: None
+== all worlds
+   D: 12 (rim - pinion) p_0^2 G^2 = the head's spring, sites: 5970
+   D: = 0, sites: 5970
+   D: the head's spring per train = 0, sites: 5970
+   Q: the mesh factor = the head's factors, spoke-sites: 35820
+   R: 2 rim p_i^2 Q_ij = the head's light grip, spoke-sites: 35820
+   R: meshes read alike from both ends (R_ij = R_ji), meshes: 8763
+   R: meshes where Q_ij = Q_ji, meshes: 17910
+   R: meshes where p_i = p_j (the two ends' mesh rates), meshes: 8763
+   R: meshes where s R_ij = s R_ji (Tensor24's grip), meshes: 8197
+   R: meshes, read: 17910
+   R: ticks with one grip on every spoke of every clock: 76
+   W+ = W, sites (the stretch's two notches summed unchanged): 45
+   W+: (T div 2)(X_n + X_n') = the head's end teeth, sites: 5970
+   W+: X_b after the act = X_n at the start, sites: 5970
+   W+: fallback to W (X_n + X_n' <= 0), sites: 0
+   W: (T div 2)(X_b + X_n) = the head's mean teeth at the impulse, sites: 5970
+   W: = the light gear's own teeth at the tick's start (both gears), gear-sites: 11940
+   births in the click: 0
+   home: W div 2 = Tensor24's home(W, 0), sites: 5970
+   load: load_of(X_n) = the head's load, sites: 5970
+   s: X_n = the head's stretch_now, sites: 5970
+   stopped clocks, sites: 0
+   stopped: mesh rate 0 at the load = the head's mask, sites: 5970
+   three: the end of tick = the gear act (off the top), sites: 4123
+   three: the end of tick, off the top, sites: 4123
+   three: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 5970
+   three: GEAR ACT (a+, b+, r+) = the formula, sites: 5970
+   three: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 5970
+   three: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 25
+   three: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 1537
+   three: fine tooth r in [0, W) at the start, sites: 5970
+   three: gear act, the gear's teeth set to W+, sites: 5970
+   three: sites read: 5970
+   three: the click moved the gear, sites: 0
+   three: the head's impelled = P + going s F (kick K = 0), sites: 5970
+   three: the release's advance moved the gear, sites: 0
+   three: the stopped restore moved the gear, sites: 0
+   three: the turnover changed the gear off the top, sites: 0
+   three: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 1847
+   three: turned-over clocks where the turnover changed the gear act, sites: 1847
+   three: turned-over clocks, sites: 1847
+   top: X_n'' (after the drives and the restore) = X_n' (after the act), sites: 5970
+   top: the weak maximum of (X_b, X_n, X_n'') or below the bottom = the head's top, sites: 5970
+   twelve: the end of tick = the gear act (off the top), sites: 4123
+   twelve: the end of tick, off the top, sites: 4123
+   twelve: F = SUM_j R_ij (a_j - a) - D a = the head's pull, sites: 5970
+   twelve: GEAR ACT (a+, b+, r+) = the formula, sites: 5970
+   twelve: GEAR ACT = Tensor24's gear(a, b, r, 0, W, W+, s F), sites: 5970
+   twelve: M1's act from the head's state, (a+, b+, r+) = the head's gear act, sites: 37
+   twelve: M1's act from the head's state, notches (a+, b+) = the head's gear act, sites: 3844
+   twelve: fine tooth r in [0, W) at the start, sites: 5970
+   twelve: gear act, the gear's teeth set to W+, sites: 5970
+   twelve: sites read: 5970
+   twelve: the click moved the gear, sites: 0
+   twelve: the head's impelled = P + going s F (kick K = 0), sites: 5970
+   twelve: the release's advance moved the gear, sites: 0
+   twelve: the stopped restore moved the gear, sites: 0
+   twelve: the turnover changed the gear off the top, sites: 0
+   twelve: turned-over clocks where the end = the turnover's formula (b, a, mirror r) / (-b, -a, r), sites: 1847
+   twelve: turned-over clocks where the turnover changed the gear act, sites: 1843
+   twelve: turned-over clocks, sites: 1847
+
+== the counts, per world (three / twelve where two; every count of sites is site-ticks)
+   world | sites | ticks | read | act=formula | act=T24 gear | end=act, off top | end=turnover, top | release/restore/click | W+=W | R_ij=R_ji meshes | M1 apart at tick
+   node3 | 27 | 40 | 1080/1080 | 1080/1080 | 1080/1080 | 939/939 of 939 | 141/141 of 141 | 0 | 8 | 916 of 3240 | 1
+   sea3 | 27 | 30 | 810/810 | 810/810 | 810/810 | 810/810 of 810 | 0/0 of 0 | 0 | 0 | 2430 of 2430 | 2
+   sea_packet3 | 27 | 30 | 810/810 | 810/810 | 810/810 | 725/725 of 725 | 85/85 of 85 | 0 | 0 | 786 of 2430 | 1
+   packet3 | 27 | 30 | 810/810 | 810/810 | 810/810 | 64/64 of 64 | 746/746 of 746 | 0 | 33 | 2389 of 2430 | 1
+   node4 | 64 | 30 | 1920/1920 | 1920/1920 | 1920/1920 | 1585/1585 of 1585 | 335/335 of 335 | 0 | 4 | 622 of 5760 | 1
+   vacuum3 | 27 | 20 | 540/540 | 540/540 | 540/540 | 0/0 of 0 | 540/540 of 540 | 0 | 0 | 1620 of 1620 | None
+   all |  |  | 5970/5970 | 5970/5970 | 5970/5970 | 4123/4123 of 4123 | 1847/1847 of 1847 | 0 | 45 | 8763 of 17910 | 
+exit 0

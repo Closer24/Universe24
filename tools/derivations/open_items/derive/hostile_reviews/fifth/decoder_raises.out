@@ -1,0 +1,42 @@
+control: the decoder's own lawful record, with its ledger
+    read: a record, cause ''
+    tool: exit 0, the whole clicks' ticks from the rate lines: 1 read, the last [1]
+a line nested 100,000 deep
+    records.read RAISED RecursionError: Stack overflow (used 8152 kB) while decoding a JSON array from a unico
+    tool: exit 1, RecursionError: Stack overflow (used 8148 kB) while decoding a JSON array from a unicode string
+an object nested 100,000 deep inside a lawful line
+    records.read RAISED RecursionError: Stack overflow (used 8152 kB) while decoding a JSON array from a unico
+    tool: exit 1, RecursionError: Stack overflow (used 8144 kB) while decoding a JSON array from a unicode string
+a whole number of 4,301 digits in a field (the schema: whole numbers of any width)
+    records.read RAISED ValueError: Exceeds the limit (4300 digits) for integer string conversion: value h
+    tool: exit 1, ValueError: Exceeds the limit (4300 digits) for integer string conversion: value has 4301 digits; use sys.set_
+the ledger's path given, its file absent (the plan: those rows read NOT READ, the cause named)
+    read: a record, cause ''
+    tool: exit 1, FileNotFoundError: [Errno 2] No such file or directory: '/dev/shm/tmp/s6/draises/no_such_ledger.jsonl'
+a ledger with a blank line
+    read: a record, cause ''
+    tool: exit 1, json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+a ledger line that is no JSON
+    read: a record, cause ''
+    tool: exit 1, json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+a ledger line that is a list
+    read: a record, cause ''
+    tool: exit 1, TypeError: list indices must be integers or slices, not str
+a ledger line without its 'at'
+    read: a record, cause ''
+    tool: exit 1, KeyError: 'at'
+a whole click at a Node-clock with no rate line (the tool's ticks)
+    read: a record, cause ''
+    tool: exit 1, ValueError: zip() argument 2 is longer than argument 1
+a label holding U+2028 written raw (json.dumps with ensure_ascii=False: lawful JSON)
+    read: None, cause 'line 2 is no JSON object with its kind'
+    tool: exit 0, not read: line 2 is no JSON object with its kind
+a label holding U+0085 written raw (lawful JSON)
+    read: None, cause 'line 2 is no JSON object with its kind'
+    tool: exit 0, not read: line 2 is no JSON object with its kind
+== tools/tensor24_decode.py with no argument
+IndexError: list index out of range
+exit 1
+== tools/tensor24_files.py with one argument (for comparison)
+usage: tensor24_files.py [universe piece setting]: the three files, or none for the examples
+exit 2

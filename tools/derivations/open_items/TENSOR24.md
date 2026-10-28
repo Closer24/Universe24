@@ -1651,7 +1651,7 @@ The owner's words of 09:4x UTC: an architect reads the plan and says how the cod
 8. the build in twelve stages, clocks first, then tensors, then the 24's operations, each with a test that can fail (TENSOR24_PLAN.md, section 12); item (u) closes before stage 3;
 9. the width: Python integers in numpy object arrays, dtype=object everywhere, exact at 112 bits and beyond; int64 wraps silently and is refused; the width a universe key, never held by an act;
 10. the twin hands: in any basis of their four integer rows the third turns' lifts cannot act as signed permutations (2T = SL(2,3) has no subgroup of index 2), so no change of ring alone, Z[zeta8] included, makes element-wise carries keep the 24 bit for bit on them; the departure stands until David's route (OPEN 3: carries on what the 24 permute, the axis form (rho, S)).
-The state is 5G + H + 4 integers per Node-clock with c and the going per gear (the tie rule), fixed for the run (line 98).
+The state is 5G + H + 4 integers per Node-clock with c and the going per gear (the tie rule), fixed for the run (line 98); 5G + H + 3 since item (u)'s past dropped tb (stage 4).
 
 **Four packages, under src/tensor24/** (the architect adds algebra/, above):
 

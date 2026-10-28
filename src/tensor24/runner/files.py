@@ -1,9 +1,14 @@
-"""The three files read and checked: whole numbers alone, the integers and the sides at least 1, every reference whole."""
+"""The three files read and checked: whole numbers alone, the integers and the sides at least 1, each train, part and site referred to there."""
 
 import json
+from collections import Counter
 from pathlib import Path
 from typing import Any, TypeGuard
 
+# The checker's one deferral: a gear's component within its kind's dimension and its fine tooth within the teeth
+# are the load's to refuse (stage 6), where the kinds and the teeth are read.
+
+NAMES = ("universe", "piece", "setting")
 VERSION = 1
 UNIVERSE = ("version", "integers", "trains", "couplings")
 INTEGERS = ("den", "full_rate", "key", "trace", "width")
@@ -25,10 +30,10 @@ def once(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
 
 
 def read(path: Path) -> tuple[Any, list[str]]:
-    """A file's content as JSON, or the reason it cannot be read, named."""
+    """A file's content as JSON, or the reason it cannot be read, named: a nesting too deep to read among them."""
     try:
         return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=once), []
-    except (OSError, ValueError) as error:
+    except (OSError, ValueError, RecursionError) as error:
         return None, [f"{path.name}: not read: {error}"]
 
 
@@ -37,13 +42,19 @@ def whole(value: Any) -> TypeGuard[int]:
     return isinstance(value, int) and not isinstance(value, bool)
 
 
-def numbers(held: Any) -> list[int]:
-    """Every whole number a file holds, at any depth."""
-    if isinstance(held, dict):
-        return [n for value in held.values() for n in numbers(value)]
-    if isinstance(held, list):
-        return [n for value in held for n in numbers(value)]
-    return [held] if whole(held) else []
+def numbers(held: Any) -> list[tuple[str, int]]:
+    """Every whole number a file holds, at any depth, with the field it stands in, walked without recursion."""
+    found: list[tuple[str, int]] = []
+    left: list[tuple[str, Any]] = [("", held)]
+    while left:
+        where, value = left.pop()
+        if isinstance(value, dict):
+            left += [(f"{where}.{key}", item) for key, item in value.items()]
+        elif isinstance(value, list):
+            left += [(f"{where}[{at}]", item) for at, item in enumerate(value)]
+        elif whole(value):
+            found.append((where, value))
+    return found
 
 
 def mapping(where: str, held: Any, names: tuple[str, ...]) -> list[str]:
@@ -115,16 +126,23 @@ def universe_departures(universe: Any) -> list[str]:
     ]
     for at, train in enumerate(trains):
         found += train_departures(f"universe.trains[{at}]", train, integers.get("den"))
-    labels = [train.get("name") for train in trains if isinstance(train, dict)]
-    doubled = sorted({name for name in labels if labels.count(name) > 1}, key=str)
-    found += [f"universe.trains: the label {name!r} names two trains or more" for name in doubled]
+    labels = Counter(
+        train["name"]
+        for train in trains
+        if isinstance(train, dict) and isinstance(train.get("name"), str)
+    )
+    found += [
+        f"universe.trains: the label {name!r} names two trains or more"
+        for name, count in sorted(labels.items())
+        if count > 1
+    ]
     couplings = universe.get("couplings", [])
     found += rows("universe.couplings", couplings, COUPLING)
     for at, (train, part, with_train, with_part, target, _) in enumerate(couplings if not found else []):
         if not all(0 <= end < len(trains) for end in (train, with_train, target)):
-            found.append(f"universe.couplings[{at}]: a train beyond the trains' rows")
+            found.append(f"universe.couplings[{at}]: a train off the trains' rows")
         elif not (0 <= part < trains[train]["part"] and 0 <= with_part < trains[with_train]["part"]):
-            found.append(f"universe.couplings[{at}]: a part beyond its train's")
+            found.append(f"universe.couplings[{at}]: a part off its train's")
     return found
 
 
@@ -161,27 +179,28 @@ def setting_departures(setting: Any, universe: Any, piece: Any) -> list[str]:
     gears = setting.get("gears", [])
     found += rows("setting.gears", gears, GEAR)
     trains, sites = len(universe["trains"]), sites_of(piece["shape"])
+    given = Counter((t, c, x) for t, c, x, *_ in gears) if not found else Counter()
     for at, row in enumerate(gears if not found else []):
         train, component, site, _, _, tooth = row
         if not (0 <= train < trains and 0 <= site < sites):
             found.append(f"setting.gears[{at}]: train {train} or site {site} off the files")
-        # a component's bound, the kind's dimension, and a tooth's, the teeth W, are refused at the load (stage 6)
         if not (component >= 0 and tooth >= 0):
             found.append(f"setting.gears[{at}]: component {component} or fine tooth {tooth} below 0")
-        if [(t, c, x) for t, c, x, *_ in gears].count((train, component, site)) > 1:
+        if given[(train, component, site)] > 1:
             found.append(f"setting.gears[{at}]: the gear ({train}, {component}, {site}) given twice")
     return found
 
 
 def departures(universe: Path, piece: Path, setting: Path) -> list[str]:
-    """Every departure of the three files, the setting read once the universe and the piece stand, then the width."""
+    """Every departure of the three files, the setting read once the universe and the piece stand, then the width, field by field."""
     (u, bad_u), (p, bad_p), (s, bad_s) = read(universe), read(piece), read(setting)
     found = bad_u + bad_p + bad_s
     found = found or universe_departures(u) + piece_departures(p)
     found = found or setting_departures(s, u, p)
-    width = u["integers"]["width"] if not found else 0
-    return found + [
-        f"the integer {n} takes more bits than the width, {width}"
-        for n in numbers([u, p, s])
-        if n.bit_length() > width > 0
+    width = 0 if found else u["integers"]["width"]
+    return found or [
+        f"{name}{where}: the integer {n} takes more bits than the width, {width}"
+        for name, held in zip(NAMES, (u, p, s), strict=True)
+        for where, n in numbers(held)
+        if n.bit_length() > width
     ]

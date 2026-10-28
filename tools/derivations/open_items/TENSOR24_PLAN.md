@@ -411,7 +411,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **every bound a carry:** carry, in algebra/carry.py, and beat, in engine/step.py.
 2. **Five folders:** algebra/ (new: Rule3 and the Gaussian integers), engine/, record/, readings/ and runner/, with decoder/ beside them.
    - The runner does not import the engine. A main.py of about 15 lines passes it the engine's functions.
-3. **The state:** ten arrays, fixed for the whole run: a, b, r, rd and go for every gear, e for every hand, and ph, tb, tn and the beat count c for every Node-clock, that is, 5G + H + 4 integers per Node-clock (c added by the one architect's ruling, the going per gear by the tie rule). Nothing grows at run time, as line 98 sets.
+3. **The state:** nine arrays, fixed for the whole run: a, b, r, rd and go for every gear, e for every hand, and ph, tn and the beat count c for every Node-clock, that is, 5G + H + 3 integers per Node-clock (c added by the one architect's ruling, the going per gear by the tie rule; tb, which lin alone read, dropped under past by Sofer's and David's yes, 6478702384 and 6479871986, the out carrying the replaced tn). Nothing grows at run time, as line 98 sets.
 4. **The lines:** about 850 (section 1).
 5. **Loops** stand only in the runner, the decoder and the tests.
 6. **The undo log:** runner/rewind.py alone reads it, for the rewind check. The engine reads no log.
@@ -602,7 +602,7 @@ On the owner's word to David: "a generic solution for everything". This is David
       - **past** keeps the cone and breaks the reversal.
       - **lin** keeps the reversal, and reaches 318 of 372 Node-clocks faster than one Mesh per shortest tick.
     - **It cancels:** Postulate 3 against Postulate 2, in the teeth.
-    - **The recommendation:** lin, as David and Sofer recommended. The great clock's tick is nothing observed. Sofer's moved to past on the stage 3 finding below (#2187 6476698665, unless David gives a half-tick synchronous pass); David's word is owed, and the owner's on the change.
+    - **The recommendation:** lin, as David and Sofer recommended. The great clock's tick is nothing observed. Sofer's moved to past on the stage 3 finding below (#2187 6476698665), and David's too (6478324607): in the beat a neighbour as of c is one of its two slots, which past reads exactly. Its price: where the dials part, the gears' run back after the turnover is not the forward run's mirror, while the rewind stays exact through the outs. The owner's word on the change is asked.
     - **Found on the stage 3 engine (derive/asynchronous_read, CHECKED):** past keeps the order test, 40 of 40 random schedules equal to the synchronous pass; lin as one carry by tn - tb fails it, 0 of 40, since a neighbour one count ahead holds its next tick. Stage 3 reads by past, the ruling's line 5; lin's formula with the order test's form under it, or past kept, is David's word.
 22. **(v) The local turnover, at every Node-clock's top. WITHDRAWN (15:0x UTC):** the whole board is one bang, run synchronously.
     - **What it gave:** with the exact T, worlds where the clocks turn over at different ticks keep their clicks; only one-clock worlds copy themselves.

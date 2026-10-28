@@ -73,7 +73,7 @@ class Taking:
     """One end of a whole click that takes at both, a reading of its own one-ended act: site, Spoke, books, push."""
 
     site: int
-    spoke: int  # the Spoke's index in the six, toward the other end
+    spoke: int  # the Spoke's index in the board's six, +x, -x, +y, -y, +z, -z, toward the other end
     taken: tuple[Holding, ...]
     laid: tuple[Holding, ...]
     push: tuple[int, int, int]
@@ -101,11 +101,11 @@ class Reading:
 
 @dataclass(frozen=True)
 class Whole:
-    """A whole click (law 5): q windings left a train at a Node-clock, with the books and the parts it laid."""
+    """A whole click (law 5): q windings left a train at a Node-clock, with the books and the parts it laid, the books in ends alone where both take."""
 
     round: int
     site: int
-    count: int  # the Node-clock's own beat count c, read at its site
+    count: int  # the count the Node-clock's beat reached, its first beat being 1
     dial: int  # its rate dial after the beat
     train: int
     q: int
@@ -119,7 +119,7 @@ class Whole:
     laid: tuple[Holding, ...]
     ends: tuple[
         Taking, ...
-    ]  # both ends where both take, each its own one-ended act; none where one end takes
+    ]  # both ends where both take, each its own one-ended act, taken and laid above then empty; none where one end takes
     children: tuple[Child, ...]
     lead: int
     twist: int
@@ -159,11 +159,11 @@ class Turnover:
 
 @dataclass(frozen=True)
 class Rate:
-    """A Node-clock's tick k at the first round and at each change: the decoder counts the ticks from these."""
+    """A Node-clock's k at its first beat and at each beat whose k differs from its last beat's, with the beat's count."""
 
     round: int
     site: int
-    count: int
+    count: int  # the count the beat reached, the first beat being 1
     dial: int
     k: int
 

@@ -85,7 +85,7 @@ def pure(make, shape, rng):
 
 
 def renamed(make, shape, rng):
-    """Every order of three trains orders the trains' rows alike, and an inert fourth train leaves the rest's bits."""
+    """Every order of three trains orders the trains' rows alike, and three inert trains more leave the rest's bits."""
     e, nb = make(), board(shape)
     s = e.world(rng, shape, 3)
     out = flat(e.step(nb, s))
@@ -95,7 +95,7 @@ def renamed(make, shape, rng):
 
     orders = map(list, itertools.permutations(range(3)))
     alike = all(same(flat(e.step(nb, tuple(ordered(s, o)))), ordered(out, o)) for o in orders)
-    inert = tuple(np.concatenate([x, 0 * x[:1]]) if len(x) == 3 else x for x in s)
+    inert = tuple(np.concatenate([x, 0 * x]) if len(x) == 3 else x for x in s)
     return alike and same([p[:3] for p in flat(e.step(nb, inert))], [p[:3] for p in out])
 
 
@@ -150,32 +150,65 @@ PROPERTIES = {"locality": local, "purity": pure, "rename": renamed, "images": tu
 PROPERTIES |= {"formula": formula, "bijectivity": bijective}
 
 
+def digest(xs):
+    """One hash of a row of arrays, entry by entry."""
+    return hashlib.sha256(repr([x.tolist() for x in xs]).encode()).hexdigest()
+
+
 def answer(module, factory, shape, seeds):
     """The digest of the step of the last seed's world, by the engine the factory names, after the earlier seeds'."""
     e, nb = getattr(importlib.import_module(module), factory)(), board(shape)
-    out = [flat(e.step(nb, e.world(np.random.default_rng(seed), shape, 2))) for seed in seeds]
-    return hashlib.sha256(repr([x.tolist() for x in out[-1]]).encode()).hexdigest()
+    return digest(
+        [flat(e.step(nb, e.world(np.random.default_rng(seed), shape, 2))) for seed in seeds][-1]
+    )
 
 
-def elsewhere(module, factory, shape, seed, hash_seed):
-    """The same answer to one seed's world in a fresh interpreter at another hash seed."""
-    code = "import json, sys; from tests.frame import answer; print(answer(*sys.argv[1:3], *map(json.loads, sys.argv[3:])))"
-    env = {
-        **os.environ,
-        "PYTHONHASHSEED": str(hash_seed),
-        "PYTHONPATH": os.pathsep.join([str(ROOT), str(ROOT / "src")]),
-    }
-    args = [module, factory, json.dumps(shape), json.dumps([seed])]
+def fresh(code, args, hash_seed=0, given=""):
+    """What a fresh interpreter prints, the tests and src on its path, at a hash seed."""
+    paths = os.pathsep.join([str(ROOT), str(ROOT / "src")])
+    env = {**os.environ, "PYTHONHASHSEED": str(hash_seed), "PYTHONPATH": paths}
     run = subprocess.run(
-        [sys.executable, "-c", code, *args], cwd=ROOT, env=env, capture_output=True, text=True
+        [sys.executable, "-c", code, *args],
+        cwd=ROOT,
+        env=env,
+        input=given,
+        capture_output=True,
+        text=True,
     )
     return run.stdout.strip() or run.stderr
 
 
 def unseeded(module, factory, shape):
-    """Purity across interpreters: a world answered here after another, and in fresh ones at two hash seeds, alike."""
+    """Purity across interpreters: a world answered here after another, and in fresh ones at three hash seeds, alike."""
     here = answer(module, factory, shape, [1, 0])
-    return all(elsewhere(module, factory, shape, 0, hash_seed) == here for hash_seed in (1, 1 + 1 + 1))
+    code = "import json, sys; from tests.frame import answer; print(answer(*sys.argv[1:3], *map(json.loads, sys.argv[3:])))"
+    args = [module, factory, json.dumps(shape), json.dumps([0])]
+    return all(fresh(code, args, hash_seed) == here for hash_seed in (1, 2, 3))
+
+
+def undone_elsewhere(module, factory, shape, seed):
+    """The run back in a fresh interpreter that never stepped, from the stepped state and the out alone."""
+    e, nb = getattr(importlib.import_module(module), factory)(), board(shape)
+    s = e.world(np.random.default_rng(seed), shape, 2)
+    state, out = e.step(nb, s)
+    rows = [x.tolist() for x in (*state, *out)]
+    code = (
+        "import importlib, json, sys; import numpy as np; from tests.frame import board, digest; "
+        "d = json.loads(sys.stdin.read()); e = getattr(importlib.import_module(d['module']), d['factory'])(); "
+        "rows = [np.array(x, dtype=object) for x in d['rows']]; "
+        "print(digest(e.unstep(board(tuple(d['shape'])), tuple(rows[:d['cut']]), tuple(rows[d['cut']:]))))"
+    )
+    given = json.dumps(
+        {"module": module, "factory": factory, "shape": shape, "cut": len(state), "rows": rows}
+    )
+    return fresh(code, [], 0, given) == digest(s)
+
+
+def meshes_of(nb):
+    """Each Spoke's Mesh, one per axis and site: along +axis the site's own, along -axis its -axis neighbour's."""
+    axes, n = np.arange(len(nb)) // 2, nb.shape[1]
+    own, theirs = axes[:, None] * n + np.arange(n)[None, :], axes[:, None] * n + nb
+    return np.where((np.arange(len(nb)) % 2 == 0)[:, None], own, theirs)
 
 
 def holds(name, make, shape, seed):
