@@ -1,0 +1,160 @@
+Probe B3: F1, the drive at plus or minus the hold (b3_drive.py). Part 1, the cap at the bang's setting (b3_cap.raw); part 2, the clamp struck (free) and the turnover past the hold (turn), in lockstep with the head (b3_lockstep.raw)
+=======================================================================================================================================================================================================================================
+
+- quanta: 500; X0: 1000; X1: 1665; X1 - X0: 665; (4/3) n X0 div Gamma: 666; forms at (0,0,0), tick 1: 18000000; 3 forms div n: 108000; key: 36000; drive div hold at tick 1 (floor): 0; drive > hold at tick 1: False; first tick the clamp acts (of 40): None
+- quanta: 700; X0: 1000; X1: 1932; X1 - X0: 932; (4/3) n X0 div Gamma: 933; forms at (0,0,0), tick 1: 25205000; 3 forms div n: 108021; key: 36000; drive div hold at tick 1 (floor): 0; drive > hold at tick 1: False; first tick the clamp acts (of 40): 21
+- quanta: 740; X0: 1000; X1: 1985; X1 - X0: 985; (4/3) n X0 div Gamma: 986; forms at (0,0,0), tick 1: 26645000; 3 forms div n: 108020; key: 36000; drive div hold at tick 1 (floor): 0; drive > hold at tick 1: False; first tick the clamp acts (of 40): None
+- quanta: 749; X0: 1000; X1: 1997; X1 - X0: 997; (4/3) n X0 div Gamma: 998; forms at (0,0,0), tick 1: 26967168; 3 forms div n: 108012; key: 36000; drive div hold at tick 1 (floor): 0; drive > hold at tick 1: False; first tick the clamp acts (of 40): 39
+- quanta: 750; X0: 1000; X1: 1998; X1 - X0: 998; (4/3) n X0 div Gamma: 1000; forms at (0,0,0), tick 1: 27011250; 3 forms div n: 108045; key: 36000; drive div hold at tick 1 (floor): 1; drive > hold at tick 1: True; first tick the clamp acts (of 40): 1
+- quanta: 751; X0: 1000; X1: 1998; X1 - X0: 998; (4/3) n X0 div Gamma: 1001; forms at (0,0,0), tick 1: 27040658; 3 forms div n: 108018; key: 36000; drive div hold at tick 1 (floor): 1; drive > hold at tick 1: True; first tick the clamp acts (of 40): 1
+- quanta: 800; X0: 1000; X1: 1998; X1 - X0: 998; (4/3) n X0 div Gamma: 1066; forms at (0,0,0), tick 1: 28804050; 3 forms div n: 108015; key: 36000; drive div hold at tick 1 (floor): 1; drive > hold at tick 1: True; first tick the clamp acts (of 40): 1
+- quanta: 1000; X0: 1000; X1: 1998; X1 - X0: 998; (4/3) n X0 div Gamma: 1333; forms at (0,0,0), tick 1: 36006098; 3 forms div n: 108018; key: 36000; drive div hold at tick 1 (floor): 1; drive > hold at tick 1: True; first tick the clamp acts (of 40): 1
+- quanta: 5000000; X0: 1000; X1: 1998; X1 - X0: 998; (4/3) n X0 div Gamma: 6666666; forms at (0,0,0), tick 1: 180000000000; 3 forms div n: 108000; key: 36000; drive div hold at tick 1 (floor): 6666; drive > hold at tick 1: True; first tick the clamp acts (of 40): 1
+
+- mode: free; world: world_nature.json; quanta: None; ticks: 60; ticks whose state differs: 0; first tick differing: None; rewind exact (variant): 20
+    tick: 1; X bits head: 11; X bits variant: 11; turns head: 18; turns variant: 18; births head: 0; births variant: 0
+    tick: 2; X bits head: 11; X bits variant: 11; turns head: 22; turns variant: 22; births head: 0; births variant: 0
+    tick: 3; X bits head: 11; X bits variant: 11; turns head: 66; turns variant: 66; births head: 0; births variant: 0
+    tick: 4; X bits head: 11; X bits variant: 11; turns head: 116; turns variant: 116; births head: 0; births variant: 0
+    tick: 5; X bits head: 11; X bits variant: 11; turns head: 171; turns variant: 171; births head: 1; births variant: 1
+    tick: 6; X bits head: 11; X bits variant: 11; turns head: 212; turns variant: 212; births head: 1; births variant: 1
+    tick: 10; X bits head: 11; X bits variant: 11; turns head: 392; turns variant: 392; births head: 2; births variant: 2
+    tick: 15; X bits head: 12; X bits variant: 12; turns head: 570; turns variant: 570; births head: 2; births variant: 2
+    tick: 20; X bits head: 12; X bits variant: 12; turns head: 668; turns variant: 668; births head: 3; births variant: 3
+    tick: 25; X bits head: 13; X bits variant: 13; turns head: 721; turns variant: 721; births head: 3; births variant: 3
+    tick: 30; X bits head: 13; X bits variant: 13; turns head: 751; turns variant: 751; births head: 3; births variant: 3
+    tick: 35; X bits head: 14; X bits variant: 14; turns head: 772; turns variant: 772; births head: 3; births variant: 3
+    tick: 40; X bits head: 14; X bits variant: 14; turns head: 791; turns variant: 791; births head: 3; births variant: 3
+    tick: 45; X bits head: 14; X bits variant: 14; turns head: 806; turns variant: 806; births head: 3; births variant: 3
+    tick: 50; X bits head: 15; X bits variant: 15; turns head: 825; turns variant: 825; births head: 3; births variant: 3
+    tick: 55; X bits head: 15; X bits variant: 15; turns head: 842; turns variant: 842; births head: 3; births variant: 3
+    tick: 60; X bits head: 15; X bits variant: 15; turns head: 861; turns variant: 861; births head: 3; births variant: 3
+- mode: free; world: world_hole.json; quanta: None; ticks: 60; ticks whose state differs: 60; first tick differing: 1; rewind exact (variant): 20
+    tick: 1; X bits head: 11; X bits variant: 14; turns head: 18; turns variant: 18; births head: 0; births variant: 0
+    tick: 2; X bits head: 13; X bits variant: 15; turns head: 36; turns variant: 24; births head: 0; births variant: 0
+    tick: 3; X bits head: 14; X bits variant: 16; turns head: 80; turns variant: 30; births head: 0; births variant: 0
+    tick: 4; X bits head: 15; X bits variant: 16; turns head: 134; turns variant: 38; births head: 0; births variant: 0
+    tick: 5; X bits head: 16; X bits variant: 17; turns head: 200; turns variant: 72; births head: 0; births variant: 0
+    tick: 6; X bits head: 16; X bits variant: 17; turns head: 230; turns variant: 86; births head: 0; births variant: 0
+    tick: 10; X bits head: 17; X bits variant: 18; turns head: 299; turns variant: 150; births head: 0; births variant: 0
+    tick: 15; X bits head: 19; X bits variant: 18; turns head: 475; turns variant: 250; births head: 5; births variant: 0
+    tick: 20; X bits head: 19; X bits variant: 19; turns head: 620; turns variant: 370; births head: 13; births variant: 1
+    tick: 25; X bits head: 20; X bits variant: 24; turns head: 762; turns variant: 435; births head: 20; births variant: 3
+    tick: 30; X bits head: 20; X bits variant: 25; turns head: 841; turns variant: 504; births head: 21; births variant: 9
+    tick: 35; X bits head: 21; X bits variant: 25; turns head: 894; turns variant: 545; births head: 25; births variant: 11
+    tick: 40; X bits head: 21; X bits variant: 26; turns head: 937; turns variant: 586; births head: 26; births variant: 14
+    tick: 45; X bits head: 21; X bits variant: 26; turns head: 980; turns variant: 632; births head: 27; births variant: 16
+    tick: 50; X bits head: 21; X bits variant: 26; turns head: 1019; turns variant: 688; births head: 28; births variant: 16
+    tick: 55; X bits head: 20; X bits variant: 26; turns head: 1049; turns variant: 740; births head: 28; births variant: 17
+    tick: 60; X bits head: 20; X bits variant: 26; turns head: 1073; turns variant: 807; births head: 28; births variant: 20
+- mode: free; world: world_bang.json; quanta: None; ticks: 60; ticks whose state differs: 60; first tick differing: 1; rewind exact (variant): 20
+    tick: 1; X bits head: 11; X bits variant: 23; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 2; X bits head: 13; X bits variant: 10; turns head: 0; turns variant: 64; births head: 0; births variant: 0
+    tick: 3; X bits head: 11; X bits variant: 10; turns head: 64; turns variant: 64; births head: 0; births variant: 0
+    tick: 4; X bits head: 10; X bits variant: 23; turns head: 64; turns variant: 64; births head: 0; births variant: 0
+    tick: 5; X bits head: 10; X bits variant: 10; turns head: 64; turns variant: 128; births head: 0; births variant: 0
+    tick: 6; X bits head: 11; X bits variant: 10; turns head: 64; turns variant: 128; births head: 32; births variant: 0
+    tick: 10; X bits head: 10; X bits variant: 23; turns head: 128; turns variant: 192; births head: 64; births variant: 0
+    tick: 15; X bits head: 10; X bits variant: 10; turns head: 192; turns variant: 320; births head: 64; births variant: 0
+    tick: 20; X bits head: 10; X bits variant: 10; turns head: 256; turns variant: 448; births head: 64; births variant: 0
+    tick: 25; X bits head: 10; X bits variant: 23; turns head: 320; turns variant: 512; births head: 64; births variant: 0
+    tick: 30; X bits head: 10; X bits variant: 10; turns head: 384; turns variant: 640; births head: 64; births variant: 0
+    tick: 35; X bits head: 10; X bits variant: 10; turns head: 448; turns variant: 768; births head: 64; births variant: 0
+    tick: 40; X bits head: 10; X bits variant: 23; turns head: 512; turns variant: 832; births head: 64; births variant: 0
+    tick: 45; X bits head: 10; X bits variant: 10; turns head: 576; turns variant: 960; births head: 64; births variant: 0
+    tick: 50; X bits head: 10; X bits variant: 10; turns head: 640; turns variant: 1088; births head: 64; births variant: 0
+    tick: 55; X bits head: 10; X bits variant: 23; turns head: 704; turns variant: 1152; births head: 64; births variant: 0
+    tick: 60; X bits head: 10; X bits variant: 10; turns head: 768; turns variant: 1280; births head: 64; births variant: 0
+- mode: free; world: world_bang.json; quanta: 700; ticks: 60; ticks whose state differs: 40; first tick differing: 21; rewind exact (variant): 20
+    tick: 1; X bits head: 11; X bits variant: 11; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 2; X bits head: 12; X bits variant: 12; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 3; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 4; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 64; births variant: 64
+    tick: 5; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 96; births variant: 96
+    tick: 6; X bits head: 14; X bits variant: 14; turns head: 0; turns variant: 0; births head: 96; births variant: 96
+    tick: 10; X bits head: 14; X bits variant: 14; turns head: 0; turns variant: 0; births head: 96; births variant: 96
+    tick: 15; X bits head: 14; X bits variant: 14; turns head: 64; turns variant: 64; births head: 96; births variant: 96
+    tick: 20; X bits head: 11; X bits variant: 11; turns head: 64; turns variant: 64; births head: 104; births variant: 104
+    tick: 25; X bits head: 14; X bits variant: 14; turns head: 64; turns variant: 64; births head: 104; births variant: 104
+    tick: 30; X bits head: 15; X bits variant: 15; turns head: 64; turns variant: 64; births head: 104; births variant: 104
+    tick: 35; X bits head: 16; X bits variant: 16; turns head: 64; turns variant: 64; births head: 104; births variant: 108
+    tick: 40; X bits head: 17; X bits variant: 16; turns head: 64; turns variant: 64; births head: 104; births variant: 112
+    tick: 45; X bits head: 17; X bits variant: 17; turns head: 64; turns variant: 64; births head: 104; births variant: 116
+    tick: 50; X bits head: 18; X bits variant: 17; turns head: 64; turns variant: 64; births head: 104; births variant: 124
+    tick: 55; X bits head: 18; X bits variant: 18; turns head: 64; turns variant: 64; births head: 104; births variant: 132
+    tick: 60; X bits head: 18; X bits variant: 18; turns head: 64; turns variant: 64; births head: 104; births variant: 136
+- mode: free; world: world_bang.json; quanta: 500; ticks: 250; ticks whose state differs: 0; first tick differing: None; rewind exact (variant): 20
+    tick: 1; X bits head: 11; X bits variant: 11; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 2; X bits head: 12; X bits variant: 12; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 3; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 4; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 5; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 64; births variant: 64
+    tick: 6; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 64; births variant: 64
+    tick: 20; X bits head: 12; X bits variant: 12; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 40; X bits head: 16; X bits variant: 16; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 60; X bits head: 19; X bits variant: 19; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 80; X bits head: 20; X bits variant: 20; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 100; X bits head: 21; X bits variant: 21; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 120; X bits head: 21; X bits variant: 21; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 140; X bits head: 22; X bits variant: 22; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 160; X bits head: 23; X bits variant: 23; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 180; X bits head: 24; X bits variant: 24; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 200; X bits head: 24; X bits variant: 24; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 220; X bits head: 25; X bits variant: 25; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+    tick: 240; X bits head: 25; X bits variant: 25; turns head: 64; turns variant: 64; births head: 80; births variant: 80
+- mode: turn; world: world_hole.json; quanta: None; ticks: 60; ticks whose state differs: 60; first tick differing: 1; rewind exact (variant): 20
+    tick: 1; X bits head: 11; X bits variant: 10; turns head: 18; turns variant: 25; births head: 0; births variant: 0
+    tick: 2; X bits head: 13; X bits variant: 10; turns head: 36; turns variant: 50; births head: 0; births variant: 0
+    tick: 3; X bits head: 14; X bits variant: 10; turns head: 80; turns variant: 107; births head: 0; births variant: 0
+    tick: 4; X bits head: 15; X bits variant: 11; turns head: 134; turns variant: 168; births head: 0; births variant: 0
+    tick: 5; X bits head: 16; X bits variant: 11; turns head: 200; turns variant: 249; births head: 0; births variant: 0
+    tick: 6; X bits head: 16; X bits variant: 11; turns head: 230; turns variant: 310; births head: 0; births variant: 0
+    tick: 10; X bits head: 17; X bits variant: 11; turns head: 299; turns variant: 548; births head: 0; births variant: 0
+    tick: 15; X bits head: 19; X bits variant: 10; turns head: 475; turns variant: 793; births head: 5; births variant: 0
+    tick: 20; X bits head: 19; X bits variant: 11; turns head: 620; turns variant: 932; births head: 13; births variant: 0
+    tick: 25; X bits head: 20; X bits variant: 11; turns head: 762; turns variant: 1161; births head: 20; births variant: 0
+    tick: 30; X bits head: 20; X bits variant: 10; turns head: 841; turns variant: 1368; births head: 21; births variant: 0
+    tick: 35; X bits head: 21; X bits variant: 10; turns head: 894; turns variant: 1599; births head: 25; births variant: 0
+    tick: 40; X bits head: 21; X bits variant: 11; turns head: 937; turns variant: 1844; births head: 26; births variant: 0
+    tick: 45; X bits head: 21; X bits variant: 11; turns head: 980; turns variant: 2073; births head: 27; births variant: 0
+    tick: 50; X bits head: 21; X bits variant: 11; turns head: 1019; turns variant: 2252; births head: 28; births variant: 0
+    tick: 55; X bits head: 20; X bits variant: 11; turns head: 1049; turns variant: 2513; births head: 28; births variant: 0
+    tick: 60; X bits head: 20; X bits variant: 11; turns head: 1073; turns variant: 2732; births head: 28; births variant: 0
+- mode: turn; world: world_bang.json; quanta: None; ticks: 30; ticks whose state differs: 30; first tick differing: 1; rewind exact (variant): 20
+    tick: 1; X bits head: 11; X bits variant: 10; turns head: 0; turns variant: 64; births head: 0; births variant: 0
+    tick: 2; X bits head: 13; X bits variant: 10; turns head: 0; turns variant: 128; births head: 0; births variant: 0
+    tick: 3; X bits head: 11; X bits variant: 10; turns head: 64; turns variant: 192; births head: 0; births variant: 0
+    tick: 4; X bits head: 10; X bits variant: 10; turns head: 64; turns variant: 256; births head: 0; births variant: 0
+    tick: 5; X bits head: 10; X bits variant: 10; turns head: 64; turns variant: 320; births head: 0; births variant: 0
+    tick: 6; X bits head: 11; X bits variant: 10; turns head: 64; turns variant: 384; births head: 32; births variant: 0
+    tick: 8; X bits head: 11; X bits variant: 10; turns head: 128; turns variant: 512; births head: 64; births variant: 0
+    tick: 10; X bits head: 10; X bits variant: 10; turns head: 128; turns variant: 640; births head: 64; births variant: 0
+    tick: 12; X bits head: 13; X bits variant: 10; turns head: 128; turns variant: 768; births head: 64; births variant: 0
+    tick: 14; X bits head: 10; X bits variant: 10; turns head: 192; turns variant: 896; births head: 64; births variant: 0
+    tick: 16; X bits head: 11; X bits variant: 10; turns head: 192; turns variant: 1024; births head: 64; births variant: 0
+    tick: 18; X bits head: 11; X bits variant: 10; turns head: 256; turns variant: 1152; births head: 64; births variant: 0
+    tick: 20; X bits head: 10; X bits variant: 10; turns head: 256; turns variant: 1280; births head: 64; births variant: 0
+    tick: 22; X bits head: 13; X bits variant: 10; turns head: 256; turns variant: 1408; births head: 64; births variant: 0
+    tick: 24; X bits head: 10; X bits variant: 10; turns head: 320; turns variant: 1536; births head: 64; births variant: 0
+    tick: 26; X bits head: 11; X bits variant: 10; turns head: 320; turns variant: 1664; births head: 64; births variant: 0
+    tick: 28; X bits head: 11; X bits variant: 10; turns head: 384; turns variant: 1792; births head: 64; births variant: 0
+    tick: 30; X bits head: 10; X bits variant: 10; turns head: 384; turns variant: 1920; births head: 64; births variant: 0
+- mode: turn; world: world_bang.json; quanta: 700; ticks: 60; ticks whose state differs: 40; first tick differing: 21; rewind exact (variant): 20
+    tick: 1; X bits head: 11; X bits variant: 11; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 2; X bits head: 12; X bits variant: 12; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 3; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 0; births variant: 0
+    tick: 4; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 64; births variant: 64
+    tick: 5; X bits head: 13; X bits variant: 13; turns head: 0; turns variant: 0; births head: 96; births variant: 96
+    tick: 6; X bits head: 14; X bits variant: 14; turns head: 0; turns variant: 0; births head: 96; births variant: 96
+    tick: 10; X bits head: 14; X bits variant: 14; turns head: 0; turns variant: 0; births head: 96; births variant: 96
+    tick: 15; X bits head: 14; X bits variant: 14; turns head: 64; turns variant: 64; births head: 96; births variant: 96
+    tick: 20; X bits head: 11; X bits variant: 11; turns head: 64; turns variant: 64; births head: 104; births variant: 104
+    tick: 25; X bits head: 14; X bits variant: 14; turns head: 64; turns variant: 80; births head: 104; births variant: 104
+    tick: 30; X bits head: 15; X bits variant: 15; turns head: 64; turns variant: 96; births head: 104; births variant: 104
+    tick: 35; X bits head: 16; X bits variant: 15; turns head: 64; turns variant: 128; births head: 104; births variant: 104
+    tick: 40; X bits head: 17; X bits variant: 15; turns head: 64; turns variant: 152; births head: 104; births variant: 104
+    tick: 45; X bits head: 17; X bits variant: 16; turns head: 64; turns variant: 232; births head: 104; births variant: 112
+    tick: 50; X bits head: 18; X bits variant: 16; turns head: 64; turns variant: 248; births head: 104; births variant: 116
+    tick: 55; X bits head: 18; X bits variant: 16; turns head: 64; turns variant: 256; births head: 104; births variant: 124
+    tick: 60; X bits head: 18; X bits variant: 16; turns head: 64; turns variant: 256; births head: 104; births variant: 128
+

@@ -1,0 +1,4 @@
+world_hole.json with twin hands, 60 ticks; fittings 61 chimes 2417 splits 2
+  split-due Node-clocks (the pair's beat, its split ticks, not stopped, not fitted): 4
+    light arriving (the head's R6 lets it split): 4
+world_nature.json with twin hands, 60 ticks; fittings 5 chimes 5859 splits 0

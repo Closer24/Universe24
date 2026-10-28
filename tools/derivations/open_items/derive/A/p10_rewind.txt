@@ -1,0 +1,6 @@
+P10 world_nature.json, 20 ticks forward and back, the engine head: 20 of 20 states returned bit for bit; fittings 3, chimes 395
+P10 world_hole.json, 20 ticks forward and back, the engine head: 20 of 20 states returned bit for bit; fittings 13, chimes 3
+P10 world_nature.json, 20 ticks forward and back, the engine f3: 2 of 20 states returned bit for bit; fittings 2, chimes 516
+ValueError: the volume X is at most 0 at a Node: the level has no reading, refused by name
+P10 world_nature.json, 20 ticks forward and back, the engine f3signed: 20 of 20 states returned bit for bit; fittings 2, chimes 516
+P10 world_hole.json, 20 ticks forward and back, the engine f3signed: 20 of 20 states returned bit for bit; fittings 13, chimes 63

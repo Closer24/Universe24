@@ -1,0 +1,16 @@
+verify_closure.py (the verifier's own probe), mutation: axis_y_sign
+  V1 S.S=rho^2       runs    27400 failures      0  exhaustive [-3,3]^4 (S=0 met only at 0), random to 200 bits, lopsided
+  V2 two-time        runs    21561 failures      0  D Hermitian; S.S - W^2 = 4 N(det[now,before]) = 4 (rho rho' - N<now,before>); exhaustive [-1,1]^8 + to 150 bits
+  V2 open            runs      321 failures      0  321 two-time readings with S = 0 met: every one has W = 0 and det = 0
+  V3 perp/Fierz      runs    12000 failures      0  N and -S under perp, perp^2 = -1, <perp u,u> = 0, det = <perp u, v>, Fierz, Lagrange
+  V4 four parts      runs    18400 failures      0  2 sigma_ab = rho1 rho2 - ab m1.m2, rows and columns rho1 rho2, E = -m1.m2/(rho1 rho2); all 6,400 pairs in [-1,1]^4 + random
+  V5 two steps       runs     1200 failures      0  one draw over four parts = first click half and half, then law 6 on (rho1, -a m1): 300 detector pairs, every draw
+  V5 within one      runs     1200 failures      0  a room the parts' sum does not divide: each count within one of Born's
+  V6 open is down    runs     5360 failures      0  law 6 on the only reading with S = 0 (rho = 0): never up, so not half and half
+  V7 CHSH            runs        1 failures      0  settings' axes; S singlet -82/29 two ways; local (-82, 87); 16 rules all |S| = 2; 81 rules with 0, max 2
+  V7 loophole        runs        1 failures      0  a local rule: S = (4, 1) over pairs clicked at both ends, S = (1, 1) with every pair counted
+  V8 k<=1/3          runs    20000 failures      0  Tr T in [-3, 1] times the norm, and 1 - Tr T = 4 x the A1 weight: E = +k m1^.m2^ for all axes needs k <= 1/3
+  V9 M3 reads no pair runs     8000 failures      0  the singlet's E from the settings alone in 8000 of 8000; parallel hands' A1 factor 0 in 8000 of 8000
+  V9 A1 half         runs     2000 failures      0  for opposite fitted hands the A1 part holds exactly half the product's weight
+  V10 two vs one     runs     4981 failures   4981  for a pair turning whole: two-time (W, S) = -2 Im g (rho, (Sx, -Sy, Sz)) of the one-time reading
+total failures: 4981

@@ -1,0 +1,42 @@
+P5 the write's formulas, random draws 400
+  lemmas (sgn, [n >= 0], [n = 0], ceil) off: 0
+  F1: the pure lead and twist against the head's, Meshes read: 375
+  F1: ... off: 0
+  F1 images: Meshes read under rotations: 36000
+  F1 images: ... sigma(image) = +sigma: 36000
+  F1: sigma_x + sigma_y = 0: 72000
+  F1 images: Meshes read under reflections: 36000
+  F1 images: ... sigma(image) = -sigma: 36000
+  F3 takes: the ladder's carries past the first (largest): 41
+  F3 takes made (a due at most the integer vertex's fall): 400
+  F3 takes: the count is the least on the numerator: 400
+  F3 takes: the window's fall (with its carries) within [D - 14, D + one unit's fall + 15): 400
+  F3 takes: the whole great clock's fall is the window's (the write is local): 400
+  F3 takes: the books (every wind and the remainder) exact, the due booked: 400
+  F3 takes: the rewind bit for bit (the field and the remainder): 400
+  F3 takes: covariant under z -> i z (the unit turned, the count and the fall kept): 400
+  F3 takes: covariant under z -> -1 z (the unit turned, the count and the fall kept): 400
+  F3 takes: covariant under z -> -i z (the unit turned, the count and the fall kept): 400
+  F3 takes: covariant under z -> conj z (the unit turned, the count and the fall kept): 400
+  F3 takes: alike at the image under one of the 48 drawn: 400
+  F3 inverse: the advance of the due from the post-state rises at least D - 14: 400
+  F3 inverse: ... and at most D + its last unit's rise + 15: 400
+  F2 fittings: read: 100
+  F2 fittings: the charge moved dQ_T = 0 on zero gears: 100
+  F2 fittings: the two light takes' joint fall = the sum alone, within 4 (no now-now cross term): 100
+  F2 fittings: the books close exactly (every wind and every remainder): 100
+  F2 fittings: the cross terms arise at the two ends alone: 100
+  F2 fittings: an end's remainder moved within [kappa, kappa + one unit's fall) (the take's overpay): 200
+  F2 fittings: |the cross term at an end| below a hundredth of a light winding: 200
+  F2 fittings: the rewind bit for bit (the light, the train; the remainders by the same book at -1): 100
+  F5 unspringings: the pair's charge W_x + W_y = 0, the gate open: 100
+  F5 unspringings: the end's Rule3 remainder in [0, one light winding): 200
+  F5 unspringings: whole light windings written at an end: 1: 200
+  F5 unspringings: the books close exactly: 100
+  F5 unspringings: the end's final remainder in (-(one light winding), one light winding): 200
+  F5 unspringings: the charge moved = -(W_x + W_y) exactly: 100
+  F2 fittings: under one drawn image the children at the image ends, exchanged by a reflection: 100
+
+real	0m16.577s
+user	0m16.750s
+sys	0m0.016s
