@@ -20,7 +20,13 @@ The owner's words of 2026-10-28, 06:0x to 06:4x UTC (Hebrew, translated):
 
 - 08:1x UTC, his answers to section 24: "1 derived. 2 derived. 3 the closure is fine, but it must follow from the tensor's algebra and the click in general. 4 from the tensor. 5 from the tensor and the families. 6 from the tensor, and representing nature in the clicks. Check whether anything is missing so that the clicks show nature exactly. No specific formulas: all of nature follows from the one act of the Node-clock."
 
-The plan's owner: the Boss. The names are the ones the owner sees in his app: Boss, Sofer, David and Animate (the owner's word through Animate, 06:3x UTC, #2187 6462416209). Its base: engine-5.0-test at 526a5666d. Its status: a plan, with nothing built under it.
+- Through David, 07:2x to 08:0x UTC (6463569365, 6463668203, 6463868269): "In fact everything is algebra, and the engine implements the algebra." "How will the bounds that were put into the code by force enter here? Does the tensor arrange them?" "The mathematics of the node and of the links and of everything unites into one mathematics, and it only does multiplication, addition and the rule of three." And on David's answer: "Approved. Let the writer check every such thing."
+
+- Through Animate, 07:4x to 08:2x UTC (6463587970, 6463670867, 6463809454, 6463868467, 6463878335): "A bang every five ticks is not fair: longer bangs, as in nature." "Black holes too should make the Node-clocks turn over. The seed is not to return exactly: every bang has one more property, with every bang more is seen, the bang keeps information in the board. All the gates are to be seen after many, many bangs." "Find more fakes, and confirm that all the gates happen in the new engine: solve it first of all algebraically." "Use the clicks' formulas, because the gates are the things behind the clicks." "Everything follows from the algebra. Derive what is needed; go through the Boss."
+
+- Through David, 08:4x UTC (6464350822): "From the clicks' formulas there are two kinds, right? Can general relativity be reached?"
+
+The plan's owner: the Boss. The names are the ones the owner sees in his app: Boss, Sofer, David and Animate (the owner's word through Animate, 06:3x UTC, #2187 6462416209). Its base: engine-5.0-test at 526a5666d. Its status: a plan; under it only cut 1, the fair draw, is built, pushed as 834cfd72e on the owner's word.
 
 - **This file is the one plan.** Sofer's record of the program (the state of the cuts, the owner's list with his recommendations, the ledger) stands on scribe-5 and points here.
 - **Its words** are the clock words of docs/CLOCK_WORDS.md (scribe-5): the great clock, the Node-clock, the Mesh, the Spoke, the tick, the train, the hand, the gear, the notch, the teeth count, the carry, the drive, the wind, the load, the bob, the fitting, the fitted hand, the unspringing, the regulator, the swing, the turnover, the rewind, the calibre, the piece, the setting, the chart, and the code names chime, vernier, unwind, stopped and lead.
@@ -73,10 +79,10 @@ then the carry: the quotient goes to the notch and the remainder stays in the fi
 
     p+ = p + s F + K,    a+ = a + (p+ + mid W+) div W+,    r+ = (p+ + mid W+) mod W+
 
-- F is the pull: the sum over the six Spokes of g_j (U_j a_j - a), less D a, with Pauli's term for the twin hands.
+- F is the pull: the sum over the six Spokes of g_j (U_j a_j - a), less D a, with the spin term for the twin hands.
 - U_j a_j is the neighbour's hand carried across the Mesh: turned by the Mesh's turn and by the pawl's reflection. So the Laplacian is the covariant one. U_j is derived from the two ends' gears (the offset's odd gears and the pawls at the two Node-clocks); the Mesh holds no state of its own (Sofer).
 - K is the kick, T s q, with T the calibre's teeth count and q a whole carry of the source: the lead's on the offset, the masses' on the held field.
-- The regulator steps by Rule3's turn, w (a+ - 2 a + a-) = the grips times (a_j - a) less D a with w its own teeth count, then by the drive of its numerators, q = carry(N, its drive teeth count, its drive fine tooth).
+- The regulator steps by Rule3's turn, w ((a+ - a) - (a - a-)) = the grips times (a_j - a) less D a with w its own teeth count, then by the drive of its numerators, q = carry(N, its drive teeth count, its drive fine tooth).
 - On the head the release advances the unsprung hand's first gear, and its recoil drives the regulator's flow gear. In Tensor24 no train is named: the release's advance is an act of every hand alike, weighed by the hand's own integers, the coupling being the spring itself (Sofer).
 
 **The Boss's probe** (formula0.py, a harness on the head's own acts, no engine change) read every gear at every Node-clock:
@@ -96,7 +102,7 @@ The one regulator site and the one unsprung site on the hole not read by the for
 **On the head the form is written twice.** The regulator steps by clock.turn plus a separate drive carry; the driven trains step by the impulse and tick.carry. These are two paths of one form, and Tensor24 makes them one (cut 6).
 
 **Its degrees (David, 6462024199):**
-- The stress, the masses, the forms and Pauli's numerator are of degree 2 in the gears. The release is of degree 3 with the clock's s counted: the stretch times the cross of a hand and its pull.
+- The stress, the masses, the forms and the spin term's numerator are of degree 2 in the gears. The release is of degree 3 with the clock's s counted: the stretch times the cross of a hand and its pull.
 - The grips and springs are maps of the load.
 - So the one act is one division over one multilinear contraction, and a cut keeps its bits within what clock.max_transient reads on the head.
 
@@ -208,7 +214,7 @@ The twist the engagement reads is kept by every turn and reversed by every mirro
 | the swing, the great clock's exact returns | the regulator's time gear | every Node-clock's time gear at its top at once, read by the reckoner |
 | the stopped Node-clock and the horizon | readings.stopped_of | a comparison of the gate |
 | the bottom (the stretch through 0) | Tick.end_teeth | a comparison of the gate, the start's teeth count read |
-| the held field, the offset's kick by the lead, Pauli's twin hands, the release's advance, the recoil on the Mesh | tick.py, clock.drive | terms of J, each a product from the table; the release's advance an act of every hand alike |
+| the held field, the offset's kick by the lead, the twin hands' spin term, the release's advance, the recoil on the Mesh | tick.py, clock.drive | terms of J, each a product from the table; the release's advance an act of every hand alike |
 | the fitting, the fitted hands' setting, the chime, the unwind, the unspringing, the unwind's fall and the stop, the ends' senses | click.py, bobs.py, unspring.py, unwind.py | the gate: the click of a whole and the click of a split |
 | the hand's own beat, its reference and its crossings (CK-S1), the still chime | bobs.py, the clock's wound, crossed, beats and reference | the gate's reads: the sign of a bilinear's crossing, read at the Node-clock |
 | the held load: the held field's notch at its weight in the load that sets the springs | Tick.rate_readings, readings.gearing | a term of D, the mediator's coupling to the masses |
@@ -234,6 +240,7 @@ The twist the engagement reads is kept by every turn and reversed by every mirro
   - the engine's modules: 95 hits (circular words in names 62, root searches 14, state beyond the Node-clock 14, log reads 3, a typed table 1, a number 1);
   - the readers' modules: 57 hits (numbers 23, circular words 13, root searches 11, state 7, typed tables 2, a float 1).
 - **The unsprung hand** is read by identity at 18 places in 7 files (the Boss's count).
+- **Sofer's two new rules** (6464340733), from David's rule that the owner approved: CLAMP, a block on min, max, abs, clip and where in an engine module, and COMPARE, a note on an ordering comparison. At 526a5666d: 71 clamps in 21 modules (assembly/setting.py 12, core/rates.py 11, bobs.py 8, tick.py 8, clock.py 6, unspring.py 5, meshes.py 4, features/stretch 4) and 102 comparisons. With them the scan's list stands at 749 hits, 223 of them blocking.
 
 ## 10. The cuts, and who does what
 
@@ -249,7 +256,7 @@ The cuts, in order:
 0. **The main formula.** David derives it (section 2); the Boss checks it bit for bit against the head; Sofer proposes it as the law's formula. Every later cut builds toward it.
 1. **The fair draw. Pushed** as 834cfd72e on the owner's word of 06:5x UTC ("if the push helps the plan, push"): the 24 on nature and the hole, the rewind 20 of 20, the full check 118 passed, Sofer's scan clean against 526a5666d; Animate's bench within the hour.
 2. **The gate.** Sofer's scan goes into tools/check.py's ratchets and the push hook, so it holds every later cut.
-3. **The pure contractions, bit for bit:** regulation.stress_of; the hands' products (dot, lead, sweep, products) as complex products; the Meshes' cross and gradient; the offset's curl; Pauli's numerator. They become J, one contraction over the Node-clock and its neighbours, its weights from the kinds' product table.
+3. **The pure contractions, bit for bit:** regulation.stress_of; the hands' products (dot, lead, sweep, products) as complex products; the Meshes' cross and gradient; the offset's curl; the spin term's numerator. They become J, one contraction over the Node-clock and its neighbours, its weights from the kinds' product table.
 4. **The pointwise maps:** the rate table and its inverse by search (stretch.load_of, readings.rates_of), the mesh factor, rest_rate_of, the clamps, rounded(p + p + 1, d) and the end teeth count's selection. Each becomes a chain of carries or integers in the calibre.
    - David has derived three already (6462024199):
      - the rate table is a chain of carries on the head, one carry per unit of load at the teeth count Gamma, kept, then one rounding (core/rates.py);
@@ -271,9 +278,15 @@ The cuts, in order:
 | Sofer | the gate on every push; the law's sentence (entered, scribe-5 8c0a0cd01) and the formula (proposed, entered on the owner's word); the program's record on scribe-5, pointing here; the documents after each cut; the ledger |
 | the owner | the formula as law. Decided by him: the 24 without the 48, a twin train where it is needed, the fair draw's push, and the seven of section 24 (08:1x UTC), each derived from the tensor, the trains and the one act |
 
+**The 64 rows that are not theorems** (section 14), assigned as Animate proposed (6463878335), by the Boss:
+- **the 20 by a train** (the twin hands 39, 41, 42, 43, 56; the one-hand coupling 20, 21, 52, 68, 69; the composite 27, 76, 77; the conversion 28, 49; the shears 35, 36; the exchange 48, 75; the coupling derived 64): David derives each train's integers and its clicks with no new number, in that order; Sofer checks each against the law;
+- **the 3 with no route** (50, 51, 57): David derives a route, or names what the algebra lacks;
+- **the 41 under a condition:** Animate writes each condition as an inequality in the clicks' formulas (K1 to K8) and the one formula, and whether the one big bang's course reaches it, David confirming each. In groups: the course (1, 1b, 1c, 3, 5, 6, 46, 58 to 60, 63), gravity (2, 10, 11 to 14, 29 to 34, 61), matter (4, 8, 8b, 9, 19, 22 to 24, 26, 44, 45, 66), light and packets (38, 53 to 55, 74);
+- **the readers through the clicks:** the 10 rows read on the great clock's lines (Animate's page, section 3) are re-cut as one more cut, built on the owner's go like every cut (section 21).
+
 ## 11. Open, by name
 
-- **(a) The twin hands.** A spinor's quarter turn needs the root of 2 over the Gaussian integers, and a carried scale does not survive the carries (section 3). So **the second way stands** (David): the twin hands are read only through (rho, S), and the 24 is asked of those. **For the owner:** the twin hands' motion written on (rho, S), which keeps the 24, or on their gears, which keeps their interference and the half turns alone.
+- **(a) The twin hands.** A spinor's quarter turn needs the root of 2 over the Gaussian integers, and a carried scale does not survive the carries (section 3). So **the second way stands** (David): the twin hands are read only through (rho, S), and the 24 is asked of those. **Decided** (section 24, item 6): they move on their gears by the one formula, keeping their interference, and the 24 is asked of what the clicks show, (rho, S) and the counts.
 - **(b) The 24 with one coupling, or the 48.** With the reflections, every kind splits in two, giving ten kinds. Animate's reading (6462233147), which the Boss recommends:
   - the law is the 24 exactly; under the 24 alone a vector and a mirror vector are one kind;
   - the mirror's break, nature's one hand (row 69), enters at one place only: a one-hand coupling, one row of the calibre's couplings, with no act of its own;
@@ -306,6 +319,15 @@ The cuts, in order:
   - the 24 is read by the images' test on every chart.
 - **The step:** one act, the formula for every gear with the gate inside it, alike for every train.
 - **No loop:** every act on whole arrays.
+- **The step does multiplication, addition and Rule3 alone** (David's rule, approved by the owner through David at 08:0x UTC, Sofer to check every such thing): no clamp by min, max, abs or where; no table; no comparison that is not a carry's quotient; no branch on a family's identity; no sum whose value depends on a loop's order. Sofer's gate takes it as rules, their counts brought to 0.
+- **Every gate can fail:** each row compares two independent readings of the state (David, 6464116147).
+- **The gates' own rules can fail** (Sofer, SOFER-FAKES-1.md, its items G1 to G4, apart from section 8's G1 to G12): the loop rule a refusal on the owner's word, and 0 loops at the end (367 stand); every ratchet's count 0, not only unrisen; no name list, since a root under a new name passes one; no typed allowance (history_allowed.json 7, numbers.json's 6 of 38 with no derivation, the identity and family-name lists, the 12 reader modules exempt from four rules, AXES = 3, which comes from the piece's shape).
+- **The laws no rule reads, each with a test that can fail** (Sofer, G5 to G9):
+  - locality, the stencil test: change every gear outside one site's seven, step once, and the site's new gears are equal;
+  - state only in the Node-clock, the purity test: a great clock rebuilt from the gears alone steps to the same bits;
+  - every act on every train alike, the rename test: rename every family of a universe file, and the run's gears are the same bits;
+  - the plan's formula is the code: the probe formula0.py as a property test on three charts;
+  - the 24's turns hold: the images test on every chart, not on nature alone.
 - **Everything of section 8 stands,** the rewind 20 of 20 on every chart among it.
 - **The counts to bring to 0,** from 526a5666d: the engine's 95 hits (the Boss) and the readers' 57 (Animate).
 
@@ -323,7 +345,7 @@ The cuts, in order:
 
 **The count.** The 77 rows of the gates on the four charts at 834cfd72e (the one big bang at 250 ticks), shown whole or in part:
 - the hole 36, the chiral 33, the bodies 18, the one big bang 34;
-- 44 of the 77 rows on at least one chart, 33 on none.
+- 44 of the 77 rows on at least one chart, 33 on none. Over the sixteen records, docs/UNIVERSE24.md (section 2) reads 46 of 77 SHOWN at 9b6d898e5, 33 of them derived (Animate, 6464376550).
 
 For nature one to one, every row must be shown on the one big bang's chart. What the 33 need, by kind (the Boss's reading of the rows' names and verdicts, for Animate to check row by row):
 
@@ -341,6 +363,14 @@ For nature one to one, every row must be shown on the one big bang's chart. What
 | the reading across the turnover | 58 the fast expansion after the bang, on every chart; 2 and 5 on the one big bang, which shows 3 in part and 6 (Animate) | the relics between swings read through the clocks' reversal (the owner's word of 05:4x UTC: because of the clocks' reversal, contraction is seen as expansion) | Animate reads |
 | the momentum across the click | 23 the momentum across the click | the fitting's momentum read across its two ends | cut 5; Animate reads |
 | rows shown on a committed chart but not on the one big bang (Animate) | 24, 73 and 74 (no unspringing there since 42d5448b), 26 (2 of 3 lifts), 37 (the current's reach never grows on a great clock alike everywhere), 64 (light set at every Node-clock), 8b (64 of 128 tracks) | the one big bang's matter and its setting (section 23) | David derives; Animate reads |
+
+**Animate's algebra page** (ANIMATE-TENSOR24-GATES-ALGEBRA.md, reader-5 eba5f51e; the owner's word to him: the gates are what stands behind the clicks). Every row is read through the clicks' formulas, K1 to K8: the wind, the click of a whole, the books, the face (the sweep, the beat and the levels), dP at the take and the lay, the click of a split, the turnover with the stopped Node-clock's silence, and the draw's room. Between clicks, the one formula's six consequences say where and when the clicks come: the rewind, the Mesh's antisymmetry, the hand's phase, the dispersion, the clock's rate, the great clock's course. Of the 80 rows (the 77 with 1b, 1c and 8b):
+- **16 are theorems** wherever their premise stands; five of them (17, 62, 65, 67, 70) are identities, which need a second reading to stand as gates;
+- **41 follow with no new train** where the one big bang's course reaches a named condition;
+- **20 need a train or an act the plan names:** the twin hands, the coupling, the composite, the conversion, the shears, the exchange, the coupling derived; none is derived;
+- **3 have no route:** 50 (light on light), 51 (the Casimir force and the running alpha), 57 (GHZ: no three-ended click).
+
+So no one can confirm that every gate happens in the new engine until the 64 are derived (Animate). Section 10 assigns them.
 
 **The order:**
 - the cuts of section 10 make the engine one act, row for row as the head;
@@ -369,7 +399,9 @@ For nature one to one, every row must be shown on the one big bang's chart. What
   - the derivations of section 14.
 - **Animate, approved the whole plan at 6cba85cb1 with corrections** (#2187 6463250257): the sixteen records run from the seed on 04cd7355f and 128b7ab6; the bench of 834cfd72e confirmed (the rows move only where the draw is read, the rewind exact on all sixteen, the books closed, the 24 and the 48 on nature); section 14 checked row by row (ANIMATE-TENSOR24-ROWS.md, reader-5 507bfa70); the readings that read a typed number or cannot fail listed. His corrections are taken.
 - **Sofer, not approved at 6cba85cb1** (6463396711, SOFER-TENSOR24-CHECK-1.md on scribe-5 ffe6e4dd6): the names against docs/CLOCK_WORDS.md; the law clause by clause, an independent read; the coverage of every function of the 26 engine files; the scan on every push. His points 2 to 4 are taken, and the six decisions he names are marked as the owner's.
-- **David** (asked for the whole plan): his fakes list of 07:2x UTC (6463200214) is taken.
+- **Sofer, approved the whole plan at 9b6d898e5** (6464153029, merged into scribe-5 as 598223799) on three text conditions, all taken at the next head: section 19's acts owed as formulas, named; the two groups of 48 each said by what it counts; the cosine out of the mass reading. His wording points are taken with them.
+- **Animate, approved the whole plan at 9b6d898e5** (6464376550, merged into reader-5 at f5d74595) on three text conditions, all taken at the next head: section 23 takes the owner's word of 07:5x; the five ticks are named F1's; F4 and F5 stand in sections 16 and 22. He takes David's list of the reading modules' fakes whole (section 16).
+- **David:** his fakes lists are taken in section 16 (6463200214; the bounds, 6463668203; R1 to R14, 6463868269; the reading modules, 6464116147), and his six items for general relativity (6464350822) in sections 18, 19 and 25. His approval of the whole plan is asked.
 - **The plan goes to the owner** when Sofer, David and Animate have each approved the whole plan, every section, on their own checks (the owner's word of 07:0x UTC: each approves the whole plan, not only his part).
 
 ## 16. What goes, and what replaces it
@@ -387,7 +419,7 @@ Sofer's audit of the source (SCRIBE-AUDIT-97E5B3F-1.md, items E1 to E19: where a
 | the rate table p0(c) = Gamma (1 - 1/Gamma)^c and its inverse (E8) | the typed exponential | open: the chain of carries is the same exponential as a recurrence, itself a fix (Sofer); the rate as the regulator's own gear moved by the formula, so the dilation comes from the step (David; section 18, item 8) | 4 |
 | the mesh factor (Gamma - t)^2 / Gamma^2 (E9) and its clamp of t into [0, full rate] | the closed form and the clamp | the Mesh's grips as a product of its two ends' tension gears; the bound derived from the one act (decided, section 24, item 2; David) | 4 |
 | the regulator's drive (held_numerator) and its clamp at plus and minus the hold (E10, E11) | the typed form and the clamp | J's metric half from the product table, the stress's kinds on the regulator's kinds, a second-kind act, one sum over every train alike; the bound derived (decided, section 24, item 2) | 3, 6 |
-| Pauli's sigma on the curl, the kicks (E12, E13) | the typed sigma | the product table's twin-by-vector part, on the twin hands' gears (decided, section 24, item 6) | 3 |
+| the spin term, sigma on the curl, the kicks (E12, E13) | the typed sigma | the product table's twin-by-vector part, on the twin hands' gears (decided, section 24, item 6) | 3 |
 | the winding as 3 T sin omega, the light's drift as a floor root (E14, E15) | the sine, the root | the calibre's integers | 4 |
 | the exclusion as refusals (E16): the setting's refusal by name (assembly/setting.py), the lay jam for every train (click.jam) | both | **Pauli from the trains' exchange symmetry** (David, the owner's word of 07:0x UTC): each train's sign under the exchange of two equal quanta follows from its kind, none declared. A full turn is -1 on the twin hands and +1 on a one-hand train, and an exchange is a full turn of one quantum about the other. So matter (the twin hands) is antisymmetric: two equal quanta at one Node-clock sum to 0 and cannot hold a whole winding. The force carriers (the unsprung hand, the offset, the regulator, the held field) are symmetric and may share a Node-clock. The setting's book is read with the train's exchange sign. **Sofer:** the law's record has the exchange declared, a train's property in the calibre (the loader's key `exchange`; docs/ALGEBRA.md lines 555, 817 and 1558). The derived sign needs the matter to be twin hands, and (rho, S) are even under the double cover and cannot carry it. **Decided: derived** (section 24, item 1), so the matter is twin hands | 5 |
 | the pair set at senses -1 and +1, the + end by the twist's sign (E17) | the typed rules | the senses from the fitting's books (the charge conserved); the end by the twist, the coupling's carrier (David). Open: the senses by the spin need a conserved spin the law does not have (Sofer) | 5 |
@@ -402,7 +434,57 @@ Sofer's audit of the source (SCRIBE-AUDIT-97E5B3F-1.md, items E1 to E19: where a
 | the chart's typed senses at every fitting (run.py) and the reckoner's charges read from them (reckoner.sweeps_of), so rows 17, 65 and 70 read a constant (David, 6463102778) | the typed senses | the fitted hands' sweeps read from their gears after the setting; the senses from the sweep's conservation, the unsprung hand's sweep 0 | 5, with Animate |
 | row 73's book identity, which cannot fail | the identity as a gate | the window's wind before and after the unspringing over every train, read from the state | Animate |
 | row 56's criterion, nature's band | the band | S against the local bound 2, with its spread | Animate |
-| the readers' readings that read a typed number or cannot fail (Animate, 6463250257): rows 15, 47, 71 and 72 (the books' identity); 62 and 67 (an identity of the sweep's form); 25 (bit lengths, which never fall); 27 (a typed third of the charge); 21, 68 and 69 (the typed + end); 43 (the typed refusals); 74 (the kick written by Pauli's sigma); 16, 19, 40 and 75 (through sine_rim and largest_below); the decoder's typed "floats used": 0 | each of them | each a reading of the state with a second, independent one; the arrow read by the rewind (row 18) | 3 to 5, with Animate |
+| the readers' readings that read a typed number or cannot fail (Animate, 6463250257): rows 15, 47, 71 and 72 (the books' identity); 62 and 67 (an identity of the sweep's form); 25 (bit lengths, which never fall); 27 (a typed third of the charge); 21, 68 and 69 (the typed + end); 43 (the typed refusals); 74 (the kick written by the spin term's sigma); 16, 19, 40 and 75 (through sine_rim and largest_below); the decoder's typed "floats used": 0 | each of them | each a reading of the state with a second, independent one; the arrow read by the rewind (row 18) | 3 to 5, with Animate |
+
+**The fakes found since, each with its cut** (David's R1 to R14 at 1cadb3931, 6463868269; his bounds, 6463668203; Animate's clamps F1 to F5 counted on the head, 6463809454). For each bound David derives whether it is a threshold, where the next carry on the clocks' ladder replaces it, or a zero, where the formula gives nothing; each is benched with every run alike wherever the clamp never acted:
+
+| the fake | where | what it puts in | what replaces it | cut |
+| --- | --- | --- | --- | --- |
+| R1: a merger engages only as a conjugate pair, else jammed "sense" | click.py:95 | annihilation of opposite charges as a rule | the sweep's conservation at the click, the light's sweep 0 | 5 |
+| R2: the pair at rest by its own branch (the + child where the sweep is positive, the twist not read, the family picked at number 0 with no draw) | click.py:90, 96-106 | the child's sense and family | the one gate's act: the twist read, the family by the draw | 5 |
+| R3: which families a click may lay, by a rule on the coupling product, the pick among them even | click.py:49 | the unspringing's channels | the product table (what a pair's product holds), the pick by the parts' sizes | 5 |
+| R4 and F3: coupling_of = min(spring, 1), every matter train coupled with strength 1 | meshes.py:23 | the charge's size; no massive train dark | the coupling the spring itself | 5 |
+| R5: the still chime laid back with no take where nothing arrives (EQ-S1) | bobs.py:54-55 | the uniform world's exact return to the full rate | the wind's balance at the Node-clock, by the books | 5 |
+| R6: a split clicks only where light arrives (net != 0) | bobs.py:160 | the detector's click | the click of a split by the parts' sizes alone | 5 |
+| R7: the paying gear the largest now^2 - before^2, the first by index on a tie | unspring.py:53 | the payer, by the gears' order | a choice by the invariants, free of order | 5 |
+| R8: the offset's sweep source and the held field's mass source summed over the trains met before them in the loop | tick.py:221-240 | an order of the trains | J, one contraction read from the start board | 3, 6 |
+| R9: the turnover as a comparison (a weak maximum of three notches, or below X_f) | clock.py:240-256 | the turnover | the time gear's own carry (David derives) | 5 |
+| R10 with the bound BH-S1: a stopped clock's dial held (where(stopped, 0, rate)), its gears restored every tick, its Meshes' factors set to 0 | tick.py:108; BH-S1's restore | the frozen Node-clock | a zero: the rate 0 gives nothing, with no restore | 4, 5 |
+| R11: a gapped pair must lie on den's circle, refused otherwise (with E19) | clock.py:58 | typed geometry | the pair's integers in the calibre | 4 |
+| R12: a calibre with an undecided rounding refused by name (the certificate) | core/rates.py:76 | a refusal | David derives: the calibre's check by name, or the carry decides | 4 |
+| R13: the light, the regulator (its pair a formula of Gamma), the offset and the ratchet typed in the code | trains.py:97-99 | four trains | every train in the universe file (G10, G11) | 4 |
+| R14: the trains' roles by identity (clock.unsprung() at 13 sites; r is self.offset; weight is not None; clock.train(REGULATOR)) | setting.py, bobs.py, click.py, tick.py, unspring.py, clock.py | each train's coupling chosen by its name | dispatch by kind and the calibre's couplings | 5, 6 |
+| F1: the regulator's drive at its hold, every Node-clock at every tick of the one big bang, none on nature | tick.py:255 (E10, E11) | the bang's length (section 23) | a threshold: the drive's carry past the hold (David derives) | 3, 6 |
+| F2: the Mesh's tension held in [0, the full rate], 28 to 44 percent of all tensions on every run | meshes.py:74 (E9) | a bounded metric | a threshold at Gamma, a zero at 0 (David derives) | 4 |
+| F4: the draw's room held at the modulus, 68 to 95 percent of digits | draw.vernier | row 25 reads the modulus's bits | the composition's own carry past the modulus, or the modulus by name in law 9 (David derives) | 5 |
+| F5: a load below 0 read at 0, up to 3 percent of Node-clocks | readings.py:21 | a floor on the load | a zero or a threshold (David derives) | 4 |
+| the end teeth kept above 0 | tick.end_teeth | the bottom's fallback (above) | the turnover at the floor, the clock's own act | 5 |
+
+**The reading modules' fakes** (David, 6464116147, read at 1cadb3931): every row is rewritten to compare two independent readings of the state, so that it can fail. Animate's rows are his to rewrite, with David; run.py is the Boss's:
+- **rows that can never read NOT SHOWN:** 62, the arrow of time (predicates.py:344-347: its reverse is the same determinant with the slots swapped); 67, CPT (symmetries.py:114-117: C, T and CPT are the row's own sign flips, and P is never computed); 68 (symmetries.py:145-159: no NOT SHOWN branch); 7, light absorbed (gates.py:94-106: any take, the line taken not checked); the three constants (gates.py:178-192: the count of integers per Node-clock fixed when the clock is built); 17's magnitude clause (clicks.py:211-212); 43, exclusion (predicates.py:185-191: it counts the lay jam itself); 14 and 34, the frozen Node-clock (great_clock.py:160-228, by bobs.py:51's skip and BH-S1's restore); 46 (nothing compared with the first cycle's gates);
+- **typed readings:** the conservations row's charge clause (gates.py:199, 218: the typed senses summed); 17's merger clause (reckoner.py:170-171: the key exact_lay, not a gear); the logged constants (run.py:81, 126, 128); the stubs that always read NOT READ with a typed reason (events.py: rows 20, 28, 32, 35, 36, 38, 39, 41, 42, 44, 48 and 50 to 54; and 11, 12, 55, 57, 77; row 39's "no held field" where one stands); the tolerances of a factor two (rows 74, 75 and 76; reckoner.py:307);
+- **closed forms read back as phenomena:** 19, the mass ratios (clicks.py:108-151: the decoder recovers its own input through sine_rim); 10, dilation (clicks.py:276-282: the rate law read back); 2 and 58 to 60 (the same rate law through the spring);
+- **phenomena made by a rule:** 1, 1b and 1c, the recurring bangs (swings.py: the turnover rule's firings, R9, and the exact return kept by the still chime, R5); 6 and 3, the contraction (only the turnover's replay); 24, the merger into light (the fittings R3 makes);
+- **identity:** the light dropped by its name "gap 0" (reckoner.py:189-190), found by object (run.py:205) and added to row 75 by its index (phenomena.py:225-227); no chime can decode as light (reckoner.py:273);
+- **two more:** rows 29 to 31 and 33 restate 10 to 13 and are counted twice (gates.py:370-372); the writer's frozen set is the tick's end mask (run.py:290) while the chimes skip by the start mask, one tick off under rows 14, 34, 45, 61 and 74.
+
+Animate takes the list whole (6464376550), in this order: the bugs first (row 39's reason, the decoder's typed "floats used", the frozen mask read at the start, the tolerances named with their derivation or struck), at his next reader push; the rest with their cuts (the typed senses and the light's identity with cut 5, the closed forms with cut 4, the turnover's rows with section 23's re-wording). Each rewrite is benched before and after, with the rows that move named. A reader push, like every cut, comes after the owner's go on this plan.
+
+**The law's text** (Sofer, SOFER-FAKES-1.md, 6464340733): the clauses of docs/ALGEBRA.md that make a phenomenon by a rule written for it, or read what cannot fail. Each changes only by Sofer's sentence after its derivation, on the owner's word:
+- **A1, Pauli** (108, 342, 817, 1043, 1558, 1903 (7)): made by a rule; cut 5; the owner's decision 1, derived from the kind with an act under it.
+- **A2, E = mc^2** (140, 142, 1177): a reading that cannot fail; cut 5; the click of a whole, the remainder Rule3's own and signed, row 73 as the wind before and after over every train.
+- **A3, the pair's typed senses** (114, 344): cut 5; the senses from the sweep's conservation, the + end by the twist.
+- **A4, the bounds** (1905, 1606, 128, 1604): clamps, which make the one big bang's five ticks; cuts 4 and 6; the owner's decision 2, David's thresholds or zeros.
+- **A5, the turnover as a written trigger** (1598, 1604): cuts 5 and 6; the time gear's carry at its top, the law's two triggers named.
+- **A6, the dispersion as a cosine** (33, 340, 420, 1499): cut 4; read from the step.
+- **A7, the hand as a (cos, sin) rotation** (110, 1531): cut 4; U from the two ends' gears.
+- **A8, the typed exponential** (106, 1459, 1636): cut 4; a chain of carries (David).
+- **A9, gates that cannot fail, in the law's words** (428, 1053, 1132, 1167, 1169, 1171, 1189, 1349): cut 5; the split by the trace of two twin readings, every gate two independent readings.
+- **A10, typed settings written for the swing** (112, 1409, 1413): cut 4; the setting's integers as data.
+- **A11, the coupling by number** (124): cut 5; the spring itself (R4, F3).
+- **A12, declared inputs fitted to nature, which the law itself calls a fit** (112, 324, 346, 350): no cut. They stand under section 19's rule that a train names only its kind and its integers, as nature measures them; the owner rules on it.
+- **A13, declared forces and families** (340, 1537, 1554, 1562): section 25.
+- **The draw stays** (1071, 1075, 1509): the one choice the plan keeps.
 
 **What stays, the generic core:** Rule3's carry (acts.carry), the clock's dial, the one mirror at the turnover, the Spokes from the piece's shape (the 24's one place), the trains' gears, the calibre's integers, the order-free phase, the remainders kept, the invariant draw.
 
@@ -431,7 +513,7 @@ Sofer's audit of the source (SCRIBE-AUDIT-97E5B3F-1.md, items E1 to E19: where a
 | the click of a whole | the carry of the wind at the winding: one quantum taken |
 | the click of a split | the draw by the parts' sizes (Born) |
 | the chime, the fitting, the unspringing | absorption, pair creation, annihilation |
-| the turnover | time reversed at the time gear's top: the mirror r to 2 mid - r |
+| the turnover | time reversed at the time gear's weak maximum or below the floor X_f: the mirror r to mid + mid - r |
 | the rewind | the same step with a+ and a- exchanged |
 | the swing | the lapse's return everywhere at once |
 | the cube's 24 | the rotation group O, acting on the kinds |
@@ -453,18 +535,19 @@ The plan's end has none. On the head these stand, each with its way out:
 11. **The one big bang's exact return asks a symmetric setting, and on it the one mirror leaves almost no matter** (two orbits of fittings, no unspringing, the near-light train never fitted). The same setting made 450 fittings, 279 of them pairs into light, on 97e5b3fd; the unspringings stop at 42d5448b, the one mirror (Animate). So the contradiction is the one mirror's on a symmetric setting. Nature has the bang and the matter. The way out, decided in kind (section 24, item 7): the matter twin hands, the mirror's tie broken by the kinds' coupling (David; section 23).
 12. **Reads beyond one Mesh** (section 8): nature is local, and the head reads two and three Meshes at a few sites and the whole great clock at six. The way out: the stencil of seven alone (cut 7).
 13. **Gates that cannot fail** (David): rows 17, 65 and 70 read the typed senses, row 73 an identity, row 56 nature's band. A gate compares two independent readings of the state, so that it can fail. The way out: section 16.
+14. **The metric has a mass** (David, 6464350822): the regulator's typed pair, rim - rim div Gamma (R13), gives it a spring D (core/rule3.py:36). General relativity's metric has none. The way out: the metric's spring 0, as the light's (section 25, item 3).
 
 ## 19. The formulas: the definitions, and every law as a formula the engine represents
 
-Every law stands here once as a formula; each cut is the engine's representation of its formula (David's proposal, 6463014614).
+Every law stands here once as a formula, or is named below as owed; each cut is the engine's representation of its formula (David's proposal, 6463014614).
 
 **The group.**
 - The 24 is O, the cube's rotation group, isomorphic to S4 (the permutations of the cube's four body diagonals): the 24 signed permutation matrices of determinant 1.
 - Its classes: the identity (1), the quarter turns about the face axes (6), the half turns about them (3), the third turns about the body diagonals (8), the half turns about the edge axes (6).
-- With the mirrors it is O_h (48). On the twin hands acts its double cover 2O (48), where a full turn is -1.
+- With the mirrors it is the 48 (the 24 rotations and their 24 mirror images, O_h); "the 48" in this plan is this group. On the twin hands acts the double cover (the 24 rotations, each with its two signs, 2O), where a full turn is -1.
 - Its five irreducible representations, A1, A2, E, T1 and T2 of dimensions 1, 1, 2, 3 and 3, are the five kinds.
 
-**The state.** At every site x and tick t, every gear holds (a, a-, r, w): the notch now and before, the fine tooth, the teeth count. A hand is z = a3 + i a12, a Gaussian integer. A train of kind K holds dim K components, times its own part: one gear, a hand, or two hands.
+**The state.** At every site x and tick t, every gear holds (a, a-, r, w): the notch now and before, the fine tooth, the teeth count. A hand is z = a3 + i a12, a Gaussian integer. A train of kind K holds dim K components, times its own part: one gear, a hand, or two hands. mid is the teeth count's half, its carry on the Spoke's two sides (acts.mid). U_j is the transport across the Mesh of Spoke j: the neighbour's hand turned by the Mesh's turn and by the pawl's reflection, read from the two ends' gears (the offset's odd gears and the pawls at the two Node-clocks); the Mesh holds no state of its own (Sofer).
 
 **The laws:**
 1. **Rule3, the carry:** n + r = q d + r', 0 <= r' < d. The quotient q leaves; the remainder r' stays.
@@ -474,27 +557,39 @@ Every law stands here once as a formula; each cut is the engine's representation
    - F = sum over j of g_j (U_j a_j - a) - D a + J;
    - a+ = a + (p+ + mid W+) div W+, and r+ = (p+ + mid W+) mod W+.
 
-   The regulator: w (a+ - 2 a + a-) = sum over j of g_j (a_j - a) - D a, with w its own teeth count, then the drive q = (N + r_d) div T_d.
+   The regulator: w ((a+ - a) - (a - a-)) = sum over j of g_j (a_j - a) - D a, with w its own teeth count, then the drive q = (N + r_d) div T_d, with T_d the drive's teeth count and r_d its fine tooth.
 3. **The rewind:** the same step with a+ and a- exchanged and every carry run backward.
-4. **The turnover,** the clock's own act and no click: at the time gear's top or bottom, a and a- are exchanged and r goes to 2 mid - r (the one mirror).
+4. **The turnover,** the clock's own act and no click, on either of the law's two triggers: the time gear's weak maximum (X0 <= X1 >= X2 with one of the two strict: the top), or its output falling below the floor X_f, the least volume with a reading. There every gear's a and a- are exchanged and r goes to mid + mid - r (the one mirror). The one big bang's rest at the full rate is neither, and does not turn (Sofer).
 5. **The click of a whole:** the wind E of a hand at its winding w gives q = E div w; a click where q is at least 1, its remainder booked.
-6. **The click of a split:** up where c (rho + rho) rho_d < room (rho rho_d + S . m) (David; from the tensor's algebra, section 24, item 3).
-7. **Pauli:** an exchange of two equal quanta carries the train's exchange sign, -1 on matter, so psi + (-psi) = 0: two equal quanta of matter at one Node-clock hold no winding; +1 on a force carrier. Derived from the kind (decided, section 24, item 1).
+6. **The click of a split:** up where c (rho + rho) rho_d < room (rho rho_d + S . m) (David; from the tensor's algebra, section 24, item 3). Here c and room are the draw's two outputs (law 9): its number, and the count of values it can take, capped at the modulus (F4, section 16). (rho, S) is the pair's reading and (rho_d, m) the detector's, a second twin pair at the Node-clock, or the pair's own upper twin where none stands (11 d).
+7. **Pauli's exclusion:** an exchange of two equal quanta carries the train's exchange sign, -1 on matter, so psi + (-psi) = 0: two equal quanta of matter at one Node-clock hold no winding; +1 on a force carrier. Derived, by the owner's decision (section 24, item 1); the derivation is owed (below), and until it stands the law's lines on the exchange stand (ALGEBRA.md 555, 817 and 1558; Sofer).
 8. **The books:** every carry's remainder kept. Read as a gate only beside a second, independent reading: the wind before and after over every train.
 9. **The draw:** the vernier's number, the mixed-radix composition of the invariant digits modulo the hands' count times the winding.
 
+**Owed as formulas, David's, before their cuts** (Sofer, 6464153029); no cut starts before its formula stands here:
+- what a click writes: the children's lay at the two ends of a Mesh, and their senses;
+- the unspringing;
+- the closure of the split (section 24, item 3);
+- the clamps' replacement: each bound a threshold or a zero (section 16);
+- the held field's load in D;
+- the release's advance and its recoil;
+- the setting's lay;
+- Pauli's exclusion: the act that writes the exchange sign, with the law's exact count of quanta kept where the board would hold 0 and the books booked two (Sofer's two checks);
+- the readings that stand below in words: energy, momentum, stress, angular momentum (with its origin named, the lattice being a torus) and helicity, each with its second, independent reading;
+- general relativity's six (David, 6464350822): the whole metric with the shears; the metric's own stress in J, the nonlinearity; the metric's spring 0; the clock's rate as the lapse, not the typed exponential; the horizon at the lapse 0, not BH-S1's restore; the deflection of light with its factor two against Newton's (section 25, item 3).
+
 **The readings, each a formula over the state** (David, 6463102778). A gate compares two independent ones, so that it can fail:
-- **mass:** the train's spring D. At rest in a flat clock, the beat read from the step meets cos omega_0 = 1 - s D / (W + W). A composite's mass is its parts' springs less the binding;
+- **mass:** the train's spring D, read as the beat, the ticks between sign changes of the notch. At rest in a flat clock, where W+ = W, the step's trace gives it, W (a+ + a-) = (W + W - s D) a, so there it is the step's own identity and cannot fail alone. Its independent reading is the composite's: the beat of a bound pair against its parts' springs less the binding (Sofer);
 - **energy:** the wind, the quadratic form of a hand's notches now and before and its neighbours', the time-time part of the stress;
 - **momentum:** the lead across each Mesh (the Wronskian), the time-space part, tallied on the regulator's flows;
 - **stress:** the products of the gradients, the space-space part;
-- **charge:** the sign of the sweep, Im(conj(z-) z), the cross of a hand's own two gears in time;
+- **charge:** the sweep, Im(conj(z-) z), the cross of a hand's own two gears in time. The charge exists by the kind; its sign is the state's, which the books conserve, the pair's two children carrying opposite signs (Sofer);
 - **spin:** the twin hands' axis S, with S . S = rho rho;
 - **angular momentum:** the moment (the cube's cross) plus the spin;
-- **statistics:** the exchange sign of the kind;
+- **statistics:** the exchange sign (law 7). Its second reading: two equal quanta laid at one Node-clock and the winding read after, against the sign (Sofer);
 - **helicity:** the twist.
 
-**What a train names outside:** only its kind and its integers (its pair, its weight, its couplings), as nature measures masses and couplings. Derived from the kind and the one formula: the spin, the statistics, the charge's sign and its conservation, the unsprung hand's coupling 0, the dispersion, the energy and the momentum, and a composite's mass. The pair enters only as its spring D, and the beat is read, not computed.
+**What a train names outside:** only its kind and its integers (its pair, its weight, its couplings), as nature measures masses and couplings. The kind gives the spin and the charge's existence; the statistics are the exchange sign, derived from the kind by the owner's decision with its derivation owed (law 7); the charge's sign is the state's. Derived from the one formula: the charge's conservation, the unsprung hand's coupling 0, the dispersion, the energy and the momentum, and a composite's mass. The pair enters only as its spring D, and the beat is read, not computed.
 
 ## 20. The dimensions, the generic functions and the code's standard
 
@@ -533,14 +628,16 @@ def carry(n: Int, d: Int, r: Int, going: Going) -> tuple[Int, Int]: ...
 def mul(z: Gauss, w: Gauss) -> Gauss: ...
 def kinds(spokes: Spokes) -> Kinds: ...                      # the five kinds of O
 def products(k: Kinds) -> Table: ...                         # the integer product table
-def shift(f: Field, j: Spoke) -> Field: ...                  # the neighbour, across the Mesh
+def shift(f: Field, j: Spoke, offset: Field) -> Field: ...   # U_j f_j, U_j from the two ends' offset gears
 def contract(f: Field, g: Field, kind: Kind, t: Table) -> Field: ...
-def pull(f: Field, metric: Field, c: Couplings) -> Field: ...
+def pull(f: Field, metric: Field, offset: Field, others: Fields, c: Couplings) -> Field: ...  # F, J from the other trains
 def step(s: State) -> State: ...                             # p+ = p + s F + K, then the carry
 def gate(s: State) -> tuple[State, list[Click]]: ...
 def draw(s: State, x: Site) -> Int: ...
 def books(start: State, end: State) -> Books: ...
 ```
+
+Every input a function reads is passed to it: U_j from the offset's gears at the Mesh's two ends, J from the other trains' gears. None is hidden state (Sofer).
 
 **The standard:**
 - **The code itself:**
@@ -567,6 +664,7 @@ The Boss's decision, as the owner asked:
   - **David** reads the diff against the cut's formula: the code is the formula's representation term by term, with nothing added;
   - **Animate** benches the cut on the 77 rows, and checks that no reading reads a number the code typed;
   - **a fresh adversarial read**, a reading agent with no stake in the cut, hunts the fakes (any rule that puts a phenomenon in) and reports to all four.
+- **Sofer's gate reads each cut as a branch or a patch on a base, before the push** (scribe_scan.py --patch FILE --base REV), and answers within 15 minutes (6464153029).
 - **A cut lands only with the four approvals.** A finding stops it, and the owner sees each push's approvals in the thread.
 
 ## 22. The rules that put a phenomenon in, found on the head (like Pauli)
@@ -575,16 +673,18 @@ The Boss's scan of the engine's modules at 834cfd72e, beside section 16:
 
 | the rule | where | the phenomenon it puts in | what replaces it |
 | --- | --- | --- | --- |
-| the exclusion's refusals: the setting's refusal by name, the lay jam | assembly/setting.py, click.jam, phase.crowded | Pauli | the kind's exchange sign (section 16) |
+| the exclusion's refusals: the setting's refusal by name, the lay jam | assembly/setting.py, click.jam, phase.crowded | Pauli's exclusion | the kind's exchange sign (section 16) |
 | the typed senses at every fitting, the reckoner's charges from them | run.py, reckoner.sweeps_of | charge conservation, the lepton and baryon numbers | the sweeps read from the gears; the senses from the sweep's conservation |
 | the split's root | bobs.splits | Born's normalisation | the trace of two twin readings; the whole winding by the carry |
 | the sense jam: a sprung pair engages only at opposite sweeps | click.engage | a pair born at opposite charges | the sweep's conservation at the fitting, by the books, not a refusal |
 | the twist's jam and the + end by the twist's sign | click.engage | matter against antimatter, the one hand | the twist as the one-hand coupling's carrier, one row of the couplings |
 | the list's filter: a coupled hand picks among the coupling-0 hands alone | click.list_of | the unspringing into light | the product table: what a pair's product holds (David) |
 | the still chime: a chime where nothing arrives takes nothing | bobs.still_chime | a bob at rest in balance | the wind's balance at the Node-clock, by the books |
-| the stop: the unspringing jammed below the unsprung hand's quantum | unspring.py | the threshold of E = mc^2 | the click of a whole: a whole winding of the light, nothing else |
-| the branches by a train's identity: the offset's kick, the held field's kick, the twin hands' Pauli term, the regulator's own path, the unsprung hand | tick.py (about 10 sites), clock.py, click.py, bobs.py, unspring.py, hands.signs, draw.py, trains.py | each train's coupling chosen by its name | dispatch by kind and the calibre's couplings: the one formula |
-| the clamps and the bottom's fallback | meshes.factors, tick.carry, Tick.end_teeth | a bounded run | derived (David), or the gate's comparison |
+| the stop: the unspringing jammed below the unsprung hand's quantum | unspring.py | the threshold of E = mc^2 | the click of a whole: a whole winding of the light, nothing else. The stop is a law clause (the unwind's fall), so its replacement is the owner's word, within his E = mc^2 example (Sofer, A2) |
+| the branches by a train's identity: the offset's kick, the held field's kick, the twin hands' spin term, the regulator's own path, the unsprung hand | tick.py (about 10 sites), clock.py, click.py, bobs.py, unspring.py, hands.signs, draw.py, trains.py | each train's coupling chosen by its name | dispatch by kind and the calibre's couplings: the one formula |
+| the clamps and the bottom's fallback | meshes.factors, tick.carry, Tick.end_teeth | a bounded run | derived (decided, section 24, item 2; David) |
+| the draw's room held at the modulus (F4) | draw.vernier | row 25 reads the modulus's bits | the composition's own carry past the modulus, or the modulus by name in law 9 (David) |
+| a load below 0 read at 0 (F5) | readings.rates_of | no clock runs faster than the full rate | a zero or a threshold (David) |
 
 
 ## 23. The one big bang
@@ -615,14 +715,18 @@ The plan's one world (Animate, 6463302451): the one big bang on the bang's calib
 - **The setting is a pure A1 state of the metric.** The lapse is the same at every site, kept by every one of the 24 and by every translation of the torus: homogeneous and isotropic, the cosmological principle.
 - **The near-light hand's pattern is an eigenmode of the covariant Laplacian** on the torus of side 4. Its quarter turn per tick is the multiplication by i, exact on the Gaussian integers, so its stress is the same at every site.
 - **So the whole great clock is one scalar oscillator.** In the main formula the metric's half sees the same neighbours' term at every site, and the great clock is one oscillator, the lapse: the k = 0 mode, as the scale factor of a closed Friedmann universe.
-- **The return is exact.** The step is exactly invertible (the carry keeps its remainder), and the turnover is an involution. So the orbit after a turnover retraces the orbit before it, bit for bit, with no drift.
+- **The return is exact.** The step is exactly invertible (the carry keeps its remainder), and the turnover is an involution. So the orbit after a turnover retraces the orbit before it, bit for bit, with no drift. This is what the head's chart shows, not the plan's goal (Animate).
 
-**Why this setting alone:** any setting not alike at every Node-clock turns its Node-clocks over at different ticks, so the great clock never turns at once and never returns. The chiral, the hole and the bodies have no exact return.
+**Why this setting, and why its exact return is no goal:** any setting not alike at every Node-clock turns its Node-clocks over at different ticks, so the great clock never turns at once and never returns exactly; the chiral, the hole and the bodies have no exact return. The owner's words through Animate (07:4x and 07:5x UTC) set the goal:
+- **Longer bangs, as in nature.** The five ticks are the clamp's, F1 (section 16): the regulator's drive stands at its hold at every Node-clock in every tick (768 of 768 on the side 4 over 12 ticks). Not the cube (the side 8 swings as the side 4), not the light, the full rate or the quantum of action; the trace moves it (12 gives 7 ticks, 3 no swing) (Animate, 6463587970). Section 24, item 2 removes it: at cuts 3 and 6 the clamp goes, and the length is the one act's own, from the matter's energy and its coupling to the clock; Animate reads it there.
+- **No exact return; a seed not alike everywhere; black holes that turn Node-clocks over; many bangs, each carrying what came before.** The rewind is exact, so nothing the board held is lost. Animate's probes on 834cfd72e, the bang's seed broken once (6463670867): with a hole laid at [0, 0, 0], 24 whole-board bangs to tick 118 and then local turnovers (6,200), 190 births of which 151 pairs into light, rows 24, 73, 74 and 75 back, 35 rows shown; with one lump of 56 quanta, one whole bang and then local turnovers only (11,245), 144 births, 103 into light, 33 rows shown; neither makes a horizon. On the hole 900 a stopped Node-clock turns over at every release (397 of 397).
+- **So rows 1, 1c and 46,** which read an exact return to the seed or the first cycle's gates, are to read the bangs' recurrence and how the bangs differ; the new words of their predicates are the owner's (Animate).
+- **The setting is David's to derive,** its seed broken at least once; Animate reads every probe he names.
 
 **What does not work yet, the plan's to solve in this one bang:**
 - **The symmetry that makes the return exact makes the matter alike.** There are 64 fittings, the near-light train is never fitted, and there is no unspringing: every one competes with its own image and is refused under the one mirror (since 42d5448b; on 97e5b3fd, 279 pairs into light).
 - **So these rows cannot show on it:** 24, 73, 74 and 76, and the twin hands' rows while the calibre holds no twin train (11 e).
-- **The way out must keep the A1 lapse exact and break only the mirror's tie.** The one-hand coupling does that and keeps the 24; David's twin hands as the bang's matter is the other proposal. David's to derive, the owner's to decide (section 18, item 11).
+- **The way out breaks the mirror's tie and the seed's sameness, as the owner asks above:** the one-hand coupling breaks the tie and keeps the 24, the twin hands are the bang's matter (section 24, items 5 to 7), and the seed is broken at least once. David derives the three (section 18, item 11).
 - **The relics between the swings** are read through the clocks' reversal: the owner's word of 05:4x UTC, that because of the clocks' reversal, contraction is seen as expansion (section 14, Animate's to read).
 
 ## 24. The owner's decisions (08:1x UTC)
@@ -634,7 +738,9 @@ Every one follows from the tensor, the trains and the one act; none is a formula
 4. **The shears: from the tensor.** The spatial metric is the vector's whole symmetric square, A1 + E + T2 (section 6), so the shears are the metric's by its kind, ten gears as in general relativity. They are driven by the stress's T2 part through the product table, and read by the one act through the mixed terms, a window of two Meshes taken as two ticks of one Mesh (David derives; section 18, item 1).
 5. **The one-hand coupling: from the tensor and the trains.** The twin hands' spin S (T1, a mirror vector) contracted with a current (T1, a vector) into A1 by the product table is allowed by the 24 and forbidden by the 48: the mirror's break, nature's V - A, follows from the kinds. Its strength is the twin train's integer in the calibre; no row of its own (11 b).
 6. **The twin hands' motion: from the tensor, nature shown in the clicks.** The twin hands move on their own gears by the one formula, the spin's coupling from the product table, keeping their interference. The 24 is asked of what the clicks show: the density and the spin (rho, S) and the click counts, since the spinor's own sign is never seen in nature (David derives and checks; 11 a).
-7. **The one big bang's way out** follows from 1, 5 and 6: its matter twin hands, the mirror's tie broken by the coupling of the kinds, the A1 lapse kept exact (section 23).
+7. **The one big bang's way out** follows from 1, 5 and 6: its matter twin hands, the mirror's tie broken by the coupling of the kinds, and its seed broken at least once, so that the bangs differ and each carries what came before (the owner's word through Animate, 07:5x UTC; section 23).
+
+**For the law** (Sofer, 6464153029): docs/ALGEBRA.md changes only by sentences Sofer proposes after each derivation and the owner approves. Until then its lines stand: Pauli (555, 817, 1558, and the setting that jams per hand, 1903 (7)), the clamps (1905), the closure (33, 92 and 102), the shears (R11). His checks on the derivation of Pauli are in section 19's owed list; the twin hands moving on their own gears (item 6) give the sign a carrier, which (rho, S) cannot.
 
 ## 25. What the clicks still need to show nature exactly
 
@@ -646,6 +752,13 @@ The Boss's check of nature's content beyond the 33 rows of section 14 (the owner
    - Its waves come from the shears (section 24, item 4; row 36).
    - Light's bending and delay (rows 11, 12, 29, 31) come from the metric's coefficients in the one formula, read on a setting with a mass.
    - The perihelion (row 32) and free fall (rows 13, 33) are read the same way.
+   - **To reach general relativity** (David, 6464350822, on the owner's question): the one formula's metric half is the wave form of the linearized Einstein equation, box h = kappa T, on the lattice. The regulator's gears are the metric (the lapse W, the tensions, the flows), and the stress of matter drives them. Six items, each David's derivation with its formula before its cut:
+     - (a) the whole metric: the shears back;
+     - (b) the nonlinearity: the metric's own stress sources it, a bilinear of the regulator's gears in J;
+     - (c) a massless metric: its spring 0, as the light's (section 18, item 14);
+     - (d) the clock's rate from the metric: the lapse, not the typed exponential (E8), so the redshift is derived;
+     - (e) the horizon from the lapse at 0, not from BH-S1's restore;
+     - (f) light's deflection and delay read (rows 11 and 12), with the deflection's factor two against Newton's: the test that space curves as much as time, the tensions' coupling equal to the lapse's.
 4. **Masses:** each train's spring, its integer in the calibre (measured, as nature's are), never computed. A composite's mass is derived from its parts.
 5. **Charge:** the sweep, read from the gears with no typed sense, conserved by the one act at every click.
 6. **Spin and statistics:** the twin hands' kind (Pauli derived, section 24, item 1).
@@ -654,4 +767,4 @@ The Boss's check of nature's content beyond the 33 rows of section 14 (the owner
 9. **Temperature** (rows 48 and 75): a common temperature from the one act's exchange of wind among the trains. On the head the unsprung hand's wind stands 10^7 above matter's. Open, for David.
 10. **Bell at a distance** (section 18, item 4). The closure follows from the tensor's algebra (decided), and its reach is the one act's, one Mesh a tick. Where the partner clicks first, the correlation is lost, and nature keeps it. No local carriage can keep it everywhere (Bell's theorem), so this stands as a contradiction until David's derivation answers it.
 11. **The relics between the swings** (rows 2, 5 and 58) are read through the clocks' reversal (the owner's word: contraction is seen as expansion). Animate reads them.
-12. **The one big bang's matter:** twin hands, the coupling of the kinds, the A1 lapse kept (section 23).
+12. **The one big bang's matter:** twin hands, the coupling of the kinds, the seed broken at least once, many bangs (section 23).
