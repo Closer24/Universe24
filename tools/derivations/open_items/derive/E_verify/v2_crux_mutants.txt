@@ -1,0 +1,9 @@
+M1. eps = +1 on the twin hands: Pauli's zero must fail
+  pairs with sigma_++ > 0 in the frame (phi, T phi): 200 of 200 (must be above 0)
+M2. eps read from the head's K (K K = +1 on the twin hands): the twin hands' sign must come out wrong
+  twin pairs where K K = +1 (eps = +1, the boson's sign): 200 of 200 (must be above 0)
+M3. eps = i: relabelling must move a size
+  configurations with a size moved by relabelling: 198 of 200 (must be above 0)
+M4. the A1 premise with the sign flipped (eps = -nu): two equal quanta must lose the A1 on every kind
+  kinds where eps = -nu leaves the pair no A1: 8 of 8 (must be above 0)
+result: every mutant fails as it must

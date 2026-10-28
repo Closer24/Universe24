@@ -1,0 +1,10 @@
+M1. K in place of T at the turnover: the 24 must break and Kramers must fail
+  lifts with S(K U psi) != S(U K psi): 32 of 48 (must be above 0)
+  hands with <K phi, phi> != 0: 576 of 624 (must be above 0)
+  twin pairs where K K psi != -psi (eps read as K squared is +1, not the full turn): 624 of 624 (must be above 0)
+M2. T without its sign, (conj z2, conj z1): its square must stop being -1 and the 24 must break
+  lifts it fails to commute with: 40 of 48 (must be above 0)
+  twin pairs where its square is not -1: 624 of 624 (must be above 0)
+M3. the exchange without the conjugation (the half turn about y, a turn and no reversal): Kramers must fail
+  hands with <H_y phi, phi> != 0: 496 of 624 (must be above 0)
+result: every mutant fails as it must

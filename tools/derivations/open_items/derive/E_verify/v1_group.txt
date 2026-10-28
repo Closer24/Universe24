@@ -1,0 +1,73 @@
+1. The group, closed from two generators (no listing): order, centre, image in the rotations
+  [ok] order 48: 48
+  [ok] closed: 48 x 48 products in the set
+  [ok] -1 in the group and central
+  [ok] every element unitary of determinant 1
+  [ok] the image is the 24 signed permutation matrices of determinant 1, each met by g and -g: 24
+  [ok] entries lie in Q(zeta8): fixed by the Galois map x -> x^17
+  entries all algebraic integers in this basis: False (the quarter turns' 1/r2 is not in Z[zeta8])
+2. The character table found from the group alone
+  [ok] 8 classes: [1, 8, 6, 12, 6, 6, 8, 1]
+  [ok] every class is real (g ~ g^-1): every kind self-dual (Brauer): 8 of 8
+  [ok] 8 irreducible characters, dimensions 1 1 2 2 2 3 3 4, SUM dim^2 = 48: [1, 1, 2, 2, 2, 3, 3, 4]
+  [ok] orthonormal (64 inner products)
+    kind of dim 1: nu = 1, chi(z)/dim = 1, A1 in Sym^2 = 1, in Alt^2 = 0
+    kind of dim 1: nu = 1, chi(z)/dim = 1, A1 in Sym^2 = 1, in Alt^2 = 0
+    kind of dim 2: nu = -1, chi(z)/dim = -1, A1 in Sym^2 = 0, in Alt^2 = 1
+    kind of dim 2: nu = -1, chi(z)/dim = -1, A1 in Sym^2 = 0, in Alt^2 = 1
+    kind of dim 3: nu = 1, chi(z)/dim = 1, A1 in Sym^2 = 1, in Alt^2 = 0
+    kind of dim 3: nu = 1, chi(z)/dim = 1, A1 in Sym^2 = 1, in Alt^2 = 0
+    kind of dim 4: nu = -1, chi(z)/dim = -1, A1 in Sym^2 = 0, in Alt^2 = 1
+    kind of dim 2: nu = 1, chi(z)/dim = 1, A1 in Sym^2 = 1, in Alt^2 = 0
+  [ok] nu = chi(z)/dim on all eight kinds (from the table found here): 8 of 8
+  [ok] the A1 of V x V lies in Sym^2 where nu = +1 and in Alt^2 where nu = -1, once
+  [ok] three kinds have nu = -1 (dims 2, 2, 4), five have +1
+3. The three signs on explicit matrices of every kind (A2 by the body diagonals, G3/2 as Sym^3)
+    A1    dim 1: homomorphism True, irreducible True, z = +1, nu = 1, invariant forms 1 (symmetry 1), antiunitary intertwiners 1 (JJ sign 1)
+    A2    dim 1: homomorphism True, irreducible True, z = +1, nu = 1, invariant forms 1 (symmetry 1), antiunitary intertwiners 1 (JJ sign 1)
+    E     dim 2: homomorphism True, irreducible True, z = +1, nu = 1, invariant forms 1 (symmetry 1), antiunitary intertwiners 1 (JJ sign 1)
+    T1    dim 3: homomorphism True, irreducible True, z = +1, nu = 1, invariant forms 1 (symmetry 1), antiunitary intertwiners 1 (JJ sign 1)
+    T2    dim 3: homomorphism True, irreducible True, z = +1, nu = 1, invariant forms 1 (symmetry 1), antiunitary intertwiners 1 (JJ sign 1)
+    E1/2  dim 2: homomorphism True, irreducible True, z = -1, nu = -1, invariant forms 1 (symmetry -1), antiunitary intertwiners 1 (JJ sign -1)
+    E5/2  dim 2: homomorphism True, irreducible True, z = -1, nu = -1, invariant forms 1 (symmetry -1), antiunitary intertwiners 1 (JJ sign -1)
+    G3/2  dim 4: homomorphism True, irreducible True, z = -1, nu = -1, invariant forms 1 (symmetry -1), antiunitary intertwiners 1 (JJ sign -1)
+  [ok] z = nu = symmetry of the invariant form = sign of JJ, on every kind: 8 of 8
+3b. The standard proof by restriction: each kind occurs once in some spin j of SU(2), whose form is Sym^2j(det)
+    kind of dim 1 (nu 1): multiplicity one in spin j = ['0/2'], sign (-1)^2j = [1]
+    kind of dim 1 (nu 1): multiplicity one in spin j = ['6/2'], sign (-1)^2j = [1]
+    kind of dim 2 (nu -1): multiplicity one in spin j = ['1/2'], sign (-1)^2j = [-1]
+    kind of dim 2 (nu -1): multiplicity one in spin j = ['5/2'], sign (-1)^2j = [-1]
+    kind of dim 3 (nu 1): multiplicity one in spin j = ['2/2', '6/2'], sign (-1)^2j = [1, 1]
+    kind of dim 3 (nu 1): multiplicity one in spin j = ['4/2', '6/2'], sign (-1)^2j = [1, 1]
+    kind of dim 4 (nu -1): multiplicity one in spin j = ['3/2', '5/2'], sign (-1)^2j = [-1, -1]
+    kind of dim 2 (nu 1): multiplicity one in spin j = ['4/2'], sign (-1)^2j = [1]
+  [ok] every kind occurs once in some spin j <= 3 and its nu is (-1)^2j: the law on 2O by restriction: 8 of 8
+  [ok] on the twin hands the intertwiner is a multiple of -i sigma_y: T = (-i sigma_y) K up to a scalar: [['0', '-1'], ['1', '0']]
+4. The law on subgroups of the 48 (is it 'the cube's 24 and not less'?)
+    2T, the tetrahedron's 24 lifts: order 24 (want 24), 7 classes, 3 real; kinds (dim:nu/z) 1:1/1 1:0/1 1:0/1 2:-1/-1 2:0/-1 2:0/-1 3:1/1
+      strict law nu = z on 3 of 7 kinds; on the self-dual kinds 3 of 3; the twin hands irreducible here: True
+    Q8, the 8 lifts of the three face half turns: order 8 (want 8), 5 classes, 5 real; kinds (dim:nu/z) 1:1/1 1:1/1 1:1/1 1:1/1 2:-1/-1
+      strict law nu = z on 5 of 5 kinds; on the self-dual kinds 5 of 5; the twin hands irreducible here: True
+    the 16 lifts of D4 (the z axis as a line): order 16 (want 16), 7 classes, 7 real; kinds (dim:nu/z) 1:1/1 1:1/1 1:1/1 1:1/1 2:-1/-1 2:-1/-1 2:1/1
+      strict law nu = z on 7 of 7 kinds; on the self-dual kinds 7 of 7; the twin hands irreducible here: True
+    the 12 lifts of D3 (the (1,1,1) axis as a line): order 12 (want 12), 6 classes, 4 real; kinds (dim:nu/z) 1:1/1 1:1/1 1:0/-1 1:0/-1 2:-1/-1 2:1/1
+      strict law nu = z on 4 of 6 kinds; on the self-dual kinds 4 of 4; the twin hands irreducible here: True
+    Z8, the quarter turns' lifts about z: order 8 (want 8), 8 classes, 2 real; kinds (dim:nu/z) 1:1/1 1:0/1 1:1/1 1:0/1 1:0/-1 1:0/-1 1:0/-1 1:0/-1
+      strict law nu = z on 2 of 8 kinds; on the self-dual kinds 2 of 2; the twin hands irreducible here: False
+    Z6, the third turns' lifts about (1,1,1): order 6 (want 6), 6 classes, 2 real; kinds (dim:nu/z) 1:1/1 1:0/1 1:0/1 1:1/-1 1:0/-1 1:0/-1
+      strict law nu = z on 1 of 6 kinds; on the self-dual kinds 1 of 2; the twin hands irreducible here: False
+    Z4, the half turn's lifts about z: order 4 (want 4), 4 classes, 2 real; kinds (dim:nu/z) 1:1/1 1:1/1 1:0/-1 1:0/-1
+      strict law nu = z on 2 of 4 kinds; on the self-dual kinds 2 of 2; the twin hands irreducible here: False
+  [ok] 2T: the strict law fails on 4 of 7 kinds, as the draft says
+  [ok] 2T: those 4 are exactly its non-self-dual kinds (nu = 0, no A1 in V x V, no commuting antiunitary)
+  [ok] 2T: on all 3 self-dual kinds the signs agree (the weak law holds)
+  [ok] Q8: the strict law holds on 5 of 5 kinds: 8 lifts already carry the whole law
+  [ok] the 16 lifts of D4: the strict law holds on 7 of 7
+  [ok] the 12 lifts of D3: strict fails only on its 2 complex kinds; weak holds
+  [ok] Z6: even the weak law fails (the real kind g -> -1 has z = -1 and nu = +1)
+  [ok] 2T: on the twin hands the commuting phase reversal is forced (1 intertwiner) and squares to -1: (1, [-1])
+  [ok] Q8: on the twin hands the commuting phase reversal is forced (1 intertwiner) and squares to -1: (1, [-1])
+  [ok] Dic3: on the twin hands the commuting phase reversal is forced (1 intertwiner) and squares to -1: (1, [-1])
+  [ok] Dic4: on the twin hands the commuting phase reversal is forced (1 intertwiner) and squares to -1: (1, [-1])
+  [ok] Z8 (abelian lifts): the phase reversal is not forced (intertwiners 2-dimensional over the field): (2, [0, 0])
+result: 0 failures

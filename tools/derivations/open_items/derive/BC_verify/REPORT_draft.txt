@@ -1,0 +1,108 @@
+VERIFIER'S REPORT: "Bell at a distance through the cone" (Animate, reader-5 50522d754)
+
+The algebra is exact; I reproduce every number with my own integer code, and the shipped probe reruns identical to its commit. The physics is a local model with maximal measurement dependence, inside the freedom-of-choice and locality loopholes. Its two load-bearing inputs, (i) and the singlet, are declared rather than derived, and (iii) does not rescue late settings.
+
+1. CLAIMS
+- Numbers: CONFIRMED.
+  - E = -21/29, -21/29, -20/29, +20/29; S = -82/29; S^2 = 6724/841 < 8.
+  - Far clicks whole (58/58 and 116/116); both marginals 1/2.
+  - Same on y-z frames and on 300 random complex frame pairs.
+- P-e (the 24): CONFIRMED (48/48), but empty; it holds for any invariant size rule.
+- Mutants: CONFIRMED.
+  - Mine: children swapped gives -1.42; a negated label gives +82/29.
+  - Sizes N(det)^n for n = 2, 3, 4, 8 give -3.77, -3.96, -3.99, -4.00, all with no signalling.
+  - So the route yields any correlation up to the PR box, and the singlet's value comes only from the size law.
+- P-f: the value -82/24389 is CONFIRMED; "PROVED" is REFUTED.
+  - perp(B's frame) at the fitting gives -82/29;
+  - one notch off gives -2.816;
+  - mixed frames give -2.40 to -2.85.
+
+  What holds: frames independent of the settings give |S| <= 2 (2,160 pairs, max 42/29). The cut-off is the frame's departure, at least l/c before the fitting.
+- "Locally, at any separation": CONFIRMED WITH CORRECTIONS.
+  - The probe has no lattice or ticks.
+  - The children's carriage is assumed, yet on the head the children never part (QG-M6).
+  - Every setting is inside the other click's past cone (0/18,900 placements outside).
+- "Drops measurement independence": CONFIRMED.
+  - Hall's M is 41/29 (answer pair) and 2 (children's states).
+  - The minimum for 82/29 is 8/29, from S <= 2 + 3M (proved, checked on 4,000 mixtures, tight).
+- The owed list also lacks the A1 premise, the children's carriage and their routing.
+
+2. CLASSIFICATION
+- A local, outcome-deterministic common-cause model whose cause includes the settings, which are carried forward to the source.
+- Neither superdeterministic nor retrocausal: it keeps Continuous Action and No Future-Input Dependence (Wharton-Argaman, RMP 92, 021002, 2020).
+- It exploits the freedom-of-choice loophole (Scheidl, PNAS 107, 19708, 2010) and the locality loophole.
+- Brans (IJTP 27, 219, 1988) runs the arrow the other way.
+- Hall (PRL 105, 250404, 2010) needs 14% dependence; this route uses all of it.
+- "One seed" is 't Hooft's premise (arXiv:1405.1548), but his correlation sits in the initial state, not in a carriage.
+- With held settings it is no conspiracy, but it does not follow from the dynamics (BC-S1). Late settings would need a tuned seed.
+
+3. CRUX (i)
+       B (x=-l)                  F                  A (x=+l)
+ +l/c  B clicks *  <-- child --   .   -- child -->  * A clicks
+ -l/c  B frame  o  -- frame -->   .   <-- frame --  o A frame leaves
+- By line 33 a click reads only through a hand at c or less, so a setting must hold from o to *, at least 2l/c. A's o precedes B's * by at least D/c.
+- 3D toy with the law's light:
+  - Held frames arrive mixed, yet S stays at -2.40 to -2.85 (d = 4, 6, 10).
+  - It even reaches -2.8478, past Tsirelson; the S^2 band is inherited from the declared frames.
+- The limits:
+  - the field at the fitting falls as 1/d (0.058, 0.038, 0.027 of a frame);
+  - a setting-independent field of 1.5% to 31% of a frame (d = 10) restores |S| <= 2;
+  - the only unmixed arrival is the 3^-d front, a bare word that line 33 forbids clicks to read.
+
+  So the route needs a carriage of its own (draft D 4.6) and settings held from t_F - l/c.
+- Nature:
+  - static analysers (Freedman-Clauser 1972; Aspect-Grangier-Roger 1982) pass only with that carriage;
+  - fails Aspect-Dalibard-Roger 1982 (switching in flight);
+  - fails Weihs 1998 (random within 1.3 us at 400 m);
+  - fails Hensen 2015 (entanglement swapping; the random bits are spacelike to the herald);
+  - fails Handsteiner 2017 (stars at about 600 ly, not quasars) and Rauch 2018 (quasars at 7.78 and 12.21 Gyr).
+
+  All of these need (iii).
+
+4. LINE 102
+- As built, Sofer is right: k = 1 and k = 7-4i give the same S, so the pair never enters. These are Born's singlet odds computed from settings.
+- The counter-reading is exact: law 6 on k eps gives N(k)N(det), and other states give other values (product -42/29, triplet -2/29).
+- It stops being "put in" only once three things are derived:
+  - a two-twin tensor at the fitting;
+  - law 6 sizes for any state;
+  - eps itself.
+
+  The last is reachable. Under the 8 exact half turns, only multiples of eps are invariant (390,624 states checked), so an equivariant fitting fed by A1 light lays eps. That equivariance is owed.
+
+5. (iii), THE BOSS'S ACCOUNT (1D, two cycles, every draw counted)
+- (1, b) Under the exact rewind: no.
+  - The rewind is bit for bit (1,320/1,320 states); the twins return the birth's axis z. S_2 = S_1 = -42/29.
+  - What reaches the birth is T(X_birth), because S^-k S^k = 1. Retracing a click needs its erased amplitude, and that erases the late axis.
+  - The axis returns only if clicks are not undone (R2: the forward rule after T). Then the twins hold a' and b in 8/8 branches, never T(X_birth). T S T = S^-1 holds in free flight (200/200) and fails at clicks.
+- (2) Under R2: S_2 = -82/29 exactly if the cycle-2 choices repeat, -0.708 if they are independent. |S| > 2 needs per-side persistence p > 0.841.
+- (c) The same Mesh holds only by two exact mirror turnovers (and draft C's recurrence stands on R10). It is not the same pair state; the returned twins are a product.
+  - Law 6 repeats cycle 1's outcomes (S_2 = -42/29).
+  - Animate's re-split needs the A1 premise.
+  - A merger keeps det, with no axis (S_2 = -72/29).
+- (a) Fresh late choices do not survive, and held ones are not late.
+  - A fixed point needs a period-one orbit, with every bang the same: Novikov consistency (PRD 42, 1915, 1990), i.e. superdeterminism.
+  - That contradicts "every bang shows more", and a reversible engine has no attractor that could approach such a fixed point.
+- (d) Marginals are 1/2 everywhere. Cycle 1 steers cycle 2's joint statistics only forward, with no signal.
+- (e) With free choices every cycle sees S of about -0.71.
+  - Our RNG, human and cosmic choices would each have to repeat the previous cycle's, trial by trial.
+  - That is exact recurrence, where the rewind carries nothing. The account does not fit our observations.
+- The analogies fail. Cramer (RMP 58, 647, 1986), ABL (PR 134, B1410, 1964), Aharonov-Vaidman, and Price and Wharton constrain the same pair in one history. A step-by-step engine (Wharton, arXiv:1211.7081) reaches only the next cycle: past-input dependence.
+
+6. PROTOCOL
+- Marks: section 0 asserts (i), "any separation" is unchecked, and P-f is mislabelled PROVED.
+- The mutants spare the load-bearing premises.
+- The probe prints floats.
+- Two declarations: run(fa, fb, fa, fb) places the frames at the fitting by hand, and eps is typed as det.
+
+7. OWED
+- the setting-dependent field, dominant at the fitting;
+- eps, by equivariance;
+- law 6 on the pair state;
+- the children's carriage and routing.
+
+Even with all four, it covers only held settings.
+
+8. THE SENTENCE
+"Bell is solved" is unfair. Instead:
+
+"A local rule reproduces the singlet exactly, without signalling, when each detector's frame is held from before the emission until its click and is read at the fitting, where law 6 splits a declared singlet. This is a measurement-dependent model inside the freedom-of-choice and locality loopholes. Tests with fast random, human or cosmic settings therefore remain a contradiction, and the time reversal does not lift it. The exact rewind carries no setting back, and a forward run after the turnover serves only the next cycle's pairs, and only if their settings repeat."

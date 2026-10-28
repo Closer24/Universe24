@@ -1,0 +1,28 @@
+1. T commutes with all 48 lifts; K with the 8 real ones (16 up to a sign: 8 of the 24 turns)
+  [ok] T U psi = U T psi: 48 of 48 lifts x 40 twin pairs
+  [ok] K U psi = U K psi: 8 of 48 (the turns about the y axis)
+  [ok] S(K U psi) = S(U K psi): K keeps the 24 on the reading only for: 16 of 48 lifts
+  [ok] on the reading S: T's S -> -S commutes with the 24 turns: 24 of 24
+  [ok] on the reading S: K's S -> (Sx, -Sy, Sz) commutes only with the y axis's 8: 8 of 24
+2. T T = -1 on the twin hands, K K = +1; T keeps rho, reverses S, and conjugates the overlap
+  [ok] T T psi = -psi: 20000 of 20000
+  [ok] K K psi = psi: 20000 of 20000
+  [ok] rho(T psi) = rho, S(T psi) = -S: 20000 of 20000
+  [ok] <T u, T v> = conj <u, v>: 20000 of 20000
+  [ok] S(K psi) = (Sx, -Sy, Sz): 20000 of 20000
+3. Kramers and the pairing: <T phi, phi> = 0, det[phi, chi] = <T phi, chi>; the one hand's K: <K z, z> = z z
+  [ok] <T phi, phi> = 0, exhaustive: 624 of 624
+  [ok] det[phi, chi] = <T phi, chi>: 56160 of 56160
+  [ok] one hand: <K z, z> = z z, never 0 for z != 0: 80 of 80
+4. T is the one covariant phase reversal: X conj(U) = U X for the generators gives X = lam (-i sigma_y), so J J < 0
+  [ok] the solutions X over Q form a space of dimension 2 (lam in Q(i)), spanned by -i sigma_y and its i multiple: [[['0+0i', '-1+0i'], ['1+0i', '0+0i']], [['0+0i', '0-1i'], ['0+1i', '0+0i']]]
+  [ok] X conj(X) is a negative multiple of 1 for every solution: every 24-covariant phase reversal squares to minus
+5. The ratchet's carry: T^n psi = (-1)^(n div 2) T^(n mod 2) psi, the sign the carry of the pawl's two teeth
+  [ok] n = 0 .. 16: 500 of 500
+6. The turnover's act on the twin gears: now' = T(before), before' = T(now)
+  [ok] the gears (u3, u12, d3, d12) of the before become (-d3, d12, u3, -u12) of the now after: an exchange and signs: 20000 of 20000
+  [ok] S of the now after = -S of the before, rho kept (time reversed, the spin reversed): 20000 of 20000
+  [ok] T: the two twins' sweeps exchange (the total kept): 20000 of 20000
+  [ok] K (head): each twin's sweep kept: 20000 of 20000
+  [ok] the rewind is the turnover with T^-1 = -T; the turnover twice gives -psi (no involution on the twin hands): 20000 of 20000
+result: 0 failures

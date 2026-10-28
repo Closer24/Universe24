@@ -1,0 +1,25 @@
+1. One twin pair per train at a Node-clock (the head's board) cannot hold two quanta
+  [ok] the filled orbital summed into one spinor, psi = phi + T phi, is a pure spinor: S . S = rho^2 (not S = 0): 624 of 624
+  [ok] so a third newcomer finds a free size N(det[phi + T phi, chi]) > 0 (it must be 0 for the filled orbital): 29488 of 29952
+  [ok] two quanta in one state: the two-quantum amplitude is 0 at every pair of parts: 5000 of 5000
+  [ok] the summed field's product at the parts is not 0: the board's sum has lost the two ways: 5000 of 5000
+  [ok] the plan's law 7, psi + (-psi) = 0: the wind of two quanta goes to 0 while two are booked (the books fail): 624 of 624
+2. One hand per quantum: n(x) is a reading of the quanta's hands at x
+  [ok] |S| <= rho for any sum of quanta (n is positive): 20000 of 20000
+  [ok] eight orthogonal quanta on four Node-clocks x two senses (F4 x H2, entries 1, -1, i, -i), each of norm 8
+  [ok] Bessel: every one of the 255 sets of orthogonal quanta keeps n(x) <= u at every Node-clock (S . S <= (2u - rho)^2): 255 of 255
+  [ok] all eight: the filled band, rho = 2u and S = 0 at every Node-clock (two per Node-clock, one per sense)
+  [ok] the same for quanta held at one Node-clock each (the eight unit hands, u = 1): 255 sets: 255 of 255
+3. The one formula's linear step keeps the quanta's mutual two-slot form W(u, v) exactly
+  [ok] W(u, v) = SUM_x <u_now, v_before> - <u_before, v_now> kept at every tick, 3 x 3 entries, 24 ticks: 24 of 24
+  [ok] the one-slot form SUM_x <u_now, v_now> is not kept (the conserved form is the two-slot one): moved at 24 of 24 ticks
+4. The lay is local, and the free partner is the occupant's turnover image
+  [ok] a child set at one Node-clock meets a spread hand at that Node-clock alone (the global form = its local term): 200 of 200
+  [ok] W(occupant, its turnover image) = <u_now, T u_now> - <u_before, T u_before> = 0 (Kramers on each slot): 20000 of 20000
+  [ok] the image carries the occupant's own two-slot charge W(v, v) = W(u, u): an equal quantum, the other sense: 20000 of 20000
+5. The occupation is no state: two boards with the same occupation at every Node-clock step apart
+  [ok] a Node-clock phase i^(x + 2y) keeps every occupation (rho, S) and changes the next tick's: 20 of 20 boards
+6. The two-slot occupation of one quantum is not positive: S . S - W W = 4 N(det[now, before]) >= 0 (draft D's P2)
+  [ok] S . S - W^2 = 4 N(det[now, before]) for one quantum's two slots: 20000 of 20000
+  [ok] so its smaller eigenvalue (W - |S|) / 2 is below 0 wherever det[now, before] != 0: 19998 of 20000
+result: 0 failures

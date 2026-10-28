@@ -1,0 +1,12 @@
+M1. The sign flipped: nu compared with -chi(z)/dim
+  kinds where nu != -chi(z)/dim: 8 of 8 (must be above 0)
+M2. Commuting lifts (O x Z2 built as the 24 rotation matrices with a sign): the odd kinds' nu = +1 against z = -1
+    T1 x sgn on O x Z2: nu = 1, chi(z)/dim = -1
+  the odd T1's mismatch (nu = +1 while z = -1): 1 of 1 (must be above 0)
+F1 (a finding, not a must-fail): the tetrahedron's 24 lifts only (2T). If Pauli needed the cube's 24, a fact it uses
+   must fail on 2T: the twin hands irreducible, nu = -1 = z on them, T forced with T T = -1.
+    on 2T: twin hands irreducible True, nu = -1 True, T forced with T T = -1 True: 3 of 3 facts hold
+F2 (a finding): Q8 alone (the 8 lifts of the face half turns), the plan's 'it needs the whole 24'
+    Q8 kinds where nu != chi(z)/dim: 0 of 5; T forced with T T = -1 on the twin hands: True
+result: every mutant fails as it must
+findings: F1 and F2 do not fail: the law, and every fact of it that Pauli uses, holds on 2T's twin hands and on Q8

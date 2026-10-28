@@ -1,0 +1,11 @@
+1. The count of fixed two-spinor states, (1/|H|) SUM chi(h)^2
+  [ok] the 48 (every turn of the cube): 1 fixed state(s): 48
+  [ok] the Mesh's axis as a line (16 lifts, D4): 1 fixed state(s): 16
+  [ok] the quarter turns about the Mesh alone (8 lifts, C4): 2 fixed state(s): 8
+2. The vectors
+  [ok] the singlet (0, 1, -1, 0) is fixed by all 48: 48
+  [ok] the triplet along the Mesh (0, 1, 1, 0) is fixed by the 8 quarter-turn lifts about it: 8
+  [ok] and reversed by the 8 lifts of the half turns across it (those that exchange the Mesh's two ends): 8
+3. So: a spin write that reads the light's A1 part and no axis (the 48) gives the singlet alone; one that reads
+   the Mesh's axis (the lead along it, as the head's fitting does) keeps only the 8 and admits S . e as well.
+result: 0 failures

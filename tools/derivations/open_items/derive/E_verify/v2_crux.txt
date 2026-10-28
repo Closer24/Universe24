@@ -1,0 +1,39 @@
+1. Step 2: the units eps that keep every size when the quanta are relabelled (psi1 <-> psi2)
+    configurations of 300 whose sizes are label-free: {'+1': 300, '-1': 300, '+i': 1, '-i': 1}
+  [ok] only eps = +1 and eps = -1 make the sizes label-free (eps eps = 1 forced by relabelling, no 3D topology used)
+2. Covariance: the 48 turning parts and quanta together keep every size, for both signs
+    E1/2: matrices unitary in the plain form: True; overlaps read with the invariant form H = SUM g^dagger g
+  [ok] E1/2: sizes kept by every lift, eps = +1 and eps = -1: +1: 576 of 576, -1: 576 of 576
+    T1: matrices unitary in the plain form: True; overlaps read with the invariant form H = SUM g^dagger g
+  [ok] T1: sizes kept by every lift, eps = +1 and eps = -1: +1: 576 of 576, -1: 576 of 576
+    G3/2: matrices unitary in the plain form: False; overlaps read with the invariant form H = SUM g^dagger g
+  [ok] G3/2: sizes kept by every lift, eps = +1 and eps = -1: +1: 192 of 192, -1: 192 of 192
+   so the 48's invariance of the joint click holds for either sign on every kind: it does not choose eps
+3. The A1 premise chooses eps: the A1 part of psi1 x psi2 + eps psi2 x psi1 is (1 + eps nu) B(psi1, psi2)
+    A1   : nu = +1; pairs of 40 with a nonzero A1 part: eps = +1 40, eps = -1 0
+    A2   : nu = +1; pairs of 40 with a nonzero A1 part: eps = +1 40, eps = -1 0
+    E    : nu = +1; pairs of 40 with a nonzero A1 part: eps = +1 40, eps = -1 0
+    T1   : nu = +1; pairs of 40 with a nonzero A1 part: eps = +1 40, eps = -1 0
+    T2   : nu = +1; pairs of 40 with a nonzero A1 part: eps = +1 40, eps = -1 0
+    E1/2 : nu = -1; pairs of 40 with a nonzero A1 part: eps = +1 0, eps = -1 39
+    E5/2 : nu = -1; pairs of 40 with a nonzero A1 part: eps = +1 0, eps = -1 40
+    G3/2 : nu = -1; pairs of 40 with a nonzero A1 part: eps = +1 0, eps = -1 40
+  [ok] on every kind exactly one sign lets two equal quanta reach the A1, and it is nu: 8 of 8
+4. The world eps = -nu read against the draft's other laws (twin hands as bosons, a hand as a fermion)
+  [ok] eps = +1 on the twin hands: sizes are norms (non-negative rationals): 200 of 200
+  [ok] eps = +1 on the twin hands: books: SUM sigma = 2 lam^2 (rho1 rho2 + eps N<psi1, psi2>), the frame (phi, T phi): 200 of 200
+  [ok] eps = +1 on the twin hands: relabelling keeps every size: 200 of 200
+  [ok] eps = +1 on the twin hands: T commutes with all 48 and T T = -1 (the kind's, not eps's): 48 of 48
+    what the eps = +1 world fails: Pauli's zero (sigma_aa > 0 at 200 of 200); the A1 of two quanta (nonzero at 0 of 200)
+  [ok] so on the twin hands eps = +1 breaks only Pauli and the A1 premise, nothing else the draft states
+  [ok] eps = -1 on a hand (A1): two quanta at one Node-clock never click (spinless fermions), consistent but no A1 pair: 200 of 200
+5. A frame-blind click at one Node-clock (the two quanta turned, the parts kept): a law for every train?
+    E1/2: configurations frame-blind under all 48 (parts kept): eps = +1 0 of 10, eps = -1 10 of 10
+  [ok] twin hands: frame-blind for eps = -1 only (the singlet is the whole Alt^2)
+    T1: configurations frame-blind under all 48 (parts kept): eps = +1 0 of 10, eps = -1 0 of 10
+  [ok] vectors: frame-blind for neither sign, so this cannot be the law of every train
+6. The fitting: a quantum and its antiquantum carry no exchange term (draft part 1), so V x V's one invariant is open to
+   an A1 source whatever eps is; the fitting cannot choose eps. Invariants of V x V (no symmetry asked), per kind:
+    {'A1': 1, 'A2': 1, 'E': 1, 'T1': 1, 'T2': 1, 'E1/2': 1, 'E5/2': 1, 'G3/2': 1}
+  [ok] one invariant pair state on every kind, with no condition on the exchange sign
+result: 0 failures
