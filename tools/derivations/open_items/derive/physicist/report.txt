@@ -1,0 +1,119 @@
+The plan's physics fails in nine places, overclaims in six, and leaves eleven contradictions with nature unlisted. The worst three are Bell, Pauli and the quantum of the click. Probes p1-p4.py are in /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/probes_review_phys/
+
+**A. Errors**
+
+1. **Bell (11d, 18.4, 24.3, 25.10, 27): "Bell past the local bound"; "a contradiction until David's derivation answers it".**
+   - The rule is Bell-local in its own cone: each act reads 7 sites, and the draw is a deterministic hash of local remainders.
+   - So CHSH <= 2 is a theorem for detections outside each other's octahedral cone with independent settings. No derivation answers it.
+   - A violation can appear only:
+     - inside the cone, through the closure's signal (up to sqrt3c along the axes);
+     - through settings that depend on the state (row 56 reads "the dial's parity").
+   - Nature violates the bound at spacelike separation. Any "influence" would have to travel faster than 10^4c (Salart 2008).
+   - "S = 0" (the open axis) is impossible: S.S = rho^2 (p3), so S = 0 forces rho = 0. The closure needs a carriage of its own, against 24.3.
+   - Fix: state row 56 as a permanent contradiction with nature. The gate must require spacelike separation and independent settings.
+
+2. **Pauli (24.1, law 7): "an exchange is a full turn of one quantum about the other"; "psi + (-psi) = 0".**
+   - An exchange is a half-braid. The belt trick links it to a 2pi turn only for framed particles, in a two-particle configuration space the engine lacks.
+   - Spin-statistics needs Lorentz invariance and microcausality. Without them, spin and statistics are independent.
+   - psi + (-psi) = 0 is interference, which bosons show too.
+   - Commuting spinors are bosons, and law 5 counts q >= 2 per site. Degeneracy pressure cannot follow.
+   - Fix: law 7 is an axiom (an anticommuting or 0/1 occupation algebra).
+
+3. **The quantum (27, law 5): "w_c = 3 key s"; "E = n h nu".**
+   - For light s = 0, so law 5 divides by 0. The head substitutes rim through carries(p, rim), which is 1 only for the unsprung train: an identity read.
+   - The quantum is fixed per train, so q/N = sin omega(k)/sin omega0 (p2). An electron at k = 0.05 clicks as 54 quanta.
+   - Light is counted right only at omega = pi/2, which is the seed's own frequency. Low-frequency photons never click, so no Planck spectrum and no photoelectric effect.
+   - Fix: a quantum per mode, from an adiabatic invariant.
+
+4. **General relativity (25.3, 26, 28): "the linearized Einstein equation".**
+   - rates.mesh_rate types "h N = 1, the ruler goes with the rate". That is PPN gamma = 1 put in, so the factor two cannot fail.
+   - E8 puts in beta.
+   - The tensions take only the traceless stress, so the spatial trace is unsourced.
+   - Ten independent wave equations, with no gauge condition and no constraints, give up to 10 polarizations; GR has 2.
+   - "trace ... kappa" is wrong: the trace cancels on the forms term.
+   - Fix: source the spatial trace from T_00, test the constraints, strike hN = 1.
+
+5. **The one big bang (23): "a pure A1 state... isotropic"; "no total momentum".**
+   - Per site the seed has momentum (+/-1, +/-1, 2) and stress (1/2, 1/2, 1) (p2, p3). It is homogeneous but streaming and anisotropic, so it is not A1.
+   - T^3 is flat, and a flat Friedmann universe never recollapses.
+   - The head's cycle is F1 plus law 4. Law 4 is a time reversal put in: contraction replays expansion backward.
+   - With D = 0, nothing restores the expansion.
+   - The lapse is gauge, not the scale factor.
+   - A coherent single mode has zero entropy; it is not "hot".
+
+6. **Masses (19, 28): "a mass ratio is a ratio of two rest beats".**
+   - The beats' ratios are 2,623 and 2,608. The fitted 1,838.68 and 1,836.15 are ratios of sines (p1).
+   - The nucleons sit at the lattice cutoff: a beat of 2.2 ticks, a Compton length of 0.41 Mesh, a top speed of 0.1c.
+   - The effective h-bar is 0.70 of the electron's, so Planck's constant is not universal.
+   - The electron's Compton length is 270 times the board.
+
+7. **Antimatter (23, 24.5): "one hand of matter outnumbers the other".**
+   - This conflates helicity with matter against antimatter.
+   - S.J, like V.A, is CP-even.
+   - Charge is "conserved... at every click", so Sakharov's B violation is excluded.
+   - There is no equilibrium to depart from, and a global turnover replays the asymmetry backward.
+
+8. **Black holes (23, 25.3e).**
+   - The exponential p0 never reaches 0. The stop is p0^2/Gamma rounding to 0: an artifact of the integers.
+   - "Lapse 0" depends on the slicing.
+   - A frozen Node-clock stops infalling matter, against free fall.
+   - A "local bang" is not GR.
+
+9. **Readings (19).**
+   - Re(conj(d0 z) da z) has the wrong sign for momentum (p2).
+   - The stress lacks -delta_ab L, so the lapse's source trace is wrong.
+   - Angular momentum lacks h-bar/2 on S.
+   - The centred lead is not the exactly conserved current.
+
+10. **Collapse and rewind (laws 3, 6).** The split zeros one twin, a many-to-one map. "No log read" is impossible unless the erased amplitudes stay local, where they could interfere again.
+
+**B. Overclaims and unproven claims**
+- **Born (law 6).** The sizes are defined as the squared overlap; Fierz only rewrites it. The draw's fairness is assumed: neighbouring windows share digits, and symmetric states jam.
+- **"V - A follows from the kinds".** The kinds allow S.J; its strength is free. V - A acts on chirality, which a second-order two-spinor lacks.
+- **Jeans.** Asserted only. A one-site seed is a lattice-scale perturbation.
+- **"Every reading from the clicks".** The regulator, the offset and the remainders never click, yet they gravitate.
+- **"none" (18), "one to one" (1), "nothing else is assumed" (26).** Assumed, not derived:
+  - laws 4, 6, 7 and 9, and the closure;
+  - the light's rim winding;
+  - hN = 1, E8 and trace = 6;
+  - the fitted pinions (A12);
+  - the tuned seeds.
+- **"Decided: derived".** A decision cannot stand in for a derivation.
+
+**C. Missing contradictions with nature** (each should go into section 18 or 25)
+1. **Doubling.** At the vacuum, 2w - D - SumR = 0 for every train (p1). The sublattices decouple, so every species has an exact doubler with equal wind and opposite sweep (p4). Nielsen-Ninomiya rules out a lone Weyl neutrino.
+2. **Single quanta.**
+   - A spread quantum never clicks, against Grangier's anticorrelation.
+   - Weak light would need a time lag; the photoelectric effect is prompt.
+   - There is no binomial partition noise and no Hong-Ou-Mandel bunching.
+3. **No Born rule for position.** A split across sites would need a nonlocal draw (row 55).
+4. **No multi-particle states and no vacuum fluctuations.**
+   - No entanglement, GHZ or exchange forces.
+   - No Casimir effect, Lamb shift, Hawking radiation or running alpha.
+   - The integers are not renormalized couplings.
+   - Confinement is impossible without SU(3) links.
+5. **Light is a complex scalar,** not a transverse spin-1 field. The offset (the EM potential) never clicks.
+6. **Lorentz invariance.** A preferred frame; different limiting speeds per species; O(1) cubic anisotropy for nucleons; no time dilation of moving clocks.
+7. **Gauge invariance.** With no link variables, U(1) invariance holds only for linear gauge functions, and the offset propagates 4 components.
+8. **CFL.** "A reach equal to light's" (25.7) is impossible on any stencil. It is a permanent artifact, not an open question.
+9. **Local turnovers** flip momentum. A finite reversible state space recurs exactly, so the bangs cannot keep showing more.
+10. **Cosmology.** No Lambda, no dark matter, no thermal history.
+11. **CPT.** There is no CPT theorem without Lorentz invariance, and C is undefined for the twin hands.
+
+**D. Wording**
+- "1/sqrt3... the stencil's own bound": it is the CFL limit. The reach is 1 Mesh per tick along an axis and 1/sqrt3 along the diagonal.
+- "-(m1.m2)/(rho1 rho2)" should be normalized by |m1||m2|.
+- "a closed universe": compact, but flat.
+- "the remainder is the phase": it is a rounding remainder, not a phase.
+
+**E. Checked and sound**
+- O ? S4 and its classes, irreps and products.
+- Helicity and the twist under the 24 and the 48.
+- 1/sqrt2 is not in Z[zeta8].
+- The Fierz and Lagrange identities.
+- cos omega0 = pinion/rim.
+- Light's long-wave speed 1/sqrt3.
+- The seed's exact quarter turn.
+- van Dam-Veltman-Zakharov for Fierz-Pauli.
+- The step's reversibility.
+- The plan's own admissions (11d, 18.2, 18.4, 18.14).

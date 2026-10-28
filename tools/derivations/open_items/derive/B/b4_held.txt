@@ -1,0 +1,15 @@
+Probe B4: the held field's load in D and its mass source, on the one big bang (b4_held.py): head (the generic held load, the order R8, F5 through the held load), free (the order-free source in lockstep), freerewind, energy (the two couplings of one weight)
+================================================================================================================================================================================================================================================================
+
+- mode: head; ticks: 250; generic held load mismatches: 0; sites where the order-free mass differs: 7680; sites where the held field's own mass term is not 0: 7680; held loads below 0: 0; loads below 0: 0; clock-ticks: 16000; held notch min: 0; held notch max: 42; first tick the masses are not 0: 7
+
+- mode: free; ticks: 250; ticks whose state differs: 96; first tick differing: 11; counts head: {'turns': 3200, 'births': 64, 'body_clicks': 28736}; counts order-free: {'turns': 3200, 'births': 64, 'body_clicks': 28736}
+
+- mode: freerewind; from tick: 15; ticks: 20; rewind exact: 20
+
+- mode: energy; load: 0; weight: 2; rate p0(c): 1000; rate p0(c + w): 998; reaction over the head's source, quotient: 35; remainder over divisor: [3856000, 4000000]; key div Gamma: 36
+- mode: energy; load: 10; weight: 2; rate p0(c): 990; rate p0(c + w): 988; reaction over the head's source, quotient: 36; remainder over divisor: [1281600, 3920400]; key div Gamma: 36
+- mode: energy; load: 100; weight: 2; rate p0(c): 905; rate p0(c + w): 903; reaction over the head's source, quotient: 39; remainder over divisor: [2408100, 3276100]; key div Gamma: 36
+- mode: energy; load: 1000; weight: 2; rate p0(c): 368; rate p0(c + w): 367; reaction over the head's source, quotient: 48; remainder over divisor: [458592, 541696]; key div Gamma: 36
+- mode: energy; load: 3000; weight: 2; rate p0(c): 50; rate p0(c + w): 50; reaction over the head's source, quotient: 0; remainder over divisor: [0, 10000]; key div Gamma: 36
+

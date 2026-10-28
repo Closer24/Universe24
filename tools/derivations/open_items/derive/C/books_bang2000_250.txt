@@ -1,0 +1,2 @@
+world_bang.json quanta 2000 ticks 250: books closed at 249 of 250 phases; mergers 20; births 116
+  open at tick 51 by -4: mergers 8 of births 8

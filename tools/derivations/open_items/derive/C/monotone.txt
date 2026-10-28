@@ -1,0 +1,3 @@
+D = 0, N >= 0: X+ - X >= X - X-: the first difference held in 200000 of 200000 draws
+D > 0 (the regulator's pair), N = 0: the first difference held in 5 of 200000 draws
+D = 0, N of either sign: the first difference held in 100041 of 200000 draws

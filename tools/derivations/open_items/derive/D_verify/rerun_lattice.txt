@@ -1,0 +1,210 @@
+closure24_lattice.py: draft D's lattice probe, integers only, the head's carry and mid (core/acts.py) for Rule3
+world: W 1572864, s 1, light (g, D) (524288, 65536), heavy (g, D) (16384, 262144), bob notches K 4096, room 5800, L 6 Meshes, first click at tick 2
+settings: a = (1, 0) axis z rho 1; a' = (1, 1) axis x rho 2; b = (5, 2) axis (20, 0, 21) rho 29; b' = (5, -2) axis (-20, 0, 21) rho 29
+S = E(a,b) + E(a,b') + E(a',b) - E(a',b'); singlet S = -82/29 = -2.8275; local isotropic S = -82/87 = -0.9425; Bell's bound |S| <= 2
+delta = the partner's click tick less the first click's; spacelike delta <= L - 2 (neither the partner's reading nor its draw can read the first click), edge delta = L - 1 (its draw can), timelike delta >= L (the message has arrived)
+
+[rewind] the one formula forward and back across the remainder's write, ring (14,1,1), 12 ticks: 40 trials, failures 0
+[rewind] the same on a torus (14,3,3), 8 ticks: 8 trials, failures 0
+
+[A] many draws, light twin train, ring (14,1,1), 8000 runs (2,000 per setting pair), hidden n and fine teeth from the LCG
+    model delta kind       E(a,b)   E(a,b')  E(a',b)  E(a',b')  S         |S|>2  with A's other setting, runs where B's answer / draw / reading moved; <b> gap = |<b> under a - <b> under a'| (signalling)
+    M0     0  spacelike  -0.2240  -0.2360  -0.2310   0.2430   -0.9340  no     0 / 0 / 0 of 8000   <b> gap  0.0130
+    M0     1  spacelike  -0.2660  -0.2700  -0.2190   0.2260   -0.9810  no     0 / 0 / 0 of 8000   <b> gap  0.0490
+    M0     2  spacelike  -0.2260  -0.2350  -0.2160   0.2310   -0.9080  no     0 / 0 / 0 of 8000   <b> gap  0.0530
+    M0     3  spacelike  -0.2230  -0.2590  -0.2250   0.2370   -0.9440  no     0 / 0 / 0 of 8000   <b> gap  0.0520
+    M0     4  spacelike  -0.2530  -0.2600  -0.2060   0.2500   -0.9690  no     0 / 0 / 0 of 8000   <b> gap  0.0070
+    M0     5  edge       -0.2200  -0.2670  -0.2460   0.2230   -0.9560  no     0 / 0 / 0 of 8000   <b> gap  0.0280
+    M0     6  timelike   -0.2190  -0.2610  -0.1780   0.2380   -0.8960  no     0 / 0 / 0 of 8000   <b> gap  0.0100
+    M0     7  timelike    0.0790   0.0760   0.0780  -0.0890    0.3220  no     0 / 0 / 0 of 8000   <b> gap  0.0600
+    M0     8  timelike    0.0860   0.0890   0.0700  -0.0620    0.3070  no     0 / 0 / 0 of 8000   <b> gap  0.0200
+    M0     9  timelike    0.2430   0.2650   0.2380  -0.2460    0.9920  no     0 / 0 / 0 of 8000   <b> gap  0.0610
+    M0    10  timelike   -0.0810  -0.1070  -0.0780   0.1040   -0.3700  no     0 / 0 / 0 of 8000   <b> gap  0.0280
+    M0    11  timelike   -0.2360  -0.2960  -0.2470   0.2170   -0.9960  no     0 / 0 / 0 of 8000   <b> gap  0.0630
+    M0    12  timelike    0.1930   0.2410   0.1860  -0.1990    0.8190  no     0 / 0 / 0 of 8000   <b> gap  0.0170
+    M1a    0  spacelike   0.0490   0.0110  -0.0190  -0.0190    0.0600  no     0 / 0 / 0 of 8000   <b> gap  0.0460
+    M1a    1  spacelike  -0.0060  -0.0130   0.0000  -0.0020   -0.0170  no     0 / 0 / 0 of 8000   <b> gap  0.0050
+    M1a    2  spacelike   0.0070   0.0120   0.0050  -0.0030    0.0270  no     0 / 0 / 0 of 8000   <b> gap  0.0410
+    M1a    3  spacelike  -0.0120  -0.0190   0.0260  -0.0200    0.0150  no     0 / 0 / 0 of 8000   <b> gap  0.0510
+    M1a    4  spacelike  -0.0250   0.0040   0.0210  -0.0440    0.0440  no     0 / 0 / 0 of 8000   <b> gap  0.0360
+    M1a    5  edge        0.0270   0.0210  -0.0190   0.0000    0.0290  no     0 / 0 / 0 of 8000   <b> gap  0.0390
+    M1a    6  timelike   -0.7040  -0.7560  -0.6900   0.7020   -2.8520  yes    2948 / 0 / 8000 of 8000   <b> gap  0.0740
+    M1a    7  timelike   -0.7020  -0.7240  -0.6810   0.6740   -2.7810  yes    2915 / 0 / 8000 of 8000   <b> gap  0.0480
+    M1a    8  timelike   -0.7360  -0.7380  -0.6660   0.7100   -2.8500  yes    2951 / 0 / 8000 of 8000   <b> gap  0.0620
+    M1a    9  timelike   -0.6950  -0.7000  -0.6970   0.7010   -2.7930  yes    2888 / 0 / 8000 of 8000   <b> gap  0.0580
+    M1a   10  timelike   -0.6970  -0.7100  -0.6870   0.6810   -2.7750  yes    2897 / 0 / 8000 of 8000   <b> gap  0.0470
+    M1a   11  timelike   -0.7140  -0.7430  -0.6850   0.6740   -2.8160  yes    2906 / 0 / 8000 of 8000   <b> gap  0.0250
+    M1a   12  timelike   -0.7410  -0.6880  -0.6960   0.7070   -2.8320  yes    2911 / 0 / 8000 of 8000   <b> gap  0.0270
+    M1b    0  spacelike  -0.2240  -0.2360  -0.2310   0.2430   -0.9340  no     0 / 0 / 0 of 8000   <b> gap  0.0130
+    M1b    1  spacelike  -0.2660  -0.2700  -0.2190   0.2260   -0.9810  no     0 / 0 / 0 of 8000   <b> gap  0.0490
+    M1b    2  spacelike  -0.2260  -0.2350  -0.2160   0.2310   -0.9080  no     0 / 0 / 0 of 8000   <b> gap  0.0530
+    M1b    3  spacelike  -0.2230  -0.2590  -0.2250   0.2370   -0.9440  no     0 / 0 / 0 of 8000   <b> gap  0.0520
+    M1b    4  spacelike  -0.2530  -0.2600  -0.2060   0.2500   -0.9690  no     0 / 0 / 0 of 8000   <b> gap  0.0070
+    M1b    5  edge       -0.2200  -0.2670  -0.2460   0.2230   -0.9560  no     0 / 0 / 0 of 8000   <b> gap  0.0280
+    M1b    6  timelike   -0.6980  -0.7490  -0.6760   0.6990   -2.8220  yes    2839 / 0 / 8000 of 8000   <b> gap  0.0380
+    M1b    7  timelike   -0.7140  -0.7340  -0.6870   0.6770   -2.8120  yes    2899 / 0 / 8000 of 8000   <b> gap  0.0300
+    M1b    8  timelike   -0.7290  -0.7380  -0.6720   0.6910   -2.8300  yes    2906 / 0 / 8000 of 8000   <b> gap  0.0310
+    M1b    9  timelike   -0.6830  -0.7060  -0.7060   0.6810   -2.7760  yes    2831 / 0 / 8000 of 8000   <b> gap  0.0330
+    M1b   10  timelike   -0.6970  -0.7050  -0.6890   0.6780   -2.7690  yes    2829 / 0 / 8000 of 8000   <b> gap  0.0160
+    M1b   11  timelike   -0.7140  -0.7540  -0.6970   0.6640   -2.8290  yes    2862 / 0 / 8000 of 8000   <b> gap  0.0070
+    M1b   12  timelike   -0.7400  -0.7010  -0.6900   0.7020   -2.8330  yes    2900 / 0 / 8000 of 8000   <b> gap  0.0160
+    M2     0  spacelike  -0.2240  -0.2360  -0.2310   0.2430   -0.9340  no     0 / 0 / 0 of 8000   <b> gap  0.0130
+    M2     1  spacelike  -0.2660  -0.2700  -0.2190   0.2260   -0.9810  no     0 / 0 / 0 of 8000   <b> gap  0.0490
+    M2     2  spacelike  -0.2260  -0.2350  -0.2160   0.2310   -0.9080  no     0 / 0 / 0 of 8000   <b> gap  0.0530
+    M2     3  spacelike  -0.2230  -0.2590  -0.2250   0.2370   -0.9440  no     0 / 0 / 0 of 8000   <b> gap  0.0520
+    M2     4  spacelike  -0.2530  -0.2600  -0.2060   0.2500   -0.9690  no     0 / 0 / 0 of 8000   <b> gap  0.0070
+    M2     5  edge       -0.2150  -0.2470  -0.2340   0.2240   -0.9200  no     2430 / 7285 / 0 of 8000   <b> gap  0.0190
+    M2     6  timelike   -0.2480  -0.2530  -0.2100   0.2440   -0.9550  no     2633 / 7998 / 8000 of 8000   <b> gap  0.0440
+    M2     7  timelike    0.0900   0.0580   0.1020  -0.0850    0.3350  no     2070 / 7998 / 8000 of 8000   <b> gap  0.0320
+    M2     8  timelike    0.1110   0.1430   0.0910  -0.1230    0.4680  no     1997 / 7993 / 8000 of 8000   <b> gap  0.0360
+    M2     9  timelike    0.3960   0.3900   0.3530  -0.3500    1.4890  no     2734 / 7993 / 8000 of 8000   <b> gap  0.0470
+    M2    10  timelike    0.1030   0.0930   0.1680  -0.1430    0.5070  no     2231 / 7997 / 8000 of 8000   <b> gap  0.0510
+    M2    11  timelike   -0.0490  -0.0790   0.1080  -0.1020    0.0820  no     2593 / 7998 / 8000 of 8000   <b> gap  0.1060
+    M2    12  timelike    0.4310   0.4410   0.4020  -0.4000    1.6740  no     5208 / 7992 / 8000 of 8000   <b> gap  0.1820
+
+[A] many draws, heavy twin train, ring (14,1,1), 8000 runs (2,000 per setting pair), hidden n and fine teeth from the LCG
+    model delta kind       E(a,b)   E(a,b')  E(a',b)  E(a',b')  S         |S|>2  with A's other setting, runs where B's answer / draw / reading moved; <b> gap = |<b> under a - <b> under a'| (signalling)
+    M0     0  spacelike  -0.2220  -0.2380  -0.2400   0.2290   -0.9290  no     0 / 0 / 0 of 8000   <b> gap  0.0390
+    M0     1  spacelike  -0.2530  -0.2260  -0.2240   0.2330   -0.9360  no     0 / 0 / 0 of 8000   <b> gap  0.0210
+    M0     2  spacelike  -0.2170  -0.1960  -0.2280   0.1870   -0.8280  no     0 / 0 / 0 of 8000   <b> gap  0.0330
+    M0     3  spacelike  -0.2700  -0.2230  -0.2270   0.2240   -0.9440  no     0 / 0 / 0 of 8000   <b> gap  0.0090
+    M0     4  spacelike  -0.2120  -0.2240  -0.2240   0.2020   -0.8620  no     0 / 0 / 0 of 8000   <b> gap  0.0460
+    M0     5  edge       -0.2380  -0.2210  -0.2120   0.2140   -0.8850  no     0 / 0 / 0 of 8000   <b> gap  0.0460
+    M0     6  timelike   -0.2630  -0.1970  -0.2380   0.2570   -0.9550  no     0 / 0 / 0 of 8000   <b> gap  0.0550
+    M0     7  timelike   -0.2580  -0.2120  -0.2030   0.1670   -0.8400  no     0 / 0 / 0 of 8000   <b> gap  0.0270
+    M0     8  timelike   -0.2540  -0.2140  -0.2230   0.2220   -0.9130  no     0 / 0 / 0 of 8000   <b> gap  0.0130
+    M0     9  timelike   -0.2240  -0.2240  -0.2260   0.2230   -0.8970  no     0 / 0 / 0 of 8000   <b> gap  0.0490
+    M0    10  timelike   -0.2380  -0.2200  -0.2300   0.2130   -0.9010  no     0 / 0 / 0 of 8000   <b> gap  0.0280
+    M0    11  timelike   -0.2310  -0.2410  -0.2090   0.2290   -0.9100  no     0 / 0 / 0 of 8000   <b> gap  0.0380
+    M0    12  timelike   -0.2440  -0.2250  -0.2340   0.1920   -0.8950  no     0 / 0 / 0 of 8000   <b> gap  0.0400
+    M1a    0  spacelike  -0.0160   0.0180   0.0160   0.0090    0.0090  no     0 / 0 / 0 of 8000   <b> gap  0.0230
+    M1a    1  spacelike  -0.0460   0.0020   0.0100   0.0280   -0.0620  no     0 / 0 / 0 of 8000   <b> gap  0.0170
+    M1a    2  spacelike   0.0410   0.0150  -0.0150  -0.0060    0.0470  no     0 / 0 / 0 of 8000   <b> gap  0.0610
+    M1a    3  spacelike  -0.0160  -0.0110  -0.0090   0.0150   -0.0510  no     0 / 0 / 0 of 8000   <b> gap  0.0080
+    M1a    4  spacelike   0.0110   0.0110  -0.0050  -0.0420    0.0590  no     0 / 0 / 0 of 8000   <b> gap  0.0150
+    M1a    5  edge        0.0020  -0.0080   0.0180   0.0130   -0.0010  no     0 / 0 / 0 of 8000   <b> gap  0.0070
+    M1a    6  timelike   -0.7270  -0.7270  -0.6840   0.6970   -2.8350  yes    2888 / 0 / 8000 of 8000   <b> gap  0.0480
+    M1a    7  timelike   -0.7270  -0.7290  -0.7070   0.6570   -2.8200  yes    2913 / 0 / 8000 of 8000   <b> gap  0.0540
+    M1a    8  timelike   -0.7270  -0.7100  -0.6670   0.6910   -2.7950  yes    2901 / 0 / 8000 of 8000   <b> gap  0.0270
+    M1a    9  timelike   -0.7000  -0.7510  -0.6840   0.7080   -2.8430  yes    2914 / 0 / 8000 of 8000   <b> gap  0.0690
+    M1a   10  timelike   -0.7170  -0.7390  -0.7210   0.6920   -2.8690  yes    2904 / 0 / 8000 of 8000   <b> gap  0.0470
+    M1a   11  timelike   -0.7090  -0.7210  -0.6720   0.7010   -2.8030  yes    2902 / 0 / 8000 of 8000   <b> gap  0.0180
+    M1a   12  timelike   -0.7240  -0.7190  -0.6770   0.6700   -2.7900  yes    2869 / 0 / 8000 of 8000   <b> gap  0.0170
+    M1b    0  spacelike  -0.2220  -0.2380  -0.2400   0.2290   -0.9290  no     0 / 0 / 0 of 8000   <b> gap  0.0390
+    M1b    1  spacelike  -0.2530  -0.2260  -0.2240   0.2330   -0.9360  no     0 / 0 / 0 of 8000   <b> gap  0.0210
+    M1b    2  spacelike  -0.2170  -0.1960  -0.2280   0.1870   -0.8280  no     0 / 0 / 0 of 8000   <b> gap  0.0330
+    M1b    3  spacelike  -0.2700  -0.2230  -0.2270   0.2240   -0.9440  no     0 / 0 / 0 of 8000   <b> gap  0.0090
+    M1b    4  spacelike  -0.2120  -0.2240  -0.2240   0.2020   -0.8620  no     0 / 0 / 0 of 8000   <b> gap  0.0460
+    M1b    5  edge       -0.2380  -0.2210  -0.2120   0.2140   -0.8850  no     0 / 0 / 0 of 8000   <b> gap  0.0460
+    M1b    6  timelike   -0.7230  -0.7130  -0.6990   0.6890   -2.8240  yes    2849 / 0 / 8000 of 8000   <b> gap  0.0500
+    M1b    7  timelike   -0.7240  -0.7290  -0.6880   0.6430   -2.7840  yes    2861 / 0 / 8000 of 8000   <b> gap  0.0720
+    M1b    8  timelike   -0.7310  -0.7130  -0.6780   0.6990   -2.8210  yes    2929 / 0 / 8000 of 8000   <b> gap  0.0500
+    M1b    9  timelike   -0.7100  -0.7550  -0.6830   0.6770   -2.8250  yes    2911 / 0 / 8000 of 8000   <b> gap  0.0960
+    M1b   10  timelike   -0.7220  -0.7300  -0.7150   0.7090   -2.8760  yes    2912 / 0 / 8000 of 8000   <b> gap  0.0210
+    M1b   11  timelike   -0.7180  -0.7240  -0.6630   0.7010   -2.8060  yes    2901 / 0 / 8000 of 8000   <b> gap  0.0430
+    M1b   12  timelike   -0.7330  -0.7190  -0.6760   0.6710   -2.7990  yes    2883 / 0 / 8000 of 8000   <b> gap  0.0330
+    M2     0  spacelike  -0.2220  -0.2380  -0.2400   0.2290   -0.9290  no     0 / 0 / 0 of 8000   <b> gap  0.0390
+    M2     1  spacelike  -0.2530  -0.2260  -0.2240   0.2330   -0.9360  no     0 / 0 / 0 of 8000   <b> gap  0.0210
+    M2     2  spacelike  -0.2170  -0.1960  -0.2280   0.1870   -0.8280  no     0 / 0 / 0 of 8000   <b> gap  0.0330
+    M2     3  spacelike  -0.2700  -0.2230  -0.2270   0.2240   -0.9440  no     0 / 0 / 0 of 8000   <b> gap  0.0090
+    M2     4  spacelike  -0.2120  -0.2240  -0.2240   0.2020   -0.8620  no     0 / 0 / 0 of 8000   <b> gap  0.0460
+    M2     5  edge       -0.2380  -0.2210  -0.2120   0.2140   -0.8850  no     0 / 0 / 0 of 8000   <b> gap  0.0460
+    M2     6  timelike   -0.2630  -0.1970  -0.2380   0.2570   -0.9550  no     0 / 0 / 0 of 8000   <b> gap  0.0550
+    M2     7  timelike   -0.2580  -0.2120  -0.2030   0.1670   -0.8400  no     0 / 2 / 0 of 8000   <b> gap  0.0270
+    M2     8  timelike   -0.2550  -0.2140  -0.2240   0.2230   -0.9160  no     2 / 12 / 0 of 8000   <b> gap  0.0130
+    M2     9  timelike   -0.2250  -0.2230  -0.2240   0.2240   -0.8960  no     5 / 23 / 0 of 8000   <b> gap  0.0490
+    M2    10  timelike   -0.2370  -0.2220  -0.2320   0.2120   -0.9030  no     19 / 71 / 0 of 8000   <b> gap  0.0290
+    M2    11  timelike   -0.2310  -0.2450  -0.2110   0.2270   -0.9140  no     29 / 103 / 0 of 8000   <b> gap  0.0400
+    M2    12  timelike   -0.2460  -0.2220  -0.2270   0.1970   -0.8920  no     64 / 176 / 1 of 8000   <b> gap  0.0450
+
+[A summary] S x 10^4 over the deltas of each kind (lowest, highest), and the runs where B's answer moved with A's setting
+    heavy M0   edge      S from  -8850 to  -8850   B's answer moved in 0 of 8000
+    heavy M0   spacelike S from  -9440 to  -8280   B's answer moved in 0 of 40000
+    heavy M0   timelike  S from  -9550 to  -8400   B's answer moved in 0 of 56000
+    heavy M1a  edge      S from    -10 to    -10   B's answer moved in 0 of 8000
+    heavy M1a  spacelike S from   -620 to    590   B's answer moved in 0 of 40000
+    heavy M1a  timelike  S from -28690 to -27900   B's answer moved in 20291 of 56000
+    heavy M1b  edge      S from  -8850 to  -8850   B's answer moved in 0 of 8000
+    heavy M1b  spacelike S from  -9440 to  -8280   B's answer moved in 0 of 40000
+    heavy M1b  timelike  S from -28760 to -27840   B's answer moved in 20246 of 56000
+    heavy M2   edge      S from  -8850 to  -8850   B's answer moved in 0 of 8000
+    heavy M2   spacelike S from  -9440 to  -8280   B's answer moved in 0 of 40000
+    heavy M2   timelike  S from  -9550 to  -8400   B's answer moved in 119 of 56000
+    light M0   edge      S from  -9560 to  -9560   B's answer moved in 0 of 8000
+    light M0   spacelike S from  -9810 to  -9080   B's answer moved in 0 of 40000
+    light M0   timelike  S from  -9960 to   9920   B's answer moved in 0 of 56000
+    light M1a  edge      S from    290 to    290   B's answer moved in 0 of 8000
+    light M1a  spacelike S from   -170 to    600   B's answer moved in 0 of 40000
+    light M1a  timelike  S from -28520 to -27750   B's answer moved in 20416 of 56000
+    light M1b  edge      S from  -9560 to  -9560   B's answer moved in 0 of 8000
+    light M1b  spacelike S from  -9810 to  -9080   B's answer moved in 0 of 40000
+    light M1b  timelike  S from -28330 to -27690   B's answer moved in 20066 of 56000
+    light M2   edge      S from  -9200 to  -9200   B's answer moved in 2430 of 8000
+    light M2   spacelike S from  -9810 to  -9080   B's answer moved in 0 of 40000
+    light M2   timelike  S from  -9550 to  16740   B's answer moved in 19466 of 56000
+
+[B] exact odds (every c in [0, room) counted), M2 the one formula's own carriage, light train, torus (14, 1, 1), averaged over the six n
+    M2    0  spacelike  -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    4  spacelike  -0.2411  -0.2411  -0.2301   0.2291  S  -0.9415   B's marginal gap between A's settings  0.0000
+    M2    5  edge       -0.2407  -0.2407  -0.2291   0.2293  S  -0.9400   B's marginal gap between A's settings  0.0000
+    M2    6  timelike   -0.2343  -0.2343  -0.2231   0.2231  S  -0.9149   B's marginal gap between A's settings  0.0006
+    M2    8  timelike    0.0929   0.0931   0.1019  -0.1020  S   0.3900   B's marginal gap between A's settings  0.0065
+    M2   12  timelike    0.4458   0.4458   0.4205  -0.4207  S   1.7330   B's marginal gap between A's settings  0.1947
+    M2   20  timelike    0.4801   0.4801   0.4573  -0.4570  S   1.8746   B's marginal gap between A's settings  0.0492
+    M2   36  timelike    0.7170   0.7168   0.6825  -0.6828  S   2.7992   B's marginal gap between A's settings  0.0655
+[B] exact odds (every c in [0, room) counted), M2 the one formula's own carriage, light train, torus (14, 3, 3), averaged over the six n
+    M2    0  spacelike  -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    4  spacelike  -0.2411  -0.2411  -0.2305   0.2289  S  -0.9417   B's marginal gap between A's settings  0.0000
+    M2    5  edge       -0.2406  -0.2406  -0.2304   0.2281  S  -0.9397   B's marginal gap between A's settings  0.0000
+    M2    6  timelike   -0.2212  -0.2212  -0.2113   0.2099  S  -0.8637   B's marginal gap between A's settings  0.0043
+    M2    8  timelike   -0.2403  -0.2403  -0.2282   0.2288  S  -0.9378   B's marginal gap between A's settings  0.0066
+    M2   12  timelike   -0.1766  -0.1787  -0.2883   0.2867  S  -0.9304   B's marginal gap between A's settings  0.2829
+    M2   20  timelike   -0.1312  -0.1314  -0.2383   0.2392  S  -0.7403   B's marginal gap between A's settings  0.4380
+    M2   36  timelike    0.3796   0.3797   0.3683  -0.3672  S   1.4950   B's marginal gap between A's settings  0.0045
+[B] exact odds (every c in [0, room) counted), M2 the one formula's own carriage, heavy train, torus (14, 1, 1), averaged over the six n
+    M2    0  spacelike  -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    4  spacelike  -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    5  edge       -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    6  timelike   -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    8  timelike   -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2   12  timelike   -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2   20  timelike   -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2   36  timelike   -0.2413  -0.2413  -0.2299   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+[B] exact odds (every c in [0, room) counted), M2 the one formula's own carriage, heavy train, torus (14, 3, 3), averaged over the six n
+    M2    0  spacelike  -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    4  spacelike  -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    5  edge       -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    6  timelike   -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2    8  timelike   -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2   12  timelike   -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2   20  timelike   -0.2413  -0.2413  -0.2295   0.2302  S  -0.9425   B's marginal gap between A's settings  0.0000
+    M2   36  timelike   -0.2413  -0.2413  -0.2298   0.2298  S  -0.9425   B's marginal gap between A's settings  0.0000
+
+[B'] M2e: no bob at B, A's remainder left at its fitting (tick 0); light train, torus (14, 1, 1)
+    M2e   6   -0.4827  -0.4827  -0.4597   0.4597  S  -1.8850  along -a m1:   1.0000  rho at B over a fitted hand's:  0.0000  nothing at B in 8 of 48
+    M2e   8   -0.4827  -0.4827  -0.4597   0.4597  S  -1.8850  along -a m1:   1.0000  rho at B over a fitted hand's:  0.0009  nothing at B in 8 of 48
+    M2e  12   -0.4827  -0.4827  -0.4595   0.4600  S  -1.8850  along -a m1:   0.9999  rho at B over a fitted hand's:  0.0132  nothing at B in 8 of 48
+    M2e  20   -0.4827  -0.4827  -0.4597   0.4597  S  -1.8850  along -a m1:   1.0000  rho at B over a fitted hand's:  0.0344  nothing at B in 8 of 48
+    M2e  36   -0.4827  -0.4827  -0.4599   0.4595  S  -1.8850  along -a m1:   0.9999  rho at B over a fitted hand's:  0.0297  nothing at B in 8 of 48
+[B'] M2e: no bob at B, A's remainder left at its fitting (tick 0); light train, torus (14, 3, 3)
+    M2e   6   -0.4827  -0.4827  -0.4597   0.4597  S  -1.8850  along -a m1:   1.0000  rho at B over a fitted hand's:  0.0000  nothing at B in 8 of 48
+    M2e   8   -0.4827  -0.4827  -0.4597   0.4597  S  -1.8850  along -a m1:   1.0000  rho at B over a fitted hand's:  0.0000  nothing at B in 8 of 48
+    M2e  12   -0.4827  -0.4827  -0.4597   0.4597  S  -1.8850  along -a m1:   1.0000  rho at B over a fitted hand's:  0.0000  nothing at B in 8 of 48
+    M2e  20   -0.4827  -0.4827  -0.4602   0.4592  S  -1.8850  along -a m1:   0.9999  rho at B over a fitted hand's:  0.0193  nothing at B in 8 of 48
+    M2e  36   -0.4827  -0.4827  -0.4589   0.4605  S  -1.8850  along -a m1:   0.9999  rho at B over a fitted hand's:  0.0008  nothing at B in 8 of 48
+[B'] M2e: no bob at B, A's remainder left at its fitting (tick 0); heavy train, torus (14, 1, 1)
+    M2e   6    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+    M2e   8    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+    M2e  12    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+    M2e  20    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+    M2e  36    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+[B'] M2e: no bob at B, A's remainder left at its fitting (tick 0); heavy train, torus (14, 3, 3)
+    M2e   6    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+    M2e   8    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+    M2e  12    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+    M2e  20    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+    M2e  36    0.0000   0.0000   0.0000   0.0000  S   0.0000  along -a m1:   (nothing arrived)  rho at B over a fitted hand's:  0.0000  nothing at B in 48 of 48
+
+[D] the link's one act at L = 1 (one draw at the - end over the four parts N(det[phi1^a, phi2^b])): exact over every c, and 8000 vernier draws
+    exact     -0.7241  -0.7241  -0.6896   0.6896  S  -2.8275
+    measured  -0.7200  -0.7020  -0.7150   0.6900  S  -2.8270

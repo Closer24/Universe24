@@ -1,0 +1,42 @@
+tree scratchpad/t24  drive nocap  quanta 5000000  ticks 30
+seed X 1000..1000
+tick: X least..largest [turned over]
+  1: 6667665..6667665
+  2: 1000..1000 [64]
+  3: 1000..1000
+  4: 6667665..6667665
+  5: 1000..1000 [64]
+  6: 1000..1000
+  7: 6667665..6667665
+  8: 1000..1000 [64]
+  9: 1000..1000
+  10: 6667665..6667665
+  11: 1000..1000 [64]
+  12: 1000..1000
+  13: 6667665..6667665
+  14: 1000..1000 [64]
+  15: 1000..1000
+  16: 6667665..6667665
+  17: 1000..1000 [64]
+  18: 1000..1000
+  19: 6667665..6667665
+  20: 1000..1000 [64]
+  21: 1000..1000
+  22: 6667665..6667665
+  23: 1000..1000 [64]
+  24: 1000..1000
+  25: 6667665..6667665
+  26: 1000..1000 [64]
+  27: 1000..1000
+  28: 6667665..6667665
+  29: 1000..1000 [64]
+  30: 1000..1000
+whole-board turnovers (bangs): 10 at ticks [2, 5, 8, 11, 14, 17, 20, 23, 26, 29]
+local turnovers (Node-clocks): 0
+the first difference fell (X+ - X < X - X-) at 0 of 1280 Node-clock ticks not turned over
+births (fittings and mergers): 0; chimes 0
+books: closed at 30 of 30 clicks' phases, clicks among them 0
+largest |X|: 6667665
+state hash ab8d5711e12de088
+rewind from tick 0: 20 of 20
+seconds 6.2
