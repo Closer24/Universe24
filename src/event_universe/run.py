@@ -16,7 +16,7 @@ from event_universe.assembly.piece import read_piece
 from event_universe.core import rates
 from event_universe.core.rates import sine_rim
 from event_universe.core.spokes import AXES, SIDES, spoke_of
-from event_universe.meshes import factors, mesh_lead
+from event_universe.meshes import coupling_of, factors, mesh_lead
 from event_universe.reckoner import THOUSAND
 from event_universe.trains import OFFSET, REGULATOR, Gear, zeros
 
@@ -367,7 +367,9 @@ def chart(
         "cube": clock.cube,
         "intervals": tick_count,
         "gapped": [
-            (str(r.ratio[0]), str(sine_rim(r.ratio[0], clock.rim))) for r in clock.sprung if r.ratio
+            (str(r.ratio[0]), str(sine_rim(r.ratio[0], clock.rim)))
+            for r in clock.hands()
+            if r.ratio and coupling_of(r)
         ],
         "planes": [str(r.ratio[0]) for r in clock.hands() if r.ratio],
         "T": clock.key,
