@@ -101,6 +101,26 @@ The owner's word (Hebrew, translated): "And try to reach the part where the draw
 - **What the owner asks for further,** a fresh draw whose odds the last choice moves, needs the last choice to reach the next draw's frame. In clocks, the reversed spin bends the light's lead through the spin's coupling to the current (S . J, item 5). The next fitting then lays its vector pair along that lead (law C), and the next detector draws in the frame the last choice left. OPEN: the next toy reads it.
 - In this toy no detector's click wrote the spins (the split chime fires 0 times here): the births and the twins' own motion wrote them. The turnover's flip acts on any record alike.
 
+**The chosen path, in the owner's next word** (15:4x UTC, translated): "A detector's click chooses one path for the future. In the next bang I want it to influence it: the path it chose for the future should not disappear; it should influence it."
+
+- **In clocks, the chosen path becomes the next bang's detector.**
+  - A click writes its chosen path as a twin pair with a definite direction: the record.
+  - The reversed run leaves it standing (way 2), and the turnover only reverses it (T).
+  - Law 6's detector is "a second twin pair at the Node-clock", so in the next bang the record is the detector at its clock. The next child there is clicked along the axis the last choice left, with the shares (rho + S . m) / 2 and (rho - S . m) / 2.
+  - The spin's coupling to the current (S . J, item 5) bends the light's lead along the record, so the next fitting lays its child along it (law C), and the last choice moves the next draw's odds.
+  - The coupling's strength is the twin train's integer in the universe file.
+- **The toy** (chosen_path.py; one Node-clock over 4,096 bangs, the 24's axis directions in integers, the board's draw by a fixed stream of fair digits). CHECKED.
+
+  | what crosses into the next bang | next choice on the last choice's line | last choice reversed | fresh draws |
+  |---|---|---|---|
+  | nothing: the exact rewind undoes every click | 1,343 of 4,095 (a third) | 686 (a sixth) | 4,096 |
+  | the record, as the next detector (way 2) | 4,095 | 2,033 (a half) | 4,096 |
+  | the record, also bending the next child along it | 4,095 | 4,095 | 1 |
+  | the record, bending the next child half along it | 4,095 | 3,085 (three quarters) | 4,096 |
+
+- **So the chosen path never disappears under way 2.** It carries the next click's axis always. Through S . J it also moves the next choice's odds, from a half to certainty as the coupling grows, while each click stays a draw below that.
+- **Bell through the circle reads the same way:** each bang's pairs are clicked in the frames the last bang's records left, in their common past.
+
 ## 7. What stays open
 
 - Pauli's exchange sign: law 7's premise, draft J.

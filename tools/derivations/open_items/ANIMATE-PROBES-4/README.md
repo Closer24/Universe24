@@ -29,5 +29,15 @@ The page is ANIMATE-CLOCK-ROOTS.md. These are toys that check whether a law woul
 - **It prints** which twin holds more at four clocks at every top and bottom.
 - **The output (twin_flip.txt):** up, down, up, down at clock (0, 0, 0) through the 7th to the 10th bangs, the opposite at its neighbours, and the flip overwritten by the new births of the 11th bang.
 
+## chosen_path.py: the chosen path carried into the next bang
+
+- **Pure integers, no engine:** `python -I chosen_path.py`. One Node-clock over 4,096 bangs:
+  - the record of each click stands, reversed by the turnover, as the next click's detector;
+  - four rules for what crosses into the next bang: nothing, the record as the detector, and the record also bending the next child fully or halfway.
+- **The output (chosen_path.txt):**
+  - with nothing crossing, the next choice is on the last choice's line a third of the time;
+  - with the record, always;
+  - the last choice reversed a half, all and three quarters of the time.
+
 ---
 Animate, reader-5.

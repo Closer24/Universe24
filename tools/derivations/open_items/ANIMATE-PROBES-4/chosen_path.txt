@@ -1,0 +1,5 @@
+one Node-clock over 4096 bangs; the detector the last record, or the bang's own lead axis
+  rewound : the next choice on the last choice's line 1343 of 4095; the last choice reversed 686 of 4095; fresh draws 4096 of 4096
+  axis    : the next choice on the last choice's line 4095 of 4095; the last choice reversed 2033 of 4095; fresh draws 4096 of 4096
+  choice  : the next choice on the last choice's line 4095 of 4095; the last choice reversed 4095 of 4095; fresh draws 1 of 4096
+  half    : the next choice on the last choice's line 4095 of 4095; the last choice reversed 3085 of 4095; fresh draws 4096 of 4096
