@@ -12,12 +12,12 @@ For the Boss's Tensor24 (TENSOR24.md law 7 and section 19's owed list, "Pauli's 
 
 ## 0. The answer in one page
 
-1. **The big law: the phase reversal law of the 24's double cover.** On every kind of the 48 (the eight irreducible kinds of 2O), three signs are one sign:
+1. **The big law: the phase reversal law of the 24's double cover.** On every kind of 2O (its eight irreducible kinds), three signs are one sign:
    - the full turn z on the kind, the phase reversal on the board (+1 on A1, A2, E, T1, T2; -1 on E1/2, E5/2, G3/2);
    - the square of the kind's phase reversal T, the one antiunitary act that commutes with all 48 (Kramers);
    - the exchange symmetry of the kind's one A1 pairing, the clock of two equal quanta (the Frobenius-Schur indicator).
 
-   PROVED (part 7, P1 to P4). CHECKED exactly on the 48, with all eight kinds built from the group (e1: 8 of 8). It is the cube's: on the 12 turns of the tetrahedron it fails on 4 of 7 kinds, and with commuting lifts on 5 of 5 (e1, the mutants).
+   PROVED (part 7, P1 to P4). CHECKED exactly on 2O, with all eight kinds built from the group (e1: 8 of 8). It is the cube's: on the 12 turns of the tetrahedron it fails on 4 of 7 kinds, and with commuting lifts on 5 of 5 (e1, the mutants).
 2. **Pauli from it, in the click** (the owner's four steps as one act). The joint click of two equal quanta reads their two-quantum amplitude, sigma_ab = N(M_a1 M_b2 + eps_T M_b1 M_a2) with M_aj = <phi_a, psi_j>, and eps_T is the big law's sign, read on the board as the train's own half turn applied twice. On the twin hands eps = -1:
    - sigma_aa = 0: two equal twin quanta never click in one state;
    - at one Node-clock they click only as the singlet, of size rho(phi)^2 N(det[psi1, psi2]) in every frame;
@@ -61,7 +61,7 @@ For the Boss's Tensor24 (TENSOR24.md law 7 and section 19's owed list, "Pauli's 
 - the fitting (a pair from light at a Mesh's two ends), the unspringing (a pair into light), the bob.
 
 **Named here:**
-- **The 48.** In this draft, as in the brief, the 48 is 2O, the double cover of the 24: the 24 turns of the cube, each with its two signs. The plan's section 19 uses "the 48" for the 24 turns with their mirrors (O_h); this draft never uses that group.
+- **2O.** In this draft 2O is the double cover of the 24 (the brief called it 2O; the owner's word of 2026-10-28, 13:0x UTC: 2O is the mirrors alone): the 24 turns of the cube, each with its two signs. The plan's section 19 uses "2O" for the 24 turns with their mirrors (O_h); this draft never uses that group.
 - **A quantum's hand.** Each quantum of a train holds its own hand at every Node-clock (now, before, fine teeth, teeth counts). A matter train's state is the list of its quanta's hands. A fitting appends two hands; an unspringing removes two (part 4).
 - **The parts of a click.** These are the places one quantum can be found: a detector's two senses (phi, T phi); an occupant's frame (phi, T phi); or a Mesh's two ends.
 - **The overlap.** M_aj = <phi_a, psi_j> = SUM over the train's own components of conj(phi_a) psi_j, a Gaussian contraction.
@@ -90,7 +90,7 @@ Here nu(V) is the Frobenius-Schur indicator, and T_V is any antiunitary act on V
 2. **In the tensors, the clock of two equal quanta.** V x V holds A1 exactly once. It sits in the symmetric square on the 24's kinds and in the antisymmetric square on the spinor kinds, where it is det, the singlet. PROVED (P2, P3); CHECKED (e1: the A1 counts of Sym^2 and Alt^2 for all eight kinds).
 3. **In time, Kramers.** Every 24-covariant phase reversal of the twin hands is lam (-i sigma_y) K, with square -N(lam), which is below 0. Every one of a hand squares to +1. PROVED (P4); CHECKED (e3: the generators of the tetrahedral 24 already force X = lam (-i sigma_y) in X conj(U) = U X; X conj(X) is a negative multiple of 1; and T commutes with all 48, 48 of 48).
 
-**Why it is the cube's 24 and not less.** The half turns about two face axes commute as turns of the cube, but their lifts anticommute (ij = -ji). This is what makes every lift of a half turn of order 4, and every spinor kind quaternionic. CHECKED (e1, e2).
+**Why anticommuting half-turn lifts are needed** (its verifier: they suffice, as on Q8 and on the 16 lifts of D4, so the cube's 24 is more than the law needs). The half turns about two face axes commute as turns of the cube, but their lifts anticommute (ij = -ji). This is what makes every lift of a half turn of order 4, and every spinor kind quaternionic. CHECKED (e1, e2).
 - On the 12 turns of the tetrahedron (2T), the two complex spinor kinds have nu = 0 while z = -1, and the two complex one-dimensional kinds have nu = 0 while z = +1. The law fails on 4 of its 7 kinds (e1, mutant M1).
 - On a double with commuting lifts (O x Z2), every odd kind has nu = +1 while z = -1 (5 of 5; e1, mutant M2).
 
@@ -209,7 +209,7 @@ PROVED (P11); CHECKED.
 
   PROVED. CHECKED (e1, 8 of 8; the mutants 4 of 7 and 5 of 5).
 - **P4, T T = nu (Kramers).**
-  - An antiunitary J = X K commutes with the 48 iff X conj(U) = U X for every lift.
+  - An antiunitary J = X K commutes with 2O iff X conj(U) = U X for every lift.
   - Two such X differ by an element of the commutant of an irreducible kind, a scalar (Schur). So X = lam X0, and J J = X conj(X) = N(lam) X0 conj(X0).
   - On the twin hands X0 = -i sigma_y, with X0 conj(X0) = -1.
   - B(u, v) = <J u, v> is then the A1 pairing, and B(v, u) = (J J) B(u, v), so J J = nu.
@@ -268,7 +268,7 @@ PROVED (P11); CHECKED.
 
   PROVED. CHECKED (e6; on the 4^3 torus A^2 (A^2 - 4)(A^2 - 8)(A^2 - 12) = 0 on 4 of 4 random fields, and the lower product is not 0 on 4 of 4; e5: the head's pawl signs have plaquette product +1 at 15,000 of 15,000).
 - **P13, the side question.** The states of E1/2 x E1/2 fixed by a group H of lifts number (1/|H|) SUM chi(h)^2:
-  - 1 for the 48, the singlet;
+  - 1 for 2O, the singlet;
   - 1 for the 16 lifts of the Mesh's axis taken as a line;
   - 2 for the 8 lifts of the quarter turns about the Mesh: the singlet and the triplet's component along the Mesh, (0, 1, 1, 0), which the 8 end-exchanging half-turn lifts reverse.
 
@@ -280,9 +280,9 @@ Run with python3 -I in this folder; e5 with /home/user/Universe24/venv314/bin/py
 
 | probe | what it checks | the claims | the mutants (each must fail) |
 | --- | --- | --- | --- |
-| e1_law48.py (.txt, _mutants.txt) | the 48 built exactly; the eight kinds from the group; nu against chi(z)/dim; A1 in Sym^2 and Alt^2; the half turns' lifts | 0 failures; 8 of 8 kinds | 2T fails on 4 of 7; commuting lifts fail on 5 of 5; the sign flipped fails on 8 of 8 |
+| e1_law48.py (.txt, _mutants.txt) | 2O built exactly; the eight kinds from the group; nu against chi(z)/dim; A1 in Sym^2 and Alt^2; the half turns' lifts | 0 failures; 8 of 8 kinds | 2T fails on 4 of 7; commuting lifts fail on 5 of 5; the sign flipped fails on 8 of 8 |
 | e2_click.py | steps 1 to 4; Pauli; the books; one Node-clock; the third; q per state; bunching; Sofer's frame; the occupation; the bound | 0 failures | eps = +1 on twin hands: 1,996 of 2,000 pairs with sigma_aa > 0; probabilities added: 1,998 of 2,000; the exchange term conjugated: 1,998 Pauli and 2,000 books failures of 2,000; the parts unexchanged: books fail 1,998 of 2,000; K's partner: 576 of 624 own states free; capacity u: 1,791 of 3,744 negative; capacity 3u: a third free 3,744 of 3,744 |
-| e3_reversal.py | T against K: the 48, the 24, Kramers, uniqueness, the ratchet's carry, the turnover's gear table | 0 failures | K: 32 of 48 lifts break the reading, 576 of 624 non-Kramers, eps read as K K +1 on 624 of 624; T without its sign: 40 of 48 break, 624 of 624 square +1; the exchange without conjugation: 496 of 624 non-Kramers |
+| e3_reversal.py | T against K: 2O, the 24, Kramers, uniqueness, the ratchet's carry, the turnover's gear table | 0 failures | K: 32 of 48 lifts break the reading, 576 of 624 non-Kramers, eps read as K K +1 on 624 of 624; T without its sign: 40 of 48 break, 624 of 624 square +1; the exchange without conjugation: 496 of 624 non-Kramers |
 | e4_board.py | the head's board cannot hold two quanta; one hand per quantum; Bessel on the one-slot form; the step's two-slot form; the partner; the occupation is no state; the two-slot occupation of one quantum not positive | 0 failures | 8 of 8 equal pairs exceed one quantum in one sense at their Node-clock; K's image not orthogonal 5,000 of 5,000; T without the slot exchange 5,000 of 5,000; unequal steps move W 6 of 6 |
 | e5_head.py (.txt) | the head's turnover on twin hands (bit for bit), the head's pawls, the head's lay jam on its own twin world | 0 failures: K at 375 of 375; T's -S differs at 69 of 69; pawl plaquettes +1 at 15,000 of 15,000; Lagrange at 1,440 of 1,440 ends | (a harness on the head: it reads, it mutates nothing) |
 | e6_hops.py | the half-turn transport: flux, T-junction, the 4^3 spectrum; the pawls | 0 failures | commuting transports: flux 3 of 3 and T-junction 1 of 1 fail; a non-product link sign: 16 of 16 plaquettes -1; the plain transport: 1 of 1 |
@@ -328,7 +328,7 @@ One requested mutation is no mutation. "The sign on the wrong term", eps M_a1 M_
     - it has pair creation and annihilation, the fitting and the unspringing;
     - it has three dimensions.
   - It lacks the configuration space of quanta and the continuity of an amplitude on it. The theorems are about loops in that space (Finkelstein and Rubinstein: "the observed relation between spin and (exchange) statistics follows from continuity alone"; Balachandran et al.: the proofs "assume certain continuity conditions involving the existence of antiparticles"). One hand per quantum holds the product configuration but no path.
-  - REFUTED as a bar to the derivation: the algebraic face of the big law (P2 to P4) is a theorem on the 48 and needs no configuration space.
+  - REFUTED as a bar to the derivation: the algebraic face of the big law (P2 to P4) is a theorem on 2O and needs no configuration space.
 - **P2, "Spin-statistics needs Lorentz invariance and microcausality. Without them, spin and statistics are independent."**
   - STANDS in general. Spin one half bosons are consistent lattice models, and so are spinless fermions.
   - REFUTED on the engine, under the premises of part 11.
@@ -374,7 +374,7 @@ One requested mutation is no mutation. "The sign on the wrong term", eps M_a1 M_
 
 In relativistic field theory the sign comes from two places. The first is the Lorentz group: the strong reflection lies in the identity component of its complexification and lifts to (-1)^(2j) on spin j. The second is locality: the field must hold both the quantum's annihilation and its antiquantum's creation, tied by the invariant pairing C, with C^T = (-1)^(2j) C. On the engine the stand-ins are:
 
-1. **The 24's double cover** (the 48, with its anticommuting half-turn lifts) stands in for the complexified Lorentz group as the source of the sign. Every half turn's lift squares to z, and nu = chi(z)/dim on all eight kinds (P1, P3). It would not stand with the tetrahedron's 12, or with commuting lifts (e1).
+1. **The 24's double cover** (2O, with its anticommuting half-turn lifts) stands in for the complexified Lorentz group as the source of the sign. Every half turn's lift squares to z, and nu = chi(z)/dim on all eight kinds (P1, P3). It would not stand with the tetrahedron's 12, or with commuting lifts (e1).
 2. **The click's law** stands in for the field's covariance and its pairing C. The joint credit is the two-quantum amplitude, the clock (A1) of two equal quanta is its sizes' kind, and the phase reversal T commutes with the 24. The A1 pairing is C, and its symmetry is the sign (P2, P4).
 3. **The cone of one Mesh a tick** stands in for microcausality only as locality of the act. The joint click reads one Node-clock's senses or one Mesh's ends; it fixes no sign.
 4. **Pair creation (the fitting)** stands in for the field's particle-antiparticle content only with an A1 spin write. That write gives the pair the singlet (P13). It is needed for Bell (draft D), not for the exchange sign.
@@ -407,7 +407,7 @@ In relativistic field theory the sign comes from two places. The first is the Lo
 
 ## 13. The side question: does an A1 source give the fitting's pair the singlet?
 
-- If the fitting conserves the kind in the sense that its spin write commutes with all 48 acting on the pair's spins, Schur gives one fixed state: the singlet. PROVED (P13); CHECKED (e7: 1 for the 48). So draft D's premise ("the pair's split reads the A1 part of its two fitted hands") is this draft's law of the click: the click's spin write is the clock's kind.
+- If the fitting conserves the kind in the sense that its spin write commutes with all of 2O acting on the pair's spins, Schur gives one fixed state: the singlet. PROVED (P13); CHECKED (e7: 1 for 2O). So draft D's premise ("the pair's split reads the A1 part of its two fitted hands") is this draft's law of the click: the click's spin write is the clock's kind.
 - The head's fitting orients the pair by the light's lead along the Mesh and its twist, a vector along the Mesh and a pseudoscalar. A spin write that reads that axis is fixed only by the 8 quarter-turn lifts about the Mesh, which leave two states: the singlet and the triplet's component along the Mesh (e7: 2 for the 8). The 8 end-exchanging half turns reverse that component (8 of 8), but they reverse the lead too. So an A1 light alone gives the singlet, and a lead-reading fitting needs the axis-blind spin write as a premise. CHECKED.
 - A singlet across a Mesh's two ends is no product of two hands. One hand per quantum holds products and one Slater determinant. At one Node-clock the singlet of two equal quanta is one Slater determinant, phi ^ T phi = rho(phi) det. The fitted pair's singlet needs the pair's joint amplitude held with the pair. OPEN (draft D's carriage).
 
