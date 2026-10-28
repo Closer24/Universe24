@@ -503,3 +503,9 @@ The owner asks whether, the families being tensors and the engine so simple, a s
 The owner asks how everything converges to the clock and whether the 24 arranges it (ledger row 305). The Scribe's answer: yes, through the dial: every component of every tensor is a gear (an integer with a carried remainder) and the only dynamics is the dial's turning over; the 24 acts on gears by exchanging dials and by reflecting a dial about its mid tooth (the one mirror), so a kind is a way of doing so (five); the clock is the kind the 24 leaves in place (the scalar: time gear, rate, load, trace); the couplings follow from the group's product table (the stress, a product of two gradients, is the trace, E and the shears). The 24 does not arrange the pair, Rule3 and the Mesh factor, or handedness.
 
 **Asked of the owner:** whether the symmetric points and the trial in this wording are passed to the Boss and David.
+
+## 46. The Boss synced on the tensor machine (the owner's order, 2026-10-28, 05:5x UTC)
+
+The owner's order "Sync the Boss" (ledger row 306), after his three questions of rows 303 to 305, and the Reader's proposal of 05:49 (the Node-clock's step as one act, cut act by act and measured). The Scribe's reply to the Reader, the Boss and David (the thread's item 1220): the counts confirmed; the 26 acts of the step are five kinds (nine contractions, eight pointwise maps, five of bookkeeping, two gate acts, two global reductions that are readings and leave the step); the law cannot come first, the cuts need none; the kinds' tables follow from the vector kind; the draw reads invariants at the fixed points; the order of the cuts and the checks after each. The sentence proposed for the law stays in SCRIBE-THE-NODE-AS-ONE-ACT-1.md until the owner's word.
+
+**Asked of the Boss:** his word on the order and on who cuts. **Asked of the owner, later:** the sentence.
