@@ -485,3 +485,9 @@ The head 526a5666d (ledger row 301): striking.py and strikes.py are click.py and
 The thread's items 1214 to 1217 (ledger row 302): David measured the Bell click on the Boss's head 42d5448b7 and found the vernier's draw skewed (c over room by tenths, 2c < room at 390 of 914, S = -3.018 past Tsirelson's bound); the cause is the centre's own digit framed to the upper half while its base stays whole (draw.py:28-43); the Boss accepts it and builds the fair draw in the toy. The Boss answers that the class Clock stays the great clock, and that he builds the Bell click only on the owner's word on the quaternion turn (to be put at 10:30 Israel time). The Scribe's reading: a defect of the pushed head and no breach of a rule; the clause allows a turn by a setting only as Rule3's act.
 
 **Asked of the Boss:** the fair draw pushed with its numbers. **Asked of the owner:** his word on the turn at 10:30 Israel time; told of the defect.
+
+## 43. The system as a tensor machine (the owner's question, 2026-10-28, 05:4x UTC)
+
+The owner asks whether the whole system works as tensors, the Node-clock a simple tensor machine and every family a kind of tensor (ledger row 303). The Scribe's answer: yes in the state (trains by kind: a scalar one gear, a plane two, a vector three, a tensor six; the metric of seven gears since the shears were struck, the potential of four, the plane of two), in the act (one division over the integer contraction of the Node-clock's and its six Meshes' gears: the quotient leaves, the remainder stays; acts.carry) and in the symmetry (all 48 images alike on the nature setting), and not yet in the form: the Node-clock is Rule3 and about 26 acts written by hand per phenomenon, the ranks constants in the code.
+
+**Asked of the owner:** whether David tries the Node-clock's step as one act and counts the acts that fall into it.
