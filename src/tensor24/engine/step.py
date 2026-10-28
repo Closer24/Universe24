@@ -35,8 +35,8 @@ def times(k: Z, c: Z, tb: Z, tn: Z) -> tuple[Z, Z]:
 
 
 def tick(layout: Layout, s: State, allowed: Z) -> tuple[State, Out]:
-    """One round where the runner allows: the due beat turns the dial, and where it ticks the gears step."""
-    nb, _, w, rate, gamma = layout
+    """One round where the runner allows (a bit per Node-clock): the due beat turns the dial; where it ticks, the gears step."""
+    nb, _, _, w, rate, gamma = layout
     a, b, r, go, ph, c, tb, tn = s
     fire = due(c, nb) * allowed
     k, dial = beat(ph, rate, gamma, fire)
@@ -49,7 +49,7 @@ def tick(layout: Layout, s: State, allowed: Z) -> tuple[State, Out]:
 
 def untick(layout: Layout, s: State, o: Out) -> State:
     """The round run back from its out: the pull as it was read, the gears, the times, the count and the dial."""
-    _, _, w, rate, gamma = layout
+    _, _, _, w, rate, gamma = layout
     a, b, r, go, ph, c, tb, tn = s
     fire, k, before = o
     count = c - fire

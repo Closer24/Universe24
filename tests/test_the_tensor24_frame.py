@@ -5,7 +5,7 @@ import itertools
 import numpy as np
 import pytest
 
-from tests.frame import Engine, holds, near, unseeded, wide
+from tests.frame import Engine, digest, holds, near, undone_elsewhere, unseeded, wide
 
 # a side of 5 or more: x + e, x - e, x + 2e and x - 2e are four sites, so no shift hides another
 SHAPE = (5, 5, 5)
@@ -72,7 +72,7 @@ def logged():
     return Engine(step, lambda nb, s, out: log.pop(0) if log else s, world, naive)
 
 
-HELD = {}  # the module-level state a cached engine keeps, which a fresh interpreter has not
+HELD = {}  # the module-level state a cached, a fifo or a memo engine keeps, which a fresh interpreter has not
 
 
 def engine():
@@ -88,6 +88,29 @@ def cached():
 def salted():
     """An engine whose step reads the interpreter's hash seed."""
     return broken(lambda nb, a, b: (trivial(nb, a, b)[0] + (hash("tensor24") & 1), a))()
+
+
+def fifo():
+    """An engine whose run back pops the worlds its steps queued in the module, the state and the out unread."""
+    queue = HELD.setdefault("queue", [])
+
+    def step(nb, s):
+        queue.append(s)
+        return trivial(nb, *s), (0 * s[0][:1],)
+
+    return Engine(step, lambda nb, s, out: queue.pop(0) if queue else s, world, naive)
+
+
+def memo():
+    """An engine whose run back looks the stepped state up among the worlds its steps kept in the module."""
+    kept = HELD.setdefault("memo", {})
+
+    def step(nb, s):
+        new = trivial(nb, *s)
+        kept[digest(new)] = s
+        return new, (0 * s[0][:1],)
+
+    return Engine(step, lambda nb, s, out: kept.get(digest(s), s), world, naive)
 
 
 def two(nb):
@@ -175,3 +198,11 @@ def test_the_images_fail_on_a_board_the_24_do_not_keep():
 @pytest.mark.parametrize("factory, pure", [("engine", True), ("cached", False), ("salted", False)])
 def test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds(factory, pure):
     assert unseeded(__name__, factory, SHAPE) == pure
+
+
+@pytest.mark.parametrize("factory, honest", [("engine", True), ("fifo", False), ("memo", False)])
+def test_a_world_is_run_back_in_a_fresh_interpreter_that_never_stepped(factory, honest):
+    HELD.clear()
+    for seed in range(3):
+        assert holds("bijectivity", globals()[factory], SHAPE, seed)
+    assert undone_elsewhere(__name__, factory, SHAPE, 0) == honest

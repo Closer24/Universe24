@@ -1,20 +1,30 @@
-"""Tensor24's three files: the examples hold, and each rule of the checker refuses its own broken file by name."""
+"""Tensor24's three files: the examples hold, each rule of the checker refuses its own broken file by name, its edge holds."""
 
 import json
 from pathlib import Path
 
 import pytest
 
-from tensor24.runner.files import departures
+from tensor24.runner.files import NAMES, departures
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
-NAMES = ("universe", "piece", "setting")
-DEN = 15162856759112389  # the example's den, as its file holds it
+DEN = 15162856759112389  # the example's den, as its file holds it: the widest of its integers, 54 bits
 
 
 def edits():
-    """One broken file per rule: the file, its one change (or its text), and the departure the checker must name."""
+    """One edited file per rule: the file, its one change (or its text), the departure named, or None at a rule's edge."""
     train = "universe.trains[0]"
+
+    def coupling(row, named):
+        return (
+            "universe",
+            lambda u: u["couplings"].append(row),
+            named and f"universe.couplings[0]: {named}",
+        )
+
+    def gear(row, named):
+        return "setting", lambda s: s["gears"].append(row), named and f"setting.gears[1]: {named}"
+
     return {
         "a version that is a float": (
             "universe",
@@ -45,12 +55,38 @@ def edits():
         "an integer past the width": (
             "universe",
             lambda u: u["integers"].update(width=8),
-            f"the integer {DEN} takes more bits than the width, 8",
+            f"universe: the integer {DEN} takes more bits than the width, 8",
+        ),
+        "the width one bit short": (
+            "universe",
+            lambda u: u["integers"].update(width=53),
+            f"universe: the integer {DEN} takes more bits than the width, 53",
+        ),
+        "the width at the widest integer": ("universe", lambda u: u["integers"].update(width=54), None),
+        "an integer too wide in the setting": (
+            "setting",
+            lambda s: s["gears"].append([0, 0, 1, 1 << 200, 0, 0]),
+            f"setting: the integer {1 << 200} takes more bits than the width, 128",
         ),
         "a key off the format": (
             "universe",
             lambda u: u.update(colour=1),
             "universe: the key 'colour' is not",
+        ),
+        "a key off the format among the integers": (
+            "universe",
+            lambda u: u["integers"].update(colour=1),
+            "universe.integers: the key 'colour' is not",
+        ),
+        "a key off the format in the piece": (
+            "piece",
+            lambda p: p.update(colour=1),
+            "piece: the key 'colour' is not",
+        ),
+        "a key off the format in the setting": (
+            "setting",
+            lambda s: s.update(colour=1),
+            "setting: the key 'colour' is not",
         ),
         "a train's key off the format": (
             "universe",
@@ -67,15 +103,30 @@ def edits():
             lambda u: u["trains"][0].update(name=7),
             f"{train}.name: a label, not 7",
         ),
+        "an empty label": (
+            "universe",
+            lambda u: u["trains"][0].update(name=""),
+            f"{train}.name: a label, not ''",
+        ),
         "two trains of one label": (
             "universe",
             lambda u: u["trains"].append(dict(u["trains"][0])),
             "universe.trains: the label 'light' names two trains or more",
         ),
+        "two trains of one label that is no text": (
+            "universe",
+            lambda u: u["trains"].extend([dict(u["trains"][0], name=[7]) for _ in range(2)]),
+            "universe.trains[2].name: a label, not [7]",
+        ),
         "no kind": (
             "universe",
             lambda u: u["trains"][0].update(kinds=[]),
             f"{train}.kinds: a list of the kinds' labels",
+        ),
+        "a kind that is no text": (
+            "universe",
+            lambda u: u["trains"][0].update(kinds=[7]),
+            f"{train}.kinds: a list of the kinds' labels, not [7]",
         ),
         "a part at 0": (
             "universe",
@@ -97,40 +148,44 @@ def edits():
             lambda u: u["trains"][0].update(pair=[DEN + 1, DEN]),
             f"{train}.pair: the pinion within [0, den], not {DEN + 1}",
         ),
+        "a pinion below 0": (
+            "universe",
+            lambda u: u["trains"][0].update(pair=[-1, DEN]),
+            f"{train}.pair: the pinion within [0, den], not -1",
+        ),
+        "a pinion at 0": ("universe", lambda u: u["trains"][0].update(pair=[0, DEN]), None),
         "a weight that is a float": (
             "universe",
             lambda u: u["trains"][0].update(weight=0.5),
             f"{train}.weight: a whole number, not 0.5",
         ),
-        "a coupling to no train": (
-            "universe",
-            lambda u: u["couplings"].append([0, 0, 1, 0, 0, 1]),
-            "universe.couplings[0]: a train beyond the trains' rows",
+        "a coupling to no train": coupling([0, 0, 1, 0, 0, 1], "a train off the trains' rows"),
+        "a coupling's first train beyond": coupling([1, 0, 0, 0, 0, 1], "a train off the trains' rows"),
+        "a coupling's first train below 0": coupling(
+            [-1, 0, 0, 0, 0, 1], "a train off the trains' rows"
         ),
-        "a coupling's first train beyond": (
-            "universe",
-            lambda u: u["couplings"].append([1, 0, 0, 0, 0, 1]),
-            "universe.couplings[0]: a train beyond the trains' rows",
+        "a coupling's second train below 0": coupling(
+            [0, 0, -1, 0, 0, 1], "a train off the trains' rows"
         ),
-        "a coupling's strength that is a float": (
-            "universe",
-            lambda u: u["couplings"].append([0, 0, 0, 0, 0, 0.5]),
-            "universe.couplings[0]: a row of whole numbers, one per field",
+        "a coupling's target beyond": coupling([0, 0, 0, 0, 1, 1], "a train off the trains' rows"),
+        "a coupling's target below 0": coupling([0, 0, 0, 0, -1, 1], "a train off the trains' rows"),
+        "a coupling's strength that is a float": coupling(
+            [0, 0, 0, 0, 0, 0.5], "a row of whole numbers, one per field"
         ),
-        "a coupling's target beyond": (
-            "universe",
-            lambda u: u["couplings"].append([0, 0, 0, 0, 1, 1]),
-            "universe.couplings[0]: a train beyond the trains' rows",
-        ),
-        "a coupling's part beyond": (
-            "universe",
-            lambda u: u["couplings"].append([0, 2, 0, 0, 0, 1]),
-            "universe.couplings[0]: a part beyond its train's",
-        ),
+        "a coupling's part beyond": coupling([0, 2, 0, 0, 0, 1], "a part off its train's"),
+        "a coupling's part below 0": coupling([0, -1, 0, 0, 0, 1], "a part off its train's"),
+        "a coupling's second part beyond": coupling([0, 0, 0, 2, 0, 1], "a part off its train's"),
+        "a coupling's second part below 0": coupling([0, 0, 0, -1, 0, 1], "a part off its train's"),
+        "a coupling at the last parts": coupling([0, 1, 0, 1, 0, 1], None),
         "a side at 0": (
             "piece",
             lambda p: p["shape"].__setitem__(0, 0),
             "piece.shape: one side per axis",
+        ),
+        "a side that is a float": (
+            "piece",
+            lambda p: p["shape"].__setitem__(0, 4.0),
+            "piece.shape: one side per axis, each a whole number of at least 1, not [4.0, 4, 4]",
         ),
         "two axes": ("piece", lambda p: p.update(shape=[4, 4]), "piece.shape: one side per axis"),
         "ticks below 0": (
@@ -138,42 +193,41 @@ def edits():
             lambda s: s.update(ticks=-1),
             "setting.ticks: a whole number of at least 0",
         ),
-        "a gear off the board": (
+        "ticks that are a float": (
             "setting",
-            lambda s: s["gears"].append([0, 0, 64, 1, 0, 0]),
-            "setting.gears[1]: train 0 or site 64 off the files",
+            lambda s: s.update(ticks=1.5),
+            "setting.ticks: a whole number of at least 0, not 1.5",
         ),
-        "a gear's notch that is a float": (
-            "setting",
-            lambda s: s["gears"].append([0, 0, 1, 0.5, 0, 0]),
-            "setting.gears[1]: a row of whole numbers, one per field",
+        "ticks at 0": ("setting", lambda s: s.update(ticks=0), None),
+        "a gear off the board": gear([0, 0, 64, 1, 0, 0], "train 0 or site 64 off the files"),
+        "a gear at the last site": gear([0, 0, 63, 1, 0, 0], None),
+        "a gear's site below 0": gear([0, 0, -1, 1, 0, 0], "train 0 or site -1 off the files"),
+        "a gear on no train": gear([1, 0, 0, 1, 0, 0], "train 1 or site 0 off the files"),
+        "a gear's train below 0": gear([-1, 0, 1, 1, 0, 0], "train -1 or site 1 off the files"),
+        "a gear's notch that is a float": gear(
+            [0, 0, 1, 0.5, 0, 0], "a row of whole numbers, one per field"
         ),
-        "a gear on no train": (
-            "setting",
-            lambda s: s["gears"].append([1, 0, 0, 1, 0, 0]),
-            "setting.gears[1]: train 1 or site 0 off the files",
-        ),
-        "a fine tooth below 0": (
-            "setting",
-            lambda s: s["gears"].append([0, 0, 1, 1, 0, -1]),
-            "setting.gears[1]: component 0 or fine tooth -1 below 0",
-        ),
-        "a gear given twice": (
-            "setting",
-            lambda s: s["gears"].append([0, 0, 0, 1, 1, 0]),
-            "setting.gears[1]: the gear (0, 0, 0) given twice",
-        ),
+        "a fine tooth below 0": gear([0, 0, 1, 1, 0, -1], "component 0 or fine tooth -1 below 0"),
+        "a component below 0": gear([0, -1, 1, 1, 0, 0], "component -1 or fine tooth 0 below 0"),
+        "a gear given twice": gear([0, 0, 0, 1, 1, 0], "the gear (0, 0, 0) given twice"),
         "a key doubled": (
             "piece",
             lambda p: '{"version": 1, "shape": [0, 4, 4], "shape": [4, 4, 4]}',
             "piece.json: not read: a key doubled",
+        ),
+        "a nesting too deep to read": (
+            "piece",
+            lambda p: "[" * 100000 + "]" * 100000,
+            "piece.json: not read:",
         ),
         "no JSON": ("setting", lambda s: "{", "setting.json: not read:"),
     }
 
 
 @pytest.mark.parametrize("rule", sorted(edits()))
-def test_the_examples_hold_and_each_rule_refuses_its_own_broken_file_by_name(rule, tmp_path):
+def test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its_edge_holds(
+    rule, tmp_path
+):
     paths = [EXAMPLES / f"{name}.json" for name in NAMES]
     assert departures(*paths) == []
     name, edit, named = edits()[rule]
@@ -184,4 +238,4 @@ def test_the_examples_hold_and_each_rule_refuses_its_own_broken_file_by_name(rul
         text if isinstance(text, str) else json.dumps(held), encoding="utf-8"
     )
     found = departures(*paths)
-    assert any(named in line for line in found), found
+    assert any(named in line for line in found) if named else found == [], found

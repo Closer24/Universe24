@@ -19,12 +19,13 @@ class State(NamedTuple):
 
 
 class Layout(NamedTuple):
-    """The board read once: the six neighbours, each Mesh's grip, the teeth, the rates and the full rate."""
+    """The board read once: the six neighbours, each Spoke's Mesh, each Mesh's grip once, the teeth, the rates and the full rate."""
 
-    nb: Z
-    grip: Z
+    nb: Z  # (6, N): +x, -x, +y, -y, +z, -z, each the other's opposite (the load makes the relation symmetric)
+    meshes: Z  # (6, N): the Mesh each Spoke holds, one Mesh read from its two ends
+    grip: Z  # one grip per Mesh
     w: Z
-    rate: Z
+    rate: Z  # from 0 to the full rate, so the beat's k is a bit (the load refuses a rate above it)
     gamma: Z
 
 
