@@ -1,10 +1,94 @@
 # The clock words
 
-The owner's words of 2026-10-27, 10:5x and 11:0x UTC, through the Boss, and his direct word of 11:3x UTC to Sofer: every name in clock words, the documents and the law's text included, the system one big clock with many gears, one dictionary for everything. His direct word of 2026-10-28, 02:4x UTC, to Sofer (in Hebrew, verbatim in translation, the name in the Hebrew's order node-clock, where Sofer's first rendering had written clock-node): "I asked the Boss that the name click stay, and also that a node be called node-clock and not only clock. Because everything is clocks of strange sizes.. sync": two rows of this dictionary change, the click kept (the pass of 2026-10-27 had named it strike) and the node the Node-clock (the pass had named it Clock); the documents' prose was renamed in one pass on 2026-10-28 (ledger row 282: 3,427 places strike to click and 4,728 places Clock to Clock-node, the order of the first rendering). His direct word of 2026-10-28, 03:2x UTC, to Sofer (in Hebrew, verbatim in translation): "node-clock. So they won't be confused with clock": the name is the Node-clock, the node first, and a second pass turned its 4,752 places from Clock-node to Node-clock (ledger row 285); in both passes the code spans, paths, file, branch and hypothesis names, the former-name quotes and Animate's generated blocks were kept as written. The dictionary is David's DAVID-CLOCK-NAMES.md (toys-5, tools/derivations/open_items/); this page is the part the documents apply, with the number of places each word was renamed on 2026-10-27.
+The owner's words of 2026-10-27, 10:5x and 11:0x UTC, through the Boss, and his direct word of 11:3x UTC to Sofer: every name in clock words, the documents and the law's text included, the system one big clock with many gears, one dictionary for everything. His direct word of 2026-10-28, 02:4x UTC, to Sofer (in Hebrew, verbatim in translation, the name in the Hebrew's order node-clock, where Sofer's first rendering had written clock-node): "I asked the Boss that the name click stay, and also that a node be called node-clock and not only clock. Because everything is clocks of strange sizes.. sync": two rows of this dictionary change, the click kept (the pass of 2026-10-27 had named it strike) and the node the Node-clock (the pass had named it Clock); the documents' prose was renamed in one pass on 2026-10-28 (ledger row 282: 3,427 places strike to click and 4,728 places Clock to Clock-node, the order of the first rendering). His direct word of 2026-10-28, 03:2x UTC, to Sofer (in Hebrew, verbatim in translation): "node-clock. So they won't be confused with clock": the name is the Node-clock, the node first, and a second pass turned its 4,752 places from Clock-node to Node-clock (ledger row 285); in both passes the code spans, paths, file, branch and hypothesis names, the former-name quotes and Animate's generated blocks were kept as written. The dictionary is David's DAVID-CLOCK-NAMES.md (toys-5, tools/derivations/open_items/); this page is the part the documents apply: first the concepts every document uses, each defined once (The concepts, defined), then the renamed words with the number of places each was renamed on 2026-10-27.
 
 ## The two levels
 
 A line is a gear: a coarse wheel (the notch, the level of the former words) and a fine wheel (the fine tooth, the remainder) of a number of teeth (the wall). A plane is a hand: two gears, its three-o'clock and twelve-o'clock shadows, and a row is a train, one family's gears at every clock stepped by one gearing. The lattice is the great clock, one point of it a node-clock, a meshing of two node-clocks a mesh, one of a node-clock's six sides a spoke, and the great clock's one step a tick.
+
+## The concepts, defined
+
+The owner's direct word of 2026-10-28, 13:2x UTC, to Sofer (in Hebrew, verbatim in translation): "Make sure all the documents define the clock concepts that everyone uses.. composite clock.. train.. and the like.. everything in English, of course, in the documents." Each concept below is defined once, in English and in clock words, with the clause that states it and its status: **law** (stated in docs/ALGEBRA.md), **plan** (stated in the Tensor24 plan, tools/derivations/open_items/TENSOR24.md, or in a draft under derive/ and not yet in the law), **proposed** (under derivation: no sentence of the law or of the plan holds it yet). Every document, page and post uses a concept as it is defined here. A new concept enters this table before it enters a draft's text; a definition is corrected by a post in the thread and entered here by Sofer. The renamings that follow this section keep the former words by name.
+
+### The machine
+
+| concept | defined | where it stands | status |
+| --- | --- | --- | --- |
+| Node-clock | one small clock of the great clock: a count of whole numbers that moves by one fixed act, the same at every place, differing from another only in its place and in the numbers it holds; it reads itself and its six Meshes and nothing else | **The picture over the postulates**; Postulate 1; **The Node-clock is one act** | law |
+| great clock | the whole lattice of Node-clocks and their Meshes and nothing beyond: no centre, no state of its own, no act of its own; its tick is the count of the Node-clocks' rounds | **The picture over the postulates** | law |
+| Mesh | the meshing of two neighbouring Node-clocks; a Node-clock has six | Postulate 1 | law |
+| Spoke | one of a Node-clock's six meshing sides | Postulate 1 | law |
+| tick | the great clock's one step; every Node-clock steps on its own clock, and a word crosses one Mesh per tick at most | Postulate 3; **The Node-clock steps on its own clock** | law |
+| locality | a Node-clock reads itself and its six Meshes and nothing further, forward and backward, in every act and every reading | Postulate 1; **Locality is never broken** | law |
+| gear | a dial: an integer with a carried remainder, one number on two wheels | **The Node-clock is one act** | law |
+| notch | the gear's coarse wheel: its whole part | the two levels, above | law |
+| fine tooth, remainder | the gear's fine wheel: the place on its teeth that a carry leaves, kept | the two levels, above | law |
+| teeth count | the number of fine teeth one notch holds: the divisor of the gear's carry, fixed by the calibre's integers | the two levels, above; **The teeth counts are algebra and not code** | law |
+| dial | a gear read as a count with a whole turn, a dial of d teeth; also a Node-clock's own dial, its rate summed over the ticks, its proper time | **Every bound is a clock's carry**; **The rates compose** | law |
+| hand | a train's data at one Node-clock: a plane of two gears (the three-o'clock and twelve-o'clock shadows); what is seen, a bob, a light or a detector, is a hand turning over the Node-clocks at its own rate | **The picture over the postulates** | law |
+| train | all the gears of one kind at every Node-clock, stepped by one gearing: the law's word for a family; no act of the Node-clock names a train | **The Node-clock is one act**; **No train is declared** | law |
+| kind | the way the cube's 24 turns exchange and reflect a train's dials; five kinds, A1 (the scalar), A2 (the pseudoscalar), E, T1 (the vector) and T2 (the shear), and three spinor kinds of the 24's double cover, E1/2, E5/2 and G3/2; a kind's dimension is its number of gears: A1 and A2 one, E two, T1 and T2 three, E1/2 and E5/2 two, G3/2 four | **The Node-clock is one act**; **The click law** | law (the five), plan (the three spinor kinds) |
+| twin hands | the two complex gears (z1, z2) of the spinor kind E1/2, matter's hand, whose phase reversal T squares to -1; not the twins, upper and lower, of a click of a split | Tensor24 plan, law 7; draft E | plan |
+| composite clock | two or more hands at one Node-clock read as one clock: its joint dial is the product of the parts' kinds, K1 x K2, split into kinds by the product table; it turns at the product of the parts' turns (the beats add) and its unit and count are the product of the parts', with no new number; the plan's clock of clocks | Tensor24 plan, open item 11 c; David's lay and Animate's ladder, under derivation; Sofer's four conditions for its click, post 6469988450 | proposed |
+| regulator | the train whose time gear counts the clock's own ticks and rulers | the renamed words, below | law |
+| time gear | the gear of the regulator whose notch is the clock's stretch | the renamed words, below | law |
+| stretch | the notch X of a Node-clock's time gear: the length of its Meshes (the engine's feature `stretch`); X equals Gamma at the vacuum and is longer where the clock runs slower | the renamed words, below (the turnover); **Every bound is a clock's carry** | law |
+| rate, full rate, mesh rate, ruler | the rate is the clock's beats per tick; the full rate Gamma is the rate at the vacuum; the mesh rate is the rate twice, p_0^2 div Gamma, the ruler: a length is a count of Meshes at that rate | **The rates compose** | law |
+| load | the count of slowings on a clock's rate; 0 at the vacuum | **The rates compose** | law |
+| vacuum | a Node-clock with nothing slowing it: load 0, the full rate and the stretch Gamma | **The rates compose** | law |
+| horizon | where a Mesh's rate is 0 and nothing crosses it, its two ends decoupled; a frozen Node-clock is one whose mesh rate reads 0, and the stopped load is the load at which it does | **The horizon**; **BH-S1, the frozen Node-clock** | law |
+
+### The arithmetic
+
+| concept | defined | where it stands | status |
+| --- | --- | --- | --- |
+| Rule3 | the Node-clock's one act: one division with a carried remainder over one integer contraction of the Node-clock's own gears and its six Meshes' gears, the same for every train | **The Node-clock is one act** | law |
+| carry | Rule3's division with remainder, n + r = q d + r': the quotient q leaves as an event and the remainder r' stays on the dial; the same formula at every integer, with no floor, no bound and no if | **Every bound is a clock's carry**; Postulate 5 | law |
+| quotient, event | what a carry sends out: a carry to the next clock, a click, or a turnover | **Every bound is a clock's carry** | law |
+| no if | the Node-clock holds no branch, no floor, no bound, no clamp and no mask: its step is Rule3's division and the sums and products around it | Postulate 5 | law |
+| bijection | every act of the Node-clock is a bijection on the integers with its remainder kept, so the great clock runs backward by the same acts in the reverse order, bit for bit | Postulate 2 | law |
+| rewind | the great clock run backward, every gear and every click undone exactly | **The inverse** | law |
+| turnover | the great clock's turn at the top: a clock's two notches exchanged and every fine tooth turned, so that time runs back; the swap applied twice is the identity on the 24's kinds, and the plan finds it of period four on the twin hands (the owner's word asked) | **The turnover** | law |
+| phase reversal, T | the exact reversal of a hand's phase: z to conj(z) on a force carrier (A1), (z1, z2) to (-conj(z2), conj(z1)) on the twin hands, so that T T is +1 on A1 and -1 on matter | Tensor24 plan, law 7 | plan |
+| half turn, full turn | a half turn is an element of the 24's double cover whose square is the full turn; a full turn is a hand turned through 2 pi about its own axis, +1 on the five kinds and -1 on the three spinor kinds (the Frobenius-Schur sign, equal to T T) | **The click law** | law |
+
+### The symmetry words
+
+| concept | defined | where it stands | status |
+| --- | --- | --- | --- |
+| the 24 | the cube's 24 turns (rotations): the step commutes with each of them, and the Node-clock is what the 24 leaves in place | **The cube's symmetry**; **The Node-clock is one act** | law |
+| the 48 | in the law's tests, the cube's 24 turns and their 24 mirror images (the signed permutations of the axes); the verifiers of draft E write the 48 for the double cover below, which also has 48 elements: a text says which it means | **The cube's symmetry**; derive/E_verify | law, plan |
+| the 24's double cover | the 48 half-turn lifts of the 24 (the binary octahedral group, 2O): where a kind's full turn can be -1, as it is on the spinor kinds | **The click law**; derive/E | plan |
+| product table | how the contraction of two kinds splits into kinds: A1 x A1 = A1, E1/2 x E1/2 = A1 + T1, and so on for every pair of the eight | **The Node-clock is one act** | law |
+| A1 | the scalar kind: what no turn of the cube moves, the clock itself; the light, the sprung hands and the held field of the one big bang's calibre are all A1 | **The Node-clock is one act**; **The click law** | law |
+| A1 pairing | the one invariant bilinear form on a kind's gears; its symmetry under exchange is the kind's sign, +1 on A1, A2, E, T1 and T2 and -1 on E1/2, E5/2 and G3/2 | **The click law** | law |
+| singlet | the A1 part of two twin hands: the antisymmetric pair, of size N(det[u, v]) | derive/E | plan |
+| intertwiner | an integer map from the gears of K1 x K2 to the gears of a kind K that commutes with the 24's lifts, the composite clock's tool | David's page on the composite clock | proposed |
+
+### The events
+
+| concept | defined | where it stands | status |
+| --- | --- | --- | --- |
+| click | the event a hand's winding makes when it is whole, the one place a Node-clock's act makes an event the detector reads; of one of two kinds and no third | **The two kinds of click** | law |
+| click of a whole | one hand holds the whole winding at the Node-clock: nothing to choose, the wind decides where the click happens | **The two kinds of click** | law |
+| click of a split | the winding is divided between two twins, upper and lower, and the great clock draws by the sizes of the parts (Born): the detector's click and the only place a choice enters the world | **The two kinds of click** | law |
+| wind, winding, beat | the hand's stored energy counted in windings; a hand wound to a whole winding of its own through one period of its beat clicks | **CK-S1, the click's beat** | law |
+| draw | the one draw, the detector's: the whether from the Node-clock's own remainders, the which from one Mesh's digit | **Locality is never broken**; **The two kinds of click** | law |
+| bob, detector | a bob is a sprung hand standing at a Node-clock; a detector is the hand standing at a Node-clock that a click is read against: the click is the meeting | **Every bob is bound; hands may be free** | law |
+| frame | the state a click's sizes are read against, the detector's frame or the occupant's: the sizes are the norms of the overlaps with it | **The two kinds of click** | law |
+| room | the total the parts of a split fill, by Lagrange's identity: N(<phi, chi>) + N(<T phi, chi>) = rho rho_d | **The click law**; Tensor24 plan, law 7 | plan |
+| books | every carry's remainder kept, read beside a second reading, the wind before and after over every train; the books close when the two agree | Tensor24 plan, law 8 | plan |
+| fitting | two new hands fitted at a Mesh's two ends (the former birth); the hand fitted is a fitted hand | the renamed words, below | law |
+| setting, calibre, piece | the setting is the hands set at the start; the calibre is a clock's design, its integers and trains (the universe file); a piece is one built clock, its calibre, size, ticks and setting (the world file) | the renamed words, below | law |
+
+### The course
+
+| concept | defined | where it stands | status |
+| --- | --- | --- | --- |
+| top | where a clock's stretch is largest, the time gear's weak maximum, and the turnover comes | **The turnover** | law |
+| bottom | where the stretch is least: the vacuum's stretch at rest, where the Links are shortest and the light densest and the fittings come | Animate's draft ANIMATE-MANY-BANGS.md | plan |
+| bang | one swing of the great clock: the stretch rises from the vacuum's at rest to the top, the turnover turns it, and the run back brings it to the vacuum's again; the dictionary's word is swing, the owner's laws 10 and 11 say bang, and nature's Big Bang keeps its name | the renamed words, below; laws 10 and 11 | law |
+| ladder | the kinds a bang can reach by the product table: from all A1 nothing new, with the twin hands and the composite clock all eight kinds by the fourth bang | ANIMATE-MANY-BANGS.md, part 7 | proposed |
 
 ## The renamed words
 
