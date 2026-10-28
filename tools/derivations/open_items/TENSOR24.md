@@ -14,6 +14,8 @@ The owner's words of 2026-10-28, 06:0x to 06:4x UTC (Hebrew, translated):
 
 - Through David, 07:1x UTC (6463014614, 6463102778): "Which group is this, the group 24 or the cube 24? What are the mathematical definitions? If there is a unique formula that stands on a node, like Einstein's: the whole plan needs everything as formulas, and then the engine represents them." And: "From the tensors, what are the masses, and what is everything seen after the clicks, so that the gates are right and follow from these tensor acts; and whether the trains' properties must stand outside, or all is derived."
 
+- 07:4x UTC: "Make sure the plan has a section of the generic functions needed, on tensors, vectors and scalars, all the generic functions the engine needs, and definitions of the dimension of the tensors and of the trains, all derived, the code clean, generic and wholly clear, at the world's standards of generic code. Decide who writes the code of this plan, the agents or the sessions. Everyone approves the code after it is written, so as not to see again the fakes there were this time. Check that there is nothing more like Pauli in the code."
+
 The plan's owner: the Boss. The names are the ones the owner sees in his app: Boss, Sofer, David and Animate (the owner's word through Animate, 06:3x UTC, #2187 6462416209). Its base: engine-5.0-test at 526a5666d. Its status: a plan, with nothing built under it.
 
 - **This file is the one plan.** Sofer's record of the program (the state of the cuts, the owner's list with his recommendations, the ledger) stands on scribe-5 and points here.
@@ -480,3 +482,93 @@ Every law stands here once as a formula; each cut is the engine's representation
 - **helicity:** the twist.
 
 **What a train names outside:** only its kind and its integers (its pair, its weight, its couplings), as nature measures masses and couplings. Derived from the kind and the one formula: the spin, the statistics, the charge's sign and its conservation, the unsprung hand's coupling 0, the dispersion, the energy and the momentum, and a composite's mass. The pair enters only as its spring D, and the beat is read, not computed.
+
+## 20. The dimensions, the generic functions and the code's standard
+
+**The dimensions:**
+- the lattice: 3 axes, 6 Spokes, a stencil of 7 sites;
+- the kinds of O: A1 1, A2 1, E 2, T1 3, T2 3;
+- a component's own part: 1 (one gear), 2 (a hand, one Gaussian integer), 4 (the twin hands, two Gaussian integers).
+
+| the train | its kinds | gears |
+| --- | --- | --- |
+| the regulator, the 3 + 1 metric | A1 the lapse (the time gear), T1 the shift (the flows), A1 + E the spatial diagonal (the tensions); with T2, the shears, on the owner's word | 7; 10 with the shears, general relativity's 1 + 3 + 6 |
+| the offset, the potential | A1 + T1 | 4 |
+| the unsprung hand, each sprung hand | A1 times a hand | 2 |
+| the twin hands | A1 times two hands, read as W (A1) and S (T1) | 4 |
+| the held field | A1 | 1 |
+| the ratchet | one gear of its own two teeth | 1 |
+| the composite | the product of its parts' kinds, by the product table | from the table |
+
+**The generic functions:** the whole engine. Each has one meaning, acts on integers alone, and runs backward at the going -1:
+1. carry(n, d, r): Rule3, the quotient and the remainder;
+2. mid(d) and mirror(r, d): the mid tooth and the one mirror;
+3. the Gaussian integers: mul(z, w), conj(z), norm(z) = z conj(z), and turn(z) = i z;
+4. kinds(spokes): the five kinds' integer matrices for the 24, from the six Spokes' signed permutations; products(kinds), O's integer product table;
+5. shift(f, j): a field at the neighbour across Spoke j, carried across the Mesh (U_j);
+6. contract(f, g, kind): two fields' product into one kind, by the table;
+7. pull(f, metric, couplings): F = the sum over j of g_j (U_j f_j - f), less D f, plus J;
+8. step(state): the main formula for every gear, then the carry, every gear read and then every gear written;
+9. gate(state): the turnover, the click of a whole and the click of a split, with the books;
+10. draw(state, x): the invariant number;
+11. books(start, end): every remainder kept and signed.
+
+**The code's skeleton:** a plan of names, not built.
+
+```python
+def carry(n: Int, d: Int, r: Int, going: Going) -> tuple[Int, Int]: ...
+def mul(z: Gauss, w: Gauss) -> Gauss: ...
+def kinds(spokes: Spokes) -> Kinds: ...                      # the five kinds of O
+def products(k: Kinds) -> Table: ...                         # the integer product table
+def shift(f: Field, j: Spoke) -> Field: ...                  # the neighbour, across the Mesh
+def contract(f: Field, g: Field, kind: Kind, t: Table) -> Field: ...
+def pull(f: Field, metric: Field, c: Couplings) -> Field: ...
+def step(s: State) -> State: ...                             # p+ = p + s F + K, then the carry
+def gate(s: State) -> tuple[State, list[Click]]: ...
+def draw(s: State, x: Site) -> Int: ...
+def books(start: State, end: State) -> Books: ...
+```
+
+**The standard:**
+- **The code itself:**
+  - typed, under mypy strict;
+  - pure functions over integer arrays, with no global state, no module-level container and no id() key;
+  - one function for each meaning;
+  - no branch on a train's identity: dispatch by kind and the calibre's integers alone;
+  - no number but 0 and 1, no float, and no formula of a phenomenon. Sofer's scan is a required gate on every push.
+- **The tests read properties, not values:**
+  - the 24 alike bit for bit;
+  - the rewind exact;
+  - the books closed;
+  - the fixed-point test;
+  - every gate comparing two independent readings;
+  - no test asserting a number the code typed.
+- **The size:** the engine under 1,000 lines, each function short. Docstrings are in the clock words with the tensor's name beside.
+
+## 21. Who writes the code, and who approves it
+
+The Boss's decision, as the owner asked:
+- **The Boss writes every line of the engine's code himself.** No agent writes engine code (the owner's condition of 02:2x UTC). The Boss may use a reading agent to search or to review, never to write.
+- **Every cut is approved by all of them after its code is written, on the code itself, before the push:**
+  - **Sofer** reads the diff against every law and postulate, and his scan passes with no count risen;
+  - **David** reads the diff against the cut's formula: the code is the formula's representation term by term, with nothing added;
+  - **Animate** benches the cut on the 77 rows, and checks that no reading reads a number the code typed;
+  - **a fresh adversarial read**, a reading agent with no stake in the cut, hunts the fakes (any rule that puts a phenomenon in) and reports to all four.
+- **A cut lands only with the four approvals.** A finding stops it, and the owner sees each push's approvals in the thread.
+
+## 22. The rules that put a phenomenon in, found on the head (like Pauli)
+
+The Boss's scan of the engine's modules at 834cfd72e, beside section 16:
+
+| the rule | where | the phenomenon it puts in | what replaces it |
+| --- | --- | --- | --- |
+| the exclusion's refusals: the setting's refusal by name, the lay jam | assembly/setting.py, click.jam, phase.crowded | Pauli | the kind's exchange sign (section 16) |
+| the typed senses at every fitting, the reckoner's charges from them | run.py, reckoner.sweeps_of | charge conservation, the lepton and baryon numbers | the sweeps read from the gears; the senses from the sweep's conservation |
+| the split's root | bobs.splits | Born's normalisation | the trace of two twin readings; the whole winding by the carry |
+| the sense jam: a sprung pair engages only at opposite sweeps | click.engage | a pair born at opposite charges | the sweep's conservation at the fitting, by the books, not a refusal |
+| the twist's jam and the + end by the twist's sign | click.engage | matter against antimatter, the one hand | the twist as the one-hand coupling's carrier, one row of the couplings |
+| the list's filter: a coupled hand picks among the coupling-0 hands alone | click.list_of | the unspringing into light | the product table: what a pair's product holds (David) |
+| the still chime: a chime where nothing arrives takes nothing | bobs.still_chime | a bob at rest in balance | the wind's balance at the Node-clock, by the books |
+| the stop: the unspringing jammed below the unsprung hand's quantum | unspring.py | the threshold of E = mc^2 | the click of a whole: a whole winding of the light, nothing else |
+| the branches by a train's identity: the offset's kick, the held field's kick, the twin hands' Pauli term, the regulator's own path, the unsprung hand | tick.py (about 10 sites), clock.py, click.py, bobs.py, unspring.py, hands.signs, draw.py, trains.py | each train's coupling chosen by its name | dispatch by kind and the calibre's couplings: the one formula |
+| the clamps and the bottom's fallback | meshes.factors, tick.carry, Tick.end_teeth | a bounded run | derived (David), or the gate's comparison |
